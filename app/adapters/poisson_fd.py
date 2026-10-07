@@ -8,7 +8,7 @@ from scipy.sparse.linalg import spsolve
 
 from app.adapters.base import Adapter
 from app.models import AdapterResult, Diagnostic, EvidenceRecord
-from app.provenance import environment_fingerprint, sha256_json
+from app.provenance import environment_fingerprint, sha256_json, utc_now
 
 
 class PoissonFDAdapter(Adapter):
@@ -66,7 +66,9 @@ class PoissonFDAdapter(Adapter):
         }
 
         evidence = EvidenceRecord(
+            id=f"ev-{self.name}-{inputs_hash[:12]}",
             grade="NUMERICAL INDICATOR",
+            claimRef=str(input_spec.get("claimRef", f"claim:{self.name}")),
             method="five-point finite difference + SciPy sparse direct solve",
             inputsHash=inputs_hash,
             environmentHash=env_hash,
@@ -78,7 +80,10 @@ class PoissonFDAdapter(Adapter):
                 "uniform Cartesian grid",
                 "floating-point arithmetic",
             ],
+            generatedAt=utc_now(),
             adapterVersion=self.version,
+            upstreamRevisions=list(input_spec.get("upstreamRevisions", [])),
+            stale=False,
             scope="finite discrete Poisson system only",
         )
 
