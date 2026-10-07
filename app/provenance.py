@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import platform
+from datetime import datetime, timezone
 import sys
 from typing import Any
 
@@ -10,6 +11,10 @@ import numpy as np
 import scipy
 
 APP_VERSION = "0.1.0"
+
+
+def utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat()
 
 
 def canonical_json(value: Any) -> str:
