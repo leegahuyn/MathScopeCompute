@@ -70,6 +70,7 @@ def capabilities() -> dict:
             },
             {"name": "advanced.galois-reference.v1", "scope": "Stage 7 finite Galois reference presets plus custom-root no-guess guard", "evidence": "NUMERICAL INDICATOR + explicit theorem mapping metadata"},
             {"name": "advanced.zeta-resolvent-reference.v1", "scope": "Stage 7 Riemann-zeta versus finite spectral-zeta/resolvent semantics", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "advanced.zeta-complex-surface.v1", "scope": "Stage 8 complex-plane Riemann-zeta height/phase surface using bounded analytic-continuation sampling", "evidence": "NUMERICAL INDICATOR, no zero certificate"},
             {"name": "advanced.spectral-flow-reference.v1", "scope": "Stage 7 signed zero crossings for explicit self-adjoint Fredholm reference families", "evidence": "NUMERICAL INDICATOR"},
             {"name": "advanced.equivariant-k-reference.v1", "scope": "Stage 7 finite symmetry/commutation reference with equivariant-K and K-homology metadata", "evidence": "NUMERICAL INDICATOR + external theorem metadata"},
             {"name": "advanced.perturbation-reference.v1", "scope": "Stage 7 finite symmetric perturbation laboratory with explicit infinite-Fredholm guard", "evidence": "NUMERICAL INDICATOR"},
@@ -98,6 +99,7 @@ def capabilities() -> dict:
             "boundaryObstructionImpliesAllBCImpossible": False,
             "fullAtiyahSingerFormalizationClaimed": False,
         },
+        "stage8Policy": {"zetaSurfaceIsProof": False, "zetaComplexSurfaceIsSpectralZeta": False, "precisionCrossCheckIsErrorBound": False, "phaseColorIsDimension": False},
         "stage7Policy": {
             "visualResemblanceImpliesGaloisRelation": False,
             "riemannZetaIsSpectralZeta": False,
