@@ -10,7 +10,7 @@ from typing import Any
 import numpy as np
 import scipy
 
-APP_VERSION = "0.3.0"
+APP_VERSION = "0.3.1"
 
 
 def utc_now() -> str:

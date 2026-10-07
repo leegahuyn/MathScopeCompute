@@ -15,7 +15,7 @@ app = FastAPI(
     title="MathScopeCompute",
     version=APP_VERSION,
     description=(
-        "Hybrid numerical, computational-topology and structural elliptic/index backend for MathScope. "
+        "Hybrid numerical, computational-topology, elliptic/index and Stage 7 advanced-research backend for MathScope. "
         "Outputs remain scoped evidence and never auto-promote to theorem/formal status."
     ),
 )
@@ -68,6 +68,12 @@ def capabilities() -> dict:
                 "scope": "Stage 6 structural reference: differential operator -> principal symbol -> ellipticity -> K-class metadata -> analytic/topological index -> boundary semantics -> nonlinear linearization bridge",
                 "evidence": "NUMERICAL INDICATOR + explicit external theorem mapping metadata",
             },
+            {"name": "advanced.galois-reference.v1", "scope": "Stage 7 finite Galois reference presets plus custom-root no-guess guard", "evidence": "NUMERICAL INDICATOR + explicit theorem mapping metadata"},
+            {"name": "advanced.zeta-resolvent-reference.v1", "scope": "Stage 7 Riemann-zeta versus finite spectral-zeta/resolvent semantics", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "advanced.spectral-flow-reference.v1", "scope": "Stage 7 signed zero crossings for explicit self-adjoint Fredholm reference families", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "advanced.equivariant-k-reference.v1", "scope": "Stage 7 finite symmetry/commutation reference with equivariant-K and K-homology metadata", "evidence": "NUMERICAL INDICATOR + external theorem metadata"},
+            {"name": "advanced.perturbation-reference.v1", "scope": "Stage 7 finite symmetric perturbation laboratory with explicit infinite-Fredholm guard", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "advanced.ricci-flow-reference.v1", "scope": "Stage 7 constant-curvature Ricci-flow reference evolution", "evidence": "NUMERICAL INDICATOR + external theorem metadata"},
         ],
         "planned": [
             "PETSc/petsc4py adapter",
@@ -92,6 +98,16 @@ def capabilities() -> dict:
             "boundaryObstructionImpliesAllBCImpossible": False,
             "fullAtiyahSingerFormalizationClaimed": False,
         },
+        "stage7Policy": {
+            "visualResemblanceImpliesGaloisRelation": False,
+            "riemannZetaIsSpectralZeta": False,
+            "spectralCorrelationImpliesIdentity": False,
+            "spectralFlowRequiresSelfAdjointFredholmFamily": True,
+            "equivariantDisplayIsKClass": False,
+            "perturbationIndexStabilityRequiresHypotheses": True,
+            "ricciFlowJustifiesDimensionLifting": False,
+            "advancedFormalCoverageClaimedFull": False,
+        },
         "adapterContract": {
             "outputs": ["outputRepresentations", "evidenceRecords", "diagnostics", "residuals", "errorBounds", "provenanceEdges", "reproducibilityHash"],
             "jobMetadata": ["jobId", "startedAt", "completedAt", "elapsedMs", "logs"],
@@ -103,6 +119,11 @@ def capabilities() -> dict:
             "finitePersistenceIsTopologyTheoremForContinuum": False,
             "sampledSymbolDisplayIsKTheoryClass": False,
             "indexZeroIsInvertibilityCertificate": False,
+            "visualResemblanceIsGaloisEvidence": False,
+            "zetaStatisticsAreSpectralIdentity": False,
+            "spectralFlowWithoutSelfAdjointFredholmFamily": False,
+            "equivariantFiniteCommutationIsFullKTheory": False,
+            "ricciFlowIsDimensionLiftingProof": False,
         },
     }
 
@@ -223,6 +244,36 @@ def self_test() -> dict:
         )
     except Exception as exc:
         checks.append({"name": "stage6-ellipticity-fail", "pass": False, "error": type(exc).__name__})
+    try:
+        galois = ADAPTERS["advanced.galois-reference.v1"].run({"preset": "quadratic_sqrt2"}, {"selfTest": True})
+        reps = {x.get("type"): x for x in galois.outputRepresentations}
+        checks.append({"name": "stage7-galois", "pass": reps["GaloisLabSpec"].get("galoisGroup") == "C2" and reps["GaloisLabSpec"].get("shapeResemblanceCreatesGaloisRelation") is False})
+    except Exception as exc:
+        checks.append({"name": "stage7-galois", "pass": False, "error": type(exc).__name__})
+    try:
+        zeta = ADAPTERS["advanced.zeta-resolvent-reference.v1"].run({"sReal": 2.0, "terms": 1000}, {"selfTest": True})
+        reps = {x.get("type"): x for x in zeta.outputRepresentations}
+        checks.append({"name": "stage7-zeta", "pass": reps["ZetaCorrespondenceSpec"].get("spectralIdentityEstablished") is False and reps["SpectralZetaSpec"].get("exactInfiniteSpectrum") is False})
+    except Exception as exc:
+        checks.append({"name": "stage7-zeta", "pass": False, "error": type(exc).__name__})
+    try:
+        flow = ADAPTERS["advanced.spectral-flow-reference.v1"].run({}, {"selfTest": True})
+        rep = flow.outputRepresentations[0]
+        checks.append({"name": "stage7-spectral-flow", "pass": rep.get("positiveCrossings") == 4 and rep.get("negativeCrossings") == 1 and rep.get("spectralFlow") == 3})
+    except Exception as exc:
+        checks.append({"name": "stage7-spectral-flow", "pass": False, "error": type(exc).__name__})
+    try:
+        eq = ADAPTERS["advanced.equivariant-k-reference.v1"].run({"preset": "c2_commuting"}, {"selfTest": True})
+        reps = {x.get("type"): x for x in eq.outputRepresentations}
+        checks.append({"name": "stage7-equivariant", "pass": reps["EquivariantKTheorySpec"].get("equivariantOperator") is True and reps["EquivariantKTheorySpec"].get("displayIsEquivariantKClass") is False})
+    except Exception as exc:
+        checks.append({"name": "stage7-equivariant", "pass": False, "error": type(exc).__name__})
+    try:
+        ricci = ADAPTERS["advanced.ricci-flow-reference.v1"].run({"preset": "round_s2", "tEnd": 0.4}, {"selfTest": True})
+        rep = ricci.outputRepresentations[0]
+        checks.append({"name": "stage7-ricci", "pass": rep.get("surgeryEvents") == [] and rep.get("surgeryUsedAsDimensionLiftingJustification") is False and rep.get("metricScale", [1])[-1] < 1})
+    except Exception as exc:
+        checks.append({"name": "stage7-ricci", "pass": False, "error": type(exc).__name__})
     return {"pass": all(item["pass"] for item in checks), "checks": checks}
 
 
