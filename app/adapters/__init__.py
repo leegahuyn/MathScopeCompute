@@ -1,3 +1,4 @@
+from .zeta_complex import ComplexZetaSurfaceAdapter
 from .advanced_research import (
     EquivariantKReferenceAdapter,
     GaloisReferenceAdapter,
@@ -16,6 +17,7 @@ from .topology_gudhi import GUDHITopologyAdapter
 from .topology_ripser import RipserTopologyAdapter
 
 ADAPTERS = {
+    ComplexZetaSurfaceAdapter.name: ComplexZetaSurfaceAdapter(),
     GaloisReferenceAdapter.name: GaloisReferenceAdapter(),
     ZetaResolventReferenceAdapter.name: ZetaResolventReferenceAdapter(),
     SpectralFlowReferenceAdapter.name: SpectralFlowReferenceAdapter(),
