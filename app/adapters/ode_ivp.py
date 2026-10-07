@@ -7,7 +7,7 @@ from scipy.integrate import solve_ivp
 
 from app.adapters.base import Adapter
 from app.models import AdapterResult, EvidenceRecord
-from app.provenance import environment_fingerprint, sha256_json
+from app.provenance import environment_fingerprint, sha256_json, utc_now
 
 
 class ODEIVPAdapter(Adapter):
@@ -81,13 +81,18 @@ class ODEIVPAdapter(Adapter):
             "finiteSampling": True,
         }
         evidence = EvidenceRecord(
+            id=f"ev-{self.name}-{inputs_hash[:12]}",
             grade="NUMERICAL INDICATOR",
+            claimRef=str(input_spec.get("claimRef", f"claim:{self.name}")),
             method="SciPy solve_ivp",
             inputsHash=inputs_hash,
             environmentHash=env_hash,
             residuals={"maxExactError": max_exact_error, "nfev": int(sol.nfev)},
             assumptions=["finite time interval", "floating-point numerical integration"],
+            generatedAt=utc_now(),
             adapterVersion=self.version,
+            upstreamRevisions=list(input_spec.get("upstreamRevisions", [])),
+            stale=False,
             scope="sampled numerical IVP trajectory only",
         )
 
