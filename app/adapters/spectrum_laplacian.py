@@ -8,7 +8,7 @@ from scipy.sparse.linalg import eigsh
 
 from app.adapters.base import Adapter
 from app.models import AdapterResult, EvidenceRecord
-from app.provenance import environment_fingerprint, sha256_json
+from app.provenance import environment_fingerprint, sha256_json, utc_now
 
 
 class LaplacianSpectrumAdapter(Adapter):
@@ -74,7 +74,9 @@ class LaplacianSpectrumAdapter(Adapter):
         }
 
         evidence = EvidenceRecord(
+            id=f"ev-{self.name}-{inputs_hash[:12]}",
             grade="NUMERICAL INDICATOR",
+            claimRef=str(input_spec.get("claimRef", f"claim:{self.name}")),
             method="SciPy eigsh / ARPACK on finite-difference matrix",
             inputsHash=inputs_hash,
             environmentHash=env_hash,
@@ -84,7 +86,10 @@ class LaplacianSpectrumAdapter(Adapter):
                 "symmetric sparse matrix",
                 "finite approximation is not the infinite operator spectrum",
             ],
+            generatedAt=utc_now(),
             adapterVersion=self.version,
+            upstreamRevisions=list(input_spec.get("upstreamRevisions", [])),
+            stale=False,
             scope="finite-dimensional approximation only",
         )
 
