@@ -7,7 +7,7 @@ from scipy.linalg import svdvals
 
 from app.adapters.base import Adapter
 from app.models import AdapterResult, EvidenceRecord
-from app.provenance import environment_fingerprint, sha256_json
+from app.provenance import environment_fingerprint, sha256_json, utc_now
 
 
 class ResolventMatrixAdapter(Adapter):
@@ -54,13 +54,18 @@ class ResolventMatrixAdapter(Adapter):
         }
 
         evidence = EvidenceRecord(
+            id=f"ev-{self.name}-{inputs_hash[:12]}",
             grade="NUMERICAL INDICATOR",
+            claimRef=str(input_spec.get("claimRef", f"claim:{self.name}")),
             method="finite matrix smallest singular value",
             inputsHash=inputs_hash,
             environmentHash=env_hash,
             residuals={"smallestSingularValue": sigma_min},
             assumptions=["finite matrix only"],
+            generatedAt=utc_now(),
             adapterVersion=self.version,
+            upstreamRevisions=list(input_spec.get("upstreamRevisions", [])),
+            stale=False,
             scope="finite-matrix resolvent sample only",
         )
 
