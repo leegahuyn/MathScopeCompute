@@ -514,6 +514,7 @@ class EquivariantKReferenceAdapter(Adapter):
         eq = {
             "id": f"equivariant-k-stage7-{preset}",
             "type": "EquivariantKTheorySpec",
+            "representationRef": rep["id"],
             "groupAction": "C2 acts on the reference fibre by diag(1,-1)",
             "equivariantBundle": "finite reference C^2 bundle surrogate",
             "equivariantOperator": equivariant,
