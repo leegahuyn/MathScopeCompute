@@ -54,3 +54,8 @@ class AdapterResult(BaseModel):
     provenanceEdges: list[dict[str, Any]] = Field(default_factory=list)
     reproducibilityHash: str
     environment: dict[str, Any]
+    jobId: str | None = None
+    startedAt: str | None = None
+    completedAt: str | None = None
+    elapsedMs: float | None = None
+    logs: list[str] = Field(default_factory=list)
