@@ -1,6 +1,6 @@
 # MathScopeCompute
 
-Hybrid numerical compute service for MathScope v0.3.1.
+Hybrid numerical and computational-topology service for MathScope v0.3.1.
 
 This repository is intentionally separate from the MathScope Lean/formal codebase.
 
@@ -12,17 +12,21 @@ The service preserves MathScope's mathematical contract:
 
 - numerical output is evidence, not a theorem;
 - finite matrices are finite approximations, not infinite operators;
+- finite sampled persistent homology is evidence about the selected filtered complex, not automatically a theorem about an unsampled continuum object;
+- persistence-diagram similarity does not by itself establish homeomorphism or homotopy equivalence;
 - every result carries input/environment hashes and provenance;
 - adapter output follows the common `Adapter.run(inputSpec, environment)` envelope.
 
-Initial stack:
+## Stack
 
-- Python 3.12+
+- Python 3.10+
 - FastAPI
 - NumPy
 - SciPy / ARPACK
+- GUDHI 3.13+ — primary computational topology backend
+- Ripser.py 0.6.15+ — optional fast Vietoris-Rips path
 
-Planned optional adapters, not enabled by this scaffold:
+Planned optional heavy adapters:
 
 - PETSc / petsc4py
 - SLEPc / slepc4py
@@ -32,19 +36,46 @@ Planned optional adapters, not enabled by this scaffold:
 
 - `GET /health`
 - `GET /v1/capabilities`
+- `GET /v1/self-test`
 - `POST /v1/run`
 
-Currently implemented adapters:
+Implemented adapters:
 
 - `ode.ivp.v1`
 - `optimization.poisson-amplitude.v1`
 - `poisson.fd.v1`
 - `spectrum.laplacian-grid.v1`
 - `resolvent.matrix.v1`
+- `topology.gudhi.v1`
+  - `complexKind=rips`
+  - `complexKind=cubical`
+  - `complexKind=simplex`
+  - `operation=compareRipsPointClouds`
+- `topology.ripser.v1`
+  - point-cloud or distance-matrix Vietoris-Rips persistence
+  - optional greedy-permutation `nPerm`
 
-Service diagnostics:
+## B7 topology contract
 
-- `GET /v1/self-test`
+Primary backend: `topology.gudhi.v1`.
+
+Optional fast path: `topology.ripser.v1`.
+
+Common topology output records:
+
+- backend / complex kind
+- coefficient field
+- max homology dimension
+- Betti numbers
+- persistent Betti numbers when a query window is requested
+- persistence intervals
+- barcode and persistence-diagram data
+- approximation / sparsification metadata
+- source revision references
+- diagnostics and provenance
+- `topologyEquivalenceStatus = NOT ESTABLISHED`
+
+The last field is deliberate: matching persistence signatures can support a finite filtered-complex comparison but cannot silently become a proof that the original mathematical objects are topologically equivalent.
 
 ## Local development
 
@@ -63,13 +94,15 @@ pytest -q
 
 ## Render
 
-`render.yaml` is included for a Python web service. The service is intentionally separate from `mathscope-cloud-lean`.
+The service is intentionally separate from `mathscope-cloud-lean`.
 
 Repository:
 
 https://github.com/leegahuyn/MathScopeCompute
 
-After deployment, place both the repository URL and Render service URL in the MathScope Stage 3 UI.
+Live service:
+
+https://mathscope-compute.onrender.com
 
 ## Trust boundary
 

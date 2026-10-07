@@ -3,6 +3,8 @@ from .optimization_poisson import PoissonAmplitudeOptimizationAdapter
 from .poisson_fd import PoissonFDAdapter
 from .resolvent_matrix import ResolventMatrixAdapter
 from .spectrum_laplacian import LaplacianSpectrumAdapter
+from .topology_gudhi import GUDHITopologyAdapter
+from .topology_ripser import RipserTopologyAdapter
 
 ADAPTERS = {
     ODEIVPAdapter.name: ODEIVPAdapter(),
@@ -10,4 +12,6 @@ ADAPTERS = {
     PoissonFDAdapter.name: PoissonFDAdapter(),
     LaplacianSpectrumAdapter.name: LaplacianSpectrumAdapter(),
     ResolventMatrixAdapter.name: ResolventMatrixAdapter(),
+    GUDHITopologyAdapter.name: GUDHITopologyAdapter(),
+    RipserTopologyAdapter.name: RipserTopologyAdapter(),
 }

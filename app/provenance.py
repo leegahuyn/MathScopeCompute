@@ -10,7 +10,7 @@ from typing import Any
 import numpy as np
 import scipy
 
-APP_VERSION = "0.1.0"
+APP_VERSION = "0.2.0"
 
 
 def utc_now() -> str:
@@ -34,6 +34,18 @@ def environment_fingerprint(extra: dict[str, Any] | None = None) -> dict[str, An
         "numpy": np.__version__,
         "scipy": scipy.__version__,
     }
+    try:
+        import gudhi
+
+        env["gudhi"] = getattr(gudhi, "__version__", "unknown")
+    except Exception:
+        env["gudhi"] = None
+    try:
+        import ripser as ripser_package
+
+        env["ripser"] = getattr(ripser_package, "__version__", "unknown")
+    except Exception:
+        env["ripser"] = None
     if extra:
         env["requestEnvironment"] = extra
     return env

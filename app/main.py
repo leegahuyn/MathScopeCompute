@@ -9,14 +9,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.adapters import ADAPTERS
 from app.models import AdapterResult, RunRequest
-from app.provenance import APP_VERSION, utc_now
+from app.provenance import APP_VERSION, environment_fingerprint, utc_now
 
 app = FastAPI(
     title="MathScopeCompute",
     version=APP_VERSION,
     description=(
-        "Hybrid numerical backend for MathScope. "
-        "Numerical outputs remain numerical evidence and never auto-promote to theorem/formal status."
+        "Hybrid numerical and computational-topology backend for MathScope. "
+        "Outputs remain scoped evidence and never auto-promote to theorem/formal status."
     ),
 )
 
@@ -46,6 +46,7 @@ def health() -> dict:
         "ok": True,
         "service": "MathScopeCompute",
         "version": APP_VERSION,
+        "environment": environment_fingerprint(),
     }
 
 
@@ -80,6 +81,16 @@ def capabilities() -> dict:
                 "scope": "finite matrix resolvent-norm sample",
                 "evidence": "NUMERICAL INDICATOR",
             },
+            {
+                "name": "topology.gudhi.v1",
+                "scope": "primary computational-topology adapter: cubical, Vietoris-Rips, SimplexTree and persistence-diagram comparison",
+                "evidence": "NUMERICAL INDICATOR",
+            },
+            {
+                "name": "topology.ripser.v1",
+                "scope": "optional fast Vietoris-Rips persistence for point clouds and distance matrices",
+                "evidence": "NUMERICAL INDICATOR",
+            },
         ],
         "planned": [
             "PETSc/petsc4py adapter",
@@ -87,6 +98,13 @@ def capabilities() -> dict:
             "DOLFINx/FEniCSx adapter",
             "queue-backed long-running jobs",
         ],
+        "topologyPolicy": {
+            "primary": "topology.gudhi.v1",
+            "optionalFastPath": "topology.ripser.v1",
+            "supportedHomologyDimensions": [0, 1, 2],
+            "visualSimilarityImpliesTopologyEquivalence": False,
+            "persistenceDiagramEqualityImpliesHomeomorphism": False,
+        },
         "adapterContract": {
             "outputs": ["outputRepresentations", "evidenceRecords", "diagnostics", "residuals", "errorBounds", "provenanceEdges", "reproducibilityHash"],
             "jobMetadata": ["jobId", "startedAt", "completedAt", "elapsedMs", "logs"],
@@ -95,6 +113,7 @@ def capabilities() -> dict:
             "maySetFormalPass": False,
             "maySetTheoremBackedWithoutTheoremMap": False,
             "finiteApproximationIsInfiniteOperator": False,
+            "finitePersistenceIsTopologyTheoremForContinuum": False,
         },
     }
 
@@ -126,6 +145,46 @@ def self_test() -> dict:
         checks.append({"name": "optimization", "pass": opt.status == "completed" and (opt.residuals or {}).get("gradientAtSolution", 1.0) < 1e-10})
     except Exception as exc:
         checks.append({"name": "optimization", "pass": False, "error": type(exc).__name__})
+    try:
+        gudhi_result = ADAPTERS["topology.gudhi.v1"].run(
+            {
+                "complexKind": "simplex",
+                "coefficientField": 2,
+                "maxHomologyDimension": 1,
+                "minPersistence": -1.0,
+                "simplices": [
+                    {"vertices": [0], "filtration": 0.0},
+                    {"vertices": [1], "filtration": 0.0},
+                    {"vertices": [2], "filtration": 0.0},
+                    {"vertices": [3], "filtration": 0.0},
+                    {"vertices": [0, 1], "filtration": 0.0},
+                    {"vertices": [1, 2], "filtration": 0.0},
+                    {"vertices": [2, 3], "filtration": 0.0},
+                    {"vertices": [3, 0], "filtration": 0.0},
+                ],
+            },
+            {"selfTest": True},
+        )
+        topology = gudhi_result.outputRepresentations[0]
+        betti = {x["dimension"]: x["value"] for x in topology.get("bettiNumbers", [])}
+        checks.append({"name": "topology-gudhi", "pass": gudhi_result.status == "completed" and betti.get(0) == 1 and betti.get(1) == 1})
+    except Exception as exc:
+        checks.append({"name": "topology-gudhi", "pass": False, "error": type(exc).__name__})
+    try:
+        ripser_result = ADAPTERS["topology.ripser.v1"].run(
+            {
+                "points": [[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]],
+                "coefficientField": 2,
+                "maxHomologyDimension": 1,
+                "maxEdgeLength": 1.1,
+            },
+            {"selfTest": True},
+        )
+        topology = ripser_result.outputRepresentations[0]
+        betti = {x["dimension"]: x["value"] for x in topology.get("bettiNumbers", [])}
+        checks.append({"name": "topology-ripser", "pass": ripser_result.status == "completed" and betti.get(0) == 1 and betti.get(1) == 1})
+    except Exception as exc:
+        checks.append({"name": "topology-ripser", "pass": False, "error": type(exc).__name__})
     return {"pass": all(item["pass"] for item in checks), "checks": checks}
 
 
