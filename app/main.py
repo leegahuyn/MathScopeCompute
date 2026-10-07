@@ -54,6 +54,16 @@ def capabilities() -> dict:
         "version": APP_VERSION,
         "implemented": [
             {
+                "name": "ode.ivp.v1",
+                "scope": "sampled numerical IVP trajectories",
+                "evidence": "NUMERICAL INDICATOR",
+            },
+            {
+                "name": "optimization.poisson-amplitude.v1",
+                "scope": "finite-grid one-parameter PDE optimization",
+                "evidence": "NUMERICAL INDICATOR",
+            },
+            {
                 "name": "poisson.fd.v1",
                 "scope": "finite-grid Dirichlet Poisson solve",
                 "evidence": "NUMERICAL INDICATOR",
@@ -81,6 +91,36 @@ def capabilities() -> dict:
             "finiteApproximationIsInfiniteOperator": False,
         },
     }
+
+
+@app.get("/v1/self-test")
+def self_test() -> dict:
+    checks = []
+    try:
+        ode = ADAPTERS["ode.ivp.v1"].run(
+            {"model": "linear_scalar", "a": -1.0, "t0": 0.0, "t1": 1.0, "y0": 1.0, "samples": 40},
+            {"selfTest": True},
+        )
+        checks.append({"name": "ode", "pass": ode.status == "completed" and (ode.residuals or {}).get("maxExactError", 1.0) < 1e-5})
+    except Exception as exc:
+        checks.append({"name": "ode", "pass": False, "error": type(exc).__name__})
+    try:
+        pde = ADAPTERS["poisson.fd.v1"].run({"gridN": 8}, {"selfTest": True})
+        checks.append({"name": "poisson", "pass": pde.status == "completed" and (pde.residuals or {}).get("linf", 1.0) < 1e-8})
+    except Exception as exc:
+        checks.append({"name": "poisson", "pass": False, "error": type(exc).__name__})
+    try:
+        spec = ADAPTERS["spectrum.laplacian-grid.v1"].run({"gridN": 8, "k": 4}, {"selfTest": True})
+        rep = spec.outputRepresentations[0]
+        checks.append({"name": "finite-spectrum", "pass": rep.get("mode") == "finiteApprox" and rep.get("exactInfinite") is False})
+    except Exception as exc:
+        checks.append({"name": "finite-spectrum", "pass": False, "error": type(exc).__name__})
+    try:
+        opt = ADAPTERS["optimization.poisson-amplitude.v1"].run({"gridN": 8, "targetAmplitude": 1.0}, {"selfTest": True})
+        checks.append({"name": "optimization", "pass": opt.status == "completed" and (opt.residuals or {}).get("gradientAtSolution", 1.0) < 1e-10})
+    except Exception as exc:
+        checks.append({"name": "optimization", "pass": False, "error": type(exc).__name__})
+    return {"pass": all(item["pass"] for item in checks), "checks": checks}
 
 
 @app.post("/v1/run", response_model=AdapterResult)
