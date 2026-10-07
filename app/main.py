@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 import os
+import time
+import uuid
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.adapters import ADAPTERS
 from app.models import AdapterResult, RunRequest
-from app.provenance import APP_VERSION
+from app.provenance import APP_VERSION, utc_now
 
 app = FastAPI(
     title="MathScopeCompute",
@@ -85,6 +87,10 @@ def capabilities() -> dict:
             "DOLFINx/FEniCSx adapter",
             "queue-backed long-running jobs",
         ],
+        "adapterContract": {
+            "outputs": ["outputRepresentations", "evidenceRecords", "diagnostics", "residuals", "errorBounds", "provenanceEdges", "reproducibilityHash"],
+            "jobMetadata": ["jobId", "startedAt", "completedAt", "elapsedMs", "logs"],
+        },
         "trustBoundary": {
             "maySetFormalPass": False,
             "maySetTheoremBackedWithoutTheoremMap": False,
@@ -128,8 +134,26 @@ def run_adapter(request: RunRequest) -> AdapterResult:
     adapter = ADAPTERS.get(request.adapter)
     if adapter is None:
         raise HTTPException(status_code=404, detail=f"Unknown adapter: {request.adapter}")
+    job_id = str(uuid.uuid4())
+    started_at = utc_now()
+    started = time.perf_counter()
     try:
-        return adapter.run(request.inputSpec, request.environment)
+        result = adapter.run(request.inputSpec, request.environment)
+        completed_at = utc_now()
+        elapsed_ms = (time.perf_counter() - started) * 1000.0
+        return result.model_copy(
+            update={
+                "jobId": job_id,
+                "startedAt": started_at,
+                "completedAt": completed_at,
+                "elapsedMs": elapsed_ms,
+                "logs": [
+                    f"adapter={request.adapter}",
+                    f"status={result.status}",
+                    f"elapsedMs={elapsed_ms:.3f}",
+                ],
+            }
+        )
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
     except Exception as exc:
