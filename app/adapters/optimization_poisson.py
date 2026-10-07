@@ -6,7 +6,7 @@ import numpy as np
 
 from app.adapters.base import Adapter
 from app.models import AdapterResult, EvidenceRecord
-from app.provenance import environment_fingerprint, sha256_json
+from app.provenance import environment_fingerprint, sha256_json, utc_now
 
 
 class PoissonAmplitudeOptimizationAdapter(Adapter):
@@ -63,7 +63,9 @@ class PoissonAmplitudeOptimizationAdapter(Adapter):
             "finiteApproximation": True,
         }
         evidence = EvidenceRecord(
+            id=f"ev-{self.name}-{inputs_hash[:12]}",
             grade="NUMERICAL INDICATOR",
+            claimRef=str(input_spec.get("claimRef", f"claim:{self.name}")),
             method="finite-grid reduced scalar optimization",
             inputsHash=inputs_hash,
             environmentHash=env_hash,
@@ -73,7 +75,10 @@ class PoissonAmplitudeOptimizationAdapter(Adapter):
                 "uniform Cartesian grid",
                 "quadratic objective",
             ],
+            generatedAt=utc_now(),
             adapterVersion=self.version,
+            upstreamRevisions=list(input_spec.get("upstreamRevisions", [])),
+            stale=False,
             scope="finite-grid one-parameter optimization only",
         )
         return AdapterResult(
