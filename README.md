@@ -1,12 +1,12 @@
 # MathScopeCompute
 
-Hybrid numerical and computational-topology service for MathScope v0.3.1.
+Hybrid numerical, computational-topology and structural elliptic/index service for MathScope v0.3.1.
 
 This repository is intentionally separate from the MathScope Lean/formal codebase.
 
 ## Architecture
 
-MathScope keeps small deterministic reference adapters in the browser and sends heavier numerical work to this Python service.
+MathScope keeps small deterministic reference adapters in the browser and sends heavier or independently replayable work to this Python service.
 
 The service preserves MathScope's mathematical contract:
 
@@ -14,6 +14,10 @@ The service preserves MathScope's mathematical contract:
 - finite matrices are finite approximations, not infinite operators;
 - finite sampled persistent homology is evidence about the selected filtered complex, not automatically a theorem about an unsampled continuum object;
 - persistence-diagram similarity does not by itself establish homeomorphism or homotopy equivalence;
+- a sampled principal-symbol display is not a K-theory class;
+- finite cotangent-direction sampling alone does not prove ellipticity;
+- index zero is not an invertibility or unique-solvability certificate;
+- a nonzero local boundary obstruction must not be restated as “all boundary conditions are impossible”;
 - every result carries input/environment hashes and provenance;
 - adapter output follows the common `Adapter.run(inputSpec, environment)` envelope.
 
@@ -31,6 +35,7 @@ Planned optional heavy adapters:
 - PETSc / petsc4py
 - SLEPc / slepc4py
 - DOLFINx / FEniCSx
+- specialist pseudodifferential/K-theory backend
 
 ## API
 
@@ -47,13 +52,8 @@ Implemented adapters:
 - `spectrum.laplacian-grid.v1`
 - `resolvent.matrix.v1`
 - `topology.gudhi.v1`
-  - `complexKind=rips`
-  - `complexKind=cubical`
-  - `complexKind=simplex`
-  - `operation=compareRipsPointClouds`
 - `topology.ripser.v1`
-  - point-cloud or distance-matrix Vietoris-Rips persistence
-  - optional greedy-permutation `nPerm`
+- `index.elliptic-reference.v1`
 
 ## B7 topology contract
 
@@ -61,21 +61,37 @@ Primary backend: `topology.gudhi.v1`.
 
 Optional fast path: `topology.ripser.v1`.
 
-Common topology output records:
+The topology adapters retain coefficient field, filtration, approximation metadata, persistence intervals, Betti data and the explicit status `topologyEquivalenceStatus = NOT ESTABLISHED`.
 
-- backend / complex kind
-- coefficient field
-- max homology dimension
-- Betti numbers
-- persistent Betti numbers when a query window is requested
-- persistence intervals
-- barcode and persistence-diagram data
-- approximation / sparsification metadata
-- source revision references
-- diagnostics and provenance
-- `topologyEquivalenceStatus = NOT ESTABLISHED`
+## Stage 6 D-layer reference contract
 
-The last field is deliberate: matching persistence signatures can support a finite filtered-complex comparison but cannot silently become a proof that the original mathematical objects are topologically equivalent.
+`index.elliptic-reference.v1` is a deterministic structural/reference adapter, not a full symbolic pseudodifferential package.
+
+Reference models:
+
+- `closed_scalar_laplacian`
+- `nonlinear_elliptic_linearization`
+- `custom_quadratic_symbol`
+- `hyperbolic_counterexample`
+
+Outputs:
+
+- `DifferentialOperatorSpec`
+- `PrincipalSymbolSpec`
+- `EllipticityResult`
+- `KTheorySpec`
+- `IndexSpec`
+- `BoundaryAnalysisSpec`
+- optional `NonlinearIndexBridgeSpec`
+- `FormalizationCoverageSpec`
+
+The built-in closed scalar Laplacian deliberately demonstrates the guard
+
+`index = 0 != invertible`
+
+by recording kernel dimension 1, cokernel dimension 1 and index 0 in the connected closed reference case.
+
+The service may emit explicit external theorem-mapping metadata, but its own EvidenceRecord remains `NUMERICAL INDICATOR`. A client must still apply the MathScope theorem/evidence contract before creating `THEOREM-BACKED` evidence.
 
 ## Local development
 
@@ -94,8 +110,6 @@ pytest -q
 
 ## Render
 
-The service is intentionally separate from `mathscope-cloud-lean`.
-
 Repository:
 
 https://github.com/leegahuyn/MathScopeCompute
@@ -106,4 +120,4 @@ https://mathscope-compute.onrender.com
 
 ## Trust boundary
 
-This service never emits `FORMAL PASS` or `THEOREM-BACKED` by itself. Its default evidence grade is `NUMERICAL INDICATOR`.
+This service never emits `FORMAL PASS` or `THEOREM-BACKED` evidence by itself. Its default evidence grade is `NUMERICAL INDICATOR`.

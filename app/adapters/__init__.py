@@ -1,3 +1,4 @@
+from .index_elliptic import EllipticIndexReferenceAdapter
 from .ode_ivp import ODEIVPAdapter
 from .optimization_poisson import PoissonAmplitudeOptimizationAdapter
 from .poisson_fd import PoissonFDAdapter
@@ -14,4 +15,5 @@ ADAPTERS = {
     ResolventMatrixAdapter.name: ResolventMatrixAdapter(),
     GUDHITopologyAdapter.name: GUDHITopologyAdapter(),
     RipserTopologyAdapter.name: RipserTopologyAdapter(),
+    EllipticIndexReferenceAdapter.name: EllipticIndexReferenceAdapter(),
 }

@@ -15,7 +15,7 @@ app = FastAPI(
     title="MathScopeCompute",
     version=APP_VERSION,
     description=(
-        "Hybrid numerical and computational-topology backend for MathScope. "
+        "Hybrid numerical, computational-topology and structural elliptic/index backend for MathScope. "
         "Outputs remain scoped evidence and never auto-promote to theorem/formal status."
     ),
 )
@@ -56,40 +56,17 @@ def capabilities() -> dict:
         "service": "MathScopeCompute",
         "version": APP_VERSION,
         "implemented": [
+            {"name": "ode.ivp.v1", "scope": "sampled numerical IVP trajectories", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "optimization.poisson-amplitude.v1", "scope": "finite-grid one-parameter PDE optimization", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "poisson.fd.v1", "scope": "finite-grid Dirichlet Poisson solve", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "spectrum.laplacian-grid.v1", "scope": "finite sparse spectrum via SciPy/ARPACK", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "resolvent.matrix.v1", "scope": "finite matrix resolvent-norm sample", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "topology.gudhi.v1", "scope": "primary computational-topology adapter: cubical, Vietoris-Rips, SimplexTree and persistence-diagram comparison", "evidence": "NUMERICAL INDICATOR"},
+            {"name": "topology.ripser.v1", "scope": "optional fast Vietoris-Rips persistence for point clouds and distance matrices", "evidence": "NUMERICAL INDICATOR"},
             {
-                "name": "ode.ivp.v1",
-                "scope": "sampled numerical IVP trajectories",
-                "evidence": "NUMERICAL INDICATOR",
-            },
-            {
-                "name": "optimization.poisson-amplitude.v1",
-                "scope": "finite-grid one-parameter PDE optimization",
-                "evidence": "NUMERICAL INDICATOR",
-            },
-            {
-                "name": "poisson.fd.v1",
-                "scope": "finite-grid Dirichlet Poisson solve",
-                "evidence": "NUMERICAL INDICATOR",
-            },
-            {
-                "name": "spectrum.laplacian-grid.v1",
-                "scope": "finite sparse spectrum via SciPy/ARPACK",
-                "evidence": "NUMERICAL INDICATOR",
-            },
-            {
-                "name": "resolvent.matrix.v1",
-                "scope": "finite matrix resolvent-norm sample",
-                "evidence": "NUMERICAL INDICATOR",
-            },
-            {
-                "name": "topology.gudhi.v1",
-                "scope": "primary computational-topology adapter: cubical, Vietoris-Rips, SimplexTree and persistence-diagram comparison",
-                "evidence": "NUMERICAL INDICATOR",
-            },
-            {
-                "name": "topology.ripser.v1",
-                "scope": "optional fast Vietoris-Rips persistence for point clouds and distance matrices",
-                "evidence": "NUMERICAL INDICATOR",
+                "name": "index.elliptic-reference.v1",
+                "scope": "Stage 6 structural reference: differential operator -> principal symbol -> ellipticity -> K-class metadata -> analytic/topological index -> boundary semantics -> nonlinear linearization bridge",
+                "evidence": "NUMERICAL INDICATOR + explicit external theorem mapping metadata",
             },
         ],
         "planned": [
@@ -97,6 +74,7 @@ def capabilities() -> dict:
             "SLEPc/slepc4py adapter",
             "DOLFINx/FEniCSx adapter",
             "queue-backed long-running jobs",
+            "specialist pseudodifferential/K-theory backend",
         ],
         "topologyPolicy": {
             "primary": "topology.gudhi.v1",
@@ -104,6 +82,15 @@ def capabilities() -> dict:
             "supportedHomologyDimensions": [0, 1, 2],
             "visualSimilarityImpliesTopologyEquivalence": False,
             "persistenceDiagramEqualityImpliesHomeomorphism": False,
+        },
+        "indexPolicy": {
+            "referenceAdapter": "index.elliptic-reference.v1",
+            "sampledSymbolIsKClass": False,
+            "sampledEllipticityIsTheorem": False,
+            "indexZeroImpliesInvertible": False,
+            "indexAloneDeterminesSolvability": False,
+            "boundaryObstructionImpliesAllBCImpossible": False,
+            "fullAtiyahSingerFormalizationClaimed": False,
         },
         "adapterContract": {
             "outputs": ["outputRepresentations", "evidenceRecords", "diagnostics", "residuals", "errorBounds", "provenanceEdges", "reproducibilityHash"],
@@ -114,6 +101,8 @@ def capabilities() -> dict:
             "maySetTheoremBackedWithoutTheoremMap": False,
             "finiteApproximationIsInfiniteOperator": False,
             "finitePersistenceIsTopologyTheoremForContinuum": False,
+            "sampledSymbolDisplayIsKTheoryClass": False,
+            "indexZeroIsInvertibilityCertificate": False,
         },
     }
 
@@ -185,6 +174,55 @@ def self_test() -> dict:
         checks.append({"name": "topology-ripser", "pass": ripser_result.status == "completed" and betti.get(0) == 1 and betti.get(1) == 1})
     except Exception as exc:
         checks.append({"name": "topology-ripser", "pass": False, "error": type(exc).__name__})
+    try:
+        idx = ADAPTERS["index.elliptic-reference.v1"].run(
+            {
+                "model": "closed_scalar_laplacian",
+                "analysisMode": "theorem",
+                "manifoldDimension": 2,
+                "lambda": 0.0,
+                "boundary": {"present": False, "condition": "none"},
+            },
+            {"selfTest": True},
+        )
+        reps = {x.get("type"): x for x in idx.outputRepresentations}
+        index_rep = reps["IndexSpec"]
+        k_rep = reps["KTheorySpec"]
+        ell = reps["EllipticityResult"]
+        checks.append(
+            {
+                "name": "stage6-index",
+                "pass": (
+                    ell.get("status") == "THEOREM-BACKED ELLIPTIC"
+                    and k_rep.get("visualizationIsKClass") is False
+                    and index_rep.get("analyticIndex") == 0
+                    and index_rep.get("kernelDimension") == 1
+                    and index_rep.get("cokernelDimension") == 1
+                    and index_rep.get("invertible") is False
+                ),
+            }
+        )
+    except Exception as exc:
+        checks.append({"name": "stage6-index", "pass": False, "error": type(exc).__name__})
+    try:
+        bad = ADAPTERS["index.elliptic-reference.v1"].run(
+            {
+                "model": "hyperbolic_counterexample",
+                "analysisMode": "symbolic",
+                "manifoldDimension": 2,
+            },
+            {"selfTest": True},
+        )
+        reps = {x.get("type"): x for x in bad.outputRepresentations}
+        checks.append(
+            {
+                "name": "stage6-ellipticity-fail",
+                "pass": reps["EllipticityResult"].get("status") == "FAIL"
+                and reps["PrincipalSymbolSpec"].get("characteristicDirectionFound") is True,
+            }
+        )
+    except Exception as exc:
+        checks.append({"name": "stage6-ellipticity-fail", "pass": False, "error": type(exc).__name__})
     return {"pass": all(item["pass"] for item in checks), "checks": checks}
 
 
