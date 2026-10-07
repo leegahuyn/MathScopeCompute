@@ -36,9 +36,15 @@ Planned optional adapters, not enabled by this scaffold:
 
 Currently implemented adapters:
 
+- `ode.ivp.v1`
+- `optimization.poisson-amplitude.v1`
 - `poisson.fd.v1`
 - `spectrum.laplacian-grid.v1`
 - `resolvent.matrix.v1`
+
+Service diagnostics:
+
+- `GET /v1/self-test`
 
 ## Local development
 
