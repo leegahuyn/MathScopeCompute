@@ -26,14 +26,19 @@ class Diagnostic(BaseModel):
 
 
 class EvidenceRecord(BaseModel):
+    id: str
     grade: EvidenceGrade
+    claimRef: str
     method: str
     inputsHash: str
     environmentHash: str
     residuals: dict[str, Any] | None = None
     errorBounds: dict[str, Any] | None = None
     assumptions: list[str] = Field(default_factory=list)
+    generatedAt: str
     adapterVersion: str
+    upstreamRevisions: list[str] = Field(default_factory=list)
+    stale: bool = False
     scope: str
 
 
