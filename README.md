@@ -43,6 +43,7 @@ Planned optional heavy adapters:
 - `GET /v1/capabilities`
 - `GET /v1/self-test`
 - `POST /v1/run`
+- `POST /v1/replay` (bounded Golden numerical replay)
 
 Implemented adapters:
 
@@ -60,6 +61,8 @@ Implemented adapters:
 - `advanced.equivariant-k-reference.v1`
 - `advanced.perturbation-reference.v1`
 - `advanced.ricci-flow-reference.v1`
+- `advanced.zeta-complex-surface.v1`
+- `golden.elliptic-torus.v1`
 
 ## B7 topology contract
 
@@ -111,6 +114,75 @@ Stage 7 adds bounded reference adapters rather than pretending to be a general C
 - Ricci flow: constant-curvature reference evolutions are available. Surgery is a separate topology-changing event and never a dimension-lifting justification.
 
 All Stage 7 compute evidence stays `NUMERICAL INDICATOR`. External theorem mapping metadata can be attached, but the compute service itself never emits `THEOREM-BACKED` or `FORMAL PASS`.
+
+## Stage 8 connected Golden fixture and executable replay
+
+The bounded Golden fixture uses the closed flat unit torus and
+`F(u) = -Delta(u) + lambda*u - u^3`. Its default nonzero constant candidate
+`lambda=1, u*=1` has zero residual and linearization `L=-Delta-2`.
+The solver plan explicitly verifies a prescribed candidate; it does not search
+for solutions or define a time evolution. Coordinate periodicity is not an
+exterior boundary condition, and initial conditions are not applicable.
+
+```json
+{
+  "adapter": "golden.elliptic-torus.v1",
+  "inputSpec": {
+    "sessionId": "research-session-1",
+    "revision": 1,
+    "lambda": 1,
+    "candidateValue": 1,
+    "gridN": 16,
+    "refinements": [8, 16, 32],
+    "seed": 0
+  },
+  "environment": {"purpose": "golden-session"}
+}
+```
+
+Send this to `/v1/run`. The first `outputRepresentations` entry is a
+`GoldenSessionSpec`, containing a client-ready `typedBundle`, actual periodic
+mesh and field values in `numericalSnapshot`, and an `executableReplayRecord`.
+All A/B/C/D nodes bind the same session revision and upstream/evidence graph.
+The finite spectrum uses Fourier diagonalization; GUDHI computes source/display
+homology with candidate lower-star filtration. The 3D display preserves this
+finite triangulation but distorts the source flat metric. Perturbation checks,
+C2 commutation, principal-symbol samples and an explicit finite spectral-flow
+family all refer to this same linearization. Changing the candidate or parameter
+recomputes residuals and IDs. A failed candidate produces `gate.pass=false`.
+
+To rerun an imported numerical bundle, post the **entire unchanged**
+`executableReplayRecord` to `/v1/replay`:
+
+```json
+{
+  "record": {"...": "the complete executableReplayRecord from /v1/run"},
+  "targetSessionId": "new-imported-session",
+  "targetRevision": 1
+}
+```
+
+The response includes `pass`, `status`, `result` (a fresh `AdapterResult`),
+`checks`, `environmentCompatible`, `exactMatch`, `numericallyEquivalent`, and
+source/target session IDs and revisions. `sourceRecord` remains available for
+audit; new typed nodes bind the target session. Numerical hashes exclude session
+identity and revision. Hashes are server-generated and opaque to JavaScript;
+Golden-only JSON normalization handles integral floats and rejects non-finite
+or unsafe large numbers, so browser parse/stringify preserves the replay record.
+Checksums detect corruption, not authorship or authenticity.
+
+Replay validates the source graph, then actually executes the computation. It
+compares both exact numerical hashes and numerical tolerance (`1e-10` absolute
+and relative). A changed runtime fingerprint requires review even when the
+numbers match (`ENVIRONMENT_CHANGED_REVIEW_REQUIRED`, `pass=false`). Invalid
+record integrity or graph/session/revision bindings return HTTP 422.
+
+All compute evidence remains `NUMERICAL INDICATOR`. Infinite kernel/cokernel and
+invertibility remain unclaimed; index zero is only scoped analytic-reference
+metadata. Nonlinear stability, continuum topology, an advanced index theorem,
+and formal verification are not established by this adapter. Its integration
+gate does not authorize a release freeze. The separate local-algebra Lean
+fixture in `formal/` proves only its explicitly stated algebraic claims.
 
 ## Local development
 
