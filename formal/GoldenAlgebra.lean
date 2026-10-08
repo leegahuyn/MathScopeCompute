@@ -1,4 +1,5 @@
-import Lean
+import Lean.Elab.Tactic.Grind.Main
+import Lean.Elab.Print
 
 /-!
 Golden nonlinear elliptic algebra, version 1.
