@@ -18,7 +18,7 @@ import uuid
 
 ROOT = Path(__file__).resolve().parent
 CLAIM = "GOLDEN-NONLINEAR-ALGEBRA-001"
-SOURCE_HASH = "6e5dca8c5675e0c262d80ddd351b3cb6ea0ff5111b00873435893e3ed513daeb"
+SOURCE_HASH = "d27a3c8baa37889217d546a9020ea54552e850888590739062300821406ce593"
 TOOLCHAIN = "leanprover/lean4:v4.34.0-rc2"
 LEAN_COMMIT = "6a10ac8c22beadecabdbb0919c2b50214762f91d"
 THEOREMS = ["MathScope.GoldenElliptic." + name for name in (
