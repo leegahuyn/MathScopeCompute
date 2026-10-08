@@ -2,6 +2,10 @@
 
 `GOLDEN-NONLINEAR-ALGEBRA-001` proves three exact commutative-ring identities in
 Lean 4.34.0-rc2, using Lean core only. `GoldenAlgebra.lean` is the complete source.
+The proof uses explicit polynomial expressions and the core `Expr.eq_of_toPoly_eq`
+soundness theorem; Lean kernel reduction checks each normalization certificate.
+This avoids loading the general `grind` tactic during each fresh replay while
+keeping the same theorem statements, assumptions and axiom audit.
 
 For `F(u) = -D(u) + λu - u³`, the first theorem proves the exact polynomial
 perturbation formula assuming `D(u + tv) = D(u) + tD(v)`. The second proves the
