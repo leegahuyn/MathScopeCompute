@@ -1,6 +1,6 @@
 # MathScope v0.3.1 Stage 8 사용·검증 안내
 
-이 문서는 개발판의 실제 조작 순서와 결과를 해석하는 범위를 설명한다. **릴리스 상태는 HOLD**이며, 이 문서를 추가하거나 개별 테스트가 통과했다고 최종 동결되는 것은 아니다. 배포된 화면의 버전, Git commit, 수치·증명 환경 및 검증 시각을 결과와 함께 기록한다. 전체 승인 기준은 [릴리스 요구사항 표](STAGE8_RELEASE_REQUIREMENTS.md)를 따르며, 실제 데이터 필드와 원본 문서 16개 항목은 [데이터·수학 계약 참조](STAGE8_CONTRACT_REFERENCE.md)에서 확인한다.
+이 문서는 개발판의 실제 조작 순서와 결과를 해석하는 범위를 설명한다. **v35 / `ac30af83`, Compute `235b73df`의 명시된 범위에 대한 기술 검증을 완료했으며, 최종 동결 판정은 최신 체크리스트·release manifest를 따른다.** 실제 Edge 키보드·휴대전화 스크린리더 확인은 사용자 보고로 구분한다. 화면의 로컬 Stage8 자동 gate는 외부 native QA를 자동 반영하지 않으므로 그 `HOLD`와 외부 감사 판정을 혼동하지 않는다. 전체 승인 기준과 근거는 [릴리스 요구사항 표](STAGE8_RELEASE_REQUIREMENTS.md#current-evidence), 실제 데이터 필드와 원본 문서 16개 항목은 [데이터·수학 계약 참조](STAGE8_CONTRACT_REFERENCE.md)에서 확인한다.
 
 - 개발판: <https://project29770.websitepublisher.ai/v0.3.1.html>
 - 계산 서비스: <https://mathscope-compute.onrender.com>
@@ -14,6 +14,8 @@
 4. `STALE`, `REPLAY REQUIRED`, `UNKNOWN`, `DEPENDENCY MISSING`은 성공의 다른 표현이 아니다. 입력 변경 또는 가져오기 이후에는 재계산·재검증 결과를 확인한다.
 
 SHA가 맞는 파일이라는 사실은 작성자의 진위나 수학적 정확성을 증명하지 않는다. 세션 ID, revision, source hash와 환경을 각각 확인해야 한다.
+
+브라우저 자동저장은 localStorage의 4.5MiB 안전 상한을 사용한다. 큰 replay 세션이 이 한도를 넘으면 저장 성공으로 간주하지 말고 `.mathscope`를 내려받아 보관한다. 실제 3,937,786B ZIP의 내보내기·복구를 확인했지만, 이것이 브라우저 저장의 영속성이나 기기 간 동기화를 보증하지는 않는다.
 
 ## 한 세션에서 Golden A → B → C → D 실행
 

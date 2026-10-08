@@ -1,29 +1,31 @@
 # Stage 8 릴리스 요구사항과 증거 매핑
 
-**현재 판정: HOLD.** 이 문서는 요구사항을 축소하지 않고 검사 범위를 구분한다. UI의 `PASS`, CI 성공, reference fixture 성공, 새 코드 작성은 서로 다른 증거이며 전체 릴리스 승인과 동일하지 않다. 아래 최신 증거 절이 과거 표의 당시 상태를 갱신한다. 원본 약 62%는 과거 체크포인트 값이며 가중치가 정의되지 않아 새 비율을 계산하지 않는다.
+**기술 검증 완료. 최종 동결 판정은 최신 체크리스트·release manifest를 따른다.** 2026-10-08의 개발판 v35와 Compute `235b73df`에 대해 아래 제한된 검사 범위의 기술 blocker가 해소되었고, 남은 실제 Edge 키보드·휴대전화 스크린리더 항목은 사용자 확인으로 기록했다. UI의 개별 `PASS`, CI, 사용자 보고와 최종 동결은 서로 다른 증거다. 아래 최신 증거 절이 과거 표의 당시 상태를 대체한다. 원본 약 62%는 과거 체크포인트 값이며 가중치가 정의되지 않아 새 비율을 계산하지 않는다.
 
 <a id="current-evidence"></a>
-## 최신 증거 — 2026-10-08 11:20 UTC 기준
+## 최신 증거 — 2026-10-08 최종 기술 감사 기준
 
-**이 절은 아래 역사적 체크포인트 표의 현재 상태를 대체한다.** 표의 원본 gate와 검사 요구는 유지하며, 과거 실패·대기 기록은 삭제하지 않는다. 이후 commit/배포가 바뀌면 최신 control-plane 값과 증거를 다시 대조한다. 아래 완료 범위 밖의 부분을 자동 완료하지 않는다.
+**이 절은 아래 역사적 체크포인트 표의 현재 상태를 대체한다.** 표의 원본 gate와 검사 요구는 유지하며, 과거 실패·대기 기록은 삭제하지 않는다. 실제 실행을 검증한 기준 commit은 `235b73dfc730ab4ee4e4c9862138fd839079a213`이다. 이 문서 정리 이후의 commit은 별도 control-plane LIVE SHA와 변경 파일을 확인한다. 문서만 바뀐 후속 commit을 기준 실행의 새 재측정으로 쓰지 않는다. 기계 판독용 근거는 [검증 기준 기록](STAGE8_VERIFIED_BASELINE.json)에 있다.
 
 | 항목 | 확인된 최신 근거와 정확한 범위 |
 |---|---|
-| 개발판 / 안정판 | 개발판 v33 / `f44b35b1`. 안정판 `index.html` page31 / `e1b6f09f` 동일 확인. |
-| Compute 배포 | `05a05cb6e97f747eb2f2c1fb4e377170978be99f`, Render `dep-db3ld0rl550s73al5850` LIVE, trigger `new_commit`. 기존 71검사 통과 코드 계열. 새 server-job 변경은 별도 PR/CI/자동 배포 및 실제 브라우저 검증 대기. |
+| 개발판 / 안정판 | 개발판 v35 / `ac30af83`. 안정판 `index.html` page31 / `e1b6f09f` 동일 확인. 개발판 작업에서 안정판은 수정하지 않음. |
+| Compute 배포·CI | `235b73dfc730ab4ee4e4c9862138fd839079a213`, Render `dep-db3nqa3l550s73ao48cg` LIVE, trigger `new_commit`, 완료 `2026-10-08T11:24:56.876155Z`. PR7 head CI `37769469570`, main CI `37769705586` 성공. 전체 pytest 93개 통과, 기존 Starlette/httpx 경고 1개. 수동 배포로 자동 배포를 대체하지 않음. |
 | Lean 배포·실제 검증 | `3c20466e37f669688e102901250f7d56e15b0331`, `dep-db3ld0e7bikc73c5d3g0` LIVE. 고정 source·환경·lock·fresh compile·axiom audit·동일 proof hash replay·C-014 regression을 포함한 실제 cloud 27/27 PASS. |
 | Golden 한 세션 A→D | flat unit torus, λ=1/u=1, 같은 operator·mesh·spectrum·stress·symbol/index reference의 수치 gate 6/6. numerical hash `35305ba191d4633ba8bc09e206785c571b69d0d2a12d45593194f28e32f29bd3`. |
-| 실제 proof 포함 ZIP 재현 | 원본 `rs-muz91pb5-3ntevz` 수치 r3 / proof r4 → 실제 다운로드·같은 파일 업로드 → 새 `rs-muzfmq6h-url8mn` historical 상태 → 수치 replay r5 → fresh proof r6. `environmentCompatible`, `exactMatch`, `numericallyEquivalent` 모두 true. proof replay 4,726ms, 새 evidence ID와 동일 source/environment/proof hash. 검증 기록 `final-golden-proof-replayed.json`. |
+| 실제 proof 포함 ZIP 재현 | 원본 `rs-muzgdn76-lcxvlx` 수치 r3 / proof r5 → 실제 다운로드·같은 파일 업로드 → 새 `rs-muzgj1m9-gi60zl` historical 상태 → 수치 replay r6 → fresh proof r7. `environmentCompatible`, `exactMatch`, `numericallyEquivalent` 모두 true. proof replay 13,884ms, 새 evidence ID와 동일 source/environment/proof hash. 검증 기록 `final-golden-proof-first.json`, `final-golden-proof-imported.json`, `final-golden-proof-replayed.json`. |
 | 증명의 범위 | `GOLDEN-NONLINEAR-ALGEBRA-001`의 정확한 commutative-ring 다항식 전개, `D(1)=0` 가정의 상수1 잔차·일차항만 검증. source SHA `d27a3c8baa37889217d546a9020ea54552e850888590739062300821406ce593`. full PDE·해석적 Fréchet·spectrum/topology/index 정리로 승격하지 않음. |
 | 선택적 revision 전파 | 의존 graph 기반 incremental invalidation의 오프라인 26/26 PASS. 실제 Foundation 18/18 및 selected-source/3D guard 확인. 오프라인 검사를 모든 사용자 경로의 실제 브라우저 검사와 동일시하지 않음. |
-| 실제 FPS / 큰 graph | 내장 브라우저 실제 viewport591×524 / DPR2, ζ180frames 60.01fps(p95 16.9ms). 합성 독립 객체1,001개 graph의 17페이지·검색·마지막 Inspector 확인; 3D는120개 표시/881개 생략, 180frames 60.02fps(p95 17ms). 전체1,001개 동시3D·간선밀집 graph·GPU완료·CPU사용률·모바일 검사 아님. |
-| Native 사용자 보고 | 사용자는 Chrome 회전·확대·+/−를 확인하고 FPS 측정/Narrator 질문에 “잘됩니다”라고 답함. 실제 FPS 숫자, 브라우저 버전, 전체 Tab/방향키/Home/포커스 및 Narrator 상태·오류·표 경로는 미기록. Edge·실제 휴대전화는 미검사. |
-| 새 hardening 구현 | server-confirmed cancellation, progressive row loading, typed FailureRecord·ZIP 보존은 새 코드와 테스트를 진행 중. 실제 최신 자동 배포·브라우저 증거가 나오기 전에는 PASS로 체크하지 않음. |
-| 문서16항목 | [데이터·수학 계약 참조](STAGE8_CONTRACT_REFERENCE.md)에 실제 Object/Representation/Operator/PDE/Spectrum/KTheory/Evidence 필드·variant와 경계·재현법을 정리. 내용 문서화와 공개본/화면 링크 확인을 분리함. |
+| 실제 FPS / 큰 graph | 내장 브라우저 실제 viewport591×524 / DPR2, ζ180frames 60.01fps(p95 16.9ms), 반복59.69fps(p95 17ms). 합성 독립 객체1,001개 graph의 17페이지·검색·마지막 Inspector 확인; 3D는120개 표시/881개 생략. 전체1,001개 동시3D·간선밀집 graph·GPU완료·브라우저 CPU사용률·모든 기기의 FPS 보증이 아님. |
+| 점진적 표시 / LOD | v35 실제 브라우저의 합성201×201 입력40,401점/80,000삼각형: row batch8, 부분 갱신 포함77회 yield/update, progressive 처리674ms, 전체 검사3,704.4ms, 180frames 60.01fps(p95 17ms). 실제 ζ875점은 full/compact·mask 보존을 확인. 부분 geometry를 수학적 evidence로 쓰지 않음. |
+| Native 사용자 보고 | `USER_REPORTED`: Chrome 회전·확대·+/−, FPS 측정 기능·Narrator 읽기; Edge와 실제 휴대전화의 회전·확대·배치 확인. 마지막 질문은 Edge Tab으로 버튼·3D 이동 및 방향키·Home 조작, 휴대전화 VoiceOver 또는 TalkBack의 버튼 이름·결과 상태 읽기였으며 답변은 **“두 항목 모두 확인했고 정상입니다”**. browser/device 버전, native FPS 수치, 어떤 모바일 스크린리더였는지와 묻지 않은 오류·표 경로는 미제공. 자동 측정 또는 모든 접근성 경로 인증으로 바꾸지 않음. |
+| 실제 서버 취소 / 실패 보존 | 실제 API의 ζ1,600점 작업이 `executing`, `workerStopped:false`인 것을 관측한 뒤 `terminate-and-join`, exit `-15`, `cancellationConfirmed:true`, `workerStopped:true` 확인. 후속2회 poll에 result 없음. v35 브라우저 Golden 실행·replay 취소에서도 기존 성공 증거가 보존되고 취소 결과는 확정되지 않음. typed FailureRecord는 claim 지원 권한 없이 ZIP에 보존. 최종 proof ZIP의 모든 JSON sidecar에서 token/Authorization 키0개 확인. |
+| 실제 서버 CPU / 메모리 | API Golden run/replay와 브라우저 replay/ζ 완료 작업의 CPU total1.249941–2.879673초, child peakRSS175,624,192–179,949,568B. POSIX `resource.getrusage(RUSAGE_SELF)` 실제 worker 지표이며 브라우저 CPU사용률이 아님. Render 30초 간격 service memory 관측 최대258,981,890B / limit536,870,900B; 관측 사이의 실제 peak나 모든 workload의 상한을 보증하지 않음. |
+| 문서16항목 / 저장 범위 | [데이터·수학 계약 참조](STAGE8_CONTRACT_REFERENCE.md)에 실제 Object/Representation/Operator/PDE/Spectrum/KTheory/Evidence 필드·variant와 경계·재현법을 정리하고 공개 문서 경로를 검사. localStorage의4.5MiB 안전 상한을 넘은 큰 replay 세션은 자동저장 성공으로 표시하지 않음. 실제3,937,786B `.mathscope` ZIP으로 내보내기·복구를 검증했으며, 영속 저장 보증 대신 ZIP 백업을 권장. |
 
 수치 replay의 `formalPass`는 false다. 실제 proof replay는 별도 verifier 경로로 얻은 결과다. 이전 `29f91be8`의 21/27, `4a67d6a`의 20/27 및 90초 timeout 이력, idle 이후 첫 브라우저 proof 요청의 abort 실패를 유지하며 새 성공으로 삭제하지 않는다.
 
-**열린 release 항목:** 새 취소·점진적 로딩·실패 보존 경로의 실제 배포 검사, 문서 공개 접근, Native Chrome/Edge 전체 E2E·스크린리더, 실제 휴대전화, target-device 성능 기록. full PDE나 full Atiyah–Singer 증명을 새로운 필수 조건으로 추가하지 않는다. 원본의 `PARTIAL/EXTERNAL` formal coverage를 명시하는 경계를 유지한다.
+**최종 감사:** 위 명시된 Stage8 검사 범위의 기술 blocker는 해소되었다. 최종 15개 항목의 집계·체크리스트·manifest를 별도로 확정한다. 런타임의 로컬 Stage8 자동 gate가 표시하는 `HOLD`는 외부 native 사용자 QA를 자동 주입하지 않는 정책이며, 이 외부 감사의 동결 판정을 대신하지 않는다. native 버전/FPS 미제공, 정지 화면 frame 측정, 제한된 formal coverage 등은 공개된 범위의 한계로 남긴다. full PDE나 full Atiyah–Singer 증명을 새로운 필수 조건으로 추가하지 않으며, 원본의 `PARTIAL/EXTERNAL` formal coverage 경계를 유지한다.
 
 ## 기준 문서와 판정 규칙
 

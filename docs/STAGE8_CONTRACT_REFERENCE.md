@@ -2,7 +2,7 @@
 
 이 문서는 원본 Master Checklist p34의 문서 16개 항목을 현재 구현에 연결한다. 실행 순서는 [사용 안내](STAGE8_USER_GUIDE.md), 승인 조건은 [릴리스 요구사항](STAGE8_RELEASE_REQUIREMENTS.md), Lean 원본·재현 절차는 [formal 안내](../formal/README.md)를 따른다. 문서의 존재나 개별 예제 성공은 릴리스 동결 승인이 아니다. 개발판은 [v0.3.1.html](https://project29770.websitepublisher.ai/v0.3.1.html)이며 안정판 `index.html`은 별도다.
 
-기준은 2026-10-08 검토한 frontend v33의 기본 데이터 구조와 이 저장소의 adapter 코드다. 추가 FailureRecord 및 server-job 계약은 아래에 구분한다. 새 코드의 실제 배포·브라우저 검증 상태는 릴리스 증거를 확인한다. 아래 JSON 예제에서 “필드 발췌”라고 표시한 것은 설명용 부분 객체이며 완성된 실행 결과나 서명된 영수증이 아니다. 실제 실행의 ID·revision·hash·환경·시각은 결과에서 가져온다.
+기준은 2026-10-08 실제 검증한 frontend v35 / `ac30af83`과 Compute `235b73dfc730ab4ee4e4c9862138fd839079a213`의 adapter 코드다. FailureRecord 및 server-job 계약은 아래에 구분한다. 실제 배포·브라우저 검사, CPU 지표와 사용자 보고의 범위는 [최신 릴리스 증거](STAGE8_RELEASE_REQUIREMENTS.md#current-evidence)를 따른다. 아래 JSON 예제에서 “필드 발췌”라고 표시한 것은 설명용 부분 객체이며 완성된 실행 결과나 서명된 영수증이 아니다. 실제 실행의 ID·revision·hash·환경·시각은 결과에서 가져온다.
 
 ## 문서 16개 항목의 위치
 
@@ -294,7 +294,7 @@ draft는 `scope:"COPILOT DRAFT / RESEARCH HYPOTHESIS"`, `status:"RESEARCH HYPOTH
 
 Golden 실행에는 `numerics/jobs.json`, `numerics/golden-runs.json`, `numerics/data.json`, `environment/numerics.lock`, `revisions/all.json`, `provenance/golden.json`이 추가된다. proof package가 있으면 `lean/GoldenAlgebra.lean`, `lean/lean-toolchain`, `lean/golden-proof.json`과 coverage가 들어간다. source가 없는 과거 formal 기록은 coverage의 별도 목록으로 남고 재실행 가능하다고 주장하지 않는다.
 
-import는 ZIP 구조·CRC, manifest 각 파일의 byte 수·SHA-256, 선언되지 않은 파일, session identity/revision, 환경 schema를 검사한다. Golden sidecar는 세션 안의 replay/provenance와 일치해야 한다. formal source는 실제 byte hash·source·toolchain·metadata 일치를 검사한다. 허용된 schema migration이 없거나 필요한 실행 입력이 없는 옛 번들은 자동 재현 성공이 아니다. frontend v33의 import 크기 제한은 12 MiB다.
+import는 ZIP 구조·CRC, manifest 각 파일의 byte 수·SHA-256, 선언되지 않은 파일, session identity/revision, 환경 schema를 검사한다. Golden sidecar는 세션 안의 replay/provenance와 일치해야 한다. formal source는 실제 byte hash·source·toolchain·metadata 일치를 검사한다. 허용된 schema migration이 없거나 필요한 실행 입력이 없는 옛 번들은 자동 재현 성공이 아니다. frontend v35의 import 크기 제한은 12 MiB다. 이는 localStorage 자동저장의 별도 4.5MiB 안전 상한과 다르다. 큰 replay 세션은 자동저장 실패를 숨기지 않고 ZIP 내보내기로 보관·복구한다.
 
 새 세션으로 가져온 후에는 다음 검사가 각각 필요하다.
 
