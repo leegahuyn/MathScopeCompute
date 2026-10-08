@@ -13,7 +13,7 @@ from app.provenance import environment_fingerprint, sha256_json, utc_now
 
 class LaplacianSpectrumAdapter(Adapter):
     name = "spectrum.laplacian-grid.v1"
-    version = "0.1.0"
+    version = "0.1.1"
 
     def run(self, input_spec: dict[str, Any], environment: dict[str, Any]) -> AdapterResult:
         n = int(input_spec.get("gridN", 32))
@@ -33,7 +33,11 @@ class LaplacianSpectrumAdapter(Adapter):
         ) / h**2
         a = kron(eye(n, format="csr"), one_d) + kron(one_d, eye(n, format="csr"))
 
-        eigenvalues, eigenvectors = eigsh(a, k=k, which="SM")
+        # ARPACK otherwise chooses a fresh random start on every replay.
+        # Record the fixed start policy; bitwise replay still needs the same
+        # numerical environment, not merely equal request parameters.
+        v0 = np.random.default_rng(0).standard_normal(dim)
+        eigenvalues, eigenvectors = eigsh(a, k=k, which="SM", v0=v0)
         order = np.argsort(eigenvalues)
         eigenvalues = eigenvalues[order]
         eigenvectors = eigenvectors[:, order]
@@ -64,6 +68,7 @@ class LaplacianSpectrumAdapter(Adapter):
             "truncationN": dim,
             "basis": "uniform Cartesian interior grid",
             "projection": "finite-difference matrix A_N",
+            "solverStart": "NumPy default_rng(0) standard_normal",
             "pointSpectrum": [
                 {"value": float(v), "residual2": residuals[i]} for i, v in enumerate(eigenvalues)
             ],

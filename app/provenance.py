@@ -9,6 +9,7 @@ from typing import Any
 
 import numpy as np
 import scipy
+import mpmath
 
 APP_VERSION = "0.3.1"
 
@@ -33,6 +34,7 @@ def environment_fingerprint(extra: dict[str, Any] | None = None) -> dict[str, An
         "platform": platform.platform(),
         "numpy": np.__version__,
         "scipy": scipy.__version__,
+        "mpmath": mpmath.__version__,
     }
     try:
         import gudhi

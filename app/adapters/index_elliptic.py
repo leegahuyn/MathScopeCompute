@@ -165,7 +165,7 @@ def _boundary_spec(spec: dict[str, Any], model: str) -> dict[str, Any]:
 
 class EllipticIndexReferenceAdapter(Adapter):
     name = "index.elliptic-reference.v1"
-    version = "0.1.0"
+    version = "0.1.1"
 
     def run(self, input_spec: dict[str, Any], environment: dict[str, Any]) -> AdapterResult:
         model = str(input_spec.get("model", "closed_scalar_laplacian"))
@@ -184,6 +184,14 @@ class EllipticIndexReferenceAdapter(Adapter):
         sample_count = int(input_spec.get("samples", 96))
         tolerance = float(input_spec.get("tolerance", 1e-9))
         lam = float(input_spec.get("lambda", 0.0))
+        if not math.isfinite(tolerance) or tolerance < 0:
+            raise ValueError("tolerance must be finite and nonnegative")
+        if not math.isfinite(lam):
+            raise ValueError("lambda must be finite")
+        candidate = input_spec.get("candidate", "u*=0")
+        zero_candidate = candidate == 0 or (
+            isinstance(candidate, str) and candidate.replace(" ", "") in {"u*=0", "0"}
+        )
         connected = bool(input_spec.get("connected", True))
         compact = bool(input_spec.get("compact", True))
         smooth = bool(input_spec.get("smooth", True))
@@ -195,7 +203,11 @@ class EllipticIndexReferenceAdapter(Adapter):
         definite_positive = bool(np.min(eig) > tolerance)
         definite_negative = bool(np.max(eig) < -tolerance)
         exact_elliptic = definite_positive or definite_negative
-        exact_fail = not exact_elliptic
+        # A small nonzero eigenvalue is not a characteristic direction.
+        # Near the user tolerance, retain uncertainty instead of proving failure.
+        exact_fail = bool(np.min(eig) < -tolerance and np.max(eig) > tolerance)
+        exact_fail = exact_fail or bool(np.any(eig == 0.0))
+        unresolved = not exact_elliptic and not exact_fail
 
         dirs = _directions(n, sample_count, seed)
         values = np.einsum("bi,ij,bj->b", dirs, a, dirs)
@@ -214,6 +226,8 @@ class EllipticIndexReferenceAdapter(Adapter):
 
         if exact_fail:
             ellipticity_status = "FAIL"
+        elif unresolved:
+            ellipticity_status = "UNRESOLVED NEAR TOLERANCE"
         elif analysis_mode == "theorem" and built_in_elliptic:
             ellipticity_status = "THEOREM-BACKED ELLIPTIC"
         else:
@@ -226,6 +240,8 @@ class EllipticIndexReferenceAdapter(Adapter):
             )
         if exact_fail:
             local_warnings.append("Characteristic direction exists for the supplied symmetric principal quadratic form.")
+        if unresolved:
+            local_warnings.append("Near-zero numerical eigenvalues do not establish a characteristic direction or certify ellipticity.")
         if boundary_present:
             local_warnings.append("Closed-manifold Atiyah-Singer edge is not applied unchanged to the boundary problem.")
 
@@ -249,7 +265,7 @@ class EllipticIndexReferenceAdapter(Adapter):
                 "boundary": boundary_present,
             },
             "principalPart": "-sum_ij A_ij partial_i partial_j",
-            "lowerOrderTerm": f"lambda={lam:g}" if model == "nonlinear_elliptic_linearization" else None,
+            "lowerOrderTerm": f"lambda={lam:g} - 3(u*)^2" if model == "nonlinear_elliptic_linearization" else None,
             "symbolGenerationHook": "replace highest-order derivatives by cotangent variables xi",
             "quadraticForm": a.tolist(),
             "sourceRevisionRefs": _source_refs(input_spec),
@@ -271,7 +287,7 @@ class EllipticIndexReferenceAdapter(Adapter):
             "smallestSingularValueSampleMax": max_sample,
             "minimumSampleDirection": min_dir,
             "eigenvaluePhaseSamples": phases,
-            "invertibilityStatus": "INVERTIBLE FOR ALL NONZERO xi" if exact_elliptic else "NOT INVERTIBLE ON CHARACTERISTIC LOCUS",
+            "invertibilityStatus": "INVERTIBLE FOR ALL NONZERO xi" if exact_elliptic else ("NOT INVERTIBLE ON CHARACTERISTIC LOCUS" if exact_fail else "UNRESOLVED NEAR TOLERANCE"),
             "characteristicDirectionFound": exact_fail,
             "characteristicDirections": characteristic,
             "sampleCount": int(len(dirs)),
@@ -312,7 +328,7 @@ class EllipticIndexReferenceAdapter(Adapter):
             "principalSymbolRef": symbol_id,
             "ellipticityStatus": ellipticity_status,
             "symbolClassRef": kclass_id + ":symbol-class" if exact_elliptic else None,
-            "classStatus": "ABSTRACT ELLIPTIC SYMBOL CLASS AVAILABLE" if exact_elliptic else "UNAVAILABLE: SYMBOL NOT ELLIPTIC",
+            "classStatus": "ABSTRACT ELLIPTIC SYMBOL CLASS AVAILABLE" if exact_elliptic else ("UNAVAILABLE: SYMBOL NOT ELLIPTIC" if exact_fail else "UNAVAILABLE: ELLIPTICITY UNRESOLVED"),
             "compactSupportSemantics": (
                 "elliptic symbol defines a class in compactly supported K-theory of T*M; numerical display is only a representative"
                 if exact_elliptic
@@ -358,14 +374,14 @@ class EllipticIndexReferenceAdapter(Adapter):
             analytic_index = 0
             topological_index = 0
             theorem_edge = "EXTERNAL THEOREM MAPPED / NOT FORMALLY VERIFIED"
-            if abs(lam) <= 1e-12:
+            if lam == 0.0 and (model != "nonlinear_elliptic_linearization" or zero_candidate):
                 kernel_dim = 1
                 cokernel_dim = 1
                 invertible = False
                 solvability = "NOT FOR ARBITRARY f; Laplace reference requires compatibility with the constant-mode cokernel"
             else:
                 invertible = None
-                solvability = "CASE-DEPENDENT; lower-order parameter may change kernel/cokernel dimensions"
+                solvability = "CASE-DEPENDENT; lambda - 3(u*)^2 and the candidate may change kernel/cokernel dimensions" if model == "nonlinear_elliptic_linearization" else "CASE-DEPENDENT; lower-order parameter may change kernel/cokernel dimensions"
 
         index_spec = {
             "id": index_id,
@@ -401,7 +417,8 @@ class EllipticIndexReferenceAdapter(Adapter):
                 "id": "nonlinear-index-bridge-stage6",
                 "type": "NonlinearIndexBridgeSpec",
                 "nonlinearEquation": "F(u) = -Delta_g u + lambda u - u^3 = 0",
-                "candidate": input_spec.get("candidate", "u*=0"),
+                "candidate": candidate,
+                "candidateResidualStatus": "NOT EVALUATED BY STRUCTURAL ADAPTER",
                 "linearization": "L = DF(u*) = -Delta_g + lambda - 3(u*)^2",
                 "linearizedOperatorRef": operator_id,
                 "principalSymbolRef": symbol_id,
@@ -411,7 +428,7 @@ class EllipticIndexReferenceAdapter(Adapter):
                 "kernelDimension": kernel_dim,
                 "cokernelDimension": cokernel_dim,
                 "localModuliVirtualDimension": analytic_index,
-                "bifurcationWarning": bool(kernel_dim and kernel_dim > 0),
+                "bifurcationWarning": kernel_dim > 0 if kernel_dim is not None else None,
                 "globalNonlinearSolvabilityStatus": "NOT ESTABLISHED",
                 "globalNonlinearStabilityStatus": "NOT ESTABLISHED",
                 "guard": "K-theory/index is applied to the linearization, not directly to the nonlinear equation.",

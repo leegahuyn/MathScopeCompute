@@ -17,6 +17,7 @@ def test_complex_zeta_returns_distinct_typed_surface():
     assert r.evidenceRecords[0].grade=="NUMERICAL INDICATOR"
     assert r.errorBounds is None
     assert s["precisionDiscrepancyIsCertifiedBound"] is False
+    assert r.environment["mpmath"]
 
 def test_pole_is_masked():
     r,s=spec({"realMin":0.5,"realMax":1.5,"imagMin":-0.4,"imagMax":0.4,"realSamples":5,"imagSamples":5,"precisionDps":25,"poleExclusionRadius":0.075})
