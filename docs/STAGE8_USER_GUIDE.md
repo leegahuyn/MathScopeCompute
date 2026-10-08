@@ -71,7 +71,7 @@ Stage 5, 6, 7의 3D 패널에서 모드를 선택하고 `Render 3D`를 누른다
 
 ## 성능 검사
 
-`Measure 3D frames`는 현재 보이는 canvas에서 180개의 정지 화면 frame 간격과 렌더 명령 제출 시간을 측정한다. `CPU sampling benchmark`는 별도 worker에서 320개의 유한 Euler–eta 계산 시간을 측정한다. worker를 만들 수 없으면 UI thread에서 몰래 계산하지 않고 실패를 알린다. `Cancel local sampling`으로 worker를 종료할 수 있다.
+`Measure 3D frames`는 현재 보이는 canvas에서 180개의 정지 화면 frame 간격과 렌더 명령 제출 시간을 측정한다. `CPU sampling benchmark`는 별도 worker에서 320개의 유한 Euler–eta 계산 시간을 측정한다. worker를 만들 수 없으면 UI thread에서 몰래 계산하지 않고 실패를 알린다. `Cancel sampling / request`으로 worker를 종료할 수 있다.
 
 측정 시 다음을 함께 남긴다: 브라우저·OS·장치·화면 주사율, viewport, devicePixelRatio, WebGL/가속 상태, full/compact LOD, 모드와 데이터 크기, reduced motion, visible 여부, 냉간/워밍업, FPS·p95 frame time·제출 시간. CPU elapsed time은 CPU 사용률이 아니고 제출 시간은 GPU 완료 시간이 아니다.
 
@@ -95,3 +95,4 @@ Stage 5, 6, 7의 3D 패널에서 모드를 선택하고 `Render 3D`를 누른다
 발산, 잘못된 mesh, domain/정리 가정 누락, spectral pollution 경고, projection 비단사성, 불완전한 topology 계산, K backend 미지원, 경계 조건 불확정, proof dependency 누락은 각각의 실패 이유를 보존한다. 실패 뒤 이전의 성공 표시를 현재 결과처럼 재사용하지 않는다.
 
 이 배포의 reference fixture나 semantic guard가 일반 ODE/DAE/FEM, 모든 함수공간의 해석, 일반 Ricci flow/surgery, 임의 K-theory 또는 완전한 증명 자동화를 구현했다는 뜻은 아니다. 그런 고급 기능은 해당 adapter, 입력 범위, 수학적 계약과 실제 검증 결과가 추가될 때 별도로 승인한다.
+
