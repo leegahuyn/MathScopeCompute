@@ -3,18 +3,27 @@ from __future__ import annotations
 import os
 import time
 import uuid
+from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.adapters import ADAPTERS
 from app.models import AdapterResult, RunRequest
 from app.golden import ReplayRequest, replay
+from app.jobs import JobRequest, JobCapacityExceeded, JobNotFound, JobBodyLimitMiddleware, get_job_manager, close_job_manager
 from app.provenance import APP_VERSION, environment_fingerprint, utc_now
+
+@asynccontextmanager
+async def lifespan(application: FastAPI):
+    yield
+    close_job_manager()
+
 
 app = FastAPI(
     title="MathScopeCompute",
     version=APP_VERSION,
+    lifespan=lifespan,
     description=(
         "Hybrid numerical, computational-topology, elliptic/index and Stage 7 advanced-research backend for MathScope. "
         "Outputs remain scoped evidence and never auto-promote to theorem/formal status."
@@ -32,12 +41,13 @@ origins = [
     if item.strip()
 ]
 
+app.add_middleware(JobBodyLimitMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=False,
     allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 
@@ -102,6 +112,7 @@ def capabilities() -> dict:
             "fullAtiyahSingerFormalizationClaimed": False,
         },
         "stage8Policy": {"zetaSurfaceIsProof": False, "zetaComplexSurfaceIsSpectralZeta": False, "precisionCrossCheckIsErrorBound": False, "phaseColorIsDimension": False},
+        "asyncJobs": {"submit": "/v1/jobs", "status": "/v1/jobs/{jobId}", "cancel": "/v1/jobs/{jobId}/cancel", "adapters": ["golden.elliptic-torus.v1", "advanced.zeta-complex-surface.v1"], "replay": "Golden only", "authentication": "per-job opaque bearer token", "processIsolation": True, "maxConcurrent": 1, "maxRetainedJobs": 16, "runtimeLimitSeconds": 90, "terminalRetentionSeconds": 300, "maxPayloadBytes": 8388608, "singleWebWorkerRequired": True, "cancelConfirmsProcessExit": True},
         "stage7Policy": {
             "visualResemblanceImpliesGaloisRelation": False,
             "riemannZetaIsSpectralZeta": False,
@@ -323,3 +334,47 @@ def replay_golden(request: ReplayRequest) -> dict:
         return outcome
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+def job_token(authorization: str | None) -> str:
+    if authorization is None or not authorization.startswith("Bearer ") or len(authorization) > 128:
+        raise HTTPException(status_code=404, detail="Job not found or ownership token invalid")
+    return authorization[7:]
+
+
+def check_job_origin(request: Request) -> None:
+    origin = request.headers.get("origin")
+    if origin is not None and origin not in origins:
+        raise HTTPException(status_code=403, detail="Origin is not allowed for numerical jobs")
+
+
+@app.post("/v1/jobs", status_code=202)
+def submit_job(job: JobRequest, request: Request, response: Response) -> dict:
+    check_job_origin(request)
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        return get_job_manager().submit(job)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except JobCapacityExceeded as exc:
+        raise HTTPException(status_code=429, detail=str(exc), headers={"Retry-After": "2"}) from exc
+
+
+@app.get("/v1/jobs/{job_id}")
+def job_status(job_id: str, request: Request, response: Response, authorization: str | None = Header(default=None)) -> dict:
+    check_job_origin(request)
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        return get_job_manager().status(job_id, job_token(authorization))
+    except JobNotFound as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.post("/v1/jobs/{job_id}/cancel")
+def cancel_job(job_id: str, request: Request, response: Response, authorization: str | None = Header(default=None)) -> dict:
+    check_job_origin(request)
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        return get_job_manager().cancel(job_id, job_token(authorization))
+    except JobNotFound as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
