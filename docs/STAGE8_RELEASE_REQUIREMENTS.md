@@ -1,6 +1,29 @@
 # Stage 8 릴리스 요구사항과 증거 매핑
 
-**현재 판정: HOLD.** 이 표는 요구사항을 축소하지 않고 검사 범위를 구분하기 위한 문서다. UI의 `PASS`, CI 성공, reference fixture 성공, 새 코드 작성은 서로 다른 증거이며 전체 릴리스 승인과 동일하지 않다. 현재 진행 중인 Golden/replay와 성능·접근성 변경은 배포 후 검증 증거가 확정되기 전까지 미완료다. 원본 약 62%는 과거 체크포인트 값이며 가중치가 정의되지 않아 새 비율을 계산하지 않는다.
+**현재 판정: HOLD.** 이 문서는 요구사항을 축소하지 않고 검사 범위를 구분한다. UI의 `PASS`, CI 성공, reference fixture 성공, 새 코드 작성은 서로 다른 증거이며 전체 릴리스 승인과 동일하지 않다. 아래 최신 증거 절이 과거 표의 당시 상태를 갱신한다. 원본 약 62%는 과거 체크포인트 값이며 가중치가 정의되지 않아 새 비율을 계산하지 않는다.
+
+<a id="current-evidence"></a>
+## 최신 증거 — 2026-10-08 11:20 UTC 기준
+
+**이 절은 아래 역사적 체크포인트 표의 현재 상태를 대체한다.** 표의 원본 gate와 검사 요구는 유지하며, 과거 실패·대기 기록은 삭제하지 않는다. 이후 commit/배포가 바뀌면 최신 control-plane 값과 증거를 다시 대조한다. 아래 완료 범위 밖의 부분을 자동 완료하지 않는다.
+
+| 항목 | 확인된 최신 근거와 정확한 범위 |
+|---|---|
+| 개발판 / 안정판 | 개발판 v33 / `f44b35b1`. 안정판 `index.html` page31 / `e1b6f09f` 동일 확인. |
+| Compute 배포 | `05a05cb6e97f747eb2f2c1fb4e377170978be99f`, Render `dep-db3ld0rl550s73al5850` LIVE, trigger `new_commit`. 기존 71검사 통과 코드 계열. 새 server-job 변경은 별도 PR/CI/자동 배포 및 실제 브라우저 검증 대기. |
+| Lean 배포·실제 검증 | `3c20466e37f669688e102901250f7d56e15b0331`, `dep-db3ld0e7bikc73c5d3g0` LIVE. 고정 source·환경·lock·fresh compile·axiom audit·동일 proof hash replay·C-014 regression을 포함한 실제 cloud 27/27 PASS. |
+| Golden 한 세션 A→D | flat unit torus, λ=1/u=1, 같은 operator·mesh·spectrum·stress·symbol/index reference의 수치 gate 6/6. numerical hash `35305ba191d4633ba8bc09e206785c571b69d0d2a12d45593194f28e32f29bd3`. |
+| 실제 proof 포함 ZIP 재현 | 원본 `rs-muz91pb5-3ntevz` 수치 r3 / proof r4 → 실제 다운로드·같은 파일 업로드 → 새 `rs-muzfmq6h-url8mn` historical 상태 → 수치 replay r5 → fresh proof r6. `environmentCompatible`, `exactMatch`, `numericallyEquivalent` 모두 true. proof replay 4,726ms, 새 evidence ID와 동일 source/environment/proof hash. 검증 기록 `final-golden-proof-replayed.json`. |
+| 증명의 범위 | `GOLDEN-NONLINEAR-ALGEBRA-001`의 정확한 commutative-ring 다항식 전개, `D(1)=0` 가정의 상수1 잔차·일차항만 검증. source SHA `d27a3c8baa37889217d546a9020ea54552e850888590739062300821406ce593`. full PDE·해석적 Fréchet·spectrum/topology/index 정리로 승격하지 않음. |
+| 선택적 revision 전파 | 의존 graph 기반 incremental invalidation의 오프라인 26/26 PASS. 실제 Foundation 18/18 및 selected-source/3D guard 확인. 오프라인 검사를 모든 사용자 경로의 실제 브라우저 검사와 동일시하지 않음. |
+| 실제 FPS / 큰 graph | 내장 브라우저 실제 viewport591×524 / DPR2, ζ180frames 60.01fps(p95 16.9ms). 합성 독립 객체1,001개 graph의 17페이지·검색·마지막 Inspector 확인; 3D는120개 표시/881개 생략, 180frames 60.02fps(p95 17ms). 전체1,001개 동시3D·간선밀집 graph·GPU완료·CPU사용률·모바일 검사 아님. |
+| Native 사용자 보고 | 사용자는 Chrome 회전·확대·+/−를 확인하고 FPS 측정/Narrator 질문에 “잘됩니다”라고 답함. 실제 FPS 숫자, 브라우저 버전, 전체 Tab/방향키/Home/포커스 및 Narrator 상태·오류·표 경로는 미기록. Edge·실제 휴대전화는 미검사. |
+| 새 hardening 구현 | server-confirmed cancellation, progressive row loading, typed FailureRecord·ZIP 보존은 새 코드와 테스트를 진행 중. 실제 최신 자동 배포·브라우저 증거가 나오기 전에는 PASS로 체크하지 않음. |
+| 문서16항목 | [데이터·수학 계약 참조](STAGE8_CONTRACT_REFERENCE.md)에 실제 Object/Representation/Operator/PDE/Spectrum/KTheory/Evidence 필드·variant와 경계·재현법을 정리. 내용 문서화와 공개본/화면 링크 확인을 분리함. |
+
+수치 replay의 `formalPass`는 false다. 실제 proof replay는 별도 verifier 경로로 얻은 결과다. 이전 `29f91be8`의 21/27, `4a67d6a`의 20/27 및 90초 timeout 이력, idle 이후 첫 브라우저 proof 요청의 abort 실패를 유지하며 새 성공으로 삭제하지 않는다.
+
+**열린 release 항목:** 새 취소·점진적 로딩·실패 보존 경로의 실제 배포 검사, 문서 공개 접근, Native Chrome/Edge 전체 E2E·스크린리더, 실제 휴대전화, target-device 성능 기록. full PDE나 full Atiyah–Singer 증명을 새로운 필수 조건으로 추가하지 않는다. 원본의 `PARTIAL/EXTERNAL` formal coverage를 명시하는 경계를 유지한다.
 
 ## 기준 문서와 판정 규칙
 
@@ -12,9 +35,9 @@
 
 ## 원본 24개 acceptance gate
 
-현재 evidence 열은 승인 근거의 위치·범위를 설명한다. 아래 표 전체가 새 Golden fixture의 증거로 채워져야 동일 세션 통합 승인에 사용할 수 있다.
+아래 evidence 열은 **이전 체크포인트 당시의 기록**이다. 현재 Golden·revision·replay 상태는 위 최신 증거 절을 우선한다. 24개 gate의 요구·검사 범위는 그대로 유지한다.
 
-| Gate | 원본 요구사항 | 통과에 필요한 검사 | 현재 증거와 미완료 범위 |
+| Gate | 원본 요구사항 | 통과에 필요한 검사 | 과거 체크포인트 증거와 당시 미완료 범위 |
 |---|---|---|---|
 | A1 Operator typing | bounded/unbounded, domain, adjoint 등 operator typing | domain·adjoint domain·self-adjoint 가정 누락/불일치와 정상 fixture 검사 | Stage 3 semantic guard와 reference 실행 있음. Golden operator/domain 연결은 새 실행 증거 필요 |
 | A2 PDE provenance | equation/BC/IC/discretization/solver provenance | 입력·mesh·solver·tolerance·revision·hash를 번들에서 복원 | Stage 2 실제 실행·self-test 있음. Golden 원본 입력부터 replay까지 연결 필요 |
@@ -53,7 +76,7 @@
 
 원본 표의 `x`/`~`/미체크를 그대로 기록했다. “현재 범위”는 새 증거 설명이며 원본의 x를 철회하거나 전체 승인으로 확대하지 않는다.
 
-| ID | 원본 상태 | 현재 범위 / 남은 조건 |
+| ID | 원본 상태 | 과거 체크포인트의 범위 / 당시 남은 조건 |
 |---|---|---|
 | S8-01 | x | navigation/panels 구현. 실제 IAB 클릭 확인. native Chrome·Edge 및 실제 target-device 범위는 추가 확인 |
 | S8-02 | x | source/map/lost info/evidence/scope metadata. 새 Golden/LOD metadata와 revision 연계 추가 확인 |
@@ -71,9 +94,9 @@
 | S8-14 | ~ | 이 user guide/요구사항 표 추가. 실제 최종 evidence·검증 PDF·전체 Spec 문서 범위 확인 필요 |
 | S8-15 | 미체크 | 전체 release HOLD. 위 미완료 조건 해소 전 최종 동결 불가 |
 
-## 성능과 사용성의 세부 범위
+## 성능과 사용성의 세부 범위 — 과거 구현 상태와 승인 조건
 
-| 원본 항목 | 현재 구현/패치 | 승인에 필요한 관측 |
+| 원본 항목 | 과거 체크포인트의 구현/패치 | 승인에 필요한 관측 |
 |---|---|---|
 | 3D canvas 60fps 목표 | frame telemetry, logical CSS-size/DPR cache, coalesced redraw | 정해진 장치/브라우저/주사율/viewport/LOD/data 크기에서 180frame 이상 실제 측정. 이전 저속값으로 PASS 금지 |
 | large dataset progressive loading | graph는 전체 데이터를 유지하고 표시를 60-node 페이지로 제한 | graph pagination은 일반 대용량 dataset streaming이 아니다. 큰 입력·점진적 로딩·메모리 상한은 별도 미완료 |

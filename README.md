@@ -44,6 +44,9 @@ Planned optional heavy adapters:
 - `GET /v1/self-test`
 - `POST /v1/run`
 - `POST /v1/replay` (bounded Golden numerical replay)
+- `POST /v1/jobs` (isolated cancellable Golden run/replay or complex-zeta run)
+- `GET /v1/jobs/{jobId}` (owned status/result)
+- `POST /v1/jobs/{jobId}/cancel` (owned process termination and result discard)
 
 Implemented adapters:
 
@@ -183,6 +186,56 @@ metadata. Nonlinear stability, continuum topology, an advanced index theorem,
 and formal verification are not established by this adapter. Its integration
 gate does not authorize a release freeze. The separate local-algebra Lean
 fixture in `formal/` proves only its explicitly stated algebraic claims.
+
+## Cancellable numerical jobs
+
+Submit a bounded job using `POST /v1/jobs`:
+
+```json
+{"kind":"run","adapter":"golden.elliptic-torus.v1","inputSpec":{"sessionId":"s","revision":1,"gridN":16},"environment":{}}
+```
+
+The allowlist also supports `advanced.zeta-complex-surface.v1`. For Golden
+replay, submit `kind:"replay"` with `record`, `targetSessionId` and
+`targetRevision`, as in the synchronous replay contract above. Arbitrary
+adapters, source code or executables are not accepted.
+
+HTTP 202 returns a `jobId` and unpredictable per-job `token`. Keep the token only
+in transient client memory. Poll `GET /v1/jobs/{jobId}` or request cancellation
+with `POST /v1/jobs/{jobId}/cancel`, both using `Authorization: Bearer <token>`.
+Never place this secret in URLs, logs, ResearchSession exports or evidence.
+
+Each job runs in a spawned process. Status is `running` until the worker exits,
+then `completed` (with `result`) or `failed` (with `error`). Cancellation performs
+terminate/join and kill/join fallback. It returns `cancelled` with
+`cancellationConfirmed:true` only after actual process exit. If termination is
+not confirmed, status remains `cancelling`. The supervisor also enforces the
+90-second worker limit, reporting `timed_out`/`TIMEOUT` after stopping the process.
+Cancelled/timed-out jobs never return results. Cancellation is idempotent and
+also discards a completed-but-uncommitted result. Clients must suppress late
+commits when a cancel click races completion, and await the submit ticket before
+cancelling if the click raced submission. Aborting fetch alone is not server
+cancellation.
+
+Default limits are one concurrent worker, 16 retained jobs, 300-second terminal
+TTL, an 8-MiB streamed request cap, 32 JSON nesting levels, an 8-KiB environment,
+a 16-MiB result cap and 32-MiB aggregate result reservation/storage. Existing
+Golden grid and complex-zeta domain/point/precision bounds apply. Capacity
+returns 429/`Retry-After`; invalid inputs return 422 and oversized HTTP bodies
+return 413. Status/cancel require the owning token; wrong/absent tokens return
+404. Browser origins retain the existing allowlist; credentials stay disabled.
+
+The manager requires **one web worker and one service instance**. In-memory
+tickets/results expire and do not survive restart. It is not a persistent or
+distributed queue. Existing synchronous APIs remain available; their transport
+abort does not cancel server computation.
+
+Completed job envelopes report actual worker CPU user/system/total time and peak
+RSS (POSIX `getrusage`, Windows process memory counters). Metrics include process
+startup/import work and are separate from the numerical result/hash. They are
+not browser CPU or FPS measurements. Killed workers that could not report final
+metrics leave them unavailable. Job completion or cancellation creates no
+mathematical/formal evidence.
 
 ## Local development
 

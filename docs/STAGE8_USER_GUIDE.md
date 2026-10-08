@@ -1,6 +1,6 @@
 # MathScope v0.3.1 Stage 8 사용·검증 안내
 
-이 문서는 개발판의 실제 조작 순서와 결과를 해석하는 범위를 설명한다. **릴리스 상태는 HOLD**이며, 이 문서를 추가하거나 개별 테스트가 통과했다고 최종 동결되는 것은 아니다. 배포된 화면의 버전, Git commit, 수치·증명 환경 및 검증 시각을 결과와 함께 기록한다. 전체 승인 기준은 [릴리스 요구사항 표](STAGE8_RELEASE_REQUIREMENTS.md)를 따른다.
+이 문서는 개발판의 실제 조작 순서와 결과를 해석하는 범위를 설명한다. **릴리스 상태는 HOLD**이며, 이 문서를 추가하거나 개별 테스트가 통과했다고 최종 동결되는 것은 아니다. 배포된 화면의 버전, Git commit, 수치·증명 환경 및 검증 시각을 결과와 함께 기록한다. 전체 승인 기준은 [릴리스 요구사항 표](STAGE8_RELEASE_REQUIREMENTS.md)를 따르며, 실제 데이터 필드와 원본 문서 16개 항목은 [데이터·수학 계약 참조](STAGE8_CONTRACT_REFERENCE.md)에서 확인한다.
 
 - 개발판: <https://project29770.websitepublisher.ai/v0.3.1.html>
 - 계산 서비스: <https://mathscope-compute.onrender.com>
@@ -30,7 +30,7 @@ Stage 8에서 `Run Golden A → B → C → D`를 사용한다. 이 버튼은 �
 
 결과의 모든 연결이 같은 실행에 속하는지 확인한다. ID만 같고 revision 또는 hash가 다른 출력은 동일한 Golden 실행의 증거로 취급하지 않는다. 실행 중 기존 세션을 변경하거나 가져온 경우에는 오래된 응답을 새 세션에 붙여 넣어서는 안 된다.
 
-`Cancel Golden request`는 브라우저의 대기를 취소한다. 이미 시작된 서버 계산을 중단했다는 보장은 없다. 취소한 응답은 현재 증거로 확정하지 않는다.
+서버 작업 API에 연결된 Golden 실행·수치 replay에서 `Cancel Golden request`는 해당 작업의 서버 취소를 요청한다. 화면과 작업 응답의 `cancellationConfirmed:true`, `workerStopped:true`가 실제로 확인되어야 서버 계산 종료로 기록한다. 작업 제출 응답이 오기 전에 취소했으면 응답의 job ID를 확보한 뒤 그 작업에 취소를 전달한다. 네트워크 단절, 서비스 재시작, 조회 기간 만료로 확인할 수 없는 경우에는 종료 여부 미확인으로 남긴다. 단순한 브라우저 요청 중단을 서버 종료로 바꾸어 쓰지 않는다. 취소한 응답은 현재 증거로 확정하지 않는다.
 
 ## 내보내기 → 가져오기 → 재실행
 
@@ -57,7 +57,7 @@ Stage 8에서 `Run Golden A → B → C → D`를 사용한다. 이 버튼은 �
 
 Proof Dock에서는 최종 검사 결과와 coverage를 함께 읽는다. C-014의 제한된 exact slice가 통과해도 PDE 전체 해의 존재·유일성, 일반 spectral theorem, Atiyah–Singer 전체가 형식화되었다는 뜻이 아니다. Lean dependency가 빠졌다면 명제를 증명한 것으로 표시하지 않는다.
 
-Golden용 별도 제한 명제 `GOLDEN-NONLINEAR-ALGEBRA-001`은 `F(u+tv)`의 정확한 대수 전개, 주어진 `D(1)=0` 가정하의 λ=1/u=1 잔차, 그 지점의 일차항을 검증한다. 이것은 C-014와 다른 명제다. torus의 Laplacian이 실제로 해당 D라는 분석적 증명, Fréchet 미분의 domain/regularity, PDE 해의 존재·유일성, spectrum/topology/index는 포함하지 않는다. 원본과 로컬 재현법은 [formal 안내](../formal/README.md)를 따른다. 새 cloud endpoint의 배포·pinned 환경·실제 실행이 확인되기 전에는 cloud FORMAL PASS로 기록하지 않는다.
+Golden용 별도 제한 명제 `GOLDEN-NONLINEAR-ALGEBRA-001`은 `F(u+tv)`의 정확한 대수 전개, 주어진 `D(1)=0` 가정하의 λ=1/u=1 잔차, 그 지점의 일차항을 검증한다. 이것은 C-014와 다른 명제다. torus의 Laplacian이 실제로 해당 D라는 분석적 증명, Fréchet 미분의 domain/regularity, PDE 해의 존재·유일성, spectrum/topology/index는 포함하지 않는다. 원본과 로컬 재현법은 [formal 안내](../formal/README.md)를 따른다. 2026-10-08에는 고정 cloud endpoint의 실제 검증 27/27과 증명 포함 ZIP의 fresh proof replay가 통과했다. 정확한 배포·source·환경·세션 근거는 [최신 검증 기록](STAGE8_RELEASE_REQUIREMENTS.md#current-evidence)을 참고하며, 이 과거 성공을 변경된 source·환경·세션의 현재 proof로 재사용하지 않는다.
 
 ## 3D와 복소 ζ 화면
 
@@ -67,7 +67,7 @@ Stage 5, 6, 7의 3D 패널에서 모드를 선택하고 `Render 3D`를 누른다
 - Research Graph의 3D 표시는 최대 120개 source node의 배치이다. 전체 노드 검색, 페이지 이동, 각 노드의 `Inspect`는 2D graph 아래 표를 이용한다. canvas의 간선은 해당 페이지 내부만 나타내며 inspector는 페이지 밖 의존성도 보여 준다.
 - 복소 ζ는 `x=Re(s), y=Im(s), z=log(1+|ζ(s)|)`와 위상 색상으로 표시한다. 극점 근처는 mask한다. 흰 점은 알려진 영점 높이의 참고 표시이며 영점 인증이 아니다.
 - `CLOUD NUMERICAL`과 브라우저 근사 fallback은 구분한다. fallback이 표시되면 `Render 3D`로 cloud 요청을 다시 시도할 수 있다. `Riemann ζ ≠ Spectral ζ`, `zeroCertification: NONE`을 유지한다.
-- `Cancel zeta sampling / request`는 로컬 worker를 종료하거나 브라우저 요청을 취소한다. 서버 작업 종료 확인은 별도로 필요하다.
+- `Cancel zeta sampling / request`는 현재 실행이 로컬 sampling worker이면 그 worker를 종료하고, 서버 작업 API를 사용하는 cloud ζ이면 해당 작업의 취소를 요청한다. cloud 종료는 `cancellationConfirmed:true`와 `workerStopped:true`인 응답으로 확인한다. 연결이 끊겨 확인하지 못하면 종료 미확인 상태로 남기며, 취소 후 도착한 sample을 현재 화면의 새 결과로 확정하지 않는다.
 
 ## 성능 검사
 
