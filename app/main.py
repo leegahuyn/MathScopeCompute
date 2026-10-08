@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.adapters import ADAPTERS
 from app.models import AdapterResult, RunRequest
+from app.golden import ReplayRequest, replay
 from app.provenance import APP_VERSION, environment_fingerprint, utc_now
 
 app = FastAPI(
@@ -56,6 +57,7 @@ def capabilities() -> dict:
         "service": "MathScopeCompute",
         "version": APP_VERSION,
         "implemented": [
+            {"name": "golden.elliptic-torus.v1", "scope": "connected same-session A-B-C-D flat-torus nonlinear elliptic fixture and executable numerical replay", "evidence": "NUMERICAL INDICATOR"},
             {"name": "ode.ivp.v1", "scope": "sampled numerical IVP trajectories", "evidence": "NUMERICAL INDICATOR"},
             {"name": "optimization.poisson-amplitude.v1", "scope": "finite-grid one-parameter PDE optimization", "evidence": "NUMERICAL INDICATOR"},
             {"name": "poisson.fd.v1", "scope": "finite-grid Dirichlet Poisson solve", "evidence": "NUMERICAL INDICATOR"},
@@ -308,3 +310,16 @@ def run_adapter(request: RunRequest) -> AdapterResult:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
     except Exception as exc:
         raise HTTPException(status_code=500, detail="Adapter execution failed") from exc
+
+
+@app.post("/v1/replay")
+def replay_golden(request: ReplayRequest) -> dict:
+    started_at = utc_now()
+    started = time.perf_counter()
+    try:
+        outcome = replay(request)
+        elapsed_ms = (time.perf_counter() - started) * 1000.0
+        outcome["result"] = outcome["result"].model_copy(update={"jobId": str(uuid.uuid4()), "startedAt": started_at, "completedAt": utc_now(), "elapsedMs": elapsed_ms, "logs": ["adapter=golden.elliptic-torus.v1", "executable-replay=" + outcome["status"], f"elapsedMs={elapsed_ms:.3f}"]})
+        return outcome
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
