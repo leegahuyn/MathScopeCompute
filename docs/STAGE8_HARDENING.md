@@ -48,3 +48,20 @@ not just panels whose reference fixtures can be run separately.
 Stage 8 backend complex-zeta adapter is a reference implementation.
 The final release gate must remain HOLD until the browser E2E, bundle import/export replay,
 cross-stage golden fixture and performance/accessibility probes have evidence.
+
+## Audit fixes (not a release freeze)
+
+Spectrum adapter 0.1.1 supplies a fixed ARPACK start vector so repeated requests
+in the same numerical environment reproduce the result hash. This is not a
+cross-platform bitwise-reproducibility guarantee. The environment fingerprint
+now includes mpmath, which is part of the complex-zeta calculation.
+
+Index adapter 0.1.1 does not reuse the zero-candidate Laplace kernel/cokernel for
+an arbitrary nonlinear candidate, nor for a small but nonzero potential. It
+records the full lower-order expression lambda - 3(u*)^2 and leaves unevaluated
+dimensions unknown. A near-zero numerical principal-symbol eigenvalue now
+leaves ellipticity unresolved rather than asserting a characteristic locus.
+
+These regressions do not execute the full Golden ResearchSession or a bundle
+replay. The compute service has no Lean verifier and still cannot issue formal
+evidence. Stage 8 remains HOLD pending the outstanding integration gates.

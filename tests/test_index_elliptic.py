@@ -1,4 +1,5 @@
 import math
+import pytest
 
 from app.adapters.index_elliptic import EllipticIndexReferenceAdapter
 
@@ -101,3 +102,38 @@ def test_nonlinear_bridge_explicitly_passes_through_linearization():
     assert bridge["principalSymbolRef"] == rep["PrincipalSymbolSpec"]["id"]
     assert bridge["globalNonlinearSolvabilityStatus"] == "NOT ESTABLISHED"
     assert bridge["globalNonlinearStabilityStatus"] == "NOT ESTABLISHED"
+
+
+@pytest.mark.parametrize("candidate", ["u*=1", "arbitrary field u*", {"values": [1, 2]}])
+def test_nonzero_or_unevaluated_candidate_does_not_inherit_laplace_kernel(candidate):
+    result = EllipticIndexReferenceAdapter().run(
+        {"model": "nonlinear_elliptic_linearization", "lambda": 0, "candidate": candidate}, {})
+    rep = _by_type(result)
+    assert rep["IndexSpec"]["kernelDimension"] is None
+    assert rep["IndexSpec"]["cokernelDimension"] is None
+    assert rep["IndexSpec"]["invertible"] is None
+    assert rep["NonlinearIndexBridgeSpec"]["bifurcationWarning"] is None
+    assert rep["NonlinearIndexBridgeSpec"]["candidateResidualStatus"] == "NOT EVALUATED BY STRUCTURAL ADAPTER"
+    assert "- 3(u*)^2" in rep["DifferentialOperatorSpec"]["lowerOrderTerm"]
+
+
+def test_small_positive_definite_symbol_is_unresolved_not_a_false_counterexample():
+    result = EllipticIndexReferenceAdapter().run(
+        {"model": "custom_quadratic_symbol", "quadraticForm": [[1, 0], [0, 1e-12]]}, {})
+    rep = _by_type(result)
+    assert rep["EllipticityResult"]["status"] == "UNRESOLVED NEAR TOLERANCE"
+    assert rep["EllipticityResult"]["characteristicDirectionFound"] is False
+    assert rep["PrincipalSymbolSpec"]["characteristicDirections"] == []
+    assert rep["KTheorySpec"]["symbolClassRef"] is None
+
+
+def test_small_nonzero_potential_does_not_inherit_exact_laplace_kernel():
+    result = EllipticIndexReferenceAdapter().run(
+        {"model": "nonlinear_elliptic_linearization", "lambda": 1e-13, "candidate": "u*=0"}, {})
+    assert _by_type(result)["IndexSpec"]["kernelDimension"] is None
+
+
+@pytest.mark.parametrize("bad", [-1, float("nan"), float("inf")])
+def test_invalid_symbol_tolerance_is_rejected(bad):
+    with pytest.raises(ValueError):
+        EllipticIndexReferenceAdapter().run({"tolerance": bad}, {})
