@@ -17,7 +17,7 @@ from app.provenance import environment_fingerprint, sha256_json, utc_now
 
 class ComplexZetaSurfaceAdapter(Adapter):
     name = "advanced.zeta-complex-surface.v1"
-    version = "0.1.0"
+    version = "0.1.1"
 
     def run(self, input_spec: dict[str, Any], environment: dict[str, Any]) -> AdapterResult:
         x0 = float(input_spec.get("realMin", 0.2))
@@ -40,19 +40,19 @@ class ComplexZetaSurfaceAdapter(Adapter):
 
         ctx = mp.clone()  # independent precision context, no mutation of global mpmath mp.dps
         vertices: list[dict[str, Any]] = []
-        masked = 0
+        pole_masked = 0
+        evaluation_masked = 0
+        sampled = 0
         clipped = 0
         max_discrepancy = 0.0
         near_zero = 0
-        sample_count = 0
 
         for j in range(ny):
             y = y0 + (y1 - y0) * j / (ny - 1)
             for i in range(nx):
                 x = x0 + (x1 - x0) * i / (nx - 1)
-                sample_count += 1
                 if math.hypot(x - 1.0, y) < radius:
-                    masked += 1
+                    pole_masked += 1
                     vertices.append({"x": x, "y": y, "status": "POLE_MASKED", "height": None,
                                      "phase": None, "magnitude": None, "re": None, "im": None,
                                      "precisionDiscrepancy": None})
@@ -85,23 +85,44 @@ class ComplexZetaSurfaceAdapter(Adapter):
                         "precisionDiscrepancy": discrepancy,
                         "status": "HEIGHT_CLIPPED" if saturated else "SAMPLED",
                     })
+                    sampled += 1
                 except (ValueError, ZeroDivisionError, OverflowError, ArithmeticError):
-                    masked += 1
+                    evaluation_masked += 1
                     vertices.append({"x": x, "y": y, "status": "EVALUATION_MASKED", "height": None,
                                      "phase": None, "magnitude": None, "re": None, "im": None,
                                      "precisionDiscrepancy": None})
 
+        if sampled == 0:
+            raise ValueError(
+                "complex zeta calculation unavailable: no valid sampled points "
+                f"({pole_masked} pole-masked, {evaluation_masked} evaluation-masked)"
+            )
+
+        counts = {
+            "sampledCount": sampled,
+            "poleMaskedCount": pole_masked,
+            "evaluationMaskedCount": evaluation_masked,
+            "maskedCount": pole_masked + evaluation_masked,
+            "heightClippedCount": clipped,
+        }
+        function = {
+            "id": "riemann-zeta-stage8",
+            "type": "RiemannZetaSpec",
+            "definition": "zeta(s) = sum_{n>=1} n^{-s} for Re(s)>1, with meromorphic continuation elsewhere",
+            "pole": {"at": {"re": 1, "im": 0}, "order": 1},
+            "reference": "NIST DLMF §25.2",
+        }
         spec = {
             "id": "complex-zeta-surface-stage8",
             "type": "ComplexZetaSurfaceSpec",
-            "functionRef": "RiemannZetaSpec",
+            "functionRef": function["id"],
             "functionName": "Riemann zeta",
             "domain": {"realMin": x0, "realMax": x1, "imagMin": y0, "imagMax": y1},
             "grid": {"realSamples": nx, "imagSamples": ny, "pointCount": nx * ny, "ordering": "imag-major"},
             "representation": {
                 "id": "complex-zeta-representation-stage8",
                 "type": "RepresentationSpec",
-                "sourceObjectRef": "RiemannZetaSpec",
+                "sourceObjectRef": function["id"],
                 "method": "complex-domain-height-phase",
                 "mapDefinition": "(Re s, Im s, log(1+|zeta(s)|)), phase arg(zeta(s)) -> hue",
                 "displayDim": 3,
@@ -109,7 +130,7 @@ class ComplexZetaSurfaceAdapter(Adapter):
                 "phaseEncodedAsColor": True,
                 "phaseIsSpatialDimension": False,
                 "intrinsicComplexGeometryPreserved": False,
-                "fidelityVector": {"precisionDiscrepancyMax": max_discrepancy, "poleMaskedCount": masked, "heightClippedCount": clipped},
+                "fidelityVector": {"precisionDiscrepancyMax": max_discrepancy, **counts},
                 "evidenceGrade": "NUMERICAL INDICATOR",
                 "status": "NUMERICAL VISUALIZATION ONLY",
             },
@@ -122,8 +143,7 @@ class ComplexZetaSurfaceAdapter(Adapter):
             "precisionDiscrepancyIsCertifiedBound": False,
             "nearZeroThreshold": 0.05,
             "nearZeroSampleCount": near_zero,
-            "maskedCount": masked,
-            "heightClippedCount": clipped,
+            **counts,
             "riemannZetaEqualsSpectralZeta": False,
             "zeroCertification": "NONE",
             "status": "NUMERICALLY SAMPLED / NOT THEOREM",
@@ -133,7 +153,9 @@ class ComplexZetaSurfaceAdapter(Adapter):
         inputs_hash = sha256_json({"adapter": self.name, "inputSpec": input_spec})
         environment_hash = sha256_json(env)
         result_hash = sha256_json({"adapter": self.name, "version": self.version, "input": inputs_hash,
-                                   "environment": environment_hash, "representation": spec})
+                                   "environment": environment_hash, "representation": spec,
+                                   "function": function})
+        raw_refs = input_spec.get("sourceRevisionRefs", input_spec.get("upstreamRevisions", []))
         evidence = EvidenceRecord(
             id=f"ev-complex-zeta-{inputs_hash[:12]}",
             grade="NUMERICAL INDICATOR",
@@ -141,29 +163,35 @@ class ComplexZetaSurfaceAdapter(Adapter):
             method="mpmath complex zeta sampling at two working precisions",
             inputsHash=inputs_hash,
             environmentHash=environment_hash,
-            residuals={"maxPrecisionDiscrepancy": max_discrepancy, "nearZeroSamples": near_zero},
+            residuals={"maxPrecisionDiscrepancy": max_discrepancy, "nearZeroSamples": near_zero, **counts},
             errorBounds=None,
             assumptions=["finite complex grid", "s=1 pole excluded by radius",
+                         "numerical indicators cover successfully sampled points only",
                          "precision discrepancy is not a certified numerical error bound",
                          "phase is shown as color, not spatial coordinate",
                          "Riemann zeta is distinct from spectral zeta"],
             generatedAt=utc_now(),
             adapterVersion=self.version,
-            upstreamRevisions=[str(x) for x in input_spec.get("sourceRevisionRefs", [])],
+            upstreamRevisions=[str(x) for x in raw_refs] if isinstance(raw_refs, list) else [],
             stale=False,
             scope="scoped 3D Riemann-zeta reference only / no proof or spectral identity",
         )
+        diagnostics = [
+            Diagnostic(level="warning", code="ZETA_3D_PROJECTION", message="3D height/phase is a representation, not the original complex graph or proof."),
+            Diagnostic(level="warning", code="NUMERICAL_UNCERTAINTY", message="Differences between working precisions are diagnostics, NOT rigorous absolute error bounds."),
+        ]
+        if evaluation_masked:
+            diagnostics.append(Diagnostic(
+                level="warning", code="ZETA_EVALUATION_MASKED",
+                message=f"{evaluation_masked} evaluations failed; numerical indicators cover only {sampled} valid sampled points.",
+            ))
         return AdapterResult(
             adapter=self.name, adapterVersion=self.version, status="completed",
-            outputRepresentations=[spec], evidenceRecords=[evidence],
-            diagnostics=[
-                Diagnostic(level="warning", code="ZETA_3D_PROJECTION", message="3D height/phase is a representation, not the original complex graph or proof."),
-                Diagnostic(level="warning", code="NUMERICAL_UNCERTAINTY", message="Differences between working precisions are diagnostics, NOT rigorous absolute error bounds."),
-            ],
-            residuals={"maxPrecisionDiscrepancy": max_discrepancy, "maskedCount": masked,
-                       "heightClippedCount": clipped},
+            outputRepresentations=[spec, function], evidenceRecords=[evidence],
+            diagnostics=diagnostics,
+            residuals={"maxPrecisionDiscrepancy": max_discrepancy, **counts},
             errorBounds=None,
-            provenanceEdges=[{"relation": "representedBy", "from": "RiemannZetaSpec",
+            provenanceEdges=[{"relation": "representedBy", "from": function["id"],
                               "to": "complex-zeta-representation-stage8"}],
             reproducibilityHash=result_hash, environment=env,
         )

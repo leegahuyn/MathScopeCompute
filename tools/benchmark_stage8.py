@@ -1,5 +1,12 @@
 """Deterministic small Stage8 backend benchmark. Run: python tools/benchmark_stage8.py"""
 import json, time
+from pathlib import Path
+import sys
+
+# Direct invocation puts tools/ on sys.path, not the application root.
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from app.adapters.zeta_complex import ComplexZetaSurfaceAdapter
 from app.adapters.advanced_research import SpectralFlowReferenceAdapter
 def timed(adapter, spec):

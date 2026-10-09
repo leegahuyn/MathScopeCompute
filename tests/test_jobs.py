@@ -81,6 +81,31 @@ def test_real_process_zeta_run(manager):
     assert done["result"]["evidenceRecords"][0]["grade"] == "NUMERICAL INDICATOR"
 
 
+def test_pole_only_grid_fails_in_worker_without_a_result(manager):
+    ticket = manager.submit(RunJobRequest(
+        kind="run", adapter="advanced.zeta-complex-surface.v1", inputSpec={
+            "realMin": 0.99, "realMax": 1.01,
+            "imagMin": -0.01, "imagMax": 0.01,
+            "realSamples": 4, "imagSamples": 4, "poleExclusionRadius": 0.4,
+        },
+    ))
+    done = wait_for(manager, ticket, {"completed", "failed", "timed_out"})
+    assert done["status"] == "failed" and done["workerStopped"]
+    assert "result" not in done
+    assert "no valid sampled points" in done["error"]["message"]
+
+
+def test_same_source_revision_replay_fails_in_worker_without_a_result(manager, record):
+    ticket = manager.submit(ReplayJobRequest(
+        kind="replay", record=record,
+        targetSessionId=record["sourceSessionId"], targetRevision=record["sourceRevision"],
+    ))
+    done = wait_for(manager, ticket, {"completed", "failed", "timed_out"})
+    assert done["status"] == "failed" and done["workerStopped"]
+    assert "result" not in done
+    assert "newer target revision" in done["error"]["message"]
+
+
 def test_actual_executing_child_terminated_joined_and_never_returns_late_result(manager):
     ticket = manager.submit(zeta_request(big=True))
     executing = wait_for(manager, ticket, {"executing", "completed", "failed"})
