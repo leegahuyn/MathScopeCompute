@@ -32,7 +32,10 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate preserved source and English metadata
-        run: python3 tools/verify_english_release.py
+        run: |
+          python3 tools/verify_english_release.py
+          python3 -B -m unittest discover -s tools -p test_addon_boundaries.py -v
+          python3 -B -m unittest discover -s ../tools/ns-original-ci -p test_git_status.py -v
       - name: Run Worker, integration, and English launcher regressions
         run: node --test mathscope-m1/tests/core.test.mjs mathscope-m1/tests/followup-integration.test.mjs tools/mathscope-en.test.mjs
       - name: Install the pinned independent reference dependency
@@ -45,3 +48,16 @@ jobs:
           python3 -B mathscope-m1/navier/followup-next/outer-uniform/test_outer_audit.py
       - name: Check the separate source-parameter path and immutable baseline
         run: python3 -B mathscope-m1/navier/followup-next/source-coherence/independent_variant.py
+      - name: Reproduce the new outer bounds and actual continuous pulse integral
+        run: |
+          python3 -B mathscope-m1/navier/followup-20261010-outer-reselection/independent-axial/verify_axial_bounds.py
+          python3 -B mathscope-m1/navier/followup-20261010-outer-reselection/check_outer_envelopes.py
+          python3 -B mathscope-m1/navier/followup-20261010-outer-reselection/independent-postpulse/check_bounds.py
+          python3 -B mathscope-m1/navier/followup-20261010-outer-reselection/certify_main_pulse_integral.py
+          python3 -B mathscope-m1/navier/followup-20261010-outer-reselection/verify_pulse_integral_independent.py
+          python3 -B -m unittest discover -s mathscope-m1/navier/followup-20261010-outer-reselection -p test_outer_envelopes.py -v
+      - name: Verify that reproduction preserved all published source and evidence bytes
+        run: |
+          python3 -B mathscope-m1/navier/followup-20261010-outer-reselection/verify_final_snapshot.py
+          python3 -B mathscope-m1/navier/followup-20261010-ci-audit/verify-default-build.py
+          python3 tools/verify_english_release.py

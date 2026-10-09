@@ -1,0 +1,98 @@
+{
+  "schema": "MathScope.N105CompletionFollowup/1",
+  "recordedUTC": "2026-10-09T21:00:38.439339+00:00",
+  "status": "REQUESTED_WHOLE_DEFAULT_BUILD_CONDITION_SATISFIED",
+  "originalAcceptanceFile": "../../evidence/original-acceptance.json",
+  "originalAcceptanceFileSHA256": "854f67efad0f6d0cda7ab784611e5352b753ddd297fbac5a1382f4032ba02dc2",
+  "originalAcceptance": "선택 commit에서 lake exe cache get 및 lake build의 종료 코드·전체 로그·환경 해시를 보존한다. 이 설계 작성 시에는 재빌드 미수행이다.",
+  "requestedRemainingCondition": "Successful termination of the complete original default build.",
+  "executionProfile": "Pinned official Lean 4.34.0-rc2 kernel through the already documented explicit installation-path entry; no stock-launcher success claim.",
+  "sourceCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+  "toolchain": "leanprover/lean4:v4.34.0-rc2",
+  "defaultBuild": {
+    "actualCommand": [
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-4.34.0-rc2-linux/bin/lake",
+      "build"
+    ],
+    "actualExitCode": 0,
+    "completedUTC": "2026-10-09T20:59:06.787843+00:00",
+    "elapsedSeconds": 655.5342379439971,
+    "reportedJobs": 11424,
+    "result": "result.json",
+    "resultSHA256": "96820a64bdb5a722901c7e8172e638a03b22854940dbbd0e038745fcc6672268",
+    "completeLog": "default-build.log",
+    "logSHA256": "cd90dc7cf0499cb6ed94415c01ab991d1ee439b42172ea43ab16d894977a8e23",
+    "environmentCanonicalSHA256": "325028d4c5f253cc800238f66914766be1b9c184317dda54b575c36ce902c802",
+    "defaultTargets": [
+      "NavierStokes",
+      "Euler",
+      "ComparatorChallenges"
+    ],
+    "finalModuleInventory": {
+      "NavierStokes": {
+        "sourceFiles": 817,
+        "oleanArtifactsPresent": 817,
+        "oleanArtifactsMissing": 0
+      },
+      "Euler": {
+        "sourceFiles": 1840,
+        "oleanArtifactsPresent": 1840,
+        "oleanArtifactsMissing": 0
+      },
+      "ComparatorChallenges": {
+        "sourceFiles": 2,
+        "oleanArtifactsPresent": 2,
+        "oleanArtifactsMissing": 0
+      }
+    }
+  },
+  "independentVerification": {
+    "file": "independent-completion-verification.json",
+    "sha256": "e79ce415bc064c304cb6ac69db0eedce4175d5ab2e6653b60c2cd27d77e099e2",
+    "passed": 29,
+    "total": 29,
+    "originalSourceInputsAndKernelUnchanged": true
+  },
+  "cacheEvidence": {
+    "file": "cache-prerequisite-link.json",
+    "sha256": "903b1bfb4e7d8cb5d32d0988e63df3d6da6244f48b0e34435424fb0b482c0933",
+    "literalCommandExitCodes": [
+      1,
+      1,
+      1
+    ],
+    "explicitPinnedCacheMContextExitCode": 0,
+    "downloadedAndDecompressed": 8747,
+    "literalCacheCommandSuccessClaimed": false
+  },
+  "originalWarningsPreserved": {
+    "challengeTemplateSorryWarnings": 4,
+    "locations": [
+      "ComparatorChallenges/NavierStokes.lean:273",
+      "ComparatorChallenges/NavierStokes.lean:280",
+      "ComparatorChallenges/Euler.lean:85",
+      "ComparatorChallenges/Euler.lean:170"
+    ],
+    "meaning": "These are warnings from the unchanged original challenge templates. A successful Lake build is not the independent guarded Comparator.",
+    "printedSubmissionAxiomLines": [
+      "info: NavierStokes/ComparatorSolution.lean:31:0: 'NavierStokes.Comparator.navier_stokes_breakdown_R3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "info: NavierStokes/ComparatorSolution.lean:32:0: 'NavierStokes.Comparator.navier_stokes_breakdown_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "info: Euler/Solution.lean:73:0: 'Euler.euler_breakdown_R3' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "info: Euler/Solution.lean:75:0: 'Euler.exists_compact_smooth_euler_singularity' depends on axioms: [propext, Classical.choice, Quot.sound]"
+    ]
+  },
+  "earlierAttemptsPreserved": [
+    "../followup-20261010-default-build/result.json",
+    "../followup-20261010-default-build-resume-2016/current-stage.json",
+    "previous-interruption-observation.json"
+  ],
+  "guards": {
+    "minimumFreeDiskBytes": 805306368,
+    "oomKillCountMayIncrease": false
+  },
+  "originalAcceptanceModified": false,
+  "wholeDefaultBuildPassed": true,
+  "independentComparatorCompleted": false,
+  "numericalLeadingProfileCertified": false,
+  "globalOuterConeCertified": false
+}

@@ -1,0 +1,37 @@
+MathScope.OuterReselection.normalized_threshold_nine {c j v p : ℝ} (hcmin : 63 / 64 ≤ c) (hcmax : c ≤ 65 / 64)
+  (hv0 : 0 ≤ v) (hvmax : v ≤ 65 / 32) (hgmin : 31 / 16 ≤ 2 * c ^ 2 - (v - 2) * j ^ 2) (hp : 9 ≤ p) :
+  2 < p * c ∧ v < NavierStokes.ConeAlgebra.coneBound (p * c) (p * j)
+'MathScope.OuterReselection.normalized_threshold_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.OuterReselection.paper_relaxed_threshold_nine {b w p : ℝ} (hcmin : 63 / 64 ≤ 1 - b * w / 2)
+  (hcmax : 1 - b * w / 2 ≤ 65 / 64) (hvmax : 2 + b ^ 2 / 2 ≤ 65 / 32)
+  (hgmin : 31 / 16 ≤ 2 * (1 - b * w / 2) ^ 2 - (2 + b ^ 2 / 2 - 2) * (w + b / 2) ^ 2) (hp : 9 ≤ p) :
+  NavierStokes.SeedConePaper.RelaxedCone 2 b p (w * p)
+'MathScope.OuterReselection.paper_relaxed_threshold_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.OuterReselection.paper_admissible_threshold_nine {b w p : ℝ} (hcmin : 63 / 64 ≤ 1 - b * w / 2)
+  (hcmax : 1 - b * w / 2 ≤ 65 / 64) (hvmax : 2 + b ^ 2 / 2 ≤ 65 / 32)
+  (hgmin : 31 / 16 ≤ 2 * (1 - b * w / 2) ^ 2 - (2 + b ^ 2 / 2 - 2) * (w + b / 2) ^ 2) (hp : 9 ≤ p)
+  (hstrict : 2 < NavierStokes.SeedConePaper.shearMagnitude 2 b) :
+  NavierStokes.SeedConePaper.AdmissibleCone 2 b p (w * p)
+'MathScope.OuterReselection.paper_admissible_threshold_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.OuterReselection.zero_axial_shear_is_not_admissible (p w : ℝ) :
+  ¬NavierStokes.SeedConePaper.AdmissibleCone 2 0 p (w * p)
+'MathScope.OuterReselection.zero_axial_shear_is_not_admissible' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+MathScope.OuterReselection.normalized_outer_threshold {c j v p : ℝ} (hcmin : 1 / 3 ≤ c) (hcmax : c ≤ 2259) (hv0 : 0 ≤ v)
+  (hvmax : v ≤ 116) (hgmin : 1 / 4 ≤ 2 * c ^ 2 - (v - 2) * j ^ 2) (hp : 2 ^ 24 ≤ p) :
+  2 < p * c ∧ v < NavierStokes.ConeAlgebra.coneBound (p * c) (p * j)
+'MathScope.OuterReselection.normalized_outer_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.OuterReselection.paper_relaxed_outer_threshold {a b w p : ℝ} (ha : 0 < a) (hcmin : 1 / 3 ≤ 1 - b * w / a)
+  (hcmax : 1 - b * w / a ≤ 2259) (hv0 : 0 ≤ NavierStokes.SeedConePaper.shearMagnitude a b)
+  (hvmax : NavierStokes.SeedConePaper.shearMagnitude a b ≤ 116)
+  (hgmin : 1 / 4 ≤ 2 * (1 - b * w / a) ^ 2 - (NavierStokes.SeedConePaper.shearMagnitude a b - 2) * (w + b / a) ^ 2)
+  (hp : 2 ^ 24 ≤ p) : NavierStokes.SeedConePaper.RelaxedCone a b p (w * p)
+'MathScope.OuterReselection.paper_relaxed_outer_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.OuterReselection.paper_admissible_outer_threshold {a b w p : ℝ} (ha : 0 < a) (hcmin : 1 / 3 ≤ 1 - b * w / a)
+  (hcmax : 1 - b * w / a ≤ 2259) (hv0 : 0 ≤ NavierStokes.SeedConePaper.shearMagnitude a b)
+  (hvmax : NavierStokes.SeedConePaper.shearMagnitude a b ≤ 116)
+  (hgmin : 1 / 4 ≤ 2 * (1 - b * w / a) ^ 2 - (NavierStokes.SeedConePaper.shearMagnitude a b - 2) * (w + b / a) ^ 2)
+  (hp : 2 ^ 24 ≤ p) (hstrict : 2 < NavierStokes.SeedConePaper.shearMagnitude a b) :
+  NavierStokes.SeedConePaper.AdmissibleCone a b p (w * p)
+'MathScope.OuterReselection.paper_admissible_outer_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]

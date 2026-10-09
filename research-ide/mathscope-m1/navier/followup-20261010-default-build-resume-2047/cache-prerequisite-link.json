@@ -1,0 +1,96 @@
+{
+  "schema": "MathScope.N1CachePrerequisiteEvidenceLink/1",
+  "recordedUTC": "2026-10-09T20:56:29.215207+00:00",
+  "status": "VANILLA_EXIT_CODES_PRESERVED_AND_PINNED_CONTEXT_DOWNLOAD_COMPLETE",
+  "originalAcceptance": "선택 commit에서 lake exe cache get 및 lake build의 종료 코드·전체 로그·환경 해시를 보존한다. 이 설계 작성 시에는 재빌드 미수행이다.",
+  "literalCommandRuns": [
+    {
+      "receipt": "../official-validation/official-command-results.json",
+      "receiptSHA256": "20bc6b959264427c3ec28e37a8176909a97a2e84a27dc1f5968082681f8dc737",
+      "entryIndex": 2,
+      "stage": "lake-cache-get",
+      "actualCommand": [
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-4.34.0-rc2-linux/bin/lake",
+        "exe",
+        "cache",
+        "get"
+      ],
+      "actualExitCode": 1,
+      "completeLog": "../official-validation/lake-cache-get.log",
+      "logSHA256": "dfce1e7d6849bcb01696e698fae3345a66f15495d7e36f99ac1293476a5bd045",
+      "environmentCanonicalSHA256": "45584b1178c571d2bec0ffcd8006b4852a7730d1bd673345bb3fec2aab4bdb33"
+    },
+    {
+      "receipt": "../official-validation/official-explicit-command-results.json",
+      "receiptSHA256": "8a42d8f1ed6c1f603ca164d1c2b7e55fda1604b2839377ecf3c7f43f461b0999",
+      "entryIndex": 0,
+      "stage": "lake-cache-get-explicit",
+      "actualCommand": [
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-4.34.0-rc2-linux/bin/lake",
+        "exe",
+        "cache",
+        "get"
+      ],
+      "actualExitCode": 1,
+      "completeLog": "../official-validation/lake-cache-get-explicit.log",
+      "logSHA256": "3f4ae63e676a74ec55c851d6fbd60f204df790f05f215d8aa59c96ce18d21594",
+      "environmentCanonicalSHA256": "deafb436a4fd6bb1c35fb7286ee6b3c812c521a7b9252f16cd9f8d0633e721e2"
+    },
+    {
+      "receipt": "../official-validation/official-wrapper-command-results.json",
+      "receiptSHA256": "1c18481fa0fec61b0f5b66cae8ef6aa1ce92b64bb7be7080c34231d61e3dbfff",
+      "entryIndex": 0,
+      "stage": "lake-cache-get-wrapper",
+      "actualCommand": [
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-4.34.0-rc2-linux/bin/lake",
+        "exe",
+        "cache",
+        "get"
+      ],
+      "actualExitCode": 1,
+      "completeLog": "../official-validation/lake-cache-get-wrapper.log",
+      "logSHA256": "b24a591ae2079621b037cfc32aaaccd490ed4e5643f8b6863a6f03965a9acf42",
+      "environmentCanonicalSHA256": "325028d4c5f253cc800238f66914766be1b9c184317dda54b575c36ce902c802"
+    }
+  ],
+  "explicitContextSuccess": {
+    "receipt": "../official-validation/cache-context-result.json",
+    "receiptSHA256": "6a1ad5899bfeae5feb14f0e4e82a6e1315ffd59699578059642be18ce8a7f024",
+    "actualCommand": [
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-rc2-entry",
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-4.34.0-rc2-linux",
+      "--run",
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/CacheEntryExplicit.lean",
+      "get"
+    ],
+    "actualExitCode": 0,
+    "elapsedSeconds": 1220.368528572002,
+    "completeLog": "../official-validation/cache-context-explicit.log",
+    "logSHA256": "6e01f287ffad23379ad402dd872baeb7f38032d059e90fe4795a6553359273f1",
+    "environmentCanonicalSHA256": "4aed8a5dd3d656c855cf6bb7bf3148b36eb6bb6dcc28b2854ccac2e9b2b5624a",
+    "downloaded": 8747,
+    "attempted": 8747,
+    "decompressed": 8747,
+    "finalLogRecords": [
+      "Downloaded: 8747 file(s) [attempted 8747/8747 = 100%, 2 KB/s], Decompressed: 8742\u001b[K",
+      "Decompressed 8747 file(s)",
+      "Already decompressed 8747 file(s)"
+    ],
+    "originalCacheMainSourceSHA256": "35d03393e763050c23a918b4f3ca513f3c86492c07d589ba4d2164586b5b8cf7",
+    "adapterSHA256": "f594e7aba0f1d4f3982513664517eaca3993522b5190858dd24f34e44d347620",
+    "adapterDescription": "Original Cache.Main command body and options remain unchanged. Replace only CacheM.run environment autodetection with ReaderT.run action and exact pinned source-path context.",
+    "adapterProvenance": "../official-validation/cache-entry.json",
+    "adapterDiff": "../official-validation/cache-entry.diff"
+  },
+  "environmentHashSerialization": "UTF-8 JSON, keys sorted, separators comma and colon without spaces; hash is SHA-256 of the exact recorded environment mapping.",
+  "checks": {
+    "literalCommandExitAndCompleteLogsPreserved": true,
+    "literalCacheCommandExitZero": false,
+    "pinnedCacheMainContextExitZero": true,
+    "all8747DownloadedAndDecompressed": true,
+    "completeLogHashesMatch": true,
+    "originalCacheSourceAndAdapterHashesMatch": true,
+    "downloadsRepeatedForThisFollowup": false
+  },
+  "scope": "The literal lake exe cache get attempts returned 1, including the final application-location failure. The original Cache.Main body completed successfully only through the already documented explicit pinned CacheM context. These two facts must not be merged into a fabricated literal-command exit 0. The full default build and its original-input checks are separate receipts."
+}

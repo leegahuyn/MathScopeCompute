@@ -11,7 +11,8 @@ The [English research workspace](research-ide/README.md) contains the M0 executi
 - [English installation and reproducibility guide](research-ide/docs/INSTALL_AND_REPRODUCIBILITY_EN.md)
 - [Current mathematical status and open obligations](research-ide/docs/CURRENT_STATUS_EN.md)
 - [All original acceptance criteria in English](research-ide/docs/ACCEPTANCE_CRITERIA_EN.md)
-- [Full English ZIP release](https://github.com/leegahuyn/MathScopeCompute/releases/tag/mathscope-research-en-2026.10.10.1)
+- [Full English ZIP release](https://github.com/leegahuyn/MathScopeCompute/releases/tag/mathscope-research-en-2026.10.10.2)
+- [Verified original build and current nine-condition assessment](research-ide/docs/VERIFICATION_2026_10_10_2_EN.md)
 - [Pinned original Lean and protected Comparator workflow](https://github.com/leegahuyn/MathScopeCompute/actions/workflows/ns-original-verification.yml)
 
 With Node.js 24 or later, run a bounded computation locally:

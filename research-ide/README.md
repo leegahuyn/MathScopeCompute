@@ -4,7 +4,9 @@ MathScope connects a mathematical object, its assumptions, a bounded computation
 
 The computation sources and historical evidence are preserved from **v54 / `16f4f911`**. The M1 engine is `1.2.0`, the NS engine is `1.3.0-m1`, and the installed registry contains **59 runnable examples**. The original v54 acceptance assessment is **61 PASS / 7 PARTIAL / 2 BLOCKED out of 70 criteria**: the six remaining M0 items passed, while a complete certified NS leading profile remained unfinished. See [current status](docs/CURRENT_STATUS_EN.md) before interpreting any result as a completed milestone.
 
-The new outer audit **rejects the current `Md=1`, `logP=14` global candidate**: its `Pc` is negative at a rigorously enclosed interior point. The added continuous moment and joining certificates retain their local scopes. The [follow-up addendum](docs/FOLLOWUP_2026_10_10_EN.md) includes the counterexample, the exact-domain results, the new source-parameter regeneration CLI, and the remaining original gates.
+The latest [verified execution follow-up](docs/VERIFICATION_2026_10_10_2_EN.md) completes the requested original whole default build with actual exit 0 and 29 independent preservation checks. Seven conditional cone statements also compiled on the original rc2 kernel. Of the nine reported remaining conditions, one is satisfied and eight remain open; the protected Comparator remains separate.
+
+The earlier outer audit **rejects the `Md=1`, `logP=14` global candidate**: its `Pc` is negative at a rigorously enclosed interior point. The [first follow-up addendum](docs/FOLLOWUP_2026_10_10_EN.md) preserves that result and the valid local certificates. A [new quantitative outer construction](docs/OUTER_RESELECTION_2026_10_10_EN.md) uses new exact parameter expressions, continuous moment roots, independently reviewed bounds and an actual outward pulse-integral enclosure. Its full new axis, joining, modulation and heat-exterior chain remains unfinished.
 
 **[Open the deployed MathScope research workspace](https://project29770.websitepublisher.ai/v0.3.1.html#research-objects/ns)**
 

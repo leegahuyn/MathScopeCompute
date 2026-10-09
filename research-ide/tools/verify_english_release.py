@@ -58,15 +58,27 @@ def edition_files():
     return dict(sorted(result.items()))
 
 
+def validate_addon_root(directory: str):
+    """Limit an explicit allowlist entry to a single dated or next-step addition."""
+    require(isinstance(directory, str), 'Addon roots must be strings.')
+    pure = PurePosixPath(directory)
+    parts = pure.parts
+    next_root = len(parts) >= 4 and parts[2] == 'followup-next'
+    dated_root = (len(parts) >= 3 and
+                  re.fullmatch(r'followup-[0-9]{8}-[a-z0-9][a-z0-9-]*', parts[2]) is not None)
+    require(not pure.is_absolute() and '..' not in parts and str(pure) == directory
+            and parts[:2] == ('mathscope-m1', 'navier')
+            and (next_root or dated_root),
+            'Unsafe or overbroad mathematical-addon root.')
+    return pure
+
+
 def addon_files():
     """Only explicitly allowed new source roots; existing v54 bytes are never replaced."""
     allowlist=read_json('provenance/addon-allowlist.json')
     result={}
     for directory in allowlist['allowedRoots']:
-        pure=PurePosixPath(directory)
-        require(not pure.is_absolute() and '..' not in pure.parts
-                and directory.startswith('mathscope-m1/navier/followup-next/')
-                and len(pure.parts)>=4, 'Unsafe or overbroad mathematical-addon root.')
+        validate_addon_root(directory)
         base=ROOT/directory
         require(not base.is_symlink(), f'Symlink at addon root: {directory}')
         if not base.exists():continue

@@ -2,6 +2,12 @@
 
 This is an English account of the **original** acceptance requirements and the verified v54 position. It does not weaken a criterion to obtain completion. N1-05 and N1-06 concern the original proof-checking environment; N3-01 through N3-07 concern a single actual leading profile. The baseline is seven PARTIAL and two BLOCKED criteria. Later evidence belongs in a dated addendum to [current status](CURRENT_STATUS_EN.md).
 
+**Later assessment:** the user's remaining N1-05 whole-default-build condition
+has now completed with actual exit 0 in the documented explicit-path
+environment. The [edition-2 verification report](VERIFICATION_2026_10_10_2_EN.md)
+contains the exact command results and current nine-condition table. The
+baseline table below remains unchanged.
+
 ## Gate summary
 
 | ID | v54 status | Evidence required to close the original gate |

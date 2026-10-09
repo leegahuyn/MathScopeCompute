@@ -1,0 +1,3522 @@
+{
+  "schema": "MathScope.IndependentAxialReselection/1",
+  "status": "AXIAL_STAGE_INEQUALITIES_VERIFIED",
+  "sourceBinding": {
+    "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "paperAnchors": [
+      "A.2",
+      "A.21",
+      "A.24-A.26",
+      "B.35",
+      "Lemma 4.5"
+    ],
+    "outerSourceSHA256": "4c0213f892a32611c79655fbe065cebbaca0fc9acdd0cf2dd057d2506a10c087",
+    "intervalLibrarySHA256": "20664d56cab022014273c2bfecff3ff1fb59c6e737123e0f337d49f248b74b4c",
+    "verifierSHA256": "01538f853fff689e30e0837ec9705eb12ba3992aa3128b92972846f8007371e9",
+    "derivationSHA256": "8cc933c198f6fd762d8087706c3e62b4eff68dfee9e6dd7b758d57ab676e26a4",
+    "parameterExpressionSHA256": "38e23d037f8b75eaeb30448a815689e92171926d47787196c7c5395fe98425a8"
+  },
+  "parametersExactExpressions": {
+    "Md": {
+      "integer": 1048576
+    },
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "logP": {
+      "product": [
+        {
+          "integer": 2
+        },
+        {
+          "ref": "T"
+        }
+      ]
+    },
+    "Pstar": {
+      "exp": {
+        "ref": "logP"
+      }
+    },
+    "lambda": {
+      "exp": {
+        "product": [
+          {
+            "integer": -1000
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "h": {
+      "exp": {
+        "product": [
+          {
+            "integer": -8002
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "co": {
+      "rational": "1/256"
+    },
+    "Tf": {
+      "integer": 128
+    }
+  },
+  "domain": {
+    "eta": "[-1,1]",
+    "localAxialY": "[0,T]",
+    "logXOverXR": "[1,1+T]",
+    "requiredXR": "XR >= 128",
+    "pressure": "The exact unedited A.21 schedule for these new parameters"
+  },
+  "claims": {
+    "stepDerivativeUpper": "9",
+    "Qlower": "(eta^2+exp(-y))/16",
+    "NsOverE2AbsoluteUpper": "24*abs(eta)*(1+y)",
+    "bswAbsoluteUpper": "27/1024",
+    "E2lower": "exp(2*T)",
+    "uneditedA21TerminalWaitPositiveAndFinite": true,
+    "actualRelaxedConeOnAxialStage": true,
+    "admissibleConeWhereVStrictlyAboveTwo": true,
+    "strictAdmissibleConeAtEveryAxialPoint": false,
+    "wholeOuterConstructionCertified": false,
+    "newA21AxisOrJoiningCertificatesGenerated": false,
+    "globalProfileCertified": false,
+    "originalAcceptanceGateClosed": false,
+    "newLeanAnalyticTheorem": false
+  },
+  "rationalBounds": {
+    "stepDerivativeUpperFromCells": "1284153240046190787061416503/154742504910672534362390528",
+    "QbilinearCorners": {
+      "s=0,z=0": "0",
+      "s=0,z=1": "1/12",
+      "s=1,z=0": "61/150",
+      "s=1,z=1": "0"
+    },
+    "geometricNsCoefficient": "1116/6625",
+    "pressureNsCoefficient": "3020000/998001",
+    "terminalLogDerivativeOverHUpper": "150/8533",
+    "terminalQpOverHUpper": "900/8533",
+    "terminalQBeforeWaitLower": "2904726/25",
+    "bsSquaredOverALowerUpper": [
+      "0",
+      "81/34359738368"
+    ],
+    "cLower": "63/64",
+    "cUpper": "65/64",
+    "vUpper": "65/32",
+    "G_lower": "31/16",
+    "Pthreshold1": "86/21",
+    "Pthreshold2": "4225/496",
+    "selectedPthreshold": "9",
+    "coneIdentityMonomials": 10
+  },
+  "checks": {
+    "whole_cell_step_derivative_below_nine": true,
+    "exact_half_interval_coverage": true,
+    "reference_Q_above_one": true,
+    "exp_eight_fifths_below_five": true,
+    "initial_Q_at_least_one_sixth": true,
+    "D_at_least_49_over_100": true,
+    "Q_bilinear_corner_s0_z0": true,
+    "Q_bilinear_corner_s0_z1": true,
+    "Q_bilinear_corner_s1_z0": true,
+    "Q_bilinear_corner_s1_z1": true,
+    "Q_loss_absorption": true,
+    "Q_eta_coefficient": true,
+    "symbolic_h_below_one_hundredth": true,
+    "symbolic_h_times_expT_below_one_over_48": true,
+    "symbolic_lambda_positive_and_below_half": true,
+    "symbolic_h_below_lambda_over_two": true,
+    "rho_bound_from_co_and_h": true,
+    "exp_one_below_three": true,
+    "exp_one_above_two": true,
+    "profile_interpolation_slope": true,
+    "terminal_log_derivative_below_h_over_four": true,
+    "terminal_linear_coefficient_positive": true,
+    "terminal_Qp_coefficient": true,
+    "terminal_Qend_above_Qp": true,
+    "terminal_Qend_above_116189": true,
+    "exp_T_minus_two_fifths_above_four": true,
+    "exp_six_fifths_below_four": true,
+    "energy_primitive_constant_below_five": true,
+    "geometric_Ns_coefficient_below_one": true,
+    "energy_Ns_coefficient_below_three": true,
+    "pressure_Ns_coefficient_below_seven": true,
+    "Ns_constant_below_24": true,
+    "Ns_y_coefficient_at_most_24": true,
+    "bsw_exact_coefficient": true,
+    "bsw_below_one_over_32": true,
+    "c_lower_margin": true,
+    "c_upper_margin": true,
+    "v_upper_margin": true,
+    "A24_gap_above_31_over_16": true,
+    "exact_cone_polynomial_identity": true,
+    "P_exceeds_first_actual_cone_threshold": true,
+    "P_exceeds_second_actual_cone_threshold": true,
+    "Pc_strictly_above_v_and_two": true,
+    "actual_cone_polynomial_positive": true,
+    "physical_radial_threshold": true,
+    "small_Md_cannot_pass_this_bound": true,
+    "axis_center_not_strictly_admissible": true
+  },
+  "passed": 47,
+  "total": 47,
+  "stepDerivativeCertificate": {
+    "bits": 88,
+    "method": "Whole closed dyadic cells plus analytic endpoint collar and exact symmetry",
+    "finitePointSamplesUsedAsSupremum": false,
+    "halfIntervalCells": [
+      {
+        "left": "0",
+        "right": "1/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "536870912",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.734723475976807e-18
+          ]
+        }
+      },
+      {
+        "left": "1/512",
+        "right": "1/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "268435459",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            8.673617476819264e-19
+          ]
+        }
+      },
+      {
+        "left": "1/256",
+        "right": "3/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "33554435",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.0842022694207325e-19
+          ]
+        }
+      },
+      {
+        "left": "3/512",
+        "right": "1/128",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "9942056",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            3.2124515516080094e-20
+          ]
+        }
+      },
+      {
+        "left": "1/128",
+        "right": "5/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "4194307",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.355253684959161e-20
+          ]
+        }
+      },
+      {
+        "left": "5/512",
+        "right": "3/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "2147486",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            6.938901503629106e-21
+          ]
+        }
+      },
+      {
+        "left": "3/256",
+        "right": "7/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1242759",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            4.015570901858547e-21
+          ]
+        }
+      },
+      {
+        "left": "7/512",
+        "right": "1/64",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "782613",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            2.528758987234229e-21
+          ]
+        }
+      },
+      {
+        "left": "1/64",
+        "right": "9/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "524291",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.694075588031404e-21
+          ]
+        }
+      },
+      {
+        "left": "9/512",
+        "right": "5/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "368227",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.1898056071037645e-21
+          ]
+        }
+      },
+      {
+        "left": "5/256",
+        "right": "11/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "268438",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            8.673699580957408e-22
+          ]
+        }
+      },
+      {
+        "left": "11/512",
+        "right": "3/128",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "201682",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            6.516696886754677e-22
+          ]
+        }
+      },
+      {
+        "left": "3/128",
+        "right": "13/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "155347",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            5.019532289776375e-22
+          ]
+        }
+      },
+      {
+        "left": "13/512",
+        "right": "7/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "122185",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            3.9480102790934253e-22
+          ]
+        }
+      },
+      {
+        "left": "7/256",
+        "right": "15/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "97829",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            3.1610254744316463e-22
+          ]
+        }
+      },
+      {
+        "left": "15/512",
+        "right": "1/32",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "79539",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            2.5700437008537214e-22
+          ]
+        }
+      },
+      {
+        "left": "1/32",
+        "right": "17/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "65539",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            2.1176793033637844e-22
+          ]
+        }
+      },
+      {
+        "left": "17/512",
+        "right": "9/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "54641",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.7655459316605463e-22
+          ]
+        }
+      },
+      {
+        "left": "9/256",
+        "right": "19/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "46031",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.487341827204235e-22
+          ]
+        }
+      },
+      {
+        "left": "19/512",
+        "right": "5/128",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "39139",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.2646492966684746e-22
+          ]
+        }
+      },
+      {
+        "left": "5/128",
+        "right": "21/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "33557",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.0842851490407012e-22
+          ]
+        }
+      },
+      {
+        "left": "21/512",
+        "right": "11/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "28988",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            9.366527967455924e-23
+          ]
+        }
+      },
+      {
+        "left": "11/256",
+        "right": "23/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "25213",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            8.146759681366987e-23
+          ]
+        }
+      },
+      {
+        "left": "23/512",
+        "right": "3/64",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "22065",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            7.129586021868186e-23
+          ]
+        }
+      },
+      {
+        "left": "3/64",
+        "right": "25/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "19421",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            6.275263545465762e-23
+          ]
+        }
+      },
+      {
+        "left": "25/512",
+        "right": "13/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "17183",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            5.55212674433542e-23
+          ]
+        }
+      },
+      {
+        "left": "13/256",
+        "right": "27/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "15276",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            4.93594181146877e-23
+          ]
+        }
+      },
+      {
+        "left": "27/512",
+        "right": "7/128",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "13641",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            4.407644818685879e-23
+          ]
+        }
+      },
+      {
+        "left": "7/128",
+        "right": "29/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "12231",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            3.952049246928157e-23
+          ]
+        }
+      },
+      {
+        "left": "29/512",
+        "right": "15/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "11009",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            3.5571997514047975e-23
+          ]
+        }
+      },
+      {
+        "left": "15/256",
+        "right": "31/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "9945",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            3.2134028093124454e-23
+          ]
+        }
+      },
+      {
+        "left": "31/512",
+        "right": "1/16",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "9014",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            2.912580484981637e-23
+          ]
+        }
+      },
+      {
+        "left": "1/16",
+        "right": "33/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "8195",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            2.647947312450024e-23
+          ]
+        }
+      },
+      {
+        "left": "33/512",
+        "right": "17/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "7473",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            2.414656530315928e-23
+          ]
+        }
+      },
+      {
+        "left": "17/256",
+        "right": "35/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "6833",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            2.207861377177671e-23
+          ]
+        }
+      },
+      {
+        "left": "35/512",
+        "right": "9/128",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "6264",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            2.0240075613406896e-23
+          ]
+        }
+      },
+      {
+        "left": "9/128",
+        "right": "37/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "5757",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.8601870259639767e-23
+          ]
+        }
+      },
+      {
+        "left": "37/512",
+        "right": "19/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "5303",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.7134917142065257e-23
+          ]
+        }
+      },
+      {
+        "left": "19/256",
+        "right": "39/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "4895",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.581659804080887e-23
+          ]
+        }
+      },
+      {
+        "left": "39/512",
+        "right": "5/64",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "4528",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.4630757084531677e-23
+          ]
+        }
+      },
+      {
+        "left": "5/64",
+        "right": "41/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "4197",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.3561238401894754e-23
+          ]
+        }
+      },
+      {
+        "left": "41/512",
+        "right": "21/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "3898",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.259511729582696e-23
+          ]
+        }
+      },
+      {
+        "left": "21/256",
+        "right": "43/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "3626",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.1716237894989369e-23
+          ]
+        }
+      },
+      {
+        "left": "43/512",
+        "right": "11/128",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "3379",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.0918137850846408e-23
+          ]
+        }
+      },
+      {
+        "left": "11/128",
+        "right": "45/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "3154",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            1.0191123640594724e-23
+          ]
+        }
+      },
+      {
+        "left": "45/512",
+        "right": "23/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "2949",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            9.528732915698745e-24
+          ]
+        }
+      },
+      {
+        "left": "23/256",
+        "right": "47/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "2761",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            8.921272153355115e-24
+          ]
+        }
+      },
+      {
+        "left": "47/512",
+        "right": "3/32",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "2589",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            8.36551017929605e-24
+          ]
+        }
+      },
+      {
+        "left": "3/32",
+        "right": "49/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "2430",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            7.851753470718192e-24
+          ]
+        }
+      },
+      {
+        "left": "49/512",
+        "right": "25/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "2285",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            7.383233201889329e-24
+          ]
+        }
+      },
+      {
+        "left": "25/256",
+        "right": "51/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "2151",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            6.950255850006104e-24
+          ]
+        }
+      },
+      {
+        "left": "51/512",
+        "right": "13/128",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "2027",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            6.549590240800731e-24
+          ]
+        }
+      },
+      {
+        "left": "13/128",
+        "right": "53/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1912",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            6.1780052000054254e-24
+          ]
+        }
+      },
+      {
+        "left": "53/512",
+        "right": "27/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1806",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            5.8355007276201874e-24
+          ]
+        }
+      },
+      {
+        "left": "27/256",
+        "right": "55/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1708",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            5.5188456493772315e-24
+          ]
+        }
+      },
+      {
+        "left": "55/512",
+        "right": "7/64",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1617",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            5.2248087910087725e-24
+          ]
+        }
+      },
+      {
+        "left": "7/64",
+        "right": "57/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1532",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            4.950158978247025e-24
+          ]
+        }
+      },
+      {
+        "left": "57/512",
+        "right": "29/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1453",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            4.694896211091989e-24
+          ]
+        }
+      },
+      {
+        "left": "29/256",
+        "right": "59/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1379",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            4.4557893152758795e-24
+          ]
+        }
+      },
+      {
+        "left": "59/512",
+        "right": "15/128",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1310",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            4.232838290798696e-24
+          ]
+        }
+      },
+      {
+        "left": "15/128",
+        "right": "61/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1246",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            4.0260431376604394e-24
+          ]
+        }
+      },
+      {
+        "left": "61/512",
+        "right": "31/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1186",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            3.8321726815933235e-24
+          ]
+        }
+      },
+      {
+        "left": "31/256",
+        "right": "63/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1130",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            3.651226922597349e-24
+          ]
+        }
+      },
+      {
+        "left": "63/512",
+        "right": "1/8",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "1077",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            3.47997468640473e-24
+          ]
+        }
+      },
+      {
+        "left": "1/8",
+        "right": "65/512",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "2055",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            6.640063120298718e-24
+          ]
+        }
+      },
+      {
+        "left": "65/512",
+        "right": "33/256",
+        "derivative": {
+          "lowerNumerator": "0",
+          "upperNumerator": "8825",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0,
+            2.851511291320496e-23
+          ]
+        }
+      },
+      {
+        "left": "33/256",
+        "right": "67/512",
+        "derivative": {
+          "lowerNumerator": "5373",
+          "upperNumerator": "47775",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.7361099340810225e-23,
+            1.54369350643441e-22
+          ]
+        }
+      },
+      {
+        "left": "67/512",
+        "right": "17/128",
+        "derivative": {
+          "lowerNumerator": "41124",
+          "upperNumerator": "250763",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.328788105884012e-22,
+            8.102589529126362e-22
+          ]
+        }
+      },
+      {
+        "left": "17/128",
+        "right": "69/512",
+        "derivative": {
+          "lowerNumerator": "227195",
+          "upperNumerator": "1233797",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.341066377694731e-22,
+            3.986613118070656e-21
+          ]
+        }
+      },
+      {
+        "left": "69/512",
+        "right": "35/256",
+        "derivative": {
+          "lowerNumerator": "1129048",
+          "upperNumerator": "5663767",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.648150844694417e-21,
+            1.8300618189131343e-20
+          ]
+        }
+      },
+      {
+        "left": "35/256",
+        "right": "71/512",
+        "derivative": {
+          "lowerNumerator": "5197998",
+          "upperNumerator": "24376814",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.679563738159927e-20,
+            7.876573412738758e-20
+          ]
+        }
+      },
+      {
+        "left": "71/512",
+        "right": "9/64",
+        "derivative": {
+          "lowerNumerator": "22407019",
+          "upperNumerator": "98678684",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.240098321057551e-20,
+            3.188480245197135e-19
+          ]
+        }
+      },
+      {
+        "left": "9/64",
+        "right": "73/512",
+        "derivative": {
+          "lowerNumerator": "90819219",
+          "upperNumerator": "376992133",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.9345272345315457e-19,
+            1.21812727930708e-18
+          ]
+        }
+      },
+      {
+        "left": "73/512",
+        "right": "37/256",
+        "derivative": {
+          "lowerNumerator": "347372559",
+          "upperNumerator": "1363496544",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.1224212739755185e-18,
+            4.4056949471869385e-18
+          ]
+        }
+      },
+      {
+        "left": "37/256",
+        "right": "75/512",
+        "derivative": {
+          "lowerNumerator": "1257787223",
+          "upperNumerator": "4682267400",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.064129709306686e-18,
+            1.5129221937769813e-17
+          ]
+        }
+      },
+      {
+        "left": "75/512",
+        "right": "19/128",
+        "derivative": {
+          "lowerNumerator": "4323994888",
+          "upperNumerator": "15308173393",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.3971581016140626e-17,
+            4.946337595425664e-17
+          ]
+        }
+      },
+      {
+        "left": "19/128",
+        "right": "77/512",
+        "derivative": {
+          "lowerNumerator": "14151927040",
+          "upperNumerator": "47770960780",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.5727342491222484e-17,
+            1.5435629921971508e-16
+          ]
+        }
+      },
+      {
+        "left": "77/512",
+        "right": "39/256",
+        "derivative": {
+          "lowerNumerator": "44208684931",
+          "upperNumerator": "142631605150",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.4284596516167338e-16,
+            4.608675723335882e-16
+          ]
+        }
+      },
+      {
+        "left": "39/256",
+        "right": "79/512",
+        "derivative": {
+          "lowerNumerator": "132129408672",
+          "upperNumerator": "408367446602",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.2693314531864956e-16,
+            1.3195063852615554e-15
+          ]
+        }
+      },
+      {
+        "left": "79/512",
+        "right": "5/32",
+        "derivative": {
+          "lowerNumerator": "378672774324",
+          "upperNumerator": "1123522730241",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.2235577243065654e-15,
+            3.630297735226564e-15
+          ]
+        }
+      },
+      {
+        "left": "5/32",
+        "right": "81/512",
+        "derivative": {
+          "lowerNumerator": "1042830293565",
+          "upperNumerator": "2976211698305",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.369566410234181e-15,
+            9.616658655044596e-15
+          ]
+        }
+      },
+      {
+        "left": "81/512",
+        "right": "41/256",
+        "derivative": {
+          "lowerNumerator": "2765058744023",
+          "upperNumerator": "7605028038372",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            8.93438666260176e-15,
+            2.4573170903373052e-14
+          ]
+        }
+      },
+      {
+        "left": "41/256",
+        "right": "83/512",
+        "derivative": {
+          "lowerNumerator": "7071970887498",
+          "upperNumerator": "18777962678598",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.2850770354210056e-14,
+            6.067486980851791e-14
+          ]
+        }
+      },
+      {
+        "left": "83/512",
+        "right": "21/128",
+        "derivative": {
+          "lowerNumerator": "17477443587360",
+          "upperNumerator": "44876355882556",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.647266598614621e-14,
+            1.4500332635968882e-13
+          ]
+        }
+      },
+      {
+        "left": "21/128",
+        "right": "85/512",
+        "derivative": {
+          "lowerNumerator": "41804963147720",
+          "upperNumerator": "103962642892743",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.3507912118862413e-13,
+            3.359214165259798e-13
+          ]
+        }
+      },
+      {
+        "left": "85/512",
+        "right": "43/256",
+        "derivative": {
+          "lowerNumerator": "96930343601910",
+          "upperNumerator": "233807292581484",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.1319883201407563e-13,
+            7.554721074098316e-13
+          ]
+        }
+      },
+      {
+        "left": "43/256",
+        "right": "87/512",
+        "derivative": {
+          "lowerNumerator": "218174674937394",
+          "upperNumerator": "511156759415747",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.049603955401221e-13,
+            1.6516365678286648e-12
+          ]
+        }
+      },
+      {
+        "left": "87/512",
+        "right": "11/64",
+        "derivative": {
+          "lowerNumerator": "477371180079003",
+          "upperNumerator": "1087742583666977",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.54246947325356e-12,
+            3.514685846318996e-12
+          ]
+        }
+      },
+      {
+        "left": "11/64",
+        "right": "89/512",
+        "derivative": {
+          "lowerNumerator": "1016661233146383",
+          "upperNumerator": "2255814518561787",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.285009615597428e-12,
+            7.28892982527325e-12
+          ]
+        }
+      },
+      {
+        "left": "89/512",
+        "right": "45/256",
+        "derivative": {
+          "lowerNumerator": "2110056455950648",
+          "upperNumerator": "4564422535910083",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.817960124041905e-12,
+            1.4748444645331822e-11
+          ]
+        }
+      },
+      {
+        "left": "45/256",
+        "right": "91/512",
+        "derivative": {
+          "lowerNumerator": "4272773306982177",
+          "upperNumerator": "9020821218952014",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.3806075161600558e-11,
+            2.914784539696905e-11
+          ]
+        }
+      },
+      {
+        "left": "91/512",
+        "right": "23/128",
+        "derivative": {
+          "lowerNumerator": "8450772761151173",
+          "upperNumerator": "17431352145574618",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.7305919488732298e-11,
+            5.632373650548416e-11
+          ]
+        }
+      },
+      {
+        "left": "23/128",
+        "right": "93/512",
+        "derivative": {
+          "lowerNumerator": "16341842159502090",
+          "upperNumerator": "32965819297499197",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.280333987399153e-11,
+            1.065183070305383e-10
+          ]
+        }
+      },
+      {
+        "left": "93/512",
+        "right": "47/256",
+        "derivative": {
+          "lowerNumerator": "30927646363481553",
+          "upperNumerator": "61072411251063889",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            9.99326150928441e-11,
+            1.973356037060369e-10
+          ]
+        }
+      },
+      {
+        "left": "47/256",
+        "right": "95/512",
+        "derivative": {
+          "lowerNumerator": "57336980448984268",
+          "upperNumerator": "110931334517355612",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.8526577581926477e-10,
+            3.5843847358355875e-10
+          ]
+        }
+      },
+      {
+        "left": "95/512",
+        "right": "3/16",
+        "derivative": {
+          "lowerNumerator": "104218457403107686",
+          "upperNumerator": "197720298251673746",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.367479977891962e-10,
+            6.38868739929636e-10
+          ]
+        }
+      },
+      {
+        "left": "3/16",
+        "right": "97/512",
+        "derivative": {
+          "lowerNumerator": "185881603116281166",
+          "upperNumerator": "346080796949929787",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.006158528440009e-10,
+            1.1182473656792301e-09
+          ]
+        }
+      },
+      {
+        "left": "97/512",
+        "right": "49/256",
+        "derivative": {
+          "lowerNumerator": "325575481764879560",
+          "upperNumerator": "595328926964036628",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.0519911189004694e-09,
+            1.923611509674408e-09
+          ]
+        }
+      },
+      {
+        "left": "49/256",
+        "right": "99/512",
+        "derivative": {
+          "lowerNumerator": "560421364271513201",
+          "upperNumerator": "1007157525964812468",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.8108190913512256e-09,
+            3.254301481503771e-09
+          ]
+        }
+      },
+      {
+        "left": "99/512",
+        "right": "25/128",
+        "derivative": {
+          "lowerNumerator": "948709510515001879",
+          "upperNumerator": "1676838006692870533",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.0654457579792277e-09,
+            5.4181558184703386e-09
+          ]
+        }
+      },
+      {
+        "left": "25/128",
+        "right": "101/512",
+        "derivative": {
+          "lowerNumerator": "1580519761686839187",
+          "upperNumerator": "2749261372636909918",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.1069347836886135e-09,
+            8.883342602680379e-09
+          ]
+        }
+      },
+      {
+        "left": "101/512",
+        "right": "51/256",
+        "derivative": {
+          "lowerNumerator": "2592941974980730369",
+          "upperNumerator": "4441569953583898283",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            8.378247387418039e-09,
+            1.4351486542588483e-08
+          ]
+        }
+      },
+      {
+        "left": "51/256",
+        "right": "103/512",
+        "derivative": {
+          "lowerNumerator": "4191566438582669790",
+          "upperNumerator": "7074635732586763946",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.3543681618060646e-08,
+            2.2859380933088505e-08
+          ]
+        }
+      },
+      {
+        "left": "103/512",
+        "right": "13/64",
+        "derivative": {
+          "lowerNumerator": "6680397336122542993",
+          "upperNumerator": "11116248516811359538",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.158552797106039e-08,
+            3.591853616182698e-08
+          ]
+        }
+      },
+      {
+        "left": "13/64",
+        "right": "105/512",
+        "derivative": {
+          "lowerNumerator": "10502924627913339903",
+          "upperNumerator": "17239597206434659001",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.39367797942017e-08,
+            5.5704142880414396e-08
+          ]
+        }
+      },
+      {
+        "left": "105/512",
+        "right": "53/256",
+        "derivative": {
+          "lowerNumerator": "16297780829815177866",
+          "upperNumerator": "26401467771519205933",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.2660970039302773e-08,
+            8.530774329509482e-08
+          ]
+        }
+      },
+      {
+        "left": "53/256",
+        "right": "107/512",
+        "derivative": {
+          "lowerNumerator": "24973216829951323829",
+          "upperNumerator": "39945547488016675419",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            8.069281560476061e-08,
+            1.290710251558738e-07
+          ]
+        }
+      },
+      {
+        "left": "107/512",
+        "right": "27/128",
+        "derivative": {
+          "lowerNumerator": "37805560462297648008",
+          "upperNumerator": "59737318603852912816",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.2215635414497613e-07,
+            1.930216866992595e-07
+          ]
+        }
+      },
+      {
+        "left": "27/128",
+        "right": "109/512",
+        "derivative": {
+          "lowerNumerator": "56567875452474558438",
+          "upperNumerator": "88338244286783461390",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.827806635453175e-07,
+            2.8543626180078334e-07
+          ]
+        }
+      },
+      {
+        "left": "109/512",
+        "right": "55/256",
+        "derivative": {
+          "lowerNumerator": "83696215427415508382",
+          "upperNumerator": "129228289649247439567",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.7043705760007705e-07,
+            4.1755912418454914e-07
+          ]
+        }
+      },
+      {
+        "left": "55/256",
+        "right": "111/512",
+        "derivative": {
+          "lowerNumerator": "122502162799167323144",
+          "upperNumerator": "187087270541273996712",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.9582583618471073e-07,
+            6.045115744031446e-07
+          ]
+        }
+      },
+      {
+        "left": "111/512",
+        "right": "7/32",
+        "derivative": {
+          "lowerNumerator": "177441746020759236807",
+          "upperNumerator": "268147067663214119392",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.733452037731656e-07,
+            8.664299050154516e-07
+          ]
+        }
+      },
+      {
+        "left": "7/32",
+        "right": "113/512",
+        "derivative": {
+          "lowerNumerator": "254452326984085140740",
+          "upperNumerator": "380628363735840459308",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            8.22179811329058e-07,
+            1.2298765744924576e-06
+          ]
+        }
+      },
+      {
+        "left": "113/512",
+        "right": "57/256",
+        "derivative": {
+          "lowerNumerator": "361370624693593042004",
+          "upperNumerator": "535277232909269360293",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.167651463643424e-06,
+            1.7295740211077308e-06
+          ]
+        }
+      },
+      {
+        "left": "57/256",
+        "right": "115/512",
+        "derivative": {
+          "lowerNumerator": "508446669001720438537",
+          "upperNumerator": "746018606228045278407",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.6428797934194908e-06,
+            2.4105161237330877e-06
+          ]
+        }
+      },
+      {
+        "left": "115/512",
+        "right": "29/128",
+        "derivative": {
+          "lowerNumerator": "708970132409660724420",
+          "upperNumerator": "1030745323353137849013",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.2908060484704074e-06,
+            3.330517765458661e-06
+          ]
+        }
+      },
+      {
+        "left": "29/128",
+        "right": "117/512",
+        "derivative": {
+          "lowerNumerator": "980027138657249358192",
+          "upperNumerator": "1412263124844364331943",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.1666384721605256e-06,
+            4.563268268339119e-06
+          ]
+        }
+      },
+      {
+        "left": "117/512",
+        "right": "59/256",
+        "derivative": {
+          "lowerNumerator": "1343407261393949354334",
+          "upperNumerator": "1919413505456350200858",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.340782974172001e-06,
+            6.20195952807007e-06
+          ]
+        }
+      },
+      {
+        "left": "59/256",
+        "right": "119/512",
+        "derivative": {
+          "lowerNumerator": "1826681970284042133124",
+          "upperNumerator": "2588397800828602838554",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.902327777809084e-06,
+            8.363564368829349e-06
+          ]
+        }
+      },
+      {
+        "left": "119/512",
+        "right": "15/64",
+        "derivative": {
+          "lowerNumerator": "2464477220397189960945",
+          "upperNumerator": "3464327181904753288308",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.963155378090355e-06,
+            1.119384484535968e-05
+          ]
+        }
+      },
+      {
+        "left": "15/64",
+        "right": "121/512",
+        "derivative": {
+          "lowerNumerator": "3299964178981781897613",
+          "upperNumerator": "4603024349301135967066",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.066275933973906e-05,
+            1.487317383145084e-05
+          ]
+        }
+      },
+      {
+        "left": "121/512",
+        "right": "61/256",
+        "derivative": {
+          "lowerNumerator": "4386593208485284906875",
+          "upperNumerator": "6073103622331016230051",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.4173847098499254e-05,
+            1.962325615006946e-05
+          ]
+        }
+      },
+      {
+        "left": "61/256",
+        "right": "123/512",
+        "derivative": {
+          "lowerNumerator": "5790097145282235660538",
+          "upperNumerator": "7958356776959169963304",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.8708812903812878e-05,
+            2.571483763156494e-05
+          ]
+        }
+      },
+      {
+        "left": "123/512",
+        "right": "31/128",
+        "derivative": {
+          "lowerNumerator": "7590790602856649916764",
+          "upperNumerator": "10360472380839471425313",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.45271672680966e-05,
+            3.347649175906843e-05
+          ]
+        }
+      },
+      {
+        "left": "31/128",
+        "right": "125/512",
+        "derivative": {
+          "lowerNumerator": "9886192463486513912223",
+          "upperNumerator": "13402116484540280357323",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.1944010694390236e-05,
+            4.330457391870726e-05
+          ]
+        }
+      },
+      {
+        "left": "125/512",
+        "right": "63/256",
+        "derivative": {
+          "lowerNumerator": "12793998886362308823783",
+          "upperNumerator": "17230402345009610085551",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.133963998368722e-05,
+            5.5674432680781926e-05
+          ]
+        }
+      },
+      {
+        "left": "63/256",
+        "right": "127/512",
+        "derivative": {
+          "lowerNumerator": "16455434040967105353901",
+          "upperNumerator": "22020776375777470047459",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.31703750384106e-05,
+            7.115296598206582e-05
+          ]
+        }
+      },
+      {
+        "left": "127/512",
+        "right": "1/4",
+        "derivative": {
+          "lowerNumerator": "21039005367171605384963",
+          "upperNumerator": "27981346740642730889060",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.798069276220095e-05,
+            9.041260756634187e-05
+          ]
+        }
+      },
+      {
+        "left": "1/4",
+        "right": "129/512",
+        "derivative": {
+          "lowerNumerator": "26744689469098824600925",
+          "upperNumerator": "35357679942767541548067",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            8.641675241245967e-05,
+            0.00011424682559965764
+          ]
+        }
+      },
+      {
+        "left": "129/512",
+        "right": "65/256",
+        "derivative": {
+          "lowerNumerator": "33808573776195223741087",
+          "upperNumerator": "44438089424946312815407",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0001092413936161617,
+            0.000143587211059427
+          ]
+        }
+      },
+      {
+        "left": "65/256",
+        "right": "131/512",
+        "derivative": {
+          "lowerNumerator": "42507977866308773994448",
+          "upperNumerator": "55559438611305160740873",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.00013735068425720247,
+            0.0001795222283734443
+          ]
+        }
+      },
+      {
+        "left": "131/512",
+        "right": "33/128",
+        "derivative": {
+          "lowerNumerator": "53167076862162755987404",
+          "upperNumerator": "69113479013468354600810",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0001717920906503816,
+            0.00022331769494543584
+          ]
+        }
+      },
+      {
+        "left": "33/128",
+        "right": "133/512",
+        "derivative": {
+          "lowerNumerator": "66163047610186946574922",
+          "upperNumerator": "85553742027900553646770",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0002137843369162874,
+            0.00027643904975329097
+          ]
+        }
+      },
+      {
+        "left": "133/512",
+        "right": "67/256",
+        "derivative": {
+          "lowerNumerator": "81932756459825428449639",
+          "upperNumerator": "105403000902405800289384",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0002647390143617048,
+            0.0003405754642632006
+          ]
+        }
+      },
+      {
+        "left": "67/256",
+        "right": "135/512",
+        "derivative": {
+          "lowerNumerator": "100980005416820518169994",
+          "upperNumerator": "129261317088510941866875",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.00032628399506364706,
+            0.00041766584159642824
+          ]
+        }
+      },
+      {
+        "left": "135/512",
+        "right": "17/64",
+        "derivative": {
+          "lowerNumerator": "123883351283350219734161",
+          "upperNumerator": "157814682864713296609462",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.00040028869687376383,
+            0.0005099267423511537
+          ]
+        }
+      },
+      {
+        "left": "17/64",
+        "right": "137/512",
+        "derivative": {
+          "lowerNumerator": "151304510161214239077611",
+          "upperNumerator": "191844269756470148445833",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0004888912398327695,
+            0.0006198822678591612
+          ]
+        }
+      },
+      {
+        "left": "137/512",
+        "right": "69/256",
+        "derivative": {
+          "lowerNumerator": "183997357422620228586047",
+          "upperNumerator": "232236289935545517259572",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0005945275266444585,
+            0.0007503959240856527
+          ]
+        }
+      },
+      {
+        "left": "69/256",
+        "right": "139/512",
+        "derivative": {
+          "lowerNumerator": "222817530987752563491156",
+          "upperNumerator": "279992475496120682280686",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0007199622725390718,
+            0.0009047044819965614
+          ]
+        }
+      },
+      {
+        "left": "139/512",
+        "right": "35/128",
+        "derivative": {
+          "lowerNumerator": "268732643529574566638010",
+          "upperNumerator": "336241178318158878879194",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0008683220026866716,
+            0.0010864538431514315
+          ]
+        }
+      },
+      {
+        "left": "35/128",
+        "right": "141/512",
+        "derivative": {
+          "lowerNumerator": "322833107092746579814798",
+          "upperNumerator": "402249091177230644979225",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0010431300284272473,
+            0.0012997369126518763
+          ]
+        }
+      },
+      {
+        "left": "141/512",
+        "right": "71/256",
+        "derivative": {
+          "lowerNumerator": "386343571600913574956205",
+          "upperNumerator": "479433588877947849710780",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0012483434070811258,
+            0.0015491334754943646
+          ]
+        }
+      },
+      {
+        "left": "71/256",
+        "right": "143/512",
+        "derivative": {
+          "lowerNumerator": "460634976867123509638259",
+          "upperNumerator": "569375686504418884380711",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.00148839188409491,
+            0.0018397520669356478
+          ]
+        }
+      },
+      {
+        "left": "143/512",
+        "right": "9/32",
+        "derivative": {
+          "lowerNumerator": "547237216043653976236755",
+          "upperNumerator": "673833610419680201696893",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0017682188108547002,
+            0.002177273822756911
+          ]
+        }
+      },
+      {
+        "left": "9/32",
+        "right": "145/512",
+        "derivative": {
+          "lowerNumerator": "647852406972954010421210",
+          "upperNumerator": "794756976425156870050913",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.002093324026733756,
+            0.002567998291367787
+          ]
+        }
+      },
+      {
+        "left": "145/512",
+        "right": "73/256",
+        "derivative": {
+          "lowerNumerator": "764368766648145014182969",
+          "upperNumerator": "934301568523028335556038",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0024698086898922457,
+            0.00301889118656302
+          ]
+        }
+      },
+      {
+        "left": "73/256",
+        "right": "147/512",
+        "derivative": {
+          "lowerNumerator": "898875082971019653999365",
+          "upperNumerator": "1094844711014672936326288",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.002904422038049303,
+            0.003537634057451405
+          ]
+        }
+      },
+      {
+        "left": "147/512",
+        "right": "37/128",
+        "derivative": {
+          "lowerNumerator": "1053675777212903774219486",
+          "upperNumerator": "1279001226216244684798259",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0034046100579189736,
+            0.0041326758506157295
+          ]
+        }
+      },
+      {
+        "left": "37/128",
+        "right": "149/512",
+        "derivative": {
+          "lowerNumerator": "1231306550037767567276510",
+          "upperNumerator": "1489639969870247370054350",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.003978566040237484,
+            0.004813286338909159
+          ]
+        }
+      },
+      {
+        "left": "149/512",
+        "right": "75/256",
+        "derivative": {
+          "lowerNumerator": "1434550603629600524244759",
+          "upperNumerator": "1729900936365266664159078",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.004635282996283784,
+            0.005589611391401084
+          ]
+        }
+      },
+      {
+        "left": "75/256",
+        "right": "151/512",
+        "derivative": {
+          "lowerNumerator": "1666455432362599829640793",
+          "upperNumerator": "2003212926123592395130972",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.005384607911461,
+            0.006472730059785376
+          ]
+        }
+      },
+      {
+        "left": "151/512",
+        "right": "19/64",
+        "derivative": {
+          "lowerNumerator": "1930350174541760660787018",
+          "upperNumerator": "2313311767950435904361493",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.00623729781179413,
+            0.007474713457966285
+          ]
+        }
+      },
+      {
+        "left": "19/64",
+        "right": "153/512",
+        "derivative": {
+          "lowerNumerator": "2229863517994959541309147",
+          "upperNumerator": "2664259089724419647317476",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0072050776200184375,
+            0.008608685413430536
+          ]
+        }
+      },
+      {
+        "left": "153/512",
+        "right": "77/256",
+        "derivative": {
+          "lowerNumerator": "2568942152681022108900344",
+          "upperNumerator": "3060461631506228089973222",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.008300699779171802,
+            0.009888884871267031
+          ]
+        }
+      },
+      {
+        "left": "77/256",
+        "right": "155/512",
+        "derivative": {
+          "lowerNumerator": "2951869763950610927025923",
+          "upperNumerator": "3506691095903827353793752",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.009538005623130577,
+            0.011330730034156156
+          ]
+        }
+      },
+      {
+        "left": "155/512",
+        "right": "39/128",
+        "derivative": {
+          "lowerNumerator": "3383286560610871887479153",
+          "upperNumerator": "4008104531305565671217996",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.01093198847518956,
+            0.01295088422414806
+          ]
+        }
+      },
+      {
+        "left": "39/128",
+        "right": "157/512",
+        "derivative": {
+          "lowerNumerator": "3868209332447379183706918",
+          "upperNumerator": "4570265244318024293181345",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.012498858457410786,
+            0.014767323454393735
+          ]
+        }
+      },
+      {
+        "left": "157/512",
+        "right": "79/256",
+        "derivative": {
+          "lowerNumerator": "4412052032288830451995449",
+          "upperNumerator": "5199164238359302786136548",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.01425610899486135,
+            0.01679940570097595
+          ]
+        }
+      },
+      {
+        "left": "79/256",
+        "right": "159/512",
+        "derivative": {
+          "lowerNumerator": "5020646877996173019439974",
+          "upperNumerator": "5901242175790549001157916",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.016222584999817657,
+            0.019067941866383546
+          ]
+        }
+      },
+      {
+        "left": "159/512",
+        "right": "5/16",
+        "derivative": {
+          "lowerNumerator": "5700265969847683885090212",
+          "upperNumerator": "6683411861143559096972282",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.01841855272130385,
+            0.02159526842673789
+          ]
+        }
+      },
+      {
+        "left": "5/16",
+        "right": "161/512",
+        "derivative": {
+          "lowerNumerator": "6457643418598611302509104",
+          "upperNumerator": "7553081242839292148456389",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.0208657712447087,
+            0.024405321754353865
+          ]
+        }
+      },
+      {
+        "left": "161/512",
+        "right": "81/256",
+        "derivative": {
+          "lowerNumerator": "7299997978936283196346432",
+          "upperNumerator": "8518176930204779804283194",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.023587565624423355,
+            0.02752371410531976
+          ]
+        }
+      },
+      {
+        "left": "81/256",
+        "right": "163/512",
+        "derivative": {
+          "lowerNumerator": "8235056182041350075690872",
+          "upperNumerator": "9587168221492171120850475",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.026608901629177974,
+            0.03097781125821412
+          ]
+        }
+      },
+      {
+        "left": "163/512",
+        "right": "41/128",
+        "derivative": {
+          "lowerNumerator": "9271075959409485380303279",
+          "upperNumerator": "10769091636885770590816871",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.029956462074726513,
+            0.034796811784526795
+          ]
+        }
+      },
+      {
+        "left": "41/128",
+        "right": "165/512",
+        "derivative": {
+          "lowerNumerator": "10416870747885850449606467",
+          "upperNumerator": "12073575948047136529597571",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.033658724711413804,
+            0.039011827923480985
+          ]
+        }
+      },
+      {
+        "left": "165/512",
+        "right": "83/256",
+        "derivative": {
+          "lowerNumerator": "11681834062911167893423708",
+          "upperNumerator": "13510867692484551368648125",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.03774604162461595,
+            0.043655968023407356
+          ]
+        }
+      },
+      {
+        "left": "83/256",
+        "right": "167/512",
+        "derivative": {
+          "lowerNumerator": "13075964523161075974437729",
+          "upperNumerator": "15091857156824770583448470",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.042250720093711086,
+            0.04876442049822308
+          ]
+        }
+      },
+      {
+        "left": "167/512",
+        "right": "21/64",
+        "derivative": {
+          "lowerNumerator": "14609891304960502244076941",
+          "upperNumerator": "16828104807788208785228170",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.04720710483972805,
+            0.05437453923051875
+          ]
+        }
+      },
+      {
+        "left": "21/64",
+        "right": "169/512",
+        "derivative": {
+          "lowerNumerator": "16294899998945904931628779",
+          "upperNumerator": "18731868143192516293062953",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.05265166157272814,
+            0.0605259303318302
+          ]
+        }
+      },
+      {
+        "left": "169/512",
+        "right": "85/256",
+        "derivative": {
+          "lowerNumerator": "18142958834296701252584948",
+          "upperNumerator": "20816128927494883338682922",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.058623061726866835,
+            0.06726054014542195
+          ]
+        }
+      },
+      {
+        "left": "85/256",
+        "right": "171/512",
+        "derivative": {
+          "lowerNumerator": "20166745227321507175955275",
+          "upperNumerator": "23094620767083177456055566",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.06516226824350255,
+            0.07462274434685835
+          ]
+        }
+      },
+      {
+        "left": "171/512",
+        "right": "43/128",
+        "derivative": {
+          "lowerNumerator": "22379672601115267042379045",
+          "upperNumerator": "25581856969584344456851073",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.07231262223018256,
+            0.08265943796228406
+          ]
+        }
+      },
+      {
+        "left": "43/128",
+        "right": "173/512",
+        "derivative": {
+          "lowerNumerator": "24795917411241848153065372",
+          "upperNumerator": "28293158618710629056397014",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.08011993028533326,
+            0.09142012608314466
+          ]
+        }
+      },
+      {
+        "left": "173/512",
+        "right": "87/256",
+        "derivative": {
+          "lowerNumerator": "27430446298776527180908174",
+          "upperNumerator": "31244682781436218048054195",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.08863255223447226,
+            0.10095701500849003
+          ]
+        }
+      },
+      {
+        "left": "87/256",
+        "right": "175/512",
+        "derivative": {
+          "lowerNumerator": "30299043276388707309705081",
+          "upperNumerator": "34453450747405829343467837",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.09790148897317932,
+            0.1113251034914247
+          ]
+        }
+      },
+      {
+        "left": "175/512",
+        "right": "11/32",
+        "derivative": {
+          "lowerNumerator": "33418336835273439626248219",
+          "upperNumerator": "37937376181230510303670088",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.10798047005431599,
+            0.12258227370408162
+          ]
+        }
+      },
+      {
+        "left": "11/32",
+        "right": "177/512",
+        "derivative": {
+          "lowerNumerator": "36805826840459108917700911",
+          "upperNumerator": "41715293046523837338864196",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.11892604059145169,
+            0.1347893814650494
+          ]
+        }
+      },
+      {
+        "left": "177/512",
+        "right": "89/256",
+        "derivative": {
+          "lowerNumerator": "40479911059128903801473955",
+          "upperNumerator": "45806983135965385112758480",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.13079764697649346,
+            0.1480103451938049
+          ]
+        }
+      },
+      {
+        "left": "89/256",
+        "right": "179/512",
+        "derivative": {
+          "lowerNumerator": "44459911140890153609355498",
+          "upperNumerator": "50233203014132697307052238",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.14365772082646366,
+            0.16231223296769876
+          ]
+        }
+      },
+      {
+        "left": "179/512",
+        "right": "45/128",
+        "derivative": {
+          "lowerNumerator": "48766097840198416150243209",
+          "upperNumerator": "55015710149098067015496287",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.15757176048154767,
+            0.17776534695769827
+          ]
+        }
+      },
+      {
+        "left": "45/128",
+        "right": "181/512",
+        "derivative": {
+          "lowerNumerator": "53419715239180067002857255",
+          "upperNumerator": "60177287974619664143270853",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.172608409273255,
+            0.1944433044086947
+          ]
+        }
+      },
+      {
+        "left": "181/512",
+        "right": "91/256",
+        "derivative": {
+          "lowerNumerator": "58443003693686268510059916",
+          "upperNumerator": "65741769586945861620489702",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.18883952966711823,
+            0.21242311420800736
+          ]
+        }
+      },
+      {
+        "left": "91/256",
+        "right": "183/512",
+        "derivative": {
+          "lowerNumerator": "63859221186344962353978535",
+          "upperNumerator": "71734059738579394047626911",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.20634027225812543,
+            0.2317852479510687
+          ]
+        }
+      },
+      {
+        "left": "183/512",
+        "right": "23/64",
+        "derivative": {
+          "lowerNumerator": "69692662727457176067140643",
+          "upperNumerator": "78180154745606059603474337",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.22518913845839683,
+            0.2526137042654723
+          ]
+        }
+      },
+      {
+        "left": "23/64",
+        "right": "185/512",
+        "derivative": {
+          "lowerNumerator": "75968677397625387455956813",
+          "upperNumerator": "85107159875188523568647968",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.24546803556488717,
+            0.2749960649929957
+          ]
+        }
+      },
+      {
+        "left": "185/512",
+        "right": "93/256",
+        "derivative": {
+          "lowerNumerator": "82713682574842689621263738",
+          "upperNumerator": "92543303725390113414795143",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.2672623227295901,
+            0.29902354165331674
+          ]
+        }
+      },
+      {
+        "left": "93/256",
+        "right": "187/512",
+        "derivative": {
+          "lowerNumerator": "89955174833280219346228719",
+          "upperNumerator": "100517949050489446933365971",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.29066084617541965,
+            0.32479101042249175
+          ]
+        }
+      },
+      {
+        "left": "187/512",
+        "right": "47/128",
+        "derivative": {
+          "lowerNumerator": "97721736941095695808676435",
+          "upperNumerator": "109061599421280852408423599",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.3157559618073491,
+            0.35239703365354696
+          ]
+        }
+      },
+      {
+        "left": "47/128",
+        "right": "189/512",
+        "derivative": {
+          "lowerNumerator": "106043040320209915503776433",
+          "upperNumerator": "118205901041490796687291997",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.34264354316037754,
+            0.38194386574563643
+          ]
+        }
+      },
+      {
+        "left": "189/512",
+        "right": "95/256",
+        "derivative": {
+          "lowerNumerator": "114949842262189993970997641",
+          "upperNumerator": "127983638968411609230607805",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.37142297240356337,
+            0.41353744093225103
+          ]
+        }
+      },
+      {
+        "left": "95/256",
+        "right": "191/512",
+        "derivative": {
+          "lowerNumerator": "124473977121251467299527195",
+          "upperNumerator": "138428726908284819513907350",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.40219711188307944,
+            0.4472873403083235
+          ]
+        }
+      },
+      {
+        "left": "191/512",
+        "right": "3/8",
+        "derivative": {
+          "lowerNumerator": "134648340628162875633563405",
+          "upperNumerator": "149576189675091488198874480",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.43507225343770506,
+            0.48330673515152356
+          ]
+        }
+      },
+      {
+        "left": "3/8",
+        "right": "193/512",
+        "derivative": {
+          "lowerNumerator": "145506866387848353868973246",
+          "upperNumerator": "161462137315593394547244570",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.4701580424584842,
+            0.5217123033157562
+          ]
+        }
+      },
+      {
+        "left": "193/512",
+        "right": "97/256",
+        "derivative": {
+          "lowerNumerator": "157084493539228573733152702",
+          "upperNumerator": "174123729814243976097802439",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.507567373392036,
+            0.562624115186579
+          ]
+        }
+      },
+      {
+        "left": "97/256",
+        "right": "195/512",
+        "derivative": {
+          "lowerNumerator": "169417124468988870396089117",
+          "upperNumerator": "187599131199667990131388726",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.5474162531063701,
+            0.6061654853912389
+          ]
+        }
+      },
+      {
+        "left": "195/512",
+        "right": "49/128",
+        "derivative": {
+          "lowerNumerator": "182541571382395471589555456",
+          "upperNumerator": "201927451780732628241859616",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.5898236282518833,
+            0.6524627861533531
+          ]
+        }
+      },
+      {
+        "left": "49/128",
+        "right": "197/512",
+        "derivative": {
+          "lowerNumerator": "196495490445119413600612314",
+          "upperNumerator": "217148677145996988594946140",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.6349111724621151,
+            0.7016452178777556
+          ]
+        }
+      },
+      {
+        "left": "197/512",
+        "right": "99/256",
+        "derivative": {
+          "lowerNumerator": "211317302121675644668522503",
+          "upperNumerator": "233303582467024991182329295",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.6828030289533628,
+            0.7538445322495685
+          ]
+        }
+      },
+      {
+        "left": "99/256",
+        "right": "199/512",
+        "derivative": {
+          "lowerNumerator": "227046096250263303768822300",
+          "upperNumerator": "250433630555510745857419064",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.7336255038049472,
+            0.8091947028390079
+          ]
+        }
+      },
+      {
+        "left": "199/512",
+        "right": "25/64",
+        "derivative": {
+          "lowerNumerator": "243721520312582908657856796",
+          "upperNumerator": "268580852038608018352107907",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.7875067049395215,
+            0.8678315379269916
+          ]
+        }
+      },
+      {
+        "left": "25/64",
+        "right": "201/512",
+        "derivative": {
+          "lowerNumerator": "261383649283088820941656691",
+          "upperNumerator": "287787705938914964027748773",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.8445761215833248,
+            0.9298922300147745
+          ]
+        }
+      },
+      {
+        "left": "201/512",
+        "right": "101/256",
+        "derivative": {
+          "lowerNumerator": "280072835378034686829191507",
+          "upperNumerator": "308096918878348691158760155",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.9049641387791642,
+            0.9955148362636443
+          ]
+        }
+      },
+      {
+        "left": "101/256",
+        "right": "203/512",
+        "derivative": {
+          "lowerNumerator": "299829535973990873238026994",
+          "upperNumerator": "329551301072268759345371199",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            0.9688014813611555,
+            1.0648376839398692
+          ]
+        }
+      },
+      {
+        "left": "203/512",
+        "right": "51/128",
+        "derivative": {
+          "lowerNumerator": "320694117932178334872720116",
+          "upperNumerator": "352193537245839255233442304",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.0362185816925475,
+            1.1379986948290268
+          ]
+        }
+      },
+      {
+        "left": "51/128",
+        "right": "205/512",
+        "derivative": {
+          "lowerNumerator": "342706636553440565418280374",
+          "upperNumerator": "376065950593498292641727939",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.107344865430714,
+            1.2151346225479163
+          ]
+        }
+      },
+      {
+        "left": "205/512",
+        "right": "103/256",
+        "derivative": {
+          "lowerNumerator": "365906587403996730016958737",
+          "upperNumerator": "401210237919872144400732357",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.1823079496329139,
+            1.2963801967386945
+          ]
+        }
+      },
+      {
+        "left": "103/256",
+        "right": "207/512",
+        "derivative": {
+          "lowerNumerator": "390332629299887571321497661",
+          "upperNumerator": "427667174152472712664421033",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.2612327476707612,
+            1.3818671682979091
+          ]
+        }
+      },
+      {
+        "left": "207/512",
+        "right": "13/32",
+        "derivative": {
+          "lowerNumerator": "416022276824402277323228601",
+          "upperNumerator": "455476284509585870606052065",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.3442404757004467,
+            1.4717232500938138
+          ]
+        }
+      },
+      {
+        "left": "13/32",
+        "right": "209/512",
+        "derivative": {
+          "lowerNumerator": "443011560884443352277175581",
+          "upperNumerator": "484675482747981085681291710",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.4314475558611983,
+            1.5660709480816772
+          ]
+        }
+      },
+      {
+        "left": "209/512",
+        "right": "105/256",
+        "derivative": {
+          "lowerNumerator": "471334655995891117336333653",
+          "upperNumerator": "515300674112020816585657382",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.5229644119693428,
+            1.665026278363162
+          ]
+        }
+      },
+      {
+        "left": "105/256",
+        "right": "211/512",
+        "derivative": {
+          "lowerNumerator": "501023473232073834219996670",
+          "upperNumerator": "547385321866371836499728782",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.6188941542638762,
+            1.7686973665779753
+          ]
+        }
+      },
+      {
+        "left": "211/512",
+        "right": "53/128",
+        "derivative": {
+          "lowerNumerator": "532107218081157814030225295",
+          "upperNumerator": "580959976627000060243714026",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.7193311507666391,
+            1.877182927090291
+          ]
+        }
+      },
+      {
+        "left": "53/128",
+        "right": "213/512",
+        "derivative": {
+          "lowerNumerator": "564611912845399679418274402",
+          "upperNumerator": "616051768117674734587369684",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.8243594840710717,
+            1.9905706207654452
+          ]
+        }
+      },
+      {
+        "left": "213/512",
+        "right": "107/256",
+        "derivative": {
+          "lowerNumerator": "598559883685292565595533626",
+          "upperNumerator": "652683859479795426162506309",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            1.9340512938924581,
+            2.1089352917498885
+          ]
+        }
+      },
+      {
+        "left": "107/256",
+        "right": "215/512",
+        "derivative": {
+          "lowerNumerator": "633969212971712994145622352",
+          "upperNumerator": "690874864859409125650830240",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.048465007522275,
+            2.2323370855933446
+          ]
+        }
+      },
+      {
+        "left": "215/512",
+        "right": "27/64",
+        "derivative": {
+          "lowerNumerator": "670853158265367726246886873",
+          "upperNumerator": "730638231693277258879588501",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.1676434624495315,
+            2.3608194533074456
+          ]
+        }
+      },
+      {
+        "left": "27/64",
+        "right": "217/512",
+        "derivative": {
+          "lowerNumerator": "709219539999948987470273377",
+          "upperNumerator": "771981589920835745427048153",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.2916119278583373,
+            2.4944070485561607
+          ]
+        }
+      },
+      {
+        "left": "217/512",
+        "right": "109/256",
+        "derivative": {
+          "lowerNumerator": "749070100806385019803120132",
+          "upperNumerator": "814906071263954052341027275",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.420376034492905,
+            2.633103528130073
+          ]
+        }
+      },
+      {
+        "left": "109/256",
+        "right": "219/512",
+        "derivative": {
+          "lowerNumerator": "790399840380948265261347043",
+          "upperNumerator": "859405602742051484113910216",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.5539196255005003,
+            2.776889269170602
+          ]
+        }
+      },
+      {
+        "left": "219/512",
+        "right": "55/128",
+        "derivative": {
+          "lowerNumerator": "833196330867218198532690718",
+          "upperNumerator": "905466179723624652937916774",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.6922025443112525,
+            2.9257190202728034
+          ]
+        }
+      },
+      {
+        "left": "55/128",
+        "right": "221/512",
+        "derivative": {
+          "lowerNumerator": "877439018884703125511939855",
+          "upperNumerator": "953065125049851379194945420",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.8351583793710016,
+            3.079519507584625
+          ]
+        }
+      },
+      {
+        "left": "221/512",
+        "right": "111/256",
+        "derivative": {
+          "lowerNumerator": "923098521584559646810579664",
+          "upperNumerator": "1002170342090202077993706128",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            2.9826921895746494,
+            3.2381870212994164
+          ]
+        }
+      },
+      {
+        "left": "111/256",
+        "right": "223/512",
+        "derivative": {
+          "lowerNumerator": "970135925429400512368876724",
+          "upperNumerator": "1052739570986968764177214792",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.134678238501523,
+            3.4015850124523923
+          ]
+        }
+      },
+      {
+        "left": "223/512",
+        "right": "7/16",
+        "derivative": {
+          "lowerNumerator": "1018502097757914627083001573",
+          "upperNumerator": "1104719658792190808713765259",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.2909577699606856,
+            3.5695417346058442
+          ]
+        }
+      },
+      {
+        "left": "7/16",
+        "right": "225/512",
+        "derivative": {
+          "lowerNumerator": "1068137022577798931182837247",
+          "upperNumerator": "1158045855666702835455636185",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.451336861822152,
+            3.7418479697456184
+          ]
+        }
+      },
+      {
+        "left": "225/512",
+        "right": "113/256",
+        "derivative": {
+          "lowerNumerator": "1118969173397352268492300053",
+          "upperNumerator": "1212641150759798879393489807",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.615584399526472,
+            3.9182548823925734
+          ]
+        }
+      },
+      {
+        "left": "113/256",
+        "right": "227/512",
+        "derivative": {
+          "lowerNumerator": "1170914937214987917272295660",
+          "upperNumerator": "1268415662774671167827202606",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.783430214894467,
+            4.098472050413309
+          ]
+        }
+      },
+      {
+        "left": "227/512",
+        "right": "57/128",
+        "derivative": {
+          "lowerNumerator": "1223878104987877222204580851",
+          "upperNumerator": "1325266101497310034521767438",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3.9545634397426213,
+            4.282165725126203
+          ]
+        }
+      },
+      {
+        "left": "57/128",
+        "right": "229/512",
+        "derivative": {
+          "lowerNumerator": "1277749444940361278775538891",
+          "upperNumerator": "1383075317665950739261711098",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.1286311271682,
+            4.46895737685115
+          ]
+        }
+      },
+      {
+        "left": "229/512",
+        "right": "115/256",
+        "derivative": {
+          "lowerNumerator": "1332406375888348963274228149",
+          "upperNumerator": "1441711959419365547716488489",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.3052371960034534,
+            4.658422584834128
+          ]
+        }
+      },
+      {
+        "left": "115/256",
+        "right": "231/512",
+        "derivative": {
+          "lowerNumerator": "1387712758281948709280948920",
+          "upperNumerator": "1501030254115620849639816624",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.483941755637945,
+            4.85009033226557
+          ]
+        }
+      },
+      {
+        "left": "231/512",
+        "right": "29/64",
+        "derivative": {
+          "lowerNumerator": "1443518820836830066940965710",
+          "upperNumerator": "1560869934485992916300436440",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.6642608689516925,
+            5.043442767670812
+          ]
+        }
+      },
+      {
+        "left": "29/64",
+        "right": "233/512",
+        "derivative": {
+          "lowerNumerator": "1499661240366982415699835752",
+          "upperNumerator": "1621056327809155396978261821",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            4.8456668102687255,
+            5.237915493047417
+          ]
+        }
+      },
+      {
+        "left": "233/512",
+        "right": "117/256",
+        "derivative": {
+          "lowerNumerator": "1555963391682287749151178858",
+          "upperNumerator": "1681400625989265861771864416",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.027588872819693,
+            5.432898436534551
+          ]
+        }
+      },
+      {
+        "left": "117/256",
+        "right": "235/512",
+        "derivative": {
+          "lowerNumerator": "1612235783114809006715459305",
+          "upperNumerator": "1741700353035857692801149795",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.209414776003196,
+            5.627737362921974
+          ]
+        }
+      },
+      {
+        "left": "235/512",
+        "right": "59/128",
+        "derivative": {
+          "lowerNumerator": "1668276691339559597038055649",
+          "upperNumerator": "1801740044422307008158625652",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.390492716602325,
+            5.821736068775637
+          ]
+        }
+      },
+      {
+        "left": "59/128",
+        "right": "237/512",
+        "derivative": {
+          "lowerNumerator": "1723873006625175616915231179",
+          "upperNumerator": "1861292150107599474595887320",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.570134099936884,
+            6.014159300258383
+          ]
+        }
+      },
+      {
+        "left": "237/512",
+        "right": "119/256",
+        "derivative": {
+          "lowerNumerator": "1778801296472910802562468020",
+          "upperNumerator": "1920118169627998467317297053",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.747616976666336,
+            6.20423642080893
+          ]
+        }
+      },
+      {
+        "left": "119/256",
+        "right": "239/512",
+        "derivative": {
+          "lowerNumerator": "1832829091787612016779954189",
+          "upperNumerator": "1977970023610624385943777036",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            5.922190198632368,
+            6.391165842741262
+          ]
+        }
+      },
+      {
+        "left": "239/512",
+        "right": "15/32",
+        "derivative": {
+          "lowerNumerator": "1885716395307789557319083154",
+          "upperNumerator": "2034591661368245500100805167",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.093078292859315,
+            6.574120221663545
+          ]
+        }
+      },
+      {
+        "left": "15/32",
+        "right": "241/512",
+        "derivative": {
+          "lowerNumerator": "1937217407069563379108450032",
+          "upperNumerator": "2089720898973945352990206243",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.259487036828864,
+            6.7522523956177025
+          ]
+        }
+      },
+      {
+        "left": "241/512",
+        "right": "121/256",
+        "derivative": {
+          "lowerNumerator": "1987082456288915617305785702",
+          "upperNumerator": "2143091476489673023321784280",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.420609700728281,
+            6.92470203234336
+          ]
+        }
+      },
+      {
+        "left": "121/256",
+        "right": "243/512",
+        "derivative": {
+          "lowerNumerator": "2035060123348132313590016135",
+          "upperNumerator": "2194435316971890912789036011",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.5756339039583915,
+            7.090602928518774
+          ]
+        }
+      },
+      {
+        "left": "243/512",
+        "right": "61/128",
+        "derivative": {
+          "lowerNumerator": "2080899529725915337444325593",
+          "upperNumerator": "2243484963670861902199263624",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.7237490142968355,
+            7.2490908847764475
+          ]
+        }
+      },
+      {
+        "left": "61/128",
+        "right": "245/512",
+        "derivative": {
+          "lowerNumerator": "2124352767903716601100331839",
+          "upperNumerator": "2289976165676418718689161212",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.864153999348891,
+            7.39931206037521
+          ]
+        }
+      },
+      {
+        "left": "245/512",
+        "right": "123/256",
+        "derivative": {
+          "lowerNumerator": "2165177437722057368135301381",
+          "upperNumerator": "2333650576363796836569288428",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            6.996065621956744,
+            7.540431692348951
+          ]
+        }
+      },
+      {
+        "left": "123/256",
+        "right": "247/512",
+        "derivative": {
+          "lowerNumerator": "2203139250572241665505621158",
+          "upperNumerator": "2374258523594177864287973480",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.118726854796739,
+            7.671643046507341
+          ]
+        }
+      },
+      {
+        "left": "247/512",
+        "right": "31/64",
+        "derivative": {
+          "lowerNumerator": "2238014658417319573194819089",
+          "upperNumerator": "2411561805966154920923048031",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.231415375204271,
+            7.7921764526116
+          ]
+        }
+      },
+      {
+        "left": "31/64",
+        "right": "249/512",
+        "derivative": {
+          "lowerNumerator": "2269593461160818194198014549",
+          "upperNumerator": "2445336465729158756066820013",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.33345199003653,
+            7.90130826414102
+          ]
+        }
+      },
+      {
+        "left": "249/512",
+        "right": "125/256",
+        "derivative": {
+          "lowerNumerator": "2297681343523183768528841031",
+          "upperNumerator": "2475375486470689778761748281",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.424208832762385,
+            7.998369574990524
+          ]
+        }
+      },
+      {
+        "left": "125/256",
+        "right": "251/512",
+        "derivative": {
+          "lowerNumerator": "2322102291513647128304111110",
+          "upperNumerator": "2501491362555820297215264615",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.503117171504093,
+            8.082754521777465
+          ]
+        }
+      },
+      {
+        "left": "251/512",
+        "right": "63/128",
+        "derivative": {
+          "lowerNumerator": "2342700838926472109648838838",
+          "upperNumerator": "2523518487664645432874845348",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.569674667858168,
+            8.153928001622388
+          ]
+        }
+      },
+      {
+        "left": "63/128",
+        "right": "253/512",
+        "derivative": {
+          "lowerNumerator": "2359344096119976271975819389",
+          "upperNumerator": "2541315311720311115561028953",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.623451932233951,
+            8.211432641559357
+          ]
+        }
+      },
+      {
+        "left": "253/512",
+        "right": "127/256",
+        "derivative": {
+          "lowerNumerator": "2371923516668927571293292507",
+          "upperNumerator": "2554766219042302377388791480",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.6640982322153715,
+            8.25489486717654
+          ]
+        }
+      },
+      {
+        "left": "127/256",
+        "right": "255/512",
+        "derivative": {
+          "lowerNumerator": "2380356362265797019276381121",
+          "upperNumerator": "2563783085643533304779959291",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.6913462259121825,
+            8.28402993451449
+          ]
+        }
+      },
+      {
+        "left": "255/512",
+        "right": "1/2",
+        "derivative": {
+          "lowerNumerator": "2384586832368008650929525288",
+          "upperNumerator": "2568306480092381574122833006",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            7.705015612047084,
+            8.29864581026065
+          ]
+        }
+      }
+    ]
+  },
+  "proofBoundary": [
+    "The analytic identification, differentiation and variation-of-constants arguments are derived in DERIVATION_EN.md, not in Lean.",
+    "The new real parameters are explicit exp-expression objects; the former binary64 pressure producer is not claimed to accept them.",
+    "The pulse, exact correction roots, corrected pressure, heat replacement, full modulation and same final field are not supplied here.",
+    "Future exact pressure-neutral corrections preserve the axial pressure; no unverified residual is treated as zero."
+  ]
+}

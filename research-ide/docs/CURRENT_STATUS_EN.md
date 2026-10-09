@@ -1,5 +1,29 @@
 # Current status and the frozen v54 baseline
 
+## Latest verified follow-up
+
+The user's remaining **whole original default-build condition (N1-05)
+is satisfied** in the documented explicit-path execution profile. The
+original `lake build` exited 0 at **2026-10-09 20:59:06 UTC**, and an
+independent verifier passed 29/29 source, kernel and completion checks.
+Seven new conditional cone statements also actually compiled on the
+original rc2 kernel, with seven standard-axiom audits.
+
+The separate stock GitHub run also completed both `lake exe cache get`
+and the original `lake build` with exit 0. Its overall job failed on a
+later audit-wrapper error: Git configuration warnings were mistaken for
+tracked source changes. The full before/after inventories match. The
+dated report preserves and distinguishes these actual results.
+
+Of the nine reported remaining conditions, **one is satisfied and eight
+remain open**. The protected independent Comparator and the seven
+complete-profile construction obligations are not promoted. The literal
+local cache-command failures and the successful explicit CacheM run
+remain separately recorded. Read the [dated execution and gate assessment](VERIFICATION_2026_10_10_2_EN.md)
+and the [new quantitative outer-reselection report](OUTER_RESELECTION_2026_10_10_EN.md).
+
+## Frozen original assessment
+
 This English edition documents the source-and-evidence archive delivered on **2026-10-10, Asia/Seoul**, from MathScope **v54 / `16f4f911`**. Its baseline assessment is immutable. The English translation does not promote unfinished mathematical work.
 
 | Workstream | Criteria | PASS | PARTIAL | BLOCKED |
@@ -11,9 +35,9 @@ This English edition documents the source-and-evidence archive delivered on **20
 | M1 total | 64 | 55 | 7 | 2 |
 | Request total | 70 | 61 | 7 | 2 |
 
-The v54 release includes 59 examples and eight NS follow-up families. Source formulas, local exact bounds, finite continuations, loop/modulation computations, and actual five-moment gluing have been implemented. The nine outstanding criteria require further build, protected-environment, or analytic certification evidence as specified in [NS_GATES_EN.md](NS_GATES_EN.md).
+The v54 release includes 59 examples and eight NS follow-up families. Source formulas, local exact bounds, finite continuations, loop/modulation computations, and actual five-moment gluing have been implemented. At v54, the nine outstanding criteria required further build, protected-environment, or analytic certification evidence as specified in [NS_GATES_EN.md](NS_GATES_EN.md).
 
-**New follow-up finding:** the current `Md=1`, `logP=14` outer candidate fails the required cone at an explicitly enclosed interior point: `Pc/XR` is strictly negative. This is a concrete reason that the current local certificates cannot complete the global profile. The [dated addendum](FOLLOWUP_2026_10_10_EN.md) contains the counterexample, the additional valid local results, and the parameter reselection it requires.
+**Preserved follow-up finding:** the earlier `Md=1`, `logP=14` outer candidate fails the required cone at an explicitly enclosed interior point: `Pc/XR` is strictly negative. This prevents those local certificates from completing that global profile. The [first dated addendum](FOLLOWUP_2026_10_10_EN.md) contains the counterexample and valid local results. The later replacement above uses a different pressure and retains its own incomplete source-chain scope.
 
 ## Original full-build snapshot
 
