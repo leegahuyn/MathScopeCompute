@@ -139,6 +139,39 @@ def test_executable_replay_recomputes_in_new_session(golden):
     assert set(n["id"] for n in g["nodes"]).isdisjoint(n["id"] for n in golden["nodes"])
 
 
+@pytest.mark.parametrize("target_revision", [2, 3])
+def test_replay_rejects_reused_or_older_source_identity_before_computing(golden, monkeypatch, target_revision):
+    def unexpected_run(*args, **kwargs):
+        pytest.fail("A replay that reuses source identities must not run the adapter")
+
+    monkeypatch.setattr(GoldenEllipticAdapter, "run", unexpected_run)
+    record = golden["executableReplayRecord"]
+    with pytest.raises(ValueError, match="same-session replay requires a newer target revision"):
+        replay(ReplayRequest(record=record, targetSessionId=record["sourceSessionId"], targetRevision=target_revision))
+
+
+def test_replay_same_session_new_revision_uses_fresh_node_ids(golden):
+    record = golden["executableReplayRecord"]
+    target_revision = record["sourceRevision"] + 1
+    replayed = replay(ReplayRequest(record=record, targetSessionId=record["sourceSessionId"], targetRevision=target_revision))
+    assert replayed["pass"]
+    target = replayed["result"].outputRepresentations[0]
+    validate_graph(target["typedBundle"], record["sourceSessionId"], target_revision)
+    assert {n["id"] for n in target["nodes"]}.isdisjoint(n["id"] for n in golden["nodes"])
+    assert {n["revision"] for n in target["nodes"]}.isdisjoint(n["revision"] for n in golden["nodes"])
+
+
+def test_api_replay_rejects_source_identity(golden, monkeypatch):
+    def unexpected_run(*args, **kwargs):
+        pytest.fail("Rejected API replay must not run the adapter")
+
+    monkeypatch.setattr(GoldenEllipticAdapter, "run", unexpected_run)
+    record = golden["executableReplayRecord"]
+    response = TestClient(app).post("/v1/replay", json={"record": record, "targetSessionId": record["sourceSessionId"], "targetRevision": record["sourceRevision"]})
+    assert response.status_code == 422
+    assert "same-session replay requires a newer target revision" in response.json()["detail"]
+
+
 def test_wire_normalization_integral_floats_and_safe_numbers(golden):
     assert wire_hash({"zero": -0.0, "n": 1.0, "array": [2.0]}) == wire_hash({"zero": 0, "n": 1, "array": [2]})
     assert wire_tree({"one": 1.0, "fraction": 1e-7}) == {"one": 1, "fraction": 1e-7}
@@ -194,6 +227,25 @@ def test_environment_change_requires_review_even_matching_numbers(golden):
     assert not replayed["pass"] and not replayed["environmentCompatible"]
     assert replayed["exactMatch"] and replayed["numericallyEquivalent"]
     assert replayed["status"] == "ENVIRONMENT_CHANGED_REVIEW_REQUIRED"
+
+
+@pytest.mark.parametrize("failure", ["snapshot", "candidate-gate"])
+def test_numerical_failure_takes_priority_over_changed_environment(golden, failure):
+    if failure == "candidate-gate":
+        # Preserve a reproducible snapshot while making the actual candidate fail.
+        golden = GoldenEllipticAdapter().run({**golden["inputSpec"], "candidateValue": 1.01}, {}).outputRepresentations[0]
+    record = golden["executableReplayRecord"]
+    record["environmentFingerprint"]["python"] = "different-version"
+    record["expectedEnvironmentHash"] = sha256_json(record["environmentFingerprint"])
+    if failure == "snapshot":
+        record["numericalSnapshot"]["operator"]["potential"] = 10
+        record["expectedNumericalHash"] = sha256_json(record["numericalSnapshot"])
+    rehash(record)
+    replayed = replay(ReplayRequest(record=record, targetSessionId="failed-replay", targetRevision=1))
+    assert not replayed["pass"] and not replayed["environmentCompatible"]
+    assert replayed["numericallyEquivalent"] is (failure == "candidate-gate")
+    assert replayed["result"].outputRepresentations[0]["gate"]["pass"] is (failure == "snapshot")
+    assert replayed["status"] == "NUMERICAL_REPLAY_FAILED"
 
 
 def test_bad_expected_snapshot_cannot_pass_by_rehashing(golden):

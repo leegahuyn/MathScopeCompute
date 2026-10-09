@@ -81,6 +81,11 @@ def replay(request: ReplayRequest) -> dict[str, Any]:
     spec = normalize_spec(record.get("inputSpec", {}))
     if spec != record["inputSpec"] or spec["sessionId"] != record.get("sourceSessionId") or type(record.get("sourceRevision")) is not int or spec["revision"] != record.get("sourceRevision"):
         raise ValueError("Replay source session/revision binding mismatch")
+    # Typed node identities are deterministic for their input/session/revision.
+    # This stateless endpoint cannot reserve unrelated target bindings; callers
+    # must allocate a fresh session or advance their current session revision.
+    if request.targetSessionId == spec["sessionId"] and request.targetRevision <= spec["revision"]:
+        raise ValueError("A same-session replay requires a newer target revision")
     if record.get("expectedInputsHash") != wire_hash({"adapter": NAME, "inputSpec": spec}) or record.get("expectedNumericalHash") != wire_hash(record.get("numericalSnapshot")):
         raise ValueError("Replay input or numerical hash mismatch")
     env, request_env = record.get("environmentFingerprint"), record.get("requestEnvironment")
@@ -112,5 +117,12 @@ def replay(request: ReplayRequest) -> dict[str, Any]:
         {"name": "numerical tolerance comparison", "pass": numerical_match, "detail": "Recursive comparison at absolute and relative tolerance 1e-10."},
         {"name": "candidate and integration gates", "pass": golden["gate"]["pass"], "detail": "Candidate residual, same operator, mesh convergence, computed topology and guards."},
     ]
-    passed = compatible and numerical_match and golden["gate"]["pass"]
-    return {"pass": passed, "status": "NUMERICAL_REPLAY_PASS" if passed else "ENVIRONMENT_CHANGED_REVIEW_REQUIRED" if not compatible else "NUMERICAL_REPLAY_FAILED", "result": result, "checks": checks, "environmentCompatible": compatible, "exactMatch": exact, "numericallyEquivalent": numerical_match, "sourceSessionId": spec["sessionId"], "sourceRevision": spec["revision"], "targetSessionId": request.targetSessionId, "targetRevision": request.targetRevision, "sourceRecord": record, "formalPass": False}
+    numerical_pass = numerical_match and golden["gate"]["pass"]
+    passed = compatible and numerical_pass
+    if not numerical_pass:
+        status = "NUMERICAL_REPLAY_FAILED"
+    elif not compatible:
+        status = "ENVIRONMENT_CHANGED_REVIEW_REQUIRED"
+    else:
+        status = "NUMERICAL_REPLAY_PASS"
+    return {"pass": passed, "status": status, "result": result, "checks": checks, "environmentCompatible": compatible, "exactMatch": exact, "numericallyEquivalent": numerical_match, "sourceSessionId": spec["sessionId"], "sourceRevision": spec["revision"], "targetSessionId": request.targetSessionId, "targetRevision": request.targetRevision, "sourceRecord": record, "formalPass": False}

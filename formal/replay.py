@@ -6,9 +6,9 @@ receipt must remain historical until a trusted verifier runs the source again.
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 import hashlib
 import json
-import os
 from pathlib import Path
 import re
 import shutil
@@ -19,6 +19,8 @@ import uuid
 ROOT = Path(__file__).resolve().parent
 CLAIM = "GOLDEN-NONLINEAR-ALGEBRA-001"
 SOURCE_HASH = "d27a3c8baa37889217d546a9020ea54552e850888590739062300821406ce593"
+# Pin the reviewed scope, assumptions and exclusions as well as the Lean source.
+MANIFEST_HASH = "1cdd08f98fcd2991112a238be44dcf0384e2f7be947b56a35b865451b79bad6b"
 TOOLCHAIN = "leanprover/lean4:v4.34.0-rc2"
 LEAN_COMMIT = "6a10ac8c22beadecabdbb0919c2b50214762f91d"
 THEOREMS = ["MathScope.GoldenElliptic." + name for name in (
@@ -46,11 +48,10 @@ def valid_audit(output: str) -> bool:
 def check_package() -> dict:
     source = (ROOT / "GoldenAlgebra.lean").read_bytes()
     manifest_bytes = (ROOT / "golden-manifest.json").read_bytes()
-    manifest = json.loads(manifest_bytes)
-    if (digest(source) != SOURCE_HASH or manifest["sourceHash"] != SOURCE_HASH
-            or manifest["claimId"] != CLAIM
+    if (digest(source) != SOURCE_HASH or digest(manifest_bytes) != MANIFEST_HASH
             or (ROOT / "lean-toolchain").read_text().strip() != TOOLCHAIN):
-        raise ValueError("Golden source/toolchain integrity failure")
+        raise ValueError("Golden source/manifest/toolchain integrity failure")
+    manifest = json.loads(manifest_bytes)
     return {"source": source.decode(), "sourceHash": SOURCE_HASH,
             "dependencyLockHash": digest(manifest_bytes), "manifest": manifest}
 
@@ -77,6 +78,7 @@ def replay() -> dict:
     formal = code == 0 and not timed_out and not stderr.strip() and valid_audit(audit)
     return {
         "id": str(uuid.uuid4()), "claimId": CLAIM, "service": "local-lean-replay",
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
         "mode": "restricted-golden-algebra", "verificationMode": "fresh-lean-process-per-request",
         "state": {"run": "SUCCESS" if formal else "ERROR", "evidence": "FORMAL" if formal else "NONE",
                   "truth": "SUPPORTED" if formal else "OPEN", "freshness": "CURRENT"},

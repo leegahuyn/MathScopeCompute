@@ -19,15 +19,20 @@ The Golden numerical computation and the C-014 theorem are independent claims.
 
 Run `python formal/replay.py --output golden-local-receipt.json` from the compute
 repository with the pinned Lean toolchain installed. Every replay starts a fresh
-Lean process, checks the exact source hash and runtime commit, and audits all
-three theorem axioms. Failed, missing or timed-out compilation cannot produce
-formal evidence. The expected axioms are `propext`, `Classical.choice` and
-`Quot.sound`; `sorryAx` is rejected.
+Lean process, checks the exact source and complete manifest hashes plus runtime
+commit, and audits all three theorem axioms. Scope, assumption, exclusion,
+dependency and other manifest edits are rejected before Lean runs; changes to
+the reviewed package require deliberately updating its pinned hashes. Failed,
+missing or timed-out compilation cannot produce formal evidence. The expected
+axioms are `propext`, `Classical.choice` and
+`Quot.sound`; `sorryAx` is rejected. Each local receipt has a fresh run ID and a
+UTC `generatedAt` timestamp, neither of which enters the stable proof hash.
 
 The local receipt is not an authenticated cloud attestation. Imported source
 and receipts remain historical in a research session until a trusted verifier
-reruns the audited source. The cloud verifier accepts only a fixed claim ID,
-source hash and semantic-review flag at `/v1/verify/golden`; it never accepts
+reruns the audited source. The separate MathScopeCloudLean service provides the
+cloud verifier; it is not hosted by MathScopeCompute. It accepts only a fixed
+claim ID, source hash and semantic-review flag at `/v1/verify/golden`; it never accepts
 arbitrary source text or a supplied executable. Its proof hash binds source,
 actual runtime environment and axiom audit. Replays in the same environment
 must preserve that hash, while run IDs and timestamps change.
