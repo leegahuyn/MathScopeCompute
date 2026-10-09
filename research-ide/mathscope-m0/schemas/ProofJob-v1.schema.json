@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:ProofJob:1",
+  "title": "MathScope proof job metadata v1",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "mathscope.proof-job/1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+    },
+    "claimId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requestedGrade": {
+      "enum": [
+        "EXACT_FINITE",
+        "CONDITIONAL_FORMAL"
+      ]
+    },
+    "sourceFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "path",
+          "content",
+          "sha256"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "statement"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "dependencyGraph": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "kind"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+              },
+              "to": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+              },
+              "type": {
+                "const": "DEPENDS_ON"
+              }
+            },
+            "required": [
+              "from",
+              "to",
+              "type"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "nodes",
+        "edges"
+      ],
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object"
+    },
+    "environment": {
+      "type": "object"
+    },
+    "digests": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "assumptions": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "dependency": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "context": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "environment": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "binding": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "source",
+        "assumptions",
+        "dependency",
+        "context",
+        "environment",
+        "binding"
+      ],
+      "additionalProperties": false
+    },
+    "graphAudit": {
+      "type": "object"
+    },
+    "status": {
+      "const": "PREPARED_LOCAL_CHECK_REQUIRED"
+    },
+    "capability": {
+      "const": "EXPORT_AND_PINNED_AUDIT_ONLY"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "claimId",
+    "target",
+    "requestedGrade",
+    "sourceFiles",
+    "assumptions",
+    "dependencyGraph",
+    "context",
+    "environment",
+    "digests",
+    "graphAudit",
+    "status",
+    "capability"
+  ],
+  "additionalProperties": false
+}

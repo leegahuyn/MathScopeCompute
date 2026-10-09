@@ -1,0 +1,462 @@
+{
+  "SourceManifest": {
+    "schema": "MathScope.SourceManifest/1",
+    "id": "m0-source-baseline",
+    "revision": "m0-source-baseline:r1",
+    "entries": [
+      {
+        "id": "v031-page41",
+        "kind": "BASELINE",
+        "title": "MathScope v0.3.1 page 41 snapshot",
+        "uri": "https://project29770.websitepublisher.ai/v0.3.1.html",
+        "sha256": "5cf7e919b8a221873c8a65523ad1e74d60ec551dc4e3c6e0b09b782c42238755",
+        "availability": "AVAILABLE",
+        "locator": "version 41 / d400a17e",
+        "version": "41",
+        "license": null
+      }
+    ]
+  },
+  "AssumptionSpec": {
+    "schema": "MathScope.AssumptionSpec/1",
+    "id": "m0-assume-gap",
+    "revision": "m0-assume-gap:r1",
+    "statement": "In the selected spectral model and fixed energy units, every positive spectral energy is at least delta > 0.",
+    "reason": "Explore a conditional corollary with the selected gap bound explicitly assumed.",
+    "origin": "USER_AXIOM",
+    "status": "DECLARED",
+    "sourceRefs": [],
+    "usedBy": [],
+    "scope": {
+      "kind": "SYMBOLIC",
+      "definition": "Conditional spectral model"
+    },
+    "introducedBy": "MathScope user assumption mode"
+  },
+  "AssumptionLedger": {
+    "schema": "MathScope.AssumptionLedger/1",
+    "id": "m0-assumptions",
+    "revision": "m0-assumptions:r1",
+    "assumptions": [
+      {
+        "schema": "MathScope.AssumptionSpec/1",
+        "id": "m0-assume-gap",
+        "revision": "m0-assume-gap:r1",
+        "statement": "In the selected spectral model and fixed energy units, every positive spectral energy is at least delta > 0.",
+        "reason": "Explore a conditional corollary with the selected gap bound explicitly assumed.",
+        "origin": "USER_AXIOM",
+        "status": "DECLARED",
+        "sourceRefs": [],
+        "usedBy": [],
+        "scope": {
+          "kind": "SYMBOLIC",
+          "definition": "Conditional spectral model"
+        },
+        "introducedBy": "MathScope user assumption mode"
+      }
+    ]
+  },
+  "PrismSpec": {
+    "schema": "MathScope.PrismSpec/1",
+    "id": "m0-prism-p1",
+    "revision": "m0-prism-p1:r1",
+    "sourceRefs": [
+      {
+        "id": "m0-source-baseline",
+        "revision": "m0-source-baseline:r1",
+        "hash": "4a9fb136f8000484e9dced524d473017703225cde379b3166b26b4f6a6d634b1"
+      }
+    ],
+    "assumptionRefs": [],
+    "p": "5",
+    "ring": {
+      "kind": "PADIC_INTEGER_RING",
+      "presentation": "Z_5 as the inverse limit of Z/5^N Z",
+      "completion": "5-adic completion"
+    },
+    "ideal": {
+      "generators": [
+        "5"
+      ],
+      "presentation": "I=(5) in Z_5"
+    },
+    "delta": {
+      "rule": "delta(a)=(a-a^5)/5 on Z_5",
+      "inputExtraDigits": 1,
+      "convention": "Frobenius lift phi=id on Z_5"
+    },
+    "frobenius": {
+      "rule": "phi(a)=a; geometric lift t -> t^5 on each compatible chart",
+      "convention": "Absolute crystalline Frobenius, basis conventions required",
+      "semilinear": true,
+      "cutoffRule": "A chart cutoff D maps into cutoff 5D; never silently crop"
+    },
+    "geometricObject": {
+      "kind": "PROJECTIVE_SPACE",
+      "presentation": "P^1 over F_5, with charts t and s=t^-1",
+      "dimension": 1
+    },
+    "hypotheses": {
+      "smooth": true,
+      "proper": true,
+      "details": [
+        "These geometric hypotheses are declared in this initial interface."
+      ]
+    },
+    "comparison": {
+      "status": "NONE",
+      "theorem": null,
+      "sourceRefs": []
+    },
+    "prismPredicate": {
+      "status": "UNVERIFIED",
+      "statement": "(Z_5,(5)) is the specified crystalline prism; attach comparison and formal provenance before upgrading the interface.",
+      "sourceRefs": []
+    },
+    "scope": {
+      "kind": "FINITE",
+      "pAdic": {
+        "p": "5",
+        "digits": 4
+      },
+      "series": {
+        "order": 1
+      }
+    },
+    "semanticStatus": "INTERFACE"
+  },
+  "PrimeQuerySpec": {
+    "schema": "MathScope.PrimeQuerySpec/1",
+    "id": "m0-primes",
+    "revision": "m0-primes:r1",
+    "sourceRefs": [
+      {
+        "id": "m0-source-baseline",
+        "revision": "m0-source-baseline:r1",
+        "hash": "4a9fb136f8000484e9dced524d473017703225cde379b3166b26b4f6a6d634b1"
+      }
+    ],
+    "assumptionRefs": [],
+    "original": {
+      "kind": "PrimeSet",
+      "definition": "The natural numbers p ≥ 2 whose only positive divisors are 1 and p."
+    },
+    "query": {
+      "lower": "2",
+      "upper": "200",
+      "completeness": "BOUNDED_ENUMERATION"
+    },
+    "scope": {
+      "kind": "FINITE",
+      "primeInterval": {
+        "lower": "2",
+        "upper": "200"
+      }
+    },
+    "output": "COUNT_AND_ENUMERATE"
+  },
+  "GaugeGroupSpec": {
+    "schema": "MathScope.GaugeGroupSpec/1",
+    "id": "m0-gauge-su2",
+    "revision": "m0-gauge-su2:r1",
+    "sourceRefs": [
+      {
+        "id": "m0-source-baseline",
+        "revision": "m0-source-baseline:r1",
+        "hash": "4a9fb136f8000484e9dced524d473017703225cde379b3166b26b4f6a6d634b1"
+      }
+    ],
+    "assumptionRefs": [],
+    "name": "SU(2)",
+    "compact": true,
+    "simple": true,
+    "lieAlgebra": {
+      "family": "A",
+      "rank": 1,
+      "dimension": 3,
+      "basis": "T_a=-i sigma_a/2",
+      "bracket": "[T_a,T_b]=epsilon_{abc} T_c"
+    },
+    "globalForm": {
+      "form": "SIMPLY_CONNECTED",
+      "cover": "SU(2)",
+      "kernel": "{1}",
+      "description": "Simply connected compact form, distinguished from SO(3)."
+    },
+    "representation": {
+      "kind": "MATRIX",
+      "name": "Defining complex representation",
+      "dimension": 2,
+      "faithful": true,
+      "convention": "Anti-Hermitian traceless 2 by 2 matrices"
+    },
+    "invariantInnerProduct": {
+      "normalization": "<T_a,T_b>=delta_ab",
+      "formula": "<X,Y>=-2 Tr(XY)"
+    }
+  },
+  "StateFamilySpec": {
+    "schema": "MathScope.StateFamilySpec/1",
+    "id": "m0-state-family",
+    "revision": "m0-state-family:r1",
+    "sourceRefs": [
+      {
+        "id": "m0-source-baseline",
+        "revision": "m0-source-baseline:r1",
+        "hash": "4a9fb136f8000484e9dced524d473017703225cde379b3166b26b4f6a6d634b1"
+      }
+    ],
+    "assumptionRefs": [],
+    "gaugeGroupRef": {
+      "id": "m0-gauge-su2",
+      "revision": "m0-gauge-su2:r1",
+      "hash": "8c03aea6b4cb233ba75a8b71c91e085d097dfbe355dff8cf9336f1fdcd235538"
+    },
+    "fieldConstruction": {
+      "kind": "EMBEDDED_BPST",
+      "rule": "Use the declared identity embedding of the classical SU(2) BPST field with rho=kappa/delta; no quantum gap identification.",
+      "gaugeConvention": "regular gauge",
+      "parameters": {
+        "kappa": 1,
+        "center": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "embedding": {
+        "domain": "SU(2)",
+        "codomainRef": {
+          "id": "m0-gauge-su2",
+          "revision": "m0-gauge-su2:r1",
+          "hash": "8c03aea6b4cb233ba75a8b71c91e085d097dfbe355dff8cf9336f1fdcd235538"
+        },
+        "formula": "identity on SU(2)",
+        "index": 1,
+        "certificateStatus": "DECLARED",
+        "sourceRefs": []
+      }
+    },
+    "delta": {
+      "mode": "EFFECTIVE_FAMILY",
+      "value": 1,
+      "units": "chosen units with hbar*c=1",
+      "role": "An explicit model size parameter via rho=kappa/delta."
+    },
+    "coupling": {
+      "g": 1,
+      "normalization": "S_E/hbar with the recorded invariant inner product"
+    },
+    "lattice": null,
+    "seed": null,
+    "channels": [
+      {
+        "id": "q4-density",
+        "kind": "SCALAR_DENSITY",
+        "definition": "Normalized classical BPST scalar density"
+      }
+    ],
+    "scope": {
+      "kind": "FINITE",
+      "spatial": {
+        "bounds": [
+          [
+            -4,
+            4
+          ],
+          [
+            -4,
+            4
+          ],
+          [
+            -4,
+            4
+          ],
+          [
+            -4,
+            4
+          ]
+        ]
+      }
+    },
+    "energyInterpretation": "EFFECTIVE_MODEL"
+  },
+  "PDEConstructionSpec": {
+    "schema": "MathScope.PDEConstructionSpec/1",
+    "id": "m0-pde-solver",
+    "revision": "m0-pde-solver:r1",
+    "sourceRefs": [
+      {
+        "id": "m0-source-baseline",
+        "revision": "m0-source-baseline:r1",
+        "hash": "4a9fb136f8000484e9dced524d473017703225cde379b3166b26b4f6a6d634b1"
+      }
+    ],
+    "assumptionRefs": [],
+    "modelId": "general_solver:periodic-taylor-green",
+    "modelKind": "GENERAL_SOLVER",
+    "equation": "du/dt + (u·grad)u = -grad p + nu Laplacian u + f; div u=0",
+    "paper": null,
+    "force": {
+      "kind": "ZERO_FORCE",
+      "definition": "f=0 for this independent benchmark",
+      "divergenceFree": true
+    },
+    "initialCondition": {
+      "definition": "u0=(sin x cos y,-cos x sin y,0)",
+      "domain": "(R/2pi Z)^3"
+    },
+    "normalization": {
+      "nu": 1,
+      "period": 6.283185307179586
+    },
+    "similarityCoordinates": null,
+    "profiles": {
+      "generator": "Taylor–Green initial data; no paper reconstruction profile",
+      "status": "ILLUSTRATIVE"
+    },
+    "pulses": {
+      "generator": "No pulses in this benchmark",
+      "cutoffRule": "Finite Fourier mode cutoff recorded by the solver"
+    },
+    "correction": {
+      "order": 0,
+      "tailStatus": "UNPROVED",
+      "tailDefinition": null
+    },
+    "scope": {
+      "kind": "FINITE",
+      "spatial": {
+        "bounds": [
+          [
+            0,
+            6.283185307179586
+          ],
+          [
+            0,
+            6.283185307179586
+          ],
+          [
+            0,
+            6.283185307179586
+          ]
+        ],
+        "timeMax": 0.9
+      },
+      "series": {
+        "order": 8,
+        "timeMax": 0.9
+      }
+    },
+    "parameters": {
+      "modeCutoff": 8
+    }
+  },
+  "ObservationMapSpec": {
+    "schema": "MathScope.ObservationMapSpec/1",
+    "id": "m0-density-observation",
+    "revision": "m0-density-observation:r1",
+    "sourceRefs": [
+      {
+        "id": "m0-source-baseline",
+        "revision": "m0-source-baseline:r1",
+        "hash": "4a9fb136f8000484e9dced524d473017703225cde379b3166b26b4f6a6d634b1"
+      }
+    ],
+    "assumptionRefs": [],
+    "sourceObjectRef": {
+      "id": "m0-state-family",
+      "revision": "m0-state-family:r1",
+      "hash": "fd01d60c067d5f05334c07c3c041c18bf7de120f61d2840a9286a139f67437ae"
+    },
+    "sourceType": "4D classical scalar density",
+    "outputType": "3D scalar density samples",
+    "method": "SLICE",
+    "definition": "q_slice(y)=q4(y,c), c=0; x4 is a Euclidean coordinate.",
+    "sourceDimension": 4,
+    "displayDimension": 3,
+    "scope": {
+      "kind": "FINITE",
+      "spatial": {
+        "bounds": [
+          [
+            -4,
+            4
+          ],
+          [
+            -4,
+            4
+          ],
+          [
+            -4,
+            4
+          ]
+        ]
+      }
+    },
+    "axes": [
+      {
+        "name": "x1",
+        "sourceField": "x1",
+        "kind": "PHYSICAL",
+        "unit": "chosen length unit",
+        "scale": "LINEAR"
+      },
+      {
+        "name": "x2",
+        "sourceField": "x2",
+        "kind": "PHYSICAL",
+        "unit": "chosen length unit",
+        "scale": "LINEAR"
+      },
+      {
+        "name": "x3",
+        "sourceField": "x3",
+        "kind": "PHYSICAL",
+        "unit": "chosen length unit",
+        "scale": "LINEAR"
+      }
+    ],
+    "lostInformation": [
+      "Values away from the selected x4=0 slice",
+      "Gauge connection and quantum spectrum are not reconstructed from scalar density"
+    ],
+    "injectivity": "NON_INJECTIVE",
+    "inverse": {
+      "status": "UNAVAILABLE"
+    },
+    "gaugeConvention": null,
+    "endpointData": null,
+    "parameters": {
+      "slice": 0
+    }
+  },
+  "ClaimSpec": {
+    "schema": "MathScope.ClaimSpec/1",
+    "id": "m0-gap-claim",
+    "revision": "m0-gap-claim:r1",
+    "sourceRefs": [
+      {
+        "id": "m0-source-baseline",
+        "revision": "m0-source-baseline:r1",
+        "hash": "4a9fb136f8000484e9dced524d473017703225cde379b3166b26b4f6a6d634b1"
+      }
+    ],
+    "assumptionRefs": [
+      {
+        "id": "m0-assume-gap",
+        "revision": "m0-assume-gap:r1",
+        "hash": "81218b347ab5480e4e6b6685781d54257162fe283b5830fbb2a135c1287919d2"
+      }
+    ],
+    "statement": "Under the selected positive gap assumption, no spectral energy lies strictly between zero and delta.",
+    "scope": {
+      "kind": "SYMBOLIC",
+      "definition": "Selected spectral interface with explicit USER_AXIOM dependency"
+    },
+    "propositionKind": "GENERAL",
+    "logicRole": "CONDITIONAL",
+    "grade": "RESEARCH HYPOTHESIS"
+  }
+}

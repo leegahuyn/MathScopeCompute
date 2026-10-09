@@ -1,0 +1,232 @@
+{
+  "schema": "MathScope.BundleAcceptanceEvidence/1",
+  "pass": true,
+  "passed": 12,
+  "total": 12,
+  "results": [
+    {
+      "id": "A01",
+      "label": "Versioned starter contracts",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "contractCount": 10,
+        "contracts": [
+          "SourceManifest",
+          "AssumptionSpec",
+          "AssumptionLedger",
+          "PrismSpec",
+          "PrimeQuerySpec",
+          "GaugeGroupSpec",
+          "StateFamilySpec",
+          "PDEConstructionSpec",
+          "ObservationMapSpec",
+          "ClaimSpec"
+        ]
+      },
+      "durationMillis": 5.787393000000002
+    },
+    {
+      "id": "A02",
+      "label": "Isolated legacy migration and round-trip",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "preservedSessionId": "m0-acceptance-isolated-session",
+        "preservedLegacyGroups": 7,
+        "importAuthority": "REVALIDATION_REQUIRED",
+        "syntheticFixture": true
+      },
+      "durationMillis": 3.9034049999999993
+    },
+    {
+      "id": "A03",
+      "label": "Finite scope, CW and fake-proof guards",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "rejected": [
+          "UNBOUNDED_FINITE_QUERY",
+          "CW_AS_PRISM",
+          "GENERIC_FORMAL_PASS"
+        ]
+      },
+      "durationMillis": 1.6114749999999987
+    },
+    {
+      "id": "A04",
+      "label": "Selective assumption staleness",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "stale": [
+          "m0-gap-claim",
+          "m0-gap-interpretation"
+        ],
+        "preservedCurrent": "m0-primes"
+      },
+      "durationMillis": 19.565478
+    },
+    {
+      "id": "A05",
+      "label": "Exact prime interval and completeness",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "count": "168",
+        "scope": "[2,1000]",
+        "verifier": "TRIAL_DIVISION_BY_ALL_ODD_DIVISORS_TO_SQRT",
+        "executionMode": "COOPERATIVE_LOCAL_RUNTIME"
+      },
+      "durationMillis": 23.100678000000002
+    },
+    {
+      "id": "A06",
+      "label": "Canonical p-adic delta",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "p": "5",
+        "inputDigits": 4,
+        "outputDigits": 3,
+        "residue": "15",
+        "scopeKind": "interval-certified"
+      },
+      "durationMillis": 5.47859600000001
+    },
+    {
+      "id": "A07",
+      "label": "Exact rational interval enclosure",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "enclosure": "[-1, 3/2]",
+        "endpoints": "EXACT_RATIONAL",
+        "residual": "NOT_COMPUTED",
+        "stability": "NOT_PROVIDED"
+      },
+      "durationMillis": 4.962090999999987
+    },
+    {
+      "id": "A08",
+      "label": "Finite differential matrix certificate",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "product": "D1 D0 = 0",
+        "dimensions": [
+          3,
+          4
+        ],
+        "scope": "These finite integer matrices only",
+        "sourceStaleGuard": true
+      },
+      "durationMillis": 10.190687000000011
+    },
+    {
+      "id": "A09",
+      "label": "Insufficient precision stays incomplete",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "status": "PRECISION_REQUIRED",
+        "requiredInputDigits": 4,
+        "noInventedDigit": true
+      },
+      "durationMillis": 2.9257180000000176
+    },
+    {
+      "id": "A10",
+      "label": "Shipped Lean audit exact binding",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "matchedAudits": [
+          {
+            "id": "m0-finite-d2",
+            "target": "MathScope.M0.Finite.differential_squared_zero",
+            "grade": "EXACT_FINITE"
+          },
+          {
+            "id": "m0-finite-integer",
+            "target": "MathScope.M0.Finite.integer_fixture",
+            "grade": "EXACT_FINITE"
+          },
+          {
+            "id": "m0-analytic-gap",
+            "target": "MathScope.M0.Analytic.gap_excludes_interval",
+            "grade": "CONDITIONAL_FORMAL"
+          },
+          {
+            "id": "m0-conditional-user-gap",
+            "target": "MathScope.M0.Conditional.selected_gap_excludes_interval",
+            "grade": "CONDITIONAL_FORMAL"
+          },
+          {
+            "id": "m0-comparison-gap",
+            "target": "MathScope.M0.Comparison.transport_gap",
+            "grade": "CONDITIONAL_FORMAL"
+          }
+        ],
+        "newLeanCompilation": false
+      },
+      "durationMillis": 14.167816999999985
+    },
+    {
+      "id": "A11",
+      "label": "Edited Lean source makes old audit stale",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "status": "STALE",
+        "mismatchedBindings": [
+          "source",
+          "binding"
+        ]
+      },
+      "durationMillis": 1.835406000000006
+    },
+    {
+      "id": "A12",
+      "label": "Forged Lean audit is untrusted",
+      "pass": true,
+      "status": "PASS",
+      "details": {
+        "status": "UNTRUSTED_IMPORTED",
+        "serializedPassFieldsGrantAuthority": false
+      },
+      "durationMillis": 1.0772340000000042
+    }
+  ],
+  "scope": {
+    "id": "M0_LOCAL_FOUNDATION_ACCEPTANCE",
+    "version": "1.0.0",
+    "isolatedSyntheticSession": true,
+    "mutatesActiveSession": false,
+    "readsActiveSession": false,
+    "networkRequests": false,
+    "computation": "Four finite local adapters and their explicit bounds; native browser Worker when available.",
+    "proof": "Exact replay of shipped source-bound Lean audits; this run does not compile Lean in the browser.",
+    "exclusions": "No full prismatic complex, general-G quantum construction, RH/BSD resolution, Navier–Stokes reconstruction or global release certification."
+  },
+  "aborted": false,
+  "generatedAt": "2026-10-09T12:46:55.103Z",
+  "bundleSha256": "b337da82947040c17b2271d34eb70eb9fba46f2aca6e8860ffcce2cc089f8695",
+  "expectedBundleSha256": "b337da82947040c17b2271d34eb70eb9fba46f2aca6e8860ffcce2cc089f8695",
+  "pageVersion": 44,
+  "nodeVersion": "v24.19.0",
+  "sourceMatchesBuild": {
+    "compute.mjs": true,
+    "worker.mjs": true,
+    "values.mjs": true,
+    "acceptance.mjs": true
+  },
+  "execution": {
+    "harness": "ISOLATED_NODE_VM",
+    "worker": "COOPERATIVE_LOCAL_RUNTIME",
+    "browserDOMExecuted": false,
+    "actualBrowserUIPassClaimed": false,
+    "newLeanCompilation": false,
+    "sourceModification": "In-memory acceptance export only; no file/source edits."
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schema": "MathScope.TaskResume/1",
+  "recordedUTC": "2026-10-09T18:44:21.897656+00:00",
+  "task": "M0 six + M1 actual objects; retain all 70 original criteria",
+  "status": "RELEASE_VERIFIED_WITH_OPEN_M1_GATES",
+  "liveSite": {
+    "version": 54,
+    "versionHash": "16f4f911",
+    "url": "https://project29770.websitepublisher.ai/v0.3.1.html",
+    "workerSha256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca",
+    "appVersion": "1.2.0",
+    "nsVersion": "1.3.0-m1",
+    "exampleCount": 59,
+    "sourceReadback": "evidence/deployment-v54-verified.json",
+    "bundleSha256": "4dc2624ae5ef86ec23d329e7b8d9e4129daef956bd81bd3f3ddf029206d9dc14",
+    "browserAcceptance": "19/19",
+    "new59ExampleBundlePublished": true
+  },
+  "currentCode": {
+    "examplesBeforeGluing": 58,
+    "m0SixComplete": true,
+    "arithmeticCriteriaPass": 24,
+    "gaugeCriteriaPass": 16,
+    "nsCriteria": {
+      "PASS": 15,
+      "PARTIAL": 7,
+      "BLOCKED": 2
+    },
+    "examplesAfterGluing": 59,
+    "originalCriteriaTotals": {
+      "PASS": 61,
+      "PARTIAL": 7,
+      "BLOCKED": 2,
+      "total": 70
+    },
+    "m1CriteriaTotals": {
+      "PASS": 55,
+      "PARTIAL": 7,
+      "BLOCKED": 2,
+      "total": 64
+    }
+  },
+  "importantCorrection": {
+    "status": "CORRECTED_AND_LIVE_V52",
+    "files": [
+      "navier/followup-construction/controlled-continuation.mjs",
+      "navier/followup-construction/source-radial-modulation.mjs"
+    ],
+    "sourceFormula": "Ns = -W*U + [D(M-eta*M_eta)+4h*eta*S-d*S_eta]/X + 4A*eta*Pi-d*Pi_eta",
+    "oldError": "-W*U was erroneously inside the /X bracket. Version51 was already live before stream failure; version52 corrects both direct app and embedded Worker.",
+    "independentFailArtifact": "navier/followup-construction/continuation-historical-formula-failure.json",
+    "impact": "The previous same-engine/replay tests did not detect the original equation transcription error. Independent original-formula checks found it, historical failures are preserved, and corrected code was retested and read back from the live site."
+  },
+  "activeWork": [
+    "Original default lake build has no successful final exit receipt yet",
+    "N1-06 protected Comparator requires a compatible unprivileged user-systemd/DBus environment",
+    "N3-01 through N3-07 retain their original uniform analytic, exact-identity and complete-profile acceptance gates"
+  ],
+  "doNotClaim": [
+    "Whole original Lean default build or protected Comparator success",
+    "Full certified N3 profile",
+    "Every original M1 item complete"
+  ],
+  "deliveryPhase": "PDF_VERIFIED_SOURCE_ARCHIVE_PREPARATION",
+  "deliverables": {
+    "pdf": {
+      "path": "output/pdf/MathScope_M0_M1_Implementation_Checklist_KO.pdf",
+      "pages": 51,
+      "sha256": "600ffcb14bca68af4b1b6fcad170a58feaf769c33530f88503b4c573a3902551",
+      "allPagesActuallyVisuallyInspected": true
+    },
+    "sourceArchive": {
+      "path": "output/MathScope_M0_M1_Source_and_Evidence.zip",
+      "verificationReceipt": "output/MathScope_M0_M1_Source_and_Evidence.package-receipt.json",
+      "note": "The final package command records the archive SHA, every-entry verification and immutable build snapshot in its receipt and embedded manifest."
+    },
+    "screenshot": {
+      "path": "output/MathScope_M1_v54_Screenshot.jpg",
+      "sha256": "fc9f26e89b975964b6acba0f0cda11b75034ee61be8a4ea20e6595e0e6785430"
+    }
+  },
+  "originalBuildPackagedSnapshot": "navier/original-build-release-snapshots/20261009T181519Z/snapshot.json",
+  "lastReadOnlyBuildObservation": {
+    "observedUTC": "2026-10-09T18:44:21.897656+00:00",
+    "stage": "RUNNING",
+    "finalResultFilePresent": false,
+    "resourceHeartbeatUTC": "2026-10-09T18:44:01.632520+00:00",
+    "diskFreeBytes": 5053829120,
+    "oomKill": 0,
+    "fullBuildPassed": false,
+    "note": "A running observation is not a final success receipt; no continuation beyond the active runtime is guaranteed."
+  }
+}

@@ -1,0 +1,703 @@
+{
+  "schema": "MathScope.ArithmeticLeanAudit/1",
+  "checkedAt": "2026-10-09T14:32:33.680328+00:00",
+  "status": "KERNEL_CHECKED_EXPLICIT_SCOPES",
+  "sourceFiles": [
+    {
+      "path": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "content": "import Mathlib.Algebra.Ring.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Data.Int.Basic\n\n/-! Exact universal identities for the actual standard two-chart P1 complex.\nThe geometric crystalline/prismatic comparison is not an axiom or theorem here.\nThe all-weight formulas hold over every commutative coefficient ring, so p|k\ndoes not invalidate them. Restricted families are defined by p-power divisibility.\n-/\nnamespace MathScope.M1.Arithmetic\n\nvariable {R : Type*} [CommRing R]\n\ndef posA (k x : R) : R × R := (k*x, -x)\ndef negA (k x : R) : R × R := (-k*x, x)\ndef weightB (k : R) (z : R × R) : R := -z.1-k*z.2\ndef posH1 (z : R × R) : R := -z.2\ndef negH1 (z : R × R) : R := z.2\ndef weightH2 (w : R) : R × R := (-w,0)\n\ntheorem positive_weight_contractible (k x u v w : R) :\n    weightB k (posA k x) = 0 ∧\n    posH1 (posA k x) = x ∧\n    posA k (posH1 (u,v)) + weightH2 (weightB k (u,v)) = (u,v) ∧\n    weightB k (weightH2 w) = w := by\n  dsimp [weightB, posA, posH1, weightH2]\n  constructor\n  · ring\n  constructor\n  · ring\n  constructor\n  · ext <;> dsimp <;> ring\n  · ring\n\ntheorem negative_weight_contractible (k x u v w : R) :\n    weightB k (negA k x) = 0 ∧\n    negH1 (negA k x) = x ∧\n    negA k (negH1 (u,v)) + weightH2 (weightB k (u,v)) = (u,v) ∧\n    weightB k (weightH2 w) = w := by\n  dsimp [weightB, negA, negH1, weightH2]\n  constructor\n  · ring\n  constructor\n  · rfl\n  constructor\n  · ext <;> dsimp <;> ring\n  · ring\n\nstructure C0 (R : Type*) where\n  a : R\n  b : R\n  c : R\n  d : R\nstructure C1 (R : Type*) where\n  u : R\n  v : R\n  w : R\n  x : R\n  y : R\nstructure C2 (R : Type*) where\n  a : R\n  b : R\n  c : R\n\ndef d0 (v : C0 R) : C1 R := ⟨v.b,v.d,v.d,v.c-v.a,-v.b⟩\ndef d1 (v : C1 R) : C2 R := ⟨-v.v+v.w,0,-v.u-v.y⟩\ndef h1 (v : C1 R) : C0 R := ⟨0,-v.y,v.x,v.w⟩\ndef h2 (v : C2 R) : C1 R := ⟨-v.c,-v.a,0,0,0⟩\ndef i0 (x : R) : C0 R := ⟨x,0,x,0⟩\ndef i2 (x : R) : C2 R := ⟨0,x,0⟩\ndef r0 (v : C0 R) : R := v.a\ndef r2 (v : C2 R) : R := v.b\n\ntheorem p1_d_squared_zero (v : C0 R) : d1 (d0 v) = ⟨0,0,0⟩ := by\n  cases v\n  simp [d0,d1]\n\ntheorem p1_retraction (x : R) : r0 (i0 x) = x ∧ r2 (i2 x) = x := by\n  constructor <;> rfl\n\ntheorem p1_homotopy_degree_zero (v : C0 R) :\n    h1 (d0 v) = ⟨v.a - (i0 (r0 v)).a,\n      v.b - (i0 (r0 v)).b, v.c - (i0 (r0 v)).c,\n      v.d - (i0 (r0 v)).d⟩ := by\n  cases v\n  simp [h1,d0,i0,r0]\n\ntheorem p1_homotopy_degree_one (v : C1 R) :\n    C1.mk ((d0 (h1 v)).u + (h2 (d1 v)).u)\n      ((d0 (h1 v)).v + (h2 (d1 v)).v)\n      ((d0 (h1 v)).w + (h2 (d1 v)).w)\n      ((d0 (h1 v)).x + (h2 (d1 v)).x)\n      ((d0 (h1 v)).y + (h2 (d1 v)).y) = v := by\n  cases v\n  simp only [h1,h2,d0,d1]\n  congr <;> ring\n\ntheorem p1_homotopy_degree_two (v : C2 R) :\n    d1 (h2 v) = ⟨v.a-(i2 (r2 v)).a,\n      v.b-(i2 (r2 v)).b, v.c-(i2 (r2 v)).c⟩ := by\n  cases v\n  simp [d1,h2,i2,r2]\n\ndef weightF1 (p : R) (z : R × R) : R × R := (p*z.1,z.2)\n\ntheorem frobenius_positive_chain_map (p k x : R) (z : R × R) :\n    posA (p*k) x = weightF1 p (posA k x) ∧\n    weightB (p*k) (weightF1 p z) = p*weightB k z := by\n  constructor\n  · apply Prod.ext\n    · dsimp [posA,weightF1]; ring\n    · rfl\n  · dsimp [weightB,weightF1]; ring\n\ntheorem frobenius_negative_chain_map (p k x : R) (z : R × R) :\n    negA (p*k) x = weightF1 p (negA k x) ∧\n    weightB (p*k) (weightF1 p z) = p*weightB k z := by\n  constructor\n  · apply Prod.ext\n    · dsimp [negA,weightF1]; ring\n    · rfl\n  · dsimp [weightB,weightF1]; ring\n\n/-- Uniform p-adic restrictedness; this is not a real absolute-value cutoff. -/\ndef Restricted (p : R) (f : ℤ → R) : Prop :=\n  ∀ N : ℕ, ∃ B : ℕ, ∀ k : ℤ, B < k.natAbs → ∃ a : R, f k = p^N*a\n\ntheorem restricted_neg (p : R) (f : ℤ → R) (hf : Restricted p f) :\n    Restricted p (fun k => -f k) := by\n  intro N\n  obtain ⟨B,hB⟩ := hf N\n  refine ⟨B,?_⟩\n  intro k hk\n  obtain ⟨a,ha⟩ := hB k hk\n  refine ⟨-a,?_⟩\n  dsimp only\n  rw [ha]\n  ring\n\n/-- Even unbounded integer weights are p-adically bounded multipliers. -/\ntheorem restricted_mul_weight (p : R) (f : ℤ → R) (w : ℤ → R)\n    (hf : Restricted p f) : Restricted p (fun k => w k * f k) := by\n  intro N\n  obtain ⟨B,hB⟩ := hf N\n  refine ⟨B,?_⟩\n  intro k hk\n  obtain ⟨a,ha⟩ := hB k hk\n  refine ⟨w k*a,?_⟩\n  dsimp only\n  rw [ha]\n  ring\n\ntheorem restricted_add (p : R) (f g : ℤ → R)\n    (hf : Restricted p f) (hg : Restricted p g) :\n    Restricted p (fun k => f k+g k) := by\n  intro N\n  obtain ⟨B,hB⟩ := hf N\n  obtain ⟨C,hC⟩ := hg N\n  refine ⟨max B C,?_⟩\n  intro k hk\n  obtain ⟨a,ha⟩ := hB k (lt_of_le_of_lt (le_max_left B C) hk)\n  obtain ⟨b,hb⟩ := hC k (lt_of_le_of_lt (le_max_right B C) hk)\n  refine ⟨a+b,?_⟩\n  dsimp only\n  rw [ha,hb]\n  ring\n\ntheorem restricted_select (p : R) (f g : ℤ → R) (P : ℤ → Prop)\n    [DecidablePred P] (hf : Restricted p f) (hg : Restricted p g) :\n    Restricted p (fun k => if P k then f k else g k) := by\n  intro N\n  obtain ⟨B,hB⟩ := hf N\n  obtain ⟨C,hC⟩ := hg N\n  refine ⟨max B C,?_⟩\n  intro k hk\n  by_cases h : P k\n  · simpa [h] using hB k (lt_of_le_of_lt (le_max_left B C) hk)\n  · simpa [h] using hC k (lt_of_le_of_lt (le_max_right B C) hk)\n\n/-- A coefficient identity valid at every precision is an inverse-system identity. -/\ntheorem inverse_system_identity {A : ℕ → Type*}\n    (f g : (N : ℕ) → ℤ → A N) (h : ∀ N k, f N k = g N k) : f = g := by\n  funext N k\n  exact h N k\n\n/-- The H2 generator is dt/t; pullback multiplies its coefficient by p. -/\ntheorem p1_frobenius_degree_two (p x : R) :\n    r2 (C2.mk 0 (p*x) 0) = p*x := rfl\n\nset_option pp.fullNames true\n#check positive_weight_contractible\n#print axioms positive_weight_contractible\n#check negative_weight_contractible\n#print axioms negative_weight_contractible\n#check p1_d_squared_zero\n#print axioms p1_d_squared_zero\n#check p1_retraction\n#print axioms p1_retraction\n#check p1_homotopy_degree_zero\n#print axioms p1_homotopy_degree_zero\n#check p1_homotopy_degree_one\n#print axioms p1_homotopy_degree_one\n#check p1_homotopy_degree_two\n#print axioms p1_homotopy_degree_two\n#check frobenius_positive_chain_map\n#print axioms frobenius_positive_chain_map\n#check frobenius_negative_chain_map\n#print axioms frobenius_negative_chain_map\n#check restricted_neg\n#print axioms restricted_neg\n#check restricted_mul_weight\n#print axioms restricted_mul_weight\n#check restricted_add\n#print axioms restricted_add\n#check restricted_select\n#print axioms restricted_select\n#check inverse_system_identity\n#print axioms inverse_system_identity\n#check p1_frobenius_degree_two\n#print axioms p1_frobenius_degree_two\nend MathScope.M1.Arithmetic\n",
+      "sha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "role": "CHECKED_THEOREM_SOURCE"
+    },
+    {
+      "path": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "content": "import Mathlib.Data.Nat.Prime.Basic\nimport Mathlib.Order.Interval.Finset.Nat\nimport Mathlib.NumberTheory.LucasPrimality\nimport Mathlib.Tactic.NormNum\n\nnamespace MathScope.M1.Arithmetic\ndef PrimeSet : Set ℕ := {n | Nat.Prime n}\ndef primesIn (a b : ℕ) : Finset ℕ := (Finset.Icc a b).filter Nat.Prime\n\ntheorem prime_interval_complete (a b n : ℕ) :\n    n ∈ primesIn a b ↔ a ≤ n ∧ n ≤ b ∧ n.Prime := by\n  simp [primesIn, and_assoc]\n\ntheorem sieve_square_root_guard (n : ℕ) (hn : 2 ≤ n)\n    (guard : ∀ d, 2 ≤ d → d ≤ Nat.sqrt n → ¬d ∣ n) : n.Prime :=\n  Nat.prime_def_le_sqrt.mpr ⟨hn,guard⟩\n\ntheorem prime_only_square_root_guard (n : ℕ) (hn : 2 ≤ n)\n    (guard : ∀ q, q.Prime → q ≤ Nat.sqrt n → ¬q ∣ n) : n.Prime := by\n  apply sieve_square_root_guard n hn\n  intro d hd hbound hdiv\n  have hd1 : d ≠ 1 := by\n    intro h\n    rw [h] at hd\n    norm_num at hd\n  have hdpos : 0 < d := lt_of_lt_of_le (by decide : 0 < 2) hd\n  exact guard d.minFac (Nat.minFac_prime hd1)\n    (le_trans (Nat.minFac_le hdpos) hbound) ((Nat.minFac_dvd d).trans hdiv)\n\n/-- The mathematical marking rule used by the segmented implementation.\nThe complete prime base through sqrt(b), not a probable-prime list, is required.\n-/\ntheorem segmented_sieve_complete_on_interval (a b n : ℕ) (base : Finset ℕ)\n    (hn : n ≤ b) (sound : ∀ q ∈ base, q.Prime)\n    (complete : ∀ q, q.Prime → q ≤ Nat.sqrt b → q ∈ base) :\n    (a ≤ n ∧ 2 ≤ n ∧ ∀ q ∈ base, q ≤ Nat.sqrt n → ¬q ∣ n) ↔\n      a ≤ n ∧ n.Prime := by\n  constructor\n  · rintro ⟨ha,h2,guard⟩\n    refine ⟨ha,prime_only_square_root_guard n h2 ?_⟩\n    intro q hq hbound\n    exact guard q (complete q hq (le_trans hbound (Nat.sqrt_le_sqrt hn))) hbound\n  · rintro ⟨ha,hp⟩\n    refine ⟨ha,hp.two_le,?_⟩\n    intro q hq hbound\n    exact (Nat.prime_def_le_sqrt.mp hp).2 q (sound q hq).two_le hbound\n\n/-- Exact library adapter, not an assertion that JavaScript ran in the kernel. -/\ntheorem lucas_certificate_sound (p : ℕ) (a : ZMod p)\n    (ha : a^(p-1)=1)\n    (hd : ∀ q : ℕ, q.Prime → q ∣ p-1 → a^((p-1)/q) ≠ 1) : p.Prime :=\n  lucas_primality p a ha hd\n\ntheorem pi_ten : (primesIn 2 10).card = 4 := by decide\ntheorem pi_hundred : (primesIn 2 100).card = 25 := by decide\ntheorem composite_controls : ¬Nat.Prime 341 ∧ ¬Nat.Prime 561 ∧ ¬Nat.Prime 1105 := by\n  constructor\n  · intro h\n    have hd := (Nat.prime_def_lt'.mp h).2 11 (by decide) (by decide)\n    exact hd (by decide)\n  constructor\n  · intro h\n    have hd := (Nat.prime_def_lt'.mp h).2 3 (by decide) (by decide)\n    exact hd (by decide)\n  · intro h\n    have hd := (Nat.prime_def_lt'.mp h).2 5 (by decide) (by decide)\n    exact hd (by decide)\n\nset_option pp.fullNames true\n#check prime_interval_complete\n#print axioms prime_interval_complete\n#check sieve_square_root_guard\n#print axioms sieve_square_root_guard\n#check prime_only_square_root_guard\n#print axioms prime_only_square_root_guard\n#check segmented_sieve_complete_on_interval\n#print axioms segmented_sieve_complete_on_interval\n#check lucas_certificate_sound\n#print axioms lucas_certificate_sound\n#check pi_ten\n#print axioms pi_ten\n#check pi_hundred\n#print axioms pi_hundred\n#check composite_controls\n#print axioms composite_controls\nend MathScope.M1.Arithmetic\n",
+      "sha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "role": "CHECKED_THEOREM_SOURCE"
+    },
+    {
+      "path": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "content": "import Mathlib.Data.Int.ModEq\nimport Mathlib.Algebra.Divisibility.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.NormNum\n\nnamespace MathScope.M1.Arithmetic\n\ntheorem precision_reduction_composes (p a : ℤ) (N M : ℕ) (h : N ≤ M) :\n    (a % p^M) % p^N = a % p^N :=\n  Int.emod_emod_of_dvd a (pow_dvd_pow p h)\n\ntheorem integral_map_preserves_precision (p a b c : ℤ) (N : ℕ)\n    (h : p^N ∣ a-b) : p^N ∣ c*a-c*b := by\n  obtain ⟨z,hz⟩ := h\n  refine ⟨c*z,?_⟩\n  calc c*a-c*b = c*(a-b) := by ring\n       _ = c*(p^N*z) := by rw [hz]\n       _ = p^N*(c*z) := by ring\n\ntheorem delta_numerator_precision (modulus a b : ℤ) (p : ℕ)\n    (h : Int.ModEq modulus a b) :\n    Int.ModEq modulus (a-a^p) (b-b^p) :=\n  h.sub (Int.ModEq.pow p h)\n\n/-- Dividing a divisible numerator by p consumes one known p-adic digit. -/\ntheorem guard_digit_division (p x y : ℤ) (N : ℕ) (hp : p ≠ 0)\n    (h : p^(N+1) ∣ p*x-p*y) : p^N ∣ x-y := by\n  obtain ⟨z,hz⟩ := h\n  refine ⟨z,?_⟩\n  apply mul_left_cancel₀ hp\n  calc p*(x-y) = p*x-p*y := by ring\n       _ = p^(N+1)*z := hz\n       _ = p*(p^N*z) := by rw [pow_succ]; ring\n\n/-- A finite fixture demonstrating that an unknown guard digit cannot be inferred. -/\ntheorem delta_guard_digit_counterexample :\n    (0 : ℤ) % 27 = 27 % 27 ∧\n    ((0 : ℤ)-0^3)/3 % 27 ≠ ((27 : ℤ)-27^3)/3 % 27 := by\n  norm_num\n\ntheorem derived_reduction_zero_differential : (3 : ℤ) % 3 = 0 := by decide\n\ntheorem finite_ring_nonunit_fixture :\n    ∀ x : Fin 27, (3*x.val) % 27 ≠ 1 := by decide\n\ntheorem finite_ring_kernel_fixture :\n    ((List.range 27).filter (fun x => (3*x)%27 == 0)) = [0,9,18] := by decide\n\nset_option pp.fullNames true\n#check precision_reduction_composes\n#print axioms precision_reduction_composes\n#check integral_map_preserves_precision\n#print axioms integral_map_preserves_precision\n#check delta_numerator_precision\n#print axioms delta_numerator_precision\n#check guard_digit_division\n#print axioms guard_digit_division\n#check delta_guard_digit_counterexample\n#print axioms delta_guard_digit_counterexample\n#check derived_reduction_zero_differential\n#print axioms derived_reduction_zero_differential\n#check finite_ring_nonunit_fixture\n#print axioms finite_ring_nonunit_fixture\n#check finite_ring_kernel_fixture\n#print axioms finite_ring_kernel_fixture\nend MathScope.M1.Arithmetic\n",
+      "sha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "role": "CHECKED_THEOREM_SOURCE"
+    },
+    {
+      "path": "lean/NegativeWeight.lean",
+      "content": "import MathScope.M1.Arithmetic.Algebra\nopen MathScope.M1.Arithmetic\n/-- Deliberately wrong sign: the correct positive h1 is -v, not v. -/\ntheorem invalid_positive_contraction :\n    negH1 (posA (3 : ℤ) 1) = 1 := by decide\n",
+      "sha256": "38912bb5343e7e7b9808c73d82ad3034c36cfef86eecdaec89e55c241a669726",
+      "role": "EXPECTED_REJECTION_CONTROL"
+    },
+    {
+      "path": "lean/NegativePrecision.lean",
+      "content": "import MathScope.M1.Arithmetic.Precision\n/-- Deliberately invents the unknown guard digit. -/\ntheorem invalid_delta_precision :\n    (((0 : ℤ)-0^3)/3) % 27 = (((27 : ℤ)-27^3)/3) % 27 := by decide\n",
+      "sha256": "aaa89b73d62cb4e7719fb536872ff50a9fa43f58c5a8e8d171bc6fb66b4b0593",
+      "role": "EXPECTED_REJECTION_CONTROL"
+    },
+    {
+      "path": "lean/NegativePrime.lean",
+      "content": "import MathScope.M1.Arithmetic.Prime\nset_option maxRecDepth 10000\ntheorem invalid_prime_certificate : Nat.Prime 341 := by decide\n",
+      "sha256": "3cab495965927f27fdab93ca6f981686c573125b245bdfbecdc99daf729afdcb",
+      "role": "EXPECTED_REJECTION_CONTROL"
+    },
+    {
+      "path": "lean/NegativeFalse.lean",
+      "content": "import Init\ntheorem impossible_equality : (0 : Nat) = 1 := by rfl\n",
+      "sha256": "8aa3ec8f05c467c828df09e43382f3acb20b9669eec576192529a461313ed2aa",
+      "role": "EXPECTED_REJECTION_CONTROL"
+    }
+  ],
+  "targets": [
+    {
+      "name": "MathScope.M1.Arithmetic.positive_weight_contractible",
+      "type": "MathScope.M1.Arithmetic.positive_weight_contractible.{u_1} {R : Type u_1} [CommRing R] (k x u v w : R) :\n  MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.posA k x) = 0 ∧\n    MathScope.M1.Arithmetic.posH1 (MathScope.M1.Arithmetic.posA k x) = x ∧\n      MathScope.M1.Arithmetic.posA k (MathScope.M1.Arithmetic.posH1 (u, v)) +\n            MathScope.M1.Arithmetic.weightH2 (MathScope.M1.Arithmetic.weightB k (u, v)) =\n          (u, v) ∧\n        MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.weightH2 w) = w",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.negative_weight_contractible",
+      "type": "MathScope.M1.Arithmetic.negative_weight_contractible.{u_1} {R : Type u_1} [CommRing R] (k x u v w : R) :\n  MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.negA k x) = 0 ∧\n    MathScope.M1.Arithmetic.negH1 (MathScope.M1.Arithmetic.negA k x) = x ∧\n      MathScope.M1.Arithmetic.negA k (MathScope.M1.Arithmetic.negH1 (u, v)) +\n            MathScope.M1.Arithmetic.weightH2 (MathScope.M1.Arithmetic.weightB k (u, v)) =\n          (u, v) ∧\n        MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.weightH2 w) = w",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.p1_d_squared_zero",
+      "type": "MathScope.M1.Arithmetic.p1_d_squared_zero.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C0 R) :\n  MathScope.M1.Arithmetic.d1 (MathScope.M1.Arithmetic.d0 v) = { a := 0, b := 0, c := 0 }",
+      "axioms": [
+        "propext"
+      ],
+      "standardAxioms": [
+        "propext"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.p1_retraction",
+      "type": "MathScope.M1.Arithmetic.p1_retraction.{u_1} {R : Type u_1} [CommRing R] (x : R) :\n  MathScope.M1.Arithmetic.r0 (MathScope.M1.Arithmetic.i0 x) = x ∧\n    MathScope.M1.Arithmetic.r2 (MathScope.M1.Arithmetic.i2 x) = x",
+      "axioms": [],
+      "standardAxioms": [],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.p1_homotopy_degree_zero",
+      "type": "MathScope.M1.Arithmetic.p1_homotopy_degree_zero.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C0 R) :\n  MathScope.M1.Arithmetic.h1 (MathScope.M1.Arithmetic.d0 v) =\n    { a := v.a - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).a,\n      b := v.b - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).b,\n      c := v.c - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).c,\n      d := v.d - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).d }",
+      "axioms": [
+        "propext"
+      ],
+      "standardAxioms": [
+        "propext"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.p1_homotopy_degree_one",
+      "type": "MathScope.M1.Arithmetic.p1_homotopy_degree_one.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C1 R) :\n  {\n      u :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).u +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).u,\n      v :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).v +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).v,\n      w :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).w +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).w,\n      x :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).x +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).x,\n      y :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).y +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).y } =\n    v",
+      "axioms": [
+        "propext"
+      ],
+      "standardAxioms": [
+        "propext"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.p1_homotopy_degree_two",
+      "type": "MathScope.M1.Arithmetic.p1_homotopy_degree_two.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C2 R) :\n  MathScope.M1.Arithmetic.d1 (MathScope.M1.Arithmetic.h2 v) =\n    { a := v.a - (MathScope.M1.Arithmetic.i2 (MathScope.M1.Arithmetic.r2 v)).a,\n      b := v.b - (MathScope.M1.Arithmetic.i2 (MathScope.M1.Arithmetic.r2 v)).b,\n      c := v.c - (MathScope.M1.Arithmetic.i2 (MathScope.M1.Arithmetic.r2 v)).c }",
+      "axioms": [
+        "propext"
+      ],
+      "standardAxioms": [
+        "propext"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.frobenius_positive_chain_map",
+      "type": "MathScope.M1.Arithmetic.frobenius_positive_chain_map.{u_1} {R : Type u_1} [CommRing R] (p k x : R) (z : R × R) :\n  MathScope.M1.Arithmetic.posA (p * k) x = MathScope.M1.Arithmetic.weightF1 p (MathScope.M1.Arithmetic.posA k x) ∧\n    MathScope.M1.Arithmetic.weightB (p * k) (MathScope.M1.Arithmetic.weightF1 p z) =\n      p * MathScope.M1.Arithmetic.weightB k z",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.frobenius_negative_chain_map",
+      "type": "MathScope.M1.Arithmetic.frobenius_negative_chain_map.{u_1} {R : Type u_1} [CommRing R] (p k x : R) (z : R × R) :\n  MathScope.M1.Arithmetic.negA (p * k) x = MathScope.M1.Arithmetic.weightF1 p (MathScope.M1.Arithmetic.negA k x) ∧\n    MathScope.M1.Arithmetic.weightB (p * k) (MathScope.M1.Arithmetic.weightF1 p z) =\n      p * MathScope.M1.Arithmetic.weightB k z",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.restricted_neg",
+      "type": "MathScope.M1.Arithmetic.restricted_neg.{u_1} {R : Type u_1} [CommRing R] (p : R) (f : ℤ → R)\n  (hf : MathScope.M1.Arithmetic.Restricted p f) : MathScope.M1.Arithmetic.Restricted p fun k => -f k",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.restricted_mul_weight",
+      "type": "MathScope.M1.Arithmetic.restricted_mul_weight.{u_1} {R : Type u_1} [CommRing R] (p : R) (f w : ℤ → R)\n  (hf : MathScope.M1.Arithmetic.Restricted p f) : MathScope.M1.Arithmetic.Restricted p fun k => w k * f k",
+      "axioms": [
+        "propext"
+      ],
+      "standardAxioms": [
+        "propext"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.restricted_add",
+      "type": "MathScope.M1.Arithmetic.restricted_add.{u_1} {R : Type u_1} [CommRing R] (p : R) (f g : ℤ → R)\n  (hf : MathScope.M1.Arithmetic.Restricted p f) (hg : MathScope.M1.Arithmetic.Restricted p g) :\n  MathScope.M1.Arithmetic.Restricted p fun k => f k + g k",
+      "axioms": [
+        "propext"
+      ],
+      "standardAxioms": [
+        "propext"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.restricted_select",
+      "type": "MathScope.M1.Arithmetic.restricted_select.{u_1} {R : Type u_1} [CommRing R] (p : R) (f g : ℤ → R) (P : ℤ → Prop)\n  [DecidablePred P] (hf : MathScope.M1.Arithmetic.Restricted p f) (hg : MathScope.M1.Arithmetic.Restricted p g) :\n  MathScope.M1.Arithmetic.Restricted p fun k => if P k then f k else g k",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.inverse_system_identity",
+      "type": "MathScope.M1.Arithmetic.inverse_system_identity.{u_2} {A : ℕ → Type u_2} (f g : (N : ℕ) → ℤ → A N)\n  (h : ∀ (N : ℕ) (k : ℤ), f N k = g N k) : f = g",
+      "axioms": [
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.p1_frobenius_degree_two",
+      "type": "MathScope.M1.Arithmetic.p1_frobenius_degree_two.{u_1} {R : Type u_1} [CommRing R] (p x : R) :\n  MathScope.M1.Arithmetic.r2 { a := 0, b := p * x, c := 0 } = p * x",
+      "axioms": [],
+      "standardAxioms": [],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.prime_interval_complete",
+      "type": "MathScope.M1.Arithmetic.prime_interval_complete (a b n : ℕ) :\n  n ∈ MathScope.M1.Arithmetic.primesIn a b ↔ a ≤ n ∧ n ≤ b ∧ Nat.Prime n",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sourceSha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.sieve_square_root_guard",
+      "type": "MathScope.M1.Arithmetic.sieve_square_root_guard (n : ℕ) (hn : 2 ≤ n) (guard : ∀ (d : ℕ), 2 ≤ d → d ≤ n.sqrt → ¬d ∣ n) :\n  Nat.Prime n",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sourceSha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.prime_only_square_root_guard",
+      "type": "MathScope.M1.Arithmetic.prime_only_square_root_guard (n : ℕ) (hn : 2 ≤ n)\n  (guard : ∀ (q : ℕ), Nat.Prime q → q ≤ n.sqrt → ¬q ∣ n) : Nat.Prime n",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sourceSha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.segmented_sieve_complete_on_interval",
+      "type": "MathScope.M1.Arithmetic.segmented_sieve_complete_on_interval (a b n : ℕ) (base : Finset ℕ) (hn : n ≤ b)\n  (sound : ∀ q ∈ base, Nat.Prime q) (complete : ∀ (q : ℕ), Nat.Prime q → q ≤ b.sqrt → q ∈ base) :\n  (a ≤ n ∧ 2 ≤ n ∧ ∀ q ∈ base, q ≤ n.sqrt → ¬q ∣ n) ↔ a ≤ n ∧ Nat.Prime n",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sourceSha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.lucas_certificate_sound",
+      "type": "MathScope.M1.Arithmetic.lucas_certificate_sound (p : ℕ) (a : ZMod p) (ha : a ^ (p - 1) = 1)\n  (hd : ∀ (q : ℕ), Nat.Prime q → q ∣ p - 1 → a ^ ((p - 1) / q) ≠ 1) : Nat.Prime p",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sourceSha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.pi_ten",
+      "type": "MathScope.M1.Arithmetic.pi_ten : (MathScope.M1.Arithmetic.primesIn 2 10).card = 4",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sourceSha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "scope": "FINITE_FIXTURE"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.pi_hundred",
+      "type": "MathScope.M1.Arithmetic.pi_hundred : (MathScope.M1.Arithmetic.primesIn 2 100).card = 25",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sourceSha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "scope": "FINITE_FIXTURE"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.composite_controls",
+      "type": "MathScope.M1.Arithmetic.composite_controls : ¬Nat.Prime 341 ∧ ¬Nat.Prime 561 ∧ ¬Nat.Prime 1105",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sourceSha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "scope": "FINITE_FIXTURE"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.precision_reduction_composes",
+      "type": "MathScope.M1.Arithmetic.precision_reduction_composes (p a : ℤ) (N M : ℕ) (h : N ≤ M) : a % p ^ M % p ^ N = a % p ^ N",
+      "axioms": [
+        "propext"
+      ],
+      "standardAxioms": [
+        "propext"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.integral_map_preserves_precision",
+      "type": "MathScope.M1.Arithmetic.integral_map_preserves_precision (p a b c : ℤ) (N : ℕ) (h : p ^ N ∣ a - b) :\n  p ^ N ∣ c * a - c * b",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.delta_numerator_precision",
+      "type": "MathScope.M1.Arithmetic.delta_numerator_precision (modulus a b : ℤ) (p : ℕ) (h : a ≡ b [ZMOD modulus]) :\n  a - a ^ p ≡ b - b ^ p [ZMOD modulus]",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.guard_digit_division",
+      "type": "MathScope.M1.Arithmetic.guard_digit_division (p x y : ℤ) (N : ℕ) (hp : p ≠ 0) (h : p ^ (N + 1) ∣ p * x - p * y) :\n  p ^ N ∣ x - y",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.delta_guard_digit_counterexample",
+      "type": "MathScope.M1.Arithmetic.delta_guard_digit_counterexample :\n  0 % 27 = 27 % 27 ∧ (0 - 0 ^ 3) / 3 % 27 ≠ (27 - 27 ^ 3) / 3 % 27",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "standardAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "scope": "FINITE_FIXTURE"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.derived_reduction_zero_differential",
+      "type": "MathScope.M1.Arithmetic.derived_reduction_zero_differential : 3 % 3 = 0",
+      "axioms": [],
+      "standardAxioms": [],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "scope": "FINITE_FIXTURE"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.finite_ring_nonunit_fixture",
+      "type": "MathScope.M1.Arithmetic.finite_ring_nonunit_fixture (x : Fin 27) : 3 * ↑x % 27 ≠ 1",
+      "axioms": [],
+      "standardAxioms": [],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "scope": "FINITE_FIXTURE"
+    },
+    {
+      "name": "MathScope.M1.Arithmetic.finite_ring_kernel_fixture",
+      "type": "MathScope.M1.Arithmetic.finite_ring_kernel_fixture : List.filter (fun x => 3 * x % 27 == 0) (List.range 27) = [0, 9, 18]",
+      "axioms": [],
+      "standardAxioms": [],
+      "customAxioms": [],
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "scope": "FINITE_FIXTURE"
+    }
+  ],
+  "builds": [
+    {
+      "module": "MathScope.M1.Arithmetic.Algebra",
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/.lake/build/lib/lean/MathScope/M1/Arithmetic/Algebra.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Algebra.lean"
+      ],
+      "exitCode": 0,
+      "seconds": 3.328874,
+      "logFile": "evidence/lean-algebra-audit.log",
+      "log": "MathScope.M1.Arithmetic.positive_weight_contractible.{u_1} {R : Type u_1} [CommRing R] (k x u v w : R) :\n  MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.posA k x) = 0 ∧\n    MathScope.M1.Arithmetic.posH1 (MathScope.M1.Arithmetic.posA k x) = x ∧\n      MathScope.M1.Arithmetic.posA k (MathScope.M1.Arithmetic.posH1 (u, v)) +\n            MathScope.M1.Arithmetic.weightH2 (MathScope.M1.Arithmetic.weightB k (u, v)) =\n          (u, v) ∧\n        MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.weightH2 w) = w\n'MathScope.M1.Arithmetic.positive_weight_contractible' depends on axioms: [propext, Quot.sound]\nMathScope.M1.Arithmetic.negative_weight_contractible.{u_1} {R : Type u_1} [CommRing R] (k x u v w : R) :\n  MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.negA k x) = 0 ∧\n    MathScope.M1.Arithmetic.negH1 (MathScope.M1.Arithmetic.negA k x) = x ∧\n      MathScope.M1.Arithmetic.negA k (MathScope.M1.Arithmetic.negH1 (u, v)) +\n            MathScope.M1.Arithmetic.weightH2 (MathScope.M1.Arithmetic.weightB k (u, v)) =\n          (u, v) ∧\n        MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.weightH2 w) = w\n'MathScope.M1.Arithmetic.negative_weight_contractible' depends on axioms: [propext, Quot.sound]\nMathScope.M1.Arithmetic.p1_d_squared_zero.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C0 R) :\n  MathScope.M1.Arithmetic.d1 (MathScope.M1.Arithmetic.d0 v) = { a := 0, b := 0, c := 0 }\n'MathScope.M1.Arithmetic.p1_d_squared_zero' depends on axioms: [propext]\nMathScope.M1.Arithmetic.p1_retraction.{u_1} {R : Type u_1} [CommRing R] (x : R) :\n  MathScope.M1.Arithmetic.r0 (MathScope.M1.Arithmetic.i0 x) = x ∧\n    MathScope.M1.Arithmetic.r2 (MathScope.M1.Arithmetic.i2 x) = x\n'MathScope.M1.Arithmetic.p1_retraction' does not depend on any axioms\nMathScope.M1.Arithmetic.p1_homotopy_degree_zero.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C0 R) :\n  MathScope.M1.Arithmetic.h1 (MathScope.M1.Arithmetic.d0 v) =\n    { a := v.a - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).a,\n      b := v.b - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).b,\n      c := v.c - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).c,\n      d := v.d - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).d }\n'MathScope.M1.Arithmetic.p1_homotopy_degree_zero' depends on axioms: [propext]\nMathScope.M1.Arithmetic.p1_homotopy_degree_one.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C1 R) :\n  {\n      u :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).u +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).u,\n      v :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).v +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).v,\n      w :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).w +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).w,\n      x :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).x +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).x,\n      y :=\n        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).y +\n          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).y } =\n    v\n'MathScope.M1.Arithmetic.p1_homotopy_degree_one' depends on axioms: [propext]\nMathScope.M1.Arithmetic.p1_homotopy_degree_two.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C2 R) :\n  MathScope.M1.Arithmetic.d1 (MathScope.M1.Arithmetic.h2 v) =\n    { a := v.a - (MathScope.M1.Arithmetic.i2 (MathScope.M1.Arithmetic.r2 v)).a,\n      b := v.b - (MathScope.M1.Arithmetic.i2 (MathScope.M1.Arithmetic.r2 v)).b,\n      c := v.c - (MathScope.M1.Arithmetic.i2 (MathScope.M1.Arithmetic.r2 v)).c }\n'MathScope.M1.Arithmetic.p1_homotopy_degree_two' depends on axioms: [propext]\nMathScope.M1.Arithmetic.frobenius_positive_chain_map.{u_1} {R : Type u_1} [CommRing R] (p k x : R) (z : R × R) :\n  MathScope.M1.Arithmetic.posA (p * k) x = MathScope.M1.Arithmetic.weightF1 p (MathScope.M1.Arithmetic.posA k x) ∧\n    MathScope.M1.Arithmetic.weightB (p * k) (MathScope.M1.Arithmetic.weightF1 p z) =\n      p * MathScope.M1.Arithmetic.weightB k z\n'MathScope.M1.Arithmetic.frobenius_positive_chain_map' depends on axioms: [propext, Quot.sound]\nMathScope.M1.Arithmetic.frobenius_negative_chain_map.{u_1} {R : Type u_1} [CommRing R] (p k x : R) (z : R × R) :\n  MathScope.M1.Arithmetic.negA (p * k) x = MathScope.M1.Arithmetic.weightF1 p (MathScope.M1.Arithmetic.negA k x) ∧\n    MathScope.M1.Arithmetic.weightB (p * k) (MathScope.M1.Arithmetic.weightF1 p z) =\n      p * MathScope.M1.Arithmetic.weightB k z\n'MathScope.M1.Arithmetic.frobenius_negative_chain_map' depends on axioms: [propext, Quot.sound]\nMathScope.M1.Arithmetic.restricted_neg.{u_1} {R : Type u_1} [CommRing R] (p : R) (f : ℤ → R)\n  (hf : MathScope.M1.Arithmetic.Restricted p f) : MathScope.M1.Arithmetic.Restricted p fun k => -f k\n'MathScope.M1.Arithmetic.restricted_neg' depends on axioms: [propext, Quot.sound]\nMathScope.M1.Arithmetic.restricted_mul_weight.{u_1} {R : Type u_1} [CommRing R] (p : R) (f w : ℤ → R)\n  (hf : MathScope.M1.Arithmetic.Restricted p f) : MathScope.M1.Arithmetic.Restricted p fun k => w k * f k\n'MathScope.M1.Arithmetic.restricted_mul_weight' depends on axioms: [propext]\nMathScope.M1.Arithmetic.restricted_add.{u_1} {R : Type u_1} [CommRing R] (p : R) (f g : ℤ → R)\n  (hf : MathScope.M1.Arithmetic.Restricted p f) (hg : MathScope.M1.Arithmetic.Restricted p g) :\n  MathScope.M1.Arithmetic.Restricted p fun k => f k + g k\n'MathScope.M1.Arithmetic.restricted_add' depends on axioms: [propext]\nMathScope.M1.Arithmetic.restricted_select.{u_1} {R : Type u_1} [CommRing R] (p : R) (f g : ℤ → R) (P : ℤ → Prop)\n  [DecidablePred P] (hf : MathScope.M1.Arithmetic.Restricted p f) (hg : MathScope.M1.Arithmetic.Restricted p g) :\n  MathScope.M1.Arithmetic.Restricted p fun k => if P k then f k else g k\n'MathScope.M1.Arithmetic.restricted_select' depends on axioms: [propext, Quot.sound]\nMathScope.M1.Arithmetic.inverse_system_identity.{u_2} {A : ℕ → Type u_2} (f g : (N : ℕ) → ℤ → A N)\n  (h : ∀ (N : ℕ) (k : ℤ), f N k = g N k) : f = g\n'MathScope.M1.Arithmetic.inverse_system_identity' depends on axioms: [Quot.sound]\nMathScope.M1.Arithmetic.p1_frobenius_degree_two.{u_1} {R : Type u_1} [CommRing R] (p x : R) :\n  MathScope.M1.Arithmetic.r2 { a := 0, b := p * x, c := 0 } = p * x\n'MathScope.M1.Arithmetic.p1_frobenius_degree_two' does not depend on any axioms\n",
+      "logSha256": "060c5eaeed4aa9b1a269112e65e077c011e524014f914be03d5375f0e15c5cf0",
+      "warnings": [],
+      "oleanSha256": "85814bf9d14457ed812b70f6f01a5d410abd1af17749ead746ec011d76c90740"
+    },
+    {
+      "module": "MathScope.M1.Arithmetic.Prime",
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sourceSha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/.lake/build/lib/lean/MathScope/M1/Arithmetic/Prime.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Prime.lean"
+      ],
+      "exitCode": 0,
+      "seconds": 2.465892,
+      "logFile": "evidence/lean-prime-audit.log",
+      "log": "MathScope.M1.Arithmetic.prime_interval_complete (a b n : ℕ) :\n  n ∈ MathScope.M1.Arithmetic.primesIn a b ↔ a ≤ n ∧ n ≤ b ∧ Nat.Prime n\n'MathScope.M1.Arithmetic.prime_interval_complete' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.M1.Arithmetic.sieve_square_root_guard (n : ℕ) (hn : 2 ≤ n) (guard : ∀ (d : ℕ), 2 ≤ d → d ≤ n.sqrt → ¬d ∣ n) :\n  Nat.Prime n\n'MathScope.M1.Arithmetic.sieve_square_root_guard' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.M1.Arithmetic.prime_only_square_root_guard (n : ℕ) (hn : 2 ≤ n)\n  (guard : ∀ (q : ℕ), Nat.Prime q → q ≤ n.sqrt → ¬q ∣ n) : Nat.Prime n\n'MathScope.M1.Arithmetic.prime_only_square_root_guard' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.M1.Arithmetic.segmented_sieve_complete_on_interval (a b n : ℕ) (base : Finset ℕ) (hn : n ≤ b)\n  (sound : ∀ q ∈ base, Nat.Prime q) (complete : ∀ (q : ℕ), Nat.Prime q → q ≤ b.sqrt → q ∈ base) :\n  (a ≤ n ∧ 2 ≤ n ∧ ∀ q ∈ base, q ≤ n.sqrt → ¬q ∣ n) ↔ a ≤ n ∧ Nat.Prime n\n'MathScope.M1.Arithmetic.segmented_sieve_complete_on_interval' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\nMathScope.M1.Arithmetic.lucas_certificate_sound (p : ℕ) (a : ZMod p) (ha : a ^ (p - 1) = 1)\n  (hd : ∀ (q : ℕ), Nat.Prime q → q ∣ p - 1 → a ^ ((p - 1) / q) ≠ 1) : Nat.Prime p\n'MathScope.M1.Arithmetic.lucas_certificate_sound' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.M1.Arithmetic.pi_ten : (MathScope.M1.Arithmetic.primesIn 2 10).card = 4\n'MathScope.M1.Arithmetic.pi_ten' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.M1.Arithmetic.pi_hundred : (MathScope.M1.Arithmetic.primesIn 2 100).card = 25\n'MathScope.M1.Arithmetic.pi_hundred' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.M1.Arithmetic.composite_controls : ¬Nat.Prime 341 ∧ ¬Nat.Prime 561 ∧ ¬Nat.Prime 1105\n'MathScope.M1.Arithmetic.composite_controls' depends on axioms: [propext, Quot.sound]\n",
+      "logSha256": "6c015571aa92c3634891ada02560325f1c5a1bede71c0aa78aff7f1fa2333d77",
+      "warnings": [],
+      "oleanSha256": "39642e4a40a3a3cc45684c92d70048b4ef03066fb058465411278e829b971f7b"
+    },
+    {
+      "module": "MathScope.M1.Arithmetic.Precision",
+      "sourceFile": "lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/.lake/build/lib/lean/MathScope/M1/Arithmetic/Precision.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Precision.lean"
+      ],
+      "exitCode": 0,
+      "seconds": 1.086558,
+      "logFile": "evidence/lean-precision-audit.log",
+      "log": "MathScope.M1.Arithmetic.precision_reduction_composes (p a : ℤ) (N M : ℕ) (h : N ≤ M) : a % p ^ M % p ^ N = a % p ^ N\n'MathScope.M1.Arithmetic.precision_reduction_composes' depends on axioms: [propext]\nMathScope.M1.Arithmetic.integral_map_preserves_precision (p a b c : ℤ) (N : ℕ) (h : p ^ N ∣ a - b) :\n  p ^ N ∣ c * a - c * b\n'MathScope.M1.Arithmetic.integral_map_preserves_precision' depends on axioms: [propext, Quot.sound]\nMathScope.M1.Arithmetic.delta_numerator_precision (modulus a b : ℤ) (p : ℕ) (h : a ≡ b [ZMOD modulus]) :\n  a - a ^ p ≡ b - b ^ p [ZMOD modulus]\n'MathScope.M1.Arithmetic.delta_numerator_precision' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.M1.Arithmetic.guard_digit_division (p x y : ℤ) (N : ℕ) (hp : p ≠ 0) (h : p ^ (N + 1) ∣ p * x - p * y) :\n  p ^ N ∣ x - y\n'MathScope.M1.Arithmetic.guard_digit_division' depends on axioms: [propext, Quot.sound]\nMathScope.M1.Arithmetic.delta_guard_digit_counterexample :\n  0 % 27 = 27 % 27 ∧ (0 - 0 ^ 3) / 3 % 27 ≠ (27 - 27 ^ 3) / 3 % 27\n'MathScope.M1.Arithmetic.delta_guard_digit_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.M1.Arithmetic.derived_reduction_zero_differential : 3 % 3 = 0\n'MathScope.M1.Arithmetic.derived_reduction_zero_differential' does not depend on any axioms\nMathScope.M1.Arithmetic.finite_ring_nonunit_fixture (x : Fin 27) : 3 * ↑x % 27 ≠ 1\n'MathScope.M1.Arithmetic.finite_ring_nonunit_fixture' does not depend on any axioms\nMathScope.M1.Arithmetic.finite_ring_kernel_fixture : List.filter (fun x => 3 * x % 27 == 0) (List.range 27) = [0, 9, 18]\n'MathScope.M1.Arithmetic.finite_ring_kernel_fixture' does not depend on any axioms\n",
+      "logSha256": "460fbdd410d57003d52cee5474fea141c24d5207797bfcc9241d1eeaf93a7ce4",
+      "warnings": [],
+      "oleanSha256": "9e2ac5c6654e6f79e819c8982e415636d5d71afa37a52c65232fe9b1688da193"
+    }
+  ],
+  "commands": [
+    [
+      "/tmp/mathscope-lean-embed",
+      "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+      "-o",
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/.lake/build/lib/lean/MathScope/M1/Arithmetic/Algebra.olean",
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Algebra.lean"
+    ],
+    [
+      "/tmp/mathscope-lean-embed",
+      "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+      "-o",
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/.lake/build/lib/lean/MathScope/M1/Arithmetic/Prime.olean",
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Prime.lean"
+    ],
+    [
+      "/tmp/mathscope-lean-embed",
+      "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+      "-o",
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/.lake/build/lib/lean/MathScope/M1/Arithmetic/Precision.olean",
+      "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Precision.lean"
+    ]
+  ],
+  "environment": {
+    "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+    "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "mathlibManifestSha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+    "driverSha256": "0e3f7d16718c0d2b6bf5bf80f26c66358b0468b35607d6ef0d921857b50440aa",
+    "driverSourceSha256": "dbcada6e01a624daf70f53689fc95fa71b1a53c3e0279d2c2157c11c1e62e78e",
+    "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+    "importClosureFile": "evidence/lean-import-closure.json",
+    "importClosureSha256": "897a21b2bf7182b575bbc27f2fea616536610ae7e220aee709339c0e99fa9492",
+    "importedModuleCount": 3072,
+    "kernelModified": false,
+    "runtimeModified": false,
+    "guardModified": false,
+    "frontend": "Official shared-library frontend with explicit installation root",
+    "LEAN_PATH": "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/.lake/build/lib/lean:/workspace/scratch/afa9cd11a21b/mathlib-ym-check/.lake/build/lib/lean:/workspace/scratch/afa9cd11a21b/mathlib-ym-check/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/scratch/afa9cd11a21b/mathlib-ym-check/.lake/packages/Qq/.lake/build/lib/lean:/workspace/scratch/afa9cd11a21b/mathlib-ym-check/.lake/packages/aesop/.lake/build/lib/lean:/workspace/scratch/afa9cd11a21b/mathlib-ym-check/.lake/packages/batteries/.lake/build/lib/lean:/workspace/scratch/afa9cd11a21b/mathlib-ym-check/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/scratch/afa9cd11a21b/mathlib-ym-check/.lake/packages/plausible/.lake/build/lib/lean:/workspace/scratch/afa9cd11a21b/mathlib-ym-check/.lake/packages/proofwidgets/.lake/build/lib/lean"
+  },
+  "negativeControls": [
+    {
+      "name": "NegativeWeight",
+      "sourceFile": "lean/NegativeWeight.lean",
+      "sourceSha256": "38912bb5343e7e7b9808c73d82ad3034c36cfef86eecdaec89e55c241a669726",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/NegativeWeight.lean"
+      ],
+      "exitCode": 1,
+      "expectedRejected": true,
+      "rejected": true,
+      "seconds": 0.894693,
+      "logFile": "evidence/lean-negativeweight-audit.log",
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/NegativeWeight.lean:5:37: error: Tactic `decide` proved that the proposition\n  negH1 (posA 3 1) = 1\nis false\n",
+      "logSha256": "4412d4d6f4d277ce400276836fbe79912640a4f4ec7334fcf16bd8492ced1f3d"
+    },
+    {
+      "name": "NegativePrecision",
+      "sourceFile": "lean/NegativePrecision.lean",
+      "sourceSha256": "aaa89b73d62cb4e7719fb536872ff50a9fa43f58c5a8e8d171bc6fb66b4b0593",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/NegativePrecision.lean"
+      ],
+      "exitCode": 1,
+      "expectedRejected": true,
+      "rejected": true,
+      "seconds": 0.918382,
+      "logFile": "evidence/lean-negativeprecision-audit.log",
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/NegativePrecision.lean:4:60: error: Tactic `decide` proved that the proposition\n  (0 - 0 ^ 3) / 3 % 27 = (27 - 27 ^ 3) / 3 % 27\nis false\n",
+      "logSha256": "e0ccaf0f407bc90a2952dd8cd42bdc56c854a9396296cc2c296ec2cc4dc83865"
+    },
+    {
+      "name": "NegativePrime",
+      "sourceFile": "lean/NegativePrime.lean",
+      "sourceSha256": "3cab495965927f27fdab93ca6f981686c573125b245bdfbecdc99daf729afdcb",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/NegativePrime.lean"
+      ],
+      "exitCode": 1,
+      "expectedRejected": true,
+      "rejected": true,
+      "seconds": 1.162487,
+      "logFile": "evidence/lean-negativeprime-audit.log",
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/NegativePrime.lean:3:56: error: Tactic `decide` proved that the proposition\n  Nat.Prime 341\nis false\n",
+      "logSha256": "dc29788f6d78a4343bd772c7fef96246b680ffae5698507f75ef3adce7b9d4d5"
+    },
+    {
+      "name": "NegativeFalse",
+      "sourceFile": "lean/NegativeFalse.lean",
+      "sourceSha256": "8aa3ec8f05c467c828df09e43382f3acb20b9669eec576192529a461313ed2aa",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/NegativeFalse.lean"
+      ],
+      "exitCode": 1,
+      "expectedRejected": true,
+      "rejected": true,
+      "seconds": 0.216146,
+      "logFile": "evidence/lean-negativefalse-audit.log",
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/NegativeFalse.lean:2:50: error: Tactic `rfl` failed: The left-hand side\n  0\nis not definitionally equal to the right-hand side\n  1\n\n⊢ 0 = 1\n",
+      "logSha256": "d07a4b651fc802c386d2af054d9bcb209e223d28da43c538289ca69459b36072"
+    }
+  ],
+  "absenceOfSorry": true,
+  "customAxioms": [],
+  "externalComparisons": [
+    {
+      "source": "S02, Theorem 3.6/Corollary 3.8",
+      "status": "THEOREM_REFERENCE",
+      "leanImport": null
+    },
+    {
+      "source": "S01, Theorem 1.8(1)",
+      "status": "THEOREM_REFERENCE",
+      "leanImport": null
+    }
+  ],
+  "scope": "Universal commutative-ring Laurent contractions and Frobenius identities, restricted-family closure, finite P1 matrix homotopy, exact prime and p-adic precision theorems. No imported crystalline/prismatic geometry theorem, no native prismatic site, no E-infinity formality."
+}

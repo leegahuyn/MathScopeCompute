@@ -1,0 +1,229 @@
+{
+  "schema": "MathScope.Navier.SelectedDatumLedger/1",
+  "status": "SCALE_BINDING_AND_PARTIAL_ORDER_AUDITED",
+  "sourceFiles": {
+    "axis": "b06de90aee6b762f3226f4e46f71b05e9967c8ffe9c6893d436b50e2653bf2cd",
+    "debt": "6bb81e736a604bed24781f91a9d5799d9ff5b37c13f4b5e47b47e1de89029dc4",
+    "prefix": "07e9ecdb8293be290f5a4cbb3978777ff0663c09b8e34a34a941ddc2ece5cde3"
+  },
+  "scaleNormalization": {
+    "legacyProducerParameter": {
+      "logXR": 20,
+      "role": "An auxiliary physical coordinate in the frozen demonstration API; it does not occur in the actual A.21 pressure function or its bound derivation."
+    },
+    "finalPhysicalScale": {
+      "Xi": "110",
+      "logXR": "log(110)+10*(logC+14)",
+      "exactExpression": "XR=110*exp(10*(logC+14))"
+    },
+    "conflictingPressureDatum": false
+  },
+  "scaleProof": {
+    "source": "Pinned paper Lemma A.5, pages 133--134, equations A.21--A.23; B.38 on page 156.",
+    "statement": "For every R>0 define E_R(X,eta)=E_sched(log(X/R),eta). Then -1/2 integral_(0,infinity) E_R(X,eta)^2 dX/X = -1/2 integral_R E_sched(y,eta)^2 dy, independent of R.",
+    "justification": "X=R exp(y) is an orientation-preserving C1 bijection from the real line to (0,infinity), with dX/X=dy. Both infinite integrals converge absolutely under the existing positive-mixture envelope. The schedule amplitude, exponent, lengths and terminal waiting ODE depend only on the six outer-shape parameters, so their integrand is unchanged. This is the same pressure function, not merely the same scalar bound.",
+    "pressureAfterCorrection": "Equality with the final fully corrected pressure also requires every actual later edit to preserve the total pressure increment; only the audited B.8 correction has been connected here.",
+    "exactProducerChecks": [
+      {
+        "logXR": "0",
+        "status": "VERIFIED_ANALYTIC_PRESSURE_BOUND_CERTIFICATE",
+        "mathematicalProjectionSHA256": "6d6e51203d91ed4fb492857b474f54a65642fd4acc42618b7595cc58b82956af"
+      },
+      {
+        "logXR": "20",
+        "status": "VERIFIED_ANALYTIC_PRESSURE_BOUND_CERTIFICATE",
+        "mathematicalProjectionSHA256": "6d6e51203d91ed4fb492857b474f54a65642fd4acc42618b7595cc58b82956af"
+      },
+      {
+        "logXR": "100",
+        "status": "VERIFIED_ANALYTIC_PRESSURE_BOUND_CERTIFICATE",
+        "mathematicalProjectionSHA256": "6d6e51203d91ed4fb492857b474f54a65642fd4acc42618b7595cc58b82956af"
+      }
+    ],
+    "allMathematicalProjectionHashesEqual": true,
+    "limitedRoleOfProducerChecks": "Three executable recalculations catch unintended scale dependence in code; the universal all-R statement comes from the displayed change of variables, not extrapolation from three values."
+  },
+  "dependencyNodes": [
+    {
+      "id": "outer-shape",
+      "selected": {
+        "Md": 1,
+        "logP": 14,
+        "lambda": 0.0002,
+        "h": 1e-8,
+        "Tf": 64,
+        "co": 0.005
+      },
+      "dependsOn": [],
+      "status": "DEFINED_WITH_NECESSARY_SCALAR_INEQUALITIES",
+      "remaining": "The original sufficiently-small outer cone and amplitude-response constants are not all instantiated."
+    },
+    {
+      "id": "pressure",
+      "selected": "The complete ideal schedule in y; A.21 integrates over both infinite ends",
+      "dependsOn": [
+        "outer-shape"
+      ],
+      "status": "POSITIVE_MIXTURE_ANALYTIC_BOUNDS",
+      "radialScaleDependency": false
+    },
+    {
+      "id": "joining-tolerance",
+      "selected": {
+        "j0": "1/10000000000"
+      },
+      "dependsOn": [
+        "outer-shape"
+      ],
+      "status": "SMALL_J_BOUND_PASSES_CONTINUOUS_JOINING_RECTANGLE",
+      "evidence": "uniform-gluing/source-joining-rectangle-certificate.json",
+      "remaining": "The choice is sufficient for the audited restoration/moment rectangle; it does not instantiate all earlier cone constants."
+    },
+    {
+      "id": "axis-shape",
+      "selected": {
+        "sigmaStar": "1960422206788141080731220075502670114714954010537638369288161/32910091146424120843099383651147010099654717312671597266972180480000000000000000000",
+        "Lambda": "1060230802149048796031398135119154508920236348358172140952455866278358184543209676362767271743381375881784663517681575334339273001401509607870431232000"
+      },
+      "dependsOn": [
+        "pressure",
+        "joining-tolerance"
+      ],
+      "status": "ACTUAL_SOURCE_BOUND_PRODUCER_COMPLETED",
+      "evidence": "source-axis-small-j-trial.json"
+    },
+    {
+      "id": "continuation-bounds",
+      "selected": "C-independent mixed axis and reference derivative bounds",
+      "dependsOn": [
+        "axis-shape"
+      ],
+      "status": "ANALYTIC_DERIVATION_WITH_EXACT_SCALAR_CHECKS",
+      "evidence": "UNIFORM_SOURCE_DEBT.md"
+    },
+    {
+      "id": "debt-widths",
+      "selected": {
+        "t1": "7601023201622924651070348575344022474098968195853590696501004233063202024311522427280168357767039160251685256358976419424616505121363014613123245105336691083776330984424806575085949125564672246764313131579819059272925525538051989972018755818916771723693054009830695336269642366719169743241220863050852993997876879983437627481805589586626023183591296866537393143313968738435050419868642797263374360459472452168973737290029668498245293646446280532339418562042097989565836687423261907870557939664816814081165250826962901448369968469936387288462301127306230258409980216373583055845064150083194188947517956762477125296910250725950766505230084516536465799240943368883509080208320448203246614229874304751481280705101414885987723275821958804479878987227465118624346548006549817795157866768023697079361031616472252406600127180848423514476599987209116269890768968655854135113206371768224084024706427696211920274080137216/2403162196246553969379645704708694580238122606923151041033775769273603515869820692563366808639922615813069808273745105437221735544180051329243748446451038022512173080564301104534126306374642585690136953192329135148972745486075772313773126416766718310904680540185201810210496056959846106452442845313185171311089418143944227377911122477038234331231308389055572485298012221446972287536495621749232181772303043908878724711867085141443121130763225702004423545663268569411632921157199926212450925473438782657915704351284844975961954025810447600679222010096564978469115165730440907355074518403444889790117606080849865206466056397017885655662209232975483314786810523395791826452615319328484876771257167839400592477327179805060819893824542916959974009995565380068007507277978833106305523063204140153778745563492658730666675990358787800680927108927869815002495730230016801182378113918230996944619034856426304565562451169429718905121907518021058663968827797400849453735481382746835849023343477415215533810758779770777590353012988052355715085150535055954133345134953795860244484859230150171810018871896770880505772628414916510820666395401991558968828071090905122520814434852486430481421035204268178723599356716732719544225886513796756555054700155624976180782346877023038540091251054277765051887162233821514479145266783638076171875",
+        "kappa0": "7601023201622924651070348575344022474098968195853590696501004233063202024311522427280168357767039160251685256358976419424616505121363014613123245105336691083776330984424806575085949125564672246764313131579819059272925525538051989972018755818916771723693054009830695336269642366719169743241220863050852993997876879983437627481805589586626023183591296866537393143313968738435050419868642797263374360459472452168973737290029668498245293646446280532339418562042097989565836687423261907870557939664816814081165250826962901448369968469936387288462301127306230258409980216373583055845064150083194188947517956762477125296910250725950766505230084516536465799240943368883509080208320448203246614229874304751481280705101414885987723275821958804479878987227465118624346548006549817795157866768023697079361031616472252406600127180848423514476599987209116269890768968655854135113206371768224084024706427696211920274080137216/1213596909104509754536721080877890763020251916496191275722056763483169775514259449744500238363160920985600253178241278245796976449810925921268092965457774201368647405684972057789733784719194505773519161362126213250231236470468265018455428840467192747006863672793526914156300508764722283758483636883158511512100156162691834825845116850904308337271810736473064105075496171830721005205930288983362251795013037173983755979492877996428776171035428979512233890559950627552874625184385962737287717364086585242247430697398846712860786783034276038343007115098765314126903158693872658214312631793739669344009391070829181929265358480494032256109415662652619073967339314314874872358570736260884862769484869758897299201050225801555714046381394173064786875047760516934343791175379310718684289146918090777658266509563792658986671375131187839343868190008574256576260343766158484597100947528706653457032612602495283805609037840562008047086563296600634625304258037687428974136418098287152103756788456094683844574433183784242683128271558966439636118001020203256837339293151666909423464853911225836764059530307869294655415177349532837964436529678005737279258175900907086873011289600505647393117622778155430255417675141950023369834072689467362060302623578590612971295085172896634462746081782410271351203016928079864811968359725737228466796875",
+        "axialWidth": "1/100",
+        "shearWidth": "1/100"
+      },
+      "dependsOn": [
+        "continuation-bounds"
+      ],
+      "status": "SUFFICIENT_FOR_THE_STATED_C1_DEBT_BOUNDS",
+      "remaining": "These widths have not been compared with the C-dependent Vmax and all activation-cone comparison constants in B.26--B.31."
+    },
+    {
+      "id": "shape-length",
+      "selected": {
+        "Tsh": "3975946303868091402392348213663137811745740987012437826219072596481515938525969008351372467708207834777508570738912973329426964097814185439664711144583259531381703428217381005212784314066264881725880"
+      },
+      "dependsOn": [
+        "axis-shape",
+        "continuation-bounds",
+        "debt-widths"
+      ],
+      "status": "FINITE_EXACT_INTEGER_SELECTED_BEFORE_FINAL_AMPLITUDE"
+    },
+    {
+      "id": "final-amplitude",
+      "selected": {
+        "logC": "7959844500343918987589481123753601899114973455998900528090583338155994908928989954719447680351832085224572158619303772605512782123823999250208751711455685581826170263291196772435994367375517395609391",
+        "C": "exp(logC)"
+      },
+      "dependsOn": [
+        "axis-shape",
+        "shape-length"
+      ],
+      "status": "EXACT_LOG_REPRESENTATION_ABOVE_AXIS_THRESHOLD",
+      "infiniteFixedPoint": "The fixed point for this final C is recomputed as an interval prefix; the old minimum-C fixed point is not reused."
+    },
+    {
+      "id": "radial-scale",
+      "selected": {
+        "Xi": "110",
+        "XR": "110*exp(10*(logC+14))",
+        "logXR": "log(110)+10*(logC+14)"
+      },
+      "dependsOn": [
+        "final-amplitude"
+      ],
+      "status": "EXACT_SYMBOLIC_SCALE_WITH_INTERVAL_LOG_OBSERVATIONS"
+    },
+    {
+      "id": "continuous-root",
+      "selected": "Source-bound unique small root of the actual five moment map for every eta in [-1,1]",
+      "dependsOn": [
+        "debt-widths",
+        "shape-length",
+        "final-amplitude",
+        "radial-scale"
+      ],
+      "status": "CONTINUOUS_INTERVAL_INCLUSION_WITH_ANALYTIC_SOURCE_DEBT_BOUNDARY"
+    },
+    {
+      "id": "display-prefix",
+      "selected": {
+        "radialDegree": 24,
+        "etaDegree": 2,
+        "arithmeticBits": 1024
+      },
+      "dependsOn": [
+        "final-amplitude"
+      ],
+      "status": "FINITE_ROUNDING_AND_INFINITE_RADIAL_TAIL_BOTH_INCLUDED",
+      "remaining": "The generated all-eta analytic premise bundle is not a Lean proof."
+    }
+  ],
+  "acyclicForCompletedBoundChain": true,
+  "openRequiredEdges": [
+    {
+      "from": "final-amplitude",
+      "to": "debt-widths",
+      "requirement": "The final activation parameters must additionally meet the B.6 C-dependent cone comparisons; no such conclusion follows from the C1 debt checks."
+    },
+    {
+      "from": "continuous-root",
+      "to": "entire-outer-profile",
+      "requirement": "A.4/A.7 outer moment and heat compensation, exact final pressure, and all later cone/support constraints."
+    },
+    {
+      "from": "selected-functions",
+      "to": "Lean-realization",
+      "requirement": "Instantiate every generated analytic bound premise and identify this specific computed sequence with the imported infinite fixed point."
+    }
+  ],
+  "logDomainExecution": {
+    "module": "source-log-evaluator.mjs",
+    "observations": "source-log-observations.json",
+    "exactOffsetPlusDirectedRemainder": true,
+    "positiveQuantitiesNeverRoundedToMathematicalZero": true,
+    "probes": [
+      {
+        "phase": "axis",
+        "coordinate": "41/10",
+        "eta": "0",
+        "status": "ENCLOSURE_COMPUTED",
+        "sourceProfileHash": "e0e167cfdd8f58b0ac1860808de78c98c4a17438293e5d31adc270083a66b8b8"
+      },
+      {
+        "phase": "joining",
+        "coordinate": "-5",
+        "eta": "1",
+        "status": "ENCLOSURE_COMPUTED",
+        "sourceProfileHash": "e0e167cfdd8f58b0ac1860808de78c98c4a17438293e5d31adc270083a66b8b8"
+      }
+    ]
+  },
+  "gates": {
+    "sameA21FunctionAcrossRadialScales": true,
+    "sourceAxisPrefixAndDebtUseSameFinalC": true,
+    "allCurrentDependencyEdgesAcyclic": true,
+    "entireOriginalParameterHierarchyComplete": false,
+    "wholeProfileCertified": false,
+    "formalPass": false
+  },
+  "proofBoundary": "The completed source/debt chain is acyclic and explicitly executable in logarithmic coordinates. The listed missing cone-dependent selection edges prevent declaring the original complete hierarchy closed."
+}

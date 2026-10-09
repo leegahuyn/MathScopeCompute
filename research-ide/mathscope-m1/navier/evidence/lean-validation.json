@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 1,
+  "status": "KERNEL_CHECKED_COMPONENTS",
+  "checkedAt": "2026-10-09T14:39:01.694607+00:00",
+  "environment": {
+    "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+    "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "driverSha256": "0e3f7d16718c0d2b6bf5bf80f26c66358b0468b35607d6ef0d921857b50440aa",
+    "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+    "kernelModified": false,
+    "runtimeModified": false,
+    "verifierGuardModified": false
+  },
+  "external": {
+    "repository": "https://github.com/openai/NavierStokesAndEuler",
+    "commit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+    "originalToolchain": "leanprover/lean4:v4.34.0-rc2",
+    "componentValidationToolchain": "Lean/mathlib 4.34.1",
+    "fullOriginalBuildPerformed": false,
+    "comparatorMainTheoremsKernelChecked": false
+  },
+  "records": [
+    {
+      "module": "NavierStokes.Flatness",
+      "sourceFile": "sources/official-repo/NavierStokes/Flatness.lean",
+      "sourceSha256": "550606d4d1e14fb16612375de57d837df325a7b2265de6ed056c935ff96b2bc6",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/.lake/build/lib/lean/NavierStokes/Flatness.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/sources/official-repo/NavierStokes/Flatness.lean"
+      ],
+      "exitCode": 0,
+      "logFile": "lean-Flatness.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "",
+      "targets": [],
+      "executionMetrics": {
+        "elapsedSeconds": 1.8305278360021475
+      },
+      "oleanSha256": "b4abb5b8c1594e65d4156bbd998003f94fe2151a16a2f1a63bb1c00c7b76fe1e",
+      "externalSourceUnchanged": true
+    },
+    {
+      "module": "NavierStokes.ProblemStatement",
+      "sourceFile": "sources/official-repo/NavierStokes/ProblemStatement.lean",
+      "sourceSha256": "d2f5cdf24a060acd41011b50492e89058991965e18d2cb797c58d915f95af633",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/.lake/build/lib/lean/NavierStokes/ProblemStatement.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/sources/official-repo/NavierStokes/ProblemStatement.lean"
+      ],
+      "exitCode": 0,
+      "logFile": "lean-ProblemStatement.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "",
+      "targets": [],
+      "executionMetrics": {
+        "elapsedSeconds": 2.1579556920005416
+      },
+      "oleanSha256": "500d108ff387f3f9f041f58619de887b0db0f66a65d08d862fe5b4da4d6b1f9a",
+      "externalSourceUnchanged": true
+    },
+    {
+      "module": "MathScope.Navier.Analytic",
+      "sourceFile": "lean/MathScope/Navier/Analytic.lean",
+      "sourceSha256": "2709cac41470cb0c87aafd3ac431eed9ed4adf393db6046f7dd5e58fd8176ff3",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/.lake/build/lib/lean/MathScope/Navier/Analytic.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/MathScope/Navier/Analytic.lean"
+      ],
+      "exitCode": 0,
+      "logFile": "lean-Analytic.log",
+      "logSha256": "b0d2ef01934e7a1753c9a788b38c58f54492e76792a6e3532526e24cde2d0bff",
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/MathScope/Navier/Analytic.lean:45:23: warning: Variable name `hp1` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hp1\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nMathScope.Navier.Analytic.scale_exponents (h : ℝ) : 1 / 2 + h + (1 / 2 - h) = 1\n'MathScope.Navier.Analytic.scale_exponents' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.Analytic.core_energy_exponent (h : ℝ) : 1 + (1 / 2 - h) - 2 * (1 / 2 + h) = 1 / 2 - 3 * h\n'MathScope.Navier.Analytic.core_energy_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.Analytic.coordinate_denominator_positive (h eta : ℝ) (hh : 0 ≤ h) (hh' : h < 1 / 2)\n  (heta : |eta| ≤ 1) : 0 < 1 - 2 * h * eta ^ 2\n'MathScope.Navier.Analytic.coordinate_denominator_positive' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.Analytic.uniform_derivative_exchange (f fp : ℕ → ℝ → ℝ) (g gp : ℝ → ℝ) (s : Set ℝ) (hs : IsOpen s)\n  (hfp : TendstoUniformlyOn fp gp Filter.atTop s)\n  (hf : ∀ᶠ (n : ℕ) in Filter.atTop, ∀ x ∈ s, HasDerivAt (f n) (fp n x) x)\n  (hfg : ∀ x ∈ s, Filter.Tendsto (fun n => f n x) Filter.atTop (𝓝 (g x))) (x : ℝ) (hx : x ∈ s) : HasDerivAt g (gp x) x\n'MathScope.Navier.Analytic.uniform_derivative_exchange' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.Analytic.diffusion_semigroup_bound (rate time : ℝ) (hr : 0 ≤ rate) (ht : 0 ≤ time) :\n  Real.exp (-rate * time) ≤ 1\n'MathScope.Navier.Analytic.diffusion_semigroup_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.Analytic.stable_residual_budget (err residual C epsilon : ℝ) (hC : 0 ≤ C) (hr : residual ≤ epsilon)\n  (hStability : |err| ≤ C * residual) : |err| ≤ C * epsilon\n'MathScope.Navier.Analytic.stable_residual_budget' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.Analytic.rational_cone_strip (a p : ℝ) (ha0 : 29 / 10 ≤ a) (ha1 : a ≤ 31 / 10) (hp0 : 49 / 10 ≤ p)\n  (hp1 : p ≤ 51 / 10) : 2 < a ∧ a < p ∧ (a - 2) * 0 ^ 2 < 2 * (p - a) ^ 2\n'MathScope.Navier.Analytic.rational_cone_strip' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.Analytic.solenoidal_reconstruction_cancellation (U UX Ueta eta X A D d q L : ℝ) (hAD : A + D = 1) :\n  (2 * eta * U + 2 * eta * X * UX - 2 * D * eta * U - d * Ueta) / (q * L) +\n      (-2 * A * eta * U + d * Ueta - 2 * eta * X * UX) / (q * L) =\n    0\n'MathScope.Navier.Analytic.solenoidal_reconstruction_cancellation' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n",
+      "targets": [
+        {
+          "target": "MathScope.Navier.Analytic.scale_exponents",
+          "targetType": "MathScope.Navier.Analytic.scale_exponents (h : ℝ) : 1 / 2 + h + (1 / 2 - h) = 1",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.Analytic.core_energy_exponent",
+          "targetType": "MathScope.Navier.Analytic.core_energy_exponent (h : ℝ) : 1 + (1 / 2 - h) - 2 * (1 / 2 + h) = 1 / 2 - 3 * h",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.Analytic.coordinate_denominator_positive",
+          "targetType": "MathScope.Navier.Analytic.coordinate_denominator_positive (h eta : ℝ) (hh : 0 ≤ h) (hh' : h < 1 / 2)\n  (heta : |eta| ≤ 1) : 0 < 1 - 2 * h * eta ^ 2",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.Analytic.uniform_derivative_exchange",
+          "targetType": "MathScope.Navier.Analytic.uniform_derivative_exchange (f fp : ℕ → ℝ → ℝ) (g gp : ℝ → ℝ) (s : Set ℝ) (hs : IsOpen s)\n  (hfp : TendstoUniformlyOn fp gp Filter.atTop s)\n  (hf : ∀ᶠ (n : ℕ) in Filter.atTop, ∀ x ∈ s, HasDerivAt (f n) (fp n x) x)\n  (hfg : ∀ x ∈ s, Filter.Tendsto (fun n => f n x) Filter.atTop (𝓝 (g x))) (x : ℝ) (hx : x ∈ s) : HasDerivAt g (gp x) x",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.Analytic.diffusion_semigroup_bound",
+          "targetType": "MathScope.Navier.Analytic.diffusion_semigroup_bound (rate time : ℝ) (hr : 0 ≤ rate) (ht : 0 ≤ time) :\n  Real.exp (-rate * time) ≤ 1",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.Analytic.stable_residual_budget",
+          "targetType": "MathScope.Navier.Analytic.stable_residual_budget (err residual C epsilon : ℝ) (hC : 0 ≤ C) (hr : residual ≤ epsilon)\n  (hStability : |err| ≤ C * residual) : |err| ≤ C * epsilon",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.Analytic.rational_cone_strip",
+          "targetType": "MathScope.Navier.Analytic.rational_cone_strip (a p : ℝ) (ha0 : 29 / 10 ≤ a) (ha1 : a ≤ 31 / 10) (hp0 : 49 / 10 ≤ p)\n  (hp1 : p ≤ 51 / 10) : 2 < a ∧ a < p ∧ (a - 2) * 0 ^ 2 < 2 * (p - a) ^ 2",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.Analytic.solenoidal_reconstruction_cancellation",
+          "targetType": "MathScope.Navier.Analytic.solenoidal_reconstruction_cancellation (U UX Ueta eta X A D d q L : ℝ) (hAD : A + D = 1) :\n  (2 * eta * U + 2 * eta * X * UX - 2 * D * eta * U - d * Ueta) / (q * L) +\n      (-2 * A * eta * U + d * Ueta - 2 * eta * X * UX) / (q * L) =\n    0",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        }
+      ],
+      "executionMetrics": {
+        "elapsedSeconds": 2.43672901500031
+      },
+      "oleanSha256": "9e6b058c2e32f01e22eb73faefd9af32e48b395eedf2b7f2262b176709cc08a8",
+      "externalSourceUnchanged": false
+    },
+    {
+      "module": "MathScope.Navier.Finite",
+      "sourceFile": "lean/MathScope/Navier/Finite.lean",
+      "sourceSha256": "3cd442a6f1c86b77da319fa102e298e4add593dcfb1d92d7049a1b90473eb537",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/.lake/build/lib/lean/MathScope/Navier/Finite.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/MathScope/Navier/Finite.lean"
+      ],
+      "exitCode": 0,
+      "logFile": "lean-Finite.log",
+      "logSha256": "a4d0fe82677d31de18db570562e242f50ecbde26bd2cd5bb7b25181463ae73a6",
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/MathScope/Navier/Finite.lean:5:0: warning: \n'Mathlib.Data.Real.Basic' has been deprecated: please replace this import by\n\nimport Mathlib.Basic.Real.Basic\nMathScope.Navier.Finite.comparison_at_zero : MathScope.Navier.Finite.comparisonPartial 0 8 = 1\n'MathScope.Navier.Finite.comparison_at_zero' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.Finite.comparison_finite_bracket :\n  271 / 1000 < MathScope.Navier.Finite.comparisonPartial (41 / 10) 12 ∧\n    MathScope.Navier.Finite.comparisonPartial (41 / 10) 12 < 272 / 1000\n'MathScope.Navier.Finite.comparison_finite_bracket' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.Finite.quadratic_increment (u du : ℝ) : (u + du) ^ 2 - u ^ 2 = 2 * u * du + du ^ 2\n'MathScope.Navier.Finite.quadratic_increment' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+      "targets": [
+        {
+          "target": "MathScope.Navier.Finite.comparison_at_zero",
+          "targetType": "MathScope.Navier.Finite.comparison_at_zero : MathScope.Navier.Finite.comparisonPartial 0 8 = 1",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.Finite.comparison_finite_bracket",
+          "targetType": "MathScope.Navier.Finite.comparison_finite_bracket :\n  271 / 1000 < MathScope.Navier.Finite.comparisonPartial (41 / 10) 12 ∧\n    MathScope.Navier.Finite.comparisonPartial (41 / 10) 12 < 272 / 1000",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.Finite.quadratic_increment",
+          "targetType": "MathScope.Navier.Finite.quadratic_increment (u du : ℝ) : (u + du) ^ 2 - u ^ 2 = 2 * u * du + du ^ 2",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        }
+      ],
+      "executionMetrics": {
+        "elapsedSeconds": 1.8727173619990936
+      },
+      "oleanSha256": "fc3a1d7657c752b9afc3cd8f7bae22ecb6f019ce15a42310b4b5587b14e44b34",
+      "externalSourceUnchanged": false
+    },
+    {
+      "module": "MathScope.Navier.SourceAdapter",
+      "sourceFile": "lean/MathScope/Navier/SourceAdapter.lean",
+      "sourceSha256": "dbc7fd472913259338338e0dae9dbe3a4dac5ab7913dd0351c8254f0658274f5",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/.lake/build/lib/lean/MathScope/Navier/SourceAdapter.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/MathScope/Navier/SourceAdapter.lean"
+      ],
+      "exitCode": 0,
+      "logFile": "lean-SourceAdapter.log",
+      "logSha256": "fc243dc391045d661bcd34ddeaf54240071c352a52cd1f8333f07cfdc2b5b40e",
+      "log": "NavierStokes.ProblemStatement.navierStokesResidual (u : NavierStokes.ProblemStatement.VelocityField)\n  (p : NavierStokes.ProblemStatement.PressureField) (t : ℝ) (x : NavierStokes.ProblemStatement.Space) :\n  NavierStokes.ProblemStatement.Space\nNavierStokes.ProblemStatement.CandidateProperties (u : NavierStokes.ProblemStatement.VelocityField)\n  (p : NavierStokes.ProblemStatement.PressureField) (f : NavierStokes.ProblemStatement.VelocityField) : Prop\nMathScope.Navier.SourceAdapter.imported_flatness_fixed_loss.{u_1} {alpha : Type u_1} {l : Filter alpha}\n  {q f : alpha → ℝ} (hf : NavierStokes.Flatness.PowerFlat l q f) (hq : ∀ᶠ (x : alpha) in l, q x ≠ 0) (loss : ℕ) :\n  NavierStokes.Flatness.PowerFlat l q fun x => f x / q x ^ loss\n'MathScope.Navier.SourceAdapter.imported_flatness_fixed_loss' depends on axioms: [propext, Classical.choice, Quot.sound]\nMathScope.Navier.SourceAdapter.imported_zero_velocity_negative_control :\n  ¬NavierStokes.ProblemStatement.SpeedUnboundedAtOne fun x => 0\n'MathScope.Navier.SourceAdapter.imported_zero_velocity_negative_control' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n",
+      "targets": [
+        {
+          "target": "MathScope.Navier.SourceAdapter.imported_flatness_fixed_loss",
+          "targetType": "MathScope.Navier.SourceAdapter.imported_flatness_fixed_loss.{u_1} {alpha : Type u_1} {l : Filter alpha}\n  {q f : alpha → ℝ} (hf : NavierStokes.Flatness.PowerFlat l q f) (hq : ∀ᶠ (x : alpha) in l, q x ≠ 0) (loss : ℕ) :\n  NavierStokes.Flatness.PowerFlat l q fun x => f x / q x ^ loss",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        },
+        {
+          "target": "MathScope.Navier.SourceAdapter.imported_zero_velocity_negative_control",
+          "targetType": "MathScope.Navier.SourceAdapter.imported_zero_velocity_negative_control :\n  ¬NavierStokes.ProblemStatement.SpeedUnboundedAtOne fun x => 0",
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "customAxioms": []
+        }
+      ],
+      "executionMetrics": {
+        "elapsedSeconds": 1.973426782002207
+      },
+      "oleanSha256": "2b60a9373167046669ed2cf4baefb4f501c99d0da7d66b34a891acbd3b01aa1c",
+      "externalSourceUnchanged": false
+    }
+  ],
+  "negativeControls": [
+    {
+      "name": "NegativeFalse",
+      "sourceSha256": "4d616ee6bf0a607f5a0ab91e51fd8dd7528bd3c433a809b6afc75e3e6708e61a",
+      "exitCode": 1,
+      "rejected": true,
+      "logFile": "NegativeFalse.log",
+      "logSha256": "b1324af23e3962841ab6de200dc37a8b14c11e0dd5a4526914aec46bd8691b1c",
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/NegativeFalse.lean:2:28: error: Tactic `rfl` failed: The left-hand side\n  0\nis not definitionally equal to the right-hand side\n  1\n\n⊢ 0 = 1\n"
+    },
+    {
+      "name": "NegativeQuadratic",
+      "sourceSha256": "cf3d67198bf1851fd7e102c9f8718420d4d97c68220b30058241f93c8b9dfbe5",
+      "exitCode": 1,
+      "rejected": true,
+      "logFile": "NegativeQuadratic.log",
+      "logSha256": "5fc6d465ca731a99d5b06589042146bbbd8e7f38c51b06e56b57190e36429120",
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/NegativeQuadratic.lean:2:0: warning: \n'Mathlib.Data.Real.Basic' has been deprecated: please replace this import by\n\nimport Mathlib.Basic.Real.Basic\nTry this:\n  [apply] ring_nf\n  \n  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.\n    \n  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.\n/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/NegativeQuadratic.lean:3:46: error: unsolved goals\nu du : ℝ\n⊢ u * du * 2 + du ^ 2 = u * du * 2\n"
+    }
+  ],
+  "scope": "Exact selected source files and adapter types only. Full C/D proof, B.2 analytic hypotheses and complete Theorem 4.6 numeric instantiation are not certified."
+}

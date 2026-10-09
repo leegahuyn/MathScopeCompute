@@ -2,7 +2,27 @@
 
 Hybrid numerical, computational-topology and structural elliptic/index service for MathScope v0.3.1.
 
-This repository is intentionally separate from the MathScope Lean/formal codebase.
+The Python service is separate from the full upstream Lean projects. The research edition below includes scoped Lean components, pinned source references, and their audit records.
+
+## M0/M1 research IDE — English edition
+
+The [English research workspace](research-ide/README.md) contains the M0 execution foundation and the M1 arithmetic, point/ℙ¹ comparison, compact matrix-group, and Navier–Stokes modules. It preserves the original source/evidence archive and adds English documentation for all **70 original acceptance criteria** and **59 runnable examples**.
+
+- [English installation and reproducibility guide](research-ide/docs/INSTALL_AND_REPRODUCIBILITY_EN.md)
+- [Current mathematical status and open obligations](research-ide/docs/CURRENT_STATUS_EN.md)
+- [All original acceptance criteria in English](research-ide/docs/ACCEPTANCE_CRITERIA_EN.md)
+- [Full English ZIP release](https://github.com/leegahuyn/MathScopeCompute/releases/tag/mathscope-research-en-2026.10.10.1)
+- [Pinned original Lean and protected Comparator workflow](https://github.com/leegahuyn/MathScopeCompute/actions/workflows/ns-original-verification.yml)
+
+With Node.js 24 or later, run a bounded computation locally:
+
+```bash
+cd research-ide
+node tools/mathscope-en.mjs list
+node tools/mathscope-en.mjs run prime-1000 --out ./runs/prime-1000
+```
+
+The standalone research Worker and the Python HTTP service have separate entry points. The research ZIP is rebuilt from all 935 preserved original archive members, the English presentation layer, and explicitly identified follow-up files. Read its current-status document for the scope of each mathematical certificate.
 
 ## Architecture
 

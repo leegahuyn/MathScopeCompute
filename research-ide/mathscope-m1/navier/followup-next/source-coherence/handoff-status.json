@@ -1,0 +1,87 @@
+{
+  "schema": "MathScope.Navier.SourceCoherenceHandoff/1",
+  "status": "LOCAL_SOURCE_CHAIN_IMPLEMENTED_GLOBAL_OUTER_REQUIREMENT_FAILED",
+  "selectedSource": {
+    "file": "uniform-source-debt-final.json",
+    "sha256": "ac79c8268a501f9762b5f13f6efe114809a94e568efc614e2fd66ceae4303c7a",
+    "mathematicalProfileHash": "2e66d4acb9d5b8b65a3096039c3656380ed1f68ecd3cb78f85449d521dc934e5",
+    "etaDomain": [
+      "-1",
+      "1"
+    ]
+  },
+  "completedLocalEvidence": {
+    "sourceFixedPointError": "1/10000000000000",
+    "lambdaDigits": 161,
+    "logCDigits": 210,
+    "sourceContinuationScalarChecks": 30,
+    "logObservations": 35,
+    "independentIntervals": {
+      "passed": 758,
+      "total": 758
+    },
+    "independentContinuation": {
+      "passed": 38,
+      "total": 38
+    },
+    "independentMomentAlgebraChecks": 8,
+    "independentCoreChecks": 37
+  },
+  "formalEvidence": {
+    "CoreAlgebraLean": {
+      "theorems": 10,
+      "receipt": "core-lean-command.json",
+      "exitCode": 0
+    },
+    "PositiveScalesLean": {
+      "theorems": 3,
+      "receipt": "positive-scales-lean-command.json",
+      "exitCode": 0,
+      "actualOriginalTypeInstantiated": "NavierStokes.NaturalAxisData.SmallParameters exact_h exact_j"
+    },
+    "negativeControl": {
+      "receipt": "negative-axial-lean-command.json",
+      "expectedExitCode": 1,
+      "actualExitCode": 1
+    },
+    "completeAnalyticPremiseBundleKernelChecked": false,
+    "newGlobalNavierStokesTheoremClaimed": false
+  },
+  "externalBlockingEvidence": {
+    "file": "../outer-uniform/axial-midpoint-certificate.json",
+    "meaning": "The required A.4 cone has negative Pc for the selected unchanged Md=1 datum; radial enlargement cannot fix its sign."
+  },
+  "remainingOriginalRequirements": [
+    "Replace the failed outer parameter choice and regenerate every dependent same-source certificate.",
+    "Complete exact outer moment/heat compensation and the final pressure identity.",
+    "Bind the whole finite-N C.12 field and its incoming moment errors on the complete required interval.",
+    "Complete exterior stress support, flat factorization and endpoint limits after every later edit.",
+    "Instantiate the generated infinite analytic source bounds and its interval-array identification in Lean."
+  ],
+  "immutability": "Earlier certificates and the pinned v54 source are preserved. The final source SHA above has not been changed by later documentation or test additions.",
+  "testsCurrentlyRunning": false,
+  "originalN3GlobalPass": false,
+  "parametricRegeneration": {
+    "entryPoint": "rebuild-source-variant.mjs",
+    "baselineParity": "variants/baseline-exact-parity/exact-baseline-parity.json",
+    "allThreeDocumentsByteIdentical": true,
+    "excludedFields": [],
+    "executedDifferentSource": "variants/parameter-path-md101-logp15",
+    "sourceParametersExact": {
+      "Md": "101/100",
+      "logP": "15"
+    },
+    "finalSourceSHA256": "fa43ec55cc374f87a7289183c97b0742278d30b1adca7dbe1635d7941a1e685f",
+    "debtChecks": 18,
+    "continuationChecks": 30,
+    "prefixRadialDegree": 24,
+    "prefixEtaDegree": 2,
+    "prefixArithmeticBits": 1024,
+    "independentChecks": {
+      "passed": 21,
+      "total": 21
+    },
+    "newVariantGloballyCertified": false,
+    "newVariantPurpose": "Executable parameter-path verification; no new outer-parameter recommendation or global cone success is claimed."
+  }
+}

@@ -1,0 +1,110 @@
+<section class="view m0" data-view="research-foundation" id="mathscopeResearchM0" aria-labelledby="m0-title">
+  <div class="page-head m0-head">
+    <div><div class="eyebrow">Research IDE · M0 / Foundation</div><h1 class="page-title" id="m0-title">Research Foundation</h1><p class="page-sub">수학 대상, 계산 범위, 가정과 검증 근거를 하나의 연구 세션에서 관리합니다.</p></div>
+    <span class="chip warn">M0 · DEVELOPMENT</span>
+  </div>
+  <div class="m0-context" aria-label="현재 연구 기반 상태">
+    <div><span class="m0-kicker">SESSION</span><strong id="m0-session-title">세션 연결 중</strong><small id="m0-session-id"></small></div>
+    <div><span class="m0-kicker">CONTRACT</span><strong id="m0-revision">연결 대기</strong><small>원본 · 표현 · 증거 ID 보존</small></div>
+    <div><span class="m0-kicker">COMPUTE</span><strong id="m0-runtime">실행 환경 확인 중</strong><small>유한 범위 · 예산 · 정밀도</small></div>
+    <div><span class="m0-kicker">PROOF</span><strong id="m0-proof-count">감사 자료 확인 중</strong><small>정확한 소스와 가정에 귀속</small></div>
+  </div>
+  <div class="m0-toolbar">
+    <button class="btn primary" id="m0-initialize">현재 세션에 M0 연결</button>
+    <button class="btn" id="m0-capture">현재 확장 관측 연결</button>
+    <button class="btn" id="m0-export">M0 세션 내보내기</button>
+    <button class="btn" id="m0-import">M0 세션 가져오기</button><input type="file" id="m0-import-file" accept=".json,application/json" hidden>
+    <button class="btn" id="m0-revalidate-inputs">입력 계약 다시 확인</button>
+    <button class="btn" id="m0-check">M0 기반 검사</button>
+  </div>
+  <p class="m0-status" id="m0-status" role="status" aria-live="polite">현재 세션을 선택한 뒤 대상을 등록하거나 작은 계산을 실행하세요.</p>
+  <details class="m0-export-panel" id="m0-export-panel" hidden>
+    <summary>내보낼 파일 · JSON 원본</summary>
+    <div class="m0-actions"><a class="btn" id="m0-download-link" download>파일 다운로드</a><button class="btn" id="m0-export-copy">JSON 복사</button></div>
+    <label for="m0-export-content">내보낼 JSON</label><textarea class="m0-code" id="m0-export-content" readonly rows="7" spellcheck="false" translate="no"></textarea>
+    <p>다운로드를 사용할 수 없으면 JSON을 복사해 같은 이름의 .json 파일로 저장할 수 있습니다.</p>
+  </details>
+  <div class="m0-tabs" role="tablist" aria-label="M0 작업 영역">
+    <button role="tab" id="m0-tab-objects" aria-controls="m0-panel-objects" aria-selected="true" data-m0-tab="objects">01 대상 · 계약</button>
+    <button role="tab" id="m0-tab-jobs" aria-controls="m0-panel-jobs" aria-selected="false" tabindex="-1" data-m0-tab="jobs">02 정밀도 · 계산</button>
+    <button role="tab" id="m0-tab-evidence" aria-controls="m0-panel-evidence" aria-selected="false" tabindex="-1" data-m0-tab="evidence">03 가정 · 증거</button>
+    <button role="tab" id="m0-tab-lean" aria-controls="m0-panel-lean" aria-selected="false" tabindex="-1" data-m0-tab="lean">04 Lean · 감사</button>
+  </div>
+
+  <div role="tabpanel" id="m0-panel-objects" aria-labelledby="m0-tab-objects">
+    <div class="m0-grid">
+      <article class="card"><div class="card-head"><h2 class="card-title">수학 대상 등록</h2><span class="chip">I0</span></div><div class="card-body m0-controls">
+        <p>정의와 유한 계산 조건을 함께 보존합니다. 입력 계약의 검사는 수학적 가정의 증명과 별도로 표시합니다.</p>
+        <label for="m0-contract-kind">계약 종류</label><select id="m0-contract-kind"></select>
+        <label for="m0-object-id">대상 ID</label><input id="m0-object-id" value="m0-prime-set" maxlength="100" autocomplete="off" spellcheck="false">
+        <label for="m0-contract-json">계약 JSON</label><textarea class="m0-code" id="m0-contract-json" spellcheck="false" translate="no" rows="16"></textarea>
+        <div class="m0-actions"><button class="btn" id="m0-contract-example">예제 다시 불러오기</button><button class="btn" id="m0-contract-validate">계약 검사</button><button class="btn primary" id="m0-contract-add">세션에 등록</button><button class="btn" id="m0-schema-export">JSON Schema</button></div>
+        <pre class="m0-output" id="m0-contract-result" aria-live="polite">검사 전</pre>
+      </div></article>
+      <article class="card"><div class="card-head"><h2 class="card-title">등록된 대상과 관측</h2><span class="chip" id="m0-node-count">0 nodes</span></div><div class="card-body">
+        <div id="m0-object-list" class="m0-list"></div>
+        <details><summary>선택한 항목의 원본 · 범위 · 출처</summary><pre class="m0-output m0-tall" id="m0-node-detail" translate="no">항목을 선택하세요.</pre></details>
+        <div class="m0-note">기존 Prime / Cohomology / Gauge / Fluid 화면의 관측도 상단의 ‘현재 확장 관측 연결’로 가져올 수 있습니다. 연결할 때 선택한 모듈과 입력이 기록됩니다.</div>
+        <div class="m0-rule"><strong>무한 대상의 정의</strong><span>PrimeSet · 역극한 · 무한급수</span><strong>유한 질의와 관측</strong><span>구간 · 정밀도 · 절단 · 시각 상한</span><strong>검증된 범위</strong><span>계산 인증 · 외부 정리 · 조건부 Lean</span></div>
+      </div></article>
+    </div>
+  </div>
+
+  <div role="tabpanel" id="m0-panel-jobs" aria-labelledby="m0-tab-jobs" hidden>
+    <div class="m0-grid">
+      <article class="card"><div class="card-head"><h2 class="card-title">정확한 작은 계산</h2><span class="chip">I1</span></div><div class="card-body m0-controls">
+        <label for="m0-adapter">계산 종류</label><select id="m0-adapter"></select>
+        <p id="m0-adapter-description"></p>
+        <label for="m0-job-json">입력 · 범위 · 정밀도 · 예산</label><textarea class="m0-code" id="m0-job-json" spellcheck="false" translate="no" rows="18"></textarea>
+        <div class="m0-actions"><button class="btn" id="m0-job-example">기본 입력</button><button class="btn primary" id="m0-job-run">계산 실행</button><button class="btn" id="m0-job-cancel" disabled>선택 작업 취소</button><button class="btn" id="m0-job-resume" disabled>체크포인트 재개</button></div>
+        <div class="m0-note">정수는 문자열로 입력할 수 있습니다. 소수점 표시와 원본의 정확한 값은 구분합니다. 예산 초과 후 재개하면 해당 예산을 최대 두 배로 늘리며, 표시된 실행 한도를 넘지 않습니다.</div>
+      </div></article>
+      <article class="card"><div class="card-head"><h2 class="card-title">작업과 결과</h2><span class="chip" id="m0-job-state">IDLE</span></div><div class="card-body">
+        <div id="m0-job-list" class="m0-list"></div>
+        <progress id="m0-job-progress" max="1" value="0" aria-label="선택 계산 진행률"></progress>
+        <p id="m0-job-progress-text">아직 실행한 작업이 없습니다.</p>
+        <div id="m0-result-summary" class="m0-result-summary"></div>
+        <div class="m0-actions"><button class="btn" id="m0-job-save" disabled>결과를 세션에 기록</button><button class="btn" id="m0-job-export" disabled>재현 묶음 내보내기</button><button class="btn" id="m0-job-replay" disabled>새 엔진에서 재현 검사</button></div>
+        <details open><summary>정확한 출력 · 인증 · 오차 원장</summary><pre id="m0-job-result" class="m0-output m0-tall" translate="no">계산 결과가 여기에 표시됩니다.</pre></details>
+        <details><summary>실제 기능과 실행 환경</summary><pre id="m0-capabilities" class="m0-output" translate="no"></pre><button class="btn" id="m0-cloud-check">기존 계산 서버 확인</button><pre id="m0-cloud-result" class="m0-output" translate="no">서버 기능은 확인한 응답만 표시합니다.</pre></details>
+      </div></article>
+    </div>
+  </div>
+
+  <div role="tabpanel" id="m0-panel-evidence" aria-labelledby="m0-tab-evidence" hidden>
+    <div class="m0-grid">
+      <article class="card"><div class="card-head"><h2 class="card-title">가정 원장</h2><span class="chip">DEPENDENCIES</span></div><div class="card-body m0-controls">
+        <label for="m0-assumption-id">가정 ID</label><input id="m0-assumption-id" value="a-user-gap" maxlength="100" spellcheck="false">
+        <label for="m0-assumption-statement">정확한 진술</label><textarea id="m0-assumption-statement" rows="4">선택한 모델의 양의 스펙트럼은 Δ 이상의 에너지에 놓인다.</textarea>
+        <label for="m0-assumption-reason">이 가정을 도입한 이유</label><input id="m0-assumption-reason" value="질량 간극 가정 아래 조건부 결과를 탐색한다." maxlength="500">
+        <div class="m0-actions"><button class="btn primary" id="m0-assumption-add">사용자 가정 등록</button><button class="btn" id="m0-assumption-revise">선택 가정 수정</button></div>
+        <div id="m0-assumption-list" class="m0-list"></div>
+        <p class="m0-note">가정을 수정하면 의존 관계로 연결된 주장과 관측 해석이 STALE로 바뀝니다. 관련 없는 계산은 현재 상태를 유지합니다.</p>
+      </div></article>
+      <article class="card"><div class="card-head"><h2 class="card-title">의존 관계와 증거 범위</h2><span class="chip">TYPED GRAPH</span></div><div class="card-body m0-controls">
+        <label for="m0-edge-json">관계 JSON</label><textarea id="m0-edge-json" class="m0-code" rows="7" spellcheck="false" translate="no"></textarea>
+        <div class="m0-actions"><button class="btn" id="m0-edge-add">관계 검증 · 등록</button><button class="btn" id="m0-dependency-example">가정 변경 예제 만들기</button></div>
+        <div id="m0-edge-list" class="m0-list"></div><pre class="m0-output" id="m0-evidence-result" aria-live="polite">관계를 등록하면 입력·출력과 필요한 인증서를 검사합니다.</pre>
+        <div class="m0-note">LOCAL_TO_GLOBAL · BASE_CHANGE · PROJECTION · LIMIT은 필요한 비교·복원·극한 증거를 요구합니다. 인용 링크나 사용자 공리만으로 FORMAL PASS를 발급하지 않습니다.</div>
+      </div></article>
+    </div>
+  </div>
+
+  <div role="tabpanel" id="m0-panel-lean" aria-labelledby="m0-tab-lean" hidden>
+    <div class="m0-grid">
+      <article class="card"><div class="card-head"><h2 class="card-title">Lean 소스와 검사 대상</h2><span class="chip">I3 · FOUNDATION</span></div><div class="card-body m0-controls">
+        <label for="m0-proof-example">검사한 정리</label><select id="m0-proof-example"></select>
+        <label for="m0-proof-file">소스 파일</label><select id="m0-proof-file"></select>
+        <label for="m0-proof-source">Lean 원본</label><textarea id="m0-proof-source" class="m0-code" spellcheck="false" translate="no" rows="19"></textarea>
+        <div class="m0-actions"><button class="btn" id="m0-proof-reset">검사한 소스로 복원</button><button class="btn primary" id="m0-proof-check">소스 · 공리 감사 확인</button><button class="btn" id="m0-proof-save">ProofJob 세션에 기록</button><button class="btn" id="m0-proof-export">ProofJob 내보내기</button></div>
+        <p class="m0-note">포함된 검사 기록은 정확히 같은 소스에 적용됩니다. 편집한 소스는 새로운 검사 작업으로 내보낼 수 있습니다.</p>
+      </div></article>
+      <article class="card"><div class="card-head"><h2 class="card-title">커널 결과와 적용 범위</h2><span class="chip" id="m0-proof-status">NOT CHECKED</span></div><div class="card-body">
+        <div id="m0-proof-summary" class="m0-result-summary"></div>
+        <pre class="m0-output m0-tall" id="m0-proof-result" translate="no">소스를 선택하고 감사 확인을 실행하세요.</pre>
+        <details><summary>형식화 기능과 후속 연결</summary><pre id="m0-proof-capabilities" class="m0-output" translate="no"></pre></details>
+      </div></article>
+    </div>
+  </div>
+  <details class="m0-audit"><summary>M0 검사 · 기준선 · WebMCP 기록</summary><pre id="m0-check-result" class="m0-output" translate="no">M0 기반 검사 버튼으로 계약·정밀도·재현·증거 경계 검사를 실행합니다.</pre><pre id="m0-webmcp-status" class="m0-output" translate="no"></pre><pre id="m0-baseline" class="m0-output" translate="no"></pre></details>
+</section>

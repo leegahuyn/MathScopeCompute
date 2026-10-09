@@ -1,0 +1,163 @@
+{
+  "schema": "MathScope.Navier.SourceC12Contract/1",
+  "kind": "ns.radial-modulation",
+  "source": {
+    "attachment": "01-navier-stokes.pdf",
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "pages": [
+      28,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163
+    ],
+    "officialCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd"
+  },
+  "api": {
+    "module": "source-radial-modulation.mjs",
+    "exports": [
+      "runRadialModulation",
+      "validateRadialModulationInput",
+      "getRadialModulationExamples"
+    ],
+    "entry": "await runRadialModulation(JSON_input, makeBudget_or_config)",
+    "staticImportsOnly": true,
+    "arbitraryCodeInputAllowed": false
+  },
+  "criteria": [
+    {
+      "id": "N3-06",
+      "original": {
+        "id": "N3-06",
+        "title": "Cone의 radial modulation",
+        "detail": "AppendixC의 N logX 위상을 가진 (C.12)를 사용하고 첫 예약 patch에서 모든 모멘트를 복구한다.",
+        "accept": "값 변화 O(N^−1), radial derivative의 order-one 변화를 별도 측정한다. 유한 N을 고정한 뒤 (4.26)의 strict margin κ>0을 구간 전체에서 인증한다."
+      },
+      "implementationStatus": "PARTIAL_SOURCE_CONSTRUCTION",
+      "originalAcceptancePassed": false,
+      "implementedOperations": [
+        "Actual C.11 zero-mean primitives of the source C.1 loop, including removable p2=0 and analytic first eta derivative",
+        "Actual C.12 finite-frequency exponential/additive field changes",
+        "C.13 fixed-phase derivatives, independent total radial derivative, and updated ps from actual five moments",
+        "Actual accumulated five-moment discrepancy and nonlinear two-U/three-E first-patch repair",
+        "Implicit first eta derivatives of the computed correction coefficients",
+        "Resolved source radial cutoff thresholds in integration and finite diagnostics",
+        "N=8 and N=256 cone-violation counterexamples; N=512 finite diagnostic pass"
+      ],
+      "remainingImplementation": [
+        "Input from the B.10 inner-to-outer reconstructed profile rather than the explicit annulus family",
+        "Arbitrary fixed higher eta orders beyond the supported order 1 or 2",
+        "Certified coefficient and interval propagation through the entire continuum"
+      ],
+      "remainingCertification": [
+        "Uniform source-loop hypotheses over the full X/eta input domain",
+        "Enclosed primitive inversion, derivative and oscillatory quadrature errors",
+        "Uniform continuous interval-Newton/implicit-function certificate for the actual correction map",
+        "One fixed finite N with positive kappa over every X and eta of the source domain"
+      ],
+      "evidence": [
+        "source-radial-modulation.mjs",
+        "source-radial-modulation-tests.json",
+        "source-radial-modulation-fixtures.json",
+        "source-correction-independent.json"
+      ]
+    },
+    {
+      "id": "N3-05",
+      "original": {
+        "id": "N3-05",
+        "title": "Inner continuation과 다섯 모멘트 접합",
+        "detail": "B.5–B.10에 따라 inner profile을 연결하고 M,I,J,S,Cp를 다섯 bump로 맞춘다.",
+        "accept": "5×5 moment Jacobian 가역성과 interval Newton/implicit-function 조건을 확인한다. 값만 이어 붙이고 누적 모멘트를 생략하면 실패다."
+      },
+      "implementationStatus": "PARTIAL_SOURCE_CONTINUATION",
+      "originalAcceptancePassed": false,
+      "implementedOperations": [
+        "B.22 reference and B.26 controlled continuation from the separate controlled-continuation module",
+        "Actual cumulative M/I/J/S/Cp propagation in the computed continuation"
+      ],
+      "remainingImplementation": [
+        "B.34 subsequent outer transition",
+        "B.8 actual inner-to-outer five-moment discrepancy and repair at the source matching scales"
+      ],
+      "remainingCertification": [
+        "Finite axis coefficients must be bound to the certified infinite axis solution",
+        "Quantitative reference/continuation widths and derivative-order dependent bounds",
+        "Complete continuous moment enclosure and uniform eta inverse/implicit-function inclusion"
+      ],
+      "notEquivalent": "The C.2 first-patch correction implemented here does not complete the B.8 inner gluing."
+    },
+    {
+      "id": "N3-07",
+      "original": {
+        "id": "N3-07",
+        "title": "지지·끝점·예약 patch 검사",
+        "detail": "T0=0 on X≤Xa 또는 X≥Xb, 내부 T0≠0, ζ=exp(−t1²/log²(X/Xa)−4/log²(Xb/X))를 확인한다.",
+        "accept": "n=T0/|T0|의 edge limit, inner/outer flatness, Ipos와 Imean의 unmodified power law를 검사한다. edge에서 0/0을 직접 계산하지 않는다."
+      },
+      "implementationStatus": "PARTIAL_SUPPORT_OPERATIONS",
+      "originalAcceptancePassed": false,
+      "implementedOperations": [
+        "Disjoint placement, endpoint collar field agreement and exact source power branch of the explicit first correction patch",
+        "Original outer module independently defines its four reserved patches"
+      ],
+      "remainingImplementation": [
+        "Stress reconstruction from the same completed inner-to-outer profile and a linked support ledger"
+      ],
+      "remainingCertification": [
+        "Exact infinite-axis equality needed in the B.30 flat stress factor",
+        "T0 zero on both external collars and nonzero at every interior point",
+        "Both normalized-stress edge limits and unchanged Ipos/Imean power laws on the same final witness"
+      ]
+    }
+  ],
+  "explicitInput": {
+    "family": "explicit-power-annulus",
+    "regularCartesianAxisCertified": false,
+    "originalPaperFullProfile": false,
+    "fiveCumulativeMomentsFiniteAtFiniteRadius": true,
+    "allMomentsIntegrableToInfinity": false
+  },
+  "validation": {
+    "execution": {
+      "file": "source-radial-modulation-tests.json",
+      "passed": 57,
+      "total": 57
+    },
+    "independentCorrection": {
+      "file": "source-correction-independent.json",
+      "passed": 74,
+      "total": 74,
+      "decimalDigits": 80
+    },
+    "newLeanKernelRun": false,
+    "independentSourceFormula": {
+      "file": "c12-source-formula-independent.json",
+      "passed": 1135,
+      "failed": 0,
+      "total": 1135
+    }
+  },
+  "display": {
+    "coordinates": [
+      "log X",
+      "eta",
+      "N(E_N-E)"
+    ],
+    "color": "N(E_N-E) on both modulation and correction patch",
+    "finiteSampleScope": "Only computed finite diagnostic samples; never all-domain certification",
+    "defaultCompactDetailedRows": 132,
+    "defaultDenseModulationPoints": 4294,
+    "defaultPatchPoints": 65
+  },
+  "historicalRecord": {
+    "frozenV50ChangedByThisModule": false,
+    "previousContinuationLoopContractScope": "That record describes only controlled-continuation.mjs and admissible-loop.mjs. This later C12 record supplements its N3-06 implementation list; it does not rewrite historical claims.",
+    "sourceFormulaCorrection": "ns-source-formula-correction.json",
+    "original53ChecksDidNotValidatePostNs": true
+  },
+  "fullProfileCertified": false,
+  "fullNavierStokesSolution": false
+}

@@ -1,0 +1,793 @@
+{
+  "schema": "MathScope.M1.M0SixIndependentAcceptanceReview/1",
+  "reviewedAt": "2026-10-09T15:03:06.978045+00:00",
+  "status": "PASS_ALL_SIX_ORIGINAL_ACCEPTANCES_WITH_EXPLICIT_SCOPE",
+  "reviewer": "/root/yang_mills_lean_module",
+  "counts": {
+    "total": 6,
+    "pass": 6,
+    "partial": 0,
+    "fail": 0,
+    "detailCoverageMet": 6,
+    "resolvedFindings": 1,
+    "openFindings": 0
+  },
+  "originalSource": {
+    "path": "mathscope-m1/evidence/original-acceptance.json",
+    "sha256": "854f67efad0f6d0cda7ab784611e5352b753ddd297fbac5a1382f4032ba02dc2",
+    "selection": "First6 entries, preserving exact original title/detail/accept/stage/sourceFile"
+  },
+  "method": "Independent inspection of the shared core and actual domain implementations; audit of recorded integration/regression/domain checks; rehash of18 current audited Lean sources; verification of positive exits and9 negative-control logs; live execution of common adapter/source-match checks. Full test suites and Lean kernel were not rerun in this review.",
+  "scopePolicy": "PASS means the original finite-runtime/contracts/reference/formal-component requirement is implemented. Mathematical hypotheses remain hypotheses and external theorems remain source references unless the exact audited import proves the stated target. No full YM/NS/BSD/continuum theorem is inferred.",
+  "items": [
+    {
+      "id": "I0-04",
+      "title": "일반 G와 상태족 계약",
+      "detail": "Lie algebra와 전역 군 형태, 표현, 불변 내적, 결합상수, 격자 a·L, 경계, seed, 관측 채널 및 Δ의 역할을 명시한다.",
+      "accept": "G 이름 또는 Δ 숫자만 있는 요청으로 실제 gauge-field job이 생성되지 않는다. 기본 상태족은 사용자가 즉시 실행할 수 있다.",
+      "stage": "I0",
+      "stageTitle": "수학 대상·가정·관측 계약 확장",
+      "sourceFile": "platform-stages.json",
+      "originalAcceptance": "G 이름 또는 Δ 숫자만 있는 요청으로 실제 gauge-field job이 생성되지 않는다. 기본 상태족은 사용자가 즉시 실행할 수 있다.",
+      "original": {
+        "id": "I0-04",
+        "title": "일반 G와 상태족 계약",
+        "detail": "Lie algebra와 전역 군 형태, 표현, 불변 내적, 결합상수, 격자 a·L, 경계, seed, 관측 채널 및 Δ의 역할을 명시한다.",
+        "accept": "G 이름 또는 Δ 숫자만 있는 요청으로 실제 gauge-field job이 생성되지 않는다. 기본 상태족은 사용자가 즉시 실행할 수 있다.",
+        "stage": "I0",
+        "stageTitle": "수학 대상·가정·관측 계약 확장",
+        "sourceFile": "platform-stages.json"
+      },
+      "status": "PASS_EXPLICIT_SCOPE",
+      "acceptanceMet": true,
+      "detailCoverageMet": true,
+      "implementation": [
+        "GaugeGroupSpec는 실제 Lie algebra, 전역 군, faithful 저장표현, invariant form과 embedding을 담는다. 현재 14개 compact matrix adapter를 구성하며 군 이름만 대입한 프록시를 쓰지 않는다.",
+        "field job의 필수 입력은 group, field construction, coupling, center/scale/coefficients, domain/boundary, seed, units, family/Delta role, observation이다. 홀로노미는 실제 4D 경로/step을 기록한다. 연속 고전 모델에는 양자 격자의 a를 만들어 넣지 않고 domain/grid와 양자격자 비사용을 명시한다.",
+        "ASSUMED_BOUND에서는 Delta 변경에도 물리적 field hash가 고정된다. UNITS에서는 단위만, CLASSICAL_SCALE 및 EFFECTIVE_MODEL에서는 정의된 실제 장을 재계산한다.",
+        "27개 완전한 기본 예제를 즉시 실행할 수 있다. group-only/Delta-only field 요청은 validation에서 거부된다.",
+        "session-binding은 원본 M1ObjectSpec와 실제 GaugeGroupSpec/StateFamilySpec/AssumptionSpec를 동일한 immutable graph에 저장하고 group reference·source hash·가정 revision을 재결속한다. 가정 변경 후 구 결과를 재저장해 덮는 경로는 거부된다."
+      ],
+      "evidence": [
+        {
+          "path": "mathscope-m1/gauge/evidence/validation.json",
+          "locator": "required-state-input-and-budget-rejections; all-examples-contract-valid-and-replay; four-delta-roles-and-physical-hashes",
+          "meaning": "27개 예제의 M0 실제 validator, 정확 replay와 필수입력/단위/field hash 대조"
+        },
+        {
+          "path": "mathscope-m1/core/registry.mjs",
+          "locator": "normalizeRequest; validateDomainRequest; executeDomain",
+          "meaning": "범위와 예산을 소유 복제한 뒤 domain validator 호출"
+        },
+        {
+          "path": "mathscope-m1/core/session-binding.mjs",
+          "locator": "constructedComponents; prepareM1SessionJob; saveM1SessionJob",
+          "meaning": "실제 계산으로 구성된 군·상태족·가정을 M0 typed graph에 저장"
+        },
+        {
+          "path": "mathscope-m1/evidence/core-tests.tap",
+          "locator": "typed mathematical objects…; a revised constructed gauge assumption…",
+          "meaning": "실행 결과/원본요청/군상태족의 결속 및 수정된 가정에 대한 재저장 거부"
+        },
+        {
+          "path": "mathscope-m1/evidence/m0-regression-tests.tap",
+          "locator": "general G contracts demand global form…; observations report lost information…",
+          "meaning": "기존 일반 G와 관측 계약의 회귀 검증"
+        }
+      ],
+      "limits": [
+        "지원행렬군 범위는 SU(2..6), SO(3,5..8), Sp(1..3), compact G2이다. Spin, 임의 중심몫, F4/E6/E7/E8과 범위 밖 입력은 미구현으로 거부한다. 일반 G의 입력 계약이 모든 G의 계산 adapter 구현을 뜻하지 않는다.",
+        "M1 장은 고전적이고 유한 관측/경로에 한정된다. 양자 Wilson ensemble, continuum QFT, 임의 G의 질량간극은 구성하지 않는다. 향후 양자 lattice a/L은 별도 모델의 필수 계약이다."
+      ],
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "I1-03",
+      "title": "정밀도 소모 전파",
+      "detail": "나눗셈, 미분, Frobenius, determinant, basis reduction, quadrature, series sum별 입력 정밀도와 출력 손실을 계산한다.",
+      "accept": "p-adic delta 연산에 추가 자릿수가 필요할 때 자동 증액한다. 유효 자릿수가 부족하면 계산 성공 대신 PRECISION_REQUIRED를 반환한다.",
+      "stage": "I1",
+      "stageTitle": "정확 연산·정밀도·계산 작업 계층",
+      "sourceFile": "platform-stages.json",
+      "originalAcceptance": "p-adic delta 연산에 추가 자릿수가 필요할 때 자동 증액한다. 유효 자릿수가 부족하면 계산 성공 대신 PRECISION_REQUIRED를 반환한다.",
+      "original": {
+        "id": "I1-03",
+        "title": "정밀도 소모 전파",
+        "detail": "나눗셈, 미분, Frobenius, determinant, basis reduction, quadrature, series sum별 입력 정밀도와 출력 손실을 계산한다.",
+        "accept": "p-adic delta 연산에 추가 자릿수가 필요할 때 자동 증액한다. 유효 자릿수가 부족하면 계산 성공 대신 PRECISION_REQUIRED를 반환한다.",
+        "stage": "I1",
+        "stageTitle": "정확 연산·정밀도·계산 작업 계층",
+        "sourceFile": "platform-stages.json"
+      },
+      "status": "PASS_EXPLICIT_SCOPE",
+      "acceptanceMet": true,
+      "detailCoverageMet": true,
+      "implementation": [
+        "deltaPadic은 출력 mod p^N에 입력 mod p^(N+1)을 요구한다. 정확 정수 원본이 기존 잔여류와 일치하는 경우에만 guard digit을 자동 확보하며, 원본이 없으면 PRECISION_REQUIRED를 반환한다.",
+        "p^v가 포함된 정확 정수로 나눌 때 v자리 손실을 계산한다. unit inverse와 알려진 p-power를 분리하고 Z_p 밖의 몫도 거부한다.",
+        "정수 계수 미분·Frobenius pullback, integral determinant, 단위 Smith basis change의 p-adic 유효자릿수 보존은 각 유한 모델과 보조정리로 다룬다. Frobenius의 차수 증가 D→pD와 p-adic 자릿수 손실0을 구분한다.",
+        "NS binary64 interval 연산은 분모의0포함, exp/log 급수 tail, Taylor jet 계수 전파, 4차미분 Simpson 잔차와 적분 tail, 비율의 분모 오차를 실제 계산한다. heat certificate는 모든 요청 미분의 최종 radius≤tolerance일 때만 완료된다.",
+        "53bit 초과 요구·지원 오차바닥 미만·overflow·부족한 p-adic 입력은 PRECISION_REQUIRED로 전파된다. 공통 engine은 이를 COMPLETED로 변환하지 않는다."
+      ],
+      "evidence": [
+        {
+          "path": "mathscope-m1/arithmetic/padic.mjs",
+          "locator": "deltaPadic; divideByInteger; finiteRingModule; determinantPadic",
+          "meaning": "guard digit 및 연산별 실제 손실 계산"
+        },
+        {
+          "path": "mathscope-m1/arithmetic/complex.mjs",
+          "locator": "p1Frobenius; reduceFreeComplex",
+          "meaning": "정수 계수 pullback과 정확 같은-prime coefficient reduction"
+        },
+        {
+          "path": "mathscope-m1/arithmetic/tests/arithmetic.test.mjs",
+          "locator": "P2-02/I1-03; I1-03: determinant, basis reduction, division and Frobenius have distinct losses",
+          "meaning": "정확 lift 자동증액·입력 부족·v_p(9)=2자리 손실·0자리 보존 검증"
+        },
+        {
+          "path": "mathscope-m1/navier/numerics.mjs",
+          "locator": "validatePrecision; interval arithmetic; interval jets; certifiedSimpson",
+          "meaning": "미분/급수/나눗셈/적분의 구간 전파"
+        },
+        {
+          "path": "mathscope-m1/navier/heat.mjs",
+          "locator": "heatIntegralCertificate; heatTaylorFinite",
+          "meaning": "각 미분 최종구간·tail·유한 Taylor remainder 및 정밀도 실패"
+        },
+        {
+          "path": "mathscope-m1/core/engine.mjs",
+          "locator": "TERMINAL; run; finish",
+          "meaning": "PRECISION_REQUIRED의 terminal 보존"
+        },
+        {
+          "path": "mathscope-m1/evidence/core-tests.tap",
+          "locator": "domain precision failures and malformed inputs never become completed calculations",
+          "meaning": "bits100 요청이 PRECISION_REQUIRED로 유지"
+        }
+      ],
+      "limits": [
+        "이 통과는 실제 지원 연산의 정밀도 규칙이다. 임의 p-adic Frobenius·일반 미분 방정식·무한급수를 자동 인증하는 범용 precision compiler를 주장하지 않는다.",
+        "Li2 Simpson 값은 UNBOUNDED_APPROXIMATION이다. 비선형 NS candidate jet/series와 일반 gauge Float64 표본에는 구간인증을 붙이지 않는다. 표본잔차나 bit 수를 해석적 tail/stability 증명으로 바꾸지 않는다."
+      ],
+      "remainingAcceptanceWork": [],
+      "operatorCoverage": [
+        {
+          "operation": "division",
+          "implementedRule": "loss=v_p(d); require inputDigits>=targetDigits+v; unit division after extraction",
+          "evidence": "arithmetic/padic.mjs:divideByInteger"
+        },
+        {
+          "operation": "differentiation",
+          "implementedRule": "Integral monomial coefficient multiplication preserves p-adic congruence; interval Taylor jets propagate real endpoint error for supported heat derivatives",
+          "evidence": "arithmetic/complex.mjs; Arithmetic.integral_map_preserves_precision; navier/numerics.mjs"
+        },
+        {
+          "operation": "Frobenius",
+          "implementedRule": "phi_A=id; coefficient precision loss0, coordinate target D=pD; delta additionally needs one guard digit",
+          "evidence": "arithmetic/complex.mjs:p1Frobenius; arithmetic/padic.mjs:deltaPadic"
+        },
+        {
+          "operation": "determinant",
+          "implementedRule": "Integral determinant polynomial; exact fraction-free integer lifts, loss0",
+          "evidence": "arithmetic/padic.mjs:determinantPadic"
+        },
+        {
+          "operation": "basis reduction",
+          "implementedRule": "UAV=S mod p^N with det U and det V units; loss0, no nonunit inverse",
+          "evidence": "arithmetic/padic.mjs:finiteRingModule,verifyFiniteRingModule"
+        },
+        {
+          "operation": "quadrature",
+          "implementedRule": "Interval Simpson fourth derivative remainder+rounding+explicit tails; unbounded numeric approximations separately tagged",
+          "evidence": "navier/numerics.mjs:certifiedSimpson; navier/heat.mjs:heatIntegralCertificate"
+        },
+        {
+          "operation": "series sum",
+          "implementedRule": "Bounded exp/log series; finite heat Taylor with explicit remainder and radius-of-convergence0 warning; no missing infinite majorant invented",
+          "evidence": "navier/numerics.mjs; navier/heat.mjs:heatTaylorFinite"
+        }
+      ]
+    },
+    {
+      "id": "I1-07",
+      "title": "독립 계산 교차 검증",
+      "detail": "직접 점 세기와 Frobenius, FFT와 direct convolution, analytic density와 quadrature, Lean certificate와 생성기 결과를 교차 검사한다.",
+      "accept": "동일 구현을 복사한 두 결과를 독립 검증으로 세지 않는다. fixture에 최소 두 방식과 오차 기준이 명시된다.",
+      "stage": "I1",
+      "stageTitle": "정확 연산·정밀도·계산 작업 계층",
+      "sourceFile": "platform-stages.json",
+      "originalAcceptance": "동일 구현을 복사한 두 결과를 독립 검증으로 세지 않는다. fixture에 최소 두 방식과 오차 기준이 명시된다.",
+      "original": {
+        "id": "I1-07",
+        "title": "독립 계산 교차 검증",
+        "detail": "직접 점 세기와 Frobenius, FFT와 direct convolution, analytic density와 quadrature, Lean certificate와 생성기 결과를 교차 검사한다.",
+        "accept": "동일 구현을 복사한 두 결과를 독립 검증으로 세지 않는다. fixture에 최소 두 방식과 오차 기준이 명시된다.",
+        "stage": "I1",
+        "stageTitle": "정확 연산·정밀도·계산 작업 계층",
+        "sourceFile": "platform-stages.json"
+      },
+      "status": "PASS_EXPLICIT_SCOPE",
+      "acceptanceMet": true,
+      "detailCoverageMet": true,
+      "implementation": [
+        "P1의 유한 점은 projective orbit enumeration으로 세고, 별도로 실제 chain map/retraction에서 계산한 H0/H2 Frobenius trace와 대조한다. elliptic pair enumeration은 독립 Legendre character sum과 비교한다.",
+        "산술 정수행렬·contraction은 JS 연산과 SymPy exact matrix product/Smith normal form 및 전칭 기호 계산으로 비교한다. Decimal100 log와 mpmath100 적분은 정수 log enclosure/근사 Li2를 별도 점검한다.",
+        "NS에서는 coefficient-space 중첩 mode convolution과 실제 mixed-radix3DFFT+3/2 padding의 물리공간 곱을 비교한다. 물리좌표 finite difference와 해석적 jet, 원래 v변수의 고정밀 적분과 log변수 적분도 구분한다.",
+        "Gauge에서는 정확 Python Fraction/BigInt 재검증, matrix commutator와 structure constants, analytic jet와 central difference, 실제 F=dA+[A,A]의 밀도 quadrature와 BPST closed density/marginal을 비교한다.",
+        "Lean 증명서는 생성기 수치 예제와 별도 경로이며, 같은 함수의 재실행은 replay로만 센다."
+      ],
+      "evidence": [
+        {
+          "path": "mathscope-m1/arithmetic/evidence/independent-validation.json",
+          "locator": "55 checks; SymPy/Decimal/mpmath environment and fixture hash",
+          "meaning": "서로 다른 계산체계의 exact/고정밀 교차 검증"
+        },
+        {
+          "path": "mathscope-m1/arithmetic/tests/arithmetic.test.mjs",
+          "locator": "I1-07: projective orbit point counts independently match Frobenius trace; P3-06",
+          "meaning": "직접 점세기와 계산된 Frobenius 비교"
+        },
+        {
+          "path": "mathscope-m1/navier/checks.mjs",
+          "locator": "Fourier convolution independentPaths; physical finite differences",
+          "meaning": "FFT와 direct finite-mode convolution은 실제 다른 알고리즘"
+        },
+        {
+          "path": "mathscope-m1/navier/evidence/numerical-validation.json",
+          "locator": "FFT_vs_direct_convolution; negative_aliasing_without_padding; heat_direct_v_integral_330bit; negative_pressure_sign",
+          "meaning": "정규화오차 기준과 잘못된 부호/aliasing 대조"
+        },
+        {
+          "path": "mathscope-m1/gauge/evidence/validation.json",
+          "locator": "all-group-bpst-and-full-color-fields; independent-density-normalization-and-window-tail; finite-holonomy-and-independent-gauge-integration",
+          "meaning": "서로 다른 field/density/transport 경로와 수렴비 검사"
+        }
+      ],
+      "limits": [
+        "독립 수치 비교는 해당 fixture의 일치만 검증한다. 연속방정식의 존재·유일성, continuum limit, 전체 JavaScript의 Lean 검증을 뜻하지 않는다.",
+        "고정밀 mpmath/Decimal 참조 자체를 interval proof로 부르지 않는다. 인증은 별도의 정확 정수/구간 오차계산에서만 나온다."
+      ],
+      "remainingAcceptanceWork": [],
+      "independenceExamples": [
+        {
+          "pair": [
+            "projective orbit count",
+            "chain Frobenius on cohomology"
+          ],
+          "criterion": "Exact integer equality for the listed finite primes; H0=1 and H2=p verified from maps"
+        },
+        {
+          "pair": [
+            "direct finite mode convolution",
+            "3DFFT with3/2padding physical product"
+          ],
+          "criterion": "normalized error<1e-11; observed9.173757111501543e-17; omitted padding is rejected"
+        },
+        {
+          "pair": [
+            "matrix-curvature density Simpson integral",
+            "closed BPST R3 marginal"
+          ],
+          "criterion": "absolute error<1e-11; observed5.551115123125783e-17"
+        },
+        {
+          "pair": [
+            "radial R4 matrix-density quadrature",
+            "unit BPST charge"
+          ],
+          "criterion": "absolute error<1e-9; observed7.087797015969954e-11"
+        },
+        {
+          "pair": [
+            "exact source/generator certificates",
+            "Lean kernel finite statements"
+          ],
+          "criterion": "All71 audited target types retained;9 deliberately false statements rejected"
+        }
+      ]
+    },
+    {
+      "id": "I3-02",
+      "title": "유한 대수 정리부터 형식화",
+      "detail": "delta identities의 허용 정밀도, d²=0, semilinear chain map, 유한 소수 구간 인증, Lie bracket, lattice holonomy를 작은 정리로 나눈다.",
+      "accept": "자체 fixture와 일부러 잘못된 certificate가 각각 수락·거부된다. 숫자 예시와 전칭 정리의 범위가 구분된다.",
+      "stage": "I3",
+      "stageTitle": "Lean 형식화·증거 승격·연구 관문",
+      "sourceFile": "platform-stages.json",
+      "originalAcceptance": "자체 fixture와 일부러 잘못된 certificate가 각각 수락·거부된다. 숫자 예시와 전칭 정리의 범위가 구분된다.",
+      "original": {
+        "id": "I3-02",
+        "title": "유한 대수 정리부터 형식화",
+        "detail": "delta identities의 허용 정밀도, d²=0, semilinear chain map, 유한 소수 구간 인증, Lie bracket, lattice holonomy를 작은 정리로 나눈다.",
+        "accept": "자체 fixture와 일부러 잘못된 certificate가 각각 수락·거부된다. 숫자 예시와 전칭 정리의 범위가 구분된다.",
+        "stage": "I3",
+        "stageTitle": "Lean 형식화·증거 승격·연구 관문",
+        "sourceFile": "platform-stages.json"
+      },
+      "status": "PASS_EXPLICIT_SCOPE",
+      "acceptanceMet": true,
+      "detailCoverageMet": true,
+      "implementation": [
+        "산술31, gauge27, NS13의 합계71개 실제 exported Lean target이 source/type/axioms/positive exit/log/hash와 함께 저장돼 있다.",
+        "delta numerator congruence·guard digit cancellation 및 counterexample, integral map 정밀도, d²=0, weight contraction, coefficient Frobenius=id의 chain map, bounded prime interval/Lucas soundness를 분리한다.",
+        "SU3와 G2의 실제 전체 bracket table(각28/91개쌍), index1 embedding/metric와 유한 Jacobi/holonomy/Wilson fixture를 검사한다. 일반 GroupLaw transport/closed-character 정리는 가정을 target type에 명시한다.",
+        "산술4개, gauge3개, NS2개의 고의 오류는 총9개 모두 실제 Lean이 거부한다. 이번 독립 검토에서는 저장 소스와 원자료/로그 해시를 재확인했으며 새 커널 실행으로 표시하지 않는다.",
+        "브라우저 checkPinnedAudit는 설치된 정확 소스와 로컬 커널 기록의 일치를 확인한다. 편집된 소스는 STALE이며 formalPass=false와 kernelRerun=false를 유지한다."
+      ],
+      "evidence": [
+        {
+          "path": "mathscope-m1/arithmetic/evidence/lean-audit.json",
+          "locator": "31 targets; 4 negative controls; positive builds exit0",
+          "meaning": "유한/전칭 산술 target와 원문 type/axioms"
+        },
+        {
+          "path": "mathscope-m1/gauge/lean/lean-audit.json",
+          "locator": "27 targets; 3 negative controls;6 positive source modules",
+          "meaning": "실제 Lie/embedding/transport/projection targets"
+        },
+        {
+          "path": "mathscope-m1/navier/evidence/lean-validation.json",
+          "locator": "13 targets across records;2 negative controls",
+          "meaning": "finite algebra, exact analytic adapter와 공식 source imports"
+        },
+        {
+          "path": "mathscope-m1/core/theorem-adapters.mjs",
+          "locator": "checkPinnedAudit; checkTheoremAdapter",
+          "meaning": "소스 변경/정리명/type/잘못된 승격 거부"
+        },
+        {
+          "path": "mathscope-m1/evidence/core-tests.tap",
+          "locator": "exact pinned Lean source comparison rejects one changed source…",
+          "meaning": "브라우저 정적 감사의 역할 경계"
+        }
+      ],
+      "limits": [
+        "특정 유한 fixture와 전칭 정리를 구별한다. 모든14개 군의 모든 Jacobi를 Lean으로 검증한 것은 아니며, 전체 table exact Python/BigInt 검증과 SU3/G2 Lean fixture 범위가 다르다.",
+        "자연수 유한 spectral support의 구간 배제는 무한차원 실수 Hamiltonian 질량간극 정리가 아니다. conditional projection 정리는 명시한 fibre/reconstruction 전제를 제거하지 않는다.",
+        "표준 Lean axiom(propext/Classical.choice/Quot.sound) 의존성은 원 target별로 보존된다. 사용자 추가 axiom·sorryAx는0이며, 이 사실이 외부 모든 수학 정리의 formalization을 뜻하지 않는다."
+      ],
+      "remainingAcceptanceWork": [],
+      "leanSummary": {
+        "targets": 71,
+        "arithmetic": 31,
+        "gauge": 27,
+        "navier": 13,
+        "rejectedNegativeControls": 9,
+        "customAxioms": 0,
+        "sorryAxDependencies": 0,
+        "newKernelRerunInThisReview": false
+      }
+    },
+    {
+      "id": "I3-03",
+      "title": "해석적 가정의 구체화",
+      "detail": "완비성, uniform convergence, 미분과 극한의 교환, semigroup bounds, spectral measure, stability constants의 정확한 진술을 저장한다.",
+      "accept": "무한 합의 미분이나 continuum limit를 쓰는 lemma마다 필요한 norm·정의역·양화 범위가 표시된다.",
+      "stage": "I3",
+      "stageTitle": "Lean 형식화·증거 승격·연구 관문",
+      "sourceFile": "platform-stages.json",
+      "originalAcceptance": "무한 합의 미분이나 continuum limit를 쓰는 lemma마다 필요한 norm·정의역·양화 범위가 표시된다.",
+      "original": {
+        "id": "I3-03",
+        "title": "해석적 가정의 구체화",
+        "detail": "완비성, uniform convergence, 미분과 극한의 교환, semigroup bounds, spectral measure, stability constants의 정확한 진술을 저장한다.",
+        "accept": "무한 합의 미분이나 continuum limit를 쓰는 lemma마다 필요한 norm·정의역·양화 범위가 표시된다.",
+        "stage": "I3",
+        "stageTitle": "Lean 형식화·증거 승격·연구 관문",
+        "sourceFile": "platform-stages.json"
+      },
+      "status": "PASS_EXPLICIT_SCOPE",
+      "acceptanceMet": true,
+      "detailCoverageMet": true,
+      "implementation": [
+        "공통5개 analytic contract는 operation/domain/spaces/norm/quantifiers/conclusion/fallback을 저장하며 빈 norm 등을 거부한다. validator는 항상 truthVerified=false와 formalPass=false이다.",
+        "NS 각 실제 관련 lemma는 B_rho Banach norm/공통 복소영역/수축상수, 열린 실영역에서 derivative uniform convergence와 function pointwise convergence, heat L1 지배함수, Taylor remainder/radius0, Fourier semigroup/Parseval 가정, 잔차-오차 stability 상수를 저장한다.",
+        "실제 Lean uniform_derivative_exchange는 열린집합과 모든 지점의 수렴 및 균등 도함수 수렴을 가정한다. diffusion_semigroup_bound는 scalar exp 부등식이며, stable_residual_budget은 주어진 stability 전제 아래의 부등식이다.",
+        "Gauge 무한차원 계약은 Hilbert space, dense self-adjoint nonnegative H, 전체 ker(H)에 대한 P0, positive spectral measure와 support, unbounded observable의 domain, 지배수렴/Tonelli, 전 채널 정보, OS reconstruction 및 a/L 극한을 구분한다.",
+        "session-binding은 NS/gauge 결과에 관련 무한추론 계약을 attached requiredForInfiniteInferences로 저장한다. 현재 유한 결과에서는 불충분한 분석 가정을 참으로 선언하거나 continuum 결론을 만들지 않는다."
+      ],
+      "evidence": [
+        {
+          "path": "mathscope-m1/core/analytic-contracts.mjs",
+          "locator": "ANALYTIC_CONTRACTS; validateAnalyticContract",
+          "meaning": "명시 문자열 계약의 필수 필드; 수학적 진리 검증과 구별"
+        },
+        {
+          "path": "mathscope-m1/navier/analytic-contracts.json",
+          "locator": "AXIS_B_RHO; DERIVATIVE_LIMIT_EXCHANGE; HEAT_DOMINATED_DIFFERENTIATION; HEAT_TAYLOR; SEMIGROUP; RESIDUAL_STABILITY; SPECTRAL_CONTINUUM",
+          "meaning": "각 연산의 norm/domain/quantifier 원문"
+        },
+        {
+          "path": "mathscope-m1/navier/lean/MathScope/Navier/Analytic.lean",
+          "locator": "uniform_derivative_exchange; diffusion_semigroup_bound; stable_residual_budget",
+          "meaning": "실제 formal hypotheses와 결론 범위"
+        },
+        {
+          "path": "mathscope-m1/gauge/analytic-assumptions.json",
+          "locator": "implementedFiniteModel; infiniteDimensionalContract; projectionContract",
+          "meaning": "finite H와 무한 해석·전사정보 보존 가정 구분"
+        },
+        {
+          "path": "mathscope-m1/core/session-binding.mjs",
+          "locator": "envelope.details.requiredForInfiniteInferences",
+          "meaning": "영역별 가정 계약의 결과 연결"
+        }
+      ],
+      "limits": [
+        "일반 continuum-limit 계약은 topology/norm/error sequence를 채워야 하는 템플릿이다. 특정 양자 YM lattice sequence에서 그 가정을 충족했다는 진술이나 Lean 증명이 없다.",
+        "형식 문자열이 존재하거나 certificateRef가 있다는 사실은 가정이 참이라는 증명이 아니다. finite candidate에 uniform convergence·전역 stability·cyclicity를 자동 부여하지 않는다.",
+        "가정 기록과 조건부 보조정리를 구현했다는 통과이다. 논문 전체 해석 가정을 모든 수치배열에 대해 검증했다는 통과로 해석할 수 없다."
+      ],
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "I3-04",
+      "title": "외부 비교 정리의 adapter",
+      "detail": "프리즘 비교·trace formula·BSD의 알려진 경우·NS 원문 정리를 인용 레벨과 실제 Lean import 레벨로 구분한다.",
+      "accept": "문헌 링크만 연결된 결과는 THEOREM REFERENCE이며, 정확한 exported Lean theorem을 import한 경우에만 kernel 결과와 연결된다.",
+      "stage": "I3",
+      "stageTitle": "Lean 형식화·증거 승격·연구 관문",
+      "sourceFile": "platform-stages.json",
+      "originalAcceptance": "문헌 링크만 연결된 결과는 THEOREM REFERENCE이며, 정확한 exported Lean theorem을 import한 경우에만 kernel 결과와 연결된다.",
+      "original": {
+        "id": "I3-04",
+        "title": "외부 비교 정리의 adapter",
+        "detail": "프리즘 비교·trace formula·BSD의 알려진 경우·NS 원문 정리를 인용 레벨과 실제 Lean import 레벨로 구분한다.",
+        "accept": "문헌 링크만 연결된 결과는 THEOREM REFERENCE이며, 정확한 exported Lean theorem을 import한 경우에만 kernel 결과와 연결된다.",
+        "stage": "I3",
+        "stageTitle": "Lean 형식화·증거 승격·연구 관문",
+        "sourceFile": "platform-stages.json"
+      },
+      "status": "PASS_EXPLICIT_SCOPE",
+      "acceptanceMet": true,
+      "detailCoverageMet": true,
+      "implementation": [
+        "프리즘 비교 S01/S02, Deligne trace formula S07, gauge 원전 및 NS 원문 주요정리는 THEOREM_REFERENCE로 기록한다. 로컬 유한 정리를 외부 정리로 이름 바꿔 연결하는 시도를 거부한다.",
+        "원문 detail 검토에서 BSD 알려진 경우의 구체 가정 누락을 발견해 BSD-GZK-ANALYTIC-RANK-LE1 reference adapter를 보완했다. Kolyvagin(1990) Theorem1과 Clay/Wiles의 modularity 설명에 따라 E/Q의 analytic rank0/1 → 대수 rank일치+Sha유한을 기록했다.",
+        "BSD adapter는 L(E,1)≠0 또는 L(E,1)=0 및 L′(E,1)≠0의 정확한 전역가정을 요구한다. 유한 Euler 목록/수치 threshold에서 가정을 자동 도출하지 않으며 선도계수 공식과 Sha차수 산출을 주장하지 않는다. 실제 공통 REFERENCES 등록도 독립 확인했다.",
+        "실제 mathlib Lucas target 및 수정되지 않은 공식 NS Flatness/ProblemStatement import는 정확한 exported adapter type·source/hash·커널기록에만 연결한다. 브라우저의 정적 일치 검사는 source-only reference의 Lean 승격이 아니다.",
+        "47개 adapter/analytic-shape guard를 독립 재실행해 모두 통과했고,3개 pinned audit/71 targets의 정확 source match 및 formalPass=false/kernelRerun=false를 확인했다."
+      ],
+      "evidence": [
+        {
+          "path": "mathscope-m1/core/theorem-adapters.mjs",
+          "locator": "THEOREM_REFERENCE vs LOCAL_LEAN_TARGET; checkPinnedAudit",
+          "meaning": "정리 인용과 실제 고정 target·source 일치 분리"
+        },
+        {
+          "path": "mathscope-m1/core/bsd-known-case-reference.json",
+          "locator": "Kolyvagin1990 §1 Theorem1 printedp4; Wiles printedp4; cases/applicationPolicy",
+          "meaning": "원문 요구에 맞는 구체 BSD known-case 문헌 adapter"
+        },
+        {
+          "path": "mathscope-m1/core/domain-references.json",
+          "locator": "BSD-GZK-ANALYTIC-RANK-LE1; S01/S02/S07; exact import entries",
+          "meaning": "실제 공통 문헌 등록"
+        },
+        {
+          "path": "mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Prime.lean",
+          "locator": "lucas_certificate_sound",
+          "meaning": "정확한 mathlib theorem import를 사용하는 로컬 target"
+        },
+        {
+          "path": "mathscope-m1/navier/lean/MathScope/Navier/SourceAdapter.lean",
+          "locator": "imported_flatness_fixed_loss; imported_zero_velocity_negative_control",
+          "meaning": "실제 공식 source import가 있는 제한된 target"
+        },
+        {
+          "path": "mathscope-m1/navier/evidence/lean-validation.json",
+          "locator": "external.fullOriginalBuildPerformed=false; records and target types",
+          "meaning": "공식 전체 정리와 선택 source adapter의 검증 범위 분리"
+        }
+      ],
+      "limits": [
+        "프리즘 비교·trace formula·BSD rank0/1 정리는 문헌 참조이며 해당 전역 정리가 Lean으로 import/checked된 것으로 표시하지 않는다. 새 BSD record의 leanImport/exportedLeanTheorem/kernelReceipt는 null, kernelVerified/formalPass는 false이다.",
+        "NS 원문 전체 C/D proof의 공식 toolchain 재현은 이 선택 source/13 targets 감사와 별개다. official-validation의 명령실패/미완료를 성공으로 바꾸지 않는다.",
+        "기록된 theorem reference가 구체 곡선의 가정을 검증해주는 것은 아니다. 현재 유한 local factor 계산만으로 analytic rank를 정하거나 BSD 전체를 결론내리지 않는다."
+      ],
+      "remainingAcceptanceWork": [],
+      "reviewFix": {
+        "id": "BSD-KNOWN-CASE-REFERENCE-GAP",
+        "found": "S08는 Euler factors와 conjecture 배경만 가리켜 known-case의 가정·결론·locator가 누락됨",
+        "resolution": "core/bsd-known-case-reference.json 추가; 공통 REFERENCES 등록; adapter guard 통과",
+        "resolved": true
+      }
+    }
+  ],
+  "evidenceSummary": {
+    "coreIntegration": {
+      "tests": 19,
+      "pass": 19,
+      "fail": 0
+    },
+    "m0Regression": {
+      "tests": 82,
+      "pass": 82,
+      "fail": 0
+    },
+    "arithmeticNode": {
+      "pass": 38,
+      "total": 38
+    },
+    "arithmeticIndependent": {
+      "pass": 55,
+      "total": 55
+    },
+    "gaugeValidationGroups": {
+      "pass": 18,
+      "total": 18
+    },
+    "navierFiniteChecks": {
+      "pass": 90,
+      "total": 90
+    },
+    "leanTargets": 71,
+    "negativeControlsRejected": 9,
+    "liveAdapterAudit": {
+      "referenceCount": 20,
+      "bsdKnownCaseRegistered": true,
+      "adapterGuards": {
+        "pass": true,
+        "passed": 47,
+        "total": 47
+      },
+      "audits": [
+        {
+          "id": "arithmetic-m1-local",
+          "targetCount": 31,
+          "status": "MATCHED_LOCAL_KERNEL_AUDIT",
+          "kernelRerun": false,
+          "formalPass": false,
+          "errorCount": 0,
+          "negativeCount": 4
+        },
+        {
+          "id": "gauge-m1-local",
+          "targetCount": 27,
+          "status": "MATCHED_LOCAL_KERNEL_AUDIT",
+          "kernelRerun": false,
+          "formalPass": false,
+          "errorCount": 0,
+          "negativeCount": 3
+        },
+        {
+          "id": "ns-m1-local",
+          "targetCount": 13,
+          "status": "MATCHED_LOCAL_KERNEL_AUDIT",
+          "kernelRerun": false,
+          "formalPass": false,
+          "errorCount": 0,
+          "negativeCount": 2
+        }
+      ]
+    }
+  },
+  "currentLeanSourceHashChecks": [
+    {
+      "path": "mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Algebra.lean",
+      "sha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Prime.lean",
+      "sha256": "ee96fba523f127ae69db14fd48e955b2f06509ec1fe6b61923efaf73dd74858a",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Precision.lean",
+      "sha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/arithmetic/lean/NegativeWeight.lean",
+      "sha256": "38912bb5343e7e7b9808c73d82ad3034c36cfef86eecdaec89e55c241a669726",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/arithmetic/lean/NegativePrecision.lean",
+      "sha256": "aaa89b73d62cb4e7719fb536872ff50a9fa43f58c5a8e8d171bc6fb66b4b0593",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/arithmetic/lean/NegativePrime.lean",
+      "sha256": "3cab495965927f27fdab93ca6f981686c573125b245bdfbecdc99daf729afdcb",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/arithmetic/lean/NegativeFalse.lean",
+      "sha256": "8aa3ec8f05c467c828df09e43382f3acb20b9669eec576192529a461313ed2aa",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/gauge/lean/MathScope/M1/Gauge/Defs.lean",
+      "sha256": "97caed5ed56a1ee421e10fce0a8e0fa8b7b9c73ccb337c9756f6f8716b849d38",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/gauge/lean/MathScope/M1/Gauge/Fixtures.lean",
+      "sha256": "c6e15cbc9a65c120b963319e193e165e22169c3fb04c72480ef9070e50d5a560",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/gauge/lean/MathScope/M1/Gauge/SU3.lean",
+      "sha256": "242bcd0ab4bc807b5df11fd0d0e8a378e43ee89db01875964471227a7efd134d",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/gauge/lean/MathScope/M1/Gauge/G2.lean",
+      "sha256": "b02189d23d5f8fda0f73248128eccc394917ca953c50991e8a6510a7141e8f48",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/gauge/lean/MathScope/M1/Gauge/Transport.lean",
+      "sha256": "01958ee14c5e5234df300e6834cc11ba95854942529655f85a84c3000fdb2345",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/gauge/lean/MathScope/M1/Gauge/Conditional.lean",
+      "sha256": "6a2cf36cd6e97c0deb33cc2b677c978ead8bd6eb8f61810cd2f32f14890ccad7",
+      "sourceAndEmbeddedAuditMatch": true
+    },
+    {
+      "path": "mathscope-m1/navier/sources/official-repo/NavierStokes/Flatness.lean",
+      "sha256": "550606d4d1e14fb16612375de57d837df325a7b2265de6ed056c935ff96b2bc6",
+      "sourceAndRecordedBuildMatch": true
+    },
+    {
+      "path": "mathscope-m1/navier/sources/official-repo/NavierStokes/ProblemStatement.lean",
+      "sha256": "d2f5cdf24a060acd41011b50492e89058991965e18d2cb797c58d915f95af633",
+      "sourceAndRecordedBuildMatch": true
+    },
+    {
+      "path": "mathscope-m1/navier/lean/MathScope/Navier/Analytic.lean",
+      "sha256": "2709cac41470cb0c87aafd3ac431eed9ed4adf393db6046f7dd5e58fd8176ff3",
+      "sourceAndRecordedBuildMatch": true
+    },
+    {
+      "path": "mathscope-m1/navier/lean/MathScope/Navier/Finite.lean",
+      "sha256": "3cd442a6f1c86b77da319fa102e298e4add593dcfb1d92d7049a1b90473eb537",
+      "sourceAndRecordedBuildMatch": true
+    },
+    {
+      "path": "mathscope-m1/navier/lean/MathScope/Navier/SourceAdapter.lean",
+      "sha256": "dbc7fd472913259338338e0dae9dbe3a4dac5ab7913dd0351c8254f0658274f5",
+      "sourceAndRecordedBuildMatch": true
+    }
+  ],
+  "reviewedArtifacts": [
+    {
+      "path": "mathscope-m1/evidence/original-acceptance.json",
+      "sha256": "854f67efad0f6d0cda7ab784611e5352b753ddd297fbac5a1382f4032ba02dc2"
+    },
+    {
+      "path": "mathscope-m1/core/registry.mjs",
+      "sha256": "7cc27c9f11eed2f1d9b1dab4f05feb15284aa840ea64ebdbb26a78761c9c9136"
+    },
+    {
+      "path": "mathscope-m1/core/engine.mjs",
+      "sha256": "6aec83047c0fea9cb2af184e876097e7d1599b228ab047fc4d7945e4536bb28f"
+    },
+    {
+      "path": "mathscope-m1/core/session-binding.mjs",
+      "sha256": "d2d975e0a34eebd87a7a9e91bee72b6fac12dca769c0dc74a0bbd45e47e8c14c"
+    },
+    {
+      "path": "mathscope-m1/core/analytic-contracts.mjs",
+      "sha256": "6be7bfa83bec680efb2e49a1f6f4158b7f0af91fe10660870a0e6d5f7a56ae39"
+    },
+    {
+      "path": "mathscope-m1/core/theorem-adapters.mjs",
+      "sha256": "d8bda9db223a9abfe69248607d8ff5f8c5be7e1e021b2dc9f9a20e8f937080b4"
+    },
+    {
+      "path": "mathscope-m1/core/bsd-known-case-reference.json",
+      "sha256": "546808914b875a4c78b4901985f7b4d863a66a0f3e1af20118e516724fa0b62f"
+    },
+    {
+      "path": "mathscope-m1/core/domain-references.json",
+      "sha256": "047dc9417784246e6283dc65aca5d133efa9d53bca47474ddc1020b72429e66a"
+    },
+    {
+      "path": "mathscope-m1/evidence/core-tests.tap",
+      "sha256": "0f10e7d65e10dbb33c7d73358d983131e0d22e6f9b64843909acbce025ddf7ae"
+    },
+    {
+      "path": "mathscope-m1/evidence/m0-regression-tests.tap",
+      "sha256": "4658fc9618f496ce0342a0d38927472272c360c3dfc98f1043b06d0ee7bb54a7"
+    },
+    {
+      "path": "mathscope-m1/tests/core.test.mjs",
+      "sha256": "54004fb8a05842292b0d06f32d6cc1bf6d568ba65491864036256dd4497e56b2"
+    },
+    {
+      "path": "mathscope-m1/arithmetic/padic.mjs",
+      "sha256": "50bfbb9fb19a120e00ecdcec785c2292a1e752d50e96af6c1a387cc1469f5ccf"
+    },
+    {
+      "path": "mathscope-m1/arithmetic/complex.mjs",
+      "sha256": "098850a65c78f0abce330de0f665548733854a54b4f42f15fb0a02314ce3b6ce"
+    },
+    {
+      "path": "mathscope-m1/arithmetic/tests/arithmetic.test.mjs",
+      "sha256": "7473bb01e5932e5721333a0ba21df0e6142a0e273cf3efb46a089fa33a13ed4a"
+    },
+    {
+      "path": "mathscope-m1/arithmetic/tests/independent.py",
+      "sha256": "eeff52206a4038085978d1112a564ee69ca0bb759d809c0bb246a51c51bb8c77"
+    },
+    {
+      "path": "mathscope-m1/arithmetic/evidence/independent-validation.json",
+      "sha256": "138cede773e8ac181c9302767735fd90b0a550356b5f68af9f467ab5f951d299"
+    },
+    {
+      "path": "mathscope-m1/arithmetic/evidence/validation-summary.json",
+      "sha256": "c0bd9228e5e3cd4899160b60f54415aaa0c5a327903e0001079537fe92cd7ba7"
+    },
+    {
+      "path": "mathscope-m1/arithmetic/evidence/lean-audit.json",
+      "sha256": "e45ffca3493af77534582fa7052ba454ceddd3797145d8ed368760445ca9bfaa"
+    },
+    {
+      "path": "mathscope-m1/navier/numerics.mjs",
+      "sha256": "6c682e1bb45453188a1b877b6b35067d44463cb176f3f0cbf2fbad0b5283241b"
+    },
+    {
+      "path": "mathscope-m1/navier/heat.mjs",
+      "sha256": "5bb609090a021a2af5bd6a0dac5f6cc398f67bc8b807b5270d649867be021769"
+    },
+    {
+      "path": "mathscope-m1/navier/checks.mjs",
+      "sha256": "9f69f84c187623d5b342b7bc3321345144652db1c402853ae0f7d0e20124a2ae"
+    },
+    {
+      "path": "mathscope-m1/navier/analytic-contracts.json",
+      "sha256": "a535eb724e7f327485ff2f70d97829f398b2986a9da933dde469b795ab0e3ad2"
+    },
+    {
+      "path": "mathscope-m1/navier/evidence/numerical-validation.json",
+      "sha256": "19f166287bca44d4f347a83065ae033ec3fbd5b8c72ff2ac4f31fd3232a1a437"
+    },
+    {
+      "path": "mathscope-m1/navier/evidence/lean-validation.json",
+      "sha256": "90f162823a56035559a584476854a27b2ed135f373183c43593ed47439d8ffe1"
+    },
+    {
+      "path": "mathscope-m1/navier/official-validation/official-command-results.json",
+      "sha256": "20bc6b959264427c3ec28e37a8176909a97a2e84a27dc1f5968082681f8dc737"
+    },
+    {
+      "path": "mathscope-m1/gauge/index.mjs",
+      "sha256": "04457510781f1e1ae9a7c617a8fb713412070f70f8de4d903a43f18d429a1421"
+    },
+    {
+      "path": "mathscope-m1/gauge/groups.mjs",
+      "sha256": "3e37c6b7b53ff9dbcfde5017735c72df5889dd3fd0522159ea54a9be1ea8d68f"
+    },
+    {
+      "path": "mathscope-m1/gauge/family.mjs",
+      "sha256": "e1008deb11424bde74025446ed1dbde90e04b6bcee198a965a7e121521bd423c"
+    },
+    {
+      "path": "mathscope-m1/gauge/tests.mjs",
+      "sha256": "62bbd6318f3cccd711e962f477f1efd869376383a18ae1a996489f62223ec4d4"
+    },
+    {
+      "path": "mathscope-m1/gauge/analytic-assumptions.json",
+      "sha256": "28642694b49e0a5be4c8838d4af0c7d4100304bb949b7c33819a7c704ab1e942"
+    },
+    {
+      "path": "mathscope-m1/gauge/evidence/validation.json",
+      "sha256": "3c57a7e7209bddc1cb02e7a9e226eb968200609e3547399accdf43793dfe8bc0"
+    },
+    {
+      "path": "mathscope-m1/gauge/lean/lean-audit.json",
+      "sha256": "06badb9181a695e54e047db3dac18085f4acdfa23cc62c8f2b9638d74dbafa9d"
+    }
+  ],
+  "mutationScope": [
+    "Created core/bsd-known-case-reference.json with root authorization; root registered it in the shared reference bundle.",
+    "Created this independent acceptance report. Gauge implementation and PDF sources were not modified."
+  ],
+  "openAcceptanceFindings": []
+}

@@ -1,0 +1,659 @@
+{
+  "schemaVersion": 1,
+  "milestone": "MathScope M1 N1-N3",
+  "allOriginalChecklistItemsCompleted": false,
+  "summary": {
+    "PASS": 15,
+    "PARTIAL": 7,
+    "BLOCKED": 2
+  },
+  "items": [
+    {
+      "id": "N1-01",
+      "title": "첨부 판본 식별",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS",
+      "originalAcceptance": "166개 페이지가 모두 읽히고 해시가 일치한다. 다른 판본이면 자동 대체하지 않고 별도 판본 기록을 만든다.",
+      "evidence": "166쪽 첨부 SHA를 재확인하고 각 페이지 text hash와 section coverage를 저장했다.",
+      "artifacts": [
+        "sources.lock.json",
+        "paper-reference-map.json"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "제목 OpenAI, Finite Time Blowup for Navier–Stokes, PDF 166쪽을 고정한다. 첨부 SHA-256은 0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f이다."
+    },
+    {
+      "id": "N1-02",
+      "title": "Theorem 1.1 계약 작성",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS",
+      "originalAcceptance": "모든 가정·양화사·결론에 p1 또는 pp123–126 출처가 연결된다. f=0 또는 t=1에서 smooth velocity를 결론에 추가하면 실패다.",
+      "evidence": "ν>0, zero datum, smooth compact force, fixed support, bounded L2, limsup L∞ 및 비영 발산 가능 force를 양화된 계약으로 고정했다.",
+      "artifacts": [
+        "theorem-contract.json",
+        "N00 p1,p118,p120,pp123-126"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "ν>0, u0=0, f∈Cc∞(R³×(0,∞)), t∈[0,1), 고정 공간 지지, bounded L², unbounded L∞를 각각 필드로 저장한다."
+    },
+    {
+      "id": "N1-03",
+      "title": "166쪽 구조 지도",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS",
+      "originalAcceptance": "p1부터 p166까지 coverage가 있고 Theorem4.6→5.5→7.5→9.6→9.9→10.1→10.3→1.1 경로가 탐색된다.",
+      "evidence": "166/166 page coverage와 경계 중첩 절, named statement, 4.6→5.5→7.5→9.6→9.9→10.1→10.3→1.1 경로를 저장했다. 10.3의 정확한 유형은 Lemma이다.",
+      "artifacts": [
+        "paper-reference-map.json"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "§1–10, Appendix A–C, 참고문헌을 빠짐없이 매핑한다. 같은 페이지에서 절이 바뀌는 경계를 유지한다."
+    },
+    {
+      "id": "N1-04",
+      "title": "공식 발표 상태 분리",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS",
+      "originalAcceptance": "조회일·URL·문서 날짜를 저장한다. Clay 최종 수상 확정이나 unforced A/B 해결을 근거 없이 표시하지 않는다.",
+      "evidence": "OpenAI의 C/D·Lean 공개 주장은 ANNOUNCEMENT, Clay 공지는 INSTITUTIONAL_ANNOUNCEMENT로 분리하고 문서·조회 날짜를 기록했다.",
+      "artifacts": [
+        "sources.lock.json publicStatus"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "OpenAI의 C/D 해결 및 Lean 공개 주장, Clay의 2026-09-11 apparently settled 공지와 심사 절차를 서로 다른 출처로 기록한다."
+    },
+    {
+      "id": "N1-05",
+      "title": "공식 Lean 환경 고정",
+      "status": "PARTIAL",
+      "implementationStatus": "PARTIAL_IMPLEMENTATION",
+      "mathGateStatus": "BLOCKED_WHOLE_DEFAULT_BUILD_COMPLETION",
+      "originalAcceptance": "선택 commit에서 lake exe cache get 및 lake build의 종료 코드·전체 로그·환경 해시를 보존한다. 이 설계 작성 시에는 재빌드 미수행이다.",
+      "evidence": "원래 rc2 commit·manifest·공식 배포 SHA를 고정했다. 표준 CLI 환경 오류, 원래 캐시 body의 8,747개 명시 context 실행(종료 0), 원래 default 호출(종료 -15)과 NS C/D 선택 target(종료 0)의 실제 명령·전체 로그·driver/공유 라이브러리 해시를 보존했다.",
+      "artifacts": [
+        "sources.lock.json",
+        "official-validation/official-audit-summary.json",
+        "official-validation/official-command-results.json",
+        "official-validation/full-pinned-command-results.json",
+        "official-validation/environment-after.json",
+        "official-validation/driver-build.json"
+      ],
+      "blockedConditions": [
+        "원래 defaultTargets 전체 성공은 미확보이다. NS C/D를 우선하려고 Euler가 시작된 default 호출을 명시 중단했다. 선택 NS target의 결과를 Euler 포함 전체 성공으로 승격하지 않는다.",
+        "표준 배포 CLI의 애플리케이션 경로 자동 탐지는 이 환경에서 실패했다. 성공 여부는 공식 rc2 커널을 그대로 사용한 별도 명시 경로 entry 프로파일로 기록한다."
+      ],
+      "originalDetail": "공식 저장소 commit, lean-toolchain, lake-manifest를 pin한다. 현재 안내의 Lean4.34.0-rc2/Mathlib/Lake를 읽되 이후 업데이트를 자동 혼합하지 않는다."
+    },
+    {
+      "id": "N1-06",
+      "title": "정리 의존성과 Comparator 검사",
+      "status": "PARTIAL",
+      "implementationStatus": "PARTIAL_IMPLEMENTATION",
+      "mathGateStatus": "BLOCKED_INDEPENDENT_COMPARATOR_GUARD",
+      "originalAcceptance": "실제 제출 정리의 #print axioms와 Comparator 결과를 저장한다. challenge의 의도된 sorry placeholder와 proof root 의존성을 혼동하지 않는다.",
+      "evidence": "원래 rc2의 C/D 제출 target 종료 0, 실제 #check·#print axioms entry 종료 0를 저장했다. 두 exported declaration이 원래 커널에 수용되었고 공리 의존성은 개별 로그에 있다. 기존 4.34.1 component 감사 13개는 동일하게 보존했다. 보호된 원래 Comparator 호출은 systemd 사용자 bus 오류로 종료 1이다.",
+      "artifacts": [
+        "formal-import-map.json",
+        "formal-adapters.json",
+        "evidence/lean-validation.json",
+        "official-validation/submitted-source-import-map.json",
+        "official-validation/ns-pinned-declarations.log",
+        "official-validation/official-audit-summary.json",
+        "official-validation/comparator-pinned-guarded.json",
+        "official-validation/comparator-environment-independent.json"
+      ],
+      "blockedConditions": [
+        "Comparator의 필수 systemd RestrictAddressFamilies 보호 호출이 사용자 bus 부재로 실패했다. 독립 환경 관측은 PID1 supervisord, 활성 user manager/DBus 부재, read-only cgroup, UID0만의 매핑과 CapBnd0을 기록한다. Comparator 본체/외부 Nanoda 검사에 도달하지 못했고 가드를 완화하지 않았다.",
+        "C/D exported type의 rc2 커널 수용, 독립적인 challenge 동치 Comparator 성공, 원문 전체 default 성공, 실제 수치 leading profile 인증은 별개이다."
+      ],
+      "originalDetail": "NavierStokes.lean→ComparatorSolution/PaperResults, ComparatorSolution→ComparatorR3Theorem/ComparatorTheorem을 추적하고 C/D reference와 비교한다."
+    },
+    {
+      "id": "N1-07",
+      "title": "표현 등급 정의",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS",
+      "originalAcceptance": "현재 exterior와 Gaussian core 도식에서 full reconstructed solution 상태로 자동 승격되는 경로가 없다. 모든 화면·export에 동일한 등급이 표시된다.",
+      "evidence": "정리 참조/직접식/interval enclosure/finite fixture/nonlinear formal series/partial candidate/kernel component 등급을 분리했다. Full certified profile은 모든 job에서 false이다.",
+      "artifacts": [
+        "evidence-grades.json",
+        "index.mjs",
+        "evidence/numerical-validation.json"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "정리 설명, 원문 직접식, 수치 프로파일, 유한 보정 단계, 인증된 근사, 별도 기준 해를 서로 다른 상태로 둔다."
+    },
+    {
+      "id": "N1-08",
+      "title": "성공·실패 의미 고정",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS",
+      "originalAcceptance": "테스트 실패는 우선 구현·매개변수·해상도 실패로 기록한다. 그래프만으로 논문 반증 또는 새 blowup 증명을 선언할 수 없다.",
+      "evidence": "성공·실패와 math gate를 분리했다. 수치 residual은 정해진 norm/영역의 일관성이며 source 반증·새 blowup 증명으로 승격하지 않는다.",
+      "artifacts": [
+        "README.md",
+        "index.mjs contract",
+        "evidence/numerical-validation.json"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "수치 residual 통과는 유한 영역·정밀도에서의 일관성이다. 논문의 증명 검증과 수치 구현 검증을 각각 별도 증거로 둔다."
+    },
+    {
+      "id": "N2-01",
+      "title": "실제 similarity 좌표 구현 사양",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS_FINITE_FIXTURES",
+      "originalAcceptance": "q의 유일성 하한 L=1−2hη²≥1−2h>0을 검사한다. 80비트 이상 기준 계산과 왕복 오차를 비교하고 τ는 독립 변수로 유지한다.",
+      "evidence": "실제 q root bracket, signed eta, X 역변환과 L>0 하한을 구현했다. ν=.1,1,3 및 η=-.8,0,.62의100자리 기준값과 비교했다.",
+      "artifacts": [
+        "coordinates.mjs",
+        "evidence/high-precision-fixtures.json",
+        "evidence/numerical-validation.json",
+        "Analytic.coordinate_denominator_positive"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "τ=q(1−η²), z=q^(1/2−h)η, X=r²/(2q)를 사용한다. q−z²q^(2h)=τ를 bracketed solve하고 부호 있는 η를 복원한다."
+    },
+    {
+      "id": "N2-02",
+      "title": "도함수 연쇄 법칙 검사",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS_FINITE_FIXTURES",
+      "originalAcceptance": "상수·다항 프로파일 q^b X^a η^c에 대해 Cartesian 직접 미분과 변환 미분이 일치한다. 정규화한 기준 오차 목표는 10^−10이다.",
+      "evidence": "실제 Tb/Zb와 inverse-root를 거치는7점 Cartesian FD를 비교하여6개 다항 fixture에서 정규화10^-10 기준을 통과했다.",
+      "artifacts": [
+        "checks.mjs coordinateChecks",
+        "numerical-validation.json"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "(4.2)의 Tb,Zb를 사용한다. q,η,X를 상수 취급한 채 시간·축 도함수를 계산하지 않는다."
+    },
+    {
+      "id": "N2-03",
+      "title": "점성 재척도화",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS_FINITE_FIXTURES",
+      "originalAcceptance": "ν=0.1,1,3 기준에서 PDE 재척도화와 ∥uν∥²₂=ν^(5/2)∥u1∥²₂가 확인된다. ν≤0은 이 재척도화 모드의 입력 오류다.",
+      "evidence": "√ν 좌표·속도와 ν pressure 배율을 구현했다. ν=.1,1,3 momentum FD와100자리 외곽 도함수 비교 및 독립 physical-box 적분의 ν^(5/2) 에너지 배율을 통과했다.",
+      "artifacts": [
+        "heat.mjs",
+        "index.mjs viscosityEnergyCheck",
+        "numerical-validation.json"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "uν=√ν u1(x/√ν,t), pν=νp1, fν=√νf1을 적용하고 반경과 축 좌표도 √ν 배율로 바꾼다."
+    },
+    {
+      "id": "N2-04",
+      "title": "Heat factor 적분과 꼬리 상계",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS_INTERVAL_ENCLOSURE",
+      "originalAcceptance": "H(0)=1, H′(0)=−h(1+h), H″(0)=h(1+h)²(2+h)를 만족한다. 적분 오차·꼬리·반올림의 합이 명시된 목표 이하이다.",
+      "evidence": "H 및0..4차 도함수에 outward arithmetic, exp/log bounded series, Simpson4차미분 bound, 양끝 tail, Γ normalization 전파를 구현했다. Z=0,.1,1,10의100자리값이 출력구간에 포함되며 목표반경1e-8을 만족한다.",
+      "artifacts": [
+        "heat.mjs",
+        "numerics.mjs",
+        "numerical-validation.json certified_heat_*"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "H(Z)=Γ(1+h)^−1∫₀∞e^−v v^h(1+Zv)^−h dv 및 도함수 적분을 사용한다. 절단 V 이후는 incomplete-gamma 상계로 평가한다."
+    },
+    {
+      "id": "N2-05",
+      "title": "Heat ODE와 NS 잔차 독립 검사",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS_FINITE_FIXTURES",
+      "originalAcceptance": "정규화 residual 목표 10^−9를 두고 2배 정밀도·다른 미분 경로에서 수렴한다. r>0에서 p_r=K²/r를 포함한 전체 momentum residual을 검사한다.",
+      "evidence": "적분 도함수 HODE, cylindrical heat FD, pressure 포함 Cartesian momentum 및100자리 외곽 jet 비교를 실행했다. 정규화 residual1e-9를 통과했다.",
+      "artifacts": [
+        "checks.mjs",
+        "high-precision-fixtures.json",
+        "numerical-validation.json"
+      ],
+      "blockedConditions": [
+        "PDE의 전체 solution-error bound는 이 검사로 얻지 않는다. 서로 다른 FD step 및330비트 기준 비교이며 모든 해상도에서 단조 수렴한다고 주장하지 않는다."
+      ],
+      "originalDetail": "Z²H″+[1+(2+2h)Z]H′+h(1+h)H=0 및 Kt=Krr+r^−1Kr−r^−2K를 검사한다."
+    },
+    {
+      "id": "N2-06",
+      "title": "축·정규화·지지 계약",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS",
+      "originalAcceptance": "r=0 제외가 export에도 유지된다. z독립 exterior를 R³ 전체의 finite-energy 해 또는 실제 core와 자동 연결하지 않는다.",
+      "evidence": "r=0 exclusion, 임의 cInfinity normalization, z독립 외곽 단독의 R3 total energy 부재, core와 자동 접합 금지를 반환/export 계약으로 유지한다.",
+      "artifacts": [
+        "heat.mjs exteriorPoint",
+        "index.mjs exteriorJob",
+        "numerical-validation.json"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "K=c∞s^−A H(2τ/s), s=r²/2. c∞=1은 임의 표시 정규화이며 추후 N3의 실제 c∞로 교체한다."
+    },
+    {
+      "id": "N2-07",
+      "title": "Taylor–Green 기준 해",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS_FINITE_FIXTURES",
+      "originalAcceptance": "mean E=a²/4, mean enstrophy=a²/2, mean dissipation=νa², dE/dt=−νa²가 확인된다. 양의 pressure 부호를 반대로 하면 실패해야 한다.",
+      "evidence": "주기 TGV velocity·positive pressure·energy/enstrophy/dissipation를 실제 계산하고 ν=.1,1,3에서 FD와 역 pressure 부호 음성 대조군을 확인했다.",
+      "artifacts": [
+        "heat.mjs taylorGreenPoint",
+        "checks.mjs",
+        "numerical-validation.json"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "u=(a sinx cosy,−a cosx siny,0), a=e^−2νt, p=a²(cos2x+cos2y)/4를 2π 주기 영역에 둔다."
+    },
+    {
+      "id": "N2-08",
+      "title": "오차 예산과 음성 대조군",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS_FINITE_FIXTURES",
+      "originalAcceptance": "올바른 식만 통과하고 세 오류가 검출된다. 단순히 계산식과 동일한 구현을 복사한 테스트는 독립 검증으로 세지 않는다.",
+      "evidence": "Norm/분모/위치/FD step을 출력하고 잘못된 angular Laplacian 부호, 누락 pressure, 불일치 viscosity를 모두 검출했다. FFT와 direct convolution 및 aliasing 음성 대조군도 독립 경로로 수행했다.",
+      "artifacts": [
+        "checks.mjs",
+        "numerical-validation.json"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "정규화 residual 분모·norm·sampling 위치를 정의한다. 잘못된 heat −r^−2K 부호, 빠진 pressure, 잘못된 ν를 고의 입력하는 fixture를 설계한다."
+    },
+    {
+      "id": "N3-01",
+      "title": "상수의 선택 순서 실행 명세",
+      "status": "PARTIAL",
+      "implementationStatus": "PARTIAL_IMPLEMENTATION",
+      "mathGateStatus": "BLOCKED_QUANTITATIVE_SELECTION",
+      "originalAcceptance": "각 sufficiently large/small 요구를 명시적 상하계 또는 증명된 선택 조건으로 바꾼다. h=.005 같은 UI 예시를 인증된 선택으로 대체 사용하지 않는다.",
+      "evidence": "(A.6),(B.40)의 실제 상수 의존 순서·필요조건을 실행 데이터로 만들고 기본 예시의 부적합 부등식도 false로 노출했다.",
+      "artifacts": [
+        "radial.mjs parameterOrder",
+        "leading-profile-candidate.json"
+      ],
+      "blockedConditions": [
+        "sufficiently large/small의 정량 상수, B_k/Tsh/전이폭/복소영역 정규화/연속 Newton 작은근방을 아직 추출하지 못했다. 예시 h=.005/P*=2는 인증된 선택이 아니다."
+      ],
+      "originalDetail": "(A.6),(B.40)의 Md→Td=e^Md+10→P*→λ→h→matching tolerance,j0→δ*,σ*,Λ→Tsh→C,XR→transition widths→N을 고정한다."
+    },
+    {
+      "id": "N3-02",
+      "title": "외곽 radial schedule와 압력 datum",
+      "status": "PARTIAL",
+      "implementationStatus": "PARTIAL_IMPLEMENTATION",
+      "mathGateStatus": "BLOCKED_OUTER_REPAIRS",
+      "originalAcceptance": "E>0와 outer moments를 검증하고 예약된 네 patch가 겹치지 않는다. 원거리 power law를 heat exterior로 바꿀 때 A.7의 보상으로 압력 datum을 복원한다.",
+      "evidence": "실제 smooth step과 unedited radial E schedule, terminal QODE wait, 네 예약 patch 및 log-normalized far exterior를 계산했다. 압력은 유한 log integral과 별도 오차 추정/미검증 tail 조건을 기록했다.",
+      "artifacts": [
+        "radial.mjs buildOuterSchedule",
+        "leading-profile-candidate.json outer"
+      ],
+      "blockedConditions": [
+        "A.8 axial Amp(η), M/J/S calibration, A.11 angular/pressure moments, A.7 heat compensation을 완료하지 않았다. 출력 pressure datum은 완성 source datum이 아니다."
+      ],
+      "originalDetail": "(A.5) smooth step, (A.7)–(A.13) radial schedule, PropositionA.4와 LemmaA.5로 Πaxis를 정한다."
+    },
+    {
+      "id": "N3-03",
+      "title": "축 자료와 수렴 멱급수",
+      "status": "PARTIAL",
+      "implementationStatus": "PARTIAL_IMPLEMENTATION",
+      "mathGateStatus": "EXPLICITLY_UNCERTIFIED_ALLOWED",
+      "originalAcceptance": "Bρ norm의 invariant ball와 contraction 상계 <1을 인증하거나 미인증 상태로 남긴다. f0(4.1)=0.2711140554… 및 φ/φ*>0 fixture를 확인한다.",
+      "evidence": "실제 B.12-B.15 nonlinear η-jet/Cauchy-product 계수 재귀를 계산한다. f0는 별도 entire comparison이며 그 꼬리구간과4.1 값을 검증했다. 비선형 Φ는 f0와 실제로 다르고 degree4→8 잔차 감소를 관찰했다.",
+      "artifacts": [
+        "axis-series.mjs",
+        "numerical-validation.json",
+        "high-precision-fixtures.json"
+      ],
+      "blockedConditions": [
+        "Bρ invariant ball, contraction<1, 공통 complex Ω, nonlinear radius/tail은 미인증이다. 원본 acceptance가 허용한 미인증 상태를 명시했으며 수렴 멱급수 인증 완료로 세지 않는다."
+      ],
+      "originalDetail": "U*=4η+j0, φ*=exp(Λ∫ζ*)와 Y=ΛX를 사용해 AppendixB의 nonlinear fixed point를 푼다."
+    },
+    {
+      "id": "N3-04",
+      "title": "실제 core 압력·방사 속도 복원",
+      "status": "PARTIAL",
+      "implementationStatus": "PARTIAL_IMPLEMENTATION",
+      "mathGateStatus": "PARTIAL_FORMAL_IDENTITY",
+      "originalAcceptance": "axis Cartesian regularity와 div u0=0을 항등식으로 확인한다. (4.13)의 leading tangential residual만 0이며 axial viscosity 등은 별도 잔차로 남는다.",
+      "evidence": "유한 nonlinear profile의 Π primitive, V0 integral average, regular Cartesian factor를 구현했다. Solenoidal cancellation 항등식을 Lean으로 검증하고 실제 Cartesian FD 발산≈4.34e-11(normalized)을 확인했다.",
+      "artifacts": [
+        "axis-series.mjs evaluateAxis",
+        "checks.mjs coreReconstructionChecks",
+        "Analytic.solenoidal_reconstruction_cancellation"
+      ],
+      "blockedConditions": [
+        "무한 exact profile의 leading residual=0은 미인증이며 finite residual은 남는다. 실제 full NS residual은 axial viscosity 등을 포함해0일 필요가 없고, 이 fixture에서는≈.995이다."
+      ],
+      "originalDetail": "E=√(2X)φ/C, ΠX=E²/(2X), V0=(X/L)[2ηU−2DηAX(U)−d∂ηAX(U)]를 사용한다."
+    },
+    {
+      "id": "N3-05",
+      "title": "Inner continuation과 다섯 모멘트 접합",
+      "status": "BLOCKED",
+      "implementationStatus": "PARTIAL_IMPLEMENTATION",
+      "mathGateStatus": "BLOCKED_CONTROLLED_CONTINUATION",
+      "originalAcceptance": "5×5 moment Jacobian 가역성과 interval Newton/implicit-function 조건을 확인한다. 값만 이어 붙이고 누적 모멘트를 생략하면 실패다.",
+      "evidence": "다섯 disjoint C∞ bump와 전체 quadratic increments,5×5 Jacobian·Newton·3201점 독립 재적분을 실행한다. 작은 planted fixture는 수치 통과했다. 실제 임시 continuation discrepancy는 수리 실패로 유지했다.",
+      "artifacts": [
+        "radial.mjs solveFiveMomentRepair",
+        "numerical-validation.json",
+        "leading-profile-candidate.json"
+      ],
+      "blockedConditions": [
+        "B.5 controlled continuation 대신 명시적 diagnostic continuation을 사용했다. continuous quadrature enclosure, interval Newton inclusion, uniform η derivatives가 없다. 실제 접합의 moment 조건은 충족되지 않았다."
+      ],
+      "originalDetail": "B.5–B.10에 따라 inner profile을 연결하고 M,I,J,S,Cp를 다섯 bump로 맞춘다."
+    },
+    {
+      "id": "N3-06",
+      "title": "Cone의 radial modulation",
+      "status": "BLOCKED",
+      "implementationStatus": "PARTIAL_IMPLEMENTATION",
+      "mathGateStatus": "BLOCKED_FULL_PROFILE_CONE",
+      "originalAcceptance": "값 변화 O(N^−1), radial derivative의 order-one 변화를 별도 측정한다. 유한 N을 고정한 뒤 (4.26)의 strict margin κ>0을 구간 전체에서 인증한다.",
+      "evidence": "C.12 연산과 O(1/N) 값 변화·order-one radial derivative를 실제 측정한다. 별도 작은 parameter box 전체에서 κ>0를 interval 계산으로 인증하고 rational cone strip을 Lean으로 검증했다.",
+      "artifacts": [
+        "radial.mjs coneModulationFixture/certifiedConeBox",
+        "Analytic.rational_cone_strip",
+        "numerical-validation.json"
+      ],
+      "blockedConditions": [
+        "사용한 periodic primitive는 Lemma C.1의 admissible loop가 아니다. 실제 profile 전 구간 κ, 첫 patch moment restoration, 모든 η에서의 source cone realization은 인증되지 않았다."
+      ],
+      "originalDetail": "AppendixC의 N logX 위상을 가진 (C.12)를 사용하고 첫 예약 patch에서 모든 모멘트를 복구한다."
+    },
+    {
+      "id": "N3-07",
+      "title": "지지·끝점·예약 patch 검사",
+      "status": "PARTIAL",
+      "implementationStatus": "PARTIAL_IMPLEMENTATION",
+      "mathGateStatus": "BLOCKED_ACTUAL_STRESS_SUPPORT",
+      "originalAcceptance": "n=T0/|T0|의 edge limit, inner/outer flatness, Ipos와 Imean의 unmodified power law를 검사한다. edge에서 0/0을 직접 계산하지 않는다.",
+      "evidence": "Source flat-weight endpoint 연산과 네 reserved patch를 구현하고 잘못된 support·zero stress normalization을 거부한다. 끝점에서0/0을 계산하지 않는다.",
+      "artifacts": [
+        "radial.mjs",
+        "leading-profile-candidate.json",
+        "numerical-validation.json"
+      ],
+      "blockedConditions": [
+        "실제 T0의 annulus support/nonzero interior, n edge limit 및 edge factorization이 미인증이다. 이 상태를 source stress support의 완료로 표시하지 않는다."
+      ],
+      "originalDetail": "T0=0 on X≤Xa 또는 X≥Xb, 내부 T0≠0, ζ=exp(−t1²/log²(X/Xa)−4/log²(Xb/X))를 확인한다."
+    },
+    {
+      "id": "N3-08",
+      "title": "Leading-profile 데이터 계약",
+      "status": "PASS",
+      "implementationStatus": "IMPLEMENTED",
+      "mathGateStatus": "PASS_DATA_CONTRACT_ONLY",
+      "originalAcceptance": "Theorem4.6(i)–(vi)의 모든 항목에 수치/해석 증거 또는 미해결 이유가 연결된다. 하나라도 없으면 full certified profile 등급을 차단한다.",
+      "evidence": "같은 parameterHash/source pin으로 profile·derivative·moment·점·outer trace를 묶고 Theorem4.6(i)-(vi) 전부에 증거/차단사유를 연결한다. 없는 cone/support/global error certificate는 null이며 full certification을 차단한다.",
+      "artifacts": [
+        "profile.mjs profileDataContract/theoremClauses",
+        "leading-profile-candidate.json",
+        "index.mjs"
+      ],
+      "blockedConditions": [],
+      "originalDetail": "각 프로파일·도함수·모멘트·cone margin·지지·오차를 같은 판본/상수 해시로 묶고 원문식과 시각적으로 대조한다."
+    }
+  ],
+  "crossCutting": [
+    {
+      "id": "I1-03",
+      "status": "PASS_FOR_NS_SCOPE",
+      "evidence": "Interval denominator, exp/log, derivative jets, quadrature+tail+rounding propagation and finite series remainder; unsupported bits/error targets/overflow return PRECISION_REQUIRED. Candidate nonlinear jets remain explicitly uncertified.",
+      "artifacts": [
+        "numerics.mjs",
+        "heat.mjs",
+        "axis-series.mjs",
+        "numerical-validation.json"
+      ]
+    },
+    {
+      "id": "I1-07",
+      "status": "PASS_FOR_NS_SCOPE",
+      "evidence": "Actual mixed-radix3DFFT+3/2 padding versus direct finite mode convolution; physical FD versus analytic source jets; independent mpmath original integral; finite rational Lean fixture versus JS series; wrong aliasing/pressure/quadratic negatives.",
+      "artifacts": [
+        "checks.mjs",
+        "fixtures.generated.mjs",
+        "formal-adapters.json",
+        "numerical-validation.json"
+      ]
+    },
+    {
+      "id": "I3-03",
+      "status": "PASS_FOR_CONTRACT_SCOPE",
+      "evidence": "Exact norms/domains/quantifiers for Bρ completeness and contraction, uniform derivative-limit exchange, dominated heat differentiation, radius-zero Taylor, Borel cutoff seminorms, semigroup, residual stability and spectral continuum limits are recorded. Hypotheses for the full source solution are not asserted from arrays.",
+      "artifacts": [
+        "analytic-contracts.json",
+        "analytic-adapters.md",
+        "lean/MathScope/Navier/Analytic.lean"
+      ]
+    },
+    {
+      "id": "I3-04",
+      "status": "PASS_FOR_ADAPTER_SCOPE",
+      "evidence": "원문 Theorem1.1은 정확한 가정의 THEOREM_REFERENCE로 유지한다. 기존 unchanged Flatness/ProblemStatement import와 13개 로컬4.34.1 target 감사는 보존했다. 추가 원래 rc2 C/D exported type의 실제 kernel/axioms 결과 및 차단된 Comparator를 별도 scope로 연결했다. 두 scope는 사용자 입력의 해석 가정이나 전체 수치 프로파일을 자동 인증하지 않는다.",
+      "artifacts": [
+        "formal-adapters.json",
+        "formal-import-map.json",
+        "evidence/lean-validation.json",
+        "official-validation/official-audit-summary.json"
+      ]
+    }
+  ],
+  "remainingOutOfM1": [
+    "N4 all-order background and Borel reconstruction",
+    "N5 pulse/phase/covariance realization",
+    "N6 finite correction and all-order residual summation",
+    "N7 global compact force extension and comparison",
+    "N8 near-time computation and final reconstruction audit"
+  ],
+  "finiteValidation": {
+    "passed": 90,
+    "total": 90
+  },
+  "formalValidation": {
+    "targets": 13,
+    "status": "KERNEL_CHECKED_COMPONENTS",
+    "mainSourceTheoremChecked": false,
+    "additionalPinnedRc2DeclarationAudit": {
+      "targets": 2,
+      "passed": true,
+      "toolchain": "leanprover/lean4:v4.34.0-rc2",
+      "independentComparatorPassed": false,
+      "wholeDefaultBuildPassed": false,
+      "auditFile": "official-validation/official-audit-summary.json"
+    },
+    "officialValidation": {
+      "schemaVersion": 1,
+      "sourceCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+      "checkedAt": "2026-10-09T16:06:24.537829+00:00",
+      "scope": "The two exact C/D exported Lean declaration types at the original pinned rc2 commit. Separate from the 14:39 Lean4.34.1 component receipt, full default build, full paper-to-formal equivalence, and numerical profile certification.",
+      "toolchain": "leanprover/lean4:v4.34.0-rc2",
+      "kernelCommit": "6a10ac8c22beadecabdbb0919c2b50214762f91d",
+      "executionProfile": {
+        "kind": "PINNED_OFFICIAL_KERNEL_EXPLICIT_PATH_ENTRY",
+        "vanillaCLIOutcome": "Environment path detection failed; exact vanilla commands and exits are separately logged.",
+        "entrySourceUnchangedFromPreviouslyApprovedDriver": true,
+        "driverSHA256": "a187c5263205d221e47724bbaf729cd377f40683b2670a543e3b7e6495108682",
+        "officialSharedLibrarySHA256": "cddf08bd2b9239f8ce2e2aba8630c47e37b6b341b47705d9d0ba910ad6db13b5",
+        "taskManagerWorkers": 1,
+        "logicalOptionsReplaced": false,
+        "proofSourcesChanged": false,
+        "manifestChanged": false,
+        "originalReleaseBytesChanged": false
+      },
+      "nsSubmissionBuild": {
+        "target": "NavierStokes.ComparatorSolution",
+        "exitCode": 0,
+        "passed": true,
+        "staticLocalSourceDependencyCount": 609,
+        "reportedLakeJobs": 9371,
+        "log": {
+          "file": "official-validation/lake-build-ns-priority-pinned.log",
+          "sha256": "f5ca33d2c60d99d59dbc9752bb614bf75964288e2533647584a9e264138192d5"
+        },
+        "commandReceipt": {
+          "file": "official-validation/full-pinned-command-results.json",
+          "sha256": "bf992d41b39bdd257ecb9b46e5caf1b6cff634466b6a05052f4d27333f346274",
+          "stage": "lake-build-ns-priority-pinned"
+        }
+      },
+      "submittedDeclarations": {
+        "names": [
+          "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+          "NavierStokes.Comparator.navier_stokes_breakdown_periodic"
+        ],
+        "entrySourceSHA256": "b0cf547fcf21a5760c90e326489a2cacdc890c71bfc4d51ecceccb826893f43d",
+        "exitCode": 0,
+        "kernelCommandAccepted": true,
+        "passed": true,
+        "axiomClosureRecordedForBothTargets": true,
+        "permittedAxioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unpermittedAxioms": [],
+        "axioms": [
+          {
+            "declaration": "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+            "report": "[propext, Classical.choice, Quot.sound]",
+            "axioms": [
+              "propext",
+              "Classical.choice",
+              "Quot.sound"
+            ]
+          },
+          {
+            "declaration": "NavierStokes.Comparator.navier_stokes_breakdown_periodic",
+            "report": "[propext, Classical.choice, Quot.sound]",
+            "axioms": [
+              "propext",
+              "Classical.choice",
+              "Quot.sound"
+            ]
+          }
+        ],
+        "originalSourceFile": "NavierStokes/ComparatorSolution.lean",
+        "sourceURL": "https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ComparatorSolution.lean",
+        "sourceSHA256": "52950d5d618a8d34c9bfbdb16641c81c276e97b6d7fd2a76c08577353f0b0227",
+        "oleanSHA256": "5025fa4e63160cea4fff8dd8f8350acabd3478cdc08563f383484fd01620de76",
+        "oleanSizeBytes": 147272,
+        "exactNormalTypes": "NavierStokes.Comparator.navier_stokes_breakdown_R3 : ∀ nu > 0,\n  ∃ u₀ f,\n    NavierStokes.Comparator.InitialVelocityConditionDecay u₀ ∧\n      NavierStokes.Comparator.ForceConditionDecay f ∧\n        ¬∃ v p, NavierStokes.Comparator.NavierStokesExistenceAndSmoothnessRn nu u₀ f v p\nNavierStokes.Comparator.navier_stokes_breakdown_periodic : ∀ nu > 0,\n  ∃ u₀ f,\n    NavierStokes.Comparator.InitialVelocityConditionPeriodic u₀ ∧\n      NavierStokes.Comparator.ForceConditionPeriodic f ∧\n        ¬∃ v p, NavierStokes.Comparator.NavierStokesExistenceAndSmoothnessPeriodic nu u₀ f v p",
+        "sourceCopy": {
+          "file": "official-validation/OfficialComparatorSolution.lean",
+          "sha256": "52950d5d618a8d34c9bfbdb16641c81c276e97b6d7fd2a76c08577353f0b0227"
+        },
+        "entrySource": {
+          "file": "official-validation/PinnedDeclarations.lean",
+          "sha256": "b0cf547fcf21a5760c90e326489a2cacdc890c71bfc4d51ecceccb826893f43d"
+        },
+        "log": {
+          "file": "official-validation/ns-pinned-declarations.log",
+          "sha256": "4fc376bfe81caf561a1fd501d13f4ea2d9e2d6d41ee9fa687b82f2649ebb3a08"
+        },
+        "commandReceipt": {
+          "file": "official-validation/full-pinned-command-results.json",
+          "sha256": "bf992d41b39bdd257ecb9b46e5caf1b6cff634466b6a05052f4d27333f346274",
+          "stage": "ns-pinned-declarations"
+        }
+      },
+      "comparator": {
+        "status": "BLOCKED",
+        "passed": false,
+        "exitCode": 1,
+        "reachedComparatorProcess": false,
+        "blocker": "Required systemd user guard cannot start: no user bus. Session UID 0 also fails the documented unprivileged-user guarantee. Comparator was not reached. No sandbox guard omitted or replaced.",
+        "configSHA256": "7610ecead7b390d80ff7f4229a3ff8f18d630e046f7ad1de4f92c7e8e76845b8",
+        "guardBypassUsed": false,
+        "alternateWeakerPathCountedAsSuccess": false,
+        "commandReceipt": {
+          "file": "official-validation/comparator-pinned-guarded.json",
+          "sha256": "cb7dda2f8777f5419a03777a7ff4a4dd4b504c8c2292f699ac93287e6578e276"
+        },
+        "log": {
+          "file": "official-validation/comparator-pinned-guarded.log",
+          "sha256": "746707a49085d66703eb45f2baea0df38a88bab7346195ece161e8e14ef2a3d1"
+        },
+        "independentEnvironment": {
+          "file": "official-validation/comparator-environment-independent.json",
+          "sha256": "f7b8b6f2baa8061c0b08a772fa6ce47c85bb098cf27ea4509f801b4f3b18230a"
+        }
+      },
+      "wholeDefaultBuildPassed": false,
+      "remainingBuildScope": {
+        "submittedLocalDependencyClosure": {
+          "sourceModules": 609,
+          "oleanArtifactsPresent": 609,
+          "oleanArtifactsMissing": 0
+        },
+        "navierStokesRootSourceClosure": {
+          "sourceModules": 753,
+          "oleanArtifactsPresent": 692,
+          "oleanArtifactsMissing": 61
+        },
+        "navierStokesWholeLibrary": {
+          "sourceModules": 817,
+          "oleanArtifactsPresent": 702,
+          "oleanArtifactsMissing": 115
+        },
+        "eulerWholeLibrary": {
+          "sourceModules": 1840,
+          "oleanArtifactsPresent": 23,
+          "oleanArtifactsMissing": 1817
+        },
+        "comparatorChallenges": {
+          "sourceModules": 2,
+          "oleanArtifactsPresent": 0,
+          "oleanArtifactsMissing": 2
+        },
+        "grade": "POST_BUILD_ARTIFACT_INVENTORY_ONLY",
+        "receipt": {
+          "file": "official-validation/remaining-build-scope.json",
+          "sha256": "4824f6c994416743f8682e22f6d941713cf0965b20f33183d29ce9529eaf4e20"
+        }
+      },
+      "pinnedEntryKernelControls": {
+        "file": "official-validation/pinned-entry-kernel-controls.json",
+        "sha256": "83360471e078eaa0c76e2dc06f223a4ac0b62e937b8c309ce7611500ee884a10"
+      },
+      "originalTrackedSourcesUnchanged": true,
+      "completeNumericalPaperProfileCertified": false,
+      "browserKernelRerun": false,
+      "browserSourceValidationPromotesKernelPass": false,
+      "historicalComponentAuditAutomaticallyPromoted": false,
+      "numericFieldInstantiatesExistentialWitness": false,
+      "auditFile": "official-validation/official-audit-summary.json",
+      "auditSHA256": "48b6adab5d50078b974baba02b01db5e771dfe8c18b99de4040823f3bed9e8ff",
+      "historicalComponentAudit": {
+        "file": "evidence/lean-validation.json",
+        "sha256": "90f162823a56035559a584476854a27b2ed135f373183c43593ed47439d8ffe1",
+        "checkedAt": "2026-10-09T14:39:01.694607+00:00",
+        "toolchain": "Lean/mathlib4.34.1",
+        "targetCount": 13,
+        "unchanged": true
+      }
+    },
+    "mainSourceTheoremCheckedScope": "The legacy boolean concerns the full paper statement as independently matched to its formalization. Exact exported C/D Lean type acceptance is recorded separately in officialValidation; Comparator remains incomplete."
+  },
+  "reportingRule": "PASS denotes the stated component or explicit data contract only. N3-01/02/04/05/06/07 mathematical gates remain open; no full certified profile exists."
+}

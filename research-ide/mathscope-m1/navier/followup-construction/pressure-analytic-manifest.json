@@ -1,0 +1,110 @@
+{
+  "schema": "MathScope.Navier.SourcePressureAnalyticManifest/1",
+  "status": "FROZEN_COMPONENT_VERIFIED",
+  "target": "Actual A.21 unedited ideal scheduled pressure; exact rational analytic bounds",
+  "sourceSha256": "3481258e834a6220476eac870568becf4cb9aa88e16a0c67f7057ad54634e59e",
+  "fixtureSha256": "a9fdad0a470b6b933ac4fff2b889a5b4227ddce90fa351d83c161f4529c439de",
+  "files": [
+    {
+      "path": "pressure-analytic.mjs",
+      "sha256": "3481258e834a6220476eac870568becf4cb9aa88e16a0c67f7057ad54634e59e",
+      "bytes": 25629
+    },
+    {
+      "path": "pressure-analytic.verify.mjs",
+      "sha256": "14396b5114124ba025211b97040b3405ee3c1fc33e5969835cf2acdeabf461f7",
+      "bytes": 12448
+    },
+    {
+      "path": "pressure-analytic-reference.py",
+      "sha256": "10574473ff1cae45d59486627b3a052b8d53b3c8c9bbf9e4d0a316b0a4a26b79",
+      "bytes": 13502
+    },
+    {
+      "path": "pressure-analytic-fixture.json",
+      "sha256": "a9fdad0a470b6b933ac4fff2b889a5b4227ddce90fa351d83c161f4529c439de",
+      "bytes": 132559
+    },
+    {
+      "path": "pressure-analytic-cases.json",
+      "sha256": "fd41abc01ab846519352cc75d25cb33010608f30abbc840ef8378fe6c8025209",
+      "bytes": 674100
+    },
+    {
+      "path": "pressure-analytic-validation.json",
+      "sha256": "5ca219647adb58e2734846fee8fd3be3192f7aeb7938a2a67ee9faa352a15235",
+      "bytes": 6517
+    },
+    {
+      "path": "pressure-analytic-independent.json",
+      "sha256": "c2580418e7db91ef79cfc69facb8a961290709e49710f4bf72dd33903b952759",
+      "bytes": 32445
+    },
+    {
+      "path": "pressure-analytic-node.log",
+      "sha256": "028246a30f2247d936e8f4df21907b9aacc2b65fa54e08da5eb1a59156ae7720",
+      "bytes": 2625
+    },
+    {
+      "path": "pressure-analytic-reference.log",
+      "sha256": "c59ea53784067f27ecd97b7f4de2dfd7ae2162d30d5730724dabf106bb3bc95d",
+      "bytes": 15949
+    },
+    {
+      "path": "README_PRESSURE_ANALYTIC_KO.md",
+      "sha256": "629f6973242daf6b82dad4a4a3fe58ceec83198ca5788d73324226c5dc86b04d",
+      "bytes": 17147
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "outer.mjs",
+      "sha256": "4c0213f892a32611c79655fbe065cebbaca0fc9acdd0cf2dd057d2506a10c087",
+      "scope": "Frozen defaults only; numerical outer solver is not run by the producer"
+    },
+    {
+      "path": "../numerics.mjs",
+      "sha256": "a406401c5a0e024e94d58cce0d7e6bdaa6b35488f22fd0ead4bf87222416c62c",
+      "scope": "ComputeError and bounded runtime only"
+    }
+  ],
+  "validation": {
+    "node": {
+      "passed": 70,
+      "failed": 0,
+      "total": 70
+    },
+    "independentFractionAndMp120": {
+      "passed": 306,
+      "failed": 0,
+      "total": 306
+    },
+    "negativeControls": 5,
+    "newLeanTargets": 0,
+    "generatedAnalyticPremiseBundleLeanChecked": false,
+    "exactRepairedFieldPressureIdentity": false,
+    "globalNavierStokesWitness": false,
+    "samplingSubstitutesForUniformProof": false
+  },
+  "sourcePins": {
+    "repositoryCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+    "paperSha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "paperPages": [
+      129,
+      130,
+      133,
+      134,
+      145
+    ]
+  },
+  "reproducibility": {
+    "commands": [
+      "node mathscope-m1/navier/followup-construction/pressure-analytic.verify.mjs",
+      "python mathscope-m1/navier/followup-construction/pressure-analytic-reference.py"
+    ],
+    "node": "v24.19.0",
+    "mpmath": "mpmath 1.3.0, 120 decimal digits",
+    "noRuntimeInMathematicalResult": true
+  },
+  "ownership": "New pressure-analytic files only; frozen outer and axis modules have not been modified by this component task."
+}

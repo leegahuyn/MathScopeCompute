@@ -1,0 +1,14 @@
+NavierStokes.ProblemStatement.navierStokesResidual (u : NavierStokes.ProblemStatement.VelocityField)
+  (p : NavierStokes.ProblemStatement.PressureField) (t : ℝ) (x : NavierStokes.ProblemStatement.Space) :
+  NavierStokes.ProblemStatement.Space
+NavierStokes.ProblemStatement.CandidateProperties (u : NavierStokes.ProblemStatement.VelocityField)
+  (p : NavierStokes.ProblemStatement.PressureField) (f : NavierStokes.ProblemStatement.VelocityField) : Prop
+MathScope.Navier.SourceAdapter.imported_flatness_fixed_loss.{u_1} {alpha : Type u_1} {l : Filter alpha}
+  {q f : alpha → ℝ} (hf : NavierStokes.Flatness.PowerFlat l q f) (hq : ∀ᶠ (x : alpha) in l, q x ≠ 0) (loss : ℕ) :
+  NavierStokes.Flatness.PowerFlat l q fun x => f x / q x ^ loss
+'MathScope.Navier.SourceAdapter.imported_flatness_fixed_loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.Navier.SourceAdapter.imported_zero_velocity_negative_control :
+  ¬NavierStokes.ProblemStatement.SpeedUnboundedAtOne fun x => 0
+'MathScope.Navier.SourceAdapter.imported_zero_velocity_negative_control' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

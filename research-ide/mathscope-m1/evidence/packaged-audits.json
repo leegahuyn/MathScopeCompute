@@ -1,0 +1,378 @@
+{
+  "audits": [
+    {
+      "id": "arithmetic-m1-local",
+      "targets": 31,
+      "positiveBuilds": 3,
+      "negativeControls": 4,
+      "sourceFiles": 3,
+      "sourceAuditSha256": "e45ffca3493af77534582fa7052ba454ceddd3797145d8ed368760445ca9bfaa"
+    },
+    {
+      "id": "gauge-m1-local",
+      "targets": 27,
+      "positiveBuilds": 6,
+      "negativeControls": 3,
+      "sourceFiles": 6,
+      "sourceAuditSha256": "06badb9181a695e54e047db3dac18085f4acdfa23cc62c8f2b9638d74dbafa9d"
+    },
+    {
+      "id": "ns-m1-local",
+      "targets": 13,
+      "positiveBuilds": 5,
+      "negativeControls": 2,
+      "sourceFiles": 5,
+      "sourceAuditSha256": "90f162823a56035559a584476854a27b2ed135f373183c43593ed47439d8ffe1"
+    },
+    {
+      "id": "ns-axis-original-rc2",
+      "targets": 20,
+      "positiveBuilds": 1,
+      "negativeControls": 1,
+      "sourceFiles": 10,
+      "sourceAuditSha256": "07e90c8e17c09e62fac5bc118b67d6975ca661f2a94415a0c2e76285e18e7648"
+    }
+  ],
+  "references": [
+    {
+      "schema": "MathScope.M1.TheoremReferenceAdapter/1",
+      "id": "BSD-GZK-ANALYTIC-RANK-LE1",
+      "title": "Gross–Zagier–Kolyvagin: E/Q의 해석적 랭크 0·1에서 랭크 일치와 Tate–Shafarevich 군의 유한성",
+      "domains": [
+        "arithmetic"
+      ],
+      "role": "THEOREM_REFERENCE",
+      "status": "THEOREM_REFERENCE",
+      "accessed": "2026-10-09",
+      "url": "https://archive.mpim-bonn.mpg.de/325/1/preprint_1990_69.pdf",
+      "locator": "V. A. Kolyvagin, MPI/90-69 (1990), §1, Theorem 1, printed p.4 / PDF p.6; modularity hypothesis printed p.3 / PDF p.5. Extension to all E/Q: Wiles, printed p.4, §2 unnumbered theorem.",
+      "bibliography": [
+        {
+          "id": "BSD-KOLYVAGIN-1990",
+          "author": "Victor A. Kolyvagin",
+          "title": "On the Mordell-Weil group and the Shafarevich-Tate group of modular elliptic curves",
+          "date": "1990",
+          "datePrecision": "YEAR",
+          "series": "MPI/90-69",
+          "url": "https://archive.mpim-bonn.mpg.de/325/1/preprint_1990_69.pdf",
+          "locator": "§1, modularity on printed p.3; Theorem 1 on printed p.4 (PDF pages5–6); Theorems2–5 describe the deduction.",
+          "supports": [
+            "For modular E/Q, analytic rank at most1 implies equality of analytic and algebraic rank and finiteness of Sha(E/Q)."
+          ],
+          "retrievedAt": "2026-10-09"
+        },
+        {
+          "id": "BSD-WILES-CLAY",
+          "author": "Andrew Wiles",
+          "title": "The Birch and Swinnerton-Dyer Conjecture",
+          "date": null,
+          "datePrecision": "NOT_SPECIFIED_IN_RETRIEVED_PDF",
+          "url": "https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf",
+          "locator": "Printed p.4, §2 Recent History, unnumbered theorem; p.2 Remark1 separates the refined leading-coefficient formula; p.4 reference[1] records the 2001 modularity theorem.",
+          "supports": [
+            "All elliptic curves over Q are modular; rank equality therefore holds for analytic rank0 or1.",
+            "The refined leading-coefficient formula is a separate statement."
+          ],
+          "retrievedAt": "2026-10-09"
+        }
+      ],
+      "mathematicalContract": {
+        "baseField": "Q",
+        "objects": "E is a nonsingular smooth projective genus-one curve over Q with a specified Q-rational identity; equivalently an elliptic curve over Q.",
+        "lFunction": "The Hasse–Weil L(E,s), including the correct bad-prime factors, with its known modular analytic continuation; r_an(E)=ord_{s=1} L(E,s). This is not a finite truncated Euler product.",
+        "algebraicRank": "rank_Z(E(Q)/E(Q)_tors)",
+        "sha": "Sha(E/Q)=ker(H^1(Q,E) -> product_v H^1(Q_v,E)), over all places v.",
+        "quantifiers": "For every elliptic curve E/Q, if r_an(E) belongs to {0,1}, then rank_Z E(Q)=r_an(E) and Sha(E/Q) is finite.",
+        "modularityDependency": {
+          "statement": "Every elliptic curve over Q is modular.",
+          "status": "THEOREM_REFERENCE",
+          "sourceRef": "BSD-WILES-CLAY",
+          "locator": "printed p.4 §2 and reference[1]",
+          "kernelVerified": false
+        },
+        "cases": [
+          {
+            "id": "BSD-GZK-RANK0",
+            "hypotheses": [
+              "E/Q is an elliptic curve.",
+              "L(E,1) != 0, with the analytically continued global L-function."
+            ],
+            "conclusions": [
+              "rank_Z E(Q)=0",
+              "E(Q) is finite",
+              "Sha(E/Q) is finite"
+            ],
+            "caseMeaning": "해석적 랭크0 → 대수적 랭크0 및 Sha유한"
+          },
+          {
+            "id": "BSD-GZK-RANK1",
+            "hypotheses": [
+              "E/Q is an elliptic curve.",
+              "L(E,1)=0 and L′(E,1) != 0, as exact statements about the analytically continued global L-function."
+            ],
+            "conclusions": [
+              "rank_Z E(Q)=1",
+              "Sha(E/Q) is finite"
+            ],
+            "caseMeaning": "해석적 랭크1 → 대수적 랭크1 및 Sha유한"
+          }
+        ],
+        "notConcluded": [
+          "This adapter supplies no formula for the leading coefficient L^(r)(E,1)/r!, the exact order of Sha, regulator, periods or Tamagawa product.",
+          "No rank>=2 conclusion or arbitrary-number-field generalization is obtained.",
+          "A finite list of local factors, a sampled graph, or |L(E,1)| below a numerical tolerance does not establish either exact analytic-rank hypothesis."
+        ],
+        "fullBSDLeadingCoefficientClaim": false,
+        "shaOrderComputed": false,
+        "analyticRankComputed": false
+      },
+      "applicationPolicy": {
+        "automaticApplicationToCurrentFiniteJobs": false,
+        "hypothesisEvidenceRequired": [
+          "Exact curve/base-field identity",
+          "An independently justified global analytic-rank0 or1 statement, with source/proof scope retained"
+        ],
+        "onMissingHypotheses": "THEOREM_REFERENCE_UNINSTANTIATED",
+        "onFiniteEulerDataOnly": "THEOREM_REFERENCE_UNINSTANTIATED",
+        "onUserDeclaredAnalyticRank": "CONDITIONAL_REFERENCE_WITH_USER_ASSUMPTION",
+        "onLabelOrNumericThresholdOnly": "REJECT_HYPOTHESIS_PROMOTION",
+        "exactCaseMatchingDoesNotProveHypotheses": true
+      },
+      "leanImport": null,
+      "exportedLeanTheorem": null,
+      "kernelReceipt": null,
+      "kernelVerified": false,
+      "formalPass": false,
+      "browserKernelRerun": false,
+      "integrationScope": "Concrete source-and-hypothesis record for I3-04. Root registers the record in the common reference ledger; this JSON is not an executable L-function or a new Lean theorem.",
+      "reviewedFromPrimarySources": true,
+      "primaryRetrievals": [
+        {
+          "sourceRef": "BSD-KOLYVAGIN-1990",
+          "webRef": "turn81view0",
+          "pageChecked": "printed4/PDF6"
+        },
+        {
+          "sourceRef": "BSD-WILES-CLAY",
+          "webRef": "turn79view0",
+          "pageChecked": "printed4/PDF4"
+        }
+      ],
+      "scope": "E/Q의 해석적 랭크 0·1을 정확히 가정하면 대수적 랭크 일치와 Sha 유한성. 전체 BSD 선도계수 공식·랭크 계산·수치 입력의 자동 인증은 포함하지 않습니다."
+    },
+    {
+      "id": "S01",
+      "title": "Bhatt–Scholze, Prisms and Prismatic Cohomology",
+      "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+      "locator": "Definition 1.1; Example 1.3(1); Definition 1.4; Theorem 1.8(1), printed pp.2–4; Theorem 5.2",
+      "scope": "Bounded crystalline prism and Frobenius-compatible crystalline comparison",
+      "domains": [
+        "arithmetic"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "S02",
+      "title": "Bhatt–de Jong, Crystalline cohomology and de Rham cohomology",
+      "url": "https://arxiv.org/html/1110.5001v1",
+      "locator": "Theorem 3.6 and Corollary 3.8",
+      "scope": "De Rham hypercohomology of a proper smooth Z_p lift computes crystalline cohomology of its special fiber.",
+      "domains": [
+        "arithmetic"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "S07",
+      "title": "Deligne, La conjecture de Weil I",
+      "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf",
+      "locator": "(1.5.1)–(1.5.4), printed pp.275–276",
+      "scope": "Finite-field trace and alternating determinant convention; not a classical RH bridge.",
+      "domains": [
+        "arithmetic"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "S08",
+      "title": "Wiles, The Birch and Swinnerton-Dyer Conjecture",
+      "url": "https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf",
+      "locator": "pp.1–2, good elliptic Euler factors and the BSD statement",
+      "scope": "Local H1 L-factor and distinction from the scheme zeta factor.",
+      "domains": [
+        "arithmetic"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "S10",
+      "title": "NIST DLMF §25.16 Mathematical Applications",
+      "url": "https://dlmf.nist.gov/25.16",
+      "locator": "§25.16(i), equations 25.16.1–25.16.4",
+      "scope": "Chebyshev psi, prime counting, PNT/RH scope.",
+      "domains": [
+        "arithmetic"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "MATHLIB-LUCAS",
+      "title": "mathlib Lucas primality theorem",
+      "url": "https://github.com/leanprover-community/mathlib4/blob/d13f23b723b8a846827a245b89c10fc7d3f11612/Mathlib/NumberTheory/LucasPrimality.lean",
+      "locator": "lucas_primality, reverse_lucas_primality",
+      "scope": "The library theorem is imported by the arithmetic Lean adapter. The JavaScript Pratt certificate checker is separately tested.",
+      "domains": [
+        "arithmetic"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "S14",
+      "title": "SageMath, Isomorphisms between Weierstrass models",
+      "url": "https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/weierstrass_morphism.html",
+      "locator": "WeierstrassIsomorphism: explicit (u,r,s,t) coordinate and coefficient transformation formulas",
+      "scope": "A displayed singular nonminimal model is distinguished from the reduction of the curve; x=u^2*x_new, y=u^3*y_new rescales short coefficients by u^4 and u^6.",
+      "domains": [
+        "arithmetic"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R01",
+      "title": "Quantum Yang–Mills Theory / Yang–Mills & the Mass Gap",
+      "url": "https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf",
+      "locator": "인쇄 p. 6 §4: 존재·스펙트럼 간극 정의; p. 7 §5: 부피에 균일한 간극과 무한 부피 문제",
+      "scope": "compact simple G, nontrivial R⁴ quantum theory, QFT axioms, positive spectral gap의 동시 요구. 현재 공식 상태 Unsolved.",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R02",
+      "title": "Math 210C. Compact Lie Groups",
+      "url": "https://math.stanford.edu/~conrad/210CPage/handouts/lie_groups_notes.pdf",
+      "locator": "§§17–18 pp.75–83; §26 p.114 이하; Appendices K,V,Y",
+      "scope": "rank-one subgroup, character/cocharacter lattice, normal subgroup, global group center/fundamental group를 분리하는 구조 설계",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R05",
+      "title": "Matter representations from geometry: under the spell of Dynkin",
+      "url": "https://arxiv.org/pdf/2012.13401",
+      "locator": "§2.5 pp.15–16(현재 PDF 페이지 16), Dynkin index of an embedding",
+      "scope": "기본 불변형의 정규화에 대한 Lie algebra embedding index. 본 설계의 B_G(ιX,ιY)=IιB_SU2(X,Y) convention을 독립 명시.",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R06",
+      "title": "Lectures on instantons",
+      "url": "https://arxiv.org/pdf/0802.1862",
+      "locator": "§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding",
+      "scope": "anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R07",
+      "title": "Gauge Theory — Chapter 4: Lattice Gauge Theory",
+      "url": "https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf",
+      "locator": "§4.1; 인쇄 p.202 이하; link gauge transform eq.(4.8)",
+      "scope": "4D Euclidean lattice, group links, Wilson loops와 작용 및 격자 cutoff의 의미",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R08",
+      "title": "Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories",
+      "url": "https://link.springer.com/article/10.1007/BF01614090",
+      "locator": "출판사 초록과 서지사항; 실제 선택한 모델의 가정 대응은 Y4-06/Y7-06의 후속 작업",
+      "scope": "Wilson lattice gauge theory의 physical positivity와 transfer matrix 구성 근거",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R09",
+      "title": "Gauge field theories on a lattice",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/0003491678900398",
+      "locator": "출판사 초록·서지사항; Euclidean lattice construction 및 positivity",
+      "scope": "유클리드 격자 gauge theory의 positivity/constructive framework. continuum 존재 증명으로 확장하지 않음.",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R13",
+      "title": "The Lean Language Reference — Axioms",
+      "url": "https://lean-lang.org/doc/reference/latest/Axioms/",
+      "locator": "axiom declaration, consistency 및 #print axioms",
+      "scope": "사용자 axiom의 논리적 지위·의존성 감사. 기존 Lean 4.34.1 결과는 로컬 source/hash/log로 별도 증빙.",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R14",
+      "title": "The Octonions",
+      "url": "https://math.ucr.edu/home/baez/octonions/node14.html",
+      "locator": "§4.1 G2; Theorem 4, compact Der(O) subset so(Im O); 7-dimensional faithful representation and invariant cross product",
+      "scope": "Compact G2 as octonion automorphisms/positive 3-form stabilizer, not split G2. The generator uses its explicitly documented equivalent Cayley–Dickson convention.",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "YM-R15",
+      "title": "Math 249B. Root systems for split classical groups",
+      "url": "https://virtualmath1.stanford.edu/~conrad/249BW16Page/handouts/classicalgps.pdf",
+      "locator": "§§2–5 (8-page PDF), roots/coroots/character lattices for A/B/C/D; use complexification to connect with the separately constructed compact real form",
+      "scope": "Classical root and coroot integer data. This split-algebra reference alone is not a proof of the compact form, which is constructed and checked separately.",
+      "domains": [
+        "gauge"
+      ],
+      "status": "THEOREM_REFERENCE"
+    },
+    {
+      "id": "NS-PAPER",
+      "title": "OpenAI, Finite Time Blowup for Navier–Stokes",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "locator": "Theorem 1.1; Theorem 4.6; Appendices A, B, C; 166 pages",
+      "scope": "Forced R3/periodic theorem reference and actual leading component formulae. Full source proof and complete profile certification are separate.",
+      "domains": [
+        "ns"
+      ],
+      "status": "THEOREM_REFERENCE",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "version": "2026-09-08"
+    },
+    {
+      "id": "NS-OFFICIAL-REPOSITORY",
+      "title": "OpenAI NavierStokesAndEuler source repository",
+      "url": "https://github.com/openai/NavierStokesAndEuler/tree/f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+      "locator": "Pinned commit f9e8bc5b38b6e212696e8a30e3e91517af887bbd; Flatness and ProblemStatement adapter",
+      "scope": "Selected unchanged source components have separate local audits; the original full repository is not rebuilt.",
+      "domains": [
+        "ns"
+      ],
+      "status": "THEOREM_REFERENCE",
+      "version": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd"
+    }
+  ],
+  "kernelRerun": false,
+  "scope": "Package byte validation of actual previous kernel checks."
+}

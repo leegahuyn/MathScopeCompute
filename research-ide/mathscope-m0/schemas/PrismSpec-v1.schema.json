@@ -1,0 +1,580 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:PrismSpec:1",
+  "title": "MathScope PrismSpec v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "MathScope.PrismSpec/1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assumptionRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "p": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+    },
+    "ring": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "PADIC_INTEGER_RING",
+            "AFFINE_PRESENTATION",
+            "AINF",
+            "PERFECTOID_PRESENTATION"
+          ]
+        },
+        "presentation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "completion": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "presentation",
+        "completion"
+      ],
+      "additionalProperties": false
+    },
+    "ideal": {
+      "type": "object",
+      "properties": {
+        "generators": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "presentation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "generators",
+        "presentation"
+      ],
+      "additionalProperties": false
+    },
+    "delta": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputExtraDigits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "convention": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "rule",
+        "inputExtraDigits",
+        "convention"
+      ],
+      "additionalProperties": false
+    },
+    "frobenius": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "convention": {
+          "type": "string",
+          "minLength": 1
+        },
+        "semilinear": {
+          "const": true
+        },
+        "cutoffRule": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "rule",
+        "convention",
+        "semilinear",
+        "cutoffRule"
+      ],
+      "additionalProperties": false
+    },
+    "geometricObject": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "POINT",
+            "PROJECTIVE_SPACE",
+            "SMOOTH_AFFINE",
+            "SMOOTH_PROPER",
+            "USER_PRESENTATION"
+          ]
+        },
+        "presentation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimension": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "kind",
+        "presentation",
+        "dimension"
+      ],
+      "additionalProperties": false
+    },
+    "hypotheses": {
+      "type": "object",
+      "properties": {
+        "smooth": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "proper": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "smooth",
+        "proper",
+        "details"
+      ],
+      "additionalProperties": false
+    },
+    "comparison": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "NONE",
+            "THEOREM_REFERENCE",
+            "CERTIFICATE_REQUIRED"
+          ]
+        },
+        "theorem": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hash": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "hash"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "status",
+        "theorem",
+        "sourceRefs"
+      ],
+      "additionalProperties": false
+    },
+    "prismPredicate": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "UNVERIFIED",
+            "THEOREM_REFERENCE",
+            "CERTIFICATE_REQUIRED"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hash": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "hash"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "certificateRef": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1
+            },
+            "hash": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "hash"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "status",
+        "statement",
+        "sourceRefs"
+      ],
+      "additionalProperties": false
+    },
+    "scope": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "FINITE"
+            },
+            "primeInterval": {
+              "type": "object",
+              "properties": {
+                "lower": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+                },
+                "upper": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+                }
+              },
+              "required": [
+                "lower",
+                "upper"
+              ],
+              "additionalProperties": false
+            },
+            "pAdic": {
+              "type": "object",
+              "properties": {
+                "p": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+                },
+                "digits": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "p",
+                "digits"
+              ],
+              "additionalProperties": false
+            },
+            "series": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "timeMax": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^(?:[1-9][0-9]*(?:\\.[0-9]+)?|0\\.[0-9]*[1-9][0-9]*)$"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "order"
+              ],
+              "additionalProperties": false
+            },
+            "spatial": {
+              "type": "object",
+              "properties": {
+                "bounds": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "minItems": 1,
+                  "maxItems": 8
+                },
+                "timeMax": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "required": [
+                "bounds"
+              ],
+              "additionalProperties": false
+            },
+            "finite": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "itemCount": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "description",
+                "itemCount"
+              ],
+              "additionalProperties": false
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "required": [
+                "primeInterval"
+              ]
+            },
+            {
+              "required": [
+                "pAdic"
+              ]
+            },
+            {
+              "required": [
+                "series"
+              ]
+            },
+            {
+              "required": [
+                "spatial"
+              ]
+            },
+            {
+              "required": [
+                "finite"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "SYMBOLIC"
+            },
+            "definition": {
+              "type": "string",
+              "minLength": 1
+            },
+            "generator": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "definition"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "semanticStatus": {
+      "enum": [
+        "INTERFACE",
+        "COMPARISON_MODEL"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "id",
+    "revision",
+    "sourceRefs",
+    "assumptionRefs",
+    "p",
+    "ring",
+    "ideal",
+    "delta",
+    "frobenius",
+    "geometricObject",
+    "hypotheses",
+    "comparison",
+    "prismPredicate",
+    "scope",
+    "semanticStatus"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,34 @@
+/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/lean/MathScope/Navier/Analytic.lean:45:23: warning: Variable name `hp1` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hp1
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+MathScope.Navier.Analytic.scale_exponents (h : ℝ) : 1 / 2 + h + (1 / 2 - h) = 1
+'MathScope.Navier.Analytic.scale_exponents' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.Navier.Analytic.core_energy_exponent (h : ℝ) : 1 + (1 / 2 - h) - 2 * (1 / 2 + h) = 1 / 2 - 3 * h
+'MathScope.Navier.Analytic.core_energy_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.Navier.Analytic.coordinate_denominator_positive (h eta : ℝ) (hh : 0 ≤ h) (hh' : h < 1 / 2)
+  (heta : |eta| ≤ 1) : 0 < 1 - 2 * h * eta ^ 2
+'MathScope.Navier.Analytic.coordinate_denominator_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.Navier.Analytic.uniform_derivative_exchange (f fp : ℕ → ℝ → ℝ) (g gp : ℝ → ℝ) (s : Set ℝ) (hs : IsOpen s)
+  (hfp : TendstoUniformlyOn fp gp Filter.atTop s)
+  (hf : ∀ᶠ (n : ℕ) in Filter.atTop, ∀ x ∈ s, HasDerivAt (f n) (fp n x) x)
+  (hfg : ∀ x ∈ s, Filter.Tendsto (fun n => f n x) Filter.atTop (𝓝 (g x))) (x : ℝ) (hx : x ∈ s) : HasDerivAt g (gp x) x
+'MathScope.Navier.Analytic.uniform_derivative_exchange' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.Navier.Analytic.diffusion_semigroup_bound (rate time : ℝ) (hr : 0 ≤ rate) (ht : 0 ≤ time) :
+  Real.exp (-rate * time) ≤ 1
+'MathScope.Navier.Analytic.diffusion_semigroup_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.Navier.Analytic.stable_residual_budget (err residual C epsilon : ℝ) (hC : 0 ≤ C) (hr : residual ≤ epsilon)
+  (hStability : |err| ≤ C * residual) : |err| ≤ C * epsilon
+'MathScope.Navier.Analytic.stable_residual_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.Navier.Analytic.rational_cone_strip (a p : ℝ) (ha0 : 29 / 10 ≤ a) (ha1 : a ≤ 31 / 10) (hp0 : 49 / 10 ≤ p)
+  (hp1 : p ≤ 51 / 10) : 2 < a ∧ a < p ∧ (a - 2) * 0 ^ 2 < 2 * (p - a) ^ 2
+'MathScope.Navier.Analytic.rational_cone_strip' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.Navier.Analytic.solenoidal_reconstruction_cancellation (U UX Ueta eta X A D d q L : ℝ) (hAD : A + D = 1) :
+  (2 * eta * U + 2 * eta * X * UX - 2 * D * eta * U - d * Ueta) / (q * L) +
+      (-2 * A * eta * U + d * Ueta - 2 * eta * X * UX) / (q * L) =
+    0
+'MathScope.Navier.Analytic.solenoidal_reconstruction_cancellation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

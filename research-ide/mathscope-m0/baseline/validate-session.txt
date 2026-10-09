@@ -1,0 +1,16 @@
+  function validateSession(s){
+    const errors = [];
+    const arrays = ['goals','objects','representations','functionSpaces','differentialSystems','optimizations','operators','pdes','spectra','geometries','topologies','entropies','symmetries','kclasses','claims','evidence','assumptions','revisions','checkpoints'];
+    if (!s || typeof s !== 'object') return ['ResearchSession missing'];
+    if (s.schema !== SCHEMA) errors.push('schema mismatch');
+    if (!s.id) errors.push('id missing');
+    if (!s.title) errors.push('title missing');
+    arrays.forEach(k => { if (!Array.isArray(s[k])) errors.push(k + ' must be array'); });
+    if (!('environmentRef' in s)) errors.push('environmentRef missing');
+    (s.objects || []).forEach(o => errors.push(...validateObjectSpec(o)));
+    (s.representations || []).forEach(r => errors.push(...validateRepresentationSpec(r,s)));
+    (s.evidence || []).forEach(e => errors.push(...validateEvidenceRecord(e)));
+    if(s.failureRecords!=null){if(!Array.isArray(s.failureRecords))errors.push('failureRecords must be array');else for(const record of s.failureRecords)errors.push(...validateFailureRecord(record));}
+    if (s.activeObjectRef && !(s.objects || []).some(o => o.id === s.activeObjectRef)) errors.push('activeObjectRef invalid');
+    return errors;
+  }

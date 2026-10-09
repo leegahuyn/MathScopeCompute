@@ -1,0 +1,3127 @@
+{
+  "schema": "MathScope.M1.CliExamples/1",
+  "exampleCount": 59,
+  "examples": [
+    {
+      "id": "prime-1000",
+      "label": "소수 구간 [2,1000] · π, ψ, Li₂",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "a": "2",
+          "b": "1000"
+        },
+        "kind": "arithmetic.primes",
+        "precision": {}
+      }
+    },
+    {
+      "id": "prime-million",
+      "label": "백만까지 정확한 소수 78,498개",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxIntegers": 1048576,
+          "maxItems": 250000,
+          "maxMillis": 60000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "a": "2",
+          "b": "1000000",
+          "includePsi": false,
+          "segmentSize": 65536
+        },
+        "kind": "arithmetic.primes",
+        "precision": {}
+      }
+    },
+    {
+      "id": "prime-large-certificate",
+      "label": "Number 안전 범위를 넘는 Lucas 인증",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "n": "18446744069414584321"
+        },
+        "kind": "arithmetic.primeCertificate",
+        "precision": {}
+      }
+    },
+    {
+      "id": "point-p3",
+      "label": "점의 실제 crystalline/prismatic 비교 모델",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "p": "3"
+        },
+        "kind": "arithmetic.point",
+        "precision": {
+          "N": 4
+        }
+      }
+    },
+    {
+      "id": "p1-p3",
+      "label": "P¹ · 두 chart · 전체 contraction · Frobenius",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "p": "3"
+        },
+        "kind": "arithmetic.p1",
+        "precision": {
+          "D": 1,
+          "N": 4
+        }
+      }
+    },
+    {
+      "id": "p1-p5-d2",
+      "label": "P¹ · p=5, D=2 → 10",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "filtrationIndex": 1,
+          "filtrationKind": "hodge",
+          "p": "5"
+        },
+        "kind": "arithmetic.p1",
+        "precision": {
+          "D": 2,
+          "N": 8
+        }
+      }
+    },
+    {
+      "id": "delta-guard",
+      "label": "δ의 한 자리 손실과 정확 원본 증액",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "exactInteger": "17",
+          "inputDigits": 4,
+          "operation": "delta",
+          "p": "3",
+          "residue": "17"
+        },
+        "kind": "arithmetic.padic",
+        "precision": {
+          "N": 4
+        }
+      }
+    },
+    {
+      "id": "padic-torsion",
+      "label": "Z/27 위 ×3: kernel/cokernel = Z/3",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "matrix": {
+            "cols": 1,
+            "entries": [
+              [
+                0,
+                0,
+                "3"
+              ]
+            ],
+            "rows": 1
+          },
+          "operation": "module",
+          "p": "3"
+        },
+        "kind": "arithmetic.padic",
+        "precision": {
+          "N": 3
+        }
+      }
+    },
+    {
+      "id": "derived-reduction",
+      "label": "derived mod p: 사라지지 않는 Tor",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "operation": "derivedReduction",
+          "p": "3"
+        },
+        "kind": "arithmetic.padic",
+        "precision": {
+          "N": 3
+        }
+      }
+    },
+    {
+      "id": "p1-local-factors",
+      "label": "p별 P¹ Frobenius·점계수·Euler 인자",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "model": "P1",
+          "primes": [
+            "2",
+            "3",
+            "5",
+            "7"
+          ]
+        },
+        "kind": "arithmetic.localFactors",
+        "precision": {
+          "levels": [
+            1,
+            2,
+            4,
+            8
+          ]
+        }
+      }
+    },
+    {
+      "id": "elliptic-good-bad",
+      "label": "E:y²=x³−x · good/bad 국소 인자",
+      "domain": "arithmetic",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 50000000
+        },
+        "input": {
+          "a": "-1",
+          "b": "0",
+          "model": "elliptic",
+          "primes": [
+            "2",
+            "3",
+            "5",
+            "7",
+            "13"
+          ]
+        },
+        "kind": "arithmetic.localFactors",
+        "precision": {
+          "levels": [
+            1,
+            2,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "su3-bpst",
+      "label": "SU(3): 실제 BPST 곡률·독립 적분",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "ASSUMED_BOUND",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "canonical-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "EMBEDDED_BPST",
+            "perturbation": null,
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "SU",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 3,
+            "representation": "DEFINING"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 7,
+            "slice": 0
+          },
+          "verify": {
+            "densityQuadrature": true,
+            "field": true
+          }
+        },
+        "kind": "gauge.field",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "g2-full-color",
+      "label": "G2: 실제 7×7 BPST + 전 기저 섭동",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "ASSUMED_BOUND",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "canonical-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "BPST_PLUS_PERTURBATION",
+            "perturbation": {
+              "amplitude": 0.2,
+              "kind": "GAUSSIAN_POLYNOMIAL",
+              "length": 1.2,
+              "modes": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0,
+                  0
+                ]
+              ],
+              "seed": "mathscope-m1-gauge-2026"
+            },
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 7,
+            "slice": 0
+          },
+          "verify": {
+            "densityQuadrature": false,
+            "field": true
+          }
+        },
+        "kind": "gauge.field",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "sp2-full-basis",
+      "label": "Sp(2): 전 기저 4D off-shell 장",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "ASSUMED_BOUND",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": null,
+            "gaugeConvention": "D=d+A",
+            "kind": "FULL_BASIS_TRIAL",
+            "perturbation": {
+              "amplitude": 0.2,
+              "kind": "GAUSSIAN_POLYNOMIAL",
+              "length": 1.2,
+              "modes": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0,
+                  0
+                ]
+              ],
+              "seed": "mathscope-m1-gauge-2026"
+            },
+            "rho": null,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "Sp",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 2,
+            "representation": "DEFINING"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 7,
+            "slice": 0
+          },
+          "verify": {
+            "densityQuadrature": false,
+            "field": true
+          }
+        },
+        "kind": "gauge.field",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "g2-projection",
+      "label": "G2: 실제 R4 → R3 선형 투영",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "ASSUMED_BOUND",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "canonical-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "BPST_PLUS_PERTURBATION",
+            "perturbation": {
+              "amplitude": 0.2,
+              "kind": "GAUSSIAN_POLYNOMIAL",
+              "length": 1.2,
+              "modes": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0,
+                  0
+                ]
+              ],
+              "seed": "mathscope-m1-gauge-2026"
+            },
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -1,
+                1
+              ]
+            ],
+            "kind": "LINEAR_PROJECTION",
+            "matrix": [
+              [
+                1,
+                0,
+                0,
+                0.3
+              ],
+              [
+                0,
+                1,
+                0,
+                -0.2
+              ],
+              [
+                0,
+                0,
+                1,
+                0.4
+              ]
+            ],
+            "quantity": "topologicalDensity",
+            "samplesPerAxis": 5
+          },
+          "verify": {
+            "densityQuadrature": false,
+            "field": true
+          }
+        },
+        "kind": "gauge.field",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "g2-marginal",
+      "label": "G2: x4 적분 q3 · 지수 정규화",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "ASSUMED_BOUND",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "canonical-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "EMBEDDED_BPST",
+            "perturbation": null,
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "BPST_INFINITE_MARGINAL",
+            "quantity": "topologicalDensity",
+            "samplesPerAxis": 7
+          },
+          "verify": {
+            "densityQuadrature": true,
+            "field": true
+          }
+        },
+        "kind": "gauge.field",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "so3-periodic",
+      "label": "SO(3): 주기적 4D Fourier 시험장",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "ASSUMED_BOUND",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "PERIODIC",
+              "kind": "PERIODIC_TORUS",
+              "origin": [
+                -2,
+                -2,
+                -2,
+                -2
+              ],
+              "periods": [
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            "embedding": null,
+            "gaugeConvention": "D=d+A",
+            "kind": "FULL_BASIS_TRIAL",
+            "perturbation": {
+              "amplitude": 0.2,
+              "kind": "FOURIER",
+              "length": 1.2,
+              "modes": [
+                {
+                  "parity": "SIN",
+                  "phase": 0,
+                  "wave": [
+                    1,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "parity": "COS",
+                  "phase": 0.3,
+                  "wave": [
+                    0,
+                    1,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "parity": "SIN",
+                  "phase": 0.1,
+                  "wave": [
+                    0,
+                    0,
+                    1,
+                    1
+                  ]
+                }
+              ],
+              "seed": "mathscope-m1-gauge-2026"
+            },
+            "rho": null,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "SO",
+            "globalForm": "ADJOINT",
+            "parameter": 3,
+            "representation": "DEFINING"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 7,
+            "slice": 0
+          },
+          "verify": {
+            "densityQuadrature": false,
+            "field": true
+          }
+        },
+        "kind": "gauge.field",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "delta-assumed_bound",
+      "label": "Δ 상태족: ASSUMED_BOUND",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "compareDeltas": [
+            0.5,
+            1,
+            2
+          ],
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "ASSUMED_BOUND",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "canonical-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "BPST_PLUS_PERTURBATION",
+            "perturbation": {
+              "amplitude": 0.2,
+              "kind": "GAUSSIAN_POLYNOMIAL",
+              "length": 1.2,
+              "modes": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0,
+                  0
+                ]
+              ],
+              "seed": "mathscope-m1-gauge-2026"
+            },
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 7,
+            "slice": 0
+          },
+          "probe": [
+            0.2,
+            -0.3,
+            0.4,
+            0.1
+          ],
+          "verify": {
+            "densityQuadrature": false,
+            "field": true
+          }
+        },
+        "kind": "gauge.family",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "delta-units",
+      "label": "Δ 상태족: UNITS",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "compareDeltas": [
+            0.5,
+            1,
+            2
+          ],
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "UNITS",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "canonical-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "BPST_PLUS_PERTURBATION",
+            "perturbation": {
+              "amplitude": 0.2,
+              "kind": "GAUSSIAN_POLYNOMIAL",
+              "length": 1.2,
+              "modes": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0,
+                  0
+                ]
+              ],
+              "seed": "mathscope-m1-gauge-2026"
+            },
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 7,
+            "slice": 0
+          },
+          "probe": [
+            0.2,
+            -0.3,
+            0.4,
+            0.1
+          ],
+          "verify": {
+            "densityQuadrature": false,
+            "field": true
+          }
+        },
+        "kind": "gauge.family",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "delta-classical_scale",
+      "label": "Δ 상태족: CLASSICAL_SCALE",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "compareDeltas": [
+            0.5,
+            1,
+            2
+          ],
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "CLASSICAL_SCALE",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "canonical-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "BPST_PLUS_PERTURBATION",
+            "perturbation": {
+              "amplitude": 0.2,
+              "kind": "GAUSSIAN_POLYNOMIAL",
+              "length": 1.2,
+              "modes": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0,
+                  0
+                ]
+              ],
+              "seed": "mathscope-m1-gauge-2026"
+            },
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 7,
+            "slice": 0
+          },
+          "probe": [
+            0.2,
+            -0.3,
+            0.4,
+            0.1
+          ],
+          "verify": {
+            "densityQuadrature": false,
+            "field": true
+          }
+        },
+        "kind": "gauge.family",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "delta-effective_model",
+      "label": "Δ 상태족: EFFECTIVE_MODEL",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "compareDeltas": [
+            0.5,
+            1,
+            2
+          ],
+          "family": {
+            "assumptionId": "effective-rho-gap-choice",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "EFFECTIVE_MODEL",
+            "referenceDelta": 1,
+            "rhoOverEll": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "canonical-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "BPST_PLUS_PERTURBATION",
+            "perturbation": {
+              "amplitude": 0.2,
+              "kind": "GAUSSIAN_POLYNOMIAL",
+              "length": 1.2,
+              "modes": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0,
+                  0
+                ]
+              ],
+              "seed": "mathscope-m1-gauge-2026"
+            },
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 7,
+            "slice": 0
+          },
+          "probe": [
+            0.2,
+            -0.3,
+            0.4,
+            0.1
+          ],
+          "verify": {
+            "densityQuadrature": false,
+            "field": true
+          }
+        },
+        "kind": "gauge.family",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "g2-index-three",
+      "label": "G2: short-root SU(2) · Dynkin index 3",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "ASSUMED_BOUND",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "short-root-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "EMBEDDED_BPST",
+            "perturbation": null,
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          },
+          "observation": {
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 7,
+            "slice": 0
+          },
+          "verify": {
+            "densityQuadrature": true,
+            "field": true
+          }
+        },
+        "kind": "gauge.field",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "g2-wilson",
+      "label": "G2: 4D Wilson loop · 게이지 검사",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "family": {
+            "assumptionId": "declared-gap-lower-bound",
+            "delta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "mode": "ASSUMED_BOUND",
+            "referenceDelta": 1
+          },
+          "field": {
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "boundary": "OPEN_RESTRICTION",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "kind": "R4_WINDOW"
+            },
+            "embedding": "canonical-su2",
+            "gaugeConvention": "D=d+A",
+            "kind": "BPST_PLUS_PERTURBATION",
+            "perturbation": {
+              "amplitude": 0.2,
+              "kind": "GAUSSIAN_POLYNOMIAL",
+              "length": 1.2,
+              "modes": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0,
+                  0
+                ]
+              ],
+              "seed": "mathscope-m1-gauge-2026"
+            },
+            "rho": 1,
+            "units": {
+              "hbarC": 1,
+              "length": "ell0"
+            }
+          },
+          "gauge": {
+            "amplitude": 0.4,
+            "generator": 4,
+            "phase": 0.2,
+            "wave": [
+              0.2,
+              -0.1,
+              0.3,
+              0.15
+            ]
+          },
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          },
+          "path": [
+            [
+              0.2,
+              -0.3,
+              0.1,
+              0.4
+            ],
+            [
+              0.6000000000000001,
+              -0.3,
+              0.1,
+              0.4
+            ],
+            [
+              0.6000000000000001,
+              -0.3,
+              0.1,
+              0.8
+            ],
+            [
+              0.2,
+              -0.3,
+              0.1,
+              0.8
+            ],
+            [
+              0.2,
+              -0.3,
+              0.1,
+              0.4
+            ]
+          ],
+          "steps": 16
+        },
+        "kind": "gauge.holonomy",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "finite-spectrum",
+      "label": "유한 H: 양의 채널 상관함수 · 조건 범위",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "model": {
+            "assumptionId": "explicit-finite-diagonal-H-model",
+            "delta": 1,
+            "hbar": 1,
+            "offsets": [
+              0,
+              0.4,
+              1.2
+            ],
+            "times": [
+              0,
+              0.125,
+              0.25,
+              0.375,
+              0.5,
+              0.625,
+              0.75,
+              0.875,
+              1,
+              1.125,
+              1.25,
+              1.375,
+              1.5,
+              1.625,
+              1.75,
+              1.875,
+              2,
+              2.125,
+              2.25,
+              2.375,
+              2.5,
+              2.625,
+              2.75,
+              2.875,
+              3
+            ],
+            "weights": [
+              0,
+              0.7,
+              0.3
+            ]
+          }
+        },
+        "kind": "gauge.spectral",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SU2",
+      "label": "SU(2): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SU",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 2,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SU3",
+      "label": "SU(3): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SU",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 3,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SU4",
+      "label": "SU(4): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SU",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 4,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SU5",
+      "label": "SU(5): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SU",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 5,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SU6",
+      "label": "SU(6): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SU",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 6,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SO3",
+      "label": "SO(3): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SO",
+            "globalForm": "ADJOINT",
+            "parameter": 3,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SO5",
+      "label": "SO(5): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SO",
+            "globalForm": "ADJOINT",
+            "parameter": 5,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SO6",
+      "label": "SO(6): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SO",
+            "globalForm": "QUOTIENT",
+            "parameter": 6,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SO7",
+      "label": "SO(7): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SO",
+            "globalForm": "ADJOINT",
+            "parameter": 7,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-SO8",
+      "label": "SO(8): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "SO",
+            "globalForm": "QUOTIENT",
+            "parameter": 8,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-Sp1",
+      "label": "Sp(1): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "Sp",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 1,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-Sp2",
+      "label": "Sp(2): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "Sp",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 2,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-Sp3",
+      "label": "Sp(3): 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "Sp",
+            "globalForm": "SIMPLY_CONNECTED",
+            "parameter": 3,
+            "representation": "DEFINING"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "algebra-G2",
+      "label": "G2: 정확 행렬 · 근 자료 · Chevalley",
+      "domain": "gauge",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxEvaluations": 12000,
+          "maxItems": 250000,
+          "maxMatrixDimension": 8,
+          "maxMillis": 30000,
+          "maxOperations": 50000000,
+          "maxSamples": 2200
+        },
+        "input": {
+          "exact": true,
+          "group": {
+            "family": "G2",
+            "globalForm": "ADJOINT",
+            "parameter": 2,
+            "representation": "REAL_7"
+          }
+        },
+        "kind": "gauge.group",
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        }
+      }
+    },
+    {
+      "id": "ns-source-contract",
+      "label": "논문 166쪽·정리·Lean 어댑터 계약",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {},
+        "kind": "ns.provenance",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-similarity",
+      "label": "실제 similarity 좌표와 역변환",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {
+          "X": 0.6,
+          "eta": -0.35,
+          "h": 0.005,
+          "tau": 0.1,
+          "theta": 0.4,
+          "viscosity": 1
+        },
+        "kind": "ns.coordinates",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-heat-interval",
+      "label": "Heat factor 적분·도함수 구간 인증",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {
+          "Z": 1,
+          "derivativeOrder": 2,
+          "h": 0.005,
+          "taylorOrder": 8
+        },
+        "kind": "ns.heat",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-source-exterior",
+      "label": "원문 heat exterior · r > 0",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {
+          "cInfinity": 1,
+          "h": 0.005,
+          "radialCount": 6,
+          "tau": 0.1,
+          "viscosity": 1
+        },
+        "kind": "ns.exterior",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-taylor-green",
+      "label": "별도 정확 Taylor–Green 기준 해",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {
+          "time": 0.19,
+          "viscosity": 1
+        },
+        "kind": "ns.benchmark",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-nonlinear-axis",
+      "label": "원문 비선형 축 급수 · 꼬리 미인증",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {
+          "Lambda": 48,
+          "Ymax": 1.2,
+          "axisOrder": 8,
+          "eta": 0.2
+        },
+        "kind": "ns.axis-series",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-five-moments",
+      "label": "비선형 5모멘트 · 독립 재적분",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {
+          "eta": 0.2
+        },
+        "kind": "ns.moments",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-cone-operator",
+      "label": "Cone 부등식과 실제 radial modulation 연산",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {
+          "N": 32,
+          "a": 3,
+          "bs": 0,
+          "ps": [
+            5,
+            0
+          ]
+        },
+        "kind": "ns.cone",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-leading-candidate",
+      "label": "실제 축·외곽 + 미인증 접합 후보",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {
+          "axisOrder": 8,
+          "etaCount": 3,
+          "h": 0.005,
+          "radialCount": 12,
+          "tau": 0.1,
+          "viscosity": 1
+        },
+        "kind": "ns.leading-profile",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-independent-checks",
+      "label": "FD·FFT·고정밀·음성 대조군",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {},
+        "kind": "ns.validate",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-axis-exact-bounds",
+      "label": "실제 Bρ 국소 수렴·양성·무한 tail 상계",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 2048
+        },
+        "input": {
+          "h": "1/200",
+          "j0": "3/100",
+          "lambdaMode": "computed-threshold",
+          "lambdaMultiplier": 2,
+          "pressure": {
+            "K": "10",
+            "family": "rational"
+          },
+          "sampleCount": 17,
+          "sampleEta": "1/5",
+          "sigmaMode": "computed-cutoff",
+          "tailDegree": 24
+        },
+        "kind": "ns.axis-certificate",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-source-outer-repairs",
+      "label": "원문 외곽 진폭·모멘트·heat 보상",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 2048
+        },
+        "input": {
+          "etas": [
+            -0.5,
+            0,
+            0.5
+          ],
+          "heatOrder": 3,
+          "parameters": {
+            "Md": 1,
+            "Tf": 64,
+            "co": 0.005,
+            "h": 1e-8,
+            "lambda": 0.0002,
+            "logP": 14,
+            "logXR": 20
+          },
+          "pressureOrder": 4,
+          "samplesPerEta": 48,
+          "tolerance": 2e-8
+        },
+        "kind": "ns.source-outer",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-controlled-axis",
+      "label": "원문 B.22/B.26 · 실제 controlled continuation",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 2048
+        },
+        "input": {
+          "axis": {
+            "Lambda": 48,
+            "axisOrder": 10,
+            "logC": 16
+          },
+          "etaValues": [
+            0,
+            0.2
+          ],
+          "pressure": {
+            "K": 10,
+            "family": "rational"
+          },
+          "samples": 161
+        },
+        "kind": "ns.controlled-continuation",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-controlled-source-datum",
+      "label": "실제 A.21 압력을 연결한 유한 continuation 후보",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 40000000,
+          "maxPoints": 2048
+        },
+        "input": {
+          "axis": {
+            "Lambda": 48,
+            "axisOrder": 10,
+            "logC": 2
+          },
+          "etaValues": [
+            0
+          ],
+          "pressure": {
+            "family": "source-outer-A21",
+            "parameters": {
+              "Md": 1,
+              "Tf": 64,
+              "co": 0.005,
+              "h": 1e-8,
+              "lambda": 0.0002,
+              "logP": 0,
+              "logXR": 20
+            }
+          },
+          "samples": 161
+        },
+        "kind": "ns.controlled-continuation",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-loop-zero-p2",
+      "label": "원문 C.1 · p₂=0의 제거 가능 분기",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 3000000,
+          "maxPoints": 2048,
+          "maxMilliseconds": 30000
+        },
+        "input": {
+          "a": 0.8,
+          "bs": 0,
+          "phaseSamples": 256,
+          "ps": [
+            5,
+            0
+          ]
+        },
+        "kind": "ns.admissible-loop",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-loop-tilted",
+      "label": "원문 C.1 · 비영 p₂와 위상 재매개화",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxOperations": 3000000,
+          "maxPoints": 2048,
+          "maxMilliseconds": 30000
+        },
+        "input": {
+          "a": 0.9,
+          "bs": 0.12,
+          "phaseSamples": 256,
+          "ps": [
+            5,
+            0.2
+          ]
+        },
+        "kind": "ns.admissible-loop",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-source-pressure-bounds",
+      "label": "실제 A.21 압력 · 복소 영역과 모든 η 도함수 상계",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 2048
+        },
+        "input": {
+          "boundBits": 128,
+          "coefficientRadiusRatio": "1/16",
+          "parameters": {
+            "Md": 1,
+            "Tf": 64,
+            "co": 0.005,
+            "h": 1e-8,
+            "lambda": 0.0002,
+            "logP": 14,
+            "logXR": 20
+          },
+          "realWindow": "11/10",
+          "tubeRadius": "1/64"
+        },
+        "kind": "ns.pressure-certificate",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-axis-source-exact-bounds",
+      "label": "실제 A.21 압력과 연결된 국소 축 상계",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 60000,
+          "maxMilliseconds": 60000,
+          "maxOperations": 20000000,
+          "maxPoints": 2048
+        },
+        "input": {
+          "boundBits": 128,
+          "j0": "3/100",
+          "lambdaMode": "computed-threshold",
+          "lambdaMultiplier": 2,
+          "pressure": {
+            "family": "source-outer-A21",
+            "parameters": {
+              "Md": 1,
+              "Tf": 64,
+              "co": 0.005,
+              "h": 1e-8,
+              "lambda": 0.0002,
+              "logP": 14,
+              "logXR": 20
+            }
+          },
+          "sampleCount": 17,
+          "sampleEta": "1/5",
+          "sigmaMode": "computed-cutoff",
+          "tailDegree": 24
+        },
+        "kind": "ns.axis-source-certificate",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-source-radial-modulation",
+      "label": "원문 C.12 · 실제 변조와 첫 patch 복원 (N=512)",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 50000000,
+          "maxPoints": 8192
+        },
+        "input": {
+          "N": 512,
+          "etaValues": [
+            0
+          ],
+          "family": "explicit-power-annulus",
+          "samples": 97
+        },
+        "kind": "ns.radial-modulation",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-source-radial-small-frequency",
+      "label": "작은 N=8 · 실제 cone 위반을 확인하는 대조",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 50000000,
+          "maxPoints": 4096
+        },
+        "input": {
+          "N": 8,
+          "etaValues": [
+            0
+          ],
+          "family": "explicit-power-annulus",
+          "samples": 97
+        },
+        "kind": "ns.radial-modulation",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    },
+    {
+      "id": "ns-source-inner-gluing",
+      "label": "원문 B.34/B.8 · 실제 inner–outer 모멘트 접합 후보",
+      "domain": "ns",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 60000,
+          "maxMilliseconds": 60000,
+          "maxOperations": 40000000,
+          "maxPoints": 2048
+        },
+        "input": {
+          "Tsh": 640,
+          "continuation": {
+            "axis": {
+              "Lambda": 1024,
+              "axisOrder": 10,
+              "j0": 0.000001,
+              "logC": 80
+            },
+            "etaValues": [
+              0
+            ],
+            "pressure": {
+              "family": "source-outer-A21",
+              "parameters": {
+                "Md": 1,
+                "Tf": 64,
+                "co": 0.005,
+                "h": 1e-8,
+                "lambda": 0.0002,
+                "logP": 0,
+                "logXR": 20
+              }
+            },
+            "samples": 33
+          },
+          "etaStep": 0.00002,
+          "etaValues": [
+            0
+          ],
+          "newtonIterations": 24,
+          "quadratureOrder": 64,
+          "samples": 97,
+          "tolerance": 1e-9,
+          "transitionSegments": 64
+        },
+        "kind": "ns.source-inner-gluing",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "MathScope.ValidatorCorrectionHistory/1",
+  "oldSourceSHA256": "7ea83446802b44e5ca3a69e22de4e8eeb45c091ffc16f1e352c37bca0f3a6e52",
+  "newSourceSHA256": "48dbd97ae3110f69260282c9a954f33bad80f87c497b7f3107b5c844addc1ed2",
+  "reason": "Use Object.hasOwn for the input whitelist so own JSON constructor/toString/__proto__ keys are rejected.",
+  "exactChange": {
+    "before": "if(!(key in d))",
+    "after": "if(!Object.hasOwn(d,key))"
+  },
+  "oldSourceRecovery": "Reversed the documented one-line patch in the current source, and verified equality with the independently recorded pre-change SHA256 before saving this exact historical source.",
+  "mathematicalOperationsChanged": false,
+  "jobResultDeepEqual": true,
+  "originalPath": "source-inner-gluing.mjs",
+  "historicalPath": "history/inner-gluing-own-key-v1/source-inner-gluing.mjs.txt"
+}

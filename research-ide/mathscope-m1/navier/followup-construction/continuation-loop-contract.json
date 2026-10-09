@@ -1,0 +1,126 @@
+{
+  "schema": "MathScope.NavierFollowupSourceContract/1",
+  "source": {
+    "attachment": "01-navier-stokes.pdf",
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "pages": 166,
+    "officialRepositoryCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd"
+  },
+  "entries": [
+    {
+      "criterion": "N3-05",
+      "originalTitle": "Inner continuation과 다섯 모멘트 접합",
+      "originalAcceptance": "5×5 moment Jacobian 가역성과 interval Newton/implicit-function 조건을 확인한다. 값만 이어 붙이고 누적 모멘트를 생략하면 실패다.",
+      "implementationStatus": "PARTIAL",
+      "acceptancePassed": false,
+      "implementedOperations": [
+        "B.22 reference field and integrated residual coefficients",
+        "B.26 actual controlled field ODE with forward five-moment integration",
+        "B.5 final axial/shear transition to Xi=110",
+        "Actual A.21 numerical pressure jets can feed the finite nonlinear axis recurrence"
+      ],
+      "blockedConditions": [
+        "The finite axis coefficients have no equality/error binding to the selected certified infinite analytic witness",
+        "Global eta and reference-width-family bounds do not yet select certified kappa0/t1",
+        "B.34 transition and actual B.8 five-by-five moment Jacobian/interval Newton are not included",
+        "Finite RK4 and quadrature errors are independently measured, not enclosed by a complete interval flow"
+      ],
+      "evidence": [
+        "controlled-continuation.mjs",
+        "continuation-loop-tests.json",
+        "continuation-loop-examples.json"
+      ],
+      "sourceReferences": [
+        "PDF 28: (4.15)-(4.16)",
+        "PDF 150: (B.22)",
+        "PDF 151-153: Lemma B.4, Proposition B.5, (B.26)-(B.30)",
+        "PDF 154-157: remaining (B.34)-(B.40)"
+      ]
+    },
+    {
+      "criterion": "N3-06",
+      "originalTitle": "Cone의 radial modulation",
+      "originalAcceptance": "값 변화 O(N^−1), radial derivative의 order-one 변화를 별도 측정한다. 유한 N을 고정한 뒤 (4.26)의 strict margin κ>0을 구간 전체에서 인증한다.",
+      "implementationStatus": "PARTIAL",
+      "acceptancePassed": false,
+      "implementedOperations": [
+        "C.4-C.10 actual exponential tilt and unique prescribed-variance root bracket",
+        "Cancellation-free positive series for the variance and I0 with outward geometric tails",
+        "C.1 actual weighted circle reparametrization and numerical C.12 zero-mean primitives",
+        "All-phase interval/algebraic gap bounds for each explicitly supplied fixed cone state",
+        "Correct p2=0 and tiny positive/negative p2 branches; certified cutoff zero separated from float zero"
+      ],
+      "blockedConditions": [
+        "A finite set of supplied states is not a certified full (X,eta) input profile",
+        "The numerical inverse lift/primitive arrays do not have zero numerical error",
+        "Full C.12 radial modulation with finite N and parameter derivatives is not implemented here",
+        "C.2 exact first-patch five-moment restoration and uniform post-modulation cone margin are not certified",
+        "The current I0/variance interval evaluator requires |mu p2| bounds at most 300"
+      ],
+      "evidence": [
+        "admissible-loop.mjs",
+        "continuation-loop-tests.json",
+        "independent-loop-reference.json",
+        "continuation-loop-examples.json"
+      ],
+      "sourceReferences": [
+        "PDF 38: (4.35)",
+        "PDF 158-160: Lemma C.1, (C.4)-(C.10)",
+        "PDF 161: (C.12), remaining modulation/restoration"
+      ]
+    },
+    {
+      "criterion": "N3-07",
+      "originalTitle": "지지·끝점·예약 patch 검사",
+      "originalAcceptance": "n=T0/|T0|의 edge limit, inner/outer flatness, Ipos와 Imean의 unmodified power law를 검사한다. edge에서 0/0을 직접 계산하지 않는다.",
+      "implementationStatus": "PARTIAL",
+      "acceptancePassed": false,
+      "implementedOperations": [
+        "Certified finite placement of the last two transitions",
+        "Explicit initial narrow-collar checkpoints",
+        "Finite-axis slope mismatch and missing flat-factor certificate are exposed"
+      ],
+      "blockedConditions": [
+        "Exact B.30 flat stress factor requires the exact analytic axis agreement",
+        "Global internal nonzero stress, both edge limits and reserved patches are not certified by these two modules"
+      ],
+      "evidence": [
+        "controlled-continuation.mjs",
+        "continuation-loop-tests.json"
+      ],
+      "sourceReferences": [
+        "PDF 152-153: (B.30)-(B.31), Corollary B.6"
+      ]
+    }
+  ],
+  "validation": {
+    "finiteChecks": {
+      "file": "continuation-loop-tests.json",
+      "passed": 109,
+      "total": 109
+    },
+    "independentBesselAndQuadrature": {
+      "file": "independent-loop-reference.json",
+      "decimalDigits": 160,
+      "passed": 39,
+      "total": 39
+    },
+    "newLeanKernelRun": false,
+    "analyticBasis": "Source C.1 continuity/strict monotonicity and algebraic cone inequalities, explicitly scoped; numerical results do not inherit full C/D theorem certification",
+    "frozenV50ChangedByThisWork": false,
+    "independentSourceFormula": {
+      "file": "continuation-source-formula-independent.json",
+      "passed": 243,
+      "failed": 0,
+      "total": 243
+    }
+  },
+  "fullProfileCertified": false,
+  "fullNavierStokesSolution": false,
+  "analyticInfiniteWitnessCoupled": false,
+  "sourceFormulaCorrection": {
+    "file": "ns-source-formula-correction.json",
+    "historicalRecordPreserved": true,
+    "correctedCurrentSource": true
+  }
+}

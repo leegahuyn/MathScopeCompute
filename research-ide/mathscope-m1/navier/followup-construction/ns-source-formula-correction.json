@@ -1,0 +1,202 @@
+{
+  "schema": "MathScope.Navier.SourceFormulaCorrection/1",
+  "status": "CORRECTED_AND_REVALIDATED",
+  "source": {
+    "paper": "01-navier-stokes.pdf",
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "pages": [
+      28,
+      155
+    ],
+    "equations": [
+      "4.16",
+      "B.35"
+    ],
+    "formula": "Ns = -W*U + (D*(M-eta*M_eta)+4*h*eta*S-d*S_eta)/X + 4*A*eta*Pi-d*Pi_eta",
+    "integralDerivation": "integral_0^X Sn = -X*W*U + D*(M-eta*M_eta)+4*h*eta*S-d*S_eta + X*(4*A*eta*Pi-d*Pi_eta)"
+  },
+  "reason": "Both the B.26 integratedState and the C.12 integratedAfter helper incorrectly divided -W*U by X. The source integrated Sn boundary term is -X*W*U; after division it is -W*U.",
+  "historicalSnapshot": {
+    "path": "history/ns-wu-scaling-v1/snapshot.json",
+    "sha256": "b3278708b59e13d5fe4f80ec5a2cf7772191ca52c25ef40e0bbfa0dd8249859b",
+    "sourceBytesPreserved": true,
+    "sourceExtension": ".mjs.txt",
+    "currentWorkerImportsHistoricalSources": false
+  },
+  "filesChanged": [
+    {
+      "path": "controlled-continuation.mjs",
+      "beforeSha256": "20a8d2bf3676dac4d25b14c8a09952eb82fc46b6b251ce5104e62929faa5f39b",
+      "afterSha256": "8cc936ec00f8720123f964e8489be97e7273c42da278c08ca88cc6baef661d92",
+      "change": "Keep -W*U outside the 1/X-scaled moment numerator; affects B26 reference shear and integrated actual U/moments."
+    },
+    {
+      "path": "source-radial-modulation.mjs",
+      "beforeSha256": "412f6cb3699316e117b612a1a40a42e06efd2236cb7da40adfc8aec686b89ef7",
+      "afterSha256": "4db08935854063f75a7422288339110364d00e0173da24e0cac7fef6d857864c",
+      "change": "Keep -W*U outside the 1/X-scaled moment numerator; expose momentEta/PiEta to independent source reconstruction."
+    }
+  ],
+  "previousTestsMissed": [
+    {
+      "file": "continuation-loop-tests.json",
+      "passed": 109,
+      "total": 109,
+      "reason": "The scalar contraction test duplicated the same -WU/X transcription; the successful initial tests therefore did not validate the original Ns identity."
+    },
+    {
+      "file": "source-radial-modulation-tests.json",
+      "passed": 53,
+      "total": 53,
+      "reason": "C13, moments and execution checks did not independently reconstruct the post-modulation Ns formula."
+    },
+    {
+      "file": "source-correction-independent.json",
+      "passed": 74,
+      "total": 74,
+      "reason": "The 80-digit test validates the separate correction moment map and its eta derivatives; it never claimed to test Ns."
+    }
+  ],
+  "historicalCounterexample": {
+    "file": "continuation-historical-formula-failure.json",
+    "status": "FAIL",
+    "counts": {
+      "passed": 0,
+      "failed": 243,
+      "total": 243
+    },
+    "maximumAbsoluteDefect": 67.01080019077068,
+    "allMatchWrongFormula": true
+  },
+  "correctedValidation": {
+    "continuationAndLoop": {
+      "file": "continuation-loop-tests.json",
+      "passed": 109,
+      "total": 109,
+      "runExitCode": 0
+    },
+    "c12Execution": {
+      "file": "source-radial-modulation-tests.json",
+      "passed": 57,
+      "total": 57,
+      "runExitCode": 0
+    },
+    "continuationOriginalFormula": {
+      "file": "continuation-source-formula-independent.json",
+      "passed": 243,
+      "failed": 0,
+      "total": 243,
+      "maximumAbsoluteDefect": 2.842170943040401e-14,
+      "runExitCode": 0
+    },
+    "c12OriginalFormula": {
+      "file": "c12-source-formula-independent.json",
+      "passed": 1135,
+      "failed": 0,
+      "total": 1135,
+      "cases": [
+        {
+          "id": "N512",
+          "maximumOriginalIdentityError": 1.2515415495653853e-20,
+          "maximumOldFormulaError": 6.0641301576373457e-05
+        },
+        {
+          "id": "N8",
+          "maximumOriginalIdentityError": 1.1899954193404218e-18,
+          "maximumOldFormulaError": 0.005875188631933917
+        },
+        {
+          "id": "N256",
+          "maximumOriginalIdentityError": 2.5326282637346427e-20,
+          "maximumOldFormulaError": 0.00011562313191208916
+        }
+      ],
+      "runExitCode": 0
+    },
+    "independentMomentMap": {
+      "file": "source-correction-independent.json",
+      "passed": 74,
+      "total": 74,
+      "decimalDigits": 80,
+      "runExitCode": 0
+    }
+  },
+  "c12ActualOutcomesAfterFix": {
+    "small": {
+      "status": "SOURCE_C12_FIRST_PATCH_WITH_CONE_VIOLATIONS",
+      "sampledCone": {
+        "modulatedPassing": 97,
+        "modulatedTotal": 131,
+        "patchPassing": 57,
+        "patchTotal": 65,
+        "minimumModulatedGaps": [
+          0.6871678549453507,
+          -0.20033919130861566,
+          -27484.893733166624,
+          -2100666018554.7524
+        ],
+        "minimumPatchGaps": [
+          -19.050813309409254,
+          -21.050813309409254,
+          19.66415296500078,
+          -1398271.9540955648
+        ]
+      }
+    },
+    "middle": {
+      "status": "SOURCE_C12_FIRST_PATCH_WITH_CONE_VIOLATIONS",
+      "sampledCone": {
+        "modulatedPassing": 2163,
+        "modulatedTotal": 2165,
+        "patchPassing": 65,
+        "patchTotal": 65,
+        "minimumModulatedGaps": [
+          0.505968181497185,
+          0.0022953556552818277,
+          44.38487478715436,
+          -56681.53704361906
+        ],
+        "minimumPatchGaps": [
+          2.37330877195135,
+          0.37330877195135015,
+          55.33030947368232,
+          6122.886292906919
+        ]
+      }
+    },
+    "large": {
+      "status": "SOURCE_C12_AND_FIRST_PATCH_COMPUTED",
+      "sampledCone": {
+        "modulatedPassing": 4294,
+        "modulatedTotal": 4294,
+        "patchPassing": 65,
+        "patchTotal": 65,
+        "minimumModulatedGaps": [
+          0.5025120653622321,
+          0.004751601384081816,
+          47.59262357311465,
+          1797.4621684530475
+        ],
+        "minimumPatchGaps": [
+          2.3928515100315977,
+          0.3928515100315977,
+          55.33030947513645,
+          6122.886293228749
+        ]
+      }
+    }
+  },
+  "commands": [
+    "node mathscope-m1/navier/followup-construction/test-continuation-loop.mjs",
+    "node mathscope-m1/navier/followup-construction/generate-continuation-loop-evidence.mjs",
+    "python mathscope-m1/navier/followup-construction/independent-continuation-formula.py --expect-bug",
+    "python mathscope-m1/navier/followup-construction/independent-continuation-formula.py",
+    "node mathscope-m1/navier/followup-construction/test-source-radial-modulation.mjs",
+    "python mathscope-m1/navier/followup-construction/independent-c12-formula.py",
+    "python mathscope-m1/navier/followup-construction/independent-source-correction.py"
+  ],
+  "acceptanceCriteriaRelaxed": false,
+  "newLeanKernelRun": false,
+  "fullProfileCertified": false,
+  "uniformIntervalNewtonCertified": false
+}

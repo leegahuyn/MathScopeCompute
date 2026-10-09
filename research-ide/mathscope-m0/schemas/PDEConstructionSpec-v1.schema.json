@@ -1,0 +1,467 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:PDEConstructionSpec:1",
+  "title": "MathScope PDEConstructionSpec v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "MathScope.PDEConstructionSpec/1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assumptionRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "modelId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "modelKind": {
+      "enum": [
+        "PAPER_CONSTRUCTION",
+        "ILLUSTRATIVE_MODEL",
+        "GENERAL_SOLVER"
+      ]
+    },
+    "equation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "paper": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "sourceRef": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "hash": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "id",
+                "revision",
+                "hash"
+              ],
+              "additionalProperties": false
+            },
+            "theorem": {
+              "type": "string",
+              "minLength": 1
+            },
+            "equationLocations": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "sourceRef",
+            "theorem",
+            "equationLocations"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "force": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "PAPER_FORCE",
+            "MANUFACTURED_FORCE",
+            "GIVEN_FORCE",
+            "ZERO_FORCE"
+          ]
+        },
+        "definition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "divergenceFree": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "definition",
+        "divergenceFree"
+      ],
+      "additionalProperties": false
+    },
+    "initialCondition": {
+      "type": "object",
+      "properties": {
+        "definition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "definition",
+        "domain"
+      ],
+      "additionalProperties": false
+    },
+    "normalization": {
+      "type": "object"
+    },
+    "similarityCoordinates": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "definition": {
+              "type": "string",
+              "minLength": 1
+            },
+            "validDomain": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "definition",
+            "validDomain"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "profiles": {
+      "type": "object",
+      "properties": {
+        "generator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "PAPER_DEFINITION",
+            "ILLUSTRATIVE",
+            "CERTIFICATE_REQUIRED",
+            "UNAVAILABLE"
+          ]
+        }
+      },
+      "required": [
+        "generator",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "pulses": {
+      "type": "object",
+      "properties": {
+        "generator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cutoffRule": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "generator",
+        "cutoffRule"
+      ],
+      "additionalProperties": false
+    },
+    "correction": {
+      "type": "object",
+      "properties": {
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tailStatus": {
+          "enum": [
+            "UNPROVED",
+            "FINITE_BOUND",
+            "CERTIFICATE_REQUIRED"
+          ]
+        },
+        "tailDefinition": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "order",
+        "tailStatus",
+        "tailDefinition"
+      ],
+      "additionalProperties": false
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "FINITE"
+        },
+        "primeInterval": {
+          "type": "object",
+          "properties": {
+            "lower": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "upper": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            }
+          },
+          "required": [
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        "pAdic": {
+          "type": "object",
+          "properties": {
+            "p": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "digits": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "p",
+            "digits"
+          ],
+          "additionalProperties": false
+        },
+        "series": {
+          "type": "object",
+          "properties": {
+            "order": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "timeMax": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?:[1-9][0-9]*(?:\\.[0-9]+)?|0\\.[0-9]*[1-9][0-9]*)$"
+                }
+              ]
+            }
+          },
+          "required": [
+            "order"
+          ],
+          "additionalProperties": false
+        },
+        "spatial": {
+          "type": "object",
+          "properties": {
+            "bounds": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "minItems": 1,
+              "maxItems": 8
+            },
+            "timeMax": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "bounds"
+          ],
+          "additionalProperties": false
+        },
+        "finite": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "itemCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "description",
+            "itemCount"
+          ],
+          "additionalProperties": false
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "primeInterval"
+          ]
+        },
+        {
+          "required": [
+            "pAdic"
+          ]
+        },
+        {
+          "required": [
+            "series"
+          ]
+        },
+        {
+          "required": [
+            "spatial"
+          ]
+        },
+        {
+          "required": [
+            "finite"
+          ]
+        }
+      ]
+    },
+    "parameters": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "id",
+    "revision",
+    "sourceRefs",
+    "assumptionRefs",
+    "modelId",
+    "modelKind",
+    "equation",
+    "paper",
+    "force",
+    "initialCondition",
+    "normalization",
+    "similarityCoordinates",
+    "profiles",
+    "pulses",
+    "correction",
+    "scope",
+    "parameters"
+  ],
+  "additionalProperties": false
+}

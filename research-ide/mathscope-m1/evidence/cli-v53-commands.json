@@ -1,0 +1,141 @@
+{
+  "schema": "MathScope.M1.CliV53CommandRecord/1",
+  "nodeVersion": "v24.19.0",
+  "startedAt": "2026-10-09T18:09:51.435Z",
+  "cwd": "/workspace/scratch/afa9cd11a21b",
+  "cliSourceSha256": "6d9d699d5efe2d055a4ed3b699aeffd5d3e2385c766548e419dad502a5d3614e",
+  "build": {
+    "workerSha256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca",
+    "bundleSha256": "010adc8a3ac7d58e1aeb1ff597404c2fe9c262129c5aecb8682663ac846a9eff"
+  },
+  "commands": [
+    {
+      "id": "gluing",
+      "command": [
+        "node",
+        "mathscope-m1/cli.mjs",
+        "run",
+        "ns-source-inner-gluing",
+        "--out",
+        "mathscope-m1/evidence/cli-v53-gluing-run"
+      ],
+      "startedAt": "2026-10-09T18:09:51.437Z",
+      "finishedAt": "2026-10-09T18:09:52.477Z",
+      "exitCode": 2,
+      "expectedExit": 2,
+      "exitMatches": true,
+      "signal": null,
+      "stdoutFile": "cli-v53-gluing.stdout.log",
+      "stderrFile": "cli-v53-gluing.stderr.log",
+      "stdoutSha256": "275df4fae8daaa419807b0de0eaa414eef5f26bf2e34d096eaddecdf012cf5c8",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "pressure",
+      "command": [
+        "node",
+        "mathscope-m1/cli.mjs",
+        "run",
+        "ns-source-pressure-bounds",
+        "--out",
+        "mathscope-m1/evidence/cli-v53-pressure-run"
+      ],
+      "startedAt": "2026-10-09T18:09:52.479Z",
+      "finishedAt": "2026-10-09T18:09:53.208Z",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "exitMatches": true,
+      "signal": null,
+      "stdoutFile": "cli-v53-pressure.stdout.log",
+      "stderrFile": "cli-v53-pressure.stderr.log",
+      "stdoutSha256": "98a47dcb8f2966e227a671fd3b70ecf58446622b52fbc41ecc0a8c18182636ba",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "axis",
+      "command": [
+        "node",
+        "mathscope-m1/cli.mjs",
+        "run",
+        "ns-axis-source-exact-bounds",
+        "--out",
+        "mathscope-m1/evidence/cli-v53-axis-run"
+      ],
+      "startedAt": "2026-10-09T18:09:53.209Z",
+      "finishedAt": "2026-10-09T18:10:06.935Z",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "exitMatches": true,
+      "signal": null,
+      "stdoutFile": "cli-v53-axis.stdout.log",
+      "stderrFile": "cli-v53-axis.stderr.log",
+      "stdoutSha256": "e88528febe56b2c55838b57e3d32cbf826ec570e582a95d645fcc8c9d0a5afce",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "existing-output-refusal",
+      "command": [
+        "node",
+        "mathscope-m1/cli.mjs",
+        "run",
+        "ns-source-inner-gluing",
+        "--out",
+        "mathscope-m1/evidence/cli-v53-gluing-run"
+      ],
+      "startedAt": "2026-10-09T18:10:06.936Z",
+      "finishedAt": "2026-10-09T18:10:07.127Z",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "exitMatches": true,
+      "signal": null,
+      "stdoutFile": "cli-v53-existing-output-refusal.stdout.log",
+      "stderrFile": "cli-v53-existing-output-refusal.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "f007137353dcb5718c38c7fd1f4bda5a286744ab80e53161348103f2a4e1744f"
+    },
+    {
+      "id": "unknown-example-refusal",
+      "command": [
+        "node",
+        "mathscope-m1/cli.mjs",
+        "run",
+        "not-an-installed-example",
+        "--out",
+        "mathscope-m1/evidence/cli-v53-unknown-must-not-exist"
+      ],
+      "startedAt": "2026-10-09T18:10:07.128Z",
+      "finishedAt": "2026-10-09T18:10:07.318Z",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "exitMatches": true,
+      "signal": null,
+      "stdoutFile": "cli-v53-unknown-example-refusal.stdout.log",
+      "stderrFile": "cli-v53-unknown-example-refusal.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "f70bc8b19b06b43a1caee3dcc1734ea0ecf3040b9acecf7cc5ae4024c70a6ae4"
+    },
+    {
+      "id": "arbitrary-request-refusal",
+      "command": [
+        "node",
+        "mathscope-m1/cli.mjs",
+        "run",
+        "ns-source-inner-gluing",
+        "--request",
+        "mathscope-m1/evidence/cli-v53-gluing-run/request.json"
+      ],
+      "startedAt": "2026-10-09T18:10:07.319Z",
+      "finishedAt": "2026-10-09T18:10:07.470Z",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "exitMatches": true,
+      "signal": null,
+      "stdoutFile": "cli-v53-arbitrary-request-refusal.stdout.log",
+      "stderrFile": "cli-v53-arbitrary-request-refusal.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "5c95c134accc16bf33709bd6eb696eff44f82e732b33933a2af82ccb131f6d88"
+    }
+  ],
+  "finishedAt": "2026-10-09T18:10:07.471Z",
+  "status": "PASS"
+}

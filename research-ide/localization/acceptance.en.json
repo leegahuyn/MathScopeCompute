@@ -1,0 +1,1211 @@
+{
+  "schema": "MathScope.EnglishAcceptanceCompanion/1",
+  "locale": "en",
+  "baseline": "v54 / 16f4f911; 2026-10-10 Asia/Seoul",
+  "historicalSnapshot": true,
+  "translationScope": "Full titles, implementation requirements, and acceptance criteria of all 70 original entries. Status is copied from the frozen v54 report; it is not a new mathematical assessment.",
+  "originalAcceptancePath": "mathscope-m1/evidence/original-acceptance.json",
+  "originalAcceptanceSha256": "854f67efad0f6d0cda7ab784611e5352b753ddd297fbac5a1382f4032ba02dc2",
+  "statusSourcePath": "mathscope-m1/report/M0_M1_normalized-report-data.json",
+  "statusSourceSha256": "985ee34e365e6d30791972474eb479c8e4c363c8be38ee871bf96ad93d44b725",
+  "originalRecordDigestPolicy": "SHA-256 of UTF-8 Python json.dumps(original, ensure_ascii=False, sort_keys=True, separators=(comma,colon)).",
+  "counts": {
+    "PASS": 61,
+    "PARTIAL": 7,
+    "BLOCKED": 2
+  },
+  "items": [
+    {
+      "id": "I0-04",
+      "stage": "I0",
+      "stageTitle": "Mathematical objects, assumptions, and observation contracts",
+      "title": "Contract for a general G and a family of states",
+      "detail": "Specify the Lie algebra and global group form, representation, invariant inner product, coupling, lattice spacing a and size L, boundary, seed, observation channels, and the role of Delta.",
+      "acceptanceCriterion": "A request containing only a group name or a numerical Delta must not create an actual gauge-field job. A default state family must be immediately runnable.",
+      "baselineStatus": "PASS",
+      "sourceFile": "platform-stages.json",
+      "originalRecordSha256": "dc8b87bffd0d478cf401a7959750599b2873cda6ddfaa95baf004d9b5cdcc6dc",
+      "originalArtifacts": [
+        "mathscope-m1/gauge/evidence/validation.json",
+        "mathscope-m1/core/registry.mjs",
+        "mathscope-m1/core/session-binding.mjs",
+        "mathscope-m1/evidence/core-tests.tap",
+        "mathscope-m1/evidence/m0-regression-tests.tap"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "I1-03",
+      "stage": "I1",
+      "stageTitle": "Exact arithmetic, precision, and computation jobs",
+      "title": "Propagate precision consumption",
+      "detail": "Calculate required input precision and output loss for division, differentiation, Frobenius, determinants, basis reduction, quadrature, and series summation.",
+      "acceptanceCriterion": "Automatically request extra digits when a p-adic delta operation requires them. If sufficient valid digits are unavailable, return PRECISION_REQUIRED instead of reporting computational success.",
+      "baselineStatus": "PASS",
+      "sourceFile": "platform-stages.json",
+      "originalRecordSha256": "608683f6ffdc822cc093568cc2a50bea7a57aa3f6ceef9aa8c9f5bf319428815",
+      "originalArtifacts": [
+        "mathscope-m1/arithmetic/padic.mjs",
+        "mathscope-m1/arithmetic/complex.mjs",
+        "mathscope-m1/arithmetic/tests/arithmetic.test.mjs",
+        "mathscope-m1/navier/numerics.mjs",
+        "mathscope-m1/navier/heat.mjs",
+        "mathscope-m1/core/engine.mjs",
+        "mathscope-m1/evidence/core-tests.tap"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "I1-07",
+      "stage": "I1",
+      "stageTitle": "Exact arithmetic, precision, and computation jobs",
+      "title": "Cross-check with independent computations",
+      "detail": "Compare direct point counting with Frobenius, FFT with direct convolution, analytic density with quadrature, and Lean certificates with generator results.",
+      "acceptanceCriterion": "Two copies of the same implementation do not count as independent verification. A fixture must specify at least two methods and their error criterion.",
+      "baselineStatus": "PASS",
+      "sourceFile": "platform-stages.json",
+      "originalRecordSha256": "6739cb11bef7756ca58181095924c6cefa4a62898155c3138908b11666f15144",
+      "originalArtifacts": [
+        "mathscope-m1/arithmetic/evidence/independent-validation.json",
+        "mathscope-m1/arithmetic/tests/arithmetic.test.mjs",
+        "mathscope-m1/navier/checks.mjs",
+        "mathscope-m1/navier/evidence/numerical-validation.json",
+        "mathscope-m1/gauge/evidence/validation.json"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "I3-02",
+      "stage": "I3",
+      "stageTitle": "Lean formalization, evidence grades, and research gates",
+      "title": "Begin formalization with finite algebraic theorems",
+      "detail": "Separate permissible precision for delta identities, d squared equals zero, semilinear chain maps, certification of finite prime intervals, Lie brackets, and lattice holonomy into small theorems.",
+      "acceptanceCriterion": "Valid fixtures and deliberately incorrect certificates must be accepted and rejected, respectively. Distinguish the scope of numerical examples from that of universally quantified theorems.",
+      "baselineStatus": "PASS",
+      "sourceFile": "platform-stages.json",
+      "originalRecordSha256": "75c38c1f32c7d6ddc41139e94dd75f327726e69aed7b263cabac6ac3ea814cfa",
+      "originalArtifacts": [
+        "mathscope-m1/arithmetic/evidence/lean-audit.json",
+        "mathscope-m1/gauge/lean/lean-audit.json",
+        "mathscope-m1/navier/evidence/lean-validation.json",
+        "mathscope-m1/core/theorem-adapters.mjs",
+        "mathscope-m1/evidence/core-tests.tap"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "I3-03",
+      "stage": "I3",
+      "stageTitle": "Lean formalization, evidence grades, and research gates",
+      "title": "Make analytic assumptions explicit",
+      "detail": "Store precise statements of completeness, uniform convergence, interchange of differentiation and limits, semigroup bounds, spectral measures, and stability constants.",
+      "acceptanceCriterion": "Every lemma using differentiation of an infinite sum or a continuum limit must display the required norm, domain, and quantifier range.",
+      "baselineStatus": "PASS",
+      "sourceFile": "platform-stages.json",
+      "originalRecordSha256": "d670c94bda3d5e66f8477b6e5eef3ca1f25a18c294518a64dc2c9fe200367f34",
+      "originalArtifacts": [
+        "mathscope-m1/core/analytic-contracts.mjs",
+        "mathscope-m1/navier/analytic-contracts.json",
+        "mathscope-m1/navier/lean/MathScope/Navier/Analytic.lean",
+        "mathscope-m1/gauge/analytic-assumptions.json",
+        "mathscope-m1/core/session-binding.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "I3-04",
+      "stage": "I3",
+      "stageTitle": "Lean formalization, evidence grades, and research gates",
+      "title": "Adapters for external comparison theorems",
+      "detail": "Distinguish citation-level references from actual Lean imports for prismatic comparison, trace formulas, known cases of BSD, and the source Navier–Stokes theorems.",
+      "acceptanceCriterion": "A result linked only to literature is a THEOREM REFERENCE. Connect it to a kernel result only when the exact exported Lean theorem has actually been imported.",
+      "baselineStatus": "PASS",
+      "sourceFile": "platform-stages.json",
+      "originalRecordSha256": "bd01ce199207eb8b9edce5577ca195131162dada6a950a7da27e5ddec6af6db2",
+      "originalArtifacts": [
+        "mathscope-m1/core/theorem-adapters.mjs",
+        "mathscope-m1/core/bsd-known-case-reference.json",
+        "mathscope-m1/core/domain-references.json",
+        "mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Prime.lean",
+        "mathscope-m1/navier/lean/MathScope/Navier/SourceAdapter.lean",
+        "mathscope-m1/navier/evidence/lean-validation.json",
+        "mathscope-m1/navier/official-validation/official-audit-summary.json"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P1-01",
+      "stage": "P1",
+      "stageTitle": "The infinite prime specification and prime-indexed arithmetic data",
+      "title": "Separate the infinite specification from completed finite ranges",
+      "detail": "Store PrimeSet as a logical definition. Generators provide nextPrime and streamInterval and record each request's endpoints, budget, and last certified interval.",
+      "acceptanceCriterion": "Forbid a global allPrimesComputed=true field. Completion of [a,b] and the definition of the infinite domain must have different types.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "03031578ecbcfa7a2d9092e577290aa4f115df7e09e64d031038cc070fd0ae75",
+      "originalArtifacts": [
+        "primes.mjs:PRIME_DOMAIN, nextPrime, streamInterval",
+        "index.mjs:validateRequest"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P1-02",
+      "stage": "P1",
+      "stageTitle": "The infinite prime specification and prime-indexed arithmetic data",
+      "title": "Construct a segmented sieve and a completeness certificate",
+      "detail": "When eliminating multiples in [a,b], recursively require completeness of the base primes up to the integer square root of b. Start at max(p², ceil(a/p)p), using integer square roots.",
+      "acceptanceCriterion": "Verify π(10)=4, π(100)=25, π(1000)=168, and π(10⁶)=78498. Exclude 0 and 1, include 2, and pass p² boundary and unaligned-interval cases.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "610060cf0ce0e1501e5dcc72d216a42531b93e9f601ad8dcd208e2b0c2a26b66",
+      "originalArtifacts": [
+        "primes.mjs:segmentedPrimes, verifyPrimeSegments",
+        "exact.mjs:isqrt"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P1-03",
+      "stage": "P1",
+      "stageTitle": "The infinite prime specification and prime-indexed arithmetic data",
+      "title": "Fix memory, range, and resume contracts",
+      "detail": "Use an initial profile of 2²⁰ integers per interval and at most 20,000 display samples. Store segment hashes and the base-prime bound; cancellation commits only the last complete segment.",
+      "acceptanceCriterion": "Splitting [2,10⁶] into 17 arbitrary intervals, computing, merging, and resuming must reproduce a single computation. A missing or duplicated segment must fail the completeness check.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "845181e909e0dbec209399bac74e62a6d5a77418b4224dd8f159bebd5368817f",
+      "originalArtifacts": [
+        "primes.mjs:segmentedPrimes, verifyPrimeSegments, streamInterval",
+        "exact.mjs:meter"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P1-04",
+      "stage": "P1",
+      "stageTitle": "The infinite prime specification and prime-indexed arithmetic data",
+      "title": "Separate π, ψ, Li, and display error",
+      "detail": "Store π as an integer and ψ as a linear combination of logarithms, including prime powers, together with a real ball. Display the normalization difference between Li₂(x)=∫₂ˣ dt/log(t) and the conventional li(x).",
+      "acceptanceCriterion": "Verify ψ(10.5)=3log(2)+2log(3)+log(5)+log(7)=log(2520). Add each weight exactly once at a p^k boundary. Without an error bound, Li remains approximate.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "9efb1adadf5d111da8038df8529d2cf61bf568658ec40539a2bd4ed5ae19b7e1",
+      "originalArtifacts": [
+        "primes.mjs:primeStatistics, logIntegerInterval"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P1-05",
+      "stage": "P1",
+      "stageTitle": "The infinite prime specification and prime-indexed arithmetic data",
+      "title": "Handle large integers and primality certification",
+      "detail": "Use BigInt for endpoints and products beyond the safe-integer range of Number. Separate probable-prime output from verified primality certificates, and provide an independent verifier for the chosen certificate algorithm.",
+      "acceptanceCriterion": "The composite integers 341, 561, and 1105 cannot become PRIME_CERTIFIED. Unsupported certificates remain UNKNOWN; display colors do not promote proof grades.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "75b1e0c4a7504fff8ba843a62ef15b11e4a31d5fa7f920e9ba8eca945ffbb002",
+      "originalArtifacts": [
+        "primes.mjs:generatePrimeCertificate, verifyPrimeCertificate",
+        "exact.mjs:bigint, powmod"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P1-06",
+      "stage": "P1",
+      "stageTitle": "The infinite prime specification and prime-indexed arithmetic data",
+      "title": "Connect prime-indexed prisms to fibers of the same model",
+      "detail": "Store an integral model, minimal-model transformations, and smoothness/discriminant certificates, and create a BasePrism for each p. Only reduction maps between precision levels N are arrows in the precision tower.",
+      "acceptanceCriterion": "Reject direct addition of a coefficient at p=5 to an element of a p=7 ring. Distinguish primes where a chosen model's discriminant vanishes from bad reduction of the curve itself.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "da0ca4337cde0edada2d749984422b4cf424245ad4b06a2b75c7e6f4e60638fe",
+      "originalArtifacts": [
+        "local-factors.mjs:integerModel, classifyReduction, localFactorBundle",
+        "padic.mjs:addPadic, crystallinePrism"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P1-07",
+      "stage": "P1",
+      "stageTitle": "The infinite prime specification and prime-indexed arithmetic data",
+      "title": "Collect good, bad, and archimedean factors",
+      "detail": "Each local factor records its prime, representation and Frobenius convention, good/bad decision, conductor, and source map. Store the archimedean gamma factor and global normalization as separate objects.",
+      "acceptanceCriterion": "A bundle containing only good-prime factors is INCOMPLETE_LOCAL_DATA. A product omitting bad-prime factors cannot be stored as the complete L(E,s).",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "88dec268c2c97a01b98bb1c4ba8ce2d7945fbfad19c1b4b6795c3ceff190b798",
+      "originalArtifacts": [
+        "local-factors.mjs:localFactorBundle"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P1-08",
+      "stage": "P1",
+      "stageTitle": "The infinite prime specification and prime-indexed arithmetic data",
+      "title": "Fix the mathematical meaning of a 3D prime view",
+      "detail": "Allow finite-range scans, zoom, prime gaps, and normalized π error. Record whether the z coordinate represents an interval, cutoff, residue class, or cohomological degree in the view manifest.",
+      "acceptanceCriterion": "Camera rotation and level-of-detail reduction must preserve the raw-data hash and π. A sampled plot cannot be described as all primes or as a proof of the prime number theorem.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "9b4ced422bde9da1c9a5eb65287fb4aa79c9588fe2256c1d228c1be9981b85eb",
+      "originalArtifacts": [
+        "primes.mjs:primeView",
+        "index.mjs:visualization"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P2-01",
+      "stage": "P2",
+      "stageTitle": "Prisms, precision, complexes, and derived operations",
+      "title": "Check assumptions on a prism input",
+      "detail": "Record the delta structure on A, the Cartier condition on I, (p,I)-completeness, p∈I+φ(I)A, and boundedness, with declarations and supporting evidence. The first base is (ℤ_p,(p)) with φ=id.",
+      "acceptanceCriterion": "A fixture approving (ℤ/p^N,(p)) directly as a p-torsion-free prism must fail. Unverified assumptions remain in the admission list.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "b963803b2397e9d779a13355d0bfbbbc0320e2bc7d2395d2002aab583069808c",
+      "originalArtifacts": [
+        "padic.mjs:crystallinePrism, validatePrismBase"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P2-02",
+      "stage": "P2",
+      "stageTitle": "Prisms, precision, complexes, and derived operations",
+      "title": "Include precision loss in the type",
+      "detail": "Record p-adic precision N, coordinate degree D, Čech/cohomological degree H, root depth M, and q−1 or u degree U separately. To compute δ(a)=(φ(a)−a^p)/p to N digits, require at least N+1 input digits.",
+      "acceptanceCriterion": "Reject an N-digit delta output from only N input digits, or lower output precision to N−1. At p=3, detect that a=0 and a=3^N agree modulo 3^N while their delta values can differ modulo 3^N.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "91876a01a7bda5f0431d83d3bd3749a19d26122679eff0ca80d64f35b84631b7",
+      "originalArtifacts": [
+        "padic.mjs:deltaPadic, precisionFailureFixture",
+        "complex.mjs:p1Model"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P2-03",
+      "stage": "P2",
+      "stageTitle": "Prisms, precision, complexes, and derived operations",
+      "title": "Distinguish field rank from modules over finite rings",
+      "detail": "Forbid Gaussian elimination that divides by a nonunit over ℤ/p^N. Return Smith normal form, DVR invariant factors, or verifiable kernel/image presentations.",
+      "acceptanceCriterion": "The kernel and cokernel of multiplication by p on ℤ/p³ are both ℤ/p. Attempting to use p modulo p³ as an invertible pivot must fail.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "e90aed937f929566d1cace591b27be1a3b1805a8b11d6216a8795429ee9ab731",
+      "originalArtifacts": [
+        "padic.mjs:finiteRingModule, verifyFiniteRingModule",
+        "exact.mjs:inverseUnit, determinant"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P2-04",
+      "stage": "P2",
+      "stageTitle": "Prisms, precision, complexes, and derived operations",
+      "title": "Verify complexes, maps, and homotopies",
+      "detail": "Check d_(k+1)d_k=0, chain-map identities, and f−g=dh+hd over the original coefficient ring. Check a φ-semilinear map using D_k F_k=F_(k+1) σ(D_k).",
+      "acceptanceCriterion": "A mutation changing any one matrix entry must fail the relevant fixture. If verification is only modulo p^N, the result specification must remain modulo p^N.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "20f7566f3ba55d2cb9cc0d96cdf29791a42d7589a4f4484c74448181c660db4e",
+      "originalArtifacts": [
+        "complex.mjs:checkComplex, checkChainMap, checkRetraction",
+        "exact.mjs:matrix"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P2-05",
+      "stage": "P2",
+      "stageTitle": "Prisms, precision, complexes, and derived operations",
+      "title": "Specify truncation and boundary conventions",
+      "detail": "Treat a simple degree cutoff, quotient truncation, and smart truncation as different operations. Determine the valid target range before discarding terms sent outside a cutoff by d, φ, or multiplication.",
+      "acceptanceCriterion": "Do not approve a finite coordinate subspace as a subcomplex when d leaves it. Require the target degree D→pD for Frobenius on ℙ¹.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "614141af14bac09a92e8358a230fbc054a5eee9e8af00e71775789987eba61fa",
+      "originalArtifacts": [
+        "complex.mjs:subcomplexByBasis, filtration, p1Frobenius"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P2-06",
+      "stage": "P2",
+      "stageTitle": "Prisms, precision, complexes, and derived operations",
+      "title": "Make derived base change an implementation contract",
+      "detail": "Tensor through a free/K-flat replacement or a Tor calculation. Do not automatically identify H(C)⊗B with H(C⊗^L B).",
+      "acceptanceCriterion": "For C=[ℤ_p --p→ ℤ_p], reduction modulo p gives a zero differential and H⁰=H¹=𝔽_p. Preserve a fixture showing the difference from simply tensoring the original H⁰=0.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "af61fe9df4eecff23c0972b899a97fcad0031745c3b312dda80e1b9eac4446a3",
+      "originalArtifacts": [
+        "complex.mjs:reduceFreeComplex",
+        "padic.mjs:derivedReductionFixture"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P2-07",
+      "stage": "P2",
+      "stageTitle": "Prisms, precision, complexes, and derived operations",
+      "title": "Give three filtrations distinct types",
+      "detail": "Distinguish the stupid degree filtration F^r C^k=C^k for k≥r, the de Rham form-degree Hodge filtration, and the Nygaard filtration induced by Frobenius divisibility. Nygaard requires the applicable theorem's base twist and descent assumptions.",
+      "acceptanceCriterion": "Check d-stability of F^r. Reject calling k≤r a cochain subcomplex without justification, or reporting cochain dimensions as filtration dimensions of H^k.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "da681fea5c0926836121d88e2830870e9495d81c2147899262cd0176cc8774af",
+      "originalArtifacts": [
+        "complex.mjs:filtration, subcomplexByBasis"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P2-08",
+      "stage": "P2",
+      "stageTitle": "Prisms, precision, complexes, and derived operations",
+      "title": "Make verification artifacts independently replayable",
+      "detail": "Export matrices, bases, coefficient rings, precision, maps, and input hashes in one manifest. External calculators generate certificates; a small verifier checks them again.",
+      "acceptanceCriterion": "Recompute d² and module invariants from raw data without display decimals or 3D coordinates. Changing a ring or basis hash invalidates an existing certificate.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "7c626346f54c67984e010e32dc728d815ef23f06d1a6743a32dac5d6674d4aca",
+      "originalArtifacts": [
+        "complex.mjs:verifyModel",
+        "padic.mjs:verifyFiniteRingModule",
+        "index.mjs:runJob"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P3-01",
+      "stage": "P3",
+      "stageTitle": "Explicit point and projective-line comparison models",
+      "title": "Complete the base case of a point",
+      "detail": "For X=Spec 𝔽_p, record the complex ℤ_p[0] and φ=id. Return both the symbolic full object and a finite computation of C⊗^L ℤ/p^N.",
+      "acceptanceCriterion": "For p∈{2,3,5,7} and N∈{1,2,4,8}, verify H⁰=ℤ/p^N and H^k=0 for k≠0. Do not extend this to a formula for arbitrary X.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "09096c40bb27fa3c7214f961c53776fb0f8ae836174e11d81dab0e5cf7244f9e",
+      "originalArtifacts": [
+        "complex.mjs:pointModel, comparisonApplication"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P3-02",
+      "stage": "P3",
+      "stageTitle": "Explicit point and projective-line comparison models",
+      "title": "Build the actual geometric input and cover of ℙ¹",
+      "detail": "Use two charts t,s with s=t⁻¹ on the overlap. Record support for smoothness/properness of the lift and Čech descent premises; build an explicit total complex for polynomial degree D≥1.",
+      "acceptanceCriterion": "Recover the chart, form degree, and Čech degree of each basis vector. The sizes of C⁰,C¹,C² are respectively 2D+2, 4D+1, and 2D+1.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "fc24eb2fb9a760e160ea98aa6fd96133d206505af2feebf940c6329c1c9e4f49",
+      "originalArtifacts": [
+        "complex.mjs:p1Complex, comparisonApplication"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P3-03",
+      "stage": "P3",
+      "stageTitle": "Explicit point and projective-line comparison models",
+      "title": "Verify the D=1 golden matrices",
+      "detail": "Check the appendix's 5×4 matrix d₀ and 3×5 matrix d₁ over the integers. Certify Smith normal form and cohomology using unit minors and a chain decomposition.",
+      "acceptanceCriterion": "Verify d₁d₀=0. The nonzero Smith factors are (1,1,1) for d₀ and (1,1) for d₁. Obtain H⁰=A, H¹=0, and H²=A·[dt/t].",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "35e289c0bd002de6df9fac9fee795409131954fd36659b084b5b5b0b54636ae3",
+      "originalArtifacts": [
+        "complex.mjs:p1Complex, p1Retraction, p1SmithCertificate"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P3-04",
+      "stage": "P3",
+      "stageTitle": "Explicit point and projective-line comparison models",
+      "title": "Prove contraction for all omitted coordinate degrees",
+      "detail": "Eliminate the complex of every nonzero Laurent weight using unit pivots. Give an explicit h for each summand added when D increases, and extend continuously to the p-adically completed limit.",
+      "acceptanceCriterion": "Prove dh+hd=id symbolically for every k≠0. Observing equal ranks at D=1,2,5 alone cannot promote the model to FULL_MODEL_CERTIFIED.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "4fa3a6cf733d4018582ec682b433e5f6655d3f92208dd6fc009efa998ae80157",
+      "originalArtifacts": [
+        "complex.mjs:weightContraction, COMPLETED_MODEL_PROOF",
+        "lean/MathScope/M1/Arithmetic/Algebra.lean"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P3-05",
+      "stage": "P3",
+      "stageTitle": "Explicit point and projective-line comparison models",
+      "title": "Compare finite-precision reductions",
+      "detail": "Store i,r,h between the completed model and a finite perfect replacement and verify that reduction modulo p^N preserves their identities.",
+      "acceptanceCriterion": "Results at N=1,2,4,8 must agree exactly after reduction to lower precision. Unexpected H² torsion indicates a denominator or cutoff error and must fail.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "18b626a102fe9acf1815defc35e555c0ddd70b7c1942d96b43b372557f7229d3",
+      "originalArtifacts": [
+        "complex.mjs:p1Model, p1Retraction",
+        "local-factors.mjs:verifyTowerReduction"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P3-06",
+      "stage": "P3",
+      "stageTitle": "Explicit point and projective-line comparison models",
+      "title": "Compute Frobenius at chain level",
+      "detail": "Construct C(D)→C(pD) using t↦t^p, s↦s^p, and d(t^p)=p t^(p−1)dt. Transport the map through i and r to the finite perfect model.",
+      "acceptanceCriterion": "After checking the integral chain-map identity, obtain F=1 on H⁰ and F=p on H². Keep a negative fixture where truncating the target back to D breaks the identity.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "5b4526da966ec32a56aad5d81a9730a9a2034799aa61477e1a31c0fd3b1a69e9",
+      "originalArtifacts": [
+        "complex.mjs:p1Frobenius, checkChainMap"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P3-07",
+      "stage": "P3",
+      "stageTitle": "Explicit point and projective-line comparison models",
+      "title": "Certify the scope of actual prismatic comparison",
+      "detail": "Record the theorem application connecting S02 Corollary 3.8 to the crystalline comparison in S01. Explain why the twist disappears for the current base with φ_A=id.",
+      "acceptanceCriterion": "Require evidence for the geometric assumptions, lift, completed complex, and quasi-isomorphism before labeling the result PRISMATIC_VIA_COMPARISON. A literature theorem unavailable in Lean remains EXTERNAL_THEOREM, not FORMAL_COMPLETE.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "fd51021e88118c95e764d34764d38853e3715ae0e1540117efe97aa6e4158992",
+      "originalArtifacts": [
+        "complex.mjs:comparisonApplication, verifyModel",
+        "sources.mjs:S01, S02"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "P3-08",
+      "stage": "P3",
+      "stageTitle": "Explicit point and projective-line comparison models",
+      "title": "Inject errors and distinguish different models",
+      "detail": "Assign different object types to CW circles/tori, bare de Rham matrices, and the ℙ¹ comparison model. Separate certification of cup products and E∞ structure from certification of module cohomology.",
+      "acceptanceCriterion": "Reject a CW input relabeled as a prism, a cutoff without a contraction, an incorrect Frobenius target, and an unsupported assertion of E∞ formality.",
+      "baselineStatus": "PASS",
+      "sourceFile": "arithmetic-stages.json",
+      "originalRecordSha256": "494ecad62d0687d130fa32fa7230bf49714b8676dae06a9fa5d1921208b94674",
+      "originalArtifacts": [
+        "complex.mjs:verifyModel",
+        "index.mjs:getCapabilities"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y1-01",
+      "stage": "Y1",
+      "stageTitle": "Concrete compact groups, representations, and Lie algebras",
+      "title": "Fix the meaning of G and the supported unit",
+      "detail": "Input Cartan type, rank, connectedness, simple Lie algebra, and central quotient. Because SU(2) has a center, do not directly use the abstract-group predicate IsSimpleGroup for this purpose.",
+      "acceptanceCriterion": "SU(2) and SO(3) share a Lie algebra but have distinct globalForm IDs. Reject direct products without the required simplicity and ranks outside the supported range.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "3807bced07ab149f4ed0378e8e2b190eb796f7aa2abf41c81eca3f838561080e",
+      "originalArtifacts": [
+        "groups.mjs",
+        "group-data.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y1-02",
+      "stage": "Y1",
+      "stageTitle": "Concrete compact groups, representations, and Lie algebras",
+      "title": "Store the root datum",
+      "detail": "Version the character and cocharacter lattices and their pairing, roots and coroots, and central quotient, as well as the Cartan matrix.",
+      "acceptanceCriterion": "Check integral pairings and Cartan conditions exactly. If global form is missing, leave global topology and representation-faithfulness features in a prepared state.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "d1a59d5e6544f25ad3110bf6c38897d551111a3e33f89db5c6bcd72e1f6428e3",
+      "originalArtifacts": [
+        "generate_groups.py",
+        "group-data.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y1-03",
+      "stage": "Y1",
+      "stageTitle": "Concrete compact groups, representations, and Lie algebras",
+      "title": "Generate a basis and structure constants",
+      "detail": "Export a Chevalley basis and sparse bracket table in a fixed order. Use computer algebra as a generator and an independent checker to verify the data.",
+      "acceptanceCriterion": "For all basis elements, the finite sums for antisymmetry and Jacobi must be exactly zero. Random sampling is not accepted as a proof of the full Jacobi identity.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "4054eac5338ad507b499e9caa8fa7a672ee8617ec15e61cca2e1bd5f34bf1de1",
+      "originalArtifacts": [
+        "generate_groups.py",
+        "exact.mjs",
+        "lean/MathScope/M1/Gauge/SU3.lean",
+        "lean/MathScope/M1/Gauge/G2.lean"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y1-04",
+      "stage": "Y1",
+      "stageTitle": "Concrete compact groups, representations, and Lie algebras",
+      "title": "Connect the compact real form",
+      "detail": "Record the coefficient field and change of basis from a complex Chevalley basis to the compact real form. Specify signs and normalizations for i h, e_α−e_−α, i(e_α+e_−α), and related vectors.",
+      "acceptanceCriterion": "Transformed brackets have real coefficients and T†=−T in the selected unitary representation. Reject a split real form labeled as compact.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "116ee9d185ac1963aead12eb943a7e14e6fab04955144857108743e0f7b7d68c",
+      "originalArtifacts": [
+        "generate_groups.py",
+        "group-data.mjs",
+        "groups.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y1-05",
+      "stage": "Y1",
+      "stageTitle": "Concrete compact groups, representations, and Lie algebras",
+      "title": "Certify the storage representation of group elements",
+      "detail": "Choose R_store:G→U(d). If a representation loses central information, as with a vector representation of Spin, store additional global data or choose a faithful representation.",
+      "acceptanceCriterion": "Check multiplication, inverse, identity, and representation-kernel contracts. Faithfulness on the Lie algebra alone does not establish faithfulness of the global group representation.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "e5c9f8dc2f6e9decfaee1f126eb19d2166145e266113fdcdfe57242520dc10d6",
+      "originalArtifacts": [
+        "matrix.mjs",
+        "groups.mjs",
+        "holonomy.mjs",
+        "lean/MathScope/M1/Gauge/Transport.lean"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y1-06",
+      "stage": "Y1",
+      "stageTitle": "Concrete compact groups, representations, and Lie algebras",
+      "title": "Fix the invariant form and action representation",
+      "detail": "Record B_G, the long-root normalization, and the trace index of R_action. The storage representation and action representation may differ.",
+      "acceptanceCriterion": "Check B([X,Y],Z)=B(X,[Y,Z]) and positive definiteness. Mark an action insensitive to the center as an intentional choice; do not copy β=2N/g₀² from SU(N) to arbitrary G.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "c6f889d811baa991923230f919a41fc6162d332d5490db2eec702c4aa92176f1",
+      "originalArtifacts": [
+        "generate_groups.py",
+        "groups.mjs",
+        "holonomy.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y1-07",
+      "stage": "Y1",
+      "stageTitle": "Concrete compact groups, representations, and Lie algebras",
+      "title": "Register family adapters and resource limits",
+      "detail": "Use a common interface for SU(N), Sp(N), Spin(N)/permitted quotients, G₂, F₄, E₆, E₇, and E₈, with separate implementation and certification states.",
+      "acceptanceCriterion": "Give a group the concrete state only when its arithmetic, exponential, representation dimension, and certificates exist. An adapter with only an added string name is metadata.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "3e6732e85473ad46c6467b4d6e1082c789126cedc63958d2db89d9536a8011a1",
+      "originalArtifacts": [
+        "index.mjs",
+        "groups.mjs",
+        "group-data.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y1-08",
+      "stage": "Y1",
+      "stageTitle": "Concrete compact groups, representations, and Lie algebras",
+      "title": "Separate exact certificates from floating-point regression",
+      "detail": "Keep exact coefficient certificates as Lean targets and float64 checks as rendering/numerical-engine tests. Provide small fixtures and error criteria depending on conditioning.",
+      "acceptanceCriterion": "Use normalized unitary and multiplication residual targets of 10⁻¹⁰ for small SU(2)/SU(3) matrices. Disable quantitative claims for larger representations without separate tolerances and error budgets.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "3918c3ec89b97ce448fcc100fd4f5964641b38850682bcc2734bcb08a52e0098",
+      "originalArtifacts": [
+        "matrix.mjs",
+        "exact.mjs",
+        "tests.mjs",
+        "lean/lean-audit.json"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y2-01",
+      "stage": "Y2",
+      "stageTitle": "Actual four-dimensional classical gauge fields",
+      "title": "Declare the 4D domain and boundary",
+      "detail": "Distinguish an observation window of an ℝ⁴ solution, a finite box, and a periodic torus. Input coordinates, units, orientation, the meaning of x₄, and boundary transition data.",
+      "acceptanceCriterion": "A truncated ℝ⁴ BPST field pasted onto a periodic grid is not automatically an exact torus solution. Record tail error for a window and seam checks for a periodic model.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "cd30e24dbe23ff65bf199de17deb1547b1f77c5aa8e9430c98c9cf3d867aa9f3",
+      "originalArtifacts": [
+        "fields.mjs",
+        "observations.mjs",
+        "index.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y2-02",
+      "stage": "Y2",
+      "stageTitle": "Actual four-dimensional classical gauge fields",
+      "title": "Certify an SU(2)→G embedding",
+      "detail": "Provide a linear map ι on the basis and, where possible, a global group homomorphism. Distinguish the group map's kernel from injectivity of the Lie algebra map.",
+      "acceptanceCriterion": "Check ι([X,Y])=[ιX,ιY] exactly for every pair of generators. A Lie algebra certificate alone cannot establish claims about the global group or bundle.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "3edeb87363afff6e0001e106ad9803e3e6de2d1fa17529f922b22ec16539c63c",
+      "originalArtifacts": [
+        "generate_groups.py",
+        "fields.mjs",
+        "groups.mjs",
+        "lean/MathScope/M1/Gauge/G2.lean"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y2-03",
+      "stage": "Y2",
+      "stageTitle": "Actual four-dimensional classical gauge fields",
+      "title": "Transport normalization using the embedding index",
+      "detail": "Calculate B_G(ιX,ιY)=I_ι B_SU2(X,Y) for fixed basic forms. Distinguish the representation trace index from the embedding index.",
+      "acceptanceCriterion": "The same I_ι must be obtained from the basis Gram matrix and included in action and topological densities. Reject copying a unit-charge SU(2) density to an arbitrary embedding unchanged.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "74c28ad5565e724e7371a2d6bfbdc61af1b2eafa7306643682568c3e6d335d24",
+      "originalArtifacts": [
+        "generate_groups.py",
+        "fields.mjs",
+        "family.mjs",
+        "index.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y2-04",
+      "stage": "Y2",
+      "stageTitle": "Actual four-dimensional classical gauge fields",
+      "title": "Lift the BPST reference to an actual G-field",
+      "detail": "Calculate A_G=ι(A_BPST) and F_G=ι(F_BPST), with center x₀, size ρ, and orientation. This is a particular family of classical G-fields.",
+      "acceptanceCriterion": "Check F(A_G)=ι(F(A)) and the self-duality sign. In the same normalization, finite-window integrals with tail correction must converge to I_ι and 8π²I_ι/g².",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "7e98048c674b9a487e530fe80af178dfea40bec25665828ea301d11e011a063f",
+      "originalArtifacts": [
+        "fields.mjs",
+        "tests.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y2-05",
+      "stage": "Y2",
+      "stageTitle": "Actual four-dimensional classical gauge fields",
+      "title": "Generate test fields using the full basis of G",
+      "detail": "Provide smooth finite families A_μ(x)=Σ_(a,m) c_(μ,a,m) φ_m(x) T_a. Actually compute components outside the embedded subalgebra.",
+      "acceptanceCriterion": "Curvature F_μν=∂_μ A_ν−∂_ν A_μ+[A_μ,A_ν] calculated from basis coefficients must agree with a matrix-commutator calculation. Do not label an off-shell test field as a Yang–Mills solution.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "196556d2d39b638dfc66a802a4790c2a23f477737710be3585e8c0e48a960c1e",
+      "originalArtifacts": [
+        "fields.mjs",
+        "index.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y2-06",
+      "stage": "Y2",
+      "stageTitle": "Actual four-dimensional classical gauge fields",
+      "title": "Separate solution residuals and conserved quantities",
+      "detail": "Calculate D_μ F_μν residuals, Bianchi residuals, action, and topological density. Compare analytic differentiation with lattice differentiation as separate paths.",
+      "acceptanceCriterion": "Check the theoretical zero BPST residual and numerical convergence. Do not hide nonzero residuals of test fields or effective perturbations, including by color normalization.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "8c1c398b49593c7c0e470a21f38ad27cb8de42757ee87ce04cf08c34e90e6df3",
+      "originalArtifacts": [
+        "fields.mjs",
+        "tests.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y2-07",
+      "stage": "Y2",
+      "stageTitle": "Actual four-dimensional classical gauge fields",
+      "title": "Test gauge transformations and observables",
+      "detail": "Fix the transformation law for A under the convention D=d+A. Distinguish gauge-dependent A,F components from invariant B_G(F,F) and appropriate traces.",
+      "acceptanceCriterion": "Invariant density before and after a nonconstant gauge transformation must agree within the stated error. Changed arrows alone do not imply a physical change of field.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "582101e397cab22a7ca4ebf1b6e26a01a85ccff387c93263709cb23be49c9a36",
+      "originalArtifacts": [
+        "fields.mjs",
+        "holonomy.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "Y2-08",
+      "stage": "Y2",
+      "stageTitle": "Actual four-dimensional classical gauge fields",
+      "title": "Export the classical-field construction record",
+      "detail": "Bind G, ι, I_ι, ρ, x₀, basis coefficients, boundary, differentiation method, normalization, and seed into one field revision.",
+      "acceptanceCriterion": "The same manifest reproduces A, F, and observables. A change to G or ι makes caches, projections, and related proof states stale.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ym-stages.json",
+      "originalRecordSha256": "edeb82d73a162acf4587aaca42e22c411e1c27784736a60ff7ede4ed481b7596",
+      "originalArtifacts": [
+        "index.mjs",
+        "family.mjs",
+        "observations.mjs",
+        "tests.mjs"
+      ],
+      "scopeDocument": "docs/MATHEMATICAL_SCOPE_EN.md"
+    },
+    {
+      "id": "N1-01",
+      "stage": "N1",
+      "stageTitle": "Source edition, theorem, and proof-evidence scope",
+      "title": "Identify the attached edition",
+      "detail": "Pin the 166-page OpenAI paper Finite Time Blowup for Navier–Stokes. Its attached SHA-256 is 0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f.",
+      "acceptanceCriterion": "All 166 pages must be readable and the hash must match. A different edition creates a separate edition record and is not substituted automatically.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "9a2cea50e762bc15a99a543efda1504126dfcc8ec5059833af36aa87ef37c25f",
+      "originalArtifacts": [
+        "sources.lock.json",
+        "paper-reference-map.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N1-02",
+      "stage": "N1",
+      "stageTitle": "Source edition, theorem, and proof-evidence scope",
+      "title": "Write the Theorem 1.1 contract",
+      "detail": "Store separately ν>0, u₀=0, f∈C_c^∞(ℝ³×(0,∞)), t∈[0,1), fixed spatial support, bounded L², and unbounded L∞.",
+      "acceptanceCriterion": "Connect every assumption, quantifier, and conclusion to page 1 or pages 123–126. Reject adding f=0 or a velocity smooth at t=1 to the conclusion.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "901d2723d6a5ac1fe884ecd4957fe3038f4e76d8894e8e36afbb2217a36231d7",
+      "originalArtifacts": [
+        "theorem-contract.json",
+        "N00 p1,p118,p120,pp123-126"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N1-03",
+      "stage": "N1",
+      "stageTitle": "Source edition, theorem, and proof-evidence scope",
+      "title": "Map the structure of all 166 pages",
+      "detail": "Map sections 1–10, Appendices A–C, and the references without gaps. Preserve boundaries where a section changes within a page.",
+      "acceptanceCriterion": "Cover pages 1–166 and make the path Theorem 4.6→5.5→7.5→9.6→9.9→10.1→10.3→1.1 navigable.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "a9c70c9edfb06a20da95018bf16454416597b72d5f522e357ebed20a81e17324",
+      "originalArtifacts": [
+        "paper-reference-map.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N1-04",
+      "stage": "N1",
+      "stageTitle": "Source edition, theorem, and proof-evidence scope",
+      "title": "Separate official announcement states",
+      "detail": "Record OpenAI's announcement of C/D and public Lean proofs separately from Clay's 2026-09-11 'apparently settled' notice and review procedure.",
+      "acceptanceCriterion": "Store retrieval dates, URLs, and document dates. Do not claim a final Clay award or a solution of unforced A/B without supporting evidence.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "56334c7cefe4a73ae12c8f1b7221a7c600f7bd6c99e7e8db7a9871c8e8ebb18e",
+      "originalArtifacts": [
+        "sources.lock.json publicStatus"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N1-05",
+      "stage": "N1",
+      "stageTitle": "Source edition, theorem, and proof-evidence scope",
+      "title": "Pin the official Lean environment",
+      "detail": "Pin the official repository commit, lean-toolchain, and lake-manifest. Read the then-current Lean 4.34.0-rc2/Mathlib/Lake instructions without automatically mixing later updates.",
+      "acceptanceCriterion": "For the selected commit, preserve exit codes, full logs, and environment hashes for lake exe cache get and lake build. The original blueprint stated that no rebuild had been performed at its date.",
+      "baselineStatus": "PARTIAL",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "8c3ef0236a03df1b6ef30a75b9c3700763788aa75bfe0d9aa72fc1a4a8aff7e5",
+      "originalArtifacts": [
+        "sources.lock.json",
+        "official-validation/official-audit-summary.json",
+        "official-validation/full-pinned-command-results.json",
+        "followup-20261009-default-build/interruption-observation-1750.json",
+        "original-build-release-snapshots/20261009T181519Z/snapshot.json",
+        "original-build-release-snapshots/20261009T181519Z/SNAPSHOT_MANIFEST.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N1-06",
+      "stage": "N1",
+      "stageTitle": "Source edition, theorem, and proof-evidence scope",
+      "title": "Check theorem dependencies and the Comparator",
+      "detail": "Trace NavierStokes.lean→ComparatorSolution/PaperResults and ComparatorSolution→ComparatorR3Theorem/ComparatorTheorem, and compare them with the C/D references.",
+      "acceptanceCriterion": "Store #print axioms output for the actual submitted theorems and the Comparator results. Do not confuse deliberate sorry placeholders in the challenge with dependencies of the proof root.",
+      "baselineStatus": "PARTIAL",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "f9b2d85f92fec693f2be703c2f28dd1ba49dd67e924361efd30e5f2743ea2d69",
+      "originalArtifacts": [
+        "formal-import-map.json",
+        "formal-adapters.json",
+        "evidence/lean-validation.json",
+        "official-validation/submitted-source-import-map.json",
+        "official-validation/ns-pinned-declarations.log",
+        "official-validation/official-audit-summary.json",
+        "official-validation/comparator-pinned-guarded.json",
+        "official-validation/comparator-environment-independent.json",
+        "official-validation/PinnedDeclarations.lean",
+        "official-validation/full-pinned-command-results.json",
+        "followup-construction/axis-pinned-audit.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N1-07",
+      "stage": "N1",
+      "stageTitle": "Source edition, theorem, and proof-evidence scope",
+      "title": "Define representation grades",
+      "detail": "Give theorem descriptions, direct source formulas, numerical profiles, finite correction stages, certified approximations, and separate reference solutions distinct states.",
+      "acceptanceCriterion": "No path may automatically promote the current exterior and Gaussian-core schematic to a fully reconstructed solution. Screens and exports must show the same grade.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "15c513e255b868620020ef1d40413336b35f0c8397b5dcdbb46f6362058e2118",
+      "originalArtifacts": [
+        "evidence-grades.json",
+        "index.mjs",
+        "evidence/numerical-validation.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N1-08",
+      "stage": "N1",
+      "stageTitle": "Source edition, theorem, and proof-evidence scope",
+      "title": "Fix what success and failure mean",
+      "detail": "A numerical residual passing establishes consistency only on its finite domain and precision. Keep verification of the paper's proof separate from verification of the numerical implementation.",
+      "acceptanceCriterion": "First record a test failure as an implementation, parameter, or resolution failure. A plot alone cannot declare a refutation of the paper or a new blowup proof.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "f2d913efdae241cea4de2cff43e15ff84f68c0998d292550c1278e5cc94fa10b",
+      "originalArtifacts": [
+        "README.md",
+        "index.mjs contract",
+        "evidence/numerical-validation.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N2-01",
+      "stage": "N2",
+      "stageTitle": "Coordinates, viscosity, exterior, and reference solutions",
+      "title": "Implement the actual similarity coordinates",
+      "detail": "Use τ=q(1−η²), z=q^(1/2−h)η, and X=r²/(2q). Solve q−z²q^(2h)=τ with a bracketed solver and recover signed η.",
+      "acceptanceCriterion": "Check the uniqueness lower bound L=1−2hη²≥1−2h>0. Compare round-trip error with at least 80-bit reference computation and retain τ as an independent variable.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "1dce9661e49dd89f6a2d2f6a512ada5d9da4fe7a6d89d487946dee27f38ad0a0",
+      "originalArtifacts": [
+        "coordinates.mjs",
+        "evidence/high-precision-fixtures.json",
+        "evidence/numerical-validation.json",
+        "Analytic.coordinate_denominator_positive"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N2-02",
+      "stage": "N2",
+      "stageTitle": "Coordinates, viscosity, exterior, and reference solutions",
+      "title": "Check derivative chain rules",
+      "detail": "Use T_b and Z_b from equation (4.2). Do not hold q,η,X constant when computing time or axial derivatives.",
+      "acceptanceCriterion": "For constant and monomial profiles q^b X^a η^c, direct Cartesian derivatives and transformed derivatives must agree. The normalized reference error target is 10⁻¹⁰.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "ef362ed282ef89b382e305e2e62a8e00fb6d3758de4eb24e9127030402b78238",
+      "originalArtifacts": [
+        "checks.mjs coordinateChecks",
+        "numerical-validation.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N2-03",
+      "stage": "N2",
+      "stageTitle": "Coordinates, viscosity, exterior, and reference solutions",
+      "title": "Rescale viscosity",
+      "detail": "Apply u_ν=√ν u₁(x/√ν,t), p_ν=ν p₁, and f_ν=√ν f₁, and scale both radial and axial coordinates by √ν.",
+      "acceptanceCriterion": "For ν=0.1,1,3, check PDE rescaling and ‖u_ν‖₂²=ν^(5/2)‖u₁‖₂². Values ν≤0 are invalid in this rescaling mode.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "1fbf909c200a22b02d3504eeb9338204c447929476a97f49ee2b62659d066edf",
+      "originalArtifacts": [
+        "heat.mjs",
+        "index.mjs viscosityEnergyCheck",
+        "numerical-validation.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N2-04",
+      "stage": "N2",
+      "stageTitle": "Coordinates, viscosity, exterior, and reference solutions",
+      "title": "Integrate the heat factor and bound its tail",
+      "detail": "Use H(Z)=Γ(1+h)^−1 ∫₀∞ e^(−v) v^h (1+Zv)^−h dv and derivative integrals. Bound the portion after a cutoff V using incomplete-gamma bounds.",
+      "acceptanceCriterion": "Verify H(0)=1, H′(0)=−h(1+h), and H″(0)=h(1+h)²(2+h). The sum of quadrature error, tail error, and rounding error must stay below the stated target.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "1685dcaada440f83419395f5ee453617d29d2f787c62d2925371c9dca666ff34",
+      "originalArtifacts": [
+        "heat.mjs",
+        "numerics.mjs",
+        "numerical-validation.json certified_heat_*"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N2-05",
+      "stage": "N2",
+      "stageTitle": "Coordinates, viscosity, exterior, and reference solutions",
+      "title": "Independently check the heat ODE and NS residual",
+      "detail": "Check Z²H″+[1+(2+2h)Z]H′+h(1+h)H=0 and K_t=K_rr+r⁻¹K_r−r⁻²K.",
+      "acceptanceCriterion": "Use a normalized residual target of 10⁻⁹ and check convergence at doubled precision and with a different differentiation path. For r>0, include p_r=K²/r in the full momentum residual.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "25f5386b05ea14e1f74b743e3a682ab984e0279171fd6f8f118687c62ea1b60f",
+      "originalArtifacts": [
+        "checks.mjs",
+        "high-precision-fixtures.json",
+        "numerical-validation.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N2-06",
+      "stage": "N2",
+      "stageTitle": "Coordinates, viscosity, exterior, and reference solutions",
+      "title": "Define axis, normalization, and support contracts",
+      "detail": "Use K=c_∞ s^−A H(2τ/s), s=r²/2. The setting c_∞=1 is an arbitrary display normalization, to be replaced by the actual N3 value later.",
+      "acceptanceCriterion": "Keep the exclusion r=0 in exported data. Do not automatically identify the z-independent exterior with a finite-energy solution on all ℝ³ or connect it to an actual core.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "abb439dddf327bf7ca51b12ff053a7ef1b2ad08b1dd25aeb7d3f688a18a1fdb2",
+      "originalArtifacts": [
+        "heat.mjs exteriorPoint",
+        "index.mjs exteriorJob",
+        "numerical-validation.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N2-07",
+      "stage": "N2",
+      "stageTitle": "Coordinates, viscosity, exterior, and reference solutions",
+      "title": "Implement a Taylor–Green reference solution",
+      "detail": "On a 2π-periodic domain use u=(a sin(x)cos(y),−a cos(x)sin(y),0), a=e^(−2νt), and p=a²(cos(2x)+cos(2y))/4.",
+      "acceptanceCriterion": "Check mean energy a²/4, mean enstrophy a²/2, mean dissipation νa², and dE/dt=−νa². Reversing the positive pressure sign must fail.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "f50ab5d0cad388b7fca582768343f9a1121b7a19cdb4194b0b8aa5fca97190de",
+      "originalArtifacts": [
+        "heat.mjs taylorGreenPoint",
+        "checks.mjs",
+        "numerical-validation.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N2-08",
+      "stage": "N2",
+      "stageTitle": "Coordinates, viscosity, exterior, and reference solutions",
+      "title": "Define error budgets and negative controls",
+      "detail": "Specify the denominator of normalized residuals, the norm, and sampling locations. Design fixtures that deliberately reverse the −r⁻²K heat term, omit pressure, or use the wrong ν.",
+      "acceptanceCriterion": "Only the correct formulas pass, and all three errors are detected. A test that merely copies the computation does not count as independent verification.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "33e7fcf0812b582876c5e3da203731c5c31730ad6b8cb236cae3bf98180bb9b7",
+      "originalArtifacts": [
+        "checks.mjs",
+        "numerical-validation.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N3-01",
+      "stage": "N3",
+      "stageTitle": "The actual inner–annulus–exterior leading profile",
+      "title": "Make the order of constant selection executable",
+      "detail": "Fix the order in (A.6) and (B.40): M_d→T_d=e^(M_d)+10→P_*→λ→h→matching tolerance,j₀→δ_*,σ_*,Λ→T_sh→C,X_R→transition widths→N.",
+      "acceptanceCriterion": "Replace every 'sufficiently large/small' requirement with an explicit bound or a proved selection condition. Do not substitute a UI example such as h=.005 for a certified choice.",
+      "baselineStatus": "PARTIAL",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "25e1eaec0a413ea1fbb1d9899c4ef128da92d355cdf87d1f868b046525a9d5cd",
+      "originalArtifacts": [
+        "followup-construction/axis-default-certificate.json",
+        "followup-construction/pressure-analytic-fixture.json",
+        "followup-construction/axis-source-default-certificate.json",
+        "followup-construction/axis-pinned-audit.json",
+        "followup-construction/source-inner-gluing-contract.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N3-02",
+      "stage": "N3",
+      "stageTitle": "The actual inner–annulus–exterior leading profile",
+      "title": "Construct the outer radial schedule and pressure datum",
+      "detail": "Determine Π_axis using the smooth step (A.5), radial schedules (A.7)–(A.13), Proposition A.4, and Lemma A.5.",
+      "acceptanceCriterion": "Verify E>0 and the outer moments, with four disjoint reserved patches. When replacing the far-field power law by the heat exterior, restore the pressure datum using the compensation in A.7.",
+      "baselineStatus": "PARTIAL",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "d9759eb0c4a6e82cab3372ce23ba56c3e1c6c6a756f401267b93111b492a9c87",
+      "originalArtifacts": [
+        "followup-construction/outer.mjs",
+        "followup-construction/outer-validation.json",
+        "followup-construction/outer-independent-reference.json",
+        "followup-construction/pressure-analytic-fixture.json",
+        "followup-construction/pressure-analytic-independent.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N3-03",
+      "stage": "N3",
+      "stageTitle": "The actual inner–annulus–exterior leading profile",
+      "title": "Construct axis data and a convergent power series",
+      "detail": "Solve the nonlinear fixed-point problem in Appendix B using U_*=4η+j₀, φ_*=exp(Λ∫ζ_*), and Y=ΛX.",
+      "acceptanceCriterion": "Certify an invariant ball in the B_ρ norm and a contraction bound below 1, or retain uncertified status. Check the fixtures f₀(4.1)=0.2711140554… and φ/φ_*>0.",
+      "baselineStatus": "PARTIAL",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "079e029fab0ecb52dcb1ad6dece2f0d64ddff0fa0c410136544d35f529d06513",
+      "originalArtifacts": [
+        "axis-series.mjs",
+        "followup-construction/axis-default-certificate.json",
+        "followup-construction/axis-source-default-certificate.json",
+        "followup-construction/axis-source-validation-manifest.json",
+        "followup-construction/axis-pinned-audit.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N3-04",
+      "stage": "N3",
+      "stageTitle": "The actual inner–annulus–exterior leading profile",
+      "title": "Recover the actual core pressure and radial velocity",
+      "detail": "Use E=√(2X)φ/C, Π_X=E²/(2X), and V₀=(X/L)[2ηU−2Dη A_X(U)−d∂_η A_X(U)].",
+      "acceptanceCriterion": "Verify Cartesian regularity at the axis and div u₀=0 as identities. Only the leading tangential residual in (4.13) vanishes; axial viscosity and other terms remain separately recorded residuals.",
+      "baselineStatus": "PARTIAL",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "8ea527976f75496324529669b17d6f76087529488b8da822eb66a8416f1519f5",
+      "originalArtifacts": [
+        "axis-series.mjs",
+        "checks.mjs",
+        "followup-construction/controlled-continuation.mjs",
+        "followup-construction/continuation-source-formula-independent.json",
+        "followup-construction/ns-source-formula-correction.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N3-05",
+      "stage": "N3",
+      "stageTitle": "The actual inner–annulus–exterior leading profile",
+      "title": "Continue the inner profile and glue five moments",
+      "detail": "Connect the inner profile following B.5–B.10, and match M,I,J,S,C_p using five bumps.",
+      "acceptanceCriterion": "Check invertibility of the 5×5 moment Jacobian and interval-Newton/implicit-function conditions. Joining values while omitting cumulative moments must fail.",
+      "baselineStatus": "BLOCKED",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "3953573aab3df0d08694bb2d1cb24647d9ff3f5d801cbab37ec6088d48a0b72c",
+      "originalArtifacts": [
+        "followup-construction/source-inner-gluing.mjs",
+        "followup-construction/source-inner-gluing-contract.json",
+        "followup-construction/source-inner-gluing-tests.json",
+        "followup-construction/source-inner-gluing-independent.json",
+        "followup-construction/source-inner-gluing-history.json",
+        "followup-construction/source-inner-gluing-final-evidence-binding.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N3-06",
+      "stage": "N3",
+      "stageTitle": "The actual inner–annulus–exterior leading profile",
+      "title": "Apply radial modulation of the cone",
+      "detail": "Use (C.12) with the N log X phase from Appendix C, and restore all moments in the first reserved patch.",
+      "acceptanceCriterion": "Measure the O(N⁻¹) value change and order-one radial derivative change separately. After fixing a finite N, certify a strict margin κ>0 in (4.26) over the entire interval.",
+      "baselineStatus": "BLOCKED",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "a48c55b3c8cb4ab5884a67cc55f746a5d11ee64905817cf1978a14962011324c",
+      "originalArtifacts": [
+        "followup-construction/admissible-loop.mjs",
+        "followup-construction/source-radial-modulation.mjs",
+        "followup-construction/source-radial-modulation-contract.json",
+        "followup-construction/c12-source-formula-independent.json",
+        "followup-construction/source-correction-independent.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N3-07",
+      "stage": "N3",
+      "stageTitle": "The actual inner–annulus–exterior leading profile",
+      "title": "Check support, endpoints, and reserved patches",
+      "detail": "Check T₀=0 for X≤X_a or X≥X_b, T₀≠0 in the interior, and ζ=exp(−t₁²/log²(X/X_a)−4/log²(X_b/X)).",
+      "acceptanceCriterion": "Check the edge limit of n=T₀/|T₀|, inner/outer flatness, and unmodified power laws on I_pos and I_mean. Never evaluate 0/0 directly at the edge.",
+      "baselineStatus": "PARTIAL",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "c4943a0f2b2edf560992bc98719392d4be0386ee7b8b2564a8f2a315203016d0",
+      "originalArtifacts": [
+        "radial.mjs",
+        "followup-construction/outer.mjs",
+        "followup-construction/source-inner-gluing-contract.json",
+        "followup-construction/source-radial-modulation-contract.json"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    },
+    {
+      "id": "N3-08",
+      "stage": "N3",
+      "stageTitle": "The actual inner–annulus–exterior leading profile",
+      "title": "Define the leading-profile data contract",
+      "detail": "Bind each profile, derivative, moment, cone margin, support, and error to the same edition and constant hashes, and compare them visually with the source formulas.",
+      "acceptanceCriterion": "Every clause of Theorem 4.6(i)–(vi) must link to numerical/analytic evidence or an explicit unresolved reason. If any clause lacks coverage, block the full certified profile grade.",
+      "baselineStatus": "PASS",
+      "sourceFile": "ns-stages.json",
+      "originalRecordSha256": "1517de31e70726c198d65526fc4e2594f4b621d05ddd6860cf73e089a2ba4ea2",
+      "originalArtifacts": [
+        "profile.mjs profileDataContract/theoremClauses",
+        "leading-profile-candidate.json",
+        "index.mjs"
+      ],
+      "scopeDocument": "docs/NS_GATES_EN.md"
+    }
+  ]
+}

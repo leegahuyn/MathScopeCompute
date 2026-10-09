@@ -1,0 +1,69 @@
+{
+  "schema": "MathScope.M1.ArithmeticValidationSummary/1",
+  "status": "PASS_EXPLICIT_SCOPE",
+  "checkedAt": "2026-10-09T14:44:38.696729+00:00",
+  "node": {
+    "version": "v24.19.0",
+    "command": [
+      "node",
+      "--test",
+      "mathscope-m1/arithmetic/tests/arithmetic.test.mjs"
+    ],
+    "exitCode": 0,
+    "tests": 38,
+    "pass": 38,
+    "fail": 0,
+    "log": "evidence/node-tests.tap",
+    "logSha256": "08888679febf532f9be5d8ed58670ed1e2118a86aa9b5be958d0c2182d181e89"
+  },
+  "independent": {
+    "pythonVersion": "Python 3.12.14",
+    "command": [
+      "python",
+      "mathscope-m1/arithmetic/tests/independent.py"
+    ],
+    "exitCode": 0,
+    "checks": 55,
+    "pass": 55,
+    "report": "evidence/independent-validation.json",
+    "reportSha256": "138cede773e8ac181c9302767735fd90b0a550356b5f68af9f467ab5f951d299",
+    "methods": [
+      "SymPy exact integer Smith normal form",
+      "SymPy symbolic polynomial identities for all weights",
+      "Decimal 100-digit logarithm",
+      "SymPy primality and Legendre character sums",
+      "mpmath 100-digit quadrature"
+    ],
+    "environment": {
+      "python": "3.12.14",
+      "sympy": "1.14.0",
+      "mpmath": "1.3.0"
+    }
+  },
+  "lean": {
+    "modules": 3,
+    "targets": 31,
+    "negativeControlsRejected": 4,
+    "warnings": 0,
+    "customAxioms": 0,
+    "audit": "evidence/lean-audit.json",
+    "auditSha256": "e45ffca3493af77534582fa7052ba454ceddd3797145d8ed368760445ca9bfaa",
+    "sourceHashesAllMatch": true,
+    "kernelModified": false,
+    "runtimeModified": false,
+    "guardModified": false
+  },
+  "checklist": {
+    "path": "checklist.json",
+    "sha256": "cada7fcfdcadd625719c0618f48c09f7d7c5420cb06c8b83201917da770205ee",
+    "P1toP3": {
+      "pass": 24,
+      "total": 24
+    },
+    "platformArithmeticOnly": {
+      "pass": 4,
+      "total": 4
+    }
+  },
+  "scopeBoundary": "The exact algebra and listed Lean theorems are checked. The genuine geometric crystalline/prismatic comparison uses source references, not imported Lean geometry theorems. Browser static audit is not live kernel execution."
+}

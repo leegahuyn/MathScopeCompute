@@ -1,0 +1,507 @@
+# MathScope M0 final-build unit test log
+# Bundle SHA-256: b337da82947040c17b2271d34eb70eb9fba46f2aca6e8860ffcce2cc089f8695
+# Page: 44
+# Run UTC: 2026-10-09T12:46:34.904774+00:00
+# Command: node --test --test-reporter=tap mathscope-m0/tests/acceptance.test.mjs mathscope-m0/tests/bridge.test.mjs mathscope-m0/tests/compute.test.mjs mathscope-m0/tests/contracts.test.mjs mathscope-m0/tests/integration.test.mjs mathscope-m0/tests/proof.test.mjs mathscope-m0/tests/webmcp.test.mjs
+TAP version 13
+# Subtest: browser-safe acceptance executes twelve isolated integration checks without session access
+ok 1 - browser-safe acceptance executes twelve isolated integration checks without session access
+  ---
+  duration_ms: 138.918456
+  type: 'test'
+  ...
+# Subtest: acceptance cancellation does not claim a complete pass
+ok 2 - acceptance cancellation does not claim a complete pass
+  ---
+  duration_ms: 2.782617
+  type: 'test'
+  ...
+# Subtest: the function under test is exactly the current builder injection
+ok 3 - the function under test is exactly the current builder injection
+  ---
+  duration_ms: 1.603201
+  type: 'test'
+  ...
+# Subtest: a storage failure leaves both in-memory state and stored data unchanged
+ok 4 - a storage failure leaves both in-memory state and stored data unchanged
+  ---
+  duration_ms: 14.954376
+  type: 'test'
+  ...
+# Subtest: switching the selected session during validation rejects the old save
+ok 5 - switching the selected session during validation rejects the old save
+  ---
+  duration_ms: 6.291178
+  type: 'test'
+  ...
+# Subtest: a concurrent M0 revision advance during validation rejects the stale save
+ok 6 - a concurrent M0 revision advance during validation rejects the stale save
+  ---
+  duration_ms: 8.537631
+  type: 'test'
+  ...
+# Subtest: different content at the same namespace revision is rejected
+ok 7 - different content at the same namespace revision is rejected
+  ---
+  duration_ms: 3.641218
+  type: 'test'
+  ...
+# Subtest: identical content at the same revision is an idempotent no-op
+ok 8 - identical content at the same revision is an idempotent no-op
+  ---
+  duration_ms: 3.35222
+  type: 'test'
+  ...
+# Subtest: a forged but internally rehashed baseline fails the actual release pin
+ok 9 - a forged but internally rehashed baseline fails the actual release pin
+  ---
+  duration_ms: 3.578194
+  type: 'test'
+  ...
+# Subtest: a successful namespace commit preserves legacy arrays, grades, checkpoints and other sessions
+ok 10 - a successful namespace commit preserves legacy arrays, grades, checkpoints and other sessions
+  ---
+  duration_ms: 12.615614
+  type: 'test'
+  ...
+# Subtest: a real typed namespace revision commits after the current revision with source hashes intact
+ok 11 - a real typed namespace revision commits after the current revision with source hashes intact
+  ---
+  duration_ms: 4.868523
+  type: 'test'
+  ...
+# Subtest: exact values preserve large integers and field/quotient distinctions
+ok 12 - exact values preserve large integers and field/quotient distinctions
+  ---
+  duration_ms: 3.404387
+  type: 'test'
+  ...
+# Subtest: rational enclosures and statistical estimates have different immutable meanings
+ok 13 - rational enclosures and statistical estimates have different immutable meanings
+  ---
+  duration_ms: 1.965878
+  type: 'test'
+  ...
+# Subtest: canonical JSON rejects silent loss and hashes every required context dimension
+ok 14 - canonical JSON rejects silent loss and hashes every required context dimension
+  ---
+  duration_ms: 30.349082
+  type: 'test'
+  ...
+# Subtest: all four fixtures run with validated envelopes and separate verification algorithms
+ok 15 - all four fixtures run with validated envelopes and separate verification algorithms
+  ---
+  duration_ms: 84.814358
+  type: 'test'
+  ...
+# Subtest: real worker executes the same source with actual message-driven progress
+ok 16 - real worker executes the same source with actual message-driven progress
+  ---
+  duration_ms: 80.333434
+  type: 'test'
+  ...
+# Subtest: missing finite scope, invalid budgets and unsafe exact integers are rejected before running
+ok 17 - missing finite scope, invalid budgets and unsafe exact integers are rejected before running
+  ---
+  duration_ms: 5.055169
+  type: 'test'
+  ...
+# Subtest: p-adic precision loss requests the extra digit and exact lifts refine only when available
+ok 18 - p-adic precision loss requests the extra digit and exact lifts refine only when available
+  ---
+  duration_ms: 14.352876
+  type: 'test'
+  ...
+# Subtest: cache respects source/precision/assumption changes and immutable result scope
+ok 19 - cache respects source/precision/assumption changes and immutable result scope
+  ---
+  duration_ms: 41.925108
+  type: 'test'
+  ...
+# Subtest: cancel → checkpoint → fresh engine resume reproduces the exact finite result
+ok 20 - cancel → checkpoint → fresh engine resume reproduces the exact finite result
+  ---
+  duration_ms: 420.455147
+  type: 'test'
+  ...
+# Subtest: operation exhaustion keeps a valid checkpoint and can resume within increased caps
+ok 21 - operation exhaustion keeps a valid checkpoint and can resume within increased caps
+  ---
+  duration_ms: 14.427616
+  type: 'test'
+  ...
+# Subtest: tampered checkpoint integrity or forged completed prefix cannot become a result
+ok 22 - tampered checkpoint integrity or forged completed prefix cannot become a result
+  ---
+  duration_ms: 17.746626
+  type: 'test'
+  ...
+# Subtest: observation bundle replays in a fresh session and never executes supplied sources
+ok 23 - observation bundle replays in a fresh session and never executes supplied sources
+  ---
+  duration_ms: 25.034189
+  type: 'test'
+  ...
+# Subtest: unsupported adapter and input caps return explicit bounded failure
+ok 24 - unsupported adapter and input caps return explicit bounded failure
+  ---
+  duration_ms: 4.052486
+  type: 'test'
+  ...
+# Subtest: queue has bounded concurrency and concurrent duplicate IDs cannot overwrite jobs
+ok 25 - queue has bounded concurrency and concurrent duplicate IDs cannot overwrite jobs
+  ---
+  duration_ms: 64.91356
+  type: 'test'
+  ...
+# Subtest: every complete starter contract validates and has a versioned JSON Schema
+ok 26 - every complete starter contract validates and has a versioned JSON Schema
+  ---
+  duration_ms: 6.519726
+  type: 'test'
+  ...
+# Subtest: canonical JSON is stable and exact integers must use strings beyond IEEE-754 range
+ok 27 - canonical JSON is stable and exact integers must use strings beyond IEEE-754 range
+  ---
+  duration_ms: 7.766371
+  type: 'test'
+  ...
+# Subtest: finite queries require bounds, preserve huge integer strings and reject infinite completeness claims
+ok 28 - finite queries require bounds, preserve huge integer strings and reject infinite completeness claims
+  ---
+  duration_ms: 4.470684
+  type: 'test'
+  ...
+# Subtest: a CW complex or finite p-adic quotient cannot be renamed into a proved prism
+ok 29 - a CW complex or finite p-adic quotient cannot be renamed into a proved prism
+  ---
+  duration_ms: 1.044265
+  type: 'test'
+  ...
+# Subtest: general G contracts demand global form, representation, dimension and explicit embedding
+ok 30 - general G contracts demand global form, representation, dimension and explicit embedding
+  ---
+  duration_ms: 2.364228
+  type: 'test'
+  ...
+# Subtest: PDE paper, illustrative model, manufactured force and bounded time are disjoint contracts
+ok 31 - PDE paper, illustrative model, manufactured force and bounded time are disjoint contracts
+  ---
+  duration_ms: 5.822224
+  type: 'test'
+  ...
+# Subtest: observations report lost information and scalar marginals cannot become connections
+ok 32 - observations report lost information and scalar marginals cannot become connections
+  ---
+  duration_ms: 0.676581
+  type: 'test'
+  ...
+# Subtest: a generic result cannot issue formal/theorem authority or turn statistics into rigorous intervals
+ok 33 - a generic result cannot issue formal/theorem authority or turn statistics into rigorous intervals
+  ---
+  duration_ms: 0.730261
+  type: 'test'
+  ...
+# Subtest: migration uses actual existing extension bundle and preserves legacy IDs, values, grades and input object
+ok 34 - migration uses actual existing extension bundle and preserves legacy IDs, values, grades and input object
+  ---
+  duration_ms: 9.833639
+  type: 'test'
+  ...
+# Subtest: baseline hash and exact starting version are enforced
+ok 35 - baseline hash and exact starting version are enforced
+  ---
+  duration_ms: 2.177581
+  type: 'test'
+  ...
+# Subtest: assumption edits stale only reachable claims and interpretations, preserving independent prime computation
+ok 36 - assumption edits stale only reachable claims and interpretations, preserving independent prime computation
+  ---
+  duration_ms: 58.264212
+  type: 'test'
+  ...
+# Subtest: USER_AXIOM origin survives revisions and cannot be smuggled into an unconditional target indirectly
+ok 37 - USER_AXIOM origin survives revisions and cannot be smuggled into an unconditional target indirectly
+  ---
+  duration_ms: 29.453192
+  type: 'test'
+  ...
+# Subtest: dependency cycles and plain metadata certificates are rejected atomically
+ok 38 - dependency cycles and plain metadata certificates are rejected atomically
+  ---
+  duration_ms: 19.209631
+  type: 'test'
+  ...
+# Subtest: finite-field Weil RH and a finite/channel observation do not close global conjectures
+ok 39 - finite-field Weil RH and a finite/channel observation do not close global conjectures
+  ---
+  duration_ms: 0.484657
+  type: 'test'
+  ...
+# Subtest: live receipt identity is checked and serialized copies are only historical audit references
+ok 40 - live receipt identity is checked and serialized copies are only historical audit references
+  ---
+  duration_ms: 0.17586
+  type: 'test'
+  ...
+# Subtest: content references and input revisions cannot be rebound to mismatched hashes
+ok 41 - content references and input revisions cannot be rebound to mismatched hashes
+  ---
+  duration_ms: 5.792169
+  type: 'test'
+  ...
+# Subtest: reusing a historical assumption revision leaves the recomputed interpretation stale
+ok 42 - reusing a historical assumption revision leaves the recomputed interpretation stale
+  ---
+  duration_ms: 17.009716
+  type: 'test'
+  ...
+# Subtest: export/import round-trip preserves exact mathematical payloads and legacy grades, quarantines current trust
+ok 43 - export/import round-trip preserves exact mathematical payloads and legacy grades, quarantines current trust
+  ---
+  duration_ms: 36.794502
+  type: 'test'
+  ...
+# Subtest: tampering is caught at bundle, baseline and payload levels
+ok 44 - tampering is caught at bundle, baseline and payload levels
+  ---
+  duration_ms: 24.314423
+  type: 'test'
+  ...
+# Subtest: USER_AXIOM cannot be hidden in an assumption ledger or a malformed namespace
+ok 45 - USER_AXIOM cannot be hidden in an assumption ledger or a malformed namespace
+  ---
+  duration_ms: 4.14991
+  type: 'test'
+  ...
+# Subtest: plain JSON and nested checkpoints cannot revive serialized proof authority
+ok 46 - plain JSON and nested checkpoints cannot revive serialized proof authority
+  ---
+  duration_ms: 15.16721
+  type: 'test'
+  ...
+# Subtest: all four actual adapters bind installed source, finite target, request and freshly verified result in one namespace
+ok 47 - all four actual adapters bind installed source, finite target, request and freshly verified result in one namespace
+  ---
+  duration_ms: 291.440499
+  type: 'test'
+  ...
+# Subtest: actual registered model reference is preserved and incompatible edited prime bounds are rejected
+ok 48 - actual registered model reference is preserved and incompatible edited prime bounds are rejected
+  ---
+  duration_ms: 6.372799
+  type: 'test'
+  ...
+# Subtest: unknown assumptions and forged installed-worker manifests cannot produce a prepared job
+ok 49 - unknown assumptions and forged installed-worker manifests cannot produce a prepared job
+  ---
+  duration_ms: 3.404877
+  type: 'test'
+  ...
+# Subtest: finite arithmetic adapters reject relabeled YM/PDE/prism targets and stale generated operand contexts
+ok 50 - finite arithmetic adapters reject relabeled YM/PDE/prism targets and stale generated operand contexts
+  ---
+  duration_ms: 41.402986
+  type: 'test'
+  ...
+# Subtest: assumption revision while a job runs prevents saving a stale interpretation and does not mutate the session
+ok 51 - assumption revision while a job runs prevents saving a stale interpretation and does not mutate the session
+  ---
+  duration_ms: 23.635509
+  type: 'test'
+  ...
+# Subtest: modified request or fabricated result values fail before save
+ok 52 - modified request or fabricated result values fail before save
+  ---
+  duration_ms: 16.010618
+  type: 'test'
+  ...
+# Subtest: explicit imported-input revalidation permits a fresh computation while old results remain untrusted
+ok 53 - explicit imported-input revalidation permits a fresh computation while old results remain untrusted
+  ---
+  duration_ms: 83.794214
+  type: 'test'
+  ...
+# Subtest: input revalidation does not revive already stale or historical dependencies
+ok 54 - input revalidation does not revive already stale or historical dependencies
+  ---
+  duration_ms: 15.685557
+  type: 'test'
+  ...
+# Subtest: all five shipped scopes recheck exact source bindings and get a branded local receipt
+ok 55 - all five shipped scopes recheck exact source bindings and get a branded local receipt
+  ---
+  duration_ms: 44.47772
+  type: 'test'
+  ...
+# Subtest: single source character change cannot reuse a previous kernel audit
+ok 56 - single source character change cannot reuse a previous kernel audit
+  ---
+  duration_ms: 14.132024
+  type: 'test'
+  ...
+# Subtest: one supplied job hash edit is rejected even with unchanged source
+ok 57 - one supplied job hash edit is rejected even with unchanged source
+  ---
+  duration_ms: 5.144702
+  type: 'test'
+  ...
+# Subtest: changed axiom text makes the associated conditional proof stale
+ok 58 - changed axiom text makes the associated conditional proof stale
+  ---
+  duration_ms: 19.840614
+  type: 'test'
+  ...
+# Subtest: delta context change is bound even when the source editor has not yet changed
+ok 59 - delta context change is bound even when the source editor has not yet changed
+  ---
+  duration_ms: 9.061456
+  type: 'test'
+  ...
+# Subtest: target declaration and runtime digest are part of the audit identity
+ok 60 - target declaration and runtime digest are part of the audit identity
+  ---
+  duration_ms: 9.795743
+  type: 'test'
+  ...
+# Subtest: an imported audit with a fabricated authority ID cannot self-certify
+ok 61 - an imported audit with a fabricated authority ID cannot self-certify
+  ---
+  duration_ms: 3.398178
+  type: 'test'
+  ...
+# Subtest: editing imported audit exit code, target type, axioms or source hash fails the immutable digest
+ok 62 - editing imported audit exit code, target type, axioms or source hash fails the immutable digest
+  ---
+  duration_ms: 8.62456
+  type: 'test'
+  ...
+# Subtest: no audit or arbitrary Lean source creates no compiler claim
+ok 63 - no audit or arbitrary Lean source creates no compiler claim
+  ---
+  duration_ms: 4.373139
+  type: 'test'
+  ...
+# Subtest: serialized and forged receipts have no runtime authority
+ok 64 - serialized and forged receipts have no runtime authority
+  ---
+  duration_ms: 3.989202
+  type: 'test'
+  ...
+# Subtest: same-ID or blank semantic metadata cannot borrow a live proof receipt
+ok 65 - same-ID or blank semantic metadata cannot borrow a live proof receipt
+  ---
+  duration_ms: 3.674697
+  type: 'test'
+  ...
+# Subtest: the explicit-hypothesis real theorem is displayed conditional even without custom axioms
+ok 66 - the explicit-hypothesis real theorem is displayed conditional even without custom axioms
+  ---
+  duration_ms: 3.793036
+  type: 'test'
+  ...
+# Subtest: a source bundle export requires fresh matching after a JSON round trip
+ok 67 - a source bundle export requires fresh matching after a JSON round trip
+  ---
+  duration_ms: 2.2706
+  type: 'test'
+  ...
+# Subtest: custom axioms cannot be requested at an unconditional or exact-finite grade
+ok 68 - custom axioms cannot be requested at an unconditional or exact-finite grade
+  ---
+  duration_ms: 3.946088
+  type: 'test'
+  ...
+# Subtest: reachable cycles are rejected with the cycle path
+ok 69 - reachable cycles are rejected with the cycle path
+  ---
+  duration_ms: 0.22986
+  type: 'test'
+  ...
+# Subtest: unrelated user axioms do not contaminate a disjoint claim closure
+ok 70 - unrelated user axioms do not contaminate a disjoint claim closure
+  ---
+  duration_ms: 0.134759
+  type: 'test'
+  ...
+# Subtest: a literature link and an open conjecture do not close a kernel proof
+ok 71 - a literature link and an open conjecture do not close a kernel proof
+  ---
+  duration_ms: 0.153146
+  type: 'test'
+  ...
+# Subtest: renaming the desired theorem as an identical assumption leaves the research gate open
+ok 72 - renaming the desired theorem as an identical assumption leaves the research gate open
+  ---
+  duration_ms: 0.259855
+  type: 'test'
+  ...
+# Subtest: dependency graph malformed edges, duplicate IDs and missing hypotheses are rejected
+ok 73 - dependency graph malformed edges, duplicate IDs and missing hypotheses are rejected
+  ---
+  duration_ms: 0.11551
+  type: 'test'
+  ...
+# Subtest: source traversal, duplicate files and nonfinite metadata are rejected before hashing
+ok 74 - source traversal, duplicate files and nonfinite metadata are rejected before hashing
+  ---
+  duration_ms: 3.89322
+  type: 'test'
+  ...
+# Subtest: canonical digests ignore object property order but preserve exact integer strings
+ok 75 - canonical digests ignore object property order but preserve exact integer strings
+  ---
+  duration_ms: 0.765813
+  type: 'test'
+  ...
+# Subtest: shipped source text, raw Lean logs and negative controls match files actually checked
+ok 76 - shipped source text, raw Lean logs and negative controls match files actually checked
+  ---
+  duration_ms: 7.88718
+  type: 'test'
+  ...
+# Subtest: full imported artifact closure is pinned outside the compact browser payload
+ok 77 - full imported artifact closure is pinned outside the compact browser payload
+  ---
+  duration_ms: 11.921979
+  type: 'test'
+  ...
+# Subtest: exact no-axiom fixture and user-axiom conditional fixture remain separately classified
+ok 78 - exact no-axiom fixture and user-axiom conditional fixture remain separately classified
+  ---
+  duration_ms: 0.486209
+  type: 'test'
+  ...
+# Subtest: bounded tools validate arguments before all effects; source status is not proof issuance
+ok 79 - bounded tools validate arguments before all effects; source status is not proof issuance
+  ---
+  duration_ms: 2.538005
+  type: 'test'
+  ...
+# Subtest: registration-only native surface works; repeated setup and cleanup affect owned registrations only
+ok 80 - registration-only native surface works; repeated setup and cleanup affect owned registrations only
+  ---
+  duration_ms: 1.877548
+  type: 'test'
+  ...
+# Subtest: failed registration releases only this setup; no polyfill or broad origin exposure
+ok 81 - failed registration releases only this setup; no polyfill or broad origin exposure
+  ---
+  duration_ms: 0.389136
+  type: 'test'
+  ...
+# Subtest: dispose during asynchronous registration cannot leave late owned tools
+ok 82 - dispose during asynchronous registration cannot leave late owned tools
+  ---
+  duration_ms: 0.984206
+  type: 'test'
+  ...
+1..82
+# tests 82
+# suites 0
+# pass 82
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 968.92295

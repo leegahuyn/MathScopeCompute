@@ -1,0 +1,280 @@
+{
+  "schema": "MathScope.SourceOuterImplementationValidation/1",
+  "status": "PASS",
+  "node": "v24.19.0",
+  "sourceFiles": [
+    {
+      "path": "outer.mjs",
+      "sha256": "4c0213f892a32611c79655fbe065cebbaca0fc9acdd0cf2dd057d2506a10c087"
+    },
+    {
+      "path": "outer.verify.mjs",
+      "sha256": "5538a35e432a4c3d80b7eba34ade789693121d791dbfdb32043b8bda48fcb815"
+    },
+    {
+      "path": "outer-reference.py",
+      "sha256": "f7d2d61a8d8db6368fa48795aec904386396a735f8b4391e624135ebded0e289"
+    }
+  ],
+  "fixture": {
+    "path": "outer-fixture.json",
+    "sha256": "33bb328c84363775f140d5d6ff71d7a18b571bdda33446939b0f666e7e0cb8a4"
+  },
+  "input": {
+    "parameters": {
+      "Md": 1,
+      "logP": 14,
+      "lambda": 0.0002,
+      "h": 1e-8,
+      "logXR": 20,
+      "Tf": 64,
+      "co": 0.005
+    },
+    "etas": [
+      0,
+      0.5,
+      1
+    ],
+    "samplesPerEta": 48,
+    "pressureOrder": 4,
+    "tolerance": 2e-8,
+    "heatOrder": 3
+  },
+  "resultHash": "49ba8d1a821bd40ac102e6dc6b79eacc4c1637b53d29fcfb700261459c49eb2c",
+  "checks": [
+    {
+      "id": "outer-json-validator-default",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "default-public-example-runs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-nan-eta",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-infinite-logP",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-non-json-callback",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-null-parameters",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-negative-h",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-h-ge-lambda-half",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-oversized-sample-array",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-huge-pressure-order",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-fractional-pressure-order",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-too-fine-tolerance",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-unknown-family",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-eta-outside-source-domain",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-giant-mesh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-scalar-input",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-prototype-input",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "validator-rejects-maxPoints-without-computation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "bounded-operation-exhaustion",
+      "pass": true,
+      "detail": "RESOURCE_LIMIT"
+    },
+    {
+      "id": "bounded-cancellation",
+      "pass": true,
+      "detail": "CANCELLED"
+    },
+    {
+      "id": "finite-default-budget",
+      "pass": true,
+      "detail": {
+        "operations": 1799315
+      }
+    },
+    {
+      "id": "result-json-safe",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "same-input-same-result-hash",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "source-step-values-and-symmetry",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "actual-A19-bracket-full-derivative",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "actual-MJ-affine-end-corrections",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "A11-two-bumps-pressure-increment",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "A7-three-additive-bumps-residuals",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "A7-heat-change-never-rounds-to-equality",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "A7-endpoint-d-zero-consistent",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "pressure-entire-source-integral-no-cutoff",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "pressure-Taylor-parity-and-sign",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "pressure-XR-independence-heat-XR-dependence",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "actual-sampled-field-and-log-coordinate-definition",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "physical-heat-edit-retained-when-field-underflows",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "finite-heat-polynomial-is-not-exact-heat-solution",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "reject-source-bracket-outside-small-lambda-regime",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "maximum-supported-pressure-jet-is-budgeted",
+      "pass": true,
+      "detail": {
+        "order": 54,
+        "operations": 5348725
+      }
+    },
+    {
+      "id": "no-original-witness-certification",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "independent-reference-has-exact-fixture-hash",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "counts": {
+    "total": 40,
+    "passed": 40,
+    "failed": 0
+  },
+  "independentReference": {
+    "path": "outer-independent-reference.json",
+    "sha256": "0d0c7bb441c411116613652a3a1a7d9bb3600201a6ee0ea5cec46d34bfbc11af",
+    "counts": {
+      "total": 71,
+      "passed": 71,
+      "failed": 0
+    },
+    "status": "PASS"
+  },
+  "mathematicalScope": {
+    "componentOperations": "IMPLEMENTED_AND_TESTED_POINTWISE",
+    "originalN302": "PARTIAL",
+    "originalN307": "PARTIAL",
+    "exactFiveMoments": false,
+    "entireEtaInterval": false,
+    "globalWitness": false
+  },
+  "command": "node mathscope-m1/navier/followup-construction/outer.verify.mjs",
+  "limits": [
+    "Finite implementation checks and independent numerical fixtures are not a certificate of all source parameter inequalities.",
+    "Dimensionless residual tolerance does not imply a small dimensional residual or exact moment equality.",
+    "The ideal source profile has not been attached to a certified analytic axis, strict stress cone, or admissible loop."
+  ]
+}

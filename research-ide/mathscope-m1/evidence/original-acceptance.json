@@ -1,0 +1,632 @@
+[
+  {
+    "id": "I0-04",
+    "title": "일반 G와 상태족 계약",
+    "detail": "Lie algebra와 전역 군 형태, 표현, 불변 내적, 결합상수, 격자 a·L, 경계, seed, 관측 채널 및 Δ의 역할을 명시한다.",
+    "accept": "G 이름 또는 Δ 숫자만 있는 요청으로 실제 gauge-field job이 생성되지 않는다. 기본 상태족은 사용자가 즉시 실행할 수 있다.",
+    "stage": "I0",
+    "stageTitle": "수학 대상·가정·관측 계약 확장",
+    "sourceFile": "platform-stages.json"
+  },
+  {
+    "id": "I1-03",
+    "title": "정밀도 소모 전파",
+    "detail": "나눗셈, 미분, Frobenius, determinant, basis reduction, quadrature, series sum별 입력 정밀도와 출력 손실을 계산한다.",
+    "accept": "p-adic delta 연산에 추가 자릿수가 필요할 때 자동 증액한다. 유효 자릿수가 부족하면 계산 성공 대신 PRECISION_REQUIRED를 반환한다.",
+    "stage": "I1",
+    "stageTitle": "정확 연산·정밀도·계산 작업 계층",
+    "sourceFile": "platform-stages.json"
+  },
+  {
+    "id": "I1-07",
+    "title": "독립 계산 교차 검증",
+    "detail": "직접 점 세기와 Frobenius, FFT와 direct convolution, analytic density와 quadrature, Lean certificate와 생성기 결과를 교차 검사한다.",
+    "accept": "동일 구현을 복사한 두 결과를 독립 검증으로 세지 않는다. fixture에 최소 두 방식과 오차 기준이 명시된다.",
+    "stage": "I1",
+    "stageTitle": "정확 연산·정밀도·계산 작업 계층",
+    "sourceFile": "platform-stages.json"
+  },
+  {
+    "id": "I3-02",
+    "title": "유한 대수 정리부터 형식화",
+    "detail": "delta identities의 허용 정밀도, d²=0, semilinear chain map, 유한 소수 구간 인증, Lie bracket, lattice holonomy를 작은 정리로 나눈다.",
+    "accept": "자체 fixture와 일부러 잘못된 certificate가 각각 수락·거부된다. 숫자 예시와 전칭 정리의 범위가 구분된다.",
+    "stage": "I3",
+    "stageTitle": "Lean 형식화·증거 승격·연구 관문",
+    "sourceFile": "platform-stages.json"
+  },
+  {
+    "id": "I3-03",
+    "title": "해석적 가정의 구체화",
+    "detail": "완비성, uniform convergence, 미분과 극한의 교환, semigroup bounds, spectral measure, stability constants의 정확한 진술을 저장한다.",
+    "accept": "무한 합의 미분이나 continuum limit를 쓰는 lemma마다 필요한 norm·정의역·양화 범위가 표시된다.",
+    "stage": "I3",
+    "stageTitle": "Lean 형식화·증거 승격·연구 관문",
+    "sourceFile": "platform-stages.json"
+  },
+  {
+    "id": "I3-04",
+    "title": "외부 비교 정리의 adapter",
+    "detail": "프리즘 비교·trace formula·BSD의 알려진 경우·NS 원문 정리를 인용 레벨과 실제 Lean import 레벨로 구분한다.",
+    "accept": "문헌 링크만 연결된 결과는 THEOREM REFERENCE이며, 정확한 exported Lean theorem을 import한 경우에만 kernel 결과와 연결된다.",
+    "stage": "I3",
+    "stageTitle": "Lean 형식화·증거 승격·연구 관문",
+    "sourceFile": "platform-stages.json"
+  },
+  {
+    "id": "P1-01",
+    "title": "무한 영역과 완료 범위를 구분한다",
+    "detail": "PrimeSet은 논리적 정의로 저장한다. 생성기는 nextPrime 및 streamInterval을 제공하고 각 요청의 끝점·예산·마지막 인증 범위를 기록한다.",
+    "accept": "전역 allPrimesComputed=true 필드를 금지한다. [a,b] 완료와 무한 영역의 정의가 서로 다른 타입이어야 한다.",
+    "stage": "P1",
+    "stageTitle": "전체 소수의 명세와 소수별 산술 객체 묶음",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P1-02",
+    "title": "구간 체와 누락 방지 증명서를 만든다",
+    "detail": "[a,b]의 배수를 지울 때 √b까지의 기초 소수 목록 완전성을 재귀적으로 요구한다. 시작 배수는 max(p²,ceil(a/p)p)로 정하고 정수 제곱근을 사용한다.",
+    "accept": "π(10)=4, π(100)=25, π(1000)=168, π(10⁶)=78498. 0·1 제외, 2 포함, p² 경계 및 비정렬 구간을 통과한다.",
+    "stage": "P1",
+    "stageTitle": "전체 소수의 명세와 소수별 산술 객체 묶음",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P1-03",
+    "title": "메모리·범위·재개 계약을 고정한다",
+    "detail": "초기 프로파일은 한 구간 2²⁰개 정수, 화면 샘플 최대 20000점으로 둔다. 세그먼트 해시와 기초 소수 상한을 저장하고 취소 시 마지막 완결 세그먼트만 커밋한다.",
+    "accept": "[2,10⁶]을 17개 임의 구간으로 나누어 계산·합치기·재개한 목록이 단일 계산과 일치한다. 한 세그먼트 누락 또는 중복은 완전성 검사에서 실패한다.",
+    "stage": "P1",
+    "stageTitle": "전체 소수의 명세와 소수별 산술 객체 묶음",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P1-04",
+    "title": "π·ψ·Li와 표시 오차를 분리한다",
+    "detail": "π는 정수, ψ는 소수 거듭제곱을 포함한 log 선형결합 및 실수 ball로 저장한다. Li₂(x)=∫₂ˣdt/log t와 통상 li(x)의 정규화 차이를 표시한다.",
+    "accept": "ψ(10.5)=3log2+2log3+log5+log7=log2520. p^k 경계에서 가중치가 한 번만 더해진다. Li 오차 상계가 없으면 approximate 등급으로 유지한다.",
+    "stage": "P1",
+    "stageTitle": "전체 소수의 명세와 소수별 산술 객체 묶음",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P1-05",
+    "title": "큰 정수와 소수성 인증을 처리한다",
+    "detail": "Number 안전정수 범위를 넘는 끝점·곱은 BigInt를 사용한다. probable-prime 결과와 검증된 primality certificate를 분리하고, 선택한 인증 알고리즘의 독립 verifier를 둔다.",
+    "accept": "합성수 341, 561, 1105는 PRIME_CERTIFIED가 될 수 없다. 지원 밖 인증서는 UNKNOWN이며 화면 색상이 증명 등급을 승격시키지 않는다.",
+    "stage": "P1",
+    "stageTitle": "전체 소수의 명세와 소수별 산술 객체 묶음",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P1-06",
+    "title": "소수별 prism과 동일 모형의 섬유를 연결한다",
+    "detail": "정수 계수 모형, 최소모형 변환, smoothness·discriminant 증명서를 저장하고 p별 BasePrism을 생성한다. 각 N의 감소 사상만 precision tower의 화살표로 제공한다.",
+    "accept": "p=5의 계수를 p=7 ring 원소로 직접 더하는 요청은 거부한다. 모형 판별식이 0인 소수와 곡선 자체의 bad reduction을 구별한다.",
+    "stage": "P1",
+    "stageTitle": "전체 소수의 명세와 소수별 산술 객체 묶음",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P1-07",
+    "title": "good·bad·무한소의 인자를 묶는다",
+    "detail": "국소 인자에는 소수, 표현·Frobenius convention, good/bad 판정, conductor, 사상 출처를 넣는다. archimedean gamma factor와 전역 정규화는 별도 객체로 둔다.",
+    "accept": "good-prime 목록만 있는 묶음은 INCOMPLETE_LOCAL_DATA. bad-prime 인자를 생략한 곱을 완전한 L(E,s)로 저장할 수 없다.",
+    "stage": "P1",
+    "stageTitle": "전체 소수의 명세와 소수별 산술 객체 묶음",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P1-08",
+    "title": "3D 소수 탐색의 수학적 의미를 고정한다",
+    "detail": "유한 범위 스캔·확대·소수 간격·π 정규화 오차를 선택하게 한다. z축이 구간, 절단 상한, residue class, cohomology degree 중 무엇인지 view manifest에 저장한다.",
+    "accept": "임의의 카메라 회전·LOD 축약 후 원자료 해시와 π가 유지된다. 표본 그래프가 모든 소수 또는 PNT 증명이라는 문구로 출력되지 않는다.",
+    "stage": "P1",
+    "stageTitle": "전체 소수의 명세와 소수별 산술 객체 묶음",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P2-01",
+    "title": "prism 입력 가정을 검사한다",
+    "detail": "A의 δ-구조, I의 Cartier 조건, (p,I)-완비성, p∈I+φ(I)A 및 boundedness를 선언·근거와 함께 저장한다. 첫 base는 (ℤ_p,(p)), φ=id다.",
+    "accept": "ℤ/p^N과 (p)를 그대로 p-torsionfree prism으로 승인하는 fixture는 실패한다. 미검증 가정은 admission 목록에 남는다.",
+    "stage": "P2",
+    "stageTitle": "정확한 계수환·정밀도·derived complex 핵심",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P2-02",
+    "title": "정밀도 손실을 타입에 포함한다",
+    "detail": "p-adic N, 좌표 D, Čech/동형차수 H, root-depth M, q−1/u 차수 U를 각각 기록한다. δ(a)=(φ(a)−a^p)/p는 목표 N에 입력 N+1 이상을 요구한다.",
+    "accept": "N자리만으로 δ를 N자리 출력하는 요청은 거부하거나 N−1로 낮춘다. p=3에서 a=0과 a=3^N은 mod3^N 같지만 δ의 mod3^N 값이 다를 수 있음을 검출한다.",
+    "stage": "P2",
+    "stageTitle": "정확한 계수환·정밀도·derived complex 핵심",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P2-03",
+    "title": "체의 rank와 유한환 모듈을 구분한다",
+    "detail": "ℤ/p^N 위에서는 비단위로 나누는 Gaussian elimination을 금지한다. Smith normal form·DVR invariant factors 또는 검증 가능한 kernel/image presentation을 출력한다.",
+    "accept": "[p] : ℤ/p³→ℤ/p³의 kernel과 cokernel은 각각 ℤ/p. p modp³를 pivot inverse로 사용하면 실패한다.",
+    "stage": "P2",
+    "stageTitle": "정확한 계수환·정밀도·derived complex 핵심",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P2-04",
+    "title": "복합체·사상·homotopy를 검증한다",
+    "detail": "d_{k+1}d_k=0, chain-map 식, homotopy 식 f−g=dh+hd를 원 coefficient ring에서 확인한다. φ-semilinear 사상은 D_kF_k=F_{k+1}σ(D_k)로 검사한다.",
+    "accept": "임의의 한 행렬 원소를 바꾼 mutation fixture가 실패한다. modp^N 검사만 있으면 결과 명세 역시 modp^N으로 한정된다.",
+    "stage": "P2",
+    "stageTitle": "정확한 계수환·정밀도·derived complex 핵심",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P2-05",
+    "title": "절단과 경계 조건을 명시한다",
+    "detail": "단순 차수 cutoff, quotient truncation, smart truncation을 별도 연산으로 둔다. d·φ·곱이 cutoff 밖으로 나가는 항을 버리기 전에 그 연산이 정의되는 target 범위를 산출한다.",
+    "accept": "d가 밖으로 나가는 유한 좌표 subspace는 subcomplex로 승인하지 않는다. P¹ Frobenius의 target D→pD를 요구한다.",
+    "stage": "P2",
+    "stageTitle": "정확한 계수환·정밀도·derived complex 핵심",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P2-06",
+    "title": "derived base change를 구현 계약으로 둔다",
+    "detail": "free/K-flat replacement 또는 Tor 계산을 거쳐 tensor한다. H(C)⊗B와 H(C⊗^L B)를 자동 동일시하지 않는다.",
+    "accept": "C=[ℤ_p --p→ ℤ_p]를 modp로 내리면 두 항의 미분은 0이므로 H⁰,H¹ 모두 𝔽_p다. 원래 H⁰=0을 단순 tensor한 결과와 다름을 fixture로 보존한다.",
+    "stage": "P2",
+    "stageTitle": "정확한 계수환·정밀도·derived complex 핵심",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P2-07",
+    "title": "세 종류의 필트레이션을 별도 타입으로 둔다",
+    "detail": "stupid degree F^rC^k=(k≥r이면 C^k), de Rham form-degree Hodge, Frobenius divisibility에서 유도되는 Nygaard를 구분한다. Nygaard는 적용 정리의 base twist와 descent를 요구한다.",
+    "accept": "F^r의 d-안정성을 검사한다. k≤r를 그대로 cochain subcomplex라 부르거나 cochain 차원을 H^k 필트레이션 차원으로 출력하면 실패한다.",
+    "stage": "P2",
+    "stageTitle": "정확한 계수환·정밀도·derived complex 핵심",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P2-08",
+    "title": "검증 산출물을 독립 재실행 가능하게 한다",
+    "detail": "행렬·기저·환·정밀도·사상·입력 해시를 한 manifest로 내보낸다. 외부 계산기는 certificate를 만들고 작은 verifier가 다시 확인하도록 한다.",
+    "accept": "표시용 소수점·3D 좌표 없이 원자료만으로 d²와 module invariants를 재계산한다. 환 또는 basis hash 하나만 바꾸면 기존 certificate는 무효다.",
+    "stage": "P2",
+    "stageTitle": "정확한 계수환·정밀도·derived complex 핵심",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P3-01",
+    "title": "점의 base 사례를 완성한다",
+    "detail": "X=Spec𝔽_p에서 complex ℤ_p[0]와 φ=id를 기록한다. 출력은 symbolic 전체 객체와 C⊗^Lℤ/p^N의 유한 계산을 함께 제공한다.",
+    "accept": "p∈{2,3,5,7}, N∈{1,2,4,8}에서 H⁰=ℤ/p^N, H^{k≠0}=0. 이것을 임의 X의 공식을 증명한 것으로 확대하지 않는다.",
+    "stage": "P3",
+    "stageTitle": "첫 실제 prismatic 계산: 점과 ℙ¹의 인증된 비교 모델",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P3-02",
+    "title": "ℙ¹의 실제 기하 입력과 cover를 만든다",
+    "detail": "두 chart t,s와 s=t⁻¹인 겹침을 입력한다. lift의 smooth/proper 근거 및 Čech descent 전제를 저장하고 polynomial degree D≥1의 명시적 total complex를 구성한다.",
+    "accept": "basis의 chart·form degree·Čech degree가 각각 복원된다. C⁰,C¹,C² 크기는 2D+2,4D+1,2D+1이다.",
+    "stage": "P3",
+    "stageTitle": "첫 실제 prismatic 계산: 점과 ℙ¹의 인증된 비교 모델",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P3-03",
+    "title": "D=1 golden matrices를 검증한다",
+    "detail": "설계 부록의 5×4 d₀와 3×5 d₁을 정수에서 검사한다. 단위 minor와 chain decomposition을 이용해 SNF 및 cohomology를 인증한다.",
+    "accept": "d₁d₀=0; SNF의 비영 invariant factors는 d₀에서 (1,1,1), d₁에서 (1,1). H⁰=A,H¹=0,H²=A·[dt/t].",
+    "stage": "P3",
+    "stageTitle": "첫 실제 prismatic 계산: 점과 ℙ¹의 인증된 비교 모델",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P3-04",
+    "title": "누락 좌표차수 전체에 대한 contraction을 증명한다",
+    "detail": "각 nonzero Laurent weight의 complex를 단위 pivot으로 소거한다. D를 늘렸을 때 추가되는 summand마다 명시적 h를 주고 p-adic completed limit에 연속적으로 확장한다.",
+    "accept": "모든 k≠0에 대해 dh+hd=id를 기호적으로 증명한다. D=1,2,5에서 rank가 같다는 관측만 있으면 FULL_MODEL_CERTIFIED로 승격하지 않는다.",
+    "stage": "P3",
+    "stageTitle": "첫 실제 prismatic 계산: 점과 ℙ¹의 인증된 비교 모델",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P3-05",
+    "title": "유한 정밀도 reduction을 비교한다",
+    "detail": "전체 completed model과 finite-perfect replacement 사이 i,r,h를 저장하고 p^N reduction이 그 항등식을 보존함을 검증한다.",
+    "accept": "N=1,2,4,8 결과를 아래 정밀도로 내리면 정확히 일치한다. H² torsion이 갑자기 생기면 분모 사용 또는 cutoff 오류로 실패시킨다.",
+    "stage": "P3",
+    "stageTitle": "첫 실제 prismatic 계산: 점과 ℙ¹의 인증된 비교 모델",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P3-06",
+    "title": "Frobenius를 chain 수준에서 계산한다",
+    "detail": "t↦t^p,s↦s^p 및 d(t^p)=pt^{p−1}dt를 사용하여 C(D)→C(pD) map을 만든다. i,r을 거쳐 finite-perfect model에 이송한다.",
+    "accept": "정수 chain-map 항등식 통과 후 H⁰의 F=1, H²의 F=p. D에 맞춰 잘라 만든 map이 항등식을 깨뜨리는 negative fixture를 보유한다.",
+    "stage": "P3",
+    "stageTitle": "첫 실제 prismatic 계산: 점과 ℙ¹의 인증된 비교 모델",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P3-07",
+    "title": "실제 prismatic 비교의 범위를 인증한다",
+    "detail": "S02 Corollary 3.8과 S01 crystalline comparison을 잇는 정리 적용 기록을 만든다. φ_A=id인 현재 base에서 twist가 없어지는 이유를 명시한다.",
+    "accept": "기하 조건·lift·completed complex·quasi-isomorphism 근거가 모두 있어야 PRISMATIC_VIA_COMPARISON. 문헌 정리가 Lean에 없으면 그 부분은 EXTERNAL_THEOREM이며 FORMAL_COMPLETE로 표시하지 않는다.",
+    "stage": "P3",
+    "stageTitle": "첫 실제 prismatic 계산: 점과 ℙ¹의 인증된 비교 모델",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "P3-08",
+    "title": "오류 주입과 모델 구별 검사를 수행한다",
+    "detail": "CW 원·토러스, bare de Rham matrix, P¹ comparison model에 서로 다른 object type을 부여한다. cup-product 구조와 E∞ 구조의 인증도 모듈 cohomology 인증과 분리한다.",
+    "accept": "CW 입력에 prism label만 붙인 fixture, contraction 없는 cutoff, 잘못된 Frob target, 무근거 E∞-formality 주장이 모두 거부된다.",
+    "stage": "P3",
+    "stageTitle": "첫 실제 prismatic 계산: 점과 ℙ¹의 인증된 비교 모델",
+    "sourceFile": "arithmetic-stages.json"
+  },
+  {
+    "id": "Y1-01",
+    "title": "G의 의미와 지원 단위를 고정",
+    "detail": "Cartan type·rank·연결성·단순 Lie algebra·중심 몫을 입력한다. SU(2)의 중심 때문에 추상군의 IsSimpleGroup을 그대로 사용하지 않는다.",
+    "accept": "SU(2)와 SO(3)는 같은 Lie algebra를 공유하되 다른 globalForm ID를 가진다. 단순성이 없는 direct product와 비허용 rank는 거부한다.",
+    "stage": "Y1",
+    "stageTitle": "일반 G의 실제 대수·전역 군·표현",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y1-02",
+    "title": "Root datum을 저장",
+    "detail": "Cartan 행렬뿐 아니라 character/cocharacter lattice와 pairing, roots/coroots, central quotient를 버전 관리한다.",
+    "accept": "정수 pairing과 Cartan 조건을 정확히 확인하고, 전역 형태가 누락되면 global topology·표현 충실성 기능을 준비 상태로 남긴다.",
+    "stage": "Y1",
+    "stageTitle": "일반 G의 실제 대수·전역 군·표현",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y1-03",
+    "title": "기저·구조상수를 생성",
+    "detail": "Chevalley 기저와 sparse bracket table을 고정 순서로 내보낸다. CAS는 생성기로 사용하고 독립 검사기가 데이터를 확인한다.",
+    "accept": "모든 기저 원소에 대해 반대칭성과 Jacobi의 유한 합이 정확히 0이다. 임의 표본 검사를 전체 Jacobi 증명으로 인정하지 않는다.",
+    "stage": "Y1",
+    "stageTitle": "일반 G의 실제 대수·전역 군·표현",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y1-04",
+    "title": "Compact real form을 연결",
+    "detail": "복소 Chevalley 기저에서 compact real form으로 옮기는 변환과 계수체를 기록한다. i h, eα−e−α, i(eα+e−α) 등의 부호·정규화를 명시한다.",
+    "accept": "변환된 bracket이 실수 계수를 가지며 선택한 unitary 표현에서 T†=−T이다. split real form을 compact로 표기하면 거부한다.",
+    "stage": "Y1",
+    "stageTitle": "일반 G의 실제 대수·전역 군·표현",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y1-05",
+    "title": "군 원소의 저장 표현을 인증",
+    "detail": "R_store:G→U(d)를 정한다. Spin의 벡터 표현처럼 중심 정보를 잃는 경우 추가 전역 데이터를 저장하거나 충실한 표현을 선택한다.",
+    "accept": "곱·역원·단위원·표현 kernel 계약을 확인한다. Lie algebra가 충실하다는 사실만으로 전역 군 표현의 충실성을 인정하지 않는다.",
+    "stage": "Y1",
+    "stageTitle": "일반 G의 실제 대수·전역 군·표현",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y1-06",
+    "title": "작용의 불변형과 표현을 고정",
+    "detail": "B_G와 long-root 정규화, R_action의 trace index를 기록한다. 저장 표현과 작용 표현은 다를 수 있다.",
+    "accept": "B([X,Y],Z)=B(X,[Y,Z])와 양의 정부호를 확인한다. 중심에 무감각한 작용은 의도된 선택으로 표시하고 SU(N)의 β=2N/g₀²를 일반 G에 복사하지 않는다.",
+    "stage": "Y1",
+    "stageTitle": "일반 G의 실제 대수·전역 군·표현",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y1-07",
+    "title": "계열별 어댑터와 자원 한도를 등록",
+    "detail": "SU(N), Sp(N), Spin(N)/허용 몫, G₂, F₄, E₆,E₇,E₈를 같은 인터페이스로 연결하되 구현·인증 상태를 각각 둔다.",
+    "accept": "그룹별 산술·지수함수·표현 차원·인증서가 있어야 concrete 상태를 준다. 문자열 이름만 추가한 어댑터는 metadata 상태다.",
+    "stage": "Y1",
+    "stageTitle": "일반 G의 실제 대수·전역 군·표현",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y1-08",
+    "title": "정확 계산과 부동소수점 회귀검사를 분리",
+    "detail": "정확 계수 인증서는 Lean 대상, float64 검사는 렌더·수치 엔진 대상으로 유지한다. 작은 fixture와 조건수별 오차 기준을 둔다.",
+    "accept": "SU(2)/SU(3) 작은 행렬 fixture의 unitary·곱 잔차 목표를 10⁻¹⁰로 두고 정규화한다. 큰 표현은 별도 허용오차·오차예산이 없으면 정량 주장을 잠근다.",
+    "stage": "Y1",
+    "stageTitle": "일반 G의 실제 대수·전역 군·표현",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y2-01",
+    "title": "4D 영역과 경계를 선언",
+    "detail": "R⁴ 해의 관측 창, 유한 box, 주기 torus를 구별한다. 좌표·단위·orientation·x₄ 역할·경계 transition data를 입력한다.",
+    "accept": "R⁴ BPST를 잘라 붙인 주기 격자가 자동으로 torus의 정확한 해가 되지 않는다. 관측 창이면 tail 오차, 주기 모델이면 seam 검사를 기록한다.",
+    "stage": "Y2",
+    "stageTitle": "실제 G값 4차원 고전장",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y2-02",
+    "title": "SU(2)→G 임베딩을 인증",
+    "detail": "기저상 선형 사상 ι와 가능하면 전역 군 homomorphism을 제공한다. group map의 kernel과 Lie algebra의 단사성을 구별한다.",
+    "accept": "모든 생성자 쌍에서 ι([X,Y])=[ιX,ιY]가 정확히 성립한다. 전역 군·bundle 관련 주장은 Lie algebra 인증만으로 통과하지 않는다.",
+    "stage": "Y2",
+    "stageTitle": "실제 G값 4차원 고전장",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y2-03",
+    "title": "임베딩 지수로 정규화를 운반",
+    "detail": "B_G(ιX,ιY)=Iι B_SU2(X,Y)를 고정 기본형에 대해 계산한다. 표현 trace index와 embedding index를 구별한다.",
+    "accept": "기저 Gram 행렬에서 동일한 Iι가 나오고 작용·위상 밀도에 반영된다. 일반 임베딩에 unit-charge SU(2) 밀도를 그대로 붙이면 거부한다.",
+    "stage": "Y2",
+    "stageTitle": "실제 G값 4차원 고전장",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y2-04",
+    "title": "BPST reference를 실제 G장으로 올림",
+    "detail": "A_G=ι(A_BPST), F_G=ι(F_BPST)를 계산하고 위치 x₀·크기 ρ·orientation을 설정한다. 이는 G의 특정 고전적 해족이다.",
+    "accept": "F(A_G)=ι(F(A))와 자기쌍대성의 부호를 확인한다. 동일한 정규화에서 유한 창 적분은 tail 보정 후 Iι 및 8π²Iι/g²에 수렴한다.",
+    "stage": "Y2",
+    "stageTitle": "실제 G값 4차원 고전장",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y2-05",
+    "title": "G의 전체 기저를 사용하는 시험장 생성",
+    "detail": "Aμ(x)=Σa,m cμ,a,m φm(x)Ta의 매끄러운 유한 함수족을 제공한다. 임베딩 부분대수 밖의 성분도 실제로 계산한다.",
+    "accept": "기저 계수에서 직접 계산한 Fμν=∂μAν−∂νAμ+[Aμ,Aν]와 행렬 commutator 계산이 일치한다. off-shell 시험장을 YM 해로 표기하지 않는다.",
+    "stage": "Y2",
+    "stageTitle": "실제 G값 4차원 고전장",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y2-06",
+    "title": "해의 잔차와 보존량을 분리",
+    "detail": "DμFμν 잔차, Bianchi 잔차, 작용, 위상 밀도를 계산한다. 해석식 미분과 격자 미분을 별도 경로로 비교한다.",
+    "accept": "BPST의 이론적 잔차 0과 수치 수렴을 확인한다. 시험장·유효 perturbation의 nonzero 잔차는 숨기거나 색상 정규화로 제거하지 않는다.",
+    "stage": "Y2",
+    "stageTitle": "실제 G값 4차원 고전장",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y2-07",
+    "title": "게이지 변환과 관측량을 시험",
+    "detail": "D=d+A의 convention으로 A의 변환을 고정한다. A·F 성분은 gauge dependent, B_G(F,F)와 적절한 trace는 invariant로 구분한다.",
+    "accept": "비상수 gauge transformation 전후 invariant density가 정해진 오차 내 동일하다. 벡터 화살표가 바뀌어도 장의 물리적 변화라고 자동 해석하지 않는다.",
+    "stage": "Y2",
+    "stageTitle": "실제 G값 4차원 고전장",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "Y2-08",
+    "title": "고전장 생성 기록을 내보냄",
+    "detail": "G·ι·Iι·ρ·x₀·기저 계수·경계·미분기·정규화·seed를 하나의 field revision에 묶는다.",
+    "accept": "같은 manifest는 같은 A/F와 관측량을 재현한다. G 또는 ι를 바꾸면 캐시·투영·관련 증명 상태가 stale로 바뀐다.",
+    "stage": "Y2",
+    "stageTitle": "실제 G값 4차원 고전장",
+    "sourceFile": "ym-stages.json"
+  },
+  {
+    "id": "N1-01",
+    "title": "첨부 판본 식별",
+    "detail": "제목 OpenAI, Finite Time Blowup for Navier–Stokes, PDF 166쪽을 고정한다. 첨부 SHA-256은 0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f이다.",
+    "accept": "166개 페이지가 모두 읽히고 해시가 일치한다. 다른 판본이면 자동 대체하지 않고 별도 판본 기록을 만든다.",
+    "stage": "N1",
+    "stageTitle": "논문·정리·증거 범위 고정",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N1-02",
+    "title": "Theorem 1.1 계약 작성",
+    "detail": "ν>0, u0=0, f∈Cc∞(R³×(0,∞)), t∈[0,1), 고정 공간 지지, bounded L², unbounded L∞를 각각 필드로 저장한다.",
+    "accept": "모든 가정·양화사·결론에 p1 또는 pp123–126 출처가 연결된다. f=0 또는 t=1에서 smooth velocity를 결론에 추가하면 실패다.",
+    "stage": "N1",
+    "stageTitle": "논문·정리·증거 범위 고정",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N1-03",
+    "title": "166쪽 구조 지도",
+    "detail": "§1–10, Appendix A–C, 참고문헌을 빠짐없이 매핑한다. 같은 페이지에서 절이 바뀌는 경계를 유지한다.",
+    "accept": "p1부터 p166까지 coverage가 있고 Theorem4.6→5.5→7.5→9.6→9.9→10.1→10.3→1.1 경로가 탐색된다.",
+    "stage": "N1",
+    "stageTitle": "논문·정리·증거 범위 고정",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N1-04",
+    "title": "공식 발표 상태 분리",
+    "detail": "OpenAI의 C/D 해결 및 Lean 공개 주장, Clay의 2026-09-11 apparently settled 공지와 심사 절차를 서로 다른 출처로 기록한다.",
+    "accept": "조회일·URL·문서 날짜를 저장한다. Clay 최종 수상 확정이나 unforced A/B 해결을 근거 없이 표시하지 않는다.",
+    "stage": "N1",
+    "stageTitle": "논문·정리·증거 범위 고정",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N1-05",
+    "title": "공식 Lean 환경 고정",
+    "detail": "공식 저장소 commit, lean-toolchain, lake-manifest를 pin한다. 현재 안내의 Lean4.34.0-rc2/Mathlib/Lake를 읽되 이후 업데이트를 자동 혼합하지 않는다.",
+    "accept": "선택 commit에서 lake exe cache get 및 lake build의 종료 코드·전체 로그·환경 해시를 보존한다. 이 설계 작성 시에는 재빌드 미수행이다.",
+    "stage": "N1",
+    "stageTitle": "논문·정리·증거 범위 고정",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N1-06",
+    "title": "정리 의존성과 Comparator 검사",
+    "detail": "NavierStokes.lean→ComparatorSolution/PaperResults, ComparatorSolution→ComparatorR3Theorem/ComparatorTheorem을 추적하고 C/D reference와 비교한다.",
+    "accept": "실제 제출 정리의 #print axioms와 Comparator 결과를 저장한다. challenge의 의도된 sorry placeholder와 proof root 의존성을 혼동하지 않는다.",
+    "stage": "N1",
+    "stageTitle": "논문·정리·증거 범위 고정",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N1-07",
+    "title": "표현 등급 정의",
+    "detail": "정리 설명, 원문 직접식, 수치 프로파일, 유한 보정 단계, 인증된 근사, 별도 기준 해를 서로 다른 상태로 둔다.",
+    "accept": "현재 exterior와 Gaussian core 도식에서 full reconstructed solution 상태로 자동 승격되는 경로가 없다. 모든 화면·export에 동일한 등급이 표시된다.",
+    "stage": "N1",
+    "stageTitle": "논문·정리·증거 범위 고정",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N1-08",
+    "title": "성공·실패 의미 고정",
+    "detail": "수치 residual 통과는 유한 영역·정밀도에서의 일관성이다. 논문의 증명 검증과 수치 구현 검증을 각각 별도 증거로 둔다.",
+    "accept": "테스트 실패는 우선 구현·매개변수·해상도 실패로 기록한다. 그래프만으로 논문 반증 또는 새 blowup 증명을 선언할 수 없다.",
+    "stage": "N1",
+    "stageTitle": "논문·정리·증거 범위 고정",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N2-01",
+    "title": "실제 similarity 좌표 구현 사양",
+    "detail": "τ=q(1−η²), z=q^(1/2−h)η, X=r²/(2q)를 사용한다. q−z²q^(2h)=τ를 bracketed solve하고 부호 있는 η를 복원한다.",
+    "accept": "q의 유일성 하한 L=1−2hη²≥1−2h>0을 검사한다. 80비트 이상 기준 계산과 왕복 오차를 비교하고 τ는 독립 변수로 유지한다.",
+    "stage": "N2",
+    "stageTitle": "좌표·점성·외곽 해·정확한 기준 검사",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N2-02",
+    "title": "도함수 연쇄 법칙 검사",
+    "detail": "(4.2)의 Tb,Zb를 사용한다. q,η,X를 상수 취급한 채 시간·축 도함수를 계산하지 않는다.",
+    "accept": "상수·다항 프로파일 q^b X^a η^c에 대해 Cartesian 직접 미분과 변환 미분이 일치한다. 정규화한 기준 오차 목표는 10^−10이다.",
+    "stage": "N2",
+    "stageTitle": "좌표·점성·외곽 해·정확한 기준 검사",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N2-03",
+    "title": "점성 재척도화",
+    "detail": "uν=√ν u1(x/√ν,t), pν=νp1, fν=√νf1을 적용하고 반경과 축 좌표도 √ν 배율로 바꾼다.",
+    "accept": "ν=0.1,1,3 기준에서 PDE 재척도화와 ∥uν∥²₂=ν^(5/2)∥u1∥²₂가 확인된다. ν≤0은 이 재척도화 모드의 입력 오류다.",
+    "stage": "N2",
+    "stageTitle": "좌표·점성·외곽 해·정확한 기준 검사",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N2-04",
+    "title": "Heat factor 적분과 꼬리 상계",
+    "detail": "H(Z)=Γ(1+h)^−1∫₀∞e^−v v^h(1+Zv)^−h dv 및 도함수 적분을 사용한다. 절단 V 이후는 incomplete-gamma 상계로 평가한다.",
+    "accept": "H(0)=1, H′(0)=−h(1+h), H″(0)=h(1+h)²(2+h)를 만족한다. 적분 오차·꼬리·반올림의 합이 명시된 목표 이하이다.",
+    "stage": "N2",
+    "stageTitle": "좌표·점성·외곽 해·정확한 기준 검사",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N2-05",
+    "title": "Heat ODE와 NS 잔차 독립 검사",
+    "detail": "Z²H″+[1+(2+2h)Z]H′+h(1+h)H=0 및 Kt=Krr+r^−1Kr−r^−2K를 검사한다.",
+    "accept": "정규화 residual 목표 10^−9를 두고 2배 정밀도·다른 미분 경로에서 수렴한다. r>0에서 p_r=K²/r를 포함한 전체 momentum residual을 검사한다.",
+    "stage": "N2",
+    "stageTitle": "좌표·점성·외곽 해·정확한 기준 검사",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N2-06",
+    "title": "축·정규화·지지 계약",
+    "detail": "K=c∞s^−A H(2τ/s), s=r²/2. c∞=1은 임의 표시 정규화이며 추후 N3의 실제 c∞로 교체한다.",
+    "accept": "r=0 제외가 export에도 유지된다. z독립 exterior를 R³ 전체의 finite-energy 해 또는 실제 core와 자동 연결하지 않는다.",
+    "stage": "N2",
+    "stageTitle": "좌표·점성·외곽 해·정확한 기준 검사",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N2-07",
+    "title": "Taylor–Green 기준 해",
+    "detail": "u=(a sinx cosy,−a cosx siny,0), a=e^−2νt, p=a²(cos2x+cos2y)/4를 2π 주기 영역에 둔다.",
+    "accept": "mean E=a²/4, mean enstrophy=a²/2, mean dissipation=νa², dE/dt=−νa²가 확인된다. 양의 pressure 부호를 반대로 하면 실패해야 한다.",
+    "stage": "N2",
+    "stageTitle": "좌표·점성·외곽 해·정확한 기준 검사",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N2-08",
+    "title": "오차 예산과 음성 대조군",
+    "detail": "정규화 residual 분모·norm·sampling 위치를 정의한다. 잘못된 heat −r^−2K 부호, 빠진 pressure, 잘못된 ν를 고의 입력하는 fixture를 설계한다.",
+    "accept": "올바른 식만 통과하고 세 오류가 검출된다. 단순히 계산식과 동일한 구현을 복사한 테스트는 독립 검증으로 세지 않는다.",
+    "stage": "N2",
+    "stageTitle": "좌표·점성·외곽 해·정확한 기준 검사",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N3-01",
+    "title": "상수의 선택 순서 실행 명세",
+    "detail": "(A.6),(B.40)의 Md→Td=e^Md+10→P*→λ→h→matching tolerance,j0→δ*,σ*,Λ→Tsh→C,XR→transition widths→N을 고정한다.",
+    "accept": "각 sufficiently large/small 요구를 명시적 상하계 또는 증명된 선택 조건으로 바꾼다. h=.005 같은 UI 예시를 인증된 선택으로 대체 사용하지 않는다.",
+    "stage": "N3",
+    "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N3-02",
+    "title": "외곽 radial schedule와 압력 datum",
+    "detail": "(A.5) smooth step, (A.7)–(A.13) radial schedule, PropositionA.4와 LemmaA.5로 Πaxis를 정한다.",
+    "accept": "E>0와 outer moments를 검증하고 예약된 네 patch가 겹치지 않는다. 원거리 power law를 heat exterior로 바꿀 때 A.7의 보상으로 압력 datum을 복원한다.",
+    "stage": "N3",
+    "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N3-03",
+    "title": "축 자료와 수렴 멱급수",
+    "detail": "U*=4η+j0, φ*=exp(Λ∫ζ*)와 Y=ΛX를 사용해 AppendixB의 nonlinear fixed point를 푼다.",
+    "accept": "Bρ norm의 invariant ball와 contraction 상계 <1을 인증하거나 미인증 상태로 남긴다. f0(4.1)=0.2711140554… 및 φ/φ*>0 fixture를 확인한다.",
+    "stage": "N3",
+    "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N3-04",
+    "title": "실제 core 압력·방사 속도 복원",
+    "detail": "E=√(2X)φ/C, ΠX=E²/(2X), V0=(X/L)[2ηU−2DηAX(U)−d∂ηAX(U)]를 사용한다.",
+    "accept": "axis Cartesian regularity와 div u0=0을 항등식으로 확인한다. (4.13)의 leading tangential residual만 0이며 axial viscosity 등은 별도 잔차로 남는다.",
+    "stage": "N3",
+    "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N3-05",
+    "title": "Inner continuation과 다섯 모멘트 접합",
+    "detail": "B.5–B.10에 따라 inner profile을 연결하고 M,I,J,S,Cp를 다섯 bump로 맞춘다.",
+    "accept": "5×5 moment Jacobian 가역성과 interval Newton/implicit-function 조건을 확인한다. 값만 이어 붙이고 누적 모멘트를 생략하면 실패다.",
+    "stage": "N3",
+    "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N3-06",
+    "title": "Cone의 radial modulation",
+    "detail": "AppendixC의 N logX 위상을 가진 (C.12)를 사용하고 첫 예약 patch에서 모든 모멘트를 복구한다.",
+    "accept": "값 변화 O(N^−1), radial derivative의 order-one 변화를 별도 측정한다. 유한 N을 고정한 뒤 (4.26)의 strict margin κ>0을 구간 전체에서 인증한다.",
+    "stage": "N3",
+    "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N3-07",
+    "title": "지지·끝점·예약 patch 검사",
+    "detail": "T0=0 on X≤Xa 또는 X≥Xb, 내부 T0≠0, ζ=exp(−t1²/log²(X/Xa)−4/log²(Xb/X))를 확인한다.",
+    "accept": "n=T0/|T0|의 edge limit, inner/outer flatness, Ipos와 Imean의 unmodified power law를 검사한다. edge에서 0/0을 직접 계산하지 않는다.",
+    "stage": "N3",
+    "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+    "sourceFile": "ns-stages.json"
+  },
+  {
+    "id": "N3-08",
+    "title": "Leading-profile 데이터 계약",
+    "detail": "각 프로파일·도함수·모멘트·cone margin·지지·오차를 같은 판본/상수 해시로 묶고 원문식과 시각적으로 대조한다.",
+    "accept": "Theorem4.6(i)–(vi)의 모든 항목에 수치/해석 증거 또는 미해결 이유가 연결된다. 하나라도 없으면 full certified profile 등급을 차단한다.",
+    "stage": "N3",
+    "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+    "sourceFile": "ns-stages.json"
+  }
+]

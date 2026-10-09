@@ -1,0 +1,518 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:StateFamilySpec:1",
+  "title": "MathScope StateFamilySpec v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "MathScope.StateFamilySpec/1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assumptionRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "gaugeGroupRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hash": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "hash"
+      ],
+      "additionalProperties": false
+    },
+    "fieldConstruction": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "EMBEDDED_BPST",
+            "LIE_ALGEBRA_EXPANSION",
+            "LATTICE_WILSON",
+            "DECLARED_MODEL"
+          ]
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gaugeConvention": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "embedding": {
+          "type": "object",
+          "properties": {
+            "domain": {
+              "const": "SU(2)"
+            },
+            "codomainRef": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "hash": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "id",
+                "revision",
+                "hash"
+              ],
+              "additionalProperties": false
+            },
+            "formula": {
+              "type": "string",
+              "minLength": 1
+            },
+            "index": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "certificateStatus": {
+              "enum": [
+                "DECLARED",
+                "THEOREM_REFERENCE",
+                "CERTIFICATE_REQUIRED"
+              ]
+            },
+            "sourceRefs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "hash": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "id",
+                  "revision",
+                  "hash"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "domain",
+            "codomainRef",
+            "formula",
+            "index",
+            "certificateStatus",
+            "sourceRefs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "kind",
+        "rule",
+        "gaugeConvention",
+        "parameters"
+      ],
+      "additionalProperties": false
+    },
+    "delta": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "ASSUMED_BOUND",
+            "UNIT_RESCALE",
+            "EFFECTIVE_FAMILY",
+            "ENSEMBLE_ESTIMATE"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "units": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "mode",
+        "value",
+        "units",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "coupling": {
+      "type": "object",
+      "properties": {
+        "g": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "normalization": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "g",
+        "normalization"
+      ],
+      "additionalProperties": false
+    },
+    "lattice": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "a": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "L": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "boundary": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "a",
+            "L",
+            "boundary"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "seed": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "channels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "definition"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "FINITE"
+        },
+        "primeInterval": {
+          "type": "object",
+          "properties": {
+            "lower": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "upper": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            }
+          },
+          "required": [
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        "pAdic": {
+          "type": "object",
+          "properties": {
+            "p": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "digits": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "p",
+            "digits"
+          ],
+          "additionalProperties": false
+        },
+        "series": {
+          "type": "object",
+          "properties": {
+            "order": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "timeMax": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?:[1-9][0-9]*(?:\\.[0-9]+)?|0\\.[0-9]*[1-9][0-9]*)$"
+                }
+              ]
+            }
+          },
+          "required": [
+            "order"
+          ],
+          "additionalProperties": false
+        },
+        "spatial": {
+          "type": "object",
+          "properties": {
+            "bounds": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "minItems": 1,
+              "maxItems": 8
+            },
+            "timeMax": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "bounds"
+          ],
+          "additionalProperties": false
+        },
+        "finite": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "itemCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "description",
+            "itemCount"
+          ],
+          "additionalProperties": false
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "primeInterval"
+          ]
+        },
+        {
+          "required": [
+            "pAdic"
+          ]
+        },
+        {
+          "required": [
+            "series"
+          ]
+        },
+        {
+          "required": [
+            "spatial"
+          ]
+        },
+        {
+          "required": [
+            "finite"
+          ]
+        }
+      ]
+    },
+    "energyInterpretation": {
+      "enum": [
+        "DECLARED_BOUND",
+        "UNIT_CONVENTION",
+        "EFFECTIVE_MODEL",
+        "CHANNEL_ESTIMATE"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "id",
+    "revision",
+    "sourceRefs",
+    "assumptionRefs",
+    "gaugeGroupRef",
+    "fieldConstruction",
+    "delta",
+    "coupling",
+    "lattice",
+    "seed",
+    "channels",
+    "scope",
+    "energyInterpretation"
+  ],
+  "additionalProperties": false
+}

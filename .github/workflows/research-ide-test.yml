@@ -1,0 +1,47 @@
+name: MathScope research IDE checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research-ide/**'
+      - '.github/workflows/research-ide-test.yml'
+  pull_request:
+    paths:
+      - 'research-ide/**'
+      - '.github/workflows/research-ide-test.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: research-ide
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate preserved source and English metadata
+        run: python3 tools/verify_english_release.py
+      - name: Run Worker, integration, and English launcher regressions
+        run: node --test mathscope-m1/tests/core.test.mjs mathscope-m1/tests/followup-integration.test.mjs tools/mathscope-en.test.mjs
+      - name: Install the pinned independent reference dependency
+        run: python3 -m pip install mpmath==1.3.0
+      - name: Check directed interval arithmetic and rejection controls
+        run: python3 -B -m unittest discover -s mathscope-m1/navier/followup-next/uniform-gluing -p test_uniform_moment_map.py -v
+      - name: Verify the recorded outer-candidate rejection and its scope
+        run: |
+          python3 -B mathscope-m1/navier/followup-next/outer-uniform/verify_axial_counterexample.py
+          python3 -B mathscope-m1/navier/followup-next/outer-uniform/test_outer_audit.py
+      - name: Check the separate source-parameter path and immutable baseline
+        run: python3 -B mathscope-m1/navier/followup-next/source-coherence/independent_variant.py

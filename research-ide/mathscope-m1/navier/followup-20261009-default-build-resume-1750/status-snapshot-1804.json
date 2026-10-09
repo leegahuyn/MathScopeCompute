@@ -1,0 +1,87 @@
+{
+  "recordedUTC": "2026-10-09T18:02:51.018383+00:00",
+  "status": "RUNNING",
+  "startedUTC": "2026-10-09T17:50:28.774028+00:00",
+  "controllerPID": 2,
+  "buildPID": 12,
+  "processChecks": {
+    "note": "The runner-recorded PID 2/12 are inside its nested PID namespace. /proc is mounted with host PIDs; a direct /proc/2 existence test is inapplicable. The records below map NSpid and command to host /proc IDs.",
+    "observedUTC": "2026-10-09T18:03:38.734891+00:00",
+    "matches": {
+      "controller": {
+        "hostProcId": 91204,
+        "namespacePid": [
+          "91204",
+          "2"
+        ],
+        "comm": "python",
+        "state": "State:\tS (sleeping)",
+        "command": [
+          "python",
+          "mathscope-m1/navier/followup-20261009-default-build-resume-1750/run.py"
+        ]
+      },
+      "build": {
+        "hostProcId": 91214,
+        "namespacePid": [
+          "91214",
+          "12"
+        ],
+        "comm": "lake",
+        "state": "State:\tS (sleeping)",
+        "command": [
+          "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-4.34.0-rc2-linux/bin/lake",
+          "build"
+        ]
+      }
+    },
+    "numberOfLakeBuildProcesses": 1
+  },
+  "latestResource": {
+    "recordedUTC": "2026-10-09T18:02:29.434461+00:00",
+    "disk": {
+      "total": 33770192896,
+      "used": 26338258944,
+      "free": 5697171456
+    },
+    "memoryCurrentBytes": 8589586432,
+    "memoryMax": "8589934592",
+    "memoryEvents": {
+      "low": 0,
+      "high": 0,
+      "max": 72468809,
+      "oom": 0,
+      "oom_kill": 0,
+      "oom_group_kill": 0
+    },
+    "memoryAnonBytes": 1859932160,
+    "memoryFileBytes": 4861079552,
+    "cpuMax": "800000 100000"
+  },
+  "resultReceiptExists": false,
+  "logTail": [
+    "✔ [9668/11424] Built Euler.MeanCurlTensor (46s)",
+    "✔ [9669/11424] Built Euler.MeanBoundaryMixed (62s)",
+    "✔ [9670/11424] Built Euler.GraphDivergence (99s)",
+    "✔ [9671/11424] Built Euler.CanonicalGraphPotential (115s)",
+    "✔ [9672/11424] Built Euler.GaussianHeatSmoothing (110s)",
+    "✔ [9673/11424] Built Euler.PacketMovingFrame (117s)"
+  ],
+  "moduleInventory": {
+    "NavierStokes": {
+      "sourceFiles": 817,
+      "oleanArtifactsPresent": 791,
+      "missing": 26
+    },
+    "Euler": {
+      "sourceFiles": 1840,
+      "oleanArtifactsPresent": 118,
+      "missing": 1722
+    },
+    "ComparatorChallenges": {
+      "sourceFiles": 2,
+      "oleanArtifactsPresent": 2,
+      "missing": 0
+    }
+  }
+}

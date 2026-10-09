@@ -1,0 +1,125 @@
+{
+  "schema": "MathScope.M1.TheoremReferenceAdapter/1",
+  "id": "BSD-GZK-ANALYTIC-RANK-LE1",
+  "title": "Gross–Zagier–Kolyvagin: E/Q의 해석적 랭크 0·1에서 랭크 일치와 Tate–Shafarevich 군의 유한성",
+  "domains": [
+    "arithmetic"
+  ],
+  "role": "THEOREM_REFERENCE",
+  "status": "THEOREM_REFERENCE",
+  "accessed": "2026-10-09",
+  "url": "https://archive.mpim-bonn.mpg.de/325/1/preprint_1990_69.pdf",
+  "locator": "V. A. Kolyvagin, MPI/90-69 (1990), §1, Theorem 1, printed p.4 / PDF p.6; modularity hypothesis printed p.3 / PDF p.5. Extension to all E/Q: Wiles, printed p.4, §2 unnumbered theorem.",
+  "bibliography": [
+    {
+      "id": "BSD-KOLYVAGIN-1990",
+      "author": "Victor A. Kolyvagin",
+      "title": "On the Mordell-Weil group and the Shafarevich-Tate group of modular elliptic curves",
+      "date": "1990",
+      "datePrecision": "YEAR",
+      "series": "MPI/90-69",
+      "url": "https://archive.mpim-bonn.mpg.de/325/1/preprint_1990_69.pdf",
+      "locator": "§1, modularity on printed p.3; Theorem 1 on printed p.4 (PDF pages5–6); Theorems2–5 describe the deduction.",
+      "supports": [
+        "For modular E/Q, analytic rank at most1 implies equality of analytic and algebraic rank and finiteness of Sha(E/Q)."
+      ],
+      "retrievedAt": "2026-10-09"
+    },
+    {
+      "id": "BSD-WILES-CLAY",
+      "author": "Andrew Wiles",
+      "title": "The Birch and Swinnerton-Dyer Conjecture",
+      "date": null,
+      "datePrecision": "NOT_SPECIFIED_IN_RETRIEVED_PDF",
+      "url": "https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf",
+      "locator": "Printed p.4, §2 Recent History, unnumbered theorem; p.2 Remark1 separates the refined leading-coefficient formula; p.4 reference[1] records the 2001 modularity theorem.",
+      "supports": [
+        "All elliptic curves over Q are modular; rank equality therefore holds for analytic rank0 or1.",
+        "The refined leading-coefficient formula is a separate statement."
+      ],
+      "retrievedAt": "2026-10-09"
+    }
+  ],
+  "mathematicalContract": {
+    "baseField": "Q",
+    "objects": "E is a nonsingular smooth projective genus-one curve over Q with a specified Q-rational identity; equivalently an elliptic curve over Q.",
+    "lFunction": "The Hasse–Weil L(E,s), including the correct bad-prime factors, with its known modular analytic continuation; r_an(E)=ord_{s=1} L(E,s). This is not a finite truncated Euler product.",
+    "algebraicRank": "rank_Z(E(Q)/E(Q)_tors)",
+    "sha": "Sha(E/Q)=ker(H^1(Q,E) -> product_v H^1(Q_v,E)), over all places v.",
+    "quantifiers": "For every elliptic curve E/Q, if r_an(E) belongs to {0,1}, then rank_Z E(Q)=r_an(E) and Sha(E/Q) is finite.",
+    "modularityDependency": {
+      "statement": "Every elliptic curve over Q is modular.",
+      "status": "THEOREM_REFERENCE",
+      "sourceRef": "BSD-WILES-CLAY",
+      "locator": "printed p.4 §2 and reference[1]",
+      "kernelVerified": false
+    },
+    "cases": [
+      {
+        "id": "BSD-GZK-RANK0",
+        "hypotheses": [
+          "E/Q is an elliptic curve.",
+          "L(E,1) != 0, with the analytically continued global L-function."
+        ],
+        "conclusions": [
+          "rank_Z E(Q)=0",
+          "E(Q) is finite",
+          "Sha(E/Q) is finite"
+        ],
+        "caseMeaning": "해석적 랭크0 → 대수적 랭크0 및 Sha유한"
+      },
+      {
+        "id": "BSD-GZK-RANK1",
+        "hypotheses": [
+          "E/Q is an elliptic curve.",
+          "L(E,1)=0 and L′(E,1) != 0, as exact statements about the analytically continued global L-function."
+        ],
+        "conclusions": [
+          "rank_Z E(Q)=1",
+          "Sha(E/Q) is finite"
+        ],
+        "caseMeaning": "해석적 랭크1 → 대수적 랭크1 및 Sha유한"
+      }
+    ],
+    "notConcluded": [
+      "This adapter supplies no formula for the leading coefficient L^(r)(E,1)/r!, the exact order of Sha, regulator, periods or Tamagawa product.",
+      "No rank>=2 conclusion or arbitrary-number-field generalization is obtained.",
+      "A finite list of local factors, a sampled graph, or |L(E,1)| below a numerical tolerance does not establish either exact analytic-rank hypothesis."
+    ],
+    "fullBSDLeadingCoefficientClaim": false,
+    "shaOrderComputed": false,
+    "analyticRankComputed": false
+  },
+  "applicationPolicy": {
+    "automaticApplicationToCurrentFiniteJobs": false,
+    "hypothesisEvidenceRequired": [
+      "Exact curve/base-field identity",
+      "An independently justified global analytic-rank0 or1 statement, with source/proof scope retained"
+    ],
+    "onMissingHypotheses": "THEOREM_REFERENCE_UNINSTANTIATED",
+    "onFiniteEulerDataOnly": "THEOREM_REFERENCE_UNINSTANTIATED",
+    "onUserDeclaredAnalyticRank": "CONDITIONAL_REFERENCE_WITH_USER_ASSUMPTION",
+    "onLabelOrNumericThresholdOnly": "REJECT_HYPOTHESIS_PROMOTION",
+    "exactCaseMatchingDoesNotProveHypotheses": true
+  },
+  "leanImport": null,
+  "exportedLeanTheorem": null,
+  "kernelReceipt": null,
+  "kernelVerified": false,
+  "formalPass": false,
+  "browserKernelRerun": false,
+  "integrationScope": "Concrete source-and-hypothesis record for I3-04. Root registers the record in the common reference ledger; this JSON is not an executable L-function or a new Lean theorem.",
+  "reviewedFromPrimarySources": true,
+  "primaryRetrievals": [
+    {
+      "sourceRef": "BSD-KOLYVAGIN-1990",
+      "webRef": "turn81view0",
+      "pageChecked": "printed4/PDF6"
+    },
+    {
+      "sourceRef": "BSD-WILES-CLAY",
+      "webRef": "turn79view0",
+      "pageChecked": "printed4/PDF4"
+    }
+  ]
+}

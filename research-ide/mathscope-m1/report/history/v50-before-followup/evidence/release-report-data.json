@@ -1,0 +1,368 @@
+{
+  "schema": "MathScope.M0M1ReleaseReport/1",
+  "release": {
+    "version": "v50",
+    "buildId": "fe509729",
+    "date": "2026-10-09",
+    "siteUrl": "https://project29770.websitepublisher.ai/v0.3.1.html",
+    "workerSha256": "8da02ff4997fa771b921eb4c1a27c11ae80817fc2f5f4f88dbaa002d909b65dd",
+    "bundleSha256": "b13060d4abbbb1469f00535bdaeabc21ffc6d8c9fb5fcd9d1695f04a6c2fb120"
+  },
+  "coreItems": [
+    {
+      "id": "I0-04",
+      "status": "PASS",
+      "originalAcceptance": "G 이름 또는 Δ 숫자만 있는 요청으로 실제 gauge-field job이 생성되지 않는다. 기본 상태족은 사용자가 즉시 실행할 수 있다.",
+      "implementation": [
+        "GaugeGroupSpec는 실제 Lie algebra, 전역 군, faithful 저장표현, invariant form과 embedding을 담는다. 현재 14개 compact matrix adapter를 구성하며 군 이름만 대입한 프록시를 쓰지 않는다.",
+        "field job의 필수 입력은 group, field construction, coupling, center/scale/coefficients, domain/boundary, seed, units, family/Delta role, observation이다. 홀로노미는 실제 4D 경로/step을 기록한다. 연속 고전 모델에는 양자 격자의 a를 만들어 넣지 않고 domain/grid와 양자격자 비사용을 명시한다.",
+        "ASSUMED_BOUND에서는 Delta 변경에도 물리적 field hash가 고정된다. UNITS에서는 단위만, CLASSICAL_SCALE 및 EFFECTIVE_MODEL에서는 정의된 실제 장을 재계산한다.",
+        "27개 완전한 기본 예제를 즉시 실행할 수 있다. group-only/Delta-only field 요청은 validation에서 거부된다.",
+        "session-binding은 원본 M1ObjectSpec와 실제 GaugeGroupSpec/StateFamilySpec/AssumptionSpec를 동일한 immutable graph에 저장하고 group reference·source hash·가정 revision을 재결속한다. 가정 변경 후 구 결과를 재저장해 덮는 경로는 거부된다."
+      ],
+      "validation": [
+        "27개 예제의 M0 실제 validator, 정확 replay와 필수입력/단위/field hash 대조 — required-state-input-and-budget-rejections; all-examples-contract-valid-and-replay; four-delta-roles-and-physical-hashes",
+        "범위와 예산을 소유 복제한 뒤 domain validator 호출 — normalizeRequest; validateDomainRequest; executeDomain",
+        "실제 계산으로 구성된 군·상태족·가정을 M0 typed graph에 저장 — constructedComponents; prepareM1SessionJob; saveM1SessionJob",
+        "실행 결과/원본요청/군상태족의 결속 및 수정된 가정에 대한 재저장 거부 — typed mathematical objects…; a revised constructed gauge assumption…",
+        "기존 일반 G와 관측 계약의 회귀 검증 — general G contracts demand global form…; observations report lost information…"
+      ],
+      "artifacts": [
+        "mathscope-m1/gauge/evidence/validation.json",
+        "mathscope-m1/core/registry.mjs",
+        "mathscope-m1/core/session-binding.mjs",
+        "mathscope-m1/evidence/core-tests.tap",
+        "mathscope-m1/evidence/m0-regression-tests.tap"
+      ],
+      "remaining": [],
+      "scopeBoundary": "지원행렬군 범위는 SU(2..6), SO(3,5..8), Sp(1..3), compact G2이다. Spin, 임의 중심몫, F4/E6/E7/E8과 범위 밖 입력은 미구현으로 거부한다. 일반 G의 입력 계약이 모든 G의 계산 adapter 구현을 뜻하지 않는다. / M1 장은 고전적이고 유한 관측/경로에 한정된다. 양자 Wilson ensemble, continuum QFT, 임의 G의 질량간극은 구성하지 않는다. 향후 양자 lattice a/L은 별도 모델의 필수 계약이다."
+    },
+    {
+      "id": "I1-03",
+      "status": "PASS",
+      "originalAcceptance": "p-adic delta 연산에 추가 자릿수가 필요할 때 자동 증액한다. 유효 자릿수가 부족하면 계산 성공 대신 PRECISION_REQUIRED를 반환한다.",
+      "implementation": [
+        "deltaPadic은 출력 mod p^N에 입력 mod p^(N+1)을 요구한다. 정확 정수 원본이 기존 잔여류와 일치하는 경우에만 guard digit을 자동 확보하며, 원본이 없으면 PRECISION_REQUIRED를 반환한다.",
+        "p^v가 포함된 정확 정수로 나눌 때 v자리 손실을 계산한다. unit inverse와 알려진 p-power를 분리하고 Z_p 밖의 몫도 거부한다.",
+        "정수 계수 미분·Frobenius pullback, integral determinant, 단위 Smith basis change의 p-adic 유효자릿수 보존은 각 유한 모델과 보조정리로 다룬다. Frobenius의 차수 증가 D→pD와 p-adic 자릿수 손실0을 구분한다.",
+        "NS binary64 interval 연산은 분모의0포함, exp/log 급수 tail, Taylor jet 계수 전파, 4차미분 Simpson 잔차와 적분 tail, 비율의 분모 오차를 실제 계산한다. heat certificate는 모든 요청 미분의 최종 radius≤tolerance일 때만 완료된다.",
+        "53bit 초과 요구·지원 오차바닥 미만·overflow·부족한 p-adic 입력은 PRECISION_REQUIRED로 전파된다. 공통 engine은 이를 COMPLETED로 변환하지 않는다."
+      ],
+      "validation": [
+        "guard digit 및 연산별 실제 손실 계산 — deltaPadic; divideByInteger; finiteRingModule; determinantPadic",
+        "정수 계수 pullback과 정확 같은-prime coefficient reduction — p1Frobenius; reduceFreeComplex",
+        "정확 lift 자동증액·입력 부족·v_p(9)=2자리 손실·0자리 보존 검증 — P2-02/I1-03; I1-03: determinant, basis reduction, division and Frobenius have distinct losses",
+        "미분/급수/나눗셈/적분의 구간 전파 — validatePrecision; interval arithmetic; interval jets; certifiedSimpson",
+        "각 미분 최종구간·tail·유한 Taylor remainder 및 정밀도 실패 — heatIntegralCertificate; heatTaylorFinite",
+        "PRECISION_REQUIRED의 terminal 보존 — TERMINAL; run; finish",
+        "bits100 요청이 PRECISION_REQUIRED로 유지 — domain precision failures and malformed inputs never become completed calculations"
+      ],
+      "artifacts": [
+        "mathscope-m1/arithmetic/padic.mjs",
+        "mathscope-m1/arithmetic/complex.mjs",
+        "mathscope-m1/arithmetic/tests/arithmetic.test.mjs",
+        "mathscope-m1/navier/numerics.mjs",
+        "mathscope-m1/navier/heat.mjs",
+        "mathscope-m1/core/engine.mjs",
+        "mathscope-m1/evidence/core-tests.tap"
+      ],
+      "remaining": [],
+      "scopeBoundary": "이 통과는 실제 지원 연산의 정밀도 규칙이다. 임의 p-adic Frobenius·일반 미분 방정식·무한급수를 자동 인증하는 범용 precision compiler를 주장하지 않는다. / Li2 Simpson 값은 UNBOUNDED_APPROXIMATION이다. 비선형 NS candidate jet/series와 일반 gauge Float64 표본에는 구간인증을 붙이지 않는다. 표본잔차나 bit 수를 해석적 tail/stability 증명으로 바꾸지 않는다."
+    },
+    {
+      "id": "I1-07",
+      "status": "PASS",
+      "originalAcceptance": "동일 구현을 복사한 두 결과를 독립 검증으로 세지 않는다. fixture에 최소 두 방식과 오차 기준이 명시된다.",
+      "implementation": [
+        "P1의 유한 점은 projective orbit enumeration으로 세고, 별도로 실제 chain map/retraction에서 계산한 H0/H2 Frobenius trace와 대조한다. elliptic pair enumeration은 독립 Legendre character sum과 비교한다.",
+        "산술 정수행렬·contraction은 JS 연산과 SymPy exact matrix product/Smith normal form 및 전칭 기호 계산으로 비교한다. Decimal100 log와 mpmath100 적분은 정수 log enclosure/근사 Li2를 별도 점검한다.",
+        "NS에서는 coefficient-space 중첩 mode convolution과 실제 mixed-radix3DFFT+3/2 padding의 물리공간 곱을 비교한다. 물리좌표 finite difference와 해석적 jet, 원래 v변수의 고정밀 적분과 log변수 적분도 구분한다.",
+        "Gauge에서는 정확 Python Fraction/BigInt 재검증, matrix commutator와 structure constants, analytic jet와 central difference, 실제 F=dA+[A,A]의 밀도 quadrature와 BPST closed density/marginal을 비교한다.",
+        "Lean 증명서는 생성기 수치 예제와 별도 경로이며, 같은 함수의 재실행은 replay로만 센다."
+      ],
+      "validation": [
+        "서로 다른 계산체계의 exact/고정밀 교차 검증 — 55 checks; SymPy/Decimal/mpmath environment and fixture hash",
+        "직접 점세기와 계산된 Frobenius 비교 — I1-07: projective orbit point counts independently match Frobenius trace; P3-06",
+        "FFT와 direct finite-mode convolution은 실제 다른 알고리즘 — Fourier convolution independentPaths; physical finite differences",
+        "정규화오차 기준과 잘못된 부호/aliasing 대조 — FFT_vs_direct_convolution; negative_aliasing_without_padding; heat_direct_v_integral_330bit; negative_pressure_sign",
+        "서로 다른 field/density/transport 경로와 수렴비 검사 — all-group-bpst-and-full-color-fields; independent-density-normalization-and-window-tail; finite-holonomy-and-independent-gauge-integration"
+      ],
+      "artifacts": [
+        "mathscope-m1/arithmetic/evidence/independent-validation.json",
+        "mathscope-m1/arithmetic/tests/arithmetic.test.mjs",
+        "mathscope-m1/navier/checks.mjs",
+        "mathscope-m1/navier/evidence/numerical-validation.json",
+        "mathscope-m1/gauge/evidence/validation.json"
+      ],
+      "remaining": [],
+      "scopeBoundary": "독립 수치 비교는 해당 fixture의 일치만 검증한다. 연속방정식의 존재·유일성, continuum limit, 전체 JavaScript의 Lean 검증을 뜻하지 않는다. / 고정밀 mpmath/Decimal 참조 자체를 interval proof로 부르지 않는다. 인증은 별도의 정확 정수/구간 오차계산에서만 나온다."
+    },
+    {
+      "id": "I3-02",
+      "status": "PASS",
+      "originalAcceptance": "자체 fixture와 일부러 잘못된 certificate가 각각 수락·거부된다. 숫자 예시와 전칭 정리의 범위가 구분된다.",
+      "implementation": [
+        "산술31, gauge27, NS13의 합계71개 실제 exported Lean target이 source/type/axioms/positive exit/log/hash와 함께 저장돼 있다.",
+        "delta numerator congruence·guard digit cancellation 및 counterexample, integral map 정밀도, d²=0, weight contraction, coefficient Frobenius=id의 chain map, bounded prime interval/Lucas soundness를 분리한다.",
+        "SU3와 G2의 실제 전체 bracket table(각28/91개쌍), index1 embedding/metric와 유한 Jacobi/holonomy/Wilson fixture를 검사한다. 일반 GroupLaw transport/closed-character 정리는 가정을 target type에 명시한다.",
+        "산술4개, gauge3개, NS2개의 고의 오류는 총9개 모두 실제 Lean이 거부한다. 이번 독립 검토에서는 저장 소스와 원자료/로그 해시를 재확인했으며 새 커널 실행으로 표시하지 않는다.",
+        "브라우저 checkPinnedAudit는 설치된 정확 소스와 로컬 커널 기록의 일치를 확인한다. 편집된 소스는 STALE이며 formalPass=false와 kernelRerun=false를 유지한다."
+      ],
+      "validation": [
+        "유한/전칭 산술 target와 원문 type/axioms — 31 targets; 4 negative controls; positive builds exit0",
+        "실제 Lie/embedding/transport/projection targets — 27 targets; 3 negative controls;6 positive source modules",
+        "finite algebra, exact analytic adapter와 공식 source imports — 13 targets across records;2 negative controls",
+        "소스 변경/정리명/type/잘못된 승격 거부 — checkPinnedAudit; checkTheoremAdapter",
+        "브라우저 정적 감사의 역할 경계 — exact pinned Lean source comparison rejects one changed source…"
+      ],
+      "artifacts": [
+        "mathscope-m1/arithmetic/evidence/lean-audit.json",
+        "mathscope-m1/gauge/lean/lean-audit.json",
+        "mathscope-m1/navier/evidence/lean-validation.json",
+        "mathscope-m1/core/theorem-adapters.mjs",
+        "mathscope-m1/evidence/core-tests.tap"
+      ],
+      "remaining": [],
+      "scopeBoundary": "특정 유한 fixture와 전칭 정리를 구별한다. 모든14개 군의 모든 Jacobi를 Lean으로 검증한 것은 아니며, 전체 table exact Python/BigInt 검증과 SU3/G2 Lean fixture 범위가 다르다. / 자연수 유한 spectral support의 구간 배제는 무한차원 실수 Hamiltonian 질량간극 정리가 아니다. conditional projection 정리는 명시한 fibre/reconstruction 전제를 제거하지 않는다. / 표준 Lean axiom(propext/Classical.choice/Quot.sound) 의존성은 원 target별로 보존된다. 사용자 추가 axiom·sorryAx는0이며, 이 사실이 외부 모든 수학 정리의 formalization을 뜻하지 않는다."
+    },
+    {
+      "id": "I3-03",
+      "status": "PASS",
+      "originalAcceptance": "무한 합의 미분이나 continuum limit를 쓰는 lemma마다 필요한 norm·정의역·양화 범위가 표시된다.",
+      "implementation": [
+        "공통5개 analytic contract는 operation/domain/spaces/norm/quantifiers/conclusion/fallback을 저장하며 빈 norm 등을 거부한다. validator는 항상 truthVerified=false와 formalPass=false이다.",
+        "NS 각 실제 관련 lemma는 B_rho Banach norm/공통 복소영역/수축상수, 열린 실영역에서 derivative uniform convergence와 function pointwise convergence, heat L1 지배함수, Taylor remainder/radius0, Fourier semigroup/Parseval 가정, 잔차-오차 stability 상수를 저장한다.",
+        "실제 Lean uniform_derivative_exchange는 열린집합과 모든 지점의 수렴 및 균등 도함수 수렴을 가정한다. diffusion_semigroup_bound는 scalar exp 부등식이며, stable_residual_budget은 주어진 stability 전제 아래의 부등식이다.",
+        "Gauge 무한차원 계약은 Hilbert space, dense self-adjoint nonnegative H, 전체 ker(H)에 대한 P0, positive spectral measure와 support, unbounded observable의 domain, 지배수렴/Tonelli, 전 채널 정보, OS reconstruction 및 a/L 극한을 구분한다.",
+        "session-binding은 NS/gauge 결과에 관련 무한추론 계약을 attached requiredForInfiniteInferences로 저장한다. 현재 유한 결과에서는 불충분한 분석 가정을 참으로 선언하거나 continuum 결론을 만들지 않는다."
+      ],
+      "validation": [
+        "명시 문자열 계약의 필수 필드; 수학적 진리 검증과 구별 — ANALYTIC_CONTRACTS; validateAnalyticContract",
+        "각 연산의 norm/domain/quantifier 원문 — AXIS_B_RHO; DERIVATIVE_LIMIT_EXCHANGE; HEAT_DOMINATED_DIFFERENTIATION; HEAT_TAYLOR; SEMIGROUP; RESIDUAL_STABILITY; SPECTRAL_CONTINUUM",
+        "실제 formal hypotheses와 결론 범위 — uniform_derivative_exchange; diffusion_semigroup_bound; stable_residual_budget",
+        "finite H와 무한 해석·전사정보 보존 가정 구분 — implementedFiniteModel; infiniteDimensionalContract; projectionContract",
+        "영역별 가정 계약의 결과 연결 — envelope.details.requiredForInfiniteInferences"
+      ],
+      "artifacts": [
+        "mathscope-m1/core/analytic-contracts.mjs",
+        "mathscope-m1/navier/analytic-contracts.json",
+        "mathscope-m1/navier/lean/MathScope/Navier/Analytic.lean",
+        "mathscope-m1/gauge/analytic-assumptions.json",
+        "mathscope-m1/core/session-binding.mjs"
+      ],
+      "remaining": [],
+      "scopeBoundary": "일반 continuum-limit 계약은 topology/norm/error sequence를 채워야 하는 템플릿이다. 특정 양자 YM lattice sequence에서 그 가정을 충족했다는 진술이나 Lean 증명이 없다. / 형식 문자열이 존재하거나 certificateRef가 있다는 사실은 가정이 참이라는 증명이 아니다. finite candidate에 uniform convergence·전역 stability·cyclicity를 자동 부여하지 않는다. / 가정 기록과 조건부 보조정리를 구현했다는 통과이다. 논문 전체 해석 가정을 모든 수치배열에 대해 검증했다는 통과로 해석할 수 없다."
+    },
+    {
+      "id": "I3-04",
+      "status": "PASS",
+      "originalAcceptance": "문헌 링크만 연결된 결과는 THEOREM REFERENCE이며, 정확한 exported Lean theorem을 import한 경우에만 kernel 결과와 연결된다.",
+      "implementation": [
+        "프리즘 비교 S01/S02, Deligne trace formula S07, gauge 원전 및 NS 원문 주요정리는 THEOREM_REFERENCE로 기록한다. 로컬 유한 정리를 외부 정리로 이름 바꿔 연결하는 시도를 거부한다.",
+        "원문 detail 검토에서 BSD 알려진 경우의 구체 가정 누락을 발견해 BSD-GZK-ANALYTIC-RANK-LE1 reference adapter를 보완했다. Kolyvagin(1990) Theorem1과 Clay/Wiles의 modularity 설명에 따라 E/Q의 analytic rank0/1 → 대수 rank일치+Sha유한을 기록했다.",
+        "BSD adapter는 L(E,1)≠0 또는 L(E,1)=0 및 L′(E,1)≠0의 정확한 전역가정을 요구한다. 유한 Euler 목록/수치 threshold에서 가정을 자동 도출하지 않으며 선도계수 공식과 Sha차수 산출을 주장하지 않는다. 실제 공통 REFERENCES 등록도 독립 확인했다.",
+        "실제 mathlib Lucas target 및 수정되지 않은 공식 NS Flatness/ProblemStatement import는 정확한 exported adapter type·source/hash·커널기록에만 연결한다. 브라우저의 정적 일치 검사는 source-only reference의 Lean 승격이 아니다.",
+        "47개 adapter/analytic-shape guard를 독립 재실행해 모두 통과했고,3개 pinned audit/71 targets의 정확 source match 및 formalPass=false/kernelRerun=false를 확인했다."
+      ],
+      "validation": [
+        "정리 인용과 실제 고정 target·source 일치 분리 — THEOREM_REFERENCE vs LOCAL_LEAN_TARGET; checkPinnedAudit",
+        "원문 요구에 맞는 구체 BSD known-case 문헌 adapter — Kolyvagin1990 §1 Theorem1 printedp4; Wiles printedp4; cases/applicationPolicy",
+        "실제 공통 문헌 등록 — BSD-GZK-ANALYTIC-RANK-LE1; S01/S02/S07; exact import entries",
+        "정확한 mathlib theorem import를 사용하는 로컬 target — lucas_certificate_sound",
+        "실제 공식 source import가 있는 제한된 target — imported_flatness_fixed_loss; imported_zero_velocity_negative_control",
+        "공식 선택 C/D 2개 target의 원래 rc2 실제 타입·공리 검사 성공과 기존 4.34.1 성분 13개 감사, 전체 default build 미완료, Comparator 환경 차단을 분리 — official-validation/official-audit-summary.json; historical component records"
+      ],
+      "artifacts": [
+        "mathscope-m1/core/theorem-adapters.mjs",
+        "mathscope-m1/core/bsd-known-case-reference.json",
+        "mathscope-m1/core/domain-references.json",
+        "mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Prime.lean",
+        "mathscope-m1/navier/lean/MathScope/Navier/SourceAdapter.lean",
+        "mathscope-m1/navier/evidence/lean-validation.json",
+        "mathscope-m1/navier/official-validation/official-audit-summary.json"
+      ],
+      "remaining": [],
+      "scopeBoundary": "프리즘 비교·trace formula·BSD rank0/1 정리는 문헌 참조이며 해당 전역 정리가 Lean으로 import/checked된 것으로 표시하지 않는다. BSD record의 leanImport/exportedLeanTheorem/kernelReceipt는 null, kernelVerified/formalPass는 false이다. / NS 원문 C/D 선택 target의 공식 rc2 타입·공리 검사 성공은 별도 원장에 기록한다. 전체 default build와 보호 Comparator는 아직 성공하지 않았고 기존 4.34.1 성분 13개 감사의 범위를 소급 확장하지 않는다. / 유한 local factor 계산만으로 구체 곡선의 analytic rank나 BSD 전체를 결론내리지 않는다."
+    }
+  ],
+  "tests": {
+    "core": {
+      "pass": 19,
+      "total": 19,
+      "artifact": "mathscope-m1/evidence/core-tests-v50.tap",
+      "executionVersion": 50
+    },
+    "m0Regression": {
+      "pass": 82,
+      "total": 82
+    },
+    "arithmetic": {
+      "pass": 38,
+      "total": 38,
+      "independent": 55,
+      "lean": 31
+    },
+    "gauge": {
+      "pass": 18,
+      "total": 18,
+      "lean": 27
+    },
+    "navier": {
+      "pass": 90,
+      "total": 90,
+      "lean": 13
+    },
+    "browserM0": {
+      "pass": 12,
+      "total": 12
+    },
+    "browserAdapters": {
+      "pass": 47,
+      "total": 47
+    },
+    "browserLiveChecks": {
+      "pass": 25,
+      "total": 25,
+      "artifact": "mathscope-m1/evidence/browser-validation.json",
+      "executionVersions": [
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "cli": {
+      "pass": 18,
+      "total": 18,
+      "artifact": "mathscope-m1/evidence/cli-validation.json"
+    },
+    "officialNS": {
+      "pass": 2,
+      "total": 2,
+      "toolchain": "4.34.0-rc2",
+      "selectedBuildExitCode": 0,
+      "reportedBuildJobs": 9371,
+      "submittedDependencyModules": 609,
+      "declarationsExitCode": 0,
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "comparatorPassed": false,
+      "wholeDefaultBuildPassed": false,
+      "artifact": "mathscope-m1/navier/official-validation/official-audit-summary.json"
+    },
+    "browserFinal": {
+      "pass": 9,
+      "total": 9,
+      "executionVersion": 50,
+      "artifact": "mathscope-m1/evidence/browser-validation-v50.json"
+    },
+    "cliFinal": {
+      "pass": 12,
+      "total": 12,
+      "executionVersion": 50,
+      "artifact": "mathscope-m1/evidence/cli-v50-validation.json"
+    }
+  },
+  "scope": {
+    "originalCriteria": 70,
+    "M0RemainingCriteria": 6,
+    "M1Criteria": 64,
+    "m0SixCompleted": true,
+    "m1AllCompleted": false,
+    "knownCaseBSDReference": "core/bsd-known-case-reference.json",
+    "localLeanTargets": 71,
+    "negativeLeanControlsRejected": 9,
+    "concreteGroups": 14,
+    "runnableExamples": 48,
+    "externalReferences": 20,
+    "officialPinnedRc2Targets": 2,
+    "officialPinnedRc2ComparatorPassed": false
+  },
+  "releaseEvidence": [
+    "evidence/core-tests.tap",
+    "evidence/m0-regression-tests.tap",
+    "evidence/m0-six-checklist.json",
+    "evidence/deployment.json",
+    "evidence/browser-validation.json",
+    "evidence/core-tests-v50.tap",
+    "evidence/browser-validation-v50.json",
+    "evidence/cli-v50-validation.json",
+    "navier/official-validation/official-audit-summary.json"
+  ],
+  "notes": [
+    "M0 여섯 원문 detail/acceptance는 독립검토에서 완료. BSD rank0/1의 구체 원전·가정·결론을 실제 UI에 등록했다.",
+    "Lean 71개는 해당 명시적 target의 실제 로컬 커널 검사이다. 브라우저 소스 대조는 새 Lean 컴파일이 아니다.",
+    "NS 원본 고정 rc2 C/D 선택 target은 9,371 jobs exit 0, 별도 정확 타입·공리 출력도 exit 0이다. 제출 의존성은 609/609이며 표준 공리 세 개만 확인했다. 원래 전체 default build는 중단(-15), Comparator는 보호 환경 부재로 BLOCKED다. N1-05/06은 PARTIAL을 유지한다.",
+    "색상은 현재 실행의 표시 표본에 대한 선형 범위다. 실행 사이에는 원래 물리 수치·단위·장 해시로 비교한다. 관측 표는 100개, 전체 JSON은 원본 전체를 보존한다.",
+    "브라우저 25개 검사는 v45–49 통합 과정에서 수행했다. 계산 Worker의 소스 해시는 그 기간 유지되었다. v49 단계에서는 링크 진입, Δ 수치 표, 범례와 관측 표를 추가 검증했으며 앞선 모든 검사를 다시 실행한 것은 아니다.",
+    "브라우저 v50 최종 확인은 9개를 별도로 수행했다. 새 Worker·세션·48개 목록, 원문 rc2 provenance, P1 계산·저장·재현, heat 구간 인증, 미인증 NS 후보, G2 625개 투영/수치 표, 47개 adapter guard를 확인했다. v45–49 통합 과정의 기존 25개와 별도 집계하며 모든 이전 검사를 v50에서 반복한 것은 아니다. v50의 Worker 해시 변경은 원문 검증 metadata 갱신 때문이다.",
+    "CLI 기존 18/18 기록은 보존했다. v50 새 Worker로 prime-1000 실제 실행 및 48개 목록, 엔진 연결과 export 무결성 등 12/12를 별도 확인했다. Node v24.19.0, 종료 0, 정확한 소수 168개이다."
+  ],
+  "overrides": {
+    "N1-05": {
+      "status": "PARTIAL",
+      "implementation": [
+        "원래 rc2 commit·manifest·공식 배포 SHA를 고정했다. 표준 CLI 환경 오류, 원래 캐시 body의 8,747개 명시 context 실행(종료 0), 원래 default 호출(종료 -15)과 NS C/D 선택 target(종료 0)의 실제 명령·전체 로그·driver/공유 라이브러리 해시를 보존했다."
+      ],
+      "validation": [
+        "공식 rc2의 별도 명시 경로 entry로 원래 Cache.Main body를 실행하여 8,747/8,747 캐시를 받았으며 종료 코드는 0이다. 원래 소스·manifest·커널은 변경하지 않았다.",
+        "원래 default lake build는 2026-10-09 15:37 UTC에 NS C/D 우선 전환을 위해 명시 중단되었다(exit -15). 이후 lake build NavierStokes.ComparatorSolution은 16:05:12 UTC, 9,371 jobs, exit 0으로 완료되었다.",
+        "제출 정리 source closure의 .olean은 609/609이다. 전체 NS root closure에는 61개, 전체 NS library에는 115개, Euler library에는 1,817개가 미생성으로 남았다. 이 수는 빌드 후 파일 재고이며 전체 target 성공 판정이 아니다."
+      ],
+      "artifacts": [
+        "sources.lock.json",
+        "official-validation/official-audit-summary.json",
+        "official-validation/official-command-results.json",
+        "official-validation/full-pinned-command-results.json",
+        "official-validation/environment-after.json",
+        "official-validation/driver-build.json",
+        "official-validation/cache-context-result.json",
+        "official-validation/lake-build-ns-priority-pinned.log",
+        "official-validation/remaining-build-scope.json"
+      ],
+      "remaining": [
+        "원래 defaultTargets 전체 성공은 미확보이다. NS C/D를 우선하려고 Euler가 시작된 default 호출을 명시 중단했다. 선택 NS target의 결과를 Euler 포함 전체 성공으로 승격하지 않는다.",
+        "표준 배포 CLI의 애플리케이션 경로 자동 탐지는 이 환경에서 실패했다. 성공 여부는 공식 rc2 커널을 그대로 사용한 별도 명시 경로 entry 프로파일로 기록한다."
+      ],
+      "scopeBoundary": "공식 4.34.0-rc2 커널로 선택 C/D target은 성공했다. 표준 CLI의 경로 자동 탐지 실패와 명시 경로 entry의 성공을 따로 기록한다. 전체 defaultTargets(NavierStokes, Euler, ComparatorChallenges)의 성공이나 Comparator 통과를 주장하지 않는다. 14:39의 Lean4.34.1 로컬 성분 13개 감사는 그대로 유지한다.",
+      "leanTargets": [],
+      "mathGateStatus": "BLOCKED_WHOLE_DEFAULT_BUILD_COMPLETION"
+    },
+    "N1-06": {
+      "status": "PARTIAL",
+      "implementation": [
+        "원래 rc2의 C/D 제출 target 종료 0, 실제 #check·#print axioms entry 종료 0를 저장했다. 두 exported declaration이 원래 커널에 수용되었고 공리 의존성은 개별 로그에 있다. 기존 4.34.1 component 감사 13개는 동일하게 보존했다. 보호된 원래 Comparator 호출은 systemd 사용자 bus 오류로 종료 1이다."
+      ],
+      "validation": [
+        "2026-10-09 16:06:24 UTC, 별도 PinnedDeclarations.lean의 원래 rc2 #check 및 #print axioms 명령이 exit 0으로 완료되었다. 일반 타입과 pp.all 타입을 ns-pinned-declarations.log에 보존했다.",
+        "C/D 두 target 각각의 공리 목록은 [propext, Classical.choice, Quot.sound]이다. 추가 공리와 sorryAx는 검출되지 않았다. 제출 소스, .olean, driver, 공식 공유 라이브러리와 로그 해시가 연결돼 있다.",
+        "원래 systemd-run --property=RestrictAddressFamilies=~AF_UNIX --user 보호 Comparator 호출은 exit 1: Failed to connect to bus: No medium found. 실제 Comparator/Nanoda 검사는 시작되지 않았다. 별도 읽기 전용 환경 조사도 이 제한을 확인했다."
+      ],
+      "artifacts": [
+        "formal-import-map.json",
+        "formal-adapters.json",
+        "evidence/lean-validation.json",
+        "official-validation/submitted-source-import-map.json",
+        "official-validation/ns-pinned-declarations.log",
+        "official-validation/official-audit-summary.json",
+        "official-validation/comparator-pinned-guarded.json",
+        "official-validation/comparator-environment-independent.json",
+        "official-validation/PinnedDeclarations.lean",
+        "official-validation/full-pinned-command-results.json"
+      ],
+      "remaining": [
+        "원래 guard를 유지한 Comparator 검사가 남았다. 현재 실행 환경에는 비특권 로그인 사용자용 systemd manager/DBus와 cgroup 위임이 제공되지 않는다. 이를 갖춘 정상 실행 환경에서 원래 고정 설정의 검사를 수행해야 한다."
+      ],
+      "scopeBoundary": "두 정확한 exported Lean 타입의 실제 커널 수용은 확인했다. 독립 challenge 동치 Comparator 성공, 원문 전체 default build 성공, 수치 후보가 존재 정리의 실제 witness임을 인증하는 일은 각각 별개다. 기존 로컬 71개 target 및 브라우저 소스 대조와 합산해 전부 재검증했다고 표시하지 않는다.",
+      "leanTargets": [
+        "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+        "NavierStokes.Comparator.navier_stokes_breakdown_periodic"
+      ],
+      "mathGateStatus": "BLOCKED_INDEPENDENT_COMPARATOR_GUARD"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+MathScope.M1.Gauge.finite_support_has_lower_bound (delta : Nat) (offsets : List Nat) (energy : Nat)
+  (support : MathScope.M1.Gauge.finiteExcitedSupport delta offsets energy) : delta ≤ energy
+'MathScope.M1.Gauge.finite_support_has_lower_bound' does not depend on any axioms
+MathScope.M1.Gauge.finite_gap_excludes_interval (delta : Nat) (offsets : List Nat) (energy : Nat)
+  (below : energy < delta) : ¬MathScope.M1.Gauge.finiteExcitedSupport delta offsets energy
+'MathScope.M1.Gauge.finite_gap_excludes_interval' does not depend on any axioms
+MathScope.M1.Gauge.project_slice_roundtrip.{u_1} {K : Type u_1} (c : K) (p : MathScope.M1.Gauge.Point3 K) :
+  MathScope.M1.Gauge.project3 (MathScope.M1.Gauge.sliceLift c p) = p
+'MathScope.M1.Gauge.project_slice_roundtrip' does not depend on any axioms
+MathScope.M1.Gauge.projection_collision :
+  MathScope.M1.Gauge.project3 { x := 0, y := 0, z := 0, w := 0 } =
+      MathScope.M1.Gauge.project3 { x := 0, y := 0, z := 0, w := 1 } ∧
+    { x := 0, y := 0, z := 0, w := 0 } ≠ { x := 0, y := 0, z := 0, w := 1 }
+'MathScope.M1.Gauge.projection_collision' does not depend on any axioms
+MathScope.M1.Gauge.property_descends_with_fibre_certificate.{u_1} {K : Type u_1}
+  (P : MathScope.M1.Gauge.Point4 K → Prop)
+  (fibreCertificate :
+    ∀ (a b : MathScope.M1.Gauge.Point4 K), MathScope.M1.Gauge.project3 a = MathScope.M1.Gauge.project3 b → (P a ↔ P b))
+  (c : K) (p : MathScope.M1.Gauge.Point4 K) : P p ↔ P (MathScope.M1.Gauge.sliceLift c (MathScope.M1.Gauge.project3 p))
+'MathScope.M1.Gauge.property_descends_with_fibre_certificate' does not depend on any axioms
+MathScope.M1.Gauge.reconstruction_on_selected_slice.{u_1} {K : Type u_1} (c : K) (p : MathScope.M1.Gauge.Point4 K)
+  (onSlice : p.w = c) : MathScope.M1.Gauge.sliceLift c (MathScope.M1.Gauge.project3 p) = p
+'MathScope.M1.Gauge.reconstruction_on_selected_slice' does not depend on any axioms

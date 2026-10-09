@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "paper": "N00",
+  "theorem": "Theorem1.1",
+  "references": [
+    {
+      "pages": [
+        1
+      ],
+      "statement": "Theorem1.1"
+    },
+    {
+      "pages": [
+        120,
+        123,
+        124,
+        125,
+        126
+      ],
+      "statement": "Lemma10.3; Corollary10.6; final viscosity/periodic comparison"
+    }
+  ],
+  "quantifiers": [
+    {
+      "name": "nu",
+      "domain": "real",
+      "condition": "nu>0",
+      "quantifier": "for every"
+    },
+    {
+      "name": "f",
+      "domain": "C_c^infinity(R^3 x (0,infinity);R^3)",
+      "quantifier": "there exists",
+      "divergenceFreeRequired": false,
+      "divergenceNote": "Global cutoff force is not in general divergence free; source p118."
+    },
+    {
+      "name": "u,p",
+      "domain": "smooth on R^3 x [0,1)",
+      "quantifier": "there exist",
+      "fixedCompactSpatialSupport": true
+    }
+  ],
+  "initialVelocity": "u(x,0)=0",
+  "equation": "partial_t u+(u dot grad)u-nu Delta u+grad p=f; div u=0",
+  "boundedEnergy": "sup_{0<=t<1} integral_{R^3}|u(x,t)|^2 dx < infinity",
+  "blowup": "limsup_{t -> 1-} ||u(t)||_infinity = infinity",
+  "forbiddenPromotions": [
+    "f=0",
+    "smooth velocity at t=1",
+    "numerical plot proves theorem",
+    "standalone exterior has finite R3 energy",
+    "N1-N3 leading candidate is a full Navier-Stokes solution"
+  ],
+  "formalGrade": "THEOREM_REFERENCE",
+  "mainTheoremKernelCheckedLocally": false
+}

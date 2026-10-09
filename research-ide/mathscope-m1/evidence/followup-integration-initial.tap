@@ -1,0 +1,40 @@
+✔ new source constructions have unique, valid, finite shipped requests (14.551041ms)
+✔ ns-axis-exact-bounds: isolated Worker, exact local result identity, and bounded source scope (1855.058651ms)
+✔ ns-source-outer-repairs: isolated Worker, exact local result identity, and bounded source scope (946.382266ms)
+✔ ns-controlled-axis: isolated Worker, exact local result identity, and bounded source scope (1017.558582ms)
+✖ ns-controlled-source-datum: isolated Worker, exact local result identity, and bounded source scope (353.420967ms)
+✔ ns-loop-zero-p2: isolated Worker, exact local result identity, and bounded source scope (180.074607ms)
+✔ ns-loop-tilted: isolated Worker, exact local result identity, and bounded source scope (194.725239ms)
+✔ exact axis certificate remains exact in M0, keeps theorem-reference premises, and replays freshly (2002.932546ms)
+✔ all new component kinds bind to typed M0 objects without universal or continuum promotion (16.443752ms)
+✔ new components preserve budget exhaustion, unsupported inputs and precision failures (6.273563ms)
+✔ isolated source-profile work can be cancelled without issuing a completed certificate (17.056154ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6936.257525
+
+✖ failing tests:
+
+test at mathscope-m1/tests/followup-integration.test.mjs:28:25
+✖ ns-controlled-source-datum: isolated Worker, exact local result identity, and bounded source scope (353.420967ms)
+  AssertionError [ERR_ASSERTION]: {"blockers":[],"certificateScope":"유한 축 계수에서 시작하는 B.22·B.26의 실제 수치 연장","contract":{"fullCertifiedProfile":false,"fullNavierStokesSolution":false,"precisionOfCandidate":"IEEE754 binary64; only individually labelled intervals are numerical enclosures","solutionErrorBound":null},"detail":{},"domainStatus":"ERR_MODULE_NOT_FOUND","evidenceGrade":"SOURCE_FORMULA","executionMetrics":{"elapsedMilliseconds":6,"operations":3},"fullCertifiedProfile":false,"fullNavierStokesSolution":false,"fullProfileCertified":false,"kind":"ns.controlled-continuation","message":"Cannot find module '/workspace/scratch/afa9cd11a21b/outer.mjs' imported from /workspace/scratch/afa9cd11a21b/[worker eval]","moduleVersion":"1.2.0-m1","parameterHash":"ed6abbae937cdd0ad8b70efd187eb0fa9beeee21a53609bfe063f7e3c3598668","precision":{"absoluteTolerance":1e-8,"bits":53,"relativeTolerance":1e-8},"scopeDescription":"유한 축 계수에서 시작하는 B.22·B.26의 실제 수치 연장","sourceConstructionScope":{"completedGlobalWitness":false,"finiteOrLocalResultIsNotFullProfileCertification":true,"generatedAnalyticPremisesKernelChecked":false,"originalAcceptanceIds":["N3-04","N3-05","N3-07"]},"sourceLedger":{"attachmentSha256":"0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f","fullOriginalKernelBuild":false,"repositoryCommit":"f9e8bc5b38b6e212696e8a30e3e91517af887bbd","theoremReference":"Theorem1.1; N3 Theorem4.6"},"sourceReferences":[{"attachment":"01-navier-stokes.pdf","equations":["4.15","4.16","B.22","B.24","B.25","B.26","B.27"],"pages":[28,29,150,151,152,153],"sha256":"0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"}],"status":"FAILED"}
+  + actual - expected
+  
+  + 'FAILED'
+  - 'PARTIAL'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/afa9cd11a21b/mathscope-m1/tests/followup-integration.test.mjs:33:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'FAILED',
+    expected: 'PARTIAL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

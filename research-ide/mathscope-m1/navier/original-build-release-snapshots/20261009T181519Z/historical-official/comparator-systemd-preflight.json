@@ -1,0 +1,16 @@
+{
+  "command": [
+    "systemd-run",
+    "--property=RestrictAddressFamilies=~AF_UNIX",
+    "--user",
+    "--pipe",
+    "--wait",
+    "--collect",
+    "--",
+    "/usr/bin/true"
+  ],
+  "exitCode": 1,
+  "output": "Failed to connect to bus: No medium found\n",
+  "checkedUTC": "2026-10-09T15:11:29.671620+00:00",
+  "purpose": "Required RestrictAddressFamilies guard availability check; no comparator execution or guard replacement."
+}

@@ -1,0 +1,31 @@
+{
+  "command": [
+    "systemd-run",
+    "--property=RestrictAddressFamilies=~AF_UNIX",
+    "--user",
+    "--pty",
+    "-E",
+    "PATH=/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-entry-layout/bin:/root/.codex/tmp/arg0/codex-arg0EYiKqf:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+    "-E",
+    "LEAN_SYSROOT=/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-entry-layout",
+    "-E",
+    "LAKE_HOME=/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lake-home",
+    "--working-directory",
+    "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo",
+    "--",
+    "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-4.34.0-rc2-linux/bin/lake",
+    "exe",
+    "comparator",
+    "ComparatorChallenges/NavierStokes.json"
+  ],
+  "cwd": "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo",
+  "exitCode": 1,
+  "output": "Failed to connect to bus: No medium found\n",
+  "completedUTC": "2026-10-09T15:14:32.521826+00:00",
+  "logSHA256": "746707a49085d66703eb45f2baea0df38a88bab7346195ece161e8e14ef2a3d1",
+  "configurationSHA256": "7610ecead7b390d80ff7f4229a3ff8f18d630e046f7ad1de4f92c7e8e76845b8",
+  "status": "BLOCKED",
+  "reason": "Required systemd user guard cannot start: no user bus. Session UID 0 also fails the documented unprivileged-user guarantee. Comparator was not reached. No sandbox guard omitted or replaced.",
+  "nanodaRequiredByOriginalConfiguration": true,
+  "rootProofSourcesChanged": false
+}

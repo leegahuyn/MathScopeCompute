@@ -1,0 +1,102 @@
+{
+  "schema": "MathScope.Navier.SourceInnerGluingContract/1",
+  "kind": "ns.source-inner-gluing",
+  "module": "source-inner-gluing.mjs",
+  "source": {
+    "attachment": "01-navier-stokes.pdf",
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "pages": [
+      28,
+      127,
+      128,
+      154,
+      155,
+      156,
+      157
+    ],
+    "officialCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd"
+  },
+  "api": {
+    "exports": [
+      "runInnerGluing",
+      "validateInnerGluingInput",
+      "getInnerGluingExamples",
+      "assessInnerGluingDebtRepresentation"
+    ],
+    "staticImportsOnly": true,
+    "arbitraryCodeAllowed": false,
+    "externalMomentDebtAllowed": false,
+    "externalEndpointAllowed": false
+  },
+  "criterion": {
+    "original": {
+      "id": "N3-05",
+      "title": "Inner continuation과 다섯 모멘트 접합",
+      "detail": "B.5–B.10에 따라 inner profile을 연결하고 M,I,J,S,Cp를 다섯 bump로 맞춘다.",
+      "accept": "5×5 moment Jacobian 가역성과 interval Newton/implicit-function 조건을 확인한다. 값만 이어 붙이고 누적 모멘트를 생략하면 실패다.",
+      "stage": "N3",
+      "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+      "sourceFile": "ns-stages.json"
+    },
+    "implementationStatus": "PARTIAL_SOURCE_INNER_TO_OUTER_GLUING",
+    "originalAcceptancePassed": false,
+    "implemented": [
+      "Actual corrected B.26 endpoint and A.21 pressure data",
+      "B.34 logarithmic angular transition with cumulative five moments",
+      "B.38 matching scale represented in signed logarithms",
+      "Actual Gi-to-4eta restoration on -8<log x<-7",
+      "Actual cumulative moment debt before the fixed B.8 patch",
+      "Two U and three E bumps, full quadratic map, original A.3 block transformation",
+      "Numerical Jacobian/Newton and separately reintegrated five moments",
+      "Correct B.35 normalized fields and finite-node relaxed cone diagnostics"
+    ],
+    "remaining": [
+      "Common source parameter bounds and B.33/B.40 order of choices",
+      "Certified binding from finite nonlinear axis jets to the same infinite source axis solution",
+      "Continuous quadrature enclosures for the five moment equations",
+      "Uniform eta interval-Newton/implicit-function inclusion",
+      "Global cone and flat stress-factor construction on this same profile"
+    ]
+  },
+  "fullProfileCertified": false,
+  "fullNavierStokesSolution": false,
+  "newLeanKernelRun": false,
+  "sourceSmallness": {
+    "defaultLogP": 0,
+    "paperLargeAmplitudeConditionPassed": false,
+    "largerLogP14FiniteAxisFailurePreserved": true
+  },
+  "validation": {
+    "node": {
+      "file": "source-inner-gluing-tests.tap",
+      "pass": 26,
+      "total": 26
+    },
+    "independent": {
+      "status": "PASS",
+      "file": "source-inner-gluing-independent.json",
+      "pass": 691,
+      "failed": 0,
+      "total": 691,
+      "decimalDigits": 90,
+      "scope": "Original B34 and B8 equations, actual endpoint normalization and debt, full quadratic map/Jacobian, fixed candidate residual. Not a continuum/whole-eta proof."
+    },
+    "negativeControls": {
+      "initialGauss32Fixture": {
+        "file": "source-inner-gluing-initial-reference.json",
+        "failedChecks": 130,
+        "total": 616
+      },
+      "quadraticOmission": {
+        "allThreeStencilsFailAtTolerance": 1e-09
+      }
+    },
+    "finalEvidenceBinding": {
+      "file": "source-inner-gluing-final-evidence-binding.json",
+      "sha256": "956d246add7ea16edd0795fe96c7cdeb015b977eba32415b99c96528f4eddcb8",
+      "sameCompleteMathematicalResult": true,
+      "scope": "The one-line Object.hasOwn validator fix changes no mathematical calculation. Complete input and result canonical bytes are equal to the 691-check independently audited fixture."
+    }
+  },
+  "upstreamFormulaCorrection": "ns-source-formula-correction.json"
+}

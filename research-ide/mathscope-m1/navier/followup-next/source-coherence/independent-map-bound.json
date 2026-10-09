@@ -1,0 +1,69 @@
+{
+  "schema": "MathScope.Navier.IndependentMomentComparisonAlgebra/1",
+  "status": "PASS",
+  "method": "Independent SymPy QQ expansion followed by the exact monomial telescoping inequality",
+  "inputContract": {
+    "Gamma": ">=1",
+    "valueBounds": "Every displayed variable except h and eta has magnitude <=Gamma; |h|,|eta|<=1.",
+    "inputDifference": "Every field/moment variable difference <=Gamma^4*s; inverse E/H differences <=Gamma^6*s.",
+    "fixedInputs": [
+      "P0",
+      "P0e",
+      "X",
+      "eta",
+      "h",
+      "iL",
+      "iX"
+    ],
+    "s": "Nonnegative smallness factor; y*e_a on the activation interval."
+  },
+  "results": {
+    "deltaP1": {
+      "polynomial": {
+        "6": "21/2",
+        "7": "5",
+        "8": "21/2"
+      },
+      "sumAbsoluteCoefficients": "26",
+      "maximumGammaExponent": 8
+    },
+    "deltaP2": {
+      "polynomial": {
+        "6": "9",
+        "7": "9",
+        "8": "9",
+        "9": "27",
+        "11": "5"
+      },
+      "sumAbsoluteCoefficients": "59",
+      "maximumGammaExponent": 11
+    },
+    "PcError": {
+      "polynomial": "100*Gamma**12*(3*Gamma**2 + 1) + 3*Gamma**4",
+      "maximumGammaExponent": 14,
+      "sumAbsoluteCoefficients": "403"
+    },
+    "JcError": {
+      "polynomial": "100*Gamma**12*(3*Gamma**2 + 1) + 3*Gamma**4",
+      "maximumGammaExponent": 14,
+      "sumAbsoluteCoefficients": "403"
+    },
+    "VsError": {
+      "polynomial": "12*Gamma**4",
+      "maximumGammaExponent": 4,
+      "sumAbsoluteCoefficients": "12"
+    }
+  },
+  "checks": {
+    "P1BoundWithin100Gamma12": true,
+    "P2BoundWithin100Gamma12": true,
+    "independentReciprocalIdentity": true,
+    "axialWUOutsideDivisionByX": true,
+    "PcErrorBelow1000Gamma16": true,
+    "JcErrorBelow1000Gamma16": true,
+    "VsErrorBelow1000Gamma16": true,
+    "historicalAxialFormulaRejected": true
+  },
+  "allPassed": true,
+  "proofBoundary": "The finite rational-map and scalar-composition exponents are verified here. The analytic field and integral bounds supplying the stated input contract are proved in CONTINUATION_REFINEMENT.md and are not inferred from these algebra checks."
+}

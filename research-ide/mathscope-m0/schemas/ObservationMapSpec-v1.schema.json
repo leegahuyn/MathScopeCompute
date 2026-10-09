@@ -1,0 +1,436 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:ObservationMapSpec:1",
+  "title": "MathScope ObservationMapSpec v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "MathScope.ObservationMapSpec/1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assumptionRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sourceObjectRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hash": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "hash"
+      ],
+      "additionalProperties": false
+    },
+    "sourceType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outputType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method": {
+      "enum": [
+        "SLICE",
+        "SCALAR_MARGINAL",
+        "WILSON_LOOP",
+        "WILSON_LINE",
+        "CONDITIONAL_MEAN",
+        "BASIS_LAYOUT",
+        "SPECTRAL_OBSERVATION",
+        "USER_MAP"
+      ]
+    },
+    "definition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceDimension": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "displayDimension": {
+      "const": 3
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "FINITE"
+        },
+        "primeInterval": {
+          "type": "object",
+          "properties": {
+            "lower": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "upper": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            }
+          },
+          "required": [
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        "pAdic": {
+          "type": "object",
+          "properties": {
+            "p": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "digits": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "p",
+            "digits"
+          ],
+          "additionalProperties": false
+        },
+        "series": {
+          "type": "object",
+          "properties": {
+            "order": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "timeMax": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?:[1-9][0-9]*(?:\\.[0-9]+)?|0\\.[0-9]*[1-9][0-9]*)$"
+                }
+              ]
+            }
+          },
+          "required": [
+            "order"
+          ],
+          "additionalProperties": false
+        },
+        "spatial": {
+          "type": "object",
+          "properties": {
+            "bounds": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "minItems": 1,
+              "maxItems": 8
+            },
+            "timeMax": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "bounds"
+          ],
+          "additionalProperties": false
+        },
+        "finite": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "itemCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "description",
+            "itemCount"
+          ],
+          "additionalProperties": false
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "primeInterval"
+          ]
+        },
+        {
+          "required": [
+            "pAdic"
+          ]
+        },
+        {
+          "required": [
+            "series"
+          ]
+        },
+        {
+          "required": [
+            "spatial"
+          ]
+        },
+        {
+          "required": [
+            "finite"
+          ]
+        }
+      ]
+    },
+    "axes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceField": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "PHYSICAL",
+              "COHOMOLOGICAL",
+              "CATEGORICAL",
+              "VALUATION",
+              "SPECTRAL"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scale": {
+            "enum": [
+              "LINEAR",
+              "LOG",
+              "SIGNED_LOG",
+              "CATEGORICAL"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "sourceField",
+          "kind",
+          "unit",
+          "scale"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "lostInformation": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "injectivity": {
+      "enum": [
+        "NON_INJECTIVE",
+        "UNPROVED",
+        "CERTIFICATE_REQUIRED"
+      ]
+    },
+    "inverse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "UNAVAILABLE",
+            "CERTIFICATE_REQUIRED"
+          ]
+        },
+        "certificateRef": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1
+            },
+            "hash": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "hash"
+          ],
+          "additionalProperties": false
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "gaugeConvention": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "endpointData": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "parameters": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "id",
+    "revision",
+    "sourceRefs",
+    "assumptionRefs",
+    "sourceObjectRef",
+    "sourceType",
+    "outputType",
+    "method",
+    "definition",
+    "sourceDimension",
+    "displayDimension",
+    "scope",
+    "axes",
+    "lostInformation",
+    "injectivity",
+    "inverse",
+    "gaugeConvention",
+    "endpointData",
+    "parameters"
+  ],
+  "additionalProperties": false
+}

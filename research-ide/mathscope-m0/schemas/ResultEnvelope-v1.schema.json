@@ -1,0 +1,599 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:ResultEnvelope:1",
+  "title": "MathScope ResultEnvelope v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "MathScope.ResultEnvelope/1"
+    },
+    "jobId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+    },
+    "inputHash": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "environmentHash": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "enum": [
+        "COMPLETED",
+        "PARTIAL",
+        "CANCELLED",
+        "FAILED",
+        "UNSUPPORTED",
+        "PRECISION_REQUIRED",
+        "BUDGET_EXCEEDED"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "FINITE"
+        },
+        "primeInterval": {
+          "type": "object",
+          "properties": {
+            "lower": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "upper": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            }
+          },
+          "required": [
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        "pAdic": {
+          "type": "object",
+          "properties": {
+            "p": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "digits": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "p",
+            "digits"
+          ],
+          "additionalProperties": false
+        },
+        "series": {
+          "type": "object",
+          "properties": {
+            "order": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "timeMax": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?:[1-9][0-9]*(?:\\.[0-9]+)?|0\\.[0-9]*[1-9][0-9]*)$"
+                }
+              ]
+            }
+          },
+          "required": [
+            "order"
+          ],
+          "additionalProperties": false
+        },
+        "spatial": {
+          "type": "object",
+          "properties": {
+            "bounds": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "minItems": 1,
+              "maxItems": 8
+            },
+            "timeMax": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "bounds"
+          ],
+          "additionalProperties": false
+        },
+        "finite": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "itemCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "description",
+            "itemCount"
+          ],
+          "additionalProperties": false
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "primeInterval"
+          ]
+        },
+        {
+          "required": [
+            "pAdic"
+          ]
+        },
+        {
+          "required": [
+            "series"
+          ]
+        },
+        {
+          "required": [
+            "spatial"
+          ]
+        },
+        {
+          "required": [
+            "finite"
+          ]
+        }
+      ]
+    },
+    "precision": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "EXACT",
+            "PADIC",
+            "REAL_INTERVAL",
+            "COMPLEX_INTERVAL",
+            "FLOAT64",
+            "STATISTICAL"
+          ]
+        },
+        "p": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+        },
+        "digits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "absoluteBits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workingBits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "guardDigits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tolerance": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?:[1-9][0-9]*(?:\\.[0-9]+)?|0\\.[0-9]*[1-9][0-9]*)$"
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "norm": {
+          "type": "string",
+          "minLength": 1
+        },
+        "propagation": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "values": {
+      "type": "object"
+    },
+    "errorLedger": {
+      "type": "object",
+      "properties": {
+        "rounding": {},
+        "discretization": {},
+        "tail": {},
+        "residual": {},
+        "stability": {},
+        "statistical": {}
+      },
+      "required": [
+        "rounding",
+        "discretization",
+        "tail",
+        "residual",
+        "stability",
+        "statistical"
+      ],
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "modelRef": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1
+            },
+            "hash": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "hash"
+          ],
+          "additionalProperties": false
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hash": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "hash"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "assumptionRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hash": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "hash"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "adapter": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "seed": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "domain": {
+          "type": "object"
+        },
+        "basis": {
+          "type": "object"
+        },
+        "environment": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "modelRef",
+        "sourceRefs",
+        "assumptionRefs",
+        "adapter",
+        "seed",
+        "domain",
+        "basis",
+        "environment"
+      ],
+      "additionalProperties": true
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "grade": {
+          "enum": [
+            "FORMAL PASS",
+            "THEOREM-BACKED",
+            "CERTIFIED NUMERICAL",
+            "NUMERICAL INDICATOR",
+            "EMPIRICAL CORRESPONDENCE",
+            "RESEARCH HYPOTHESIS",
+            "UNKNOWN",
+            "STALE"
+          ]
+        },
+        "scopeKind": {
+          "enum": [
+            "exact-finite",
+            "interval-certified",
+            "statistical",
+            "numerical",
+            "conditional-formal",
+            "theorem-reference",
+            "interface"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assumptionRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hash": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "hash"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hash": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "hash"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "certificateRef": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1
+            },
+            "hash": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "hash"
+          ],
+          "additionalProperties": false
+        },
+        "supportsCurrent": {
+          "type": "boolean"
+        },
+        "effectiveTrust": {
+          "type": "string",
+          "minLength": 1
+        },
+        "axioms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "formalAudit": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "grade",
+        "scopeKind",
+        "sourceRefs",
+        "assumptionRefs"
+      ],
+      "additionalProperties": true
+    },
+    "contentHash": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "cacheKey": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "checkpointRef": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "details": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "jobId",
+    "inputHash",
+    "environmentHash",
+    "status",
+    "scope",
+    "precision",
+    "values",
+    "errorLedger",
+    "provenance",
+    "evidence"
+  ],
+  "additionalProperties": true
+}

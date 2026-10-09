@@ -1,0 +1,12 @@
+{
+  "schema": "MathScope.IntegrationCorrection/1",
+  "date": "2026-10-09T17:18:15.751662+00:00",
+  "sourcePath": "mathscope-m1/navier/followup-construction/controlled-continuation.mjs",
+  "beforeSha256": "cf86f5acf76f140810aa6ce7089deca06053408dc313210c6406158595c57806",
+  "afterSha256": "20a8d2bf3676dac4d25b14c8a09952eb82fc46b6b251ce5104e62929faa5f39b",
+  "failure": "Bundled Node Worker could not resolve the runtime dynamic import of outer.mjs for the actual A.21 datum example. Standalone local execution succeeded.",
+  "correction": "Resolve outer through a static namespace import and reject dynamic import in the static bundler. No mathematical algorithm or acceptance tolerance changed.",
+  "initialIntegrationLog": "evidence/followup-integration-initial.tap",
+  "targetedCorrectionLog": "evidence/followup-static-import-fix.tap",
+  "originalComponentAuditPreserved": true
+}

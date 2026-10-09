@@ -1,0 +1,454 @@
+{
+  "schema": "MathScope.M1.CliAcceptance/1",
+  "revision": "v50-fresh-run",
+  "status": "PASS",
+  "checkedAt": "2026-10-09T16:13:11.362Z",
+  "command": [
+    "node",
+    "mathscope-m1/cli.mjs",
+    "run",
+    "prime-1000",
+    "--out",
+    "mathscope-m1/evidence/cli-v50-prime-1000"
+  ],
+  "exitCode": 0,
+  "nodeVersion": "v24.19.0",
+  "sourceFile": "mathscope-m1/cli.mjs",
+  "sourceSha256": "6d9d699d5efe2d055a4ed3b699aeffd5d3e2385c766548e419dad502a5d3614e",
+  "workerSha256": "8da02ff4997fa771b921eb4c1a27c11ae80817fc2f5f4f88dbaa002d909b65dd",
+  "appSha256FromBuildManifest": "b13060d4abbbb1469f00535bdaeabc21ffc6d8c9fb5fcd9d1695f04a6c2fb120",
+  "requestHash": "66afd97c457c0699b0507dc2dff13965ff04d8a40017c75aeb5f79f107b12950",
+  "environmentHash": "ce6c6dee88799d352f70821101a110efb2fcd06ea0e2c3acc157c4ee589afa33",
+  "resultHash": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457",
+  "mathematicalHash": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457",
+  "bundleHash": "7050c89a9b981fa899ac355055be92a36b4763c2b274d1bec61149c385db0852",
+  "execution": {
+    "kind": "NODE_WORKER_THREADS",
+    "nodeVersion": "v24.19.0",
+    "workerResourceLimits": {
+      "maxOldGenerationSizeMb": 512,
+      "maxYoungGenerationSizeMb": 64
+    }
+  },
+  "submittedAt": "2026-10-09T16:10:56.595Z",
+  "finishedAt": "2026-10-09T16:10:56.692Z",
+  "scope": {
+    "description": "Only the requested bounded input and explicitly supported operations are computed.",
+    "finite": true,
+    "infiniteDomain": {
+      "definition": "{ n : Nat | Nat.Prime n }",
+      "enumeration": "Every completed request covers only its stated finite interval.",
+      "kind": "SYMBOLIC_INFINITE_SET",
+      "leanDefinition": "MathScope.M1.Arithmetic.PrimeSet",
+      "schema": "MathScope.PrimeDomain/1"
+    }
+  },
+  "checks": [
+    {
+      "id": "V50-01",
+      "name": "fresh bounded Node Worker completed with v50 source pin",
+      "pass": true,
+      "detail": {
+        "exitCode": 0,
+        "workerSha256": "8da02ff4997fa771b921eb4c1a27c11ae80817fc2f5f4f88dbaa002d909b65dd",
+        "appSha256FromManifest": "b13060d4abbbb1469f00535bdaeabc21ffc6d8c9fb5fcd9d1695f04a6c2fb120",
+        "appWasNotExecutedByCLI": true
+      }
+    },
+    {
+      "id": "V50-02",
+      "name": "original registry request preserved in saved request and exportBundle",
+      "pass": true,
+      "detail": {
+        "example": "prime-1000",
+        "kind": "arithmetic.primes",
+        "input": {
+          "a": "2",
+          "b": "1000"
+        }
+      }
+    },
+    {
+      "id": "V50-03",
+      "name": "actual finite result contains 168 primes in [2,1000]",
+      "pass": true,
+      "detail": {
+        "count": 168,
+        "intervalCount": {
+          "kind": "INTEGER",
+          "value": "168"
+        },
+        "first": "2",
+        "last": "997",
+        "normalizedInterval": {
+          "a": "2",
+          "b": "1000",
+          "inputReversed": false
+        },
+        "finite": true,
+        "countRepresentation": "TAGGED_EXACT_INTEGER",
+        "acceptedCount": {
+          "kind": "INTEGER",
+          "value": "168"
+        }
+      }
+    },
+    {
+      "id": "V50-04",
+      "name": "computed result preserved in actual exportBundle",
+      "pass": true,
+      "detail": {
+        "comparison": "canonical JSON equality"
+      }
+    },
+    {
+      "id": "V50-05",
+      "name": "input, environment, result, mathematical and bundle digests verify",
+      "pass": true,
+      "detail": {
+        "digests": {
+          "input": {
+            "computed": "66afd97c457c0699b0507dc2dff13965ff04d8a40017c75aeb5f79f107b12950",
+            "recorded": "66afd97c457c0699b0507dc2dff13965ff04d8a40017c75aeb5f79f107b12950"
+          },
+          "environment": {
+            "computed": "ce6c6dee88799d352f70821101a110efb2fcd06ea0e2c3acc157c4ee589afa33",
+            "recorded": "ce6c6dee88799d352f70821101a110efb2fcd06ea0e2c3acc157c4ee589afa33"
+          },
+          "result": {
+            "computed": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457",
+            "recorded": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457"
+          },
+          "mathematical": {
+            "computed": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457",
+            "recorded": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457"
+          },
+          "bundle": {
+            "computed": "7050c89a9b981fa899ac355055be92a36b4763c2b274d1bec61149c385db0852",
+            "recorded": "7050c89a9b981fa899ac355055be92a36b4763c2b274d1bec61149c385db0852"
+          }
+        },
+        "mathematicalHashPolicy": "EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY",
+        "selectedResultHasNoTopLevelExecutionMetrics": true
+      }
+    },
+    {
+      "id": "V50-06",
+      "name": "actual CLI list returns the installed 48 unique registry examples",
+      "pass": true,
+      "detail": {
+        "command": [
+          "node",
+          "mathscope-m1/cli.mjs",
+          "list",
+          "--json"
+        ],
+        "exitCode": 0,
+        "count": 48,
+        "stdoutSha256": "a2f7020fa32978e00891639465278f6a5d814611b96469f86aa78d9ee9514c31"
+      }
+    },
+    {
+      "id": "V50-07",
+      "name": "CLI shares the existing engine and pinned Worker factory",
+      "pass": true,
+      "detail": {
+        "method": "actual APPLICATION_WORKER_FACTORY execution plus source wiring inspection",
+        "cliSourceUnchanged": true,
+        "cliSourceSha256": "6d9d699d5efe2d055a4ed3b699aeffd5d3e2385c766548e419dad502a5d3614e",
+        "engineSourceSha256": "6aec83047c0fea9cb2af184e876097e7d1599b228ab047fc4d7945e4536bb28f"
+      }
+    },
+    {
+      "id": "V50-08",
+      "name": "all five saved artifact byte counts and SHA-256 values verify",
+      "pass": true,
+      "detail": {
+        "fileCount": 5
+      }
+    },
+    {
+      "id": "V50-09",
+      "name": "new artifact directory contains exactly the six CLI outputs",
+      "pass": true,
+      "detail": {
+        "files": [
+          "environment.json",
+          "files-manifest.json",
+          "replay-bundle.json",
+          "request.json",
+          "result.json",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "id": "V50-10",
+      "name": "serialized result keeps its explicit trust boundary",
+      "pass": true,
+      "detail": {
+        "trust": "UNTRUSTED_WHEN_SERIALIZED",
+        "browserKernelRerun": false,
+        "browserSessionModified": false
+      }
+    },
+    {
+      "id": "V50-11",
+      "name": "historical 18/18 CLI audit and prior six artifacts remain byte-identical",
+      "pass": true,
+      "detail": {
+        "historicalFileCount": 7
+      }
+    },
+    {
+      "id": "V50-12",
+      "name": "this prime-1000 mathematical result matches its historical result",
+      "pass": true,
+      "detail": {
+        "previousWorkerSha256": "aa416e4a0092f7e8c36d94130ec3c414c4a9127676538744e93444217467f27b",
+        "currentWorkerSha256": "8da02ff4997fa771b921eb4c1a27c11ae80817fc2f5f4f88dbaa002d909b65dd",
+        "resultHash": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457",
+        "scope": "Only this exact prime-1000 request; not a rerun of all mathematics."
+      }
+    }
+  ],
+  "passed": 12,
+  "total": 12,
+  "files": [
+    {
+      "path": "request.json",
+      "bytes": 223,
+      "sha256": "dca71ae112f86b9ff3459f1032b61405d6a87c124e8a0bfb4f45e57673933b94",
+      "actualBytes": 223,
+      "actualSha256": "dca71ae112f86b9ff3459f1032b61405d6a87c124e8a0bfb4f45e57673933b94",
+      "matches": true
+    },
+    {
+      "path": "environment.json",
+      "bytes": 21959,
+      "sha256": "2f516bd6bbff324a0cfc71eff4bd3d8faf180f85dc9d68e79dc3bed331129507",
+      "actualBytes": 21959,
+      "actualSha256": "2f516bd6bbff324a0cfc71eff4bd3d8faf180f85dc9d68e79dc3bed331129507",
+      "matches": true
+    },
+    {
+      "path": "result.json",
+      "bytes": 59161,
+      "sha256": "6f7406b9f8aff4c0741fbdd44a6acdfb16292462632aeadce304c35893a00c64",
+      "actualBytes": 59161,
+      "actualSha256": "6f7406b9f8aff4c0741fbdd44a6acdfb16292462632aeadce304c35893a00c64",
+      "matches": true
+    },
+    {
+      "path": "replay-bundle.json",
+      "bytes": 93005,
+      "sha256": "287d98ae27b2eaedb05e2cb6f85ee2f43a609654c2a6ce1df90738d38a0d4146",
+      "actualBytes": 93005,
+      "actualSha256": "287d98ae27b2eaedb05e2cb6f85ee2f43a609654c2a6ce1df90738d38a0d4146",
+      "matches": true
+    },
+    {
+      "path": "summary.json",
+      "bytes": 5274,
+      "sha256": "a6b2d2a54a54ce498f437d98d95ae4298dbead9b2e17cb679016edd65e72d3bd",
+      "actualBytes": 5274,
+      "actualSha256": "a6b2d2a54a54ce498f437d98d95ae4298dbead9b2e17cb679016edd65e72d3bd",
+      "matches": true
+    }
+  ],
+  "manifestFileSha256": "40d0ea37db34039d5297fcad0a68af17ba12ce70fb1faafeec374d82bfa10336",
+  "sourceFiles": [
+    {
+      "path": "mathscope-m1/cli.mjs",
+      "bytes": 8640,
+      "sha256": "6d9d699d5efe2d055a4ed3b699aeffd5d3e2385c766548e419dad502a5d3614e"
+    },
+    {
+      "path": "mathscope-m1/core/engine.mjs",
+      "bytes": 9476,
+      "sha256": "6aec83047c0fea9cb2af184e876097e7d1599b228ab047fc4d7945e4536bb28f"
+    },
+    {
+      "path": "mathscope-m1/core/registry.mjs",
+      "bytes": 5310,
+      "sha256": "7cc27c9f11eed2f1d9b1dab4f05feb15284aa840ea64ebdbb26a78761c9c9136"
+    },
+    {
+      "path": "mathscope-m1/core/worker-data.mjs",
+      "bytes": 679477,
+      "sha256": "fc8e4c19d96fc78535e3275071f2a849e99b08d794e47dc4eba9dd7656800010"
+    },
+    {
+      "path": "mathscope-m0/contracts.mjs",
+      "bytes": 39841,
+      "sha256": "671016df5d430515f5d52ad7379af603632d85e64ed0f682a52d612ae6d8eae2"
+    },
+    {
+      "path": "mathscope-m1/build-manifest.json",
+      "bytes": 5030,
+      "sha256": "e89efb498cc2c09957a2d3eac4f7e983caa71339b09cd1baefe990a43bd3d3cb"
+    }
+  ],
+  "registry": {
+    "command": [
+      "node",
+      "mathscope-m1/cli.mjs",
+      "list",
+      "--json"
+    ],
+    "exitCode": 0,
+    "exampleCount": 48,
+    "ids": [
+      "prime-1000",
+      "prime-million",
+      "prime-large-certificate",
+      "point-p3",
+      "p1-p3",
+      "p1-p5-d2",
+      "delta-guard",
+      "padic-torsion",
+      "derived-reduction",
+      "p1-local-factors",
+      "elliptic-good-bad",
+      "su3-bpst",
+      "g2-full-color",
+      "sp2-full-basis",
+      "g2-projection",
+      "g2-marginal",
+      "so3-periodic",
+      "delta-assumed_bound",
+      "delta-units",
+      "delta-classical_scale",
+      "delta-effective_model",
+      "g2-index-three",
+      "g2-wilson",
+      "finite-spectrum",
+      "algebra-SU2",
+      "algebra-SU3",
+      "algebra-SU4",
+      "algebra-SU5",
+      "algebra-SU6",
+      "algebra-SO3",
+      "algebra-SO5",
+      "algebra-SO6",
+      "algebra-SO7",
+      "algebra-SO8",
+      "algebra-Sp1",
+      "algebra-Sp2",
+      "algebra-Sp3",
+      "algebra-G2",
+      "ns-source-contract",
+      "ns-similarity",
+      "ns-heat-interval",
+      "ns-source-exterior",
+      "ns-taylor-green",
+      "ns-nonlinear-axis",
+      "ns-five-moments",
+      "ns-cone-operator",
+      "ns-leading-candidate",
+      "ns-independent-checks"
+    ],
+    "stdoutSha256": "a2f7020fa32978e00891639465278f6a5d814611b96469f86aa78d9ee9514c31"
+  },
+  "historicalEvidence": {
+    "audit": "mathscope-m1/evidence/cli-validation.json",
+    "originalPassed": 18,
+    "originalTotal": 18,
+    "preserved": true,
+    "files": [
+      {
+        "path": "mathscope-m1/evidence/cli-validation.json",
+        "bytes": 4491,
+        "sha256": "ff2a612832d15a139efa45232a7bf42b924c860e71f401c2a5dc9f26edd4d758",
+        "actualBytes": 4491,
+        "actualSha256": "ff2a612832d15a139efa45232a7bf42b924c860e71f401c2a5dc9f26edd4d758",
+        "unchanged": true
+      },
+      {
+        "path": "mathscope-m1/evidence/cli-prime-1000/environment.json",
+        "bytes": 21959,
+        "sha256": "f476e54bd9c55568e4238e4c6512db873eff8ff3d4e6e238be1aceeb050e428f",
+        "actualBytes": 21959,
+        "actualSha256": "f476e54bd9c55568e4238e4c6512db873eff8ff3d4e6e238be1aceeb050e428f",
+        "unchanged": true
+      },
+      {
+        "path": "mathscope-m1/evidence/cli-prime-1000/files-manifest.json",
+        "bytes": 991,
+        "sha256": "b8acd5073a4588f1364cae74d7c386d5f753cbb0b060eb533afe4227bbb5df76",
+        "actualBytes": 991,
+        "actualSha256": "b8acd5073a4588f1364cae74d7c386d5f753cbb0b060eb533afe4227bbb5df76",
+        "unchanged": true
+      },
+      {
+        "path": "mathscope-m1/evidence/cli-prime-1000/replay-bundle.json",
+        "bytes": 93005,
+        "sha256": "d7460d973f20c41fbf3c741af9c435f871d2f0f8d13c8105435a1f1464996a76",
+        "actualBytes": 93005,
+        "actualSha256": "d7460d973f20c41fbf3c741af9c435f871d2f0f8d13c8105435a1f1464996a76",
+        "unchanged": true
+      },
+      {
+        "path": "mathscope-m1/evidence/cli-prime-1000/request.json",
+        "bytes": 223,
+        "sha256": "dca71ae112f86b9ff3459f1032b61405d6a87c124e8a0bfb4f45e57673933b94",
+        "actualBytes": 223,
+        "actualSha256": "dca71ae112f86b9ff3459f1032b61405d6a87c124e8a0bfb4f45e57673933b94",
+        "unchanged": true
+      },
+      {
+        "path": "mathscope-m1/evidence/cli-prime-1000/result.json",
+        "bytes": 59161,
+        "sha256": "6f7406b9f8aff4c0741fbdd44a6acdfb16292462632aeadce304c35893a00c64",
+        "actualBytes": 59161,
+        "actualSha256": "6f7406b9f8aff4c0741fbdd44a6acdfb16292462632aeadce304c35893a00c64",
+        "unchanged": true
+      },
+      {
+        "path": "mathscope-m1/evidence/cli-prime-1000/summary.json",
+        "bytes": 5274,
+        "sha256": "bd9714d9c0525f9e86fccd48fcdea562561718c04c85008c2de78907222428ab",
+        "actualBytes": 5274,
+        "actualSha256": "bd9714d9c0525f9e86fccd48fcdea562561718c04c85008c2de78907222428ab",
+        "unchanged": true
+      }
+    ]
+  },
+  "interpretation": "One fresh v50 prime-1000 calculation through the shared bounded Node Worker, exact source/environment/result/export hashes, actual 48-example listing and file integrity. The prior 18/18 CLI audit remains historical. No full mathematics rerun, Lean/compiler/Comparator rerun, source change, site deployment, or ZIP creation.",
+  "negativeControlsRerun": false,
+  "browserAppExecutionPerformed": false,
+  "packagedArtifactDirectory": "mathscope-m1/evidence/cli-v50-prime-1000",
+  "validationCorrections": [
+    {
+      "checkedAt": "2026-10-09T16:12:43.032Z",
+      "initialStatus": "FAIL",
+      "initialPassed": 11,
+      "initialTotal": 12,
+      "correctedCheck": "V50-03",
+      "reason": "The one-off validator initially treated intervalCount as a primitive scalar via String(intervalCount). The actual arithmetic contract serializes exact counts as {kind:\"INTEGER\",value:\"168\"}. The saved calculation was correct; the validator now checks that explicit tagged-integer representation.",
+      "originalFailedCheck": {
+        "id": "V50-03",
+        "name": "actual finite result contains 168 primes in [2,1000]",
+        "pass": false,
+        "detail": {
+          "count": 168,
+          "intervalCount": {
+            "kind": "INTEGER",
+            "value": "168"
+          },
+          "first": "2",
+          "last": "997",
+          "normalizedInterval": {
+            "a": "2",
+            "b": "1000",
+            "inputReversed": false
+          },
+          "finite": true
+        }
+      },
+      "changedCalculationOrArtifact": false,
+      "reranCalculation": false,
+      "reranRegistryListing": false
+    }
+  ]
+}

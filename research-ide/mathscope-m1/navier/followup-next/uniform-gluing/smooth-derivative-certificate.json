@@ -1,0 +1,53 @@
+{
+  "schema": "MathScope.FlatStepDerivativeBounds/1",
+  "shape": "sigma(t)=exp(-1/t^2)/(exp(-1/t^2)+exp(-1/(1-t)^2)) on (0,1), with flat constant extensions.",
+  "domain": [
+    "0",
+    "1"
+  ],
+  "method": "88-bit outward dyadic whole-cell formulas, exact reflection, and analytic endpoint majorants.",
+  "partitionCells": 1024,
+  "bounds": {
+    "sigma1": {
+      "numerator": "2521958606132422317472999009",
+      "denominator": "309485009821345068724781056",
+      "approximate": 8.148887752554675
+    },
+    "sigma2": {
+      "numerator": "30985843004714288672275660677",
+      "denominator": "309485009821345068724781056",
+      "approximate": 100.12065858246685
+    },
+    "sigma3": {
+      "numerator": "324930177542532172329638328627",
+      "denominator": "77371252455336267181195264",
+      "approximate": 4199.62411400931
+    }
+  },
+  "maximizingEnclosureCells": [
+    [
+      "511/1024",
+      "1/2"
+    ],
+    [
+      "233/512",
+      "467/1024"
+    ],
+    [
+      "511/1024",
+      "1/2"
+    ]
+  ],
+  "endpointThirdDerivativeMajorant": "(64*t^-9+144*t^-7+48*t^-5)*exp(4-t^-2) for 0<t<=1/4, increasing there.",
+  "bumpTransfer": {
+    "B8": "b(x)=sigmaPrime((x-left)/width): sup|b^(k)| <= sup|sigma^(k+1)|/width^k, k=0,1,2.",
+    "unitMassC2": "b(x)=sigmaPrime((x-left)/width)/width: sup|b^(k)| <= sup|sigma^(k+1)|/width^(k+1), k=0,1,2."
+  },
+  "sourceSHA256": "d503da4147b0bc65cd7a251ff85baa99e9f467439446602619be63d03cc8acf3",
+  "arithmeticSHA256": "20664d56cab022014273c2bfecff3ff1fb59c6e737123e0f337d49f248b74b4c",
+  "scope": {
+    "continuousStepAndBumpDerivatives": true,
+    "sourceC12SlowDerivativesCertified": false,
+    "globalConePromoted": false
+  }
+}

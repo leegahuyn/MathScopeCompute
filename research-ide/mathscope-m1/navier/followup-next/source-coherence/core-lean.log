@@ -1,0 +1,47 @@
+MathScope.SourceCoherence.radial_flux_identity (h eta X U Ux Ueta : ℝ) :
+  2 * eta * U + 2 * eta * X * Ux - 2 * (1 / 2 - h) * eta * U - (1 - eta ^ 2) * Ueta =
+    2 * (1 / 2 + h) * eta * U - (1 - eta ^ 2) * Ueta + 2 * eta * X * Ux
+'MathScope.SourceCoherence.radial_flux_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.SourceCoherence.angular_integrated_source_identity (h eta X F Fx Feta U Ueta NW : ℝ) :
+  -(1 - 2 * (1 / 2 - h) * eta * U - (1 - eta ^ 2) * Ueta) * (2 * X * F) - NW * (2 * F + 2 * X * Fx) +
+            (1 - h) * (2 * X * F) -
+          (1 / 2 - h) * eta * (2 * X * Feta) -
+        (1 - eta ^ 2) * (Ueta * (2 * X * F) + U * (2 * X * Feta)) +
+      2 * (h - (1 / 2 - h)) * eta * U * (2 * X * F) =
+    -2 * (NW * (F + X * Fx) + X * h * (1 - 2 * eta * U) * F + X * ((1 / 2 - h) * eta + (1 - eta ^ 2) * U) * Feta)
+'MathScope.SourceCoherence.angular_integrated_source_identity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+MathScope.SourceCoherence.axial_integrated_source_identity (h eta X F Feta U Ux Ueta NW Pi Pieta : ℝ) :
+  -(1 - 2 * (1 / 2 - h) * eta * U - (1 - eta ^ 2) * Ueta) * U - NW * Ux + (1 / 2 - h) * (U - eta * Ueta) +
+              4 * h * eta * (U ^ 2 - X * F ^ 2) -
+            (1 - eta ^ 2) * (2 * U * Ueta - 2 * X * F * Feta) +
+          4 * (1 / 2 + h) * eta * Pi -
+        (1 - eta ^ 2) * Pieta +
+      X * (4 * (1 / 2 + h) * eta * F ^ 2 - (1 - eta ^ 2) * 2 * F * Feta) =
+    -NW * Ux - (1 / 2 + h) * (1 - 2 * eta * U) * U - ((1 / 2 - h) * eta + (1 - eta ^ 2) * U) * Ueta -
+          (1 - eta ^ 2) * Pieta +
+        4 * (1 / 2 + h) * eta * Pi +
+      2 * eta * X * F ^ 2
+'MathScope.SourceCoherence.axial_integrated_source_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.SourceCoherence.centered_energy_debt_identity (U c : ℝ) : U ^ 2 - c ^ 2 - 2 * c * (U - c) = (U - c) ^ 2
+'MathScope.SourceCoherence.centered_energy_debt_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.SourceCoherence.physical_axis_denominator_positive (h eta : ℝ) (hh : 0 < h) (hh2 : h < 1 / 2)
+  (he : eta ^ 2 ≤ 1) : 0 < 1 - 2 * h * eta ^ 2
+'MathScope.SourceCoherence.physical_axis_denominator_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+MathScope.SourceCoherence.first_preconditioned_U_margin : 33065 / 10000000000 + 652102 * (3 / 2000000000000) < 1 / 25000
+'MathScope.SourceCoherence.first_preconditioned_U_margin' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.SourceCoherence.second_preconditioned_U_margin :
+  29309 / 10000000000 + 652102 * (3 / 2000000000000) < 1 / 25000
+'MathScope.SourceCoherence.second_preconditioned_U_margin' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.SourceCoherence.first_preconditioned_E_margin :
+  3204447 / 10 ^ 30 + 801413 * (11 / 10 ^ 18) + 1295 / 10 ^ 30 < 1 / 1000000
+'MathScope.SourceCoherence.first_preconditioned_E_margin' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.SourceCoherence.second_preconditioned_E_margin :
+  7290926 / 10 ^ 30 + 1775906 * (11 / 10 ^ 18) + 2660 / 10 ^ 30 < 1 / 1000000
+'MathScope.SourceCoherence.second_preconditioned_E_margin' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.SourceCoherence.third_preconditioned_E_margin :
+  4080614 / 10 ^ 30 + 967355 * (11 / 10 ^ 18) + 1367 / 10 ^ 30 < 1 / 1000000
+'MathScope.SourceCoherence.third_preconditioned_E_margin' depends on axioms: [propext, Classical.choice, Quot.sound]

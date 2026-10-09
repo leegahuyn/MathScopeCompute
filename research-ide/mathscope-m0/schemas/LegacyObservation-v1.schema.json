@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:LegacyObservation:1",
+  "title": "MathScope LegacyObservation v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "MathScope.LegacyObservation/1"
+    },
+    "module": {
+      "enum": [
+        "primes",
+        "cohomology",
+        "yangmills",
+        "navier"
+      ]
+    },
+    "input": {
+      "type": "object"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "FINITE"
+        },
+        "primeInterval": {
+          "type": "object",
+          "properties": {
+            "lower": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "upper": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            }
+          },
+          "required": [
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        "pAdic": {
+          "type": "object",
+          "properties": {
+            "p": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+            },
+            "digits": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "p",
+            "digits"
+          ],
+          "additionalProperties": false
+        },
+        "series": {
+          "type": "object",
+          "properties": {
+            "order": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "timeMax": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?:[1-9][0-9]*(?:\\.[0-9]+)?|0\\.[0-9]*[1-9][0-9]*)$"
+                }
+              ]
+            }
+          },
+          "required": [
+            "order"
+          ],
+          "additionalProperties": false
+        },
+        "spatial": {
+          "type": "object",
+          "properties": {
+            "bounds": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "minItems": 1,
+              "maxItems": 8
+            },
+            "timeMax": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "bounds"
+          ],
+          "additionalProperties": false
+        },
+        "finite": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "itemCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "description",
+            "itemCount"
+          ],
+          "additionalProperties": false
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "primeInterval"
+          ]
+        },
+        {
+          "required": [
+            "pAdic"
+          ]
+        },
+        {
+          "required": [
+            "series"
+          ]
+        },
+        {
+          "required": [
+            "spatial"
+          ]
+        },
+        {
+          "required": [
+            "finite"
+          ]
+        }
+      ]
+    },
+    "legacyRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "snapshot": {
+      "type": "object"
+    },
+    "grade": {
+      "enum": [
+        "NUMERICAL INDICATOR",
+        "RESEARCH HYPOTHESIS"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "module",
+    "input",
+    "scope",
+    "legacyRefs",
+    "snapshot",
+    "grade"
+  ],
+  "additionalProperties": false
+}

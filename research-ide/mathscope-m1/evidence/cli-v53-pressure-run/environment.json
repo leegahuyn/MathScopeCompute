@@ -1,0 +1,572 @@
+{
+  "schema": "MathScope.M1Environment/1",
+  "version": "1.2.0",
+  "workerSha256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca",
+  "execution": "APPLICATION_WORKER_FACTORY",
+  "server": false,
+  "capabilities": {
+    "domains": {
+      "arithmetic": {
+        "externalTheoremAdapters": [
+          {
+            "accessed": "2026-10-09",
+            "id": "S01",
+            "leanImport": null,
+            "locator": "Definition 1.1; Example 1.3(1); Definition 1.4; Theorem 1.8(1), printed pp.2–4; Theorem 5.2",
+            "role": "Bounded crystalline prism and Frobenius-compatible crystalline comparison",
+            "status": "THEOREM_REFERENCE",
+            "title": "Bhatt–Scholze, Prisms and Prismatic Cohomology",
+            "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf"
+          },
+          {
+            "accessed": "2026-10-09",
+            "id": "S02",
+            "leanImport": null,
+            "locator": "Theorem 3.6 and Corollary 3.8",
+            "role": "De Rham hypercohomology of a proper smooth Z_p lift computes crystalline cohomology of its special fiber.",
+            "status": "THEOREM_REFERENCE",
+            "title": "Bhatt–de Jong, Crystalline cohomology and de Rham cohomology",
+            "url": "https://arxiv.org/html/1110.5001v1"
+          },
+          {
+            "accessed": "2026-10-09",
+            "id": "S07",
+            "leanImport": null,
+            "locator": "(1.5.1)–(1.5.4), printed pp.275–276",
+            "role": "Finite-field trace and alternating determinant convention; not a classical RH bridge.",
+            "status": "THEOREM_REFERENCE",
+            "title": "Deligne, La conjecture de Weil I",
+            "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf"
+          },
+          {
+            "accessed": "2026-10-09",
+            "id": "S08",
+            "leanImport": null,
+            "locator": "pp.1–2, good elliptic Euler factors and the BSD statement",
+            "role": "Local H1 L-factor and distinction from the scheme zeta factor.",
+            "status": "THEOREM_REFERENCE",
+            "title": "Wiles, The Birch and Swinnerton-Dyer Conjecture",
+            "url": "https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf"
+          },
+          {
+            "accessed": "2026-10-09",
+            "id": "S10",
+            "leanImport": null,
+            "locator": "§25.16(i), equations 25.16.1–25.16.4",
+            "role": "Chebyshev psi, prime counting, PNT/RH scope.",
+            "status": "THEOREM_REFERENCE",
+            "title": "NIST DLMF §25.16 Mathematical Applications",
+            "url": "https://dlmf.nist.gov/25.16"
+          },
+          {
+            "accessed": "2026-10-09",
+            "id": "S14",
+            "leanImport": null,
+            "locator": "WeierstrassIsomorphism: explicit (u,r,s,t) coordinate and coefficient transformation formulas",
+            "role": "A displayed singular nonminimal model is distinguished from the reduction of the curve; x=u^2*x_new, y=u^3*y_new rescales short coefficients by u^4 and u^6.",
+            "status": "THEOREM_REFERENCE",
+            "title": "SageMath, Isomorphisms between Weierstrass models",
+            "url": "https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/weierstrass_morphism.html"
+          }
+        ],
+        "formalComplete": false,
+        "kinds": [
+          "arithmetic.primes",
+          "arithmetic.primeCertificate",
+          "arithmetic.padic",
+          "arithmetic.point",
+          "arithmetic.p1",
+          "arithmetic.localFactors",
+          "arithmetic.verify"
+        ],
+        "limits": {
+          "chartPoints": 20000,
+          "defaultPrimeIntervalWidth": 2097152,
+          "determinantDimension": 32,
+          "maxBasePrime": 2000000,
+          "maxPrimeIntervalWidth": 8388608,
+          "moduleMatrixDimension": 16,
+          "p1FrobeniusTargetD": 256,
+          "p1SourceD": 32,
+          "padicDigits": 256,
+          "primeCertificateIntegerDigits": 256,
+          "segmentIntegers": 1048576
+        },
+        "primeDomain": {
+          "definition": "{ n : Nat | Nat.Prime n }",
+          "enumeration": "Every completed request covers only its stated finite interval.",
+          "kind": "SYMBOLIC_INFINITE_SET",
+          "leanDefinition": "MathScope.M1.Arithmetic.PrimeSet",
+          "schema": "MathScope.PrimeDomain/1"
+        },
+        "schema": "MathScope.ArithmeticCapabilities/1",
+        "supported": [
+          "exact bounded segmented enumeration and Lucas/Pratt certificates",
+          "Z_p observations, guard-digit delta, exact integer division, finite-ring Smith certificates",
+          "point and P1 crystalline/prismatic comparison models with integral all-weight contraction",
+          "explicit P1 chain Frobenius and good finite elliptic point-count Euler factors",
+          "decreasing cochain and de Rham Hodge subcomplexes, quotient and smart truncation"
+        ],
+        "unsupported": [
+          "arbitrary native prismatic-site computation",
+          "general Tate/minimal-model algorithm or complete elliptic L function",
+          "Nygaard descent certificate",
+          "general q/Breuil–Kisin/A_inf arithmetic",
+          "classical RH or general BSD proof"
+        ],
+        "version": "1.0.0"
+      },
+      "gauge": {
+        "boundaries": [
+          "R4_WINDOW:OPEN_RESTRICTION",
+          "PERIODIC_TORUS:PERIODIC (finite Fourier, trivial bundle)"
+        ],
+        "deltaModes": [
+          "ASSUMED_BOUND",
+          "UNITS",
+          "CLASSICAL_SCALE",
+          "EFFECTIVE_MODEL"
+        ],
+        "domain": "gauge",
+        "fieldConstructions": [
+          "EMBEDDED_BPST",
+          "FULL_BASIS_TRIAL",
+          "BPST_PLUS_PERTURBATION"
+        ],
+        "kinds": [
+          "gauge.group",
+          "gauge.field",
+          "gauge.family",
+          "gauge.holonomy",
+          "gauge.spectral"
+        ],
+        "leanAuditPath": "gauge/lean/lean-audit.json",
+        "matrixBounds": {
+          "G2": 7,
+          "SO": [
+            3,
+            5,
+            6,
+            7,
+            8
+          ],
+          "SU": [
+            2,
+            6
+          ],
+          "Sp": [
+            1,
+            3
+          ]
+        },
+        "numericArithmetic": "Float64 with explicit tolerance; BigInt rational finite bracket verification",
+        "observations": [
+          "SLICE",
+          "FINITE_MARGINAL",
+          "BPST_INFINITE_MARGINAL",
+          "LINEAR_PROJECTION"
+        ],
+        "references": [
+          {
+            "authors": "Arthur Jaffe; Edward Witten; Clay Mathematics Institute",
+            "id": "YM-R01",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "인쇄 p. 6 §4: 존재·스펙트럼 간극 정의; p. 7 §5: 부피에 균일한 간극과 무한 부피 문제",
+            "role": "compact simple G, nontrivial R⁴ quantum theory, QFT axioms, positive spectral gap의 동시 요구. 현재 공식 상태 Unsolved.",
+            "status": "THEOREM_REFERENCE",
+            "title": "Quantum Yang–Mills Theory / Yang–Mills & the Mass Gap",
+            "url": "https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf"
+          },
+          {
+            "authors": "Brian Conrad; Aaron Landesman",
+            "id": "YM-R02",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "§§17–18 pp.75–83; §26 p.114 이하; Appendices K,V,Y",
+            "role": "rank-one subgroup, character/cocharacter lattice, normal subgroup, global group center/fundamental group를 분리하는 구조 설계",
+            "status": "THEOREM_REFERENCE",
+            "title": "Math 210C. Compact Lie Groups",
+            "url": "https://math.stanford.edu/~conrad/210CPage/handouts/lie_groups_notes.pdf"
+          },
+          {
+            "authors": "Mboyo Esole; Monica Jinwoo Kang",
+            "id": "YM-R05",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "§2.5 pp.15–16(현재 PDF 페이지 16), Dynkin index of an embedding",
+            "role": "기본 불변형의 정규화에 대한 Lie algebra embedding index. 본 설계의 B_G(ιX,ιY)=IιB_SU2(X,Y) convention을 독립 명시.",
+            "status": "THEOREM_REFERENCE",
+            "title": "Matter representations from geometry: under the spell of Dynkin",
+            "url": "https://arxiv.org/pdf/2012.13401"
+          },
+          {
+            "authors": "Stefan Vandoren; Peter van Nieuwenhuizen",
+            "id": "YM-R06",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding",
+            "role": "anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.",
+            "status": "THEOREM_REFERENCE",
+            "title": "Lectures on instantons",
+            "url": "https://arxiv.org/pdf/0802.1862"
+          },
+          {
+            "authors": "David Tong",
+            "id": "YM-R07",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "§4.1; 인쇄 p.202 이하; link gauge transform eq.(4.8)",
+            "role": "4D Euclidean lattice, group links, Wilson loops와 작용 및 격자 cutoff의 의미",
+            "status": "THEOREM_REFERENCE",
+            "title": "Gauge Theory — Chapter 4: Lattice Gauge Theory",
+            "url": "https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf"
+          },
+          {
+            "authors": "Martin Lüscher",
+            "id": "YM-R08",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "출판사 초록과 서지사항; 실제 선택한 모델의 가정 대응은 Y4-06/Y7-06의 후속 작업",
+            "role": "Wilson lattice gauge theory의 physical positivity와 transfer matrix 구성 근거",
+            "status": "THEOREM_REFERENCE",
+            "title": "Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories",
+            "url": "https://link.springer.com/article/10.1007/BF01614090"
+          },
+          {
+            "authors": "Konrad Osterwalder; Erhard Seiler",
+            "id": "YM-R09",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "출판사 초록·서지사항; Euclidean lattice construction 및 positivity",
+            "role": "유클리드 격자 gauge theory의 positivity/constructive framework. continuum 존재 증명으로 확장하지 않음.",
+            "status": "THEOREM_REFERENCE",
+            "title": "Gauge field theories on a lattice",
+            "url": "https://www.sciencedirect.com/science/article/abs/pii/0003491678900398"
+          },
+          {
+            "authors": "Lean FRO contributors",
+            "id": "YM-R13",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "axiom declaration, consistency 및 #print axioms",
+            "role": "사용자 axiom의 논리적 지위·의존성 감사. 기존 Lean 4.34.1 결과는 로컬 source/hash/log로 별도 증빙.",
+            "status": "THEOREM_REFERENCE",
+            "title": "The Lean Language Reference — Axioms",
+            "url": "https://lean-lang.org/doc/reference/latest/Axioms/"
+          },
+          {
+            "authors": "John C. Baez",
+            "id": "YM-R14",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "§4.1 G2; Theorem 4, compact Der(O) subset so(Im O); 7-dimensional faithful representation and invariant cross product",
+            "role": "Compact G2 as octonion automorphisms/positive 3-form stabilizer, not split G2. The generator uses its explicitly documented equivalent Cayley–Dickson convention.",
+            "status": "THEOREM_REFERENCE",
+            "title": "The Octonions",
+            "url": "https://math.ucr.edu/home/baez/octonions/node14.html"
+          },
+          {
+            "authors": "Brian Conrad",
+            "id": "YM-R15",
+            "kernelReceipt": null,
+            "leanImport": null,
+            "locator": "§§2–5 (8-page PDF), roots/coroots/character lattices for A/B/C/D; use complexification to connect with the separately constructed compact real form",
+            "role": "Classical root and coroot integer data. This split-algebra reference alone is not a proof of the compact form, which is constructed and checked separately.",
+            "status": "THEOREM_REFERENCE",
+            "title": "Math 249B. Root systems for split classical groups",
+            "url": "https://virtualmath1.stanford.edu/~conrad/249BW16Page/handouts/classicalgps.pdf"
+          }
+        ],
+        "supportedGroups": [
+          {
+            "dimension": 3,
+            "id": "SU2",
+            "label": "SU(2)",
+            "matrixDimension": 2,
+            "rank": 1,
+            "spec": {
+              "family": "SU",
+              "globalForm": "SIMPLY_CONNECTED",
+              "parameter": 2,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 8,
+            "id": "SU3",
+            "label": "SU(3)",
+            "matrixDimension": 3,
+            "rank": 2,
+            "spec": {
+              "family": "SU",
+              "globalForm": "SIMPLY_CONNECTED",
+              "parameter": 3,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 15,
+            "id": "SU4",
+            "label": "SU(4)",
+            "matrixDimension": 4,
+            "rank": 3,
+            "spec": {
+              "family": "SU",
+              "globalForm": "SIMPLY_CONNECTED",
+              "parameter": 4,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 24,
+            "id": "SU5",
+            "label": "SU(5)",
+            "matrixDimension": 5,
+            "rank": 4,
+            "spec": {
+              "family": "SU",
+              "globalForm": "SIMPLY_CONNECTED",
+              "parameter": 5,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 35,
+            "id": "SU6",
+            "label": "SU(6)",
+            "matrixDimension": 6,
+            "rank": 5,
+            "spec": {
+              "family": "SU",
+              "globalForm": "SIMPLY_CONNECTED",
+              "parameter": 6,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 3,
+            "id": "SO3",
+            "label": "SO(3)",
+            "matrixDimension": 3,
+            "rank": 1,
+            "spec": {
+              "family": "SO",
+              "globalForm": "ADJOINT",
+              "parameter": 3,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 10,
+            "id": "SO5",
+            "label": "SO(5)",
+            "matrixDimension": 5,
+            "rank": 2,
+            "spec": {
+              "family": "SO",
+              "globalForm": "ADJOINT",
+              "parameter": 5,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 15,
+            "id": "SO6",
+            "label": "SO(6)",
+            "matrixDimension": 6,
+            "rank": 3,
+            "spec": {
+              "family": "SO",
+              "globalForm": "QUOTIENT",
+              "parameter": 6,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 21,
+            "id": "SO7",
+            "label": "SO(7)",
+            "matrixDimension": 7,
+            "rank": 3,
+            "spec": {
+              "family": "SO",
+              "globalForm": "ADJOINT",
+              "parameter": 7,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 28,
+            "id": "SO8",
+            "label": "SO(8)",
+            "matrixDimension": 8,
+            "rank": 4,
+            "spec": {
+              "family": "SO",
+              "globalForm": "QUOTIENT",
+              "parameter": 8,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 3,
+            "id": "Sp1",
+            "label": "Sp(1)",
+            "matrixDimension": 2,
+            "rank": 1,
+            "spec": {
+              "family": "Sp",
+              "globalForm": "SIMPLY_CONNECTED",
+              "parameter": 1,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 10,
+            "id": "Sp2",
+            "label": "Sp(2)",
+            "matrixDimension": 4,
+            "rank": 2,
+            "spec": {
+              "family": "Sp",
+              "globalForm": "SIMPLY_CONNECTED",
+              "parameter": 2,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 21,
+            "id": "Sp3",
+            "label": "Sp(3)",
+            "matrixDimension": 6,
+            "rank": 3,
+            "spec": {
+              "family": "Sp",
+              "globalForm": "SIMPLY_CONNECTED",
+              "parameter": 3,
+              "representation": "DEFINING"
+            }
+          },
+          {
+            "dimension": 14,
+            "id": "G2",
+            "label": "G2",
+            "matrixDimension": 7,
+            "rank": 2,
+            "spec": {
+              "family": "G2",
+              "globalForm": "ADJOINT",
+              "parameter": 2,
+              "representation": "REAL_7"
+            }
+          }
+        ],
+        "unsupported": [
+          {
+            "item": "Spin and nontrivial central quotients",
+            "reason": "No faithful storage adapter/descended representation has been implemented."
+          },
+          {
+            "item": "F4, E6, E7, E8",
+            "reason": "No concrete matrix adapter is shipped; no label-only proxy."
+          },
+          {
+            "item": "SO(4)",
+            "reason": "Its Lie algebra is not simple."
+          },
+          {
+            "item": "Quantum Wilson ensemble / empirical gap estimate",
+            "reason": "M1 constructs deterministic classical links, not a Gibbs sampler or transfer-matrix continuum limit."
+          },
+          {
+            "item": "Continuum quantum Yang-Mills / OS reconstruction / infinite-volume mass gap",
+            "reason": "Separate analytic construction and hypotheses; no existence claim."
+          }
+        ],
+        "version": "m1-1"
+      },
+      "ns": {
+        "budget": {
+          "cancellation": "isCancelled callback checked in bounded numerical loops",
+          "maximumMilliseconds": 120000,
+          "maximumOperations": 50000000,
+          "maximumPoints": 16384
+        },
+        "evidenceGrades": {
+          "EXACT_BOUND_CERTIFICATE_WITH_THEOREM_REFERENCE": "Exact executable local bounds with explicit source-theorem references; no full generated analytic Lean proof or global profile.",
+          "EXACT_RATIONAL_BOUNDS_WITH_ANALYTIC_THEOREM_ARGUMENT": "Exact scalar bounds for the actual A.21 pressure with explicit analytic theorem arguments; generated Lean premise bundle remains open.",
+          "FINITE_NUMERICAL_FIXTURE": "Independent finite numerical consistency checks.",
+          "FORMAL_NONLINEAR_AXIS_COEFFICIENTS": "Actual finite nonlinear recurrence coefficients; invariant ball, radius and tail are not certified.",
+          "FULL_CERTIFIED_PROFILE": "Reserved; no current computation may emit this grade.",
+          "KERNEL_CHECKED_COMPONENTS": "Only exact named imported/local theorem types and their listed axioms pass the local unchanged kernel.",
+          "PARTIAL_CANDIDATE_WITH_BLOCKERS": "Source axis/exterior components and explicitly unverified continuation; full theorem gate remains closed.",
+          "SOURCE_FORMULA": "Direct source expression, evaluated with stated normalization and domain.",
+          "THEOREM_REFERENCE": "Citation and precise statement, no local kernel proof of the full source claim.",
+          "VERIFIED_NUMERICAL_ENCLOSURE": "Finite real interval quadrature/series and explicit error budget, without full PDE theorem."
+        },
+        "id": "navier-m1",
+        "kinds": [
+          "ns.provenance",
+          "ns.coordinates",
+          "ns.heat",
+          "ns.exterior",
+          "ns.benchmark",
+          "ns.axis-series",
+          "ns.moments",
+          "ns.cone",
+          "ns.leading-profile",
+          "ns.validate",
+          "ns.axis-certificate",
+          "ns.source-outer",
+          "ns.controlled-continuation",
+          "ns.admissible-loop",
+          "ns.pressure-certificate",
+          "ns.axis-source-certificate",
+          "ns.radial-modulation",
+          "ns.source-inner-gluing"
+        ],
+        "notImplemented": [
+          "one uniformly certified quantitative parameter selection for the full original datum",
+          "certified identity of the actual A.21 target with repaired outer fields and of finite eta jets with the infinite axis sequence",
+          "uniform interval-Newton five-moment gluing and complete radial/eta cone certification after the computed C.12 operation",
+          "N4-N8 full construction"
+        ],
+        "precision": {
+          "arithmetic": "exact rational axis bounds; outward binary64 heat and scalar intervals; signed-log outer quantities; binary64 candidate jets and ODEs",
+          "bits": 53,
+          "independentFixtures": "separate high-precision and exact rational reference calculations",
+          "minimumAbsoluteTolerance": 2e-14,
+          "unsupportedPrecisionStatus": "PRECISION_REQUIRED"
+        },
+        "scope": [
+          "N1 provenance and exact theorem contract",
+          "N2 coordinates, heat, viscosity and independent PDE checks",
+          "N3 finite nonlinear axis and exact local bounds for an explicit analytic datum",
+          "Source outer repairs, exact A.21 pressure/axis input bounds, B.5 continuation, actual B.34/B.8 cumulative five-moment gluing, C.1 loops and C.12 modulation with nonlinear first-patch correction"
+        ],
+        "version": "1.3.0-m1"
+      }
+    },
+    "evidencePolicy": "FINITE_DOMAIN_RESULTS_DO_NOT_ISSUE_FORMAL_PASS",
+    "execution": "STATIC_BOUNDED_WORKER",
+    "limits": {
+      "maxBytes": 8388608,
+      "maxConcurrent": 1,
+      "maxEvaluations": 50000,
+      "maxInputBytes": 262144,
+      "maxIntegers": 8388608,
+      "maxItems": 1000000,
+      "maxJobs": 32,
+      "maxMatrixDimension": 8,
+      "maxMillis": 60000,
+      "maxMilliseconds": 60000,
+      "maxOperations": 50000000,
+      "maxPoints": 16384,
+      "maxSamples": 5000
+    },
+    "server": false,
+    "version": "1.2.0"
+  },
+  "hash": "2ba35ddc155a734db13ea59f20efabcd861d79323f1dd51ee8a5f1fb730f96eb"
+}

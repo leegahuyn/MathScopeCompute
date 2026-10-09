@@ -1,0 +1,113 @@
+{
+  "schema": "MathScope.FixedLogPOuterParameterFamilyRejection/1",
+  "status": "ANALYTIC_FAMILY_REJECTION_WITH_EXACT_RATIONAL_CHECKS",
+  "sourceAxisSHA256": "edb33aded21f971d8e298768a9a58c3a4ca3649ba6247f225d6af2cffe64ebf3",
+  "sourcePaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "retainedSourceParameters": {
+    "Md": "1",
+    "logP": "14",
+    "lambda": "7378697629483821/36893488147419103232",
+    "h": "3022314549036573/302231454903657293676544",
+    "logXR": "20",
+    "Tf": "64",
+    "co": "5764607523034235/1152921504606846976"
+  },
+  "prospectiveFamily": {
+    "Md": "Every real 0 < Md < log(4)",
+    "logP": "14",
+    "h": "3022314549036573/302231454903657293676544",
+    "eta": "3/4",
+    "XR": "Every positive real XR",
+    "pressure": "Each prospective Md's own exact A.21 schedule pressure; not the unchanged original Pi0 reused across Md."
+  },
+  "analyticImplications": [
+    "A.6 with logP=14 implies exp(Md)+10<14, hence 0<Md<log(4)<7/5.",
+    "At the exact sigma midpoint, x=exp(Md/2) lies in (1,2), y=x-1 lies in (0,1), k=2, a=2 and -kPrime=32/(Md*x)>80/7.",
+    "The first transition is independent of Md. The displayed barriers yield 1<Q<3 there and 1/3<Q<=3 in the following axial transition.",
+    "E2=f2*exp(28-2/5-y)>f2*2^26, and the remaining axial length is x*x+11-x>11.",
+    "The A.21 pressure's positive exact axial segment and nonnegative later derivative contributions give the same Ns/E2 upper bound for every member of this family.",
+    "Pc/P1=1-bs*w/2 is uniformly negative; P1/XR>2/3. Thus every family member fails the necessary Pc>2 cone condition."
+  ],
+  "bounds": {
+    "mdRationalUpper": {
+      "numerator": "7",
+      "denominator": "5",
+      "approximate": 1.4
+    },
+    "expSevenFifthsTaylorLower": {
+      "numerator": "102647018359",
+      "denominator": "25312500000",
+      "approximate": 4.055190848750617
+    },
+    "E2Lower": {
+      "numerator": "17179869184",
+      "denominator": "625",
+      "approximate": 27487790.6944
+    },
+    "remainingAxialPressureMassLower": {
+      "numerator": "2047",
+      "denominator": "2048",
+      "approximate": 0.99951171875
+    },
+    "NsOverE2Upper": {
+      "numerator": "-151800506247540492762564853422415737",
+      "denominator": "129807421463370690713262408230502400",
+      "approximate": -1.1694285622211196
+    },
+    "minusKPrimeLower": {
+      "numerator": "80",
+      "denominator": "7",
+      "approximate": 11.428571428571429
+    },
+    "bsTimesWLower": {
+      "numerator": "21685786606791498966080693346059391",
+      "denominator": "3245185536584267267831560205762560",
+      "approximate": 6.682448926977827
+    },
+    "aMinusBsWUpper": {
+      "numerator": "-15195415533622964430417572934534271",
+      "denominator": "3245185536584267267831560205762560",
+      "approximate": -4.682448926977827
+    },
+    "PcOverP1Upper": {
+      "numerator": "-15195415533622964430417572934534271",
+      "denominator": "6490371073168534535663120411525120",
+      "approximate": -2.3412244634889134
+    },
+    "PcOverXRUpper": {
+      "numerator": "-15195415533622964430417572934534271",
+      "denominator": "9735556609752801803494680617287680",
+      "approximate": -1.5608163089926088
+    }
+  },
+  "checks": {
+    "originalCandidateAndPressureHRetained": true,
+    "positiveRetainedH": true,
+    "lambdaLargerThanTwiceH": true,
+    "logFourBelowSevenFifths": true,
+    "idealQBetweenOneAndThree": true,
+    "firstTransitionLowerBarrier": true,
+    "firstTransitionUpperBarrier": true,
+    "axialSourceBetweenOneThirdAndThree": true,
+    "positiveLBelowOne": true,
+    "positiveEnergyAndTailMass": true,
+    "actualNsUpperBelowMinusOne": true,
+    "minusKPrimeUniformLowerIsEightySevenths": true,
+    "bsTimesWUniformLowerAboveSix": true,
+    "firstMarginUniformUpperNegative": true,
+    "necessaryPcUniformUpperNegative": true
+  },
+  "passed": 15,
+  "total": 15,
+  "conclusion": {
+    "varyingMdAloneWithinA6AtLogP14CannotRepair": true,
+    "candidateParametersChanged": false,
+    "aNewCandidateConstructed": false,
+    "allPositiveMdRejected": false,
+    "paperExistentialChoiceRefuted": false,
+    "globalNavierStokesClaim": false,
+    "newLeanAnalyticTheorem": false,
+    "originalSnapshotPromoted": false
+  },
+  "derivation": "README.md, section 7"
+}

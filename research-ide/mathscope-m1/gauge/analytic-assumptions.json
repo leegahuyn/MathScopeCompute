@@ -1,0 +1,62 @@
+{
+  "schema": "MathScope.M1.AnalyticAssumptionContract/1",
+  "scope": "Norms, domains, quantifiers, units and limit requirements are explicit. This file is an interface ledger, not a Lean proof receipt.",
+  "implementedFiniteModel": {
+    "space": "H = C^(n+1), 1 <= n <= 32, Euclidean norm ||v||_2^2 = sum_j |v_j|^2",
+    "operator": "H = diag(0, Delta+epsilon_1, ..., Delta+epsilon_n), Delta>0 and epsilon_j>=0",
+    "domain": "D(H) = H (finite dimension); the full vacuum subspace is span(e_0)",
+    "semigroup": "T_t = exp(-t H/hbar), all real t>=0; hbar has dimensions energy*time",
+    "channel": "v=(0,sqrt(w_1),...,sqrt(w_n)), w_j>=0, sum_j w_j>0; C(t)=<v,T_t v>",
+    "quantifiers": "For every permitted explicit finite list, every real t>=0, C(t)=sum_j w_j exp(-(Delta+epsilon_j)t/hbar) and 0<=C(t)<=||v||_2^2 exp(-Delta t/hbar).",
+    "channelMass": "m_H=min_j(Delta+epsilon_j); m_channel=min_{j:w_j>0}(Delta+epsilon_j); Delta<=m_H<=m_channel",
+    "implementation": "family.mjs finiteSpectralModel constructs the displayed finite energies and evaluates finite sums using Float64; no infinite-sum exchange or measured ensemble is used.",
+    "leanScope": "Conditional.lean proves a separate exact natural-number finite support lower bound and interval exclusion; it does not prove this full real exponential estimate."
+  },
+  "infiniteDimensionalContract": {
+    "status": "HYPOTHESES_REQUIRED_NOT_IMPLEMENTED",
+    "space": "A specified complex Hilbert space (H,<.,.>,||.||), not an unspecified function space",
+    "hamiltonian": "A densely defined self-adjoint nonnegative operator H:D(H)->H; P0 is the orthogonal projection onto the full ker(H), not automatically one chosen vacuum vector",
+    "gap": "Delta>0 and sigma(H) subset {0} union [Delta,infinity); existence of such H is not obtained from a 4D classical connection",
+    "operatorSemigroupBound": "For every real t>=0, ||exp(-tH/hbar)(I-P0)||_(H->H) <= exp(-Delta*t/hbar)",
+    "vectorNormBound": "For every v in ran(I-P0), 0<=<v,exp(-tH/hbar)v><=||v||^2 exp(-Delta*t/hbar)",
+    "boundedObservable": "If O is bounded and Omega is normalized vacuum, set v=(I-P0)O Omega. Then the finite positive spectral measure mu_v has total mass ||v||^2.",
+    "unboundedObservable": "Specify Omega in D(O), O Omega in H, a common invariant domain where required, and finite vector norm. Bounded-operator estimates cannot be silently applied.",
+    "spectralMeasure": "C(t)=integral exp(-E*t/hbar) dmu_v(E), with finite positive mu_v supported on [Delta,infinity). Laplace-transform domination uses this positivity and support.",
+    "sumAndLimitExchange": "For an infinite expansion require a positive measure/Tonelli condition or an explicit integrable dominating function and the stated convergence mode. A visually convergent finite sum is insufficient.",
+    "gapInference": "Decay in one chosen channel only yields its supported excitation scale under the stated spectral assumptions. To certify the global gap from correlators needs suitable cyclicity/density or completeness/overlap control across channels.",
+    "reconstruction": "A continuum quantum Yang-Mills measure, reflection positivity, regularity, Euclidean covariance and reconstruction hypotheses are separate construction tasks. None are asserted by this module."
+  },
+  "classicalStateFamily": {
+    "ASSUMED_BOUND": "Delta changes a HYPOTHESIS record and assumption hash; the actual classical field and its physical hash remain fixed.",
+    "UNITS": "Lunit=Delta/referenceDelta in base length units; x_display=x/Lunit, A_display=Lunit A, F_display=Lunit^2 F, q4_display=Lunit^4 q4, q3_display=Lunit^3 q3. The physical source is unchanged.",
+    "CLASSICAL_SCALE": "lambda=Delta/referenceDelta; A_lambda(x)=lambda A(c+lambda(x-c)), rho and every trial-function length scale by 1/lambda. Fourier torus periods also scale. This is an actual source change, not a spectral theorem.",
+    "EFFECTIVE_MODEL": "ell=hbarC/Delta, rho=kappa ell; A_trial=(epsilon/ell) sum c phi((x-c)/ell) T. The complete coefficient array, seed, coupling and boundary are persisted. The relation is a DEFINITION of the effective model.",
+    "ENSEMBLE_ESTIMATE": "NOT_IMPLEMENTED. A statistical estimate would need ensembles at specified coupling, spacing, volume, boundary, autocorrelation/error analysis, overlap channels and independent continuum/infinite-volume extrapolations."
+  },
+  "projectionContract": {
+    "slice": "S_c(x1,x2,x3)=(x1,x2,x3,c); a scalar density is pulled back. Reconstructing a known slice uses explicit c and on-slice membership.",
+    "linearProjection": "P:R4->R3 is the actual input rank-three matrix. Every source sample is retained. Points differ by ker(P), so coincident screen positions are not equality of 4D states.",
+    "scalarMarginal": "Integrating a gauge-invariant scalar along x4 returns a scalar of dimension length^-3. It does not return a 3D gauge connection or preserve a Hamiltonian spectrum.",
+    "propertyTransfer": "A property descends only with an explicit certificate of invariance on full fibres, or an explicit reconstruction/injectivity hypothesis on a restricted domain.",
+    "leanScope": "project_slice_roundtrip, projection_collision, property_descends_with_fibre_certificate, reconstruction_on_selected_slice are actually kernel checked."
+  },
+  "sourceRoles": [
+    {
+      "id": "YM-R01",
+      "status": "THEOREM_REFERENCE",
+      "url": "https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf"
+    },
+    {
+      "id": "YM-R08",
+      "status": "THEOREM_REFERENCE",
+      "url": "https://doi.org/10.1007/BF01614090"
+    },
+    {
+      "id": "YM-R09",
+      "status": "THEOREM_REFERENCE",
+      "url": "https://doi.org/10.1016/0003-4916(78)90039-8"
+    }
+  ],
+  "importedLeanAnalyticTheorems": [],
+  "customLeanAxiomsIntroduced": []
+}

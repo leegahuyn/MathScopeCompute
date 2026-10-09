@@ -1,0 +1,111 @@
+{
+  "schema": "MathScope.Navier.SourceVariantRun/1",
+  "status": "LOCAL_SOURCE_CHAIN_REGENERATED_NOT_GLOBAL_CERTIFIED",
+  "mode": "REGENERATE_LOCAL_SOURCE_CHAIN",
+  "sourceInput": {
+    "pressure": {
+      "family": "source-outer-A21",
+      "parameters": {
+        "Md": "1.01",
+        "logP": "15",
+        "lambda": 0.0002,
+        "h": 1e-8,
+        "logXR": 20,
+        "Tf": 64,
+        "co": 0.005
+      }
+    },
+    "j0": "1/10000000000",
+    "sigmaMode": "computed-cutoff",
+    "lambdaMode": "computed-threshold",
+    "lambdaMultiplier": 2,
+    "tailDegree": 24,
+    "sampleEta": "0",
+    "sampleCount": 17,
+    "boundBits": 128
+  },
+  "parametersExact": {
+    "Md": "101/100",
+    "logP": "15",
+    "lambda": "7378697629483821/36893488147419103232",
+    "h": "3022314549036573/302231454903657293676544",
+    "logXR": "20",
+    "Tf": "64",
+    "co": "5764607523034235/1152921504606846976"
+  },
+  "inputBinding": {
+    "Md": {
+      "exact": "101/100",
+      "inputKind": "EXACT_TEXT_RATIONAL",
+      "numericApproximation": 1.01,
+      "numericApproximationIsIdentical": false
+    },
+    "logP": {
+      "exact": "15",
+      "inputKind": "EXACT_TEXT_RATIONAL",
+      "numericApproximation": 15,
+      "numericApproximationIsIdentical": true
+    },
+    "lambda": {
+      "exact": "7378697629483821/36893488147419103232",
+      "inputKind": "EXACT_BINARY64_VALUE",
+      "numericApproximation": 0.0002,
+      "numericApproximationIsIdentical": true
+    },
+    "h": {
+      "exact": "3022314549036573/302231454903657293676544",
+      "inputKind": "EXACT_BINARY64_VALUE",
+      "numericApproximation": 1e-8,
+      "numericApproximationIsIdentical": true
+    },
+    "logXR": {
+      "exact": "20",
+      "inputKind": "EXACT_BINARY64_VALUE",
+      "numericApproximation": 20,
+      "numericApproximationIsIdentical": true
+    },
+    "Tf": {
+      "exact": "64",
+      "inputKind": "EXACT_BINARY64_VALUE",
+      "numericApproximation": 64,
+      "numericApproximationIsIdentical": true
+    },
+    "co": {
+      "exact": "5764607523034235/1152921504606846976",
+      "inputKind": "EXACT_BINARY64_VALUE",
+      "numericApproximation": 0.005,
+      "numericApproximationIsIdentical": true
+    }
+  },
+  "outputDirectory": "variants/parameter-path-md101-logp15",
+  "originalSourceHashes": {
+    "source-axis-cone-refined.json": "edb33aded21f971d8e298768a9a58c3a4ca3649ba6247f225d6af2cffe64ebf3",
+    "uniform-source-debt-cone-refined.json": "4074d5156d01dde40041ba37cb68c5225f62133c1586048798145ad570a24b10",
+    "continuation-refinement.json": "f1f319a499d109fb325da896ad6909a19fb8875d990e04ba2e8cb55b96c01e01",
+    "uniform-source-debt-final.json": "ac79c8268a501f9762b5f13f6efe114809a94e568efc614e2fd66ceae4303c7a",
+    "axis-prefix-final.json": "91509edfe6f029293d4ad191981e60eb97747d13c4f8266c0f14cc9fefd2f7be"
+  },
+  "originalGlobalParameterHierarchyComplete": false,
+  "entireOuterProfileConeCertified": false,
+  "generatedAnalyticPremisesKernelChecked": false,
+  "fullProfileCertified": false,
+  "warning": "This command regenerates a local analytic source chain. It does not establish the outer cone, final outgoing pressure equality, complete finite-frequency field or global support. The default Md=1 datum has an independently certified negative outer Pc.",
+  "axisComputation": "Actual frozen A.21 producer and automatic remainder-based Lambda refinement executed.",
+  "sourceMathematicalProfileHash": "5643aaa02a4f6e868d95d0e17e2ac29ecbf4db23cb0c9798b619823d7acdae2e",
+  "prefixComputation": "The finite nonlinear recurrence, directed rounding and analytic radial tail were recomputed for this exact source.",
+  "sourceParameterContract": {
+    "necessaryLogPGreaterThanTd": "PROVED",
+    "necessaryHBelowExpMinusTd": "PROVED",
+    "twiceHLessThanLambda": true,
+    "fullSufficientlySmallLargeOrderCertified": false,
+    "reason": "The source pressure is well defined and bounded for these finite parameters; the full A.6 choices needed for the complete corrected profile are separate."
+  },
+  "finalSourceSHA256": "fa43ec55cc374f87a7289183c97b0742278d30b1adca7dbe1635d7941a1e685f",
+  "originalFilesUnchanged": true,
+  "scalarChecks": {
+    "debt": 18,
+    "debtTotal": 18,
+    "continuation": 30,
+    "continuationTotal": 30
+  }
+}

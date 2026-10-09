@@ -1,0 +1,655 @@
+{
+  "schema": "MathScope.SourceOuterIndependentReference/1",
+  "status": "PASS",
+  "fixtureSha256": "33bb328c84363775f140d5d6ff71d7a18b571bdda33446939b0f666e7e0cb8a4",
+  "scriptSha256": "f7d2d61a8d8db6368fa48795aec904386396a735f8b4391e624135ebded0e289",
+  "method": {
+    "precisionDecimalDigits": 70,
+    "quadrature": "96-point Gauss--Legendre with source-aware subintervals",
+    "terminal": "Independent integrating-factor integrals, not RK4",
+    "heat": "Reintegrated moment increments in log(x), not the implementation x quadrature",
+    "intervalCertified": false,
+    "referenceEvaluations": 64128
+  },
+  "counts": {
+    "total": 71,
+    "passed": 71,
+    "failed": 0
+  },
+  "checks": [
+    {
+      "id": "terminal-Q-integrating-factor",
+      "pass": true,
+      "error": 1.042082205864394e-12,
+      "tolerance": 2e-10,
+      "observed": "45.297515911898714",
+      "expected": "45.29751591189767154309953"
+    },
+    {
+      "id": "terminal-Qp-independent-integral",
+      "pass": true,
+      "error": 1.4811542902754206e-10,
+      "tolerance": 2e-09,
+      "observed": "3.7149022713030523e-10",
+      "expected": "3.714902271853286630471324e-10"
+    },
+    {
+      "id": "terminal-wait",
+      "pass": true,
+      "error": 1.4814189987375523e-10,
+      "tolerance": 2e-08,
+      "observed": "25.526751008501073",
+      "expected": "25.52675100835293080401969"
+    },
+    {
+      "id": "independent-logXtail",
+      "pass": true,
+      "error": 1.4198704020610755e-10,
+      "tolerance": 3e-08,
+      "observed": "65966.47514304022",
+      "expected": "65966.47514304008280632688"
+    },
+    {
+      "id": "independent-logEPow-tail",
+      "pass": true,
+      "error": 7.263623257288326e-11,
+      "tolerance": 3e-08,
+      "observed": "-33047.47975141415",
+      "expected": "-33047.47975141407381271864"
+    },
+    {
+      "id": "Kb-source-reintegration",
+      "pass": true,
+      "error": 7.869067382893404e-10,
+      "tolerance": 2e-09,
+      "observed": "0.24504962098760122",
+      "expected": "0.2450496202006944805129138"
+    },
+    {
+      "id": "pressure-A21-eta-0.0",
+      "pass": true,
+      "error": 3.9935718285304464e-11,
+      "tolerance": 2e-08,
+      "observed": "-3.3146227297305546",
+      "expected": "-3.314622729770490324960546"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-1-eta-0.0",
+      "pass": true,
+      "error": 0.0,
+      "tolerance": 2e-08,
+      "observed": "0",
+      "expected": "0.0"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-2-eta-0.0",
+      "pass": true,
+      "error": 7.792366129620655e-11,
+      "tolerance": 2e-08,
+      "observed": "6.629245459463057",
+      "expected": "6.629245459540980649921092"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-3-eta-0.0",
+      "pass": true,
+      "error": 0.0,
+      "tolerance": 2e-08,
+      "observed": "0",
+      "expected": "0.0"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-4-eta-0.0",
+      "pass": true,
+      "error": 3.7169702419384185e-11,
+      "tolerance": 2e-08,
+      "observed": "-9.943868189274301",
+      "expected": "-9.943868189311470974881637"
+    },
+    {
+      "id": "A11-source-ODE-debt-log-eta-0.0",
+      "pass": true,
+      "error": 2.826126343477768e-10,
+      "tolerance": 2e-08,
+      "observed": "-278.9142266861502",
+      "expected": "-278.9142266864327992858505"
+    },
+    {
+      "id": "MJ-independent-pulse-integral-0-eta-0.0",
+      "pass": true,
+      "error": 3.4565841132128232e-09,
+      "tolerance": 2e-08,
+      "observed": "-1.451748758131536701692342e-2318",
+      "expected": "-1.451748763149628412771714e-2318"
+    },
+    {
+      "id": "MJ-independent-pulse-integral-1-eta-0.0",
+      "pass": true,
+      "error": 4.2405223547826035e-10,
+      "tolerance": 2e-08,
+      "observed": "-1.17672327734397713881379e-2317",
+      "expected": "-1.176723277842969275322408e-2317"
+    },
+    {
+      "id": "negative-control-omit-MJ-end-bumps-0.0",
+      "pass": true,
+      "detail": "Omitting both bumps leaves a relative M and J residual of one, even if an unscaled Float64 value underflows."
+    },
+    {
+      "id": "Amp-independent-energy-root-eta-0.0",
+      "pass": true,
+      "error": 2.279217675103701e-09,
+      "tolerance": 2e-08,
+      "observed": "1.1221067888662217",
+      "expected": "1.122106791145439375103701"
+    },
+    {
+      "id": "Amp-independent-S-residual-eta-0.0",
+      "pass": true,
+      "error": 1.2534413681462294e-09,
+      "tolerance": 2e-08,
+      "observed": "-1.253441368146229398559018e-9",
+      "expected": "0"
+    },
+    {
+      "id": "negative-control-shifted-Amp-0.0",
+      "pass": true,
+      "detail": "Adding .02 to Amp must fail the source S equation."
+    },
+    {
+      "id": "A11-reintegrated-row-0-eta-0.0",
+      "pass": true,
+      "error": 5.020420794812016e-16,
+      "tolerance": 2e-08,
+      "observed": "-0.9999999999999994979579205",
+      "expected": "-1.0"
+    },
+    {
+      "id": "A11-reintegrated-row-1-eta-0.0",
+      "pass": true,
+      "error": 8.062852362376094e-18,
+      "tolerance": 2e-08,
+      "observed": "8.062852362376092783278092e-18",
+      "expected": "0.0"
+    },
+    {
+      "id": "A7-independent-compensation-row-0-eta-0.0",
+      "pass": true,
+      "error": 1.0798758205635478e-13,
+      "tolerance": 2e-08,
+      "observed": "-1.07987582056354782331966e-13",
+      "expected": "5.523632158782577992006095e-56889"
+    },
+    {
+      "id": "A7-independent-compensation-row-1-eta-0.0",
+      "pass": true,
+      "error": 8.500432866509396e-13,
+      "tolerance": 2e-08,
+      "observed": "8.500432866509395530195454e-13",
+      "expected": "-5.507734671009026828043788e-28468"
+    },
+    {
+      "id": "A7-independent-compensation-row-2-eta-0.0",
+      "pass": true,
+      "error": 2.2528757160449455e-12,
+      "tolerance": 2e-08,
+      "observed": "0.9999999999977471242839551",
+      "expected": "1.0"
+    },
+    {
+      "id": "negative-control-heat-bump-coefficient-0.0",
+      "pass": true,
+      "detail": "A one-percent change in the first nonzero bump coefficient must fail the normalized moment equations."
+    },
+    {
+      "id": "A7-heat-debt-log-0-eta-0.0",
+      "pass": true,
+      "error": 3.6410780833867165e-10,
+      "tolerance": 3e-06,
+      "observed": "-131603.20834580643",
+      "expected": "-131603.2083458060657533051"
+    },
+    {
+      "id": "A7-heat-debt-log-1-eta-0.0",
+      "pass": true,
+      "error": 1.4239018204689863e-10,
+      "tolerance": 3e-06,
+      "observed": "-66161.4403000582",
+      "expected": "-66161.44030005805274444279"
+    },
+    {
+      "id": "A7-heat-debt-log-2-eta-0.0",
+      "pass": true,
+      "error": 1.7841642697968368e-11,
+      "tolerance": 3e-06,
+      "observed": "-613.1540261118466",
+      "expected": "-613.1540261118287916418876"
+    },
+    {
+      "id": "nonzero-heat-beyond-float64-eta-0.0",
+      "pass": true,
+      "detail": "Tiny pressure change is retained, not declared zero."
+    },
+    {
+      "id": "pressure-A21-eta-0.5",
+      "pass": true,
+      "error": 2.5577351577293013e-11,
+      "tolerance": 2e-08,
+      "observed": "-2.1213585470275365",
+      "expected": "-2.121358547053113807974749"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-1-eta-0.5",
+      "pass": true,
+      "error": 4.0894008546608866e-11,
+      "tolerance": 2e-08,
+      "observed": "3.394173675244088",
+      "expected": "3.394173675284982092759599"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-2-eta-0.5",
+      "pass": true,
+      "error": 8.37473386870762e-12,
+      "tolerance": 2e-08,
+      "observed": "-0.6788347350486217",
+      "expected": "-0.6788347350569964185519198"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-3-eta-0.5",
+      "pass": true,
+      "error": 4.5781891755515677e-11,
+      "tolerance": 2e-08,
+      "observed": "-3.801474516273398",
+      "expected": "-3.801474516319179943890751"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-4-eta-0.5",
+      "pass": true,
+      "error": 5.4290227568417226e-11,
+      "tolerance": 2e-08,
+      "observed": "4.616076198333285",
+      "expected": "4.616076198387575646153054"
+    },
+    {
+      "id": "A11-source-ODE-debt-log-eta-0.5",
+      "pass": true,
+      "error": 2.5236121525148026e-10,
+      "tolerance": 2e-08,
+      "observed": "-279.3044095692208",
+      "expected": "-279.304409569473170077407"
+    },
+    {
+      "id": "MJ-independent-pulse-integral-0-eta-0.5",
+      "pass": true,
+      "error": 3.4565841132128232e-09,
+      "tolerance": 2e-08,
+      "observed": "-1.451748758131536701692342e-2318",
+      "expected": "-1.451748763149628412771714e-2318"
+    },
+    {
+      "id": "MJ-independent-pulse-integral-1-eta-0.5",
+      "pass": true,
+      "error": 4.2405223547826035e-10,
+      "tolerance": 2e-08,
+      "observed": "-1.17672327734397713881379e-2317",
+      "expected": "-1.176723277842969275322408e-2317"
+    },
+    {
+      "id": "MJ-independent-prepulse-affine-log-0-eta-0.5",
+      "pass": true,
+      "error": 1.6810408714740049e-12,
+      "tolerance": 2e-06,
+      "observed": "-32739.202310854198",
+      "expected": "-32739.20231085419632261257"
+    },
+    {
+      "id": "MJ-independent-prepulse-affine-log-1-eta-0.5",
+      "pass": true,
+      "error": 1.3127013144143706e-12,
+      "tolerance": 2e-06,
+      "observed": "-32740.20191085512",
+      "expected": "-32740.20191085512255388527"
+    },
+    {
+      "id": "negative-control-omit-MJ-end-bumps-0.5",
+      "pass": true,
+      "detail": "Omitting both bumps leaves a relative M and J residual of one, even if an unscaled Float64 value underflows."
+    },
+    {
+      "id": "Amp-independent-energy-root-eta-0.5",
+      "pass": true,
+      "error": 2.2792479393850606e-09,
+      "tolerance": 2e-08,
+      "observed": "1.1221067888662217",
+      "expected": "1.122106791145469639385061"
+    },
+    {
+      "id": "Amp-independent-S-residual-eta-0.5",
+      "pass": true,
+      "error": 1.2534580117966739e-09,
+      "tolerance": 2e-08,
+      "observed": "-1.253458011796673933484719e-9",
+      "expected": "0"
+    },
+    {
+      "id": "negative-control-shifted-Amp-0.5",
+      "pass": true,
+      "detail": "Adding .02 to Amp must fail the source S equation."
+    },
+    {
+      "id": "A11-reintegrated-row-0-eta-0.5",
+      "pass": true,
+      "error": 5.020420794812016e-16,
+      "tolerance": 2e-08,
+      "observed": "-0.9999999999999994979579205",
+      "expected": "-1.0"
+    },
+    {
+      "id": "A11-reintegrated-row-1-eta-0.5",
+      "pass": true,
+      "error": 8.062852362376094e-18,
+      "tolerance": 2e-08,
+      "observed": "8.062852362376092783278092e-18",
+      "expected": "0.0"
+    },
+    {
+      "id": "A7-independent-compensation-row-0-eta-0.5",
+      "pass": true,
+      "error": 1.4375354858999756e-13,
+      "tolerance": 2e-08,
+      "observed": "-1.437535485899975664589432e-13",
+      "expected": "5.523632158664924627025279e-56889"
+    },
+    {
+      "id": "A7-independent-compensation-row-1-eta-0.5",
+      "pass": true,
+      "error": 6.811073196327153e-13,
+      "tolerance": 2e-08,
+      "observed": "6.811073196327153051851108e-13",
+      "expected": "-5.507734671056944119681775e-28468"
+    },
+    {
+      "id": "A7-independent-compensation-row-2-eta-0.5",
+      "pass": true,
+      "error": 2.252911372778018e-12,
+      "tolerance": 2e-08,
+      "observed": "0.999999999997747088627222",
+      "expected": "1.0"
+    },
+    {
+      "id": "negative-control-heat-bump-coefficient-0.5",
+      "pass": true,
+      "detail": "A one-percent change in the first nonzero bump coefficient must fail the normalized moment equations."
+    },
+    {
+      "id": "A7-heat-debt-log-0-eta-0.5",
+      "pass": true,
+      "error": 3.7553941568472337e-10,
+      "tolerance": 3e-06,
+      "observed": "-131603.4960278789",
+      "expected": "-131603.4960278785175342325"
+    },
+    {
+      "id": "A7-heat-debt-log-1-eta-0.5",
+      "pass": true,
+      "error": 1.3926987416458347e-10,
+      "tolerance": 3e-06,
+      "observed": "-66161.72798213064",
+      "expected": "-66161.72798213050452537023"
+    },
+    {
+      "id": "A7-heat-debt-log-2-eta-0.5",
+      "pass": true,
+      "error": 1.47213348156532e-11,
+      "tolerance": 3e-06,
+      "observed": "-613.4417081842953",
+      "expected": "-613.4417081842805725693268"
+    },
+    {
+      "id": "nonzero-heat-beyond-float64-eta-0.5",
+      "pass": true,
+      "detail": "Tiny pressure change is retained, not declared zero."
+    },
+    {
+      "id": "pressure-A21-eta-1.0",
+      "pass": true,
+      "error": 1.0215744138867849e-11,
+      "tolerance": 2e-08,
+      "observed": "-0.8286556824324068",
+      "expected": "-0.8286556824426225812401364"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-1-eta-1.0",
+      "pass": true,
+      "error": 1.9899913493545173e-11,
+      "tolerance": 2e-08,
+      "observed": "1.6573113648653452",
+      "expected": "1.657311364885245162480273"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-2-eta-1.0",
+      "pass": true,
+      "error": 1.9899913493545173e-11,
+      "tolerance": 2e-08,
+      "observed": "-1.6573113648653452",
+      "expected": "-1.657311364885245162480273"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-3-eta-1.0",
+      "pass": true,
+      "error": 1.0215744138867849e-11,
+      "tolerance": 2e-08,
+      "observed": "0.8286556824324068",
+      "expected": "0.8286556824426225812401364"
+    },
+    {
+      "id": "pressure-Taylor-coefficient-4-eta-1.0",
+      "pass": true,
+      "error": 1.3409896247383628e-12,
+      "tolerance": 2e-08,
+      "observed": "0.20716392060931466",
+      "expected": "0.2071639206106556453100341"
+    },
+    {
+      "id": "A11-source-ODE-debt-log-eta-1.0",
+      "pass": true,
+      "error": 2.3801878046341406e-12,
+      "tolerance": 2e-08,
+      "observed": "-65823.39533096956",
+      "expected": "-65823.3953309695620036617"
+    },
+    {
+      "id": "MJ-independent-pulse-integral-0-eta-1.0",
+      "pass": true,
+      "error": 3.4565841132128232e-09,
+      "tolerance": 2e-08,
+      "observed": "-1.451748758131536701692342e-2318",
+      "expected": "-1.451748763149628412771714e-2318"
+    },
+    {
+      "id": "MJ-independent-pulse-integral-1-eta-1.0",
+      "pass": true,
+      "error": 4.2405223547826035e-10,
+      "tolerance": 2e-08,
+      "observed": "-1.17672327734397713881379e-2317",
+      "expected": "-1.176723277842969275322408e-2317"
+    },
+    {
+      "id": "MJ-independent-prepulse-affine-log-0-eta-1.0",
+      "pass": true,
+      "error": 2.4108156959081987e-13,
+      "tolerance": 2e-06,
+      "observed": "-32738.03916004439",
+      "expected": "-32738.0391600443906417495"
+    },
+    {
+      "id": "MJ-independent-prepulse-affine-log-1-eta-1.0",
+      "pass": true,
+      "error": 2.7526606162975556e-12,
+      "tolerance": 2e-06,
+      "observed": "-32739.038760045314",
+      "expected": "-32739.0387600453168730222"
+    },
+    {
+      "id": "negative-control-omit-MJ-end-bumps-1.0",
+      "pass": true,
+      "detail": "Omitting both bumps leaves a relative M and J residual of one, even if an unscaled Float64 value underflows."
+    },
+    {
+      "id": "Amp-independent-energy-root-eta-1.0",
+      "pass": true,
+      "error": 2.2793520565218462e-09,
+      "tolerance": 2e-08,
+      "observed": "1.1221067888662217",
+      "expected": "1.122106791145573756521846"
+    },
+    {
+      "id": "Amp-independent-S-residual-eta-1.0",
+      "pass": true,
+      "error": 1.2535152703586525e-09,
+      "tolerance": 2e-08,
+      "observed": "-1.253515270358652515481231e-9",
+      "expected": "0"
+    },
+    {
+      "id": "negative-control-shifted-Amp-1.0",
+      "pass": true,
+      "detail": "Adding .02 to Amp must fail the source S equation."
+    },
+    {
+      "id": "A11-reintegrated-row-0-eta-1.0",
+      "pass": true,
+      "error": 5.020420794812016e-16,
+      "tolerance": 2e-08,
+      "observed": "0.9999999999999994979579205",
+      "expected": "1.0"
+    },
+    {
+      "id": "A11-reintegrated-row-1-eta-1.0",
+      "pass": true,
+      "error": 8.062852362376094e-18,
+      "tolerance": 2e-08,
+      "observed": "-8.062852362376092783278092e-18",
+      "expected": "0.0"
+    },
+    {
+      "id": "A7-independent-compensation-row-0-eta-1.0",
+      "pass": true,
+      "error": 0.0,
+      "tolerance": 2e-08,
+      "observed": "0.0",
+      "expected": "0.0"
+    },
+    {
+      "id": "A7-independent-compensation-row-1-eta-1.0",
+      "pass": true,
+      "error": 0.0,
+      "tolerance": 2e-08,
+      "observed": "0.0",
+      "expected": "0.0"
+    },
+    {
+      "id": "A7-independent-compensation-row-2-eta-1.0",
+      "pass": true,
+      "error": 0.0,
+      "tolerance": 2e-08,
+      "observed": "0.0",
+      "expected": "0.0"
+    }
+  ],
+  "referenceValues": [
+    {
+      "eta": 0.0,
+      "pressureNormalized": "-3.314622729770490324960545764905307188818",
+      "amplitude": "1.1221067911454393751037013154625614666",
+      "sourceSMomentAtComputedAmplitude": {
+        "sign": -1,
+        "logAbs": -20.49737297393854,
+        "decimal": "-0.000000001253441368146229398559017997820481971147"
+      },
+      "heatLeadingChanges": [
+        {
+          "sign": -1,
+          "logAbs": -131603.20834580605,
+          "decimal": "-2.836708123996676647448297012996359967418e-57155"
+        },
+        {
+          "sign": 1,
+          "logAbs": -66161.44030005805,
+          "decimal": "2.82854383375933693053026204708093522044e-28734"
+        },
+        {
+          "sign": -1,
+          "logAbs": -613.1540261118288,
+          "decimal": "-5.135584777316434475145080151842571697582e-267"
+        }
+      ],
+      "A11ReintegratedRows": [
+        "-0.99999999999999949795792051879838464",
+        "8.062852362376092783278091737523804e-18"
+      ],
+      "A7ReintegratedRowsInCommonScale": [
+        "-1.0798758205635478233196603395911622e-13",
+        "8.5004328665093955301954543719497631e-13",
+        "0.99999999999774712428395505444218209"
+      ]
+    },
+    {
+      "eta": 0.5,
+      "pressureNormalized": "-2.121358547053113807974749289539396600844",
+      "amplitude": "1.122106791145469639385060568760992965523",
+      "sourceSMomentAtComputedAmplitude": {
+        "sign": -1,
+        "logAbs": -20.49735969566293,
+        "decimal": "-0.000000001253458011796673933484719300446248011461"
+      },
+      "heatLeadingChanges": [
+        {
+          "sign": -1,
+          "logAbs": -131603.49602787851,
+          "decimal": "-2.127531092997507485586222759747269975563e-57155"
+        },
+        {
+          "sign": 1,
+          "logAbs": -66161.7279821305,
+          "decimal": "2.12140787531950269789769653531070141533e-28734"
+        },
+        {
+          "sign": -1,
+          "logAbs": -613.4417081842806,
+          "decimal": "-3.851688582987325856358810113881928773187e-267"
+        }
+      ],
+      "A11ReintegratedRows": [
+        "-0.99999999999999949795792051879838464",
+        "8.062852362376092783278091737523804e-18"
+      ],
+      "A7ReintegratedRowsInCommonScale": [
+        "-1.4375354858999756645894321066142212e-13",
+        "6.8110731963271530518511084891601441e-13",
+        "0.9999999999977470886272219822192871"
+      ]
+    },
+    {
+      "eta": 1.0,
+      "pressureNormalized": "-0.8286556824426225812401364412263267972045",
+      "amplitude": "1.122106791145573756521846204204491842629",
+      "sourceSMomentAtComputedAmplitude": {
+        "sign": -1,
+        "logAbs": -20.497314016227577,
+        "decimal": "-0.000000001253515270358652515481230874087094900039"
+      },
+      "heatLeadingChanges": [],
+      "A11ReintegratedRows": [
+        "0.99999999999999949795792051879838464",
+        "-8.062852362376092783278091737523804e-18"
+      ],
+      "A7ReintegratedRowsInCommonScale": [
+        "0.0",
+        "0.0",
+        "0.0"
+      ]
+    }
+  ],
+  "elapsedSeconds": 10.342077501998574,
+  "scope": "Finite source fixture and numerical independent checks. Neither all-eta certification nor exact moment equality is claimed."
+}

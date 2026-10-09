@@ -1,0 +1,143 @@
+/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Algebra.lean:110:34: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Algebra.lean:117:34: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Algebra.lean:132:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  f k
+in the target expression
+  (fun k => -f k) k = p ^ N * -a
+
+R : Type u_1
+inst✝ : CommRing R
+p : R
+f : ℤ → R
+hf : Restricted p f
+N B : ℕ
+hB : ∀ (k : ℤ), B < k.natAbs → ∃ a, f k = p ^ N * a
+k : ℤ
+hk : B < k.natAbs
+a : R
+ha : f k = p ^ N * a
+⊢ (fun k => -f k) k = p ^ N * -a
+/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Algebra.lean:144:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  f k
+in the target expression
+  (fun k => w k * f k) k = p ^ N * (w k * a)
+
+R : Type u_1
+inst✝ : CommRing R
+p : R
+f w : ℤ → R
+hf : Restricted p f
+N B : ℕ
+hB : ∀ (k : ℤ), B < k.natAbs → ∃ a, f k = p ^ N * a
+k : ℤ
+hk : B < k.natAbs
+a : R
+ha : f k = p ^ N * a
+⊢ (fun k => w k * f k) k = p ^ N * (w k * a)
+/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Algebra.lean:158:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  f k
+in the target expression
+  (fun k => f k + g k) k = p ^ N * (a + b)
+
+R : Type u_1
+inst✝ : CommRing R
+p : R
+f g : ℤ → R
+hf : Restricted p f
+hg : Restricted p g
+N B : ℕ
+hB : ∀ (k : ℤ), B < k.natAbs → ∃ a, f k = p ^ N * a
+C : ℕ
+hC : ∀ (k : ℤ), C < k.natAbs → ∃ a, g k = p ^ N * a
+k : ℤ
+hk : max B C < k.natAbs
+a : R
+ha : f k = p ^ N * a
+b : R
+hb : g k = p ^ N * b
+⊢ (fun k => f k + g k) k = p ^ N * (a + b)
+MathScope.M1.Arithmetic.positive_weight_contractible.{u_1} {R : Type u_1} [CommRing R] (k x u v w : R) :
+  MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.posA k x) = 0 ∧
+    MathScope.M1.Arithmetic.posH1 (MathScope.M1.Arithmetic.posA k x) = x ∧
+      MathScope.M1.Arithmetic.posA k (MathScope.M1.Arithmetic.posH1 (u, v)) +
+            MathScope.M1.Arithmetic.weightH2 (MathScope.M1.Arithmetic.weightB k (u, v)) =
+          (u, v) ∧
+        MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.weightH2 w) = w
+'MathScope.M1.Arithmetic.positive_weight_contractible' depends on axioms: [propext, Quot.sound]
+MathScope.M1.Arithmetic.negative_weight_contractible.{u_1} {R : Type u_1} [CommRing R] (k x u v w : R) :
+  MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.negA k x) = 0 ∧
+    MathScope.M1.Arithmetic.negH1 (MathScope.M1.Arithmetic.negA k x) = x ∧
+      MathScope.M1.Arithmetic.negA k (MathScope.M1.Arithmetic.negH1 (u, v)) +
+            MathScope.M1.Arithmetic.weightH2 (MathScope.M1.Arithmetic.weightB k (u, v)) =
+          (u, v) ∧
+        MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.weightH2 w) = w
+'MathScope.M1.Arithmetic.negative_weight_contractible' depends on axioms: [propext, Quot.sound]
+MathScope.M1.Arithmetic.p1_d_squared_zero.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C0 R) :
+  MathScope.M1.Arithmetic.d1 (MathScope.M1.Arithmetic.d0 v) = { a := 0, b := 0, c := 0 }
+'MathScope.M1.Arithmetic.p1_d_squared_zero' depends on axioms: [propext]
+MathScope.M1.Arithmetic.p1_retraction.{u_1} {R : Type u_1} [CommRing R] (x : R) :
+  MathScope.M1.Arithmetic.r0 (MathScope.M1.Arithmetic.i0 x) = x ∧
+    MathScope.M1.Arithmetic.r2 (MathScope.M1.Arithmetic.i2 x) = x
+'MathScope.M1.Arithmetic.p1_retraction' does not depend on any axioms
+MathScope.M1.Arithmetic.p1_homotopy_degree_zero.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C0 R) :
+  MathScope.M1.Arithmetic.h1 (MathScope.M1.Arithmetic.d0 v) =
+    { a := v.a - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).a,
+      b := v.b - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).b,
+      c := v.c - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).c,
+      d := v.d - (MathScope.M1.Arithmetic.i0 (MathScope.M1.Arithmetic.r0 v)).d }
+'MathScope.M1.Arithmetic.p1_homotopy_degree_zero' depends on axioms: [propext]
+MathScope.M1.Arithmetic.p1_homotopy_degree_one.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C1 R) :
+  {
+      u :=
+        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).u +
+          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).u,
+      v :=
+        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).v +
+          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).v,
+      w :=
+        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).w +
+          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).w,
+      x :=
+        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).x +
+          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).x,
+      y :=
+        (MathScope.M1.Arithmetic.d0 (MathScope.M1.Arithmetic.h1 v)).y +
+          (MathScope.M1.Arithmetic.h2 (MathScope.M1.Arithmetic.d1 v)).y } =
+    v
+'MathScope.M1.Arithmetic.p1_homotopy_degree_one' depends on axioms: [propext]
+MathScope.M1.Arithmetic.p1_homotopy_degree_two.{u_1} {R : Type u_1} [CommRing R] (v : MathScope.M1.Arithmetic.C2 R) :
+  MathScope.M1.Arithmetic.d1 (MathScope.M1.Arithmetic.h2 v) =
+    { a := v.a - (MathScope.M1.Arithmetic.i2 (MathScope.M1.Arithmetic.r2 v)).a,
+      b := v.b - (MathScope.M1.Arithmetic.i2 (MathScope.M1.Arithmetic.r2 v)).b,
+      c := v.c - (MathScope.M1.Arithmetic.i2 (MathScope.M1.Arithmetic.r2 v)).c }
+'MathScope.M1.Arithmetic.p1_homotopy_degree_two' depends on axioms: [propext]
+MathScope.M1.Arithmetic.frobenius_positive_chain_map.{u_1} {R : Type u_1} [CommRing R] (p k x : R) (z : R × R) :
+  MathScope.M1.Arithmetic.posA (p * k) x = MathScope.M1.Arithmetic.weightF1 p (MathScope.M1.Arithmetic.posA k x) ∧
+    MathScope.M1.Arithmetic.weightB (p * k) (MathScope.M1.Arithmetic.weightF1 p z) =
+      p * MathScope.M1.Arithmetic.weightB k z
+'MathScope.M1.Arithmetic.frobenius_positive_chain_map' depends on axioms: [propext, Quot.sound]
+MathScope.M1.Arithmetic.frobenius_negative_chain_map.{u_1} {R : Type u_1} [CommRing R] (p k x : R) (z : R × R) :
+  MathScope.M1.Arithmetic.negA (p * k) x = MathScope.M1.Arithmetic.weightF1 p (MathScope.M1.Arithmetic.negA k x) ∧
+    MathScope.M1.Arithmetic.weightB (p * k) (MathScope.M1.Arithmetic.weightF1 p z) =
+      p * MathScope.M1.Arithmetic.weightB k z
+'MathScope.M1.Arithmetic.frobenius_negative_chain_map' depends on axioms: [propext, Quot.sound]
+MathScope.M1.Arithmetic.restricted_neg.{u_1} {R : Type u_1} [CommRing R] (p : R) (f : ℤ → R)
+  (hf : MathScope.M1.Arithmetic.Restricted p f) : MathScope.M1.Arithmetic.Restricted p fun k => -f k
+'MathScope.M1.Arithmetic.restricted_neg' depends on axioms: [propext, sorryAx]
+MathScope.M1.Arithmetic.restricted_mul_weight.{u_1} {R : Type u_1} [CommRing R] (p : R) (f w : ℤ → R)
+  (hf : MathScope.M1.Arithmetic.Restricted p f) : MathScope.M1.Arithmetic.Restricted p fun k => w k * f k
+'MathScope.M1.Arithmetic.restricted_mul_weight' depends on axioms: [sorryAx]
+MathScope.M1.Arithmetic.restricted_add.{u_1} {R : Type u_1} [CommRing R] (p : R) (f g : ℤ → R)
+  (hf : MathScope.M1.Arithmetic.Restricted p f) (hg : MathScope.M1.Arithmetic.Restricted p g) :
+  MathScope.M1.Arithmetic.Restricted p fun k => f k + g k
+'MathScope.M1.Arithmetic.restricted_add' depends on axioms: [sorryAx]
+MathScope.M1.Arithmetic.inverse_system_identity.{u_2} {A : ℕ → Type u_2} (f g : (N : ℕ) → ℤ → A N)
+  (h : ∀ (N : ℕ) (k : ℤ), f N k = g N k) : f = g
+'MathScope.M1.Arithmetic.inverse_system_identity' depends on axioms: [Quot.sound]
+MathScope.M1.Arithmetic.p1_frobenius_degree_two.{u_1} {R : Type u_1} [CommRing R] (p x : R) :
+  MathScope.M1.Arithmetic.r2 { a := 0, b := p * x, c := 0 } = p * x
+'MathScope.M1.Arithmetic.p1_frobenius_degree_two' does not depend on any axioms

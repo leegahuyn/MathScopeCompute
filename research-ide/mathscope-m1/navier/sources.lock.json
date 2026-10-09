@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 1,
+  "attachment": {
+    "fileName": "01-navier-stokes.pdf",
+    "pageCount": 166,
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "title": "Finite Time Blowup for Navier–Stokes",
+    "author": "OpenAI",
+    "date": "2026-09-08"
+  },
+  "repository": {
+    "url": "https://github.com/openai/NavierStokesAndEuler",
+    "commit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+    "toolchain": "leanprover/lean4:v4.34.0-rc2",
+    "files": [
+      {
+        "path": "lean-toolchain",
+        "sha256": "8190e75a201741065fe508b28955dd64dd72d090babe5f70ce6848879d68ae88"
+      },
+      {
+        "path": "lakefile.toml",
+        "sha256": "97b2804da5b9a2cd0aaf44ce42b7c39e9947beff9d2ac01a11e0d3d867af1c09"
+      },
+      {
+        "path": "lake-manifest.json",
+        "sha256": "5ec1dc8e009008d0efb9601cd38f6ba54e753fd538b0e5f8c3e6c5ec72ee1e09"
+      },
+      {
+        "path": "NavierStokes.lean",
+        "sha256": "aa93efae7c7d7e44f2bb421d85587e7e9610e03ce67e15a15ed86acad2d014a1"
+      },
+      {
+        "path": "NavierStokes/ComparatorSolution.lean",
+        "sha256": "52950d5d618a8d34c9bfbdb16641c81c276e97b6d7fd2a76c08577353f0b0227"
+      },
+      {
+        "path": "NavierStokes/ComparatorR3Theorem.lean",
+        "sha256": "d05cd1c55e78709dabe1996546eb6ddaaa46e602d2ef1b05c6e2085320781207"
+      },
+      {
+        "path": "NavierStokes/ComparatorTheorem.lean",
+        "sha256": "629c992327e531611c20165eb14db24edcabcf8f646a1d2689be9ac6fe2a9c68"
+      },
+      {
+        "path": "NavierStokes/Flatness.lean",
+        "sha256": "550606d4d1e14fb16612375de57d837df325a7b2265de6ed056c935ff96b2bc6"
+      },
+      {
+        "path": "NavierStokes/ProblemStatement.lean",
+        "sha256": "d2f5cdf24a060acd41011b50492e89058991965e18d2cb797c58d915f95af633"
+      },
+      {
+        "path": "ComparatorChallenges/NavierStokes.lean",
+        "sha256": "0cd193b8d5cbd0266e6e2f72e68dd5abcdcf2430ebd435dd9289737e9aa7da61"
+      },
+      {
+        "path": "ComparatorChallenges/NavierStokes.json",
+        "sha256": "7610ecead7b390d80ff7f4229a3ff8f18d630e046f7ad1de4f92c7e8e76845b8"
+      }
+    ],
+    "originalFullBuild": {
+      "schemaVersion": 2,
+      "attempted": true,
+      "performed": false,
+      "performedMeaning": "Compatibility field: the entire original defaultTargets build completed successfully with exit 0. It does not mean merely invoking the command; attempted records that separately.",
+      "wholeDefaultBuildPassed": false,
+      "requiredDefaultTargets": [
+        "NavierStokes",
+        "Euler",
+        "ComparatorChallenges"
+      ],
+      "exitCode": -15,
+      "startedAt": "2026-10-09T15:23:30.991157+00:00",
+      "completedAt": "2026-10-09T15:37:13.760832+00:00",
+      "terminationReason": "Explicit stop request",
+      "scope": "Original default lake build using the pinned official rc2 kernel through the separately audited explicit-path shell entry.",
+      "reason": "The original default invocation was recorded and then explicitly stopped to prioritize NS C/D dependencies after unrelated Euler compilation started. Its result is not counted as whole-default success.",
+      "vanillaCLIStatus": "ENVIRONMENT_PATH_DETECTION_FAILED",
+      "vanillaCLIResults": "official-validation/official-command-results.json",
+      "cacheProfile": {
+        "status": "FINISHED",
+        "exitCode": 0,
+        "entry": "Original Cache.Main CLI body with explicit pinned CacheM context only",
+        "cacheAlgorithmsChanged": false,
+        "unsafeFlagsUsed": false,
+        "endpoint": "https://lakecache.blob.core.windows.net/mathlib4-master",
+        "lastProgress": {
+          "downloaded": 8747,
+          "attempted": 8747,
+          "requested": 8747
+        },
+        "log": "cache-context-explicit.log",
+        "logSHA256": "6e01f287ffad23379ad402dd872baeb7f38032d059e90fe4795a6553359273f1"
+      },
+      "defaultLog": "official-validation/lake-build-full-pinned.log",
+      "defaultLogSHA256": "6e05a1754e2110c57701e554b70c6f0fcc94d7dd333c3c7f5152def81a012929",
+      "transitionRecord": "official-validation/priority-transition.json",
+      "additionalPinnedDeclarationAudit": "repository.pinnedRc2Validation",
+      "auditFile": "official-validation/official-audit-summary.json",
+      "auditSHA256": "48b6adab5d50078b974baba02b01db5e771dfe8c18b99de4040823f3bed9e8ff"
+    },
+    "pinnedRc2Validation": {
+      "schemaVersion": 1,
+      "sourceCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+      "checkedAt": "2026-10-09T16:06:24.537829+00:00",
+      "scope": "The two exact C/D exported Lean declaration types at the original pinned rc2 commit. Separate from the 14:39 Lean4.34.1 component receipt, full default build, full paper-to-formal equivalence, and numerical profile certification.",
+      "toolchain": "leanprover/lean4:v4.34.0-rc2",
+      "kernelCommit": "6a10ac8c22beadecabdbb0919c2b50214762f91d",
+      "executionProfile": {
+        "kind": "PINNED_OFFICIAL_KERNEL_EXPLICIT_PATH_ENTRY",
+        "vanillaCLIOutcome": "Environment path detection failed; exact vanilla commands and exits are separately logged.",
+        "entrySourceUnchangedFromPreviouslyApprovedDriver": true,
+        "driverSHA256": "a187c5263205d221e47724bbaf729cd377f40683b2670a543e3b7e6495108682",
+        "officialSharedLibrarySHA256": "cddf08bd2b9239f8ce2e2aba8630c47e37b6b341b47705d9d0ba910ad6db13b5",
+        "taskManagerWorkers": 1,
+        "logicalOptionsReplaced": false,
+        "proofSourcesChanged": false,
+        "manifestChanged": false,
+        "originalReleaseBytesChanged": false
+      },
+      "nsSubmissionBuild": {
+        "target": "NavierStokes.ComparatorSolution",
+        "exitCode": 0,
+        "passed": true,
+        "staticLocalSourceDependencyCount": 609,
+        "reportedLakeJobs": 9371,
+        "log": {
+          "file": "official-validation/lake-build-ns-priority-pinned.log",
+          "sha256": "f5ca33d2c60d99d59dbc9752bb614bf75964288e2533647584a9e264138192d5"
+        },
+        "commandReceipt": {
+          "file": "official-validation/full-pinned-command-results.json",
+          "sha256": "bf992d41b39bdd257ecb9b46e5caf1b6cff634466b6a05052f4d27333f346274",
+          "stage": "lake-build-ns-priority-pinned"
+        }
+      },
+      "submittedDeclarations": {
+        "names": [
+          "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+          "NavierStokes.Comparator.navier_stokes_breakdown_periodic"
+        ],
+        "entrySourceSHA256": "b0cf547fcf21a5760c90e326489a2cacdc890c71bfc4d51ecceccb826893f43d",
+        "exitCode": 0,
+        "kernelCommandAccepted": true,
+        "passed": true,
+        "axiomClosureRecordedForBothTargets": true,
+        "permittedAxioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unpermittedAxioms": [],
+        "axioms": [
+          {
+            "declaration": "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+            "report": "[propext, Classical.choice, Quot.sound]",
+            "axioms": [
+              "propext",
+              "Classical.choice",
+              "Quot.sound"
+            ]
+          },
+          {
+            "declaration": "NavierStokes.Comparator.navier_stokes_breakdown_periodic",
+            "report": "[propext, Classical.choice, Quot.sound]",
+            "axioms": [
+              "propext",
+              "Classical.choice",
+              "Quot.sound"
+            ]
+          }
+        ],
+        "originalSourceFile": "NavierStokes/ComparatorSolution.lean",
+        "sourceURL": "https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ComparatorSolution.lean",
+        "sourceSHA256": "52950d5d618a8d34c9bfbdb16641c81c276e97b6d7fd2a76c08577353f0b0227",
+        "oleanSHA256": "5025fa4e63160cea4fff8dd8f8350acabd3478cdc08563f383484fd01620de76",
+        "oleanSizeBytes": 147272,
+        "exactNormalTypes": "NavierStokes.Comparator.navier_stokes_breakdown_R3 : ∀ nu > 0,\n  ∃ u₀ f,\n    NavierStokes.Comparator.InitialVelocityConditionDecay u₀ ∧\n      NavierStokes.Comparator.ForceConditionDecay f ∧\n        ¬∃ v p, NavierStokes.Comparator.NavierStokesExistenceAndSmoothnessRn nu u₀ f v p\nNavierStokes.Comparator.navier_stokes_breakdown_periodic : ∀ nu > 0,\n  ∃ u₀ f,\n    NavierStokes.Comparator.InitialVelocityConditionPeriodic u₀ ∧\n      NavierStokes.Comparator.ForceConditionPeriodic f ∧\n        ¬∃ v p, NavierStokes.Comparator.NavierStokesExistenceAndSmoothnessPeriodic nu u₀ f v p",
+        "sourceCopy": {
+          "file": "official-validation/OfficialComparatorSolution.lean",
+          "sha256": "52950d5d618a8d34c9bfbdb16641c81c276e97b6d7fd2a76c08577353f0b0227"
+        },
+        "entrySource": {
+          "file": "official-validation/PinnedDeclarations.lean",
+          "sha256": "b0cf547fcf21a5760c90e326489a2cacdc890c71bfc4d51ecceccb826893f43d"
+        },
+        "log": {
+          "file": "official-validation/ns-pinned-declarations.log",
+          "sha256": "4fc376bfe81caf561a1fd501d13f4ea2d9e2d6d41ee9fa687b82f2649ebb3a08"
+        },
+        "commandReceipt": {
+          "file": "official-validation/full-pinned-command-results.json",
+          "sha256": "bf992d41b39bdd257ecb9b46e5caf1b6cff634466b6a05052f4d27333f346274",
+          "stage": "ns-pinned-declarations"
+        }
+      },
+      "comparator": {
+        "status": "BLOCKED",
+        "passed": false,
+        "exitCode": 1,
+        "reachedComparatorProcess": false,
+        "blocker": "Required systemd user guard cannot start: no user bus. Session UID 0 also fails the documented unprivileged-user guarantee. Comparator was not reached. No sandbox guard omitted or replaced.",
+        "configSHA256": "7610ecead7b390d80ff7f4229a3ff8f18d630e046f7ad1de4f92c7e8e76845b8",
+        "guardBypassUsed": false,
+        "alternateWeakerPathCountedAsSuccess": false,
+        "commandReceipt": {
+          "file": "official-validation/comparator-pinned-guarded.json",
+          "sha256": "cb7dda2f8777f5419a03777a7ff4a4dd4b504c8c2292f699ac93287e6578e276"
+        },
+        "log": {
+          "file": "official-validation/comparator-pinned-guarded.log",
+          "sha256": "746707a49085d66703eb45f2baea0df38a88bab7346195ece161e8e14ef2a3d1"
+        },
+        "independentEnvironment": {
+          "file": "official-validation/comparator-environment-independent.json",
+          "sha256": "f7b8b6f2baa8061c0b08a772fa6ce47c85bb098cf27ea4509f801b4f3b18230a"
+        }
+      },
+      "wholeDefaultBuildPassed": false,
+      "remainingBuildScope": {
+        "submittedLocalDependencyClosure": {
+          "sourceModules": 609,
+          "oleanArtifactsPresent": 609,
+          "oleanArtifactsMissing": 0
+        },
+        "navierStokesRootSourceClosure": {
+          "sourceModules": 753,
+          "oleanArtifactsPresent": 692,
+          "oleanArtifactsMissing": 61
+        },
+        "navierStokesWholeLibrary": {
+          "sourceModules": 817,
+          "oleanArtifactsPresent": 702,
+          "oleanArtifactsMissing": 115
+        },
+        "eulerWholeLibrary": {
+          "sourceModules": 1840,
+          "oleanArtifactsPresent": 23,
+          "oleanArtifactsMissing": 1817
+        },
+        "comparatorChallenges": {
+          "sourceModules": 2,
+          "oleanArtifactsPresent": 0,
+          "oleanArtifactsMissing": 2
+        },
+        "grade": "POST_BUILD_ARTIFACT_INVENTORY_ONLY",
+        "receipt": {
+          "file": "official-validation/remaining-build-scope.json",
+          "sha256": "4824f6c994416743f8682e22f6d941713cf0965b20f33183d29ce9529eaf4e20"
+        }
+      },
+      "pinnedEntryKernelControls": {
+        "file": "official-validation/pinned-entry-kernel-controls.json",
+        "sha256": "83360471e078eaa0c76e2dc06f223a4ac0b62e937b8c309ce7611500ee884a10"
+      },
+      "originalTrackedSourcesUnchanged": true,
+      "completeNumericalPaperProfileCertified": false,
+      "browserKernelRerun": false,
+      "browserSourceValidationPromotesKernelPass": false,
+      "historicalComponentAuditAutomaticallyPromoted": false,
+      "numericFieldInstantiatesExistentialWitness": false,
+      "auditFile": "official-validation/official-audit-summary.json",
+      "auditSHA256": "48b6adab5d50078b974baba02b01db5e771dfe8c18b99de4040823f3bed9e8ff",
+      "historicalComponentAudit": {
+        "file": "evidence/lean-validation.json",
+        "sha256": "90f162823a56035559a584476854a27b2ed135f373183c43593ed47439d8ffe1",
+        "checkedAt": "2026-10-09T14:39:01.694607+00:00",
+        "toolchain": "Lean/mathlib4.34.1",
+        "targetCount": 13,
+        "unchanged": true
+      }
+    }
+  },
+  "publicStatus": [
+    {
+      "id": "N01",
+      "url": "https://openai.com/index/navier-stokes-solution/",
+      "publicationDate": "2026-09-08",
+      "updateDate": "2026-09-10",
+      "retrievedDate": "2026-10-09",
+      "status": "ANNOUNCEMENT",
+      "claim": "OpenAI reports an analytical and Lean proof for forced alternatives C/D. This record is an attributed publication claim."
+    },
+    {
+      "id": "N02",
+      "url": "https://www.claymath.org/news/navier-stokes-announcement/",
+      "publicationDate": "2026-09-11",
+      "retrievedDate": "2026-10-09",
+      "status": "INSTITUTIONAL_ANNOUNCEMENT",
+      "claim": "Clay describes the problem as apparently settled and explains that evaluation and attribution follow a deliberate process. No final prize adjudication is inferred."
+    }
+  ],
+  "scope": "User attachment and pinned source definitions. Unforced A/B are not claimed by this module."
+}

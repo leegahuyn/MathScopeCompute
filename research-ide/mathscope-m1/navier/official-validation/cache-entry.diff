@@ -1,0 +1,380 @@
+--- original-pinned-Cache-Main.lean
++++ isolated-CacheEntryExplicit.lean
+@@ -117,193 +117,195 @@
+   if args.isEmpty || parseFlagOpt "help" args then
+     println help
+     Process.exit 0
+-  CacheM.run do
+-
+-  -- split args and named options
+-  let (options, args) := args.partition (·.startsWith "--")
+-
+-  -- check for unrecognized options
+-  for opt in options do
+-    unless isKnownOpt opt do
+-      IO.eprintln s!"Unknown option '{opt}'"
+-      IO.eprintln help
++  let action : CacheM Unit := do
++  
++    -- split args and named options
++    let (options, args) := args.partition (·.startsWith "--")
++  
++    -- check for unrecognized options
++    for opt in options do
++      unless isKnownOpt opt do
++        IO.eprintln s!"Unknown option '{opt}'"
++        IO.eprintln help
++        Process.exit 1
++  
++    let repo? ← parseNamedOpt "repo" options
++    let stagingDir? ← parseNamedOpt "staging-dir" options
++    let cacheFromStr? ← parseNamedOpt "cache-from" options
++    let containerStr? ← parseNamedOpt "container" options
++    let scopeStr? ← parseNamedOpt "scope" options
++    let unsafeFlag := parseFlagOpt "unsafe" options
++    let unsafeWindowStr? ← parseNamedOpt "unsafe-window" options
++  
++    -- Resolve `--unsafe` / `--unsafe-window=N` into an optional SHA window.
++    -- `some n` means unsafe mode is on with window `n`; `none` means off. Passing
++    -- `--unsafe-window` implies `--unsafe`.
++    let unsafeWindow? : Option Nat ← match unsafeWindowStr? with
++      | some s => match s.toNat? with
++        | some n =>
++          if n == 0 then
++            IO.eprintln "--unsafe-window must be a positive integer"
++            Process.exit 1
++          pure (some n)
++        | none =>
++          IO.eprintln s!"--unsafe-window must be a positive integer (got '{s}')"
++          Process.exit 1
++      | none => pure (if unsafeFlag then some defaultUnsafeSHAWindow else none)
++  
++    -- `--unsafe` and `--scope` are mutually exclusive: `--unsafe` walks several
++    -- commit scopes automatically, `--scope` pins exactly one.
++    if unsafeWindow?.isSome && scopeStr?.isSome then
++      IO.eprintln "--unsafe and --scope are mutually exclusive: --unsafe walks several commit \
++        scopes automatically, while --scope pins exactly one."
+       Process.exit 1
+-
+-  let repo? ← parseNamedOpt "repo" options
+-  let stagingDir? ← parseNamedOpt "staging-dir" options
+-  let cacheFromStr? ← parseNamedOpt "cache-from" options
+-  let containerStr? ← parseNamedOpt "container" options
+-  let scopeStr? ← parseNamedOpt "scope" options
+-  let unsafeFlag := parseFlagOpt "unsafe" options
+-  let unsafeWindowStr? ← parseNamedOpt "unsafe-window" options
+-
+-  -- Resolve `--unsafe` / `--unsafe-window=N` into an optional SHA window.
+-  -- `some n` means unsafe mode is on with window `n`; `none` means off. Passing
+-  -- `--unsafe-window` implies `--unsafe`.
+-  let unsafeWindow? : Option Nat ← match unsafeWindowStr? with
+-    | some s => match s.toNat? with
+-      | some n =>
+-        if n == 0 then
+-          IO.eprintln "--unsafe-window must be a positive integer"
+-          Process.exit 1
+-        pure (some n)
++  
++    -- Apply `--scope=` to the process-wide override read by `getRepoScope`.
++    -- Accepts any git ref `git rev-parse` resolves (HEAD, branch, tag, SHA);
++    -- falls through to the literal value if `git rev-parse` is unavailable
++    -- (e.g. invoked outside a git checkout with a bare SHA).
++    if let some s := scopeStr? then
++      let resolved ← try resolveGitRef s catch _ => pure s
++      scopeOverride.set (some resolved)
++  
++    -- Apply `--cache-from` to the process-wide override read by `effectiveGetURLs`.
++    if let some s := cacheFromStr? then
++      match parseCacheFromList s with
+       | none =>
+-        IO.eprintln s!"--unsafe-window must be a positive integer (got '{s}')"
+-        Process.exit 1
+-    | none => pure (if unsafeFlag then some defaultUnsafeSHAWindow else none)
+-
+-  -- `--unsafe` and `--scope` are mutually exclusive: `--unsafe` walks several
+-  -- commit scopes automatically, `--scope` pins exactly one.
+-  if unsafeWindow?.isSome && scopeStr?.isSome then
+-    IO.eprintln "--unsafe and --scope are mutually exclusive: --unsafe walks several commit \
+-      scopes automatically, while --scope pins exactly one."
+-    Process.exit 1
+-
+-  -- Apply `--scope=` to the process-wide override read by `getRepoScope`.
+-  -- Accepts any git ref `git rev-parse` resolves (HEAD, branch, tag, SHA);
+-  -- falls through to the literal value if `git rev-parse` is unavailable
+-  -- (e.g. invoked outside a git checkout with a bare SHA).
+-  if let some s := scopeStr? then
+-    let resolved ← try resolveGitRef s catch _ => pure s
+-    scopeOverride.set (some resolved)
+-
+-  -- Apply `--cache-from` to the process-wide override read by `effectiveGetURLs`.
+-  if let some s := cacheFromStr? then
+-    match parseCacheFromList s with
+-    | none =>
+-      IO.eprintln s!"Unknown container name in --cache-from={s}.\n\
+-        Known containers: {", ".intercalate (Container.all.map Container.name)}."
+-      Process.exit 1
+-    | some cs => cacheFromOverride.set (some cs)
+-
+-  -- Parse `--container=NAME`. Validation is unconditional; the upload commands
+-  -- enforce that the flag is set (via `effectiveUploadURL`).
+-  let container? ← match containerStr? with
+-    | none => pure none
+-    | some s => match Container.parse? s with
+-      | some c => pure (some c)
+-      | none =>
+-        IO.eprintln s!"Unknown container name in --container={s}.\n\
++        IO.eprintln s!"Unknown container name in --cache-from={s}.\n\
+           Known containers: {", ".intercalate (Container.all.map Container.name)}."
+         Process.exit 1
+-
+-  -- Early dispatch for `query`: avoids running `parseArgs` (which would try to
+-  -- interpret a git ref like `HEAD` as a Lean module) and skips the expensive
+-  -- hash-memo build below — the query only needs git + a single HTTP probe.
+-  match args with
+-  | ["query"] =>
+-    let repo ← resolveQueryRepo repo?
+-    cacheQuery repo (cap := 50)
+-    return
+-  | ["query", ref] =>
+-    let repo ← resolveQueryRepo repo?
+-    let sha ← resolveGitRef ref
+-    cacheQuerySingle repo sha
+-    return
+-  | "query" :: _ =>
+-    IO.eprintln "Usage: cache query [REF]"
+-    Process.exit 1
+-  | _ => pure ()
+-
+-  let mut roots : Std.HashMap Lean.Name FilePath ← parseArgs args
+-  if roots.isEmpty then do
+-    -- No arguments means to start from `Mathlib.lean`
+-    -- TODO: could change this to the default-target of a downstream project
+-    let mod := `Mathlib
+-    let sp := (← read).srcSearchPath
+-    let sourceFile ← Lean.findLean sp mod
+-    roots := roots.insert mod sourceFile
+-
+-  let hashMemo ← getHashMemo roots
+-  let hashMap := hashMemo.hashMap
+-  let goodCurl ← pure !curlArgs.contains (args.headD "") <||> validateCurl
+-  let get (args : List String) (force := false) (decompress := true) := do
+-    let hashMap ← if args.isEmpty then pure hashMap else hashMemo.filterByRootModules roots.keys
+-    -- Resolve the repo once (single git-remote probe) and thread it through the
+-    -- read path, the non-default-scope warning, and the HEAD hint below.
+-    let cliOverride? ← cacheFromOverride.get
+-    let (detectedRepo?, resolvedRepo) ← resolveRepo repo? (← read).mathlibDepPath
+-    -- Warn before reading if the scope is non-default (`--unsafe` always is).
+-    warnIfNonDefaultScope repo? detectedRepo? cliOverride? resolvedRepo unsafeWindow?
+-    -- In `--unsafe` mode, walk history for recent cached fork commits to try as
+-    -- scopes; otherwise point an uncached fork HEAD at the per-commit workflow.
+-    let unsafeScopes ← match unsafeWindow? with
+-      | some window =>
+-        let scopes ← discoverUnsafeScopes resolvedRepo window
+-        if scopes.isEmpty then
+-          IO.eprintln s!"--unsafe: no cached fork commits found in range for {resolvedRepo}; \
+-            reading the default cache only."
+-        else
+-          IO.eprintln s!"--unsafe: trying {scopes.length} cached fork commit scope(s) for \
+-            {resolvedRepo} (most recent first):"
+-          for s in scopes do IO.eprintln s!"  {s}"
+-        pure scopes
+-      | none =>
+-        informIfHeadNotBuilt resolvedRepo
+-        pure []
+-    getFiles resolvedRepo hashMap force force goodCurl decompress (unsafeScopes := unsafeScopes)
+-  let pack (overwrite verbose unpackedOnly := false) := do
+-    packCache hashMap overwrite verbose unpackedOnly (← getGitCommitHash)
+-  let put (overwrite unpackedOnly := false) := do
+-    let repo := repo?.getD MATHLIBREPO
+-    let auth ← getUploadAuth
+-    putFiles repo container? (← pack overwrite (verbose := true) unpackedOnly) overwrite auth
+-    if let some sha ← getRepoScope then
+-      if let some c := container? then
+-        uploadMarker c repo sha auth
+-  let stage outDir (unpackedOnly := true) := do
+-    stageFiles outDir (← pack (verbose := true) (unpackedOnly := unpackedOnly))
+-  let unstage (overwrite := false) := do
+-    if stagingDir?.isNone then IO.println "unstage requires --staging-dir=" return else
+-      unstageFiles stagingDir?.get! overwrite
+-  let putStaged (stagingDir : FilePath) := do
+-    let repo := repo?.getD MATHLIBREPO
+-    if !(← stagingDir.isDir) then IO.println "--staging-dir must be a directory" return
+-    else
+-      let fileSet ← getFilesWithExtension stagingDir "ltar"
++      | some cs => cacheFromOverride.set (some cs)
++  
++    -- Parse `--container=NAME`. Validation is unconditional; the upload commands
++    -- enforce that the flag is set (via `effectiveUploadURL`).
++    let container? ← match containerStr? with
++      | none => pure none
++      | some s => match Container.parse? s with
++        | some c => pure (some c)
++        | none =>
++          IO.eprintln s!"Unknown container name in --container={s}.\n\
++            Known containers: {", ".intercalate (Container.all.map Container.name)}."
++          Process.exit 1
++  
++    -- Early dispatch for `query`: avoids running `parseArgs` (which would try to
++    -- interpret a git ref like `HEAD` as a Lean module) and skips the expensive
++    -- hash-memo build below — the query only needs git + a single HTTP probe.
++    match args with
++    | ["query"] =>
++      let repo ← resolveQueryRepo repo?
++      cacheQuery repo (cap := 50)
++      return
++    | ["query", ref] =>
++      let repo ← resolveQueryRepo repo?
++      let sha ← resolveGitRef ref
++      cacheQuerySingle repo sha
++      return
++    | "query" :: _ =>
++      IO.eprintln "Usage: cache query [REF]"
++      Process.exit 1
++    | _ => pure ()
++  
++    let mut roots : Std.HashMap Lean.Name FilePath ← parseArgs args
++    if roots.isEmpty then do
++      -- No arguments means to start from `Mathlib.lean`
++      -- TODO: could change this to the default-target of a downstream project
++      let mod := `Mathlib
++      let sp := (← read).srcSearchPath
++      let sourceFile ← Lean.findLean sp mod
++      roots := roots.insert mod sourceFile
++  
++    let hashMemo ← getHashMemo roots
++    let hashMap := hashMemo.hashMap
++    let goodCurl ← pure !curlArgs.contains (args.headD "") <||> validateCurl
++    let get (args : List String) (force := false) (decompress := true) := do
++      let hashMap ← if args.isEmpty then pure hashMap else hashMemo.filterByRootModules roots.keys
++      -- Resolve the repo once (single git-remote probe) and thread it through the
++      -- read path, the non-default-scope warning, and the HEAD hint below.
++      let cliOverride? ← cacheFromOverride.get
++      let (detectedRepo?, resolvedRepo) ← resolveRepo repo? (← read).mathlibDepPath
++      -- Warn before reading if the scope is non-default (`--unsafe` always is).
++      warnIfNonDefaultScope repo? detectedRepo? cliOverride? resolvedRepo unsafeWindow?
++      -- In `--unsafe` mode, walk history for recent cached fork commits to try as
++      -- scopes; otherwise point an uncached fork HEAD at the per-commit workflow.
++      let unsafeScopes ← match unsafeWindow? with
++        | some window =>
++          let scopes ← discoverUnsafeScopes resolvedRepo window
++          if scopes.isEmpty then
++            IO.eprintln s!"--unsafe: no cached fork commits found in range for {resolvedRepo}; \
++              reading the default cache only."
++          else
++            IO.eprintln s!"--unsafe: trying {scopes.length} cached fork commit scope(s) for \
++              {resolvedRepo} (most recent first):"
++            for s in scopes do IO.eprintln s!"  {s}"
++          pure scopes
++        | none =>
++          informIfHeadNotBuilt resolvedRepo
++          pure []
++      getFiles resolvedRepo hashMap force force goodCurl decompress (unsafeScopes := unsafeScopes)
++    let pack (overwrite verbose unpackedOnly := false) := do
++      packCache hashMap overwrite verbose unpackedOnly (← getGitCommitHash)
++    let put (overwrite unpackedOnly := false) := do
++      let repo := repo?.getD MATHLIBREPO
+       let auth ← getUploadAuth
+-      putFilesAbsolute repo container? fileSet (tempConfigFilePath := stagingDir / "curl.config")
+-        (overwrite := false) auth
+-      -- After artifacts upload, write the per-SHA marker if the upload is
+-      -- SHA-scoped. The marker lets `cache query` discover cached commits
+-      -- with a cheap HEAD probe.
++      putFiles repo container? (← pack overwrite (verbose := true) unpackedOnly) overwrite auth
+       if let some sha ← getRepoScope then
+         if let some c := container? then
+           uploadMarker c repo sha auth
+-
+-  match args with
+-  | "get"  :: args => get args
+-  | "get!" :: args => get args (force := true)
+-  | "get-" :: args => get args (decompress := false)
+-  | ["pack"] => discard <| pack
+-  | ["pack!"] => discard <| pack (overwrite := true)
+-  | ["unpack"] => unpackCache hashMap false
+-  | ["unpack!"] => unpackCache hashMap true
+-  | ["unstage"] => unstage
+-  | ["unstage!"] => unstage (overwrite := true)
+-  | ["clean"] =>
+-    cleanCache <| hashMap.fold (fun acc _ hash => acc.insert <| CACHEDIR / hash.asLTar) .empty
+-  | ["clean!"] => cleanCache
+-  -- We allow arguments for `put*` so they can be added to the `roots`.
+-  | "put" :: _ => put
+-  | "put!" :: _ => put (overwrite := true)
+-  | "put-unpacked" :: _ => put (unpackedOnly := true)
+-  | "stage" :: _ => if (stagingDir?.isNone) then IO.println "stage requires --staging-dir=" return else
+-    stage stagingDir?.get!
+-  | "stage!" :: _ => if (stagingDir?.isNone) then IO.println "stage! requires --staging-dir=" return else
+-    stage stagingDir?.get! (unpackedOnly := false)
+-  | "put-staged" :: _ => if (stagingDir?.isNone) then IO.println "put-staged requires --staging-dir=" return else
+-    putStaged stagingDir?.get!
+-  | ["commit"] =>
+-    if !(← isGitStatusClean) then IO.println "Please commit your changes first" return else
+-    commit container? hashMap false (← getUploadAuth)
+-  | ["commit!"] =>
+-    if !(← isGitStatusClean) then IO.println "Please commit your changes first" return else
+-    commit container? hashMap true (← getUploadAuth)
+-  | ["collect"] => IO.println "TODO"
+-  | "lookup" :: _ => lookup hashMap roots.keys
+-  | [] => println help -- unreachable: options are already partitioned out
+-  | cmd :: _ =>
+-    IO.eprintln s!"Unknown command '{cmd}'"
+-    IO.eprintln help
+-    Process.exit 1
++    let stage outDir (unpackedOnly := true) := do
++      stageFiles outDir (← pack (verbose := true) (unpackedOnly := unpackedOnly))
++    let unstage (overwrite := false) := do
++      if stagingDir?.isNone then IO.println "unstage requires --staging-dir=" return else
++        unstageFiles stagingDir?.get! overwrite
++    let putStaged (stagingDir : FilePath) := do
++      let repo := repo?.getD MATHLIBREPO
++      if !(← stagingDir.isDir) then IO.println "--staging-dir must be a directory" return
++      else
++        let fileSet ← getFilesWithExtension stagingDir "ltar"
++        let auth ← getUploadAuth
++        putFilesAbsolute repo container? fileSet (tempConfigFilePath := stagingDir / "curl.config")
++          (overwrite := false) auth
++        -- After artifacts upload, write the per-SHA marker if the upload is
++        -- SHA-scoped. The marker lets `cache query` discover cached commits
++        -- with a cheap HEAD probe.
++        if let some sha ← getRepoScope then
++          if let some c := container? then
++            uploadMarker c repo sha auth
++  
++    match args with
++    | "get"  :: args => get args
++    | "get!" :: args => get args (force := true)
++    | "get-" :: args => get args (decompress := false)
++    | ["pack"] => discard <| pack
++    | ["pack!"] => discard <| pack (overwrite := true)
++    | ["unpack"] => unpackCache hashMap false
++    | ["unpack!"] => unpackCache hashMap true
++    | ["unstage"] => unstage
++    | ["unstage!"] => unstage (overwrite := true)
++    | ["clean"] =>
++      cleanCache <| hashMap.fold (fun acc _ hash => acc.insert <| CACHEDIR / hash.asLTar) .empty
++    | ["clean!"] => cleanCache
++    -- We allow arguments for `put*` so they can be added to the `roots`.
++    | "put" :: _ => put
++    | "put!" :: _ => put (overwrite := true)
++    | "put-unpacked" :: _ => put (unpackedOnly := true)
++    | "stage" :: _ => if (stagingDir?.isNone) then IO.println "stage requires --staging-dir=" return else
++      stage stagingDir?.get!
++    | "stage!" :: _ => if (stagingDir?.isNone) then IO.println "stage! requires --staging-dir=" return else
++      stage stagingDir?.get! (unpackedOnly := false)
++    | "put-staged" :: _ => if (stagingDir?.isNone) then IO.println "put-staged requires --staging-dir=" return else
++      putStaged stagingDir?.get!
++    | ["commit"] =>
++      if !(← isGitStatusClean) then IO.println "Please commit your changes first" return else
++      commit container? hashMap false (← getUploadAuth)
++    | ["commit!"] =>
++      if !(← isGitStatusClean) then IO.println "Please commit your changes first" return else
++      commit container? hashMap true (← getUploadAuth)
++    | ["collect"] => IO.println "TODO"
++    | "lookup" :: _ => lookup hashMap roots.keys
++    | [] => println help -- unreachable: options are already partitioned out
++    | cmd :: _ =>
++      IO.eprintln s!"Unknown command '{cmd}'"
++      IO.eprintln help
++      Process.exit 1
++
++  ReaderT.run action { mathlibDepPath := "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/mathlib", srcSearchPath := ["/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/mathlib", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/Cli", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/Comparator", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/LeanSearchClient", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/Qq", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/aesop", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/batteries", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/importGraph", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/lean4export", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/plausible", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/.lake/packages/proofwidgets", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-4.34.0-rc2-linux/src/lean/lake", "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/lean-4.34.0-rc2-linux/src/lean"] }

@@ -1,0 +1,218 @@
+{
+  "schema": "MathScope.SourceBindingContract/1",
+  "sourceFiles": {
+    "uniform-source-debt-small-j.json": {
+      "sha256": "6bb81e736a604bed24781f91a9d5799d9ff5b37c13f4b5e47b47e1de89029dc4",
+      "relativePath": "source-coherence/uniform-source-debt-small-j.json"
+    },
+    "source-axis-small-j-trial.json": {
+      "sha256": "b06de90aee6b762f3226f4e46f71b05e9967c8ffe9c6893d436b50e2653bf2cd",
+      "relativePath": "source-coherence/source-axis-small-j-trial.json"
+    },
+    "uniform-source-debt-final.json": {
+      "sha256": "ac79c8268a501f9762b5f13f6efe114809a94e568efc614e2fd66ceae4303c7a",
+      "relativePath": "source-coherence/uniform-source-debt-final.json"
+    },
+    "source-axis-cone-refined.json": {
+      "sha256": "edb33aded21f971d8e298768a9a58c3a4ca3649ba6247f225d6af2cffe64ebf3",
+      "relativePath": "source-coherence/source-axis-cone-refined.json"
+    },
+    "continuation-refinement.json": {
+      "sha256": "f1f319a499d109fb325da896ad6909a19fb8875d990e04ba2e8cb55b96c01e01",
+      "relativePath": "source-coherence/continuation-refinement.json"
+    },
+    "uniform-moment-certificate.json": {
+      "sha256": "7f73f23ab6e7eb474d15bd54e92699385c83a58b89e8a209693066ab0bd915fd",
+      "relativePath": "uniform-gluing/uniform-moment-certificate.json"
+    },
+    "source-bound-moment-inclusion.json": {
+      "sha256": "99b47e51d56668ed4205b1cea2f5809f97acbb0eb73b224edf3a059f042ee9bc",
+      "relativePath": "uniform-gluing/source-bound-moment-inclusion.json"
+    },
+    "source-joining-rectangle-certificate.json": {
+      "sha256": "d29f7637f060dca2c9b5cc62e84efc17d9231a0af2ab586dbbdd7709a94aae1c",
+      "relativePath": "uniform-gluing/source-joining-rectangle-certificate.json"
+    },
+    "source-c2-moment-certificate.json": {
+      "sha256": "0aa38524c16d6caa7a7844884b5af4fd706c6594f6d0bcaabfa2d8b33f950b7b",
+      "relativePath": "uniform-gluing/source-c2-moment-certificate.json"
+    },
+    "source-joining-loop-certificate.json": {
+      "sha256": "2bff16cd3944228e5d15b5477be587355a1910b3de9fb43890a1af4d546c5631",
+      "relativePath": "uniform-gluing/source-joining-loop-certificate.json"
+    },
+    "source-final-bound-moment-inclusion.json": {
+      "sha256": "60a363094bbd6178965dc27a4925a4ecbcc06a7376ff18ef792f79f6dd690374",
+      "relativePath": "uniform-gluing/source-final-bound-moment-inclusion.json"
+    },
+    "source-final-joining-rectangle-certificate.json": {
+      "sha256": "2e1dd5a78249f27ea07ded688f95fd84a4a9a1bcde15bd598d0348e5c2713ec2",
+      "relativePath": "uniform-gluing/source-final-joining-rectangle-certificate.json"
+    },
+    "source-final-joining-loop-certificate.json": {
+      "sha256": "35dad04d261f134518312be0a000ad3c4b4fc51db9ef58872c7d6e6f538ebbcb",
+      "relativePath": "uniform-gluing/source-final-joining-loop-certificate.json"
+    },
+    "source-final-joining-slow-bounds.json": {
+      "sha256": "35381c7613f69fa18f04d221ec85ec123bc352165783cbdc10a62b60c13d0bd2",
+      "relativePath": "uniform-gluing/source-final-joining-slow-bounds.json"
+    },
+    "source-final-joining-frequency.json": {
+      "sha256": "5a5d07f5f063e84c924d9d8855665c1692a4a00f862f3ddf30a6e78ca87b2ec4",
+      "relativePath": "uniform-gluing/source-final-joining-frequency.json"
+    },
+    "source-final-c2-map-binding.json": {
+      "sha256": "3dbf690d2544e5c2aed8a5276a9360fe72f6e5c8852ed0050ad7f18c6bc8c3c5",
+      "relativePath": "uniform-gluing/source-final-c2-map-binding.json"
+    }
+  },
+  "sourceDefinition": {
+    "primarySource": "source-coherence/uniform-source-debt-final.json",
+    "previousSourcePreserved": "source-coherence/uniform-source-debt-small-j.json",
+    "pressure": "A.21 at logP=14; exact datum Pi0 shared by all forward pressure integrals.",
+    "axis": "The unique function-defined source fixed point with the selected Lambda, sigma, j0=1e-10 and the bound source logC.",
+    "continuation": "Exact B.22/B.26 integrals, B.34 interpolation, and the unique continuous B.8 root.",
+    "finiteArraysIdentified": false
+  },
+  "etaDomain": {
+    "closed": [
+      "-1",
+      "1"
+    ],
+    "physicalMap": "eta=z/q^D; q-z^2*q^(2h)=1-t; D=1/2-h",
+    "physicalInterior": "All real z with t<1 map to |eta|<1.",
+    "endpoints": "One-sided limits at t=1; no arbitrary extension to eta outside [-1,1] is asserted.",
+    "source": "Equation (4.1), supplied paper pp.24-25"
+  },
+  "B8Contract": {
+    "physicalRadius": "X=XR*x; XR=110*exp(10*(logC+14))",
+    "reference": "E0=K(eta)*x^(1/10), U0=c(eta), K=exp(14)/(1+eta^2), c=4eta",
+    "normalizedMomentOrder": [
+      "M/(XR*K)",
+      "(J-c*I)/(XR^(3/2)*K^2)",
+      "I/(XR^(3/2)*K)",
+      "(S-2*c*M)/(XR*K^2)",
+      "Cp/K^2"
+    ],
+    "actualDebtSource": "Only the pinned source-specific UAbsoluteUpper/EAbsoluteUpper and UEtaAbsoluteUpper/EEtaAbsoluteUpper bounds are admitted here.",
+    "sourceC0AndC1Bound": true,
+    "sourceC2Bound": true,
+    "root": "Unique exact continuous polynomial root in source-final-bound-moment-inclusion.json; finite approximations are not substituted for that root.",
+    "correctedRectangle": {
+      "logx": [
+        "-8",
+        "-5"
+      ],
+      "eta": [
+        "-1",
+        "1"
+      ]
+    },
+    "momentPatch": "Five disjoint fixed supports in exp(-6)<x<exp(-5).",
+    "tailIdentity": "After the patch, exact equality of M,I,J,S,Cp and the same Pi0 propagates by the forward integral definitions. It identifies Qs,Ns and pressure only with the same exact reference exterior.",
+    "completeExteriorIdentityProved": false
+  },
+  "C1Contract": {
+    "certifiedDomain": {
+      "logx": [
+        "-8",
+        "-5"
+      ],
+      "eta": [
+        "-1",
+        "1"
+      ],
+      "phase": "R/Z"
+    },
+    "loopParameters": "Explicit source-final-joining-loop-certificate.json constants.",
+    "proven": "Every phase of this rectangle has positive four-component cone gaps and exact prescribed shear mean.",
+    "globalExtensionProved": false,
+    "finiteFrequencySelected": false
+  },
+  "C12JoiningContribution": {
+    "domain": {
+      "logx": [
+        "-8",
+        "-5"
+      ],
+      "eta": [
+        "-1",
+        "1"
+      ],
+      "phase": "R/Z"
+    },
+    "sameSourceSlowBounds": "source-final-joining-slow-bounds.json",
+    "finiteFrequency": {
+      "kind": "CEIL_EXP_EXACT_RATIONAL",
+      "exponentExact": "502813163520000000000000003666345984000000000000000006683443200000001321579/343",
+      "definition": "N_local=ceil(exp(exponentExact)); every larger integer also satisfies the joining estimates.",
+      "integerMaterialized": false,
+      "reason": "The integer is finite but too large to expand. Phase remains an independent circle coordinate for verification.",
+      "dyadicSafetyExponent": 3853,
+      "allInequalitiesUseExactExponent": true
+    },
+    "incomingMomentTolerance": {
+      "numerator": "1",
+      "denominator": "2597716242271617866584232878085712508675399261298053155854667288254213056529456018480928769500920248304005221369054943016620757962181881409496873127404623099453743307258132595985767114757709535919365641001565604803121899809557310287227423641354692668988706837054440486914161935767031498893174565824913465879908017674783149318294410708287146632045700748741102140202914762553880163827556823789743224990147698681122013192505029467780786897586096610790012374176570268629880449098055044029103531765316547243426472875026402880301133188122229001879437959237914174757252799855742874570840543964944222317720413058912053211693056",
+      "approximate": null,
+      "scientificDisplay": "3.84953515602432665e-619"
+    },
+    "incomingMomentUnits": "The original B.35 hats: M/XR, I/XR^(3/2), J/XR^(3/2), S/XR, Cp.",
+    "incomingDerivativeOrders": [
+      0,
+      1
+    ],
+    "incomingBoundProved": false,
+    "frequencyMeaning": "Only the joining contribution fits its tolerance. The actual incoming moment error remains open; no incoming value is injected.",
+    "globalFiniteFrequencySelected": false
+  },
+  "C2Contract": {
+    "lambdaExact": "7378697629483821/36893488147419103232",
+    "profileOnActualReservedPatch": "U=0, E=Kphys(eta)*X^(-1/2-lambda); Kphys>0, X=X0*x.",
+    "normalizedAmplitude": "Ktilde=Kphys*X0^(-1/2-lambda)",
+    "normalizedMomentOrder": [
+      "M/(X0*Ktilde)",
+      "J/(X0^(3/2)*Ktilde^2)",
+      "I/(X0^(3/2)*Ktilde)",
+      "S/(X0*Ktilde^2)",
+      "Cp/Ktilde^2"
+    ],
+    "computedCoefficientPatch": "8<x<16, with exact certified continuous bump coefficients.",
+    "physicalPatchLocationBound": false,
+    "actualC12DebtBound": false,
+    "requiredC12Quantities": [
+      "Same source profile on the whole original I and admissible radial collars.",
+      "Uniform loop slow radial derivatives and eta derivatives.",
+      "Uniform original fields and cumulative moments through eta order two.",
+      "Exact normalized C0/C1 moment discrepancy accumulated up to the actual source patch.",
+      "One finite N satisfying all four cone inequalities and the source-lambda map inclusion radius."
+    ],
+    "tailIdentity": "Matching all five moments with identical Pi0 propagates the exact original exterior fields beyond the same physical patch."
+  },
+  "remainingOriginalGates": {
+    "N3-05": "Continuous maps and all-eta joining-root enclosure are computed. Full single-profile pressure/exterior binding and new analytic formal bridge remain.",
+    "N3-06": "Whole joining rectangle relaxed cone, all-phase C1 loop, C2 slow bounds and a finite frequency for its generated contribution are computed. One compatible loop over the whole I, actual incoming C12 moments, source-wide cone preservation and actual source patch restoration remain."
+  },
+  "rejectedPromotions": [
+    "Different PStar, Lambda, amplitude or j0 treated as one witness without a new binding.",
+    "Measured eta samples promoted to the closed eta interval.",
+    "Gauss agreement promoted to an integral enclosure.",
+    "An underflowed amplitude treated as exact zero.",
+    "An arbitrary endpoint moment or caller-provided debt substituted for the source integral.",
+    "A C1 loop margin promoted to a C12 field margin without its slow derivative and moment bounds.",
+    "An analytic premise accepted as a new Lean axiom to claim formal completion."
+  ],
+  "subsequentOuterCandidateAudit": {
+    "status": "ACTUAL_Md1_RELAXED_CONE_FAILURE",
+    "sourceSHA256": "ac79c8268a501f9762b5f13f6efe114809a94e568efc614e2fd66ceae4303c7a",
+    "independentEvidence": "outer-counterexample-independent.json",
+    "independentEvidenceSHA256": "d8934fdb3c0306a344100e89c7db8faf0c36612e95f8a74ebe90b4ef52cbb772",
+    "witness": "eta=3/4, local axial y=sqrt(e)-1",
+    "necessaryConditionViolated": "Pc<0 whereas Pc>2 is required.",
+    "globalCurrentDatumCandidateValid": false,
+    "localCertificatesRemainWithinTheirStatedScope": true,
+    "changedHistoricalSource": false
+  },
+  "originalN305Promoted": false,
+  "originalN306Promoted": false
+}

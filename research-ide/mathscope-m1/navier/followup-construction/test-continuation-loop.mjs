@@ -1,0 +1,134 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {runAdmissibleLoop,varianceCertificate,meanExponentialCertificate,validateLoopInput} from './admissible-loop.mjs';
+import {runControlledContinuation,validateContinuationInput} from './controlled-continuation.mjs';
+import {makeBudget} from '../numerics.mjs';
+import {solveAxisCoefficients,jetC,jetVar,jetAdd,jetMul,jetInv,jetScale} from '../axis-series.mjs';
+
+const dir=fileURLToPath(new URL('.',import.meta.url)),tests=[];
+const check=(name,pass,detail={})=>tests.push({name,pass:!!pass,detail});
+const near=(a,b,atol=1e-10,rtol=1e-9)=>Math.abs(a-b)<=atol+rtol*Math.max(Math.abs(a),Math.abs(b));
+const unbox=x=>x&&typeof x==='object'&&x.kind==='FLOAT64'?Number(x.value):x;
+const unpack=x=>Array.isArray(x)?x.map(unpack):x&&typeof x==='object'?x.kind==='FLOAT64'?Number(x.value):Object.fromEntries(Object.entries(x).map(([k,v])=>[k,unpack(v)])):x;
+const budget={maxOperations:40000000,maxMilliseconds:30000,maxPoints:4096};
+function gauss(f,a,b,n=32){
+  let sum=0;
+  for(let i=1;i<=n;i++){
+    let z=Math.cos(Math.PI*(i-.25)/(n+.5)),p,dp;
+    for(let j=0;j<12;j++){
+      let p0=1,p1=z;
+      for(let k=2;k<=n;k++){const pn=((2*k-1)*z*p1-(k-1)*p0)/k;p0=p1;p1=pn;}
+      p=p1;dp=n*(z*p1-p0)/(z*z-1);const d=p/dp;z-=d;if(Math.abs(d)<2e-16)break;
+    }
+    let p0=1,p1=z;for(let k=2;k<=n;k++){const pn=((2*k-1)*z*p1-(k-1)*p0)/k;p0=p1;p1=pn;}
+    dp=n*(z*p1-p0)/(z*z-1);sum+=2/((1-z*z)*dp*dp)*f((a+b)/2+(b-a)*z/2);
+  }
+  return sum*(b-a)/2;
+}
+function canonicalSafe(x){
+  if(typeof x==='number')return Number.isFinite(x)&&(!Number.isInteger(x)||Number.isSafeInteger(x));
+  if(Array.isArray(x))return x.every(canonicalSafe);
+  return !x||typeof x!=='object'||Object.values(x).every(canonicalSafe);
+}
+
+const pVariants=[0,1e-16,-1e-16,1e-9,-1e-9,.2,-.2];
+const loopResults=pVariants.map(p=>runAdmissibleLoop({a:.8,bs:.05,ps:[5,p],phaseSamples:512},budget));
+for(let k=0;k<pVariants.length;k++){
+  const r=loopResults[k],p=pVariants[k],l=r.loops?.[0];
+  check(`C.1 actual branch p2=${p}`,r.status==='PARTIAL'&&l?.phaseCertificate.pass,{status:r.status,message:r.message});
+  if(!l)continue;
+  check(`C.10 positive variance at p2=${p}`,l.muRoot.lower>0&&l.muRoot.bracketCertified&&l.rho>0);
+  check(`C.7 common upper root at p2=${p}`,varianceCertificate(l.muMax,p,l.d0).value[0]>3/l.input.a);
+  check(`C.1 weighted mean at p2=${p}`,Math.abs(l.diagnostics.numericMeanError.a)<2e-6&&Math.abs(l.diagnostics.numericMeanError.bs)<2e-6,l.diagnostics.numericMeanError);
+  check(`C.1 raw lift at p2=${p}`,Math.abs(l.diagnostics.rawLiftPeriodError)<3e-10,{defect:l.diagnostics.rawLiftPeriodError});
+  check(`C.1 all sampled gaps respect all-phase bound p2=${p}`,l.samples.every(s=>s.gaps.every((g,j)=>g+1e-9>=l.phaseCertificate.gapLowerBounds[j])));
+  check(`C.12 primitive closure p2=${p}`,Math.abs(l.diagnostics.primitiveClosure.A)<1e-9&&Math.abs(l.diagnostics.primitiveClosure.BOverE)<1e-9,l.diagnostics.primitiveClosure);
+}
+const zero=loopResults[0].loops[0];
+for(const k of [1,2,3,4]){
+  const l=loopResults[k].loops[0];
+  check(`removable p2 continuity ${pVariants[k]}`,near(l.muRoot.midpoint,zero.muRoot.midpoint,2e-8,1e-10)&&near(l.delta,zero.delta,2e-9,1e-9));
+}
+check('negative control: uniform theta mean does not enforce requested a',Math.abs(zero.diagnostics.wrongUniformThetaMean.a-.8)>.1,zero.diagnostics.wrongUniformThetaMean);
+const boundary=runAdmissibleLoop({a:3,bs:0,ps:[5,0],boundary:true,phaseSamples:64},budget).loops[0];
+check('certified exact-zero cutoff branch',boundary.certifiedZeroBranch&&boundary.muRoot.exactZero&&boundary.boundaryUnchanged&&boundary.samples.every(s=>s.aL===3&&s.bL===0));
+const underflowCutoff=runAdmissibleLoop({a:2.002702622456615,ps:[5,0],phaseSamples:32},budget).loops[0];
+check('negative control: float cutoff zero is not exact zero certificate',underflowCutoff.zeta===0&&underflowCutoff.rho===0&&!underflowCutoff.certifiedZeroBranch&&!underflowCutoff.muRoot.exactZero&&underflowCutoff.phaseCertificate.pass);
+const family=runAdmissibleLoop({points:[{a:.8,bs:0,ps:[5,0]},{a:1.1,bs:.1,ps:[6,.1]}],phaseSamples:64},budget);
+check('one common source C.7/C.8 family parameter choice',family.status==='PARTIAL'&&family.loops.every(l=>l.muMax===family.sharedParameters.muMax&&l.delta===family.sharedParameters.delta));
+check('source whole-profile claim remains false',loopResults.every(r=>r.fullProfileCertified===false&&r.missingConditions.length>=3));
+check('invalid relaxed-cone state rejected',runAdmissibleLoop({a:1,ps:[1,0]}).status==='FAILED');
+check('invalid boundary claim rejected',runAdmissibleLoop({a:1,ps:[5,0],boundary:true}).status==='FAILED');
+check('loop point budget enforced',runAdmissibleLoop({phaseSamples:64},{maxPoints:1}).status==='BUDGET_EXCEEDED');
+check('loop cancellation enforced',runAdmissibleLoop({},makeBudget(budget,{isCancelled:()=>true})).status==='CANCELLED');
+check('large concentration precision limit reported',runAdmissibleLoop({a:1e-6,ps:[5,2],phaseSamples:64},budget).status==='PRECISION_REQUIRED');
+
+const baseInput={etaValues:[0,.2],axis:{Lambda:48,logC:16,axisOrder:10},samples:513};
+const baseRaw=await runControlledContinuation(baseInput,budget),base=unpack(baseRaw);
+check('actual B.22/B.26 finite continuation executes',base.status==='PARTIAL'&&base.slices?.length===2,{status:base.status,message:base.message});
+check('continuation JSON-safe output',canonicalSafe(baseRaw));
+if(base.slices){
+  const options=base.parameters;
+  for(const slice of base.slices){
+    const d=slice.diagnostics;
+    check(`B.26 initial values eta=${slice.eta}`,d.initialStateAgreement.logE===0&&d.initialStateAgreement.U===0);
+    check(`B.5 terminal shear eta=${slice.eta}`,d.terminalShear.a===.8&&d.terminalShear.bs===0);
+    check(`independent field derivative eta=${slice.eta}`,near(d.derivativeCheck.logarithmicAngularFD,d.derivativeCheck.logarithmicAngularRHS,2e-8,2e-8)&&near(d.derivativeCheck.axialFD,d.derivativeCheck.axialRHS,2e-8,2e-8));
+    check(`short activation has explicit checkpoints eta=${slice.eta}`,slice.constructionCheckpoints.length===13&&slice.constructionCheckpoints[2].kappa>.49&&slice.constructionCheckpoints[2].kappa<.51);
+    const late=slice.constructionCheckpoints.slice(-3);
+    check(`exact axial support endpoint eta=${slice.eta}`,late.every(q=>q.bs===0&&q.beta===0));
+    for(const q of [slice.samples[0],slice.samples[128],slice.samples[384]]){
+      const eta=slice.eta,h=options.h,D=.5-h,A=.5+h,deta=1-eta*eta,L=1-2*h*eta*eta,X=q.X;
+      const [M,I,J,S,Cp]=q.moments,[Me,Ie,Je,Se]=q.momentEtaJets.map(j=>j[1]);
+      const W=1-(2*D*eta*M+deta*Me)/X,H=Math.sqrt(2*X)*q.E;
+      const Q=-W+((1-h)*I-D*eta*Ie-deta*Je+2*(h-D)*eta*J)/(X*H);
+      // Reconstruct the integrated source numerator on PDF p28, then divide.
+      // The -X W U factor is deliberately retained to catch a lost X.
+      const N=(-X*W*q.U+D*(M-eta*Me)+4*h*eta*S-deta*Se+X*(4*A*eta*q.Pi-deta*q.etaJets.Pi[1]))/X;
+      check(`4.16 independent scalar contraction eta=${eta}, X=${X.toPrecision(3)}`,near(q.ps[0],X*Q/L,1e-10,5e-12)&&near(q.ps[1],X*N/(L*q.E),1e-9,5e-12));
+    }
+    const dy=Math.log(110/slice.samples[0].X)/(slice.samples.length-1);
+    const k=200,q=slice.samples[k],pred=[q.X*q.U,q.X*Math.sqrt(2*q.X)*q.E,q.X*q.U*Math.sqrt(2*q.X)*q.E,q.X*(q.U*q.U-q.E*q.E/2),q.E*q.E/2];
+    for(let m=0;m<5;m++){
+      const fd=(slice.samples[k-2].moments[m]-8*slice.samples[k-1].moments[m]+8*slice.samples[k+1].moments[m]-slice.samples[k+2].moments[m])/(12*dy);
+      check(`five independent radial moment derivatives eta=${slice.eta}, m=${m}`,near(fd,pred[m],1e-38,4e-6),{fd,rhs:pred[m]});
+    }
+  }
+  const o={...options},eta=0;
+  const pressureJet=(e,n)=>{const z=jetVar(e,n),f=jetInv(jetAdd(jetC(1,n),jetMul(z,z)));return jetScale(jetMul(f,f),-10);};
+  const axis=solveAxisCoefficients(eta,o,pressureJet,makeBudget(budget)),X0=4/o.Lambda;
+  const field=X=>{const Y=o.Lambda*X,P=axis.phi.reduceRight((s,row)=>s*Y+row[0],0),up=axis.u.reduceRight((s,row)=>s*Y+row[0],0),F=axis.data.g[0]*P,U=axis.data.Us[0]+up/o.Lambda;return {F,U,E:Math.sqrt(2*X)*F};};
+  const integrands=[x=>field(x).U,x=>2*x*field(x).F,x=>2*x*field(x).F*field(x).U,x=>field(x).U**2-x*field(x).F**2,x=>field(x).F**2];
+  for(let k=0;k<5;k++){
+    const quad=gauss(integrands[k],0,X0),value=base.slices[0].samples[0].moments[k];
+    check(`independent Gauss initial moment ${k}`,near(value,quad,1e-35,3e-12),{polynomialPrimitive:value,gaussQuadrature:quad});
+  }
+  check('finite tail mismatch is exposed',base.slices[1].diagnostics.finiteAxisSlopeDefectAtX0!==0&&base.slices.every(s=>s.diagnostics.fullStressFlatFactorCertified===false));
+}
+const refined=unpack(await runControlledContinuation({...baseInput,samples:513,referenceSteps:96,transitionSteps:48,radialSteps:384},budget));
+if(base.slices&&refined.slices)for(let j=0;j<2;j++){
+  const a=base.slices[j].samples.at(-1),b=refined.slices[j].samples.at(-1);
+  check(`independent step refinement eta=${a.eta}`,near(a.logE,b.logE,3e-9,1e-9)&&near(a.U,b.U,3e-9,1e-9)&&a.moments.every((v,k)=>near(v,b.moments[k],1e-35,2e-6)),{logEDifference:a.logE-b.logE,UDifference:a.U-b.U});
+}
+const outerInput={etaValues:[0],pressure:{family:'source-outer-A21',parameters:{Md:1,logP:0,lambda:.0002,h:1e-8,logXR:20,Tf:64,co:.005}},axis:{Lambda:48,logC:2,axisOrder:10},samples:33};
+const bound=await runControlledContinuation(outerInput,budget);
+check('actual A.21 pressure is consumed by finite recurrence',bound.status==='PARTIAL'&&bound.inputContract.pressure.outerDatumComputed&&bound.parameters.h===1e-8,{status:bound.status,message:bound.message,slopeDefect:bound.slices?.[0].diagnostics.finiteAxisSlopeDefectAtX0});
+check('A.21 numeric connection not promoted to complex-neighborhood proof',bound.inputContract?.pressure.outerBindingCertified===false&&bound.fullProfileCertified===false);
+const invalidSupport=await runControlledContinuation({axialWidth:.1,shearWidth:.1},budget);
+check('negative source support case rejected',invalidSupport.status==='FAILED'&&invalidSupport.domainStatus==='INVALID_SUPPORT');
+check('invalid source t1 rejected',!(validateContinuationInput({t1:.1}).valid));
+check('mismatched outer/axis h rejected',!(validateContinuationInput({...outerInput,axis:{h:.005}}).valid));
+check('unsupported external callback family refused',(await runControlledContinuation({pressure:{family:'callback'}},budget)).status==='UNSUPPORTED');
+check('continuation operation budget enforced',(await runControlledContinuation({samples:33},{maxOperations:1000})).status==='BUDGET_EXCEEDED');
+check('continuation cancellation enforced',(await runControlledContinuation({samples:33},makeBudget(budget,{isCancelled:()=>true}))).status==='CANCELLED');
+check('huge certified logC not silently rounded into finite profile',(await runControlledContinuation({axis:{logC:'124605440450970487202262263129522548304693417090247016651789069123465812759792436944981808470769532928001'}},budget)).status==='PRECISION_REQUIRED');
+const oversizedDatum=await runControlledContinuation({...outerInput,pressure:{...outerInput.pressure,parameters:{...outerInput.pressure.parameters,logP:14}}},budget);
+check('negative pressure/axis compatibility case rejected',oversizedDatum.status==='FAILED'&&oversizedDatum.domainStatus==='INVALID_PROFILE');
+
+const hashes=Object.fromEntries(['admissible-loop.mjs','controlled-continuation.mjs','test-continuation-loop.mjs'].map(n=>[n,crypto.createHash('sha256').update(fs.readFileSync(dir+n)).digest('hex')]));
+const report={schema:'MathScope.NavierFollowupComputations/1',sourceHashes:hashes,tests,passed:tests.filter(t=>t.pass).length,total:tests.length,
+  fullProfileCertified:false,analyticInfiniteWitnessCoupled:false,scope:'Finite source operations, explicit-state all-phase bounds, independent moment quadrature and finite difference/refinement checks. This report does not certify the original whole profile.'};
+fs.writeFileSync(dir+'continuation-loop-tests.json',JSON.stringify(report,(_,x)=>typeof x==='number'&&(!Number.isFinite(x)||Number.isInteger(x)&&!Number.isSafeInteger(x))?{kind:'FLOAT64',value:String(x),precisionBits:53}:x,2)+'\n');
+console.log(JSON.stringify({passed:report.passed,total:report.total,failures:tests.filter(t=>!t.pass)},null,2));
+if(report.passed!==report.total)process.exitCode=1;

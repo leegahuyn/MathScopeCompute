@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-09T12:24:56.518621+00:00",
+  "status": "PASS",
+  "tests": {
+    "passed": 9,
+    "failed": 0
+  },
+  "method": "Actual injected commitResearchM0 and createRevisionRecord extracted from v031-with-m0.html; actual foundation release guard; real session and contract validators in Node vm; only localStorage/time/UI/concurrency mocked.",
+  "bridgeSha256": "aa4f12792f6c0696e9ca8d82e8171cc6fb8c1decb5ad58a0c4623b9d83fe8b27",
+  "releaseGuardSha256": "0fbc13befe3503e3ec4725179c85301b46d9077796211d38dea20a3ac1a567e0",
+  "testSourceSha256": "2d79a8595be789d8c2176acfada6c7ea20f1d68abaf0342b1e679bc91e974fd7",
+  "logSha256": "437cd82ddecc311f547dec347c323f894392db1a2a294ea7d76c4510a83874b9",
+  "invariants": [
+    "Injected function matches builder source",
+    "Storage failure changes no in-memory session/store state or identities",
+    "Concurrent session selection rejects old commit",
+    "Concurrent M0 revision change rejects old commit",
+    "Same-revision content change rejected",
+    "Same-revision identical-content commit is no-op",
+    "Forged rehashed baseline rejected by installed-release pin",
+    "Successful namespace commit preserves legacy data/grades/checkpoints/other sessions",
+    "Typed namespace revision remains hash-valid after commit"
+  ]
+}

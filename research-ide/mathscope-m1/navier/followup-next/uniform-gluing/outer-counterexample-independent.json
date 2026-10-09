@@ -1,0 +1,136 @@
+{
+  "schema": "MathScope.OuterCounterexampleIndependentBarrier/1",
+  "status": "CERTIFIED_ACTUAL_Md1_CONE_FAILURE",
+  "sourceSHA256": "ac79c8268a501f9762b5f13f6efe114809a94e568efc614e2fd66ceae4303c7a",
+  "axisSHA256": "edb33aded21f971d8e298768a9a58c3a4ca3649ba6247f225d6af2cffe64ebf3",
+  "parameters": {
+    "Md": "1",
+    "logP": "14",
+    "h": "3022314549036573/302231454903657293676544",
+    "lambda": "7378697629483821/36893488147419103232",
+    "co": "5764607523034235/1152921504606846976"
+  },
+  "witness": {
+    "eta": "3/4",
+    "localAxialY": "sqrt(e)-1",
+    "globalLogXOverXR": "sqrt(e)",
+    "a": "2",
+    "k": "2",
+    "kPrime": "-32/sqrt(e)"
+  },
+  "method": "Exact rational ODE barriers and positive partial tail integrals; no quadrature and no tail truncation.",
+  "bounds": {
+    "eLower": {
+      "numerator": "109601",
+      "denominator": "40320",
+      "approximate": 2.71827876984127
+    },
+    "eUpper": {
+      "numerator": "8877691",
+      "denominator": "3265920",
+      "approximate": 2.718281831765628
+    },
+    "Qideal": {
+      "numerator": "12920394700153663853708829",
+      "denominator": "6044629098073145873530880",
+      "approximate": 2.1375000005
+    },
+    "Ceta": {
+      "numerator": "24480748267297963103883711",
+      "denominator": "15111572745182864683827200",
+      "approximate": 1.6200000278
+    },
+    "axialSourceLower": {
+      "numerator": "2720082964173390034516257",
+      "denominator": "7555786372591432341913600",
+      "approximate": 0.3599999828
+    },
+    "axialSourceUpper": {
+      "numerator": "24480748267297963103883711",
+      "denominator": "15111572745182864683827200",
+      "approximate": 1.6200000278
+    },
+    "currentE2Lower": {
+      "numerator": "17179869184",
+      "denominator": "625",
+      "approximate": 27487790.6944
+    },
+    "remainingAxialMassFactorLower": {
+      "numerator": "2047",
+      "denominator": "2048",
+      "approximate": 0.99951171875
+    },
+    "NsOverE2Upper": {
+      "numerator": "-151800506247540492762564853422415737",
+      "denominator": "129807421463370690713262408230502400",
+      "approximate": -1.1694285622211196
+    },
+    "bsTimesWLower": {
+      "numerator": "151800506247540492762564853422415737",
+      "denominator": "16225927682921336339157801028812800",
+      "approximate": 9.355428497768957
+    },
+    "aMinusBsWUpper": {
+      "numerator": "-119348650881697820084249251364790137",
+      "denominator": "16225927682921336339157801028812800",
+      "approximate": -7.3554284977689575
+    },
+    "PcOverP1Upper": {
+      "numerator": "-119348650881697820084249251364790137",
+      "denominator": "32451855365842672678315602057625600",
+      "approximate": -3.6777142488844787
+    },
+    "PcOverXRUpper": {
+      "numerator": "-119348650881697820084249251364790137",
+      "denominator": "48677783048764009017473403086438400",
+      "approximate": -2.451809499256319
+    }
+  },
+  "analyticFacts": [
+    "sigma(1/2)=1/2 and sigmaPrime(1/2)=8 exactly.",
+    "Ideal Q is in (1,3). In the first transition Qprime+(1+l)Q=(4L-1)l+Ceta with l>=0; barriers 1 and 3 apply.",
+    "In the axial transition Qprime+Q=c0+c1*k, 0<=k<=4. Thus 1/3<Q<=3.",
+    "Reference primitives obey 0<=kbar<=4 and 0<=kSquaredBar<=16, hence |W|<=3. Their S combination equals the matched source S; individual E2 or U2 primitives are not asserted separately matched.",
+    "E2=f2*exp(28-2/5-(sqrt(e)-1))>f2*2^26, because sqrt(e)-1<1 and e>2.",
+    "The remaining exact axial stage has length e+11-sqrt(e)>11. Its positive pressure mass factor exceeds 1-2^-11.",
+    "At positive eta all later unedited A.21 pressure derivative contributions are nonnegative, since 0<=theta<=1; pressure-neutral future corrections may be omitted before their support.",
+    "Ns/E2 <= (9/2+27h)/E2lower -(2A*eta+d*Jprime)*(1-2^-11), after dropping only nonpositive terms.",
+    "Since |kPrime|>16 and Q<=3, bs*w>8. With a=2 and p_s,1>0, Pc=p_s,1*(1-bs*w/a)<0 for every positive XR."
+  ],
+  "checks": {
+    "sourceAxisAndPressureUseSameH": true,
+    "strictParameterDomain": true,
+    "elementaryEBounds": true,
+    "idealQBetweenOneAndThree": true,
+    "firstTransitionLowerBarrier": true,
+    "firstTransitionUpperBarrier": true,
+    "axialSourceLowerBarrier": true,
+    "axialSourceUpperBarrier": true,
+    "positiveCurrentEnergyLower": true,
+    "remainingAxialPressureMassPositive": true,
+    "actualNsOverE2BelowMinusOne": true,
+    "bsTimesWAboveEight": true,
+    "aMinusBsWBelowMinusSix": true,
+    "necessaryPcConditionFails": true
+  },
+  "passed": 14,
+  "total": 14,
+  "scope": {
+    "actualCurrentOuterCandidateFailsNecessaryRelaxedCone": true,
+    "merelyFailedSufficientCondition": false,
+    "increasingXRCannotRepair": true,
+    "currentDatumSupportsOriginalGlobalC12Route": false,
+    "previousLocalJoiningCertificatesInvalidated": false,
+    "paperExistentialChoiceRefuted": false,
+    "generalNavierStokesClaim": false,
+    "newLeanTheorem": false,
+    "sourceOrAcceptanceSnapshotChanged": false
+  },
+  "sourcePaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "sourcePages": [
+    "129: A.2/A.5-A.7",
+    "133-135: A.21-A.26",
+    "155: B.35"
+  ],
+  "derivationFile": "OUTER_CANDIDATE_FAILURE.md"
+}

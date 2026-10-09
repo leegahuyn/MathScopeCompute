@@ -1,0 +1,821 @@
+{
+  "schema": "MathScope.M1.ArithmeticChecklist/1",
+  "generatedAt": "2026-10-09T14:41:07.245522+00:00",
+  "status": "PASS_EXPLICIT_M1_SCOPE",
+  "summary": {
+    "P1": {
+      "pass": 8,
+      "total": 8
+    },
+    "P2": {
+      "pass": 8,
+      "total": 8
+    },
+    "P3": {
+      "pass": 8,
+      "total": 8
+    },
+    "platformAssigned": {
+      "pass": 4,
+      "total": 4
+    },
+    "nodeTests": 38,
+    "independentChecks": 55,
+    "leanTargets": 31,
+    "leanNegativeControls": 4,
+    "leanWarnings": 0,
+    "customAxioms": 0
+  },
+  "originalBlueprints": [
+    {
+      "path": "blueprint-work/arithmetic-stages.json",
+      "sha256": "1b9f7d006d6db7610adc3cf437590bc2a74f2514a7f6016426302a94c2fba21d"
+    },
+    {
+      "path": "blueprint-work/arithmetic-design.md",
+      "sha256": "cf94ab7ce02853059b6bba29ec48b55cb500ecac8ab041c18047b97f86e555c2"
+    },
+    {
+      "path": "blueprint-work/appendix-arithmetic.tex",
+      "sha256": "c6b867688c0d6ec955ab173175b0363131d18adae9d21b7b4f2002be71a75e0e"
+    },
+    {
+      "path": "blueprint-work/platform-stages.json",
+      "sha256": "2c07775f7bec16d6710b88eff12d73110866c900576cd4f51e8e528721216e0d"
+    }
+  ],
+  "items": [
+    {
+      "id": "P1-01",
+      "title": "무한 영역과 완료 범위를 구분한다",
+      "detail": "PrimeSet은 논리적 정의로 저장한다. 생성기는 nextPrime 및 streamInterval을 제공하고 각 요청의 끝점·예산·마지막 인증 범위를 기록한다.",
+      "accept": "전역 allPrimesComputed=true 필드를 금지한다. [a,b] 완료와 무한 영역의 정의가 서로 다른 타입이어야 한다.",
+      "stage": "P1",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "논리적 무한 PrimeSet과 완료 유한 구간을 별도 객체로 반환한다.",
+        "nextPrime은 인증서가 있는 다음 소수를 반환하며 UNKNOWN 후보를 건너뛰지 않는다. streamInterval은 소비한 타일만 계산한다."
+      ],
+      "files": [
+        "primes.mjs:PRIME_DOMAIN, nextPrime, streamInterval",
+        "index.mjs:validateRequest"
+      ],
+      "validation": [
+        "P1-01/02",
+        "P1-03: lazy stream",
+        "API: malformed"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.prime_interval_complete"
+      ],
+      "scopeBoundary": "리소스 한도는 한 요청의 한도이며 PrimeSet의 논리적 끝점이 아니다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P1-02",
+      "title": "구간 체와 누락 방지 증명서를 만든다",
+      "detail": "[a,b]의 배수를 지울 때 √b까지의 기초 소수 목록 완전성을 재귀적으로 요구한다. 시작 배수는 max(p²,ceil(a/p)p)로 정하고 정수 제곱근을 사용한다.",
+      "accept": "π(10)=4, π(100)=25, π(1000)=168, π(10⁶)=78498. 0·1 제외, 2 포함, p² 경계 및 비정렬 구간을 통과한다.",
+      "stage": "P1",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "정수 sqrt(b), 완전한 기초 소수, max(p²,ceil(a/p)p)로 표시한다.",
+        "π(10)=4, π(100)=25, π(1000)=168, π(10^6)=78498; 0/1, p²와 역순 끝점을 검사한다."
+      ],
+      "files": [
+        "primes.mjs:segmentedPrimes, verifyPrimeSegments",
+        "exact.mjs:isqrt"
+      ],
+      "validation": [
+        "P1-01/02",
+        "P1-02: 0/1"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.segmented_sieve_complete_on_interval",
+        "MathScope.M1.Arithmetic.prime_only_square_root_guard",
+        "MathScope.M1.Arithmetic.pi_ten",
+        "MathScope.M1.Arithmetic.pi_hundred"
+      ],
+      "scopeBoundary": "Lean 정리는 명시한 기초 소수 soundness/completeness 가정 아래의 marking 관계이다. 전체 JavaScript 명령형 프로그램의 refinement proof를 주장하지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P1-03",
+      "title": "메모리·범위·재개 계약을 고정한다",
+      "detail": "초기 프로파일은 한 구간 2²⁰개 정수, 화면 샘플 최대 20000점으로 둔다. 세그먼트 해시와 기초 소수 상한을 저장하고 취소 시 마지막 완결 세그먼트만 커밋한다.",
+      "accept": "[2,10⁶]을 17개 임의 구간으로 나누어 계산·합치기·재개한 목록이 단일 계산과 일치한다. 한 세그먼트 누락 또는 중복은 완전성 검사에서 실패한다.",
+      "stage": "P1",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "기본 segment 2^20개 정수, 표시 20000점; 완료 세그먼트만 checkpoint 한다.",
+        "[2,10^6]의 17개 비균등 분할, 합치기, 실제 취소 후 검증된 prefix 재개가 단일 실행과 같다. 누락/중복 세그먼트는 거부한다."
+      ],
+      "files": [
+        "primes.mjs:segmentedPrimes, verifyPrimeSegments, streamInterval",
+        "exact.mjs:meter"
+      ],
+      "validation": [
+        "P1-03: 17 uneven",
+        "P1-03: cancellation",
+        "P1-03: lazy stream"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "maxBasePrime=2000000, 최대 구간 폭 8388608; 예산/시간/취소 오류를 공통 worker가 표시한다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P1-04",
+      "title": "π·ψ·Li와 표시 오차를 분리한다",
+      "detail": "π는 정수, ψ는 소수 거듭제곱을 포함한 log 선형결합 및 실수 ball로 저장한다. Li₂(x)=∫₂ˣdt/log t와 통상 li(x)의 정규화 차이를 표시한다.",
+      "accept": "ψ(10.5)=3log2+2log3+log5+log7=log2520. p^k 경계에서 가중치가 한 번만 더해진다. Li 오차 상계가 없으면 approximate 등급으로 유지한다.",
+      "stage": "P1",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "π는 정수, ψ는 정확한 소수별 log 계수와 엄밀한 fixed-point 구간을 저장한다.",
+        "ψ(10.5)=3log2+2log3+log5+log7. Decimal 100자리 log2520가 반환 구간에 포함된다.",
+        "Li₂=∫₂ˣ dt/log(t)는 float64 Simpson 근사, certified:false이다. li와의 정규화 차이가 명시된다."
+      ],
+      "files": [
+        "primes.mjs:primeStatistics, logIntegerInterval"
+      ],
+      "validation": [
+        "P1-04: psi",
+        "P1-04: exact prime-power",
+        "independent: psi enclosure, Li2"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "Li₂의 표시 소수점을 엄밀한 오차 상계나 PNT/RH 증명으로 승격하지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P1-05",
+      "title": "큰 정수와 소수성 인증을 처리한다",
+      "detail": "Number 안전정수 범위를 넘는 끝점·곱은 BigInt를 사용한다. probable-prime 결과와 검증된 primality certificate를 분리하고, 선택한 인증 알고리즘의 독립 verifier를 둔다.",
+      "accept": "합성수 341, 561, 1105는 PRIME_CERTIFIED가 될 수 없다. 지원 밖 인증서는 UNKNOWN이며 화면 색상이 증명 등급을 승격시키지 않는다.",
+      "stage": "P1",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "Number 범위 밖 정수는 decimal BigInt로 계산한다. n−1의 완전 인수분해와 재귀 Lucas/Pratt 증명서를 독립 검증한다.",
+        "18446744069414584321 인증 및 SymPy 소수성 교차 검사; 341/561/1105와 변조 증명서는 거부한다."
+      ],
+      "files": [
+        "primes.mjs:generatePrimeCertificate, verifyPrimeCertificate",
+        "exact.mjs:bigint, powmod"
+      ],
+      "validation": [
+        "P1-05",
+        "independent: large prime"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.lucas_certificate_sound",
+        "MathScope.M1.Arithmetic.composite_controls"
+      ],
+      "scopeBoundary": "지원 밖 인증서와 예산 내 미완료 인수분해는 UNKNOWN이다. Lucas의 실제 imported 정리와 JS verifier 실행을 분리한다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P1-06",
+      "title": "소수별 prism과 동일 모형의 섬유를 연결한다",
+      "detail": "정수 계수 모형, 최소모형 변환, smoothness·discriminant 증명서를 저장하고 p별 BasePrism을 생성한다. 각 N의 감소 사상만 precision tower의 화살표로 제공한다.",
+      "accept": "p=5의 계수를 p=7 ring 원소로 직접 더하는 요청은 거부한다. 모형 판별식이 0인 소수와 곡선 자체의 bad reduction을 구별한다.",
+      "stage": "P1",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "정수 모형 hash, 소수별 base, 판별식/최소성 사유, precision tower 감소 화살표를 기록한다.",
+        "p=5와 p=7의 덧셈을 거부한다. a=-81,p=3의 singular 표시 모형을 MINIMIZATION_REQUIRED로 둔다.",
+        "E:y²=x³−x, p=2에서 v₂(Δ)=6<12인 최소성 근거와 bad reduction을 기록한다."
+      ],
+      "files": [
+        "local-factors.mjs:integerModel, classifyReduction, localFactorBundle",
+        "padic.mjs:addPadic, crystallinePrism"
+      ],
+      "validation": [
+        "P1-06"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.precision_reduction_composes"
+      ],
+      "scopeBoundary": "일반 Tate 알고리즘은 미지원이며 미확정 최소모형/인자는 UNKNOWN으로 보존한다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P1-07",
+      "title": "good·bad·무한소의 인자를 묶는다",
+      "detail": "국소 인자에는 소수, 표현·Frobenius convention, good/bad 판정, conductor, 사상 출처를 넣는다. archimedean gamma factor와 전역 정규화는 별도 객체로 둔다.",
+      "accept": "good-prime 목록만 있는 묶음은 INCOMPLETE_LOCAL_DATA. bad-prime 인자를 생략한 곱을 완전한 L(E,s)로 저장할 수 없다.",
+      "stage": "P1",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "point/P1 good factors, E good H1 Euler factors, unresolved bad factors, conductor와 archimedean 정규화를 별도 필드로 저장한다.",
+        "모든 반환 전역 묶음은 INCOMPLETE_LOCAL_DATA이며 isCompleteGlobalLFunction=false이다."
+      ],
+      "files": [
+        "local-factors.mjs:localFactorBundle"
+      ],
+      "validation": [
+        "P1-07"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "유한 good-prime 목록으로 완전한 L(E,s), analytic continuation, BSD rank를 만들지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P1-08",
+      "title": "3D 소수 탐색의 수학적 의미를 고정한다",
+      "detail": "유한 범위 스캔·확대·소수 간격·π 정규화 오차를 선택하게 한다. z축이 구간, 절단 상한, residue class, cohomology degree 중 무엇인지 view manifest에 저장한다.",
+      "accept": "임의의 카메라 회전·LOD 축약 후 원자료 해시와 π가 유지된다. 표본 그래프가 모든 소수 또는 PNT 증명이라는 문구로 출력되지 않는다.",
+      "stage": "P1",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "prime/gap/count와 구간 또는 residue 축 의미, LOD sampling 여부, 원자료 hash를 기록한다.",
+        "카메라 변경과 점 축약은 raw hash와 intervalCount를 바꾸지 않는다. π는 [2,x]의 선행 커버리지가 있을 때만 제공한다."
+      ],
+      "files": [
+        "primes.mjs:primeView",
+        "index.mjs:visualization"
+      ],
+      "validation": [
+        "P1-08",
+        "API: every shipped example"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "공통 브라우저 렌더러의 시각 QA는 root 통합 검증 대상이다. 이 항목은 렌더러에 전달하는 불변 데이터 계약을 검사한다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P2-01",
+      "title": "prism 입력 가정을 검사한다",
+      "detail": "A의 δ-구조, I의 Cartier 조건, (p,I)-완비성, p∈I+φ(I)A 및 boundedness를 선언·근거와 함께 저장한다. 첫 base는 (ℤ_p,(p)), φ=id다.",
+      "accept": "ℤ/p^N과 (p)를 그대로 p-torsionfree prism으로 승인하는 fixture는 실패한다. 미검증 가정은 admission 목록에 남는다.",
+      "stage": "P2",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "(Z_p,(p)), phi=id, delta=(a-a^p)/p와 Cartier/completeness/boundedness 근거를 명시한다.",
+        "유한 Z/p^N 관측을 prism으로 재분류하거나 phi/delta/가정을 바꾸면 admission이 실패한다."
+      ],
+      "files": [
+        "padic.mjs:crystallinePrism, validatePrismBase"
+      ],
+      "validation": [
+        "P2-01",
+        "P3-07/08"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "현재 admitted base는 crystalline prism 하나이다. 일반 prism의 사용자 선언만으로 승인하지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P2-02",
+      "title": "정밀도 손실을 타입에 포함한다",
+      "detail": "p-adic N, 좌표 D, Čech/동형차수 H, root-depth M, q−1/u 차수 U를 각각 기록한다. δ(a)=(φ(a)−a^p)/p는 목표 N에 입력 N+1 이상을 요구한다.",
+      "accept": "N자리만으로 δ를 N자리 출력하는 요청은 거부하거나 N−1로 낮춘다. p=3에서 a=0과 a=3^N은 mod3^N 같지만 δ의 mod3^N 값이 다를 수 있음을 검출한다.",
+      "stage": "P2",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "p-adic N, coordinate D, Čech/cohomological degree를 구분하며 미사용 root/q/u 차수는 null이다.",
+        "목표 N의 delta는 N+1자리 입력을 요구한다. 일치하는 정확한 정수 원본만 있으면 자동 증액한다.",
+        "p=3에서 0과 27은 mod27 같지만 delta mod27이 다르다."
+      ],
+      "files": [
+        "padic.mjs:deltaPadic, precisionFailureFixture",
+        "complex.mjs:p1Model"
+      ],
+      "validation": [
+        "P2-02/I1-03",
+        "P2-02: all lifts"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.delta_numerator_precision",
+        "MathScope.M1.Arithmetic.guard_digit_division",
+        "MathScope.M1.Arithmetic.delta_guard_digit_counterexample"
+      ],
+      "scopeBoundary": "관측 잔여류만으로 누락 자릿수를 만들어내지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P2-03",
+      "title": "체의 rank와 유한환 모듈을 구분한다",
+      "detail": "ℤ/p^N 위에서는 비단위로 나누는 Gaussian elimination을 금지한다. Smith normal form·DVR invariant factors 또는 검증 가능한 kernel/image presentation을 출력한다.",
+      "accept": "[p] : ℤ/p³→ℤ/p³의 kernel과 cokernel은 각각 ℤ/p. p modp³를 pivot inverse로 사용하면 실패한다.",
+      "stage": "P2",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "유한 DVR 환에서 valuation pivot와 단위 basis transform으로 Smith certificate를 만든다. U*A*V=S 및 det(U),det(V)의 단위성을 독립 검증한다.",
+        "[3] on Z/27의 kernel/cokernel은 Z/3이고 fieldRank=null이다. 단위가 아닌 3의 역원은 거부한다.",
+        "0×5,4×0의 free modules와 작은 2×2 행렬의 전체 kernel/image 열거가 일치한다."
+      ],
+      "files": [
+        "padic.mjs:finiteRingModule, verifyFiniteRingModule",
+        "exact.mjs:inverseUnit, determinant"
+      ],
+      "validation": [
+        "P2-03: finite ring",
+        "P2-03: DVR Smith",
+        "P2-03: a forged",
+        "P2-03: zero-dimensional"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.finite_ring_nonunit_fixture",
+        "MathScope.M1.Arithmetic.finite_ring_kernel_fixture"
+      ],
+      "scopeBoundary": "유한환의 torsion invariants를 체의 rank로 대체하지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P2-04",
+      "title": "복합체·사상·homotopy를 검증한다",
+      "detail": "d_{k+1}d_k=0, chain-map 식, homotopy 식 f−g=dh+hd를 원 coefficient ring에서 확인한다. φ-semilinear 사상은 D_kF_k=F_{k+1}σ(D_k)로 검사한다.",
+      "accept": "임의의 한 행렬 원소를 바꾼 mutation fixture가 실패한다. modp^N 검사만 있으면 결과 명세 역시 modp^N으로 한정된다.",
+      "stage": "P2",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "정수 또는 명시 mod p^N에서 d², chain-map, id−ir=dh+hd를 검사한다.",
+        "이 base에서 sigma=id인 semilinearity를 명시한다. 임의 sigma는 미지원이다.",
+        "행렬 원소 변조와 d²가 공허한 짧은 복합체의 잘못된 차원·인덱스·계수도 거부한다."
+      ],
+      "files": [
+        "complex.mjs:checkComplex, checkChainMap, checkRetraction",
+        "exact.mjs:matrix"
+      ],
+      "validation": [
+        "P2-04/P3-03",
+        "P2-04: vacuous",
+        "P2-04/P3-04",
+        "P2-05"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.p1_d_squared_zero",
+        "MathScope.M1.Arithmetic.p1_retraction",
+        "MathScope.M1.Arithmetic.p1_homotopy_degree_zero",
+        "MathScope.M1.Arithmetic.p1_homotopy_degree_one",
+        "MathScope.M1.Arithmetic.p1_homotopy_degree_two",
+        "MathScope.M1.Arithmetic.frobenius_positive_chain_map",
+        "MathScope.M1.Arithmetic.frobenius_negative_chain_map"
+      ],
+      "scopeBoundary": "정수 검증과 mod p^N 검증의 scope를 결과에 따로 기록한다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P2-05",
+      "title": "절단과 경계 조건을 명시한다",
+      "detail": "단순 차수 cutoff, quotient truncation, smart truncation을 별도 연산으로 둔다. d·φ·곱이 cutoff 밖으로 나가는 항을 버리기 전에 그 연산이 정의되는 target 범위를 산출한다.",
+      "accept": "d가 밖으로 나가는 유한 좌표 subspace는 subcomplex로 승인하지 않는다. P¹ Frobenius의 target D→pD를 요구한다.",
+      "stage": "P2",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "미분이 선택된 기저 밖으로 나가는 경우 subcomplex 승인을 거부한다. quotient와 smart truncation은 별도 타입이다.",
+        "기하적 Frobenius의 target은 C(pD)이며 같은 D를 요구하면 target mismatch이다. 비대칭 crop은 chain-map 식도 실패한다."
+      ],
+      "files": [
+        "complex.mjs:subcomplexByBasis, filtration, p1Frobenius"
+      ],
+      "validation": [
+        "P2-05",
+        "P2-07"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.frobenius_positive_chain_map",
+        "MathScope.M1.Arithmetic.frobenius_negative_chain_map"
+      ],
+      "scopeBoundary": "whole-weight projection은 우연히 chain map일 수 있으므로 모든 crop이 항등식을 깨뜨린다고 주장하지 않는다. 기하적 pullback target 계약이 별도로 필요하다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P2-06",
+      "title": "derived base change를 구현 계약으로 둔다",
+      "detail": "free/K-flat replacement 또는 Tor 계산을 거쳐 tensor한다. H(C)⊗B와 H(C⊗^L B)를 자동 동일시하지 않는다.",
+      "accept": "C=[ℤ_p --p→ ℤ_p]를 modp로 내리면 두 항의 미분은 0이므로 H⁰,H¹ 모두 𝔽_p다. 원래 H⁰=0을 단순 tensor한 결과와 다름을 fixture로 보존한다.",
+      "stage": "P2",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "정수 또는 같은 p의 유한환 위 bounded free complex에 termwise derived base change를 수행한다. 원환 및 대상환에서 d²를 검사한다.",
+        "[Z_p --p→ Z_p]를 mod p로 내리면 H0=H1=F_p이며 H(C)⊗F_p의 H0=0과 다르다.",
+        "서로 다른 p 및 원본보다 높은 N으로의 reduction은 거부한다."
+      ],
+      "files": [
+        "complex.mjs:reduceFreeComplex",
+        "padic.mjs:derivedReductionFixture"
+      ],
+      "validation": [
+        "P2-06: derived reduction",
+        "P2-06: generic bounded-free"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.derived_reduction_zero_differential"
+      ],
+      "scopeBoundary": "K-flat 이유는 명시적 bounded free terms이다. 일반 비자유 complex의 resolution이나 임의 geometry 비교는 추론하지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P2-07",
+      "title": "세 종류의 필트레이션을 별도 타입으로 둔다",
+      "detail": "stupid degree F^rC^k=(k≥r이면 C^k), de Rham form-degree Hodge, Frobenius divisibility에서 유도되는 Nygaard를 구분한다. Nygaard는 적용 정리의 base twist와 descent를 요구한다.",
+      "accept": "F^r의 d-안정성을 검사한다. k≤r를 그대로 cochain subcomplex라 부르거나 cochain 차원을 H^k 필트레이션 차원으로 출력하면 실패한다.",
+      "stage": "P2",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "decreasing cochain k≥r, de Rham form-degree Hodge, quotient, smart를 별도 결과 타입으로 제공한다.",
+        "d-안정성을 검사하고 cochain dimensions와 filtered cohomology dimensions를 구분한다.",
+        "Nygaard는 base twist와 descent certificate가 없어 UNSUPPORTED로 반환한다."
+      ],
+      "files": [
+        "complex.mjs:filtration, subcomplexByBasis"
+      ],
+      "validation": [
+        "P2-07"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "k≤r를 그대로 cochain subcomplex라고 부르는 fixture는 실패한다. Nygaard를 cochain 차수로 대체하지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P2-08",
+      "title": "검증 산출물을 독립 재실행 가능하게 한다",
+      "detail": "행렬·기저·환·정밀도·사상·입력 해시를 한 manifest로 내보낸다. 외부 계산기는 certificate를 만들고 작은 verifier가 다시 확인하도록 한다.",
+      "accept": "표시용 소수점·3D 좌표 없이 원자료만으로 d²와 module invariants를 재계산한다. 환 또는 basis hash 하나만 바꾸면 기존 certificate는 무효다.",
+      "stage": "P2",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "행렬, 순서 있는 기저, coefficient ring, N/D, i/r/h/F와 raw hash를 포함한다.",
+        "숫자형 그림 좌표를 사용하지 않고 certificate 재실행이 가능하다. 기저/환/관측/cohomology/Frobenius 변조를 거부한다."
+      ],
+      "files": [
+        "complex.mjs:verifyModel",
+        "padic.mjs:verifyFiniteRingModule",
+        "index.mjs:runJob"
+      ],
+      "validation": [
+        "P2-08",
+        "P2-03: a forged",
+        "Export independent algebra fixtures"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "표시용 좌표와 카메라는 수학 원자료 certificate에 포함되지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P3-01",
+      "title": "점의 base 사례를 완성한다",
+      "detail": "X=Spec𝔽_p에서 complex ℤ_p[0]와 φ=id를 기록한다. 출력은 symbolic 전체 객체와 C⊗^Lℤ/p^N의 유한 계산을 함께 제공한다.",
+      "accept": "p∈{2,3,5,7}, N∈{1,2,4,8}에서 H⁰=ℤ/p^N, H^{k≠0}=0. 이것을 임의 X의 공식을 증명한 것으로 확대하지 않는다.",
+      "stage": "P3",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "Spec F_p, Z_p lift, K=Z_p[0], Frobenius=id를 명시한다.",
+        "p=2,3,5,7와 N=1,2,4,8의 16개 경우에서 H0=Z/p^N, 다른 차수 0을 검증한다."
+      ],
+      "files": [
+        "complex.mjs:pointModel, comparisonApplication"
+      ],
+      "validation": [
+        "P3-01"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "기하 비교는 S01/S02 참조이고 임의 X의 공식으로 확대하지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P3-02",
+      "title": "ℙ¹의 실제 기하 입력과 cover를 만든다",
+      "detail": "두 chart t,s와 s=t⁻¹인 겹침을 입력한다. lift의 smooth/proper 근거 및 Čech descent 전제를 저장하고 polynomial degree D≥1의 명시적 total complex를 구성한다.",
+      "accept": "basis의 chart·form degree·Čech degree가 각각 복원된다. C⁰,C¹,C² 크기는 2D+2,4D+1,2D+1이다.",
+      "stage": "P3",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "P1_Zp의 chart t,s와 s=t^-1, 함수/형식/Čech 차수별 기저와 sign convention을 기록한다.",
+        "C^0,C^1,C^2 차원은 2D+2,4D+1,2D+1이다. D=1,2,5,12,32의 실제 기저와 identity를 검사한다."
+      ],
+      "files": [
+        "complex.mjs:p1Complex, comparisonApplication"
+      ],
+      "validation": [
+        "P3-02/03"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "기저 절단은 full completed model의 명시적 retract로 정당화한다. bare matrix를 prismatic complex로 간주하지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P3-03",
+      "title": "D=1 golden matrices를 검증한다",
+      "detail": "설계 부록의 5×4 d₀와 3×5 d₁을 정수에서 검사한다. 단위 minor와 chain decomposition을 이용해 SNF 및 cohomology를 인증한다.",
+      "accept": "d₁d₀=0; SNF의 비영 invariant factors는 d₀에서 (1,1,1), d₁에서 (1,1). H⁰=A,H¹=0,H²=A·[dt/t].",
+      "stage": "P3",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "D=1의 두 정수 행렬을 설계 golden fixture와 정확히 비교한다.",
+        "d1*d0=0, SNF 비영 인자 (1,1,1)/(1,1), H0=A,H1=0,H2=A[dt/t].",
+        "단위 minor와 integral strong deformation retract를 제공하며 SymPy SNF가 독립 확인한다."
+      ],
+      "files": [
+        "complex.mjs:p1Complex, p1Retraction, p1SmithCertificate"
+      ],
+      "validation": [
+        "P2-04/P3-03",
+        "P3-02/03",
+        "independent: integral Smith"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.p1_d_squared_zero",
+        "MathScope.M1.Arithmetic.p1_retraction",
+        "MathScope.M1.Arithmetic.p1_homotopy_degree_zero",
+        "MathScope.M1.Arithmetic.p1_homotopy_degree_one",
+        "MathScope.M1.Arithmetic.p1_homotopy_degree_two"
+      ],
+      "scopeBoundary": "체 rank 차이만으로 torsion-free cohomology를 결론내리지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P3-04",
+      "title": "누락 좌표차수 전체에 대한 contraction을 증명한다",
+      "detail": "각 nonzero Laurent weight의 complex를 단위 pivot으로 소거한다. D를 늘렸을 때 추가되는 summand마다 명시적 h를 주고 p-adic completed limit에 연속적으로 확장한다.",
+      "accept": "모든 k≠0에 대해 dh+hd=id를 기호적으로 증명한다. D=1,2,5에서 rank가 같다는 관측만 있으면 FULL_MODEL_CERTIFIED로 승격하지 않는다.",
+      "stage": "P3",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "모든 양/음 Laurent weight의 h1*a=id, a*h1+h2*b=id, b*h2=id를 임의 CommRing에서 Lean으로 증명한다.",
+        "h/i/r는 0,±1 계수라 p^N-divisibility와 restricted families를 보존한다. 전체 p-adic completion으로 연속 확장하는 논증을 명시한다.",
+        "SymPy의 기호적 k 항등식과 p|k를 포함한 정수 표본, 잘못된 homotopy sign 음성 대조를 별도 검사한다."
+      ],
+      "files": [
+        "complex.mjs:weightContraction, COMPLETED_MODEL_PROOF",
+        "lean/MathScope/M1/Arithmetic/Algebra.lean"
+      ],
+      "validation": [
+        "P2-04/P3-04",
+        "independent: symbolic all-weight contractions"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.positive_weight_contractible",
+        "MathScope.M1.Arithmetic.negative_weight_contractible",
+        "MathScope.M1.Arithmetic.restricted_neg",
+        "MathScope.M1.Arithmetic.restricted_mul_weight",
+        "MathScope.M1.Arithmetic.restricted_add",
+        "MathScope.M1.Arithmetic.restricted_select",
+        "MathScope.M1.Arithmetic.inverse_system_identity"
+      ],
+      "scopeBoundary": "완료 모델의 기하적 동일시와 실제 p-adic completed module 전체의 Lean 형식화는 별도이다. 수학적 연속 확장 논증은 명시되어 있으나 그 전체를 kernel import라고 표시하지 않는다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P3-05",
+      "title": "유한 정밀도 reduction을 비교한다",
+      "detail": "전체 completed model과 finite-perfect replacement 사이 i,r,h를 저장하고 p^N reduction이 그 항등식을 보존함을 검증한다.",
+      "accept": "N=1,2,4,8 결과를 아래 정밀도로 내리면 정확히 일치한다. H² torsion이 갑자기 생기면 분모 사용 또는 cutoff 오류로 실패시킨다.",
+      "stage": "P3",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "정수 i/r/h를 각 p^N으로 내려 같은 homotopy 항등식을 검사한다.",
+        "p=2,3,5,7, N=1,2,4,8에서 H2 torsion 없이 동일한 finite-perfect replacement를 얻는다. N=8→2 reduction이 직접 N=2와 같다."
+      ],
+      "files": [
+        "complex.mjs:p1Model, p1Retraction",
+        "local-factors.mjs:verifyTowerReduction"
+      ],
+      "validation": [
+        "P3-05"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.precision_reduction_composes",
+        "MathScope.M1.Arithmetic.integral_map_preserves_precision"
+      ],
+      "scopeBoundary": "잔여류 관측이 더 높은 정밀도를 인증하지 않는다. 모든 N에 대한 보존은 정수 계수 항등식과 명시된 전칭 정리에 근거한다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P3-06",
+      "title": "Frobenius를 chain 수준에서 계산한다",
+      "detail": "t↦t^p,s↦s^p 및 d(t^p)=pt^{p−1}dt를 사용하여 C(D)→C(pD) map을 만든다. i,r을 거쳐 finite-perfect model에 이송한다.",
+      "accept": "정수 chain-map 항등식 통과 후 H⁰의 F=1, H²의 F=p. D에 맞춰 잘라 만든 map이 항등식을 깨뜨리는 negative fixture를 보유한다.",
+      "stage": "P3",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "t^j↦t^(pj), t^j dt↦p t^(p(j+1)-1)dt로 C(D)→C(pD)를 만든다.",
+        "r_target*F*i_source는 H0에서 1, H2에서 p이다. 정수 chain-map과 기호적 signed-weight identities를 검사한다."
+      ],
+      "files": [
+        "complex.mjs:p1Frobenius, checkChainMap"
+      ],
+      "validation": [
+        "P3-06",
+        "P2-05",
+        "independent: chain Frobenius, H2 multiplier"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.frobenius_positive_chain_map",
+        "MathScope.M1.Arithmetic.frobenius_negative_chain_map",
+        "MathScope.M1.Arithmetic.p1_frobenius_degree_two"
+      ],
+      "scopeBoundary": "현재 계수 Frobenius는 Z_p의 identity이다. 다른 sigma 또는 잘못된 target은 거부한다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P3-07",
+      "title": "실제 prismatic 비교의 범위를 인증한다",
+      "detail": "S02 Corollary 3.8과 S01 crystalline comparison을 잇는 정리 적용 기록을 만든다. φ_A=id인 현재 base에서 twist가 없어지는 이유를 명시한다.",
+      "accept": "기하 조건·lift·completed complex·quasi-isomorphism 근거가 모두 있어야 PRISMATIC_VIA_COMPARISON. 문헌 정리가 Lean에 없으면 그 부분은 EXTERNAL_THEOREM이며 FORMAL_COMPLETE로 표시하지 않는다.",
+      "stage": "P3",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "smooth proper lift, p-adic completed Čech–de Rham, explicit replacement를 S02 Cor3.8 및 S01 Thm1.8(1)/5.2에 연결한다.",
+        "phi_A=id이므로 crystalline comparison의 coefficient base-change twist가 identity임을 기록한다.",
+        "PRISMATIC_VIA_COMPARISON이지만 각 문헌 화살표는 THEOREM_REFERENCE, leanImport:null, formalComplete:false이다."
+      ],
+      "files": [
+        "complex.mjs:comparisonApplication, verifyModel",
+        "sources.mjs:S01, S02"
+      ],
+      "validation": [
+        "P3-07/08",
+        "P2-08"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "Scheme/Cech/descent 및 S01/S02 원문 비교정리의 Lean import는 없다. 이는 원문 acceptance가 허용하는 외부정리 adapter 경계이다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "P3-08",
+      "title": "오류 주입과 모델 구별 검사를 수행한다",
+      "detail": "CW 원·토러스, bare de Rham matrix, P¹ comparison model에 서로 다른 object type을 부여한다. cup-product 구조와 E∞ 구조의 인증도 모듈 cohomology 인증과 분리한다.",
+      "accept": "CW 입력에 prism label만 붙인 fixture, contraction 없는 cutoff, 잘못된 Frob target, 무근거 E∞-formality 주장이 모두 거부된다.",
+      "stage": "P3",
+      "status": "PASS",
+      "acceptanceScope": "M1 arithmetic engine and evidence",
+      "implementation": [
+        "CW label 위조, contraction 삭제, properness 삭제, 잘못된 Frob target과 E-infinity/formalComplete 승격을 거부한다.",
+        "underlying module complex의 비교와 cup-product/E-infinity formality를 분리한다."
+      ],
+      "files": [
+        "complex.mjs:verifyModel",
+        "index.mjs:getCapabilities"
+      ],
+      "validation": [
+        "P3-07/08",
+        "P2-05"
+      ],
+      "leanTargets": [],
+      "scopeBoundary": "native prismatic site, 임의 perfectoid/q/Breuil–Kisin/A_inf, Nygaard descent, 고차원/타원곡선 integral complex는 M1 지원 범위 밖이다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "I1-03",
+      "title": "정밀도 소모 전파",
+      "detail": "나눗셈, 미분, Frobenius, determinant, basis reduction, quadrature, series sum별 입력 정밀도와 출력 손실을 계산한다.",
+      "accept": "p-adic delta 연산에 추가 자릿수가 필요할 때 자동 증액한다. 유효 자릿수가 부족하면 계산 성공 대신 PRECISION_REQUIRED를 반환한다.",
+      "stage": "I1",
+      "status": "PASS_ASSIGNED_SCOPE",
+      "acceptanceScope": "Arithmetic-owned part of the common platform item",
+      "implementation": [
+        "delta 한 자리, 비단위 p^v 나눗셈 v자리, integral derivative/Frobenius/determinant 및 단위 basis change 0자리의 p-adic 손실을 반환한다.",
+        "정확한 원본과 기존 잔여류가 일치할 때만 delta guard digit을 자동 증액한다. 부족하면 PRECISION_REQUIRED."
+      ],
+      "files": [
+        "padic.mjs",
+        "complex.mjs:p1Frobenius, reduceFreeComplex",
+        "exact.mjs:determinant"
+      ],
+      "validation": [
+        "P2-02/I1-03",
+        "I1-03: determinant"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.guard_digit_division",
+        "MathScope.M1.Arithmetic.integral_map_preserves_precision"
+      ],
+      "scopeBoundary": "산술 담당 범위의 통과이다. quadrature/FFT/NS series 연산은 다른 domain checklist에서 검증한다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "I1-07",
+      "title": "독립 계산 교차 검증",
+      "detail": "직접 점 세기와 Frobenius, FFT와 direct convolution, analytic density와 quadrature, Lean certificate와 생성기 결과를 교차 검사한다.",
+      "accept": "동일 구현을 복사한 두 결과를 독립 검증으로 세지 않는다. fixture에 최소 두 방식과 오차 기준이 명시된다.",
+      "stage": "I1",
+      "status": "PASS_ASSIGNED_SCOPE",
+      "acceptanceScope": "Arithmetic-owned part of the common platform item",
+      "implementation": [
+        "segmented sieve 대 independent Euler linear sieve; P1 nonzero-vector orbit 점세기 대 chain Frobenius trace; E pair enumeration 대 square-residue/Legendre sum을 비교한다.",
+        "행렬은 SymPy SNF/기호 연산, ψ는 Decimal 100자리 구간 포함, Li₂는 mpmath 100자리 근사차이를 별도 검사한다.",
+        "Lean의 전칭 명제와 JS generator fixture는 다른 증거 층으로 연결한다."
+      ],
+      "files": [
+        "tests/arithmetic.test.mjs",
+        "tests/independent.py"
+      ],
+      "validation": [
+        "I1-07",
+        "independent-validation.json:55 checks"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.segmented_sieve_complete_on_interval",
+        "MathScope.M1.Arithmetic.lucas_certificate_sound",
+        "MathScope.M1.Arithmetic.frobenius_positive_chain_map",
+        "MathScope.M1.Arithmetic.frobenius_negative_chain_map"
+      ],
+      "scopeBoundary": "동일 JS 함수 두 번 호출을 독립 검증으로 세지 않는다. FFT/density는 다른 담당 범위이다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "I3-02",
+      "title": "유한 대수 정리부터 형식화",
+      "detail": "delta identities의 허용 정밀도, d²=0, semilinear chain map, 유한 소수 구간 인증, Lie bracket, lattice holonomy를 작은 정리로 나눈다.",
+      "accept": "자체 fixture와 일부러 잘못된 certificate가 각각 수락·거부된다. 숫자 예시와 전칭 정리의 범위가 구분된다.",
+      "stage": "I3",
+      "status": "PASS_ASSIGNED_SCOPE",
+      "acceptanceScope": "Arithmetic-owned part of the common platform item",
+      "implementation": [
+        "Lean 4.34.1에서 3개 모듈의 31개 exported theorem을 실제 커널 검사한다. source/type/#print axioms/log/exit/hash/import closure를 저장한다.",
+        "0 warnings, 0 sorry, 0 custom axioms. 틀린 weight sign, delta 정밀도, 341 prime, 0=1의 4개 음성 대조는 모두 false/불일치로 거부된다.",
+        "FINITE_FIXTURE와 UNIVERSAL_WITH_PRINTED_HYPOTHESES를 구분한다."
+      ],
+      "files": [
+        "lean/MathScope/M1/Arithmetic/Algebra.lean",
+        "lean/MathScope/M1/Arithmetic/Prime.lean",
+        "lean/MathScope/M1/Arithmetic/Precision.lean",
+        "lean/NegativeWeight.lean",
+        "lean/NegativePrecision.lean",
+        "lean/NegativePrime.lean",
+        "lean/NegativeFalse.lean"
+      ],
+      "validation": [
+        "evidence/lean-audit.json",
+        "evidence/lean-import-closure.json"
+      ],
+      "leanTargets": [
+        "ALL_31_AUDITED_TARGETS"
+      ],
+      "scopeBoundary": "브라우저의 정적 감사 조회는 새 커널 실행이 아니다. 전체 JS/기하 코드의 검증을 주장하지 않는다. Lie/lattice는 gauge 담당 범위이다.",
+      "remainingAcceptanceWork": []
+    },
+    {
+      "id": "I3-04",
+      "title": "외부 비교 정리의 adapter",
+      "detail": "프리즘 비교·trace formula·BSD의 알려진 경우·NS 원문 정리를 인용 레벨과 실제 Lean import 레벨로 구분한다.",
+      "accept": "문헌 링크만 연결된 결과는 THEOREM REFERENCE이며, 정확한 exported Lean theorem을 import한 경우에만 kernel 결과와 연결된다.",
+      "stage": "I3",
+      "status": "PASS_ASSIGNED_SCOPE",
+      "acceptanceScope": "Arithmetic-owned part of the common platform item",
+      "implementation": [
+        "S01/S02와 trace/BSD 배경 문헌은 THEOREM_REFERENCE 및 leanImport:null이다.",
+        "핀 고정 mathlib Lucas theorem의 정확한 exported adapter MathScope.M1.Arithmetic.lucas_certificate_sound만 실제 import 커널 근거에 연결한다."
+      ],
+      "files": [
+        "sources.mjs",
+        "complex.mjs:comparisonApplication",
+        "lean/MathScope/M1/Arithmetic/Prime.lean"
+      ],
+      "validation": [
+        "P3-07/08",
+        "evidence/lean-audit.json:externalComparisons"
+      ],
+      "leanTargets": [
+        "MathScope.M1.Arithmetic.lucas_certificate_sound"
+      ],
+      "scopeBoundary": "프리즘 비교 자체를 fake axiom으로 만들지 않았다. 공통 adapter registry/UI 연결은 root 담당이다.",
+      "remainingAcceptanceWork": []
+    }
+  ],
+  "evidence": [
+    "evidence/node-tests.tap",
+    "evidence/independent-validation.json",
+    "evidence/independent-fixtures.json",
+    "evidence/psi-fixture.json",
+    "evidence/lean-audit.json",
+    "evidence/lean-import-closure.json",
+    "evidence/official-cache-download.json"
+  ],
+  "unimplementedOutsideAcceptance": [
+    "General native prismatic site, arbitrary prisms, perfectoid/A_inf/q/Breuil-Kisin arithmetic",
+    "Nygaard descent, E-infinity/cup-product formality certificate",
+    "General Tate/minimal-model algorithm, complete global L bundle, RH/BSD research bridges",
+    "Geometric S01/S02 theorem imports and completed formal-scheme cohomology in Lean"
+  ],
+  "integrationOwnership": {
+    "workerUIReplayAndDeployment": "root",
+    "arithmeticComputeAndEvidence": "arithmetic subagent"
+  },
+  "formalComplete": false
+}

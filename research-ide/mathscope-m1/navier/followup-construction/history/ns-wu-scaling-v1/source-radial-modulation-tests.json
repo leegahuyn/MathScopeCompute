@@ -1,0 +1,416 @@
+{
+  "schema": "MathScope.SourceC12Tests/1",
+  "sourceHashes": {
+    "source-radial-modulation.mjs": "412f6cb3699316e117b612a1a40a42e06efd2236cb7da40adfc8aec686b89ef7",
+    "test-source-radial-modulation.mjs": "8a67c3d2e1229a4efd9ef9a9bfeb3019c27a9980fb09aab3b3609591c2b1b98d"
+  },
+  "tests": [
+    {
+      "name": "actual large-N source construction executes",
+      "pass": true,
+      "detail": {
+        "status": "PARTIAL"
+      }
+    },
+    {
+      "name": "actual small N has visible cone violations",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "narrow cutoff prevents a false N=256 pass",
+      "pass": true,
+      "detail": {
+        "modulatedPassing": 2163,
+        "modulatedTotal": 2165,
+        "patchPassing": 65,
+        "patchTotal": 65,
+        "minimumModulatedGaps": [
+          0.505968181497185,
+          0.0022953556552818277,
+          44.38477150611969,
+          -56681.62983877674
+        ],
+        "minimumPatchGaps": [
+          2.37330877195135,
+          0.37330877195135015,
+          55.33030947368232,
+          6122.886292906919
+        ]
+      }
+    },
+    {
+      "name": "large: explicit input remains separate from full paper witness",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: source endpoint collars have zero changes",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: actual unplanted moment debt is nonzero",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: all five quadratic moment equations solved",
+      "pass": true,
+      "detail": {
+        "residual": [
+          0,
+          -2.8031083007890725e-22,
+          0,
+          -1.8476991836538402e-18,
+          1.3436763552459436e-19
+        ]
+      }
+    },
+    {
+      "name": "large: independent continuous correction integration",
+      "pass": true,
+      "detail": {
+        "residual": [
+          -2.809165140870736e-13,
+          -5.26079021716246e-13,
+          -3.1346582892306873e-13,
+          6.546730411215734e-14,
+          -1.4566578251096527e-14
+        ]
+      }
+    },
+    {
+      "name": "large: first eta moment derivatives retained",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: uncomputed second derivatives not reported as zero",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: five patch supports are disjoint and ordered",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: C13 versus independent total radial derivative",
+      "pass": true,
+      "detail": {
+        "X": 4.376222366962698,
+        "logRadialStep": 9.765625e-7,
+        "sourceC13": {
+          "a": 1.077377968117347,
+          "bs": 1.0028993905685748
+        },
+        "independentTotalFiniteDifference": {
+          "a": 1.0773779681063995,
+          "bs": 1.002899390685535
+        },
+        "defect": {
+          "a": -1.0947465156618819e-11,
+          "bs": 1.1696021928742084e-10
+        },
+        "certified": false
+      }
+    },
+    {
+      "name": "large: actual updated ps is returned on both pieces",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: compact table retains dense diagnostics and visualization",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: worst cone states remain in compact rows",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: explicit N scaling of visualization",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: first-patch fields match at both endpoints",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: numerical positive fields",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large: JSON-safe result",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: explicit input remains separate from full paper witness",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: source endpoint collars have zero changes",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: actual unplanted moment debt is nonzero",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: all five quadratic moment equations solved",
+      "pass": true,
+      "detail": {
+        "residual": [
+          5.421010862427522e-20,
+          4.472333961502706e-19,
+          5.421010862427522e-20,
+          -8.311695109302145e-14,
+          6.066220422306593e-15
+        ]
+      }
+    },
+    {
+      "name": "small: independent continuous correction integration",
+      "pass": true,
+      "detail": {
+        "residual": [
+          2.7019675505248614e-11,
+          -3.931052448076684e-11,
+          2.9610172170083104e-11,
+          5.6224541539320666e-12,
+          -1.246231722452798e-12
+        ]
+      }
+    },
+    {
+      "name": "small: first eta moment derivatives retained",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: uncomputed second derivatives not reported as zero",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: five patch supports are disjoint and ordered",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: C13 versus independent total radial derivative",
+      "pass": true,
+      "detail": {
+        "X": 4.376222366962698,
+        "logRadialStep": 0.0000012979119630232572,
+        "sourceC13": {
+          "a": 1.1129975444741744,
+          "bs": 0.9892063040576047
+        },
+        "independentTotalFiniteDifference": {
+          "a": 1.1129975443190465,
+          "bs": 0.989206303927624
+        },
+        "defect": {
+          "a": -1.5512791051719432e-10,
+          "bs": -1.2998069287561975e-10
+        },
+        "certified": false
+      }
+    },
+    {
+      "name": "small: actual updated ps is returned on both pieces",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: compact table retains dense diagnostics and visualization",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: worst cone states remain in compact rows",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: explicit N scaling of visualization",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: first-patch fields match at both endpoints",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: numerical positive fields",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "small: JSON-safe result",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "large N all returned dense cone samples pass",
+      "pass": true,
+      "detail": {
+        "modulatedPassing": 4294,
+        "modulatedTotal": 4294,
+        "patchPassing": 65,
+        "patchTotal": 65,
+        "minimumModulatedGaps": [
+          0.5025120653622321,
+          0.004751601384081816,
+          47.59264846032093,
+          1797.470481509155
+        ],
+        "minimumPatchGaps": [
+          2.3928515100315977,
+          0.3928515100315977,
+          55.33030947513645,
+          6122.886293228749
+        ]
+      }
+    },
+    {
+      "name": "sample pass never promoted to whole-domain certificate",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "measured value change has the expected N scaling",
+      "pass": true,
+      "detail": [
+        {
+          "N": 512,
+          "maxAngularValueChange": 0.000014296994945075006,
+          "maxAxialValueChange": 0.00008026253489728284,
+          "maxRadialAngularChange": 0.14294667800744013,
+          "maxRadialAxialChange": 0.3142624350707743
+        },
+        {
+          "N": 1024,
+          "maxAngularValueChange": 0.000006861144438556696,
+          "maxAxialValueChange": 0.000037085484463478437,
+          "maxRadialAngularChange": 0.07965642730828895,
+          "maxRadialAxialChange": 0.23839821760043703
+        }
+      ]
+    },
+    {
+      "name": "radial changes remain order one in this comparison",
+      "pass": true,
+      "detail": [
+        {
+          "N": 512,
+          "maxAngularValueChange": 0.000014296994945075006,
+          "maxAxialValueChange": 0.00008026253489728284,
+          "maxRadialAngularChange": 0.14294667800744013,
+          "maxRadialAxialChange": 0.3142624350707743
+        },
+        {
+          "N": 1024,
+          "maxAngularValueChange": 0.000006861144438556696,
+          "maxAxialValueChange": 0.000037085484463478437,
+          "maxRadialAngularChange": 0.07965642730828895,
+          "maxRadialAxialChange": 0.23839821760043703
+        }
+      ]
+    },
+    {
+      "name": "negative control: omitting C13 exponential denominator changes axial shear",
+      "pass": true,
+      "detail": {
+        "maximumError": 0.002345232451101631
+      }
+    },
+    {
+      "name": "negative control: omitting phase chain term changes angular shear",
+      "pass": true,
+      "detail": {
+        "maximumError": 1.154238330927075
+      }
+    },
+    {
+      "name": "nonzero eta branch executes for independent derivative comparison",
+      "pass": true,
+      "detail": {
+        "status": "PARTIAL"
+      }
+    },
+    {
+      "name": "analytic removable-branch first eta derivatives match independent nonzero branches",
+      "pass": true,
+      "detail": {
+        "maximumAError": 2.6473872681738453e-11,
+        "maximumBError": 7.321687635515606e-12
+      }
+    },
+    {
+      "name": "C.1 closed branch is actually used",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "invalid power patch overlap refused",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "degenerate lambda=0 source weights refused",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "arbitrary profile callback family refused",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "non-boolean quadrature option refused",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "point budget guard enforced",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "operation budget guard enforced",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "cancellation hook enforced",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "invalid source annulus rejected",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "deterministic mathematical result",
+      "pass": true,
+      "detail": {}
+    }
+  ],
+  "passed": 53,
+  "total": 53,
+  "fullProfileCertified": false
+}

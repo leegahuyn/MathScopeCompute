@@ -1,0 +1,17 @@
+/workspace/scratch/afa9cd11a21b/mathscope-m1/arithmetic/lean/MathScope/M1/Arithmetic/Prime.lean:26:82: error: unsolved goals
+⊢ ¬Nat.Prime 341 ∧ ¬Nat.Prime 561 ∧ ¬Nat.Prime 1105
+MathScope.M1.Arithmetic.prime_interval_complete (a b n : ℕ) :
+  n ∈ MathScope.M1.Arithmetic.primesIn a b ↔ a ≤ n ∧ n ≤ b ∧ Nat.Prime n
+'MathScope.M1.Arithmetic.prime_interval_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M1.Arithmetic.sieve_square_root_guard (n : ℕ) (hn : 2 ≤ n) (guard : ∀ (d : ℕ), 2 ≤ d → d ≤ n.sqrt → ¬d ∣ n) :
+  Nat.Prime n
+'MathScope.M1.Arithmetic.sieve_square_root_guard' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M1.Arithmetic.lucas_certificate_sound (p : ℕ) (a : ZMod p) (ha : a ^ (p - 1) = 1)
+  (hd : ∀ (q : ℕ), Nat.Prime q → q ∣ p - 1 → a ^ ((p - 1) / q) ≠ 1) : Nat.Prime p
+'MathScope.M1.Arithmetic.lucas_certificate_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M1.Arithmetic.pi_ten : (MathScope.M1.Arithmetic.primesIn 2 10).card = 4
+'MathScope.M1.Arithmetic.pi_ten' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M1.Arithmetic.pi_hundred : (MathScope.M1.Arithmetic.primesIn 2 100).card = 25
+'MathScope.M1.Arithmetic.pi_hundred' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M1.Arithmetic.composite_controls : ¬Nat.Prime 341 ∧ ¬Nat.Prime 561 ∧ ¬Nat.Prime 1105
+'MathScope.M1.Arithmetic.composite_controls' depends on axioms: [propext, sorryAx]

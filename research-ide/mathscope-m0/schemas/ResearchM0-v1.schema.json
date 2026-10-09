@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:ResearchM0:1",
+  "title": "MathScope additive ResearchSession namespace v1",
+  "description": "Structural format only. Digest, type, semantic-edge and cycle validation in session.mjs is also mandatory.",
+  "type": "object",
+  "required": [
+    "schema",
+    "version",
+    "revision",
+    "baseline",
+    "baselineHash",
+    "legacyIndex",
+    "nodes",
+    "edges",
+    "history",
+    "events",
+    "trustPolicy"
+  ],
+  "properties": {
+    "schema": {
+      "const": "MathScope.ResearchM0/1"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "baseline": {
+      "type": "object",
+      "required": [
+        "schema"
+      ],
+      "properties": {
+        "schema": {
+          "const": "MathScopeBaselineManifest/1"
+        }
+      }
+    },
+    "baselineHash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "legacyIndex": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "group",
+          "revision",
+          "hash",
+          "grade"
+        ]
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "revision",
+          "payload",
+          "hash",
+          "freshness",
+          "staleReasons",
+          "supportsCurrent",
+          "effectiveTrust"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "object",
+              "assumption",
+              "claim",
+              "observation",
+              "legacyObservation",
+              "computeJob",
+              "result",
+              "source",
+              "proof"
+            ]
+          },
+          "revision": {
+            "type": "string",
+            "pattern": ":r[1-9][0-9]*$"
+          },
+          "payload": {
+            "type": "object"
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "freshness": {
+            "enum": [
+              "CURRENT",
+              "STALE",
+              "REVALIDATION_REQUIRED",
+              "HISTORICAL"
+            ]
+          },
+          "staleReasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "supportsCurrent": {
+            "const": false
+          },
+          "effectiveTrust": {
+            "enum": [
+              "DECLARED",
+              "REVALIDATION_REQUIRED",
+              "FINITE_COMPUTATION_METADATA"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "revision",
+          "payload",
+          "hash",
+          "freshness",
+          "staleReasons",
+          "supportsCurrent",
+          "effectiveTrust"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "object",
+              "assumption",
+              "claim",
+              "observation",
+              "legacyObservation",
+              "computeJob",
+              "result",
+              "source",
+              "proof"
+            ]
+          },
+          "revision": {
+            "type": "string",
+            "pattern": ":r[1-9][0-9]*$"
+          },
+          "payload": {
+            "type": "object"
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "freshness": {
+            "enum": [
+              "CURRENT",
+              "STALE",
+              "REVALIDATION_REQUIRED",
+              "HISTORICAL"
+            ]
+          },
+          "staleReasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "supportsCurrent": {
+            "const": false
+          },
+          "effectiveTrust": {
+            "enum": [
+              "DECLARED",
+              "REVALIDATION_REQUIRED",
+              "FINITE_COMPUTATION_METADATA"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "from",
+          "to",
+          "fromRevision",
+          "toRevision",
+          "fromHash",
+          "toHash",
+          "semanticBridge",
+          "certificate",
+          "proofStatus",
+          "freshness"
+        ]
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "trustPolicy": {
+      "const": "SERIALIZED_METADATA_NEVER_ISSUES_FORMAL_PASS"
+    },
+    "importAudit": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

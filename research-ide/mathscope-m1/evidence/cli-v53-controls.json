@@ -1,0 +1,302 @@
+{
+  "schema": "MathScope.M1.CliV53PublicEngineControls/1",
+  "transport": "Bounded Node Worker; same public createM1Engine API and environment as CLI",
+  "notNativeCliReplay": true,
+  "controls": [
+    {
+      "id": "valid-gluing-replay",
+      "api": "createM1Engine.replay",
+      "status": "MATCH",
+      "originalHash": "04742c75a8bd5c44045a1652fa1b8ed2f825bd986524ebec5a0c500084b1089e",
+      "freshHash": "04742c75a8bd5c44045a1652fa1b8ed2f825bd986524ebec5a0c500084b1089e",
+      "artifactBytesMatch": false,
+      "semanticHashPolicy": "EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY",
+      "freshJobId": "m1-job:mv1abvsv:1",
+      "sourceVerified": true,
+      "importedEvidenceTrusted": false
+    },
+    {
+      "id": "tampered-result",
+      "api": "createM1Engine.replay",
+      "mutation": "etaStencilCorrections[0].actualDebtFloat64[0]=0; only outer bundleHash recomputed",
+      "bundleHash": "fd39fa3a858832b24f88b643ddd7d666f1fe8d35640f6d8bbad8785b9f1dcb8c",
+      "rejection": "Replay input/result digest mismatch.",
+      "newJobs": 0
+    },
+    {
+      "id": "self-consistent-promotion-forgery",
+      "api": "createM1Engine.replay",
+      "mutation": "Set result.fullProfileCertified and formalPass true; recompute result, mathematical and bundle digests",
+      "forgedResultHash": "3aa3be9a5f7ff30cb784b9cc51ed3fc9bebef5416631825d21d58c33f4b2c7b3",
+      "forgedMathematicalHash": "9d04854eaffd26953a9b6a1dcb124d22668d5edbc65befd0ff9030f8918ff462",
+      "forgedBundleHash": "1b418f800a5bf40a8bcfe10ff1633493c0732c1f1da45163d3b97b8ce8caf857",
+      "status": "MISMATCH",
+      "originalHash": "9d04854eaffd26953a9b6a1dcb124d22668d5edbc65befd0ff9030f8918ff462",
+      "freshHash": "04742c75a8bd5c44045a1652fa1b8ed2f825bd986524ebec5a0c500084b1089e",
+      "artifactBytesMatch": false,
+      "semanticHashPolicy": "EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY",
+      "freshJobId": "m1-job:mv1abwj0:2",
+      "sourceVerified": true,
+      "importedEvidenceTrusted": false,
+      "freshStatus": "PARTIAL",
+      "freshFormalPass": false,
+      "freshFullProfileCertified": false
+    },
+    {
+      "id": "foreign-source-environment",
+      "api": "createM1Engine.replay",
+      "mutation": "Replace workerSha256; recompute environment and bundle digests",
+      "forgedEnvironmentHash": "93b7fb8e4a22ec357f85fba57bd71bae66c094137c1d5c3c9b056dd9b4f464de",
+      "forgedBundleHash": "42815f0e43563a149084f7531aa20c1c15aa47432178690cd5de6b0e4526329b",
+      "rejection": "Replay requires the same installed source and environment.",
+      "newJobs": 0
+    },
+    {
+      "id": "high-precision-request",
+      "api": "createM1Engine.submit/wait",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 60000,
+          "maxMilliseconds": 60000,
+          "maxOperations": 40000000,
+          "maxPoints": 2048
+        },
+        "input": {
+          "Tsh": 640,
+          "continuation": {
+            "axis": {
+              "Lambda": 1024,
+              "axisOrder": 10,
+              "j0": 0.000001,
+              "logC": 80
+            },
+            "etaValues": [
+              0
+            ],
+            "pressure": {
+              "family": "source-outer-A21",
+              "parameters": {
+                "Md": 1,
+                "Tf": 64,
+                "co": 0.005,
+                "h": 1e-8,
+                "lambda": 0.0002,
+                "logP": 0,
+                "logXR": 20
+              }
+            },
+            "samples": 33
+          },
+          "etaStep": 0.00002,
+          "etaValues": [
+            0
+          ],
+          "newtonIterations": 24,
+          "quadratureOrder": 64,
+          "samples": 97,
+          "tolerance": 1e-9,
+          "transitionSegments": 64
+        },
+        "kind": "ns.source-inner-gluing",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 100,
+          "relativeTolerance": 1e-8
+        }
+      },
+      "status": "PRECISION_REQUIRED",
+      "inputHash": "c407d841db97a568ad9d6181af4e7ebdb2f374da1080b29af5771faadfa14ac3",
+      "resultHash": "a8b476c0c738523765e5954153208c687e1dc60a1d457010c6a031c8b0fee58e",
+      "mathematicalHash": "a8b476c0c738523765e5954153208c687e1dc60a1d457010c6a031c8b0fee58e",
+      "result": {
+        "blockers": [
+          "Browser evaluator provides outward binary64 balls; high precision reference fixtures are computed separately"
+        ],
+        "checks": [],
+        "contractReport": {
+          "code": "PRECISION_REQUIRED",
+          "detail": {
+            "availableBits": 53,
+            "requestedBits": 100
+          },
+          "message": "Browser evaluator provides outward binary64 balls; high precision reference fixtures are computed separately",
+          "ok": false,
+          "status": "PRECISION_REQUIRED",
+          "valid": false
+        },
+        "evidenceGrade": "UNKNOWN",
+        "status": "PRECISION_REQUIRED"
+      },
+      "startedAt": "2026-10-09T18:14:41.065Z",
+      "finishedAt": "2026-10-09T18:14:41.193Z"
+    },
+    {
+      "id": "one-operation-budget",
+      "api": "createM1Engine.submit/wait",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 60000,
+          "maxMilliseconds": 60000,
+          "maxOperations": 1,
+          "maxPoints": 2048
+        },
+        "input": {
+          "Tsh": 640,
+          "continuation": {
+            "axis": {
+              "Lambda": 1024,
+              "axisOrder": 10,
+              "j0": 0.000001,
+              "logC": 80
+            },
+            "etaValues": [
+              0
+            ],
+            "pressure": {
+              "family": "source-outer-A21",
+              "parameters": {
+                "Md": 1,
+                "Tf": 64,
+                "co": 0.005,
+                "h": 1e-8,
+                "lambda": 0.0002,
+                "logP": 0,
+                "logXR": 20
+              }
+            },
+            "samples": 33
+          },
+          "etaStep": 0.00002,
+          "etaValues": [
+            0
+          ],
+          "newtonIterations": 24,
+          "quadratureOrder": 64,
+          "samples": 97,
+          "tolerance": 1e-9,
+          "transitionSegments": 64
+        },
+        "kind": "ns.source-inner-gluing",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      },
+      "status": "BUDGET_EXCEEDED",
+      "inputHash": "27b9a6e2b9d1eadb6ecf8cb77acc64a3d8fc47d3b833ca2a0f09cfcfece217b9",
+      "resultHash": "7745daf723dc888a65c49c7f4d00ae7f24a08424e497a2edadce04856a6f384f",
+      "mathematicalHash": "1483664d46295798fc4e0ac59f68378092b5ad2cc48d762736cf0932b8b351dd",
+      "result": {
+        "detail": {
+          "maxOps": 1,
+          "operations": 1,
+          "requestedCharge": 1
+        },
+        "domainStatus": "RESOURCE_LIMIT",
+        "executionMetrics": {
+          "elapsedMilliseconds": 2,
+          "operations": 1
+        },
+        "fullCertifiedProfile": false,
+        "kind": "ns.source-inner-gluing",
+        "message": "Operation budget exceeded",
+        "moduleVersion": "1.3.0-m1",
+        "status": "BUDGET_EXCEEDED"
+      },
+      "startedAt": "2026-10-09T18:14:41.193Z",
+      "finishedAt": "2026-10-09T18:14:41.346Z"
+    },
+    {
+      "id": "caller-supplied-debt",
+      "api": "createM1Engine.submit/wait",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 60000,
+          "maxMilliseconds": 60000,
+          "maxOperations": 40000000,
+          "maxPoints": 2048
+        },
+        "input": {
+          "Tsh": 640,
+          "actualDebt": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "continuation": {
+            "axis": {
+              "Lambda": 1024,
+              "axisOrder": 10,
+              "j0": 0.000001,
+              "logC": 80
+            },
+            "etaValues": [
+              0
+            ],
+            "pressure": {
+              "family": "source-outer-A21",
+              "parameters": {
+                "Md": 1,
+                "Tf": 64,
+                "co": 0.005,
+                "h": 1e-8,
+                "lambda": 0.0002,
+                "logP": 0,
+                "logXR": 20
+              }
+            },
+            "samples": 33
+          },
+          "etaStep": 0.00002,
+          "etaValues": [
+            0
+          ],
+          "newtonIterations": 24,
+          "quadratureOrder": 64,
+          "samples": 97,
+          "tolerance": 1e-9,
+          "transitionSegments": 64
+        },
+        "kind": "ns.source-inner-gluing",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      },
+      "status": "FAILED",
+      "inputHash": "6dc7dafe651ee8ef424b3db7b6114f90f24982d80b37a7d23f67423e64c1d9a5",
+      "resultHash": "9d7cb5647f57d7114b268a79b564f0ded4d2d44b37305490c3399661f0301407",
+      "mathematicalHash": "9d7cb5647f57d7114b268a79b564f0ded4d2d44b37305490c3399661f0301407",
+      "result": {
+        "blockers": [
+          "Unknown gluing input; terminal moments and correction debts cannot be supplied"
+        ],
+        "checks": [],
+        "contractReport": {
+          "code": "FAILED",
+          "detail": {
+            "key": "actualDebt"
+          },
+          "message": "Unknown gluing input; terminal moments and correction debts cannot be supplied",
+          "ok": false,
+          "status": "FAILED",
+          "valid": false
+        },
+        "evidenceGrade": "UNKNOWN",
+        "status": "FAILED"
+      },
+      "startedAt": "2026-10-09T18:14:41.346Z",
+      "finishedAt": "2026-10-09T18:14:41.492Z"
+    }
+  ]
+}

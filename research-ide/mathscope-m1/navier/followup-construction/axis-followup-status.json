@@ -1,0 +1,72 @@
+{
+  "schema": "MathScope.Navier.AxisFollowupStatus/1",
+  "recordedUTC": "2026-10-09T17:19:58.062109+00:00",
+  "originalAcceptanceSHA256": "854f67efad0f6d0cda7ab784611e5352b753ddd297fbac5a1382f4032ba02dc2",
+  "criteria": [
+    {
+      "id": "N3-01",
+      "original": {
+        "id": "N3-01",
+        "title": "상수의 선택 순서 실행 명세",
+        "detail": "(A.6),(B.40)의 Md→Td=e^Md+10→P*→λ→h→matching tolerance,j0→δ*,σ*,Λ→Tsh→C,XR→transition widths→N을 고정한다.",
+        "accept": "각 sufficiently large/small 요구를 명시적 상하계 또는 증명된 선택 조건으로 바꾼다. h=.005 같은 UI 예시를 인증된 선택으로 대체 사용하지 않는다.",
+        "stage": "N3",
+        "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+        "sourceFile": "ns-stages.json"
+      },
+      "originalCriterionStatus": "PARTIAL",
+      "statusChangedFromFrozenV50": false,
+      "completedLocalComponents": [
+        "정확한 rational pressure datum에서 전체 η 구간 low-Z margin·σ를 계산한다.",
+        "다항식 perturbation/Cauchy 상계로 공통 복소 반경과 모든 η 도함수 norm을 계산한다.",
+        "실제 Controlled B/L에서 Λ를 자동 선택하고 복소 phase bound에서 정확 log C를 선택한다."
+      ],
+      "remaining": [
+        "Md→Td→P*→λ→h 및 외부 witness에 의존하는 matching tolerance 등 원문 전체 선택 순서는 구현·인증되지 않았다.",
+        "h=1/200,j0=3/100은 선언된 국소 datum이며 전역 충분히 작은 선택의 인증으로 사용하지 않는다.",
+        "Tsh,Cpre,XR,transition widths,N과 해당 모든 선행 조건을 실제 pressure witness로 연결해야 한다."
+      ],
+      "evidence": [
+        "axis-default-certificate.json",
+        "axis-independent-validation.json",
+        "axis-test-results.json",
+        "axis-lean-audit.json",
+        "N3_AXIS_FOLLOWUP.md"
+      ]
+    },
+    {
+      "id": "N3-03",
+      "original": {
+        "id": "N3-03",
+        "title": "축 자료와 수렴 멱급수",
+        "detail": "U*=4η+j0, φ*=exp(Λ∫ζ*)와 Y=ΛX를 사용해 AppendixB의 nonlinear fixed point를 푼다.",
+        "accept": "Bρ norm의 invariant ball와 contraction 상계 <1을 인증하거나 미인증 상태로 남긴다. f0(4.1)=0.2711140554… 및 φ/φ*>0 fixture를 확인한다.",
+        "stage": "N3",
+        "stageTitle": "실제 inner–annulus–exterior 프로파일 구성",
+        "sourceFile": "ns-stages.json"
+      },
+      "originalCriterionStatus": "PARTIAL",
+      "statusChangedFromFrozenV50": false,
+      "completedLocalComponents": [
+        "원래 무한 계수 공간의 연산자·resolvent·모든 nonlinear remainder 항의 상계를 계산한다.",
+        "반경 1 invariant ball, Lipschitz <1/2, 전 구간 Φ>1/4와 무한 radial/mixed tail를 인증한다.",
+        "전체 η cover·급수·Lipschitz 전개를 다른 정확 알고리즘으로 검증하고 고정 스칼라 gate 4개를 Lean으로 검사한다."
+      ],
+      "remaining": [
+        "완성된 원문 outer pressure와 이 rational datum의 동일성은 증명되지 않았다.",
+        "기존 binary64 finite η-jet 계수와 유일한 무한 고정점의 계수별 동일성·rounding error는 연결되지 않았다.",
+        "생성된 복소 해석 입력·norm producer 전체를 Lean의 CompatibleData 및 bridge 전제로 export한 증명은 없다.",
+        "큰 Λ/log C의 정확 amplitude를 일반 float evaluator가 유지하지 못하므로 전역 witness로 승격하지 않는다."
+      ],
+      "evidence": [
+        "axis-default-certificate.json",
+        "axis-independent-validation.json",
+        "axis-test-results.json",
+        "axis-lean-audit.json",
+        "N3_AXIS_FOLLOWUP.md"
+      ]
+    }
+  ],
+  "boundCertificateStatus": "VERIFIED_LOCAL_BOUND_CERTIFICATE",
+  "scope": "명시적 rational pressure datum에 대한 실제 무한 Bρ 국소 상계. 원문 전체 pressure/witness 및 70개 판정의 완성으로 표시하지 않는다."
+}

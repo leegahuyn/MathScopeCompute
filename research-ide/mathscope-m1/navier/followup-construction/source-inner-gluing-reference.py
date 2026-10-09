@@ -1,0 +1,230 @@
+"""Independent high-precision reference for actual B.34/B.8 construction data.
+
+The reference integrates in each bump's local t coordinate using mpmath,
+reconstructs all five original functionals, and derives the Jacobian from the
+independent linear/quadratic coefficients.  It never imports the JS producer.
+An explicitly expected failing historical fixture is preserved as FAIL data.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+HERE = Path(__file__).resolve().parent
+try:
+    import mpmath as mp
+except ModuleNotFoundError:
+    sys.path.insert(0, str(HERE.parents[1] / "arithmetic" / "vendor"))
+    import mpmath as mp
+mp.mp.dps = 90
+
+
+def val(x):
+    if isinstance(x, dict) and x.get("kind") == "FLOAT64":
+        return mp.mpf(float(x["value"]))
+    return mp.mpf(x)
+
+
+def slog(x):
+    return mp.mpf(0) if not x["sign"] else val(x["sign"]) * mp.exp(val(x["logAbs"]))
+
+
+def show(x):
+    return mp.nstr(x, 70)
+
+
+def step(t):
+    if t <= 0:
+        return mp.mpf(0)
+    if t >= 1:
+        return mp.mpf(1)
+    z = -1 / t**2 + 1 / (1 - t)**2
+    return 1 / (1 + mp.exp(-z)) if z >= 0 else mp.exp(z) / (1 + mp.exp(z))
+
+
+def bump(t):
+    if t <= 0 or t >= 1:
+        return mp.mpf(0)
+    z = -1 / t**2 + 1 / (1 - t)**2
+    e = mp.exp(-abs(z))
+    return e / (1 + e)**2 * (2 / t**3 + 2 / (1 - t)**3)
+
+
+def integrate(f):
+    return mp.quad(f, list(map(mp.mpf, [0, ".15", ".3", ".4", ".5", ".6", ".7", ".85", 1])))
+
+
+def transform(v, eta):
+    u = 4 * eta
+    return mp.matrix([v[0], v[2] - u * v[1], v[1], v[3] - 2 * u * v[0], v[4]])
+
+
+def ideal_moments(eta, logP, y):
+    k = mp.exp(logP) / (1 + eta**2)
+    u, x = 4 * eta, mp.exp(y)
+    ii = mp.sqrt(2) * k * x**mp.mpf("1.6") / mp.mpf("1.6")
+    return mp.matrix([u*x, ii, u*ii, u*u*x-k*k*x**mp.mpf("1.2")/mp.mpf("2.4"), mp.mpf("2.5")*k*k*x**mp.mpf(".2")])
+
+
+def run(path: Path):
+    doc = json.loads(path.read_text())
+    r = doc.get("result", doc)
+    checks, matrices, transitions = [], [], []
+    def check(name, ok, **detail):
+        checks.append({"id": name, "pass": bool(ok), **detail})
+    def compare(name, observed, expected, atol=mp.mpf("1e-20"), rtol=mp.mpf("5e-11"), scale=None):
+        error = abs(observed - expected)
+        tol = atol + rtol * (abs(expected) if scale is None else scale)
+        check(name, error <= tol, absoluteDifference=show(error), tolerance=show(tol))
+
+    logP = val(r["scales"]["logP"])
+    cache = {}
+    for s in r["etaStencilCorrections"]:
+        eta = val(s["eta"])
+        name = f"eta={s['eta']}"
+        k, u = mp.exp(logP) / (1 + eta**2), 4 * eta
+        A, Q = mp.matrix(5, 5), [[[mp.mpf(0) for _ in range(5)] for _ in range(5)] for _ in range(5)]
+        for j, ends in enumerate(s["supports"]):
+            aa, bb = map(val, ends)
+            w = bb - aa
+            x = lambda t: aa + w * t
+            key = tuple(ends)
+            if key not in cache:
+                cache[key] = {
+                    "mass": w * integrate(bump),
+                    "sqrt": w * integrate(lambda t: mp.sqrt(2*x(t))*bump(t)),
+                    "h": w * integrate(lambda t: mp.sqrt(2)*x(t)**mp.mpf(".6")*bump(t)),
+                    "e": w * integrate(lambda t: x(t)**mp.mpf(".1")*bump(t)),
+                    "ep": w * integrate(lambda t: x(t)**mp.mpf("-.9")*bump(t)),
+                    "square": w * integrate(lambda t: bump(t)**2),
+                    "squarep": w * integrate(lambda t: bump(t)**2/x(t)),
+                }
+            z = cache[key]
+            compare(f"{name}:bump-{j}-exact-total", z["mass"], w, atol=mp.mpf("1e-80"), rtol=mp.mpf("1e-75"))
+            if j < 2:
+                A[0,j], A[2,j], A[3,j] = z["mass"], k*z["h"], 2*u*z["mass"]
+                Q[3][j][j] = z["square"]
+            else:
+                A[1,j], A[2,j], A[3,j], A[4,j] = z["sqrt"], u*z["sqrt"], -k*z["e"], k*z["ep"]
+                Q[3][j][j], Q[4][j][j] = -z["square"]/2, z["squarep"]/2
+        for row in range(5):
+            for j in range(5):
+                compare(f"{name}:linear-{row}-{j}", val(s["linearMap"][row][j]), A[row,j])
+                for jj in range(5):
+                    compare(f"{name}:quadratic-{row}-{j}-{jj}", val(s["quadraticMap"][row][j][jj]), Q[row][j][jj])
+        B = mp.matrix(5, 5)
+        for j in range(5):
+            col = transform(A[:,j], eta)
+            for row in range(5):
+                B[row,j] = col[row]
+                compare(f"{name}:transformed-{row}-{j}", val(s["transformedLinearMap"][row][j]), col[row], atol=mp.mpf("5e-19"))
+        det_u = mp.det(mp.matrix([[B[i,j] for j in [0,1]] for i in [0,1]]))
+        det_e = mp.det(mp.matrix([[B[i,j] for j in [2,3,4]] for i in [2,3,4]]))
+        check(f"{name}:two-U-source-powers-independent", abs(det_u) > mp.mpf("1e-15"), determinant=show(det_u))
+        check(f"{name}:three-E-source-powers-independent", abs(det_e) > mp.mpf("1e-15"), determinant=show(det_e))
+        c = mp.matrix(list(map(val, s["coefficients"])))
+        debt = mp.matrix(list(map(val, s["actualDebtFloat64"])))
+        change = A*c + mp.matrix([sum(Q[row][j][jj]*c[j]*c[jj] for j in range(5) for jj in range(5)) for row in range(5)])
+        residual = debt + change
+        J = mp.matrix([[A[row,j] + sum((Q[row][j][jj]+Q[row][jj][j])*c[jj] for jj in range(5)) for j in range(5)] for row in range(5)])
+        normalization = list(map(val, s["rowNormalization"]))
+        normalized_residual = max(abs(v) / normalization[i] for i, v in enumerate(transform(residual, eta)))
+        for row in range(5):
+            compare(f"{name}:actual-integral-change-{row}", val(s["independentIntegralChange"][row]), change[row], atol=mp.mpf("1e-18"))
+            compare(f"{name}:residual-{row}", val(s["independentResidual"][row]), residual[row], atol=mp.mpf("1e-18"))
+            if "rawJacobian" in s:
+                for j in range(5):
+                    compare(f"{name}:actual-Jacobian-{row}-{j}", val(s["rawJacobian"][row][j]), J[row,j])
+        check(f"{name}:nonlinear-match-claim-agrees-with-independent-residual",
+              not s["finiteNumericalMomentMatch"] or normalized_residual <= val(r["parameters"]["tolerance"]),
+              independentScaledResidual=show(normalized_residual), claimed=s["finiteNumericalMomentMatch"])
+        underflow_rows = [i for i, q in enumerate(s["actualDebt"]) if q["sign"] and s["actualDebtFloat64"][i] == 0]
+        check(f"{name}:nonzero-signed-log-debt-not-dropped-for-a-match", not underflow_rows or not s["finiteNumericalMomentMatch"], rows=underflow_rows)
+        check(f"{name}:whole-parameter-certificates-remain-false", not s["intervalNewtonCertified"] and not s["continuousMomentsCertified"] and not s["uniformEtaDerivativesCertified"])
+        if max(abs(v) for v in debt) > mp.mpf("1e-20"):
+            check(f"{name}:negative-omitting-accumulated-five-moments", max(abs(v)/normalization[i] for i,v in enumerate(transform(debt,eta))) > val(r["parameters"]["tolerance"]))
+        linear_only = mp.lu_solve(A, -debt)
+        omitted_quadratic = mp.matrix([sum(Q[row][j][jj]*linear_only[j]*linear_only[jj] for j in range(5) for jj in range(5)) for row in range(5)])
+        linear_only_scaled = max(abs(v)/normalization[i] for i,v in enumerate(transform(omitted_quadratic,eta)))
+        check(f"{name}:negative-omitting-quadratic-terms", linear_only_scaled > val(r["parameters"]["tolerance"]),
+              actualScaledRemainder=show(linear_only_scaled), tolerance=r["parameters"]["tolerance"])
+        matrices.append({"eta": s["eta"], "linearMap": [[show(A[i,j]) for j in range(5)] for i in range(5)],
+                         "jacobianAtComputedCoefficients": [[show(J[i,j]) for j in range(5)] for i in range(5)],
+                         "independentScaledResidual": show(normalized_residual),
+                         "linearOnlyRemainder": [show(v) for v in omitted_quadratic],
+                         "linearOnlyScaledRemainder": show(linear_only_scaled)})
+
+    # Reconstruct the actual inner-to-transition five-moment normalization for
+    # requested eta values, whose upstream endpoints are included in the result.
+    for s in r["slices"]:
+        e = s["upstreamEndpoint"]
+        eta, Gi = val(s["eta"]), val(e["Gi"])
+        name = f"eta={s['eta']}:B34"
+        logC, logXR, T = map(val, [r["scales"]["logC"], r["scales"]["logXR"], r["parameters"]["Tsh"]])
+        logXi = mp.log(val(e["Xi"]))
+        ell, logf = val(e["ell_i"]), -mp.log(1+eta**2)
+        y0, ys = logXi-logXR, logXi-logXR+T
+        actual = mp.matrix([val(x)*mp.exp(-z*logXR) for x,z in zip(e["moments"],[1,mp.mpf("1.5"),mp.mpf("1.5"),1,0])])
+        for i in range(5):
+            compare(f"{name}:physical-moment-scaling-{i}", slog(s["B34"]["initialNormalizedMoments"][i]), actual[i], atol=mp.mpf(0), rtol=mp.mpf("2e-11"))
+            packed = s["B34"]["initialNormalizedMoments"][i]
+            if actual[i] != 0 and abs(actual[i]) < mp.mpf("1e-324"):
+                check(f"{name}:initial-underflow-preserved-{i}", packed["sign"] != 0 and packed["float64"] is None and packed.get("underflowAvoided"))
+        # Endpoint split quadrature in y resolves the exponential growth while
+        # mpmath represents every very small positive component without underflow.
+        def loge(y): return -logC+y/10+(1-step(y/T))*ell+step(y/T)*logf
+        knots = [T*i/32 for i in range(33)]
+        # Normalize positive densities before adaptive quadrature: mpmath's
+        # absolute stopping rule must not mistake a tiny integral for zero.
+        angular_offset = mp.log(2)/2+loge(T)+mp.mpf("1.5")*(y0+T)
+        energy_offset = 2*loge(T)+y0+T-mp.log(2)
+        cp_offset = 2*loge(T)-mp.log(2)
+        angular = mp.exp(angular_offset)*mp.quad(lambda y: mp.exp(mp.log(2)/2+loge(y)+mp.mpf("1.5")*(y0+y)-angular_offset), knots)
+        energy = mp.exp(energy_offset)*mp.quad(lambda y: mp.exp(2*loge(y)+y0+y-mp.log(2)-energy_offset), knots)
+        cp = mp.exp(cp_offset)*mp.quad(lambda y: mp.exp(2*loge(y)-mp.log(2)-cp_offset), knots)
+        dx = mp.exp(ys)-mp.exp(y0)
+        actual += mp.matrix([Gi*dx,angular,Gi*angular,Gi*Gi*dx-energy,cp])
+        target = ideal_moments(eta,logP,ys)
+        debt = actual-target
+        for i in range(5):
+            compare(f"{name}:integrated-moment-{i}", slog(s["B34"]["atXsepNormalizedMoments"][i]), actual[i], atol=mp.mpf(0), rtol=mp.mpf("5e-10"))
+            compare(f"{name}:actual-separation-debt-{i}", slog(s["B34"]["actualXsepDiscrepancy"][i]), debt[i], atol=mp.mpf(0), rtol=mp.mpf("5e-10"), scale=max(abs(actual[i]),abs(target[i])))
+        u=4*eta;du=Gi-u;xm8=mp.exp(-8);pre=ideal_moments(eta,logP,-8)
+        debt += mp.matrix([du*(xm8-mp.exp(ys)),0,du*(pre[1]-target[1]),(Gi*Gi-u*u)*(xm8-mp.exp(ys)),0])
+        def restore(y): return Gi+(u-Gi)*step(y+8)
+        k=mp.exp(logP)/(1+eta**2)
+        debt += mp.matrix([mp.quad(lambda y:(restore(y)-u)*mp.exp(y),[-8,mp.mpf("-7.5"),-7]),0,
+            mp.quad(lambda y:(restore(y)-u)*mp.sqrt(2)*k*mp.exp(mp.mpf("1.6")*y),[-8,mp.mpf("-7.5"),-7]),
+            mp.quad(lambda y:(restore(y)**2-u*u)*mp.exp(y),[-8,mp.mpf("-7.5"),-7]),0])
+        for i in range(5):
+            compare(f"{name}:actual-pre-bump-debt-{i}", val(s["momentCorrection"]["actualDebtFloat64"][i]), debt[i], atol=mp.mpf("1e-22"), rtol=mp.mpf("5e-10"))
+        transitions.append({"eta":s["eta"],"logxsep":show(ys),"referenceActualPreBumpDebt":[show(v) for v in debt]})
+
+    check("global-and-formal-certificates-remain-false", not r["fullProfileCertified"] and not r["fullNavierStokesSolution"] and not r["formalPass"])
+    report={"schema":"MathScope.Navier.SourceInnerGluingIndependentReference/1","precisionDecimalDigits":90,
+        "fixture":{"path":str(path),"sha256":hashlib.sha256(path.read_bytes()).hexdigest()},
+        "source":{"paper":"01-navier-stokes.pdf","sha256":"0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f","pages":[28,127,128,154,155,156,157]},
+        "currentModuleAtAuditSha256":hashlib.sha256((HERE/'source-inner-gluing.mjs').read_bytes()).hexdigest(),
+        "fixtureProducerSha256":doc.get("sourceSha256",doc.get("sourceHashes",{}).get("source-inner-gluing.mjs")),
+        "checkerSha256":hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "checks":checks,"counts":{"passed":sum(x["pass"] for x in checks),"failed":sum(not x["pass"] for x in checks),"total":len(checks)},
+        "matrices":matrices,"transitions":transitions,"fullProfileCertified":False,"intervalNewtonCertified":False,
+        "scope":"Independent high-precision numerical integration and algebra for actual computed finite inputs. Finite-parameter existence, continuous quadrature enclosure, the infinite axis and uniform gluing remain uncertified."}
+    report["status"]="PASS" if report["counts"]["failed"]==0 else "FAIL"
+    return report
+
+
+if __name__ == "__main__":
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--fixture",type=Path,default=HERE/'source-inner-gluing-fixture.json')
+    parser.add_argument("--output",type=Path,default=HERE/'source-inner-gluing-independent.json')
+    parser.add_argument("--expect-initial-failure",action="store_true")
+    args=parser.parse_args()
+    report=run(args.fixture)
+    report["expectedHistoricalFailure"]=args.expect_initial_failure
+    args.output.write_text(json.dumps(report,indent=2)+'\n')
+    print(json.dumps({"status":report['status'],"counts":report['counts'],"failures":[x for x in report['checks'] if not x['pass']]},indent=2))
+    raise SystemExit(0 if (report['status']=='FAIL' if args.expect_initial_failure else report['status']=='PASS') else 1)

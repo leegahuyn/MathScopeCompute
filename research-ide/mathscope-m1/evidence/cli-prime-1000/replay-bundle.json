@@ -1,0 +1,4080 @@
+{
+  "schema": "MathScope.M1ReplayBundle/1",
+  "request": {
+    "budget": {
+      "maxBytes": 8388608,
+      "maxItems": 250000,
+      "maxMillis": 30000,
+      "maxOperations": 50000000
+    },
+    "input": {
+      "a": "2",
+      "b": "1000"
+    },
+    "kind": "arithmetic.primes",
+    "precision": {}
+  },
+  "inputHash": "66afd97c457c0699b0507dc2dff13965ff04d8a40017c75aeb5f79f107b12950",
+  "environment": {
+    "schema": "MathScope.M1Environment/1",
+    "version": "1.0.0",
+    "workerSha256": "aa416e4a0092f7e8c36d94130ec3c414c4a9127676538744e93444217467f27b",
+    "execution": "APPLICATION_WORKER_FACTORY",
+    "server": false,
+    "capabilities": {
+      "domains": {
+        "arithmetic": {
+          "externalTheoremAdapters": [
+            {
+              "accessed": "2026-10-09",
+              "id": "S01",
+              "leanImport": null,
+              "locator": "Definition 1.1; Example 1.3(1); Definition 1.4; Theorem 1.8(1), printed pp.2–4; Theorem 5.2",
+              "role": "Bounded crystalline prism and Frobenius-compatible crystalline comparison",
+              "status": "THEOREM_REFERENCE",
+              "title": "Bhatt–Scholze, Prisms and Prismatic Cohomology",
+              "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S02",
+              "leanImport": null,
+              "locator": "Theorem 3.6 and Corollary 3.8",
+              "role": "De Rham hypercohomology of a proper smooth Z_p lift computes crystalline cohomology of its special fiber.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Bhatt–de Jong, Crystalline cohomology and de Rham cohomology",
+              "url": "https://arxiv.org/html/1110.5001v1"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S07",
+              "leanImport": null,
+              "locator": "(1.5.1)–(1.5.4), printed pp.275–276",
+              "role": "Finite-field trace and alternating determinant convention; not a classical RH bridge.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Deligne, La conjecture de Weil I",
+              "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S08",
+              "leanImport": null,
+              "locator": "pp.1–2, good elliptic Euler factors and the BSD statement",
+              "role": "Local H1 L-factor and distinction from the scheme zeta factor.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Wiles, The Birch and Swinnerton-Dyer Conjecture",
+              "url": "https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S10",
+              "leanImport": null,
+              "locator": "§25.16(i), equations 25.16.1–25.16.4",
+              "role": "Chebyshev psi, prime counting, PNT/RH scope.",
+              "status": "THEOREM_REFERENCE",
+              "title": "NIST DLMF §25.16 Mathematical Applications",
+              "url": "https://dlmf.nist.gov/25.16"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S14",
+              "leanImport": null,
+              "locator": "WeierstrassIsomorphism: explicit (u,r,s,t) coordinate and coefficient transformation formulas",
+              "role": "A displayed singular nonminimal model is distinguished from the reduction of the curve; x=u^2*x_new, y=u^3*y_new rescales short coefficients by u^4 and u^6.",
+              "status": "THEOREM_REFERENCE",
+              "title": "SageMath, Isomorphisms between Weierstrass models",
+              "url": "https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/weierstrass_morphism.html"
+            }
+          ],
+          "formalComplete": false,
+          "kinds": [
+            "arithmetic.primes",
+            "arithmetic.primeCertificate",
+            "arithmetic.padic",
+            "arithmetic.point",
+            "arithmetic.p1",
+            "arithmetic.localFactors",
+            "arithmetic.verify"
+          ],
+          "limits": {
+            "chartPoints": 20000,
+            "defaultPrimeIntervalWidth": 2097152,
+            "determinantDimension": 32,
+            "maxBasePrime": 2000000,
+            "maxPrimeIntervalWidth": 8388608,
+            "moduleMatrixDimension": 16,
+            "p1FrobeniusTargetD": 256,
+            "p1SourceD": 32,
+            "padicDigits": 256,
+            "primeCertificateIntegerDigits": 256,
+            "segmentIntegers": 1048576
+          },
+          "primeDomain": {
+            "definition": "{ n : Nat | Nat.Prime n }",
+            "enumeration": "Every completed request covers only its stated finite interval.",
+            "kind": "SYMBOLIC_INFINITE_SET",
+            "leanDefinition": "MathScope.M1.Arithmetic.PrimeSet",
+            "schema": "MathScope.PrimeDomain/1"
+          },
+          "schema": "MathScope.ArithmeticCapabilities/1",
+          "supported": [
+            "exact bounded segmented enumeration and Lucas/Pratt certificates",
+            "Z_p observations, guard-digit delta, exact integer division, finite-ring Smith certificates",
+            "point and P1 crystalline/prismatic comparison models with integral all-weight contraction",
+            "explicit P1 chain Frobenius and good finite elliptic point-count Euler factors",
+            "decreasing cochain and de Rham Hodge subcomplexes, quotient and smart truncation"
+          ],
+          "unsupported": [
+            "arbitrary native prismatic-site computation",
+            "general Tate/minimal-model algorithm or complete elliptic L function",
+            "Nygaard descent certificate",
+            "general q/Breuil–Kisin/A_inf arithmetic",
+            "classical RH or general BSD proof"
+          ],
+          "version": "1.0.0"
+        },
+        "gauge": {
+          "boundaries": [
+            "R4_WINDOW:OPEN_RESTRICTION",
+            "PERIODIC_TORUS:PERIODIC (finite Fourier, trivial bundle)"
+          ],
+          "deltaModes": [
+            "ASSUMED_BOUND",
+            "UNITS",
+            "CLASSICAL_SCALE",
+            "EFFECTIVE_MODEL"
+          ],
+          "domain": "gauge",
+          "fieldConstructions": [
+            "EMBEDDED_BPST",
+            "FULL_BASIS_TRIAL",
+            "BPST_PLUS_PERTURBATION"
+          ],
+          "kinds": [
+            "gauge.group",
+            "gauge.field",
+            "gauge.family",
+            "gauge.holonomy",
+            "gauge.spectral"
+          ],
+          "leanAuditPath": "gauge/lean/lean-audit.json",
+          "matrixBounds": {
+            "G2": 7,
+            "SO": [
+              3,
+              5,
+              6,
+              7,
+              8
+            ],
+            "SU": [
+              2,
+              6
+            ],
+            "Sp": [
+              1,
+              3
+            ]
+          },
+          "numericArithmetic": "Float64 with explicit tolerance; BigInt rational finite bracket verification",
+          "observations": [
+            "SLICE",
+            "FINITE_MARGINAL",
+            "BPST_INFINITE_MARGINAL",
+            "LINEAR_PROJECTION"
+          ],
+          "references": [
+            {
+              "authors": "Arthur Jaffe; Edward Witten; Clay Mathematics Institute",
+              "id": "YM-R01",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "인쇄 p. 6 §4: 존재·스펙트럼 간극 정의; p. 7 §5: 부피에 균일한 간극과 무한 부피 문제",
+              "role": "compact simple G, nontrivial R⁴ quantum theory, QFT axioms, positive spectral gap의 동시 요구. 현재 공식 상태 Unsolved.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Quantum Yang–Mills Theory / Yang–Mills & the Mass Gap",
+              "url": "https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf"
+            },
+            {
+              "authors": "Brian Conrad; Aaron Landesman",
+              "id": "YM-R02",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§§17–18 pp.75–83; §26 p.114 이하; Appendices K,V,Y",
+              "role": "rank-one subgroup, character/cocharacter lattice, normal subgroup, global group center/fundamental group를 분리하는 구조 설계",
+              "status": "THEOREM_REFERENCE",
+              "title": "Math 210C. Compact Lie Groups",
+              "url": "https://math.stanford.edu/~conrad/210CPage/handouts/lie_groups_notes.pdf"
+            },
+            {
+              "authors": "Mboyo Esole; Monica Jinwoo Kang",
+              "id": "YM-R05",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§2.5 pp.15–16(현재 PDF 페이지 16), Dynkin index of an embedding",
+              "role": "기본 불변형의 정규화에 대한 Lie algebra embedding index. 본 설계의 B_G(ιX,ιY)=IιB_SU2(X,Y) convention을 독립 명시.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Matter representations from geometry: under the spell of Dynkin",
+              "url": "https://arxiv.org/pdf/2012.13401"
+            },
+            {
+              "authors": "Stefan Vandoren; Peter van Nieuwenhuizen",
+              "id": "YM-R06",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding",
+              "role": "anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Lectures on instantons",
+              "url": "https://arxiv.org/pdf/0802.1862"
+            },
+            {
+              "authors": "David Tong",
+              "id": "YM-R07",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§4.1; 인쇄 p.202 이하; link gauge transform eq.(4.8)",
+              "role": "4D Euclidean lattice, group links, Wilson loops와 작용 및 격자 cutoff의 의미",
+              "status": "THEOREM_REFERENCE",
+              "title": "Gauge Theory — Chapter 4: Lattice Gauge Theory",
+              "url": "https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf"
+            },
+            {
+              "authors": "Martin Lüscher",
+              "id": "YM-R08",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "출판사 초록과 서지사항; 실제 선택한 모델의 가정 대응은 Y4-06/Y7-06의 후속 작업",
+              "role": "Wilson lattice gauge theory의 physical positivity와 transfer matrix 구성 근거",
+              "status": "THEOREM_REFERENCE",
+              "title": "Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories",
+              "url": "https://link.springer.com/article/10.1007/BF01614090"
+            },
+            {
+              "authors": "Konrad Osterwalder; Erhard Seiler",
+              "id": "YM-R09",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "출판사 초록·서지사항; Euclidean lattice construction 및 positivity",
+              "role": "유클리드 격자 gauge theory의 positivity/constructive framework. continuum 존재 증명으로 확장하지 않음.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Gauge field theories on a lattice",
+              "url": "https://www.sciencedirect.com/science/article/abs/pii/0003491678900398"
+            },
+            {
+              "authors": "Lean FRO contributors",
+              "id": "YM-R13",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "axiom declaration, consistency 및 #print axioms",
+              "role": "사용자 axiom의 논리적 지위·의존성 감사. 기존 Lean 4.34.1 결과는 로컬 source/hash/log로 별도 증빙.",
+              "status": "THEOREM_REFERENCE",
+              "title": "The Lean Language Reference — Axioms",
+              "url": "https://lean-lang.org/doc/reference/latest/Axioms/"
+            },
+            {
+              "authors": "John C. Baez",
+              "id": "YM-R14",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§4.1 G2; Theorem 4, compact Der(O) subset so(Im O); 7-dimensional faithful representation and invariant cross product",
+              "role": "Compact G2 as octonion automorphisms/positive 3-form stabilizer, not split G2. The generator uses its explicitly documented equivalent Cayley–Dickson convention.",
+              "status": "THEOREM_REFERENCE",
+              "title": "The Octonions",
+              "url": "https://math.ucr.edu/home/baez/octonions/node14.html"
+            },
+            {
+              "authors": "Brian Conrad",
+              "id": "YM-R15",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§§2–5 (8-page PDF), roots/coroots/character lattices for A/B/C/D; use complexification to connect with the separately constructed compact real form",
+              "role": "Classical root and coroot integer data. This split-algebra reference alone is not a proof of the compact form, which is constructed and checked separately.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Math 249B. Root systems for split classical groups",
+              "url": "https://virtualmath1.stanford.edu/~conrad/249BW16Page/handouts/classicalgps.pdf"
+            }
+          ],
+          "supportedGroups": [
+            {
+              "dimension": 3,
+              "id": "SU2",
+              "label": "SU(2)",
+              "matrixDimension": 2,
+              "rank": 1,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 2,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 8,
+              "id": "SU3",
+              "label": "SU(3)",
+              "matrixDimension": 3,
+              "rank": 2,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 3,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 15,
+              "id": "SU4",
+              "label": "SU(4)",
+              "matrixDimension": 4,
+              "rank": 3,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 4,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 24,
+              "id": "SU5",
+              "label": "SU(5)",
+              "matrixDimension": 5,
+              "rank": 4,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 5,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 35,
+              "id": "SU6",
+              "label": "SU(6)",
+              "matrixDimension": 6,
+              "rank": 5,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 6,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 3,
+              "id": "SO3",
+              "label": "SO(3)",
+              "matrixDimension": 3,
+              "rank": 1,
+              "spec": {
+                "family": "SO",
+                "globalForm": "ADJOINT",
+                "parameter": 3,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 10,
+              "id": "SO5",
+              "label": "SO(5)",
+              "matrixDimension": 5,
+              "rank": 2,
+              "spec": {
+                "family": "SO",
+                "globalForm": "ADJOINT",
+                "parameter": 5,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 15,
+              "id": "SO6",
+              "label": "SO(6)",
+              "matrixDimension": 6,
+              "rank": 3,
+              "spec": {
+                "family": "SO",
+                "globalForm": "QUOTIENT",
+                "parameter": 6,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 21,
+              "id": "SO7",
+              "label": "SO(7)",
+              "matrixDimension": 7,
+              "rank": 3,
+              "spec": {
+                "family": "SO",
+                "globalForm": "ADJOINT",
+                "parameter": 7,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 28,
+              "id": "SO8",
+              "label": "SO(8)",
+              "matrixDimension": 8,
+              "rank": 4,
+              "spec": {
+                "family": "SO",
+                "globalForm": "QUOTIENT",
+                "parameter": 8,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 3,
+              "id": "Sp1",
+              "label": "Sp(1)",
+              "matrixDimension": 2,
+              "rank": 1,
+              "spec": {
+                "family": "Sp",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 1,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 10,
+              "id": "Sp2",
+              "label": "Sp(2)",
+              "matrixDimension": 4,
+              "rank": 2,
+              "spec": {
+                "family": "Sp",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 2,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 21,
+              "id": "Sp3",
+              "label": "Sp(3)",
+              "matrixDimension": 6,
+              "rank": 3,
+              "spec": {
+                "family": "Sp",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 3,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 14,
+              "id": "G2",
+              "label": "G2",
+              "matrixDimension": 7,
+              "rank": 2,
+              "spec": {
+                "family": "G2",
+                "globalForm": "ADJOINT",
+                "parameter": 2,
+                "representation": "REAL_7"
+              }
+            }
+          ],
+          "unsupported": [
+            {
+              "item": "Spin and nontrivial central quotients",
+              "reason": "No faithful storage adapter/descended representation has been implemented."
+            },
+            {
+              "item": "F4, E6, E7, E8",
+              "reason": "No concrete matrix adapter is shipped; no label-only proxy."
+            },
+            {
+              "item": "SO(4)",
+              "reason": "Its Lie algebra is not simple."
+            },
+            {
+              "item": "Quantum Wilson ensemble / empirical gap estimate",
+              "reason": "M1 constructs deterministic classical links, not a Gibbs sampler or transfer-matrix continuum limit."
+            },
+            {
+              "item": "Continuum quantum Yang-Mills / OS reconstruction / infinite-volume mass gap",
+              "reason": "Separate analytic construction and hypotheses; no existence claim."
+            }
+          ],
+          "version": "m1-1"
+        },
+        "ns": {
+          "budget": {
+            "cancellation": "isCancelled callback checked in bounded numerical loops",
+            "maximumMilliseconds": 120000,
+            "maximumOperations": 50000000,
+            "maximumPoints": 16384
+          },
+          "evidenceGrades": {
+            "FINITE_NUMERICAL_FIXTURE": "Independent finite numerical consistency checks.",
+            "FORMAL_NONLINEAR_AXIS_COEFFICIENTS": "Actual finite nonlinear recurrence coefficients; invariant ball, radius and tail are not certified.",
+            "FULL_CERTIFIED_PROFILE": "Reserved; no current computation may emit this grade.",
+            "KERNEL_CHECKED_COMPONENTS": "Only exact named imported/local theorem types and their listed axioms pass the local unchanged kernel.",
+            "PARTIAL_CANDIDATE_WITH_BLOCKERS": "Source axis/exterior components and explicitly unverified continuation; full theorem gate remains closed.",
+            "SOURCE_FORMULA": "Direct source expression, evaluated with stated normalization and domain.",
+            "THEOREM_REFERENCE": "Citation and precise statement, no local kernel proof of the full source claim.",
+            "VERIFIED_NUMERICAL_ENCLOSURE": "Finite real interval quadrature/series and explicit error budget, without full PDE theorem."
+          },
+          "id": "navier-m1",
+          "kinds": [
+            "ns.provenance",
+            "ns.coordinates",
+            "ns.heat",
+            "ns.exterior",
+            "ns.benchmark",
+            "ns.axis-series",
+            "ns.moments",
+            "ns.cone",
+            "ns.leading-profile",
+            "ns.validate"
+          ],
+          "notImplemented": [
+            "complete quantitative source parameter selection",
+            "certified nonlinear axis radius and tail",
+            "B.5 controlled continuation",
+            "C.1 admissible loop and uniform cone certificate",
+            "N4-N8 full construction"
+          ],
+          "precision": {
+            "arithmetic": "outward binary64 intervals for heat and scalar comparison; ordinary binary64 candidate jets",
+            "bits": 53,
+            "independentFixtures": "mpmath100 decimal digits",
+            "minimumAbsoluteTolerance": 2e-14,
+            "unsupportedPrecisionStatus": "PRECISION_REQUIRED"
+          },
+          "scope": [
+            "N1 provenance and exact theorem contract",
+            "N2 coordinates, heat, viscosity and independent PDE checks",
+            "N3 actual finite nonlinear axis, schedule, moment and modulation operators; candidate with explicit blockers"
+          ],
+          "version": "1.1.0-m1"
+        }
+      },
+      "evidencePolicy": "FINITE_DOMAIN_RESULTS_DO_NOT_ISSUE_FORMAL_PASS",
+      "execution": "STATIC_BOUNDED_WORKER",
+      "limits": {
+        "maxBytes": 8388608,
+        "maxConcurrent": 1,
+        "maxEvaluations": 50000,
+        "maxInputBytes": 262144,
+        "maxIntegers": 8388608,
+        "maxItems": 1000000,
+        "maxJobs": 32,
+        "maxMatrixDimension": 8,
+        "maxMillis": 60000,
+        "maxMilliseconds": 60000,
+        "maxOperations": 50000000,
+        "maxPoints": 16384,
+        "maxSamples": 5000
+      },
+      "server": false,
+      "version": "1.0.0"
+    },
+    "hash": "45c9fff29acd685a860b61ec6a5244d5086301618385fd8e8684c2dcb6e94d02"
+  },
+  "result": {
+    "checks": [],
+    "evidence": {
+      "calculation": "EXACT_CORE_WITH_SEPARATELY_TAGGED_APPROXIMATION",
+      "formalComplete": false,
+      "geometricComparison": null,
+      "lean": "See separately hashed static Lean audit; this browser job is not a kernel execution."
+    },
+    "kind": "arithmetic.primes",
+    "object": {
+      "kind": "PRIME_QUERY",
+      "p": null
+    },
+    "precisionLedger": {
+      "requested": {},
+      "roundingError": "0 for exact integer/modular operations; each numerical approximation is separately tagged."
+    },
+    "provenance": {
+      "algorithmVersion": "1.0.0",
+      "assumptions": [],
+      "localDesign": [
+        "blueprint-work/arithmetic-stages.json: P1-01..P3-08",
+        "blueprint-work/arithmetic-design.md: §§3–5, §§9–11",
+        "blueprint-work/appendix-arithmetic.tex: A1–A4",
+        "blueprint-work/platform-stages.json: I1-03,I1-07,I3-02,I3-04"
+      ],
+      "operations": 13186,
+      "sources": [
+        {
+          "accessed": "2026-10-09",
+          "id": "S01",
+          "leanImport": null,
+          "locator": "Definition 1.1; Example 1.3(1); Definition 1.4; Theorem 1.8(1), printed pp.2–4; Theorem 5.2",
+          "role": "Bounded crystalline prism and Frobenius-compatible crystalline comparison",
+          "status": "THEOREM_REFERENCE",
+          "title": "Bhatt–Scholze, Prisms and Prismatic Cohomology",
+          "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf"
+        },
+        {
+          "accessed": "2026-10-09",
+          "id": "S02",
+          "leanImport": null,
+          "locator": "Theorem 3.6 and Corollary 3.8",
+          "role": "De Rham hypercohomology of a proper smooth Z_p lift computes crystalline cohomology of its special fiber.",
+          "status": "THEOREM_REFERENCE",
+          "title": "Bhatt–de Jong, Crystalline cohomology and de Rham cohomology",
+          "url": "https://arxiv.org/html/1110.5001v1"
+        },
+        {
+          "accessed": "2026-10-09",
+          "id": "S07",
+          "leanImport": null,
+          "locator": "(1.5.1)–(1.5.4), printed pp.275–276",
+          "role": "Finite-field trace and alternating determinant convention; not a classical RH bridge.",
+          "status": "THEOREM_REFERENCE",
+          "title": "Deligne, La conjecture de Weil I",
+          "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf"
+        },
+        {
+          "accessed": "2026-10-09",
+          "id": "S08",
+          "leanImport": null,
+          "locator": "pp.1–2, good elliptic Euler factors and the BSD statement",
+          "role": "Local H1 L-factor and distinction from the scheme zeta factor.",
+          "status": "THEOREM_REFERENCE",
+          "title": "Wiles, The Birch and Swinnerton-Dyer Conjecture",
+          "url": "https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf"
+        },
+        {
+          "accessed": "2026-10-09",
+          "id": "S10",
+          "leanImport": null,
+          "locator": "§25.16(i), equations 25.16.1–25.16.4",
+          "role": "Chebyshev psi, prime counting, PNT/RH scope.",
+          "status": "THEOREM_REFERENCE",
+          "title": "NIST DLMF §25.16 Mathematical Applications",
+          "url": "https://dlmf.nist.gov/25.16"
+        },
+        {
+          "accessed": "2026-10-09",
+          "audit": "evidence/lean-audit.json",
+          "id": "MATHLIB-LUCAS",
+          "leanImport": "MathScope.M1.Arithmetic.lucas_certificate_sound",
+          "locator": "lucas_primality, reverse_lucas_primality",
+          "role": "The library theorem is imported by the arithmetic Lean adapter. The JavaScript Pratt certificate checker is separately tested.",
+          "status": "LEAN_IMPORT_CHECKED",
+          "title": "mathlib Lucas primality theorem",
+          "url": "https://github.com/leanprover-community/mathlib4/blob/d13f23b723b8a846827a245b89c10fc7d3f11612/Mathlib/NumberTheory/LucasPrimality.lean"
+        },
+        {
+          "accessed": "2026-10-09",
+          "id": "S14",
+          "leanImport": null,
+          "locator": "WeierstrassIsomorphism: explicit (u,r,s,t) coordinate and coefficient transformation formulas",
+          "role": "A displayed singular nonminimal model is distinguished from the reduction of the curve; x=u^2*x_new, y=u^3*y_new rescales short coefficients by u^4 and u^6.",
+          "status": "THEOREM_REFERENCE",
+          "title": "SageMath, Isomorphisms between Weierstrass models",
+          "url": "https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/weierstrass_morphism.html"
+        }
+      ]
+    },
+    "request": {
+      "budget": {
+        "maxBytes": 8388608,
+        "maxItems": 250000,
+        "maxMillis": 30000,
+        "maxOperations": 50000000
+      },
+      "input": {
+        "a": "2",
+        "b": "1000"
+      },
+      "kind": "arithmetic.primes",
+      "precision": {}
+    },
+    "resultHash": "3e082f9408dc7c178ec2bba5c0df3bba92de9e26d06f02dc71af470ee059c1f7",
+    "results": {
+      "baseCertificate": {
+        "bound": "31",
+        "hash": "e6561afb627fae34e6f8b441024f4341cf86b1b079ccad31da0085d217fee569",
+        "method": "ERATOSTHENES_COMPLETE_TABLE",
+        "primes": [
+          "2",
+          "3",
+          "5",
+          "7",
+          "11",
+          "13",
+          "17",
+          "19",
+          "23",
+          "29",
+          "31"
+        ],
+        "rule": "Any composite n has a prime divisor at most floor(sqrt(n))."
+      },
+      "coverage": {
+        "completed": [
+          [
+            "2",
+            "1000"
+          ]
+        ],
+        "uncomputed": "PrimeSet outside the completed finite interval"
+      },
+      "domain": {
+        "definition": "{ n : Nat | Nat.Prime n }",
+        "enumeration": "Every completed request covers only its stated finite interval.",
+        "kind": "SYMBOLIC_INFINITE_SET",
+        "leanDefinition": "MathScope.M1.Arithmetic.PrimeSet",
+        "schema": "MathScope.PrimeDomain/1"
+      },
+      "intervalCount": {
+        "kind": "INTEGER",
+        "value": "168"
+      },
+      "normalizedInterval": {
+        "a": "2",
+        "b": "1000",
+        "inputReversed": false
+      },
+      "operations": 2434,
+      "piAtUpper": {
+        "kind": "INTEGER",
+        "value": "168"
+      },
+      "primes": [
+        "2",
+        "3",
+        "5",
+        "7",
+        "11",
+        "13",
+        "17",
+        "19",
+        "23",
+        "29",
+        "31",
+        "37",
+        "41",
+        "43",
+        "47",
+        "53",
+        "59",
+        "61",
+        "67",
+        "71",
+        "73",
+        "79",
+        "83",
+        "89",
+        "97",
+        "101",
+        "103",
+        "107",
+        "109",
+        "113",
+        "127",
+        "131",
+        "137",
+        "139",
+        "149",
+        "151",
+        "157",
+        "163",
+        "167",
+        "173",
+        "179",
+        "181",
+        "191",
+        "193",
+        "197",
+        "199",
+        "211",
+        "223",
+        "227",
+        "229",
+        "233",
+        "239",
+        "241",
+        "251",
+        "257",
+        "263",
+        "269",
+        "271",
+        "277",
+        "281",
+        "283",
+        "293",
+        "307",
+        "311",
+        "313",
+        "317",
+        "331",
+        "337",
+        "347",
+        "349",
+        "353",
+        "359",
+        "367",
+        "373",
+        "379",
+        "383",
+        "389",
+        "397",
+        "401",
+        "409",
+        "419",
+        "421",
+        "431",
+        "433",
+        "439",
+        "443",
+        "449",
+        "457",
+        "461",
+        "463",
+        "467",
+        "479",
+        "487",
+        "491",
+        "499",
+        "503",
+        "509",
+        "521",
+        "523",
+        "541",
+        "547",
+        "557",
+        "563",
+        "569",
+        "571",
+        "577",
+        "587",
+        "593",
+        "599",
+        "601",
+        "607",
+        "613",
+        "617",
+        "619",
+        "631",
+        "641",
+        "643",
+        "647",
+        "653",
+        "659",
+        "661",
+        "673",
+        "677",
+        "683",
+        "691",
+        "701",
+        "709",
+        "719",
+        "727",
+        "733",
+        "739",
+        "743",
+        "751",
+        "757",
+        "761",
+        "769",
+        "773",
+        "787",
+        "797",
+        "809",
+        "811",
+        "821",
+        "823",
+        "827",
+        "829",
+        "839",
+        "853",
+        "857",
+        "859",
+        "863",
+        "877",
+        "881",
+        "883",
+        "887",
+        "907",
+        "911",
+        "919",
+        "929",
+        "937",
+        "941",
+        "947",
+        "953",
+        "967",
+        "971",
+        "977",
+        "983",
+        "991",
+        "997"
+      ],
+      "rawHash": "5e9d9893d87a72303343be3256c0c513c12830a2fe95007c18c6c21189dc7c38",
+      "schema": "MathScope.PrimeIntervalResult/1",
+      "segments": [
+        {
+          "a": "2",
+          "b": "1000",
+          "basePrimeBound": "31",
+          "basePrimeHash": "e6561afb627fae34e6f8b441024f4341cf86b1b079ccad31da0085d217fee569",
+          "hash": "a9438d8f1918d467ecf87b70d89c6d3b0625f6637808b33d13de2a70a5dbfd67",
+          "primes": [
+            "2",
+            "3",
+            "5",
+            "7",
+            "11",
+            "13",
+            "17",
+            "19",
+            "23",
+            "29",
+            "31",
+            "37",
+            "41",
+            "43",
+            "47",
+            "53",
+            "59",
+            "61",
+            "67",
+            "71",
+            "73",
+            "79",
+            "83",
+            "89",
+            "97",
+            "101",
+            "103",
+            "107",
+            "109",
+            "113",
+            "127",
+            "131",
+            "137",
+            "139",
+            "149",
+            "151",
+            "157",
+            "163",
+            "167",
+            "173",
+            "179",
+            "181",
+            "191",
+            "193",
+            "197",
+            "199",
+            "211",
+            "223",
+            "227",
+            "229",
+            "233",
+            "239",
+            "241",
+            "251",
+            "257",
+            "263",
+            "269",
+            "271",
+            "277",
+            "281",
+            "283",
+            "293",
+            "307",
+            "311",
+            "313",
+            "317",
+            "331",
+            "337",
+            "347",
+            "349",
+            "353",
+            "359",
+            "367",
+            "373",
+            "379",
+            "383",
+            "389",
+            "397",
+            "401",
+            "409",
+            "419",
+            "421",
+            "431",
+            "433",
+            "439",
+            "443",
+            "449",
+            "457",
+            "461",
+            "463",
+            "467",
+            "479",
+            "487",
+            "491",
+            "499",
+            "503",
+            "509",
+            "521",
+            "523",
+            "541",
+            "547",
+            "557",
+            "563",
+            "569",
+            "571",
+            "577",
+            "587",
+            "593",
+            "599",
+            "601",
+            "607",
+            "613",
+            "617",
+            "619",
+            "631",
+            "641",
+            "643",
+            "647",
+            "653",
+            "659",
+            "661",
+            "673",
+            "677",
+            "683",
+            "691",
+            "701",
+            "709",
+            "719",
+            "727",
+            "733",
+            "739",
+            "743",
+            "751",
+            "757",
+            "761",
+            "769",
+            "773",
+            "787",
+            "797",
+            "809",
+            "811",
+            "821",
+            "823",
+            "827",
+            "829",
+            "839",
+            "853",
+            "857",
+            "859",
+            "863",
+            "877",
+            "881",
+            "883",
+            "887",
+            "907",
+            "911",
+            "919",
+            "929",
+            "937",
+            "941",
+            "947",
+            "953",
+            "967",
+            "971",
+            "977",
+            "983",
+            "991",
+            "997"
+          ],
+          "schema": "MathScope.PrimeSegment/1"
+        }
+      ],
+      "statistics": {
+        "Li2": {
+          "definition": "Li2(x) = integral from 2 to x of dt/log(t), x >= 2",
+          "error": {
+            "reason": "No quadrature enclosure is claimed.",
+            "status": "UNBOUNDED_APPROXIMATION"
+          },
+          "method": "composite Simpson, 512 panels",
+          "normalization": "li(x) = Li2(x) + li(2); the principal-value constant is not set to zero.",
+          "value": {
+            "certified": false,
+            "kind": "FLOAT64",
+            "value": 176.64076639203654
+          }
+        },
+        "pi": {
+          "kind": "INTEGER",
+          "value": "168"
+        },
+        "psi": {
+          "ball": {
+            "certification": "EXACT_FIXED_POINT_LOG_SERIES_WITH_TAIL",
+            "certified": true,
+            "kind": "REAL_INTERVAL",
+            "lower": {
+              "denominator": "18446744073709551616",
+              "kind": "RATIONAL",
+              "numerator": "18385517711375009505402"
+            },
+            "upper": {
+              "denominator": "18446744073709551616",
+              "kind": "RATIONAL",
+              "numerator": "18385517711375009586135"
+            }
+          },
+          "bound": "The atanh series uses 0 <= z <= 1/3; interval arithmetic includes every rounding and the positive tail.",
+          "kind": "EXACT_LOG_LINEAR_COMBINATION",
+          "terms": [
+            {
+              "prime": "2",
+              "weight": 9
+            },
+            {
+              "prime": "3",
+              "weight": 6
+            },
+            {
+              "prime": "5",
+              "weight": 4
+            },
+            {
+              "prime": "7",
+              "weight": 3
+            },
+            {
+              "prime": "11",
+              "weight": 2
+            },
+            {
+              "prime": "13",
+              "weight": 2
+            },
+            {
+              "prime": "17",
+              "weight": 2
+            },
+            {
+              "prime": "19",
+              "weight": 2
+            },
+            {
+              "prime": "23",
+              "weight": 2
+            },
+            {
+              "prime": "29",
+              "weight": 2
+            },
+            {
+              "prime": "31",
+              "weight": 2
+            },
+            {
+              "prime": "37",
+              "weight": 1
+            },
+            {
+              "prime": "41",
+              "weight": 1
+            },
+            {
+              "prime": "43",
+              "weight": 1
+            },
+            {
+              "prime": "47",
+              "weight": 1
+            },
+            {
+              "prime": "53",
+              "weight": 1
+            },
+            {
+              "prime": "59",
+              "weight": 1
+            },
+            {
+              "prime": "61",
+              "weight": 1
+            },
+            {
+              "prime": "67",
+              "weight": 1
+            },
+            {
+              "prime": "71",
+              "weight": 1
+            },
+            {
+              "prime": "73",
+              "weight": 1
+            },
+            {
+              "prime": "79",
+              "weight": 1
+            },
+            {
+              "prime": "83",
+              "weight": 1
+            },
+            {
+              "prime": "89",
+              "weight": 1
+            },
+            {
+              "prime": "97",
+              "weight": 1
+            },
+            {
+              "prime": "101",
+              "weight": 1
+            },
+            {
+              "prime": "103",
+              "weight": 1
+            },
+            {
+              "prime": "107",
+              "weight": 1
+            },
+            {
+              "prime": "109",
+              "weight": 1
+            },
+            {
+              "prime": "113",
+              "weight": 1
+            },
+            {
+              "prime": "127",
+              "weight": 1
+            },
+            {
+              "prime": "131",
+              "weight": 1
+            },
+            {
+              "prime": "137",
+              "weight": 1
+            },
+            {
+              "prime": "139",
+              "weight": 1
+            },
+            {
+              "prime": "149",
+              "weight": 1
+            },
+            {
+              "prime": "151",
+              "weight": 1
+            },
+            {
+              "prime": "157",
+              "weight": 1
+            },
+            {
+              "prime": "163",
+              "weight": 1
+            },
+            {
+              "prime": "167",
+              "weight": 1
+            },
+            {
+              "prime": "173",
+              "weight": 1
+            },
+            {
+              "prime": "179",
+              "weight": 1
+            },
+            {
+              "prime": "181",
+              "weight": 1
+            },
+            {
+              "prime": "191",
+              "weight": 1
+            },
+            {
+              "prime": "193",
+              "weight": 1
+            },
+            {
+              "prime": "197",
+              "weight": 1
+            },
+            {
+              "prime": "199",
+              "weight": 1
+            },
+            {
+              "prime": "211",
+              "weight": 1
+            },
+            {
+              "prime": "223",
+              "weight": 1
+            },
+            {
+              "prime": "227",
+              "weight": 1
+            },
+            {
+              "prime": "229",
+              "weight": 1
+            },
+            {
+              "prime": "233",
+              "weight": 1
+            },
+            {
+              "prime": "239",
+              "weight": 1
+            },
+            {
+              "prime": "241",
+              "weight": 1
+            },
+            {
+              "prime": "251",
+              "weight": 1
+            },
+            {
+              "prime": "257",
+              "weight": 1
+            },
+            {
+              "prime": "263",
+              "weight": 1
+            },
+            {
+              "prime": "269",
+              "weight": 1
+            },
+            {
+              "prime": "271",
+              "weight": 1
+            },
+            {
+              "prime": "277",
+              "weight": 1
+            },
+            {
+              "prime": "281",
+              "weight": 1
+            },
+            {
+              "prime": "283",
+              "weight": 1
+            },
+            {
+              "prime": "293",
+              "weight": 1
+            },
+            {
+              "prime": "307",
+              "weight": 1
+            },
+            {
+              "prime": "311",
+              "weight": 1
+            },
+            {
+              "prime": "313",
+              "weight": 1
+            },
+            {
+              "prime": "317",
+              "weight": 1
+            },
+            {
+              "prime": "331",
+              "weight": 1
+            },
+            {
+              "prime": "337",
+              "weight": 1
+            },
+            {
+              "prime": "347",
+              "weight": 1
+            },
+            {
+              "prime": "349",
+              "weight": 1
+            },
+            {
+              "prime": "353",
+              "weight": 1
+            },
+            {
+              "prime": "359",
+              "weight": 1
+            },
+            {
+              "prime": "367",
+              "weight": 1
+            },
+            {
+              "prime": "373",
+              "weight": 1
+            },
+            {
+              "prime": "379",
+              "weight": 1
+            },
+            {
+              "prime": "383",
+              "weight": 1
+            },
+            {
+              "prime": "389",
+              "weight": 1
+            },
+            {
+              "prime": "397",
+              "weight": 1
+            },
+            {
+              "prime": "401",
+              "weight": 1
+            },
+            {
+              "prime": "409",
+              "weight": 1
+            },
+            {
+              "prime": "419",
+              "weight": 1
+            },
+            {
+              "prime": "421",
+              "weight": 1
+            },
+            {
+              "prime": "431",
+              "weight": 1
+            },
+            {
+              "prime": "433",
+              "weight": 1
+            },
+            {
+              "prime": "439",
+              "weight": 1
+            },
+            {
+              "prime": "443",
+              "weight": 1
+            },
+            {
+              "prime": "449",
+              "weight": 1
+            },
+            {
+              "prime": "457",
+              "weight": 1
+            },
+            {
+              "prime": "461",
+              "weight": 1
+            },
+            {
+              "prime": "463",
+              "weight": 1
+            },
+            {
+              "prime": "467",
+              "weight": 1
+            },
+            {
+              "prime": "479",
+              "weight": 1
+            },
+            {
+              "prime": "487",
+              "weight": 1
+            },
+            {
+              "prime": "491",
+              "weight": 1
+            },
+            {
+              "prime": "499",
+              "weight": 1
+            },
+            {
+              "prime": "503",
+              "weight": 1
+            },
+            {
+              "prime": "509",
+              "weight": 1
+            },
+            {
+              "prime": "521",
+              "weight": 1
+            },
+            {
+              "prime": "523",
+              "weight": 1
+            },
+            {
+              "prime": "541",
+              "weight": 1
+            },
+            {
+              "prime": "547",
+              "weight": 1
+            },
+            {
+              "prime": "557",
+              "weight": 1
+            },
+            {
+              "prime": "563",
+              "weight": 1
+            },
+            {
+              "prime": "569",
+              "weight": 1
+            },
+            {
+              "prime": "571",
+              "weight": 1
+            },
+            {
+              "prime": "577",
+              "weight": 1
+            },
+            {
+              "prime": "587",
+              "weight": 1
+            },
+            {
+              "prime": "593",
+              "weight": 1
+            },
+            {
+              "prime": "599",
+              "weight": 1
+            },
+            {
+              "prime": "601",
+              "weight": 1
+            },
+            {
+              "prime": "607",
+              "weight": 1
+            },
+            {
+              "prime": "613",
+              "weight": 1
+            },
+            {
+              "prime": "617",
+              "weight": 1
+            },
+            {
+              "prime": "619",
+              "weight": 1
+            },
+            {
+              "prime": "631",
+              "weight": 1
+            },
+            {
+              "prime": "641",
+              "weight": 1
+            },
+            {
+              "prime": "643",
+              "weight": 1
+            },
+            {
+              "prime": "647",
+              "weight": 1
+            },
+            {
+              "prime": "653",
+              "weight": 1
+            },
+            {
+              "prime": "659",
+              "weight": 1
+            },
+            {
+              "prime": "661",
+              "weight": 1
+            },
+            {
+              "prime": "673",
+              "weight": 1
+            },
+            {
+              "prime": "677",
+              "weight": 1
+            },
+            {
+              "prime": "683",
+              "weight": 1
+            },
+            {
+              "prime": "691",
+              "weight": 1
+            },
+            {
+              "prime": "701",
+              "weight": 1
+            },
+            {
+              "prime": "709",
+              "weight": 1
+            },
+            {
+              "prime": "719",
+              "weight": 1
+            },
+            {
+              "prime": "727",
+              "weight": 1
+            },
+            {
+              "prime": "733",
+              "weight": 1
+            },
+            {
+              "prime": "739",
+              "weight": 1
+            },
+            {
+              "prime": "743",
+              "weight": 1
+            },
+            {
+              "prime": "751",
+              "weight": 1
+            },
+            {
+              "prime": "757",
+              "weight": 1
+            },
+            {
+              "prime": "761",
+              "weight": 1
+            },
+            {
+              "prime": "769",
+              "weight": 1
+            },
+            {
+              "prime": "773",
+              "weight": 1
+            },
+            {
+              "prime": "787",
+              "weight": 1
+            },
+            {
+              "prime": "797",
+              "weight": 1
+            },
+            {
+              "prime": "809",
+              "weight": 1
+            },
+            {
+              "prime": "811",
+              "weight": 1
+            },
+            {
+              "prime": "821",
+              "weight": 1
+            },
+            {
+              "prime": "823",
+              "weight": 1
+            },
+            {
+              "prime": "827",
+              "weight": 1
+            },
+            {
+              "prime": "829",
+              "weight": 1
+            },
+            {
+              "prime": "839",
+              "weight": 1
+            },
+            {
+              "prime": "853",
+              "weight": 1
+            },
+            {
+              "prime": "857",
+              "weight": 1
+            },
+            {
+              "prime": "859",
+              "weight": 1
+            },
+            {
+              "prime": "863",
+              "weight": 1
+            },
+            {
+              "prime": "877",
+              "weight": 1
+            },
+            {
+              "prime": "881",
+              "weight": 1
+            },
+            {
+              "prime": "883",
+              "weight": 1
+            },
+            {
+              "prime": "887",
+              "weight": 1
+            },
+            {
+              "prime": "907",
+              "weight": 1
+            },
+            {
+              "prime": "911",
+              "weight": 1
+            },
+            {
+              "prime": "919",
+              "weight": 1
+            },
+            {
+              "prime": "929",
+              "weight": 1
+            },
+            {
+              "prime": "937",
+              "weight": 1
+            },
+            {
+              "prime": "941",
+              "weight": 1
+            },
+            {
+              "prime": "947",
+              "weight": 1
+            },
+            {
+              "prime": "953",
+              "weight": 1
+            },
+            {
+              "prime": "967",
+              "weight": 1
+            },
+            {
+              "prime": "971",
+              "weight": 1
+            },
+            {
+              "prime": "977",
+              "weight": 1
+            },
+            {
+              "prime": "983",
+              "weight": 1
+            },
+            {
+              "prime": "991",
+              "weight": 1
+            },
+            {
+              "prime": "997",
+              "weight": 1
+            }
+          ]
+        },
+        "x": "1000",
+        "xOverLogX": {
+          "certified": false,
+          "kind": "FLOAT64",
+          "value": 144.76482730108395
+        }
+      },
+      "status": "COMPLETE_FINITE_INTERVAL"
+    },
+    "schema": "MathScope.M1.ArithmeticResult/1",
+    "scope": {
+      "description": "Only the requested bounded input and explicitly supported operations are computed.",
+      "finite": true,
+      "infiniteDomain": {
+        "definition": "{ n : Nat | Nat.Prime n }",
+        "enumeration": "Every completed request covers only its stated finite interval.",
+        "kind": "SYMBOLIC_INFINITE_SET",
+        "leanDefinition": "MathScope.M1.Arithmetic.PrimeSet",
+        "schema": "MathScope.PrimeDomain/1"
+      }
+    },
+    "status": "COMPLETED",
+    "version": "1.0.0",
+    "visualization": {
+      "axes": [
+        {
+          "label": "정수 위치",
+          "type": "ARITHMETIC_LOCATION"
+        },
+        {
+          "label": "WITHIN_INTERVAL_PREVIOUS_PRIME_GAP",
+          "type": "COUNT_OR_GAP"
+        },
+        {
+          "label": "interval",
+          "type": "LAYOUT_ATTRIBUTE"
+        }
+      ],
+      "coordinateMeaning": "좌표는 소수·간격·구간 속성이다. 물리 공간이나 소수집합과 동형인 공간이 아니다.",
+      "description": "완료한 유한 구간의 소수 관측",
+      "lines": [],
+      "lostInformation": [],
+      "manifest": {
+        "axisTypes": {
+          "x": "INTEGER_LOCATION",
+          "y": "WITHIN_INTERVAL_PREVIOUS_PRIME_GAP",
+          "z": "LAYOUT_OR_ARITHMETIC_ATTRIBUTE"
+        },
+        "camera": null,
+        "maxPoints": 20000,
+        "mode": "gap",
+        "proofClaim": null,
+        "sampled": false,
+        "stride": 1,
+        "warning": "Finite sampled data are not a proof of the prime number theorem or an enumeration of all primes.",
+        "zAxis": "interval"
+      },
+      "points": [
+        {
+          "label": "p=2",
+          "pos": [
+            2,
+            0,
+            2
+          ],
+          "value": {
+            "index": 0,
+            "prime": "2"
+          }
+        },
+        {
+          "label": "p=3",
+          "pos": [
+            3,
+            1,
+            2
+          ],
+          "value": {
+            "index": 1,
+            "prime": "3"
+          }
+        },
+        {
+          "label": "p=5",
+          "pos": [
+            5,
+            2,
+            2
+          ],
+          "value": {
+            "index": 2,
+            "prime": "5"
+          }
+        },
+        {
+          "label": "p=7",
+          "pos": [
+            7,
+            2,
+            2
+          ],
+          "value": {
+            "index": 3,
+            "prime": "7"
+          }
+        },
+        {
+          "label": "p=11",
+          "pos": [
+            11,
+            4,
+            2
+          ],
+          "value": {
+            "index": 4,
+            "prime": "11"
+          }
+        },
+        {
+          "label": "p=13",
+          "pos": [
+            13,
+            2,
+            2
+          ],
+          "value": {
+            "index": 5,
+            "prime": "13"
+          }
+        },
+        {
+          "label": "p=17",
+          "pos": [
+            17,
+            4,
+            2
+          ],
+          "value": {
+            "index": 6,
+            "prime": "17"
+          }
+        },
+        {
+          "label": "p=19",
+          "pos": [
+            19,
+            2,
+            2
+          ],
+          "value": {
+            "index": 7,
+            "prime": "19"
+          }
+        },
+        {
+          "label": "p=23",
+          "pos": [
+            23,
+            4,
+            2
+          ],
+          "value": {
+            "index": 8,
+            "prime": "23"
+          }
+        },
+        {
+          "label": "p=29",
+          "pos": [
+            29,
+            6,
+            2
+          ],
+          "value": {
+            "index": 9,
+            "prime": "29"
+          }
+        },
+        {
+          "label": "p=31",
+          "pos": [
+            31,
+            2,
+            2
+          ],
+          "value": {
+            "index": 10,
+            "prime": "31"
+          }
+        },
+        {
+          "label": "p=37",
+          "pos": [
+            37,
+            6,
+            2
+          ],
+          "value": {
+            "index": 11,
+            "prime": "37"
+          }
+        },
+        {
+          "label": "p=41",
+          "pos": [
+            41,
+            4,
+            2
+          ],
+          "value": {
+            "index": 12,
+            "prime": "41"
+          }
+        },
+        {
+          "label": "p=43",
+          "pos": [
+            43,
+            2,
+            2
+          ],
+          "value": {
+            "index": 13,
+            "prime": "43"
+          }
+        },
+        {
+          "label": "p=47",
+          "pos": [
+            47,
+            4,
+            2
+          ],
+          "value": {
+            "index": 14,
+            "prime": "47"
+          }
+        },
+        {
+          "label": "p=53",
+          "pos": [
+            53,
+            6,
+            2
+          ],
+          "value": {
+            "index": 15,
+            "prime": "53"
+          }
+        },
+        {
+          "label": "p=59",
+          "pos": [
+            59,
+            6,
+            2
+          ],
+          "value": {
+            "index": 16,
+            "prime": "59"
+          }
+        },
+        {
+          "label": "p=61",
+          "pos": [
+            61,
+            2,
+            2
+          ],
+          "value": {
+            "index": 17,
+            "prime": "61"
+          }
+        },
+        {
+          "label": "p=67",
+          "pos": [
+            67,
+            6,
+            2
+          ],
+          "value": {
+            "index": 18,
+            "prime": "67"
+          }
+        },
+        {
+          "label": "p=71",
+          "pos": [
+            71,
+            4,
+            2
+          ],
+          "value": {
+            "index": 19,
+            "prime": "71"
+          }
+        },
+        {
+          "label": "p=73",
+          "pos": [
+            73,
+            2,
+            2
+          ],
+          "value": {
+            "index": 20,
+            "prime": "73"
+          }
+        },
+        {
+          "label": "p=79",
+          "pos": [
+            79,
+            6,
+            2
+          ],
+          "value": {
+            "index": 21,
+            "prime": "79"
+          }
+        },
+        {
+          "label": "p=83",
+          "pos": [
+            83,
+            4,
+            2
+          ],
+          "value": {
+            "index": 22,
+            "prime": "83"
+          }
+        },
+        {
+          "label": "p=89",
+          "pos": [
+            89,
+            6,
+            2
+          ],
+          "value": {
+            "index": 23,
+            "prime": "89"
+          }
+        },
+        {
+          "label": "p=97",
+          "pos": [
+            97,
+            8,
+            2
+          ],
+          "value": {
+            "index": 24,
+            "prime": "97"
+          }
+        },
+        {
+          "label": "p=101",
+          "pos": [
+            101,
+            4,
+            2
+          ],
+          "value": {
+            "index": 25,
+            "prime": "101"
+          }
+        },
+        {
+          "label": "p=103",
+          "pos": [
+            103,
+            2,
+            2
+          ],
+          "value": {
+            "index": 26,
+            "prime": "103"
+          }
+        },
+        {
+          "label": "p=107",
+          "pos": [
+            107,
+            4,
+            2
+          ],
+          "value": {
+            "index": 27,
+            "prime": "107"
+          }
+        },
+        {
+          "label": "p=109",
+          "pos": [
+            109,
+            2,
+            2
+          ],
+          "value": {
+            "index": 28,
+            "prime": "109"
+          }
+        },
+        {
+          "label": "p=113",
+          "pos": [
+            113,
+            4,
+            2
+          ],
+          "value": {
+            "index": 29,
+            "prime": "113"
+          }
+        },
+        {
+          "label": "p=127",
+          "pos": [
+            127,
+            14,
+            2
+          ],
+          "value": {
+            "index": 30,
+            "prime": "127"
+          }
+        },
+        {
+          "label": "p=131",
+          "pos": [
+            131,
+            4,
+            2
+          ],
+          "value": {
+            "index": 31,
+            "prime": "131"
+          }
+        },
+        {
+          "label": "p=137",
+          "pos": [
+            137,
+            6,
+            2
+          ],
+          "value": {
+            "index": 32,
+            "prime": "137"
+          }
+        },
+        {
+          "label": "p=139",
+          "pos": [
+            139,
+            2,
+            2
+          ],
+          "value": {
+            "index": 33,
+            "prime": "139"
+          }
+        },
+        {
+          "label": "p=149",
+          "pos": [
+            149,
+            10,
+            2
+          ],
+          "value": {
+            "index": 34,
+            "prime": "149"
+          }
+        },
+        {
+          "label": "p=151",
+          "pos": [
+            151,
+            2,
+            2
+          ],
+          "value": {
+            "index": 35,
+            "prime": "151"
+          }
+        },
+        {
+          "label": "p=157",
+          "pos": [
+            157,
+            6,
+            2
+          ],
+          "value": {
+            "index": 36,
+            "prime": "157"
+          }
+        },
+        {
+          "label": "p=163",
+          "pos": [
+            163,
+            6,
+            2
+          ],
+          "value": {
+            "index": 37,
+            "prime": "163"
+          }
+        },
+        {
+          "label": "p=167",
+          "pos": [
+            167,
+            4,
+            2
+          ],
+          "value": {
+            "index": 38,
+            "prime": "167"
+          }
+        },
+        {
+          "label": "p=173",
+          "pos": [
+            173,
+            6,
+            2
+          ],
+          "value": {
+            "index": 39,
+            "prime": "173"
+          }
+        },
+        {
+          "label": "p=179",
+          "pos": [
+            179,
+            6,
+            2
+          ],
+          "value": {
+            "index": 40,
+            "prime": "179"
+          }
+        },
+        {
+          "label": "p=181",
+          "pos": [
+            181,
+            2,
+            2
+          ],
+          "value": {
+            "index": 41,
+            "prime": "181"
+          }
+        },
+        {
+          "label": "p=191",
+          "pos": [
+            191,
+            10,
+            2
+          ],
+          "value": {
+            "index": 42,
+            "prime": "191"
+          }
+        },
+        {
+          "label": "p=193",
+          "pos": [
+            193,
+            2,
+            2
+          ],
+          "value": {
+            "index": 43,
+            "prime": "193"
+          }
+        },
+        {
+          "label": "p=197",
+          "pos": [
+            197,
+            4,
+            2
+          ],
+          "value": {
+            "index": 44,
+            "prime": "197"
+          }
+        },
+        {
+          "label": "p=199",
+          "pos": [
+            199,
+            2,
+            2
+          ],
+          "value": {
+            "index": 45,
+            "prime": "199"
+          }
+        },
+        {
+          "label": "p=211",
+          "pos": [
+            211,
+            12,
+            2
+          ],
+          "value": {
+            "index": 46,
+            "prime": "211"
+          }
+        },
+        {
+          "label": "p=223",
+          "pos": [
+            223,
+            12,
+            2
+          ],
+          "value": {
+            "index": 47,
+            "prime": "223"
+          }
+        },
+        {
+          "label": "p=227",
+          "pos": [
+            227,
+            4,
+            2
+          ],
+          "value": {
+            "index": 48,
+            "prime": "227"
+          }
+        },
+        {
+          "label": "p=229",
+          "pos": [
+            229,
+            2,
+            2
+          ],
+          "value": {
+            "index": 49,
+            "prime": "229"
+          }
+        },
+        {
+          "label": "p=233",
+          "pos": [
+            233,
+            4,
+            2
+          ],
+          "value": {
+            "index": 50,
+            "prime": "233"
+          }
+        },
+        {
+          "label": "p=239",
+          "pos": [
+            239,
+            6,
+            2
+          ],
+          "value": {
+            "index": 51,
+            "prime": "239"
+          }
+        },
+        {
+          "label": "p=241",
+          "pos": [
+            241,
+            2,
+            2
+          ],
+          "value": {
+            "index": 52,
+            "prime": "241"
+          }
+        },
+        {
+          "label": "p=251",
+          "pos": [
+            251,
+            10,
+            2
+          ],
+          "value": {
+            "index": 53,
+            "prime": "251"
+          }
+        },
+        {
+          "label": "p=257",
+          "pos": [
+            257,
+            6,
+            2
+          ],
+          "value": {
+            "index": 54,
+            "prime": "257"
+          }
+        },
+        {
+          "label": "p=263",
+          "pos": [
+            263,
+            6,
+            2
+          ],
+          "value": {
+            "index": 55,
+            "prime": "263"
+          }
+        },
+        {
+          "label": "p=269",
+          "pos": [
+            269,
+            6,
+            2
+          ],
+          "value": {
+            "index": 56,
+            "prime": "269"
+          }
+        },
+        {
+          "label": "p=271",
+          "pos": [
+            271,
+            2,
+            2
+          ],
+          "value": {
+            "index": 57,
+            "prime": "271"
+          }
+        },
+        {
+          "label": "p=277",
+          "pos": [
+            277,
+            6,
+            2
+          ],
+          "value": {
+            "index": 58,
+            "prime": "277"
+          }
+        },
+        {
+          "label": "p=281",
+          "pos": [
+            281,
+            4,
+            2
+          ],
+          "value": {
+            "index": 59,
+            "prime": "281"
+          }
+        },
+        {
+          "label": "p=283",
+          "pos": [
+            283,
+            2,
+            2
+          ],
+          "value": {
+            "index": 60,
+            "prime": "283"
+          }
+        },
+        {
+          "label": "p=293",
+          "pos": [
+            293,
+            10,
+            2
+          ],
+          "value": {
+            "index": 61,
+            "prime": "293"
+          }
+        },
+        {
+          "label": "p=307",
+          "pos": [
+            307,
+            14,
+            2
+          ],
+          "value": {
+            "index": 62,
+            "prime": "307"
+          }
+        },
+        {
+          "label": "p=311",
+          "pos": [
+            311,
+            4,
+            2
+          ],
+          "value": {
+            "index": 63,
+            "prime": "311"
+          }
+        },
+        {
+          "label": "p=313",
+          "pos": [
+            313,
+            2,
+            2
+          ],
+          "value": {
+            "index": 64,
+            "prime": "313"
+          }
+        },
+        {
+          "label": "p=317",
+          "pos": [
+            317,
+            4,
+            2
+          ],
+          "value": {
+            "index": 65,
+            "prime": "317"
+          }
+        },
+        {
+          "label": "p=331",
+          "pos": [
+            331,
+            14,
+            2
+          ],
+          "value": {
+            "index": 66,
+            "prime": "331"
+          }
+        },
+        {
+          "label": "p=337",
+          "pos": [
+            337,
+            6,
+            2
+          ],
+          "value": {
+            "index": 67,
+            "prime": "337"
+          }
+        },
+        {
+          "label": "p=347",
+          "pos": [
+            347,
+            10,
+            2
+          ],
+          "value": {
+            "index": 68,
+            "prime": "347"
+          }
+        },
+        {
+          "label": "p=349",
+          "pos": [
+            349,
+            2,
+            2
+          ],
+          "value": {
+            "index": 69,
+            "prime": "349"
+          }
+        },
+        {
+          "label": "p=353",
+          "pos": [
+            353,
+            4,
+            2
+          ],
+          "value": {
+            "index": 70,
+            "prime": "353"
+          }
+        },
+        {
+          "label": "p=359",
+          "pos": [
+            359,
+            6,
+            2
+          ],
+          "value": {
+            "index": 71,
+            "prime": "359"
+          }
+        },
+        {
+          "label": "p=367",
+          "pos": [
+            367,
+            8,
+            2
+          ],
+          "value": {
+            "index": 72,
+            "prime": "367"
+          }
+        },
+        {
+          "label": "p=373",
+          "pos": [
+            373,
+            6,
+            2
+          ],
+          "value": {
+            "index": 73,
+            "prime": "373"
+          }
+        },
+        {
+          "label": "p=379",
+          "pos": [
+            379,
+            6,
+            2
+          ],
+          "value": {
+            "index": 74,
+            "prime": "379"
+          }
+        },
+        {
+          "label": "p=383",
+          "pos": [
+            383,
+            4,
+            2
+          ],
+          "value": {
+            "index": 75,
+            "prime": "383"
+          }
+        },
+        {
+          "label": "p=389",
+          "pos": [
+            389,
+            6,
+            2
+          ],
+          "value": {
+            "index": 76,
+            "prime": "389"
+          }
+        },
+        {
+          "label": "p=397",
+          "pos": [
+            397,
+            8,
+            2
+          ],
+          "value": {
+            "index": 77,
+            "prime": "397"
+          }
+        },
+        {
+          "label": "p=401",
+          "pos": [
+            401,
+            4,
+            2
+          ],
+          "value": {
+            "index": 78,
+            "prime": "401"
+          }
+        },
+        {
+          "label": "p=409",
+          "pos": [
+            409,
+            8,
+            2
+          ],
+          "value": {
+            "index": 79,
+            "prime": "409"
+          }
+        },
+        {
+          "label": "p=419",
+          "pos": [
+            419,
+            10,
+            2
+          ],
+          "value": {
+            "index": 80,
+            "prime": "419"
+          }
+        },
+        {
+          "label": "p=421",
+          "pos": [
+            421,
+            2,
+            2
+          ],
+          "value": {
+            "index": 81,
+            "prime": "421"
+          }
+        },
+        {
+          "label": "p=431",
+          "pos": [
+            431,
+            10,
+            2
+          ],
+          "value": {
+            "index": 82,
+            "prime": "431"
+          }
+        },
+        {
+          "label": "p=433",
+          "pos": [
+            433,
+            2,
+            2
+          ],
+          "value": {
+            "index": 83,
+            "prime": "433"
+          }
+        },
+        {
+          "label": "p=439",
+          "pos": [
+            439,
+            6,
+            2
+          ],
+          "value": {
+            "index": 84,
+            "prime": "439"
+          }
+        },
+        {
+          "label": "p=443",
+          "pos": [
+            443,
+            4,
+            2
+          ],
+          "value": {
+            "index": 85,
+            "prime": "443"
+          }
+        },
+        {
+          "label": "p=449",
+          "pos": [
+            449,
+            6,
+            2
+          ],
+          "value": {
+            "index": 86,
+            "prime": "449"
+          }
+        },
+        {
+          "label": "p=457",
+          "pos": [
+            457,
+            8,
+            2
+          ],
+          "value": {
+            "index": 87,
+            "prime": "457"
+          }
+        },
+        {
+          "label": "p=461",
+          "pos": [
+            461,
+            4,
+            2
+          ],
+          "value": {
+            "index": 88,
+            "prime": "461"
+          }
+        },
+        {
+          "label": "p=463",
+          "pos": [
+            463,
+            2,
+            2
+          ],
+          "value": {
+            "index": 89,
+            "prime": "463"
+          }
+        },
+        {
+          "label": "p=467",
+          "pos": [
+            467,
+            4,
+            2
+          ],
+          "value": {
+            "index": 90,
+            "prime": "467"
+          }
+        },
+        {
+          "label": "p=479",
+          "pos": [
+            479,
+            12,
+            2
+          ],
+          "value": {
+            "index": 91,
+            "prime": "479"
+          }
+        },
+        {
+          "label": "p=487",
+          "pos": [
+            487,
+            8,
+            2
+          ],
+          "value": {
+            "index": 92,
+            "prime": "487"
+          }
+        },
+        {
+          "label": "p=491",
+          "pos": [
+            491,
+            4,
+            2
+          ],
+          "value": {
+            "index": 93,
+            "prime": "491"
+          }
+        },
+        {
+          "label": "p=499",
+          "pos": [
+            499,
+            8,
+            2
+          ],
+          "value": {
+            "index": 94,
+            "prime": "499"
+          }
+        },
+        {
+          "label": "p=503",
+          "pos": [
+            503,
+            4,
+            2
+          ],
+          "value": {
+            "index": 95,
+            "prime": "503"
+          }
+        },
+        {
+          "label": "p=509",
+          "pos": [
+            509,
+            6,
+            2
+          ],
+          "value": {
+            "index": 96,
+            "prime": "509"
+          }
+        },
+        {
+          "label": "p=521",
+          "pos": [
+            521,
+            12,
+            2
+          ],
+          "value": {
+            "index": 97,
+            "prime": "521"
+          }
+        },
+        {
+          "label": "p=523",
+          "pos": [
+            523,
+            2,
+            2
+          ],
+          "value": {
+            "index": 98,
+            "prime": "523"
+          }
+        },
+        {
+          "label": "p=541",
+          "pos": [
+            541,
+            18,
+            2
+          ],
+          "value": {
+            "index": 99,
+            "prime": "541"
+          }
+        },
+        {
+          "label": "p=547",
+          "pos": [
+            547,
+            6,
+            2
+          ],
+          "value": {
+            "index": 100,
+            "prime": "547"
+          }
+        },
+        {
+          "label": "p=557",
+          "pos": [
+            557,
+            10,
+            2
+          ],
+          "value": {
+            "index": 101,
+            "prime": "557"
+          }
+        },
+        {
+          "label": "p=563",
+          "pos": [
+            563,
+            6,
+            2
+          ],
+          "value": {
+            "index": 102,
+            "prime": "563"
+          }
+        },
+        {
+          "label": "p=569",
+          "pos": [
+            569,
+            6,
+            2
+          ],
+          "value": {
+            "index": 103,
+            "prime": "569"
+          }
+        },
+        {
+          "label": "p=571",
+          "pos": [
+            571,
+            2,
+            2
+          ],
+          "value": {
+            "index": 104,
+            "prime": "571"
+          }
+        },
+        {
+          "label": "p=577",
+          "pos": [
+            577,
+            6,
+            2
+          ],
+          "value": {
+            "index": 105,
+            "prime": "577"
+          }
+        },
+        {
+          "label": "p=587",
+          "pos": [
+            587,
+            10,
+            2
+          ],
+          "value": {
+            "index": 106,
+            "prime": "587"
+          }
+        },
+        {
+          "label": "p=593",
+          "pos": [
+            593,
+            6,
+            2
+          ],
+          "value": {
+            "index": 107,
+            "prime": "593"
+          }
+        },
+        {
+          "label": "p=599",
+          "pos": [
+            599,
+            6,
+            2
+          ],
+          "value": {
+            "index": 108,
+            "prime": "599"
+          }
+        },
+        {
+          "label": "p=601",
+          "pos": [
+            601,
+            2,
+            2
+          ],
+          "value": {
+            "index": 109,
+            "prime": "601"
+          }
+        },
+        {
+          "label": "p=607",
+          "pos": [
+            607,
+            6,
+            2
+          ],
+          "value": {
+            "index": 110,
+            "prime": "607"
+          }
+        },
+        {
+          "label": "p=613",
+          "pos": [
+            613,
+            6,
+            2
+          ],
+          "value": {
+            "index": 111,
+            "prime": "613"
+          }
+        },
+        {
+          "label": "p=617",
+          "pos": [
+            617,
+            4,
+            2
+          ],
+          "value": {
+            "index": 112,
+            "prime": "617"
+          }
+        },
+        {
+          "label": "p=619",
+          "pos": [
+            619,
+            2,
+            2
+          ],
+          "value": {
+            "index": 113,
+            "prime": "619"
+          }
+        },
+        {
+          "label": "p=631",
+          "pos": [
+            631,
+            12,
+            2
+          ],
+          "value": {
+            "index": 114,
+            "prime": "631"
+          }
+        },
+        {
+          "label": "p=641",
+          "pos": [
+            641,
+            10,
+            2
+          ],
+          "value": {
+            "index": 115,
+            "prime": "641"
+          }
+        },
+        {
+          "label": "p=643",
+          "pos": [
+            643,
+            2,
+            2
+          ],
+          "value": {
+            "index": 116,
+            "prime": "643"
+          }
+        },
+        {
+          "label": "p=647",
+          "pos": [
+            647,
+            4,
+            2
+          ],
+          "value": {
+            "index": 117,
+            "prime": "647"
+          }
+        },
+        {
+          "label": "p=653",
+          "pos": [
+            653,
+            6,
+            2
+          ],
+          "value": {
+            "index": 118,
+            "prime": "653"
+          }
+        },
+        {
+          "label": "p=659",
+          "pos": [
+            659,
+            6,
+            2
+          ],
+          "value": {
+            "index": 119,
+            "prime": "659"
+          }
+        },
+        {
+          "label": "p=661",
+          "pos": [
+            661,
+            2,
+            2
+          ],
+          "value": {
+            "index": 120,
+            "prime": "661"
+          }
+        },
+        {
+          "label": "p=673",
+          "pos": [
+            673,
+            12,
+            2
+          ],
+          "value": {
+            "index": 121,
+            "prime": "673"
+          }
+        },
+        {
+          "label": "p=677",
+          "pos": [
+            677,
+            4,
+            2
+          ],
+          "value": {
+            "index": 122,
+            "prime": "677"
+          }
+        },
+        {
+          "label": "p=683",
+          "pos": [
+            683,
+            6,
+            2
+          ],
+          "value": {
+            "index": 123,
+            "prime": "683"
+          }
+        },
+        {
+          "label": "p=691",
+          "pos": [
+            691,
+            8,
+            2
+          ],
+          "value": {
+            "index": 124,
+            "prime": "691"
+          }
+        },
+        {
+          "label": "p=701",
+          "pos": [
+            701,
+            10,
+            2
+          ],
+          "value": {
+            "index": 125,
+            "prime": "701"
+          }
+        },
+        {
+          "label": "p=709",
+          "pos": [
+            709,
+            8,
+            2
+          ],
+          "value": {
+            "index": 126,
+            "prime": "709"
+          }
+        },
+        {
+          "label": "p=719",
+          "pos": [
+            719,
+            10,
+            2
+          ],
+          "value": {
+            "index": 127,
+            "prime": "719"
+          }
+        },
+        {
+          "label": "p=727",
+          "pos": [
+            727,
+            8,
+            2
+          ],
+          "value": {
+            "index": 128,
+            "prime": "727"
+          }
+        },
+        {
+          "label": "p=733",
+          "pos": [
+            733,
+            6,
+            2
+          ],
+          "value": {
+            "index": 129,
+            "prime": "733"
+          }
+        },
+        {
+          "label": "p=739",
+          "pos": [
+            739,
+            6,
+            2
+          ],
+          "value": {
+            "index": 130,
+            "prime": "739"
+          }
+        },
+        {
+          "label": "p=743",
+          "pos": [
+            743,
+            4,
+            2
+          ],
+          "value": {
+            "index": 131,
+            "prime": "743"
+          }
+        },
+        {
+          "label": "p=751",
+          "pos": [
+            751,
+            8,
+            2
+          ],
+          "value": {
+            "index": 132,
+            "prime": "751"
+          }
+        },
+        {
+          "label": "p=757",
+          "pos": [
+            757,
+            6,
+            2
+          ],
+          "value": {
+            "index": 133,
+            "prime": "757"
+          }
+        },
+        {
+          "label": "p=761",
+          "pos": [
+            761,
+            4,
+            2
+          ],
+          "value": {
+            "index": 134,
+            "prime": "761"
+          }
+        },
+        {
+          "label": "p=769",
+          "pos": [
+            769,
+            8,
+            2
+          ],
+          "value": {
+            "index": 135,
+            "prime": "769"
+          }
+        },
+        {
+          "label": "p=773",
+          "pos": [
+            773,
+            4,
+            2
+          ],
+          "value": {
+            "index": 136,
+            "prime": "773"
+          }
+        },
+        {
+          "label": "p=787",
+          "pos": [
+            787,
+            14,
+            2
+          ],
+          "value": {
+            "index": 137,
+            "prime": "787"
+          }
+        },
+        {
+          "label": "p=797",
+          "pos": [
+            797,
+            10,
+            2
+          ],
+          "value": {
+            "index": 138,
+            "prime": "797"
+          }
+        },
+        {
+          "label": "p=809",
+          "pos": [
+            809,
+            12,
+            2
+          ],
+          "value": {
+            "index": 139,
+            "prime": "809"
+          }
+        },
+        {
+          "label": "p=811",
+          "pos": [
+            811,
+            2,
+            2
+          ],
+          "value": {
+            "index": 140,
+            "prime": "811"
+          }
+        },
+        {
+          "label": "p=821",
+          "pos": [
+            821,
+            10,
+            2
+          ],
+          "value": {
+            "index": 141,
+            "prime": "821"
+          }
+        },
+        {
+          "label": "p=823",
+          "pos": [
+            823,
+            2,
+            2
+          ],
+          "value": {
+            "index": 142,
+            "prime": "823"
+          }
+        },
+        {
+          "label": "p=827",
+          "pos": [
+            827,
+            4,
+            2
+          ],
+          "value": {
+            "index": 143,
+            "prime": "827"
+          }
+        },
+        {
+          "label": "p=829",
+          "pos": [
+            829,
+            2,
+            2
+          ],
+          "value": {
+            "index": 144,
+            "prime": "829"
+          }
+        },
+        {
+          "label": "p=839",
+          "pos": [
+            839,
+            10,
+            2
+          ],
+          "value": {
+            "index": 145,
+            "prime": "839"
+          }
+        },
+        {
+          "label": "p=853",
+          "pos": [
+            853,
+            14,
+            2
+          ],
+          "value": {
+            "index": 146,
+            "prime": "853"
+          }
+        },
+        {
+          "label": "p=857",
+          "pos": [
+            857,
+            4,
+            2
+          ],
+          "value": {
+            "index": 147,
+            "prime": "857"
+          }
+        },
+        {
+          "label": "p=859",
+          "pos": [
+            859,
+            2,
+            2
+          ],
+          "value": {
+            "index": 148,
+            "prime": "859"
+          }
+        },
+        {
+          "label": "p=863",
+          "pos": [
+            863,
+            4,
+            2
+          ],
+          "value": {
+            "index": 149,
+            "prime": "863"
+          }
+        },
+        {
+          "label": "p=877",
+          "pos": [
+            877,
+            14,
+            2
+          ],
+          "value": {
+            "index": 150,
+            "prime": "877"
+          }
+        },
+        {
+          "label": "p=881",
+          "pos": [
+            881,
+            4,
+            2
+          ],
+          "value": {
+            "index": 151,
+            "prime": "881"
+          }
+        },
+        {
+          "label": "p=883",
+          "pos": [
+            883,
+            2,
+            2
+          ],
+          "value": {
+            "index": 152,
+            "prime": "883"
+          }
+        },
+        {
+          "label": "p=887",
+          "pos": [
+            887,
+            4,
+            2
+          ],
+          "value": {
+            "index": 153,
+            "prime": "887"
+          }
+        },
+        {
+          "label": "p=907",
+          "pos": [
+            907,
+            20,
+            2
+          ],
+          "value": {
+            "index": 154,
+            "prime": "907"
+          }
+        },
+        {
+          "label": "p=911",
+          "pos": [
+            911,
+            4,
+            2
+          ],
+          "value": {
+            "index": 155,
+            "prime": "911"
+          }
+        },
+        {
+          "label": "p=919",
+          "pos": [
+            919,
+            8,
+            2
+          ],
+          "value": {
+            "index": 156,
+            "prime": "919"
+          }
+        },
+        {
+          "label": "p=929",
+          "pos": [
+            929,
+            10,
+            2
+          ],
+          "value": {
+            "index": 157,
+            "prime": "929"
+          }
+        },
+        {
+          "label": "p=937",
+          "pos": [
+            937,
+            8,
+            2
+          ],
+          "value": {
+            "index": 158,
+            "prime": "937"
+          }
+        },
+        {
+          "label": "p=941",
+          "pos": [
+            941,
+            4,
+            2
+          ],
+          "value": {
+            "index": 159,
+            "prime": "941"
+          }
+        },
+        {
+          "label": "p=947",
+          "pos": [
+            947,
+            6,
+            2
+          ],
+          "value": {
+            "index": 160,
+            "prime": "947"
+          }
+        },
+        {
+          "label": "p=953",
+          "pos": [
+            953,
+            6,
+            2
+          ],
+          "value": {
+            "index": 161,
+            "prime": "953"
+          }
+        },
+        {
+          "label": "p=967",
+          "pos": [
+            967,
+            14,
+            2
+          ],
+          "value": {
+            "index": 162,
+            "prime": "967"
+          }
+        },
+        {
+          "label": "p=971",
+          "pos": [
+            971,
+            4,
+            2
+          ],
+          "value": {
+            "index": 163,
+            "prime": "971"
+          }
+        },
+        {
+          "label": "p=977",
+          "pos": [
+            977,
+            6,
+            2
+          ],
+          "value": {
+            "index": 164,
+            "prime": "977"
+          }
+        },
+        {
+          "label": "p=983",
+          "pos": [
+            983,
+            6,
+            2
+          ],
+          "value": {
+            "index": 165,
+            "prime": "983"
+          }
+        },
+        {
+          "label": "p=991",
+          "pos": [
+            991,
+            8,
+            2
+          ],
+          "value": {
+            "index": 166,
+            "prime": "991"
+          }
+        },
+        {
+          "label": "p=997",
+          "pos": [
+            997,
+            6,
+            2
+          ],
+          "value": {
+            "index": 167,
+            "prime": "997"
+          }
+        }
+      ],
+      "sourceHash": "5e9d9893d87a72303343be3256c0c513c12830a2fe95007c18c6c21189dc7c38"
+    }
+  },
+  "resultHash": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457",
+  "mathematicalHash": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457",
+  "semanticHashPolicy": "EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY",
+  "checkpoint": {
+    "a": "2",
+    "b": "1000",
+    "next": "1001",
+    "schema": "MathScope.PrimeCheckpoint/1",
+    "segments": [
+      {
+        "a": "2",
+        "b": "1000",
+        "basePrimeBound": "31",
+        "basePrimeHash": "e6561afb627fae34e6f8b441024f4341cf86b1b079ccad31da0085d217fee569",
+        "hash": "a9438d8f1918d467ecf87b70d89c6d3b0625f6637808b33d13de2a70a5dbfd67",
+        "primes": [
+          "2",
+          "3",
+          "5",
+          "7",
+          "11",
+          "13",
+          "17",
+          "19",
+          "23",
+          "29",
+          "31",
+          "37",
+          "41",
+          "43",
+          "47",
+          "53",
+          "59",
+          "61",
+          "67",
+          "71",
+          "73",
+          "79",
+          "83",
+          "89",
+          "97",
+          "101",
+          "103",
+          "107",
+          "109",
+          "113",
+          "127",
+          "131",
+          "137",
+          "139",
+          "149",
+          "151",
+          "157",
+          "163",
+          "167",
+          "173",
+          "179",
+          "181",
+          "191",
+          "193",
+          "197",
+          "199",
+          "211",
+          "223",
+          "227",
+          "229",
+          "233",
+          "239",
+          "241",
+          "251",
+          "257",
+          "263",
+          "269",
+          "271",
+          "277",
+          "281",
+          "283",
+          "293",
+          "307",
+          "311",
+          "313",
+          "317",
+          "331",
+          "337",
+          "347",
+          "349",
+          "353",
+          "359",
+          "367",
+          "373",
+          "379",
+          "383",
+          "389",
+          "397",
+          "401",
+          "409",
+          "419",
+          "421",
+          "431",
+          "433",
+          "439",
+          "443",
+          "449",
+          "457",
+          "461",
+          "463",
+          "467",
+          "479",
+          "487",
+          "491",
+          "499",
+          "503",
+          "509",
+          "521",
+          "523",
+          "541",
+          "547",
+          "557",
+          "563",
+          "569",
+          "571",
+          "577",
+          "587",
+          "593",
+          "599",
+          "601",
+          "607",
+          "613",
+          "617",
+          "619",
+          "631",
+          "641",
+          "643",
+          "647",
+          "653",
+          "659",
+          "661",
+          "673",
+          "677",
+          "683",
+          "691",
+          "701",
+          "709",
+          "719",
+          "727",
+          "733",
+          "739",
+          "743",
+          "751",
+          "757",
+          "761",
+          "769",
+          "773",
+          "787",
+          "797",
+          "809",
+          "811",
+          "821",
+          "823",
+          "827",
+          "829",
+          "839",
+          "853",
+          "857",
+          "859",
+          "863",
+          "877",
+          "881",
+          "883",
+          "887",
+          "907",
+          "911",
+          "919",
+          "929",
+          "937",
+          "941",
+          "947",
+          "953",
+          "967",
+          "971",
+          "977",
+          "983",
+          "991",
+          "997"
+        ],
+        "schema": "MathScope.PrimeSegment/1"
+      }
+    ]
+  },
+  "resumePolicy": "RECOMPUTE_FROM_ORIGINAL_INPUT",
+  "trust": "UNTRUSTED_WHEN_SERIALIZED",
+  "bundleHash": "76e171d959df2ac57f4839838527e10fa71d4db7dcd3d7647cdadbd398f7e4e8"
+}

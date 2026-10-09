@@ -1,0 +1,162 @@
+{
+  "schema": "MathScope.M1.CliAcceptance/1",
+  "status": "PASS",
+  "checkedAt": "2026-10-09T15:16:51.622Z",
+  "command": [
+    "node",
+    "mathscope-m1/cli.mjs",
+    "run",
+    "prime-1000",
+    "--out",
+    "/tmp/mathscope-m1-cli-prime-final"
+  ],
+  "exitCode": 0,
+  "nodeVersion": "v24.19.0",
+  "sourceFile": "mathscope-m1/cli.mjs",
+  "sourceSha256": "6d9d699d5efe2d055a4ed3b699aeffd5d3e2385c766548e419dad502a5d3614e",
+  "workerSha256": "aa416e4a0092f7e8c36d94130ec3c414c4a9127676538744e93444217467f27b",
+  "requestHash": "66afd97c457c0699b0507dc2dff13965ff04d8a40017c75aeb5f79f107b12950",
+  "resultHash": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457",
+  "mathematicalHash": "6b9f0a6ec3652112943dc3a80f9889b3acb107302caed27ead683bc327ede457",
+  "bundleHash": "76e171d959df2ac57f4839838527e10fa71d4db7dcd3d7647cdadbd398f7e4e8",
+  "scope": {
+    "description": "Only the requested bounded input and explicitly supported operations are computed.",
+    "finite": true,
+    "infiniteDomain": {
+      "definition": "{ n : Nat | Nat.Prime n }",
+      "enumeration": "Every completed request covers only its stated finite interval.",
+      "kind": "SYMBOLIC_INFINITE_SET",
+      "leanDefinition": "MathScope.M1.Arithmetic.PrimeSet",
+      "schema": "MathScope.PrimeDomain/1"
+    }
+  },
+  "checks": [
+    {
+      "name": "real bounded Node Worker completed",
+      "pass": true
+    },
+    {
+      "name": "exact interval and168 primes",
+      "pass": true
+    },
+    {
+      "name": "request preserved in actual exportBundle",
+      "pass": true
+    },
+    {
+      "name": "computed result preserved in actual exportBundle",
+      "pass": true
+    },
+    {
+      "name": "input digest verifies",
+      "pass": true
+    },
+    {
+      "name": "result digest verifies",
+      "pass": true
+    },
+    {
+      "name": "bundle digest verifies",
+      "pass": true
+    },
+    {
+      "name": "environment digest verifies",
+      "pass": true
+    },
+    {
+      "name": "unchanged installed Worker source pin",
+      "pass": true
+    },
+    {
+      "name": "serialized trust boundary retained",
+      "pass": true
+    },
+    {
+      "name": "saved bytes andSHA256: request.json",
+      "pass": true
+    },
+    {
+      "name": "saved bytes andSHA256: environment.json",
+      "pass": true
+    },
+    {
+      "name": "saved bytes andSHA256: result.json",
+      "pass": true
+    },
+    {
+      "name": "saved bytes andSHA256: replay-bundle.json",
+      "pass": true
+    },
+    {
+      "name": "saved bytes andSHA256: summary.json",
+      "pass": true
+    },
+    {
+      "name": "actual registry lists48 unique examples",
+      "pass": true
+    },
+    {
+      "name": "existing output rejected before computation",
+      "pass": true
+    },
+    {
+      "name": "unknown example rejected",
+      "pass": true
+    }
+  ],
+  "passed": 18,
+  "total": 18,
+  "files": [
+    {
+      "path": "request.json",
+      "bytes": 223,
+      "sha256": "dca71ae112f86b9ff3459f1032b61405d6a87c124e8a0bfb4f45e57673933b94"
+    },
+    {
+      "path": "environment.json",
+      "bytes": 21959,
+      "sha256": "f476e54bd9c55568e4238e4c6512db873eff8ff3d4e6e238be1aceeb050e428f"
+    },
+    {
+      "path": "result.json",
+      "bytes": 59161,
+      "sha256": "6f7406b9f8aff4c0741fbdd44a6acdfb16292462632aeadce304c35893a00c64"
+    },
+    {
+      "path": "replay-bundle.json",
+      "bytes": 93005,
+      "sha256": "d7460d973f20c41fbf3c741af9c435f871d2f0f8d13c8105435a1f1464996a76"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 5274,
+      "sha256": "bd9714d9c0525f9e86fccd48fcdea562561718c04c85008c2de78907222428ab"
+    }
+  ],
+  "negativeControls": [
+    {
+      "command": [
+        "node",
+        "mathscope-m1/cli.mjs",
+        "run",
+        "prime-1000",
+        "--out",
+        "/tmp/mathscope-m1-cli-prime-final"
+      ],
+      "exitCode": 1,
+      "stderr": "MathScope CLI: Output already exists; select a new directory: /tmp/mathscope-m1-cli-prime-final\n"
+    },
+    {
+      "command": [
+        "node",
+        "mathscope-m1/cli.mjs",
+        "run",
+        "does-not-exist"
+      ],
+      "exitCode": 1,
+      "stderr": "MathScope CLI: Unknown example 'does-not-exist'. Run list to see installed IDs.\n"
+    }
+  ],
+  "interpretation": "One final CLI computation in the actual bounded Node Worker and saved-file integrity/registry/negative controls; no Lean or official NS build rerun, and no source ZIP written.",
+  "packagedArtifactDirectory": "mathscope-m1/evidence/cli-prime-1000"
+}

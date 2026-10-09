@@ -1,0 +1,456 @@
+import {ComputeError,makeBudget,finiteNumber,positive,boundedInteger,solveLinear} from '../numerics.mjs';
+import {smoothStep,smoothStepDerivative,compactBump} from '../radial.mjs';
+import {runAdmissibleLoop,coneGaps} from './admissible-loop.mjs';
+
+const TAU=2*Math.PI,SOURCE={attachment:'01-navier-stokes.pdf',sha256:'0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f',pages:[28,158,159,160,161,162,163],equations:['4.15','4.16','C.4','C.5','C.9','C.10','C.11','C.12','C.13','C.14','C.15','C.16']};
+const bf=b=>b?.tick?b:makeBudget(b??{});
+const safe=x=>{
+  if(typeof x==='number'){
+    if(!Number.isFinite(x))throw new ComputeError('PRECISION_REQUIRED','Nonfinite source modulation output');
+    return Number.isInteger(x)&&!Number.isSafeInteger(x)?{kind:'FLOAT64',value:x.toExponential(17),precisionBits:53}:Object.is(x,-0)?0:x;
+  }
+  if(Array.isArray(x))return x.map(safe);
+  if(x&&typeof x==='object')return Object.fromEntries(Object.entries(x).filter(([,v])=>v!==undefined&&typeof v!=='function').map(([k,v])=>[k,safe(v)]));
+  return x;
+};
+const zeros=n=>Array(n).fill(0),dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),maxabs=a=>Math.max(...a.map(Math.abs));
+function failStatus(e){return e.code==='RESOURCE_LIMIT'?'BUDGET_EXCEEDED':['PRECISION_REQUIRED','UNSUPPORTED','BUDGET_EXCEEDED','CANCELLED'].includes(e.code)?e.code:'FAILED';}
+const gaussCache=new Map();
+function gaussRule(n){
+  if(gaussCache.has(n))return gaussCache.get(n);
+  const out=[];
+  for(let i=1;i<=n;i++){
+    let z=Math.cos(Math.PI*(i-.25)/(n+.5)),dp=0;
+    for(let j=0;j<16;j++){
+      let p0=1,p1=z;for(let k=2;k<=n;k++){const p=((2*k-1)*z*p1-(k-1)*p0)/k;p0=p1;p1=p;}
+      dp=n*(z*p1-p0)/(z*z-1);const d=p1/dp;z-=d;if(Math.abs(d)<2e-16)break;
+    }
+    let p0=1,p1=z;for(let k=2;k<=n;k++){const p=((2*k-1)*z*p1-(k-1)*p0)/k;p0=p1;p1=p;}
+    dp=n*(z*p1-p0)/(z*z-1);out.push([z,2/((1-z*z)*dp*dp)]);
+  }
+  gaussCache.set(n,out);return out;
+}
+function quadVector(f,a,b,n,budget){
+  if(a===b)return zeros(f(a).length);
+  let sum=null;const m=(a+b)/2,h=(b-a)/2;
+  for(const [z,w] of gaussRule(n)){
+    budget.tick();const v=f(m+h*z);if(!sum)sum=zeros(v.length);
+    for(let j=0;j<v.length;j++)sum[j]+=w*h*v[j];
+  }
+  return sum;
+}
+function powerDifference(a,b,p){return Math.exp(p*Math.log(a))*Math.expm1(p*Math.log(b/a))/p;}
+
+export function validateRadialModulationInput(input={}){
+  try{
+    if(!input||typeof input!=='object'||Array.isArray(input))throw new ComputeError('INVALID_INPUT','Modulation input must be a JSON object');
+    if(input.family!==undefined&&input.family!=='explicit-power-annulus')throw new ComputeError('UNSUPPORTED','This implementation accepts the explicit power-annulus family, not an unbound full paper witness');
+    const p={h:positive(input.h??1e-8,'h'),lambda:positive(input.lambda??.2,'lambda'),innerAmplitude:positive(input.innerAmplitude??40,'innerAmplitude'),
+      powerAmplitude:positive(input.powerAmplitude??1,'powerAmplitude'),modulationInterval:input.modulationInterval??[3,6],patch:input.patch??[8,16],
+      N:boundedInteger(input.N??512,'N',2,2048),phaseNodes:boundedInteger(input.phaseNodes??512,'phaseNodes',128,2048),
+      samples:boundedInteger(input.samples??97,'samples',33,1025),quadratureOrder:boundedInteger(input.quadratureOrder??12,'quadratureOrder',6,24),
+      etaDerivativeOrder:boundedInteger(input.etaDerivativeOrder??1,'etaDerivativeOrder',1,2),
+      detailMode:input.detailMode??'compact',
+      etaStep:positive(input.etaStep??2e-4,'etaStep'),logRadialStep:positive(input.logRadialStep??1e-4,'logRadialStep'),
+      etaValues:input.etaValues??[0],includeIndependentQuadrature:input.includeIndependentQuadrature??true};
+    if(!(p.h<.001&&p.lambda>=.0001&&p.lambda<=.5&&p.h<p.lambda/2&&p.innerAmplitude<=100&&p.powerAmplitude<=10))throw new ComputeError('INVALID_INPUT','Require 0<h<.001, 1e-4<=lambda<=.5, 2h<lambda, innerAmplitude<=100 and powerAmplitude<=10');
+    if(p.phaseNodes%2)throw new ComputeError('INVALID_INPUT','phaseNodes must be even');
+    if(typeof p.includeIndependentQuadrature!=='boolean')throw new ComputeError('INVALID_INPUT','includeIndependentQuadrature must be a boolean');
+    if(!['compact','dense'].includes(p.detailMode))throw new ComputeError('INVALID_INPUT','detailMode must be compact or dense');
+    if(!(p.etaStep>=1e-6&&p.etaStep<=.005&&p.logRadialStep>=1e-6&&p.logRadialStep<=.002))throw new ComputeError('INVALID_INPUT','Finite-difference steps are outside the supported accuracy range');
+    for(const [name,v] of [['modulationInterval',p.modulationInterval],['patch',p.patch]]){
+      if(!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||!(v[0]>0&&v[1]>v[0]))throw new ComputeError('INVALID_SUPPORT',name+' must contain two ordered positive radii');
+    }
+    if(!(p.modulationInterval[0]>2.1&&p.modulationInterval[1]<=20&&p.patch[0]>p.modulationInterval[1]&&p.patch[1]<=100))throw new ComputeError('INVALID_SUPPORT','Modulation must follow the inner transition and precede the disjoint first power-law patch');
+    if(!Array.isArray(p.etaValues)||!p.etaValues.length||p.etaValues.length>3||p.etaValues.some(x=>typeof x!=='number'||!Number.isFinite(x)||Math.abs(x)>1))throw new ComputeError('INVALID_INPUT','etaValues must contain 1..3 finite values in [-1,1]');
+    return {valid:true,parameters:p};
+  }catch(e){return {valid:false,status:failStatus(e),domainStatus:e.code??'INVALID_INPUT',message:e.message,detail:e.detail??{}};}
+}
+
+/** Explicit positive finite-moment profile. It is smooth on the annulus but is
+ * not the original regular-axis/outer witness. U=0, and the first patch is an
+ * exact E=K X^(-1/2-lambda) branch as required by the C.2 correction operator. */
+function makeProfile(p,budget){
+  const alpha=.1,beta=-.5-p.lambda,[left,right]=p.modulationInterval,yl=Math.log(left),yr=Math.log(right),width=yr-yl;
+  const jump=(alpha-beta)*width/8,K=p.powerAmplitude,Kout=K*Math.exp(jump),A=p.innerAmplitude;
+  function field(X){
+    const y=Math.log(X);let logE,slope;
+    if(X<=1){logE=Math.log(A)+alpha*y;slope=alpha;}
+    else if(X<2){
+      const s=y/Math.LN2,c=smoothStep(s),dc=smoothStepDerivative(s)/Math.LN2;
+      const f=Math.log(A)+alpha*y,g=Math.log(K)+beta*y;
+      logE=(1-c)*f+c*g;slope=(1-c)*alpha+c*beta+dc*(g-f);
+    }else{
+      const s=(y-yl)/width;logE=Math.log(K)+beta*y+jump*smoothStep(s);
+      slope=beta+jump/width*smoothStepDerivative(s);
+    }
+    return {X,logE,E:Math.exp(logE),U:0,slope,a:1-2*slope};
+  }
+  const foundation=[Math.SQRT2*A/(alpha+1.5),-.5*A*A/(2*alpha+1),A*A/(4*alpha)];
+  const integrand=y=>{const X=Math.exp(y),E=field(X).E;return [X*Math.sqrt(2*X)*E,-X*E*E/2,E*E/2];};
+  const drop=quadVector(integrand,0,Math.LN2,48,budget),atTwo=foundation.map((v,j)=>v+drop[j]);
+  const power=(k,a,b)=>[Math.SQRT2*k*powerDifference(a,b,beta+1.5),-.5*k*k*powerDifference(a,b,2*beta+1),.5*k*k*powerDifference(a,b,2*beta)];
+  const pre=power(K,2,left),atLeft=atTwo.map((v,j)=>v+pre[j]),central=quadVector(integrand,yl,yr,48,budget),atRight=atLeft.map((v,j)=>v+central[j]);
+  const pressureTailAtRight=Kout*Kout*Math.exp(2*beta*yr)/(-4*beta),axisPressure=-atRight[2]-pressureTailAtRight;
+  const cache=new Map();
+  function radial(X){
+    const key=String(X);if(cache.has(key))return cache.get(key);
+    const f=field(X);let moments,Pi;
+    if(X<left-1e-10)throw new ComputeError('UNSUPPORTED','Radial residual evaluation is restricted to the modulation and later patch');
+    if(X>=right){const v=power(Kout,right,X);moments=atRight.map((x,j)=>x+v[j]);Pi=-Kout*Kout*Math.exp(2*beta*Math.log(X))/(-4*beta);}
+    else{
+      const v=quadVector(integrand,yl,Math.log(X),32,budget);moments=atLeft.map((x,j)=>x+v[j]);
+      Pi=-quadVector(integrand,Math.log(X),yr,32,budget)[2]-pressureTailAtRight;
+    }
+    const value={...f,I:moments[0],S:moments[1],Cp:moments[2],Pi};cache.set(key,value);return value;
+  }
+  function state(X,eta){
+    const r=radial(X),L=1-2*p.h*eta*eta,AA=.5+p.h;
+    const Q=-1+(1-p.h)*r.I/(X*Math.sqrt(2*X)*r.E),N=4*p.h*eta*r.S/X+4*AA*eta*r.Pi;
+    const ps=[X*Q/L,X*N/(L*r.E)];return {...r,eta,ps,bs:0,...coneGaps({a:r.a,bs:0,ps})};
+  }
+  return {field,radial,state,left,right,yl,yr,width,alpha,beta,jump,Kout,axisPressure,atLeft,atRight,
+    contract:{family:'explicit-power-annulus',formula:'log E blends log(A)+0.1 log X into log(K)+beta log X on 1<X<2, then adds jump*sigma((log X-log Xminus)/width)',
+      beta,jump,axisPressure,angularProfileIndependentOfEta:true,axialProfile:'U=0',firstPatchExactPowerLaw:true,
+      regularCartesianAxisCertified:false,originalPaperProfile:false}};
+}
+
+function floatMeanAndVariance(mu,p,d0,budget){
+  const z=mu*p;if(Math.abs(z)>300)throw new ComputeError('PRECISION_REQUIRED','C.12 loop concentration exceeds the supported |mu p2| range');
+  if(!p)return {M:1,logM:0,V:d0*d0*mu*mu/2};
+  const q=z*z/4;let term=1,M=1,tail=0;
+  for(let n=1;n<2000;n++){budget.tick();term*=q/(n*n);M+=term;tail+=term;if(term<1e-16*M)break;}
+  const z2=z*z;let raw=1,central=.5,B=.5;
+  for(let n=1;n<2000;n++){
+    budget.tick();raw*=z2/((n+1)*(n+1));central*=(2*n+1)/(2*n+2);const add=(1-central)*raw;B+=add;if(add<1e-16*B)break;
+  }
+  return {M,logM:Math.abs(z)<1e-3?Math.log1p(tail):Math.log(M),V:d0*d0*mu*mu*B/(M*M)};
+}
+function hermite(v0,v1,d0,d1,h,s){return ((2*s-3)*s*s+1)*v0+((s-2)*s+1)*s*h*d0+(-2*s+3)*s*s*v1+(s-1)*s*s*h*d1;}
+function primitiveFamily(profile,p,budget){
+  const points=[];
+  for(const f of [0,.25,.5,.75,1])for(const eta of [-1,0,1]){
+    const X=Math.exp(profile.yl+f*profile.width),s=profile.state(X,eta);
+    points.push({a:s.a,bs:0,ps:s.ps,X,eta,boundary:f===0||f===1});
+  }
+  const selected=runAdmissibleLoop({points,phaseSamples:32},budget);
+  if(selected.status!=='PARTIAL'||!selected.loops?.every(l=>l.phaseCertificate.pass))throw new ComputeError(['PRECISION_REQUIRED','BUDGET_EXCEEDED','CANCELLED','UNSUPPORTED'].includes(selected.status)?selected.status:'INVALID_PROFILE','The explicit profile does not supply the checked finite C.1 parameter-selection states',{selectionStatus:selected.status,message:selected.message});
+  const {d0,muMax,delta}=selected.sharedParameters,cache=new Map(),cutoffBreakpoints=[];
+  // A radial cutoff may be far narrower than a phase quarter-period. Resolve
+  // its actual source thresholds before quadrature instead of hoping a grid
+  // samples this smooth but narrow transition.
+  for(const threshold of [2+delta/8,2+delta/4]){
+    let lo=0,hi=.5;
+    for(let j=0;j<60;j++){
+      const m=(lo+hi)/2,a=profile.field(Math.exp(profile.yl+m*profile.width)).a;
+      if(a>threshold)lo=m;else hi=m;
+    }
+    const t=(lo+hi)/2;cutoffBreakpoints.push(profile.yl+t*profile.width,profile.yl+(1-t)*profile.width);
+  }
+  cutoffBreakpoints.sort((a,b)=>a-b);
+  const radialStencilStep=Math.min(p.logRadialStep,(cutoffBreakpoints[1]-cutoffBreakpoints[0])/128,(cutoffBreakpoints[3]-cutoffBreakpoints[2])/128);
+  if(!(radialStencilStep>1e-10))throw new ComputeError('PRECISION_REQUIRED','The C.1 radial cutoff is too narrow for this Float64 differentiation path');
+  const stats={families:0,closedRemovableFamilies:0,outsideCutoffFamilies:0,numericalUnderflowZeroFamilies:0,maxPeriodDefect:0,maxRootVarianceDefect:0};
+  function at(X,eta){
+    if(X<=profile.left||X>=profile.right)return {value:()=>({A:0,B:0,Ap:0,Bp:0,aL:profile.field(X).a,bL:0}),maxA:0,maxB:0,zero:true};
+    const key=X+'|'+eta;if(cache.has(key))return cache.get(key);
+    if(cache.size>=100000)throw new ComputeError('BUDGET_EXCEEDED','Loop-family cache limit reached');
+    const s=profile.state(X,eta),a=s.a,p2=s.ps[1],pc=s.ps[0];
+    if(!(a>0&&pc>Math.max(2,a)&&d0<(pc-2)/2))throw new ComputeError('INVALID_PROFILE','A queried annular state fails the C.1 hypotheses or common d0 condition',{X,eta,a,pc,d0});
+    const cutoffArgument=(a-(2+delta/8))/(delta/8),zeta=1-smoothStep(cutoffArgument),rho=zeta*zeta*Math.max(0,2+delta/2-a),v=a+rho;
+    if(rho===0){
+      const outside=a>=2+delta/4;stats[outside?'outsideCutoffFamilies':'numericalUnderflowZeroFamilies']++;
+      const result={value:()=>({A:0,B:0,Ap:0,Bp:0,aL:a,bL:0}),maxA:0,maxB:0,zero:true,numericOnlyZero:!outside};
+      if(eta!==0)cache.set(key,result);return result;
+    }
+    const target=rho/a;let mu;
+    if(p2===0)mu=Math.sqrt(2*target)/d0;
+    else{
+      let lo=0,hi=muMax;if(floatMeanAndVariance(hi,p2,d0,budget).V<=target)throw new ComputeError('INVALID_PROFILE','Selected common muMax does not bracket a queried state');
+      for(let k=0;k<55;k++){const m=(lo+hi)/2;if(floatMeanAndVariance(m,p2,d0,budget).V<target)lo=m;else hi=m;}
+      mu=(lo+hi)/2;
+    }
+    const mv=floatMeanAndVariance(mu,p2,d0,budget),z=mu*p2;
+    stats.maxRootVarianceDefect=Math.max(stats.maxRootVarianceDefect,Math.abs(mv.V-target));
+    if(p2===0){
+      // Exact removable-branch primitives of C.5/C.11. The inverse circle lift
+      // is one monotone scalar equation, not a sampled surrogate loop.
+      const T=d0*mu,c=rho/(4*Math.PI*v),meanAp=a*a*T**3/(24*Math.PI*v*d0);
+      function value(phase){
+        const q=phase-Math.floor(phase);let th=q*TAU,lo=0,hi=TAU;
+        for(let j=0;j<50;j++){
+          budget.tick();const f=th/TAU-c*Math.sin(2*th)-q,df=1/TAU-2*c*Math.cos(2*th);
+          if(Math.abs(f)<8e-16)break;if(f<0)lo=th;else hi=th;
+          const next=th-f/df;th=next>lo&&next<hi?next:(lo+hi)/2;
+        }
+        const st=Math.sin(th),ct=Math.cos(th),tt=T*st,aa=v/(1+tt*tt),bb=-aa*tt;
+        const primitiveF=-ct/4+ct**3/6+1/12,phiP=a*T**3*primitiveF/(Math.PI*v*d0),phiTheta=a*(1+tt*tt)/(TAU*v),thetaP=-phiP/phiTheta;
+        return {A:-a*rho*Math.sin(2*th)/(8*Math.PI*v),B:s.E*a*T*ct/(4*Math.PI),aL:aa,bL:bb,
+          Ap:-a*thetaP/(4*Math.PI)-meanAp,
+          Bp:s.E*(a*T*T*Math.sin(2*th)/(32*Math.PI*d0)-a*T*st*thetaP/(4*Math.PI))};
+      }
+      stats.closedRemovableFamilies++;
+      return {value,maxA:a*rho/(8*Math.PI*v),maxB:s.E*a*T/(4*Math.PI),zero:false,mu,period:1,closedRemovable:true};
+    }
+    const n=p.phaseNodes,h=TAU/n,phi=new Float64Array(n+1),tIntegral=new Float64Array(n+1),ts=new Float64Array(n+1),ds=new Float64Array(n+1),phiMid=new Float64Array(n),tMidIntegral=new Float64Array(n),tMid=new Float64Array(n),dMid=new Float64Array(n);
+    const t=th=>p2===0?d0*mu*Math.sin(th):d0*Math.expm1(z*Math.sin(th)-mv.logM)/p2;
+    for(let i=0;i<=n;i++){
+      budget.tick(10);ts[i]=t(i*h);ds[i]=a*(1+ts[i]*ts[i])/(TAU*v);
+      if(i){
+        const tm=t((i-.5)*h),dm=a*(1+tm*tm)/(TAU*v),tq=t((i-.75)*h),dq=a*(1+tq*tq)/(TAU*v);
+        tMid[i-1]=tm;dMid[i-1]=dm;
+        phiMid[i-1]=phi[i-1]+h*(ds[i-1]+4*dq+dm)/12;
+        tMidIntegral[i-1]=tIntegral[i-1]+h*(ts[i-1]+4*tq+tm)/12;
+        phi[i]=phi[i-1]+h*(ds[i-1]+4*dm+ds[i])/6;
+        tIntegral[i]=tIntegral[i-1]+h*(ts[i-1]+4*tm+ts[i])/6;
+      }
+    }
+    const period=phi[n];stats.maxPeriodDefect=Math.max(stats.maxPeriodDefect,Math.abs(period-1));
+    if(Math.abs(period-1)>2e-6)throw new ComputeError('PRECISION_REQUIRED','Numerical loop phase resolution is insufficient',{X,eta,periodDefect:period-1,phaseNodes:n});
+    let meanA=0,meanB=0,maxA=0,maxB=0;
+    const rawA=i=>.5*a*(phi[i]-i/n),rawB=i=>-s.E*a*tIntegral[i]/(2*TAU);
+    for(let i=1;i<=n;i++){
+      const am=.5*a*(phiMid[i-1]-(i-.5)/n),bm=-s.E*a*tMidIntegral[i-1]/(2*TAU);
+      meanA+=h*(rawA(i-1)*ds[i-1]+4*am*dMid[i-1]+rawA(i)*ds[i])/(6*period);
+      meanB+=h*(rawB(i-1)*ds[i-1]+4*bm*dMid[i-1]+rawB(i)*ds[i])/(6*period);
+    }
+    for(let i=0;i<=n;i++){maxA=Math.max(maxA,Math.abs(rawA(i)-meanA));maxB=Math.max(maxB,Math.abs(rawB(i)-meanB));}
+    function value(phase){
+      const q=phase-Math.floor(phase),target=q*period;let lo=0,hi=n;
+      while(hi-lo>1){const m=(lo+hi)>>1;if(phi[m]<=target)lo=m;else hi=m;}
+      let u=(target-phi[lo])/(phi[hi]-phi[lo]),l=0,r=1;
+      for(let k=0;k<45;k++){
+        const val=hermite(phi[lo],phi[hi],ds[lo],ds[hi],h,u);
+        if(val<target)l=u;else r=u;
+        if(Math.abs(val-target)<1e-14)break;u=(l+r)/2;
+      }
+      const theta=(lo+u)*h,tt=t(theta),aa=v/(1+tt*tt),bb=-aa*tt;
+      const it=hermite(tIntegral[lo],tIntegral[hi],ts[lo],ts[hi],h,u);
+      return {A:.5*a*(target-theta/TAU)-meanA,B:-s.E*a*it/(2*TAU)-meanB,aL:aa,bL:bb};
+    }
+    const result={value,maxA,maxB,zero:false,mu,period};cache.set(key,result);stats.families++;return result;
+  }
+  function fields(X,eta,N=p.N,withRadial=false){
+    const base=profile.radial(Math.min(Math.max(X,profile.left),p.patch[1])),phase=N*Math.log(X),center=at(X,eta).value(phase),ep=p.etaStep;
+    let Ae,Be,Aee,Bee,etaMethod;
+    if(eta===0&&p.etaDerivativeOrder===1){
+      const dp=(4*p.h*base.S+4*(.5+p.h)*X*base.Pi)/base.E;
+      Ae=center.Ap*dp;Be=center.Bp*dp;etaMethod='Analytic first derivative of the C.5 removable branch and its normalized C.11 primitives';
+    }else{
+      const plus=at(X,eta+ep).value(phase),minus=at(X,eta-ep).value(phase),plus2=at(X,eta+2*ep).value(phase),minus2=at(X,eta-2*ep).value(phase);
+      Ae=(minus2.A-8*minus.A+8*plus.A-plus2.A)/(12*ep);Be=(minus2.B-8*minus.B+8*plus.B-plus2.B)/(12*ep);
+      if(p.etaDerivativeOrder>=2){Aee=(-plus2.A+16*plus.A-30*center.A+16*minus.A-minus2.A)/(12*ep*ep);Bee=(-plus2.B+16*plus.B-30*center.B+16*minus.B-minus2.B)/(12*ep*ep);}
+      etaMethod='Five-point finite difference at fixed phase';
+    }
+    const E=base.E*Math.exp(center.A/N),deltaE=base.E*Math.expm1(center.A/N),U=center.B/N;
+    const result={X,eta,phase:phase-Math.floor(phase),E,U,deltaE,baseE:base.E,baseU:0,A:center.A,B:center.B,Aeta:Ae,Beta:Be,AetaEta:Aee,BetaEta:Bee,
+      Eeta:E*Ae/N,Ueta:Be/N,EetaEta:Aee===undefined?undefined:E*(Aee/N+(Ae/N)**2),UetaEta:Bee===undefined?undefined:Bee/N,aL:center.aL,bL:center.bL,etaDerivativeOrder:p.etaDerivativeOrder,etaDerivativeMethod:etaMethod};
+    if(withRadial){
+      const e=radialStencilStep,yp=at(X*Math.exp(e),eta).value(phase),ym=at(X*Math.exp(-e),eta).value(phase),yp2=at(X*Math.exp(2*e),eta).value(phase),ym2=at(X*Math.exp(-2*e),eta).value(phase),
+        Ay=(ym2.A-8*ym.A+8*yp.A-yp2.A)/(12*e),By=(ym2.B-8*ym.B+8*yp.B-yp2.B)/(12*e);
+      result.DXA=Ay;result.DXB=By;result.radialStencilStep=e;result.aN=center.aL-2*Ay/N;result.bN=Math.exp(-center.A/N)*(center.bL+2*By/(N*base.E));
+      result.DXE=E*(1-result.aN)/2;result.DXU=E*result.bN/2;
+    }
+    return result;
+  }
+  return {at,fields,stats,parameters:{d0,muMax,delta},selectionPoints:points,cutoffBreakpoints,radialStencilStep,selectionScope:'Finite source-state probes, not a uniform analytic profile certificate'};
+}
+
+function momentDifferenceRows(f){
+  const second=f.EetaEta!==undefined&&f.UetaEta!==undefined,X=f.X,E=f.E,U=f.U,de=f.deltaE,E0=f.baseE,Ee=f.Eeta,Ue=f.Ueta,Eee=f.EetaEta??0,Uee=f.UetaEta??0,H=Math.sqrt(2*X)*E,He=Math.sqrt(2*X)*Ee,Hee=Math.sqrt(2*X)*Eee;
+  return [U,Math.sqrt(2*X)*de,U*H,U*U-E0*de-de*de/2,(E0*de+de*de/2)/X,
+    Ue,He,Ue*H+U*He,2*U*Ue-E*Ee,E*Ee/X,
+    ...(second?[Uee,Hee,Uee*H+2*Ue*He+U*Hee,2*Ue*Ue+2*U*Uee-Ee*Ee-E*Eee,(Ee*Ee+E*Eee)/X]:zeros(5))];
+}
+function integrateDebt(profile,loops,p,eta,to,order,budget){
+  const end=Math.min(to,profile.right);if(end<=profile.left)return {moments:zeros(5),eta:zeros(5),etaEta:p.etaDerivativeOrder>=2?zeros(5):null};
+  const a=profile.yl,b=Math.log(end),cuts=[a,b];
+  // Split into quarter-period intervals before high-order Gaussian integration.
+  for(let k=Math.floor(4*p.N*a)+1;k<4*p.N*b;k++)cuts.push(k/(4*p.N));
+  for(const y of loops.cutoffBreakpoints)if(y>a&&y<b)cuts.push(y);
+  cuts.sort((x,y)=>x-y);const sum=zeros(15);
+  for(let i=0;i<cuts.length-1;i++){
+    const v=quadVector(y=>{const X=Math.exp(y);return momentDifferenceRows(loops.fields(X,eta)).map(t=>t*X);},cuts[i],cuts[i+1],order,budget);
+    for(let j=0;j<15;j++)sum[j]+=v[j];
+  }
+  return {moments:sum.slice(0,5),eta:sum.slice(5,10),etaEta:p.etaDerivativeOrder>=2?sum.slice(10,15):null,nodes:order*(cuts.length-1),phaseQuarterCells:cuts.length-1};
+}
+
+function integrateDebtPath(profile,loops,p,eta,radii,order,budget){
+  const ys=radii.map(Math.log),cutSet=new Set(ys),a=profile.yl,b=profile.yr;
+  cutSet.add(a);cutSet.add(b);
+  for(let k=Math.floor(4*p.N*a)+1;k<4*p.N*b;k++)cutSet.add(k/(4*p.N));
+  for(const y of loops.cutoffBreakpoints)if(y>a&&y<b)cutSet.add(y);
+  const cuts=[...cutSet].sort((x,y)=>x-y),sum=zeros(15),rows=new Map(),snapshot=()=>({moments:sum.slice(0,5),eta:sum.slice(5,10),etaEta:p.etaDerivativeOrder>=2?sum.slice(10,15):null});
+  rows.set(cuts[0],snapshot());
+  for(let i=0;i<cuts.length-1;i++){
+    const v=quadVector(y=>{const X=Math.exp(y);return momentDifferenceRows(loops.fields(X,eta)).map(t=>t*X);},cuts[i],cuts[i+1],order,budget);
+    for(let j=0;j<15;j++)sum[j]+=v[j];rows.set(cuts[i+1],snapshot());
+  }
+  return {values:ys.map(y=>rows.get(y)),total:{...snapshot(),nodes:order*(cuts.length-1),partitionCells:cuts.length-1},method:'Forward prefix integration split at requested radii, phase quarters and actual cutoff thresholds'};
+}
+
+function correctionMap(profile,p,budget,order=128){
+  const [a,b]=p.patch,w=b-a,centers=[.1,.3,.5,.7,.9],supports=centers.map(t=>[a+w*(t-.065),a+w*(t+.065)]);
+  if(supports.some((s,i)=>i&&s[0]<=supports[i-1][1]))throw new ComputeError('INVALID_SUPPORT','Correction bump supports overlap');
+  const A=Array.from({length:5},()=>zeros(5)),Q=Array.from({length:5},()=>Array.from({length:5},()=>zeros(5)));
+  const values=X=>supports.map(([l,r])=>compactBump(X,l,r));
+  for(const [l,r] of supports)for(const [z,weight] of gaussRule(order)){
+    budget.tick(100);const X=(l+r)/2+(r-l)*z/2,wq=weight*(r-l)/2,E=profile.field(X).E,H=Math.sqrt(2*X)*E,v=values(X);
+    for(let i=0;i<5;i++){
+      if(i<2){A[0][i]+=wq*v[i];A[2][i]+=wq*H*v[i];}
+      else{A[1][i]+=wq*Math.sqrt(2*X)*v[i];A[3][i]-=wq*E*v[i];A[4][i]+=wq*E/X*v[i];}
+      for(let j=0;j<5;j++){
+        const q=wq*v[i]*v[j];
+        if(i<2&&j<2)Q[3][i][j]+=q;
+        if(i>=2&&j>=2){Q[3][i][j]-=q/2;Q[4][i][j]+=q/(2*X);}
+        if((i<2)!==(j<2))Q[2][i][j]+=q*Math.sqrt(2*X)/2;
+      }
+    }
+  }
+  const apply=c=>A.map((row,k)=>dot(row,c)+Q[k].reduce((s,q,i)=>s+c[i]*dot(q,c),0));
+  const jacobian=c=>A.map((row,k)=>row.map((x,i)=>x+2*dot(Q[k][i],c)));
+  return {A,Q,apply,jacobian,values,supports,order};
+}
+function solveRepair(map,debt,budget){
+  const scales=map.A.map(row=>Math.max(1e-20,row.reduce((s,x)=>s+Math.abs(x),0))),norm=v=>maxabs(v.map((x,i)=>x/scales[i]));
+  let c=zeros(5),history=[];
+  for(let n=0;n<20;n++){
+    budget.tick(1000);const residual=map.apply(c).map((x,k)=>x+debt.moments[k]),size=norm(residual);history.push(size);
+    if(size<2e-13)break;
+    const J=map.jacobian(c),step=solveLinear(J.map((row,k)=>row.map(x=>x/scales[k])),residual.map((x,k)=>-x/scales[k])).solution;
+    let factor=1,accepted=false;
+    for(let j=0;j<16;j++){
+      const next=c.map((x,i)=>x+factor*step[i]),r=map.apply(next).map((x,k)=>x+debt.moments[k]);
+      if(norm(r)<size){c=next;accepted=true;break;}factor/=2;
+    }
+    if(!accepted)throw new ComputeError('SINGULAR_SYSTEM','First-patch Newton iteration did not reduce the actual nonlinear moment residual',{history});
+  }
+  const J=map.jacobian(c),eta=solveLinear(J,debt.eta.map(x=>-x)).solution;
+  const hessian=map.Q.map(Q=>2*Q.reduce((s,row,i)=>s+eta[i]*dot(row,eta),0));
+  const etaEta=debt.etaEta?solveLinear(J,debt.etaEta.map((x,k)=>-x-hessian[k])).solution:null;
+  const inverseColumns=Array.from({length:5},(_,i)=>solveLinear(J,Array.from({length:5},(_,j)=>i===j?1:0)).solution);
+  const inverseInfinityNorm=Math.max(...Array.from({length:5},(_,i)=>inverseColumns.reduce((s,col)=>s+Math.abs(col[i]),0)));
+  const residual=map.apply(c).map((x,k)=>x+debt.moments[k]);
+  return {coefficients:c,coefficientEta:eta,coefficientEtaEta:etaEta,residual,normalizedResidual:norm(residual),jacobian:J,inverseInfinityNorm,history,
+    continuousIntervalNewtonCertified:false,finiteNonlinearSystemSolved:norm(residual)<2e-11};
+}
+function correctedPoint(profile,map,repair,X){
+  const r=profile.field(X),v=map.values(X),u=dot(v.slice(0,2),repair.coefficients.slice(0,2)),de=dot(v.slice(2),repair.coefficients.slice(2)),ue=dot(v.slice(0,2),repair.coefficientEta.slice(0,2)),ee=dot(v.slice(2),repair.coefficientEta.slice(2));
+  return {X,E:r.E+de,U:u,deltaE:de,baseE:r.E,baseU:0,Eeta:ee,Ueta:ue,
+    EetaEta:repair.coefficientEtaEta?dot(v.slice(2),repair.coefficientEtaEta.slice(2)):undefined,UetaEta:repair.coefficientEtaEta?dot(v.slice(0,2),repair.coefficientEtaEta.slice(0,2)):undefined};
+}
+function bumpDerivative(X,a,b){
+  if(X<=a||X>=b)return 0;const t=(X-a)/(b-a);if(t<1e-8||t>1-1e-8)return 0;
+  const s=smoothStep(t),zp=2/t**3+2/(1-t)**3,zpp=-6/t**4+6/(1-t)**4;
+  return s*(1-s)*((1-2*s)*zp*zp+zpp)/(b-a)**2;
+}
+function correctionThrough(profile,map,repair,X,budget){
+  const sum=zeros(15);
+  for(const [a,b] of map.supports){
+    if(X<=a)continue;const v=quadVector(x=>momentDifferenceRows(correctedPoint(profile,map,repair,x)),a,Math.min(b,X),128,budget);
+    for(let j=0;j<15;j++)sum[j]+=v[j];
+  }
+  return {moments:sum.slice(0,5),eta:sum.slice(5,10),etaEta:sum.slice(10,15)};
+}
+function independentCorrection(profile,map,repair,p,budget){
+  const sum=zeros(15);
+  for(const [a,b] of map.supports){const v=quadVector(X=>momentDifferenceRows(correctedPoint(profile,map,repair,X)),a,b,192,budget);for(let j=0;j<15;j++)sum[j]+=v[j];}
+  return {moments:sum.slice(0,5),eta:sum.slice(5,10),etaEta:sum.slice(10,15)};
+}
+function integratedAfter(profile,p,eta,X,field,debt){
+  const base=profile.radial(X),m=[0,base.I,0,base.S,base.Cp].map((x,j)=>x+debt.moments[j]),[M,I,J,S,Cp]=m,[Me,Ie,Je,Se,Cpe]=debt.eta;
+  const D=.5-p.h,A=.5+p.h,d=1-eta*eta,L=1-2*p.h*eta*eta,Pi=base.Pi+debt.moments[4],H=Math.sqrt(2*X)*field.E;
+  const W=1-(2*D*eta*M+d*Me)/X;
+  const Q=-W+((1-p.h)*I-D*eta*Ie-d*Je+2*(p.h-D)*eta*J)/(X*H);
+  // Source (4.16)/(B.35): -W*U is not divided by the radius.
+  const N=-W*field.U+(D*(M-eta*Me)+4*p.h*eta*S-d*Se)/X+4*A*eta*Pi-d*Cpe;
+  return {moments:m,momentEta:debt.eta.slice(),Pi,PiEta:Cpe,V0:X/L*(2*eta*field.U-2*D*eta*M/X-d*Me/X),ps:[X*Q/L,X*N/(L*field.E)]};
+}
+
+export async function runRadialModulation(input={},budgetInput={}){
+  const budget=bf(budgetInput),valid=validateRadialModulationInput(input);if(!valid.valid)return safe({...valid,fullProfileCertified:false});
+  try{
+    const p=valid.parameters,profile=makeProfile(p,budget),loops=primitiveFamily(profile,p,budget),map=correctionMap(profile,p,budget);
+    const regularSampleCount=Math.max(p.samples,Math.ceil(12*p.N*profile.width)+1),sampleSet=new Set(Array.from({length:regularSampleCount},(_,i)=>i===0?profile.left:i===regularSampleCount-1?profile.right:Math.exp(profile.yl+profile.width*i/(regularSampleCount-1))));
+    for(const j of [0,2])for(let k=0;k<=16;k++)sampleSet.add(Math.exp(loops.cutoffBreakpoints[j]+(loops.cutoffBreakpoints[j+1]-loops.cutoffBreakpoints[j])*k/16));
+    const sampleXs=[...sampleSet].sort((a,b)=>a-b),sampleCount=sampleXs.length,slices=[];
+    if((sampleCount+65)*p.etaValues.length>budget.maxPoints)throw new ComputeError('BUDGET_EXCEEDED','Modulated, narrow-cutoff and correction-patch samples exceed maxPoints');
+    for(const eta of p.etaValues){
+      const momentPath=integrateDebtPath(profile,loops,p,eta,sampleXs,p.quadratureOrder,budget),debt=momentPath.total,repair=solveRepair(map,debt,budget);
+      const independentDebt=p.includeIndependentQuadrature?integrateDebt(profile,loops,p,eta,profile.right,p.quadratureOrder+4,budget):debt;
+      const correction=independentCorrection(profile,map,repair,p,budget),postResidual=independentDebt.moments.map((v,j)=>v+correction.moments[j]),postEtaResidual=independentDebt.eta.map((v,j)=>v+correction.eta[j]);
+      const samples=[],scaling=[p.N,2*p.N].map(N=>({N,maxAngularValueChange:0,maxAxialValueChange:0,maxRadialAngularChange:0,maxRadialAxialChange:0}));
+      for(let i=0;i<sampleCount;i++){
+        budget.tick();const X=sampleXs[i],f=loops.fields(X,eta,p.N,true),base=profile.state(X,eta),post=integratedAfter(profile,p,eta,X,f,momentPath.values[i]);
+        samples.push({...f,baseA:base.a,basePs:base.ps,loopConeGaps:coneGaps({a:f.aL,bs:f.bL,ps:base.ps}).gaps,
+          postMoments:post.moments,postMomentEta:post.momentEta,Pi:post.Pi,PiEta:post.PiEta,V0:post.V0,postPs:post.ps,postConeGaps:coneGaps({a:f.aN,bs:f.bN,ps:post.ps}).gaps});
+        for(let k=0;k<2;k++){
+          const g=k?loops.fields(X,eta,2*p.N,true):f,s=scaling[k];
+          s.maxAngularValueChange=Math.max(s.maxAngularValueChange,Math.abs(g.deltaE));s.maxAxialValueChange=Math.max(s.maxAxialValueChange,Math.abs(g.U));
+          s.maxRadialAngularChange=Math.max(s.maxRadialAngularChange,Math.abs(g.DXE-base.E*base.slope));s.maxRadialAxialChange=Math.max(s.maxRadialAxialChange,Math.abs(g.DXU));
+        }
+      }
+      const checkpointXs=[profile.left,Math.sqrt(profile.left*profile.right),profile.right],momentCheckpoints=[];
+      for(const X of checkpointXs){const local=X===profile.right?debt:integrateDebt(profile,loops,p,eta,X,p.quadratureOrder,budget),f=loops.fields(X,eta,p.N,true),integrated=integratedAfter(profile,p,eta,X,f,local);momentCheckpoints.push({X,...integrated,a:f.aN,bs:f.bN,coneGaps:coneGaps({a:f.aN,bs:f.bN,ps:integrated.ps}).gaps});}
+      const patchSamples=Array.from({length:65},(_,i)=>{
+        const X=p.patch[0]+(p.patch[1]-p.patch[0])*i/64,f=correctedPoint(profile,map,repair,X),partial=correctionThrough(profile,map,repair,X,budget),cumulative={moments:debt.moments.map((v,j)=>v+partial.moments[j]),eta:debt.eta.map((v,j)=>v+partial.eta[j])};
+        const bprime=map.supports.map(([a,b])=>bumpDerivative(X,a,b)),Eprime=profile.field(X).E*profile.beta/X+dot(bprime.slice(2),repair.coefficients.slice(2)),Uprime=dot(bprime.slice(0,2),repair.coefficients.slice(0,2));
+        const a=1-2*X*Eprime/f.E,bs=2*X*Uprime/f.E,post=integratedAfter(profile,p,eta,X,f,cumulative);
+        return {...f,a,bs,postMoments:post.moments,postMomentEta:post.momentEta,Pi:post.Pi,PiEta:post.PiEta,V0:post.V0,postPs:post.ps,postConeGaps:coneGaps({a,bs,ps:post.ps}).gaps};
+      });
+      const y=(profile.yl+profile.yr)/2+.031,N=p.N,X=Math.exp(y),e=Math.min(loops.radialStencilStep,5e-4/N),fc=loops.fields(X,eta,N,true),fp=loops.fields(X*Math.exp(e),eta,N),fm=loops.fields(X*Math.exp(-e),eta,N),fp2=loops.fields(X*Math.exp(2*e),eta,N),fm2=loops.fields(X*Math.exp(-2*e),eta,N);
+      const fdA=1-2*(Math.log(fm2.E)-8*Math.log(fm.E)+8*Math.log(fp.E)-Math.log(fp2.E))/(12*e),fdB=2*(fm2.U-8*fm.U+8*fp.U-fp2.U)/(12*e*fc.E);
+      const finalBase=profile.radial(p.patch[1]),postDebt={moments:postResidual,eta:postEtaResidual},final=integratedAfter(profile,p,eta,p.patch[1],{E:finalBase.E,U:0},postDebt);
+      slices.push({eta,samples,scaling,momentCheckpoints,patchSamples,momentPathMethod:momentPath.method,
+        primitiveDerivativeConvention:'DX differentiates log radius with phase fixed; eta differences also hold phase fixed; total C.12 radial derivatives include N*d/dphase',
+        shearIdentityCheck:{X,logRadialStep:e,sourceC13:{a:fc.aN,bs:fc.bN},independentTotalFiniteDifference:{a:fdA,bs:fdB},defect:{a:fdA-fc.aN,bs:fdB-fc.bN},certified:false},
+        momentDebt:debt,repair:{...repair,supports:map.supports,momentOrder:['M','I','J','S','Cp'],linearMap:map.A,quadraticTermsIncluded:true},
+        independentMomentCheck:{modulationQuadratureOrder:p.includeIndependentQuadrature?p.quadratureOrder+4:null,correctionQuadratureOrder:192,
+          modulationDifference:independentDebt.moments.map((v,j)=>v-debt.moments[j]),postResidual,postEtaResidual,continuousMomentsCertified:false},
+        afterPatch:{X:p.patch[1],...final,basePs:profile.state(p.patch[1],eta).ps},
+        positiveAtPatchSamples:patchSamples.every(s=>s.E>0),
+        sampledCone:{modulatedPassing:samples.filter(s=>s.postConeGaps.every(v=>v>0)).length,modulatedTotal:samples.length,
+          patchPassing:patchSamples.filter(s=>s.postConeGaps.every(v=>v>0)).length,patchTotal:patchSamples.length,
+          minimumModulatedGaps:Array.from({length:4},(_,j)=>Math.min(...samples.map(s=>s.postConeGaps[j]))),minimumPatchGaps:Array.from({length:4},(_,j)=>Math.min(...patchSamples.map(s=>s.postConeGaps[j])))},
+        globalConeCertified:false});
+    }
+    const all=slices.flatMap(s=>s.samples),allPatch=slices.flatMap(s=>s.patchSamples.map(v=>({...v,eta:s.eta}))),denseLines=slices.map(s=>({points:s.samples.map(v=>[Math.log(v.X),s.eta,p.N*v.deltaE])}));
+    for(const slice of slices){
+      const original=slice.samples,indices=new Set([0,original.length-1]);
+      if(p.detailMode==='compact'){
+        for(let j=0;j<p.samples;j++)indices.add(Math.round((original.length-1)*j/(p.samples-1)));
+        for(let i=0;i<original.length;i++){
+          const y=Math.log(original[i].X);if(loops.cutoffBreakpoints.some((v,k)=>k%2===0&&y>=v-1e-14&&y<=loops.cutoffBreakpoints[k+1]+1e-14))indices.add(i);
+        }
+        for(let k=0;k<4;k++){let j=0;for(let i=1;i<original.length;i++)if(original[i].postConeGaps[k]<original[j].postConeGaps[k])j=i;indices.add(j);}
+        slice.samples=[...indices].sort((a,b)=>a-b).map(i=>original[i]);
+      }
+      slice.sampleSelection={mode:p.detailMode,denseDiagnosticCount:original.length,returnedDetailedRows:slice.samples.length,
+        denseVisualizationPreserved:true,rule:'Compact table keeps requested radial rows, every narrow-cutoff row and each worst gap row; dense mode returns all fields'};
+    }
+    const sampledConePass=slices.every(s=>s.sampledCone.modulatedPassing===s.sampledCone.modulatedTotal&&s.sampledCone.patchPassing===s.sampledCone.patchTotal);
+    return safe({status:'PARTIAL',domainStatus:sampledConePass?'SOURCE_C12_AND_FIRST_PATCH_COMPUTED':'SOURCE_C12_FIRST_PATCH_WITH_CONE_VIOLATIONS',sourceReferences:[SOURCE],parameters:p,
+      inputContract:profile.contract,loopParameters:loops.parameters,loopSelectionScope:loops.selectionScope,loopDiagnostics:loops.stats,
+      supportContract:{modulationInterval:p.modulationInterval,firstCorrectionPatch:p.patch,fieldsUnchangedBefore:profile.left,fieldsUnchangedAfter:p.patch[1],
+        integratedFieldsExactlyRestored:false,originalPaperReservedPatchesInherited:false,cutoffQuadratureBreakpoints:loops.cutoffBreakpoints.map(Math.exp)},
+      construction:'C.11/C.12/C.13 with fixed finite-family loop parameters, actual accumulated moment debt, and the source first-patch linear-plus-quadratic moment solve',
+      slices,certifiedConditions:[],computedConditions:[{id:'ACTUAL_C12_FIELDS',pass:true},{id:'C13_CHAIN_RULE_SEPARATED',pass:true},{id:'ACTUAL_FIVE_MOMENT_DEBT',pass:true},{id:'FIRST_PATCH_NONLINEAR_SYSTEM',pass:slices.every(s=>s.repair.finiteNonlinearSystemSolved)},{id:'SAMPLED_POST_CONE',pass:sampledConePass,scope:'Only computed finite diagnostic samples; never all-domain certification'}],
+      missingConditions:['The supplied explicit annulus is not the regular-axis/full outer profile of Corollary B.10.',
+        'Loop parameters are checked at finite states; a uniform complete (X,eta) certificate is not supplied.',
+        'Primitive inversion, X/eta differentiation and oscillatory quadrature have numerical errors, not a complete interval enclosure.',
+        'The exact continuous moment map has not received a uniform interval-Newton certificate; finite and independently reintegrated residuals are reported.',
+        'The finite N construction is computed, but the complete post-modulation/post-repair cone has no all-domain positive kappa certificate.'],
+      fullProfileCertified:false,fullNavierStokesSolution:false,newLeanKernelRun:false,
+      visualization:{points:[...all.map(s=>({pos:[Math.log(s.X),s.eta,p.N*s.deltaE],value:p.N*s.deltaE,label:'C.12: N times actual angular-field change'})),...allPatch.map(s=>({pos:[Math.log(s.X),s.eta,p.N*s.deltaE],value:p.N*s.deltaE,label:'C.2: N times actual first-patch correction'}))],
+        lines:[...denseLines,...slices.map(s=>({points:s.patchSamples.map(v=>[Math.log(v.X),s.eta,p.N*v.deltaE])}))],arrows:[],axes:['log X','eta','N (E_N - E)'],
+        valueMeaning:'N(E_N−E), the same quantity and scale on the modulation and correction patch',
+        description:'Actual C.12 angular-field change multiplied by N, followed by the computed five-moment correction. This explicit scaling makes the O(1/N) values visible.',coordinateMeaning:'Similarity radial coordinate, parameter eta and N times the angular-profile difference; not a 3D physical-space solution.',
+        lostInformation:['No certified original full profile or full-domain cone.','The vertical axis is explicitly multiplied by N; unscaled fields are in the detailed table.','Compact detail mode keeps selected rows while preserving every dense visualization point and cone diagnostic.','Displayed fields and moment identities have the recorded numerical defects.']}});
+  }catch(e){return safe({status:failStatus(e),domainStatus:e.code??'COMPUTATION_ERROR',message:e.message,detail:e.detail??{},sourceReferences:[SOURCE],fullProfileCertified:false});}
+}
+
+export function getRadialModulationExamples(){return [
+  {id:'ns-source-radial-modulation',label:'원문 C.12 · 실제 변조와 첫 patch 복원 (N=512)',request:{kind:'ns.radial-modulation',input:{family:'explicit-power-annulus',N:512,etaValues:[0],samples:97},budget:{maxOperations:50000000,maxMilliseconds:60000,maxPoints:8192}}},
+  {id:'ns-source-radial-small-frequency',label:'작은 N=8 · 실제 cone 위반을 확인하는 대조',request:{kind:'ns.radial-modulation',input:{family:'explicit-power-annulus',N:8,etaValues:[0],samples:97},budget:{maxOperations:50000000,maxMilliseconds:60000,maxPoints:4096}}}
+];}

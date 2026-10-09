@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "scope": "M0 local proof foundation",
+  "minimumLocalGateComplete": true,
+  "allI3DomainTasksComplete": false,
+  "actualLeanModules": 6,
+  "actualAuditedTargets": 8,
+  "negativeControlsRejected": 2,
+  "browserProofTests": {
+    "passed": 24,
+    "failed": 0
+  },
+  "shippedSelectableAudits": 5,
+  "importedModuleCount": 2258,
+  "unresolvedImports": 0,
+  "absenceOfSorry": true,
+  "warnings": 0,
+  "arbitrarySourceCompile": false,
+  "existingFormalPassIssuer": false,
+  "status": "LOCAL_AUDIT_VERIFIED_PER_EXACT_SCOPE",
+  "semanticClaimRebinding": "Not allowed without source/target revision and payload binding; shipped receipt contexts do not certify arbitrary application claims.",
+  "checklist": [
+    {
+      "id": "I3-01",
+      "status": "M0_FOUNDATION_COMPLETE",
+      "evidence": [
+        "lean/MathScope/M0",
+        "tests/proof.test.mjs"
+      ],
+      "remaining": "Expand domain theorem modules later."
+    },
+    {
+      "id": "I3-02",
+      "status": "PARTIAL",
+      "evidence": [
+        "evidence/lean-finite-audit.txt",
+        "evidence/lean-negativematrix-audit.txt"
+      ],
+      "remaining": "Delta precision, semilinearity, prime intervals, Lie bracket and lattice holonomy theorem implementations."
+    },
+    {
+      "id": "I3-03",
+      "status": "PARTIAL",
+      "evidence": [
+        "evidence/lean-analytic-audit.txt"
+      ],
+      "remaining": "Uniform convergence, completeness, spectral measure, semigroup and stability formalization."
+    },
+    {
+      "id": "I3-04",
+      "status": "PARTIAL",
+      "evidence": [
+        "evidence/lean-comparison-audit.txt",
+        "tests/proof.test.mjs"
+      ],
+      "remaining": "Domain-level prism/trace/BSD/NS imports and adapters."
+    },
+    {
+      "id": "I3-05",
+      "status": "M0_FOUNDATION_COMPLETE",
+      "evidence": [
+        "proof.mjs",
+        "evidence/lean-proof-tests.txt"
+      ],
+      "remaining": "Arbitrary-source remote compilation and domain generators."
+    },
+    {
+      "id": "I3-06",
+      "status": "M0_FOUNDATION_COMPLETE",
+      "evidence": [
+        "evidence/lean-validation.json",
+        "evidence/lean-environment.json"
+      ],
+      "remaining": "Apply the same audit to future targets."
+    },
+    {
+      "id": "I3-07",
+      "status": "M0_FOUNDATION_COMPLETE",
+      "evidence": [
+        "lean/MathScope/M0/Open.lean",
+        "evidence/lean-proof-tests.txt"
+      ],
+      "remaining": "The research theorems remain open; graph checks cannot decide all logical equivalences."
+    },
+    {
+      "id": "I3-08",
+      "status": "API_DATA_COMPLETE",
+      "evidence": [
+        "lean/shipped-proof-data.mjs"
+      ],
+      "remaining": "Root UI integration/browser acceptance recorded separately."
+    }
+  ],
+  "files": {
+    "proof.mjs": {
+      "sha256": "f6fc066413f110f51b93246a3a292b93a43976eb47bd7d41dca62a6aa6911111",
+      "bytes": 17383
+    },
+    "lean/shipped-proof-data.mjs": {
+      "sha256": "12413093cd8fe1056b8647e4adbc48391a3df39ea9a7fabeb8d0b56adb461fef",
+      "bytes": 50471
+    },
+    "evidence/lean-validation.json": {
+      "sha256": "e2fe9ce4051cb3bdb401de44da63ea2068fa4691a2054adbbd47f2d2c3f57a1b",
+      "bytes": 17408
+    },
+    "evidence/lean-environment.json": {
+      "sha256": "b596afdb954f29f3b327eca57e8fafe0ba141fe5fc1abb8c988a35d3d937a4b4",
+      "bytes": 1702609
+    },
+    "evidence/lean-proof-tests.txt": {
+      "sha256": "b6e4a10c24e80e667997ed2505e9c6f84786431f6f21584d1e7e447f480f8342",
+      "bytes": 2315
+    },
+    "docs/lean-notes.md": {
+      "sha256": "d0e9ad1d696dd64c2b7d1635f1b655dcbe8a9db7092d7d51cb00ec121a8cc9e0",
+      "bytes": 12263
+    }
+  },
+  "bundleSmoke": {
+    "bundledProofsPassed": 5,
+    "exports": 10,
+    "nodeImports": false
+  }
+}

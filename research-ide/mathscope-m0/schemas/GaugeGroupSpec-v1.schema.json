@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:GaugeGroupSpec:1",
+  "title": "MathScope GaugeGroupSpec v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "MathScope.GaugeGroupSpec/1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assumptionRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,199}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "hash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "compact": {
+      "const": true
+    },
+    "simple": {
+      "const": true
+    },
+    "lieAlgebra": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
+        },
+        "rank": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "dimension": {
+          "type": "integer",
+          "minimum": 3
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bracket": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "family",
+        "rank",
+        "dimension",
+        "basis",
+        "bracket"
+      ],
+      "additionalProperties": false
+    },
+    "globalForm": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "enum": [
+            "SIMPLY_CONNECTED",
+            "ADJOINT",
+            "QUOTIENT"
+          ]
+        },
+        "cover": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kernel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "form",
+        "cover",
+        "kernel",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "representation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "MATRIX",
+            "ADJOINT",
+            "ROOT_DATA"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimension": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "faithful": {
+          "type": "boolean"
+        },
+        "convention": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "dimension",
+        "faithful",
+        "convention"
+      ],
+      "additionalProperties": false
+    },
+    "invariantInnerProduct": {
+      "type": "object",
+      "properties": {
+        "normalization": {
+          "type": "string",
+          "minLength": 1
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "normalization",
+        "formula"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema",
+    "id",
+    "revision",
+    "sourceRefs",
+    "assumptionRefs",
+    "name",
+    "compact",
+    "simple",
+    "lieAlgebra",
+    "globalForm",
+    "representation",
+    "invariantInnerProduct"
+  ],
+  "additionalProperties": false
+}

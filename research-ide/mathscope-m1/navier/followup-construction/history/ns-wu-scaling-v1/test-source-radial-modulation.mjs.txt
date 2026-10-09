@@ -1,0 +1,78 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {runRadialModulation,validateRadialModulationInput} from './source-radial-modulation.mjs';
+import {makeBudget} from '../numerics.mjs';
+const dir=fileURLToPath(new URL('.',import.meta.url)),tests=[],budget={maxOperations:50000000,maxMilliseconds:60000,maxPoints:8192};
+const check=(name,pass,detail={})=>tests.push({name,pass:!!pass,detail}),maxabs=a=>Math.max(...a.map(Math.abs));
+const jsonSafe=x=>typeof x==='number'?Number.isFinite(x)&&(!Number.isInteger(x)||Number.isSafeInteger(x)):Array.isArray(x)?x.every(jsonSafe):!x||typeof x!=='object'||Object.values(x).every(jsonSafe);
+const large=await runRadialModulation({N:512},budget),small=await runRadialModulation({N:8},budget),middle=await runRadialModulation({N:256},budget);
+check('actual large-N source construction executes',large.status==='PARTIAL'&&large.domainStatus==='SOURCE_C12_AND_FIRST_PATCH_COMPUTED',{status:large.status,message:large.message});
+check('actual small N has visible cone violations',small.status==='PARTIAL'&&small.domainStatus==='SOURCE_C12_FIRST_PATCH_WITH_CONE_VIOLATIONS');
+check('narrow cutoff prevents a false N=256 pass',middle.status==='PARTIAL'&&middle.slices?.[0].sampledCone.modulatedPassing<middle.slices?.[0].sampledCone.modulatedTotal,middle.slices?.[0].sampledCone);
+for(const [name,r] of [['large',large],['small',small]]){
+  const s=r.slices?.[0];if(!s)continue;
+  check(`${name}: explicit input remains separate from full paper witness`,r.inputContract.originalPaperProfile===false&&r.inputContract.regularCartesianAxisCertified===false&&r.fullProfileCertified===false&&r.newLeanKernelRun===false);
+  check(`${name}: source endpoint collars have zero changes`,s.samples[0].deltaE===0&&s.samples[0].U===0&&s.samples.at(-1).deltaE===0&&s.samples.at(-1).U===0);
+  check(`${name}: actual unplanted moment debt is nonzero`,maxabs(s.momentDebt.moments)>1e-15&&s.repair.coefficients.some(x=>x!==0));
+  check(`${name}: all five quadratic moment equations solved`,s.repair.finiteNonlinearSystemSolved&&maxabs(s.repair.residual)<3e-12,{residual:s.repair.residual});
+  check(`${name}: independent continuous correction integration`,maxabs(s.independentMomentCheck.postResidual)<5e-10,{residual:s.independentMomentCheck.postResidual});
+  check(`${name}: first eta moment derivatives retained`,s.momentDebt.eta.length===5&&s.repair.coefficientEta.length===5&&maxabs(s.independentMomentCheck.postEtaResidual)<5e-10);
+  check(`${name}: uncomputed second derivatives not reported as zero`,s.momentDebt.etaEta===null&&s.repair.coefficientEtaEta===null);
+  check(`${name}: five patch supports are disjoint and ordered`,s.repair.supports.every((x,i)=>x[0]<x[1]&&(!i||x[0]>s.repair.supports[i-1][1])));
+  check(`${name}: C13 versus independent total radial derivative`,maxabs(Object.values(s.shearIdentityCheck.defect))<2e-8,s.shearIdentityCheck);
+  check(`${name}: actual updated ps is returned on both pieces`,s.samples.every(x=>x.postPs?.length===2&&x.postMoments?.length===5)&&s.patchSamples.every(x=>x.postPs?.length===2&&x.postConeGaps?.length===4));
+  check(`${name}: compact table retains dense diagnostics and visualization`,s.sampleSelection.denseDiagnosticCount===s.sampledCone.modulatedTotal&&s.sampleSelection.returnedDetailedRows===s.samples.length&&s.sampleSelection.denseVisualizationPreserved&&r.visualization.points.length===s.sampledCone.modulatedTotal+65);
+  check(`${name}: worst cone states remain in compact rows`,[0,1,2,3].every(j=>Math.min(...s.samples.map(x=>x.postConeGaps[j]))===s.sampledCone.minimumModulatedGaps[j]));
+  check(`${name}: explicit N scaling of visualization`,r.visualization.axes[2]==='N (E_N - E)'&&r.visualization.coordinateMeaning.includes('N times'));
+  check(`${name}: first-patch fields match at both endpoints`,s.patchSamples[0].deltaE===0&&s.patchSamples[0].U===0&&s.patchSamples.at(-1).deltaE===0&&s.patchSamples.at(-1).U===0);
+  check(`${name}: numerical positive fields`,s.samples.every(x=>x.E>0)&&s.positiveAtPatchSamples);
+  check(`${name}: JSON-safe result`,jsonSafe(r));
+}
+if(large.slices){
+  const s=large.slices[0];
+  check('large N all returned dense cone samples pass',s.sampledCone.modulatedPassing===4294&&s.sampledCone.modulatedTotal===4294&&s.sampledCone.patchPassing===65,s.sampledCone);
+  check('sample pass never promoted to whole-domain certificate',s.globalConeCertified===false&&large.certifiedConditions.length===0&&large.supportContract.integratedFieldsExactlyRestored===false);
+  const a=s.scaling[0],b=s.scaling[1];
+  check('measured value change has the expected N scaling',b.maxAngularValueChange<a.maxAngularValueChange*.75&&b.maxAxialValueChange<a.maxAxialValueChange*.75,s.scaling);
+  check('radial changes remain order one in this comparison',a.maxRadialAngularChange>.01&&b.maxRadialAngularChange>.01,s.scaling);
+}
+if(small.slices){
+  const s=small.slices[0],N=small.parameters.N;
+  const omittedDenominator=Math.max(...s.samples.map(v=>Math.abs(v.bN-(v.bL+2*v.DXB/(N*v.baseE)))));
+  const omittedPhaseTerm=Math.max(...s.samples.map(v=>Math.abs(v.aN-(v.baseA-2*v.DXA/N))));
+  check('negative control: omitting C13 exponential denominator changes axial shear',omittedDenominator>1e-6,{maximumError:omittedDenominator});
+  check('negative control: omitting phase chain term changes angular shear',omittedPhaseTerm>.1,{maximumError:omittedPhaseTerm});
+}
+const e=.0004,jet=await runRadialModulation({N:4,samples:65,phaseNodes:512,etaValues:[-e,0,e],quadratureOrder:8,includeIndependentQuadrature:false},budget);
+check('nonzero eta branch executes for independent derivative comparison',jet.status==='PARTIAL'&&jet.slices?.length===3,{status:jet.status,message:jet.message});
+if(jet.slices){
+  const [lo,mid,hi]=jet.slices;let errA=0,errB=0;
+  for(let i=0;i<mid.samples.length;i++){
+    // Retained cutoff/worst-gap rows can differ between eta values. Compare by X.
+    const c=mid.samples[i],l=lo.samples.find(x=>x.X===c.X),h=hi.samples.find(x=>x.X===c.X);if(!l||!h)continue;
+    errA=Math.max(errA,Math.abs((h.A-l.A)/(2*e)-c.Aeta));errB=Math.max(errB,Math.abs((h.B-l.B)/(2*e)-c.Beta));
+  }
+  check('analytic removable-branch first eta derivatives match independent nonzero branches',errA<1e-8&&errB<1e-8,{maximumAError:errA,maximumBError:errB});
+  check('C.1 closed branch is actually used',jet.loopDiagnostics.closedRemovableFamilies>0&&mid.samples.some(s=>s.etaDerivativeMethod.startsWith('Analytic')));
+}
+check('invalid power patch overlap refused',!validateRadialModulationInput({patch:[4,8]}).valid);
+check('degenerate lambda=0 source weights refused',!validateRadialModulationInput({lambda:0}).valid);
+check('arbitrary profile callback family refused',!validateRadialModulationInput({family:'callback'}).valid);
+check('non-boolean quadrature option refused',!validateRadialModulationInput({includeIndependentQuadrature:'yes'}).valid);
+check('point budget guard enforced',(await runRadialModulation({N:512},{...budget,maxPoints:4096})).status==='BUDGET_EXCEEDED');
+check('operation budget guard enforced',(await runRadialModulation({N:8},{maxOperations:1000})).status==='BUDGET_EXCEEDED');
+check('cancellation hook enforced',(await runRadialModulation({N:8},makeBudget(budget,{isCancelled:()=>true}))).status==='CANCELLED');
+check('invalid source annulus rejected',(await runRadialModulation({N:8,innerAmplitude:1},budget)).status==='FAILED');
+const again=await runRadialModulation({N:8},budget);
+check('deterministic mathematical result',JSON.stringify(again)===JSON.stringify(small));
+
+const hashes=Object.fromEntries(['source-radial-modulation.mjs','test-source-radial-modulation.mjs'].map(n=>[n,crypto.createHash('sha256').update(fs.readFileSync(dir+n)).digest('hex')]));
+const summarize=r=>({status:r.status,domainStatus:r.domainStatus,parameters:r.parameters,inputContract:r.inputContract,loopParameters:r.loopParameters,loopDiagnostics:r.loopDiagnostics,
+  slices:r.slices?.map(s=>({eta:s.eta,momentDebt:s.momentDebt,repair:s.repair,independentMomentCheck:s.independentMomentCheck,sampledCone:s.sampledCone,scaling:s.scaling,shearIdentityCheck:s.shearIdentityCheck,sampleSelection:s.sampleSelection,afterPatch:s.afterPatch})),
+  fullProfileCertified:false,newLeanKernelRun:false});
+fs.writeFileSync(dir+'source-radial-modulation-fixtures.json',JSON.stringify({schema:'MathScope.SourceC12Fixtures/1',sourceHashes:hashes,large:summarize(large),small:summarize(small),middle:summarize(middle)},null,2)+'\n');
+const report={schema:'MathScope.SourceC12Tests/1',sourceHashes:hashes,tests,passed:tests.filter(x=>x.pass).length,total:tests.length,fullProfileCertified:false};
+fs.writeFileSync(dir+'source-radial-modulation-tests.json',JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({passed:report.passed,total:report.total,failures:tests.filter(x=>!x.pass)},null,2));
+if(report.passed!==report.total)process.exitCode=1;

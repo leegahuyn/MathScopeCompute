@@ -1,0 +1,125 @@
+NavierStokes.AxisOperators.norm_product_le (I : NavierStokes.AxisCoefficientSpace.Window) {ε : ℝ} (hε : 0 < ε) :
+  ‖NavierStokes.AxisOperators.product I hε‖ ≤ 64
+'NavierStokes.AxisOperators.norm_product_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.AxisOperators.norm_parameterPrimitive_le (I : NavierStokes.AxisCoefficientSpace.Window) {ε : ℝ}
+  (hε : 0 < ε) : ‖NavierStokes.AxisOperators.parameterPrimitive I hε‖ ≤ 80 / ε
+'NavierStokes.AxisOperators.norm_parameterPrimitive_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.AxisOperators.norm_inverseMixed_le (I : NavierStokes.AxisCoefficientSpace.Window) {ε : ℝ} (hε : 0 < ε)
+  (r : ℕ) (hr : 1 ≤ r) : ‖NavierStokes.AxisOperators.inverseMixed I hε r hr‖ ≤ 5120 / ε
+'NavierStokes.AxisOperators.norm_inverseMixed_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.AxisOperators.norm_inverseDotProduct_le (I : NavierStokes.AxisCoefficientSpace.Window) {ε : ℝ} (hε : 0 < ε)
+  (r : ℕ) (hr : 1 ≤ r) : ‖NavierStokes.AxisOperators.inverseDotProduct I hε r hr‖ ≤ 5120
+'NavierStokes.AxisOperators.norm_inverseDotProduct_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.AxisResolvent.naturalOperator_pow_bound (I : NavierStokes.AxisCoefficientSpace.Window) {ε : ℝ} (hε : 0 < ε)
+  (χ : ↥(NavierStokes.AxisCoefficientSpace.AxisSpace I ε)) (k : ℕ) :
+  ‖NavierStokes.AxisResolvent.naturalOperator I hε χ ^ k‖ ≤ NavierStokes.AxisResolvent.factorialMajorant (2560 * ‖χ‖) k
+'NavierStokes.AxisResolvent.naturalOperator_pow_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.AxisResolvent.naturalResolvent_norm_le (I : NavierStokes.AxisCoefficientSpace.Window) {ε : ℝ} (hε : 0 < ε)
+  (χ : ↥(NavierStokes.AxisCoefficientSpace.AxisSpace I ε)) :
+  ‖NavierStokes.AxisResolvent.naturalResolvent I hε χ‖ ≤
+    ∑' (k : ℕ), NavierStokes.AxisResolvent.factorialMajorant (2560 * ‖χ‖) k
+'NavierStokes.AxisResolvent.naturalResolvent_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.AxisContraction.exists_fixedPoint_of_controlled.{u_1} {E : Type u_1} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [CompleteSpace E] (x₀ : E) (f : NavierStokes.AxisContraction.Controlled E E (‖x₀‖ + 1)) (s : ℝ)
+  (hs : 0 ≤ s) (hbound : s * f.bound ≤ 1) (hlip : s * f.lip ≤ 1 / 2) :
+  ∃ x,
+    ‖x - x₀‖ ≤ 1 ∧
+      x₀ + s • f.eval x = x ∧ ‖x - x₀‖ ≤ s * f.bound ∧ ∀ (y : E), ‖y - x₀‖ ≤ 1 → x₀ + s • f.eval y = y → y = x
+'NavierStokes.AxisContraction.exists_fixedPoint_of_controlled' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+NavierStokes.AxisContraction.norm_naturalRemainder_le.{u_5} {V : Type u_5} [NormedAddCommGroup V] [NormedSpace ℝ V]
+  (O : NavierStokes.AxisContraction.NaturalOperators V) (d : NavierStokes.AxisContraction.AxisData V) (S : V →L[ℝ] V)
+  (R M : ℝ) (hR : 0 ≤ R) (hM : 0 ≤ M) (t : ℝ) (ht : |t| ≤ 1) (a : V) (ha : ‖a‖ ≤ M) (x : V × V) (hx : ‖x‖ ≤ R) :
+  ‖NavierStokes.AxisContraction.naturalRemainder O d S t a x‖ ≤
+    NavierStokes.AxisContraction.remainderBound O d S R M hR hM
+'NavierStokes.AxisContraction.norm_naturalRemainder_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.AxisContraction.naturalRemainder_sub_le.{u_5} {V : Type u_5} [NormedAddCommGroup V] [NormedSpace ℝ V]
+  (O : NavierStokes.AxisContraction.NaturalOperators V) (d : NavierStokes.AxisContraction.AxisData V) (S : V →L[ℝ] V)
+  (R M : ℝ) (hR : 0 ≤ R) (hM : 0 ≤ M) (t : ℝ) (ht : |t| ≤ 1) (a : V) (ha : ‖a‖ ≤ M) (x y : V × V) (hx : ‖x‖ ≤ R)
+  (hy : ‖y‖ ≤ R) :
+  ‖NavierStokes.AxisContraction.naturalRemainder O d S t a x -
+        NavierStokes.AxisContraction.naturalRemainder O d S t a y‖ ≤
+    NavierStokes.AxisContraction.remainderLip O d S R M hR hM * ‖x - y‖
+'NavierStokes.AxisContraction.naturalRemainder_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.AxisContraction.exists_unique_natural_fixedPoint.{u_5} {V : Type u_5} [NormedAddCommGroup V]
+  [NormedSpace ℝ V] [CompleteSpace V] (O : NavierStokes.AxisContraction.NaturalOperators V)
+  (d : NavierStokes.AxisContraction.AxisData V) (S : V →L[ℝ] V) (x₀ : V × V) (M : ℝ) (hM : 0 ≤ M) (Λ : ℝ)
+  (hΛ : NavierStokes.AxisContraction.contractionThreshold O d S x₀ M hM ≤ Λ) (a : V) (ha : ‖a‖ ≤ M) :
+  ∃ x,
+    ‖x - x₀‖ ≤ 1 ∧
+      x₀ + (1 / (2 * Λ)) • NavierStokes.AxisContraction.naturalRemainder O d S (1 / Λ) a x = x ∧
+        ‖x - x₀‖ ≤ NavierStokes.AxisContraction.remainderBound O d S (‖x₀‖ + 1) M ⋯ hM / (2 * Λ) ∧
+          ∀ (y : V × V),
+            ‖y - x₀‖ ≤ 1 →
+              x₀ + (1 / (2 * Λ)) • NavierStokes.AxisContraction.naturalRemainder O d S (1 / Λ) a y = y → y = x
+'NavierStokes.AxisContraction.exists_unique_natural_fixedPoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+NavierStokes.AnalyticCoefficientBounds.cauchy_bound_le_weight {ε ρ : ℝ} (hε : 0 < ε) (hερ : ε < ρ) (m : ℕ) :
+  ↑m.factorial * ρ⁻¹ ^ m ≤
+    NavierStokes.AnalyticCoefficientBounds.radiusLoss (ε / ρ) * NavierStokes.AxisWeightEstimates.weight ε 0 m
+'NavierStokes.AnalyticCoefficientBounds.cauchy_bound_le_weight' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+NavierStokes.AnalyticCoefficientBounds.normalizedExp_unitHolomorphic {I : NavierStokes.AxisCoefficientSpace.Window}
+  {ρ Λ C M : ℝ} {F : ℂ → ℂ} (hF : AnalyticOnNhd ℂ F (NavierStokes.AnalyticCoefficientBounds.closedTube I ρ))
+  (hM : ∀ z ∈ NavierStokes.AnalyticCoefficientBounds.closedTube I ρ, (F z).re ≤ M) (hΛ : 0 ≤ Λ)
+  (hC : Real.exp (Λ * M) ≤ C) :
+  NavierStokes.AnalyticCoefficientBounds.UnitHolomorphic I ρ
+    (NavierStokes.AnalyticCoefficientBounds.normalizedExp F Λ C)
+'NavierStokes.AnalyticCoefficientBounds.normalizedExp_unitHolomorphic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+NavierStokes.NaturalAxisData.exists_root_with_positive_Z {h j : ℝ} {P : ℝ → ℝ}
+  (p : NavierStokes.NaturalAxisData.SmallParameters h j) (pP : NavierStokes.NaturalAxisData.PressureData P) :
+  ∃ η₀ ∈ Set.Ioo (-j / 4) (-j / 5),
+    NavierStokes.NaturalAxisData.H h j η₀ = 0 ∧
+      j / 5 < NavierStokes.NaturalAxisData.Z h j P η₀ ∧
+        ∀ η ∈ Set.Icc (-1) 1, NavierStokes.NaturalAxisData.H h j η = 0 → η = η₀
+'NavierStokes.NaturalAxisData.exists_root_with_positive_Z' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.NaturalAxisData.exists_sigma {h j : ℝ} {P : ℝ → ℝ} (p : NavierStokes.NaturalAxisData.SmallParameters h j)
+  (pP : NavierStokes.NaturalAxisData.PressureData P) :
+  ∃ σ,
+    0 < σ ∧
+      ∀ η ∈ Set.Icc (-1) 1,
+        |NavierStokes.NaturalAxisData.Z h j P η| ≤ j / 10 → 99 / 100 < NavierStokes.NaturalAxisData.chi h j σ η
+'NavierStokes.NaturalAxisData.exists_sigma' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.NaturalAxisBridge.exists_scaled_profiles (I : NavierStokes.AxisCoefficientSpace.Window) {ε : ℝ}
+  (hε : 0 < ε) (χ : ↥(NavierStokes.AxisCoefficientSpace.AxisSpace I ε))
+  (d : NavierStokes.AxisContraction.AxisData ↥(NavierStokes.AxisCoefficientSpace.AxisSpace I ε))
+  (hd : NavierStokes.NaturalAxisBridge.CompatibleData I ε χ d) (M : ℝ) (hM : 0 ≤ M) :
+  ∃ Λ₀,
+    0 < Λ₀ ∧
+      ∀ (Λ : ℝ),
+        Λ₀ ≤ Λ →
+          ∀ (a : ↥(NavierStokes.AxisCoefficientSpace.AxisSpace I ε)),
+            ‖a‖ ≤ M →
+              NavierStokes.NaturalAxisBridge.RadiallyConstant I ε a →
+                ∃ Φ u B P,
+                  NavierStokes.NaturalAxisBridge.IsScaledSolution I (NavierStokes.NaturalAxisBridge.parameters I ε χ d)
+                      (1 / Λ) (NavierStokes.NaturalAxisBridge.inputValue I ε a) Φ u B P ∧
+                    NavierStokes.NaturalAxisBridge.UniformMixedError I ε
+                      (NavierStokes.NaturalAxisBridge.errorConstant I hε χ d M hM / (2 * Λ)) Φ u
+                      (NavierStokes.AxisEvaluation.profile I ε
+                        (NavierStokes.NaturalAxisBridge.referenceCoefficients I hε χ d).1)
+                      (NavierStokes.AxisEvaluation.profile I ε
+                        (NavierStokes.NaturalAxisBridge.referenceCoefficients I hε χ d).2)
+'NavierStokes.NaturalAxisBridge.exists_scaled_profiles' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.AxisModelBounds.model_bounds (z : ℝ) (hz0 : 0 ≤ z) (hz1 : z ≤ 41 / 10) :
+  53 / 200 < 305719 / 1152000 ∧
+    305719 / 1152000 ≤ NavierStokes.AxisModelBounds.model z ∧ NavierStokes.AxisModelBounds.model z ≤ 1
+'NavierStokes.AxisModelBounds.model_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.FollowupAxis.scalarBanachGates :
+  0 < MathScope.FollowupAxis.selectedLambda ∧
+    1 + MathScope.FollowupAxis.boundB + MathScope.FollowupAxis.boundL ≤ MathScope.FollowupAxis.selectedLambda ∧
+      MathScope.FollowupAxis.boundB / (2 * MathScope.FollowupAxis.selectedLambda) = 1 / 400 ∧
+        MathScope.FollowupAxis.boundL / (2 * MathScope.FollowupAxis.selectedLambda) ≤ 1 / 2
+'MathScope.FollowupAxis.scalarBanachGates' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.FollowupAxis.complexNormalizationGate :
+  MathScope.FollowupAxis.selectedLambda * MathScope.FollowupAxis.phaseUpper + 1 ≤ MathScope.FollowupAxis.selectedLogC
+'MathScope.FollowupAxis.complexNormalizationGate' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.FollowupAxis.wholeIntervalPhiMargin : 1 / 4 < 305719 / 1152000 - 1 / 318
+'MathScope.FollowupAxis.wholeIntervalPhiMargin' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.FollowupAxis.comparisonDerivativeUpper (z : ℝ) (hz : z ≤ 41 / 10) : -(1 / 4) + z / 24 ≤ -(19 / 240)
+'MathScope.FollowupAxis.comparisonDerivativeUpper' depends on axioms: [propext, Classical.choice, Quot.sound]

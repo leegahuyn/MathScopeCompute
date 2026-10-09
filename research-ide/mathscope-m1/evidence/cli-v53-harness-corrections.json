@@ -1,0 +1,14 @@
+{
+  "schema": "MathScope.M1.CliAuditHarnessCorrection/1",
+  "entries": [
+    {
+      "stage": "command driver initialization",
+      "initialExitCode": 1,
+      "message": "ENOENT: /workspace/scratch/mathscope-m1/build-manifest.json",
+      "reason": "The audit driver moved up one directory too far from its own file URL.",
+      "correction": "Resolve ../.. from evidence/cli-v53-command-runner.mjs without a second parent operation.",
+      "actualCliCommandsExecutedBeforeFailure": 0,
+      "productionCliOrMathematicsChanged": false
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "schema": "MathScope.M0DeliveryValidation/1",
+  "verifiedAt": "2026-10-09",
+  "scope": "M0 local executable foundation (I0/I1 and I3 foundation), not completion of all domain work packages",
+  "status": "M0_FOUNDATION_DELIVERED_WITH_EXPLICIT_LIMITATIONS",
+  "deployment": {
+    "projectId": 29770,
+    "slug": "v0.3.1.html",
+    "version": 44,
+    "versionHash": "4d79dd82",
+    "updatedAt": "2026-10-09T12:37:56.000000Z",
+    "verifiedUrl": "https://project29770.websitepublisher.ai/v0.3.1.html#research-foundation/lean",
+    "baseVersion": 41,
+    "baseVersionHash": "d400a17e",
+    "bundleSha256": "b337da82947040c17b2271d34eb70eb9fba46f2aca6e8860ffcce2cc089f8695",
+    "bundleBytes": 264909,
+    "newPages": 0,
+    "newAssets": 0,
+    "deepLinkReload": "PASS after asynchronous initialization",
+    "releaseGate": "UNCHANGED / HOLD"
+  },
+  "suites": [
+    {
+      "name": "M0 Node",
+      "passed": 82,
+      "total": 82,
+      "evidence": "unit-tests.txt"
+    },
+    {
+      "name": "Actual injected commit bridge",
+      "passed": 9,
+      "total": 9,
+      "includedIn": "M0 Node",
+      "evidence": "bridge-validation.json"
+    },
+    {
+      "name": "Final assembled bundle acceptance in isolated Node VM",
+      "passed": 12,
+      "total": 12,
+      "evidence": "bundle-acceptance.json"
+    },
+    {
+      "name": "M0 actual browser acceptance",
+      "passed": 12,
+      "total": 12,
+      "executionMode": "BROWSER_WEB_WORKER",
+      "evidence": "browser-webmcp-validation.json"
+    },
+    {
+      "name": "Legacy RX Node regression",
+      "passed": 13,
+      "total": 13,
+      "evidence": "legacy-extension-tests.txt"
+    },
+    {
+      "name": "Legacy RX actual browser UI regression",
+      "passed": 28,
+      "total": 28,
+      "observedStatus": "확장 검증 28/28 · PASS · 계산·화면·기록 범위",
+      "pageVersionAtCheck": 43
+    },
+    {
+      "name": "Actual Lean kernel",
+      "modules": 6,
+      "auditedTargets": 8,
+      "negativeControlsRejected": 2,
+      "negativeControlsTotal": 2,
+      "evidence": "lean-validation.json",
+      "newCompilationPerBrowserClick": false
+    }
+  ],
+  "suiteOverlap": "Do not sum these as independent theorem counts.",
+  "nativeWebMCP": {
+    "registeredAndInvoked": 7,
+    "transport": "Native document.modelContext via actual browser consumer",
+    "evidence": "browser-webmcp-validation.json",
+    "tools": [
+      "status",
+      "validate_contract",
+      "run_fixture",
+      "job_status",
+      "cancel_job",
+      "proof_audit",
+      "self_test"
+    ],
+    "cancelScope": "Completed job response only: cancelRequested false, COMPLETED preserved; running cancellation separately covered by code tests."
+  },
+  "browserScenarios": [
+    {
+      "check": "Prime [2,1000]",
+      "status": "PASS",
+      "result": "168",
+      "sessionSave": true,
+      "replayNewEngine": "MATCH"
+    },
+    {
+      "check": "Canonical Z5 delta, 7+O(5^4)",
+      "status": "PASS",
+      "result": "15+O(5^3)",
+      "sessionSave": true
+    },
+    {
+      "check": "Insufficient p-adic input precision",
+      "status": "PASS",
+      "result": "PRECISION_REQUIRED; no fabricated guard digit"
+    },
+    {
+      "check": "Exact rational interval multiplication",
+      "status": "PASS",
+      "result": "[-1,3/2]",
+      "sessionSave": false
+    },
+    {
+      "check": "Fixed integer differential product",
+      "status": "PASS",
+      "result": "zero 3 by 4 matrix",
+      "sessionSave": true
+    },
+    {
+      "check": "Selective assumption staleness",
+      "status": "PASS",
+      "staleIds": [
+        "m0-gap-claim",
+        "m0-gap-interpretation"
+      ],
+      "independentCurrent": "m0-primes"
+    },
+    {
+      "check": "Conditional Lean audit and source edit",
+      "status": "PASS",
+      "matchedStatus": "LOCAL_AUDIT_VERIFIED",
+      "editedStatus": "STALE",
+      "conditionalUserAxiomsRemainVisible": true
+    },
+    {
+      "check": "Current Yang-Mills extension observation linked to M0",
+      "status": "PASS",
+      "observedStatus": "yangmills 관측의 입력·3D 표현·출처를 M0에 기록했습니다."
+    }
+  ],
+  "session": {
+    "id": "rs-mv0tg8vv-bgefzg",
+    "legacyCountsBeforeAndAfter": {
+      "objects": 5,
+      "representations": 5,
+      "claims": 5,
+      "evidence": 6
+    },
+    "existingFormalGradeCount": 1,
+    "existingFormalAfterReload": "HISTORICAL FORMAL; supportsCurrent false (existing policy)",
+    "newFormalPassIssued": false,
+    "finalM0Revision": 22,
+    "finalM0Nodes": 17,
+    "finalLegacyRevision": 15
+  },
+  "exports": {
+    "jsonTextCharacters": 275922,
+    "fullJsonParsed": true,
+    "manualControlOrMetaC": true,
+    "clipboardExactContentMatch": true,
+    "capturedSessionM0Revision": 21,
+    "file": "browser-session-bundle.json",
+    "blobDownload": "FAILED in test browser; not claimed as successful",
+    "automaticClipboard": "Restricted; selection-and-manual-copy fallback verified",
+    "actualUIImport": "NOT_VERIFIED: fileChooser.setFiles was rejected by security approval; no retry or alternate upload workaround used.",
+    "codeImportTests": "PASS including hash verification, quarantine, input-only revalidation and fresh recomputation"
+  },
+  "limits": {
+    "arbitrarySourceM0Compiler": false,
+    "durableServerQueue": false,
+    "fullPrismaticComplex": false,
+    "generalGQuantumConstruction": false,
+    "navierStokesPaperReconstruction": false,
+    "rhBsdResolution": false,
+    "legacyGpu3D": "Cloud WebGL context creation unavailable; no full GPU compatibility claim",
+    "consoleEvidence": "browser-console-final.json"
+  },
+  "artifactNotes": {
+    "sourceSnapshot": "Connector baseline includes masked opaque legacy fields; use targeted current-version patches, not full-page overwrite.",
+    "historicalLogs": "compute-acceptance-validation.json and intermediate records remain historical; this delivery summary identifies final evidence."
+  }
+}

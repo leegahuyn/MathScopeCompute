@@ -1,0 +1,73 @@
+name: MathScope English research edition
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/research-ide-release.yml'
+      - 'research-ide/RELEASE.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mathscope-english-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify-and-package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source preservation and English bindings
+        working-directory: research-ide
+        run: |
+          python3 tools/verify_english_release.py
+          node --test tools/mathscope-en.test.mjs
+      - name: Build the complete English ZIP and verify every member
+        working-directory: research-ide
+        run: |
+          python3 tools/package_english_release.py \
+            --archive-members ./archive-members \
+            --output ./dist/MathScope_M0_M1_English_Full.zip
+          python3 tools/prepare_github_release.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MathScope-English-full-${{ github.sha }}
+          path: research-ide/dist/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish a new immutable English release
+        working-directory: research-ide
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          MATHSCOPE_RELEASE_COMMIT: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mathscope_tag=$(python3 -c 'import json; print(json.load(open("RELEASE.json"))["tag"])')
+          mathscope_title=$(python3 -c 'import json; print(json.load(open("RELEASE.json"))["title"])')
+          if gh release view "$mathscope_tag" --repo "$GH_REPO" >/dev/null 2>&1; then
+            echo "Release already exists; refusing to overwrite its assets."
+            exit 1
+          fi
+          gh release create "$mathscope_tag" \
+            --repo "$GH_REPO" --target "$MATHSCOPE_RELEASE_COMMIT" \
+            --title "$mathscope_title" --prerelease \
+            --notes-file dist/RELEASE_NOTES.md \
+            dist/MathScope_M0_M1_English_Full.zip \
+            dist/MathScope_M0_M1_English_Full.zip.sha256 \
+            dist/MathScope_M0_M1_English_Full.package-receipt.json

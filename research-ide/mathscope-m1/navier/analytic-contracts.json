@@ -1,0 +1,98 @@
+[
+  {
+    "id": "AXIS_B_RHO",
+    "operator": "nonlinear axis fixed point and all eta derivatives",
+    "norm": "||a||_{B_rho}=sup_{alpha,beta} |a_alpha_beta|/w_alpha_beta; w=20^(-alpha)rho^(-beta) beta! binom(alpha+beta,beta)/((alpha+1)^2(beta+1)^2)",
+    "domain": "Y=Lambda X complex analytic neighborhood; eta in a common complex neighborhood Omega of [-1,1]",
+    "quantifiers": "There exist rho>0, invariant radius R, and contraction constant 0<=k<1 such that F maps the closed ball into itself and ||F(a)-F(b)||<=k||a-b|| for all a,b in the ball. Banach completeness is required.",
+    "requiredBounds": [
+      "sup_Omega |g|<=1",
+      "holomorphic coefficients and denominators separated from zero",
+      "uniform all-eta coefficient/tail and derivative bounds"
+    ],
+    "status": "THEOREM_REFERENCE_UNINSTANTIATED",
+    "sources": [
+      "N00 pp145-148 B.11-B.16"
+    ]
+  },
+  {
+    "id": "DERIVATIVE_LIMIT_EXCHANGE",
+    "operator": "partial_eta of infinite reconstruction / derivative of uniform limit",
+    "norm": "uniform convergence of derivative on an open real set s; pointwise convergence of functions at each x in s",
+    "domain": "s subset R is open; f_n,fp_n,g,gp:s->R",
+    "quantifiers": "TendstoUniformlyOn fp gp atTop s; eventually for every x in s HasDerivAt(f_n)(fp_n x)x; for every x in s f_n x tends to g x. Then for each x in s HasDerivAt g(gp x)x.",
+    "leanTarget": "MathScope.Navier.Analytic.uniform_derivative_exchange",
+    "status": "LOCAL_ADAPTER_BUILD_STATUS_IN_LEAN_LEDGER",
+    "limitation": "No array sample establishes these universal convergence hypotheses."
+  },
+  {
+    "id": "HEAT_DOMINATED_DIFFERENTIATION",
+    "operator": "derivatives of H under the infinite integral",
+    "domain": "Z>=0, 0<h<.01; each fixed derivative order m>=0",
+    "norm": "L1(0,infinity) in v",
+    "quantifiers": "For each fixed m, abs(partial_Z^m integrand) <= (h)_m exp(-v)v^(h+m), an integrable majorant uniform over Z>=0. Gamma(1+h)>0.",
+    "status": "ANALYTIC_REFERENCE_PLUS_EXPLICIT_FINITE_INTERVAL_QUADRATURE",
+    "sources": [
+      "N00 p138 A.32-A.35"
+    ],
+    "limitation": "Implemented derivative orders0..4; unbounded m cannot be inferred from finite output."
+  },
+  {
+    "id": "HEAT_TAYLOR",
+    "operator": "finite Taylor expansion at Z=0",
+    "domain": "Z>=0,h>0,finiteN",
+    "norm": "absolute scalar remainder <= (h)_(N+1)(1+h)_(N+1) Z^(N+1)/(N+1)!",
+    "quantifiers": "For every finite N the Taylor remainder bound follows from the derivative majorant. The infinite Taylor series has radius0 for h>0.",
+    "status": "FINITE_REMAINDER_EVALUATOR",
+    "sources": [
+      "N00 p138 A.35"
+    ]
+  },
+  {
+    "id": "BOREL_CUTOFF",
+    "operator": "background and all-order correction synthesis beyond M1",
+    "domain": "common local physical domain with cutoffs epsilon_k selected per derivative seminorm",
+    "norm": "C^m seminorms weighted by q powers; for each fixed m,sum_k norm_m(term_k)<infinity",
+    "quantifiers": "For every derivative order m choose all sufficiently late cutoff thresholds so term_k is bounded by2^-k in that seminorm; common supports and divergence-preserving construction are required.",
+    "status": "THEOREM_REFERENCE_OUT_OF_M1",
+    "sources": [
+      "N00 pp59-62 Proposition5.5",
+      "N00 pp111-116 Proposition9.9"
+    ]
+  },
+  {
+    "id": "SEMIGROUP",
+    "operator": "Fourier diffusion exp(-nu|k|^2 t)",
+    "domain": "nu>=0,t>=0,k in Z^3; L2(T3) for contraction",
+    "norm": "abs multiplier<=1; coefficient ell2 contraction",
+    "quantifiers": "For every nonnegative rate and time,exp(-rate*time)<=1. Infinite-dimensional norm estimate additionally requires Parseval and summability.",
+    "leanTarget": "MathScope.Navier.Analytic.diffusion_semigroup_bound",
+    "status": "LOCAL_ADAPTER_BUILD_STATUS_IN_LEAN_LEDGER"
+  },
+  {
+    "id": "RESIDUAL_STABILITY",
+    "operator": "residual to solution error",
+    "domain": "specified time interval, normed PDE class, initial/boundary errors and admissible constants",
+    "norm": "||u-u_approx|| <= C_stab (||R|| + initialError + boundaryError)",
+    "quantifiers": "A stability bound with finite explicitly supplied C_stab is a separate hypothesis; if totalResidual<=epsilon and C_stab>=0 then error<=C_stab epsilon.",
+    "leanTarget": "MathScope.Navier.Analytic.stable_residual_budget",
+    "status": "LOCAL_CONDITIONAL_ADAPTER",
+    "limitation": "No global C_stab is provided for the candidate profile; residual is not reported as a solution-error bound."
+  },
+  {
+    "id": "SPECTRAL_CONTINUUM",
+    "operator": "Galerkin limit beyond finite FFT fixture",
+    "domain": "solenoidal Fourier fields on T3; fixednu>0,time interval before any asserted singularity",
+    "norm": "specified Hs convergence sufficient to multiply and differentiate; e.g. s>5/2 for3D product/control, with separate time regularity",
+    "quantifiers": "A uniform-in-cutoff stability/compactness argument and convergence of nonlinear terms are required; finite dealiased convolution identity supplies neither.",
+    "status": "THEOREM_REFERENCE_NO_CONTINUUM_LIMIT_CLAIM"
+  },
+  {
+    "id": "SPECTRAL_MEASURE",
+    "operator": "general infinite-dimensional spectral interpretation",
+    "domain": "a densely defined self-adjoint nonnegative operator on a specified Hilbert space",
+    "norm": "spectral measure integral exp(-t lambda); Hilbert norm",
+    "quantifiers": "Requires self-adjointness, positivity and spectral theorem hypotheses; the scalar diffusion adapter does not certify these for arbitraryPDE operators.",
+    "status": "NOT_USED_BY_CURRENT_NS_NUMERICS"
+  }
+]

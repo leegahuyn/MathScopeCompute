@@ -1,0 +1,41 @@
+<section class="view m1" data-view="research-objects" id="mathscopeResearchM1" lang="ko">
+  <header class="m1-header"><div><p class="m1-eyebrow">MATHSCOPE / M1 · ACTUAL MATHEMATICAL OBJECTS</p><h1>계산할 수 있는 수학 대상</h1><p class="m1-lead">소수·프리즘 비교 모델, 4차원 게이지 장, 유체 프로파일을 같은 입력과 검증 기록으로 연결합니다.</p></div><div class="m1-runtime"><span id="m1-runtime">초기화 중</span><small id="m1-session">세션 확인 중</small></div></header>
+  <div class="m1-status" id="m1-status" role="status" aria-live="polite">M1 준비 중…</div>
+  <div class="m1-tabs" role="tablist" aria-label="M1 수학 분야">
+    <button type="button" role="tab" id="m1-tab-arithmetic" data-m1-tab="arithmetic" aria-controls="m1-compute-area" aria-selected="true">소수 · 프리즘</button>
+    <button type="button" role="tab" id="m1-tab-gauge" data-m1-tab="gauge" aria-controls="m1-compute-area" aria-selected="false" tabindex="-1">게이지 · 4D</button>
+    <button type="button" role="tab" id="m1-tab-ns" data-m1-tab="ns" aria-controls="m1-compute-area" aria-selected="false" tabindex="-1">Navier–Stokes</button>
+    <button type="button" role="tab" id="m1-tab-audit" data-m1-tab="audit" aria-controls="m1-audit-area" aria-selected="false" tabindex="-1">검증 · Lean</button>
+  </div>
+  <div id="m1-compute-area" role="tabpanel" aria-labelledby="m1-tab-arithmetic">
+    <div class="m1-grid">
+      <article class="m1-card m1-input-card"><div class="m1-card-head"><h2>01 / 대상과 입력</h2><span class="m1-tag" id="m1-kind">DOMAIN</span></div><p id="m1-domain-description" class="m1-muted"></p>
+        <label for="m1-example">실행 예제</label><select id="m1-example"></select><button type="button" class="m1-small" id="m1-load">선택 예제 불러오기</button>
+        <div id="m1-gauge-controls" class="m1-quick-controls" hidden><h3>Δ와 4차원 관측</h3><div class="m1-quick-grid"><div><label for="m1-delta">양의 Δ 값</label><input id="m1-delta" type="number" min="0.0001" max="10000" step="any" value="1"></div><div><label for="m1-delta-mode">Δ의 수학적 역할</label><select id="m1-delta-mode"><option value="ASSUMED_BOUND">스펙트럼 하한 가정</option><option value="UNITS">표시 단위 변경</option><option value="CLASSICAL_SCALE">고전적 장의 크기 변환</option><option value="EFFECTIVE_MODEL">선택한 유효 모형</option></select></div><div id="m1-slice-control"><label for="m1-x4">단면 x₄</label><input id="m1-x4" type="number" step="any" value="0"></div></div><p id="m1-delta-help" class="m1-muted"></p><button id="m1-apply-delta" type="button">Δ·단면을 입력에 적용하고 실행</button></div>
+        <label for="m1-input">정확한 실행 입력 · JSON</label><textarea id="m1-input" translate="no" spellcheck="false" rows="15" aria-describedby="m1-input-help"></textarea><p id="m1-input-help" class="m1-muted">입력의 군·차트·좌표·정밀도와 자원 상한을 함께 기록합니다. 값이 바뀌면 새 작업을 실행하세요.</p>
+        <div class="m1-actions"><button id="m1-validate" type="button">입력 검사</button><button id="m1-run" class="m1-primary" type="button">계산 실행</button><button id="m1-cancel" type="button" disabled>계산 중지</button></div>
+        <details><summary>입력 검사 결과</summary><pre id="m1-validation" translate="no">아직 검사하지 않았습니다.</pre></details>
+      </article>
+      <article class="m1-card m1-result-card"><div class="m1-card-head"><h2>02 / 결과와 관측</h2><span class="m1-tag" id="m1-result-status">READY</span></div><p id="m1-result-description" class="m1-muted">실행한 대상의 계산값과 3차원 관측이 이곳에 나타납니다.</p>
+        <div class="m1-metrics" id="m1-metrics"></div>
+        <canvas id="m1-scene" tabindex="0" role="img" aria-label="계산된 수학 좌표의 3차원 관측. 아래 수치 표와 JSON에서 같은 값을 읽을 수 있습니다." aria-describedby="m1-color-range m1-observation"></canvas>
+        <div id="m1-color-legend" class="m1-color-legend" hidden><span class="m1-color-ramp" aria-hidden="true"></span><p id="m1-color-range"></p></div>
+        <div class="m1-camera" role="group" aria-label="3차원 카메라"><button data-m1-camera="left" type="button" aria-label="카메라 왼쪽 회전">←</button><button data-m1-camera="right" type="button" aria-label="카메라 오른쪽 회전">→</button><button data-m1-camera="up" type="button" aria-label="카메라 위 회전">↑</button><button data-m1-camera="down" type="button" aria-label="카메라 아래 회전">↓</button><button data-m1-camera="in" type="button" aria-label="확대">＋</button><button data-m1-camera="out" type="button" aria-label="축소">－</button><button data-m1-camera="reset" type="button">시점 초기화</button></div>
+        <p class="m1-muted" id="m1-observation">마우스 드래그·방향키로 회전할 수 있습니다. 휴대폰에서는 버튼으로 회전하고 화면은 평소처럼 스크롤하세요.</p>
+        <div class="m1-actions"><button id="m1-save" type="button" disabled>현재 세션에 결과 저장</button><button id="m1-replay" type="button" disabled>새 계산으로 재현 검사</button><button id="m1-export" type="button" disabled>실행 기록 내보내기</button></div>
+        <div id="m1-blockers" class="m1-obligations" hidden></div>
+        <details id="m1-delta-comparison" hidden open><summary>Δ별 같은 4차원 위치의 실제 계산</summary><div class="m1-table-wrap"><table><thead><tr><th>Δ</th><th>ρ</th><th>물리적 작용 밀도</th><th>표시 밀도 배율</th><th>물리적 장 SHA-256</th></tr></thead><tbody id="m1-delta-rows"></tbody></table></div></details>
+        <details><summary>독립 검사와 오차 · 적용 범위</summary><pre id="m1-diagnostics" translate="no"></pre></details>
+        <details><summary>관측 수치 표</summary><p class="m1-muted">표에는 앞 100개 표본을 표시합니다. 전체 관측값과 원본 좌표는 실행 기록 JSON에 있습니다.</p><div class="m1-table-wrap"><table><thead><tr><th>표본</th><th id="m1-axis-0">x</th><th id="m1-axis-1">y</th><th id="m1-axis-2">z</th><th>관측값</th><th>설명</th></tr></thead><tbody id="m1-observation-rows"></tbody></table></div></details>
+        <details><summary>전체 계산 결과 · JSON</summary><pre id="m1-result-json" translate="no"></pre></details>
+      </article>
+    </div>
+    <article class="m1-card"><div class="m1-card-head"><h2>03 / 실행 기록</h2><span id="m1-job-count" class="m1-tag">0 jobs</span></div><div id="m1-jobs" class="m1-job-list"></div></article>
+  </div>
+  <div id="m1-audit-area" role="tabpanel" aria-labelledby="m1-tab-audit" hidden>
+    <div class="m1-grid"><article class="m1-card"><h2>Lean 소스와 실제 검사 기록</h2><p class="m1-muted">아래 검사는 배포한 소스가 로컬 Lean 커널 검사에 사용한 소스와 정확히 같은지 대조합니다. 편집한 소스는 새 커널 검사 대상입니다.</p><label for="m1-audit-select">검사 묶음</label><select id="m1-audit-select"></select><label for="m1-audit-file">Lean 파일</label><select id="m1-audit-file"></select><textarea id="m1-lean-source" translate="no" spellcheck="false" rows="17"></textarea><div class="m1-actions"><button id="m1-lean-check" type="button">기록과 원본 대조</button><button id="m1-lean-reset" type="button">검사된 소스 복원</button></div><pre id="m1-lean-result" translate="no"></pre></article>
+    <article class="m1-card"><h2>적용한 정리와 남은 가정</h2><p class="m1-muted">논문의 정리 인용과 실제로 검사한 Lean 정리를 각각 표시합니다. 유한 계산의 검증 범위도 함께 확인하세요.</p><div id="m1-theorem-references"></div><details open><summary>무한 연산에 필요한 구체 가정</summary><div id="m1-analytic-hypotheses"></div></details><button id="m1-adapter-check" type="button">가정·정리 adapter 검사</button><pre id="m1-adapter-result" translate="no"></pre></article></div>
+    <article class="m1-card"><h2>실행 환경 · WebMCP</h2><details><summary>계산기와 지원 범위</summary><pre id="m1-capabilities" translate="no"></pre></details><pre id="m1-webmcp" translate="no"></pre></article>
+  </div>
+  <details id="m1-export-panel" class="m1-card" hidden><summary>내보내기 준비 완료</summary><p class="m1-muted">다운로드가 지원되지 않는 환경에서는 전체 JSON을 선택해 복사할 수 있습니다.</p><div class="m1-actions"><a id="m1-download" class="m1-link-button" download>JSON 다운로드</a><button id="m1-copy" type="button">전체 선택 · 복사</button></div><textarea id="m1-export-content" translate="no" rows="10" readonly aria-label="전체 내보내기 JSON"></textarea></details>
+</section>

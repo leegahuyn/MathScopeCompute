@@ -1,0 +1,76 @@
+{
+  "schema": "MathScope.Navier.FinalIndependentEvidenceBinding/1",
+  "status": "PASS",
+  "independentAudit": {
+    "path": "source-inner-gluing-independent.json",
+    "sha256": "ead88d92a66d19e5a4b74e71c222b40540c256cbce49b76c37f6d24e553c4450",
+    "counts": {
+      "passed": 691,
+      "failed": 0,
+      "total": 691
+    },
+    "actualPrecisionDecimalDigits": 90,
+    "allChecksActuallyExecuted": true
+  },
+  "auditedFixture": {
+    "path": "source-inner-gluing-fixture-before-final-rebind.json",
+    "sha256": "173779a590a6dc0fcfc7cae7f02fcbf0a7380cc387a4d3425f32b636bc5046e4",
+    "producerModuleSha256": "7ea83446802b44e5ca3a69e22de4e8eeb45c091ffc16f1e352c37bca0f3a6e52"
+  },
+  "finalFixture": {
+    "path": "source-inner-gluing-fixture.json",
+    "sha256": "b315186cd611b96678a2a3db268193f36d9aa93c50fa75ab17f24116d6cdd5f0",
+    "producerModuleSha256": "48dbd97ae3110f69260282c9a954f33bad80f87c497b7f3107b5c844addc1ed2",
+    "upstream": {
+      "module": "controlled-continuation.mjs",
+      "sha256": "8cc936ec00f8720123f964e8489be97e7273c42da278c08ca88cc6baef661d92"
+    }
+  },
+  "exactEquality": {
+    "inputCanonicalBytesEqual": true,
+    "resultCanonicalBytesEqual": true,
+    "inputCanonicalSha256": "28c84bb7410faa931e90de9a1c6a4432b45e3601cbb253f3a74a6746a96a55d3",
+    "resultCanonicalSha256": "f15ca10d1b934e16ad33911a9bb3317b838c9895c0ad7f1a83030d6ad9075ccb",
+    "ignoredFixtureOnlyFields": [
+      "producer",
+      "budget.elapsedMilliseconds"
+    ],
+    "noMathematicalResultFieldIgnored": true
+  },
+  "producerSourceDifference": {
+    "oneExactReplacementOnly": true,
+    "before": "if(!(key in d))",
+    "after": "if(!Object.hasOwn(d,key))",
+    "historicalSourcePath": "history/inner-gluing-own-key-v1/source-inner-gluing.mjs.txt",
+    "oldSourceSha256": "7ea83446802b44e5ca3a69e22de4e8eeb45c091ffc16f1e352c37bca0f3a6e52",
+    "newSourceSha256": "48dbd97ae3110f69260282c9a954f33bad80f87c497b7f3107b5c844addc1ed2",
+    "mathematicalAlgorithmUnchanged": true,
+    "purpose": "Reject inherited property names supplied as own JSON keys; no caller can inject source moments or replace the path computation."
+  },
+  "repeatedHighPrecisionIntegration": false,
+  "repetitionReason": "The final current producer was executed by its owner and its complete input/result equal the already audited fixture exactly. The only source change is the independently verified whitelist correction. Evidence is bound by this checked equality, not by relabeling an unexecuted test.",
+  "finalApiReview": {
+    "actualPathRequired": [
+      "runControlledContinuation(A21)",
+      "prepareSlice(actualEndpoint)",
+      "B34 five accumulated moments",
+      "Gi-to-4eta restoration",
+      "solvePatch(measuredDebt)"
+    ],
+    "callerDebtOrEndpointInjectionAccepted": false,
+    "budgetSharedWithUpstream": true,
+    "quadratureAndNewtonBudgetChecks": true,
+    "unrepresentableNonzeroDebtRefusedBeforeNewton": true,
+    "globalCertificateOrFormalPassPromotion": false,
+    "inputWhitelistOwnKeysOnly": true
+  },
+  "concreteRemainingBlockers": [
+    "The executable logP=0 candidate does not satisfy the original sufficiently-large-Pstar hierarchy. The implemented larger-logP branch exposes an actual upstream finite-axis positivity failure.",
+    "The finite nonlinear axis/RK4/pressure jets have no certified equality or error binding to the infinite analytic source witness.",
+    "A continuum quadrature enclosure and uniform eta interval-Newton/implicit-function inclusion are absent.",
+    "Central eta differences, B33/B40 order-of-choices bounds and the whole-domain strict cone/flat stress factor remain uncertified."
+  ],
+  "fullProfileCertified": false,
+  "uniformIntervalNewtonCertified": false,
+  "formalPass": false
+}

@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:schema:FiniteScope:1",
+  "title": "MathScope FiniteScope v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "MathScope.FiniteScope/1"
+    },
+    "kind": {
+      "const": "FINITE"
+    },
+    "primeInterval": {
+      "type": "object",
+      "properties": {
+        "lower": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+        },
+        "upper": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+        }
+      },
+      "required": [
+        "lower",
+        "upper"
+      ],
+      "additionalProperties": false
+    },
+    "pAdic": {
+      "type": "object",
+      "properties": {
+        "p": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$"
+        },
+        "digits": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "p",
+        "digits"
+      ],
+      "additionalProperties": false
+    },
+    "series": {
+      "type": "object",
+      "properties": {
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "timeMax": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?:[1-9][0-9]*(?:\\.[0-9]+)?|0\\.[0-9]*[1-9][0-9]*)$"
+            }
+          ]
+        }
+      },
+      "required": [
+        "order"
+      ],
+      "additionalProperties": false
+    },
+    "spatial": {
+      "type": "object",
+      "properties": {
+        "bounds": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "minItems": 1,
+          "maxItems": 8
+        },
+        "timeMax": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "bounds"
+      ],
+      "additionalProperties": false
+    },
+    "finite": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "itemCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "description",
+        "itemCount"
+      ],
+      "additionalProperties": false
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schema",
+    "kind"
+  ],
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "required": [
+        "primeInterval"
+      ]
+    },
+    {
+      "required": [
+        "pAdic"
+      ]
+    },
+    {
+      "required": [
+        "series"
+      ]
+    },
+    {
+      "required": [
+        "spatial"
+      ]
+    },
+    {
+      "required": [
+        "finite"
+      ]
+    }
+  ]
+}

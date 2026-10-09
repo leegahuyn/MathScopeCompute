@@ -1,0 +1,398 @@
+{
+  "schema": "MathScope.M1.LeanAudit/1",
+  "domain": "gauge",
+  "checkedAt": "2026-10-09T14:27:50.957247+00:00",
+  "status": "KERNEL_CHECKED_FIXED_FINITE_AND_CONDITIONAL_SOURCES",
+  "sourceFiles": [
+    {
+      "path": "MathScope/M1/Gauge/Defs.lean",
+      "content": "import Init\n\n/-!\nFinite exact Gaussian-integer matrix operations used for explicit fixtures.\nAll tested matrices have their recorded square shape. This is not a definition\nof a Hilbert-space quantum Yang-Mills theory or a general matrix Lie-group API.\n-/\nnamespace MathScope.M1.Gauge\n\nstructure CI where\n  re : Int\n  im : Int\n  deriving DecidableEq, Repr, Inhabited\n\ndef ciAdd (a b : CI) : CI := ⟨a.re + b.re, a.im + b.im⟩\ndef ciNeg (a : CI) : CI := ⟨-a.re, -a.im⟩\ndef ciMul (a b : CI) : CI := ⟨a.re*b.re-a.im*b.im, a.re*b.im+a.im*b.re⟩\ndef ciConj (a : CI) : CI := ⟨a.re, -a.im⟩\ndef ciScale (c : Int) (a : CI) : CI := ⟨c*a.re,c*a.im⟩\ndef ciZero : CI := ⟨0,0⟩\nabbrev Mat := List (List CI)\ndef matZero (n : Nat) : Mat := List.replicate n (List.replicate n ciZero)\ndef matId (n : Nat) : Mat := (List.range n).map fun i => (List.range n).map fun j => if i == j then ⟨1,0⟩ else ciZero\ndef matAdd (a b : Mat) : Mat := a.zipWith (fun x y => x.zipWith ciAdd y) b\ndef matScale (c : Int) (a : Mat) : Mat := a.map (fun row => row.map (ciScale c))\ndef matNeg (a : Mat) : Mat := matScale (-1) a\ndef matMul (a b : Mat) : Mat := a.map fun row => (List.range b.length).map fun j =>\n  (row.zipWith (fun x input => ciMul x (input[j]!)) b).foldl ciAdd ciZero\ndef matDagger (a : Mat) : Mat := (List.range a.length).map fun i => (List.range a.length).map fun j => ciConj (a[j]![i]!)\ndef matBracket (a b : Mat) : Mat := matAdd (matMul a b) (matNeg (matMul b a))\ndef matTrace (a : Mat) : CI := ((List.range a.length).map fun i => a[i]![i]!).foldl ciAdd ciZero\ndef matrixLinearCombination (n : Nat) (basis : List Mat) (coeff : List Int) : Mat :=\n  (basis.zip coeff).foldl (fun a (x,c) => if c == 0 then a else matAdd a (matScale c x)) (matZero n)\ndef squareShape (n : Nat) (a : Mat) : Bool := (a.length == n) && a.all (fun r => r.length == n)\ndef antiHermitian (a : Mat) : Bool := matDagger a == matNeg a\nabbrev BracketRow := Nat × Nat × List Int\ndef checkBracketRows (n : Nat) (basis : List Mat) (rows : List BracketRow) : Bool :=\n rows.all fun (a,b,c) => matBracket basis[a]! basis[b]! == matrixLinearCombination n basis c\n\ndef bracketJacobi (a b c : Mat) : Mat :=\n matAdd (matAdd (matBracket a (matBracket b c)) (matBracket b (matBracket c a)))\n   (matBracket c (matBracket a b))\n\ndef gramTrace (basis : List Mat) : List (List Int) :=\n basis.map fun a => basis.map fun b => -(matTrace (matMul a b)).re\n\ndef gaugeLink (gx u gy : Mat) : Mat := matMul (matMul gx u) (matDagger gy)\ndef holonomy3 (u v w : Mat) : Mat := matMul (matMul u v) w\n\nend MathScope.M1.Gauge\n",
+      "sha256": "97caed5ed56a1ee421e10fce0a8e0fa8b7b9c73ccb337c9756f6f8716b849d38"
+    },
+    {
+      "path": "MathScope/M1/Gauge/Fixtures.lean",
+      "content": "import MathScope.M1.Gauge.Defs\nnamespace MathScope.M1.Gauge\n\ndef su3B0 : Mat := [[⟨0,0⟩,⟨1,0⟩,⟨0,0⟩],[⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef su3B1 : Mat := [[⟨0,0⟩,⟨0,1⟩,⟨0,0⟩],[⟨0,1⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef su3B2 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef su3B3 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,1⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,1⟩,⟨0,0⟩,⟨0,0⟩]]\ndef su3B4 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩]]\ndef su3B5 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,1⟩],[⟨0,0⟩,⟨0,1⟩,⟨0,0⟩]]\ndef su3B6 : Mat := [[⟨0,1⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,-1⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef su3B7 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,1⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,-1⟩]]\ndef su3Basis : List Mat := [su3B0,su3B1,su3B2,su3B3,su3B4,su3B5,su3B6,su3B7]\ndef su3BracketRows : List BracketRow := [(0,1,[0,0,0,0,0,0,2,0]),(0,2,[0,0,0,0,-1,0,0,0]),(0,3,[0,0,0,0,0,-1,0,0]),(0,4,[0,0,1,0,0,0,0,0]),(0,5,[0,0,0,1,0,0,0,0]),(0,6,[0,-2,0,0,0,0,0,0]),(0,7,[0,1,0,0,0,0,0,0]),(1,2,[0,0,0,0,0,1,0,0]),(1,3,[0,0,0,0,-1,0,0,0]),(1,4,[0,0,0,1,0,0,0,0]),(1,5,[0,0,-1,0,0,0,0,0]),(1,6,[2,0,0,0,0,0,0,0]),(1,7,[-1,0,0,0,0,0,0,0]),(2,3,[0,0,0,0,0,0,2,2]),(2,4,[-1,0,0,0,0,0,0,0]),(2,5,[0,1,0,0,0,0,0,0]),(2,6,[0,0,0,-1,0,0,0,0]),(2,7,[0,0,0,-1,0,0,0,0]),(3,4,[0,-1,0,0,0,0,0,0]),(3,5,[-1,0,0,0,0,0,0,0]),(3,6,[0,0,1,0,0,0,0,0]),(3,7,[0,0,1,0,0,0,0,0]),(4,5,[0,0,0,0,0,0,0,2]),(4,6,[0,0,0,0,0,1,0,0]),(4,7,[0,0,0,0,0,-2,0,0]),(5,6,[0,0,0,0,-1,0,0,0]),(5,7,[0,0,0,0,2,0,0,0]),(6,7,[0,0,0,0,0,0,0,0])]\ndef su3L0 : Mat := [[⟨0,0⟩,⟨0,-1⟩,⟨0,0⟩],[⟨0,-1⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef su3L1 : Mat := [[⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩],[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef su3L2 : Mat := [[⟨0,-1⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,1⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef su3EmbeddingScaled : List Mat := [su3L0,su3L1,su3L2]\ndef su3U0 : Mat := [[⟨0,0⟩,⟨0,-1⟩,⟨0,0⟩],[⟨0,-1⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩]]\ndef su3U1 : Mat := [[⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩],[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩]]\ndef su3U2 : Mat := [[⟨0,-1⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,1⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩]]\ndef g2B0 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B1 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B2 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B3 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B4 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B5 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B6 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩],[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B7 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B8 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B9 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B10 : Mat := [[⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B11 : Mat := [[⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B12 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2B13 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩]]\ndef g2Basis : List Mat := [g2B0,g2B1,g2B2,g2B3,g2B4,g2B5,g2B6,g2B7,g2B8,g2B9,g2B10,g2B11,g2B12,g2B13]\ndef g2BracketRows : List BracketRow := [(0,1,[0,0,0,0,0,0,0,0,-1,0,0,0,0,-1]),(0,2,[0,0,0,0,0,0,0,0,0,-1,0,0,1,0]),(0,3,[0,0,0,0,0,0,0,0,0,0,-2,0,0,0]),(0,4,[0,0,0,0,0,0,0,0,0,0,0,0,0,-1]),(0,5,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]),(0,6,[0,0,0,0,0,0,0,0,0,0,1,0,0,0]),(0,7,[0,0,0,0,0,0,0,0,0,0,0,0,1,0]),(0,8,[0,1,0,0,-1,0,0,0,0,0,0,0,0,0]),(0,9,[0,0,1,0,0,0,0,-1,0,0,0,0,0,0]),(0,10,[0,0,0,2,0,0,0,0,0,0,0,0,0,0]),(0,11,[0,0,0,-1,0,0,0,0,0,0,0,0,0,0]),(0,12,[0,0,0,0,0,0,0,-1,0,0,0,0,0,0]),(0,13,[0,0,0,0,1,0,0,0,0,0,0,0,0,0]),(1,2,[0,0,0,0,0,0,0,0,0,0,0,-2,0,0]),(1,3,[0,0,0,0,0,0,0,0,0,1,0,0,-1,0]),(1,4,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]),(1,5,[0,0,0,0,0,0,0,0,0,0,0,0,0,-1]),(1,6,[0,0,0,0,0,0,0,0,0,-1,0,0,0,0]),(1,7,[0,0,0,0,0,0,0,0,0,0,0,-1,0,0]),(1,8,[-1,0,0,0,0,-1,0,0,0,0,0,0,0,0]),(1,9,[0,0,0,0,0,0,1,0,0,0,0,0,0,0]),(1,10,[0,0,-1,0,0,0,0,0,0,0,0,0,0,0]),(1,11,[0,0,2,0,0,0,0,0,0,0,0,0,0,0]),(1,12,[0,0,0,1,0,0,1,0,0,0,0,0,0,0]),(1,13,[0,0,0,0,0,1,0,0,0,0,0,0,0,0]),(2,3,[0,0,0,0,0,0,0,0,-1,0,0,0,0,-1]),(2,4,[0,0,0,0,0,0,0,0,0,0,0,1,0,0]),(2,5,[0,0,0,0,0,0,0,0,0,0,0,0,1,0]),(2,6,[0,0,0,0,0,0,0,0,1,0,0,0,0,0]),(2,7,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]),(2,8,[0,0,0,0,0,0,-1,0,0,0,0,0,0,0]),(2,9,[-1,0,0,0,0,-1,0,0,0,0,0,0,0,0]),(2,10,[0,1,0,0,0,0,0,0,0,0,0,0,0,0]),(2,11,[0,-2,0,0,0,0,0,0,0,0,0,0,0,0]),(2,12,[0,0,0,0,0,-1,0,0,0,0,0,0,0,0]),(2,13,[0,0,0,1,0,0,1,0,0,0,0,0,0,0]),(3,4,[0,0,0,0,0,0,0,0,0,-1,0,0,0,0]),(3,5,[0,0,0,0,0,0,0,0,0,0,-1,0,0,0]),(3,6,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]),(3,7,[0,0,0,0,0,0,0,0,1,0,0,0,0,0]),(3,8,[0,0,0,0,0,0,0,-1,0,0,0,0,0,0]),(3,9,[0,0,0,0,1,0,0,0,0,0,0,0,0,0]),(3,10,[-2,0,0,0,0,0,0,0,0,0,0,0,0,0]),(3,11,[1,0,0,0,0,0,0,0,0,0,0,0,0,0]),(3,12,[0,-1,0,0,1,0,0,0,0,0,0,0,0,0]),(3,13,[0,0,-1,0,0,0,0,1,0,0,0,0,0,0]),(4,5,[0,0,0,0,0,0,0,0,-1,0,0,0,0,-1]),(4,6,[0,0,0,0,0,0,0,0,0,-2,0,0,0,0]),(4,7,[0,0,0,0,0,0,0,0,0,0,-1,-1,0,0]),(4,8,[1,0,0,0,0,1,0,0,0,0,0,0,0,0]),(4,9,[0,0,0,0,0,0,2,0,0,0,0,0,0,0]),(4,10,[0,0,-1,0,0,0,0,1,0,0,0,0,0,0]),(4,11,[0,0,1,0,0,0,0,0,0,0,0,0,0,0]),(4,12,[0,0,0,0,0,0,1,0,0,0,0,0,0,0]),(4,13,[-1,0,0,0,0,0,0,0,0,0,0,0,0,0]),(5,6,[0,0,0,0,0,0,0,0,0,0,-1,-1,0,0]),(5,7,[0,0,0,0,0,0,0,0,0,0,0,0,-2,0]),(5,8,[0,1,0,0,-1,0,0,0,0,0,0,0,0,0]),(5,9,[0,0,0,0,0,0,0,1,0,0,0,0,0,0]),(5,10,[0,0,0,-1,0,0,0,0,0,0,0,0,0,0]),(5,11,[0,0,0,1,0,0,1,0,0,0,0,0,0,0]),(5,12,[0,0,0,0,0,0,0,2,0,0,0,0,0,0]),(5,13,[0,-1,0,0,0,0,0,0,0,0,0,0,0,0]),(6,7,[0,0,0,0,0,0,0,0,-1,0,0,0,0,-1]),(6,8,[0,0,1,0,0,0,0,0,0,0,0,0,0,0]),(6,9,[0,0,0,0,-2,0,0,0,0,0,0,0,0,0]),(6,10,[1,0,0,0,0,0,0,0,0,0,0,0,0,0]),(6,11,[-1,0,0,0,0,-1,0,0,0,0,0,0,0,0]),(6,12,[0,0,0,0,-1,0,0,0,0,0,0,0,0,0]),(6,13,[0,0,-1,0,0,0,0,1,0,0,0,0,0,0]),(7,8,[0,0,0,1,0,0,0,0,0,0,0,0,0,0]),(7,9,[0,0,0,0,0,-1,0,0,0,0,0,0,0,0]),(7,10,[0,1,0,0,-1,0,0,0,0,0,0,0,0,0]),(7,11,[0,-1,0,0,0,0,0,0,0,0,0,0,0,0]),(7,12,[0,0,0,0,0,-2,0,0,0,0,0,0,0,0]),(7,13,[0,0,0,-1,0,0,-1,0,0,0,0,0,0,0]),(8,9,[0,0,0,0,0,0,0,0,0,0,0,-1,0,0]),(8,10,[0,0,0,0,0,0,0,0,0,0,0,0,-1,0]),(8,11,[0,0,0,0,0,0,0,0,0,1,0,0,0,0]),(8,12,[0,0,0,0,0,0,0,0,0,0,1,0,0,0]),(8,13,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]),(9,10,[0,0,0,0,0,0,0,0,0,0,0,0,0,-1]),(9,11,[0,0,0,0,0,0,0,0,-1,0,0,0,0,0]),(9,12,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]),(9,13,[0,0,0,0,0,0,0,0,0,0,1,0,0,0]),(10,11,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]),(10,12,[0,0,0,0,0,0,0,0,-1,0,0,0,0,0]),(10,13,[0,0,0,0,0,0,0,0,0,-1,0,0,0,0]),(11,12,[0,0,0,0,0,0,0,0,0,0,0,0,0,-1]),(11,13,[0,0,0,0,0,0,0,0,0,0,0,0,1,0]),(12,13,[0,0,0,0,0,0,0,0,0,0,0,-1,0,0])]\ndef g2L0 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩]]\ndef g2L1 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2L2 : Mat := [[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2EmbeddingScaled : List Mat := [g2L0,g2L1,g2L2]\ndef g2U0 : Mat := [[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩]]\ndef g2U1 : Mat := [[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2U2 : Mat := [[⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨-1,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩],[⟨0,0⟩,⟨0,0⟩,⟨0,0⟩,⟨1,0⟩,⟨0,0⟩,⟨0,0⟩,⟨0,0⟩]]\ndef g2Omega0 : Mat := matAdd (matAdd (matId 7) g2B0) (matMul g2B0 g2B0)\ndef g2Omega1 : Mat := matAdd (matAdd (matId 7) g2B1) (matMul g2B1 g2B1)\n\nend MathScope.M1.Gauge\n",
+      "sha256": "c6e15cbc9a65c120b963319e193e165e22169c3fb04c72480ef9070e50d5a560"
+    },
+    {
+      "path": "MathScope/M1/Gauge/SU3.lean",
+      "content": "import MathScope.M1.Gauge.Fixtures\nset_option maxRecDepth 200000\nset_option maxHeartbeats 16000000\nnamespace MathScope.M1.Gauge\n\n/-- All eight concrete defining matrices have square shape. -/\ntheorem su3_shapes : su3Basis.all (squareShape 3) = true := by decide\n\n/-- The literal full basis lies in the anti-Hermitian real form. -/\ntheorem su3_compact_form : su3Basis.all antiHermitian = true := by decide\n\n/-- All 28 unordered basis brackets agree with the exact integral table. -/\ntheorem su3_complete_bracket_table : checkBracketRows 3 su3Basis su3BracketRows = true := by decide\n\n/-- Cleared denominators: L_a=2T_a, hence [L_a,L_b]=2 epsilon L_c. -/\ntheorem su3_embedding_brackets : matBracket su3L0 su3L1 = matScale 2 su3L2 ∧ matBracket su3L1 su3L2 = matScale 2 su3L0 ∧ matBracket su3L2 su3L0 = matScale 2 su3L1 := by decide\n\n/-- With B=-Tr and T=L/2 this gives B(T_a,T_b)=delta_ab/2, index one. -/\ntheorem su3_embedding_metric : gramTrace su3EmbeddingScaled = [[2,0,0],[0,2,0],[0,0,2]] := by decide\n\n/-- A nonzero nested-bracket Jacobi fixture; full table Jacobi is independently exact-rational checked. -/\ntheorem su3_jacobi_fixture : bracketJacobi su3B0 su3B1 su3B2 = matZero 3 := by decide\n\n/-- A nontrivial exact embedded SU2 link is unitary. -/\ntheorem su3_link_unitary : matMul (matDagger su3U0) su3U0 = matId 3 := by decide\n\nset_option pp.fullNames true\n#check su3_shapes\n#print axioms su3_shapes\n#check su3_compact_form\n#print axioms su3_compact_form\n#check su3_complete_bracket_table\n#print axioms su3_complete_bracket_table\n#check su3_embedding_brackets\n#print axioms su3_embedding_brackets\n#check su3_embedding_metric\n#print axioms su3_embedding_metric\n#check su3_jacobi_fixture\n#print axioms su3_jacobi_fixture\n#check su3_link_unitary\n#print axioms su3_link_unitary\nend MathScope.M1.Gauge\n",
+      "sha256": "242bcd0ab4bc807b5df11fd0d0e8a378e43ee89db01875964471227a7efd134d"
+    },
+    {
+      "path": "MathScope/M1/Gauge/G2.lean",
+      "content": "import MathScope.M1.Gauge.Fixtures\nset_option maxRecDepth 200000\nset_option maxHeartbeats 16000000\nnamespace MathScope.M1.Gauge\n\n/-- All fourteen actual compact G2 basis matrices have square shape. -/\ntheorem g2_shapes : g2Basis.all (squareShape 7) = true := by decide\n\n/-- The complete real antisymmetric matrix basis is anti-Hermitian. -/\ntheorem g2_compact_form : g2Basis.all antiHermitian = true := by decide\n\n/-- All 91 unordered brackets agree with the exact table of the octonion stabilizer. -/\ntheorem g2_complete_bracket_table : checkBracketRows 7 g2Basis g2BracketRows = true := by decide\n\n/-- Actual 7x7 embedded quaternion matrices; cleared denominator SU2 brackets. -/\ntheorem g2_embedding_brackets : matBracket g2L0 g2L1 = matScale 2 g2L2 ∧ matBracket g2L1 g2L2 = matScale 2 g2L0 ∧ matBracket g2L2 g2L0 = matScale 2 g2L1 := by decide\n\n/-- B=-Tr_7/2 and T=L/2 give B(T_a,T_b)=delta_ab/2, index one. -/\ntheorem g2_embedding_metric : gramTrace g2EmbeddingScaled = [[4,0,0],[0,4,0],[0,0,4]] := by decide\n\n/-- An exact exceptional-algebra Jacobi fixture, distinct from an abstract group label. -/\ntheorem g2_jacobi_fixture : bracketJacobi g2B0 g2B1 g2B2 = matZero 7 := by decide\n\n/-- The exact nontrivial quaternion block link is orthogonal and unitary. -/\ntheorem g2_link_unitary : matMul (matDagger g2U0) g2U0 = matId 7 := by decide\n\n/-- Distinct exact compact site frames used in a finite gauge covariance fixture. -/\ntheorem g2_nonconstant_site_frames : matMul (matDagger g2Omega0) g2Omega0 = matId 7 ∧ matMul (matDagger g2Omega1) g2Omega1 = matId 7 := by decide\n\n/-- Exact endpoint cancellation for an actual exceptional-group loop with unequal site frames. -/\ntheorem g2_holonomy_covariance : holonomy3 (gaugeLink g2Omega0 g2U0 g2Omega1) (gaugeLink g2Omega1 g2U1 (matId 7)) (gaugeLink (matId 7) g2U2 g2Omega0) = gaugeLink g2Omega0 (holonomy3 g2U0 g2U1 g2U2) g2Omega0 := by decide\n\n/-- Closed unnormalized Wilson trace equality of literal matrices, without floating point. -/\ntheorem g2_wilson_trace : matTrace (holonomy3 (gaugeLink g2Omega0 g2U0 g2Omega1) (gaugeLink g2Omega1 g2U1 (matId 7)) (gaugeLink (matId 7) g2U2 g2Omega0)) = matTrace (holonomy3 g2U0 g2U1 g2U2) := by decide\n\nset_option pp.fullNames true\n#check g2_shapes\n#print axioms g2_shapes\n#check g2_compact_form\n#print axioms g2_compact_form\n#check g2_complete_bracket_table\n#print axioms g2_complete_bracket_table\n#check g2_embedding_brackets\n#print axioms g2_embedding_brackets\n#check g2_embedding_metric\n#print axioms g2_embedding_metric\n#check g2_jacobi_fixture\n#print axioms g2_jacobi_fixture\n#check g2_link_unitary\n#print axioms g2_link_unitary\n#check g2_nonconstant_site_frames\n#print axioms g2_nonconstant_site_frames\n#check g2_holonomy_covariance\n#print axioms g2_holonomy_covariance\n#check g2_wilson_trace\n#print axioms g2_wilson_trace\nend MathScope.M1.Gauge\n",
+      "sha256": "b02189d23d5f8fda0f73248128eccc394917ca953c50991e8a6510a7141e8f48"
+    },
+    {
+      "path": "MathScope/M1/Gauge/Transport.lean",
+      "content": "import Init\n\n/-!\nUniversal finite transport laws. The group operations and their laws are\nexplicit parameters. Nothing here constructs a compact group, a quantum\nmeasure, a continuum limit, a vacuum Hamiltonian or a mass gap.\n-/\nnamespace MathScope.M1.Gauge\n\nuniverse u v\nstructure GroupLaw (G : Type u) where\n  mul : G → G → G\n  inv : G → G\n  one : G\n  assoc : ∀ a b c, mul (mul a b) c = mul a (mul b c)\n  inv_mul : ∀ a, mul (inv a) a = one\n  one_mul : ∀ a, mul one a = a\n  mul_one : ∀ a, mul a one = a\n\nnamespace GroupLaw\n\ndef link (L : GroupLaw G) (gx u gy : G) : G := L.mul (L.mul gx u) (L.inv gy)\n\ntheorem inverse_cancellation (L : GroupLaw G) (a b : G) :\n    L.mul (L.inv a) (L.mul a b) = b := by\n  rw [← L.assoc, L.inv_mul, L.one_mul]\n\n/-- Exact endpoint cancellation for every lawful group and arbitrary links. -/\ntheorem adjacent_transport_covariance (L : GroupLaw G) (gx gy gz u v : G) :\n    L.mul (L.link gx u gy) (L.link gy v gz) =\n      L.link gx (L.mul u v) gz := by\n  simp only [link, L.assoc, inverse_cancellation]\n\n/-- A closed three-edge holonomy transforms by conjugation at its base vertex. -/\ntheorem closed_holonomy_covariance (L : GroupLaw G) (gx gy gz u v w : G) :\n    L.mul (L.mul (L.link gx u gy) (L.link gy v gz)) (L.link gz w gx) =\n      L.link gx (L.mul (L.mul u v) w) gx := by\n  rw [adjacent_transport_covariance, adjacent_transport_covariance]\n\n/-- A class function is an explicit hypothesis. Matrix trace is separately checked in fixtures. -/\ntheorem closed_character_invariant (L : GroupLaw G) (χ : G → V)\n    (classFunction : ∀ gx h, χ (L.link gx h gx) = χ h)\n    (gx gy gz u v w : G) :\n    χ (L.mul (L.mul (L.link gx u gy) (L.link gy v gz)) (L.link gz w gx)) =\n      χ (L.mul (L.mul u v) w) := by\n  rw [closed_holonomy_covariance, classFunction]\n\nset_option pp.fullNames true\n#check inverse_cancellation\n#print axioms inverse_cancellation\n#check adjacent_transport_covariance\n#print axioms adjacent_transport_covariance\n#check closed_holonomy_covariance\n#print axioms closed_holonomy_covariance\n#check closed_character_invariant\n#print axioms closed_character_invariant\n\nend GroupLaw\nend MathScope.M1.Gauge\n",
+      "sha256": "01958ee14c5e5234df300e6834cc11ba95854942529655f85a84c3000fdb2345"
+    },
+    {
+      "path": "MathScope/M1/Gauge/Conditional.lean",
+      "content": "import Init\n\n/-!\nExplicit finite energy and projection logic. Energies in the first two lemmas\nare NATURAL NUMBERS in a declared discrete energy unit, not real spectral data.\nThe remaining projection statements work over any coordinate type and any\nproperty. Analytic norm/domain/limit requirements are recorded independently\nin analytic-assumptions.json, not asserted as imported Lean results.\n-/\nnamespace MathScope.M1.Gauge\n\n/-- Finite constructed excited-energy support. No existence assumption is hidden. -/\ndef finiteExcitedSupport (delta : Nat) (offsets : List Nat) (energy : Nat) : Prop :=\n  ∃ offset, offset ∈ offsets ∧ energy = delta + offset\n\ntheorem finite_support_has_lower_bound (delta : Nat) (offsets : List Nat) (energy : Nat)\n    (support : finiteExcitedSupport delta offsets energy) : delta ≤ energy := by\n  obtain ⟨offset, _, he⟩ := support\n  rw [he]\n  exact Nat.le_add_right delta offset\n\n/-- A nonempty open interval below the declared finite construction contains no excitation. -/\ntheorem finite_gap_excludes_interval (delta : Nat) (offsets : List Nat) (energy : Nat)\n    (below : energy < delta) : ¬ finiteExcitedSupport delta offsets energy := by\n  intro hs\n  exact Nat.not_lt_of_ge (finite_support_has_lower_bound delta offsets energy hs) below\n\nuniverse u\nstructure Point4 (K : Type u) where\n  x : K\n  y : K\n  z : K\n  w : K\n  deriving DecidableEq\nstructure Point3 (K : Type u) where\n  x : K\n  y : K\n  z : K\n  deriving DecidableEq\n\ndef project3 (p : Point4 K) : Point3 K := ⟨p.x,p.y,p.z⟩\ndef sliceLift (c : K) (p : Point3 K) : Point4 K := ⟨p.x,p.y,p.z,c⟩\n\ntheorem project_slice_roundtrip (c : K) (p : Point3 K) :\n    project3 (sliceLift c p) = p := by cases p; rfl\n\n/-- Two distinct literal 4D points have the same displayed 3D position. -/\ntheorem projection_collision :\n    project3 (Point4.mk 0 0 0 (0 : Nat)) = project3 (Point4.mk 0 0 0 1) ∧\n    Point4.mk 0 0 0 (0 : Nat) ≠ Point4.mk 0 0 0 1 := by decide\n\n/-- Transfer requires the property to be constant on whole projection fibres. -/\ntheorem property_descends_with_fibre_certificate\n    (P : Point4 K → Prop)\n    (fibreCertificate : ∀ a b, project3 a = project3 b → (P a ↔ P b))\n    (c : K) (p : Point4 K) : P p ↔ P (sliceLift c (project3 p)) := by\n  apply fibreCertificate\n  rw [project_slice_roundtrip]\n\n/-- A specified slice does reconstruct the original point when its fourth coordinate is known. -/\ntheorem reconstruction_on_selected_slice (c : K) (p : Point4 K) (onSlice : p.w = c) :\n    sliceLift c (project3 p) = p := by\n  cases p with\n  | mk x y z w =>\n    change w = c at onSlice\n    cases onSlice\n    rfl\n\nset_option pp.fullNames true\n#check finite_support_has_lower_bound\n#print axioms finite_support_has_lower_bound\n#check finite_gap_excludes_interval\n#print axioms finite_gap_excludes_interval\n#check project_slice_roundtrip\n#print axioms project_slice_roundtrip\n#check projection_collision\n#print axioms projection_collision\n#check property_descends_with_fibre_certificate\n#print axioms property_descends_with_fibre_certificate\n#check reconstruction_on_selected_slice\n#print axioms reconstruction_on_selected_slice\n\nend MathScope.M1.Gauge\n",
+      "sha256": "6a2cf36cd6e97c0deb33cc2b677c978ead8bd6eb8f61810cd2f32f14890ccad7"
+    }
+  ],
+  "targets": [
+    {
+      "name": "MathScope.M1.Gauge.su3_shapes",
+      "type": "MathScope.M1.Gauge.su3_shapes : MathScope.M1.Gauge.su3Basis.all (MathScope.M1.Gauge.squareShape 3) = Bool.true",
+      "axioms": [],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.su3_compact_form",
+      "type": "MathScope.M1.Gauge.su3_compact_form : MathScope.M1.Gauge.su3Basis.all MathScope.M1.Gauge.antiHermitian = Bool.true",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.su3_complete_bracket_table",
+      "type": "MathScope.M1.Gauge.su3_complete_bracket_table :\n  MathScope.M1.Gauge.checkBracketRows 3 MathScope.M1.Gauge.su3Basis MathScope.M1.Gauge.su3BracketRows = Bool.true",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.su3_embedding_brackets",
+      "type": "MathScope.M1.Gauge.su3_embedding_brackets :\n  MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.su3L0 MathScope.M1.Gauge.su3L1 =\n      MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.su3L2 ∧\n    MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.su3L1 MathScope.M1.Gauge.su3L2 =\n        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.su3L0 ∧\n      MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.su3L2 MathScope.M1.Gauge.su3L0 =\n        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.su3L1",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.su3_embedding_metric",
+      "type": "MathScope.M1.Gauge.su3_embedding_metric :\n  MathScope.M1.Gauge.gramTrace MathScope.M1.Gauge.su3EmbeddingScaled = [[2, 0, 0], [0, 2, 0], [0, 0, 2]]",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.su3_jacobi_fixture",
+      "type": "MathScope.M1.Gauge.su3_jacobi_fixture :\n  MathScope.M1.Gauge.bracketJacobi MathScope.M1.Gauge.su3B0 MathScope.M1.Gauge.su3B1 MathScope.M1.Gauge.su3B2 =\n    MathScope.M1.Gauge.matZero 3",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.su3_link_unitary",
+      "type": "MathScope.M1.Gauge.su3_link_unitary :\n  MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.su3U0) MathScope.M1.Gauge.su3U0 =\n    MathScope.M1.Gauge.matId 3",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_shapes",
+      "type": "MathScope.M1.Gauge.g2_shapes : MathScope.M1.Gauge.g2Basis.all (MathScope.M1.Gauge.squareShape 7) = Bool.true",
+      "axioms": [],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_compact_form",
+      "type": "MathScope.M1.Gauge.g2_compact_form : MathScope.M1.Gauge.g2Basis.all MathScope.M1.Gauge.antiHermitian = Bool.true",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_complete_bracket_table",
+      "type": "MathScope.M1.Gauge.g2_complete_bracket_table :\n  MathScope.M1.Gauge.checkBracketRows 7 MathScope.M1.Gauge.g2Basis MathScope.M1.Gauge.g2BracketRows = Bool.true",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_embedding_brackets",
+      "type": "MathScope.M1.Gauge.g2_embedding_brackets :\n  MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.g2L0 MathScope.M1.Gauge.g2L1 =\n      MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.g2L2 ∧\n    MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.g2L1 MathScope.M1.Gauge.g2L2 =\n        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.g2L0 ∧\n      MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.g2L2 MathScope.M1.Gauge.g2L0 =\n        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.g2L1",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_embedding_metric",
+      "type": "MathScope.M1.Gauge.g2_embedding_metric :\n  MathScope.M1.Gauge.gramTrace MathScope.M1.Gauge.g2EmbeddingScaled = [[4, 0, 0], [0, 4, 0], [0, 0, 4]]",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_jacobi_fixture",
+      "type": "MathScope.M1.Gauge.g2_jacobi_fixture :\n  MathScope.M1.Gauge.bracketJacobi MathScope.M1.Gauge.g2B0 MathScope.M1.Gauge.g2B1 MathScope.M1.Gauge.g2B2 =\n    MathScope.M1.Gauge.matZero 7",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_link_unitary",
+      "type": "MathScope.M1.Gauge.g2_link_unitary :\n  MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.g2U0) MathScope.M1.Gauge.g2U0 =\n    MathScope.M1.Gauge.matId 7",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_nonconstant_site_frames",
+      "type": "MathScope.M1.Gauge.g2_nonconstant_site_frames :\n  MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.g2Omega0) MathScope.M1.Gauge.g2Omega0 =\n      MathScope.M1.Gauge.matId 7 ∧\n    MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.g2Omega1) MathScope.M1.Gauge.g2Omega1 =\n      MathScope.M1.Gauge.matId 7",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_holonomy_covariance",
+      "type": "MathScope.M1.Gauge.g2_holonomy_covariance :\n  MathScope.M1.Gauge.holonomy3\n      (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega0 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2Omega1)\n      (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega1 MathScope.M1.Gauge.g2U1 (MathScope.M1.Gauge.matId 7))\n      (MathScope.M1.Gauge.gaugeLink (MathScope.M1.Gauge.matId 7) MathScope.M1.Gauge.g2U2 MathScope.M1.Gauge.g2Omega0) =\n    MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega0\n      (MathScope.M1.Gauge.holonomy3 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2U1 MathScope.M1.Gauge.g2U2)\n      MathScope.M1.Gauge.g2Omega0",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.g2_wilson_trace",
+      "type": "MathScope.M1.Gauge.g2_wilson_trace :\n  MathScope.M1.Gauge.matTrace\n      (MathScope.M1.Gauge.holonomy3\n        (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega0 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2Omega1)\n        (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega1 MathScope.M1.Gauge.g2U1 (MathScope.M1.Gauge.matId 7))\n        (MathScope.M1.Gauge.gaugeLink (MathScope.M1.Gauge.matId 7) MathScope.M1.Gauge.g2U2\n          MathScope.M1.Gauge.g2Omega0)) =\n    MathScope.M1.Gauge.matTrace\n      (MathScope.M1.Gauge.holonomy3 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2U1 MathScope.M1.Gauge.g2U2)",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.GroupLaw.inverse_cancellation",
+      "type": "MathScope.M1.Gauge.GroupLaw.inverse_cancellation.{u_1} {G : Type u_1} (L : MathScope.M1.Gauge.GroupLaw G) (a b : G) :\n  L.mul (L.inv a) (L.mul a b) = b",
+      "axioms": [],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.GroupLaw.adjacent_transport_covariance",
+      "type": "MathScope.M1.Gauge.GroupLaw.adjacent_transport_covariance.{u_1} {G : Type u_1} (L : MathScope.M1.Gauge.GroupLaw G)\n  (gx gy gz u v : G) : L.mul (L.link gx u gy) (L.link gy v gz) = L.link gx (L.mul u v) gz",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.GroupLaw.closed_holonomy_covariance",
+      "type": "MathScope.M1.Gauge.GroupLaw.closed_holonomy_covariance.{u_1} {G : Type u_1} (L : MathScope.M1.Gauge.GroupLaw G)\n  (gx gy gz u v w : G) :\n  L.mul (L.mul (L.link gx u gy) (L.link gy v gz)) (L.link gz w gx) = L.link gx (L.mul (L.mul u v) w) gx",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.GroupLaw.closed_character_invariant",
+      "type": "MathScope.M1.Gauge.GroupLaw.closed_character_invariant.{u_1, u_2} {G : Type u_1} {V : Sort u_2}\n  (L : MathScope.M1.Gauge.GroupLaw G) (χ : G → V) (classFunction : ∀ (gx h : G), χ (L.link gx h gx) = χ h)\n  (gx gy gz u v w : G) : χ (L.mul (L.mul (L.link gx u gy) (L.link gy v gz)) (L.link gz w gx)) = χ (L.mul (L.mul u v) w)",
+      "axioms": [
+        "propext"
+      ],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.finite_support_has_lower_bound",
+      "type": "MathScope.M1.Gauge.finite_support_has_lower_bound (delta : Nat) (offsets : List Nat) (energy : Nat)\n  (support : MathScope.M1.Gauge.finiteExcitedSupport delta offsets energy) : delta ≤ energy",
+      "axioms": [],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.finite_gap_excludes_interval",
+      "type": "MathScope.M1.Gauge.finite_gap_excludes_interval (delta : Nat) (offsets : List Nat) (energy : Nat)\n  (below : energy < delta) : ¬MathScope.M1.Gauge.finiteExcitedSupport delta offsets energy",
+      "axioms": [],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.project_slice_roundtrip",
+      "type": "MathScope.M1.Gauge.project_slice_roundtrip.{u_1} {K : Type u_1} (c : K) (p : MathScope.M1.Gauge.Point3 K) :\n  MathScope.M1.Gauge.project3 (MathScope.M1.Gauge.sliceLift c p) = p",
+      "axioms": [],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.projection_collision",
+      "type": "MathScope.M1.Gauge.projection_collision :\n  MathScope.M1.Gauge.project3 { x := 0, y := 0, z := 0, w := 0 } =\n      MathScope.M1.Gauge.project3 { x := 0, y := 0, z := 0, w := 1 } ∧\n    { x := 0, y := 0, z := 0, w := 0 } ≠ { x := 0, y := 0, z := 0, w := 1 }",
+      "axioms": [],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.property_descends_with_fibre_certificate",
+      "type": "MathScope.M1.Gauge.property_descends_with_fibre_certificate.{u_1} {K : Type u_1}\n  (P : MathScope.M1.Gauge.Point4 K → Prop)\n  (fibreCertificate :\n    ∀ (a b : MathScope.M1.Gauge.Point4 K), MathScope.M1.Gauge.project3 a = MathScope.M1.Gauge.project3 b → (P a ↔ P b))\n  (c : K) (p : MathScope.M1.Gauge.Point4 K) : P p ↔ P (MathScope.M1.Gauge.sliceLift c (MathScope.M1.Gauge.project3 p))",
+      "axioms": [],
+      "customAxioms": []
+    },
+    {
+      "name": "MathScope.M1.Gauge.reconstruction_on_selected_slice",
+      "type": "MathScope.M1.Gauge.reconstruction_on_selected_slice.{u_1} {K : Type u_1} (c : K) (p : MathScope.M1.Gauge.Point4 K)\n  (onSlice : p.w = c) : MathScope.M1.Gauge.sliceLift c (MathScope.M1.Gauge.project3 p) = p",
+      "axioms": [],
+      "customAxioms": []
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/.lake/build/lib/lean/MathScope/M1/Gauge/Defs.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/MathScope/M1/Gauge/Defs.lean"
+      ],
+      "standardCommand": "lake env lean MathScope/M1/Gauge/Defs.lean",
+      "exitCode": 0,
+      "elapsedSeconds": 0.7565965149988187,
+      "log": "",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logPath": "defs-audit.log",
+      "oleanSha256": "28fd328f56a8d6128668043228e4be9367b5e7a6ad6a525b58bb06ff2db1d69a"
+    },
+    {
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/.lake/build/lib/lean/MathScope/M1/Gauge/Fixtures.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/MathScope/M1/Gauge/Fixtures.lean"
+      ],
+      "standardCommand": "lake env lean MathScope/M1/Gauge/Fixtures.lean",
+      "exitCode": 0,
+      "elapsedSeconds": 3.415624866000144,
+      "log": "",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logPath": "fixtures-audit.log",
+      "oleanSha256": "a503d68bc59dbef9c1cadb67687b866064e5414c280eb39e5173f1069c6d76f7"
+    },
+    {
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/.lake/build/lib/lean/MathScope/M1/Gauge/SU3.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/MathScope/M1/Gauge/SU3.lean"
+      ],
+      "standardCommand": "lake env lean MathScope/M1/Gauge/SU3.lean",
+      "exitCode": 0,
+      "elapsedSeconds": 1.1447767089994159,
+      "log": "MathScope.M1.Gauge.su3_shapes : MathScope.M1.Gauge.su3Basis.all (MathScope.M1.Gauge.squareShape 3) = Bool.true\n'MathScope.M1.Gauge.su3_shapes' does not depend on any axioms\nMathScope.M1.Gauge.su3_compact_form : MathScope.M1.Gauge.su3Basis.all MathScope.M1.Gauge.antiHermitian = Bool.true\n'MathScope.M1.Gauge.su3_compact_form' depends on axioms: [propext]\nMathScope.M1.Gauge.su3_complete_bracket_table :\n  MathScope.M1.Gauge.checkBracketRows 3 MathScope.M1.Gauge.su3Basis MathScope.M1.Gauge.su3BracketRows = Bool.true\n'MathScope.M1.Gauge.su3_complete_bracket_table' depends on axioms: [propext]\nMathScope.M1.Gauge.su3_embedding_brackets :\n  MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.su3L0 MathScope.M1.Gauge.su3L1 =\n      MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.su3L2 ∧\n    MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.su3L1 MathScope.M1.Gauge.su3L2 =\n        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.su3L0 ∧\n      MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.su3L2 MathScope.M1.Gauge.su3L0 =\n        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.su3L1\n'MathScope.M1.Gauge.su3_embedding_brackets' depends on axioms: [propext]\nMathScope.M1.Gauge.su3_embedding_metric :\n  MathScope.M1.Gauge.gramTrace MathScope.M1.Gauge.su3EmbeddingScaled = [[2, 0, 0], [0, 2, 0], [0, 0, 2]]\n'MathScope.M1.Gauge.su3_embedding_metric' depends on axioms: [propext]\nMathScope.M1.Gauge.su3_jacobi_fixture :\n  MathScope.M1.Gauge.bracketJacobi MathScope.M1.Gauge.su3B0 MathScope.M1.Gauge.su3B1 MathScope.M1.Gauge.su3B2 =\n    MathScope.M1.Gauge.matZero 3\n'MathScope.M1.Gauge.su3_jacobi_fixture' depends on axioms: [propext]\nMathScope.M1.Gauge.su3_link_unitary :\n  MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.su3U0) MathScope.M1.Gauge.su3U0 =\n    MathScope.M1.Gauge.matId 3\n'MathScope.M1.Gauge.su3_link_unitary' depends on axioms: [propext]\n",
+      "logSha256": "056cd6771bc22d3a893c0e841c4aaa997134668d32c7bc7b6fff6d9a0adc3125",
+      "logPath": "su3-audit.log",
+      "oleanSha256": "73f5a69cc47b6468a6dd19cf7548aad74509b9c3290326382de7794d3558a051"
+    },
+    {
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/.lake/build/lib/lean/MathScope/M1/Gauge/G2.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/MathScope/M1/Gauge/G2.lean"
+      ],
+      "standardCommand": "lake env lean MathScope/M1/Gauge/G2.lean",
+      "exitCode": 0,
+      "elapsedSeconds": 31.33523175099981,
+      "log": "MathScope.M1.Gauge.g2_shapes : MathScope.M1.Gauge.g2Basis.all (MathScope.M1.Gauge.squareShape 7) = Bool.true\n'MathScope.M1.Gauge.g2_shapes' does not depend on any axioms\nMathScope.M1.Gauge.g2_compact_form : MathScope.M1.Gauge.g2Basis.all MathScope.M1.Gauge.antiHermitian = Bool.true\n'MathScope.M1.Gauge.g2_compact_form' depends on axioms: [propext]\nMathScope.M1.Gauge.g2_complete_bracket_table :\n  MathScope.M1.Gauge.checkBracketRows 7 MathScope.M1.Gauge.g2Basis MathScope.M1.Gauge.g2BracketRows = Bool.true\n'MathScope.M1.Gauge.g2_complete_bracket_table' depends on axioms: [propext]\nMathScope.M1.Gauge.g2_embedding_brackets :\n  MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.g2L0 MathScope.M1.Gauge.g2L1 =\n      MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.g2L2 ∧\n    MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.g2L1 MathScope.M1.Gauge.g2L2 =\n        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.g2L0 ∧\n      MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.g2L2 MathScope.M1.Gauge.g2L0 =\n        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.g2L1\n'MathScope.M1.Gauge.g2_embedding_brackets' depends on axioms: [propext]\nMathScope.M1.Gauge.g2_embedding_metric :\n  MathScope.M1.Gauge.gramTrace MathScope.M1.Gauge.g2EmbeddingScaled = [[4, 0, 0], [0, 4, 0], [0, 0, 4]]\n'MathScope.M1.Gauge.g2_embedding_metric' depends on axioms: [propext]\nMathScope.M1.Gauge.g2_jacobi_fixture :\n  MathScope.M1.Gauge.bracketJacobi MathScope.M1.Gauge.g2B0 MathScope.M1.Gauge.g2B1 MathScope.M1.Gauge.g2B2 =\n    MathScope.M1.Gauge.matZero 7\n'MathScope.M1.Gauge.g2_jacobi_fixture' depends on axioms: [propext]\nMathScope.M1.Gauge.g2_link_unitary :\n  MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.g2U0) MathScope.M1.Gauge.g2U0 =\n    MathScope.M1.Gauge.matId 7\n'MathScope.M1.Gauge.g2_link_unitary' depends on axioms: [propext]\nMathScope.M1.Gauge.g2_nonconstant_site_frames :\n  MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.g2Omega0) MathScope.M1.Gauge.g2Omega0 =\n      MathScope.M1.Gauge.matId 7 ∧\n    MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.g2Omega1) MathScope.M1.Gauge.g2Omega1 =\n      MathScope.M1.Gauge.matId 7\n'MathScope.M1.Gauge.g2_nonconstant_site_frames' depends on axioms: [propext]\nMathScope.M1.Gauge.g2_holonomy_covariance :\n  MathScope.M1.Gauge.holonomy3\n      (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega0 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2Omega1)\n      (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega1 MathScope.M1.Gauge.g2U1 (MathScope.M1.Gauge.matId 7))\n      (MathScope.M1.Gauge.gaugeLink (MathScope.M1.Gauge.matId 7) MathScope.M1.Gauge.g2U2 MathScope.M1.Gauge.g2Omega0) =\n    MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega0\n      (MathScope.M1.Gauge.holonomy3 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2U1 MathScope.M1.Gauge.g2U2)\n      MathScope.M1.Gauge.g2Omega0\n'MathScope.M1.Gauge.g2_holonomy_covariance' depends on axioms: [propext]\nMathScope.M1.Gauge.g2_wilson_trace :\n  MathScope.M1.Gauge.matTrace\n      (MathScope.M1.Gauge.holonomy3\n        (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega0 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2Omega1)\n        (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega1 MathScope.M1.Gauge.g2U1 (MathScope.M1.Gauge.matId 7))\n        (MathScope.M1.Gauge.gaugeLink (MathScope.M1.Gauge.matId 7) MathScope.M1.Gauge.g2U2\n          MathScope.M1.Gauge.g2Omega0)) =\n    MathScope.M1.Gauge.matTrace\n      (MathScope.M1.Gauge.holonomy3 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2U1 MathScope.M1.Gauge.g2U2)\n'MathScope.M1.Gauge.g2_wilson_trace' depends on axioms: [propext]\n",
+      "logSha256": "9a7ac571f05e106e2a32e166a696286fb8ce481031cf0bc48fe1982e94b4cf39",
+      "logPath": "g2-audit.log",
+      "oleanSha256": "bf16147f9a24a06f76b2d1a5da3d13ef0e7d349930f3ea732f92af536a9b923d"
+    },
+    {
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/.lake/build/lib/lean/MathScope/M1/Gauge/Transport.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/MathScope/M1/Gauge/Transport.lean"
+      ],
+      "standardCommand": "lake env lean MathScope/M1/Gauge/Transport.lean",
+      "exitCode": 0,
+      "elapsedSeconds": 0.27244211099969107,
+      "log": "MathScope.M1.Gauge.GroupLaw.inverse_cancellation.{u_1} {G : Type u_1} (L : MathScope.M1.Gauge.GroupLaw G) (a b : G) :\n  L.mul (L.inv a) (L.mul a b) = b\n'MathScope.M1.Gauge.GroupLaw.inverse_cancellation' does not depend on any axioms\nMathScope.M1.Gauge.GroupLaw.adjacent_transport_covariance.{u_1} {G : Type u_1} (L : MathScope.M1.Gauge.GroupLaw G)\n  (gx gy gz u v : G) : L.mul (L.link gx u gy) (L.link gy v gz) = L.link gx (L.mul u v) gz\n'MathScope.M1.Gauge.GroupLaw.adjacent_transport_covariance' depends on axioms: [propext]\nMathScope.M1.Gauge.GroupLaw.closed_holonomy_covariance.{u_1} {G : Type u_1} (L : MathScope.M1.Gauge.GroupLaw G)\n  (gx gy gz u v w : G) :\n  L.mul (L.mul (L.link gx u gy) (L.link gy v gz)) (L.link gz w gx) = L.link gx (L.mul (L.mul u v) w) gx\n'MathScope.M1.Gauge.GroupLaw.closed_holonomy_covariance' depends on axioms: [propext]\nMathScope.M1.Gauge.GroupLaw.closed_character_invariant.{u_1, u_2} {G : Type u_1} {V : Sort u_2}\n  (L : MathScope.M1.Gauge.GroupLaw G) (χ : G → V) (classFunction : ∀ (gx h : G), χ (L.link gx h gx) = χ h)\n  (gx gy gz u v w : G) : χ (L.mul (L.mul (L.link gx u gy) (L.link gy v gz)) (L.link gz w gx)) = χ (L.mul (L.mul u v) w)\n'MathScope.M1.Gauge.GroupLaw.closed_character_invariant' depends on axioms: [propext]\n",
+      "logSha256": "8e3c556627f5680280189dd75f43154822bcce4422c6cb5272b19a5031e0b32e",
+      "logPath": "transport-audit.log",
+      "oleanSha256": "52a9d71497f08f292eeedbfcc746b83f31408355bb0a5d299f9482e42e792cf7"
+    },
+    {
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "-o",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/.lake/build/lib/lean/MathScope/M1/Gauge/Conditional.olean",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/MathScope/M1/Gauge/Conditional.lean"
+      ],
+      "standardCommand": "lake env lean MathScope/M1/Gauge/Conditional.lean",
+      "exitCode": 0,
+      "elapsedSeconds": 0.32171000800008187,
+      "log": "MathScope.M1.Gauge.finite_support_has_lower_bound (delta : Nat) (offsets : List Nat) (energy : Nat)\n  (support : MathScope.M1.Gauge.finiteExcitedSupport delta offsets energy) : delta ≤ energy\n'MathScope.M1.Gauge.finite_support_has_lower_bound' does not depend on any axioms\nMathScope.M1.Gauge.finite_gap_excludes_interval (delta : Nat) (offsets : List Nat) (energy : Nat)\n  (below : energy < delta) : ¬MathScope.M1.Gauge.finiteExcitedSupport delta offsets energy\n'MathScope.M1.Gauge.finite_gap_excludes_interval' does not depend on any axioms\nMathScope.M1.Gauge.project_slice_roundtrip.{u_1} {K : Type u_1} (c : K) (p : MathScope.M1.Gauge.Point3 K) :\n  MathScope.M1.Gauge.project3 (MathScope.M1.Gauge.sliceLift c p) = p\n'MathScope.M1.Gauge.project_slice_roundtrip' does not depend on any axioms\nMathScope.M1.Gauge.projection_collision :\n  MathScope.M1.Gauge.project3 { x := 0, y := 0, z := 0, w := 0 } =\n      MathScope.M1.Gauge.project3 { x := 0, y := 0, z := 0, w := 1 } ∧\n    { x := 0, y := 0, z := 0, w := 0 } ≠ { x := 0, y := 0, z := 0, w := 1 }\n'MathScope.M1.Gauge.projection_collision' does not depend on any axioms\nMathScope.M1.Gauge.property_descends_with_fibre_certificate.{u_1} {K : Type u_1}\n  (P : MathScope.M1.Gauge.Point4 K → Prop)\n  (fibreCertificate :\n    ∀ (a b : MathScope.M1.Gauge.Point4 K), MathScope.M1.Gauge.project3 a = MathScope.M1.Gauge.project3 b → (P a ↔ P b))\n  (c : K) (p : MathScope.M1.Gauge.Point4 K) : P p ↔ P (MathScope.M1.Gauge.sliceLift c (MathScope.M1.Gauge.project3 p))\n'MathScope.M1.Gauge.property_descends_with_fibre_certificate' does not depend on any axioms\nMathScope.M1.Gauge.reconstruction_on_selected_slice.{u_1} {K : Type u_1} (c : K) (p : MathScope.M1.Gauge.Point4 K)\n  (onSlice : p.w = c) : MathScope.M1.Gauge.sliceLift c (MathScope.M1.Gauge.project3 p) = p\n'MathScope.M1.Gauge.reconstruction_on_selected_slice' does not depend on any axioms\n",
+      "logSha256": "c6a2245b4bc7807cf514a026506b01bc466c30328c92959b36d62d5aadf5d903",
+      "logPath": "conditional-audit.log",
+      "oleanSha256": "796bac15da1b1f2582cb448c94f7a7f6b6a4325b4c93157dbe225c72517298cb"
+    }
+  ],
+  "toolchain": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+  "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+  "mathlibImported": false,
+  "negativeControls": [
+    {
+      "name": "NegativeBracket",
+      "path": "NegativeBracket.lean",
+      "content": "import MathScope.M1.Gauge.Fixtures\nopen MathScope.M1.Gauge\nexample : matBracket su3L0 su3L1 = matScale 3 su3L2 := by decide\n",
+      "sha256": "f245b16e07f369a6032346b46fdd2913fa70888a262b6cf5044424d5502de106",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/NegativeBracket.lean"
+      ],
+      "exitCode": 1,
+      "expected": "REJECT",
+      "rejected": true,
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/NegativeBracket.lean:3:58: error: Tactic `decide` proved that the proposition\n  matBracket su3L0 su3L1 = matScale 3 su3L2\nis false\n",
+      "logSha256": "a7df8b537a8be333804a61aa0fb9c6bcb4ba067e097caed49a95092ee1273de6"
+    },
+    {
+      "name": "NegativeWilson",
+      "path": "NegativeWilson.lean",
+      "content": "import MathScope.M1.Gauge.Fixtures\nopen MathScope.M1.Gauge\nexample : matTrace (holonomy3 g2U0 g2U1 g2U2) = CI.mk 7 0 := by decide\n",
+      "sha256": "a3e59c228c7ddd76bfb5f17e1c797d7b59df833ae88d1f07f07fc62160788142",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/NegativeWilson.lean"
+      ],
+      "exitCode": 1,
+      "expected": "REJECT",
+      "rejected": true,
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/NegativeWilson.lean:3:64: error: Tactic `decide` proved that the proposition\n  matTrace (holonomy3 g2U0 g2U1 g2U2) = { re := 7, im := 0 }\nis false\n",
+      "logSha256": "cf3c3c151885163b83f3ee10c109947d0edf6a442e29970a7b509eac3924e057"
+    },
+    {
+      "name": "NegativeProjection",
+      "path": "NegativeProjection.lean",
+      "content": "import MathScope.M1.Gauge.Conditional\nopen MathScope.M1.Gauge\nexample : Point4.mk 0 0 0 (0 : Nat) = Point4.mk 0 0 0 1 := by decide\n",
+      "sha256": "a870ca778414adf1554dfd0bc8a03b635f00016cac860f6615a488d5e7848cd4",
+      "command": [
+        "/tmp/mathscope-lean-embed",
+        "/workspace/scratch/afa9cd11a21b/lean-4.34.1-linux",
+        "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/NegativeProjection.lean"
+      ],
+      "exitCode": 1,
+      "expected": "REJECT",
+      "rejected": true,
+      "log": "/workspace/scratch/afa9cd11a21b/mathscope-m1/gauge/lean/NegativeProjection.lean:3:62: error: Tactic `decide` proved that the proposition\n  { x := 0, y := 0, z := 0, w := 0 } = { x := 0, y := 0, z := 0, w := 1 }\nis false\n",
+      "logSha256": "45478c7a7c5a7afa369a6caca6502b7e258c27232c9a79886580b2ec3661c29c"
+    }
+  ],
+  "absenceOfSorry": true,
+  "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+  "driverSha256": "0e3f7d16718c0d2b6bf5bf80f26c66358b0468b35607d6ef0d921857b50440aa",
+  "kernelModified": false,
+  "runtimeModified": false,
+  "guardModified": false,
+  "frontend": "unchanged official frontend shared-library driver with explicit sysroot",
+  "browserKernelRerun": false,
+  "scope": "Fixed exact SU3/G2 matrices, brackets, embeddings and holonomy; universal transport endpoint cancellation under lawful group operations; explicitly quantified conditional spectrum/projection interfaces. No quantum Yang-Mills existence theorem."
+}

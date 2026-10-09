@@ -1,0 +1,595 @@
+{
+  "schema": "MathScope.M1.GaugeChecklist/1",
+  "scope": "Y1-Y2 fully implemented only within explicit supported concrete bounds; root integration and future Y3-Y7 are separate.",
+  "status": "PASS_WITH_DECLARED_BOUNDS",
+  "counts": {
+    "Y1": 8,
+    "Y2": 8,
+    "Y1Y2Total": 16,
+    "gaugeRelevantM0": 5,
+    "validationGroups": 18,
+    "validationGroupsPassed": 18,
+    "leanTargets": 27,
+    "customLeanAxioms": 0,
+    "negativeLeanControls": 3,
+    "concreteGroupAdapters": 14,
+    "runnableExamples": 27
+  },
+  "tasks": [
+    {
+      "id": "Y1-01",
+      "title": "G의 의미와 지원 단위를 고정",
+      "originalAcceptance": "SU(2)와 SO(3)는 같은 Lie algebra를 공유하되 다른 globalForm ID를 가진다. 단순성이 없는 direct product와 비허용 rank는 거부한다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "실제 compact SU/SO/Sp/G2 전역군을 구별하고 SU(2)/SO(3)의 서로 다른 kernel과 faithful representation을 저장한다. simple은 Lie 대수의 단순성을 뜻한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "global-form-and-kernel-distinguished",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "supported-bounds-and-global-form-rejections",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "groups.mjs",
+        "group-data.mjs"
+      ],
+      "limits": [
+        "단일 연결·전역군 분류와 중심 정보는 원전 정리 참조다. Lean IsSimpleGroup SU(2)를 선언하지 않는다."
+      ]
+    },
+    {
+      "id": "Y1-02",
+      "title": "Root datum을 저장",
+      "originalAcceptance": "정수 pairing과 Cartan 조건을 정확히 확인하고, 전역 형태가 누락되면 global topology·표현 충실성 기능을 준비 상태로 남긴다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "14개 군의 character/cocharacter 정수 격자, 단순근/쌍대근, 전 근 자료와 Cartan pairing을 저장하고 실제 coroot Gram에서 긴 근 길이 제곱 2를 검사한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "exact-group-data-integrity",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "generate_groups.py",
+        "group-data.mjs"
+      ],
+      "limits": [
+        "임의 중앙몫의 격자·표현을 생성하는 어댑터는 미구현이며 해당 입력을 거부한다."
+      ]
+    },
+    {
+      "id": "Y1-03",
+      "title": "기저·구조상수를 생성",
+      "originalAcceptance": "모든 기저 원소에 대해 반대칭성과 Jacobi의 유한 합이 정확히 0이다. 임의 표본 검사를 전체 Jacobi 증명으로 인정하지 않는다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "완전 compact 및 Chevalley 기저, 정수 Chevalley 구조상수, 모든 bracket·Jacobi·Serre 관계를 정확 유리수로 검사한다. 브라우저 BigInt가 전 Jacobi를 독립 재검사한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "exact-group-data-integrity",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "all-compact-matrix-regressions",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "corrupt-exact-bracket-rejected",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "lean-audit-source-and-negative-controls",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "generate_groups.py",
+        "exact.mjs",
+        "lean/MathScope/M1/Gauge/SU3.lean",
+        "lean/MathScope/M1/Gauge/G2.lean"
+      ],
+      "limits": [
+        "Lean은 SU3/G2 전 bracket 표 및 명시된 Jacobi fixture를 확인한다. 모든 군의 전 Jacobi가 Lean으로 검증됐다는 주장은 하지 않는다."
+      ]
+    },
+    {
+      "id": "Y1-04",
+      "title": "Compact real form을 연결",
+      "originalAcceptance": "변환된 bracket이 실수 계수를 가지며 선택한 unitary 표현에서 T†=−T이다. split real form을 compact로 표기하면 거부한다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "정확 복소 Chevalley↔compact 변환 및 실제 anti-Hermitian compact 행렬을 생성한다. Sp는 unitary symplectic, G2는 positive octonion form 안정자다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "exact-group-data-integrity",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "all-compact-matrix-regressions",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "generate_groups.py",
+        "group-data.mjs",
+        "groups.mjs"
+      ],
+      "limits": [
+        "split real form을 compact로 표기하는 입력은 허용하지 않는다."
+      ]
+    },
+    {
+      "id": "Y1-05",
+      "title": "군 원소의 저장 표현을 인증",
+      "originalAcceptance": "곱·역원·단위원·표현 kernel 계약을 확인한다. Lie algebra가 충실하다는 사실만으로 전역 군 표현의 충실성을 인정하지 않는다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "SU/SO/Sp 정의 표현과 G2 real 7 표현을 실제 저장한다. 군 원소 지수함수·곱·역/adjoint·단위원·determinant·추가 불변 tensor를 검사하며 전역 cover kernel을 구별한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "global-form-and-kernel-distinguished",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "all-compact-matrix-regressions",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "finite-holonomy-and-independent-gauge-integration",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "matrix.mjs",
+        "groups.mjs",
+        "holonomy.mjs",
+        "lean/MathScope/M1/Gauge/Transport.lean"
+      ],
+      "limits": [
+        "부동소수점 군 원소는 membership 잔차를 가진다. 전역군 분류 정리를 새로 Lean 증명한 것은 아니다. Spin 벡터 표현을 faithful로 속이지 않는다."
+      ]
+    },
+    {
+      "id": "Y1-06",
+      "title": "작용의 불변형과 표현을 고정",
+      "originalAcceptance": "B([X,Y],Z)=B(X,[Y,Z])와 양의 정부호를 확인한다. 중심에 무감각한 작용은 의도된 선택으로 표시하고 SU(N)의 β=2N/g₀²를 일반 G에 복사하지 않는다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "실제 trace 불변형의 모든 ordered basis triple ad-invariance 및 정확 LDL 양정성을 확인한다. coupling과 beta=2 dim(R)c/g² convention을 기록한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "exact-group-data-integrity",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "all-compact-matrix-regressions",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "finite-holonomy-and-independent-gauge-integration",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "generate_groups.py",
+        "groups.mjs",
+        "holonomy.mjs"
+      ],
+      "limits": [
+        "작용의 Lie algebra 불변형만으로 전역 중심/line-operator sector가 구별되지는 않는다."
+      ]
+    },
+    {
+      "id": "Y1-07",
+      "title": "계열별 어댑터와 자원 한도를 등록",
+      "originalAcceptance": "그룹별 산술·지수함수·표현 차원·인증서가 있어야 concrete 상태를 준다. 문자열 이름만 추가한 어댑터는 metadata 상태다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "SU(2..6), SO(3,5..8), compact Sp(1..3), compact G2의 실제 데이터·산술·표현·지수함수·인증서를 등록한다. rank/차원/표본/평가 횟수 한도를 강제한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "supported-bounds-and-global-form-rejections",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "required-state-input-and-budget-rejections",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "all-examples-contract-valid-and-replay",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "index.mjs",
+        "groups.mjs",
+        "group-data.mjs"
+      ],
+      "limits": [
+        "F4,E6,E7,E8,Spin,임의 중앙몫,범위 밖 고전군은 concrete 구현으로 표시하지 않고 거부한다. 임의 compact simple G 전체를 구현했다는 주장은 하지 않는다."
+      ]
+    },
+    {
+      "id": "Y1-08",
+      "title": "정확 계산과 부동소수점 회귀검사를 분리",
+      "originalAcceptance": "SU(2)/SU(3) 작은 행렬 fixture의 unitary·곱 잔차 목표를 10⁻¹⁰로 두고 정규화한다. 큰 표현은 별도 허용오차·오차예산이 없으면 정량 주장을 잠근다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "정확 Python Fraction, 브라우저 BigInt, Float64 행렬 검사 및 실제 Lean 검사를 구별한다. 모든 지원 표현의 membership/곱 회귀 잔차는 기본 1e-10 gate를 통과한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "all-compact-matrix-regressions",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "float64-large-integer-wrapper",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "lean-audit-source-and-negative-controls",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "matrix.mjs",
+        "exact.mjs",
+        "tests.mjs",
+        "lean/lean-audit.json"
+      ],
+      "limits": [
+        "Float64 결과는 interval certificate가 아니다. 큰 스케일에서는 실제 잔차/단위/범위를 함께 읽어야 한다."
+      ]
+    },
+    {
+      "id": "Y2-01",
+      "title": "4D 영역과 경계를 선언",
+      "originalAcceptance": "R⁴ BPST를 잘라 붙인 주기 격자가 자동으로 torus의 정확한 해가 되지 않는다. 관측 창이면 tail 오차, 주기 모델이면 seam 검사를 기록한다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "R4 관측 창과 periodic trivial-bundle torus를 구별한다. pure BPST는 내접 4D ball을 이용해 창 밖 charge/action 상한을 기록한다. Fourier torus는 모든 seam을 검사한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "independent-density-normalization-and-window-tail",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "periodic-boundary-and-global-gauge",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "required-state-input-and-budget-rejections",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "fields.mjs",
+        "observations.mjs",
+        "index.mjs"
+      ],
+      "limits": [
+        "single BPST의 naive periodic glue와 미지정 bundle transition은 거부한다. 일반 off-shell장의 생략 tail은 인증된 전체 작용으로 주장하지 않는다."
+      ]
+    },
+    {
+      "id": "Y2-02",
+      "title": "SU(2)→G 임베딩을 인증",
+      "originalAcceptance": "모든 생성자 쌍에서 ι([X,Y])=[ιX,ιY]가 정확히 성립한다. 전역 군·bundle 관련 주장은 Lie algebra 인증만으로 통과하지 않는다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "모든 지원 군의 실제 SU2 준동형 생성자·전 bracket·compact 좌표·global kernel을 저장한다. G2의 long-root index 1 및 short-root index 3을 별도 지원한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "global-form-and-kernel-distinguished",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "all-group-bpst-and-full-color-fields",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "embedding-index-one-versus-three",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "lean-audit-source-and-negative-controls",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "generate_groups.py",
+        "fields.mjs",
+        "groups.mjs",
+        "lean/MathScope/M1/Gauge/G2.lean"
+      ],
+      "limits": [
+        "SU2→SO3는 kernel ±1을 갖는 준동형이다. Lie algebra 단사성과 전역군 단사성을 혼동하지 않는다."
+      ]
+    },
+    {
+      "id": "Y2-03",
+      "title": "임베딩 지수로 정규화를 운반",
+      "originalAcceptance": "기저 Gram 행렬에서 동일한 Iι가 나오고 작용·위상 밀도에 반영된다. 일반 임베딩에 unit-charge SU(2) 밀도를 그대로 붙이면 거부한다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "Gram pullback으로 계산한 지수 1/3을 실제 곡률, q4, q3, 작용, charge 및 hash에 반영한다. 지수 3 밀도가 지수 1의 정확히 세 배인지 독립 적분한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "embedding-index-one-versus-three",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "dilation-density-units-q4-q3",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "independent-density-normalization-and-window-tail",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "generate_groups.py",
+        "fields.mjs",
+        "family.mjs",
+        "index.mjs"
+      ],
+      "limits": [
+        "임의 embedding은 미구현이며 ID를 바꾸어 unit-charge 식을 재사용할 수 없다. Index 3은 exact-rational 생성기 검증이며 현재 Lean metric target은 index 1이다."
+      ]
+    },
+    {
+      "id": "Y2-04",
+      "title": "BPST reference를 실제 G장으로 올림",
+      "originalAcceptance": "F(A_G)=ι(F(A))와 자기쌍대성의 부호를 확인한다. 동일한 정규화에서 유한 창 적분은 tail 보정 후 Iι 및 8π²Iι/g²에 수렴한다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "실제 G matrix-valued BPST A를 해석 미분해 dA+[A,A]를 만들고 독립 closed F, self-duality, action density 및 infinite integral의 수치 quadrature와 비교한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "all-group-bpst-and-full-color-fields",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "embedding-index-one-versus-three",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "independent-density-normalization-and-window-tail",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "fields.mjs",
+        "tests.mjs"
+      ],
+      "limits": [
+        "무한 적분과 smooth continuum 해석은 원전/직접 수학식과 수치 비교이며, 유한 표본으로 Clay 양자 존재나 일반 PDE 정리가 Lean 증명됐다고 부르지 않는다."
+      ]
+    },
+    {
+      "id": "Y2-05",
+      "title": "G의 전체 기저를 사용하는 시험장 생성",
+      "originalAcceptance": "기저 계수에서 직접 계산한 Fμν=∂μAν−∂νAμ+[Aμ,Aν]와 행렬 commutator 계산이 일치한다. off-shell 시험장을 YM 해로 표기하지 않는다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "실제 dim(g) 전체 계수의 Gaussian-polynomial/Fourier 시험장과 BPST+perturbation을 생성한다. scalar coefficient+f_ab^c 곡률을 행렬 곱 곡률과 독립 비교한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "all-group-bpst-and-full-color-fields",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "periodic-boundary-and-global-gauge",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "fields.mjs",
+        "index.mjs"
+      ],
+      "limits": [
+        "시험장에는 YM 방정식을 강제하지 않는다. off-shell residual이 0 또는 nonzero인지 계산 결과를 그대로 기록한다."
+      ]
+    },
+    {
+      "id": "Y2-06",
+      "title": "해의 잔차와 보존량을 분리",
+      "originalAcceptance": "BPST의 이론적 잔차 0과 수치 수렴을 확인한다. 시험장·유효 perturbation의 nonzero 잔차는 숨기거나 색상 정규화로 제거하지 않는다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "실제 1/2차 jet에서 covariant derivative, YM residual, Bianchi residual을 분리한다. BPST zero residual 및 독립 중심차분 2차 수렴을 검증한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "all-group-bpst-and-full-color-fields",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "fields.mjs",
+        "tests.mjs"
+      ],
+      "limits": [
+        "유효 섭동의 nonzero residual은 숨기지 않는다. 수치 잔차가 작다는 사실은 전체 함수 공간에서의 해 증명이 아니다."
+      ]
+    },
+    {
+      "id": "Y2-07",
+      "title": "게이지 변환과 관측량을 시험",
+      "originalAcceptance": "비상수 gauge transformation 전후 invariant density가 정해진 오차 내 동일하다. 벡터 화살표가 바뀌어도 장의 물리적 변화라고 자동 해석하지 않는다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "비상수 Omega의 A 변환과 F conjugation, 실제 행렬 invariant densities 및 별도 finite-difference F를 비교한다. periodic source에는 periodic global gauge 조건을 강제한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "all-group-bpst-and-full-color-fields",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "periodic-boundary-and-global-gauge",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "finite-holonomy-and-independent-gauge-integration",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "fields.mjs",
+        "holonomy.mjs"
+      ],
+      "limits": [
+        "A의 성분과 열린 선의 trace는 gauge invariant로 표시하지 않는다. 닫힌 Wilson trace와 scalar densities만 불변 관측으로 사용한다."
+      ]
+    },
+    {
+      "id": "Y2-08",
+      "title": "고전장 생성 기록을 내보냄",
+      "originalAcceptance": "같은 manifest는 같은 A/F와 관측량을 재현한다. G 또는 ι를 바꾸면 캐시·투영·관련 증명 상태가 stale로 바뀐다.",
+      "status": "PASS_WITH_DECLARED_BOUNDS",
+      "implementation": "완전 group/field/family/assumption/coefficients/domain/units 입력과 4D 원본 표본, 관측 지도, source/display/assumption hashes를 내보낸다. 모든 27 예제의 완전 JSON replay와 M0 typed 계약을 확인한다.",
+      "evidence": [
+        {
+          "file": "evidence/validation.json",
+          "record": "four-delta-roles-and-physical-hashes",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "actual-projection-and-source-coordinates",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "all-examples-contract-valid-and-replay",
+          "status": "PASS"
+        },
+        {
+          "file": "evidence/validation.json",
+          "record": "float64-large-integer-wrapper",
+          "status": "PASS"
+        }
+      ],
+      "files": [
+        "index.mjs",
+        "family.mjs",
+        "observations.mjs",
+        "tests.mjs"
+      ],
+      "limits": [
+        "세션 그래프의 stale 전파·새 revision 재결합·저장은 root 공통 M0 엔진이 담당한다. 이 모듈은 실제 변화가 구별되는 결정적 hash와 완전 source manifest를 제공한다."
+      ]
+    }
+  ],
+  "m0Contributions": [
+    {
+      "id": "I0-04",
+      "status": "GAUGE_IMPLEMENTATION_PASS",
+      "implementation": "실제 G·전역군·표현·불변형·완전 상태족·경계·계수·seed·coupling·units·Delta 역할과 source hash를 저장한다. label-only/Delta-only field 요청을 거부하며 M0 typed 계약에 맞는 실제 가정 기록을 반환한다.",
+      "evidence": [
+        "required-state-input-and-budget-rejections",
+        "four-delta-roles-and-physical-hashes",
+        "all-examples-contract-valid-and-replay"
+      ],
+      "rootIntegration": "공통 M0 immutable graph, revision refs, persistence 및 UI는 root 소유다."
+    },
+    {
+      "id": "I1-07",
+      "status": "GAUGE_IMPLEMENTATION_PASS",
+      "implementation": "정확 Python와 BigInt 표, matrix curvature와 independent scalar coefficient table, analytic jet와 central difference, 실제 curvature density의 Simpson quadrature와 closed marginal를 비교한다.",
+      "evidence": [
+        "all-group-bpst-and-full-color-fields",
+        "independent-density-normalization-and-window-tail",
+        "embedding-index-one-versus-three"
+      ],
+      "rootIntegration": "타 도메인의 independent validation은 각 소유 모듈에서 별도 결합한다."
+    },
+    {
+      "id": "I3-02",
+      "status": "GAUGE_IMPLEMENTATION_PASS",
+      "implementation": "공식 Lean 4.34.1의 27개 실제 유한/보편적 transport/조건부 projection target과 전체 source/type/axioms/log/hash를 제공한다. 3개의 잘못된 theorem은 실제 커널이 거부한다.",
+      "evidence": [
+        "lean-audit-source-and-negative-controls"
+      ],
+      "rootIntegration": "고정 source exact-match 표시 및 기존 guard/권한 경계는 root 공통 verifier가 유지한다."
+    },
+    {
+      "id": "I3-03",
+      "status": "GAUGE_INTERFACE_AND_FINITE_LOGIC_PASS",
+      "implementation": "유한 H는 실제 구성하고, 무한차원 norm/domain/spectral support/positive measure/observable domain/limit exchange/채널 조건을 analytic-assumptions.json에 정확히 기록한다. 자연수 finite support 하한·구간배제와 projection 조건부 정리는 실제 Lean target이다.",
+      "evidence": [
+        "finite-spectral-model-and-channel-scope",
+        "lean-audit-source-and-negative-controls"
+      ],
+      "rootIntegration": "무한차원 분석 및 quantum YM를 증명한 것으로 승격하지 않는다."
+    },
+    {
+      "id": "I3-04",
+      "status": "GAUGE_REFERENCE_ADAPTER_INPUT_PASS",
+      "implementation": "모든 원전은 title/authors/locator/status=THEOREM_REFERENCE, leanImport=null, kernelReceipt=null로 제공한다. 실제 고정 source와 kernel evidence는 별도 lean-audit.json만 사용한다.",
+      "evidence": [
+        "lean-audit-source-and-negative-controls"
+      ],
+      "rootIntegration": "공통 외부 정리 adapter registry는 root가 담당한다."
+    }
+  ],
+  "unsupportedAndFuture": [
+    {
+      "item": "임의 compact simple G 전체",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "14개 bounded concrete adapter와 G2 두 embedding만 제공한다. 다른 예외군·Spin·중앙몫은 거부한다."
+    },
+    {
+      "item": "Quantum Wilson ensemble / Gibbs sampler",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "여기서 Wilson link는 deterministic classical transport다. 샘플링·통계 오차·autocorrelation·transfer matrix 추정은 Y3 이후다."
+    },
+    {
+      "item": "연속 양자 YM 존재·OS 재구성·무한부피 및 연속극한·mass gap",
+      "status": "NOT_PROVED_NOT_CONSTRUCTED",
+      "reason": "클래식장/유한 H/프로젝션과 별도의 분석적 존재 문제다."
+    },
+    {
+      "item": "고차원 물리장 복원/스펙트럼의 3D projection 자동전달",
+      "status": "REQUIRES_EXPLICIT_CERTIFICATE",
+      "reason": "fibre invariance 또는 제한된 영역의 재구성 증거가 필요하다."
+    }
+  ],
+  "evidence": {
+    "validation": "evidence/validation.json",
+    "validationSha256": "3c57a7e7209bddc1cb02e7a9e226eb968200609e3547399accdf43793dfe8bc0",
+    "leanAudit": "lean/lean-audit.json",
+    "leanAuditSha256": "06badb9181a695e54e047db3dac18085f4acdfa23cc62c8f2b9638d74dbafa9d",
+    "sourceCatalog": "sources.json",
+    "analyticContract": "analytic-assumptions.json"
+  },
+  "integrationState": "Pure JSON-safe ES worker facade implemented; root reported actual M0 graph save/resave integration PASS. No deployment operation is performed by this module."
+}

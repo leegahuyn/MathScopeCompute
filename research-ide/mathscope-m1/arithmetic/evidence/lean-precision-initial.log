@@ -1,0 +1,17 @@
+MathScope.M1.Arithmetic.precision_reduction_composes (p a : ℤ) (N M : ℕ) (h : N ≤ M) : a % p ^ M % p ^ N = a % p ^ N
+'MathScope.M1.Arithmetic.precision_reduction_composes' depends on axioms: [propext]
+MathScope.M1.Arithmetic.integral_map_preserves_precision (p a b c : ℤ) (N : ℕ) (h : p ^ N ∣ a - b) :
+  p ^ N ∣ c * a - c * b
+'MathScope.M1.Arithmetic.integral_map_preserves_precision' depends on axioms: [propext, Quot.sound]
+MathScope.M1.Arithmetic.guard_digit_division (p x y : ℤ) (N : ℕ) (hp : p ≠ 0) (h : p ^ (N + 1) ∣ p * x - p * y) :
+  p ^ N ∣ x - y
+'MathScope.M1.Arithmetic.guard_digit_division' depends on axioms: [propext, Quot.sound]
+MathScope.M1.Arithmetic.delta_guard_digit_counterexample :
+  0 % 27 = 27 % 27 ∧ (0 - 0 ^ 3) / 3 % 27 ≠ (27 - 27 ^ 3) / 3 % 27
+'MathScope.M1.Arithmetic.delta_guard_digit_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M1.Arithmetic.derived_reduction_zero_differential : 3 % 3 = 0
+'MathScope.M1.Arithmetic.derived_reduction_zero_differential' does not depend on any axioms
+MathScope.M1.Arithmetic.finite_ring_nonunit_fixture (x : Fin 27) : 3 * ↑x % 27 ≠ 1
+'MathScope.M1.Arithmetic.finite_ring_nonunit_fixture' does not depend on any axioms
+MathScope.M1.Arithmetic.finite_ring_kernel_fixture : List.filter (fun x => 3 * x % 27 == 0) (List.range 27) = [0, 9, 18]
+'MathScope.M1.Arithmetic.finite_ring_kernel_fixture' does not depend on any axioms
