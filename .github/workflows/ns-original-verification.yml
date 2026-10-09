@@ -1,0 +1,87 @@
+name: Pinned original NS verification
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ns-original-verification.yml'
+      - 'tools/ns-original-ci/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pinned-original-ns-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  original:
+    name: Original ${{ matrix.mode }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [default-build, comparator]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        if: matrix.mode == 'comparator'
+        with:
+          go-version: '1.27.2'
+          cache: false
+      - name: Prepare a separate unprivileged verification user
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo useradd --create-home --shell /bin/bash mathscopeverify
+          sudo install -d -m 755 /opt/mathscope-ci
+          sudo install -m 644 tools/ns-original-ci/pins.json /opt/mathscope-ci/pins.json
+          sudo install -m 755 tools/ns-original-ci/run.py tools/ns-original-ci/probe.py /opt/mathscope-ci/
+          if [ '${{ matrix.mode }}' = comparator ]; then
+            rustup toolchain install 1.99.0 --profile minimal --no-self-update
+            mathscope_rust_bin=$(rustup which --toolchain 1.99.0 rustc)
+            mathscope_rust_root=$(dirname "$(dirname "$mathscope_rust_bin")")
+            sudo cp -a "$mathscope_rust_root" /opt/mathscope-ci/rust
+            mathscope_go_root=$(go env GOROOT)
+            sudo cp -a "$mathscope_go_root" /opt/mathscope-ci/go
+          fi
+          mathscope_uid=$(id -u mathscopeverify)
+          sudo loginctl enable-linger mathscopeverify
+          sudo systemctl start "user@${mathscope_uid}.service"
+          sudo -u mathscopeverify -H env XDG_RUNTIME_DIR="/run/user/${mathscope_uid}" \
+            DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/${mathscope_uid}/bus" \
+            systemctl --user is-active default.target
+      - name: Run the original pinned validation with all guards intact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mathscope_uid=$(id -u mathscopeverify)
+          sudo -u mathscopeverify -H env \
+            XDG_RUNTIME_DIR="/run/user/${mathscope_uid}" \
+            DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/${mathscope_uid}/bus" \
+            PATH="/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin" \
+            /usr/bin/python3 /opt/mathscope-ci/run.py \
+            --mode '${{ matrix.mode }}' --work /home/mathscopeverify/audit
+      - name: Collect results even when validation fails
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p original-validation-evidence
+          if sudo test -d /home/mathscopeverify/audit/evidence; then
+            sudo cp -a /home/mathscopeverify/audit/evidence/. original-validation-evidence/
+            sudo chown -R "$(id -u):$(id -g)" original-validation-evidence
+          fi
+          cp tools/ns-original-ci/pins.json original-validation-evidence/
+          git rev-parse HEAD > original-validation-evidence/mathscope-commit.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: original-${{ matrix.mode }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: original-validation-evidence/
+          retention-days: 30
+          if-no-files-found: error
