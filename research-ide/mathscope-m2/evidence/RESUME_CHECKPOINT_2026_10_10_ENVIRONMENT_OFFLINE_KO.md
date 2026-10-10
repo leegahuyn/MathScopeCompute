@@ -39,7 +39,7 @@ v65에서 추가로 PASS가 된 항목은 N4-03, N5-04, N5-05다. 개별 원문�
 - NS Node 141/141, 독립 검사 2778개.
 - v65 신규 3예제 15패널 및 기존 core 5패널의 실제 브라우저 실행·원본 경로·유한 좌표 확인: evidence/v65-new-catalog-audit.json.
 - 실제 amplitude를 새 job으로 replay하여 MATCH: evidence/v65-amplitude-replay.json.
-- 이전 v64 전체 브라우저 검사 68예제·129패널: evidence/v64-m2-catalog-audit.json 등 버전별 live-release 기록을 확인한다. v65에서 전체 패널을 다시 순회했다고 확대하지 않는다.
+- 이전 v64 전체 브라우저 검사 68예제·129패널: evidence/live-release-v64.json 등 버전별 live-release 기록을 확인한다. v65에서 전체 패널을 다시 순회했다고 확대하지 않는다.
 - M1은 기존 빈 관측 26개를 보완하고 등록 59개 전부 브라우저 실행한 v62 기록을 보존한다.
 - v65에서는 구간행·끝점이 footer와 겹치지 않도록 renderer를 수정하고 M1 열 적분 구간을 다시 실제 브라우저에서 확인했다.
 - evidence/live-release.json, v65-publication.json, v65-m1-audit.json 및 실제 스크린샷 세 파일을 v65 commit에 보존했다.
@@ -148,3 +148,25 @@ m2_gauge의 additive actual-covariance-uniform.mjs와 tests/fixture는 offline �
 6. 실제 브라우저에서 새8패널/precision/재현/원본 결속을 검증하고 이미지·게시 receipt를 저장한다. 등록 전체 source/staticWorker parity의 새 개수72를 확인한다.
 7. 검증된 v66 코드·근거를 같은 원격 브랜치에 저장한다. 이 문서 commit과 새 로컬 변경을 보존한 채 Git expected_sha lease를 사용한다.
 8. 남은 실제 N4-04/05와 N5-06을 끝까지 구현·검증하기 전 전체44개 완료 또는 fullM2Complete:true라고 보고하지 않는다.
+
+## 연결 중단 후 추가 확인 — 미게시·미적용 노트
+
+### 정확한 stress 집계 복구 절차
+
+원격 v65 tree에는 actual-mean-stress와 actual-covariance-uniform 신규 파일이 없음을 확인했다. 이러한 파일이 e9bab80 또는 본 handoff commit에 보존되어 있다고 말하지 않는다.
+
+1. frozen evidence/actual-mean-stress.json SHA-256 **130a3e7f468f519f5d769abf104f4c032ed84597fbc89160a794e17aacdf826f**를 대조하고, 내부 files에 기록한 모든 source bytes/hash를 검증한다.
+2. 현재 Python stdout을 JSON parse하여 실제 pass 및 checks=700, Object.keys를 확인한다. stdout의 files는 없으며 receipt의 존재는 아직 확인하지 못했다. 없는 필드를 읽지 않는다.
+3. frozen evidence에 저장한 실제 receipt를 verifyActualMeanStress로 현재 producer에 재실행하거나 같은 input의 evaluateActualMeanStress와 canonical 비교한다. 위치와 shape를 실제 파일로 확인한다.
+4. 새 audit에는 frozenEvidence, sourceByteVerification, independentExecution(command/script SHA/checks/stdoutKeys), receiptReplay(input/storedHash/currentHash/match)를 별개로 보존한다. source hash 검사를 제거하여 집계 오류를 피하지 않는다.
+
+### Uniform 커널 저장 범위
+
+저장을 직접 확인한 것은 navier/actual-covariance-uniform.mjs, tests/actual-covariance-uniform.test.mjs, tests/actual-covariance-uniform-fixture.mjs이다. Node11/11은 이 파일들의 실행 결과다. tests/actual-covariance-uniform-independent.py는 쓰기 응답이 중단돼 존재·완성 여부가 불확실하다. evidence/actual-covariance-uniform.json 및 research/ACTUAL_COVARIANCE_UNIFORM_REVIEW_KO.md는 아직 작성 전이다.
+
+### 다음 실제 모멘트·잔차 검증을 위한 수학 노트
+
+- C2 direct inverse와 normalized RHS 검토를 m2_gauge가 독립 확인했다. η0..2의 최대 raw derivative norm에서는 Leibniz를 포함해 quadratic selfmap≤4λ·2^36·r², Lipschitz≤8λ·2^36·r<1/4라는 넓은 상수를 사용한다. 다른 Banach norm convention의2r bound와 혼동하지 않는다.
+- blueprint_review는 pure V8 BigInt로 해당 bound의8개 대수 검사를 실행했지만, 파일·Node·Python 증거로 저장하지 못했다. 정식 테스트 집계에 추가하지 않는다.
+- m1_visualization은 pure V8 BigInt 유리수 다항식으로 source U*=4η+j의 Z 연산 관련8개 항등식을 대조했다. α=U1_X(0,η)=−(1/2)Z_-1 Z_-A U*, α(0)=Aj, α′(0)=12, α″(0)=2Aj(8h−3). 실제 N1 axial residual의 선형 X 계수는 (9/2−18h²)j>0, N1 radial Q1=(Ω1−2XF1²)/X의 axis값은0이다.
+- N0 radial axis coefficient Ω0/X=−2Π1_X=24−4AP(0)+P″(0)는 기존 actual A21 interval과 연결해 양의 하계를 확인해야 한다. 위 유도만으로 고정 X residual remainder나 N4-05의 PASS를 인정하지 않는다. Cauchy remainder·실제 norm·고정 좌표 및 N/격자/precision 분리 검증이 필요하다.
