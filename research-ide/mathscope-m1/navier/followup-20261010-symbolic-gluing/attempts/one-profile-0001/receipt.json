@@ -1,0 +1,1946 @@
+{
+  "schema": "MathScope.Navier.OneProfileEvidenceAssembly/1",
+  "generatedUTC": "2026-10-09T23:15:27.529806+00:00",
+  "status": "ACTUAL_SAME_PROFILE_PARAMETERS_AND_ANALYTIC_EVIDENCE_ATTACHED",
+  "sourcePaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "profileEvidenceSHA256": "f51970a3aa90150347b8dd760f44289fff90f88ce6dbdce86c734ea827bfa444",
+  "parametersExactExpressions": {
+    "Md": {
+      "integer": 1048576
+    },
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "logP": {
+      "product": [
+        {
+          "integer": 2
+        },
+        {
+          "ref": "T"
+        }
+      ]
+    },
+    "Pstar": {
+      "exp": {
+        "ref": "logP"
+      }
+    },
+    "lambda": {
+      "exp": {
+        "product": [
+          {
+            "integer": -1000
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "h": {
+      "exp": {
+        "product": [
+          {
+            "integer": -8002
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "co": {
+      "rational": "1/256"
+    },
+    "Tf": {
+      "integer": 128
+    },
+    "K": {
+      "power": [
+        {
+          "ref": "Pstar"
+        },
+        2
+      ]
+    },
+    "epsilonMoment": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        3
+      ]
+    },
+    "muMoment": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        2
+      ]
+    },
+    "j0": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        4
+      ]
+    },
+    "deltaStar": {
+      "quotient": [
+        {
+          "ref": "j0"
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "sigmaStar": {
+      "quotient": [
+        {
+          "ref": "j0"
+        },
+        {
+          "integer": 2000
+        }
+      ]
+    },
+    "outerComplexRadius": {
+      "quotient": [
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        },
+        {
+          "integer": 2048
+        }
+      ]
+    },
+    "rho": {
+      "quotient": [
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        },
+        {
+          "integer": 65536
+        }
+      ]
+    },
+    "Q": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": 1852673427797059126777135760139006525652319754650249024631321344126610074238976
+            },
+            {
+              "ref": "K"
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        }
+      ]
+    },
+    "Lambda": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        64
+      ]
+    },
+    "logCaxis": {
+      "sum": [
+        {
+          "quotient": [
+            {
+              "product": [
+                {
+                  "integer": 64
+                },
+                {
+                  "ref": "Lambda"
+                }
+              ]
+            },
+            {
+              "power": [
+                {
+                  "ref": "sigmaStar"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "integer": 1
+        }
+      ]
+    },
+    "Caxis": {
+      "exp": {
+        "ref": "logCaxis"
+      }
+    },
+    "barT": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        -200
+      ]
+    },
+    "BRefUpper": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        300
+      ]
+    },
+    "Bk": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        80
+      ]
+    },
+    "Tsh": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        90
+      ]
+    },
+    "logCSelected": {
+      "sum": [
+        {
+          "product": [
+            {
+              "integer": 10
+            },
+            {
+              "log": {
+                "sum": [
+                  {
+                    "integer": 1
+                  },
+                  {
+                    "ref": "BRefUpper"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "Q"
+            },
+            200
+          ]
+        }
+      ]
+    },
+    "CSelected": {
+      "exp": {
+        "ref": "logCSelected"
+      }
+    },
+    "XR": {
+      "product": [
+        {
+          "integer": 110
+        },
+        {
+          "power": [
+            {
+              "product": [
+                {
+                  "ref": "CSelected"
+                },
+                {
+                  "ref": "Pstar"
+                }
+              ]
+            },
+            10
+          ]
+        }
+      ]
+    },
+    "Xsep": {
+      "product": [
+        {
+          "integer": 110
+        },
+        {
+          "exp": {
+            "ref": "Tsh"
+          }
+        }
+      ]
+    },
+    "L0": {
+      "log": {
+        "product": [
+          {
+            "rational": "55/2"
+          },
+          {
+            "ref": "Lambda"
+          }
+        ]
+      }
+    },
+    "Lmath": {
+      "sum": [
+        {
+          "ref": "logCSelected"
+        },
+        {
+          "quotient": [
+            {
+              "product": [
+                {
+                  "integer": 34
+                },
+                {
+                  "ref": "Lambda"
+                }
+              ]
+            },
+            {
+              "power": [
+                {
+                  "ref": "sigmaStar"
+                },
+                2
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "VA": {
+      "sum": [
+        {
+          "integer": 1
+        },
+        {
+          "ref": "BRefUpper"
+        },
+        {
+          "product": [
+            {
+              "integer": 1048576
+            },
+            {
+              "power": [
+                {
+                  "ref": "BRefUpper"
+                },
+                2
+              ]
+            },
+            {
+              "power": [
+                {
+                  "ref": "Lambda"
+                },
+                4
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "Bcmp0": {
+      "product": [
+        {
+          "integer": 1000000
+        },
+        {
+          "power": [
+            {
+              "sum": [
+                {
+                  "integer": 1
+                },
+                {
+                  "power": [
+                    {
+                      "ref": "Q"
+                    },
+                    1000
+                  ]
+                },
+                {
+                  "ref": "BRefUpper"
+                },
+                {
+                  "ref": "VA"
+                },
+                {
+                  "ref": "L0"
+                }
+              ]
+            },
+            4
+          ]
+        }
+      ]
+    },
+    "Gamma": {
+      "product": [
+        {
+          "ref": "Bcmp0"
+        },
+        {
+          "exp": {
+            "ref": "Lmath"
+          }
+        }
+      ]
+    },
+    "Kcmp": {
+      "product": [
+        {
+          "integer": 1000
+        },
+        {
+          "power": [
+            {
+              "ref": "Gamma"
+            },
+            16
+          ]
+        }
+      ]
+    },
+    "Vmax": {
+      "product": [
+        {
+          "ref": "VA"
+        },
+        {
+          "exp": {
+            "product": [
+              {
+                "integer": 2
+              },
+              {
+                "ref": "Lmath"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "tauBase": {
+      "min": [
+        {
+          "quotient": [
+            {
+              "ref": "barT"
+            },
+            {
+              "integer": 4
+            }
+          ]
+        },
+        {
+          "rational": "1/1000"
+        },
+        {
+          "quotient": [
+            {
+              "integer": 1
+            },
+            {
+              "product": [
+                {
+                  "integer": 100
+                },
+                {
+                  "ref": "Gamma"
+                },
+                {
+                  "ref": "Bcmp0"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "quotient": [
+            {
+              "ref": "j0"
+            },
+            {
+              "product": [
+                {
+                  "integer": 100000000
+                },
+                {
+                  "sum": [
+                    {
+                      "integer": 1
+                    },
+                    {
+                      "ref": "BRefUpper"
+                    }
+                  ]
+                },
+                {
+                  "sum": [
+                    {
+                      "integer": 1
+                    },
+                    {
+                      "ref": "L0"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "quotient": [
+            {
+              "power": [
+                {
+                  "ref": "Q"
+                },
+                -200
+              ]
+            },
+            {
+              "product": [
+                {
+                  "integer": 1000000
+                },
+                {
+                  "sum": [
+                    {
+                      "integer": 1
+                    },
+                    {
+                      "ref": "BRefUpper"
+                    }
+                  ]
+                },
+                {
+                  "sum": [
+                    {
+                      "integer": 1
+                    },
+                    {
+                      "ref": "L0"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "quotient": [
+            {
+              "integer": 1
+            },
+            {
+              "product": [
+                {
+                  "integer": 100000000
+                },
+                {
+                  "ref": "Bcmp0"
+                },
+                {
+                  "power": [
+                    {
+                      "sum": [
+                        {
+                          "integer": 1
+                        },
+                        {
+                          "ref": "Kcmp"
+                        }
+                      ]
+                    },
+                    2
+                  ]
+                },
+                {
+                  "power": [
+                    {
+                      "sum": [
+                        {
+                          "integer": 1
+                        },
+                        {
+                          "ref": "Vmax"
+                        }
+                      ]
+                    },
+                    2
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "t1": {
+      "power": [
+        {
+          "ref": "CSelected"
+        },
+        -120
+      ]
+    },
+    "kappa0": {
+      "ref": "t1"
+    },
+    "omega1": {
+      "ref": "t1"
+    },
+    "omega2": {
+      "ref": "t1"
+    },
+    "DeltaEarly": {
+      "exp": {
+        "quotient": [
+          {
+            "product": [
+              {
+                "integer": -1
+              },
+              {
+                "power": [
+                  {
+                    "ref": "Q"
+                  },
+                  200
+                ]
+              }
+            ]
+          },
+          {
+            "integer": 4
+          }
+        ]
+      }
+    },
+    "sourceEnvelopeS": {
+      "power": [
+        {
+          "ref": "CSelected"
+        },
+        100000
+      ]
+    },
+    "sourceJLeft": {
+      "product": [
+        {
+          "quotient": [
+            {
+              "integer": 4
+            },
+            {
+              "ref": "Lambda"
+            }
+          ]
+        },
+        {
+          "exp": {
+            "quotient": [
+              {
+                "ref": "t1"
+              },
+              {
+                "integer": 16
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sourceJRight": {
+      "product": [
+        {
+          "integer": 16
+        },
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60000
+                  },
+                  {
+                    "ref": "T"
+                  }
+                ]
+              },
+              {
+                "integer": -25
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "loopILeft": {
+      "product": [
+        {
+          "quotient": [
+            {
+              "integer": 4
+            },
+            {
+              "ref": "Lambda"
+            }
+          ]
+        },
+        {
+          "exp": {
+            "quotient": [
+              {
+                "ref": "t1"
+              },
+              {
+                "integer": 8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "loopIRight": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "BOuter": {
+      "product": [
+        {
+          "integer": 1000
+        },
+        {
+          "ref": "T"
+        }
+      ]
+    },
+    "Xa": {
+      "quotient": [
+        {
+          "integer": 4
+        },
+        {
+          "ref": "Lambda"
+        }
+      ]
+    },
+    "loopD0": {
+      "quotient": [
+        {
+          "integer": 1
+        },
+        {
+          "product": [
+            {
+              "integer": 8
+            },
+            {
+              "ref": "sourceEnvelopeS"
+            }
+          ]
+        }
+      ]
+    },
+    "loopMuMax": {
+      "power": [
+        {
+          "ref": "sourceEnvelopeS"
+        },
+        12
+      ]
+    },
+    "loopDelta": {
+      "exp": {
+        "product": [
+          {
+            "integer": -1
+          },
+          {
+            "power": [
+              {
+                "ref": "sourceEnvelopeS"
+              },
+              16
+            ]
+          }
+        ]
+      }
+    },
+    "C12EnvelopeR": {
+      "exp": {
+        "power": [
+          {
+            "ref": "sourceEnvelopeS"
+          },
+          256
+        ]
+      }
+    },
+    "radialFrequencyN": {
+      "sum": [
+        {
+          "integer": 1
+        },
+        {
+          "ceil": {
+            "power": [
+              {
+                "ref": "C12EnvelopeR"
+              },
+              50
+            ]
+          }
+        }
+      ]
+    },
+    "directionalMarginKappa": {
+      "power": [
+        {
+          "ref": "C12EnvelopeR"
+        },
+        -10
+      ]
+    },
+    "stressFlatLowerConstant": {
+      "min": [
+        {
+          "power": [
+            {
+              "ref": "CSelected"
+            },
+            -11
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "C12EnvelopeR"
+            },
+            -8
+          ]
+        }
+      ]
+    },
+    "X0I1": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60
+                  },
+                  {
+                    "ref": "BOuter"
+                  }
+                ]
+              },
+              {
+                "integer": -25
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "I1Right": {
+      "product": [
+        {
+          "ref": "X0I1"
+        },
+        {
+          "exp": {
+            "integer": 5
+          }
+        }
+      ]
+    },
+    "X0I2": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60
+                  },
+                  {
+                    "ref": "BOuter"
+                  }
+                ]
+              },
+              {
+                "integer": -20
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "I2Right": {
+      "product": [
+        {
+          "ref": "X0I2"
+        },
+        {
+          "exp": {
+            "integer": 5
+          }
+        }
+      ]
+    },
+    "X0Ipos": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60
+                  },
+                  {
+                    "ref": "BOuter"
+                  }
+                ]
+              },
+              {
+                "integer": -14
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "IposRight": {
+      "product": [
+        {
+          "ref": "X0Ipos"
+        },
+        {
+          "exp": {
+            "integer": 5
+          }
+        }
+      ]
+    },
+    "X0Imean": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60
+                  },
+                  {
+                    "ref": "BOuter"
+                  }
+                ]
+              },
+              {
+                "integer": -8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "ImeanRight": {
+      "product": [
+        {
+          "ref": "X0Imean"
+        },
+        {
+          "exp": {
+            "integer": 5
+          }
+        }
+      ]
+    }
+  },
+  "evidenceInputs": [
+    {
+      "path": "followup-20261010-same-datum-axis/axis-envelope-certificate.json",
+      "sha256": "32f59e314e04d71bd7d47cf1bf3d1208e98b6549240875b7e2e2740c63ba2605",
+      "bytes": 9343,
+      "snapshot": "inputs/0-axis-envelope-certificate.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/continuation-debt-certificate.json",
+      "sha256": "819440fca3698cffc9752226c563a826f9cf7728139dddde405ddb82f3c0b9bd",
+      "bytes": 43072,
+      "snapshot": "inputs/1-continuation-debt-certificate.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/global-source-envelope-certificate.json",
+      "sha256": "bf9ca2766ad0ec90aa055becccc07b7ad882c71928e51c71529543c9d94efb4f",
+      "bytes": 14446,
+      "snapshot": "inputs/2-global-source-envelope-certificate.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/ACTIVE_SOURCE_FREEZE.json",
+      "sha256": "f179d4aee0d10bcc6fca4a4babcdb0473411474719eef1083aab03759a6c077f",
+      "bytes": 1256,
+      "snapshot": "inputs/3-ACTIVE_SOURCE_FREEZE.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/attempts/b8-0001/certificate.json",
+      "sha256": "0a2c375dfdd09d7aa90a0275a8697eb3eb073bf4a9b81e1f862af2ba8ed20f07",
+      "bytes": 38313,
+      "snapshot": "inputs/4-certificate.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/attempts/0001/certificate.json",
+      "sha256": "a76539a30b9900a0275f2cfb25948c5aa13f222e3e578d3d5fb1f81617bccbe7",
+      "bytes": 47648,
+      "snapshot": "inputs/5-certificate.json"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/attempts/0001/receipt.json",
+      "sha256": "d9e59a1d7ec0ddfdf1ababb78823d478b4cdf2714c3855abdbf36a6cef3e4dc0",
+      "bytes": 7228,
+      "snapshot": "inputs/6-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/attempts/loop-derivatives-0001/receipt.json",
+      "sha256": "149a2051ffafe4a4a34dc3e1a028e8b353924a29753ee91cae08f0da7a547f93",
+      "bytes": 40098,
+      "snapshot": "inputs/7-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/attempts/c12-0001/receipt.json",
+      "sha256": "175ee8263c47b0ff1e0fa4de0c98566aeda6a167ecd059cffda2800412566555",
+      "bytes": 13581,
+      "snapshot": "inputs/8-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/attempts/pressure-datum-0001/receipt.json",
+      "sha256": "f6b32aab94547230a538d544c81be58831e2555802b653e95a3bf81c56fb7be3",
+      "bytes": 144763,
+      "snapshot": "inputs/9-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/attempts/pressure-prefix-0002/receipt.json",
+      "sha256": "a81679a52297df4cf15ce60bbbb276d627bb8a43af6e11fa0a8c20d07713a4bf",
+      "bytes": 4963,
+      "snapshot": "inputs/10-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/attempts/core-intervals-0002/receipt.json",
+      "sha256": "8f65d85d903df534c2c10501119fbcef636678c95ec214e165041681d16fb5a5",
+      "bytes": 936426,
+      "snapshot": "inputs/11-receipt.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/evaluated-phi-mixed-comparison.json",
+      "sha256": "eb7e2448416c4be63d86c41d2be7ad6c6c11c057bc2a852b30b95807232e49b5",
+      "bytes": 1061736,
+      "snapshot": "inputs/12-evaluated-phi-mixed-comparison.json"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/preloop-gap-review/0001/receipt.json",
+      "sha256": "76a7d327840e8825fe4bd6fec90bc6caee1d0800ad26e9788bafb741151a9d1f",
+      "bytes": 5684,
+      "snapshot": "inputs/13-receipt.json"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/stress-assembly/0002/receipt.json",
+      "sha256": "6b45c2c47ccfab2d9a29d32a8441aafafc3fd584fcda8d79e5fc2be97737bc44",
+      "bytes": 4529,
+      "snapshot": "inputs/14-receipt.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/axis-fraction-review-002.json",
+      "sha256": "45b390acb46503eec4a7d9ede80f774c73a1583d53d09b7e8ec50e883e92da73",
+      "bytes": 7771,
+      "snapshot": "inputs/15-axis-fraction-review-002.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/source-derivative-review-001.json",
+      "sha256": "3056b493be3558a00289bd3b0b6e83a5465fea37de313c0d3274f21269ef5c06",
+      "bytes": 17661,
+      "snapshot": "inputs/16-source-derivative-review-001.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/fraction-review-001.json",
+      "sha256": "3ee5d7fea6327770b0ca87b0be71af0a7e1a4a15f0a7f1b14773c98ccc1e7583",
+      "bytes": 9091,
+      "snapshot": "inputs/17-fraction-review-001.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/b8-fraction-review-001.json",
+      "sha256": "d9f489ea955ee03947e9bb97d5f558b9aab001ebb8057ea44c68360224c94213",
+      "bytes": 5895,
+      "snapshot": "inputs/18-b8-fraction-review-001.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/c12-loop-review-001.json",
+      "sha256": "3dca0c88dff605d5db1e962f0bf5140d0e520e17cf690cd02ba68e1f3122c099",
+      "bytes": 15756,
+      "snapshot": "inputs/19-c12-loop-review-001.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/pressure-core-review-002.json",
+      "sha256": "66080a7085f4b42f8754da463fd870db4adfa2158c69e94db366e0736f318672",
+      "bytes": 34052,
+      "snapshot": "inputs/20-pressure-core-review-002.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.json",
+      "sha256": "2a7de565c23b4e7c20c95567f2fd770d98935ac1799b174f52d1ef5b1e626a03",
+      "bytes": 42563,
+      "snapshot": "inputs/21-mixed-phi-review-001.json"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/pressure-tail-review/0001/receipt.json",
+      "sha256": "b668b90a5b8d716879565393183935bed1d646e95d2cca9488634917bd721b7e",
+      "bytes": 1981,
+      "snapshot": "inputs/22-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.json",
+      "sha256": "b618ace5e2e3f11681cb6ff035887d5afff146f9d96c73cf72b8fd5a3bc1378e",
+      "bytes": 5016,
+      "snapshot": "inputs/23-final-independent-chain-seal-001.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/SAME_DATUM_ANALYTIC_AXIS.md",
+      "sha256": "1923770e721cd73d569150eec19eb8cf78a645b86207b6be90cb97aabb547920",
+      "bytes": 20071,
+      "snapshot": "inputs/24-SAME_DATUM_ANALYTIC_AXIS.md"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/CONTINUATION_AND_NEW_DEBT.md",
+      "sha256": "b2b4dfc3f1223e3a5e2bb09043dc649d48d2cda16813d6c719f7d47f6b0214e2",
+      "bytes": 23134,
+      "snapshot": "inputs/25-CONTINUATION_AND_NEW_DEBT.md"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/REFERENCE_DERIVATIVE_BOUNDS.md",
+      "sha256": "c4f47c6a156052a007a55992345faa47c7c47cb5606a46bff693f0b69d5054d9",
+      "bytes": 14028,
+      "snapshot": "inputs/26-REFERENCE_DERIVATIVE_BOUNDS.md"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md",
+      "sha256": "f27e8d640e9b8e49805c0128c987f043d5667c298b2029dd061b820ae9e3117b",
+      "bytes": 12673,
+      "snapshot": "inputs/27-GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/axis-symbolic-jet-N24.json",
+      "sha256": "2681e6d3efd059283c41f73c8185e8ad055f2e309275e50bb372544b724130e3",
+      "bytes": 167959,
+      "snapshot": "inputs/28-axis-symbolic-jet-N24.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/evaluated-phi-comparison.json",
+      "sha256": "5586ca70f07080c0f965b07362781276eb2ac98da0c5f5f9be29b6f0e8b282d5",
+      "bytes": 73998,
+      "snapshot": "inputs/29-evaluated-phi-comparison.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/core-independent-receipt.json",
+      "sha256": "66080a7085f4b42f8754da463fd870db4adfa2158c69e94db366e0736f318672",
+      "bytes": 34052,
+      "snapshot": "inputs/30-core-independent-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/core-independent-verifier.py",
+      "sha256": "8c6687546c950866dbc76edf9525723173612e9a043db2476945093556a0d471",
+      "bytes": 11994,
+      "snapshot": "inputs/31-core-independent-verifier.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/pressure-review.md",
+      "sha256": "9cdf454b107c9536cbc47d093e2b77da0c5e5e6276410205f123c23c8c911721",
+      "bytes": 5308,
+      "snapshot": "inputs/32-pressure-review.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/core-review.md",
+      "sha256": "683e075de9f7771505c57d246571f3f25e6ec5499639e052ea64fcc6d9f384f3",
+      "bytes": 5751,
+      "snapshot": "inputs/33-core-review.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/loop-independent-receipt.json",
+      "sha256": "3dca0c88dff605d5db1e962f0bf5140d0e520e17cf690cd02ba68e1f3122c099",
+      "bytes": 15756,
+      "snapshot": "inputs/34-loop-independent-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/loop-review.md",
+      "sha256": "e63945ee5c8804a8eee1fbe61c8586677af812e061d5688fdcc1bc13e8f3d128",
+      "bytes": 8893,
+      "snapshot": "inputs/35-loop-review.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/axis-independent-receipt.json",
+      "sha256": "45b390acb46503eec4a7d9ede80f774c73a1583d53d09b7e8ec50e883e92da73",
+      "bytes": 7771,
+      "snapshot": "inputs/36-axis-independent-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/axis-independent-verifier.py",
+      "sha256": "b58dc1a1d3787de339fb664fac3a4c594d1ff47d59080f43c02ae981d3b2994f",
+      "bytes": 8394,
+      "snapshot": "inputs/37-axis-independent-verifier.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/axis-original-analytic-review.md",
+      "sha256": "7bde10a6506662d5aaea2741e3b5bb2c565ff87ffe903861f60b7c26ec21177e",
+      "bytes": 9966,
+      "snapshot": "inputs/38-axis-original-analytic-review.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/source-independent-receipt.json",
+      "sha256": "3056b493be3558a00289bd3b0b6e83a5465fea37de313c0d3274f21269ef5c06",
+      "bytes": 17661,
+      "snapshot": "inputs/39-source-independent-receipt.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/source-independent-verifier.py",
+      "sha256": "6e7a150236618140391cf376661bc15f7e40bb28a066dbec91b9a4336efafaf6",
+      "bytes": 14537,
+      "snapshot": "inputs/40-source-independent-verifier.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/source-review.md",
+      "sha256": "e6e8ac846046c2238b865e7eb295b25ea58b3822da70355e785045196f3e1480",
+      "bytes": 9268,
+      "snapshot": "inputs/41-source-review.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/axis-active-freeze.json",
+      "sha256": "f179d4aee0d10bcc6fca4a4babcdb0473411474719eef1083aab03759a6c077f",
+      "bytes": 1256,
+      "snapshot": "inputs/42-axis-active-freeze.json"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.inputs/current-core-receipt.json",
+      "sha256": "8f65d85d903df534c2c10501119fbcef636678c95ec214e165041681d16fb5a5",
+      "bytes": 936426,
+      "snapshot": "inputs/43-current-core-receipt.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.inputs/evaluated-phi-mixed-comparison.json",
+      "sha256": "eb7e2448416c4be63d86c41d2be7ad6c6c11c057bc2a852b30b95807232e49b5",
+      "bytes": 1061736,
+      "snapshot": "inputs/44-evaluated-phi-mixed-comparison.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.inputs/evaluate_phi_mixed_comparison.py",
+      "sha256": "de434893666e98b6005b162093304f91df12ceb903b9cd4b2d26c9cced873f7c",
+      "bytes": 8728,
+      "snapshot": "inputs/45-evaluate_phi_mixed_comparison.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/evaluate_phi_mixed_comparison.py",
+      "sha256": "de434893666e98b6005b162093304f91df12ceb903b9cd4b2d26c9cced873f7c",
+      "bytes": 8728,
+      "snapshot": "inputs/46-evaluate_phi_mixed_comparison.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.inputs/evaluate_phi_comparison.py",
+      "sha256": "defab2c42dc5b0a50b3d801efb3bef42aa7e44cba5d1a85edb87440391f3d3e4",
+      "bytes": 9569,
+      "snapshot": "inputs/47-evaluate_phi_comparison.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/evaluate_phi_comparison.py",
+      "sha256": "defab2c42dc5b0a50b3d801efb3bef42aa7e44cba5d1a85edb87440391f3d3e4",
+      "bytes": 9569,
+      "snapshot": "inputs/48-evaluate_phi_comparison.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.inputs/EVALUATED_MIXED_PHI.md",
+      "sha256": "e831255d5dd49a5493e2a70b71a7c57000650c374430f35b49dddc8353166853",
+      "bytes": 5554,
+      "snapshot": "inputs/49-EVALUATED_MIXED_PHI.md"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/EVALUATED_MIXED_PHI.md",
+      "sha256": "e831255d5dd49a5493e2a70b71a7c57000650c374430f35b49dddc8353166853",
+      "bytes": 5554,
+      "snapshot": "inputs/50-EVALUATED_MIXED_PHI.md"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.inputs/axis-envelope-certificate.json",
+      "sha256": "32f59e314e04d71bd7d47cf1bf3d1208e98b6549240875b7e2e2740c63ba2605",
+      "bytes": 9343,
+      "snapshot": "inputs/51-axis-envelope-certificate.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.inputs/continuation-debt-certificate.json",
+      "sha256": "819440fca3698cffc9752226c563a826f9cf7728139dddde405ddb82f3c0b9bd",
+      "bytes": 43072,
+      "snapshot": "inputs/52-continuation-debt-certificate.json"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.inputs/SAME_DATUM_ANALYTIC_AXIS.md",
+      "sha256": "1923770e721cd73d569150eec19eb8cf78a645b86207b6be90cb97aabb547920",
+      "bytes": 20071,
+      "snapshot": "inputs/53-SAME_DATUM_ANALYTIC_AXIS.md"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.inputs/independent-verifier.py",
+      "sha256": "7f516592d8719e94bdd7c8ecb5a28f41aaa173f355cac92650d181f3059e30a2",
+      "bytes": 9324,
+      "snapshot": "inputs/54-independent-verifier.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/independent-review/verify_mixed_phi.py",
+      "sha256": "7f516592d8719e94bdd7c8ecb5a28f41aaa173f355cac92650d181f3059e30a2",
+      "bytes": 9324,
+      "snapshot": "inputs/55-verify_mixed_phi.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/verify_certificate.py",
+      "sha256": "feef26195c5183f56271eb6936e0cb713967ae056c92c9e480d261c1aa6a4640",
+      "bytes": 15070,
+      "snapshot": "inputs/56-verify_certificate.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/independent-review/verify_b8_certificate.py",
+      "sha256": "b92f5fb810ac46ac826d7db5f9beca53ed4e467ffa88bf809e0d82247595f4f5",
+      "bytes": 8463,
+      "snapshot": "inputs/57-verify_b8_certificate.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/PRESSURE_DATUM_INTERVAL.md",
+      "sha256": "8dfd40a7206871b425e69894ead0321fe6f476c338f0532739c1d055a920386d",
+      "bytes": 7857,
+      "snapshot": "inputs/58-PRESSURE_DATUM_INTERVAL.md"
+    },
+    {
+      "path": "followup-20261010-outer-reselection/OUTER_DERIVATION.md",
+      "sha256": "ffb859d1f6b79aad9aa45e7c5173e8b727cd7a554f6ea28697dc9a108b3dbd81",
+      "bytes": 22237,
+      "snapshot": "inputs/59-OUTER_DERIVATION.md"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/PRESSURE_TAIL_REVIEW_EN.md",
+      "sha256": "521fe683b3fa95117ba06751ac15f6f8c6259b953e68c3c1a52997bc278b1d28",
+      "bytes": 6242,
+      "snapshot": "inputs/60-PRESSURE_TAIL_REVIEW_EN.md"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/check_pressure_tail_review.py",
+      "sha256": "266eee4c107bbf5e1dafeeb302484c1cd8bbaab515174d2c71299629f2d5f518",
+      "bytes": 3999,
+      "snapshot": "inputs/61-check_pressure_tail_review.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/check_global_source_envelope.py",
+      "sha256": "55759d18bbd3a522a935483a7b9874c4e06114ed0deb86742bff6c5d312b3594",
+      "bytes": 12020,
+      "snapshot": "inputs/62-check_global_source_envelope.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/LOOP_DERIVATIVE_ENVELOPE.md",
+      "sha256": "531e5addbe900564c22e0b44406c9c024e7d279c03a7188ea17431a567fe1250",
+      "bytes": 10357,
+      "snapshot": "inputs/63-LOOP_DERIVATIVE_ENVELOPE.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/QUANTITATIVE_LOOP_SELECTION.md",
+      "sha256": "937cfaace88466009c5f47a763e0f983d983c350fd754cd4cc57ad148d5897e6",
+      "bytes": 7398,
+      "snapshot": "inputs/64-QUANTITATIVE_LOOP_SELECTION.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/check_loop_derivative_envelope.py",
+      "sha256": "70d90feeb10b0b670873522b2d763d52bf332ce924303f113d2a11d0b2eb4ad1",
+      "bytes": 7625,
+      "snapshot": "inputs/65-check_loop_derivative_envelope.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/C12_FREQUENCY_CONTRACT.md",
+      "sha256": "1740353222f1a5ca727c2c8a2c7063bba8a990f9a4393754256d5c82f49f7a16",
+      "bytes": 12543,
+      "snapshot": "inputs/66-C12_FREQUENCY_CONTRACT.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/check_c12_frequency_contract.py",
+      "sha256": "ba945f3ecb94313ec3f2c89a1e9a6e0af6b7a13c08fd7710b224cacc12f6faad",
+      "bytes": 6176,
+      "snapshot": "inputs/67-check_c12_frequency_contract.py"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/HEAT_COMPENSATION_PROOF_EN.md",
+      "sha256": "81446a5f1a6a18a4e1aa9a44fdc5695da1846a1c23fe412c9ac282af155688e3",
+      "bytes": 18440,
+      "snapshot": "inputs/68-HEAT_COMPENSATION_PROOF_EN.md"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/check_heat_compensation.py",
+      "sha256": "cdc91dea1c3310560944e4623b3b6cddd6ed0ecbad2ecd2907cefc8daa1bf0aa",
+      "bytes": 15181,
+      "snapshot": "inputs/69-check_heat_compensation.py"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/GLOBAL_STRESS_ASSEMBLY_EN.md",
+      "sha256": "3c89af370fb2728bc407f5192493eb7474666051289626c57b73f19da7e59516",
+      "bytes": 13948,
+      "snapshot": "inputs/70-GLOBAL_STRESS_ASSEMBLY_EN.md"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md",
+      "sha256": "2035fa202134d7ca0affcad7ad7aafbb05e3508fde3a5f34a3f2cea6fd003750",
+      "bytes": 6843,
+      "snapshot": "inputs/71-ACTIVATION_COLLAR_BOUNDS_EN.md"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/B8_AND_PRELOOP_GAPS_EN.md",
+      "sha256": "e7a8b814e5e3c0489779a460323dd0744e79f9da9454d0be7a5d5b29de73d1a5",
+      "bytes": 15002,
+      "snapshot": "inputs/72-B8_AND_PRELOOP_GAPS_EN.md"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/check_preloop_gaps.py",
+      "sha256": "c1f1bd7b351d37950a3624afe47c31555d13c7936aa6ad1c420152079054c19d",
+      "bytes": 10631,
+      "snapshot": "inputs/73-check_preloop_gaps.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/ONE_PROFILE_SPECIFICATION.md",
+      "sha256": "576af35dedd563791fb1dd9624b4446f67e550d2a2f29fdcc272ec4fdec108fc",
+      "bytes": 9889,
+      "snapshot": "inputs/74-ONE_PROFILE_SPECIFICATION.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/CORE_INTERVAL_EVALUATION.md",
+      "sha256": "6f25a0c29fffe04297e775fb3358ddf5fda85c802a3ba67d7b9a29ad3d636b76",
+      "bytes": 5943,
+      "snapshot": "inputs/75-CORE_INTERVAL_EVALUATION.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/evaluate_core_intervals.py",
+      "sha256": "bea76c97ada2abcc09811dc67da783b625a0d6e02d1a9817a4609f8955e0526c",
+      "bytes": 9046,
+      "snapshot": "inputs/76-evaluate_core_intervals.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/check_pressure_datum_interval.py",
+      "sha256": "ecc9b9848e20c2d55315496d961053af5b5e75c1e6f36b354de48423a47f585e",
+      "bytes": 5361,
+      "snapshot": "inputs/77-check_pressure_datum_interval.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/certify_pressure_prefix.py",
+      "sha256": "55dd776f789347ffbaa66117539a1b4d175259dcd95d3ad278b9cc795b05f705",
+      "bytes": 8362,
+      "snapshot": "inputs/78-certify_pressure_prefix.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/certify_symbolic_c2.py",
+      "sha256": "ca7e2890609ed13a04dd2ca68b4ab7d5d5e43067fedbec27958b93f52c016b23",
+      "bytes": 15564,
+      "snapshot": "inputs/79-certify_symbolic_c2.py"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/certify_symbolic_b8.py",
+      "sha256": "ca4e758c27fe36986e324a82ad39f6c22766731562265cf4113017961c9fe8f1",
+      "bytes": 6480,
+      "snapshot": "inputs/80-certify_symbolic_b8.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/check_axis_envelopes.py",
+      "sha256": "2c5a48917616c22f7c365523cda7813178b3d557f04459b94d5ae47026309df7",
+      "bytes": 14013,
+      "snapshot": "inputs/81-check_axis_envelopes.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/check_continuation_debt.py",
+      "sha256": "e109c3e600d8036938dabf707afdd7e1a13d7ef735c7a6e7ec681430f9e95efa",
+      "bytes": 24759,
+      "snapshot": "inputs/82-check_continuation_debt.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/symbolic_axis_jet.py",
+      "sha256": "477ae1b888eaa5b3a7da39922d96443023c717bf8c75a12e44fe891aba13ccfa",
+      "bytes": 8775,
+      "snapshot": "inputs/83-symbolic_axis_jet.py"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/FORMAL_BRIDGE_REMAINING.md",
+      "sha256": "fe6d6cde40c11ac233d80901b88fc7cb2963e1cadc7d3c4ac67a0567be186951",
+      "bytes": 6395,
+      "snapshot": "inputs/84-FORMAL_BRIDGE_REMAINING.md"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/assemble_one_profile.py",
+      "sha256": "31dc39c98b34d58e89aa549f3156c12af3b52a0f9f77bf49ea403c726bb167e0",
+      "bytes": 19922,
+      "snapshot": "inputs/85-assemble_one_profile.py"
+    }
+  ],
+  "acceptedEvidence": {
+    "axis": {
+      "path": "followup-20261010-same-datum-axis/axis-envelope-certificate.json",
+      "sha256": "32f59e314e04d71bd7d47cf1bf3d1208e98b6549240875b7e2e2740c63ba2605"
+    },
+    "continuation": {
+      "path": "followup-20261010-same-datum-axis/continuation-debt-certificate.json",
+      "sha256": "819440fca3698cffc9752226c563a826f9cf7728139dddde405ddb82f3c0b9bd"
+    },
+    "sourceEnvelope": {
+      "path": "followup-20261010-same-datum-axis/global-source-envelope-certificate.json",
+      "sha256": "bf9ca2766ad0ec90aa055becccc07b7ad882c71928e51c71529543c9d94efb4f"
+    },
+    "sourceFreeze": {
+      "path": "followup-20261010-same-datum-axis/ACTIVE_SOURCE_FREEZE.json",
+      "sha256": "f179d4aee0d10bcc6fca4a4babcdb0473411474719eef1083aab03759a6c077f"
+    },
+    "b8": {
+      "path": "followup-20261010-symbolic-gluing/attempts/b8-0001/certificate.json",
+      "sha256": "0a2c375dfdd09d7aa90a0275a8697eb3eb073bf4a9b81e1f862af2ba8ed20f07"
+    },
+    "c2": {
+      "path": "followup-20261010-symbolic-gluing/attempts/0001/certificate.json",
+      "sha256": "a76539a30b9900a0275f2cfb25948c5aa13f222e3e578d3d5fb1f81617bccbe7"
+    },
+    "heat": {
+      "path": "followup-20261010-final-stress-audit/attempts/0001/receipt.json",
+      "sha256": "d9e59a1d7ec0ddfdf1ababb78823d478b4cdf2714c3855abdbf36a6cef3e4dc0"
+    },
+    "loop": {
+      "path": "followup-20261010-symbolic-gluing/attempts/loop-derivatives-0001/receipt.json",
+      "sha256": "149a2051ffafe4a4a34dc3e1a028e8b353924a29753ee91cae08f0da7a547f93"
+    },
+    "frequency": {
+      "path": "followup-20261010-symbolic-gluing/attempts/c12-0001/receipt.json",
+      "sha256": "175ee8263c47b0ff1e0fa4de0c98566aeda6a167ecd059cffda2800412566555"
+    },
+    "pressure": {
+      "path": "followup-20261010-symbolic-gluing/attempts/pressure-datum-0001/receipt.json",
+      "sha256": "f6b32aab94547230a538d544c81be58831e2555802b653e95a3bf81c56fb7be3"
+    },
+    "pressurePrefix": {
+      "path": "followup-20261010-symbolic-gluing/attempts/pressure-prefix-0002/receipt.json",
+      "sha256": "a81679a52297df4cf15ce60bbbb276d627bb8a43af6e11fa0a8c20d07713a4bf"
+    },
+    "core": {
+      "path": "followup-20261010-symbolic-gluing/attempts/core-intervals-0002/receipt.json",
+      "sha256": "8f65d85d903df534c2c10501119fbcef636678c95ec214e165041681d16fb5a5"
+    },
+    "mixedPhi": {
+      "path": "followup-20261010-same-datum-axis/evaluated-phi-mixed-comparison.json",
+      "sha256": "eb7e2448416c4be63d86c41d2be7ad6c6c11c057bc2a852b30b95807232e49b5"
+    },
+    "relaxedGaps": {
+      "path": "followup-20261010-final-stress-audit/preloop-gap-review/0001/receipt.json",
+      "sha256": "76a7d327840e8825fe4bd6fec90bc6caee1d0800ad26e9788bafb741151a9d1f"
+    },
+    "stress": {
+      "path": "followup-20261010-final-stress-audit/stress-assembly/0002/receipt.json",
+      "sha256": "6b45c2c47ccfab2d9a29d32a8441aafafc3fd584fcda8d79e5fc2be97737bc44"
+    },
+    "axisReview": {
+      "path": "followup-20261010-same-datum-axis/independent-review/axis-fraction-review-002.json",
+      "sha256": "45b390acb46503eec4a7d9ede80f774c73a1583d53d09b7e8ec50e883e92da73"
+    },
+    "sourceReview": {
+      "path": "followup-20261010-same-datum-axis/independent-review/source-derivative-review-001.json",
+      "sha256": "3056b493be3558a00289bd3b0b6e83a5465fea37de313c0d3274f21269ef5c06"
+    },
+    "c2Review": {
+      "path": "followup-20261010-symbolic-gluing/independent-review/fraction-review-001.json",
+      "sha256": "3ee5d7fea6327770b0ca87b0be71af0a7e1a4a15f0a7f1b14773c98ccc1e7583"
+    },
+    "b8Review": {
+      "path": "followup-20261010-symbolic-gluing/independent-review/b8-fraction-review-001.json",
+      "sha256": "d9f489ea955ee03947e9bb97d5f558b9aab001ebb8057ea44c68360224c94213"
+    },
+    "loopReview": {
+      "path": "followup-20261010-symbolic-gluing/independent-review/c12-loop-review-001.json",
+      "sha256": "3dca0c88dff605d5db1e962f0bf5140d0e520e17cf690cd02ba68e1f3122c099"
+    },
+    "coreReview": {
+      "path": "followup-20261010-symbolic-gluing/independent-review/pressure-core-review-002.json",
+      "sha256": "66080a7085f4b42f8754da463fd870db4adfa2158c69e94db366e0736f318672"
+    },
+    "mixedPhiReview": {
+      "path": "followup-20261010-same-datum-axis/independent-review/mixed-phi-review-001.json",
+      "sha256": "2a7de565c23b4e7c20c95567f2fd770d98935ac1799b174f52d1ef5b1e626a03"
+    },
+    "pressureTailReview": {
+      "path": "followup-20261010-final-stress-audit/pressure-tail-review/0001/receipt.json",
+      "sha256": "b668b90a5b8d716879565393183935bed1d646e95d2cca9488634917bd721b7e"
+    },
+    "independentSeal": {
+      "path": "followup-20261010-symbolic-gluing/independent-review/final-independent-chain-seal-001.json",
+      "sha256": "b618ace5e2e3f11681cb6ff035887d5afff146f9d96c73cf72b8fd5a3bc1378e"
+    }
+  },
+  "checks": {
+    "axis_executed_checks_pass": true,
+    "continuation_executed_checks_pass": true,
+    "sourceEnvelope_executed_checks_pass": true,
+    "b8_executed_checks_pass": true,
+    "c2_executed_checks_pass": true,
+    "heat_executed_checks_pass": true,
+    "loop_executed_checks_pass": true,
+    "frequency_executed_checks_pass": true,
+    "pressure_executed_checks_pass": true,
+    "core_executed_checks_pass": true,
+    "mixedPhi_executed_checks_pass": true,
+    "relaxedGaps_executed_checks_pass": true,
+    "stress_executed_checks_pass": true,
+    "axisReview_executed_checks_pass": true,
+    "sourceReview_executed_checks_pass": true,
+    "c2Review_executed_checks_pass": true,
+    "b8Review_executed_checks_pass": true,
+    "loopReview_executed_checks_pass": true,
+    "coreReview_executed_checks_pass": true,
+    "mixedPhiReview_executed_checks_pass": true,
+    "pressureTailReview_executed_checks_pass": true,
+    "independentSeal_executed_checks_pass": true,
+    "pressure_prefix_continuous_claim": true,
+    "frozen_axis-envelope-certificate.json": true,
+    "frozen_continuation-debt-certificate.json": true,
+    "frozen_global-source-envelope-certificate.json": true,
+    "frozen_SAME_DATUM_ANALYTIC_AXIS.md": true,
+    "frozen_CONTINUATION_AND_NEW_DEBT.md": true,
+    "frozen_REFERENCE_DERIVATIVE_BOUNDS.md": true,
+    "frozen_GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md": true,
+    "frozen_axis-symbolic-jet-N24.json": true,
+    "frozen_evaluated-phi-comparison.json": true,
+    "independent_sealed_core-independent-receipt.json": true,
+    "independent_current_core-independent-receipt.json": true,
+    "independent_sealed_core-independent-verifier.py": true,
+    "independent_sealed_pressure-review.md": true,
+    "independent_sealed_core-review.md": true,
+    "independent_sealed_loop-independent-receipt.json": true,
+    "independent_current_loop-independent-receipt.json": true,
+    "independent_sealed_loop-review.md": true,
+    "independent_sealed_axis-independent-receipt.json": true,
+    "independent_current_axis-independent-receipt.json": true,
+    "independent_sealed_axis-independent-verifier.py": true,
+    "independent_sealed_axis-original-analytic-review.md": true,
+    "independent_sealed_source-independent-receipt.json": true,
+    "independent_current_source-independent-receipt.json": true,
+    "independent_sealed_source-independent-verifier.py": true,
+    "independent_sealed_source-review.md": true,
+    "independent_sealed_axis-active-freeze.json": true,
+    "independent_current_axis-active-freeze.json": true,
+    "independent_sealed_current-core-receipt.json": true,
+    "independent_current_current-core-receipt.json": true,
+    "mixed_phi_independent_input_evaluated-phi-mixed-comparison.json": true,
+    "mixed_phi_independent_input_evaluate_phi_mixed_comparison.py": true,
+    "mixed_phi_independent_input_evaluate_phi_comparison.py": true,
+    "mixed_phi_independent_input_EVALUATED_MIXED_PHI.md": true,
+    "mixed_phi_independent_input_axis-envelope-certificate.json": true,
+    "mixed_phi_independent_input_continuation-debt-certificate.json": true,
+    "mixed_phi_independent_input_SAME_DATUM_ANALYTIC_AXIS.md": true,
+    "mixed_phi_independent_input_independent-verifier.py": true,
+    "c2_independent_certificate_pin": true,
+    "c2_independent_verifier_pin": true,
+    "b8_independent_certificate_pin": true,
+    "b8_independent_verifier_pin": true,
+    "pressure_tail_same_source": true,
+    "pressure_tail_same_continuous_prefix": true,
+    "pressure_tail_input_PRESSURE_DATUM_INTERVAL.md": true,
+    "pressure_tail_input_OUTER_DERIVATION.md": true,
+    "pressure_tail_input_PRESSURE_TAIL_REVIEW_EN.md": true,
+    "pressure_tail_input_check_pressure_tail_review.py": true,
+    "shared_parameter_epsilonMoment": true,
+    "shared_parameter_j0": true,
+    "shared_parameter_muMoment": true,
+    "acyclic_parameter_Md": true,
+    "acyclic_parameter_T": true,
+    "acyclic_parameter_logP": true,
+    "acyclic_parameter_Pstar": true,
+    "acyclic_parameter_lambda": true,
+    "acyclic_parameter_h": true,
+    "acyclic_parameter_co": true,
+    "acyclic_parameter_Tf": true,
+    "acyclic_parameter_K": true,
+    "acyclic_parameter_epsilonMoment": true,
+    "acyclic_parameter_muMoment": true,
+    "acyclic_parameter_j0": true,
+    "acyclic_parameter_deltaStar": true,
+    "acyclic_parameter_sigmaStar": true,
+    "acyclic_parameter_outerComplexRadius": true,
+    "acyclic_parameter_rho": true,
+    "acyclic_parameter_Q": true,
+    "acyclic_parameter_Lambda": true,
+    "acyclic_parameter_logCaxis": true,
+    "acyclic_parameter_Caxis": true,
+    "acyclic_parameter_barT": true,
+    "acyclic_parameter_BRefUpper": true,
+    "acyclic_parameter_Bk": true,
+    "acyclic_parameter_Tsh": true,
+    "acyclic_parameter_logCSelected": true,
+    "acyclic_parameter_CSelected": true,
+    "acyclic_parameter_XR": true,
+    "acyclic_parameter_Xsep": true,
+    "acyclic_parameter_L0": true,
+    "acyclic_parameter_Lmath": true,
+    "acyclic_parameter_VA": true,
+    "acyclic_parameter_Bcmp0": true,
+    "acyclic_parameter_Gamma": true,
+    "acyclic_parameter_Kcmp": true,
+    "acyclic_parameter_Vmax": true,
+    "acyclic_parameter_tauBase": true,
+    "acyclic_parameter_t1": true,
+    "acyclic_parameter_kappa0": true,
+    "acyclic_parameter_omega1": true,
+    "acyclic_parameter_omega2": true,
+    "acyclic_parameter_DeltaEarly": true,
+    "acyclic_parameter_sourceEnvelopeS": true,
+    "acyclic_parameter_sourceJLeft": true,
+    "acyclic_parameter_sourceJRight": true,
+    "acyclic_parameter_loopILeft": true,
+    "acyclic_parameter_loopIRight": true,
+    "acyclic_parameter_BOuter": true,
+    "acyclic_parameter_Xa": true,
+    "acyclic_parameter_loopD0": true,
+    "acyclic_parameter_loopMuMax": true,
+    "acyclic_parameter_loopDelta": true,
+    "acyclic_parameter_C12EnvelopeR": true,
+    "acyclic_parameter_radialFrequencyN": true,
+    "acyclic_parameter_directionalMarginKappa": true,
+    "acyclic_parameter_stressFlatLowerConstant": true,
+    "acyclic_parameter_X0I1": true,
+    "acyclic_parameter_I1Right": true,
+    "acyclic_parameter_X0I2": true,
+    "acyclic_parameter_I2Right": true,
+    "acyclic_parameter_X0Ipos": true,
+    "acyclic_parameter_IposRight": true,
+    "acyclic_parameter_X0Imean": true,
+    "acyclic_parameter_ImeanRight": true,
+    "same_new_h": true,
+    "same_new_lambda": true,
+    "same_final_j": true,
+    "same_final_mu": true,
+    "actual_source_S": true,
+    "actual_width": true,
+    "all_source_derivative_exponents_fit_S": true,
+    "same_outer_parameter_identity": true,
+    "same_continuation_parameter_identity": true,
+    "source_table_input_SAME_DATUM_ANALYTIC_AXIS.md": true,
+    "source_table_input_REFERENCE_DERIVATIVE_BOUNDS.md": true,
+    "source_table_input_CONTINUATION_AND_NEW_DEBT.md": true,
+    "source_table_input_GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md": true,
+    "source_table_input_axis-envelope-certificate.json": true,
+    "source_table_input_continuation-debt-certificate.json": true,
+    "source_checker_hash": true,
+    "loop_source_LOOP_DERIVATIVE_ENVELOPE.md": true,
+    "loop_source_QUANTITATIVE_LOOP_SELECTION.md": true,
+    "loop_source_check_loop_derivative_envelope.py": true,
+    "frequency_source_proof": true,
+    "frequency_source_operator": true,
+    "frequency_checker_hash": true,
+    "heat_uses_same_continuous_operator": true,
+    "heat_input_HEAT_COMPENSATION_PROOF_EN.md": true,
+    "heat_input_check_heat_compensation.py": true,
+    "stress_source_followup-20261010-final-stress-audit/GLOBAL_STRESS_ASSEMBLY_EN.md": true,
+    "stress_source_followup-20261010-final-stress-audit/HEAT_COMPENSATION_PROOF_EN.md": true,
+    "stress_source_followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md": true,
+    "stress_source_followup-20261010-symbolic-gluing/C12_FREQUENCY_CONTRACT.md": true,
+    "stress_source_followup-20261010-symbolic-gluing/LOOP_DERIVATIVE_ENVELOPE.md": true,
+    "stress_source_followup-20261010-same-datum-axis/REFERENCE_DERIVATIVE_BOUNDS.md": true,
+    "actual_relaxed_gap_ledger_attached": true,
+    "actual_both_boundary_collars_attached": true,
+    "actual_unchanged_J_outside_I_attached": true,
+    "gap_same_source_paper": true,
+    "gap_same_outer_parameters": true,
+    "gap_same_final_parameters": true,
+    "gap_same_continuation_receipt": true,
+    "gap_same_B8_receipt": true,
+    "gap_same_axis_input_SAME_DATUM_ANALYTIC_AXIS.md": true,
+    "gap_same_axis_input_REFERENCE_DERIVATIVE_BOUNDS.md": true,
+    "gap_same_axis_input_CONTINUATION_AND_NEW_DEBT.md": true,
+    "gap_same_axis_input_axis-envelope-certificate.json": true,
+    "gap_active_B8_AND_PRELOOP_GAPS_EN.md": true,
+    "gap_snapshot_B8_AND_PRELOOP_GAPS_EN.md": true,
+    "gap_active_check_preloop_gaps.py": true,
+    "gap_snapshot_check_preloop_gaps.py": true,
+    "gap_uses_selected_C": true,
+    "gap_uses_actual_S": true,
+    "raw_source_gap_fits_S_inverse": true,
+    "boundary_outer_gap_fits_source_S": true,
+    "R_covers_all_source_bounds": true,
+    "R_covers_loop_derivatives_and_gaps": true,
+    "R_exceeds_required_minimum": true,
+    "N_frequency_and_kappa_literals": true,
+    "fresh_core_uses_same_axis": true,
+    "fresh_core_uses_same_pressure": true,
+    "fresh_core_producer": true,
+    "core_input_snapshot_inputs/0-evaluate_phi_comparison.py": true,
+    "core_input_snapshot_inputs/1-axis-envelope-certificate.json": true,
+    "core_input_snapshot_inputs/2-SAME_DATUM_ANALYTIC_AXIS.md": true,
+    "core_input_snapshot_inputs/3-receipt.json": true,
+    "core_input_snapshot_inputs/4-PRESSURE_DATUM_INTERVAL.md": true,
+    "mixed_phi_same_axisReceiptSHA256": true,
+    "mixed_phi_same_continuationReceiptSHA256": true,
+    "mixed_phi_same_parameters": true,
+    "mixed_phi_same_axis_proof": true,
+    "mixed_phi_producer": true,
+    "mixed_phi_actual_coefficients": true,
+    "mixed_phi_finite_evaluation": true,
+    "mixed_phi_domain_not_overstated": true,
+    "mixed_phi_original_formal_gate_retained": true,
+    "formal_open_condition_retained": true,
+    "full_eta_graph_not_misrepresented": true
+  },
+  "passed": 210,
+  "total": 210,
+  "attachedAnalyticConclusions": {
+    "samePressureDatumAndAllFiveMoments": true,
+    "sameInfiniteAxisAndActualContinuationDebt": true,
+    "continuousB8InclusionAllEta": true,
+    "heatCompensationSameDatum": true,
+    "actualSAndPreloopMarginsAttached": true,
+    "actualLoopDerivativeBoundAttached": true,
+    "oneFiniteNSelected": true,
+    "continuousC12DebtAndI1Restoration": true,
+    "wholeClosedAnnulusDirectionalMargin": "R^-10",
+    "actualStressFlatLower": "min(C^-11,R^-8)*zeta",
+    "preservedReservedPatches": [
+      "Ipos",
+      "Imean"
+    ]
+  },
+  "finiteEvaluations": {
+    "core": {
+      "points": 5,
+      "intervalValues": 75,
+      "etaDomain": "eta=0 with specified parameter derivatives"
+    },
+    "mixedPhi": {
+      "coefficients": 125,
+      "mixedValues": 75,
+      "etaChart": "|eta|<=rho/4",
+      "comparisonOnlyComplexXiDisk": "|xi|<=1/16"
+    }
+  },
+  "evidenceLevel": "Written analytic derivations with executed continuous interval and exact arithmetic checks; actual original Lean inputs are separately identified.",
+  "outstanding": {
+    "generatedAnalyticPremisesLean": "NOT_COMPLETED",
+    "wholeNonlinearEtaJetGraphEvaluation": "NOT_COMPLETED",
+    "protectedComparator": "AWAITING_SEPARATE_ACTUAL_RESULT"
+  },
+  "fullOriginalNineConditionsComplete": false,
+  "fullOriginalTheorem46CertificationFlag": false
+}

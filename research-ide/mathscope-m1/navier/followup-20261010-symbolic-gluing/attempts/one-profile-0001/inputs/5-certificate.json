@@ -1,0 +1,1655 @@
+{
+  "schema": "MathScope.SymbolicLambdaContinuousMomentMap/1",
+  "generatedUTC": "2026-10-09T21:46:13.225924+00:00",
+  "source": {
+    "outerDerivationSHA256": "ffb859d1f6b79aad9aa45e7c5173e8b727cd7a554f6ea28697dc9a108b3dbd81",
+    "parameterTreeSHA256": "38e23d037f8b75eaeb30448a815689e92171926d47787196c7c5395fe98425a8",
+    "parameterExpressions": {
+      "Md": {
+        "integer": 1048576
+      },
+      "T": {
+        "sum": [
+          {
+            "exp": {
+              "ref": "Md"
+            }
+          },
+          {
+            "integer": 10
+          }
+        ]
+      },
+      "logP": {
+        "product": [
+          {
+            "integer": 2
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      },
+      "Pstar": {
+        "exp": {
+          "ref": "logP"
+        }
+      },
+      "lambda": {
+        "exp": {
+          "product": [
+            {
+              "integer": -1000
+            },
+            {
+              "ref": "T"
+            }
+          ]
+        }
+      },
+      "h": {
+        "exp": {
+          "product": [
+            {
+              "integer": -8002
+            },
+            {
+              "ref": "T"
+            }
+          ]
+        }
+      },
+      "co": {
+        "rational": "1/256"
+      },
+      "Tf": {
+        "integer": 128
+      }
+    },
+    "strictLambdaMeaning": "lambda=exp(-1000*T)>0, T=exp(2^20)+10; never replaced by 0",
+    "lambdaUpper": {
+      "numerator": "1",
+      "denominator": "1606938044258990275541962092341162602522202993782792835301376",
+      "approximate": 6.223015277861142e-61
+    },
+    "checks": {
+      "TLowerIsValid": true,
+      "lambdaUpperByExponent": true,
+      "hUpperByExponent": true,
+      "supportsPositiveDisjoint": true,
+      "supportsInside8To16": true,
+      "logSupportInside0To5": true,
+      "reservedIntervalsFit": true
+    },
+    "baseField": "U=0; E=K(eta)*x^(-1/2-lambda), K(eta)=e_star/(1+eta^2)>0",
+    "physicalScale": {
+      "B": "1000*T",
+      "constantSlopeStart": "X=XR*exp(T+2)",
+      "constantSlopeStartAmplitude": "Pstar*exp(-T/2-7/10-lambda/2)",
+      "patchOffsets": [
+        25,
+        20,
+        14,
+        8
+      ],
+      "X0i": "XR*exp(T+2+60*B-offset_i)",
+      "e_star_i": "Pstar*exp(-T/2-7/10-lambda/2-(1/2+lambda)*(60*B-offset_i))",
+      "coordinate": "X=X0i*x; each support has log(x) in (0,5)",
+      "roles": [
+        "I1: cone-restoration",
+        "I2: heat-compensation",
+        "I3: background-reserved",
+        "I4: mean-reserved"
+      ],
+      "XR": "Any later exact XR>=2^40; not a fabricated fixed final core radius"
+    }
+  },
+  "geometry": {
+    "supports": [
+      [
+        {
+          "numerator": "9",
+          "denominator": "1",
+          "approximate": 9.0
+        },
+        {
+          "numerator": "19",
+          "denominator": "2",
+          "approximate": 9.5
+        }
+      ],
+      [
+        {
+          "numerator": "10",
+          "denominator": "1",
+          "approximate": 10.0
+        },
+        {
+          "numerator": "21",
+          "denominator": "2",
+          "approximate": 10.5
+        }
+      ],
+      [
+        {
+          "numerator": "11",
+          "denominator": "1",
+          "approximate": 11.0
+        },
+        {
+          "numerator": "23",
+          "denominator": "2",
+          "approximate": 11.5
+        }
+      ],
+      [
+        {
+          "numerator": "12",
+          "denominator": "1",
+          "approximate": 12.0
+        },
+        {
+          "numerator": "25",
+          "denominator": "2",
+          "approximate": 12.5
+        }
+      ],
+      [
+        {
+          "numerator": "13",
+          "denominator": "1",
+          "approximate": 13.0
+        },
+        {
+          "numerator": "27",
+          "denominator": "2",
+          "approximate": 13.5
+        }
+      ]
+    ],
+    "allSupportsDisjoint": true,
+    "bump": "sigma'((x-left)/width)/width",
+    "unitMass": true
+  },
+  "arithmetic": {
+    "bits": 88,
+    "panels": 1024,
+    "wholeCells": 898,
+    "dependencies": {
+      "dyadic_interval.py": "20664d56cab022014273c2bfecff3ff1fb59c6e737123e0f337d49f248b74b4c",
+      "logarithmic_interval.py": "4a83ee73f387f483acf2cb57933b0548b1487ee23e673f5a5601ce38493f66d6",
+      "certify_uniform_moment_map.py": "b9cbad7d99428e42cb50d041980e3ff2ca09cf94401061b95b247f2abbdda9f5"
+    },
+    "implementationSHA256": "ca7e2890609ed13a04dd2ca68b4ab7d5d5e43067fedbec27958b93f52c016b23",
+    "lambdaRemainderRetained": true,
+    "method": "Exact outward Riemann-Stieltjes cells; endpoint collars use analytic derivative bounds; positive measure d(sigma)."
+  },
+  "normalization": {
+    "physicalUnknown": "v=lambda*z; delta U=K*lambda*sum(z0*b0+z1*b1), delta E=K*lambda*sum(z2*b2+z3*b3+z4*b4)",
+    "originalMomentRows": [
+      "M",
+      "I",
+      "J",
+      "S",
+      "Cp"
+    ],
+    "scaledDebtRows": [
+      "dM/(X0*K*lambda)",
+      "(dJ/(sqrt(2)*X0^(3/2)*K^2)-dM/(X0*K))/lambda^2",
+      "dI/(X0^(3/2)*K*lambda)",
+      "dS/(X0*K^2*lambda)",
+      "dCp/(K^2*lambda)"
+    ],
+    "equation": "A_lambda*z+lambda*Q(z)=scaledDebt",
+    "exactRowEquivalenceRequires": "lambda>0; K>0; X0>0; pairwise disjoint bump supports",
+    "limitUse": "lambda=0 is only a continuous enclosure limit; never an allowed original C.2 source",
+    "etaScope": "The same matrix enclosures cover every eta in [-1,1], because eta enters only the exact positive K and the debt."
+  },
+  "coefficientIntegrals": [
+    {
+      "mass": {
+        "lowerNumerator": "309485009821345068724781056",
+        "upperNumerator": "309485009821345068724781056",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          1.0,
+          1.0
+        ]
+      },
+      "dividedLog": {
+        "lowerNumerator": "-688494567018217528532371575",
+        "upperNumerator": "-688478230051577707708163084",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -2.2246459284592217,
+          -2.2245931408730013
+        ]
+      },
+      "sqrt": {
+        "lowerNumerator": "941248543817127302485948376",
+        "upperNumerator": "941273387164526342736230803",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          3.0413380743722525,
+          3.041418347557094
+        ]
+      },
+      "minusHalfLambda": {
+        "lowerNumerator": "101757008064366058106464543",
+        "upperNumerator": "101759693864016318451534387",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.32879462602439724,
+          0.3288033043111156
+        ]
+      },
+      "minusThreeHalvesLambda": {
+        "lowerNumerator": "11000599833220597054197368",
+        "upperNumerator": "11001470920871957145199540",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.035544855111305264,
+          0.03554766974730932
+        ]
+      },
+      "bumpSquared": {
+        "lowerNumerator": "3334080050089598393572711708",
+        "upperNumerator": "3463950778668986679640740108",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          10.772993664585716,
+          11.192628620909959
+        ]
+      },
+      "bumpSquaredOverX": {
+        "lowerNumerator": "360432899846623411967504425",
+        "upperNumerator": "374492431317583810499599065",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          1.164621511247633,
+          1.2100503075537172
+        ]
+      }
+    },
+    {
+      "mass": {
+        "lowerNumerator": "309485009821345068724781056",
+        "upperNumerator": "309485009821345068724781056",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          1.0,
+          1.0
+        ]
+      },
+      "dividedLog": {
+        "lowerNumerator": "-720263922696703167269155378",
+        "upperNumerator": "-720249179602449824655936336",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -2.327298253031662,
+          -2.3272506155248833
+        ]
+      },
+      "sqrt": {
+        "lowerNumerator": "990822873241498367173300121",
+        "upperNumerator": "990846473611034869699997517",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          3.20152137195099,
+          3.201597628857747
+        ]
+      },
+      "minusHalfLambda": {
+        "lowerNumerator": "96665962386389073613310678",
+        "upperNumerator": "96668264884061205238420543",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.31234457023359863,
+          0.31235201000482843
+        ]
+      },
+      "minusThreeHalvesLambda": {
+        "lowerNumerator": "9430693515349422235031327",
+        "upperNumerator": "9431367428129537935444053",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.03047221421416641,
+          0.03047439174380025
+        ]
+      },
+      "bumpSquared": {
+        "lowerNumerator": "3334080050089598393572711708",
+        "upperNumerator": "3463950778668986679640740108",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          10.772993664585716,
+          11.192628620909959
+        ]
+      },
+      "bumpSquaredOverX": {
+        "lowerNumerator": "325269329867700181139724065",
+        "upperNumerator": "337955482637259220801762719",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          1.0510018887682697,
+          1.0919930591544618
+        ]
+      }
+    },
+    {
+      "mass": {
+        "lowerNumerator": "309485009821345068724781056",
+        "upperNumerator": "309485009821345068724781056",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          1.0,
+          1.0
+        ]
+      },
+      "dividedLog": {
+        "lowerNumerator": "-749073529925421902370658450",
+        "upperNumerator": "-749060097343364460222222892",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -2.4203871145740985,
+          -2.4203437115606046
+        ]
+      },
+      "sqrt": {
+        "lowerNumerator": "1038032311720789666469647803",
+        "upperNumerator": "1038054838769271100690284621",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          3.354063294761868,
+          3.3541360835812504
+        ]
+      },
+      "minusHalfLambda": {
+        "lowerNumerator": "92269789380507619194785789",
+        "upperNumerator": "92271791801129464463482273",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.29813976914026225,
+          0.29814623931024886
+        ]
+      },
+      "minusThreeHalvesLambda": {
+        "lowerNumerator": "8201647878865450749763730",
+        "upperNumerator": "8202181864948040232639203",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.02650095357962564,
+          0.026502678981715058
+        ]
+      },
+      "bumpSquared": {
+        "lowerNumerator": "3334080050089598393572711708",
+        "upperNumerator": "3463950778668986679640740108",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          10.772993664585716,
+          11.192628620909959
+        ]
+      },
+      "bumpSquaredOverX": {
+        "lowerNumerator": "296356977097939431748049904",
+        "upperNumerator": "307914186161437863386187387",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.9575810384774888,
+          0.9949243950108796
+        ]
+      }
+    },
+    {
+      "mass": {
+        "lowerNumerator": "309485009821345068724781056",
+        "upperNumerator": "309485009821345068724781056",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          1.0,
+          1.0
+        ]
+      },
+      "dividedLog": {
+        "lowerNumerator": "-775428178415942237293664954",
+        "upperNumerator": "-775415842381687346420856632",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -2.5055435766131935,
+          -2.5055037167367424
+        ]
+      },
+      "sqrt": {
+        "lowerNumerator": "1083186120161262139905551069",
+        "upperNumerator": "1083207708159407104915553695",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          3.4999631186872278,
+          3.5000328732713264
+        ]
+      },
+      "minusHalfLambda": {
+        "lowerNumerator": "88423559261721923214581623",
+        "upperNumerator": "88425321559392800074837499",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.28571192935246126,
+          0.2857176236433476
+        ]
+      },
+      "minusThreeHalvesLambda": {
+        "lowerNumerator": "7218155469473024825935840",
+        "upperNumerator": "7218587057518232268288489",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.023323118213834704,
+          0.02332451275002066
+        ]
+      },
+      "bumpSquared": {
+        "lowerNumerator": "3334080050089598393572711708",
+        "upperNumerator": "3463950778668986679640740108",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          10.772993664585716,
+          11.192628620909959
+        ]
+      },
+      "bumpSquaredOverX": {
+        "lowerNumerator": "272164946906948807122533597",
+        "upperNumerator": "282777722792790792815304960",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.8794123730388756,
+          0.9137041013909802
+        ]
+      }
+    },
+    {
+      "mass": {
+        "lowerNumerator": "309485009821345068724781056",
+        "upperNumerator": "309485009821345068724781056",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          1.0,
+          1.0
+        ]
+      },
+      "dividedLog": {
+        "lowerNumerator": "-799713604531725303205214333",
+        "upperNumerator": "-799702199526511329804672751",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -2.584014020560712,
+          -2.5839771690013404
+        ]
+      },
+      "sqrt": {
+        "lowerNumerator": "1126531510263235973128056850",
+        "upperNumerator": "1126552267635255325425827888",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          3.6400196278118395,
+          3.6400866984981755
+        ]
+      },
+      "minusHalfLambda": {
+        "lowerNumerator": "85021412496826140791395229",
+        "upperNumerator": "85022979100140909862928813",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.2747190002705011,
+          0.2747240622388196
+        ]
+      },
+      "minusThreeHalvesLambda": {
+        "lowerNumerator": "6416629826962820309625304",
+        "upperNumerator": "6416984533071914086373203",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.020733249182785678,
+          0.020734395300038008
+        ]
+      },
+      "bumpSquared": {
+        "lowerNumerator": "3334080050089598393572711708",
+        "upperNumerator": "3463950778668986679640740108",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          10.772993664585716,
+          11.192628620909959
+        ]
+      },
+      "bumpSquaredOverX": {
+        "lowerNumerator": "251624497979121195536291773",
+        "upperNumerator": "261435534726534230617294436",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.8130426030145217,
+          0.8447437724930583
+        ]
+      }
+    }
+  ],
+  "linearMap": [
+    [
+      {
+        "lowerNumerator": "309485009821345068724781056",
+        "upperNumerator": "309485009821345068724781056",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "lowerNumerator": "309485009821345068724781056",
+        "upperNumerator": "309485009821345068724781056",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "-688494567018217528532371575",
+        "upperNumerator": "-688478230051577707708163084",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -2.2246459284592217,
+          -2.2245931408730013
+        ]
+      },
+      {
+        "lowerNumerator": "-720263922696703167269155378",
+        "upperNumerator": "-720249179602449824655936336",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -2.327298253031662,
+          -2.3272506155248833
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "1467999373417037019670030365",
+        "upperNumerator": "1468031231474519700180318397",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          4.743361800510021,
+          4.743464739445582
+        ]
+      },
+      {
+        "lowerNumerator": "1531856501706349923654449684",
+        "upperNumerator": "1531887031746111018388832294",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          4.949695310253111,
+          4.949793958131982
+        ]
+      },
+      {
+        "lowerNumerator": "1593156140254913832002267685",
+        "upperNumerator": "1593185495611942823820957909",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          5.147765124955769,
+          5.147859977230023
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "-92271791801129464463482273",
+        "upperNumerator": "-92269789380507619194785789",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -0.29814623931024886,
+          -0.29813976914026225
+        ]
+      },
+      {
+        "lowerNumerator": "-88425321559392800074837499",
+        "upperNumerator": "-88423559261721923214581623",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -0.2857176236433476,
+          -0.28571192935246126
+        ]
+      },
+      {
+        "lowerNumerator": "-85022979100140909862928813",
+        "upperNumerator": "-85021412496826140791395229",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -0.2747240622388196,
+          -0.2747190002705011
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "8201647878865450749763730",
+        "upperNumerator": "8202181864948040232639203",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.02650095357962564,
+          0.026502678981715058
+        ]
+      },
+      {
+        "lowerNumerator": "7218155469473024825935840",
+        "upperNumerator": "7218587057518232268288489",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.023323118213834704,
+          0.02332451275002066
+        ]
+      },
+      {
+        "lowerNumerator": "6416629826962820309625304",
+        "upperNumerator": "6416984533071914086373203",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.020733249182785678,
+          0.020734395300038008
+        ]
+      }
+    ]
+  ],
+  "quadraticDiagonal": [
+    [
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "3334080050089598393572711708",
+        "upperNumerator": "3463950778668986679640740108",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          10.772993664585716,
+          11.192628620909959
+        ]
+      },
+      {
+        "lowerNumerator": "3334080050089598393572711708",
+        "upperNumerator": "3463950778668986679640740108",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          10.772993664585716,
+          11.192628620909959
+        ]
+      },
+      {
+        "lowerNumerator": "-1731975389334493339820370054",
+        "upperNumerator": "-1667040025044799196786355854",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -5.5963143104549795,
+          -5.386496832292858
+        ]
+      },
+      {
+        "lowerNumerator": "-1731975389334493339820370054",
+        "upperNumerator": "-1667040025044799196786355854",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -5.5963143104549795,
+          -5.386496832292858
+        ]
+      },
+      {
+        "lowerNumerator": "-1731975389334493339820370054",
+        "upperNumerator": "-1667040025044799196786355854",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -5.5963143104549795,
+          -5.386496832292858
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "0",
+        "upperNumerator": "0",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "lowerNumerator": "148178488548969715874024952",
+        "upperNumerator": "153957093080718931693093694",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.4787905192387444,
+          0.4974621975054398
+        ]
+      },
+      {
+        "lowerNumerator": "136082473453474403561266798",
+        "upperNumerator": "141388861396395396407652480",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.4397061865194378,
+          0.4568520506954901
+        ]
+      },
+      {
+        "lowerNumerator": "125812248989560597768145886",
+        "upperNumerator": "130717767363267115308647218",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          0.40652130150726085,
+          0.42237188624652916
+        ]
+      }
+    ]
+  ],
+  "inverseU": {
+    "preconditioner": [
+      [
+        {
+          "numerator": "1440513102299152991925091714",
+          "denominator": "63540305229357755684557055",
+          "approximate": 22.67085587800399
+        },
+        {
+          "numerator": "618970019642690137449562112",
+          "denominator": "63540305229357755684557055",
+          "approximate": 9.74137623998547
+        }
+      ],
+      [
+        {
+          "numerator": "-1376972797069795236240534659",
+          "denominator": "63540305229357755684557055",
+          "approximate": -21.67085587800399
+        },
+        {
+          "numerator": "-618970019642690137449562112",
+          "denominator": "63540305229357755684557055",
+          "approximate": -9.74137623998547
+        }
+      ]
+    ],
+    "enclosedPreconditioner": [
+      [
+        {
+          "lowerNumerator": "7016290054062363681973766003",
+          "upperNumerator": "7016290054062363681973766004",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            22.67085587800399,
+            22.67085587800399
+          ]
+        },
+        {
+          "lowerNumerator": "3014809921305320613879158617",
+          "upperNumerator": "3014809921305320613879158618",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            9.74137623998547,
+            9.74137623998547
+          ]
+        }
+      ],
+      [
+        {
+          "lowerNumerator": "-6706805044241018613248984948",
+          "upperNumerator": "-6706805044241018613248984947",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -21.67085587800399,
+            -21.67085587800399
+          ]
+        },
+        {
+          "lowerNumerator": "-3014809921305320613879158618",
+          "upperNumerator": "-3014809921305320613879158617",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -9.74137623998547,
+            -9.74137623998547
+          ]
+        }
+      ]
+    ],
+    "residual": [
+      [
+        {
+          "lowerNumerator": "-79572269329292917589816",
+          "upperNumerator": "79572269329292917589815",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.0002571118690860899,
+            0.0002571118690860899
+          ]
+        },
+        {
+          "lowerNumerator": "-71809014031689026338125",
+          "upperNumerator": "71809014031689026338123",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.00023202743833422457,
+            0.00023202743833422457
+          ]
+        }
+      ],
+      [
+        {
+          "lowerNumerator": "-79572269329292917589815",
+          "upperNumerator": "79572269329292917589816",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.0002571118690860899,
+            0.0002571118690860899
+          ]
+        },
+        {
+          "lowerNumerator": "-71809014031689026338123",
+          "upperNumerator": "71809014031689026338125",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.00023202743833422457,
+            0.00023202743833422457
+          ]
+        }
+      ]
+    ],
+    "residualNorm": {
+      "numerator": "151381283360981943927941",
+      "denominator": "309485009821345068724781056",
+      "approximate": 0.0004891393074203144
+    },
+    "preconditionerNorm": {
+      "numerator": "5015549987683842147926462311",
+      "denominator": "154742504910672534362390528",
+      "approximate": 32.41223211798946
+    },
+    "inverseNormBound": {
+      "numerator": "10031099975367684295852924622",
+      "denominator": "309333628537984086780853115",
+      "approximate": 32.42809397341658
+    }
+  },
+  "inverseE": {
+    "preconditioner": [
+      [
+        {
+          "numerator": "7167547609144953540851869021294985964951898205149865905354794454983794229248",
+          "denominator": "537276038597899234267926595468367906762757864756015316771848184903320141459",
+          "approximate": 13.340530926802026
+        },
+        {
+          "numerator": "258477655487247872906766219155749719354869196533664195843579893612053853634560",
+          "denominator": "537276038597899234267926595468367906762757864756015316771848184903320141459",
+          "approximate": 481.08911791745504
+        },
+        {
+          "numerator": "1645243475635016772007202525017156139339386075868021746179908640285385497247744",
+          "denominator": "537276038597899234267926595468367906762757864756015316771848184903320141459",
+          "approximate": 3062.194025865217
+        }
+      ],
+      [
+        {
+          "numerator": "-2326905945224114484878224006352264062638254476153431258205606780768461258752",
+          "denominator": "76753719799699890609703799352623986680393980679430759538835454986188591637",
+          "approximate": -30.3165234375157
+        },
+        {
+          "numerator": "-80622619998907247289385884711294469584528603545124409309086239132136262074368",
+          "denominator": "76753719799699890609703799352623986680393980679430759538835454986188591637",
+          "approximate": -1050.40668008409
+        },
+        {
+          "numerator": "-490517082253739631439007214039306603609217867473381676357878244391781425741824",
+          "denominator": "76753719799699890609703799352623986680393980679430759538835454986188591637",
+          "approximate": -6390.792309920823
+        }
+      ],
+      [
+        {
+          "numerator": "3053838670606868505733720853865851035092263064182549926422057159355722104832",
+          "denominator": "179092012865966411422642198489455968920919288252005105590616061634440047153",
+          "approximate": 17.051785960395566
+        },
+        {
+          "numerator": "101490572196225574799559727508109933643877759220016440546009699489687109894144",
+          "denominator": "179092012865966411422642198489455968920919288252005105590616061634440047153",
+          "approximate": 566.6951338147154
+        },
+        {
+          "numerator": "595169970750243501897404798146524308373685545864674318283003290857578134765568",
+          "denominator": "179092012865966411422642198489455968920919288252005105590616061634440047153",
+          "approximate": 3323.2636186610534
+        }
+      ]
+    ],
+    "enclosedPreconditioner": [
+      [
+        {
+          "lowerNumerator": "4128694344903282519315393557",
+          "upperNumerator": "4128694344903282519315393558",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            13.340530926802026,
+            13.340530926802026
+          ]
+        },
+        {
+          "lowerNumerator": "148889870383625810517078319014",
+          "upperNumerator": "148889870383625810517078319015",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            481.08911791745504,
+            481.08911791745504
+          ]
+        },
+        {
+          "lowerNumerator": "947703148169760876922333749554",
+          "upperNumerator": "947703148169760876922333749555",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3062.194025865217,
+            3062.194025865217
+          ]
+        }
+      ],
+      [
+        {
+          "lowerNumerator": "-9382509553808584024971402458",
+          "upperNumerator": "-9382509553808584024971402457",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -30.3165234375157,
+            -30.3165234375157
+          ]
+        },
+        {
+          "lowerNumerator": "-325085121702231060845126876757",
+          "upperNumerator": "-325085121702231060845126876756",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -1050.40668008409,
+            -1050.40668008409
+          ]
+        },
+        {
+          "lowerNumerator": "-1977854420802022281117588652243",
+          "upperNumerator": "-1977854420802022281117588652242",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -6390.792309920823,
+            -6390.792309920823
+          ]
+        }
+      ],
+      [
+        {
+          "lowerNumerator": "5277272145424496352572612234",
+          "upperNumerator": "5277272145424496352572612235",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            17.051785960395566,
+            17.051785960395566
+          ]
+        },
+        {
+          "lowerNumerator": "175383649054355665982968088086",
+          "upperNumerator": "175383649054355665982968088087",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            566.6951338147154,
+            566.6951338147154
+          ]
+        },
+        {
+          "lowerNumerator": "1028500273660234920678290422746",
+          "upperNumerator": "1028500273660234920678290422747",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            3323.2636186610534,
+            3323.2636186610534
+          ]
+        }
+      ]
+    ],
+    "residual": [
+      [
+        {
+          "lowerNumerator": "-1511757581889741493153308",
+          "upperNumerator": "1511757581889741493153304",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.004884752197731408,
+            0.004884752197731408
+          ]
+        },
+        {
+          "lowerNumerator": "-1288357752644295601526270",
+          "upperNumerator": "1288357752644295601526264",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.004162908418045901,
+            0.004162908418045901
+          ]
+        },
+        {
+          "lowerNumerator": "-1115735391673126728348075",
+          "upperNumerator": "1115735391673126728348069",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.0036051354872315205,
+            0.0036051354872315205
+          ]
+        }
+      ],
+      [
+        {
+          "lowerNumerator": "-3240887847044713068918985",
+          "upperNumerator": "3240887847044713068918983",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.010471873416148863,
+            0.010471873416148863
+          ]
+        },
+        {
+          "lowerNumerator": "-2767441736058342324514239",
+          "upperNumerator": "2767441736058342324514237",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.008942086525146695,
+            0.008942086525146695
+          ]
+        },
+        {
+          "lowerNumerator": "-2401188015269913753703751",
+          "upperNumerator": "2401188015269913753703749",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.007758656927054516,
+            0.007758656927054516
+          ]
+        }
+      ],
+      [
+        {
+          "lowerNumerator": "-1726287660349780914766780",
+          "upperNumerator": "1726287660349780914766783",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.005577936266917441,
+            0.005577936266917441
+          ]
+        },
+        {
+          "lowerNumerator": "-1476779033337206292202868",
+          "upperNumerator": "1476779033337206292202871",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.004771730411723978,
+            0.004771730411723978
+          ]
+        },
+        {
+          "lowerNumerator": "-1283564823807582388218970",
+          "upperNumerator": "1283564823807582388218974",
+          "denominatorPowerOfTwo": 88,
+          "approximate": [
+            -0.004147421629721387,
+            0.004147421629721387
+          ]
+        }
+      ]
+    ],
+    "residualNorm": {
+      "numerator": "8409517598372969147136975",
+      "denominator": "309485009821345068724781056",
+      "approximate": 0.027172616868350073
+    },
+    "preconditionerNorm": {
+      "numerator": "1156161026029030962993843465729",
+      "denominator": "154742504910672534362390528",
+      "approximate": 7471.5155134424285
+    },
+    "inverseNormBound": {
+      "numerator": "2312322052058061925987686931458",
+      "denominator": "301075492222972099577644081",
+      "approximate": 7680.206831134532
+    }
+  },
+  "preconditionedQuadraticU": [
+    [
+      {
+        "lowerNumerator": "1603989630363789224862618538264",
+        "upperNumerator": "1666469024619344354956791400623",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          5182.770019425873,
+          5384.651830411233
+        ]
+      },
+      {
+        "lowerNumerator": "1603989630363789224862618538264",
+        "upperNumerator": "1666469024619344354956791400623",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          5182.770019425873,
+          5384.651830411233
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "-3638557037396388733578534601363",
+        "upperNumerator": "-3502139956549211538182352316233",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -11756.811871104197,
+          -11316.024509784416
+        ]
+      },
+      {
+        "lowerNumerator": "-3638557037396388733578534601363",
+        "upperNumerator": "-3502139956549211538182352316233",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -11756.811871104197,
+          -11316.024509784416
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "1889406940134498119353562629365",
+        "upperNumerator": "1963004050045409152993870979411",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          6105.003086337484,
+          6342.808174064983
+        ]
+      },
+      {
+        "lowerNumerator": "1889406940134498119353562629365",
+        "upperNumerator": "1963004050045409152993870979411",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          6105.003086337484,
+          6342.808174064983
+        ]
+      }
+    ]
+  ],
+  "preconditionedQuadraticE": [
+    [
+      {
+        "lowerNumerator": "-379483229913279647125639428884",
+        "upperNumerator": "-330548324510541963754167434089",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -1226.1764475518285,
+          -1068.0592404179963
+        ]
+      },
+      {
+        "lowerNumerator": "-416523575075480874730441944990",
+        "upperNumerator": "-369034688489967427314980470603",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -1345.8602577098175,
+          -1192.4153893689336
+        ]
+      },
+      {
+        "lowerNumerator": "-447972995073172531687648489629",
+        "upperNumerator": "-401711648887658813661199088358",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -1447.4788143431301,
+          -1298.0003429553922
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "767162171756582953161178928567",
+        "upperNumerator": "872300573583748054543788729518",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          2478.83466859813,
+          2818.555167138133
+        ]
+      },
+      {
+        "lowerNumerator": "847483130154061028502768323711",
+        "upperNumerator": "949603693836725679542643368265",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          2738.365682535912,
+          3068.3350201190647
+        ]
+      },
+      {
+        "lowerNumerator": "915679875839419221750160500297",
+        "upperNumerator": "1015238565361866731125934963948",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          2958.721252341137,
+          3280.412728060492
+        ]
+      }
+    ],
+    [
+      {
+        "lowerNumerator": "-489065844959729987888889015760",
+        "upperNumerator": "-433063463797282409019170022838",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -1580.2569734865372,
+          -1399.3035205397343
+        ]
+      },
+      {
+        "lowerNumerator": "-529264091857364469080307447341",
+        "upperNumerator": "-474831010904697949334279114654",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -1710.1445144722525,
+          -1534.2617439817243
+        ]
+      },
+      {
+        "lowerNumerator": "-563394755173771942418497953870",
+        "upperNumerator": "-510293869476304217559657163806",
+        "denominatorPowerOfTwo": 88,
+        "approximate": [
+          -1820.4266355226707,
+          -1648.8484200604066
+        ]
+      }
+    ]
+  ],
+  "bounds": {
+    "BU": {
+      "numerator": "3638557037396388733578534601363",
+      "denominator": "154742504910672534362390528",
+      "approximate": 23513.623742208394
+    },
+    "BE": {
+      "numerator": "2837142832782340465212367061731",
+      "denominator": "309485009821345068724781056",
+      "approximate": 9167.30291531769
+    },
+    "scaledURadius": {
+      "numerator": "1",
+      "denominator": "1000000",
+      "approximate": 1e-06
+    },
+    "scaledERadius": {
+      "numerator": "1",
+      "denominator": "1000000",
+      "approximate": 1e-06
+    },
+    "allowedPreconditionedDebtPerEtaDerivativeOrder0To2": {
+      "numerator": "1",
+      "denominator": "100000000",
+      "approximate": 1e-08
+    },
+    "uImage": {
+      "numerator": "81155784539360815779393789",
+      "denominator": "7737125245533626718119526400000000",
+      "approximate": 1.0489139307420315e-08
+    },
+    "eImage": {
+      "numerator": "18486806126788886325304055873222672083973685676367594959092380290936814288504944102366824457",
+      "denominator": "497323236409786642155382248146820840100456150797347717440463976893159497012533375533056000000000000",
+      "approximate": 3.7172616868350075e-08
+    },
+    "eContraction": {
+      "numerator": "6756786881345509951875116695877231841484562084197058892343868041016988653971304201167061731",
+      "denominator": "248661618204893321077691124073410420050228075398673858720231988446579748506266687766528000000",
+      "approximate": 0.027172616868350073
+    },
+    "uEtaDerivative1": {
+      "numerator": "1208925819614629174706176",
+      "denominator": "120833448647650033898770748046875",
+      "approximate": 1.0004893786817698e-08
+    },
+    "eEtaDerivative1": {
+      "numerator": "300466408740025359177108431627906390423037366268364732465869104965620328782113477447738145554624324154031138748235776",
+      "denominator": "29230195013352357818157269742551462383286713971011734632885422732194566950892893941749236504814736610891516359637249193359375",
+      "approximate": 1.027931591297192e-08
+    },
+    "uEtaDerivative2": {
+      "numerator": "1208925819614629174706176",
+      "denominator": "120833448647650033898770748046875",
+      "approximate": 1.0004893786817698e-08
+    },
+    "eEtaDerivative2": {
+      "numerator": "135972835819633471408905636189609197730913403500849776757996832962241684023503175398145549528022547998563719688850978661195076355960695477828257404231599800516977056845042987771031739754471296433361153913893487899612879792726181226170846728808684709777555101181805717795843225034444967881162899737227572691083619484931092421541888",
+      "denominator": "13227809804740350386666452144951339450436967749424175398452183667019068891876704296952829749653700714257273283988173236523126237379450800597336668615399915613733437670560503948898095015120787547255256453263298317448872889330903121178756993986576171178078971822861960304917262223056202434932022828515600730235926708108626661825454345703125",
+      "approximate": 1.027931591297192e-08
+    },
+    "bumpSupremum": {
+      "numerator": "2521958606132422317472999009",
+      "denominator": "309485009821345068724781056",
+      "approximate": 8.148887752554675
+    },
+    "bumpDerivativeSupremum": {
+      "numerator": "30985843004714288672275660677",
+      "denominator": "309485009821345068724781056",
+      "approximate": 100.12065858246685
+    },
+    "positiveEOverK": {
+      "numerator": "67677120357416997491609364783246044735601362859544124564776079394859298972491070892639000991",
+      "denominator": "248661618204893321077691124073410420050228075398673858720231988446579748506266687766528000000",
+      "approximate": 0.2721655269759087
+    },
+    "eCorrectionOverKLambda": {
+      "numerator": "2521958606132422317472999009",
+      "denominator": "154742504910672534362390528000000",
+      "approximate": 1.629777550510935e-05
+    },
+    "radialShearErrorOverLambda": {
+      "numerator": "2692838448946672030998852395681858074486821469700088606247208456613776792564503013598678210",
+      "denominator": "67677120357416997491609364783246044735601362859544124564776079394859298972491070892639000991",
+      "approximate": 0.03978949510152368
+    },
+    "axialShearErrorOverLambda": {
+      "numerator": "650702703099000062117788874217",
+      "denominator": "21057787697292663330446806000000",
+      "approximate": 0.030900810306044586
+    }
+  },
+  "checks": {
+    "newOuterInputBound": true,
+    "allContinuousCellsCovered": true,
+    "uInverseResidualBelowOne": true,
+    "eInverseResidualBelowOne": true,
+    "strictUInclusion": true,
+    "strictEInclusion": true,
+    "eContraction": true,
+    "allEtaFirstDerivativeInsideSameRadii": true,
+    "allEtaSecondDerivativeInsideSameRadii": true,
+    "positiveCorrectedAzimuthalField": true,
+    "radialShearErrorBelowLambdaOver4": true,
+    "axialShearErrorBelowLambdaOver4": true,
+    "strictBaseShearPersists": true
+  },
+  "allPassed": true,
+  "claimBoundary": {
+    "sameNewOuterParameterBound": true,
+    "physicalReservedPatchBound": true,
+    "continuousIntegralMapCertified": true,
+    "uniformEtaConditionalInclusionCertified": true,
+    "actualModulationIncomingDebtEnclosed": false,
+    "infiniteAxisConstructedHere": false,
+    "fullProfileCertified": false,
+    "formalLeanProof": false,
+    "missing": "Actual same-source incoming scaled debts and final global cone; operator inclusion alone does not close N3-05 or N3-06."
+  },
+  "elapsedSeconds": 3.0047851790004643
+}

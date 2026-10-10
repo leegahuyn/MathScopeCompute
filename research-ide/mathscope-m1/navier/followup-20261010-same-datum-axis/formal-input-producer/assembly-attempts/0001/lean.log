@@ -1,0 +1,72 @@
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/assembly-attempts/0001/ConcreteProducer.lean:136:98: error: Application type mismatch: The argument
+  heta
+has type
+  eta ∈ axisWindow.interval
+but is expected to have type
+  ?m.41.2 ∈ axisWindow.interval
+in the application
+  profile_inputValue axisWindow rho selectedAxisData.one selectedAxisData_compatible.one_radial heta
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/assembly-attempts/0001/ConcreteProducer.lean:138:39: error(lean.unknownIdentifier): Unknown identifier `NavierStokes.AxisEvaluation.profile_axis`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/assembly-attempts/0001/ConcreteProducer.lean:138:2: error: Type mismatch: After simplification, term
+  he
+ has type
+  NavierStokes.AxisEvaluation.profile axisWindow rho selectedFixedPoint.1 (0, eta) =
+    NavierStokes.AxisEvaluation.profile axisWindow rho selectedAxisData.one (0, eta) +
+      1 / (2 * selectedLambda) *
+        NavierStokes.AxisEvaluation.profile axisWindow rho
+          (naturalRemainder selectedOperators selectedAxisData (ContinuousLinearMap.id ℝ ↥(AxisSpace axisWindow rho))
+              (1 / selectedLambda) actualAmplitudeInput selectedFixedPoint).1
+          (0, eta)
+but is expected to have type
+  coefficient axisWindow (weight rho) selectedFixedPoint.1 0 eta = 1
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/assembly-attempts/0001/ConcreteProducer.lean:134:4: warning: This simp argument is unused:
+  (remainder_axis_zero axisWindow rho_pos selectedAxisData (1 / selectedLambda) actualAmplitudeInput selectedFixedPoint
+          heta).1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [profile_add axisWindow rho_pos _ _ (p := (0, eta)) hzero,
+    naturalOperator_axis_zero axisWindow rho_pos chiInput selectedFixedPoint.1 heta, profile_smul,
+    profile_inputValue axisWindow rho selectedAxisData.one selectedAxisData_compatible.one_radial heta,
+    selectedAxisData_compatible.one_value eta heta, add_zero, mul_zero] at he
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/assembly-attempts/0001/ConcreteProducer.lean:137:4: warning: This simp argument is unused:
+  selectedAxisData_compatible.one_value eta heta
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [profile_add axisWindow rho_pos _ _ (p := (0, eta)) hzero,
+    naturalOperator_axis_zero axisWindow rho_pos chiInput selectedFixedPoint.1 heta, profile_smul,
+    (remainder_axis_zero axisWindow rho_pos selectedAxisData (1 / selectedLambda) actualAmplitudeInput
+          selectedFixedPoint heta).1,
+    profile_inputValue axisWindow rho selectedAxisData.one selectedAxisData_compatible.one_radial heta, add_zero,
+    mul_zero] at he
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/assembly-attempts/0001/ConcreteProducer.lean:137:62: warning: This simp argument is unused:
+  mul_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [profile_add axisWindow rho_pos _ _ (p := (0, eta)) hzero,
+    naturalOperator_axis_zero axisWindow rho_pos chiInput selectedFixedPoint.1 heta, profile_smul,
+    (remainder_axis_zero axisWindow rho_pos selectedAxisData (1 / selectedLambda) actualAmplitudeInput
+          selectedFixedPoint heta).1,
+    profile_inputValue axisWindow rho selectedAxisData.one selectedAxisData_compatible.one_radial heta,
+    selectedAxisData_compatible.one_value eta heta, add_zero] at he
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'MathScope.SameDatumInputs.selectedElement_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selectedFixedPoint_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selectedPhi_reference_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selectedPhi_axis_coefficient' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'MathScope.SameDatumInputs.selected_scaled_solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selected_uniform_mixed_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selected_reference_leading_solution' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathScope.SameDatumInputs.selected_actual_pressure_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selected_actual_amplitude_logDerivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

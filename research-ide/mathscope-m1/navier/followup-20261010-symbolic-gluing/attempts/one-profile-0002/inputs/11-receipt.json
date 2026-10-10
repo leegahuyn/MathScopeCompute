@@ -1,0 +1,1266 @@
+{
+  "schema": "mathscope.loop-derivative-envelope.scalar-audit.v1",
+  "minimumS": 1048576,
+  "expressions": {
+    "d0": "1/(8*S)",
+    "muMax": "S^12",
+    "deltaL": "exp(-S^16)",
+    "rawConeLower": "exp(-S^17)",
+    "R": "exp(S^256)",
+    "conditionalN": "1+ceil(exp(50*S^256))",
+    "conditionalKappa": "exp(-10*S^256)"
+  },
+  "sources": {
+    "LOOP_DERIVATIVE_ENVELOPE.md": "531e5addbe900564c22e0b44406c9c024e7d279c03a7188ea17431a567fe1250",
+    "QUANTITATIVE_LOOP_SELECTION.md": "937cfaace88466009c5f47a763e0f983d983c350fd754cd4cc57ad148d5897e6",
+    "check_loop_derivative_envelope.py": "70d90feeb10b0b670873522b2d763d52bf332ce924303f113d2a11d0b2eb4ad1"
+  },
+  "checks": [
+    {
+      "id": "variance_bracket",
+      "passed": true,
+      "worstEndpointRatio": "3291009114642412084309938365114701009965471731267194911069306881/1766847064778384329583297500742918515827483896875618958121606201292619776",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          0
+        ],
+        [
+          32,
+          2
+        ],
+        [
+          2147483648,
+          9
+        ]
+      ],
+      "targetPower": 12
+    },
+    {
+      "id": "real_t_bound",
+      "passed": true,
+      "worstEndpointRatio": "3705346855594118253554271520278013051304639509300498049262642688253220161060865/1942668892225729070919461906823518906642406839052139521251812409738904285205208498176",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          2,
+          13
+        ],
+        [
+          12,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "targetPower": 14,
+      "exponentialFactors": [
+        {
+          "multiplicity": 2,
+          "index": 13
+        }
+      ],
+      "ordinarySPower": 12,
+      "powerOfTwo": 1
+    },
+    {
+      "id": "real_j_bound",
+      "passed": true,
+      "worstEndpointRatio": "1942668892225729070919461906823518906642406839052139521251812409738904285205209546753/2037035976334486086268445688409378161051468393665936250636140449354381299763336706183397376",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          14
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "targetPower": 15,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 14
+        }
+      ],
+      "ordinarySPower": 1,
+      "powerOfTwo": 1
+    },
+    {
+      "id": "delta_quadratic_cone_entry",
+      "passed": true,
+      "worstEndpointRatio": "4074071952668972172536891376818756322102936787331872501272280898708762599526673412368891909/2135987035920910082395021706169552114602704522356652769947041607822219725780640550022962086936576",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          2,
+          15
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "targetPower": 16,
+      "exponentialFactors": [
+        {
+          "multiplicity": 2,
+          "index": 15
+        }
+      ],
+      "ordinarySPower": 2,
+      "powerOfTwo": 5
+    },
+    {
+      "id": "delta_d0_and_boundary_entries",
+      "passed": true,
+      "worstEndpointRatio": "1048579/2135987035920910082395021706169552114602704522356652769947041607822219725780640550022962086936576",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "targetPower": 16,
+      "exponentialFactors": [],
+      "ordinarySPower": 1,
+      "powerOfTwo": 3
+    },
+    {
+      "id": "raw_cone_margin_cutoff",
+      "passed": true,
+      "worstEndpointRatio": "2135987035920910082395021706169552114602704522356652769947041607822219725780640550022962086936579/2239744742177804210557442280568444278121645497234649534899989100963791871180160945380877493271607115776",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          16
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "targetPower": 17,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 16
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 3
+    },
+    {
+      "id": "raw_cone_margin_angular",
+      "passed": true,
+      "worstEndpointRatio": "3885337784451458141838923813647037813284813678104279042503624819477808570410416996353/2239744742177804210557442280568444278121645497234649534899989100963791871180160945380877493271607115776",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          2,
+          14
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "targetPower": 17,
+      "exponentialFactors": [
+        {
+          "multiplicity": 2,
+          "index": 14
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 1
+    },
+    {
+      "id": "raw_cone_margin_d0",
+      "passed": true,
+      "worstEndpointRatio": "524289/559936185544451052639360570142111069530411374308662383724997275240947967795040236345219373317901778944",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "targetPower": 17,
+      "exponentialFactors": [],
+      "ordinarySPower": 2,
+      "powerOfTwo": 4
+    },
+    {
+      "id": "cutoff_coefficient_integer_bound",
+      "passed": true,
+      "worstEndpointRatio": "815730721/4294967296",
+      "argument": "The exact derivative recurrence is included in the receipt."
+    },
+    {
+      "id": "cutoff_monomial_integer_bound",
+      "passed": true,
+      "worstEndpointRatio": "531441/1048576",
+      "argument": "For m<=24, sup s^(m/2) exp(-s) <= max(1,12^12)."
+    },
+    {
+      "id": "cutoff_denominator_positive",
+      "passed": true,
+      "worstEndpointRatio": "81/128",
+      "argument": "e<3 implies exp(-4)>1/81>2^-7; one of t,1-t is at least 1/2."
+    },
+    {
+      "id": "cutoff_reciprocal_order_1",
+      "passed": true,
+      "worstEndpointRatio": "1/256",
+      "argument": "Reciprocal normalized Taylor recurrence, using already proved lower orders."
+    },
+    {
+      "id": "cutoff_reciprocal_order_2",
+      "passed": true,
+      "worstEndpointRatio": "1/128",
+      "argument": "Reciprocal normalized Taylor recurrence, using already proved lower orders."
+    },
+    {
+      "id": "cutoff_reciprocal_order_3",
+      "passed": true,
+      "worstEndpointRatio": "3/256",
+      "argument": "Reciprocal normalized Taylor recurrence, using already proved lower orders."
+    },
+    {
+      "id": "cutoff_reciprocal_order_4",
+      "passed": true,
+      "worstEndpointRatio": "1/64",
+      "argument": "Reciprocal normalized Taylor recurrence, using already proved lower orders."
+    },
+    {
+      "id": "cutoff_reciprocal_order_5",
+      "passed": true,
+      "worstEndpointRatio": "5/256",
+      "argument": "Reciprocal normalized Taylor recurrence, using already proved lower orders."
+    },
+    {
+      "id": "cutoff_reciprocal_order_6",
+      "passed": true,
+      "worstEndpointRatio": "3/128",
+      "argument": "Reciprocal normalized Taylor recurrence, using already proved lower orders."
+    },
+    {
+      "id": "cutoff_reciprocal_order_7",
+      "passed": true,
+      "worstEndpointRatio": "7/256",
+      "argument": "Reciprocal normalized Taylor recurrence, using already proved lower orders."
+    },
+    {
+      "id": "cutoff_reciprocal_order_8",
+      "passed": true,
+      "worstEndpointRatio": "1/32",
+      "argument": "Reciprocal normalized Taylor recurrence, using already proved lower orders."
+    },
+    {
+      "id": "cutoff_eighth_factorial",
+      "passed": true,
+      "worstEndpointRatio": "315/512",
+      "argument": "8!<2^16."
+    },
+    {
+      "id": "cutoff_sigma_all_orders",
+      "passed": true,
+      "worstEndpointRatio": "9/1062275985633534197379176413104937254659186235454063846398888276400807119721704485478325004530458571337778658972493002030693158675305414478819039957533174703887662541670786438063456256",
+      "argument": "Leibniz sum has <=9 terms for each order<=8."
+    },
+    {
+      "id": "mixed_exponential_coefficients",
+      "passed": true,
+      "worstEndpointRatio": "6975757441/1099511627776",
+      "argument": "Each of eight differentiations multiplies coefficient l1 norm by at most seventeen."
+    },
+    {
+      "id": "moment_generating_ratio_eight_derivatives",
+      "passed": true,
+      "worstEndpointRatio": "578960446186580977117854925043439539266349923328202820197287920039565648199681/15914343565113172548972231940698266883214596825515126958094847260581103904401068017057792",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          40,
+          13
+        ],
+        [
+          128,
+          0
+        ]
+      ],
+      "targetPower": 15,
+      "exponentialFactors": [
+        {
+          "multiplicity": 40,
+          "index": 13
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 128
+    },
+    {
+      "id": "removable_quotient_positive_lower",
+      "passed": true,
+      "worstEndpointRatio": "7410693711188236507108543040556026102609279018600996098525285376506440296955905/1942668892225729070919461906823518906642406839052139521251812409738904285205208498176",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          4,
+          13
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "targetPower": 14,
+      "exponentialFactors": [
+        {
+          "multiplicity": 4,
+          "index": 13
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 1
+    },
+    {
+      "id": "square_root_Q_three_derivatives",
+      "passed": true,
+      "worstEndpointRatio": "1527778439252533733998137455903463738427781277054581477081746275875093279000716433543921669/559936185544451052639360570142111069530411374308662383724997275240947967795040236345219373317901778944",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          3,
+          15
+        ],
+        [
+          3,
+          14
+        ],
+        [
+          20,
+          0
+        ]
+      ],
+      "targetPower": 17,
+      "exponentialFactors": [
+        {
+          "multiplicity": 3,
+          "index": 15
+        },
+        {
+          "multiplicity": 3,
+          "index": 14
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 20
+    },
+    {
+      "id": "W_three_derivatives",
+      "passed": true,
+      "worstEndpointRatio": "559936185544451052639360570142111069530411374308662383724997275240947967795040236345219373317918556165/615656346818663737691860001564743965704370926101022604186692084441339402679643915803347910232576806887603562348544",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          17
+        ],
+        [
+          64,
+          1
+        ],
+        [
+          20,
+          0
+        ]
+      ],
+      "targetPower": 19,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 17
+        }
+      ],
+      "ordinarySPower": 64,
+      "powerOfTwo": 20
+    },
+    {
+      "id": "W_mu_positive_lower",
+      "passed": true,
+      "worstEndpointRatio": "11116040566782354760662814560834039153913918527901494147787928064759660446482437/1942668892225729070919461906823518906642406839052139521251812409738904285205208498176",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          6,
+          13
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "targetPower": 14,
+      "exponentialFactors": [
+        {
+          "multiplicity": 6,
+          "index": 13
+        }
+      ],
+      "ordinarySPower": 1,
+      "powerOfTwo": 5
+    },
+    {
+      "id": "cutoff_after_source_composition",
+      "passed": true,
+      "worstEndpointRatio": "400497569235170640449066569906791021488007097941872394365070301466666198583870103129305391497345/146783911423364576743092537299333564210980159306769991919205685720763064069663027716481187399048043939495936",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          3,
+          16
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2064,
+          0
+        ]
+      ],
+      "targetPower": 18,
+      "exponentialFactors": [
+        {
+          "multiplicity": 3,
+          "index": 16
+        }
+      ],
+      "ordinarySPower": 3,
+      "powerOfTwo": 2064
+    },
+    {
+      "id": "implicit_right_side",
+      "passed": true,
+      "worstEndpointRatio": "73391955711882537156163853969891315390443475164128999508573779057564067185564846957532528751088674665922561/80695308690215893426747474125094121072803306025913234775958104891895238188026287332176417290004307232371974124148359168",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          18
+        ],
+        [
+          3,
+          16
+        ],
+        [
+          16,
+          1
+        ],
+        [
+          32,
+          0
+        ]
+      ],
+      "targetPower": 20,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 18
+        },
+        {
+          "multiplicity": 3,
+          "index": 16
+        }
+      ],
+      "ordinarySPower": 16,
+      "powerOfTwo": 32
+    },
+    {
+      "id": "full_implicit_equation",
+      "passed": true,
+      "worstEndpointRatio": "80695308690215893426747474125094121072803306025913234775958104891895238188026287332176417290004307232371974124148752385/88725430211866075506509253892578678509965986412026130405455346579667881849780019937279180995332466499116518750764914298527173050368",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          20
+        ],
+        [
+          12,
+          1
+        ],
+        [
+          32,
+          0
+        ]
+      ],
+      "targetPower": 22,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 20
+        }
+      ],
+      "ordinarySPower": 12,
+      "powerOfTwo": 32
+    },
+    {
+      "id": "implicit_first_derivative",
+      "passed": true,
+      "worstEndpointRatio": "709803441694928604052074031140629428079727891296694710466699204905072920274946039224894049672422766873245103108554040459518686527489/744282853678701455922507579277316643178128753343813693728245963960974631028119473486019635930893891134220822124816566203939432067701407744",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          22
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "targetPower": 23,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 22
+        },
+        {
+          "multiplicity": 1,
+          "index": 14
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 4
+    },
+    {
+      "id": "implicit_second_derivative",
+      "passed": true,
+      "worstEndpointRatio": "372141604290211151693404802657166106746421396603879671037800598655288541782289805479519624188959363672802129373684060240479830913522335745/214524926879081553593184399971293538039669853129478294043576983099548224481176751628829988770670454843040509730983776813660062124991145119142938384097345536",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          22
+        ],
+        [
+          2,
+          23
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          16,
+          0
+        ]
+      ],
+      "targetPower": 26,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 22
+        },
+        {
+          "multiplicity": 2,
+          "index": 23
+        },
+        {
+          "multiplicity": 1,
+          "index": 14
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 16
+    },
+    {
+      "id": "implicit_third_derivative",
+      "passed": true,
+      "worstEndpointRatio": "2574299122548978643118213509458964151404642289627770669152351876922469990468831486245164770320965733062525341665854994186687618744996849983755720127854673925/1037378892220248239628101965922790287753111558060609224998914332422663202853227036599926762236775948572049471652825197295598787768852943826971718708528490921765295450850377380921344",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          22
+        ],
+        [
+          3,
+          26
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          20,
+          0
+        ]
+      ],
+      "targetPower": 30,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 22
+        },
+        {
+          "multiplicity": 3,
+          "index": 26
+        },
+        {
+          "multiplicity": 1,
+          "index": 14
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 20
+    },
+    {
+      "id": "divided_difference_integrand",
+      "passed": true,
+      "worstEndpointRatio": "31828717484427786124961196997988827883912109938637114105869714080731109979181592367202305/34996011596528190789960035633881941845650710894291398982812329702559247987190014771576210832368861184",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          15
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          104,
+          1
+        ],
+        [
+          64,
+          0
+        ]
+      ],
+      "targetPower": 17,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 15
+        },
+        {
+          "multiplicity": 1,
+          "index": 14
+        }
+      ],
+      "ordinarySPower": 104,
+      "powerOfTwo": 64
+    },
+    {
+      "id": "composed_mu_times_p",
+      "passed": true,
+      "worstEndpointRatio": "518689446110124119814050982961395143876555779030304612499457166211331601426613518299963381118387974286024735826412598647799393884426471913485859354264245460882647725425188690853889/543885304644369509058138323509727874385503352552480689356230797517213245297512696564902402319594788524942673393916417039714897241756372213155348458256985448390483221335442656288489603072",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          30
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          8,
+          0
+        ]
+      ],
+      "targetPower": 31,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 30
+        }
+      ],
+      "ordinarySPower": 3,
+      "powerOfTwo": 8
+    },
+    {
+      "id": "actual_t_mixed_jet",
+      "passed": true,
+      "worstEndpointRatio": "1631656432622554637298534784580166584551653934213221098373304892008805947224139516308505475014937709489121986491556133066508545211817332257800457498250784593314430664826663080713110159365/657516987693546688405123735360016083193792475352896732437285112883591519287135102764208317034698556403372871107022277214127429031272975482890976846331485106244402958891055574773957969735540339658911656466972672",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          17
+        ],
+        [
+          3,
+          31
+        ],
+        [
+          1,
+          30
+        ],
+        [
+          40,
+          0
+        ]
+      ],
+      "targetPower": 35,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 17
+        },
+        {
+          "multiplicity": 3,
+          "index": 31
+        },
+        {
+          "multiplicity": 1,
+          "index": 30
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 40
+    },
+    {
+      "id": "target_v_mixed_jet",
+      "passed": true,
+      "worstEndpointRatio": "1174271291386916613944740298394668513687841274454159935353645485766104512557304221731849499192384351516491779/645562469521727147413979793000752968582426448207305878207664839135161905504210298657411338320034457858975792993186873344",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          2,
+          18
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          12,
+          0
+        ]
+      ],
+      "targetPower": 20,
+      "exponentialFactors": [
+        {
+          "multiplicity": 2,
+          "index": 18
+        }
+      ],
+      "ordinarySPower": 2,
+      "powerOfTwo": 12
+    },
+    {
+      "id": "reciprocal_v_mixed_jet",
+      "passed": true,
+      "worstEndpointRatio": "1936687408565181442241939379002258905747279344621917634622994517405485716512630895972234014960103373576927378979560620037/709803441694928604052074031140629428079727891296209043243642772637343054798240159498233447962659731992932150006119314388217384402944",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          3,
+          20
+        ],
+        [
+          20,
+          0
+        ]
+      ],
+      "targetPower": 22,
+      "exponentialFactors": [
+        {
+          "multiplicity": 3,
+          "index": 20
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 20
+    },
+    {
+      "id": "circle_density_jet",
+      "passed": true,
+      "worstEndpointRatio": "2630067950774186753620494941440064332775169901411586929749140451534366077148541120860274963067398277687522625057517188584401012334135145574336544728380738665137110069012184958827824811092167477950034843252555781/1516130949512411069481425281701662651618052751090524034315480505884815383482789928057498446121725076123523174508917063677901933636830873429144811792032403456254350562520361235888930942999607856274670897650113739014543795755679744",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          2,
+          35
+        ],
+        [
+          1,
+          22
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          20,
+          0
+        ]
+      ],
+      "targetPower": 38,
+      "exponentialFactors": [
+        {
+          "multiplicity": 2,
+          "index": 35
+        },
+        {
+          "multiplicity": 1,
+          "index": 22
+        }
+      ],
+      "ordinarySPower": 1,
+      "powerOfTwo": 20
+    },
+    {
+      "id": "circle_lift_jet",
+      "passed": true,
+      "worstEndpointRatio": "6064523798049644277925701126806650606472211004362096137261922023539261533931159712229993784486900304494092698035668254711607734547323493716579247168129613825017402250081444943555723771998431425098683590600454956058175183022718979/6359114106063703798370219984742410466332205126109989319225557147754704702203399726411277962562135973685197744935448875852478791860694279747355800678568677946181447581781401213133886609947027230004277244697462656003657100713230572978176",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          38
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "targetPower": 39,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 38
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 3
+    },
+    {
+      "id": "inverse_circle_first",
+      "passed": true,
+      "worstEndpointRatio": "3179557053031851899185109992371205233166102563054994659612778573877352351101699863205638981281067986842598872467724437926239395930347139873677900339284338973090723790890700606566943304973513615002138622348731328001828550356615287537667/3334007216439927137039925895360628898572379161157954080198128905882018618908816035760716100435777145371464955296716620222944400827059682540181678026165415023047578789757007279231539142955907012364482508067943300990845374018738230645581938688",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          39
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          6,
+          0
+        ]
+      ],
+      "targetPower": 40,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 39
+        }
+      ],
+      "ordinarySPower": 2,
+      "powerOfTwo": 6
+    },
+    {
+      "id": "inverse_circle_second",
+      "passed": true,
+      "worstEndpointRatio": "3334008806218453652965875487915625084174995744209235607695458712271305557584991586610647703255267785905458376596152854085163363946757647713751614865115584665217065335118902724581842426427559499121290009137254475356509374933013408953225707525/1921924308174003258872616370050369756495810455948672905389542244035233680030523317234537010836564833497229828911284598430510768810573374275010933992099815720970170092183271059798176857571621225553914820586983072295508566795439261982531741155133337002515103744",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          39
+        ],
+        [
+          2,
+          40
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          20,
+          0
+        ]
+      ],
+      "targetPower": 43,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 39
+        },
+        {
+          "multiplicity": 2,
+          "index": 40
+        }
+      ],
+      "ordinarySPower": 2,
+      "powerOfTwo": 20
+    },
+    {
+      "id": "inverse_circle_third",
+      "passed": true,
+      "worstEndpointRatio": "720721615565251222077231337491204473176672620050126862721405414394622820948612469761612246398233756417702636194168054478190715966394544585906470636999676542060055889437497852695502139759594890251505968154075212955416650181953620039157403047459398664398635009/304541062856249971261043199621099634714882089299843985214622076787904646586450815702050470808812820600790778632231520880733099058287596688955562103009770419360352428123639782183462176734064176511024987296225574339802674935168589842054573862983405175400866837597008673346307143437247315968",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          39
+        ],
+        [
+          3,
+          43
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          32,
+          0
+        ]
+      ],
+      "targetPower": 48,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 39
+        },
+        {
+          "multiplicity": 3,
+          "index": 43
+        }
+      ],
+      "ordinarySPower": 2,
+      "powerOfTwo": 32
+    },
+    {
+      "id": "reciprocal_loop_denominator",
+      "passed": true,
+      "worstEndpointRatio": "3945101926161280130430742412160096499162754852117380394623710677301549115722810616585249902208191338420237226642133663284764574187637852897345861077988910637466417753346333448643747818413242037953469938801836035/722947573429303679218971863604384733017946601434003846318950894300849620572466815975903723774778879224549853567560703123999563997664868082592397590652658203246283799419575326866593810558132103097281884026581639773628137472",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          6,
+          35
+        ],
+        [
+          24,
+          0
+        ]
+      ],
+      "targetPower": 37,
+      "exponentialFactors": [
+        {
+          "multiplicity": 6,
+          "index": 35
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 24
+    },
+    {
+      "id": "composed_actual_loop",
+      "passed": true,
+      "worstEndpointRatio": "456811594284374956891564799431649452072323133949765977821933115181947338326354968702601539389505829633280331275536931025948936561310555896644011955451554486400221528128198089945033882547197961787959902443827721983483912667652440726093535879797306515034001722673892341681426771146707042305/212234145163966538949586160681135434156795913583085085898206198394970795742850288862584251300118134254665285358653865366797480086613045780799305442856259823779465054678224848934107252252573136418231830633222237133012475558939530571146176344253173130949621245817503109142107562563579939423189810553705994663554142952324852386627584",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          37
+        ],
+        [
+          1,
+          35
+        ],
+        [
+          1,
+          20
+        ],
+        [
+          3,
+          48
+        ],
+        [
+          64,
+          0
+        ]
+      ],
+      "targetPower": 55,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 37
+        },
+        {
+          "multiplicity": 1,
+          "index": 35
+        },
+        {
+          "multiplicity": 1,
+          "index": 20
+        },
+        {
+          "multiplicity": 3,
+          "index": 48
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 64
+    },
+    {
+      "id": "full_loop_jet_norm",
+      "passed": true,
+      "worstEndpointRatio": "13582985290493858492773514283592667786034938469317445497485196697278130927542418487205392083207560592298578262953847383475038725543234929971155548342800628721885763499406390331782864144164680730766837160526223176512798435772129956553355286032203080380775759732320198985094884004069116123084147875437183658467465148948790552744165381/14242792383964888162918480513432465216409371640403009729971037612045113415478719007639881209041451055630074000655093473974722206675223109929434400259100512062680086347153555148539548552831624261944567042435944993535084132588196941322891072406503377213352323037077384970994853089450777507879083442634420291861180736024127002634265953304576",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          55
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "targetPower": 56,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 55
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 5
+    },
+    {
+      "id": "actual_zero_mean_primitives",
+      "passed": true,
+      "worstEndpointRatio": "7121396191982444081459240256716232608204685820201504864985518806022556707739359503819940604520725527815037000327546736987361103337611554964717200129550256031340043173576777574269774276415812130972283521217972496767542066294098470661445536203251688606676161518538692485497426544725388753939541721317210145930590368012063501317132977176579/8609239728192875309033688848026317741789962372724344960866618408200370345620872809698742268618023086643185459515980793894292463645408330512495804941364358672329751735827995440442339948260027561953233532209528263115672842634120284604946286883018983292367591887869716989357289293891350690398620386238823937277993356373135681446113758102659457217956755570518130688",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          56
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          6,
+          0
+        ]
+      ],
+      "targetPower": 60,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 56
+        }
+      ],
+      "ordinarySPower": 1,
+      "powerOfTwo": 6
+    },
+    {
+      "id": "final_R_dominates_primitive",
+      "passed": true,
+      "worstEndpointRatio": "1/10903928694741160380772004707919102869979908137371385702490856941524075818224420052917570217273944667999300582158347735461565424583321555469085746581776947165090441151321619705552543207227518868790702077496870428763424312220017640339495912140284911647310335057644185848653240993321819753477819423035764009071298555640908508416570540830484238524758950128099251901260871336602340963070644694601976829027153376114181985757609159237031229351779046500970730459521287754036365230490212028734166985192216561962981505475615097651910439858746576542934815987220795563837466101019226187727526586961298920085947748070019162008795361987489085440806841328773837913779827712326659578672395038964624772231460042228442693558155749046636524158494131804191611809282077203279895309506686038121191649349838924240656476968913904176861399232731983489195712560909824536975219581921136555491696576492559280626798205842560284418637635715081975028886310714652164117554116664047460945012753294655121532877384264752445441909504491800840924888378150021229807666062834860077014312561658831371920016931770454196680387066340022599153223074010958467957531436196593080514385216565942128734106753881917170231149592576",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          60
+        ]
+      ],
+      "targetPower": 256,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 60
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 0
+    },
+    {
+      "id": "final_R_dominates_cone_inverse",
+      "passed": true,
+      "worstEndpointRatio": "1/83826102452076268125327390815552443887980353423159148540601557049931983325458794344711584504538886922870452872042889413660308860554658299736997843572957487729123980690379177105986398898771617882452861283932342114001992070005654202022160796102839368239399098764960900580459815350017300514385285669299932304191006673490529963566127286748888339119200538570091478395410216536427754363444139437835052283300994066586542887308125464903759879777211127133988596966016837662875006059212782972598891650348835238986720900701764962101299747350131615835186609355100782770400143144926860175081446524236615520289510134856711218104477593415808103054857664095398221308370098665378048198627129740705589648802857052507645878684695285712404852855263997821310140348598310715137896546612963900188279941497462663806344598004460414781819483202984075539596851758399488967705205435242740236590103346348230070659787375268581151200729075956447341952508760246457746305125303829100410229616789986935812290766519513913596297411038238663040454997423004840888764501680704322586754073595006831702415259682750823662423333186347727011684709927802987062317527456806853894539269981599743256071640945635316743617410230489258481122972609202166268680475784413169390808275778541767347832759055920795190364657739052826816401561859857031492811232390436880899585262769527628442906529627745956622647881500219572232678051598787788365579649608964459661217655509395469006223190847888818176",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          1,
+          17
+        ]
+      ],
+      "targetPower": 256,
+      "exponentialFactors": [
+        {
+          "multiplicity": 1,
+          "index": 17
+        }
+      ],
+      "ordinarySPower": 0,
+      "powerOfTwo": 0
+    },
+    {
+      "id": "final_R_exceeds_8192",
+      "passed": true,
+      "worstEndpointRatio": "13/187749072224295762487282918043534149672470009810028327446062532949263717368127024576140841104973120370273487261876951083004001413137204173750956938653211788724190430095984469913776932431963546640404661377521170242454281393564883698042160362597493239676179542430408230026967675408244369534225406182334053860953190851410763968250231766966368150031479733532494389362263966829774739549874576217702802049949175044144226916408271128525427622225198410553089064349578703883506197408833728032937541363391644479638264014861396658218947068985826257384271858030352807755971277360363293570350006795256116943835609813348656451703942739615910726879627516589755942615059584953695158906776349078531641699376974783981966272485654732492263213186492225477260675547523932337061020406120250964136034529347299464072163800076187742576595379686343865722042219212538664133431405598476618632378694390016986508065484388368263534489462021091442580691883449258543148763819608108278025227630151849488163230271017209333339572098874097605709683555074986308074644075465524908758151061239207358632374820522302308593867486159699800255775718113162926434961209248394655996108849613488899817872188299520363081282737595469502189721561285889897515363929727744544447417526634383587059070293805996935707713490568437981961300034126756863201261849257039580831538344714324593879688126002780304484145068997028656541324271928440299730361243738276658036052139964707237167826208674384719689501485461459019092511353744510977179559894717372061260467912691621997768268855590726394611504645144576",
+      "argument": "Nonnegative polynomial divided by S^target is nonincreasing for S>=2^20.",
+      "terms": [
+        [
+          13,
+          0
+        ]
+      ],
+      "targetPower": 256
+    }
+  ],
+  "cutoffExactDerivativePolynomials": [
+    {
+      "order": 0,
+      "coefficients": {
+        "0": 1
+      },
+      "absoluteCoefficientSum": 1
+    },
+    {
+      "order": 1,
+      "coefficients": {
+        "3": 2
+      },
+      "absoluteCoefficientSum": 2
+    },
+    {
+      "order": 2,
+      "coefficients": {
+        "4": -6,
+        "6": 4
+      },
+      "absoluteCoefficientSum": 10
+    },
+    {
+      "order": 3,
+      "coefficients": {
+        "5": 24,
+        "7": -36,
+        "9": 8
+      },
+      "absoluteCoefficientSum": 68
+    },
+    {
+      "order": 4,
+      "coefficients": {
+        "6": -120,
+        "8": 300,
+        "10": -144,
+        "12": 16
+      },
+      "absoluteCoefficientSum": 580
+    },
+    {
+      "order": 5,
+      "coefficients": {
+        "7": 720,
+        "9": -2640,
+        "11": 2040,
+        "13": -480,
+        "15": 32
+      },
+      "absoluteCoefficientSum": 5912
+    },
+    {
+      "order": 6,
+      "coefficients": {
+        "8": -5040,
+        "10": 25200,
+        "12": -27720,
+        "14": 10320,
+        "16": -1440,
+        "18": 64
+      },
+      "absoluteCoefficientSum": 69784
+    },
+    {
+      "order": 7,
+      "coefficients": {
+        "9": 40320,
+        "11": -262080,
+        "13": 383040,
+        "15": -199920,
+        "17": 43680,
+        "19": -4032,
+        "21": 128
+      },
+      "absoluteCoefficientSum": 933200
+    },
+    {
+      "order": 8,
+      "coefficients": {
+        "10": -362880,
+        "12": 2963520,
+        "14": -5503680,
+        "16": 3764880,
+        "18": -1142400,
+        "20": 163968,
+        "22": -10752,
+        "24": 256
+      },
+      "absoluteCoefficientSum": 13912336
+    }
+  ],
+  "summary": {
+    "passed": 50,
+    "total": 50
+  },
+  "claimBoundary": {
+    "exactScalarAbsorptions": true,
+    "actualSourceSBoundAttached": false,
+    "actualNSelected": false,
+    "fullProfileCertified": false,
+    "analyticImplicitAndInverseMapArgumentsLeanFormalized": false
+  }
+}

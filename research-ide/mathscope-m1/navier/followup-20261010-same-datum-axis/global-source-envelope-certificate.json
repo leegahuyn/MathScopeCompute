@@ -1,0 +1,485 @@
+{
+  "schema": "MathScope.Navier.SameProfileGlobalSourceEnvelope/1",
+  "status": "EXPLICIT_S_C100000_PROVED_FOR_ACTUAL_NEW_PREMODULATION_PROFILE",
+  "sourceBinding": {
+    "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "outerParameterExpressionSHA256": "38e23d037f8b75eaeb30448a815689e92171926d47787196c7c5395fe98425a8",
+    "finalContinuationParameterExpressionSHA256": "7767e9da2faa9463b94beee9593ec5e55e16b8107cfec000992533d022fd0a4e",
+    "proofAndProducerInputsSHA256": {
+      "SAME_DATUM_ANALYTIC_AXIS.md": "1923770e721cd73d569150eec19eb8cf78a645b86207b6be90cb97aabb547920",
+      "REFERENCE_DERIVATIVE_BOUNDS.md": "c4f47c6a156052a007a55992345faa47c7c47cb5606a46bff693f0b69d5054d9",
+      "CONTINUATION_AND_NEW_DEBT.md": "b2b4dfc3f1223e3a5e2bb09043dc649d48d2cda16813d6c719f7d47f6b0214e2",
+      "GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md": "f27e8d640e9b8e49805c0128c987f043d5667c298b2029dd061b820ae9e3117b",
+      "axis-envelope-certificate.json": "32f59e314e04d71bd7d47cf1bf3d1208e98b6549240875b7e2e2740c63ba2605",
+      "continuation-debt-certificate.json": "819440fca3698cffc9752226c563a826f9cf7728139dddde405ddb82f3c0b9bd"
+    },
+    "thisCheckerSHA256": "55759d18bbd3a522a935483a7b9874c4e06114ed0deb86742bff6c5d312b3594"
+  },
+  "parametersExactExpressions": {
+    "sourceEnvelopeS": {
+      "power": [
+        {
+          "ref": "CSelected"
+        },
+        100000
+      ]
+    },
+    "sourceJLeft": {
+      "product": [
+        {
+          "quotient": [
+            {
+              "integer": 4
+            },
+            {
+              "ref": "Lambda"
+            }
+          ]
+        },
+        {
+          "exp": {
+            "quotient": [
+              {
+                "ref": "t1"
+              },
+              {
+                "integer": 16
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sourceJRight": {
+      "product": [
+        {
+          "integer": 16
+        },
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60000
+                  },
+                  {
+                    "ref": "T"
+                  }
+                ]
+              },
+              {
+                "integer": -25
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "loopILeft": {
+      "product": [
+        {
+          "quotient": [
+            {
+              "integer": 4
+            },
+            {
+              "ref": "Lambda"
+            }
+          ]
+        },
+        {
+          "exp": {
+            "quotient": [
+              {
+                "ref": "t1"
+              },
+              {
+                "integer": 8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "loopIRight": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 3
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "parameterExpressionSHA256": "cef935d0b265392e99d19d89b62f269a71b4dc3c32d6f7874e4c9753fe5b50e6",
+  "actualSourceUpperCExponents": {
+    "E": 1000,
+    "U": 1000,
+    "moments": 2030,
+    "inverseE": 3015,
+    "inverseH": 3050,
+    "p1": 8000,
+    "p2": 8000,
+    "a": 5000,
+    "b": 5000,
+    "inverseA": 16000,
+    "t": 21002,
+    "v": 26004,
+    "Pc": 29004,
+    "Jc": 29004
+  },
+  "derivativeOrder": {
+    "fields": 4,
+    "moments": 4,
+    "source": 3,
+    "meaning": "total mixed log-radius and eta order"
+  },
+  "actualPositiveLowerBounds": {
+    "X": "C^-1",
+    "E": "C^-3",
+    "a": "C^-122"
+  },
+  "additionalC12Inputs": {
+    "radialUpper": "C^12",
+    "KAndReciprocalEtaOrder2": "C^3",
+    "lambdaInverse": "C",
+    "samePositiveLambda": true
+  },
+  "finiteDerivationDetails": {
+    "universalStepDerivativeProof": [
+      {
+        "order": 0,
+        "polynomial": {
+          "0": 1
+        },
+        "coefficientL1": 1,
+        "degree": 0
+      },
+      {
+        "order": 1,
+        "polynomial": {
+          "3": 2
+        },
+        "coefficientL1": 2,
+        "degree": 3
+      },
+      {
+        "order": 2,
+        "polynomial": {
+          "4": -6,
+          "6": 4
+        },
+        "coefficientL1": 10,
+        "degree": 6
+      },
+      {
+        "order": 3,
+        "polynomial": {
+          "5": 24,
+          "7": -36,
+          "9": 8
+        },
+        "coefficientL1": 68,
+        "degree": 9
+      },
+      {
+        "order": 4,
+        "polynomial": {
+          "6": -120,
+          "8": 300,
+          "10": -144,
+          "12": 16
+        },
+        "coefficientL1": 580,
+        "degree": 12
+      },
+      {
+        "order": 5,
+        "polynomial": {
+          "7": 720,
+          "9": -2640,
+          "11": 2040,
+          "13": -480,
+          "15": 32
+        },
+        "coefficientL1": 5912,
+        "degree": 15
+      },
+      {
+        "order": 6,
+        "polynomial": {
+          "8": -5040,
+          "10": 25200,
+          "12": -27720,
+          "14": 10320,
+          "16": -1440,
+          "18": 64
+        },
+        "coefficientL1": 69784,
+        "degree": 18
+      },
+      {
+        "order": 7,
+        "polynomial": {
+          "9": 40320,
+          "11": -262080,
+          "13": 383040,
+          "15": -199920,
+          "17": 43680,
+          "19": -4032,
+          "21": 128
+        },
+        "coefficientL1": 933200,
+        "degree": 21
+      },
+      {
+        "order": 8,
+        "polynomial": {
+          "10": -362880,
+          "12": 2963520,
+          "14": -5503680,
+          "16": 3764880,
+          "18": -1142400,
+          "20": 163968,
+          "22": -10752,
+          "24": 256
+        },
+        "coefficientL1": 13912336,
+        "degree": 24
+      }
+    ],
+    "actualAnalyticEvaluationScalars": {
+      "0,0": "200/159",
+      "0,1": "10000/25281",
+      "0,2": "16000000/36177111",
+      "0,3": "200000000/213042987",
+      "0,4": "102400000000/33873834933",
+      "0,5": "640000000000000/48473457789123",
+      "0,6": "1024000000000000000/13987285542039159",
+      "0,7": "22400000000000000000/45387314309882169",
+      "0,8": "2293760000000000000000000/584543220996972454551",
+      "1,0": "8200/25281",
+      "1,1": "820000/4019679",
+      "1,2": "656000000/1917386883",
+      "1,3": "32800000000/33873834933",
+      "1,4": "20992000000000/5385939754347",
+      "1,5": "52480000000000000/2569093262823519",
+      "1,6": "41984000000000000000/317711200169175183",
+      "1,7": "7347200000000000000000/7216582975271264871",
+      "2,0": "1976200/4019679",
+      "2,1": "77080000/213042987",
+      "2,2": "211888000000/304864514397",
+      "2,3": "11939200000000/5385939754347",
+      "2,4": "104960000000000/10572400258533",
+      "2,5": "23406080000000000000/408485828788939521",
+      "2,6": "20446208000000000000000/50516080826898854097",
+      "3,0": "203581400/213042987",
+      "3,1": "28460560000/33873834933",
+      "3,2": "89956624000000/48473457789123",
+      "3,3": "1896889600000000/285454806980391",
+      "3,4": "1492006400000000000/45387314309882169",
+      "3,5": "13451463680000000000000/64949246777441383839",
+      "4,0": "81472797400/33873834933",
+      "4,1": "13438697920000/5385939754347",
+      "4,2": "16047130384000000/2569093262823519",
+      "4,3": "1124838214400000000/45387314309882169",
+      "4,4": "966089100800000000000/7216582975271264871",
+      "5,0": "40800616893400/5385939754347",
+      "5,1": "862426872160000/95151602326797",
+      "5,2": "10342930237232000000/408485828788939521",
+      "5,3": "794117115641600000000/7216582975271264871",
+      "6,0": "8186689770569800/285454806980391",
+      "6,1": "1762977323267360000/45387314309882169",
+      "6,2": "7772296127105936000000/64949246777441383839",
+      "7,0": "5750225619548841800/45387314309882169",
+      "7,1": "1382447242977463520000/7216582975271264871",
+      "8,0": "4615503098401588233800/7216582975271264871"
+    },
+    "gradedWidthProductCasesChecked": 6434,
+    "referenceSourcePositivePolynomials": {
+      "Sq": {
+        "12": "3",
+        "222": "2"
+      },
+      "Sn": {
+        "4": "3",
+        "5": "4",
+        "33": "3",
+        "222": "2"
+      }
+    },
+    "referenceStockRadialExponentRecurrence": [
+      400,
+      1003,
+      1115,
+      1227
+    ],
+    "continuousMomentExponentTable": {
+      "density": {
+        "M": 1000,
+        "I": 1007,
+        "J": 2007,
+        "S": 2000,
+        "Cp": 2001
+      },
+      "integral": {
+        "M": 1015,
+        "I": 1022,
+        "J": 2022,
+        "S": 2015,
+        "Cp": 2016
+      },
+      "regularAxisPressure": "integral F^2 from 0 to X0; F eta derivatives through 4 below 1"
+    },
+    "actualSourceMomentMap": {
+      "p1": {
+        "maxCExponentBeforeCoefficient": 5081,
+        "mixedDerivativeCoefficientSum": "1809",
+        "monomialCount": 13,
+        "certifiedBound": "C^8000"
+      },
+      "p2": {
+        "maxCExponentBeforeCoefficient": 6059,
+        "mixedDerivativeCoefficientSum": "11667/2",
+        "monomialCount": 20,
+        "certifiedBound": "C^8000"
+      }
+    }
+  },
+  "checks": {
+    "axis_exact_receipt_pass": true,
+    "same_profile_debt_receipt_pass": true,
+    "same_axis_receipt_bound": true,
+    "explicit_final_width_C_minus120": true,
+    "explicit_Bref_Q300": true,
+    "explicit_final_C": true,
+    "actual_B8_U_root_orders0to4": true,
+    "actual_B8_E_root_orders0to4": true,
+    "step_exponential_polynomial_order0": true,
+    "step_exponential_polynomial_order1": true,
+    "step_exponential_polynomial_order2": true,
+    "step_exponential_polynomial_order3": true,
+    "step_exponential_polynomial_order4": true,
+    "step_exponential_polynomial_order5": true,
+    "step_exponential_polynomial_order6": true,
+    "step_exponential_polynomial_order7": true,
+    "step_exponential_polynomial_order8": true,
+    "step_t_power_exponential_bound": true,
+    "step_denominator_lower": true,
+    "step_reciprocal_recursion_exponent": true,
+    "step_eighth_factorial": true,
+    "step_sigma_derivatives_below_two2048": true,
+    "step_sigma_bound_absorbed_in_Q8": true,
+    "B8_log_radial_bump_bound_Q9": true,
+    "actual_analytic_coefficient_y0_eta0": true,
+    "actual_analytic_coefficient_y0_eta1": true,
+    "actual_analytic_coefficient_y0_eta2": true,
+    "actual_analytic_coefficient_y0_eta3": true,
+    "actual_analytic_coefficient_y0_eta4": true,
+    "actual_analytic_coefficient_y0_eta5": true,
+    "actual_analytic_coefficient_y0_eta6": true,
+    "actual_analytic_coefficient_y0_eta7": true,
+    "actual_analytic_coefficient_y0_eta8": true,
+    "actual_analytic_coefficient_y1_eta0": true,
+    "actual_analytic_coefficient_y1_eta1": true,
+    "actual_analytic_coefficient_y1_eta2": true,
+    "actual_analytic_coefficient_y1_eta3": true,
+    "actual_analytic_coefficient_y1_eta4": true,
+    "actual_analytic_coefficient_y1_eta5": true,
+    "actual_analytic_coefficient_y1_eta6": true,
+    "actual_analytic_coefficient_y1_eta7": true,
+    "actual_analytic_coefficient_y2_eta0": true,
+    "actual_analytic_coefficient_y2_eta1": true,
+    "actual_analytic_coefficient_y2_eta2": true,
+    "actual_analytic_coefficient_y2_eta3": true,
+    "actual_analytic_coefficient_y2_eta4": true,
+    "actual_analytic_coefficient_y2_eta5": true,
+    "actual_analytic_coefficient_y2_eta6": true,
+    "actual_analytic_coefficient_y3_eta0": true,
+    "actual_analytic_coefficient_y3_eta1": true,
+    "actual_analytic_coefficient_y3_eta2": true,
+    "actual_analytic_coefficient_y3_eta3": true,
+    "actual_analytic_coefficient_y3_eta4": true,
+    "actual_analytic_coefficient_y3_eta5": true,
+    "actual_analytic_coefficient_y4_eta0": true,
+    "actual_analytic_coefficient_y4_eta1": true,
+    "actual_analytic_coefficient_y4_eta2": true,
+    "actual_analytic_coefficient_y4_eta3": true,
+    "actual_analytic_coefficient_y4_eta4": true,
+    "actual_analytic_coefficient_y5_eta0": true,
+    "actual_analytic_coefficient_y5_eta1": true,
+    "actual_analytic_coefficient_y5_eta2": true,
+    "actual_analytic_coefficient_y5_eta3": true,
+    "actual_analytic_coefficient_y6_eta0": true,
+    "actual_analytic_coefficient_y6_eta1": true,
+    "actual_analytic_coefficient_y6_eta2": true,
+    "actual_analytic_coefficient_y7_eta0": true,
+    "actual_analytic_coefficient_y7_eta1": true,
+    "actual_analytic_coefficient_y8_eta0": true,
+    "all_mixed_logPhi_inputs_below_Q100": true,
+    "phase_derivatives_below_Q74": true,
+    "reference_defining_integral_product_budget": true,
+    "reference_Bell_polynomials_below_Q900": true,
+    "reference_regular_pressure_reserve": true,
+    "graded_radial_width_product_inequality": true,
+    "reference_literal_Sq_budget_Q1000": true,
+    "reference_literal_Sn_budget_Q1000": true,
+    "reference_source_mixed_product_coefficients": true,
+    "reference_ODE_radial_derivatives_Q3000": true,
+    "B26_control_derivatives_Q4000": true,
+    "B26_actual_Bell_derivative_Q20000": true,
+    "B26_field_C362": true,
+    "all_field_regions_below_C1000": true,
+    "logQ_lower_from_new_parameters": true,
+    "global_outer_log_range_absorbed": true,
+    "outer_positive_E_lower": true,
+    "inner_positive_E_constant": true,
+    "axis_X_lower": true,
+    "a_positive_lower_exponent": true,
+    "all_continuous_moments_below_C2030": true,
+    "moment_product_derivative_coefficients": true,
+    "core_pressure_regular_integral": true,
+    "inverseE_total3_C3015": true,
+    "inverseH_total3_C3050": true,
+    "p1_full_source_polynomial_C8000": true,
+    "p2_full_source_polynomial_C8000": true,
+    "a_b_source_exponents": true,
+    "inverse_a_source_exponent": true,
+    "t_source_exponent": true,
+    "v_source_exponent": true,
+    "Pc_Jc_source_exponents": true,
+    "all_source_jets_below_S": true,
+    "factorially_weighted_eta_norms_below_S": true,
+    "patch_K_reciprocal_and_lambda_fit_S": true
+  },
+  "passed": 104,
+  "total": 104,
+  "boundaries": {
+    "actualSameB8RootDerivativesThroughFourBound": true,
+    "unknownCompactSupremumUsed": false,
+    "rawAdmissibleConeGapsForUnmodulatedInteriorAsserted": false,
+    "loopAndConeLowerBoundsSuppliedSeparately": true,
+    "fullAnalyticPremisesProvedInLean": false,
+    "fullOriginalN3Completion": false
+  }
+}

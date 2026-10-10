@@ -1,0 +1,59 @@
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0007/MixedEtaBindings.lean:18:4: error: Type mismatch: After simplification, term
+  Real.add_one_le_exp 1
+ has type
+  1 + 1 ≤ Real.exp 1
+but is expected to have type
+  2 ≤ Real.exp 1
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0007/MixedEtaBindings.lean:32:59: error: Type mismatch
+  actual_h_dyadic_bound
+has type
+  h ≤ 1 / 2 ^ 4096
+but is expected to have type
+  0 ≤ h
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0007/MixedEtaBindings.lean:38:59: error: Type mismatch
+  actual_h_dyadic_bound
+has type
+  h ≤ 1 / 2 ^ 4096
+but is expected to have type
+  0 ≤ h
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0007/MixedEtaBindings.lean:60:81: error: unsolved goals
+xi : ℝ
+hH : NavierStokes.NaturalAxisData.H h j (j * xi) = j * transportPolynomial xi
+hleft : (j * transportPolynomial xi) ^ 2 + (j / 2000) ^ 2 ≠ 0
+hright : transportPolynomial xi ^ 2 + 1 / 4000000 ≠ 0
+⊢ j * transportPolynomial xi ^ 2 * j⁻¹ * 4000000 + j * transportPolynomial xi ^ 4 * j⁻¹ * 16000000000000 =
+    transportPolynomial xi ^ 2 * 4000000 + transportPolynomial xi ^ 4 * 16000000000000
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0007/MixedEtaBindings.lean:99:54: error: Type mismatch: After simplification, term
+  hi
+ has type
+  (2 ^ 16000)⁻¹ ≤ (2 ^ 5)⁻¹
+but is expected to have type
+  (2 ^ 16000)⁻¹ ≤ 32⁻¹
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0007/MixedEtaBindings.lean:100:2: warning: exponent 16000 exceeds the threshold 256, exponentiation operation was not evaluated, use `set_option exponentiation.threshold <num>` to set a new threshold
+'MathScope.MixedEtaBindings.actual_h_dyadic_bound' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.MixedEtaBindings.actual_j_squared_dyadic_bound' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'MathScope.MixedEtaBindings.actual_positive_interval_inputs' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'MathScope.MixedEtaBindings.actual_transport_polynomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.MixedEtaBindings.actual_chi_normalized_coordinate' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'MathScope.MixedEtaBindings.actual_chart_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.MixedEtaBindings.actual_chart_xi_small' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.MixedEtaBindings.actual_chart_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.MixedEtaBindings.actual_chart_inside_comparison_radius' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

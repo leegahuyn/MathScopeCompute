@@ -1,0 +1,84 @@
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:29:21: error: Application type mismatch: The argument
+  hx
+has type
+  -33 / 32 ≤ x ∧ x ≤ 33 / 32
+but is expected to have type
+  -(33 / 32) ≤ x ∧ x ≤ 33 / 32
+in the application
+  abs_le.mpr hx
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:61:14: error: unsolved goals
+z : ℂ
+hz : ‖z‖ ≤ 3 / 2
+hd : ‖complexD z‖ ≤ 4
+hu : ‖complexU j z‖ ≤ 7
+⊢ False
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:81:90: error: unexpected token '('; expected ']'
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:73:4: error: linarith failed to find a contradiction
+z w : ℂ
+hz : ‖z‖ ≤ 3 / 2
+hw : ‖w‖ ≤ 3 / 2
+hid :
+  complexH h j z - complexH h j w =
+    (z - w) * (↑(NavierStokes.NaturalAxisData.D h) + 4 - ↑j * (z + w) - 4 * (z ^ 2 + z * w + w ^ 2))
+hh : ‖↑(NavierStokes.NaturalAxisData.D h) + 4‖ ≤ |NavierStokes.NaturalAxisData.D h| + 4
+a✝ : 5 < ‖↑(NavierStokes.NaturalAxisData.D h) + 4‖
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:64:56: error: unsolved goals
+z w : ℂ
+hz : ‖z‖ ≤ 3 / 2
+hw : ‖w‖ ≤ 3 / 2
+hid :
+  complexH h j z - complexH h j w =
+    (z - w) * (↑(NavierStokes.NaturalAxisData.D h) + 4 - ↑j * (z + w) - 4 * (z ^ 2 + z * w + w ^ 2))
+hd : ‖↑(NavierStokes.NaturalAxisData.D h) + 4‖ ≤ 5
+hsum : ‖z + w‖ ≤ 3
+hjsum : ‖↑j * (z + w)‖ ≤ 3
+hz2 : ‖z‖ ^ 2 ≤ 9 / 4
+hw2 : ‖w‖ ^ 2 ≤ 9 / 4
+hzw : ‖z‖ * ‖w‖ ≤ 9 / 4
+⊢ ‖complexH h j z - complexH h j w‖ ≤ 36 * ‖z - w‖
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:107:42: error: Type mismatch
+  complex_H_difference hz hw
+has type
+  ‖complexH h j z - complexH h j w‖ ≤ 36 * ‖z - w‖
+but is expected to have type
+  ‖complexH h j z + complexH h j w‖ ≤ 36 * ‖z - w‖
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:112:43: error: failed to prove positivity/nonnegativity/nonzeroness
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:122:4: error: linarith failed to find a contradiction
+z : ℂ
+hzn : ‖z‖ ≤ 3 / 2
+x : ℝ
+hx : x ∈ axisWindow.interval
+hz : dist z ↑x ≤ 16 * (sigma ^ 2 / 65536)
+hd : dist (complexH h j z ^ 2) (complexH h j ↑x ^ 2) ≤ 1800 * ‖z - ↑x‖
+a✝ : sigma ^ 2 / 2 < ‖complexH h j z ^ 2 - complexH h j ↑x ^ 2‖
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:134:23: error: failed to prove strict positivity, but it would be possible to prove nonnegativity if desired
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:141:4: error: linarith failed to find a contradiction
+z : ℂ
+hden : 0 < ‖denominator h j sigma z‖
+hzn : ‖z‖ ≤ 3 / 2
+x : ℝ
+hx : x ∈ axisWindow.interval
+hz : dist z ↑x ≤ 16 * (sigma ^ 2 / 65536)
+hd : dist (complexH h j z ^ 2) (complexH h j ↑x ^ 2) ≤ 1800 * ‖z - ↑x‖
+a✝ : sigma ^ 2 / 2 < ‖complexH h j z ^ 2 - complexH h j ↑x ^ 2‖
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:169:46: error: failed to prove strict positivity, but it would be possible to prove nonnegativity if desired
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0001/FieldBounds.lean:190:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  complexField ?h ?j ?σ (NavierStokes.PressureDatum.complexPressure newClockWeight newShapeExponent) ?k ↑?x
+in the target expression
+  (if n = 0 then (complexField h j sigma newComplexPressure Field.chi ↑x).re else 0) =
+    if n = 0 then NavierStokes.NaturalAxisData.chi h j sigma x else 0
+
+n : ℕ
+x : ℝ
+hx : x ∈ axisWindow.interval
+⊢ (if n = 0 then (complexField h j sigma newComplexPressure Field.chi ↑x).re else 0) =
+    if n = 0 then NavierStokes.NaturalAxisData.chi h j sigma x else 0
+'MathScope.SameDatumInputs.denominator_norm_lower' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.chiInput_norm' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.chiInput_coefficient' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

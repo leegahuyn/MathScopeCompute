@@ -1,0 +1,134 @@
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0001/AxisFiniteJet.lean:108:16: error: Function expected at
+  norm_sub_le (mixedSeries I epsilon A k m p) (mixedSeries I epsilon B k m p)
+but this term has type
+  ‖mixedSeries I epsilon A k m p - mixedSeries I epsilon B k m p‖ ≤
+    ‖mixedSeries I epsilon A k m p‖ + ‖mixedSeries I epsilon B k m p‖
+
+Note: Expected a function because this term is being applied to the argument
+  (roundedJet c N k p.1)
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0001/AxisFiniteJet.lean:103:74: error: unsolved goals
+I : Window
+epsilon R E : ℝ
+hepsilon : 0 < epsilon
+hR : 1 ≤ R
+hR20 : R < 20
+A B : ↥(AxisSpace I epsilon)
+herror : ‖A - B‖ ≤ E
+N k m : ℕ
+p : ℝ × ℝ
+hp : |p.1| ≤ R
+c delta : ℕ → ℝ
+hround : ∀ n ∈ Finset.range N, |jet I (weight epsilon) (↑B) n m p.2 - c n| ≤ delta n
+hnonlinear : ‖mixedSeries I epsilon A k m p - mixedSeries I epsilon B k m p‖ ≤ jetBound epsilon R k m * E
+htail : ‖mixedSeries I epsilon B k m p - finiteJet I epsilon B N k m p‖ ≤ tailMajorant epsilon ‖B‖ R N k m
+hround' : ‖finiteJet I epsilon B N k m p - roundedJet c N k p.1‖ ≤ roundoffBound delta N k p.1
+⊢ ‖mixedSeries I epsilon A k m p - roundedJet c N k p.1‖ ≤
+    jetBound epsilon R k m * E + tailMajorant epsilon ‖B‖ R N k m + roundoffBound delta N k p.1
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0001/AxisFiniteJet.lean:126:2: error: Tactic `apply` failed: could not unify the conclusion of `mixed_jet_truncation_and_roundoff I hepsilon hR hR20 A B
+  herror N k m ?m.111 c delta`
+  ‖mixedSeries I epsilon A k m ?m.110 - roundedJet c N k ?m.110.1‖ ≤
+    jetBound epsilon R k m * E + tailMajorant epsilon ‖B‖ R N k m + roundoffBound delta N k ?m.110.1
+with the goal
+  ‖∑' (n : ℕ), ↑(n.descFactorial k) * Y ^ (n - k) * jet I (weight epsilon) (↑A) n m eta - roundedJet c N k Y‖ ≤
+    jetBound epsilon R k m * E + tailMajorant epsilon ‖B‖ R N k m + roundoffBound delta N k Y
+
+Note: The full type of `mixed_jet_truncation_and_roundoff I hepsilon hR hR20 A B herror N k m ?m.111 c delta` is
+  (∀ n ∈ Finset.range N, |jet I (weight epsilon) (↑B) n m ?m.110.2 - c n| ≤ delta n) →
+    ‖mixedSeries I epsilon A k m ?m.110 - roundedJet c N k ?m.110.1‖ ≤
+      jetBound epsilon R k m * E + tailMajorant epsilon ‖B‖ R N k m + roundoffBound delta N k ?m.110.1
+
+I : Window
+epsilon R E Y eta : ℝ
+hepsilon : 0 < epsilon
+hR : 1 ≤ R
+hR20 : R < 20
+A B : ↥(AxisSpace I epsilon)
+herror : ‖A - B‖ ≤ E
+N k m : ℕ
+hY : |Y| ≤ R
+heta : eta ∈ Ioo I.left I.right
+c delta : ℕ → ℝ
+hround : ∀ n ∈ Finset.range N, |iteratedDeriv m (coefficient I (weight epsilon) B n) eta - c n| ≤ delta n
+⊢ ‖∑' (n : ℕ), ↑(n.descFactorial k) * Y ^ (n - k) * jet I (weight epsilon) (↑A) n m eta - roundedJet c N k Y‖ ≤
+    jetBound epsilon R k m * E + tailMajorant epsilon ‖B‖ R N k m + roundoffBound delta N k Y
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0001/AxisFiniteJet.lean:186:38: error: Application type mismatch: The argument
+  Nat.cast_nonneg N.factorial
+has type
+  @OfNat.ofNat ?m.243 0 (@Zero.toOfNat0 ?m.243 instMulZeroClassOfSemiring.toZero) ≤ ↑N.factorial
+but is expected to have type
+  @OfNat.ofNat ?m.238 0 (@Zero.toOfNat0 ?m.238 SubtractionMonoid.toSubNegZeroMonoid.toNegZeroClass.toZero) ≤ ?m.241
+in the application
+  abs_of_nonneg (Nat.cast_nonneg N.factorial)
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0001/AxisFiniteJet.lean:187:20: error: Application type mismatch: The argument
+  Nat.cast_nonneg (N + k).factorial
+has type
+  @OfNat.ofNat ?m.243 0 (@Zero.toOfNat0 ?m.243 instMulZeroClassOfSemiring.toZero) ≤ ↑(N + k).factorial
+but is expected to have type
+  @OfNat.ofNat ?m.238 0 (@Zero.toOfNat0 ?m.238 SubtractionMonoid.toSubNegZeroMonoid.toNegZeroClass.toZero) ≤ ?m.241
+in the application
+  abs_of_nonneg (Nat.cast_nonneg (N + k).factorial)
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0001/AxisFiniteJet.lean:184:69: error: unsolved goals
+case h₁
+k N : ℕ
+hk : 1 ≤ k
+hN : 2 ≤ N
+t : ℝ
+ht : |t| ≤ 3
+hs :
+  ∑ i ∈ Finset.range N, NavierStokes.AxisSeries.term k i t + ∑' (i : ℕ), NavierStokes.AxisSeries.term k (i + N) t =
+    ∑' (i : ℕ), NavierStokes.AxisSeries.term k i t
+heq :
+  NavierStokes.AxisSeries.bessel k t - ∑ n ∈ Finset.range N, NavierStokes.AxisSeries.term k n t =
+    ∑' (n : ℕ), NavierStokes.AxisSeries.term k (n + N) t
+hb :
+  ‖∑' (n : ℕ), NavierStokes.AxisSeries.term k (n + N) t‖ ≤
+    ∑' (n : ℕ), ‖NavierStokes.AxisSeries.term k N t‖ * (1 / 2) ^ n
+⊢ ↑N.factorial ≤ |↑N.factorial|
+
+case h₂
+k N : ℕ
+hk : 1 ≤ k
+hN : 2 ≤ N
+t : ℝ
+ht : |t| ≤ 3
+hs :
+  ∑ i ∈ Finset.range N, NavierStokes.AxisSeries.term k i t + ∑' (i : ℕ), NavierStokes.AxisSeries.term k (i + N) t =
+    ∑' (i : ℕ), NavierStokes.AxisSeries.term k i t
+heq :
+  NavierStokes.AxisSeries.bessel k t - ∑ n ∈ Finset.range N, NavierStokes.AxisSeries.term k n t =
+    ∑' (n : ℕ), NavierStokes.AxisSeries.term k (n + N) t
+hb :
+  ‖∑' (n : ℕ), NavierStokes.AxisSeries.term k (n + N) t‖ ≤
+    ∑' (n : ℕ), ‖NavierStokes.AxisSeries.term k N t‖ * (1 / 2) ^ n
+⊢ ↑(N + k).factorial ≤ |↑(N + k).factorial|
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/formal-finite-jet/attempts/0001/AxisFiniteJet.lean:192:2: error: linarith failed to find a contradiction
+k N : ℕ
+hk : 1 ≤ k
+hN : 2 ≤ N
+t : ℝ
+ht : |t| ≤ 3
+hs :
+  ∑ i ∈ Finset.range N, NavierStokes.AxisSeries.term k i t + ∑' (i : ℕ), NavierStokes.AxisSeries.term k (i + N) t =
+    ∑' (i : ℕ), NavierStokes.AxisSeries.term k i t
+heq :
+  NavierStokes.AxisSeries.bessel k t - ∑ n ∈ Finset.range N, NavierStokes.AxisSeries.term k n t =
+    ∑' (n : ℕ), NavierStokes.AxisSeries.term k (n + N) t
+hterm : ‖NavierStokes.AxisSeries.term k N t‖ ≤ 3 ^ N / (↑N.factorial * ↑(N + k).factorial)
+hb : |∑' (n : ℕ), NavierStokes.AxisSeries.term k (n + N) t| ≤ |NavierStokes.AxisSeries.term k N t| * 2
+a✝ : 2 * 3 ^ N / (↑N.factorial * ↑(N + k).factorial) < ‖∑' (n : ℕ), NavierStokes.AxisSeries.term k (n + N) t‖
+⊢ False
+failed
+'MathScope.AxisFiniteJet.coefficient_jet_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.AxisFiniteJet.coefficient_jet_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.AxisFiniteJet.normalized_coefficient_jet_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.AxisFiniteJet.finite_truncation_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.AxisFiniteJet.finite_roundoff_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.AxisFiniteJet.mixed_jet_truncation_and_roundoff' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'MathScope.AxisFiniteJet.actual_derivative_truncation_and_roundoff' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'MathScope.AxisFiniteJet.bessel_finite_tail_error' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

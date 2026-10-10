@@ -1,0 +1,423 @@
+{
+  "schema": "MathScope.Navier.SameDatumAxisEnvelopes/1",
+  "status": "EXACT_SCALAR_CHECKS_SUPPORT_WRITTEN_LOCAL_AXIS_PROOF",
+  "sourceBinding": {
+    "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "officialCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+    "outerDerivationSHA256": "ffb859d1f6b79aad9aa45e7c5173e8b727cd7a554f6ea28697dc9a108b3dbd81",
+    "outerParameterExpressionSHA256": "38e23d037f8b75eaeb30448a815689e92171926d47787196c7c5395fe98425a8",
+    "officialAxisContractionSHA256": "d9151673815948eef8e8e2db3e93c95119ce7be80fc6a01d8a83f2bc4cd4df9d",
+    "officialNaturalAxisBridgeSHA256": "9d1d98bdc48199dd483ab6cc8cd5a356847373faab7aca2908c166cd6d0c754f",
+    "originalSourceVerification": "live supplied checkout"
+  },
+  "parametersExactExpressions": {
+    "Md": {
+      "integer": 1048576
+    },
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "logP": {
+      "product": [
+        {
+          "integer": 2
+        },
+        {
+          "ref": "T"
+        }
+      ]
+    },
+    "Pstar": {
+      "exp": {
+        "ref": "logP"
+      }
+    },
+    "lambda": {
+      "exp": {
+        "product": [
+          {
+            "integer": -1000
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "h": {
+      "exp": {
+        "product": [
+          {
+            "integer": -8002
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "co": {
+      "rational": "1/256"
+    },
+    "Tf": {
+      "integer": 128
+    },
+    "K": {
+      "power": [
+        {
+          "ref": "Pstar"
+        },
+        2
+      ]
+    },
+    "epsilonMoment": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        3
+      ]
+    },
+    "muMoment": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        2
+      ]
+    },
+    "j0": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        4
+      ]
+    },
+    "deltaStar": {
+      "quotient": [
+        {
+          "ref": "j0"
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "sigmaStar": {
+      "quotient": [
+        {
+          "ref": "j0"
+        },
+        {
+          "integer": 2000
+        }
+      ]
+    },
+    "outerComplexRadius": {
+      "quotient": [
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        },
+        {
+          "integer": 2048
+        }
+      ]
+    },
+    "rho": {
+      "quotient": [
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        },
+        {
+          "integer": 65536
+        }
+      ]
+    },
+    "Q": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": 1852673427797059126777135760139006525652319754650249024631321344126610074238976
+            },
+            {
+              "ref": "K"
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        }
+      ]
+    },
+    "Lambda": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        64
+      ]
+    },
+    "logCaxis": {
+      "sum": [
+        {
+          "quotient": [
+            {
+              "product": [
+                {
+                  "integer": 64
+                },
+                {
+                  "ref": "Lambda"
+                }
+              ]
+            },
+            {
+              "power": [
+                {
+                  "ref": "sigmaStar"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "integer": 1
+        }
+      ]
+    },
+    "Caxis": {
+      "exp": {
+        "ref": "logCaxis"
+      }
+    }
+  },
+  "parameterExpressionSHA256": "2e6d94354c051e0062e94639f6a4f2db7f207c136cb2665470c60309878269aa",
+  "checks": {
+    "new_outer_expression_tree_exact": true,
+    "live_original_AxisContraction_lean": true,
+    "live_original_NaturalAxisBridge_lean": true,
+    "T_lower_at_least_128": true,
+    "h_and_j_below_one_over_1000": true,
+    "D_lower": true,
+    "negative_outer_H_collar": true,
+    "right_small_negative_H_margin": true,
+    "nonnegative_H_eta_below_half": true,
+    "nonnegative_H_eta_above_half": true,
+    "Z_on_low_H_exceeds_delta": true,
+    "low_Z_chi_lower": true,
+    "outside_unit_interval_H_stays_separated": true,
+    "tube_inside_modulus_bound": true,
+    "complex_H_bound_ten": true,
+    "complex_H_derivative_bound_twenty": true,
+    "quadratic_denominator_perturbation": true,
+    "L_lower_99_over_100": true,
+    "one_plus_z_squared_real_part": true,
+    "pressure_derivative_disk_fits": true,
+    "zeta_upper": true,
+    "chi_sup_at_most_one_from_quarter_perturbation": true,
+    "coefficient_cauchy_loss_below_two": true,
+    "complex_Z_sup_below_1024K": true,
+    "all_operator_constants_below_Q": true,
+    "all_field_constants_below_Q": true,
+    "gradient_constant_below_Q": true,
+    "resolvent_argument_below_80_squared": true,
+    "exp160_below_two256": true,
+    "reference_axial_norm_bound": true,
+    "reference_ball_below_Q": true,
+    "literal_tree_bound_below_Q32": true,
+    "literal_tree_lipschitz_below_Q32": true,
+    "sharp_remainder_degree11_coefficient_sum58": true,
+    "sharp_lipschitz_degree10_coefficient_sum102": true,
+    "sharp_eta_source_residual_absorbs_fixed_coefficient": true,
+    "Lambda_Q64_dominates_threshold": true,
+    "selfmap_and_lipschitz_below_half": true,
+    "uniform_Phi_margin": true,
+    "mixed_evaluation_scalar_0_0_below_128": true,
+    "mixed_evaluation_scalar_0_1_below_128": true,
+    "mixed_evaluation_scalar_0_2_below_128": true,
+    "mixed_evaluation_scalar_1_0_below_128": true,
+    "mixed_evaluation_scalar_1_1_below_128": true,
+    "mixed_evaluation_scalar_1_2_below_128": true,
+    "mixed_evaluation_scalar_2_0_below_128": true,
+    "mixed_evaluation_scalar_2_1_below_128": true,
+    "mixed_evaluation_scalar_2_2_below_128": true,
+    "rho_inverse_below_Q": true,
+    "mixed_error_below_Q_minus_29": true,
+    "pressure_norm_bound": true
+  },
+  "passed": 51,
+  "total": 51,
+  "controlledRemainder": {
+    "polynomialBound": {
+      "5": "2",
+      "6": "3",
+      "7": "3",
+      "8": "11",
+      "9": "8",
+      "10": "2",
+      "11": "29"
+    },
+    "polynomialLipschitz": {
+      "4": "2",
+      "5": "3",
+      "6": "4",
+      "7": "17",
+      "8": "14",
+      "9": "4",
+      "10": "58"
+    },
+    "tree": {
+      "lin1": {
+        "bound": {
+          "3": "2",
+          "4": "2",
+          "6": "2"
+        },
+        "lipschitz": {
+          "2": "2",
+          "3": "2",
+          "5": "2"
+        }
+      },
+      "quad1": {
+        "bound": {
+          "8": "1"
+        },
+        "lipschitz": {
+          "7": "2"
+        }
+      },
+      "slow1": {
+        "bound": {
+          "5": "1",
+          "6": "6",
+          "7": "2"
+        },
+        "lipschitz": {
+          "4": "2",
+          "5": "12",
+          "6": "4"
+        }
+      },
+      "lin2": {
+        "bound": {
+          "3": "2",
+          "4": "1",
+          "6": "5"
+        },
+        "lipschitz": {
+          "2": "2",
+          "3": "1",
+          "5": "5"
+        }
+      },
+      "slow2": {
+        "bound": {
+          "5": "1",
+          "6": "5"
+        },
+        "lipschitz": {
+          "4": "2",
+          "5": "10"
+        }
+      },
+      "pressure": {
+        "bound": {
+          "9": "28"
+        },
+        "lipschitz": {
+          "8": "56"
+        }
+      },
+      "first": {
+        "bound": {
+          "6": "2",
+          "7": "2",
+          "8": "1",
+          "9": "8",
+          "10": "2",
+          "11": "1"
+        },
+        "lipschitz": {
+          "5": "2",
+          "6": "2",
+          "7": "2",
+          "8": "14",
+          "9": "4",
+          "10": "2"
+        }
+      },
+      "second": {
+        "bound": {
+          "5": "2",
+          "6": "1",
+          "7": "1",
+          "8": "10",
+          "11": "28"
+        },
+        "lipschitz": {
+          "4": "2",
+          "5": "1",
+          "6": "2",
+          "7": "15",
+          "10": "56"
+        }
+      }
+    },
+    "uniformRange": "Every Q>=2^260 and every actual coefficient-space input in the radius-one ball; all fields and operators have derived norms <=Q.",
+    "boundExponent": 32,
+    "lambdaExponent": 64,
+    "sharpDisplacement": "29*Q^(-53)",
+    "sharpContraction": "51*Q^(-54)"
+  },
+  "lowHMarginOverJLower": "568499833/4500000000",
+  "mixedEvaluationScalarBounds": {
+    "0,0": "4/3",
+    "0,1": "4/9",
+    "0,2": "128/243",
+    "1,0": "4/45",
+    "1,1": "8/135",
+    "1,2": "128/1215",
+    "2,0": "8/675",
+    "2,1": "8/675",
+    "2,2": "512/18225"
+  },
+  "boundaries": {
+    "writtenProofSuppliesInfiniteFixedPoint": true,
+    "finiteChecksAloneProveAnalyticClaims": false,
+    "oldPressureCertificateReused": false,
+    "positiveExponentialsEvaluatedAsFloat": false,
+    "fullAnalyticPremisesProvedInLean": false,
+    "oldBinary64JetIdentified": false,
+    "B8IncomingDebtProvedByThisLocalCheckerAlone": false,
+    "finalJChoiceAndDebtSuppliedInCompanionReceipt": "continuation-debt-certificate.json",
+    "fullN3Completion": false
+  }
+}

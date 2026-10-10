@@ -1,0 +1,166 @@
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:33:40: error: linarith failed to find a contradiction
+a✝ : 2 ^ 260 * Pstar ^ 2 < 2 ^ 260
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:36:29: error: unsolved goals
+⊢ 1 ≤ 2 ^ 260
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:37:33: error: unsolved goals
+⊢ 5120 ≤ 2 ^ 260
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:40:11: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a * ?b / ?c
+in the target expression
+  Q * (sigma ^ 2 / 65536) = 2 ^ 244 * Pstar ^ 2
+
+⊢ Q * (sigma ^ 2 / 65536) = 2 ^ 244 * Pstar ^ 2
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:52:2: error: linarith failed to find a contradiction
+a✝ : 2 ^ 260 * Pstar ^ 2 < 200
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:60:25: error: linarith failed to find a contradiction
+hsmall : 80 ≤ Q
+hb : ‖selectedElement Field.zStar‖ ≤ 2 * (262144 * Pstar ^ 2)
+a✝ : Q < 2 * (262144 * Pstar ^ 2)
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:60:25: error: linarith failed to find a contradiction
+hsmall : 80 ≤ Q
+hb : ‖selectedElement Field.gradient‖ ≤ 2 * (100 / sigma ^ 2)
+a✝ : Q < 2 * (100 / sigma ^ 2)
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:72:2: error: linarith failed to find a contradiction
+he : 1048577 ≤ Real.exp 1048576
+a✝ : Real.exp (2 ^ 20) + 10 < 1280
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:82:33: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Norm (↥(AxisSpace axisWindow rho) →L[ℝ] ↥(AxisSpace axisWindow rho))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:91:4: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Norm (↥(AxisSpace axisWindow rho) →L[ℝ] ↥(AxisSpace axisWindow rho))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:93:47: error(lean.unknownIdentifier): Unknown constant `Real.exp_eq_tsum`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:93:40: error: unsolved goals
+hn : 0 ≤ 2560 * ‖chiInput‖
+hsum : ∑' (i : ℕ), factorialMajorant (2560 * ‖chiInput‖) i ≤ ∑' (i : ℕ), (2560 * ‖chiInput‖) ^ i / ↑i.factorial
+he : ‖naturalResolvent axisWindow rho_pos chiInput‖ ≤ ∑' (k : ℕ), factorialMajorant (2560 * ‖chiInput‖) k
+hexp : Real.exp (2560 * ‖chiInput‖) ≤ Real.exp 5120
+⊢ ∑' (k : ℕ), (2560 * ‖chiInput‖) ^ k / ↑k.factorial = Real.exp (2560 * ‖chiInput‖)
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:98:42: error: Type mismatch
+  selectedElement_norm Field.one
+has type
+  ‖selectedElement Field.one‖ ≤ 2 * fixedFieldBound Field.one
+but is expected to have type
+  ‖selectedAxisData.one‖ ≤ 2
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:99:47: error: Type mismatch
+  selectedElement_norm Field.inverseL
+has type
+  ‖selectedElement Field.inverseL‖ ≤ 2 * fixedFieldBound Field.inverseL
+but is expected to have type
+  ‖selectedAxisData.inverseL‖ ≤ 4
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:107:10: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Norm (↥(AxisSpace axisWindow rho) →L[ℝ] ↥(AxisSpace axisWindow rho))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:113:10: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Norm (↥(AxisSpace axisWindow rho) →L[ℝ] ↥(AxisSpace axisWindow rho) →L[ℝ] ↥(AxisSpace axisWindow rho))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:133:8: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  NormSMulClass ℝ ↥(AxisSpace axisWindow rho)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:135:4: error: linarith failed to find a contradiction
+ho : ‖selectedAxisData.one‖ ≤ 2
+hi : ‖selectedAxisData.inverseL‖ ≤ 4
+hz : ‖selectedAxisData.zStar‖ ≤ 524288 * Pstar ^ 2
+hs : ‖selectedResolvent selectedAxisData.one‖ ≤ 2 * Pstar ^ 2
+hp : ‖(selectedOperators.product selectedAxisData.inverseL) selectedAxisData.zStar‖ ≤ 134217728 * Pstar ^ 2
+hj :
+  ‖selectedOperators.j1 ((selectedOperators.product selectedAxisData.inverseL) selectedAxisData.zStar)‖ ≤
+    10737418240 * Pstar ^ 2
+a✝ :
+  5368709120 * Pstar ^ 2 <
+    1 / 2 * ‖↑(selectedOperators.j1 ((selectedOperators.product selectedAxisData.inverseL) selectedAxisData.zStar))‖
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:142:2: error: linarith failed to find a contradiction
+hb : ‖selectedReference‖ ≤ 2 ^ 34 * Pstar ^ 2
+hQ : 2 ^ 260 * Pstar ^ 2 ≤ Q
+a✝ : Q < ‖selectedReference‖ + 1
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:144:8: warning: declaration uses `sorry`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:151:2: warning: Unused tactic linter: `refine
+  { radius := selectedReference_radius_Q
+    resolvent := selectedResolvent_norm.trans ?_
+    product := (norm_product_le axisWindow rho_pos).trans h64
+    average := (norm_average_le axisWindow rho_pos).trans h1
+    primitive := (norm_primitive_le axisWindow rho_pos).trans h80
+    parameterPrimitive := (norm_parameterPrimitive_le axisWindow rho_pos).trans h80rho
+    mulY := (norm_mulY_le axisWindow rho_pos).trans h80
+    j1 := (norm_regularInverse_le axisWindow rho_pos 1 (by norm_num)).trans h80
+    j2 := (norm_regularInverse_le axisWindow rho_pos 2 (by norm_num)).trans h80
+    param1 := (norm_inverseParamProduct_le axisWindow rho_pos 1 (by norm_num)).trans Q_ge_operator_scale
+    param2 := (norm_inverseParamProduct_le axisWindow rho_pos 2 (by norm_num)).trans Q_ge_operator_scale
+    dot1 := (norm_inverseDotProduct_le axisWindow rho_pos 1 (by norm_num)).trans Q_ge_5120
+    dot2 := (norm_inverseDotProduct_le axisWindow rho_pos 2 (by norm_num)).trans Q_ge_5120
+    mixed1 := (norm_inverseMixed_le axisWindow rho_pos 1 (by norm_num)).trans Q_ge_operator_scale
+    mixed2 := (norm_inverseMixed_le axisWindow rho_pos 2 (by norm_num)).trans Q_ge_operator_scale
+    one := selectedElement_norm_Q .one
+    eta := selectedElement_norm_Q .eta
+    dataD := selectedElement_norm_Q .d
+    inverseL := selectedElement_norm_Q .inverseL
+    uStar := selectedElement_norm_Q .uStar
+    uStarEta := selectedElement_norm_Q .uStarEta
+    wStar := selectedElement_norm_Q .wStar
+    hStar := selectedElement_norm_Q .hStar
+    normalizedGradient := selectedElement_norm_Q .gradient
+    zStar := selectedElement_norm_Q .zStar
+    absA := ?_
+    absD := ?_
+    absH := ?_ }` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:181:2: warning: Unused tactic linter: `· nlinarith [Q_ge_scale, sq_nonneg Pstar]` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:182:2: warning: Unused tactic linter: `·
+  simpa [selectedAxisData, Complex.norm_real, Real.norm_eq_abs] using complex_A_norm` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:183:2: warning: Unused tactic linter: `·
+  simpa [selectedAxisData, Complex.norm_real, Real.norm_eq_abs] using complex_D_norm` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:184:2: warning: Unused tactic linter: `·
+  change |h| ≤ 1
+  rw [abs_of_pos h_pos]
+  exact h_le_one` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:181:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:182:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:183:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0001/OperatorBounds.lean:184:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+'MathScope.SameDatumInputs.Q_ge_two_pow' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selectedResolvent_norm' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selectedReference_radius_Q' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'MathScope.SameDatumInputs.selectedInputNormBounds' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.actual_fixedPoint_at_selectedLambda' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

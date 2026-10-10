@@ -1,0 +1,62 @@
+{
+  "schema": "MathScope.Navier.IndependentB8IncomingDebtArithmetic/1",
+  "verifiedUTC": "2026-10-09T22:08:01.261068+00:00",
+  "status": "PASS",
+  "passed": 16,
+  "total": 16,
+  "checks": {
+    "fresh_B8_certificate": true,
+    "same_outer_family": true,
+    "U_preconditioner_norm_below_2power40": true,
+    "E_preconditioner_norm_below_2power40": true,
+    "linear_Leibniz_constants": true,
+    "linear_14j_covers_all_orders": true,
+    "quadratic_Leibniz_constants": true,
+    "quadratic_184j2_covers_all_orders": true,
+    "second_U_weight_integral_less_than_one": true,
+    "linear_j_over_mu_exponent": true,
+    "quadratic_j_squared_over_mu_exponent": true,
+    "early_epsilon_over_mu_exponent": true,
+    "required_beta_is_exact": true,
+    "uniform_scaled_U_debt_less_than_beta": true,
+    "uniform_scaled_E_debt_less_than_beta": true,
+    "mu_upper_matches_h_upper_squared": true
+  },
+  "verifierSHA256": "19e5ac4529d2f2e150101e2eb6bc0d25007c6d5afe0ac0dddaf5cb905b6e9df7",
+  "certificateSHA256": "0a2c375dfdd09d7aa90a0275a8697eb3eb073bf4a9b81e1f862af2ba8ed20f07",
+  "continuationNoteSHA256": "4677cbb56eb5a090f7c322136bb155efb681407343b808266918fbefa0993f8d",
+  "preconditionerNorms": {
+    "U": {
+      "exact": "648590272591048185435602944/616142452827810333141",
+      "intervalUpper": "325783373571510667465677395266735/309485009821345068724781056"
+    },
+    "E": {
+      "exact": "142653744939137988360902004179971902945012519919723884088241731786380410880/8825880321031514793456272113809317747809745190682511464507305553027",
+      "intervalUpper": "625280340992388498457894943829877/38685626227668133590597632"
+    }
+  },
+  "linearLeibnizCoefficients": [
+    "4",
+    "6",
+    "10"
+  ],
+  "quadraticLeibnizCoefficients": [
+    "16",
+    "48",
+    "152"
+  ],
+  "preconditionedScaledDebtUpper": {
+    "U": "803469022129495137770981046170581301261101496891396417650695/1174271291386916613944740298394668513687841274454159935353645485766104512557304221731849499192384351515967488",
+    "E": "1339385758982834151185531311325002263201756014631917009304687985462938813906170153116497973519619822659493341146941433531483931607115392554498072196837321850491820971853028873177634325632796392734744272769130809372947742658424845944895692993259632864321399559710817770957553728956578048354650708508695/1957514479771106223105036599014583257892346039790105569606252722269430329474942666297179646021055097354107024219952289489422688267361156820810675740486740021954063135087379905699513062304510540787585689988538493506819768898394678354849540229001600731036794943035992443891993683312500863939617462674237671598801479461402705384469699789101345508687872",
+    "requiredBeta": "1/100000000"
+  },
+  "analyticPremises": {
+    "same_actual_profile_throughout": "Required; defined and justified in the written continuation note, not evaluated by this program.",
+    "positive_Pstar_greater_than_one": true,
+    "positive_h_less_than_2powerMinus200": true,
+    "drift_derivatives_orders_0_1_2": "(2j,j,j), with j=h^4, on the whole parameter interval.",
+    "normalized_early_errors": "Every transformed row and actual eta derivative through order two has absolute value below epsilon_m=h^3.",
+    "eta_independent_inverse": "The preconditioners belong to the normalized fresh B8 matrix."
+  },
+  "scope": "Independent exact arithmetic implication of the displayed analytic premises; no numerical evaluation of Bref or Kcmp, no new Lean proof terms."
+}

@@ -1,0 +1,70 @@
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0003/FieldBounds.lean:210:4: error: linarith failed to find a contradiction
+a : ℝ
+ha0 : 0 ≤ a
+ha1 : a ≤ 1
+z : ℂ
+hz : z ∈ NavierStokes.PressureDatum.strip
+him : |z.im| < 1 / 2
+hr : 1 + (z.re * z.re - z.im * z.im) ≤ ‖1 + z * z‖
+hi : -(1 / 2) < z.im ∧ z.im < 1 / 2
+a✝ : ‖1 + z ^ 2‖ < 1 / 2
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0003/FieldBounds.lean:220:20: error(lean.unknownIdentifier): Unknown constant `Complex.ofNat_re`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0003/FieldBounds.lean:220:38: error(lean.unknownIdentifier): Unknown constant `Complex.ofNat_im`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0003/FieldBounds.lean:223:2: error: linarith failed to find a contradiction
+a : ℝ
+ha0 : 0 ≤ a
+ha1 : a ≤ 1
+z : ℂ
+hz : z ∈ NavierStokes.PressureDatum.strip
+him : |z.im| < 1 / 2
+hb : 1 / 2 ≤ ‖1 + z ^ 2‖
+hblog : -1 ≤ Real.log ‖1 + z ^ 2‖
+ha : a * -1 ≤ a * Real.log ‖1 + z ^ 2‖
+a✝ : 2 < -re 2 * a * Real.log ‖1 + z ^ 2‖ - (-2 * ↑a).im * (log (1 + z ^ 2)).im
+⊢ False
+failed
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0003/FieldBounds.lean:220:66: warning: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Complex.mul_re, Complex.neg_re, Complex.ofReal_re, Complex.ofReal_im, Complex.neg_im,
+    Complex.ofNat_re, Complex.ofNat_im, mul_zero, sub_zero, Complex.log_re]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0003/FieldBounds.lean:234:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ‖?a * ?b‖
+in the target expression
+  (fun a => ‖↑(newClockWeight a) * NavierStokes.PressureDatum.complexKernel (newShapeExponent a) z‖) y ≤
+    (fun x => Real.exp 2 * newClockWeight x) y
+
+z : ℂ
+hz : z ∈ NavierStokes.PressureDatum.strip
+hi : Integrable (fun y => ↑(newClockWeight y) * NavierStokes.PressureDatum.complexKernel (newShapeExponent y) z) volume
+hg : Integrable (fun x => Real.exp 2 * newClockWeight x) volume
+y : ℝ
+⊢ (fun a => ‖↑(newClockWeight a) * NavierStokes.PressureDatum.complexKernel (newShapeExponent a) z‖) y ≤
+    (fun x => Real.exp 2 * newClockWeight x) y
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0003/FieldBounds.lean:226:48: error: unsolved goals
+z : ℂ
+hz : z ∈ NavierStokes.PressureDatum.strip
+hi : Integrable (fun y => ↑(newClockWeight y) * NavierStokes.PressureDatum.complexKernel (newShapeExponent y) z) volume
+hg : Integrable (fun x => Real.exp 2 * newClockWeight x) volume
+hm :
+  ∫ (y : ℝ), ‖↑(newClockWeight y) * NavierStokes.PressureDatum.complexKernel (newShapeExponent y) z‖ ≤
+    Real.exp 2 * ∫ (a : ℝ), newClockWeight a
+hmass : ∫ (y : ℝ), newClockWeight y ≤ 64 * Pstar ^ 2
+hexp : Real.exp 2 < 9
+⊢ ‖newComplexPressure z‖ ≤ 512 * Pstar ^ 2
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0003/FieldBounds.lean:266:4: error: 'change' tactic failed, pattern
+  ‖w - z‖ ≤ 1 / 32
+is not definitionally equal to target
+  w ∈ closedBall z (1 / 32)
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/field-attempts/0003/FieldBounds.lean:283:61: error(lean.invalidField): Invalid field `deriv_div_const`: The environment does not contain `Exists.deriv_div_const`, so it is not possible to project the field `deriv_div_const` from an expression
+  AnalyticOnNhd.differentiableOn newComplexPressure_analytic z hzstrip
+of type
+  ∃ f', HasFDerivWithinAt newComplexPressure f' NavierStokes.PressureDatum.strip z
+'MathScope.SameDatumInputs.denominator_norm_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.chiInput_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.chiInput_coefficient' depends on axioms: [propext, Classical.choice, Quot.sound]

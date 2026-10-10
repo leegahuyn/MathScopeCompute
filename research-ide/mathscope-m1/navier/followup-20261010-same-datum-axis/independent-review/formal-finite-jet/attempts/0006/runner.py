@@ -1,0 +1,145 @@
+#!/usr/bin/env python3
+"""Append-only original-kernel checks for finite jet and interval proofs."""
+import argparse
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+
+HERE = Path(__file__).resolve().parent
+AXIS = HERE.parent.parent
+BASE = AXIS / "formal-input-producer/attempts/0012"
+MASS = AXIS / "independent-review/formal-mass-bound/attempts/0002"
+AUDIT = Path("/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation")
+REPO = AUDIT / "repo"
+COMMIT = "f9e8bc5b38b6e212696e8a30e3e91517af887bbd"
+KERNEL = AUDIT / "lean-4.34.0-rc2-linux/lib/lean/libleanshared.so"
+KERNEL_SHA = "cddf08bd2b9239f8ce2e2aba8630c47e37b6b341b47705d9d0ba910ad6db13b5"
+
+
+def sha(p):
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def tracked_hashes():
+    names = subprocess.check_output(["git", "ls-files", "-z"], cwd=REPO).decode().split("\0")
+    return {n: sha(REPO/n) for n in names if n and (REPO/n).is_file()}
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--module", choices=["AxisFiniteJet", "SelectedReferenceBoxes", "ConcreteFiniteJet"], default="AxisFiniteJet")
+    ap.add_argument("--field-root", type=Path, default=AXIS / "formal-input-producer/field-attempts/0002")
+    ap.add_argument("--bridge-root", type=Path)
+    ap.add_argument("--boxes-root", type=Path)
+    ap.add_argument("--concrete-root", type=Path)
+    args = ap.parse_args()
+    assert sha(KERNEL) == KERNEL_SHA
+    assert subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip() == COMMIT
+    number = 1
+    while (HERE / "attempts" / f"{number:04d}").exists():
+        number += 1
+    dest = HERE / "attempts" / f"{number:04d}"
+    dest.mkdir(parents=True)
+    source = dest / (args.module + ".lean")
+    source.write_bytes((HERE / (args.module + ".lean")).read_bytes())
+    (dest / "runner.py").write_bytes(Path(__file__).read_bytes())
+    dependencies = {}
+    roots = []
+    if args.module in ["SelectedReferenceBoxes", "ConcreteFiniteJet"]:
+        assert args.bridge_root is not None
+        for name, root in [("SameDatumInputs", BASE), ("SameDatumMass", MASS),
+                           ("FieldBounds", args.field_root), ("AxisFiniteJet", args.bridge_root)]:
+            assert (root / (name + ".olean")).exists()
+            assert json.loads((root / "receipt.json").read_text())["status"] == "PASS"
+            dependencies[name] = {"root": str(root.resolve()),
+                "sourceSHA256": sha(root / (name + ".lean")),
+                "oleanSHA256": sha(root / (name + ".olean")),
+                "receiptSHA256": sha(root / "receipt.json")}
+            (dest / (name + ".lean")).write_bytes((root / (name + ".lean")).read_bytes())
+            (dest / (name + "-receipt.json")).write_bytes((root / "receipt.json").read_bytes())
+            roots.append(str(root.resolve()))
+        data = AXIS / "evaluated-phi-mixed-comparison.json"
+        dependencies["evaluated-phi-mixed-comparison.json"] = {"path": str(data), "sha256": sha(data)}
+        (dest / data.name).write_bytes(data.read_bytes())
+    if args.module == "ConcreteFiniteJet":
+        assert args.boxes_root is not None and args.concrete_root is not None
+        concrete_receipt = json.loads((args.concrete_root / "receipt.json").read_text())
+        assert concrete_receipt["status"] == "PASS"
+        extra = {name: Path(item["sourcePath"]).parent
+                 for name, item in concrete_receipt["importedInputs"].items()}
+        extra.update({"SelectedReferenceBoxes": args.boxes_root, "ConcreteProducer": args.concrete_root})
+        for name, root in extra.items():
+            assert (root / (name + ".olean")).exists()
+            assert json.loads((root / "receipt.json").read_text())["status"] == "PASS"
+            item = {"root": str(root.resolve()), "sourceSHA256": sha(root / (name + ".lean")),
+                    "oleanSHA256": sha(root / (name + ".olean")), "receiptSHA256": sha(root / "receipt.json")}
+            if name in dependencies:
+                assert item["sourceSHA256"] == dependencies[name]["sourceSHA256"]
+                assert item["oleanSHA256"] == dependencies[name]["oleanSHA256"]
+                continue
+            dependencies[name] = item
+            (dest / (name + ".lean")).write_bytes((root / (name + ".lean")).read_bytes())
+            (dest / (name + "-receipt.json")).write_bytes((root / "receipt.json").read_bytes())
+            roots.append(str(root.resolve()))
+    before = tracked_hashes()
+    env = os.environ.copy()
+    for name in ("GITHUB_TOKEN", "GH_TOKEN", "LEAN_PATH", "LEAN_SRC_PATH"):
+        env.pop(name, None)
+    for name in list(env):
+        if name.startswith("COMPARATOR_"):
+            env.pop(name)
+    env["PATH"] = str(AUDIT / "lean-entry-layout/bin") + os.pathsep + env.get("PATH", "")
+    env["LEAN_SYSROOT"] = str(AUDIT / "lean-entry-layout")
+    env["LAKE_HOME"] = str(AUDIT / "lake-home")
+    env["MATHLIB_CACHE_DIR"] = str(AUDIT / "mathlib-cache")
+    env["LAKE_CACHE_DIR"] = str(AUDIT / "lake-cache")
+    if roots:
+        env["LEAN_PATH"] = os.pathsep.join(roots)
+    cmd = [str(AUDIT / "lean-4.34.0-rc2-linux/bin/lake"), "env", "lean",
+           "--root", str(dest), "-o", str(dest / (args.module + ".olean")), str(source)]
+    started = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    with (dest / "lean.log").open("w") as log:
+        p = subprocess.run(cmd, cwd=REPO, env=env, stdout=log, stderr=subprocess.STDOUT)
+    after = tracked_hashes()
+    output = (dest / "lean.log").read_text()
+    axioms = {name: [a.strip() for a in body.split(",") if a.strip()]
+              for name, body in re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]", output, re.S)}
+    allow = {"propext", "Classical.choice", "Quot.sound"}
+    printed = re.findall(r"^#print axioms ([A-Za-z0-9_.]+)", source.read_text(), re.M)
+    ax_ok = set(axioms) == set(printed) and bool(printed) and all(set(a) <= allow for a in axioms.values())
+    final_kernel = sha(KERNEL)
+    dep_ok = all("root" not in item or (sha(Path(item["root"]) / (name + ".lean")) == item["sourceSHA256"]
+        and sha(Path(item["root"]) / (name + ".olean")) == item["oleanSHA256"])
+        for name, item in dependencies.items())
+    passed = p.returncode == 0 and before == after and ax_ok and final_kernel == KERNEL_SHA and dep_ok
+    for label, values in [("before", before), ("after", after)]:
+        (dest / ("original-source-hashes-" + label + ".json")).write_text(json.dumps(values, indent=2) + "\n")
+    receipt = {
+        "schema": "MathScope.Navier.FiniteJetKernelCheck/1", "module": args.module,
+        "status": "PASS" if passed else "FAIL",
+        "startedUTC": started, "finishedUTC": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "command": cmd, "cwd": str(REPO), "exitCode": p.returncode,
+        "sourceSHA256": sha(source), "runnerSHA256": sha(Path(__file__)), "logSHA256": sha(dest / "lean.log"),
+        "dependencies": dependencies, "dependenciesUnchanged": dep_ok,
+        "originalCommit": COMMIT, "kernelSHA256Before": KERNEL_SHA, "kernelSHA256After": final_kernel,
+        "originalTrackedFileCount": len(before), "originalTrackedFilesPreserved": before == after,
+        "printedAxioms": axioms, "onlyExpectedStandardAxioms": ax_ok,
+        "scope": "Original coefficient-space norms control actual mixed jets, finite truncation, and separately bounded arithmetic. SelectedReferenceBoxes additionally checks the actual selected chi reference dyadic coefficients.",
+        "fullNonlinear4792NodeGraphEvaluatedByThisCheck": False,
+        "full125MixedCoefficientBoxesKernelInstantiatedByThisCheck": False,
+        "fullAnalyticInputProducerCompleted": False, "fullOriginalN303Completion": False,
+    }
+    if (dest / (args.module + ".olean")).exists():
+        receipt["oleanSHA256"] = sha(dest / (args.module + ".olean"))
+    (dest / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
+    print(json.dumps({"attempt": str(dest), "status": receipt["status"], "exitCode": p.returncode}))
+    print(output)
+    return 0 if passed else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

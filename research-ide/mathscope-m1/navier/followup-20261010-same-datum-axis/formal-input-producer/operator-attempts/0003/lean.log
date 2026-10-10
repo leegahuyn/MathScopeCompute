@@ -1,0 +1,34 @@
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0003/OperatorBounds.lean:123:6: error: Type mismatch: After simplification, term
+  HasSum.tsum_eq (NormedSpace.expSeries_div_hasSum_exp (2560 * ‖chiInput‖))
+ has type
+  ∑' (b : ℕ), (2560 * ‖↑chiInput‖) ^ b / ↑b.factorial = NormedSpace.exp (2560 * ‖↑chiInput‖)
+but is expected to have type
+  ∑' (k : ℕ), (2560 * ‖↑chiInput‖) ^ k / ↑k.factorial = Real.exp (2560 * ‖↑chiInput‖)
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0003/OperatorBounds.lean:168:44: error: unexpected token '('; expected '‖', '‖₊' or '‖ₑ'
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0003/OperatorBounds.lean:167:46: error(lean.unknownIdentifier): Unknown identifier `abs_ofNat`
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0003/OperatorBounds.lean:168:4: error: Unexpected syntax
+  failed to pretty print term (use 'set_option pp.rawOnError true' for raw representation)
+/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/operator-attempts/0003/OperatorBounds.lean:127:81: error: unsolved goals
+ho : ‖selectedAxisData.one‖ ≤ 2
+hi : ‖selectedAxisData.inverseL‖ ≤ 4
+hz : ‖selectedAxisData.zStar‖ ≤ 524288 * Pstar ^ 2
+hs : ‖selectedResolvent selectedAxisData.one‖ ≤ 2 * Pstar ^ 2
+hp : ‖(selectedOperators.product selectedAxisData.inverseL) selectedAxisData.zStar‖ ≤ 134217728 * Pstar ^ 2
+hj :
+  ‖selectedOperators.j1 ((selectedOperators.product selectedAxisData.inverseL) selectedAxisData.zStar)‖ ≤
+    10737418240 * Pstar ^ 2
+hu :
+  ‖-(1 / 2) • selectedOperators.j1 ((selectedOperators.product selectedAxisData.inverseL) selectedAxisData.zStar)‖ ≤
+    5368709120 * Pstar ^ 2
+⊢ ‖selectedReference‖ ≤ 2 ^ 34 * Pstar ^ 2
+'MathScope.SameDatumInputs.Q_ge_two_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selectedResolvent_norm' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.selectedReference_radius_Q' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'MathScope.SameDatumInputs.selectedInputNormBounds' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.SameDatumInputs.actual_fixedPoint_at_selectedLambda' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
