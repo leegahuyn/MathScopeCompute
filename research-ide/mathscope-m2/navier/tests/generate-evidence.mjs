@@ -1,6 +1,10 @@
-import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import {mkdir,mkdtemp,rm,writeFile,readFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {tmpdir} from 'node:os';
+import {join,relative} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {gunzipSync} from 'node:zlib';
 import {getExamples,getCapabilities} from '../index.mjs';
 import {getChecklist,BLUEPRINT_SOURCE} from '../checklist.mjs';
 import {executeDomain,requestHash} from '../../core/registry.mjs';
@@ -18,11 +22,17 @@ import {evaluatePulseCutoffRemainder,defaultTailJet} from '../source-tail.mjs';
 import {evaluateActualMeanStress,verifyActualMeanStress} from '../actual-mean-stress.mjs';
 import {actualResidualOrderCertificate,verifyActualResidualOrderCertificate} from '../actual-residual-order.mjs';
 import {actualBackgroundMomentCertificate} from '../actual-continuation-exact-certificate.mjs';
+import {actualCovarianceFamilyCertificate} from '../actual-covariance-source-certificate.mjs';
 
 const base=new URL('../',import.meta.url),out=new URL('../evidence/',import.meta.url);
 await mkdir(out,{recursive:true});
 const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs','actual-picard-acceptance.test.mjs','actual-pulse-amplitude.test.mjs','actual-continuation.test.mjs','actual-mean-stress.test.mjs','actual-pulse-covariance.test.mjs','actual-pulse-covariance-matching.test.mjs','actual-residual-order.test.mjs','actual-covariance-uniform.test.mjs','actual-leading-high-jets.test.mjs','actual-stress-direction.test.mjs'];
 testSuites.push('actual-continuation-exact.test.mjs','actual-continuation-global.test.mjs','actual-continuation-stress.test.mjs','actual-continuation-functions.test.mjs','actual-continuation-certificate.test.mjs');
+// These 66 tests support the completed-background/H construction. Their
+// standalone receipts retain their narrower scopes when the final H gate
+// is attached later; a conditional lemma is not counted as an actual H.
+testSuites.push('actual-leading-all-order.test.mjs','actual-leading-enlarged-c2.test.mjs','actual-residual-order-induction.test.mjs','actual-residual-order-induction-background.test.mjs','actual-covariance-concentration.test.mjs','actual-covariance-global-assembly.test.mjs');
+testSuites.push('actual-covariance-source.test.mjs','actual-covariance-source-kernels.test.mjs');
 const testResult=spawnSync(process.execPath,['--test','--test-reporter=tap',...testSuites.map(name=>fileURLToPath(new URL(name,import.meta.url)))],{encoding:'utf8',maxBuffer:16*1024*1024});
 await writeFile(new URL('tests.tap',out),testResult.stdout+testResult.stderr);
 if(testResult.status!==0)throw Error('N4/N5 regression tests failed; evidence is not sealed.');
@@ -32,6 +42,7 @@ const independent=spawnSync('python',[fileURLToPath(new URL('./source-independen
 const independentEvidence=JSON.parse(independent.stdout);if(!independentEvidence.pass)throw Error('Independent checker did not accept.');await writeFile(new URL('source-independent-checks.json',out),JSON.stringify(independentEvidence,null,2)+'\n');
 const additionalIndependent=[];
 const newSourcePaths=[];
+const supportingSourceEvidence=[];
 {
   const manifestPath='tests/actual-continuation-exact-manifest.json',manifestText=await readFile(new URL(manifestPath,base),'utf8'),manifest=JSON.parse(manifestText),manifestHash=await sha256(manifestText);
   if(manifestHash!=='40f8c7494543caf8e7c7c5d23fbb94b8b779a06b473676d2e26ad0a7c5bff431'||!manifest.pass)throw Error('The frozen actual moment construction manifest changed.');
@@ -208,6 +219,231 @@ for(const spec of [
   const serialized=JSON.stringify(body,null,2)+'\n';await writeFile(new URL(file,out),serialized);
   additionalIndependent.push({file,checks:spec.checks,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_FRACTION_SOURCE_SUBCLAIM_WITH_TRANSITIVE_IMPORT_HASHES_AND_CURRENT_PROGRAM_REPLAY'});
 }
+// BEGIN FROZEN_SUPPORTING_CERTIFICATES
+// Preserve the original subclaim files byte for byte. Release audits are
+// written under new names after current source replay and independent runs.
+{
+  const sourceRoot=new URL('../../',base),verifiedFiles=new Map();
+  const relativeSourcePath=path=>{
+    const p=path.replace(/^research-ide\//,'');
+    const url=p.startsWith('mathscope-')?new URL(p,sourceRoot):new URL(p.replace(/^navier\//,''),base);
+    if(!url.href.startsWith(sourceRoot.href))throw Error('Supporting source is outside the reviewed research tree: '+path);
+    return url.href.startsWith(base.href)?url.href.slice(base.href.length):'../../'+url.href.slice(sourceRoot.href.length);
+  };
+  const currentFile=async path=>{
+    path=relativeSourcePath(path);const text=await readFile(new URL(path,base),'utf8');
+    const record={path,bytes:new TextEncoder().encode(text).length,sha256:await sha256(text)};
+    newSourcePaths.push(path);return record;
+  };
+  const bindFile=async (file,reviewedReplacement=null)=>{
+    const actual=await currentFile(file.path),same=actual.sha256===file.sha256&&(file.bytes===undefined||actual.bytes===file.bytes);
+    if(!same&&(!reviewedReplacement||actual.sha256!==reviewedReplacement.sha256||actual.bytes!==reviewedReplacement.bytes))throw Error('Stale frozen supporting source: '+file.path);
+    verifiedFiles.set(actual.path,actual);
+    return {...actual,...(!same?{historicalDependency:{bytes:file.bytes,sha256:file.sha256},reviewedCurrentBinding:'navier/evidence/actual-residual-order-induction.json'}:{})};
+  };
+  const frozen=async (file,expectedSHA256)=>{
+    const text=await readFile(new URL(file,out),'utf8'),hash=await sha256(text);
+    if(hash!==expectedSHA256)throw Error('A frozen supporting receipt changed: '+file);
+    newSourcePaths.push('evidence/'+file);return {file,text,sha256:hash,data:JSON.parse(text)};
+  };
+  const run=async (command,args,options={})=>{
+    const result=spawnSync(command,args,{encoding:'utf8',timeout:240000,maxBuffer:128*1024*1024,...options});
+    if(result.error||result.status!==0)throw Error('Supporting certificate execution failed: '+command+' '+args.join(' ')+' '+(result.error?.message??'')+' '+result.stderr);
+    return result;
+  };
+  const imports=new Map();
+  async function bindImports(path){
+    path=relativeSourcePath(path);if(imports.has(path))return;
+    const actual=await currentFile(path);imports.set(path,actual);
+    if(!path.endsWith('.mjs'))return;
+    const text=await readFile(new URL(path,base),'utf8');
+    for(const match of text.matchAll(/(?:from\s*|import\s*)['"]([^'"]+)['"]/g)){
+      if(!match[1].startsWith('.'))continue;
+      const url=new URL(match[1],new URL(path,base));
+      if(!url.href.startsWith(sourceRoot.href))throw Error('Supporting import is outside the reviewed source tree: '+url.href);
+      await bindImports(url.href.startsWith(base.href)?url.href.slice(base.href.length):'../../'+url.href.slice(sourceRoot.href.length));
+    }
+  }
+  const writeAudit=async (file,body,{nodeTests,independentChecks=0}={})=>{
+    const serialized=JSON.stringify(body,null,2)+'\n',hash=await sha256(serialized);await writeFile(new URL(file,out),serialized);
+    newSourcePaths.push('evidence/'+file);
+    supportingSourceEvidence.push({file,sha256:hash,nodeTests,independentChecks,scope:body.scope});
+    if(independentChecks)additionalIndependent.push({file,checks:independentChecks,sha256:hash,verification:'EXECUTED_CURRENT_SOURCE_REPLAY_AND_INDEPENDENT_FRACTION_DECIMAL_WITH_FROZEN_RECEIPT_AND_TRANSITIVE_BYTE_BINDINGS'});
+  };
+  // The later combined induction manifest pins the current imported kernel.
+  // The earlier leading-jet receipt explicitly treats dependency hashes as
+  // historical until this combined re-verification. Its six owned files and
+  // every original source document must still match their original hashes.
+  const inductionFrozen=await frozen('actual-residual-order-induction.json','d79935327a0bc6d8c2bb7900b46b326888ef63326a7f6b14b9d3d96bc29ad3d6'),im=inductionFrozen.data;
+  if(!im.pass||im.nodeTests.tests!==26||im.nodeTests.pass!==26||im.nodeTests.fail!==0||im.independentChecks.checks!==4181)throw Error('Incomplete frozen actual induction evidence.');
+  const inductionBoundFiles=[];
+  for(const file of [...im.files,...im.runtimeDependencies,...im.evidenceFiles,...Object.values(im.dependencies)])inductionBoundFiles.push(await bindFile(file));
+  const approvedCurrent=new Map(inductionBoundFiles.map(file=>[file.path,file]));
+  {
+    const f=await frozen('actual-leading-all-order-jets.json','5fad2c150066a8fcf8e57a52ded316d960da9b8bcf01552162628b820d3db492'),r=f.data;
+    if(!r.pass||r.checks!==2597||r.nodeTests.pass!==16||r.nodeTests.fail!==0)throw Error('Incomplete frozen arbitrary-leading-jet evidence.');
+    const files=[];
+    for(const file of [...r.files,...r.sourceBindings])files.push(await bindFile(file));
+    for(const file of r.dependencyFiles)files.push(await bindFile(file,approvedCurrent.get(relativeSourcePath(file.path))));
+    for(const file of r.files)await bindImports(file.path);
+    const command=fileURLToPath(new URL('actual-leading-all-order-independent.py',import.meta.url)),executed=await run('python3',[command]),audit=JSON.parse(executed.stdout);
+    const fixture=JSON.parse((await run(process.execPath,[fileURLToPath(new URL('actual-leading-all-order-fixture.mjs',import.meta.url))])).stdout);
+    const currentHash=await sha256(canonicalStringify(fixture.receipt)),storedHash=await sha256(canonicalStringify(r.receipt));
+    if(!audit.pass||audit.checks!==2597||audit.failed.length!==0||audit.rows.length!==2597||!audit.rows.every(x=>x.pass===true)||
+      audit.receiptSHA256!==currentHash||fixture.receiptSHA256!==currentHash||currentHash!==storedHash||storedHash!==r.receiptCanonicalSHA256||
+      canonicalStringify(fixture.summaryRequests)!==canonicalStringify(r.summaryRequests)||canonicalStringify(fixture.receipt.scope)!==canonicalStringify(r.scope)||
+      fixture.receipt.scope.originalN506Complete!==false||fixture.receipt.scope.completedBackgroundC2TailCertified!==false)throw Error('Actual leading all-order source, independent oracle or preserved scope did not replay.');
+    await writeAudit('actual-leading-all-order-jets-executed.json',{schema:'MathScope.ActualLeadingAllOrderReleaseAudit/1',pass:true,checks:2597,
+      frozenEvidence:{path:'navier/evidence/'+f.file,sha256:f.sha256},sourceByteVerification:{files,match:true,historicalDependencyRevisionsReverified:true},
+      independentExecution:audit,receiptReplay:{storedHash,currentHash,summaryRequests:fixture.summaryRequests,match:true},scope:r.scope},
+      {nodeTests:16,independentChecks:2597});
+  }
+  {
+    const f=await frozen('actual-leading-enlarged-c2.json','5d2fd4d011261f535f1117caa20fd8d72fdcf0efee586bd0761e6616f6d05c92'),r=f.data;
+    if(!r.pass||r.nodeTests.pass!==8||r.nodeTests.fail!==0||r.independentReview.separatePythonAuditClaimed!==false)throw Error('Incomplete or overstated frozen enlarged C2 evidence.');
+    const files=[];for(const file of [...r.files,...r.receipt.sourceBindings])files.push(await bindFile(file));
+    for(const file of r.files)await bindImports(file.path);
+    const {actualLeadingEnlargedC2}=await import(new URL('actual-leading-enlarged-c2.mjs',base)),current=actualLeadingEnlargedC2();
+    const currentHash=await sha256(canonicalStringify(current)),storedHash=await sha256(canonicalStringify(r.receipt));
+    if(!current.pass||currentHash!==storedHash||storedHash!==r.receiptCanonicalSHA256||current.scope.actualUniformHColumnsCertified!==false||current.scope.sourceUniformQStarCertified!==false||current.scope.originalN506Complete!==false)throw Error('Actual enlarged leading C2 changed its program or covariance scope.');
+    await writeAudit('actual-leading-enlarged-c2-executed.json',{schema:'MathScope.ActualLeadingEnlargedC2ReleaseAudit/1',pass:true,
+      frozenEvidence:{path:'navier/evidence/'+f.file,sha256:f.sha256},sourceByteVerification:{files,match:true},receiptReplay:{storedHash,currentHash,match:true},
+      independentPythonChecksClaimed:0,scope:current.scope},{nodeTests:8});
+  }
+  {
+    const fixture=await run(process.execPath,[fileURLToPath(new URL('actual-residual-order-induction-fixture.mjs',import.meta.url))]);
+    const independent=await run('python3',[fileURLToPath(new URL('actual-residual-order-induction-independent.py',import.meta.url))],{input:fixture.stdout}),audit=JSON.parse(independent.stdout);
+    const independentStored=JSON.parse(await readFile(new URL('actual-residual-order-induction-independent.json',out),'utf8'));
+    if(!audit.pass||audit.checks!==4181||canonicalStringify(audit)!==canonicalStringify(im.independentChecks)||canonicalStringify(audit)!==canonicalStringify(independentStored))throw Error('The arbitrary-order source/convolution/cutoff independent audit did not reproduce its frozen record.');
+    const {prepareActualCompletedBackgroundC2,actualBackgroundSymbolicPrefix,actualBackgroundDyadicPrefix}=await import(new URL('actual-residual-order-induction-background.mjs',base));
+    const result=prepareActualCompletedBackgroundC2({order:4}),G=result.G,programNodeCount=G.nodes.length,programCanonicalSHA256=await sha256(canonicalStringify(result.program)),
+      functionCounts={picard:G.picardSystems.length,shared:G.expressionSystems.length,quadratic:G.quadraticSystems.length,monotone:G.monotoneSystems.length};
+    const dyadic=actualBackgroundSymbolicPrefix(result,{anchorOrder:1,dyadicBand:true,derivativeOrder:2}),arbitrary=actualBackgroundDyadicPrefix(result,{ellExact:'4',derivativeOrder:2});
+    const receipt={schema:'MathScope.ActualResidualOrderInductionExecuted/1',input:{order:4},profileId:result.program.profileId,parameterExpressionSHA256:result.program.parameterExpressionSHA256,
+      programCanonicalSHA256,programNodeCount,functionCounts,positiveNormRoots:result.roots,
+      proofs:{checks:result.checks,pass:result.pass,parametricPDE:result.parametricPDE,
+        actualAndAuxiliary:result.systems.map(s=>({order:s.order,kind:s.kind,system:s.system,checks:s.checks,bindings:s.bindings,negative:s.negative,pass:s.pass})),
+        actualMoments:result.moments,potential:result.potential,support:{pass:result.support.pass,rows:result.support.rows,sourceOrder:result.support.sourceOrder,bareLocalizedIntegralProvedZero:result.support.bareLocalizedIntegralProvedZero}},
+      allOrderInduction:result.induction,canonicalPrefix:result.cutoffs.rows.map(row=>({order:row.order,logScale:row.logScale,scale:row.scale,canonicalNormRequest:row.canonicalNormRequest,selectedByLaterPrefix:row.selectedByLaterPrefix,sourceCoefficientRoots:row.sourceCoefficientRoots})),
+      chart:{domain:result.chart.domain,chart:result.chart.chart,exactFields:result.chart.exactFields,roots:result.chart.roots,bounds:result.chart.bounds,derivation:result.chart.derivation,scope:result.chart.scope},
+      observations:{anchor:{kind:dyadic.bandSelection.kind,ell:dyadic.ell,Q:dyadic.Q,rows:dyadic.rows.map(row=>row.order),derivativeOrder:dyadic.derivativeOrder,jetCounts:Object.fromEntries(Object.entries(dyadic.jets).map(([k,v])=>[k,v.length])),inactiveTail:dyadic.exactInactiveTail,plateau:dyadic.exactPlateau,
+          qDerivativePreserved:dyadic.qDerivativePreserved,thisFiniteBandEqualsAllBands:dyadic.thisFiniteBandEqualsAllBands},
+        arbitraryInteger:{ellExact:arbitrary.ellExact,rows:arbitrary.rows.map(row=>row.order),inactiveTail:arbitrary.exactInactiveTail,algorithmDefinedForEveryFiniteIntegerEll:arbitrary.algorithmDefinedForEveryFiniteIntegerEll,sameCanonicalSequenceAsAnchorFamily:arbitrary.sameCanonicalSequenceAsAnchorFamily}},
+      graphInterpretation:'Node identifiers are bindings in the replayable source program identified by programCanonicalSHA256. The complete program is generated by the attached source code; this small evidence file is not a replacement program or numeric interval evaluator.',
+      scope:result.program.scope};
+    const stored=JSON.parse(await readFile(new URL('actual-residual-order-induction-executed.json',out),'utf8')),
+      currentHash=await sha256(canonicalStringify(receipt)),storedHash=await sha256(canonicalStringify(stored));
+    if(!result.pass||programCanonicalSHA256!==im.programCanonicalSHA256||programNodeCount!==im.programNodeCount||
+      currentHash!==storedHash||storedHash!==im.executedReceiptCanonicalSHA256||canonicalStringify(receipt.scope)!==canonicalStringify(im.scope)||
+      receipt.scope.weightedStressSelectorComputed!==false||receipt.scope.physicalResidualSelectorComputed!==false||receipt.scope.fullOriginalProposition55Certified!==false||receipt.scope.originalN506Complete!==false)throw Error('Actual all-order completed C2 program or its preserved narrower scope did not replay.');
+    for(const file of im.files)await bindImports(file.path);
+    await writeAudit('actual-residual-order-induction-release-executed.json',{schema:'MathScope.ActualCompletedBackgroundReleaseAudit/1',pass:true,checks:4181,
+      frozenEvidence:{path:'navier/evidence/'+inductionFrozen.file,sha256:inductionFrozen.sha256},sourceByteVerification:{files:inductionBoundFiles,match:true},
+      independentExecution:audit,receiptReplay:{storedHash,currentHash,programCanonicalSHA256,programNodeCount,match:true},scope:receipt.scope},{nodeTests:26,independentChecks:4181});
+  }
+  {
+    const files=[];for(const f of [
+      {path:'actual-covariance-concentration.mjs',sha256:'154460fb7d11eee113a2bd7f4d5a0f839824331f955775923291d4ab14104934'},
+      {path:'tests/actual-covariance-concentration.test.mjs',sha256:'306774894ab1322005dd423252c65989e8f935ad3b5b8195d3486925ce7687b9'}
+    ]){files.push(await bindFile(f));await bindImports(f.path);}
+    const {covarianceConcentrationScalarAudit}=await import(new URL('actual-covariance-concentration.mjs',base)),scalar=covarianceConcentrationScalarAudit();
+    if(!scalar.pass||scalar.checks.length!==12||!scalar.checks.every(r=>r.pass)||scalar.sourceFieldCertificate!==false)throw Error('The conditional continuum covariance lemma lost its exact scalar checks or scope.');
+    await writeAudit('actual-covariance-concentration-executed.json',{schema:'MathScope.CovarianceConcentrationLemmaReleaseAudit/1',pass:true,sourceByteVerification:{files,match:true},scalar,
+      independentPythonChecksClaimed:0,scope:{conditionalAnalyticLemma:true,actualOperatorBoundsProducedHere:false,actualUniformHColumnsCertified:false,sourceUniformQStarCertified:false,originalN506Complete:false,numericQuadratureExecuted:false,formalKernelProof:false}},{nodeTests:8});
+  }
+  {
+    const f=await frozen('actual-covariance-global-assembly.json','58a3cccfc8f602c21d4c78cac50c71c1a5fb64cf252f1507d226dfead858ac96'),r=f.data;
+    if(r.nodeTests.tests!==8||r.nodeTests.pass!==8||r.nodeTests.fail!==0||r.independentPythonChecksClaimed!==0)throw Error('Incomplete or overstated frozen global assembly lemma.');
+    const files=[];for(const file of r.files){files.push(await bindFile(file));await bindImports(file.path);}
+    const {ActualSourceExpressions}=await import(new URL('actual-global-source-expressions.mjs',base)),
+      {sourceSquaredProductPartition,covarianceGlobalAssemblyRecipe}=await import(new URL('actual-covariance-global-assembly.mjs',base));
+    const G=new ActualSourceExpressions(),coordinates=Array.from({length:10},(_,i)=>G.var('partition_offset_'+i)),h=G.parameter('h'),q=G.var('q'),ell=G.var('ell'),
+      bandQ=G.exp(G.neg(G.mul(ell,G.log(G.q(2))))),target=[G.var('T0theta'),G.var('T0z')],
+      partition=sourceSquaredProductPartition(G,{bandOffset:coordinates[0],meshOffsets:[coordinates.slice(1,4),coordinates.slice(4,7),coordinates.slice(7,10)]}),
+      assembly=covarianceGlobalAssemblyRecipe(G,{h,q,Q:bandQ,target,partition}),program=G.pack({partition:partition.expandedSquaredSum,...assembly.roots}),
+      receipt={schema:'MathScope.ExactCovarianceGlobalAssemblyLemma/1',program,partition,assembly},currentHash=await sha256(canonicalStringify(receipt)),storedHash=await sha256(canonicalStringify(r.receipt));
+    if(currentHash!==storedHash||storedHash!==r.receiptSHA256||!assembly.checks.every(x=>x.pass)||assembly.scope.conditionalAssemblyLemma!==true||assembly.scope.actualEveryBoxHCertified!==false||assembly.scope.sourceUniformQStarCertified!==false||assembly.scope.actualGlobalEquation730Certified!==false||assembly.scope.originalN506Complete!==false)throw Error('The complete partition/physical-scale lemma changed its source-independent receipt or scope.');
+    await writeAudit('actual-covariance-global-assembly-executed.json',{schema:'MathScope.CovarianceGlobalAssemblyLemmaReleaseAudit/1',pass:true,
+      frozenEvidence:{path:'navier/evidence/'+f.file,sha256:f.sha256},sourceByteVerification:{files,match:true},receiptReplay:{storedHash,currentHash,match:true},
+      independentPythonChecksClaimed:0,scope:assembly.scope},{nodeTests:8});
+  }
+  // The main acceptance binds these current transitive bytes as well. All
+  // historical source receipts remain unchanged, including their false H,
+  // q-star, weighted-stress and full-Proposition-5.5 subclaims.
+  const transitive=[...imports.values()].sort((a,b)=>a.path.localeCompare(b.path));
+  supportingSourceEvidence.push({kind:'CURRENT_TRANSITIVE_SUPPORTING_SOURCE_BYTES',files:transitive,independentChecks:0});
+}
+// END FROZEN_SUPPORTING_CERTIFICATES
+// The final actual-source family closes N5-06. Its universal domain is
+// certified by the retained source construction, not by promoting the
+// finite displayed member or the independent numeric fixtures to a family.
+{
+  const manifestPath='evidence/actual-covariance-source.json',manifestBytes=await readFile(new URL(manifestPath,base)),
+    manifestSHA256=createHash('sha256').update(manifestBytes).digest('hex'),manifest=JSON.parse(manifestBytes.toString('utf8')),
+    repo=new URL('../../../',base),boundFiles=new Map();
+  if(manifestSHA256!=='d321fd9151e495abb48c5d1f6a49ebde9d4720b300845aa428ae49fbb11ea36a'||
+    manifest.status!=='PASS'||manifest.evidenceGrade!=='THEOREM-BACKED'||manifest.nodeTests.tests!==22||
+    manifest.nodeTests.skipped!==0||!manifest.nodeTests.pass||manifest.wholeHDecimalQuadratureClaim!==false)throw Error('The frozen actual covariance source manifest changed or overstates its evidence.');
+  newSourcePaths.push(manifestPath);
+  for(const file of [...manifest.files,...manifest.runtimeDependencies,...manifest.sourceIndependentReview.sourceFiles]){
+    const url=new URL(file.path,repo),bytes=await readFile(url),digest=createHash('sha256').update(bytes).digest('hex');
+    if(bytes.length!==file.bytes||digest!==file.sha256)throw Error('Stale actual covariance source bytes: '+file.path);
+    boundFiles.set(file.path,{path:file.path,bytes:bytes.length,sha256:digest});
+    newSourcePaths.push(relative(fileURLToPath(base),fileURLToPath(url)).replaceAll('\\','/'));
+  }
+  const compressed=await readFile(new URL(manifest.graph.compressedProgram.path,repo)),programBytes=gunzipSync(compressed),
+    programSHA256=createHash('sha256').update(programBytes).digest('hex'),program=JSON.parse(programBytes.toString('utf8'));
+  if(programSHA256!==manifest.graph.sha256||programBytes.length!==manifest.graph.canonicalBytes||
+    program.nodes.length!==manifest.graph.nodeCount||program.parameterExpressionSHA256!==manifest.parameterExpressionSHA256)throw Error('The retained full actual covariance graph does not match its sealed manifest.');
+  const current=await actualCovarianceFamilyCertificate(),stored=JSON.parse(await readFile(new URL('actual-covariance-source-certificate.json',out),'utf8')),
+    currentCanonical=canonicalStringify(current),storedCanonical=canonicalStringify(stored);
+  if(currentCanonical!==storedCanonical||Buffer.byteLength(currentCanonical)!==manifest.graph.packetBytes||
+    current.graph.sha256!==programSHA256||current.graph.nodeCount!==program.nodes.length||
+    current.graph.canonicalBytes!==programBytes.length||canonicalStringify(current.graph.rootIds)!==canonicalStringify(program.roots))throw Error('The final actual covariance family did not reproduce the complete sealed graph and compact receipt.');
+  const s=current.scope,e=current.exercisedMember;
+  if(!current.pass||current.checks.length!==26||!current.checks.every(c=>c.pass)||!current.uniformFamily.certified||
+    !s.originalN506Complete||!s.actualSourceFamilyAuthenticated||!s.actualUniformHColumnsCertified||!s.actualEveryCertifiedBoxPositiveInverse||
+    !s.sourceUniformQStarCertified||!s.globalEquation730Certified||s.actualNumericalWholeHQuadrature!==false||
+    s.allSlowDerivativeBoundsComputed!==false||s.fullNavierStokesSolutionOrRegularityClaim!==false||s.newLeanKernelProof!==false||
+    s.exercisedMemberProvedInCertifiedDomain!==false||e.certifiedBandMembership!==false||
+    e.determinantNonzeroForThisMemberCertified!==false||e.positivityOfThisMemberCertified!==false||
+    e.finiteTermsEqualSolution!==false||e.nonzeroTailRetained!==true||
+    canonicalStringify(s)!==canonicalStringify(manifest.scope)||
+    canonicalStringify(current.uniformFamily.global730.exactResidual)!==canonicalStringify(['0','0']))throw Error('The final actual covariance family lost its certified scope or retained an overstated finite-member claim.');
+  const review=JSON.parse(await readFile(new URL('actual-covariance-source-review.json',out),'utf8')),
+    replay=JSON.parse(await readFile(new URL('actual-covariance-source-replay.json',out),'utf8'));
+  if(canonicalStringify(review)!==canonicalStringify(manifest.sourceIndependentReview)||!review.execution.allPass||
+    canonicalStringify(replay)!==canonicalStringify(manifest.replay)||!replay.defaultEqualsExplicit||
+    replay.graphs[0]!==programSHA256||replay.graphs[2]!==programSHA256||new Set(replay.thresholds).size!==1)throw Error('The bound source review or mixed-request replay is inconsistent with the release.');
+  // Execute the independent oracle against this newly reconstructed packet.
+  // Its default /tmp input is deliberately not used by release generation.
+  const temporary=await mkdtemp(join(tmpdir(),'mathscope-actual-covariance-release-'));
+  let audit;
+  try{
+    const input=join(temporary,'actual-source.json');await writeFile(input,currentCanonical+'\n');
+    const executed=spawnSync('python',[fileURLToPath(new URL('actual-covariance-source-independent.py',import.meta.url)),'--source',input],{encoding:'utf8',maxBuffer:4*1024*1024});
+    if(executed.status!==0)throw Error('Independent final actual covariance checks failed: '+executed.stderr);
+    audit=JSON.parse(executed.stdout);
+  }finally{await rm(temporary,{recursive:true,force:true});}
+  const independentStored=JSON.parse(await readFile(new URL('actual-covariance-source-independent.json',import.meta.url),'utf8'));
+  if(!audit.pass||audit.checks!==1144||audit.sourceGraphSHA256!==programSHA256||
+    audit.sourceParameterSHA256!==manifest.parameterExpressionSHA256||
+    canonicalStringify(audit)!==canonicalStringify(manifest.independent)||
+    canonicalStringify(audit)!==canonicalStringify(independentStored))throw Error('The independently executed final source oracle differs from its frozen result.');
+  const file='actual-covariance-source-executed.json',body={schema:'MathScope.ActualCovarianceSourceReleaseAudit/1',pass:true,
+    originalCriterion:current.originalCriterion,evidenceGrade:'THEOREM-BACKED',checks:audit.checks,
+    sourceManifest:{path:'navier/'+manifestPath,sha256:manifestSHA256},
+    sourceByteVerification:{files:[...boundFiles.values()],match:true},
+    retainedFullGraph:{compressed:manifest.graph.compressedProgram,sha256:programSHA256,canonicalBytes:programBytes.length,nodeCount:program.nodes.length,rootIdsMatch:true},
+    currentSourceReplay:{request:current.graph.compilerInput,compactReceiptSHA256:await sha256(currentCanonical),graphSHA256:current.graph.sha256,match:true},
+    runtimeChecks:{pass:true,checks:current.checks.length},independentExecution:audit,
+    mixedRequestReplay:replay,independentSourceReview:{path:'navier/evidence/actual-covariance-source-review.json',allPass:review.execution.allPass,countedInIndependentTotal:false},
+    uniformFamilyDomain:current.uniformFamily.certifiedDomain,exercisedMember:e,scope:s};
+  const serialized=JSON.stringify(body,null,2)+'\n';await writeFile(new URL(file,out),serialized);
+  additionalIndependent.push({file,checks:audit.checks,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_FRACTION_DECIMAL_ACTUAL_SOURCE_AUDIT_PLUS_FULL_SOURCE_GRAPH_REPLAY_AND_ALL_CURRENT_BOUND_BYTE_HASHES'});
+  supportingSourceEvidence.push({kind:'FINAL_ACTUAL_COVARIANCE_SOURCE_FAMILY',file,nodeTests:22,independentChecks:1144,runtimeChecks:26,
+    originalCriterion:'N5-06',originalCriterionComplete:true,uniformFamilyDomain:current.uniformFamily.certifiedDomain,scope:s});
+}
 // Reuse independently executed, frozen receipts only after checking every
 // producer/source byte they bind. Regenerate those receipts with their own
 // --output commands whenever one of the bound files changes.
@@ -258,12 +494,12 @@ const sourceFiles=['index.mjs','pulse-ode.mjs','checklist.mjs','source-algebra.m
 sourceFiles.push(...[...new Set([...actualManifest.files.map(f=>f.path.replace(/^navier\//,'')),...pulseReceipt.files.map(f=>f.path.replace(/^research-ide\/mathscope-m2\/navier\//,'')),'tests/actual-background-manifest.json','research/RESUMED_SOURCE_AUDIT_KO.md'])].filter(p=>!sourceFiles.includes(p)));
 sourceFiles.push(...[...new Set([...extendedManifests.flatMap(m=>m.files.map(f=>f.path.replace(/^research-ide\/mathscope-m2\/navier\//,''))),'actual-core-evaluator-manifest.json','tests/actual-global-source-manifest.json','research/ACTUAL_CORE_INDEPENDENT_REVIEW_KO.md'])].filter(p=>!sourceFiles.includes(p)));
 sourceFiles.push(...[...new Set([...newSourcePaths,'research/FINITE_CRITERIA_REAUDIT_KO.md'])].filter(p=>!sourceFiles.includes(p)));
-for(const name of sourceFiles)sourceHashes[name]=await sha256(await readFile(new URL(name,base),'utf8'));
+for(const name of sourceFiles)sourceHashes[name]=createHash('sha256').update(await readFile(new URL(name,base))).digest('hex');
 const convergence=[];
 for(const steps of[32,64,128,256]){const r=await executeDomain({kind:'ns.pulse-ode',input:{steps}});convergence.push({stepsPerHalf:steps,...r.results.diagnostics});}
 const negativeCovariance=await executeDomain({kind:'ns.pulse-covariance',input:{target:[1,0]}});
 const checklist=getChecklist(),criterionCounts=Object.fromEntries(['PASS','PARTIAL','OPEN'].map(status=>[status,checklist.filter(x=>x.status===status).length]));
 const independentTotal=independentEvidence.total+additionalIndependent.reduce((n,x)=>n+x.checks,0);
-const body={schema:'MathScope.M2.NavierAcceptance/3',generatedAt:new Date().toISOString(),source:BLUEPRINT_SOURCE,sourceHashes,testEvidence:{runner:'node --test --test-reporter=tap',suites:testSuites,file:'tests.tap',total:totalTests,pass:passedTests,fail:0,sha256:await sha256(testResult.stdout+testResult.stderr),scope:'LOCAL_NODE_DOMAIN_AND_ENGINE_REPLAY; browser/worker integration is verified separately by the page build.'},independentEvidence:{file:'source-independent-checks.json',sha256:await sha256(JSON.stringify(independentEvidence,null,2)+'\n'),checks:independentEvidence.total,exactPhysicalPdeComparisons:independentEvidence.pdeExactMatches,additional:additionalIndependent,totalChecks:independentTotal},exactSourceEvidence:{file:'source-exact-identities.json',sha256:await sha256(JSON.stringify(exactEvidence,null,2)+'\n')},archive:getCapabilities().n3Profile,examples:records,convergence,negativeControls:{outsideCone:{status:negativeCovariance.status,weights:negativeCovariance.results.weights,checks:negativeCovariance.checks}},checklist,criterionCounts,acceptance:'ORIGINAL_FINITE_CRITERIA_WITH_SOURCE_BOUND_PICARD_PHASE_AND_HOMOGENEOUS_PULSE_CERTIFICATES; REMAINING_ACTUAL_SOURCE_OBLIGATIONS_ARE_SEPARATE',packageCompletionGate:false,sourceInstanceCertified:false,allOrderSourceCertificate:false,fullN4:false,fullN5:false,formalComplete:false,globalNavierStokesConstruction:false};
+const body={schema:'MathScope.M2.NavierAcceptance/3',generatedAt:new Date().toISOString(),source:BLUEPRINT_SOURCE,sourceHashes,testEvidence:{runner:'node --test --test-reporter=tap',suites:testSuites,file:'tests.tap',total:totalTests,pass:passedTests,fail:0,sha256:await sha256(testResult.stdout+testResult.stderr),scope:'LOCAL_NODE_DOMAIN_AND_ENGINE_REPLAY; browser/worker integration is verified separately by the page build.'},independentEvidence:{file:'source-independent-checks.json',sha256:await sha256(JSON.stringify(independentEvidence,null,2)+'\n'),checks:independentEvidence.total,exactPhysicalPdeComparisons:independentEvidence.pdeExactMatches,additional:additionalIndependent,totalChecks:independentTotal},supportingSourceEvidence,exactSourceEvidence:{file:'source-exact-identities.json',sha256:await sha256(JSON.stringify(exactEvidence,null,2)+'\n')},archive:getCapabilities().n3Profile,examples:records,convergence,negativeControls:{outsideCone:{status:negativeCovariance.status,weights:negativeCovariance.results.weights,checks:negativeCovariance.checks}},checklist,criterionCounts,acceptance:'ALL_16_ORIGINAL_N4_N5_CRITERIA_COMPLETE_WITH_SOURCE_BOUND_CONSTRUCTIONS_AND_UNIFORM_ACTUAL_COVARIANCE_FAMILY; FULL_PHYSICAL_PDE_AND_NEW_LEAN_PROOF_ARE_OUTSIDE_THIS_GATE',originalCriteriaComplete:criterionCounts.PASS===16&&criterionCounts.PARTIAL===0&&criterionCounts.OPEN===0,packageCompletionGate:false,sourceInstanceCertified:false,allOrderSourceCertificate:false,fullN4:false,fullN5:false,formalComplete:false,globalNavierStokesConstruction:false};
 await writeFile(new URL('acceptance.json',out),JSON.stringify({...body,artifactHash:await sha256(canonicalStringify(body))},null,2)+'\n');
 process.stdout.write(JSON.stringify({tests:totalTests,passed:passedTests,independentChecks:independentTotal,examples:records.length,criterionCounts:body.criterionCounts,sourceFiles:sourceFiles.length,output:fileURLToPath(out)},null,2)+'\n');

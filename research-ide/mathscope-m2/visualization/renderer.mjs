@@ -134,7 +134,7 @@ export class SourceBoundScene extends Scene3D {
     c.font='11px sans-serif';
     for(let j=0;j<cols;j++){c.fillStyle='#d5e6ef';c.fillText(short(chart.columnLabels[j],Math.max(4,Math.floor(cell/7))),left+j*cell+7,top-12);}
     for(let i=0;i<rows;i++){
-      c.fillStyle='#d5e6ef';c.fillText(short(chart.rowLabels[i],9),8,top+(i+.5)*cell+4);
+      c.fillStyle='#d5e6ef';c.font='11px sans-serif';c.fillText(short(chart.rowLabels[i],9),8,top+(i+.5)*cell+4);
       for(let j=0;j<cols;j++){
         const v=chart.values[i][j],n=numericValue(v),x=left+j*cell,y=top+i*cell;
         c.fillStyle=Number.isFinite(n)?heatColor((n+extent)/(2*extent)):'#334658';c.fillRect(x+1,y+1,Math.max(0,cell-2),Math.max(0,cell-2));

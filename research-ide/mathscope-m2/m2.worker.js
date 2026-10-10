@@ -3807,7 +3807,10 @@ const CHECKLIST = [
     "sourceInstanceCertified": true,
     "allOrderSourceCertificate": false,
     "certifiedScope": {
-      "backgroundOrders": [1, 2],
+      "backgroundOrders": [
+        1,
+        2
+      ],
       "actualMomentIdentities": 10,
       "actualInnerPDEIdentities": 12,
       "actualStressSupports": 4,
@@ -3836,8 +3839,19 @@ const CHECKLIST = [
     "sourceInstanceCertified": true,
     "allOrderSourceCertificate": false,
     "certifiedScope": {
-      "backgroundOrders": [0, 1],
-      "derivativeOrders": [0, 1, 2, 3, 4, 5, 6],
+      "backgroundOrders": [
+        0,
+        1
+      ],
+      "derivativeOrders": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "fixedSimilarityCompact": "X in [0,4*Xunit], eta in [-1,1], all theta; Xunit is a fixed positive source expression",
       "supremumDomain": "Original space-time set at fixed q; tau=q*(1-eta^2), z=q^D*eta",
       "finiteCriterionComplete": true,
@@ -4018,25 +4032,32 @@ const CHECKLIST = [
     "title": "두 family의 positive covariance",
     "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
     "sourcePage": 60,
-    "status": "PARTIAL",
-    "implementedScope": "실제 homogeneous pulse의 Gaussian 좌표 적분과 양의 tail, angular 1/2·원래 Haar Jacobian·χ 질량을 계산했습니다. 동일한 N3의 heat-prepared T0,*와 정확한 F 식을 대조해 양의 y± 및 determinant 하계를 계산하고, 원문에서 허용한 smooth 제곱분할의 모든 활성 항을 대표점에서 합해 C(W0)=εT0,*와 (7.30)을 확인했습니다. 전체 slow 이웃·annulus에 공통인 실제 q* 및 uniform covariance는 남아 있습니다.",
-    "testStatus": "ACTUAL_COVARIANCE_STRESS_POSITIVE_INVERSE_AND_COMPLETE_POINT_SUM_PASS",
+    "status": "PASS",
+    "implementedScope": "동일한 실제 N3의 일반 차수 source·다섯 모멘트 복구·canonical cutoff·전체 tail에서 완성 배경 C²를 도출하고, 실제 phase·moving frame·B′·pressure·damping ODE와 두 H 적분을 수렴 함수로 구성했습니다. angular 1/2·normalized Haar·rectangle Jacobian·c_i·실제 χ² 질량을 유지합니다. source만으로 생성한 공통 q*>0 아래 모든 허용 band와 원래 annulus에서 H 열 오차·|det H| 하계·양의 inverse를 인증하고, 실제 q·band별 chart·mesh·물리 torus에 결속한 전체 squared partition으로 (7.30)을 확인했습니다. 같은 box의 두 signs는 한 번만 합산합니다.",
+    "testStatus": "ACTUAL_SOURCE_UNIFORM_H_QSTAR_POSITIVE_INVERSE_AND_GLOBAL_730_PASS",
     "formalComplete": false,
-    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json",
-    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-    "remainingObligations": [
-      "Certify actual completed-background C2 and edge-direction bounds on every enlarged slow neighborhood with a common source-derived q*.",
-      "Propagate the actual integrated covariance column and positive inverse bounds uniformly over the complete active annulus and sum the resulting full family."
-    ],
-    "independentEvidencePath": "mathscope-m2/navier/evidence/actual-pulse-covariance-matching-independent.json",
-    "sourceInstanceCertified": false,
+    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-uniform-covariance.json",
+    "acceptanceScope": "The original N5-06 covariance-family criterion is met by exact convergent-function construction and source-derived uniform analytic bounds on ell>=ellMinimum and0<q<qStar. Strict y±>0 holds onXa<X<Xb; the two endpoints have exact zero weights and smooth zero extension. This does not assert signed numerical whole-H quadrature, admissibility of the exercised finite anchor, every slow derivative norm, the full physical PDE residual/flat-error package or a new formal/global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "independentEvidencePath": "mathscope-m2/navier/evidence/actual-covariance-source-executed.json",
+    "sourceInstanceCertified": true,
     "allOrderSourceCertificate": false,
     "additionalEvidencePaths": [
+      "mathscope-m2/navier/evidence/actual-covariance-source.json",
+      "mathscope-m2/navier/evidence/actual-covariance-source-certificate.json",
+      "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_KO.md",
+      "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_REVIEW_KO.md",
       "mathscope-m2/navier/evidence/actual-pulse-covariance-independent.json",
       "mathscope-m2/navier/evidence/actual-mean-stress-executed.json",
       "mathscope-m2/navier/research/ACTUAL_PULSE_COVARIANCE_MATCHING.md"
     ],
     "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-actual-uniform-covariance.json",
+      "mathscope-m2/navier/evidence/actual-covariance-source-executed.json",
+      "mathscope-m2/navier/evidence/actual-covariance-source.json",
+      "mathscope-m2/navier/evidence/actual-covariance-source-certificate.json",
+      "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_KO.md",
+      "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_REVIEW_KO.md",
       "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json",
       "mathscope-m2/navier/evidence/actual-pulse-covariance-matching-independent.json",
       "mathscope-m2/navier/evidence/actual-pulse-covariance-independent.json",
@@ -4057,7 +4078,29 @@ const CHECKLIST = [
       "actualCompletePointwiseActiveSumExecuted": true,
       "sourceUniformQStarCertified": false,
       "wholeAnnulusCovarianceMatched": false,
-      "originalWholeCriterionComplete": false
+      "originalWholeCriterionComplete": false,
+      "retainedEarlierExampleScope": true,
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json"
+    },
+    "actualUniformScope": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "domain": {
+        "band": "ell>=ellMinimum",
+        "physicalScale": "0<q<qStar",
+        "closedStressShell": "Xa<=X<=Xb",
+        "strictPositiveWeights": "Xa<X<Xb",
+        "flatEndpoints": "y+=y-=0, smooth zero extension"
+      },
+      "actualUniformHColumnsCertified": true,
+      "sourceUniformQStarCertified": true,
+      "wholeAnnulusCovarianceMatched": true,
+      "actualCompleteGlobalPartitionInstantiated": true,
+      "sameSlowBoxCountedOnce": true,
+      "originalWholeCriterionComplete": true,
+      "actualNumericalWholeHQuadrature": false,
+      "exercisedFiniteMemberProvedInCertifiedDomain": false,
+      "allSlowDerivativeBoundsComputed": false,
+      "fullPhysicalResidualAndFlatErrorPackageComplete": false
     }
   },
   {
@@ -9878,6 +9921,3480 @@ async function actualBackgroundMomentCertificate(input={},context={}){
 return {prepareActualBackgroundMomentCertificate,compileActualBackgroundMomentProgram,actualBackgroundMomentCertificate};
 })();
 const __m2_110 = (()=>{
+/** An append-only copy of the actual source functional graph, with finite
+ * derivative/resource budgets independent of the historical order-12 UI.
+ * All function operations retain their bodies and their materializers.
+ * This file never changes a previously certified source graph.
+ */
+const {ActualConvergentExpressions} = __m2_90;
+const {fail} = __m2_74;
+const integer=(n,name)=>{if(!Number.isSafeInteger(n)||n<0)fail('INVALID_INPUT',name+' must be a nonnegative safe integer.');};
+
+class ActualInductionExpressions extends ActualConvergentExpressions {
+  constructor(base,{maxNodes=1500000,maxDerivativeOrder=128,checkCancelled}={}){
+    super(base.source.id);
+    integer(maxNodes,'maxNodes');integer(maxDerivativeOrder,'maxDerivativeOrder');
+    if(maxNodes<base.nodes.length||maxNodes>8000000||maxDerivativeOrder<2)fail('RESOURCE_LIMIT','The actual graph copy needs a sufficient explicit node/derivative budget.');
+    for(const [key,value]of Object.entries(base)){
+      if(value instanceof Map)this[key]=new Map(value);
+      else if(Array.isArray(value))this[key]=structuredClone(value);
+      else if(value&&typeof value==='object')this[key]=structuredClone(value);
+      else this[key]=value;
+    }
+    this.maxNodes=maxNodes;this.maxDerivativeOrder=maxDerivativeOrder;this.checkCancelled=checkCancelled;
+    // These are new local function definitions. The original bodies and
+    // variable lists remain identical; only the materialization budget grows.
+    this.expressionSystems=this.expressionSystems.map(s=>({...s,derivativeLimits:s.parameters.map(()=>maxDerivativeOrder),
+      implementation:'actual-residual-order-induction-expressions.mjs:materializeExpressionFunction',historicalBodyPreserved:true}));
+    this.baseNodeCount=base.nodes.length;this.baseDefinitionCount=base.picardSystems.length;
+  }
+  node(op,args){
+    const key=JSON.stringify([op,args]);if(this.lookup.has(key))return this.lookup.get(key);
+    if(this.maxNodes!==undefined&&this.nodes.length>=this.maxNodes)fail('RESOURCE_LIMIT','The actual induction graph exhausted its declared node budget. No order certificate was returned.');
+    if(this.nodes.length%8192===0)this.checkCancelled?.();
+    const id=this.nodes.length;this.nodes.push({op,args});this.lookup.set(key,id);return id;
+  }
+  derivativeBudget(...orders){for(const n of orders){integer(n,'derivative order');if(n>this.maxDerivativeOrder)fail('RESOURCE_LIMIT','This finite materialization exceeds its derivative budget; no missing derivative is set to zero.');}}
+  step(x,order=0){this.derivativeBudget(order);return this.node('source_step_derivative',[x,order]);}
+  natural(component,Y,eta=this.core.eta,radialOrder=0,etaOrder=0){
+    if(!['Phi','u','average'].includes(component))fail('INVALID_INPUT','Unknown original natural component.');
+    this.derivativeBudget(radialOrder,etaOrder);
+    if(Y===this.zero)return this.naturalAxisDerivative(component,eta,radialOrder,etaOrder);
+    return this.node('actual_natural_series',[component,Y,eta,radialOrder,etaOrder]);
+  }
+  picardRoot(system,component,xi,eta=this.core.eta,etaOrder=0){
+    this.derivativeBudget(etaOrder);
+    if(!this.picardSystems[system]||!Number.isInteger(component)||component<0||component>5)fail('INVALID_INPUT','Unknown actual Picard component.');
+    if(xi===this.zero)return this.zero;
+    return this.node('actual_background_picard',[system,component,xi,eta,etaOrder]);
+  }
+  picardEven(system,component,X,eta=this.core.eta,radialOrder=0,etaOrder=0){
+    this.derivativeBudget(2*radialOrder,etaOrder);
+    if(!this.picardSystems[system]||!Number.isInteger(component)||component<0||component>3)fail('INVALID_INPUT','Use an even component of the actual source system.');
+    if(X===this.zero)return radialOrder?this.materializePicardEvenDerivative(system,component,X,eta,radialOrder,etaOrder):this.zero;
+    return this.node('actual_background_even_profile',[system,component,X,eta,radialOrder,etaOrder]);
+  }
+  materializePicardEvenDerivative(system,component,X,eta=this.core.eta,radialOrder=0,etaOrder=0){
+    this.derivativeBudget(2*radialOrder,etaOrder);const s=this.picardSystems[system];
+    if(!s||component<0||component>3)fail('INVALID_INPUT','Use an actual even component.');
+    if(radialOrder===0)return this.picardRoot(system,component,this.sqrt(X),eta,etaOrder);
+    let body=this.picardRoot(system,component,s.xi,s.eta,etaOrder);
+    for(let j=0;j<2*radialOrder;j++)body=this.derivative(body,s.xi);
+    const variables=Array.from({length:radialOrder},()=>this.fresh('induction_even_X'));
+    body=this.simultaneousSubstitute(body,[s.xi,s.eta],[this.mul(this.sqrt(X),...variables),eta]);
+    body=this.mul(body,...variables.map((t,j)=>this.pow(t,2*(radialOrder-1-j))));
+    for(const t of variables)body=this.integral(body,t,this.zero,this.one);
+    return this.mul(this.q(1,1n<<BigInt(radialOrder)),body);
+  }
+  defineExpressionFunction({name,parameters,body,derivativeLimits=parameters?.map(()=>this.maxDerivativeOrder)}){
+    if(!Array.isArray(parameters)||!parameters.length||parameters.some(v=>this.nodes[v]?.op!=='coordinate')||new Set(parameters).size!==parameters.length||!this.nodes[body])fail('INVALID_INPUT','An actual shared expression needs its body and explicit parameters.');
+    if(!Array.isArray(derivativeLimits)||derivativeLimits.length!==parameters.length)fail('INVALID_INPUT','Every expression parameter needs a derivative budget.');
+    this.derivativeBudget(...derivativeLimits);
+    if([...this.freeCoordinates(body)].some(v=>!parameters.includes(v)))fail('INVALID_INPUT','An induction expression contains an unbound free coordinate.');
+    const id=this.expressionSystems.length;this.expressionSystems.push({name,parameters:[...parameters],body,derivativeLimits:[...derivativeLimits],
+      implementation:'actual-residual-order-induction-expressions.mjs:materializeExpressionFunction',unspecifiedOracle:false});return id;
+  }
+  expressionValue(system,values,orders=null){
+    const s=this.expressionSystems[system];orders??=s?.parameters.map(()=>0);
+    if(!s||!Array.isArray(values)||values.length!==s.parameters.length||values.some(v=>!this.nodes[v])||!Array.isArray(orders)||orders.length!==values.length)fail('INVALID_INPUT','Unknown actual expression or incomplete arguments.');
+    this.derivativeBudget(...orders);
+    if(orders.some((v,j)=>v>s.derivativeLimits[j]))fail('RESOURCE_LIMIT','The shared body derivative budget is exhausted.');
+    return this.node('actual_expression_partial',[system,[...values],[...orders]]);
+  }
+  share(body,parameters,name){return this.expressionValue(this.defineExpressionFunction({name,parameters,body}),parameters);}
+  pack(roots,extra={}){return super.pack(roots,{inductionExpressionKernel:{implementation:'actual-residual-order-induction-expressions.mjs',
+    copiedOriginalGraph:true,originalGraphMutated:false,arbitraryFiniteDerivativeRecurrence:true,maxDerivativeOrder:this.maxDerivativeOrder,maxNodes:this.maxNodes,
+    omittedDerivativeIsZero:false,naturalAxisMaterializerBudget:'The source coefficient materializer may return RESOURCE_LIMIT above its own finite degree budget; no axis oracle replaces it.',
+    picardEvenIdentity:'d_X^r f(sqrt X)=2^-r integral_[0,1]^r product_j t_j^(2(r-1-j))*f^(2r)(sqrt X product_j t_j) dt'},...extra});}
+}
+
+return {ActualInductionExpressions};
+})();
+const __m2_111 = (()=>{
+/** Executed, source-specific primitives for an all-order continuation.
+ *
+ * These are arbitrary finite-order derivative algorithms, not an extension
+ * of the old order-12 numerical constants.  They do NOT certify a completed
+ * positive-order coefficient or choose a cutoff from an unspecified norm.
+ * The companion source/norm/background modules supply those operands.
+ * See research/ACTUAL_RESIDUAL_ORDER_INDUCTION_KO.md for their exact
+ * two-system induction and the boundary of the C2 completion claim.
+ */
+const {SOURCE_PROFILE_ID,assertSourceProfile} = __m2_45;
+const {PINNED_N3} = __m2_44;
+const {rational: Q,qadd,qmul,qpow,qtext,factorial,fail} = __m2_74;
+const orderCheck=(n,name)=>{if(!Number.isSafeInteger(n)||n<0)fail('INVALID_INPUT',name+' must be a nonnegative safe integer.');};
+const workBudget=(n,context={})=>{const limit=context.maxArithmeticOperations??1000000;if(!Number.isSafeInteger(limit)||limit<1)fail('INVALID_INPUT','Use a positive arithmetic resource budget.');if(n>Math.floor(Math.sqrt(limit/16)))fail('RESOURCE_LIMIT','This requested finite derivative order exceeds the explicit arithmetic budget. The recurrence has no fixed order-twelve theorem limit.');};
+const binomial=(n,k)=>factorial(n)/(factorial(k)*factorial(n-k));
+const absolute=n=>n<0n?-n:n;
+const polynomial=p=>[...p].filter(([,c])=>c!==0n).sort(([a],[b])=>a-b).map(([power,c])=>({power,coefficient:String(c)}));
+const addTerm=(p,k,v)=>{const next=(p.get(k)??0n)+v;if(next)p.set(k,next);else p.delete(k);};
+const source=profileId=>{const s=assertSourceProfile(profileId??SOURCE_PROFILE_ID);return {profileId:s.id,parameterExpressionSHA256:s.parameterExpressionSHA256,assemblySHA256:PINNED_N3.inputs.assembly.sha256};};
+
+/** For a_p(t)=exp(-t^-p), p=1 or2, every derivative is
+ * exp(-z^p) P_k(z), z=1/t, with
+ * P_(k+1)=p*z^(p+1)*P_k-z^2*P'_k.
+ * Each monomial is bounded individually on ALL z>=0.  No maximum
+ * degree from a previous finite audit enters this estimate.
+ */
+function seedJets(p,order,checkCancelled){
+  let P=new Map([[0,1n]]);const rows=[],bounds=[];
+  for(let k=0;k<=order;k++){
+    checkCancelled?.();let bound=0n;
+    const monomialBounds=[];
+    for(const [j,c] of P){
+      // max z^j exp(-z^p)=(j/(p*e))^(j/p) for j>0.
+      // If v=j/p<=1 the maximum is<=1; if v>1, ceil(v)^ceil(v)
+      // is an integer upper bound.  This also covers j=0.
+      const ceiling=Math.max(1,Math.ceil(j/p));
+      const upper=BigInt(ceiling)**BigInt(ceiling);
+      bound+=absolute(c)*upper;
+      monomialBounds.push({power:j,coefficient:String(c),integerMaximumUpper:String(upper)});
+    }
+    rows.push({order:k,polynomial:polynomial(P),monomialBounds,ordinaryDerivativeUpper:String(bound)});bounds.push(bound);
+    if(k<order){const next=new Map();for(const [j,c]of P){addTerm(next,j+p+1,BigInt(p)*c);if(j)addTerm(next,j+1,-BigInt(j)*c);}P=next;}
+  }
+  return {rows,bounds};
+}
+
+/** Ordinary derivatives of sigma_p(t)=a_p(t)/(a_p(t)+a_p(1-t)).
+ * The extension is constant outside [0,1], with matching flat jets.
+ * exp(-2^p)>1/denominatorInverseUpper, proved with e<11/4.
+ */
+function stepJets(p,order,checkCancelled){
+  const seed=seedJets(p,order,checkCancelled),inverseFloor=p===2?64n:16n,reciprocal=[inverseFloor],sigma=[1n];
+  for(let m=1;m<=order;m++){
+    checkCancelled?.();let r=0n;
+    for(let k=1;k<=m;k++)r+=binomial(m,k)*2n*seed.bounds[k]*reciprocal[m-k];
+    reciprocal.push(inverseFloor*r);
+    let s=0n;for(let k=0;k<=m;k++)s+=binomial(m,k)*seed.bounds[k]*reciprocal[m-k];
+    sigma.push(s);
+  }
+  return {seedPower:p,seed:'exp(-1/t^'+p+') on t>0, extended flat by0',
+    step:'a(t)/(a(t)+a(1-t)) on0<t<1, with constant exterior branches',
+    denominatorInverseUpper:String(inverseFloor),seedDerivatives:seed.rows,
+    reciprocalOrdinaryDerivativeBounds:reciprocal.map(String),ordinaryDerivativeBounds:sigma.map(String),
+    recurrence:{reciprocal:'r_0=D; r_m=D*sum_(k=1)^m binom(m,k)*2*b_k*r_(m-k)',
+      quotient:'s_0=1; s_m=sum_(k=0)^m binom(m,k)*b_k*r_(m-k) for m>=1'},
+    domain:'all real t; flat endpoint extension included',fixedOldDerivativeBoundUsed:false};
+}
+
+/** The original source uses the square seed for activation and radial
+ * gluing.  The independently chosen time cutoff matches source-gluing.mjs:
+ * chi(s)=1-sigma_1(2s-1), equal1 for s<=1/2 and0 for s>=1.
+ */
+function sourceAllOrderCutoffJets(input={},context={}){
+  if(input===null||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Use a source derivative request.');
+  for(const k of Object.keys(input))if(!['sourceProfile','order'].includes(k))fail('INVALID_INPUT','A source cutoff, derivative bound, or scale cannot be replaced: '+k);
+  const n=input.order??16;orderCheck(n,'order');workBudget(n+2,context);
+  const sourceInfo=source(input.sourceProfile),activation=stepJets(2,n,context.checkCancelled),timeStep=stepJets(1,n+1,context.checkCancelled);
+  const S=Array.from({length:n+2},()=>[]);S[0][0]=1n;
+  for(let r=1;r<=n+1;r++)for(let k=0;k<=r;k++)S[r][k]=BigInt(k)*(S[r-1][k]??0n)+(k?S[r-1][k-1]??0n:0n);
+  const ordinary=Array.from({length:n+2},(_,r)=>r?2n**BigInt(r)*BigInt(timeStep.ordinaryDerivativeBounds[r]):1n),euler=[];
+  for(let r=0;r<=n+1;r++){
+    let value=0n;for(let k=0;k<=r;k++)value+=(S[r][k]??0n)*ordinary[k];
+    euler.push(value);
+  }
+  // Rational comparisons, independent of a machine exponential.
+  let eUpper=Q(0);for(let k=0;k<=10;k++)eUpper=qadd(eUpper,Q(1,factorial(k)));
+  eUpper=qadd(eUpper,Q(12,11n*factorial(11)));
+  const checks=[{id:'same-source-profile',pass:sourceInfo.profileId===SOURCE_PROFILE_ID},
+    {id:'e-upper-below-11/4',pass:eUpper[0]*4n<11n*eUpper[1]},
+    {id:'square-denominator',pass:11n**4n<64n*4n**4n},
+    {id:'linear-denominator',pass:11n**2n<16n*4n**2n},
+    {id:'every-requested-derivative-generated',pass:activation.ordinaryDerivativeBounds.length===n+1&&euler.length===n+2}];
+  return {schema:'MathScope.SourceAllOrderCutoffJets/1',...sourceInfo,order:n,activation,timeStep,
+    timeCutoff:{definition:'chi(s)=1-sigma_1(2s-1)',sameDefinitionAs:'source-gluing.mjs:smoothPotentialCutoff',
+      plateau:['s<=1/2','s>=1'],ordinaryDerivativeBounds:ordinary.map(String),eulerDerivativeBounds:euler.map(String),
+      eulerIdentity:'(s*d_s)^r chi=sum_(k=0)^r S(r,k)*s^k*chi^(k); |s|<=1 on every nonconstant derivative support',
+      radialPotentialExtraDerivative:'The cutoff term s*chi_prime has r-th Euler derivative D^(r+1)chi; its needed n+1 bound is retained.',
+      stirling:S.map(row=>row.map(String))},checks,pass:checks.every(x=>x.pass),
+    scope:{actualSourcePrimitiveBoundsDerived:true,requestedFiniteOrder:n,fixedTwelveJetExtrapolation:false,
+      fullCoefficientNormProducer:false,cutoffScalesSelected:false,backgroundC2TailCertified:false,originalN506Complete:false,formalKernelProof:false}};
+}
+
+/** Actual B_rho derivative bound on a fixed complex natural domain.
+ * Phi,u,average here are the actual nonlinear Banach solution.  The
+ * coefficient is exact rational arithmetic; Q and rho are the pinned
+ * positive source expressions and are never rounded to zero.
+ */
+function sourceAllOrderNaturalJetBound(input={},context={}){
+  if(input===null||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Use an actual natural derivative request.');
+  for(const k of Object.keys(input))if(!['sourceProfile','radialLogOrder','etaOrder'].includes(k))fail('INVALID_INPUT','The actual natural field or bound cannot be replaced: '+k);
+  const r=input.radialLogOrder??0,m=input.etaOrder??0;orderCheck(r,'radialLogOrder');orderCheck(m,'etaOrder');workBudget(r+m+2,context);
+  const sourceInfo=source(input.sourceProfile),S=Array.from({length:r+1},()=>[]);S[0][0]=1n;
+  for(let j=1;j<=r;j++){context.checkCancelled?.();for(let k=0;k<=j;k++)S[j][k]=BigInt(k)*(S[j-1][k]??0n)+(k?S[j-1][k-1]??0n:0n);}
+  let coefficient=Q(0);const terms=[];
+  for(let k=0;k<=r;k++)if(S[r][k]){
+    const value=qmul(Q(S[r][k]*factorial(m+k)),qmul(qpow(Q(1,4),k),qpow(Q(2),m+k+1)));
+    coefficient=qadd(coefficient,value);terms.push({radialDerivative:k,stirling:String(S[r][k]),coefficient:qtext(value)});
+  }
+  return {schema:'MathScope.SourceAllOrderNaturalJetBound/1',...sourceInfo,radialLogOrder:r,etaOrder:m,
+    source:'SAME_DATUM_ANALYTIC_AXIS.md Banach space B_rho, radial base20; differentiated geometric series',
+    functions:['actual Phi','actual u','actual radial average of u'],
+    domain:{complexYAbsoluteUpper:'5',complexEtaDistanceFromRealIUpper:'rho/4',realI:['-1','1'],remainingCauchyDenominatorLower:'1/2'},
+    exactBound:{product:[{rational:qtext(coefficient)},{sourceParameter:'Q'},{integerPower:[{sourceParameter:'rho'},-m]}]},
+    coefficient:qtext(coefficient),terms,derivativeConvention:'ordinary eta derivative and (Y*d_Y)^r',
+    inequality:'|(Y*d_Y)^r d_eta^m f| <= Q*rho^-m*sum_k S(r,k)*(1/4)^k*(m+k)!*2^(m+k+1)',
+    proof:'At |Y|<=5 and |deltaEta|<=rho/4, 1-|Y|/20-|deltaEta|/rho>=1/2. Expand (Y*d_Y)^r by exact Stirling numbers and apply the positive B_rho Cauchy coefficient bound. The extra original (m+1)^-2 gain is discarded, never needed.',
+    pass:true,scope:{actualNaturalFunctionBound:true,comparisonProfileSubstituted:false,arbitraryFiniteOrdersComputed:true,
+      actualActivationCollarIncluded:false,positiveOrderAuxiliarySystemConstructed:false,fullCoefficientNormProducer:false,backgroundC2TailCertified:false}};
+}
+
+/** All ordered nonlinear products required by the original order-n
+ * equations. This is an executable recipe, not a claim that its function
+ * operands have been supplied. The same-order (0,n),(n,0) terms remain in
+ * the linear Picard operator; every forcing pair is strictly lower-order.
+ */
+function positiveOrderInductionRecipe(order){
+  orderCheck(order,'order');if(order===0)fail('INVALID_INPUT','Use a positive expansion order.');
+  workBudget(order);
+  const pairs=Array.from({length:order+1},(_,i)=>[i,order-i]),forcingPairs=pairs.filter(([i,j])=>i>0&&j>0),omegaOrder=order-1;
+  return {schema:'MathScope.PositiveOrderInductionRecipe/1',order,
+    exactExponent:{sourceParameter:'h',integerMultiplier:2*order},
+    linearPairs:[[0,order],[order,0]],forcingPairs,omega:{order:omegaOrder,orderedPairs:Array.from({length:order},(_,i)=>[i,omegaOrder-i]),axialViscosityOrder:order>=2?order-2:null},
+    tangentialAxialViscosityOrder:order-1,
+    pressureKnown:'sum_(i+j=n, i,j>=1) F_i F_j - Omega_(n-1)/(2X)',
+    angularKnown:'sum_(i+j=n, i,j>=1) [v_i*(X*F_jX+F_j)+U_i*Z_(b+2jh)F_j] - Z_(b+2(n-1)h-D)Z_(b+2(n-1)h)F_(n-1)',
+    axialKnown:'sum_(i+j=n, i,j>=1) [X*v_i*U_jX+U_i*Z_(c+2jh)U_j] - Z_(c+2(n-1)h-D)Z_(c+2(n-1)h)U_(n-1)',
+    sixForcing:'[0,0,0,2*xi*pKnown,2*Htheta,2*Hz-4*eta*X*pKnown/L]',
+    momentLowerBodies:['0','0','sum_(i+j=n, i,j>=1) F_i F_j-Omega_(n-1)/(2X)',
+      'sum_(i+j=n, i,j>=1) 2X U_i F_j','sum_(i+j=n, i,j>=1) [U_i U_j-X F_i F_j]+Omega_(n-1)/2'],
+    lowerSourcePolicy:'Actual common-collar system consumes finalized local cutoffs; global moments consume the full finalized lower fields, including Ipos corrections.',
+    auxiliaryPolicy:'A second natural system must be generated explicitly from earlier natural auxiliary systems. It is identified with the actual one only on X<=Xa by uniqueness.',
+    coefficientParameterBound:{formula:'4+2*n*h',fixedAbsExponentThree:false},
+    requiresCompletedOrders:Array.from({length:order},(_,i)=>i),
+    sourceOperandsResolved:false,coefficientNormsComputed:false,actualTupleConstructed:false,pass:false};
+}
+
+/** Source q-Euler product coefficients for (5.46). Returned weights are
+ * actual polynomials in the pinned h, with exact nonnegative integer
+ * coefficients. A coefficient-profile norm is deliberately NOT invented.
+ */
+function sourceNormalizedCutoffWeights(input={},context={}){
+  if(input===null||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Use an actual normalized cutoff request.');
+  for(const k of Object.keys(input))if(!['sourceProfile','order','derivativeOrder'].includes(k))fail('INVALID_INPUT','A missing coefficient norm cannot be injected into this primitive: '+k);
+  const n=input.order??2,m=input.derivativeOrder??2;orderCheck(n,'order');orderCheck(m,'derivativeOrder');if(n<1)fail('INVALID_INPUT','Use a positive expansion order.');
+  const primitives=sourceAllOrderCutoffJets({sourceProfile:input.sourceProfile,order:m},context),C=primitives.timeCutoff.eulerDerivativeBounds.map(BigInt),rows=[];
+  for(let r=0;r<=m;r++){
+    const coefficients=Array.from({length:r+1},(_,power)=>String(binomial(r,power)*(2n*BigInt(n))**BigInt(power)*C[r-power]));
+    const extra=Array.from({length:r+1},(_,power)=>String(binomial(r,power)*(2n*BigInt(n))**BigInt(power)*C[r-power+1]));
+    rows.push({eulerOrder:r,polynomialInSourceH:coefficients,extraPotentialCutoffPolynomialInSourceH:extra});
+  }
+  return {schema:'MathScope.SourceNormalizedCutoffWeights/1',profileId:primitives.profileId,parameterExpressionSHA256:primitives.parameterExpressionSHA256,order:n,derivativeOrder:m,
+    weights:rows,sourceCutoff:primitives.timeCutoff.definition,
+    identity:'(q*d_q)^r[chi(c*q)*q^(2*n*h)]=q^(2*n*h)*sum_k binom(r,k)*(2*n*h)^(r-k)*(s*d_s)^k chi(s), s=c*q',
+    extraPotentialIdentity:'Replace the k-th chi Euler derivative by its k+1 derivative for s*chi_prime(s).',
+    pendingNorm:'B_(n,m) must be computed from the actual normalized coefficient/potential jets multiplied by these weights, through all mixed profile derivatives <=m.',
+    selectorOnceNormExists:'log(c_n) >= max(log(c_(n-1))+log2, [n*log2+log(max(1,B_(n,m)))]/(n*h), for every m<=n, plus the actual (5.37) requirements.',
+    allQProof:'For 0<q<=1/c_n, B_(n,m)*q^(n*h)<=2^-n; for q>=1/c_n the cutoff and every derivative are zero.',
+    scope:{actualSourceCutoffWeightsComputed:true,allPositiveNExponentRetained:true,actualCoefficientNormMissing:true,
+      completeScheduleSelected:false,backgroundC2TailCertified:false,sourceUniformQStarCertified:false,originalN506Complete:false},pass:primitives.pass};
+}
+
+return {sourceAllOrderCutoffJets,sourceAllOrderNaturalJetBound,positiveOrderInductionRecipe,sourceNormalizedCutoffWeights};
+})();
+const __m2_112 = (()=>{
+/** Actual ordered coefficient generator.  At every positive order it
+ * constructs BOTH the common radial-collar system and a distinct natural
+ * analytic auxiliary system, then applies the actual five-moment inverse.
+ * No caller supplies a coefficient, an incoming moment, or a source norm.
+ */
+const {prepareActualOrderOneStressProgram} = __m2_105;
+const {assertActualFirstOrderCompleted} = __m2_98;
+const {sourceScaledOperators,buildActualOmegaCoefficientOverX} = __m2_99;
+const {verifyActualMomentLinearIdentities} = __m2_97;
+const {sourceGraphRationalIdentity} = __m2_102;
+const {ActualInductionExpressions} = __m2_110;
+const {sourceAllOrderCutoffJets} = __m2_111;
+const {factorial,fail} = __m2_74;
+const live=new WeakMap();
+const positiveOrder=n=>{if(!Number.isSafeInteger(n)||n<1)fail('INVALID_INPUT','Use a positive finite order.');};
+const frozenJSON=x=>JSON.stringify(x);
+
+/** Explicit positive majorants of the actual common/auxiliary source.
+ * The ordinary cutoff derivatives are computed from the original seed.
+ * All exponent constants retain 2*n*h; there is no fixed |a|<=3 step.
+ */
+function innerNorm(G,bootstrap,records,n,kind,sourceInfo){
+  const q=(n,d=1)=>G.q(n,d),o=G.one,Lambda=G.parameter('Lambda'),rho=G.parameter('rho'),Q=G.parameter('Q'),sigma=G.parameter('sigmaStar'),delta=bootstrap.inner.delta;
+  // At n=1 the original actual solution has a wider eta strip than the
+  // independently generated auxiliary one. The raw radial core bound uses
+  // that auxiliary norm, so all subsequent Cauchy losses use the smaller
+  // auxiliary strip, for BOTH systems.
+  const strip=G.div(delta,q(8n*256n**BigInt(n))),sourceStrip=G.mul(q(4),strip),loss=strip,previousStrip=n===1?G.div(delta,q(8)):records[n-1].norm.auxiliary.strip;
+  const radius=G.add(q(6),q(1,1n<<BigInt(n-1))),radialDomain=kind==='actual'?bootstrap.inner.aSquared:G.div(radius,Lambda);
+  const step=sourceAllOrderCutoffJets({order:2}),s=step.activation.ordinaryDerivativeBounds.map(BigInt),w=G.div(G.parameter('t1'),q(64)),Xa=G.parameter('Xa');
+  const kappa1=G.div(q(s[1]),G.mul(w,Xa)),kappa2=G.add(G.div(q(s[1]),G.mul(w,G.pow(Xa,2))),G.div(q(s[2]),G.mul(G.pow(w,2),G.pow(Xa,2))));
+  // On |Y|<=8 and dist(eta,I)<=rho/4 the B_rho margin is7/20.
+  // |zeta|<=64/sigma^2 on that tube, giving an elementary actual g
+  // upper bound without identifying a comparison profile with the source.
+  const gBound=G.div(G.exp(G.div(G.mul(q(128),Lambda),G.pow(sigma,2))),G.parameter('CSelected'));
+  const naturalBase=G.mul(q(64),Q,G.add(o,gBound));
+  const H=[],V=[],rawDetails=[];
+  for(let i=0;i<n;i++){
+    let B;
+    if(i===0){
+      if(kind==='actual')B=bootstrap.inner.B;
+      else{
+        const gap=G.sub(q(8),radius),factor=G.maximum(o,G.div(G.mul(q(2),G.pow(Lambda,2)),G.pow(gap,2)));
+        B=G.mul(naturalBase,factor);
+      }
+    }else if(kind==='auxiliary'){
+      const lower=records[i].norm.auxiliary,gap=G.sub(lower.radius,radius);
+      B=G.mul(lower.solutionNorm,G.maximum(o,G.div(G.mul(q(2),G.pow(Lambda,2)),G.pow(gap,2))));
+      rawDetails.push({order:i,method:'actual auxiliary complex-X Cauchy',largerRadius:lower.radius,smallerRadius:radius,gap,bound:B});
+    }else{
+      const actual=records[i].norm.actual,aux=records[i].norm.auxiliary;
+      const core=G.mul(q(2),G.pow(Lambda,2),aux.solutionNorm),collar=G.div(G.mul(q(64),actual.C,actual.solutionNorm,G.pow(Lambda,2)),actual.strip),raw=G.maximum(o,core,collar);
+      B=G.mul(raw,G.add(o,G.mul(q(2),kappa1),kappa2));
+      rawDetails.push({order:i,method:'auxiliary Cauchy on X<=1/Lambda; actual ODE on X>=1/Lambda; actual cutoff product',core,collar,raw,bound:B});
+    }
+    H.push(G.maximum(o,B));
+    // Average is a contraction in each X derivative; one eta derivative
+    // gives V_i/X.  The previous strip is common to the finite lower set.
+    V.push(G.div(G.mul(q(128),G.add(o,G.mul(q(2*i),G.parameter('h'))),H[i]),previousStrip));
+  }
+  const e1=G.div(q(16),previousStrip),e2=G.mul(q(2),G.pow(e1,2)),E=G.add(q(4),G.mul(q(2*n),G.parameter('h')));
+  const Z=B=>G.mul(B,G.add(G.mul(q(5),E),q(5),G.mul(q(6),e1)));
+  const DXZ=B=>G.mul(B,G.add(G.mul(q(5),E),q(10),G.mul(q(6),e1)));
+  const DEZ=B=>G.mul(B,G.add(G.mul(q(16),E),q(64),G.mul(G.add(G.mul(q(5),E),q(69)),e1),G.mul(q(6),e2)));
+  const ZZ=B=>G.add(G.mul(q(5),E,Z(B)),G.mul(q(5),DXZ(B)),G.mul(q(6),DEZ(B)));
+  const time=B=>G.mul(q(2),B,G.add(E,G.mul(q(2),e1),o));
+  const omegaTerms=[time(V[n-1]),G.mul(q(6),V[n-1])];
+  for(let i=0;i<n;i++){const j=n-1-i;omegaTerms.push(G.mul(q(3,2),V[i],V[j]),G.mul(H[i],Z(V[j])));}
+  if(n>=2)omegaTerms.push(ZZ(V[n-2]));
+  const omega=G.add(...omegaTerms),theta=[ZZ(H[n-1])],axial=[ZZ(H[n-1])],pressure=[G.mul(q(1,2),omega)];
+  for(let i=1;i<n;i++){const j=n-i;pressure.push(G.mul(H[i],H[j]));theta.push(G.mul(q(2),V[i],H[j]),G.mul(H[i],Z(H[j])));axial.push(G.mul(V[i],H[j]),G.mul(H[i],Z(H[j])));}
+  const pKnown=G.add(...pressure),Htheta=G.add(...theta),Hz=G.add(...axial),forcingBounds=[G.zero,G.zero,G.zero,G.mul(q(2),pKnown),G.mul(q(2),Htheta),G.add(G.mul(q(2),Hz),G.mul(q(16),pKnown))];
+  const matrixBound=G.mul(q(512),G.add(o,E),G.add(o,H[0],V[0],Z(H[0]))),C=G.mul(q(2),G.add(matrixBound,...forcingBounds));
+  const solutionNorm=G.exp(G.div(G.mul(q(9),G.pow(C,2),radialDomain),G.mul(q(2),loss))),Kcondition=G.ceiling(G.div(G.mul(q(72),G.pow(C,2),radialDomain),loss));
+  return {order:n,kind,C,solutionNorm,strip,sourceStrip,loss,previousStrip,radialDomain,radius:kind==='auxiliary'?radius:null,Kcondition,
+    sourceInfo,actualSourceBoundsDerived:true,sourceOperandReplacedByBound:false,leadingBase:{B:bootstrap.inner.B,naturalBase,gBound},lowerMixedRadialBounds:H,lowerRegularVBounds:V,
+    rawDetails,kappa1,kappa2,e1,e2,exponentBound:E,omega,pKnown,Htheta,Hz,matrixBound,forcingBounds,
+    proof:{radial:'The actual activation collar is smooth, not complex-radial analytic. Its derivatives follow from the original ODE. A separate auxiliary system supplies the small-core Cauchy estimate.',
+      eta:'Previous analytic strips are at least256 times the next strip. Average, V/X, eta derivatives and products fit successively in the retained source strip.',
+      matrix:'Every entry of the explicit six-by-six matrix is bounded by the displayed512*(1+E)*(1+H0+V0+Z(H0)); |eta|<=33/32, |d|<=3, |1/L|<=2, |X|,|xi|<=1.',
+      naturalG:'Along eta paths of length<=2, |zeta|<=64/sigmaStar^2; g=exp(Lambda*integral zeta)/CSelected. This deliberately large true bound changes no source parameter.'}};
+}
+
+/** Universal six-component algebra kernel. The actual source constructor
+ * calls this same body at lambda=2*n*h. A separate exact check can leave
+ * lambda as an indeterminate, proving the equation identity for every n.
+ * This operator alone is not an authenticated coefficient constructor.
+ */
+function actualInductionLinearKernel(G,{X,eta,xi,lambda,F0,U0,v0,pKnown,Htheta,Hz}){
+  const q=(n,d=1)=>G.q(n,d),z=G.zero,o=G.one,{A,D,d,L}=G.core,b=G.neg(G.add(A,q(1,2))),c=G.neg(A),Hf=G.add(F0,G.mul(X,G.derivative(F0,X))),Hu=G.mul(X,G.derivative(U0,X)),{Z}=sourceScaledOperators(G,X,eta);
+  const beta=G.add(b,lambda),gamma=G.add(c,lambda),pressureExponent=G.add(G.mul(q(-2),A),lambda),matrix0=Array.from({length:6},()=>Array(6).fill(z)),matrix1=Array.from({length:6},()=>Array(6).fill(z));
+  matrix0[0][4]=o;matrix0[1][5]=o;matrix0[2][5]=q(-1);matrix0[3][0]=G.mul(q(4),xi,F0);
+  matrix0[4][0]=G.mul(q(2),G.add(G.div(G.mul(beta,G.sub(G.mul(q(2),eta,U0),o)),L),v0));
+  matrix0[4][1]=G.add(G.div(G.mul(q(4),eta,G.sub(A,lambda),Hf),L),G.mul(q(2),Z(b,F0)));
+  matrix0[4][2]=G.div(G.mul(q(-4),eta,G.add(D,lambda),Hf),L);matrix0[4][4]=G.add(G.div(xi,L),G.mul(xi,v0),G.div(G.mul(q(-2),eta,xi,U0),L));
+  matrix0[5][0]=G.div(G.mul(q(-8),eta,X,F0),L);matrix0[5][1]=G.add(G.div(G.mul(q(2),gamma,G.sub(G.mul(q(2),eta,U0),o)),L),G.div(G.mul(q(4),eta,G.sub(A,lambda),Hu),L),G.mul(q(2),Z(c,U0)));
+  matrix0[5][2]=G.div(G.mul(q(-4),eta,G.add(D,lambda),Hu),L);matrix0[5][3]=G.div(G.mul(q(4),pressureExponent,eta),L);matrix0[5][5]=matrix0[4][4];
+  matrix1[4][0]=G.div(G.mul(q(2),G.add(G.mul(D,eta),G.mul(d,U0))),L);matrix1[4][1]=matrix1[4][2]=G.div(G.mul(q(-2),d,Hf),L);
+  matrix1[5][1]=G.div(G.mul(q(2),G.add(G.mul(D,eta),G.mul(d,U0),G.neg(G.mul(d,Hu)))),L);matrix1[5][2]=G.div(G.mul(q(-2),d,Hu),L);matrix1[5][3]=G.div(G.mul(q(2),d),L);
+  const rawForcing=[z,z,z,G.mul(q(2),xi,pKnown),G.mul(q(2),Htheta),G.sub(G.mul(q(2),Hz),G.div(G.mul(q(4),eta,X,pKnown),L))];
+  return {matrix0,matrix1,rawForcing,Hf,Hu,kernel:'ActualSixComponentUniversalKernel/1'};
+}
+
+function sourceSystem(G,bootstrap,records,n,kind,norm){
+  const {X,eta}=bootstrap.constants,q=(n,d=1)=>G.q(n,d),z=G.zero,o=G.one,{A,D,d,L}=G.core,h=G.parameter('h'),lambda=G.mul(q(2*n),h),{Z}=sourceScaledOperators(G,X,eta);
+  const fields=Array.from({length:n},(_,i)=>i===0?records[0][kind]:records[i][kind]),F=fields.map(t=>t.F),U=fields.map(t=>t.U),v=fields.map(t=>t.v);
+  const omega=buildActualOmegaCoefficientOverX(G,{order:n-1,X,eta,U,v}),p=[G.mul(q(-1,2),omega.value)],ht=[],hz=[],b=G.neg(G.add(A,q(1,2))),c=G.neg(A);
+  for(let i=1;i<n;i++){const j=n-i,lj=G.mul(q(2*j),h);p.push(G.mul(F[i],F[j]));ht.push(G.mul(v[i],G.add(G.mul(X,G.derivative(F[j],X)),F[j])),G.mul(U[i],Z(G.add(b,lj),F[j])));hz.push(G.mul(X,v[i],G.derivative(U[j],X)),G.mul(U[i],Z(G.add(c,lj),U[j])));}
+  const prev=G.mul(q(2*(n-1)),h);ht.push(G.neg(Z(G.sub(G.add(b,prev),D),Z(G.add(b,prev),F[n-1]))));hz.push(G.neg(Z(G.sub(G.add(c,prev),D),Z(G.add(c,prev),U[n-1]))));
+  const pKnown=G.add(...p),Htheta=G.add(...ht),Hz=G.add(...hz),F0=F[0],U0=U[0],v0=v[0],Hf=G.add(F0,G.mul(X,G.derivative(F0,X))),Hu=G.mul(X,G.derivative(U0,X));
+  const xi=G.fresh('actual_'+kind+'_order_'+n+'_xi'),{matrix0,matrix1,rawForcing,kernel}=actualInductionLinearKernel(G,{X,eta,xi,lambda,F0,U0,v0,pKnown,Htheta,Hz}),atXi=id=>G.substitute(id,X,G.pow(xi,2));
+  const system=G.definePicardSystem({name:'ActualSameN3'+kind+'Order'+n,order:n,kind,linearKernel:kernel,xi,eta,diagonal:[0,0,2,0,3,1],A0:matrix0.map(r=>r.map(atXi)),A1:matrix1.map(r=>r.map(atXi)),forcing:rawForcing.map(atXi),zeroAxisDatum:[0,0,0,0,0,0],
+    unknowns:['phi_n/C','U_n','Avg(U_n)-U_n','Pi_n','partial_xi(phi_n/C)','partial_xi U_n'],radialDomain:[z,G.sqrt(norm.radialDomain)],
+    lowerOrders:fields.map((t,i)=>({order:i,F:atXi(t.F),U:atXi(t.U),v:atXi(t.v),kind})),actualFinalizedLowerCutoffs:kind==='actual',actualNaturalAuxiliaryEquations:kind==='auxiliary',
+    tail:{sourceBound:norm.C,sourceStrip:norm.sourceStrip,solutionStrip:norm.strip,loss:norm.loss,Kcondition:norm.Kcondition,
+      valueTailAtK:'4^-K/3 for K>=Kcondition',etaTailAtK:'m!*(2/solutionStrip)^m*4^-K/3',sourceNormProducer:'actual-residual-order-induction-source.mjs:innerNorm',
+      actualAllOperandsSpecified:true,finitePartialSumIsSolution:false},solutionNorm:norm.solutionNorm,callerSuppliedForcing:false});
+  const Fn=G.picardEven(system,0,X,eta),Un=G.picardEven(system,1,X,eta),average=G.add(Un,G.picardEven(system,2,X,eta));
+  const vn=G.div(G.sub(G.sub(G.mul(q(2),eta,Un),G.mul(q(2),eta,G.add(D,lambda),average)),G.mul(d,G.derivative(average,eta))),L);
+  return {order:n,kind,system,xi,F:Fn,U:Un,average,v:vn,Pi:G.picardEven(system,3,X,eta),lambda,omegaOverX:omega.value,pKnown,Htheta,Hz,rawMatrix0:matrix0,rawMatrix1:matrix1,rawForcing};
+}
+
+function actualCutoffRestriction(G,bootstrap,raw){
+  const {X,eta}=bootstrap.constants,q=(n,d=1)=>G.q(n,d),r=bootstrap.orderOne,{D,d,L}=G.core;
+  const w=G.div(G.parameter('t1'),q(64)),kappa=G.sub(G.one,G.step(G.div(G.sub(G.log(G.div(X,G.parameter('Xa'))),w),w)));
+  const F=G.choose(X,r.Xkeep,r.Xcut,raw.F,G.mul(kappa,raw.F),G.zero),U=G.choose(X,r.Xkeep,r.Xcut,raw.U,G.mul(kappa,raw.U),G.zero),t=G.fresh('actual_order_'+raw.order+'_cut_average');
+  const average=G.integral(G.substitute(U,X,G.mul(t,X)),t,G.zero,G.one),v=G.div(G.sub(G.sub(G.mul(q(2),eta,U),G.mul(q(2),eta,G.add(D,raw.lambda),average)),G.mul(d,G.derivative(average,eta))),L);
+  return {order:raw.order,F,U,average,v,kappa,rawSystem:raw.system,rawF:raw.F,rawU:raw.U,cutoffPreserved:true,cutoffEnds:r.Xcut};
+}
+
+/** Whole-support lower nonlinear moments and the actual continuous inverse.
+ * The source operands are functions; the norm graph never enters a debt.
+ */
+function completeOrder(G,bootstrap,records,n,raw,local,context){
+  const {X,eta}=bootstrap.constants,r=bootstrap.orderOne,q=(n,d=1)=>G.q(n,d),z=G.zero,o=G.one,{D,d,L}=G.core,{Xkeep,Xcut,Xplus,X0,IposRight,Rbase,ef,supports,Umat,Emat,Uinverse,Einverse}=r,lambda=G.parameter('lambda');
+  const integrate=(body,a,b,name)=>{const t=G.fresh(name),shared=G.share(body,[X,eta],name+'_body');return G.integral(G.substitute(shared,X,t),t,a,b);};
+  const Ft=local.F,Ut=local.U,F0=records[0].actual.F,U0=records[0].actual.U,localBodies=[Ut,G.mul(q(2),X,Ft),G.mul(q(2),F0,Ft),G.mul(q(2),X,G.add(G.mul(U0,Ft),G.mul(Ut,F0))),G.sub(G.mul(q(2),U0,Ut),G.mul(q(2),X,F0,Ft))];
+  const localMoments=localBodies.map((v,j)=>integrate(v,z,Xcut,'n'+n+'_local_m'+j));
+  const lower=records.slice(0,n).map(r=>r.global),omegaRaw=buildActualOmegaCoefficientOverX(G,{order:n-1,X,eta,U:lower.map(r=>r.U),v:lower.map(r=>r.v)}).value;
+  const omega=G.choose(X,bootstrap.inner.aSquared,Xplus,raw.omegaOverX,omegaRaw,z),low=[[],[],[]];
+  for(let i=1;i<n;i++){const j=n-i;low[0].push(G.mul(lower[i].F,lower[j].F));low[1].push(G.mul(q(2),X,lower[i].U,lower[j].F));low[2].push(G.sub(G.mul(lower[i].U,lower[j].U),G.mul(X,lower[i].F,lower[j].F)));}
+  const lowerBodies=low.map(row=>G.add(...row)),lowerPressure=G.sub(lowerBodies[0],G.mul(q(1,2),omega));
+  const incoming=[localMoments[0],localMoments[1],G.add(localMoments[2],integrate(lowerPressure,z,Xplus,'n'+n+'_lower_pressure')),
+    G.add(localMoments[3],integrate(lowerBodies[1],z,Xplus,'n'+n+'_lower_angular_flux')),
+    G.add(localMoments[4],integrate(G.add(lowerBodies[2],G.mul(q(1,2),X,omega)),z,Xplus,'n'+n+'_lower_axial_flux'))].map((v,j)=>G.share(v,[eta],'ActualOrder'+n+'Moment'+j));
+  const power=(v,p)=>G.exp(G.mul(p,G.log(v))),R1=power(Rbase,G.sub(o,G.mul(q(2),lambda))),Rp=power(Rbase,G.sub(q(-2),G.mul(q(2),lambda))),Rz=power(Rbase,G.mul(q(-2),lambda)),dot=(a,b)=>G.add(...a.map((v,j)=>G.mul(v,b[j])));
+  const Urhs=[G.neg(G.div(incoming[0],Rbase)),G.div(G.add(G.neg(G.div(incoming[0],Rbase)),G.div(incoming[3],G.mul(ef,R1))),G.mul(q(2),lambda))];
+  const Erhs=[G.neg(G.div(incoming[1],G.pow(Rbase,2))),G.neg(G.div(incoming[2],G.mul(q(2),ef,Rp))),G.div(incoming[4],G.mul(ef,Rz))],alpha=Uinverse.map(row=>dot(row,Urhs)),beta=Einverse.map(row=>dot(row,Erhs));
+  const width=q(1,2048),bump=(x,j)=>G.div(G.step(G.div(G.sub(x,supports[j][0]),width),1),width),sqrt2X=G.sqrt(G.mul(q(2),X)),normalizedR=G.div(sqrt2X,Rbase);
+  const dU=G.choose(X,X0,IposRight,z,G.div(G.add(...alpha.map((v,j)=>G.mul(v,bump(normalizedR,j)))),Rbase),z),dF=G.choose(X,X0,IposRight,z,G.div(G.add(...beta.map((v,j)=>G.mul(v,bump(normalizedR,j+2)))),G.mul(Rbase,sqrt2X)),z);
+  const U=G.share(G.add(Ut,dU),[X,eta],'ActualOrder'+n+'GlobalU'),F=G.share(G.add(Ft,dF),[X,eta],'ActualOrder'+n+'GlobalF');
+  const correctionMass=G.mul(Rbase,G.add(...alpha.map((v,j)=>{const t=G.fresh('n'+n+'_bump_mass');return G.mul(v,G.choose(normalizedR,...supports[j],z,G.integral(G.mul(t,bump(t,j)),t,supports[j][0],normalizedR),Umat[0][j]));})));
+  const localMassPart=integrate(Ut,z,X,'n'+n+'_local_mass'),localMass=G.choose(X,Xkeep,Xcut,localMassPart,localMassPart,localMoments[0]),lastU=G.mul(X0,G.pow(supports[1][1],2));
+  const Mbody=G.choose(X,Xkeep,lastU,G.mul(X,raw.average),G.add(localMass,correctionMass),z),M=G.share(Mbody,[X,eta],'ActualOrder'+n+'Stream'),average=G.share(G.choose(X,Xkeep,lastU,raw.average,G.div(M,X),z),[X,eta],'ActualOrder'+n+'Average');
+  const v=G.share(G.div(G.sub(G.sub(G.mul(q(2),eta,U),G.mul(q(2),eta,G.add(D,raw.lambda),average)),G.mul(d,G.derivative(average,eta))),L),[X,eta],'ActualOrder'+n+'VOverX');
+  const localPressurePart=integrate(localBodies[2],z,X,'n'+n+'_local_pressure'),localPressure=G.choose(X,Xkeep,Xcut,localPressurePart,localPressurePart,localMoments[2]);
+  const correctionPressure=G.mul(q(2),ef,Rp,G.add(...beta.map((v,j)=>{const t=G.fresh('n'+n+'_bump_pressure');return G.mul(v,G.choose(normalizedR,...supports[j+2],z,G.integral(G.mul(power(t,G.sub(q(-2),G.mul(q(2),lambda))),bump(t,j+2)),t,supports[j+2][0],normalizedR),Emat[1][j]));})));
+  const Pi=G.share(G.choose(X,Xkeep,Xplus,raw.Pi,G.add(localPressure,correctionPressure,integrate(lowerPressure,z,X,'n'+n+'_lower_pressure_prefix')),z),[X,eta],'ActualOrder'+n+'Pressure');
+  const F0pos=G.mul(ef,power(sqrt2X,G.sub(q(-2),G.mul(q(2),lambda)))),F0Fn=G.add(G.choose(X,Xkeep,Xcut,G.mul(F0,raw.F),G.mul(F0,Ft),z),G.choose(X,X0,IposRight,z,G.mul(F0pos,dF),z));
+  const pressureDerivative=G.add(G.mul(q(2),F0Fn),lowerPressure),originalUrows=[Umat[0],Umat[0].map((v,j)=>G.sub(v,G.mul(q(2),lambda,Umat[1][j])))];
+  const correctionMoments=[G.mul(Rbase,dot(originalUrows[0],alpha)),G.mul(G.pow(Rbase,2),dot(Emat[0],beta)),G.mul(q(2),ef,Rp,dot(Emat[1],beta)),G.mul(ef,R1,dot(originalUrows[1],alpha)),G.neg(G.mul(ef,Rz,dot(Emat[2],beta)))];
+  const identity=verifyActualMomentLinearIdentities();if(!identity.pass)fail('INTERNAL_VALIDATION','The actual five-moment row identity failed.');
+  // Execute the actual five residual bodies BEFORE authorizing order n+1.
+  // A universal row formula or a later independent audit is insufficient.
+  const momentResiduals=incoming.map((v,j)=>G.add(v,correctionMoments[j]));
+  const actualMomentChecks=momentResiduals.map(body=>sourceGraphRationalIdentity(G,body,{atomicNodes:incoming}));
+  if(!actualMomentChecks.every(c=>c.pass))fail('PREVIOUS_ORDER_INCOMPLETE','The actual order '+n+' moments did not cancel; the next source is forbidden.');
+  context.checkCancelled?.();
+  return {order:n,F,U,M,average,v,V:G.mul(X,v),Pi,E:G.mul(sqrt2X,F),pressureDerivative,F0Fn,localBodies,localMoments,lowerBodies,omega,lowerPressure,incoming,Urhs,Erhs,alpha,beta,dU,dF,
+    correctionMoments,momentResiduals,momentIdentity:identity,actualMomentChecks,
+    actualFullLowerSupportConsumed:true,knownNonlinearMomentsRestrictedToCore:false,continuousMatrixInverse:true,callerSuppliedDebt:false,completed:actualMomentChecks.every(c=>c.pass)};
+}
+
+function attachStress(G,bootstrap,records,n,tuple){
+  const {X,eta}=bootstrap.constants,q=(n,d=1)=>G.q(n,d),z=G.zero,{A,D}=G.core,h=G.parameter('h'),{Z,T}=sourceScaledOperators(G,X,eta),b=G.neg(G.add(A,q(1,2))),c=G.neg(A),nu=k=>G.mul(q(2*k),h),all=[...records.slice(0,n).map(r=>r.global),tuple],F=all.map(r=>r.F),U=all.map(r=>r.U),v=all.map(r=>r.v);
+  const Fx=F.map(f=>G.derivative(f,X)),Ux=U.map(f=>G.derivative(f,X)),theta=[T(G.add(b,nu(n)),F[n])],axial=[T(G.add(c,nu(n)),U[n])];
+  for(let i=0;i<=n;i++){const j=n-i;theta.push(G.mul(v[i],G.add(G.mul(X,Fx[j]),F[j])),G.mul(U[i],Z(G.add(b,nu(j)),F[j])));axial.push(G.mul(X,v[i],Ux[j]),G.mul(U[i],Z(G.add(c,nu(j)),U[j])));}
+  theta.push(G.mul(q(-2),G.add(G.mul(X,G.derivative(Fx[n],X)),G.mul(q(2),Fx[n]))),G.neg(Z(G.sub(G.add(b,nu(n-1)),D),Z(G.add(b,nu(n-1)),F[n-1]))));
+  axial.push(Z(G.add(G.mul(q(-2),A),nu(n)),tuple.Pi),G.mul(q(-2),G.add(G.mul(X,G.derivative(Ux[n],X)),Ux[n])),G.neg(Z(G.sub(G.add(c,nu(n-1)),D),Z(G.add(c,nu(n-1)),U[n-1]))));
+  const rawTheta=G.share(G.add(...theta),[X,eta],'ActualOrder'+n+'AngularResidual'),rawZ=G.share(G.add(...axial),[X,eta],'ActualOrder'+n+'AxialResidual'),{Xminus,Xplus}=bootstrap.orderOne;
+  const thetaBody=G.mul(q(2),X,G.choose(X,Xminus,Xplus,z,rawTheta,z)),zBody=G.choose(X,Xminus,Xplus,z,rawZ,z),integrate=(body,a,b)=>{const t=G.fresh('n'+n+'_stress');return G.integral(G.substitute(body,X,t),t,a,b);};
+  const Ttheta=G.choose(X,Xminus,Xplus,z,G.neg(G.div(integrate(thetaBody,Xminus,X),G.mul(q(2),X))),z),Tz=G.choose(X,Xminus,Xplus,z,G.neg(G.div(integrate(zBody,Xminus,X),G.sqrt(G.mul(q(2),X)))),z);
+  return {order:n,rawTheta,rawZ,angularTerms:theta,axialTerms:axial,Ttheta,Tz,thetaBody,zBody,
+    backwardTheta:G.div(integrate(thetaBody,X,Xplus),G.mul(q(2),X)),backwardZ:G.div(integrate(zBody,X,Xplus),G.sqrt(G.mul(q(2),X))),
+    conservativeSourceMoments:[tuple.actualMomentChecks.every(c=>c.pass),records[n-1].global.actualMomentChecks.every(c=>c.pass)],
+    compactSupport:[Xminus,Xplus],lowerViscosityOrder:n-1,leadingHeatUsedAsPositiveLower:false,exactNumericValuesClaimed:false};
+}
+
+function prepareActualOrderInduction(input={},context={}){
+  for(const k of Object.keys(input))if(!['sourceProfile','order','maxNodes','maxDerivativeOrder'].includes(k))fail('INVALID_INPUT','Actual coefficients and their norms cannot be supplied: '+k);
+  const order=input.order??2;positiveOrder(order);
+  const maxNodes=input.maxNodes??1500000;if(order>Math.floor(Math.sqrt(maxNodes)))fail('RESOURCE_LIMIT','Requested induction prefix exceeds its explicit construction budget.');
+  const bootstrap=prepareActualOrderOneStressProgram({sourceProfile:input.sourceProfile,terms:0,bits:128,heatIterations:0},context);assertActualFirstOrderCompleted(bootstrap.completedOrderOne);
+  const G=new ActualInductionExpressions(bootstrap.G,{maxNodes,maxDerivativeOrder:input.maxDerivativeOrder??128,checkCancelled:context.checkCancelled}),{X,eta}=bootstrap.constants,q=(n,d=1)=>G.q(n,d),{D,d,L,Ustar}=G.core,Lambda=G.parameter('Lambda'),Y=G.mul(Lambda,X);
+  const share=(v,name)=>G.share(v,[X,eta],name),naturalF=G.mul(G.core.g,G.natural('Phi',Y)),naturalU=G.add(Ustar,G.div(G.natural('u',Y),Lambda)),average=G.add(Ustar,G.div(G.natural('average',Y),Lambda));
+  const naturalV=G.div(G.sub(G.sub(G.mul(q(2),eta,naturalU),G.mul(q(2),D,eta,average)),G.mul(d,G.derivative(average,eta))),L);
+  const records=[{order:0,actual:{F:bootstrap.inner.F0,U:bootstrap.inner.U0,v:bootstrap.inner.v0},auxiliary:{F:naturalF,U:naturalU,v:naturalV,average},
+    global:{order:0,F:share(bootstrap.actualHeat.heat.finalF,'ActualFinalLeadingF'),U:share(bootstrap.finalU,'ActualFinalLeadingU'),v:share(bootstrap.finalv,'ActualFinalLeadingVOverX'),completed:true},
+    sourceGate:bootstrap.program.parameterExpressionSHA256}];
+  for(let n=1;n<=order;n++){
+    context.checkCancelled?.();if(records.slice(0,n).some(r=>!r.global.completed))fail('PREVIOUS_ORDER_INCOMPLETE','Every lower actual global tuple must have completed its five moments.');
+    const auxiliaryNorm=innerNorm(G,bootstrap,records,n,'auxiliary',{allLowerAuxiliarySystemsGenerated:true}),auxiliary=sourceSystem(G,bootstrap,records,n,'auxiliary',auxiliaryNorm);
+    let raw,actual,norm,global,stress;
+    if(n===1){
+      const i=bootstrap.inner,r=bootstrap.orderOne;norm={order:1,kind:'actual',C:i.C1,solutionNorm:i.solutionNorm,strip:i.loss,sourceStrip:G.mul(q(2),i.loss),loss:i.loss,radialDomain:i.aSquared,radius:null,Kcondition:G.picardSystems[i.system].tail.Kcondition,originalActualSourceMajorant:true};
+      raw={order:1,kind:'actual',system:i.system,F:G.picardEven(i.system,0,X,eta),U:G.picardEven(i.system,1,X,eta),average:G.add(G.picardEven(i.system,1,X,eta),G.picardEven(i.system,2,X,eta)),Pi:G.picardEven(i.system,3,X,eta),lambda:i.lambda1,omegaOverX:i.omegaOverX};
+      actual=actualCutoffRestriction(G,bootstrap,raw);
+      global={order:1,F:share(r.F1,'ActualFinalOrderOneF'),U:share(r.U1,'ActualFinalOrderOneU'),v:share(r.v1,'ActualFinalOrderOneVOverX'),M:share(r.M1,'ActualFinalOrderOneStream'),average:share(r.M1overX,'ActualFinalOrderOneAverage'),Pi:share(r.Pi1,'ActualFinalOrderOnePressure'),E:r.E1,
+        pressureDerivative:r.pressureDerivative,alpha:r.alpha,beta:r.beta,incoming:r.moments,localMoments:r.localMoments,localBodies:r.localBodies,momentIdentity:bootstrap.program.momentRepair.universalLinearIdentity,completed:true,actualFullLowerSupportConsumed:true};
+      global.actualMomentChecks=r.momentResiduals.map(body=>sourceGraphRationalIdentity(G,body,{atomicNodes:r.moments}));
+      global.completed=global.actualMomentChecks.every(c=>c.pass);
+      if(!global.completed)fail('PREVIOUS_ORDER_INCOMPLETE','The actual source first-order moments must cancel before generating order two.');
+      stress=bootstrap.stress;
+    }else{
+      norm=innerNorm(G,bootstrap,records,n,'actual',{allLowerActualMomentTuplesCompleted:true});raw=sourceSystem(G,bootstrap,records,n,'actual',norm);actual=actualCutoffRestriction(G,bootstrap,raw);
+      global=completeOrder(G,bootstrap,records,n,raw,actual,context);stress=attachStress(G,bootstrap,records,n,global);
+    }
+    records.push({order:n,raw,actual,auxiliary,global,stress,norm:{actual:norm,auxiliary:auxiliaryNorm},
+      coreAgreement:{domain:[G.zero,G.parameter('Xa')],reason:'Identical original leading functions, zero axis datum, and lower coefficients before their common cutoff; uniqueness of the actual six-component Picard equation.',
+        actualCutoffStarts:bootstrap.orderOne.Xkeep,auxiliaryReplacesActivationCollar:false,allEarlierAuxiliarySystemsGenerated:true}});
+  }
+  const roots={};for(const r of records.slice(1))for(const [name,v]of Object.entries({F:r.global.F,U:r.global.U,M:r.global.M,Pi:r.global.Pi,v:r.global.v,Ttheta:r.stress.Ttheta,Tz:r.stress.Tz,actualC:r.norm.actual.C,auxiliaryC:r.norm.auxiliary.C,actualNorm:r.norm.actual.solutionNorm,auxiliaryNorm:r.norm.auxiliary.solutionNorm}))roots['n'+r.order+'_'+name]=v;
+  const result={G,bootstrap,records,roots,order};
+  result.program=G.pack(roots,{schema:'MathScope.ActualOrderInductionProgram/1',order,records,
+    sourceProvenance:{sameN3Profile:true,parameterExpressionSHA256:bootstrap.program.parameterExpressionSHA256,actualFinalLeadingIncludingHeat:true,positiveOrderMomentsBeforeNextSource:true},
+    scope:{actualFinitePrefixConstructed:true,twoExplicitSystemsAtEveryOrder:true,actualInnerSourceNormsDerived:true,actualFiveMomentOperandsGenerated:true,
+      fullGlobalMixedCoefficientNormsDerived:false,actualCutoffSequenceSelected:false,backgroundC2TailCertified:false,sourceUniformQStarCertified:false,originalN506Complete:false,formalKernelProof:false}});
+  live.set(result,{G,nodeCount:G.nodes.length,prefix:frozenJSON(G.nodes),definitions:G.captureFunctionDefinitions(),recordData:frozenJSON(records),bootstrap});return result;
+}
+function assertActualOrderInduction(result){
+  const r=live.get(result);if(!r||r.G!==result.G||frozenJSON(r.G.nodes.slice(0,r.nodeCount))!==r.prefix||!r.G.functionDefinitionsUnchanged(r.definitions)||frozenJSON(result.records)!==r.recordData)fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged internally generated actual induction prefix.');
+  assertActualFirstOrderCompleted(r.bootstrap.completedOrderOne);return true;
+}
+function compileActualOrderInduction(input={},context={}){return prepareActualOrderInduction(input,context).program;}
+
+/** Every requested tail is an actual source-system tail, independent of
+ * the small number of terms optionally displayed by the UI. */
+function actualOrderInductionTail(prepared,{order,kind='actual',etaOrder=0,bits=128}={}){
+  assertActualOrderInduction(prepared);positiveOrder(order);const r=prepared.records[order];
+  if(!r||!['actual','auxiliary'].includes(kind)||!Number.isSafeInteger(etaOrder)||etaOrder<0||!Number.isSafeInteger(bits)||bits<1)fail('INVALID_INPUT','Use a generated order and a finite derivative/precision target.');
+  const G=prepared.G,norm=r.norm[kind],q=(n,d=1)=>G.q(n,d);G.derivativeBudget(etaOrder);
+  const factor=G.mul(q(factorial(etaOrder)),G.pow(G.div(q(2),norm.strip),etaOrder)),Kprecision=G.ceiling(G.div(G.add(G.mul(q(bits),G.log(q(2))),G.log(G.maximum(G.one,factor))),G.log(q(4)))),K=G.maximum(G.one,norm.Kcondition,Kprecision),tail=G.mul(q(1,3),factor,G.exp(G.neg(G.mul(K,G.log(q(4))))));
+  return {order,kind,etaOrder,bits,K,tail,target:q(1,1n<<BigInt(bits)),positiveRemainderRetained:true,actualSourceConvergenceModulus:true,finiteDisplayedTermsCertified:false};
+}
+
+return {actualInductionLinearKernel,prepareActualOrderInduction,assertActualOrderInduction,compileActualOrderInduction,actualOrderInductionTail};
+})();
+const __m2_113 = (()=>{
+/** Positive finite Taylor arithmetic. No source function is authenticated here.
+ * A total jet is sum_{|alpha|<=n} sup |D^alpha f|/alpha!. The source producer
+ * supplies its actual positive denominators, branches and domains.
+ */
+const {factorial,fail} = __m2_74;
+const chooseInteger=(n,k)=>k<0||k>n?0n:factorial(n)/(factorial(k)*factorial(n-k));
+const order=(n)=>{if(!Number.isSafeInteger(n)||n<0)fail('INVALID_INPUT','Use a nonnegative finite Taylor order.');};
+
+/** The equation w=A*t/(1-t)+(1+A)*w^2 majorizes the translated
+ * implicit equation after removing its actual linear unknown term. If A
+ * bounds the collapsed external/unknown Taylor coefficients AFTER applying
+ * the actual Jacobian inverse, all remaining terms are bounded by
+ * A*(1/((1-t)*(1-w))-1-w). Multiplication by (1-w) gives the displayed
+ * quadratic exactly. This retains variable linear/quadratic coefficients,
+ * t*w^j terms and all pure w^j terms, not only a constant quadratic.
+ * The coefficient formula is valid at EVERY finite n; no old degree cap.
+ */
+function implicitCatalanCoefficients(n){
+  order(n);const rows=[];
+  for(let m=1;m<=n;m++){
+    const terms=[];
+    for(let k=1;k<=m;k++)terms.push({aPower:k,onePlusAPower:k-1,
+      coefficient:String(chooseInteger(2*k-2,k-1)/BigInt(k)*chooseInteger(m-1,k-1))});
+    rows.push({order:m,terms});
+  }
+  return {order:n,equation:'w=A*t/(1-t)+(1+A)*w^2',constantUnknown:0,
+    linearUnknownAlreadyInverted:true,rows};
+}
+
+/** d_X^r=X^-r product_(j=0)^(r-1)(D_y-j), y=log X.
+ * Signs are removed only for the norm; all nonzero derivative terms remain.
+ */
+function physicalXConversion(r,m){
+  order(r);order(m);let p=[1n];
+  for(let j=0;j<r;j++){
+    const next=Array(p.length+1).fill(0n);
+    for(let k=0;k<p.length;k++){next[k]+=BigInt(j)*p[k];next[k+1]+=p[k];}
+    p=next;
+  }
+  const ordinaryCoefficient=p.reduce((a,c,k)=>a+c*factorial(k)*factorial(m),0n);
+  return {radialOrder:r,etaOrder:m,unsignedCoefficients:p.map(String),
+    ordinaryCoefficient:String(ordinaryCoefficient),
+    identity:'d_X^r=X^-r*product_(j=0)^(r-1)(D_y-j)',
+    includesAllLogDerivatives:true};
+}
+
+/** A graph ledger rather than an expanded polynomial: very large source
+ * scales remain exact finite expressions. All rules below are positive.
+ */
+class PositiveTaylorLedger {
+  constructor(G,{checkCancelled}={}){this.G=G;this.rows=[];this.checkCancelled=checkCancelled;}
+  record(label,n,rule,root,inputs=[],extra={}){
+    this.checkCancelled?.();this.rows.push({label,order:n,rule,root,inputs,...extra});return root;
+  }
+  sum(label,n,...a){return this.record(label,n,'sum',this.G.add(...a),a);}
+  product(label,n,...a){return this.record(label,n,'submultiplicative total Taylor product',this.G.mul(...a),a);}
+  geometric(x,n){let s=this.G.one,p=this.G.one;for(let k=1;k<=n;k++){p=this.G.mul(p,x);s=this.G.add(s,p);}return s;}
+  exponentialSeries(x,n){let s=this.G.one,p=this.G.one;for(let k=1;k<=n;k++){p=this.G.mul(p,x);s=this.G.add(s,this.G.mul(this.G.q(1,factorial(k)),p));}return s;}
+  inverse(label,n,F,lower){
+    const I=this.G.inv(lower),root=this.G.mul(I,this.geometric(this.G.mul(I,F),n));
+    return this.record(label,n,'finite reciprocal Taylor series at actual positive value',root,[F,lower],{positiveValueLower:lower});
+  }
+  exponential(label,n,F,actualValueUpper=null){
+    const value=actualValueUpper??this.G.exp(F),root=this.G.mul(value,this.exponentialSeries(F,n));
+    return this.record(label,n,'finite exponential Taylor series',root,[F,value],{actualValueUpper:value,valueUpperDerivedFromNorm:actualValueUpper===null});
+  }
+  logarithm(label,n,F,lower){
+    const I=this.G.inv(lower),x=this.G.mul(I,F);let root=this.G.add(F,I),p=this.G.one;
+    for(let k=1;k<=n;k++){p=this.G.mul(p,x);root=this.G.add(root,this.G.mul(this.G.q(1,k),p));}
+    return this.record(label,n,'log value <= F+1/lower and its finite Taylor series',root,[F,lower],{positiveValueLower:lower});
+  }
+  squareRoot(label,n,F,lower){
+    const root=this.G.mul(this.G.sqrt(F),this.geometric(this.G.div(F,lower),n));
+    return this.record(label,n,'positive square-root Taylor, |binom(1/2,k)|<=1',root,[F,lower],{positiveValueLower:lower});
+  }
+  compose(label,n,outerTotal,innerNonconstantSum){
+    const root=this.G.mul(outerTotal,this.geometric(innerNonconstantSum,n));
+    return this.record(label,n,'total-degree Taylor composition',root,[outerTotal,innerNonconstantSum]);
+  }
+  derivative(label,n,higher){return this.record(label,n,'one ordinary derivative: (n+1)*higher total jet',this.G.mul(this.G.q(n+1),higher),[higher],{requiredInputOrder:n+1});}
+  prefix(label,n,F,length){
+    return this.record(label,n,'parameter-independent endpoints; moving upper endpoint by FTC',this.G.mul(this.G.add(this.G.one,length),F),[F,length],{etaEndpointDependence:false});
+  }
+  implicit(label,n,F,inverseSlope,zerothUpper,dimension=1){
+    const A=this.G.mul(this.G.q(dimension),F,inverseSlope),P=this.G.add(this.G.one,A),coefficients=implicitCatalanCoefficients(n);
+    let root=zerothUpper;
+    for(const row of coefficients.rows)for(const term of row.terms)root=this.G.add(root,this.G.mul(this.G.q(term.coefficient),this.G.pow(A,term.aPower),this.G.pow(P,term.onePlusAPower)));
+    return this.record(label,n,'actual root implicit Catalan recurrence',root,[F,inverseSlope,zerothUpper],
+      {dimension,actualLinearUnknownAlreadyInverted:true,positiveMajorantA:A,
+        coefficientNormIncludesExternalAndUnknownVariables:true,
+        untranslatedCoefficientBound:F,actualJacobianInverseNorm:inverseSlope,
+        fullMixedMajorant:'A*(1/((1-t)*(1-w))-1-w)',
+        fullMixedToQuadraticIdentity:'(1-w)*w=A*t/(1-t)+A*w^2',
+        equation:coefficients.equation,coefficientFormula:'Cat(k-1)*binom(m-1,k-1)*A^k*(1+A)^(k-1)',
+        finiteCoefficientCount:n*(n+1)/2,oldSmallDerivativeBoxUsed:false});
+  }
+}
+
+return {chooseInteger,implicitCatalanCoefficients,physicalXConversion,PositiveTaylorLedger};
+})();
+const __m2_114 = (()=>{
+/** Arbitrary finite jets of the SAME completed leading axial source.
+ *
+ * Bounds are generated from the natural Banach series, actual B22/B26/B34,
+ * the same B8 root, removable C1 variance, the same circle inverse, original
+ * finite N, actual I1 root, and actual outer amplitude. Fixed order-6/order-12
+ * estimates are not extrapolated. The bounds may exceed the original R.
+ *
+ * This is a bound producer, not a signed-moment evaluator or an all-order
+ * positive coefficient/background/H certificate. See the accompanying proof.
+ */
+const {SOURCE_PROFILE_ID,assertSourceProfile} = __m2_45;
+const {PINNED_N3} = __m2_44;
+const {ActualSourceExpressions} = __m2_65;
+const {sourceAllOrderCutoffJets} = __m2_111;
+const {actualB8ContractionProof} = __m2_93;
+const {actualI1ContractionProof} = __m2_95;
+const {prepareActualFullLeadingProgram,assertActualHeatLeading,actualHeatI2ContractionProof} = __m2_101;
+const {ACTUAL_B8_PRECONDITIONER: B8PIN} = __m2_92;
+const {factorial,readRational,qadd,qcompare,qtext,rational,fail} = __m2_74;
+const {PositiveTaylorLedger,physicalXConversion} = __m2_113;
+const ACTUAL_LEADING_ALL_ORDER_BINDINGS=Object.freeze([
+  {path:'mathscope-m1/navier/followup-20261010-same-datum-axis/SAME_DATUM_ANALYTIC_AXIS.md',bytes:20071,sha256:'1923770e721cd73d569150eec19eb8cf78a645b86207b6be90cb97aabb547920'},
+  {path:'mathscope-m1/navier/followup-20261010-same-datum-axis/REFERENCE_DERIVATIVE_BOUNDS.md',bytes:14028,sha256:'c4f47c6a156052a007a55992345faa47c7c47cb5606a46bff693f0b69d5054d9'},
+  {path:'mathscope-m1/navier/followup-20261010-same-datum-axis/CONTINUATION_AND_NEW_DEBT.md',bytes:23134,sha256:'b2b4dfc3f1223e3a5e2bb09043dc649d48d2cda16813d6c719f7d47f6b0214e2'},
+  {path:'mathscope-m1/navier/followup-20261010-same-datum-axis/GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md',bytes:12673,sha256:'f27e8d640e9b8e49805c0128c987f043d5667c298b2029dd061b820ae9e3117b'},
+  {path:'mathscope-m1/navier/followup-20261010-symbolic-gluing/LOOP_DERIVATIVE_ENVELOPE.md',bytes:10357,sha256:'531e5addbe900564c22e0b44406c9c024e7d279c03a7188ea17431a567fe1250'},
+  {path:'mathscope-m1/navier/followup-20261010-symbolic-gluing/C12_FREQUENCY_CONTRACT.md',bytes:12543,sha256:'1740353222f1a5ca727c2c8a2c7063bba8a990f9a4393754256d5c82f49f7a16'},
+  {path:'mathscope-m1/navier/followup-20261010-outer-reselection/OUTER_DERIVATION.md',bytes:22237,sha256:'ffb859d1f6b79aad9aa45e7c5173e8b727cd7a554f6ea28697dc9a108b3dbd81'},
+  {path:'mathscope-m1/navier/followup-20261010-final-stress-audit/HEAT_COMPENSATION_PROOF_EN.md',bytes:18440,sha256:'81446a5f1a6a18a4e1aa9a44fdc5695da1846a1c23fe412c9ac282af155688e3'},
+]);
+
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+let compiledLeading=null;
+function actualFunctionIdentity(context){
+  context.checkCancelled?.();
+  if(!compiledLeading)compiledLeading=prepareActualFullLeadingProgram({sourceProfile:SOURCE_PROFILE_ID,iterations:0},context);
+  assertActualHeatLeading(compiledLeading);
+  const p=compiledLeading.program,l=compiledLeading.loop.program;
+  return {implementation:'actual-continuation-exact-heat.mjs:prepareActualFullLeadingProgram',
+    profileId:p.profileId,parameterExpressionSHA256:p.parameterExpressionSHA256,
+    U0RootName:'actualGlobalU0',U0Root:p.roots.actualGlobalU0,nodeCount:p.nodes.length,
+    F0innerImplementation:'actual-continuation-exact-pregluing.mjs:functions.naturalF and functions.B26EAt / sqrt(2X)',
+    sameOriginalN:l.modulation.originalNRetained,
+    actualB8AndI1RootBodiesPresent:compiledLeading.normalizedDebts.length===5&&compiledLeading.loop.b8.program.B8.cancellation.allFiveMomentsRestoredExactlyInTheLimit&&Object.values(compiledLeading.proof.checks).every(Boolean),
+    actualHeatI2RootBodyPresent:p.I2.rhs.length===3&&p.I2.meanUpperBoundUsedAsDebt===false&&p.heat.tailTruncated===false,
+    rawFunctionGraphDifferentiatedAtRequestedOrder:false,
+    meaning:'The bound recipe below is an independent majorant of these exact functions, with a generated finite-order recurrence.'};
+}
+
+function inputOf(input,context){
+  if(input===null||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Use an actual finite leading-jet request.');
+  for(const k of Object.keys(input))if(!['sourceProfile','radialOrder','etaOrder'].includes(k))fail('INVALID_INPUT','A source, derivative bound, root, R or N cannot be replaced: '+k);
+  const r=input.radialOrder??2,m=input.etaOrder??6,budget=context.jetOrderBudget??128;
+  for(const [name,n]of [['radialOrder',r],['etaOrder',m],['jetOrderBudget',budget]])if(!Number.isSafeInteger(n)||n<0)fail('INVALID_INPUT',name+' must be a nonnegative safe integer.');
+  if(!Number.isSafeInteger(r+m)||r+m+8>budget||budget>512)fail('RESOURCE_LIMIT','This finite request exceeds the declared derivative-resource budget. No missing derivative is set to zero.');
+  assertSourceProfile(input.sourceProfile??SOURCE_PROFILE_ID);return {r,m,n:r+m,budget};
+}
+
+function sourceChecks(source){
+  const p=source.parametersExactExpressions;
+  return [
+    {id:'actual-source-parameter-hash',pass:source.parameterExpressionSHA256===PINNED_N3.parameterExpressionSHA256},
+    {id:'same-natural-scales',pass:same(p.Lambda,{power:[{ref:'Q'},64]})&&same(p.rho,{quotient:[{power:[{ref:'sigmaStar'},2]},{integer:65536}]})},
+    {id:'same-widths',pass:same(p.t1,{power:[{ref:'CSelected'},-120]})&&['kappa0','omega1','omega2'].every(k=>same(p[k],{ref:'t1'}))},
+    {id:'same-R-and-finite-N',pass:same(p.sourceEnvelopeS,{power:[{ref:'CSelected'},100000]})&&same(p.C12EnvelopeR,{exp:{power:[{ref:'sourceEnvelopeS'},256]}})&&same(p.radialFrequencyN,{sum:[{integer:1},{ceil:{power:[{ref:'C12EnvelopeR'},50]}}]})},
+    {id:'same-loop-variance-and-circle-scales',pass:same(p.loopDelta,{exp:{product:[{integer:-1},{power:[{ref:'sourceEnvelopeS'},16]}]}})&&same(p.loopMuMax,{power:[{ref:'sourceEnvelopeS'},12]})&&same(p.loopD0,{quotient:[{integer:1},{product:[{integer:8},{ref:'sourceEnvelopeS'}]}]})},
+    {id:'same-positive-h-lambda',pass:same(p.h,{exp:{product:[{integer:-8002},{ref:'T'}]}})&&same(p.lambda,{exp:{product:[{integer:-1000},{ref:'T'}]}})},
+    {id:'positive-interpolation-before-heat-edit',pass:same(p.Tf,{integer:128}),proof:'Xplus=Xv*e is inside the first unit of the positive 128-unit interpolation. Xtail and XK are later, so the heat edit itself vanishes on [0,Xplus]. Its full improper debt still enters I2.'},
+    {id:'actual-common-collar-before-C12',pass:same(p.Xa,{quotient:[{integer:4},{ref:'Lambda'}]})&&same(p.sourceJLeft,{product:[{quotient:[{integer:4},{ref:'Lambda'}]},{exp:{quotient:[{ref:'t1'},{integer:16}]}}]})&&same(p.loopILeft,{product:[{quotient:[{integer:4},{ref:'Lambda'}]},{exp:{quotient:[{ref:'t1'},{integer:8}]}}]}),proof:'t1>0 gives Xa*exp(t1/16)<loopILeft= Xa*exp(t1/8). The B26 norm up to Xi is restricted to this actual unchanged collar.'},
+    {id:'C-dominates-Q10000-for-coefficient-tube',pass:factorial(51)<(1n<<BigInt(260*200)),proof:'exp(Q^200)>Q^10200/51!>Q^10000; Q>=2^260. This is a value/tube bound, not a derivative-order absorption.'},
+  ];
+}
+
+/** Return ordinary mixed physical-X/eta bounds, covering the requested
+ * rectangle 0<=r'<=r,0<=m'<=m, from a total-degree bound of order r+m.
+ */
+function actualLeadingAllOrderJets(input={},context={}){
+  const request=inputOf(input,context),{r,m,n}=request,source=assertSourceProfile(),functionIdentity=actualFunctionIdentity(context);
+  const primitive=sourceAllOrderCutoffJets({order:n+8,sourceProfile:SOURCE_PROFILE_ID},context),sigma=primitive.activation.ordinaryDerivativeBounds.map(BigInt);
+  const G=new ActualSourceExpressions(),J=new PositiveTaylorLedger(G,context),q=(a,b=1)=>G.q(a,b),P=k=>G.parameter(k),one=G.one;
+  const Q=P('Q'),rho=P('rho'),Lambda=P('Lambda'),C=P('CSelected'),S=P('sourceEnvelopeS'),N=P('radialFrequencyN'),R=P('C12EnvelopeR'),t1=P('t1'),lambda=P('lambda'),mu=P('muMoment'),XR=P('XR'),Pstar=P('Pstar'),sigmaStar=P('sigmaStar'),delta=P('loopDelta'),muMax=P('loopMuMax'),d0=P('loopD0');
+  const Xa=G.div(q(4),Lambda),Xi=q(110),Xv=G.mul(XR,G.exp(G.add(P('T'),q(2),G.mul(q(60),P('BOuter')),G.div(q(13),lambda)))),Xmax=G.add(one,G.mul(q(3),Xv));
+  // All pregluing/pulse radial intervals occur before Xv. The source lower
+  // endpoint is Xa and XR>1. These explicit expressions avoid a fabricated
+  // derivative-dependent envelope R or a change to the old N.
+  const length=G.add(q(32),G.log(XR),G.log(Lambda),P('T'),G.mul(q(60),P('BOuter')),G.div(q(13),lambda)),Xjet=G.mul(q(3),Xmax),sqrtXjet=G.mul(q(3),G.sqrt(G.mul(q(2),Xmax))),invSqrtXjet=G.mul(q(3),G.sqrt(G.div(one,Xa)));
+  const cache=new Map(),memo=(key,fn)=>{if(cache.has(key))return cache.get(key);context.checkCancelled?.();const value=fn();cache.set(key,value);return value;};
+  const add=(label,k,...a)=>J.sum(label,k,...a),mul=(label,k,...a)=>J.product(label,k,...a),D=(label,k,a)=>J.derivative(label,k,a);
+  const sigmaAt=(label,k,arg,shift=0,scale=one)=>{
+    let root=G.zero,power=one;
+    for(let j=0;j<=k;j++){root=G.add(root,G.mul(q(sigma[j+shift],factorial(j)),power));power=G.mul(power,arg);}
+    return J.record(label,k,'actual square-seed cutoff finite Taylor composition',G.mul(scale,root),[arg,scale],{sourceDerivativeShift:shift,sourceLargestDerivative:k+shift});
+  };
+  const unitBump=(label,k,argumentBound=q(65536),prefactor=one)=>sigmaAt(label,k,argumentBound,1,prefactor);
+  const geom=k=>memo('geom'+k,()=>{
+    const eta=q(2),d=q(5),L=q(3),invL=J.inverse('L inverse',k,L,q(49,50)),f=J.inverse('actual f=(1+eta^2)^-1',k,q(5),one),uStar=q(10),H=G.add(G.mul(q(1),eta),G.mul(d,uStar)),den=G.add(G.pow(H,2),G.pow(sigmaStar,2));
+    const zeta=G.mul(L,H,J.inverse('actual zeta denominator',k,den,G.pow(sigmaStar,2))),logGValue=G.add(G.log(C),G.mul(q(64),Lambda,G.pow(sigmaStar,-2)));
+    const logg=k?G.add(logGValue,G.mul(Lambda,geom(k-1).zeta)):logGValue;
+    return {eta,d,L,invL,f,uStar,zeta,logg,logGValue};
+  });
+  // Differentiate the actual B_rho coefficient sum, not its Bessel comparator.
+  const natural=(k,physical=false)=>memo('natural'+k+physical,()=>{
+    let root=G.zero;const coefficients=[];
+    const stirling=Array.from({length:k+1},()=>[]);stirling[0][0]=1n;
+    for(let i=1;i<=k;i++)for(let j=0;j<=i;j++)stirling[i][j]=BigInt(j)*(stirling[i-1][j]??0n)+(j?stirling[i-1][j-1]??0n:0n);
+    for(let rr=0;rr<=k;rr++)for(let mm=0;mm+rr<=k;mm++){
+      let a=G.zero;
+      if(physical)a=G.mul(q(factorial(rr+mm)*2n**BigInt(rr+mm+1),20n**BigInt(rr)*factorial(rr)*factorial(mm)),G.pow(Lambda,rr));
+      else for(let j=0;j<=rr;j++)if(stirling[rr][j])a=G.add(a,q(stirling[rr][j]*factorial(mm+j)*2n**BigInt(mm+j+1),4n**BigInt(j)*factorial(rr)*factorial(mm)));
+      root=G.add(root,G.mul(Q,G.pow(rho,-mm),a));coefficients.push({radialOrder:rr,etaOrder:mm,coefficientRoot:a});
+    }
+    return J.record(physical?'actual natural physical total jet':'actual natural log-radius total jet',k,'B_rho positive differentiated geometric series on |Y|<=5',root,[Q,rho,Lambda],
+      {actualNonlinearSeries:true,comparisonSubstituted:false,coordinate:physical?'physical X':'log X',coefficients,complexYAbsoluteUpper:5,etaDistanceUpper:'rho/4'});
+  });
+  const gNorm=k=>J.record('actual g eta jet',k,'Cauchy on the actual Omega tube; |g|<1 and radius >=rho',G.mul(q(2*(k+1)),G.pow(rho,-k)),[rho],{ordinaryDerivativeUpper:'2*m!*rho^-m',radialIndependent:true});
+  const pressure=k=>J.record('actual A21 pressure jet',k,'positive-measure representation, |P|<=5K on |Im eta|<=1/16',G.mul(q(5),P('K'),J.geometric(q(32),k)),[P('K')],{cauchyRadius:'1/32',actualAllOuterEnergyAndInfiniteTailRetained:true});
+  const moment=(label,k,F,U)=>{
+    const densities=[U,G.mul(q(2),Xjet,F),G.mul(q(2),Xjet,U,F),G.add(G.pow(U,2),G.mul(Xjet,G.pow(F,2))),G.pow(F,2)];
+    const rows=densities.map((v,j)=>J.record(label+' '+['M','I','J','S','Cp'][j],k,'actual physical-X prefix; eta integration and radial FTC',G.mul(q(4),Xmax,v),[v,Xmax],{density:['U','2X F','2X U F','U^2-X F^2','F^2'][j],axisRegular:true}));
+    return {M:rows[0],I:rows[1],J:rows[2],S:rows[3],Cp:rows[4],rows};
+  };
+  const reference=k=>memo('ref'+k,()=>{
+    const g=geom(k),nat=natural(k),nat1=natural(k+1),cut=sigmaAt('B22 actual cutoff',k,G.add(one,G.inv(t1))),invPhi=J.inverse('B22 actual Phi reciprocal',k,nat,q(1,4));
+    const slope=mul('B22 Y PhiY/Phi',k,D('natural log radial derivative',k,nat1),invPhi),v=J.prefix('B22 literal log integral',k,G.mul(G.add(one,cut),slope),G.mul(q(2),t1));
+    const logPhi=J.logarithm('actual log Phi at start',k,nat,q(1,4)),logR=G.add(logPhi,v),Rr=J.exponential('actual B22 Rr',k,logR,q(2));
+    const Ur=G.add(g.uStar,G.div(nat,Lambda),J.prefix('B22 literal U integral',k,G.mul(G.add(one,cut),G.div(D('natural u log radial derivative',k,nat1),Lambda)),G.mul(q(2),t1)));
+    const Fr=G.mul(gNorm(k),Rr),Pi=G.add(pressure(k),moment('reference prefix',k,Fr,Ur).Cp);
+    return {Rr,Ur,Fr,Pi,l:G.mul(G.add(one,cut),slope),logR};
+  });
+  const refSource=k=>memo('refSource'+k,()=>{
+    const a=reference(k),b=reference(k+1),g=geom(k),Ueta=D('reference U_eta',k,b.Ur),avgEta=Ueta,avg=a.Ur;
+    const W=G.add(one,G.mul(q(2),g.eta,avg),G.mul(g.d,avgEta)),Hc=G.add(g.eta,G.mul(g.d,a.Ur)),logFeta=G.add(G.mul(Lambda,g.zeta),G.mul(D('reference Rr_eta',k,b.Rr),J.inverse('reference ratio Rr inverse',k,a.Rr,q(1,4))));
+    const oneMinus=G.add(one,G.mul(q(2),g.eta,a.Ur)),Sq=G.add(G.mul(W,a.l),G.mul(P('h'),oneMinus),G.mul(Hc,logFeta));
+    const Sn=G.add(G.mul(W,D('reference DyU',k,b.Ur)),G.mul(oneMinus,a.Ur),G.mul(Hc,Ueta),G.mul(g.d,D('reference Pi_eta',k,b.Pi)),G.mul(q(4),g.eta,a.Pi),G.mul(q(2),g.eta,Xjet,G.pow(a.Fr,2)));
+    const ratio=G.mul(a.Rr,J.inverse('reference Rr denominator',k,a.Rr,q(1,4))),p1=G.mul(Xjet,g.invL,ratio,Sq),ns=G.mul(g.invL,Sn);
+    return {p1:J.record('actual reference p1',k,'regular original source integral X/L*integral s Rr(sX)/Rr(X) Sq',p1,[Sq,ratio,g.invL,Xjet],{smallGDividedOut:false}),
+      ns:J.record('actual reference ns',k,'regular original source integral L^-1*integral Sn',ns,[Sn,g.invL],{allSixSnTermsIncluded:true})};
+  });
+  const inner=k=>memo('inner'+k,()=>{
+    const s=refSource(k),g=geom(k),control=sigmaAt('B26 original t1/omega controls',k,G.add(one,G.inv(t1))),kap=G.add(q(2),control),beta=G.add(one,control),blend=control;
+    const shear=G.add(G.mul(G.add(one,blend),kap,s.p1),G.mul(q(4,5),blend)),I=J.prefix('B26 actual shear integral',k,shear,length),logF=G.add(g.logg,J.logarithm('actual Phi4 logarithm',k,natural(k),q(1,4)),G.mul(q(1,2),I));
+    const F=J.exponential('actual B26 F',k,logF),U=G.add(g.uStar,G.div(natural(k),Lambda),J.prefix('actual B26 U integral',k,G.mul(q(1,2),kap,beta,Xjet,s.ns),length));
+    const coreF=G.mul(gNorm(k),natural(k)),coreU=G.add(g.uStar,G.div(natural(k),Lambda));
+    return {F: G.add(F,coreF),U:G.add(U,coreU),logF,E:G.mul(sqrtXjet,F),source:s,endpointLogE:G.add(logF,length,q(4))};
+  });
+  const prebase=k=>memo('prebase'+k,()=>{
+    const a=inner(k),g=geom(k),step=sigmaAt('B34/axial-restoration/unit-width controls',k,G.mul(G.add(q(4),length),G.add(one,G.inv(P('Tsh'))))),logf=J.logarithm('actual log f',k,g.f,q(1,2));
+    const shiftLog=G.add(G.log(C),length,G.mul(G.add(one,step),G.add(G.log(C),a.endpointLogE)),G.mul(step,logf));
+    const shiftE=J.exponential('actual B34 endpoint-preserving E',k,shiftLog),restoredU=G.add(a.U,G.mul(G.add(q(8),a.U),step));
+    const outerLog=G.add(P('logP'),G.mul(G.add(one,step),G.add(q(2),logf)),G.mul(q(8),length,G.add(one,step)),G.mul(q(8),P('T'))),outerE=J.exponential('literal initial-decay-entry-power and first interpolation unit E',k,outerLog,G.pow(C,2));
+    const E=G.add(a.E,shiftE,outerE),F=G.add(a.F,G.mul(invSqrtXjet,G.add(shiftE,outerE))),U=G.add(a.U,restoredU,q(8));
+    return {E,F,U,inner:a,moments:moment('actual incoming B8 and ideal prefixes',k,F,U)};
+  });
+  let maxPreconditioner=rational(0);
+  for(const row of B8PIN.preconditioner){const s=row.reduce((v,x)=>{const a=readRational(x);return qadd(v,a[0]<0n?[-a[0],a[1]]:a);},rational(0));if(qcompare(s,maxPreconditioner)>0)maxPreconditioner=s;}
+  const [pn,pd]=maxPreconditioner,PB=q(pn,pd),Bquadratic=B8PIN.quadraticPreconditionedBounds.map(x=>readRational(x)).reduce(qadd,rational(0)),BQ=q(...Bquadratic);
+  const outer=k=>memo('outer'+k,()=>{
+    const g=geom(k),coeff=G.mul(G.pow(C,32),J.geometric(q(8),k));
+    const amplitude=J.implicit('actual outer positive Amp',k,G.mul(q(13),coeff),q(20,7),q(2));
+    const R0=G.mul(q(14),G.add(one,sigmaAt('actual R0 initial scale 50',k,q(64))),G.add(one,sigmaAt('actual R0 terminal cutoff',k,one))),bump=unitBump('actual pulse endpoint beta',k,q(4),q(4));
+    const pulse=G.mul(q(3),G.pow(C,2),g.f,G.add(G.mul(amplitude,R0),G.mul(q(2),coeff,G.add(one,amplitude),bump)));
+    const logArg=J.logarithm('actual decay log(1+s)',k,G.add(q(2),P('T')),one),decay=G.mul(q(8),G.add(one,sigmaAt('actual axialDecay k(log(1+s)/Md)',k,G.div(logArg,P('Md')))));
+    return {U:J.record('complete actual outer U',k,'literal decay and actual Amp/affine M,J pulse with exact zero exterior',G.add(q(8),decay,pulse),[pulse,decay,amplitude],
+      {complexCoefficientNorm:G.pow(C,32),coefficientTubeRadius:'1/4',cauchyRadius:'1/8',realAmplitudeDerivativeLower:'7/20',sameAmplitudeBracket:['9/10','6/5'],infiniteEnergyTailIncluded:true,complexSqrtBranchAssumed:false}),amplitude};
+  });
+  const premod=k=>memo('premod'+k,()=>{
+    const a=prebase(k),g=geom(k),M=a.moments,Ki=G.div(q(5),Pstar),XR32=G.sqrt(G.pow(XR,3)),Kn=G.mul(Pstar,g.f);
+    // The comparison ideal F~X^(-2/5) is not bounded at the axis. Its
+    // five exact primitives, rather than an invalid bounded-density rule,
+    // give these endpoint bounds (x=exp(-7)<1).
+    const idealI=G.mul(q(2),XR32,Kn),ideal=[G.mul(q(4),g.eta,XR),idealI,G.mul(q(4),g.eta,idealI),G.add(G.mul(q(16),G.pow(g.eta,2),XR),G.mul(XR,G.pow(Kn,2))),G.mul(q(3),G.pow(Kn,2))];
+    const [dm,di,dj,ds,dp]=M.rows.map((v,j)=>G.add(v,ideal[j]));
+    J.record('actual minus exact ideal B8 moments',k,'all five actual histories plus the exact ideal endpoint primitives',G.add(dm,di,dj,ds,dp),[...M.rows,...ideal],{idealAxisSingularDensityNotBoundedByActualF:true,idealEndpoint:'x=exp(-7)',idealCpPrimitive:'(5/2)*Keta^2*x^(1/5)'});
+    const rows=[G.mul(dm,Ki,G.inv(XR)),G.mul(G.add(dj,G.mul(q(4),g.eta,di)),G.pow(Ki,2),G.inv(XR32)),G.mul(di,Ki,G.inv(XR32)),G.mul(G.add(ds,G.mul(q(8),g.eta,dm)),G.pow(Ki,2),G.inv(XR)),G.mul(dp,G.pow(Ki,2))].map(v=>G.div(v,mu));
+    const rhs=G.add(...rows),equation=G.add(q(2),G.mul(PB,rhs),G.mul(q(20),mu,BQ));
+    const root=J.implicit('same actual B8 root at arbitrary finite eta order',k,equation,q(2),q(5,1000000),5),bump=unitBump('actual B8 width1/4096 bumps',k,q(65536));
+    const correction=G.mul(Pstar,g.f,mu,root,bump),U=G.add(a.U,correction,outer(k).U),E=G.add(a.E,correction),F=G.add(a.F,G.mul(invSqrtXjet,correction));
+    return {U,E,F,moments:moment('actual full pre-C12 prefixes',k,F,U),B8root:root,B8normalizedDebtRows:rows};
+  });
+  const loopInput=k=>memo('loopInput'+k,()=>{
+    const a=premod(k),b=premod(k+1),g=geom(k),invE=J.inverse('actual pre-loop E on J',k,a.E,G.pow(C,-3)),invAInput=G.pow(C,-122),Xinv=G.div(q(3),Xa),M=a.moments,Me=b.moments;
+    const ar=G.add(one,G.mul(q(2),D('actual pre-loop DyE',k,b.E),invE)),bs=G.mul(q(2),D('actual pre-loop DyU',k,b.U),invE),invA=J.inverse('actual pre-loop a on J',k,ar,invAInput),ts=G.mul(bs,invA),vs=G.add(ar,G.mul(G.pow(bs,2),invA));
+    const W=G.add(one,G.mul(q(2),g.eta,M.M,Xinv),G.mul(g.d,D('actual M_eta',k,Me.M),Xinv));
+    const angular=G.add(M.I,G.mul(g.eta,D('actual I_eta',k,Me.I)),G.mul(g.d,D('actual J_eta',k,Me.J)),G.mul(q(2),g.eta,M.J)),p1=G.mul(g.invL,G.add(G.mul(Xjet,W),G.mul(angular,invE,invSqrtXjet)));
+    const Pi=G.add(pressure(k),M.Cp),PiEta=G.add(D('actual P_eta',k,pressure(k+1)),D('actual Cp_eta',k,Me.Cp));
+    const p2=G.mul(g.invL,invE,G.add(G.mul(Xjet,W,a.U),M.M,G.mul(g.eta,D('actual M_eta for p2',k,Me.M)),G.mul(q(4),g.eta,M.S),G.mul(g.d,D('actual S_eta',k,Me.S)),G.mul(Xjet,G.add(G.mul(q(4),g.eta,Pi),G.mul(g.d,PiEta)))));
+    return {E:a.E,U:a.U,a:ar,bs,ts,vs,p1,p2,invA};
+  });
+  const tilt=k=>memo('tilt'+k,()=>{
+    const Z=G.pow(S,13),E=G.exp(G.mul(q(2),Z)),Mnorm=G.mul(q(9),E),Mlower=G.exp(G.neg(G.mul(q(2),Z))),invM=J.inverse('actual exponential circle mean M inverse',k,Mnorm,Mlower),arg=G.mul(q(3),G.add(one,Z));
+    const numerator=J.exponential('actual exp(z sin theta)',k,arg),normalized=G.mul(numerator,invM),ratio=G.mul(Mnorm,G.pow(invM,2));
+    return {normalized,ratio,Mnorm,Z};
+  });
+  const loop=k=>memo('loop'+k,()=>{
+    const a=loopInput(k),z0=G.pow(S,13),high=tilt(k+2),Qjet=G.mul(q((k+1)*(k+2)),high.ratio),Qlower=G.exp(G.neg(G.pow(S,14)));
+    J.record('removable Q at p2=0',k,'integral_0^1 (1-s) R_second(s*z) ds',Qjet,[high.ratio],{requiredTiltOrder:k+2,divisionByP2:false,actualValueLower:Qlower});
+    const cut=sigmaAt('actual C1 delta-width cutoff',k,G.mul(q(8),G.inv(delta),G.add(q(4),a.vs))),vStar=G.add(q(2),G.mul(q(1,2),delta)),rad=G.mul(G.add(vStar,a.vs),a.invA),radLower=G.div(delta,G.mul(q(4),S));
+    const rnorm=G.mul(G.add(one,cut),J.squareRoot('actual nonzero branch r=sqrt((vStar-vs)/a)',k,rad,radLower)),target=G.add(a.vs,G.mul(G.pow(G.add(one,cut),2),G.add(vStar,a.vs)));
+    const muVar=G.add(one,muMax),zin=G.mul(muVar,a.p2),composedQ=J.compose('Q(mu*p2) in actual implicit equation',k,Qjet,G.add(q(2),zin)),sq=J.squareRoot('actual sqrt Q(mu*p2)',k,composedQ,Qlower),equation=G.add(G.mul(d0,muVar,sq),rnorm);
+    const muRoot=J.implicit('same nonnegative actual C1 mu root',k,equation,G.exp(G.pow(S,14)),muMax),tiltD=D('actual derivative of normalized tilt',k,tilt(k+1).normalized),zinRoot=G.mul(muRoot,a.p2);
+    const t=G.add(a.ts,G.mul(d0,muRoot,J.compose('removable actual t integral',k,tiltD,G.add(q(3),zinRoot)))),invTarget=J.inverse('actual vTarget denominator',k,target,q(2)),density=G.mul(a.a,G.add(one,G.pow(t,2)),invTarget);
+    const phi=J.prefix('actual circle lift on one period',k,density,q(8)),theta=J.implicit('same actual circle inverse lift',k,G.add(phi,q(2)),G.mul(q(16),G.pow(S,2)),q(16));
+    const AtTheta=G.mul(q(1,2),a.a,G.add(phi,q(8))),BtTheta=G.mul(q(1,2),a.E,a.a,G.add(G.mul(a.ts,phi),J.prefix('actual B primitive t integral',k,t,q(8)))),meanA=G.mul(q(8),AtTheta,density),meanB=G.mul(q(8),BtTheta,density);
+    const A=G.add(G.mul(q(1,2),a.a,G.add(q(2),theta)),meanA),B=G.add(G.mul(q(1,2),a.E,a.a,G.add(G.mul(q(2),a.ts),J.compose('actual B integral at inverse lift',k,J.prefix('actual t prefix',k,t,q(8)),G.add(q(2),theta)))),meanB);
+    const phaseFactor=G.pow(G.add(one,N),k),physicalA=G.div(G.mul(phaseFactor,A),N),du=G.div(G.mul(phaseFactor,B),N),de=G.mul(a.E,G.add(one,J.exponential('actual finite-N E multiplier',k,physicalA)));
+    J.record('actual fast phase substitution',k,'Dy^r B(y,eta,N*y)=sum binom(r,j) N^j B_(y^(r-j),phase^j)',du,[B,N],{factor:phaseFactor,etaPhaseDerivative:0,sameN:true,periodicValueBoundUsedOnOnePeriod:true});
+    return {A,B,mu:muRoot,theta,du,de,source:a,Qjet,target,phaseFactor};
+  });
+  const final=k=>memo('final'+k,()=>{
+    const a=premod(k),b=loop(k),g=geom(k),du=b.du,de=b.de,E=a.E,U=a.U;
+    const densities=[G.mul(Xjet,du),G.mul(sqrtXjet,Xjet,de),G.mul(sqrtXjet,Xjet,G.add(G.mul(E,du),G.mul(U,de),G.mul(du,de))),G.mul(Xjet,G.add(G.mul(q(2),U,du),G.pow(du,2),G.mul(E,de),G.mul(q(1,2),G.pow(de,2)))),G.add(G.mul(E,de),G.mul(q(1,2),G.pow(de,2)))];
+    const debts=densities.map((v,j)=>J.record('actual C12 debt '+j,k,'same-N actual density integral over fixed log-radius endpoints',G.mul(length,v),[v,length],{allQuadraticCrossTermsRetained:true}));
+    const Kbase=G.mul(Pstar,G.exp(G.add(G.mul(q(-1,2),P('T')),q(-7,10),G.mul(q(-1,2),lambda),G.neg(G.mul(G.add(q(1,2),lambda),G.sub(G.mul(q(60),P('BOuter')),q(25))))))),Knorm=G.mul(Kbase,g.f),invK=G.div(q(5),Kbase),X0=P('X0I1'),X032=G.sqrt(G.pow(X0,3));
+    const rows=[G.mul(debts[0],G.inv(X0),invK,G.inv(lambda)),G.mul(G.add(G.mul(debts[2],G.inv(X032),G.pow(invK,2)),G.mul(debts[0],G.inv(X0),invK)),G.pow(lambda,-2)),G.mul(debts[1],G.inv(X032),invK,G.inv(lambda)),G.mul(debts[3],G.inv(X0),G.pow(invK,2),G.inv(lambda)),G.mul(debts[4],G.pow(invK,2),G.inv(lambda))];
+    const rhs=G.add(...rows),equation=G.add(one,G.mul(q(1n<<30n),rhs),G.mul(q(1n<<40n),lambda));
+    const root=J.implicit('same actual continuous I1 root at arbitrary finite eta order',k,equation,q(2),q(5,1000000),5),bump=unitBump('actual unit-mass I1 width1/2 bumps',k,q(64),q(2)),repair=G.mul(Knorm,lambda,root,bump);
+    return {U: G.add(U,du,repair),E:G.add(E,de,repair),I1root:root,normalizedDebtRows:rows,actualC12Debts:debts,repair,loop:b};
+  });
+  const heatActive=k=>memo('heatActive'+k,()=>{
+    const h=P('h'),g=geom(k),X0=P('X0I2'),eStar=G.mul(Pstar,G.exp(G.add(G.mul(q(-1,2),P('T')),q(-7,10),G.mul(q(-1,2),lambda),G.neg(G.mul(G.add(q(1,2),lambda),G.sub(G.mul(q(60),P('BOuter')),q(20))))))),Knorm=G.mul(eStar,g.f),invK=G.div(q(5),eStar);
+    // L(z)=E_Gamma(1+h)[1-(1+z*t)^(-h)]. At z>=0,
+    // |L^(j)| <= (h)_j(1+h)_j. Z=2(1-eta^2)/X has
+    // nonconstant eta Taylor norm <=6/X. Keep an explicit 1/X in
+    // every derivative for the ACTUAL improper radial integral.
+    let loss=G.mul(q(4),h),ph=one,p1h=one;const rows=[];
+    for(let j=1;j<=k;j++){
+      ph=G.mul(ph,G.add(h,q(j-1)));p1h=G.mul(p1h,G.add(h,q(j)));
+      const term=G.mul(q(6n**BigInt(j),factorial(j)),ph,p1h);loss=G.add(loss,term);rows.push({order:j,gammaRatioRoot:p1h,fallingHeatRoot:ph,term});
+    }
+    J.record('actual heat loss arbitrary eta jet with radial decay',k,'Gamma recurrence and finite composition; X*[L(2d/X)]_eta,k <= loss',loss,[h],{gammaMomentRows:rows,constantTerm:'L(Z)<=4h/X',radialDecayRetained:'1/X',improperTailIncluded:true});
+    const quadraticLoss=G.add(loss,G.mul(q(1,2),G.pow(loss,2)));
+    // H4: eK<=eStar and eK*sqrt(XK)<=eStar*sqrt(X0), XK>=X0.
+    // These are source value inequalities, valid before differentiation;
+    // all eta derivatives were generated above, rather than borrowed from H9 C2.
+    const heatI=G.div(G.mul(q(4),loss,eStar,G.sqrt(X0)),h),heatS=G.mul(q(4),G.pow(eStar,2),quadraticLoss),heatCp=G.div(heatS,X0);
+    const X032=G.sqrt(G.pow(X0,3)),rhsRows=[G.mul(heatI,G.inv(lambda),G.inv(X032),invK),G.mul(heatS,G.inv(lambda),G.inv(X0),G.pow(invK,2)),G.mul(heatCp,G.inv(lambda),G.pow(invK,2))],equation=G.add(one,G.mul(q(1n<<30n),G.add(...rhsRows)),G.mul(q(1n<<40n),lambda));
+    const root=J.implicit('same actual I2 heat compensating root at arbitrary eta order',k,equation,q(2),q(3,1000000),3),correction=G.mul(Knorm,lambda,root,unitBump('actual I2 unit-mass E bumps',k,q(64),q(2)));
+    return {E:G.add(final(k).E,correction),I2root:root,loss,heatI,heatS,heatCp,normalizedDebtRows:rhsRows,correction,
+      sourceH4:{XStar:X0,eStar,inequalities:['eK<=eStar','eK*sqrt(XK)<=eStar*sqrt(XStar)','XK>=XStar>=1'],source:'HEAT_COMPENSATION_PROOF_EN.md H2-H4'},
+      radialIntegrals:{I:'integral_1^infinity x^(-1-h) dx=1/h',S:'integral_1^infinity x^(-1-2A) dx=1/(2A)<=1',Cp:'integral_1^infinity x^(-2-2A) dx=1/(1+2A)<=1'}};
+  });
+  const f=final(n),active=heatActive(n),inside=inner(n),core=natural(n,true),coreU=G.add(q(10),G.div(core,Lambda)),coreF=G.mul(gNorm(n),core),conversion=physicalXConversion(r,m),ordinary=q(factorial(n));
+  const annulusFactor=G.mul(G.add(one,q(conversion.ordinaryCoefficient)),G.pow(G.add(one,G.inv(Xa)),r)),Ubound=G.add(G.mul(ordinary,coreU),G.mul(annulusFactor,f.U)),FinnerBound=G.add(G.mul(ordinary,coreF),G.mul(annulusFactor,inside.F));
+  const FactiveBound=G.add(G.mul(ordinary,coreF),G.mul(annulusFactor,invSqrtXjet,active.E)),Xplus=G.mul(Xv,G.exp(one));
+  const b8proof=actualB8ContractionProof(),i1proof=actualI1ContractionProof(),i2proof=actualHeatI2ContractionProof(),checks=[...sourceChecks(source),
+    {id:'actual-source-program-internally-constructed',pass:functionIdentity.sameOriginalN&&functionIdentity.actualB8AndI1RootBodiesPresent&&functionIdentity.actualHeatI2RootBodyPresent},
+    {id:'all-needed-source-step-derivatives-generated',pass:primitive.pass&&Math.max(...J.rows.map(x=>x.sourceLargestDerivative??0))<=primitive.order},
+    {id:'same-B8-C0-root-positive-Jacobian',pass:Object.values(b8proof.checks).every(Boolean),proof:'The preconditioned Jacobian inverse is <2. The same C0 root is differentiated; no C^m small-ball premise is asserted.'},
+    {id:'same-I1-C0-root-positive-Jacobian',pass:Object.values(i1proof.checks).every(Boolean),proof:'The exact continuous inverse is <2^30 and the preconditioned point Jacobian inverse is <2. Its old C2 smallness is used only to identify the C0 branch.'},
+    {id:'same-I2-actual-heat-root',pass:Object.values(i2proof.checks).every(Boolean)&&functionIdentity.actualHeatI2RootBodyPresent,proof:'The actual improper heat debts, including their positive eta-dependent tails, define the same C0 root. New arbitrary eta derivatives use Gamma moments, not the old H9 C2 norm.'},
+    {id:'source-function-and-bound-orders-separated',pass:J.rows.every(row=>row.order>=0&&row.order<=n+8)},
+    {id:'physical-axis-removable-extension',pass:conversion.includesAllLogDerivatives&&G.nodes[Ubound]!==undefined&&G.nodes[FinnerBound]!==undefined},
+  ];
+  const roots={U0:Ubound,F0inner:FinnerBound,F0active:FactiveBound,U0LogTotal:f.U,F0innerLogTotal:inside.F,F0activeLogTotal:G.mul(invSqrtXjet,active.E),U0CorePhysicalTotal:coreU,F0CorePhysicalTotal:coreF,
+    actualSourceR:R,actualSourceN:N,actualSourceXv:Xv,actualSourceXa:Xa,actualInnerXi:Xi,actualB8RootNorm:premod(n).B8root,actualI1RootNorm:f.I1root,actualMuRootNorm:f.loop.mu,actualCircleRootNorm:f.loop.theta};
+  Object.assign(roots,{actualSourceXplus:Xplus,actualI2RootNorm:active.I2root,actualHeatLossEtaNormTimesX:active.loss,actualHeatIDebtNorm:active.heatI,actualHeatSDebtNorm:active.heatS,actualHeatCpDebtNorm:active.heatCp});
+  return {schema:'MathScope.ActualLeadingAllOrderJets/1',profileId:SOURCE_PROFILE_ID,parameterExpressionSHA256:source.parameterExpressionSHA256,
+    radialOrder:r,etaOrder:m,totalTaylorOrder:n,derivativeConvention:'ordinary physical X and ordinary eta',
+    boundConvention:'Each returned scalar bounds every requested mixed derivative 0<=rPrime<=radialOrder, 0<=mPrime<=etaOrder; intermediate rows are total factorial Taylor norms.',
+    etaEndpointConvention:'All eta derivatives at -1 and +1 are the continuous one-sided derivatives. The actual heat Laplace function is not asserted holomorphic across these endpoints.',
+    normProgram:G.pack(roots,{schema:'MathScope.ActualLeadingAllOrderPositiveNormProgram/1',sourceFunctionIdentity:functionIdentity,ledger:J.rows}),
+    bounds:{U0:{root:Ubound,domain:{X:['0','infinity'],eta:['-1','1'],exactZeroAfter:'Xv'},actualCompletedLeadingSource:true},
+      F0inner:{root:FinnerBound,domain:{X:['0','sourceJLeft=Xa*exp(t1/16)'],eta:['-1','1'],includesNaturalAndActualB26:true,beforeC12:true},boundComputedOnLargerPreB26Domain:'0<=X<=Xi=110',completedLeadingEqualityOnlyBeforeC12:true,fullGlobalF0:false},
+      F0active:{root:FactiveBound,domain:{X:['0','Xplus=Xv*exp(1)'],eta:['-1','1'],containsAllPositiveOrderVelocityCoefficientSupport:true,containsStressSupportFromOrder:2,containsFullFirstOrderAngularStressSupport:false},actualHeatI2CorrectionIncluded:true,actualHeatEditIsZeroOnThisDomain:true,fullGlobalF0:false}},
+    sourceBindings:ACTUAL_LEADING_ALL_ORDER_BINDINGS,sourceFunctionIdentity:functionIdentity,
+    primitive:{source:primitive.profileId,derivativeOrder:primitive.order,seedPower:primitive.activation.seedPower,
+      ordinaryDerivativeBounds:primitive.activation.ordinaryDerivativeBounds,sourceDefinitionUnchanged:true},
+    physicalConversion:conversion,rootProofs:{B8:b8proof,I1:i1proof,I2:i2proof},heatDerivativeProof:{sourceH4:active.sourceH4,radialIntegrals:active.radialIntegrals,actualGammaMomentRecurrence:true,allEtaOrdersGenerated:true,oldH9C2Extrapolated:false},
+    checks,pass:checks.every(x=>x.pass),
+    scope:{actualSameSourceFiniteLeadingJetsGenerated:true,arbitraryFiniteRecurrence:true,explicitResourceBudget:request.budget,
+      fixedSixOrTwelveJetExtrapolation:false,oldRReselected:false,oldNReselected:false,highDerivativeBoundsMayExceedR:true,
+      actualSignedDebtNumericallyEvaluated:false,actualF0OnAllPositiveOrderVelocitySupportBounded:true,actualF0OnStressSupportFromOrderTwoBounded:true,fullFirstOrderAngularStressSupportCovered:false,fullGlobalF0DerivativeBound:false,positiveOrderCoefficientNormProduced:false,
+      allOrderCutoffScheduleProduced:false,completedBackgroundC2TailCertified:false,actualUniformHColumnsCertified:false,
+      sourceUniformQStarCertified:false,originalN506Complete:false,formalKernelProof:false}};
+}
+
+return {ACTUAL_LEADING_ALL_ORDER_BINDINGS,actualLeadingAllOrderJets};
+})();
+const __m2_115 = (()=>{
+/** Source-bound ordinary mixed-jet norms of the completed coefficient
+ * prefix.  The recurrences are well founded in (order, radial derivative).
+ * A finite source norm is never accepted as a request parameter.
+ */
+const {assertActualOrderInduction} = __m2_112;
+const {sourceAllOrderCutoffJets} = __m2_111;
+const {actualLeadingAllOrderJets} = __m2_114;
+const {factorial,fail} = __m2_74;
+const choose=(n,k)=>factorial(n)/(factorial(k)*factorial(n-k));
+const sealedNorms=new WeakMap();
+
+/** Positive ordinary-derivative calculus. Multiplication executes every
+ * binomial Leibniz term; differentiation shifts the requested derivative.
+ * The underlying functions are bounds of actual operands, not formal
+ * replacements for those operands in the coefficient equation.
+ */
+function actualNormCalculus(G){
+  const q=(n,d=1)=>G.q(n,d),cacheFunction=(body,label='')=>{const cache=new Map();return {label,get(r=0,m=0){if(!Number.isSafeInteger(r)||r<0||!Number.isSafeInteger(m)||m<0)fail('INVALID_INPUT','Use ordinary nonnegative derivative orders.');const k=r+':'+m;if(!cache.has(k))cache.set(k,body(r,m));return cache.get(k);}};};
+  const constant=v=>cacheFunction((r,m)=>r||m?G.zero:v,'constant');
+  const add=(...fs)=>cacheFunction((r,m)=>G.add(...fs.map(f=>f.get(r,m))),'sum');
+  const multiply2=(f,g)=>cacheFunction((r,m)=>{
+    const terms=[];for(let a=0;a<=r;a++)for(let b=0;b<=m;b++)terms.push(G.mul(q(choose(r,a)*choose(m,b)),f.get(a,b),g.get(r-a,m-b)));
+    return G.add(...terms);
+  },'Leibniz product');
+  const mul=(...fs)=>fs.reduce(multiply2,constant(G.one));
+  const scale=(s,f)=>mul(constant(s),f),dx=(f,k=1)=>cacheFunction((r,m)=>f.get(r+k,m),'X derivative'),de=(f,k=1)=>cacheFunction((r,m)=>f.get(r,m+k),'eta derivative');
+  return {fn:cacheFunction,constant,add,mul,scale,dx,de};
+}
+
+function importPositiveProgram(G,program,root){
+  if(!program||!Array.isArray(program.nodes)||!program.nodes[root])fail('INVALID_SOURCE_CONSTRUCTION','The actual leading producer did not supply its norm body.');
+  const map=new Map(),copy=id=>{if(map.has(id))return map.get(id);const n=program.nodes[id];let out;
+    if(n.op==='rational')out=G.q(...n.args.map(BigInt));else if(n.op==='source_parameter')out=G.parameter(n.args[0]);
+    else if(n.op==='add')out=G.add(...n.args.map(copy));else if(n.op==='multiply')out=G.mul(...n.args.map(copy));else if(n.op==='inverse')out=G.inv(copy(n.args[0]));
+    else if(n.op==='integer_power')out=G.pow(copy(n.args[0]),n.args[1]);else if(n.op==='exp')out=G.exp(copy(n.args[0]));else if(n.op==='log_positive')out=G.log(copy(n.args[0]));else if(n.op==='sqrt_positive')out=G.sqrt(copy(n.args[0]));
+    else if(n.op==='maximum')out=G.maximum(...n.args.map(copy));else fail('INVALID_SOURCE_CONSTRUCTION','Unknown leading norm operation '+n.op);
+    map.set(id,out);return out;
+  };return copy(root);
+}
+
+function attachActualInductionNorms(prepared,{derivativeOrder=2,throughOrder=prepared?.order}={},context={}){
+  assertActualOrderInduction(prepared);
+  if(!Number.isSafeInteger(derivativeOrder)||derivativeOrder<0)fail('INVALID_INPUT','Use a finite mixed derivative order.');
+  if(!Number.isSafeInteger(throughOrder)||throughOrder<1||throughOrder>prepared.order)fail('INVALID_INPUT','The requested norm prefix must already have its actual coefficient tuples.');
+  const G=prepared.G,{bootstrap,records}=prepared,order=throughOrder,{X,eta}=bootstrap.constants,q=(n,d=1)=>G.q(n,d),a=actualNormCalculus(G),{fn,constant:C,add,mul,scale,dx,de}=a;
+  const requestedRadial=derivativeOrder+2*order+4,requestedEta=2*derivativeOrder+6*order+8;
+  const leading=actualLeadingAllOrderJets({radialOrder:requestedRadial,etaOrder:requestedEta},context);
+  if(!leading.pass||leading.profileId!==prepared.program.profileId||leading.parameterExpressionSHA256!==prepared.program.parameterExpressionSHA256||leading.derivativeConvention!=='ordinary physical X and ordinary eta')fail('INVALID_SOURCE_CONSTRUCTION','The actual leading mixed-jet producer differs from the completed source.');
+  const leadingURoot=importPositiveProgram(G,leading.normProgram,leading.bounds.U0.root),leadingFRoot=importPositiveProgram(G,leading.normProgram,leading.bounds.F0inner.root),leadingFActiveRoot=leading.bounds.F0active?importPositiveProgram(G,leading.normProgram,leading.bounds.F0active.root):null;
+  const leadingBound=root=>fn((r,m)=>{if(r>requestedRadial||m>requestedEta)fail('RESOURCE_LIMIT','The leading ordinary-jet demand exceeded the generated rectangle; no top derivative is set to zero.');return root;});
+  const leadU=leadingBound(leadingURoot),leadF=leadingBound(leadingFRoot),leadFActive=leadingFActiveRoot===null?null:leadingBound(leadingFActiveRoot),Lambda=G.parameter('Lambda'),h=G.parameter('h'),Xa=G.parameter('Xa'),t1=G.parameter('t1'),{Xplus,Xb,X0,Rbase,ef}=bootstrap.orderOne;
+  const Xlo=G.div(Xa,q(2)),Xhi=G.mul(q(2),Xb),xInner=fn((r,m)=>m?G.zero:r===0?G.one:r===1?G.one:G.zero),xGlobal=fn((r,m)=>m?G.zero:r===0?Xplus:r===1?G.one:G.zero);
+  const etaF=fn((r,m)=>r?G.zero:m===0?q(33,32):m===1?G.one:G.zero),dF=fn((r,m)=>r?G.zero:m===0?q(3):m===1?q(3):m===2?q(2):G.zero);
+  const invL=fn((r,m)=>r?G.zero:G.mul(q(2n*factorial(m)*8n**BigInt(m)),G.one)),D=C(G.one),A=C(G.one),exponent=n=>C(G.add(q(2),G.mul(q(2*n),h)));
+  const Z=(f,n,x)=>mul(invL,add(scale(q(2),mul(etaF,exponent(n),f)),scale(q(2),mul(etaF,x,dx(f))),mul(dF,de(f))));
+  const T=(f,n,x)=>mul(invL,add(mul(exponent(n),f),mul(D,etaF,de(f)),mul(x,dx(f))));
+  const regularV=(U,n)=>{
+    const avg=fn((r,m)=>G.div(U.get(r,m),q(r+1)));
+    return mul(invL,add(scale(q(2),mul(etaF,U)),scale(q(2),mul(etaF,C(G.add(G.one,G.mul(q(2*n),h))),avg)),mul(dF,de(avg))));
+  };
+  const cutoffMemo=new Map(),sourceStepMemo=new Map(),stepBound=m=>{
+    if(!sourceStepMemo.has(m))sourceStepMemo.set(m,sourceAllOrderCutoffJets({order:m},context).activation.ordinaryDerivativeBounds.map(BigInt));return sourceStepMemo.get(m);
+  };
+  const bell=(n,derivatives)=>{
+    const rows=Array.from({length:n+1},()=>Array(n+1).fill(G.zero));rows[0][0]=G.one;
+    for(let r=1;r<=n;r++)for(let k=1;k<=r;k++)rows[r][k]=G.add(...Array.from({length:r-k+1},(_,i)=>G.mul(q(choose(r-1,i)),derivatives[i+1],rows[r-i-1][k-1])));
+    return rows[n];
+  };
+  const kappa=fn((r,m)=>{
+    if(m)return G.zero;if(r===0)return G.one;if(cutoffMemo.has(r))return cutoffMemo.get(r);
+    const width=G.div(t1,q(64)),derivatives=Array.from({length:r+1},(_,k)=>k?G.div(q(factorial(k-1)),G.mul(width,G.pow(Xa,k))):G.zero),B=bell(r,derivatives),S=stepBound(r);
+    const out=G.add(...Array.from({length:r},(_,j)=>G.mul(q(S[j+1]),B[j+1])));cutoffMemo.set(r,out);return out;
+  });
+  const raw={},local={},global={},average={},vel={},pi={},incoming={},alpha={},beta={},correctionF={},correctionU={};
+  const fieldCache=new Map(),remember=(key,build)=>{if(!fieldCache.has(key))fieldCache.set(key,build());return fieldCache.get(key);};
+  function rawField(n,field){return remember('raw'+n+field,()=>fn((r,m)=>rawBound(n,field,r,m),'actual inner '+field+n));}
+  function localField(n,field){if(n===0)return field==='F'?leadF:leadU;return remember('local'+n+field,()=>mul(kappa,rawField(n,field)));}
+  function globalField(n,field){if(n===0){if(field==='U')return leadU;if(leadFActive)return leadFActive;fail('INVALID_SOURCE_CONSTRUCTION','A full leading F norm must not be inferred from its inner restriction.');}return remember('global'+n+field,()=>add(localField(n,field),field==='F'?correction(n).F:correction(n).U));}
+  function velocity(n,domain){return remember('v'+domain+n,()=>regularV(domain==='inner'?localField(n,'U'):globalField(n,'U'),n));}
+  function omega(k,domain){return remember('omega'+domain+k,()=>{
+    const x=domain==='inner'?xInner:xGlobal,getU=i=>domain==='inner'?localField(i,'U'):globalField(i,'U'),v=i=>velocity(i,domain),terms=[T(v(k),k,x),scale(q(2),add(scale(q(2),dx(v(k))),mul(x,dx(v(k),2))))];
+    for(let i=0;i<=k;i++){const j=k-i;terms.push(mul(v(i),add(scale(q(1,2),v(j)),mul(x,dx(v(j))))),mul(getU(i),Z(v(j),j,x)));}
+    if(k>0)terms.push(Z(Z(v(k-1),k-1,x),k-1,x));return add(...terms);
+  });}
+  function innerPressure(n){return remember('innerPi'+n,()=>fn((r,m)=>{
+    if(r===0)return baseInner(n,0,m);
+    const products=[scale(q(2),mul(leadF,rawField(n,'F'))),scale(q(1,2),omega(n-1,'inner'))];
+    for(let i=1;i<n;i++)products.push(mul(localField(i,'F'),localField(n-i,'F')));
+    return add(...products).get(r-1,m);
+  }));}
+  function baseInner(n,r,m){
+    const rec=records[n],actual=rec.norm.actual,aux=rec.norm.auxiliary;
+    // Cauchy in eta is used ONLY for the actual/natural Picard solution,
+    // whose analytic strip and exact source norm were constructed above.
+    const etaFactor=G.mul(q(factorial(m)),G.pow(G.div(q(2),actual.strip),m));
+    const collar=G.mul(actual.solutionNorm,etaFactor,r?G.sqrt(Lambda):G.one);
+    const core=G.mul(q(factorial(r)*factorial(m)),G.pow(Lambda,r),G.pow(G.div(q(2),aux.strip),m),aux.solutionNorm);
+    return G.maximum(collar,core);
+  }
+  const inverseTwoX=fn((r,m)=>m?G.zero:G.mul(q(factorial(r),2),G.pow(Lambda,r+1)));
+  const radialAudit=[];
+  function rawBound(n,field,r,m){
+    context.checkCancelled?.();if(n===0)return (field==='F'?leadF:leadU).get(r,m);
+    if(r<2)return baseInner(n,r,m);
+    const x=xInner,F=i=>i===n?rawField(n,'F'):localField(i,'F'),U=i=>i===n?rawField(n,'U'):localField(i,'U'),v=i=>i===n?regularV(U(n),n):velocity(i,'inner'),terms=[T(field==='F'?F(n):U(n),n,x)];
+    for(let i=0;i<=n;i++){const j=n-i;if(field==='F')terms.push(mul(v(i),add(mul(x,dx(F(j))),F(j))),mul(U(i),Z(F(j),j,x)));else terms.push(mul(x,v(i),dx(U(j))),mul(U(i),Z(U(j),j,x)));}
+    if(field==='F')terms.push(scale(q(4),dx(F(n))),Z(Z(F(n-1),n-1,x),n-1,x));
+    else terms.push(Z(innerPressure(n),n,x),scale(q(2),dx(U(n))),Z(Z(U(n-1),n-1,x),n-1,x));
+    const collar=mul(inverseTwoX,add(...terms)).get(r-2,m),aux=records[n].norm.auxiliary;
+    const core=G.mul(q(factorial(r)*factorial(m)),G.pow(Lambda,r),G.pow(G.div(q(2),aux.strip),m),aux.solutionNorm),bound=G.maximum(core,collar);
+    radialAudit.push({order:n,field,radialOrder:r,etaOrder:m,core,collar,bound,recurrence:'Solve the original equation for 2X*dX^2, then differentiate r-2 times; every same-order field derivative has smaller radial order.',collarAnalyticityAssumed:false});return bound;
+  }
+  const ef0=G.substitute(ef,eta,G.zero),inverseEf=fn((r,m)=>r||m>2?G.zero:G.div(q(2),ef0));
+  const power=(v,p)=>G.exp(G.mul(p,G.log(v))),lambda=G.parameter('lambda'),R1=power(Rbase,G.sub(G.one,G.mul(q(2),lambda))),Rp=power(Rbase,G.sub(q(-2),G.mul(q(2),lambda))),Rz=power(Rbase,G.mul(q(-2),lambda));
+  function momentFunctions(n){return remember('moments'+n,()=>{
+    const F=localField(n,'F'),U=localField(n,'U'),x=xInner,localBodies=[U,scale(q(2),mul(x,F)),scale(q(2),mul(leadF,F)),scale(q(2),mul(x,add(mul(leadU,F),mul(U,leadF)))),scale(q(2),add(mul(leadU,U),mul(x,leadF,F)))];
+    const localMom=localBodies.map(f=>fn((r,m)=>r?G.zero:f.get(0,m)));
+    const lowP=[],lowI=[],lowS=[];
+    for(let i=1;i<n;i++){const j=n-i;lowP.push(mul(globalField(i,'F'),globalField(j,'F')));lowI.push(scale(q(2),mul(xGlobal,globalField(i,'U'),globalField(j,'F'))));lowS.push(mul(globalField(i,'U'),globalField(j,'U')),mul(xGlobal,globalField(i,'F'),globalField(j,'F')));}
+    const integrate=f=>fn((r,m)=>r?G.zero:G.mul(Xplus,f.get(0,m))),O=omega(n-1,'global');
+    return [localMom[0],localMom[1],add(localMom[2],integrate(add(...lowP,scale(q(1,2),O)))),add(localMom[3],integrate(add(...lowI))),add(localMom[4],integrate(add(...lowS,scale(q(1,2),mul(xGlobal,O)))))];
+  });}
+  const bumpMemo=new Map(),bumpNorm=fn((r,m)=>{
+    if(m)return G.zero;if(bumpMemo.has(r))return bumpMemo.get(r);const width=q(1,2048),S=stepBound(r+1);
+    if(r===0){const b=G.div(q(S[1]),width);bumpMemo.set(r,b);return b;}
+    const derivatives=Array.from({length:r+1},(_,k)=>k?G.div(q(4n*factorial(k)),G.mul(width,G.pow(X0,k))):G.zero),B=bell(r,derivatives),bound=G.div(G.add(...Array.from({length:r},(_,j)=>G.mul(q(S[j+2]),B[j+1]))),width);bumpMemo.set(r,bound);return bound;
+  });
+  const inverseIposR=fn((r,m)=>m?G.zero:G.div(q(factorial(r)),G.mul(Rbase,G.pow(X0,r))));
+  function correction(n){return remember('correction'+n,()=>{
+    const M=momentFunctions(n),a0=scale(G.inv(Rbase),M[0]),a1=scale(G.inv(G.mul(q(2),lambda)),add(a0,scale(G.inv(R1),mul(inverseEf,M[3]))));
+    const A=scale(q(1024),add(a0,a1)),B=scale(q(1n<<24n),add(scale(G.inv(G.pow(Rbase,2)),M[1]),scale(G.inv(G.mul(q(2),Rp)),mul(inverseEf,M[2])),scale(G.inv(Rz),mul(inverseEf,M[4]))));
+    const U=scale(G.div(q(2),Rbase),mul(A,bumpNorm)),F=scale(G.div(q(3),Rbase),mul(B,bumpNorm,inverseIposR));
+    return {alpha:A,beta:B,U,F,moments:M,continuousInverseBounds:{U:q(1024),E:q(1n<<24n)},actualRhsSignsBoundedInAbsoluteValue:true};
+  });}
+  const F0pos=fn((r,m)=>{
+    const exponent=G.add(q(2),G.mul(q(2),lambda));
+    // F0pos=ef*R^(-2-2lambda). On Ipos R>=Rbase and
+    // dX^r has factor (1+lambda)_r/X^r, <=(r+2)^r/X0^r.
+    const fEta=G.mul(q(2n*factorial(m)*4n**BigInt(m)),ef0),radial=G.div(q(BigInt(r+2)**BigInt(r)),G.pow(X0,r));
+    return G.mul(fEta,power(Rbase,G.neg(exponent)),radial);
+  });
+  function globalPressure(n){return remember('globalPi'+n,()=>fn((r,m)=>{
+    const p=[scale(q(2),add(mul(leadF,localField(n,'F')),mul(F0pos,correction(n).F))),scale(q(1,2),omega(n-1,'global'))];
+    for(let i=1;i<n;i++)p.push(mul(globalField(i,'F'),globalField(n-i,'F')));const f=add(...p);
+    return r===0?G.mul(Xplus,f.get(0,m)):f.get(r-1,m);
+  }));}
+  const sqrtEnlarged=fn((r,m)=>m?G.zero:G.mul(q(factorial(r)),G.sqrt(G.mul(q(2),Xhi)),G.pow(Xlo,-r))),inverseSqrtEnlarged=fn((r,m)=>m?G.zero:G.div(q(factorial(r)),G.mul(G.sqrt(G.mul(q(2),Xlo)),G.pow(Xlo,r))));
+  const normalized=[],globalRoots=[],leadingNormalized={U:[],radialBracket:[],FActive:[],FActiveDomain:{X:[G.zero,Xplus],eta:['-1','1']}};
+  const leadingRadial=mul(inverseSqrtEnlarged,xGlobal,regularV(leadU,0));
+  for(let r=0;r<=derivativeOrder;r++)for(let m=0;r+m<=derivativeOrder;m++){
+    leadingNormalized.U.push({radialOrder:r,etaOrder:m,upper:leadU.get(r,m)});
+    leadingNormalized.radialBracket.push({radialOrder:r,etaOrder:m,upper:leadingRadial.get(r,m)});
+    if(leadFActive)leadingNormalized.FActive.push({radialOrder:r,etaOrder:m,upper:leadFActive.get(r,m)});
+  }
+  for(let n=1;n<=order;n++){
+    const F=globalField(n,'F'),U=globalField(n,'U'),avg=fn((r,m)=>G.div(U.get(r,m),q(r+1))),M=mul(xGlobal,avg),v=regularV(U,n),V=mul(xGlobal,v),Pi=globalPressure(n);
+    const profiles={E:mul(sqrtEnlarged,F),U,Pi,VOverR:mul(inverseSqrtEnlarged,V),StreamOverR:mul(inverseSqrtEnlarged,M),ExtraStream:scale(q(2),mul(etaF,invL,inverseSqrtEnlarged,M))},jets={};
+    for(const[name,f]of Object.entries(profiles)){jets[name]=[];for(let r=0;r<=derivativeOrder;r++)for(let m=0;m+r<=derivativeOrder;m++)jets[name].push({radialOrder:r,etaOrder:m,upper:f.get(r,m)});}
+    normalized.push({order:n,jets,actualSourceRoots:{F:records[n].global.F,U:records[n].global.U,Pi:records[n].global.Pi,Stream:records[n].global.M,VOverX:records[n].global.v},
+      domain:{X:[Xlo,Xhi],eta:['-1','1']},derivativeConvention:'ordinary physical X and ordinary eta',sourceCoefficientReplacedByBound:false});
+    const c=correction(n);globalRoots.push({order:n,U0:U.get(0,0),F0:F.get(0,0),alpha0:c.alpha.get(0,0),beta0:c.beta.get(0,0),incoming0:c.moments.map(f=>f.get(0,0))});
+  }
+  const roots={};for(const row of normalized)for(const[field,jets]of Object.entries(row.jets))for(const j of jets)roots['n'+row.order+'_'+field+'_X'+j.radialOrder+'_eta'+j.etaOrder]=j.upper;
+  const checks={actualLeadingProducer:leading.pass,sameOriginalProfile:leading.profileId===prepared.program.profileId,allPreviousTuplesCompleted:records.every(r=>r.global.completed),
+    separateActualAndAuxiliarySystems:records.slice(1).every(r=>r.raw.system!==r.auxiliary.system),actualIposInverse:bootstrap.orderOne.proof.actualContinuousEntriesRetained,
+    everyNormalizedMixedJet:normalized.every(r=>Object.values(r.jets).every(j=>j.length===(derivativeOrder+1)*(derivativeOrder+2)/2)),noUserNormInput:true};
+  const result={prepared,G,order,derivativeOrder,normalized,globalRoots,radialAudit,leading,leadingNormalized,roots,checks};
+  result.program=G.pack(roots,{schema:'MathScope.ActualInductionNormProgram/1',order,derivativeOrder,normalized,globalRoots,radialAudit,leadingNormalized,
+    leadingSource:{profileId:leading.profileId,parameterExpressionSHA256:leading.parameterExpressionSHA256,requestedRadial,requestedEta,sourceBindings:leading.sourceBindings},
+    sourceNormRules:{ordinaryLeibniz:'Every binomial term is included.',rawHigherRadial:'Core Cauchy from the separately constructed auxiliary solution; collar second-order PDE recurrence in X.',
+      globalMoments:'Differentiate the actual eta-dependent whole-support integrands; endpoints are eta-independent. The factor Xplus is the actual positive support length upper bound.',
+      localIpos:'The actual continuous inverse is bounded by1024 and2^24. Actual tiny lambda and ef are preserved in the physical row scaling.',
+      cutoff:'Every ordinary cutoff derivative comes from the original square seed and exact Bell/Leibniz recurrences. Flat endpoints share all derivatives.'},
+    checks,pass:Object.values(checks).every(Boolean),scope:{actualCompletedCoefficientMixedNormsDerived:true,allRequestedNormalizedVelocityAndPressureJets:true,
+      fullLeadingFOutsideInnerNotAssumed:true,actualActiveLeadingFSeparatelyBounded:leadFActive!==null,weightedStressNormsDerived:false,actualCutoffSequenceSelected:false,backgroundC2TailCertified:false,originalN506Complete:false,formalKernelProof:false}});
+  sealedNorms.set(result,{prepared,G,nodeCount:G.nodes.length,prefix:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),normalized:JSON.stringify(normalized),leadingNormalized:JSON.stringify(leadingNormalized),order,derivativeOrder});return result;
+}
+function assertActualInductionNorms(result){const r=sealedNorms.get(result);if(!r||r.G!==result.G||JSON.stringify(r.G.nodes.slice(0,r.nodeCount))!==r.prefix||!r.G.functionDefinitionsUnchanged(r.definitions)||JSON.stringify(result.normalized)!==r.normalized||JSON.stringify(result.leadingNormalized)!==r.leadingNormalized||result.order!==r.order||result.derivativeOrder!==r.derivativeOrder)fail('INVALID_SOURCE_CONSTRUCTION','Use unchanged source-bound coefficient norms.');assertActualOrderInduction(r.prepared);return true;}
+
+return {actualNormCalculus,attachActualInductionNorms,assertActualInductionNorms};
+})();
+const __m2_116 = (()=>{
+/** The normalized (5.46) selector consumes actual coefficient norm bodies.
+ * Enormous cutoff scales are exact positive expressions. No logarithm or
+ * source exponent is evaluated with a floating-point underflow to zero.
+ */
+const {assertActualInductionNorms,attachActualInductionNorms} = __m2_115;
+const {assertActualOrderInduction} = __m2_112;
+const {sourceNormalizedCutoffWeights} = __m2_111;
+const {fail} = __m2_74;
+const sealed=new WeakMap();
+function attachActualNormalizedCutoffs(norms,context={}){
+  assertActualInductionNorms(norms);
+  if(norms.derivativeOrder<norms.order)fail('INVALID_INPUT','An order-n diagonal cutoff must consume every actual mixed profile norm through n.');
+  const G=norms.G,q=(n,d=1)=>G.q(n,d),h=G.parameter('h'),log2=G.log(q(2)),rows=[];let previous=G.zero;
+  for(let n=1;n<=norms.order;n++){
+    context.checkCancelled?.();const normalized=norms.normalized[n-1],weights=sourceNormalizedCutoffWeights({order:n,derivativeOrder:n},context);
+    const polynomial=c=>G.add(...c.map((s,k)=>G.mul(q(BigInt(s)),G.pow(h,k))));
+    const W=weights.weights.map(r=>polynomial(r.polynomialInSourceH)),Wp=weights.weights.map(r=>polynomial(r.extraPotentialCutoffPolynomialInSourceH));
+    const jet=(name,r,m)=>{const j=normalized.jets[name].find(j=>j.radialOrder===r&&j.etaOrder===m);if(!j)fail('INVALID_SOURCE_CONSTRUCTION','The actual normalized coefficient jet is missing.');return j.upper;};
+    const coefficientBounds=[];
+    for(let m=0;m<=n;m++){
+      const terms=[];
+      for(let e=0;e<=m;e++)for(let r=0;r+e<=m;r++)for(let s=0;s+r+e<=m;s++){
+        for(const name of ['E','U','Pi','StreamOverR'])terms.push({field:name,eulerOrder:e,radialOrder:r,etaOrder:s,upper:G.mul(W[e],jet(name,r,s))});
+        terms.push({field:'complete radial cutoff bracket / R',eulerOrder:e,radialOrder:r,etaOrder:s,
+          upper:G.add(G.mul(W[e],jet('VOverR',r,s)),G.mul(Wp[e],jet('ExtraStream',r,s)))});
+      }
+      const bound=G.maximum(G.one,...terms.map(t=>t.upper)),requiredLog=G.div(G.add(G.mul(q(n),log2),G.log(bound)),G.mul(q(n),h));
+      coefficientBounds.push({derivativeOrder:m,bound,requiredLog,terms});
+    }
+    const doubling=G.add(previous,log2),logScale=G.maximum(doubling,...coefficientBounds.map(r=>r.requiredLog)),scale=G.exp(logScale);
+    rows.push({order:n,previousLogScale:previous,doubling,logScale,scale,coefficientBounds,
+      sourceCoefficientRoots:normalized.actualSourceRoots,sourceNormRows:norms.normalized[n-1],
+      originalPositiveExponent:G.mul(q(n),h),logProof:'log c_n >= (n log2+log B_nm)/(n h), hence B_nm q^(n h)<=2^-n for 0<q<=1/c_n. All cutoff derivatives vanish for q>=1/c_n.',
+      originalSourceHRetained:true,extraStokesStreamDerivativeIncluded:true});previous=logScale;
+  }
+  const roots={};for(const r of rows){roots['log_c_'+r.order]=r.logScale;roots['c_'+r.order]=r.scale;for(const b of r.coefficientBounds)roots['B_'+r.order+'_'+b.derivativeOrder]=b.bound;}
+  const result={G,norms,rows,roots,order:norms.order};
+  result.program=G.pack(roots,{schema:'MathScope.ActualNormalizedCutoffPrefix/1',order:norms.order,rows,
+    originalSelector:'The profile-normalized velocity/pressure clauses of (5.40),(5.45),(5.46). The physical residual and weighted-stress clauses are distinct obligations until their norm bodies are also attached.',
+    localFiniteness:{exactGeometricLower:'c_n>=2^n',forAnyPositiveQ:'If n>=ceil(log2(1/q))+1 then c_n*q>1, so every corresponding cutoff derivative is zero.',
+      finitePrefixDoesNotMeanAllActiveTermsShown:true,resourceLimitCannotBeReportedAsCompleteActivePrefix:true},
+    scope:{actualProfileNormalizedSelectorComputed:true,callerSuppliedCoefficientBound:false,actualFinitePrefix:norms.order,
+      weightedStressSelectorComputed:false,physicalResidualSelectorComputed:false,completeOriginalBackgroundCutoffSequence:false,
+      wholeAnnulusCompletedBackgroundCertified:false,originalN506Complete:false,formalKernelProof:false}});
+  sealed.set(result,{G,norms,nodeCount:G.nodes.length,prefix:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),rows:JSON.stringify(rows),order:result.order,canonical:false});return result;
+}
+
+/** The canonical sequence is PREFIX INDEPENDENT. In particular c_1 is
+ * not silently changed when a later request asks for n=4 or a larger jet.
+ * The n-th diagonal norm recipe always uses (throughOrder,derivativeOrder)
+ * =(n,n), and only these internally generated norms select c_n.
+ */
+function attachActualCanonicalCutoffs(prepared,context={}){
+  assertActualOrderInduction(prepared);const {G,order}=prepared,q=(n,d=1)=>G.q(n,d),rows=[],normPrefixes=[],log2=G.log(q(2));let previous=G.zero;
+  for(let n=1;n<=order;n++){
+    context.checkCancelled?.();
+    const norms=attachActualInductionNorms(prepared,{throughOrder:n,derivativeOrder:n},context),temporary=attachActualNormalizedCutoffs(norms,context),source=temporary.rows[n-1],doubling=G.add(previous,log2),logScale=G.maximum(doubling,...source.coefficientBounds.map(b=>b.requiredLog)),scale=G.exp(logScale);
+    const row={...source,previousLogScale:previous,doubling,logScale,scale,canonicalNormRequest:{throughOrder:n,derivativeOrder:n},selectedByLaterPrefix:false};
+    rows.push(row);normPrefixes.push(norms);previous=logScale;
+  }
+  const roots={};for(const r of rows){roots['canonical_log_c_'+r.order]=r.logScale;roots['canonical_c_'+r.order]=r.scale;}
+  const result={G,prepared,norms:normPrefixes.at(-1),normPrefixes,rows,roots,order,canonical:true};
+  result.program=G.pack(roots,{schema:'MathScope.ActualCanonicalNormalizedCutoffs/1',order,rows,
+    definition:{coefficientRecipe:'prepareActualOrderInduction through n',diagonalNormRecipe:'attachActualInductionNorms with throughOrder=n and derivativeOrder=n',
+      logRecurrence:'log c_n=max(log c_(n-1)+log2, max_(0<=m<=n) (n log2+log B_nm)/(n h))',logC0:'0',prefixIndependent:true,
+      laterAdditionalOriginalClauses:'Enlarging any c_n, while preserving the same monotone doubling recurrence, preserves every normalized estimate, potential identity, and tail below. Such an enlargement is not claimed to have been computed here.'},
+    localFiniteness:{exactGeometricLower:'c_n>=2^n',missingTerms:'A prefix is a complete active family only after the exact query lower bound proves all later n inactive.',
+      resourceLimitIsNotCompletion:true},
+    scope:{canonicalActualNormalizedSequence:true,actualFinitePrefix:order,actualSourceCoefficients:true,
+      allOrderNormAndCoefficientRecipeExecutable:true,wholeAnnulusC2BoundAttached:false,weightedStressSelectorComputed:false,physicalResidualSelectorComputed:false,
+      fullOriginalProposition55Certified:false,originalN506Complete:false,formalKernelProof:false}});
+  sealed.set(result,{G,norms:result.norms,normPrefixes,nodeCount:G.nodes.length,prefix:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),rows:JSON.stringify(rows),order,canonical:true});return result;
+}
+
+function assertActualNormalizedCutoffs(result){const r=sealed.get(result);if(!r||r.G!==result.G||r.norms!==result.norms||JSON.stringify(r.G.nodes.slice(0,r.nodeCount))!==r.prefix||!r.G.functionDefinitionsUnchanged(r.definitions)||JSON.stringify(result.rows)!==r.rows||r.order!==result.order||Boolean(result.canonical)!==r.canonical||r.canonical&&(result.normPrefixes!==r.normPrefixes||r.normPrefixes.length!==r.order))fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged internally selected actual cutoffs.');for(const n of r.normPrefixes??[r.norms])assertActualInductionNorms(n);return true;}
+
+/** Explicit finite-block constants needed by (5.42). The tail uses the
+ * diagonal induction inequality; orders below the derivative order remain
+ * finite actual source norms. In particular n=2 is never discarded while
+ * improving a claimed power from q^(2h) to q^(3h).
+ */
+function actualNormalizedFiniteBlock(cutoffs,{derivativeOrder=2}={},context={}){
+  assertActualNormalizedCutoffs(cutoffs);const {G}=cutoffs,norms=cutoffs.canonical?cutoffs.normPrefixes[Math.max(2,derivativeOrder)-1]:cutoffs.norms,q=(n,d=1)=>G.q(n,d),h=G.parameter('h'),J=Math.max(3,derivativeOrder);
+  if(!norms)fail('RESOURCE_LIMIT','The actual finite block requires its own canonical derivative prefix.');
+  if(!Number.isSafeInteger(derivativeOrder)||derivativeOrder<0||derivativeOrder>norms.derivativeOrder||norms.order<J-1)fail('RESOURCE_LIMIT','Generate every finite-block coefficient and requested derivative before asserting a tail comparison.');
+  const finite=[];
+  for(let n=1;n<J;n++){
+    const jets=norms.normalized[n-1].jets,weights=sourceNormalizedCutoffWeights({order:n,derivativeOrder},context),W=weights.weights.map(r=>G.add(...r.polynomialInSourceH.map((v,k)=>G.mul(q(BigInt(v)),G.pow(h,k))))),Wp=weights.weights.map(r=>G.add(...r.extraPotentialCutoffPolynomialInSourceH.map((v,k)=>G.mul(q(BigInt(v)),G.pow(h,k))))),terms=[];
+    for(let e=0;e<=derivativeOrder;e++)for(let r=0;r+e<=derivativeOrder;r++)for(let s=0;s+r+e<=derivativeOrder;s++){
+      const get=name=>jets[name].find(j=>j.radialOrder===r&&j.etaOrder===s)?.upper;
+      for(const name of ['E','U','Pi','StreamOverR'])terms.push(G.mul(W[e],get(name)));
+      terms.push(G.add(G.mul(W[e],get('VOverR')),G.mul(Wp[e],get('ExtraStream'))));
+    }
+    finite.push({order:n,bound:G.maximum(G.one,...terms),originalPower:G.mul(q(2*n),h)});
+  }
+  const tailConstant=q(1,1n<<BigInt(J-1)),coefficient=G.add(...finite.map(r=>r.bound),tailConstant),radialEulerFactor=G.pow(G.add(G.one,h),derivativeOrder);
+  return {schema:'MathScope.ActualNormalizedFiniteBlock/1',derivativeOrder,tailStarts:J,finite,tailConstant,coefficient,
+    tangentialAxialBound:{coefficient,power:G.mul(q(2),h),statement:'All requested normalized E/U/profile radial-bracket derivatives are <=coefficient*q^(2h), for0<q<=1, once the all-order diagonal induction has been established.'},
+    physicalRadialNormalizedBound:{coefficient:G.mul(radialEulerFactor,coefficient),power:G.mul(q(3),h),
+      derivation:'The original q^A radial component equals q^h times the profile radial bracket/R. Leibniz adds at most(1+h)^m. The finite n=1 and n=2 terms retain their actual q^(2nh) powers.'},
+    tailProof:'sum_(n>=J)2^-n*q^(nh)<=2^(1-J)*q^(Jh); J>=3 and0<q<=1. The finitely many n<J are evaluated with their actual B_nm, even when m>n.',
+    scope:{actualFiniteBlockComputed:true,finiteN2Retained:true,conditionalOnlyOnActualUnboundedInduction:true,
+      unboundedDiagonalInductionCertified:false,fullBackgroundC2Certificate:false,sourceUniformQStarCertified:false}};
+}
+
+return {attachActualNormalizedCutoffs,attachActualCanonicalCutoffs,assertActualNormalizedCutoffs,actualNormalizedFiniteBlock};
+})();
+const __m2_117 = (()=>{
+/** Independent reduction of each generated system to the original PDE.
+ * The nonlinear lower bodies are actual source roots; no matrix-coefficient
+ * fixture or caller norm is substituted into the verification.
+ */
+const {assertActualOrderInduction,actualInductionLinearKernel} = __m2_112;
+const {sourceScaledOperators} = __m2_99;
+const {sourceGraphRationalIdentity} = __m2_102;
+const {fail} = __m2_74;
+function verifyActualInductionInnerEquations(prepared,{order=prepared?.order,kind='actual'}={}){
+  assertActualOrderInduction(prepared);const record=prepared.records[order];
+  if(!record||order<1||!['actual','auxiliary'].includes(kind))fail('INVALID_INPUT','Use a generated positive-order system.');
+  const G=prepared.G,raw=kind==='actual'?record.raw:record.auxiliary,s=G.picardSystems[raw.system],q=(n,d=1)=>G.q(n,d),{X,eta}=prepared.bootstrap.constants,{A,D,d,L}=G.core,nu=G.mul(q(2*order),G.parameter('h')),xi=s.xi,XX=G.pow(xi,2),{Z}=sourceScaledOperators(G,X,eta),at=id=>G.substitute(id,X,XX);
+  const leading=prepared.records[0][kind],b=G.neg(G.add(A,q(1,2))),c=G.neg(A),F0=at(leading.F),U0=at(leading.U),v0=at(leading.v),HF=at(G.add(leading.F,G.mul(X,G.derivative(leading.F,X)))),HU=at(G.mul(X,G.derivative(leading.U,X))),ZF0=at(Z(b,leading.F)),ZU0=at(Z(c,leading.U));
+  const viscF=at(Z(G.sub(b,D),Z(b,leading.F))),viscU=at(Z(G.sub(c,D),Z(c,leading.U)));
+  const Ht=raw.Htheta===undefined?G.neg(viscF):at(raw.Htheta),Hz=raw.Hz===undefined?G.neg(viscU):at(raw.Hz),pKnown=at(raw.pKnown??G.mul(q(-1,2),raw.omegaOverX));
+  const W=Array.from({length:6},(_,j)=>G.picardRoot(raw.system,j,xi,eta)),We=Array.from({length:6},(_,j)=>G.picardRoot(raw.system,j,xi,eta,1));
+  const rhs=s.A0.map((row,i)=>G.add(s.forcing[i],...row.map((v,j)=>G.mul(v,W[j])),...s.A1[i].map((v,j)=>G.mul(v,We[j]))));
+  const[F,U,K,Pi,Fxi,Uxi]=W,[Fe,Ue,Ke,Pie]=We,FX=G.div(Fxi,G.mul(q(2),xi)),UX=G.div(Uxi,G.mul(q(2),xi)),avg=G.add(U,K),avge=G.add(Ue,Ke);
+  const vn=G.div(G.sub(G.sub(G.mul(q(2),eta,U),G.mul(q(2),eta,G.add(D,nu),avg)),G.mul(d,avge)),L);
+  const time=(ex,f,fe,fx)=>G.div(G.add(G.neg(G.mul(ex,f)),G.mul(D,eta,fe),G.mul(XX,fx)),L),zz=(ex,f,fe,fx)=>G.div(G.add(G.mul(q(2),eta,G.sub(G.mul(ex,f),G.mul(XX,fx))),G.mul(d,fe)),L);
+  const theta=G.add(time(G.add(b,nu),F,Fe,FX),G.mul(v0,G.add(G.mul(XX,FX),F)),G.mul(U0,zz(G.add(b,nu),F,Fe,FX)),G.mul(vn,HF),G.mul(U,ZF0),Ht,G.mul(q(-1,2),rhs[4]));
+  const PiX=G.add(G.mul(q(2),F0,F),pKnown),axial=G.add(time(G.add(c,nu),U,Ue,UX),G.mul(XX,v0,UX),G.mul(U0,zz(G.add(c,nu),U,Ue,UX)),G.mul(vn,HU),G.mul(U,ZU0),zz(G.add(G.mul(q(-2),A),nu),Pi,Pie,PiX),Hz,G.mul(q(-1,2),rhs[5]));
+  const avgIdentity=G.sub(G.add(G.mul(q(2),xi,avg),G.mul(XX,G.sub(G.add(rhs[1],rhs[2]),G.div(G.mul(q(2),K),xi)))),G.mul(q(2),xi,U));
+  const expressions={FDerivative:G.sub(rhs[0],Fxi),UDerivative:G.sub(rhs[1],Uxi),average:avgIdentity,pressure:G.sub(rhs[3],G.mul(q(2),xi,PiX)),theta,axial};
+  const atomicNodes=[...W,...We,F0,U0,v0,HF,HU,ZF0,ZU0,pKnown,...(raw.Htheta===undefined?[viscF,viscU]:[Ht,Hz])],checks=Object.fromEntries(Object.entries(expressions).map(([name,body])=>[name,sourceGraphRationalIdentity(G,body,{atomicNodes})]));
+  const negative=sourceGraphRationalIdentity(G,G.sub(theta,Ht),{atomicNodes}),norm=record.norm[kind];
+  const bindings={sameOriginalH:nu===raw.lambda,actualSystemOrder:s.order===order,actualSourceBound:s.tail.sourceBound===norm.C,actualNormPositiveBody:G.nodes[norm.solutionNorm].op==='exp',
+    originalDiagonal:JSON.stringify(s.diagonal)==='[0,0,2,0,3,1]',allRequestedLowerOrders:order===1&&kind==='actual'||s.lowerOrders?.length===order,
+    actualKnownForceOmissionRejected:!negative.pass,distinctAuxiliarySystem:record.raw.system!==record.auxiliary.system};
+  const pass=Object.values(checks).every(v=>v.pass)&&Object.values(bindings).every(Boolean);
+  if(!pass)fail('INTERNAL_VALIDATION','The generated actual '+kind+' order '+order+' failed its independent PDE reduction: '+Object.entries(checks).filter(([,v])=>!v.pass).map(([k])=>k).concat(Object.entries(bindings).filter(([,v])=>!v).map(([k])=>k)).join(', '));
+  return {schema:'MathScope.ActualInductionInnerPDE/1',order,kind,system:raw.system,checks,bindings,negative,
+    scope:{actualGeneratedMatrixChecked:true,finiteNumericSampleUsed:false,arbitraryCoefficientFieldAssumed:false,formalLeanKernelProof:false},pass};
+}
+
+function verifyActualInductionMoments(prepared,{order=prepared?.order}={}){
+  assertActualOrderInduction(prepared);if(!Number.isSafeInteger(order)||order<2||order>prepared.order)fail('INVALID_INPUT','Use a generated order at least two.');
+  const r=prepared.records[order].global,G=prepared.G;
+  const checks=r.momentResiduals.map(body=>sourceGraphRationalIdentity(G,body,{atomicNodes:r.incoming}));
+  const negative=sourceGraphRationalIdentity(G,G.sub(r.momentResiduals[2],r.correctionMoments[2]),{atomicNodes:r.incoming});
+  const pass=checks.every(v=>v.pass)&&!negative.pass;if(!pass)fail('INTERNAL_VALIDATION','The actual generated five-moment inverse did not close.');
+  return {order,checks,negative,actualIncomingBodies:r.incoming,actualCorrectionBodies:r.correctionMoments,
+    actualContinuousInverseRetained:true,actualWholeLowerSupport:true,pass};
+}
+
+/** Leave nu=2*n*h INDETERMINATE. This verifies the exact algebra of the
+ * same universal matrix body called by the actual source constructor.
+ * It is the order-independent equation step in the induction. Actual
+ * lower fields/forces and their convergence bounds are supplied by the
+ * separate actual constructor, never by these symbolic verification slots.
+ */
+function verifyActualInductionParametricKernel(prepared){
+  assertActualOrderInduction(prepared);const {G}=prepared,q=(n,d=1)=>G.q(n,d),{X,eta}=prepared.bootstrap.constants,{A,D,d,L}=G.core,leading=prepared.records[0].actual,{Z}=sourceScaledOperators(G,X,eta);
+  const nu=G.fresh('indeterminate_actual_order_exponent'),xi=G.fresh('indeterminate_actual_radial_coordinate'),p=G.fresh('actual_known_pressure_slot'),Ht=G.fresh('actual_known_theta_slot'),Hz=G.fresh('actual_known_axial_slot'),XX=G.pow(xi,2),at=v=>G.substitute(v,X,XX),b=G.neg(G.add(A,q(1,2))),c=G.neg(A);
+  const kernel=actualInductionLinearKernel(G,{X,eta,xi,lambda:nu,F0:leading.F,U0:leading.U,v0:leading.v,pKnown:p,Htheta:Ht,Hz}),W=Array.from({length:6},(_,i)=>G.fresh('parametric_W_'+i)),We=Array.from({length:6},(_,i)=>G.fresh('parametric_Weta_'+i));
+  const rhs=kernel.matrix0.map((row,i)=>G.add(at(kernel.rawForcing[i]),...row.map((v,j)=>G.mul(at(v),W[j])),...kernel.matrix1[i].map((v,j)=>G.mul(at(v),We[j]))));
+  const [F,U,K,Pi,Fxi,Uxi]=W,[Fe,Ue,Ke,Pie]=We,FX=G.div(Fxi,G.mul(q(2),xi)),UX=G.div(Uxi,G.mul(q(2),xi)),avg=G.add(U,K),avge=G.add(Ue,Ke),v=G.div(G.sub(G.sub(G.mul(q(2),eta,U),G.mul(q(2),eta,G.add(D,nu),avg)),G.mul(d,avge)),L);
+  const F0=at(leading.F),U0=at(leading.U),v0=at(leading.v),HF=at(kernel.Hf),HU=at(kernel.Hu),ZF=at(Z(b,leading.F)),ZU=at(Z(c,leading.U));
+  const time=(e,f,fe,fx)=>G.div(G.add(G.neg(G.mul(e,f)),G.mul(D,eta,fe),G.mul(XX,fx)),L),zz=(e,f,fe,fx)=>G.div(G.add(G.mul(q(2),eta,G.sub(G.mul(e,f),G.mul(XX,fx))),G.mul(d,fe)),L),PiX=G.add(G.mul(q(2),F0,F),p);
+  const theta=G.add(time(G.add(b,nu),F,Fe,FX),G.mul(v0,G.add(G.mul(XX,FX),F)),G.mul(U0,zz(G.add(b,nu),F,Fe,FX)),G.mul(v,HF),G.mul(U,ZF),Ht,G.mul(q(-1,2),rhs[4]));
+  const axial=G.add(time(G.add(c,nu),U,Ue,UX),G.mul(XX,v0,UX),G.mul(U0,zz(G.add(c,nu),U,Ue,UX)),G.mul(v,HU),G.mul(U,ZU),zz(G.add(G.mul(q(-2),A),nu),Pi,Pie,PiX),Hz,G.mul(q(-1,2),rhs[5]));
+  const average=G.sub(G.add(G.mul(q(2),xi,avg),G.mul(XX,G.sub(G.add(rhs[1],rhs[2]),G.div(G.mul(q(2),K),xi)))),G.mul(q(2),xi,U));
+  const bodies={FDerivative:G.sub(rhs[0],Fxi),UDerivative:G.sub(rhs[1],Uxi),average,pressure:G.sub(rhs[3],G.mul(q(2),xi,PiX)),theta,axial},atoms=[...W,...We,F0,U0,v0,HF,HU,ZF,ZU,p,Ht,Hz,nu];
+  const checks=Object.fromEntries(Object.entries(bodies).map(([k,v])=>[k,sourceGraphRationalIdentity(G,v,{atomicNodes:atoms})])),negative=sourceGraphRationalIdentity(G,G.sub(theta,Ht),{atomicNodes:atoms});
+  const producerUsesThisKernel=prepared.records.slice(1).every((r,i)=>G.picardSystems[r.auxiliary.system].linearKernel===kernel.kernel&&(i===0||G.picardSystems[r.raw.system].linearKernel===kernel.kernel)),pass=Object.values(checks).every(c=>c.pass)&&!negative.pass&&producerUsesThisKernel;
+  if(!pass)fail('INTERNAL_VALIDATION','The indeterminate-order universal source matrix failed its exact PDE identity.');
+  return {schema:'MathScope.ActualInductionParametricPDE/1',kernel:kernel.kernel,indeterminateExponent:nu,meaning:'Identity for every real nu, applied to nu=2*n*h at every positive integer n.',checks,negative,producerUsesThisKernel,
+    verificationSlots:{nu,xi,W,We,F0,U0,v0,HF,HU,ZF,ZU,pKnown:p,Htheta:Ht,Hz,eta,h:G.parameter('h')},
+    actualKernelExpressions:{matrix0:kernel.matrix0.map(r=>r.map(at)),matrix1:kernel.matrix1.map(r=>r.map(at)),forcing:kernel.rawForcing.map(at),bodies},
+    exactAlgebra:true,finiteOrderSamplesUsedForUniversalIdentity:false,actualSourceForcingReplaced:false,operatorVerificationSlotsOnly:true,pass};
+}
+
+return {verifyActualInductionInnerEquations,verifyActualInductionMoments,verifyActualInductionParametricKernel};
+})();
+const __m2_118 = (()=>{
+/** Finite, exact arithmetic for the higher-jet source estimates.
+ * These universal calculations do not authenticate any supplied function.
+ * The source-specific producer, in actual-leading-high-jets.mjs, supplies
+ * the actual functions, positive denominators, domains and selected scales.
+ */
+const {rational: rat,qadd,qmul,qpow,qcompare,qtext,factorial,fail} = __m2_74;
+const binomial=(n,k)=>factorial(n)/(factorial(k)*factorial(n-k));
+const bits=n=>n===0n?0:n.toString(2).length;
+const add=(a,b)=>{const r=new Map(a);for(const [k,v] of b)r.set(k,(r.get(k)??0n)+v);return r;};
+const scale=(a,c)=>new Map([...a].map(([k,v])=>[k,v*c]).filter(([,v])=>v));
+const mul=(a,b)=>{const r=new Map();for(const [i,u] of a)for(const [j,v] of b)r.set(i+j,(r.get(i+j)??0n)+u*v);return r;};
+const monomial=(n,c=1n)=>new Map([[n,c]]),zero=()=>new Map();
+const serialize=a=>[...a].sort(([i],[j])=>i-j).map(([power,coefficient])=>({power,coefficient:String(coefficient)}));
+const degree=a=>a.size?Math.max(...a.keys()):-1;
+const coefficientSum=a=>[...a.values()].reduce((s,x)=>s+x,0n);
+const serialSummary=a=>({polynomial:serialize(a),degree:degree(a),coefficientSum:String(coefficientSum(a)),coefficientBits:bits(coefficientSum(a))});
+
+/** A multivariable total Taylor norm can be majorized by one positive t
+ * series: collect coefficients of equal total degree. This routine solves
+ * the resulting coefficient inequality for F(x,w(x))=0. F_00=0 and the
+ * F_01*w_n term have already been removed and inverted. Both the remaining
+ * Taylor coefficients and the inverse slope are bounded by H.
+ */
+function implicitTotalJetMajorant(order=6){
+  if(!Number.isSafeInteger(order)||order<1||order>12)fail('INVALID_INPUT','The implicit jet arithmetic supports orders 1 through 12.');
+  const w=Array.from({length:order+1},zero),one=monomial(0);
+  const convolution=(a,b,n)=>Array.from({length:n+1},(_,k)=>{let r=zero();for(let j=0;j<=k;j++)r=add(r,mul(a[j]??zero(),b[k-j]??zero()));return r;});
+  for(let n=1;n<=order;n++){
+    let s=zero(),wp=[one,...Array.from({length:n},zero)];
+    for(let j=0;j<=n;j++){
+      if(j)wp=convolution(wp,w,n);
+      for(let i=0;i+j<=n;i++){
+        if((i===0&&j===0)||(i===0&&j===1))continue;
+        s=add(s,wp[n-i]??zero());
+      }
+    }
+    w[n]=mul(monomial(2),s);
+  }
+  return {schema:'MathScope.ImplicitTotalJetMajorant/1',order,convention:'sum of absolute Taylor coefficients of each total parameter degree',coefficientAndInverseSlopeUpper:'H',zeroConstantUnknown:true,linearUnknownCoefficientRemoved:true,rows:w.slice(1).map((a,i)=>({order:i+1,...serialSummary(a)})),universalArithmeticOnly:true};
+}
+
+/** A+2 mu Qdiag diag(z) is the actual B.8 Jacobian. Its inverse after
+ * preconditioning has norm <2. The matrix and Q are eta-independent.
+ * This is the ordinary-derivative recurrence, with the binomial factors.
+ */
+function fixedQuadraticJetMajorant({order=8,rhsPower=4131}={}){
+  if(!Number.isSafeInteger(order)||order<1||order>12||!Number.isSafeInteger(rhsPower)||rhsPower<1||rhsPower>100000)fail('INVALID_INPUT','Invalid fixed quadratic derivative budget.');
+  const w=[zero()];
+  for(let n=1;n<=order;n++){
+    let s=monomial(rhsPower);
+    for(let k=1;k<n;k++)s=add(s,scale(mul(w[k],w[n-k]),binomial(n,k)));
+    w.push(scale(s,2n));
+  }
+  return {schema:'MathScope.FixedQuadraticJetMajorant/1',order,rhsPower,recurrence:'b_m=2*(C^rhsPower+sum_(1<=k<m) binom(m,k)b_k*b_(m-k))',jacobianAlreadyContainsZerothRoot:true,rows:w.slice(1).map((a,i)=>({order:i+1,...serialSummary(a)})),universalArithmeticOnly:true};
+}
+
+/** The actual outer amplitude solves a0(eta)+a1(eta)A+a2(eta)A^2=0,
+ * |A|<=2, partial_A F>=7/20. All coefficient Taylor jets <=C^p.
+ * Translate A=A(eta0)+w, with w(0)=0, before extracting degree m.
+ * |F_m(A0)|<=7C^p, |(partial_A F)_m|<=5C^p, |(a2)_m|<=C^p.
+ */
+function variableQuadraticJetMajorant({order=8,coefficientPower=50}={}){
+  if(!Number.isSafeInteger(order)||order<1||order>12||!Number.isSafeInteger(coefficientPower)||coefficientPower<1||coefficientPower>100000)fail('INVALID_INPUT','Invalid varying quadratic derivative budget.');
+  const w=[zero()];
+  for(let n=1;n<=order;n++){
+    let s=monomial(0,7n);
+    for(let i=1;i<n;i++)s=add(s,scale(w[i],5n));
+    for(let i=1;i<n;i++)for(let j=1;i+j<=n;j++)s=add(s,mul(w[i],w[j]));
+    w.push(scale(mul(monomial(coefficientPower),s),3n));
+  }
+  return {schema:'MathScope.VariableQuadraticJetMajorant/1',order,coefficientPower,rows:w.slice(1).map((a,i)=>({order:i+1,...serialSummary(a)})),derivativeConvention:'Taylor; multiply the m-th row by m! for the ordinary eta derivative',positiveBranchDerivativeLower:'7/20',universalArithmeticOnly:true};
+}
+
+/** Execute the exact recurrence f^(k)=f P_k(1/t) for the *same* source
+ * step. This extends its old eight-derivative estimate, not its definition.
+ */
+function actualStepHighDerivativeAudit(order=12){
+  if(!Number.isSafeInteger(order)||order<0||order>12)fail('INVALID_INPUT','The source-step audit supports orders 0 through 12.');
+  let p=new Map([[0,1n]]);const polynomials=[];
+  const exponentialBound=18n**18n,F=1n<<160n,G=2n*F,reciprocal=[128n],sigma=[];
+  for(let k=0;k<=order;k++){
+    const absSum=[...p.values()].reduce((s,v)=>s+(v<0n?-v:v),0n);
+    polynomials.push({order:k,terms:[...p].sort(([a],[b])=>a-b).map(([power,c])=>({power,coefficient:String(c)})),degree:Math.max(...p.keys()),absoluteCoefficientSum:String(absSum),fDerivativeUpper:String(absSum*exponentialBound),fBoundPass:absSum*exponentialBound<F});
+    const next=new Map();for(const [m,c] of p){next.set(m+3,(next.get(m+3)??0n)+2n*c);if(m)next.set(m+1,(next.get(m+1)??0n)-BigInt(m)*c);}p=next;
+    if(k){let s=0n;for(let j=1;j<=k;j++)s+=G*reciprocal[k-j];reciprocal.push(128n*s);}
+    const ordinary=factorial(k)*F*reciprocal.slice(0,k+1).reduce((s,x)=>s+x,0n);
+    sigma.push({order:k,ordinaryUpper:String(ordinary),upperBits:bits(ordinary),pass:ordinary<(1n<<4096n)});
+  }
+  return {schema:'MathScope.ActualStepHighDerivativeAudit/1',order,polynomials,reciprocalTaylorBounds:reciprocal.map(String),sigma,commonOrdinaryDerivativeUpper:'2^4096',sourceDefinitionUnchanged:true,denominatorLowerProof:'f(t)+f(1-t)>=exp(-4)>1/128; e^4<3^4=81<128.',powerExponentialBound:'sup_(z>=0) z^m exp(-z^2) <=18^18 for 0<=m<=36',pass:polynomials.every(p=>p.fBoundPass)&&sigma.every(s=>s.pass)};
+}
+
+/** Formula (16), including Stirling expansion of (Y partial_Y)^r. */
+function actualNaturalMixedCoefficientAudit(order=12){
+  if(!Number.isSafeInteger(order)||order<0||order>12)fail('INVALID_INPUT','The actual natural coefficient audit supports total orders 0 through 12.');
+  const stirling=Array.from({length:order+1},()=>[]);stirling[0][0]=1n;
+  for(let n=1;n<=order;n++)for(let k=0;k<=n;k++)stirling[n][k]=BigInt(k)*(stirling[n-1][k]??0n)+(k?stirling[n-1][k-1]??0n:0n);
+  const rows=[];
+  for(let r=0;r<=order;r++)for(let m=0;m+r<=order;m++){
+    let coefficient=rat(0);
+    for(let k=0;k<=r;k++){
+      const a=stirling[r][k]??0n;if(!a)continue;
+      coefficient=qadd(coefficient,qmul(rat(a*factorial(m+k),BigInt((m+1)**2)),qmul(qpow(rat(41,200),k),qpow(rat(200,159),m+k+1))));
+    }
+    rows.push({radialLogOrder:r,etaOrder:m,coefficient:qtext(coefficient),qPower:m+2,pass:qcompare(coefficient,rat(1n<<260n))<0});
+  }
+  return {schema:'MathScope.ActualNaturalMixedCoefficientAudit/1',order,source:'SAME_DATUM_ANALYTIC_AXIS.md (16)',realDomain:'0<=Y<=41/10, eta in [-1,1]',formula:'Q*rho^(-m)*sum_k S(r,k)*(41/200)^k*(m+k)!/(m+1)^2*(200/159)^(m+k+1)',QMinimum:'2^260',rhoInverseAtMostQ:true,rows,commonQPower:order+2,pass:rows.every(r=>r.pass)};
+}
+
+function polynomialAbsorption(row,{baseBits=260,ordinaryOrder=0}={}){
+  const sum=BigInt(row.coefficientSum)*factorial(ordinaryOrder),reserve=Math.max(1,Math.ceil(bits(sum)/baseBits));
+  return {degree:row.degree,coefficientSumAfterFactorial:String(sum),coefficientBits:bits(sum),baseBits,reserve,strictPower:row.degree+reserve,pass:sum<(1n<<BigInt(baseBits*reserve))};
+}
+
+/** E_a^d times a fixed coefficient is <E_(a+1), E_a=exp(S^a).
+ * log(coefficient)<=bitLength(coefficient) and S>=2^20 are enough.
+ */
+function exponentialJetAbsorption(row,{from=22,to=23,Smin=1n<<20n}={}){
+  Smin=BigInt(Smin);if(!Number.isSafeInteger(from)||!Number.isSafeInteger(to)||from<1||to<=from||Smin<2n)fail('INVALID_INPUT','Invalid exponential jet scale.');
+  const multiplier=BigInt(row.degree+row.coefficientBits+1),available=Smin**BigInt(to-from);
+  return {from,to,multiplier:String(multiplier),available:String(available),pass:multiplier<available};
+}
+
+/** A deliberately enclosing template for one displayed loop-jet stage.
+ * For H>=1 the finite jet norms of reciprocal, square root (with its
+ * positive value and inverse bounded by H), and composition with at most
+ * three inputs are all bounded by J(H)=H*sum_(k=0)^6(3H^2)^k.
+ * Every displayed stage uses at most three nested such operations, at most
+ * eight products, and a fixed coefficient factor less than2^80. This
+ * template computes its exact degree and sum of coefficients without
+ * serializing the large, irrelevant expanded polynomial.
+ */
+function finiteLoopJetStageAudit(){
+  const n=6,j=x=>{let sum=0n;for(let k=0;k<=n;k++)sum+=(3n*x*x)**BigInt(k);return x*sum;};
+  let sum=1n,degree=1;
+  for(let i=0;i<3;i++){sum=j(sum);degree*=2*n+1;}
+  sum=(1n<<80n)*sum**8n;degree*=8;
+  const coefficientBits=bits(sum),logMultiplier=degree+coefficientBits+1;
+  return {schema:'MathScope.FiniteLoopJetStageAudit/1',order:n,template:'2^80*[J(J(J(H)))]^8; J(H)=H*sum_(k=0)^6(3H^2)^k',nestedOperations:3,productFactors:8,degree,coefficientSum:String(sum),coefficientBits,logMultiplier,strictMultiplierUpper:65536,pass:logMultiplier<65536,meaning:'If H=exp(S^a), the template is <exp(65536*S^a)<exp(S^(a+1)) at S>=2^20.'};
+}
+
+/** exp(C^200000) dominates a specified *computed* finite C power. */
+function finitePowerBelowInputExponential(power){
+  if(!Number.isSafeInteger(power)||power<0||power>1000000000)fail('RESOURCE_LIMIT','Invalid finite source power.');
+  const m=Math.ceil((power+2)/200000)+1,f=factorial(m),reserve=Math.max(1,Math.ceil(bits(f)/260)),remaining=200000*m-reserve;
+  return {power,expSeriesTerm:m,factorialBits:bits(f),factorialReserveInC:reserve,remainingPower:remaining,pass:f<(1n<<BigInt(260*reserve))&&remaining>=power,proof:'exp(C^200000)>(C^200000)^m/m!; C>2^260.'};
+}
+
+function evaluatePositiveJetPolynomial(row,at){
+  at=BigInt(at);if(at<0n)fail('INVALID_INPUT','A positive majorant argument must be nonnegative.');
+  return row.polynomial.reduce((s,{power,coefficient})=>s+BigInt(coefficient)*at**BigInt(power),0n);
+}
+
+return {implicitTotalJetMajorant,fixedQuadraticJetMajorant,variableQuadraticJetMajorant,actualStepHighDerivativeAudit,actualNaturalMixedCoefficientAudit,polynomialAbsorption,exponentialJetAbsorption,finiteLoopJetStageAudit,finitePowerBelowInputExponential,evaluatePositiveJetPolynomial};
+})();
+const __m2_119 = (()=>{
+/** Higher derivatives of the ONE accepted leading source.
+ *
+ * The old C_eta^2 contract is not relabelled C_eta^6. The finite source
+ * coefficient, cutoff, reciprocal, quadratic and implicit recurrences below
+ * extend it at the original, unchanged S/R/N. Numerical materialization of
+ * the enormous constants is neither requested nor used.
+ * See research/ACTUAL_LEADING_HIGH_JETS_KO.md for the analytic arguments
+ * connecting each executed finite bound to its continuous source function.
+ */
+const {SOURCE_PROFILE_ID,assertSourceProfile} = __m2_45;
+const {PINNED_N3} = __m2_44;
+const {ACTUAL_B8_PRECONDITIONER: B8} = __m2_92;
+const {rational: rat,readRational,qadd,qmul,qcompare,qtext,factorial,fail} = __m2_74;
+const {implicitTotalJetMajorant,fixedQuadraticJetMajorant,variableQuadraticJetMajorant,actualStepHighDerivativeAudit,actualNaturalMixedCoefficientAudit,polynomialAbsorption,exponentialJetAbsorption,finitePowerBelowInputExponential,finiteLoopJetStageAudit} = __m2_118;
+const ACTUAL_LEADING_HIGH_JET_BINDINGS=Object.freeze([
+  {path:'mathscope-m1/navier/followup-20261010-same-datum-axis/SAME_DATUM_ANALYTIC_AXIS.md',bytes:20071,sha256:'1923770e721cd73d569150eec19eb8cf78a645b86207b6be90cb97aabb547920'},
+  {path:'mathscope-m1/navier/followup-20261010-same-datum-axis/REFERENCE_DERIVATIVE_BOUNDS.md',bytes:14028,sha256:'c4f47c6a156052a007a55992345faa47c7c47cb5606a46bff693f0b69d5054d9'},
+  {path:'mathscope-m1/navier/followup-20261010-same-datum-axis/CONTINUATION_AND_NEW_DEBT.md',bytes:23134,sha256:'b2b4dfc3f1223e3a5e2bb09043dc649d48d2cda16813d6c719f7d47f6b0214e2'},
+  {path:'mathscope-m1/navier/followup-20261010-same-datum-axis/GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md',bytes:12673,sha256:'f27e8d640e9b8e49805c0128c987f043d5667c298b2029dd061b820ae9e3117b'},
+  {path:'mathscope-m1/navier/followup-20261010-symbolic-gluing/LOOP_DERIVATIVE_ENVELOPE.md',bytes:10357,sha256:'531e5addbe900564c22e0b44406c9c024e7d279c03a7188ea17431a567fe1250'},
+  {path:'mathscope-m1/navier/followup-20261010-symbolic-gluing/C12_FREQUENCY_CONTRACT.md',bytes:12543,sha256:'1740353222f1a5ca727c2c8a2c7063bba8a990f9a4393754256d5c82f49f7a16'},
+  {path:'mathscope-m1/navier/followup-20261010-outer-reselection/OUTER_DERIVATION.md',bytes:22237,sha256:'ffb859d1f6b79aad9aa45e7c5173e8b727cd7a554f6ea28697dc9a108b3dbd81'},
+  {path:'mathscope-m1/navier/followup-20261010-final-stress-audit/GLOBAL_STRESS_ASSEMBLY_EN.md',bytes:13948,sha256:'3c89af370fb2728bc407f5192493eb7474666051289626c57b73f19da7e59516'}
+]);
+
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),abs=q=>q[0]<0n?[-q[0],q[1]]:q;
+const Cmin=1n<<260n,Smin=1n<<20n,Rmin=8192n;
+const reserve=k=>Math.max(1,Math.ceil(BigInt(k).toString(2).length/260));
+
+/** Records ordinary mixed-jet product rules through the fixed order. The
+ * coefficient sum of an n-th derivative of k factors is k^n. */
+class PowerLedger{
+  constructor(order){this.order=order;this.rows=[];this.map=new Map();}
+  put(id,power,rule,inputs=[],extra={}){if(this.map.has(id)||!Number.isSafeInteger(power)||power<0)throw Error('Invalid source power ledger.');const r={id,power,rule,inputs,...extra};this.rows.push(r);this.map.set(id,r);return id;}
+  at(id){const x=this.map.get(id);if(!x)throw Error('Missing source power '+id);return x.power;}
+  sum(id,ids){const coefficient=BigInt(ids.length),s=reserve(coefficient);return this.put(id,Math.max(...ids.map(x=>this.at(x)))+s,'sum',ids,{coefficientSum:String(coefficient),coefficientReserve:s});}
+  product(id,ids){const coefficient=BigInt(ids.length)**BigInt(this.order),s=reserve(coefficient);return this.put(id,ids.reduce((a,x)=>a+this.at(x),0)+s,'ordinary mixed Leibniz',ids,{coefficientSum:String(coefficient),coefficientReserve:s});}
+  reciprocal(id,input,lowerPower){const n=this.order,coefficient=BigInt(n+1)**BigInt(n+2)*factorial(n),s=reserve(coefficient);return this.put(id,(n+1)*lowerPower+n*this.at(input)+s,'finite reciprocal Taylor series',[input],{positiveValueLowerPower:lowerPower,coefficientSum:String(coefficient),coefficientReserve:s});}
+}
+
+function inputOf(input){
+  if(input===null||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Use a source-bound high-jet request.');
+  for(const k of Object.keys(input))if(k!=='sourceProfile')fail('INVALID_INPUT','No high-jet norm, derivative order, source function, R or N override is accepted: '+k);
+  return {sourceProfile:input.sourceProfile??SOURCE_PROFILE_ID};
+}
+
+function sourceHierarchy(source){
+  const p=source.parametersExactExpressions,checks=[];
+  const check=(id,pass,proof)=>checks.push({id,pass,proof});
+  check('same-Q-rho-and-positive-P',same(p.Q,{quotient:[{product:[{integer:String(1n<<260n)},{ref:'K'}]},{power:[{ref:'sigmaStar'},2]}]})&&same(p.rho,{quotient:[{power:[{ref:'sigmaStar'},2]},{integer:65536}]})&&same(p.K,{power:[{ref:'Pstar'},2]})&&same(p.logP,{product:[{integer:2},{ref:'T'}]}),'Q=2^260*Pstar^2/sigmaStar^2, rho=sigmaStar^2/65536, Pstar=exp(2T)>1.');
+  check('same-C-Q200-choice',same(p.CSelected,{exp:{ref:'logCSelected'}})&&same(p.logCSelected,{sum:[{product:[{integer:10},{log:{sum:[{integer:1},{ref:'BRefUpper'}]}}]},{power:[{ref:'Q'},200]}]}),'C>exp(Q^200).');
+  check('Q10000-below-C',factorial(51)<(1n<<BigInt(260*200)),'exp(Q^200)>Q^10200/51!>Q^10000, for Q>=2^260.');
+  check('same-fixed-width',same(p.t1,{power:[{ref:'CSelected'},-120]})&&same(p.Lambda,{power:[{ref:'Q'},64]}),'No B22/B26 width or radial scaling is reselected.');
+  check('same-S-R-N',same(p.sourceEnvelopeS,{power:[{ref:'CSelected'},100000]})&&same(p.C12EnvelopeR,{exp:{power:[{ref:'sourceEnvelopeS'},256]}})&&same(p.radialFrequencyN,{sum:[{integer:1},{ceil:{power:[{ref:'C12EnvelopeR'},50]}}]}),'S=C^100000, R=exp(S^256), N=1+ceil(R^50) are the accepted scales.');
+  check('same-loop-choices',same(p.loopDelta,{exp:{product:[{integer:-1},{power:[{ref:'sourceEnvelopeS'},16]}]}})&&same(p.loopD0,{quotient:[{integer:1},{product:[{integer:8},{ref:'sourceEnvelopeS'}]}]})&&same(p.loopMuMax,{power:[{ref:'sourceEnvelopeS'},12]}),'The actual signed-variance root and inverse-circle map retain their original branch and scales.');
+  check('same-h-lambda-mu',same(p.h,{exp:{product:[{integer:-8002},{ref:'T'}]}})&&same(p.lambda,{exp:{product:[{integer:-1000},{ref:'T'}]}})&&same(p.muMoment,{power:[{ref:'h'},2]})&&same(p.sigmaStar,{quotient:[{ref:'j0'},{integer:2000}]})&&same(p.j0,{power:[{ref:'h'},4]}),'log Q>64020T; muMoment^-1=exp(16004T)<Q, h^-1<Q, lambda^-1<Q; lambda<2^-200.');
+  check('fixed-small-integers-absorbed',12n**12n*factorial(12)<Cmin&&Smin>100000n,'All finite product, Taylor and multi-index counts used below are computed below the same positive C or S.');
+  return {checks,pass:checks.every(c=>c.pass),lowerBounds:{Q:'2^260',C:'Q^10000',S:'2^20',R:'8192'},oldHigherJetAssumptionUsed:false};
+}
+
+function premodulationHighJets(step,natural){
+  // Q powers first. A width loss is recorded separately, so a radial
+  // derivative of a short cutoff is never treated as a small eta change.
+  const reciprocalPhiPower=13+12*natural.commonQPower+1;
+  const nonconstantLogPower=natural.commonQPower+reciprocalPhiPower+1;
+  const qRows=[
+    {id:'natural-reciprocal-Phi',actual:reciprocalPhiPower,bound:256,reason:'Phi>=1/4, finite reciprocal recurrence to order12.'},
+    {id:'natural-log-and-Y-slope',actual:nonconstantLogPower+2,bound:512,reason:'(log Phi)_eta=Phi_eta/Phi and Y Phi_Y/Phi; all required mixed derivatives are supplied by (16).'},
+    {id:'reference-eta-ratio',actual:16+(13+12*16+1)+1,bound:512,reason:'Reference value 1/4<=Rr<=2; short v has all eta derivatives below1, so exp(v) uses finite Bell coefficients and its actual value <=2.'},
+    {id:'reference-mixed-fields',actual:12*512+2,bound:16384,reason:'Finite Bell polynomial at known |g Rr|<=2; retain t1^-max(r-1,0), r+eta<=10.'},
+    {id:'reference-pressure',actual:2*16384+4,bound:40000,reason:'Pi=P+integral F_r^2; eta derivative under the continuous integral, D_y Pi=X F_r^2. The axis is treated by its regular integral.'},
+    {id:'literal-source-Sq-Sn',actual:Math.max(3*512+8,40000+12),bound:50000,reason:'All six Sn terms and all three Sq terms, including the eta derivative of Pi/U and D_y Pi; width loss at most t1^-r.'},
+    {id:'integrated-reference-eta-jets',actual:50000+512+4,bound:100000,reason:'p1r=(X/L) integral_0^1 s Rr(sX)/Rr(X) Sq; nsr=(1/L) integral Sn; X<=110 and L inverse eta12 has fixed rational bounds <Q.'},
+    {id:'reference-radial-recurrence',actual:100000+9*(512+3),bound:200000,reason:'D_y p1r=X Sq/L-l p1r and D_y nsr=Sn/L-nsr, differentiated at most9 times; retain t1^-max(r-1,0).'},
+    {id:'actual-B26-log-and-U',actual:200000+4*17+8,bound:210000,reason:'Original kappa/beta/blend products and actual reference sources; all widths t1 and the eta-independent integral length <Q^2 are retained.'}
+  ].map(r=>({...r,pass:r.actual<r.bound}));
+  const sourceLogCPower=Math.ceil(210000/10000),bellActual=2+8*sourceLogCPower+7*120+1;
+  const cRows=[
+    {id:'B26-B34-and-restoration-mixed8',actual:bellActual,bound:2048,reason:'Known E value <C^2, eight-factor Bell rule, and sum max(r_i-1,0)<=max(r-1,0). B34 width>=1; ideal and axial-restoration segments are smaller.'},
+    {id:'incoming-five-moments-eta8',actual:2*2048+12+7+3,bound:4120,reason:'The largest density sqrt(2X)UE costs2*2048+7+1; integration adds12; two units cover finite stage sums and radial-product coefficients. Other four densities are smaller. Core Cp is regular.'},
+    {id:'B8-scaled-actual-debt-eta8',actual:4120+9,bound:4130,reason:'The exact five rows include Keta inverses, muMoment^-1, subtraction of 4eta*dI and 8eta*dM, and the ideal moments. These normalizers have explicit polynomial eta dependence.'}
+  ].map(r=>({...r,pass:r.actual<r.bound}));
+  let maxInverseRow=rat(0);
+  for(const row of B8.preconditioner){const total=row.map(x=>readRational(x)).map(abs).reduce(qadd,rat(0));if(qcompare(total,maxInverseRow)>0)maxInverseRow=total;}
+  const inverseResidual=B8.inverseResidualUpper.map(x=>readRational(x)).reduce((a,b)=>qcompare(a,b)>0?a:b,rat(0)),mu=readRational(B8.muUpper),quad=B8.quadraticPreconditionedBounds.map(x=>readRational(x)).reduce(qadd,rat(0));
+  const radius=readRational(B8.rootRadius),jacLoss=qadd(inverseResidual,qmul(rat(2),qmul(mu,qmul(quad,radius))));
+  const root=fixedQuadraticJetMajorant({order:8,rhsPower:4131}),rootAbsorptions=root.rows.map(r=>polynomialAbsorption(r)),rootPower=Math.max(...rootAbsorptions.map(r=>r.strictPower));
+  const patchPower=rootPower+4,profilePower=65536;
+  const checks=[
+    {id:'new-step-twelve-derivatives',pass:step.pass&&step.order===12},
+    {id:'new-natural-total-twelve',pass:natural.pass&&natural.order===12},
+    {id:'B22-short-integral-small-at-all-required-orders',pass:512<120*10000,proof:'Q^512*t1<Q^(512-1200000)<1, before Bell differentiation.'},
+    {id:'all-reference-width-and-source-terms',pass:qRows.every(r=>r.pass)&&cRows.every(r=>r.pass)},
+    {id:'actual-B8-inverse-row',pass:qcompare(maxInverseRow,rat(1n<<30n))<0,upper:qtext(maxInverseRow)},
+    {id:'actual-B8-Jacobian-inverse-below-two',pass:qcompare(jacLoss,rat(1,4))<0&&qcompare(qmul(mu,quad),rat(1))<0,loss:qtext(jacLoss),proof:'Neumann inverse norm <=1/(1-loss)<2; no claim that the rational preconditioner is the exact continuous inverse.'},
+    {id:'B8-all-eight-implicit-derivatives',pass:rootAbsorptions.every(r=>r.pass)&&patchPower<profilePower,rootPower,physicalCorrectionPower:patchPower,proof:'Keta*mu*z_j*b_j; source bump log derivatives to8 use sigma derivatives to9 and fixed x/width<32. Higher z derivatives are not declared smaller than 10^-6.'}
+  ];
+  const L=new PowerLedger(6);
+  L.put('E',profilePower,'actual premodulation mixed8 source bound');L.put('U',profilePower,'actual premodulation mixed8 source bound');L.put('DyE',profilePower,'one source radial derivative, six further parameter derivatives');L.put('DyU',profilePower,'one source radial derivative, six further parameter derivatives');
+  L.put('moment',2*profilePower+32,'five regular continuous moment densities and integration, mixed7');L.put('elementary',1,'fixed geometric eta coefficients and L inverse');L.put('radial',12,'C^-1<X<C^12');
+  L.reciprocal('inverseE','E',3);L.product('H',['E','radial']);L.reciprocal('inverseH','H',4);
+  L.product('a-product',['DyE','inverseE']);L.sum('a',['elementary','a-product']);L.product('bs',['DyU','inverseE']);L.reciprocal('inverseA','a',122);
+  L.product('ts',['bs','inverseA']);L.product('bs-square-over-a',['bs','bs','inverseA']);L.sum('vs',['a','bs-square-over-a']);
+  L.product('W-moment',['moment','elementary','radial']);L.sum('W',['elementary','W-moment']);
+  L.product('angular-numerator',['moment','elementary']);L.product('angular-integral',['inverseH','angular-numerator']);L.product('XW',['radial','W']);L.sum('p1-numerator',['XW','angular-integral']);L.product('p1',['elementary','p1-numerator']);
+  L.product('XWU',['radial','W','U']);L.product('axial-moments',['elementary','moment','radial']);L.sum('p2-numerator',['XWU','axial-moments']);L.product('p2',['elementary','inverseE','p2-numerator']);
+  L.product('ts-p2',['ts','p2']);L.sum('cs',['p1','ts-p2']);L.product('ts-p1',['ts','p1']);L.sum('js',['p2','ts-p1']);
+  const actualInputPower=Math.max(...L.rows.map(r=>r.power))+1,inputAbsorption=finitePowerBelowInputExponential(actualInputPower);
+  checks.push({id:'all-original-loop-input-high-jets-below-E2',pass:inputAbsorption.pass,power:actualInputPower,proof:'This enlarged derivative bound leaves the original pointwise S and its positive gaps unchanged.'});
+  return {schema:'MathScope.ActualPremodulationHigherJetBounds/1',QRows:qRows,CRows:cRows,B8:{root,maxPreconditionerRow:qtext(maxInverseRow),rootAbsorptions},premodulationProfileMixedOrder:8,premodulationProfileCPower:profilePower,inputMixedOrder:6,inputPowerLedger:L.rows,inputAbsorption,positiveDenominators:{E:'C^-3',a:'C^-122',L:'49/50'},checks,pass:checks.every(c=>c.pass)};
+}
+
+function loopHigherJets(premodulation){
+  const implicit=implicitTotalJetMajorant(6),muAbsorption=implicit.rows.map(r=>exponentialJetAbsorption(r,{from:22,to:23})),circleAbsorption=implicit.rows.map(r=>exponentialJetAbsorption(r,{from:39,to:40})),stageAudit=finiteLoopJetStageAudit();
+  // The enclosing finite-jet template executes degree + log(coefficient)
+  // <65536. That log multiplier costs one E index since S>=2^20.
+  const rows=[
+    {id:'tilted-mean-and-removable-Q',from:13,to:15,count:4096,reason:'M^(k), (M^-1)^(k), R^(k), k<=8; Q^(k)=integral(1-s)s^k R^(k+2), k<=6, including z=0.'},
+    {id:'sqrt-Q-and-W-mixed6',from:15,to:19,count:65536,reason:'Q>=E14^-1 and W_mu>=E14^-1; square-root Taylor recurrence through6 uses Q derivatives through6.'},
+    {id:'cutoff-and-right-hand-side-mixed6',from:16,to:20,count:65536,reason:'delta^-1=E16, vstar-vs>=delta/4 on the cutoff support; input mixed6<E2; actual flat zero extension.'},
+    {id:'actual-implicit-equation-mixed6',from:20,to:22,count:65536,reason:'F(mu,y,eta)=W(mu,p2(y,eta))-r(y,eta); actual simple derivative is positive.'},
+    {id:'actual-mu-total6',from:23,to:32,count:65536,reason:'Executed total-degree implicit recurrence; the original nonnegative root, including mu=0.'},
+    {id:'actual-t-total6',from:32,to:35,count:65536,reason:'The removable integral of partial_z(exp(z sin theta)/M(z)), not division by p2. Derivatives of the numerator through7 are supplied by the order8 tilt bound.'},
+    {id:'circle-density-total6',from:35,to:38,count:65536,reason:'a(1+t^2)/(2pi*v); v>=2. All reciprocal and product Taylor coefficients through6 included.'},
+    {id:'circle-lift-total6',from:38,to:39,count:64,reason:'Integrate over a single circle of length2pi<8; theta derivatives lower the integrand order.'},
+    {id:'actual-inverse-circle-total6',from:40,to:48,count:65536,reason:'Executed implicit recurrence, density>=1/(16S^2); local lifts agree at the seam.'},
+    {id:'actual-loop-total6',from:48,to:64,count:65536,reason:'v(1,t)/(1+t^2) after inverse-circle substitution. The denominator is >=1.'},
+    {id:'actual-zero-mean-primitives-total6',from:64,to:128,count:65536,reason:'Both period integrals, actual mean subtraction and E factor in B retained. No global lifted-phase magnitude is used as a periodic derivative bound.'}
+  ].map(r=>({...r,available:String(Smin**BigInt(r.to-r.from)),pass:BigInt(r.count)<Smin**BigInt(r.to-r.from)}));
+  const checks=[
+    {id:'actual-input-high-jets-generated',pass:premodulation.pass},
+    {id:'implicit-six-jet-extraction',pass:implicit.rows.length===6&&muAbsorption.every(a=>a.pass)&&circleAbsorption.every(a=>a.pass)},
+    {id:'all-fixed-Taylor-composition-absorptions',pass:stageAudit.pass&&rows.every(r=>r.pass)&&12n**12n*factorial(12)<Cmin},
+    {id:'new-six-jet-bound-fits-original-R',pass:128<256,proof:'E128<R=E256; R and the already selected N are not increased.'}
+  ];
+  return {schema:'MathScope.ActualLoopHigherJetBounds/1',totalOrder:6,coordinates:['logX','eta','periodicPhase'],norm:'sum of absolute partial derivatives divided by multi-index factorial through total6',implicit,muAbsorption,circleAbsorption,stageAudit,rows,periodicPrimitivesUpper:'exp(S^128)<R',sameRootBranches:true,oldThreeJetBoundRelabelled:false,checks,pass:checks.every(c=>c.pass)};
+}
+
+function outerHigherJets(){
+  const lambdaUpper=rat(1,1n<<200n),radius=qmul(rat(1n<<16n),qpowInteger(lambdaUpper,29));
+  const angularLip=qmul(rat(512),radius),root=variableQuadraticJetMajorant({order:8,coefficientPower:50}),absorptions=root.rows.map((r,i)=>polynomialAbsorption(r,{ordinaryOrder:i+1}));
+  const rows=[
+    {id:'outer-complex-f',actual:41,bound:48,proof:'On dist(eta,[-1,1])<=1/4: |1+eta^2|>=9/16, <=41/16; |f|<2, |1/f|<3.'},
+    {id:'outer-complex-angular-debt',actual:26*27,bound:1024,proof:'|rAfter|<=24, rEq<=2; exp(-(1-lambda)(30B-3))<27*lambda^29.'},
+    {id:'outer-complex-angular-root-selfmap',actual:4*1024,bound:32768,proof:'The complex contraction ball radius is 65536*lambda^29. Its real restriction is the original unique small root.'},
+    {id:'outer-finite-and-infinite-E-energy',actual:2*2+11+1,bound:20,proof:'Xb<C^11, scalar E height<C^2, h^-1<C; include E(Xb)^2*Xb/(2h) and the angular edit. No tail is dropped.'},
+    {id:'outer-amplitude-polynomial',actual:20+3+5,bound:32,proof:'Normalize by exp(-pulse.start-2logAStart)/f^2<C^3; affine moment inverse<4/lambda<C^2, affine coefficients<C^5; positive bump weights<30.'},
+    {id:'outer-amplitude-coefficient-Cauchy',actual:32+1,bound:50,proof:'Cauchy circle radius1/8 is contained in the proved1/4 tube; 8^8*8!<C.'}
+  ].map(r=>({...r,pass:r.actual<r.bound}));
+  const maxAmplitudePower=Math.max(...absorptions.map(r=>r.strictPower)),fieldPower=maxAmplitudePower+16;
+  const checks=[
+    {id:'actual-complex-angular-contraction',pass:qcompare(angularLip,rat(1,4))<0&&rows.every(r=>r.pass),lipschitzUpper:qtext(angularLip)},
+    {id:'all-actual-amplitude-eta-derivatives',pass:absorptions.every(r=>r.pass)&&8n**8n*factorial(8)<Cmin,proof:'Differentiate the actual quadratic whose coefficients contain every outer energy stage, angular correction and both M/J corrections. The real derivative floor is7/20.'},
+    {id:'outer-field-and-one-radial-jet',pass:fieldPower<4096,actualCPower:fieldPower,proof:'U=E*(Amp R0+affine endpoint bumps), with source sigma derivatives. M is its actual primitive, and exactly zero after Xv by its moment equation.'}
+  ];
+  return {schema:'MathScope.ActualOuterHigherJetBounds/1',etaOrder:8,radialLogOrder:1,complexCoefficientTube:'dist(eta,[-1,1])<=1/4',amplitudeIsOnlyRealRootOnOriginalBracket:true,coefficientRows:rows,amplitude:root,absorptions,fieldCPower:4096,XvUpper:'C^11<R',etaEndpointsIndependentOfX:true,checks,pass:checks.every(c=>c.pass)};
+}
+const qpowInteger=(a,n)=>rat(a[0]**BigInt(n),a[1]**BigInt(n));
+
+function modulationAndRestoration(loop){
+  const rows=[
+    {id:'C12-field-change-eta6',power:2,coefficient:4,divideByN:true,formula:'||Delta E||6,||Delta U||6 <=4 R^2/N'},
+    {id:'C12-actual-five-debt-eta6',power:6,coefficient:1,divideByN:true,formula:'20 R^5/N<R^6/N, using the five full nonlinear density differences'},
+    {id:'actual-I1-row-operator-eta6',power:7,coefficient:1,divideByN:false,formula:'The whole second row retains lambda^-2 and both terms; 210R^6<R^7'},
+    {id:'actual-I1-inverse-debt-eta6',power:16,coefficient:1,divideByN:true,formula:'Continuous I1 inverse<2^30<R^3, so beta<R^16/N'},
+    {id:'actual-I1-root-eta6',power:17,coefficient:1,divideByN:true,formula:'The same quadratic contraction in the C_eta^6 factorial Banach algebra has root norm<2 beta<R^17/N'},
+    {id:'actual-I1-field-change-eta6',power:20,coefficient:1,divideByN:true,formula:'Keta*lambda*z times the fixed source bump; the ordinary log-radius derivative is included'},
+    {id:'actual-I1-partial-moment-change-eta6',power:24,coefficient:1,divideByN:true,formula:'All partial density integrals, with the same datum, are bounded before exact moment restoration'}
+  ];
+  const lambdaUpper=rat(1,1n<<200n),r=rat(1,1000000),lip=qmul(rat(2n*(1n<<36n)),qmul(lambdaUpper,r));
+  const checks=[
+    {id:'new-loop-primitives-through-six',pass:loop.pass},
+    {id:'same-frequency-dominates-all-new-small-errors',pass:rows.filter(r=>r.divideByN).every(r=>r.power+1<50)&&20<Rmin&&210<Rmin},
+    {id:'continuous-I1-inverse-bound',pass:(1n<<30n)<Rmin**3n,proof:'Independent continuous determinant/cofactor estimate, not the old fixture matrix: U inverse<800; E inverse<768000000<2^30.'},
+    {id:'I1-factorial-C6-contraction',pass:qcompare(lip,rat(1,4))<0&&2n<Rmin&&2n*Rmin**16n*100000000n<Rmin**50n,lipschitzUpper:qtext(lip),proof:'The eta-independent quadratic operator norm is<2^36 after exact inverse. Work in the factorial C6 algebra; pointwise uniqueness identifies the same original root.'},
+    {id:'eta-independent-fast-phase-kept',pass:6>=5+1,proof:'D_y(B(y,eta,N y)/N)=B_y/N+B_phase. Mixed eta5 uses actual total6, not the small value bound alone.'},
+  ];
+  return {schema:'MathScope.ActualC12HigherJetRestoration/1',parameterOrder:6,norm:'sum_(j=0)^6 sup|partial_eta^j f|/j!',frequency:'the original N=1+ceil(R^50)',rows,rawSixthDerivativeFactorial:720,ordinaryDerivativesAreNotFactorialNorm:true,fastRadialDerivative:'B_y/N+B_phase',pointwiseEqualityAfterI1:'All five functions of eta exactly restored by the actual root equation; this analytic identity is not inferred from compact support or an interval midpoint.',checks,pass:checks.every(c=>c.pass)};
+}
+
+/** Continuous bounds, not evaluations of the signed source integrals. */
+function actualLeadingHighJetBounds(input={},context={}){
+  const request=inputOf(input),source=assertSourceProfile(request.sourceProfile);context.checkCancelled?.();
+  const hierarchy=sourceHierarchy(source),step=actualStepHighDerivativeAudit(12),natural=actualNaturalMixedCoefficientAudit(12),premodulation=premodulationHighJets(step,natural);context.checkCancelled?.();
+  const loop=loopHigherJets(premodulation),outer=outerHigherJets(),restoration=modulationAndRestoration(loop);
+  const regularIntegrands=[
+    {name:'Jm',formula:'v',etaNormPower:3,xDerivativePower:5},
+    {name:'J0',formula:'X*v',etaNormPower:4,xDerivativePower:7},
+    {name:'Hm',formula:'U*v',etaNormPower:6,xDerivativePower:9},
+    {name:'H0',formula:'X*U*v',etaNormPower:7,xDerivativePower:11},
+    {name:'Km2',formula:'v^2',etaNormPower:7,xDerivativePower:9},
+    {name:'Km1',formula:'X*v^2',etaNormPower:8,xDerivativePower:11}
+  ];
+  const checks=[
+    {id:'actual-hierarchy',pass:hierarchy.pass},
+    {id:'actual-leading-all-stages-higher-jet-proof',pass:premodulation.pass&&loop.pass&&outer.pass&&restoration.pass},
+    {id:'natural-core-physical-X-derivative',pass:64+14<10000,proof:'U=Ustar+u(Lambda X)/Lambda, and its average; the actual natural mixed coefficient bounds include eta6 and one Y derivative. No1/X bound is used at the axis.'},
+    {id:'six-regular-integrand-bounds',pass:regularIntegrands.every(r=>r.etaNormPower<12&&r.xDerivativePower<12)},
+    {id:'eta-order-suffices-for-Omega-four',pass:6>=4+2&&6>=5+1,proof:'v uses one derivative of M/X; weighted Omega adds one. Its eta4 derivatives require U/M eta6.'},
+    {id:'entire-finite-support-length',pass:11<100000,proof:'Source Xv<Xb<C^11<R, with U=M=V=0 after Xv.'}
+  ];
+  return {schema:'MathScope.ActualLeadingHighJetBounds/1',profileId:source.id,sourceHash:PINNED_N3.inputs.assembly.sha256,parameterExpressionSHA256:source.parameterExpressionSHA256,sourceInputs:structuredClone(source.inputs),sourceBindings:structuredClone(ACTUAL_LEADING_HIGH_JET_BINDINGS),
+    hierarchy,step,natural,premodulation,loop,outer,restoration,
+    bounds:{domain:{X:['0','Xv'],eta:[-1,1]},factorialEtaNorm:{U0:{order:6,upper:'R^2'},averageU0:{order:6,upper:'R^2'},V0OverX:{order:5,upper:'R^3'}},physicalXDerivative:{U0:{etaOrder:5,upper:'R^5'},averageU0:{etaOrder:5,upper:'R^5'},V0OverX:{etaOrder:5,upper:'R^5'}},M0:{etaOrder:6,upper:'R^3',physicalXDerivative:'U0'},originalFrequency:'1+ceil(R^50)',R:'exp(CSelected^25600000)',rawDerivativeConversion:'The j-th ordinary eta derivative is at most j! times the listed factorial norm.'},
+    regularIntegrands,weightedOmega:{pressure:'(D*eta*Jm_eta+d*Hm_eta-2A*eta*Hm)/(2L)+Km2/4+axisVX',flux:'(D*eta*J0_eta-J0+d*H0_eta+2D*eta*H0)/(2L)-Km1/4',axisVX:'[2A*eta*(4eta+j0)-4d]/L',axisBoundaryDropped:false,etaOrder:4,factorialNormUpper:'R^13',regularIntegralProducerBound:{etaOrder:5,valueAndPhysicalXDerivativeUpper:'R^12'},quadrature:{interval:['0','Xv'],rule:'left Riemann rectangles, n equal subintervals',factorialEtaErrorUpper:'R^14/(2n)',tailAfterXvExactlyZero:true,uniformForAllEta:true,proof:'For each differentiable integrand, |integral f-leftSum| <= (Xv)^2 sup|f_X|/(2n). The exact signed function is not replaced by this bound.'}},
+    checks,pass:checks.every(c=>c.pass),certificateType:'SOURCE_ANALYTIC_DERIVATION_WITH_EXECUTED_FINITE_JET_ARITHMETIC',
+    scope:{actualLeadingHigherEtaNormsDerived:true,oldC2ContractPromotedWithoutNewProof:false,sourceConstantsSuppliedByCaller:false,signedMomentValuesNumericallyEnclosed:false,n1CompletedCoefficientNormDerived:false,allPositiveOrdersCompleted:false,stressFlatEdgeDirectionModulusDerived:false,actualUniformHColumnsCertified:false,sourceUniformQStarCertified:false,originalN506Complete:false,formalKernelProof:false}};
+}
+
+return {ACTUAL_LEADING_HIGH_JET_BINDINGS,actualLeadingHighJetBounds};
+})();
+const __m2_120 = (()=>{
+/** Exact flat-factor functions for the ONE accepted order-zero stress.
+ *
+ * Inner differences are divided analytically by the common activation
+ * factor, through an explicit Laplace integral. The outer backward stress
+ * is factored by the same change of variables. Neither code path divides
+ * a numerical zero stress by its zero norm at an edge.
+ */
+const {ActualConvergentExpressions} = __m2_90;
+const {SOURCE_PROFILE_ID,assertSourceProfile} = __m2_45;
+const {fail} = __m2_74;
+function request(input){
+  if(input===null||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Use the actual source stress-factor request.');
+  for(const k of Object.keys(input))if(!['sourceProfile','derivativeOrder'].includes(k))fail('INVALID_INPUT','No stress function, endpoint, width or bound override is accepted: '+k);
+  const sourceProfile=input.sourceProfile??SOURCE_PROFILE_ID,derivativeOrder=input.derivativeOrder??1;
+  assertSourceProfile(sourceProfile);
+  if(!Number.isSafeInteger(derivativeOrder)||derivativeOrder<0||derivativeOrder>1)fail('RESOURCE_LIMIT','This factor producer materializes values and first ordinary profile derivatives.');
+  return {sourceProfile,derivativeOrder};
+}
+
+/** Ring identities, shared by the exact compiler and independent tests.
+ * These helpers make no source or analytic certification for caller data.
+ */
+function innerMomentDifferenceAlgebra(G,b){
+  const q=(n,d=1)=>G.q(n,d),du=b.uOver,de=b.EOver;
+  const energy=G.add(G.mul(q(2),b.E,de),G.mul(b.a,G.pow(de,2)));
+  const mixed=G.add(G.mul(b.E,du),G.mul(b.U,de),G.mul(b.a,de,du));
+  return [G.mul(b.X,du),G.mul(b.r,b.X,de),G.mul(b.r,b.X,mixed),G.mul(b.X,G.sub(G.add(G.mul(q(2),b.U,du),G.mul(b.a,G.pow(du,2))),G.mul(q(1,2),energy))),G.mul(q(1,2),energy)];
+}
+
+function innerStressDifferenceAlgebra(G,b,m,c){
+  const q=(n,d=1)=>G.q(n,d),{eta,A,D,d,L,h}=c;
+  const WOver=G.neg(G.div(G.add(G.mul(q(2),D,eta,m.M),G.mul(d,m.Meta)),b.X));
+  const FWOver=G.add(G.mul(b.F,WOver),G.mul(b.W,b.FOver),G.mul(b.a,b.FOver,WOver));
+  const WUOver=G.add(G.mul(b.W,b.uOver),G.mul(b.U,WOver),G.mul(b.a,WOver,b.uOver));
+  const angOver=G.add(G.mul(G.sub(G.one,h),m.I),G.neg(G.mul(D,eta,m.Ieta)),G.neg(G.mul(d,m.Jeta)),G.mul(q(2),G.sub(h,D),eta,m.J));
+  const axialOver=G.add(G.neg(G.mul(b.X,WUOver)),G.mul(D,G.sub(m.M,G.mul(eta,m.Meta))),G.mul(q(4),h,eta,m.S),G.neg(G.mul(d,m.Seta)),G.mul(b.X,G.sub(G.mul(q(4),A,eta,m.Cp),G.mul(d,m.Cpeta))));
+  const theta=G.add(G.neg(G.div(G.mul(b.X,FWOver),L)),G.div(angOver,G.mul(q(2),b.X,L)),G.mul(b.p1,G.sub(b.F,G.mul(b.kappa,b.FOver))));
+  const axial=G.sub(G.div(axialOver,G.mul(L,b.r)),G.div(G.mul(q(2),b.Uy),b.r));
+  return {WOver,FWOver,WUOver,angOver,axialOver,theta,axial};
+}
+
+function outerStressFactorAlgebra(G,b){
+  const q=(n,d=1)=>G.q(n,d);
+  return {theta:G.add(G.div(G.mul(q(2),b.K,b.c),b.r),G.div(G.mul(G.pow(b.delta,3),b.viscous),G.mul(q(2),G.pow(b.r,2))),G.div(G.mul(G.pow(b.delta,3),b.inviscid),G.mul(q(4),b.L,G.pow(b.r,2)))),axial:G.div(b.axialIntegral,G.mul(q(4),b.r))};
+}
+
+function compileActualStressDirectionProgram(input={},context={}){
+  const selected=request(input),G=new ActualConvergentExpressions(selected.sourceProfile),q=(n,d=1)=>G.q(n,d),p=n=>G.parameter(n),z=G.zero,o=G.one;
+  const {eta,A,D,d,L,Ustar,g}=G.core,h=p('h'),Lambda=p('Lambda'),Xa=p('Xa'),t1=p('t1'),kap0=p('kappa0');
+  const y=G.var('inner_log_distance'),delta=G.var('outer_log_distance'),Xat=s=>G.mul(Xa,G.exp(s)),rat=s=>G.sqrt(G.mul(q(2),Xat(s)));
+  const integral=(name,fn,a,b)=>{const t=G.fresh(name);return G.integral(fn(t),t,a,b);};
+  const improper=[];
+  function laplace(name,fn){
+    const t=G.fresh(name+'_compact'),den=G.sub(o,t),u=G.div(t,den),body=G.mul(G.exp(G.neg(u)),fn(u),G.pow(den,-2)),root=G.integral(body,t,z,o);
+    improper.push({name,root,variable:t,substitution:'u=t/(1-t)',weight:'exp(-u)',endpoints:'One-sided improper limits; no singular endpoint sample is evaluated.'});return root;
+  }
+  function flat(t){
+    const positive=G.exp(G.neg(G.pow(t,-2)));
+    return G.choose(t,z,o,z,positive,positive);
+  }
+  const ga=s=>G.div(G.sub(o,kap0),G.add(flat(G.div(s,t1)),flat(G.sub(o,G.div(s,t1)))));
+  const ea=s=>G.mul(G.sub(o,kap0),G.step(G.div(s,t1)));
+  const innerKernels=[];
+  // K_a f(y)=e_a(y)^-1 integral_0^y e_a(s)f(s)ds.
+  // The expression below has no e_a^-1 and is defined at y=0.
+  function Ka(name,end,fn){
+    const radius=G.div(end,t1),root=G.mul(G.div(G.pow(end,3),G.mul(q(2),G.pow(t1,2),ga(end))),laplace(name,u=>{
+      const v=G.add(o,G.mul(G.pow(radius,2),u)),s=G.div(end,G.sqrt(v));
+      return G.div(G.mul(ga(s),fn(s)),G.mul(v,G.sqrt(v)));
+    }));
+    innerKernels.push({name,root,upper:end,identity:'e_a(y)^-1 integral_0^y e_a(s) f(s) ds',valueUpper:'(y^3/t1^2)*sup|f|',radialDerivativeUpper:'5*sup|f|+(y^3/t1^2)*sup|partial_y f|',etaDerivativeRule:'Differentiate only the displayed f, since e_a is eta-independent.'});return root;
+  }
+  const stateCache=new Map();
+  function natural(s){
+    const Y=G.mul(q(4),G.exp(s)),F=G.mul(g,G.natural('Phi',Y)),U=G.add(Ustar,G.div(G.natural('u',Y),Lambda)),X=Xat(s),r=rat(s);
+    const Uy=G.div(G.mul(Y,G.natural('u',Y,eta,1,0)),Lambda),p1=G.neg(G.div(G.mul(q(2),Y,G.natural('Phi',Y,eta,1,0)),G.natural('Phi',Y)));
+    const avg=G.add(Ustar,G.div(G.natural('average',Y),Lambda)),W=G.sub(o,G.add(G.mul(q(2),D,eta,avg),G.mul(d,G.derivative(avg,eta))));
+    return {Y,F,U,X,r,E:G.mul(r,F),Uy,p1,W};
+  }
+  function actualDifferenceAt(s){
+    if(stateCache.has(s))return stateCache.get(s);
+    const ref=natural(s),a=ea(s),kappa=G.sub(o,a),vOver=G.mul(q(1,2),Ka('inner_log_ratio',s,t=>natural(t).p1)),uOver=G.neg(Ka('inner_U_difference',s,t=>natural(t).Uy)),v=G.mul(a,vOver);
+    // (exp(v)-1)/v = integral_0^1 exp(t v)dt, including v=0.
+    const expDiv=integral('inner_exponential_divided_difference',t=>G.exp(G.mul(t,v)),z,o),FOver=G.mul(ref.F,vOver,expDiv),EOver=G.mul(ref.r,FOver);
+    const F=G.mul(ref.F,G.exp(v)),E=G.mul(ref.r,F),U=G.add(ref.U,G.mul(a,uOver));
+    const out={...ref,a,kappa,vOver,uOver,FOver,EOver,actualF:F,actualE:E,actualU:U,v};stateCache.set(s,out);return out;
+  }
+  const source=actualDifferenceAt(y),momentNames=['M','I','J','S','Cp'];
+  const deltaMoments=momentNames.map((name,j)=>Ka('inner_delta_'+name,y,s=>innerMomentDifferenceAlgebra(G,actualDifferenceAt(s))[j]));
+  const [mI,iI,jI,sI,cpI]=deltaMoments,meta=G.derivative(mI,eta),ieta=G.derivative(iI,eta),jeta=G.derivative(jI,eta),seta=G.derivative(sI,eta),cpeta=G.derivative(cpI,eta);
+  const inner=innerStressDifferenceAlgebra(G,source,{M:mI,Meta:meta,I:iI,Ieta:ieta,J:jI,Jeta:jeta,S:sI,Seta:seta,Cp:cpI,Cpeta:cpeta},{eta,A,D,d,L,h});
+  const {FWOver,WUOver,theta:innerTheta,axial:innerZ}=inner;
+
+  context.checkCancelled?.();
+  // The terminal original stage is eta-independent. Its exact height and
+  // endpoint already include the actual scalar waiting integral.
+  const terminal=G.outer.stages.find(v=>v.id==='terminal');
+  if(!terminal)fail('INTERNAL_VALIDATION','The actual terminal source stage is missing.');
+  const Xb=G.mul(p('XR'),G.exp(terminal.end)),EpowB=G.mul(p('Pstar'),G.exp(terminal.logAEnd)),rho=G.mul(p('co'),h);
+  const gamma=laplace('actual_Euler_Gamma',v=>G.exp(G.mul(h,G.log(v))));
+  const outerCache=new Map();
+  function outerAt(s){
+    if(outerCache.has(s))return outerCache.get(s);
+    const X=G.mul(Xb,G.exp(G.neg(s))),r=G.sqrt(G.mul(q(2),X)),Z=G.div(G.mul(q(2),d),X),pow=G.mul(EpowB,G.exp(G.mul(A,s)));
+    const heatWeight=v=>G.exp(G.mul(h,G.sub(G.log(v),G.log(G.add(o,G.mul(Z,v))))));
+    const heatNumerator=laplace('actual_outer_heat',heatWeight),heat=G.div(heatNumerator,gamma),K=G.mul(pow,heat);
+    // Differentiation supplies one extra v, outside the gamma density v^h.
+    const heatZIntegral=laplace('actual_outer_heat_Z',v=>G.div(G.mul(v,heatWeight(v)),G.add(o,G.mul(Z,v))));
+    const exactHeatZ=G.neg(G.div(G.mul(h,heatZIntegral),gamma));
+    const Kdelta=G.mul(pow,G.add(G.mul(A,heat),G.mul(Z,exactHeatZ)));
+    const half=G.mul(q(1,2),s),den=G.add(flat(half),flat(G.sub(o,half))),go=G.inv(den);
+    // s is sometimes a compound expression. Use a fresh coordinate for
+    // the ordinary derivative of the smooth prefactor in that case.
+    const a=G.fresh('outer_prefactor_distance'),ga=G.inv(G.add(flat(G.mul(q(1,2),a)),flat(G.sub(o,G.mul(q(1,2),a))))),gp=G.substitute(G.derivative(ga,a),a,s);
+    const exponential=flat(half),f=G.sub(o,G.mul(rho,exponential,go)),c=G.mul(rho,G.add(G.mul(q(8),go),G.mul(G.pow(s,3),gp)));
+    const out={X,r,Z,pow,heat,K,Kdelta,go,f,c};outerCache.set(s,out);return out;
+  }
+  const outerKernels=[];
+  function J(name,end,m,fn){
+    if(!Number.isSafeInteger(m)||m< -3)fail('INTERNAL_VALIDATION','The outer regularized kernel requires m>=-3.');
+    // a=4 is scaled to the fixed weight exp(-u), so each exact prefactor
+    // 1/4 and transformed radius is retained.
+    const root=G.mul(q(1,4),laplace(name,u=>{
+      const z1=G.add(o,G.mul(q(1,4),G.pow(end,2),u)),s=G.div(end,G.sqrt(z1));
+      return G.div(fn(s),G.mul(G.pow(z1,Math.floor((m+3)/2)),(m+3)%2?G.sqrt(z1):o));
+    }));
+    outerKernels.push({name,root,m,identity:'J_(4,m)G(delta)=integral_0^infinity exp(-4t)*(1+delta^2*t)^(-(m+3)/2)*G(delta/sqrt(1+delta^2*t))dt',valueUpper:'sup|G|/4',deltaDerivativeUpper:'sup|G_delta|/4+(m+3)*sup|G|/32',etaDerivativeRule:'Differentiate the displayed G; the kernel is eta-independent.'});return root;
+  }
+  const b=outerAt(delta),viscous=J('outer_viscous_stress',delta,-3,s=>{const a=outerAt(s);return G.mul(a.r,G.add(a.K,G.mul(q(2),a.Kdelta)),a.c);}),inviscid=J('outer_inviscid_stress',delta,-3,s=>{const a=outerAt(s);return G.mul(G.pow(a.r,3),a.K,a.c);});
+  const pressureCoefficient=s=>G.div(G.mul(eta,J('outer_pressure',s,-3,t=>{const a=outerAt(t);return G.mul(G.pow(a.K,2),a.f,a.c);})),L);
+  const outer=outerStressFactorAlgebra(G,{K:b.K,c:b.c,r:b.r,delta,L,viscous,inviscid,axialIntegral:J('outer_axial_stress',delta,0,s=>G.mul(G.pow(outerAt(s).r,2),pressureCoefficient(s)))});
+  const {theta:outerTheta,axial:outerZ}=outer;
+  const norm=(a,b)=>G.sqrt(G.add(G.pow(a,2),G.pow(b,2))),innerNorm=norm(innerTheta,innerZ),outerScaledZ=G.mul(G.pow(delta,6),outerZ),outerNorm=norm(outerTheta,outerScaledZ);
+  const roots={innerLogDistance:y,outerLogDistance:delta,eta,Xa,Xb,t1,EpowB,rho,
+    innerFactor:source.a,innerTheta,innerZ,innerDirectionTheta:G.div(innerTheta,innerNorm),innerDirectionZ:G.div(innerZ,innerNorm),
+    outerTheta,outerZ,outerScaledZ,outerDirectionTheta:G.div(outerTheta,outerNorm),outerDirectionZ:G.div(outerScaledZ,outerNorm),
+    actualInnerF:source.actualF,actualInnerU:source.actualU,innerVOverFactor:source.vOver,innerUOverFactor:source.uOver,innerFOverFactor:source.FOver,
+    innerFWOverFactor:FWOver,innerWUOverFactor:WUOver};
+  momentNames.forEach((name,j)=>{roots['inner'+name+'DifferenceOverFactor']=deltaMoments[j];});
+  if(selected.derivativeOrder)for(const [name,coordinate]of [['innerTheta',y],['innerZ',y],['innerDirectionTheta',y],['innerDirectionZ',y],['outerTheta',delta],['outerZ',delta],['outerDirectionTheta',delta],['outerDirectionZ',delta]]){
+    context.checkCancelled?.();roots[name+'_radial']=G.derivative(roots[name],coordinate);roots[name+'_eta']=G.derivative(roots[name],eta);
+  }
+  return G.pack(roots,{schema:'MathScope.ActualStressDirectionProgram/1',request:selected,
+    domains:{inner:{coordinate:'y=log(X/Xa)',range:['0','t1/4'],eta:[-1,1]},outer:{coordinate:'delta=log(Xb/X)',range:['0','1/2'],eta:[-1,1]}},
+    exactFactorization:{inner:'T0=e_a*(innerTheta,innerZ)',outer:'T0=exp(-4/delta^2)*delta^-3*(outerTheta,delta^6*outerZ)',normalizationsArePhysicalStress:false,actualPhysicalFactor:'Tphysical=q^(-A-1/2)*T0; it cancels only from the direction.',commonZeroStressFactorDividedNumerically:false},
+    sourceEquations:['4.11','4.15','4.16','B.26','B.27','B.30','A.53','A.54','A.48','A.49'],
+    innerKernels,outerKernels,improper,
+    exactSupport:{inner:'C12 primitives vanish on y<=t1/4 by the strict shear cutoff; B8/I1/I2 are farther right.',outer:'Backward stress uses the exact heat exterior after all five actual moment functions are restored; no old forward-prefix approximation is substituted.'},
+    preservedTerms:{innerNonlinearMomentDifferences:true,innerAxialStockMinusXWU:true,outerThreeAngularTerms:true,outerPressureHeatSquare:true,outerNestedAxialIntegral:true,heatGammaIsActualLaplaceIntegral:true},
+    scope:{actualSameSourceFlatFactorFunctionsCompiled:true,firstProfileDerivativesExpanded:!!selected.derivativeOrder,underlyingNaturalSeriesHasConvergentSourceTail:true,entireFunctionNumericallyEnclosed:false,uniformDirectionNormBoundIncluded:false,completedPositiveOrderBackgroundIncluded:false,actualUniformHColumnsCertified:false,sourceUniformQStarCertified:false,originalN506Complete:false,newLeanKernelProof:false}});
+}
+
+return {innerMomentDifferenceAlgebra,innerStressDifferenceAlgebra,outerStressFactorAlgebra,compileActualStressDirectionProgram};
+})();
+const __m2_121 = (()=>{
+/** Actual continuous direction modulus, including both flat stress edges.
+ * Source analytic bounds are combined by an executed finite power ledger.
+ * The bound concerns T0; it supplies neither completed F/G nor H columns.
+ */
+const {SOURCE_PROFILE_ID,assertSourceProfile} = __m2_45;
+const {PINNED_N3} = __m2_44;
+const {actualLeadingHighJetBounds,ACTUAL_LEADING_HIGH_JET_BINDINGS} = __m2_119;
+const {compileActualStressDirectionProgram} = __m2_120;
+const {rational: Q,readRational,qadd,qsub,qmul,qdiv,qcompare,qtext,factorial,fail} = __m2_74;
+const ACTUAL_STRESS_DIRECTION_BINDINGS=Object.freeze([
+  ...ACTUAL_LEADING_HIGH_JET_BINDINGS,
+  {path:'mathscope-m1/navier/followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md',bytes:6843,sha256:'2035fa202134d7ca0affcad7ad7aafbb05e3508fde3a5f34a3f2cea6fd003750'},
+  {path:'mathscope-m1/navier/followup-20261010-final-stress-audit/HEAT_COMPENSATION_PROOF_EN.md',bytes:18440,sha256:'81446a5f1a6a18a4e1aa9a44fdc5695da1846a1c23fe412c9ac282af155688e3'},
+]);
+const Cmin=1n<<260n,Rmin=8192n;
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+
+class Ledger {
+  constructor(base='C',order=3){this.base=base;this.order=order;this.rows=[];this.values=new Map();}
+  put(id,power,rule,inputs=[],extra={}){if(this.values.has(id)||!Number.isSafeInteger(power)||power<0)throw Error('Invalid fixed-source direction ledger.');const row={id,power,rule,inputs,...extra};this.values.set(id,power);this.rows.push(row);return id;}
+  at(id){if(!this.values.has(id))throw Error('Missing direction input '+id);return this.values.get(id);}
+  reserve(coefficient){const bits=coefficient.toString(2).length,baseBits=this.base==='C'?260:13;return Math.max(1,Math.ceil(bits/baseBits));}
+  sum(id,inputs){const coefficient=BigInt(inputs.length),reserve=this.reserve(coefficient);return this.put(id,Math.max(...inputs.map(x=>this.at(x)))+reserve,'sum',inputs,{coefficient:String(coefficient),reserve});}
+  product(id,inputs){const coefficient=BigInt(inputs.length)**BigInt(this.order),reserve=this.reserve(coefficient);return this.put(id,inputs.reduce((v,x)=>v+this.at(x),0)+reserve,'mixed product',inputs,{coefficient:String(coefficient),reserve});}
+  derivative(id,input){return this.put(id,this.at(input)+1,'ordinary derivative extraction within the supplied mixed-jet rectangle',[input],{coefficient:String(factorial(this.order)),reserve:1});}
+  Ka(id,input){return this.put(id,this.at(input)+1,'actual flat-factor integral and its first y derivative',[input],{coefficient:'6',reserve:1});}
+  J(id,input,m){const coefficient=BigInt(m+12);return this.put(id,this.at(input)+this.reserve(coefficient),'actual outer Laplace kernel through first delta derivative',[input],{m,coefficient:String(coefficient),reserve:this.reserve(coefficient)});}
+  expDividedDifference(id,input){const coefficient=1n+factorial(this.order)*BigInt(this.order+1)**BigInt(this.order+2),reserve=this.reserve(coefficient);return this.put(id,this.order*this.at(input)+reserve,'finite Bell derivatives of integral_0^1 exp(t*v)dt; actual |v|<1/10',[input],{coefficient:String(coefficient),reserve});}
+}
+
+/** A finite integer comparison in the unchanged source hierarchy.
+ * R=exp(C^25,600,000)>C^power, by one explicitly selected exponential term.
+ */
+function directionCPowerAbsorption(power){
+  if(!Number.isSafeInteger(power)||power<0||power>1000000000)fail('INVALID_INPUT','Use a nonnegative bounded finite C power.');
+  const sourcePower=25600000,term=Math.max(1,Math.ceil((power+2)/sourcePower)),f=factorial(term),effectivePower=term*sourcePower-1;
+  return {power,sourceRExponentPower:sourcePower,expSeriesTerm:term,factorial:String(f),factorialUpper:'C',effectivePower,strictUpper:'R',pass:f<Cmin&&effectivePower>power};
+}
+
+/** Entire-domain kernel inequalities in exact rational arithmetic. */
+function flatKernelAudit({radialDerivativeCoefficient='5',outerDerivativeDivisor='32'}={}){
+  const k=readRational(radialDerivativeCoefficient),od=readRational(outerDerivativeDivisor),one=Q(1),innerLogSlopeUpper=Q(56,27),innerDerivative= qadd(one,innerLogSlopeUpper);
+  const rows=[
+    {id:'activation-logarithmic-slope-lower',left:qtext(qmul(Q(2),qsub(one,Q(1,16384)))),right:'1',pass:qcompare(qmul(Q(2),qsub(one,Q(1,16384))),one)>0},
+    {id:'activation-logarithmic-slope-upper',left:qtext(qmul(Q(2),qadd(one,Q(1,27)))),right:'56/27',pass:qcompare(qmul(Q(2),qadd(one,Q(1,27))),innerLogSlopeUpper)===0},
+    {id:'normalized-inner-primitive-first-derivative',left:qtext(innerDerivative),right:qtext(k),pass:qcompare(innerDerivative,k)<0},
+    {id:'outer-first-derivative-kernel-moment',left:'1/32',right:qtext(qdiv(one,od)),pass:qcompare(Q(1,32),qdiv(one,od))<=0}
+  ];
+  return {schema:'MathScope.ActualFlatKernelAudit/1',inner:{domain:'0<y/t1<=1/4',logSlope:['t1^2/y^3','(56/27)*t1^2/y^3'],primitiveValueUpper:'(y^3/t1^2)*B',primitiveYDerivativeUpper:qtext(k)+'*B+(y^3/t1^2)*B_y',limitAtZero:'0',normalizationRetained:true},outer:{domain:'0<=delta<=1/2, m>=-3',valueUpper:'B/4',deltaDerivativeUpper:'B_delta/4+(m+3)*B/'+qtext(od),laplaceTailAfterT:'exp(-4*T)*B/4',mixedDerivativeTail:'exp(-4*T)*(B_delta/4+(m+3)*B*(T/8+1/32))'},rows,pass:rows.every(r=>r.pass),finiteSamplingUsed:false};
+}
+
+function innerBound(){
+  const a=new Ledger('C',3);
+  a.put('reference',65536,'Actual natural/reference fields F,E,U,W,p1,Uy, and needed eta2/one-y jets from the new source high-jet producer.');
+  a.put('coordinate',2,'X,X^-1,sqrt(2X), reciprocal, L^-1 and elementary eta factors on 4/Lambda<=X<=4exp(t1/4)/Lambda.');
+  a.put('activation',121,'eta-independent e_a and one y derivative: sigmaPrime<=9 and t1^-1=C^120.');
+  a.Ka('vOver','reference');a.Ka('uOver','reference');
+  a.product('v',['activation','vOver']);a.expDividedDifference('expDiv','v');
+  a.product('FOver',['reference','vOver','expDiv']);a.product('EOver',['coordinate','FOver']);
+  a.product('M_density',['coordinate','uOver']);a.Ka('MOver','M_density');
+  a.product('I_density',['coordinate','coordinate','EOver']);a.Ka('IOver','I_density');
+  a.product('J_Edu',['reference','uOver']);a.product('J_Ude',['reference','EOver']);a.product('J_cross',['activation','uOver','EOver']);
+  a.sum('J_increment',['J_Edu','J_Ude','J_cross']);a.product('J_density',['coordinate','coordinate','J_increment']);a.Ka('JOver','J_density');
+  a.product('U_squared_linear',['reference','uOver']);a.product('U_squared_cross',['activation','uOver','uOver']);
+  a.product('E_squared_linear',['reference','EOver']);a.product('E_squared_cross',['activation','EOver','EOver']);
+  a.sum('S_increment',['U_squared_linear','U_squared_cross','E_squared_linear','E_squared_cross']);a.product('S_density',['coordinate','S_increment']);a.Ka('SOver','S_density');
+  a.sum('Cp_density',['E_squared_linear','E_squared_cross']);a.Ka('CpOver','Cp_density');
+  for(const n of ['M','I','J','S','Cp'])a.derivative(n+'Over_eta',n+'Over');
+  a.sum('M_geometry',['MOver','MOver_eta']);a.product('WOver',['coordinate','coordinate','M_geometry']);
+  a.product('FW_first',['reference','WOver']);a.product('FW_second',['reference','FOver']);a.product('FW_cross',['activation','FOver','WOver']);a.sum('FWOver',['FW_first','FW_second','FW_cross']);
+  a.product('WU_first',['reference','uOver']);a.product('WU_second',['reference','WOver']);a.product('WU_cross',['activation','WOver','uOver']);a.sum('WUOver',['WU_first','WU_second','WU_cross']);
+  a.sum('angular_terms',['IOver','IOver_eta','JOver','JOver_eta']);a.product('angular',['coordinate','angular_terms']);
+  a.product('theta_stock',['coordinate','coordinate','FWOver']);a.product('theta_moments',['coordinate','coordinate','angular']);
+  a.product('theta_shear_first',['reference','reference']);a.product('theta_shear_second',['reference','activation','FOver']);a.sum('innerTheta',['theta_stock','theta_moments','theta_shear_first','theta_shear_second']);
+  a.sum('axial_moment_terms',['MOver','MOver_eta','SOver','SOver_eta','CpOver','CpOver_eta']);a.product('axial_moments',['coordinate','coordinate','axial_moment_terms']);a.product('axial_stock',['coordinate','WUOver']);
+  a.sum('axial',['axial_moments','axial_stock']);a.product('axial_normalized',['coordinate','coordinate','axial']);a.product('axial_shear',['coordinate','reference']);a.sum('innerZ',['axial_normalized','axial_shear']);
+  const power=Math.max(a.at('innerTheta'),a.at('innerZ'))+1,absorption=directionCPowerAbsorption(power+14);
+  return {schema:'MathScope.ActualInnerStressDirectionBound/1',domain:{y:['0','t1/4'],eta:[-1,1]},norm:'value, first y derivative and first eta derivative; intermediate eta2/one-y rectangle is retained.',referenceInput:'actualLeadingHighJetBounds(): natural total12 and actual B26 mixed8; the reference is exactly natural on this collar.',ledger:a.rows,factorCoefficientCPower:power,factorCoefficientLower:'C^-12',coefficientAndFirstDerivativeUpper:'C^'+power,unitDirectionDerivativeCPower:power+14,absorption,unitDirectionDerivativeUpper:'R',lowerBoundProof:'D=Pc-vs>=2 e_a, F>=C^-3, |t_s|<C^6. Divide the exact positive e_a factor before taking the norm; 2F/sqrt(1+t_s^2)>C^-12.',pass:absorption.pass};
+}
+
+function outerBound(){
+  const a=new Ledger('C',3);
+  a.put('heat',20,'Actual H integral, Epow(Xb), exp(A delta), and K_delta: factorial(n)factorial(n+1) bounds H^(n), n<=4.');
+  a.put('flatPrefactor',20,'1/(exp(-4/delta²)+exp(-(1-delta/2)^-2)); closed prefactor jets to3, denominator>=1/9.');
+  a.put('radial',8,'sqrt(2Xb exp(-delta)), reciprocal, and their needed derivatives, Xb<C^11.');
+  a.put('coefficient',2,'rho, delta^k (k<=6), L^-1, eta, and their needed derivatives.');
+  a.product('c',['coefficient','flatPrefactor']);
+  a.product('theta_boundary',['heat','c','radial']);
+  a.product('theta_viscous_integrand',['radial','heat','c']);a.J('theta_viscous_integral','theta_viscous_integrand',-3);a.product('theta_viscous',['coefficient','radial','radial','theta_viscous_integral']);
+  a.product('theta_inviscid_integrand',['radial','radial','radial','heat','c']);a.J('theta_inviscid_integral','theta_inviscid_integrand',-3);a.product('theta_inviscid',['coefficient','coefficient','radial','radial','theta_inviscid_integral']);
+  a.sum('outerTheta',['theta_boundary','theta_viscous','theta_inviscid']);
+  a.product('pressure_integrand',['heat','heat','flatPrefactor','c']);a.J('pressure_integral','pressure_integrand',-3);a.product('pressure_coefficient',['coefficient','pressure_integral']);
+  a.product('axial_integrand',['radial','radial','pressure_coefficient']);a.J('axial_integral','axial_integrand',0);a.product('outerZ',['radial','axial_integral']);a.product('outerScaledZ',['coefficient','outerZ']);
+  const power=Math.max(a.at('outerTheta'),a.at('outerScaledZ'))+1,absorption=directionCPowerAbsorption(power+12),heatDerivatives=Array.from({length:5},(_,n)=>({order:n,upper:String(factorial(n)*factorial(n+1))}));
+  return {schema:'MathScope.ActualOuterStressDirectionBound/1',domain:{delta:['0','1/2'],eta:[-1,1]},heatDerivatives,heatArgumentNonnegativeIncludingEtaEndpoints:true,ledger:a.rows,factorCoefficientCPower:power,factorCoefficientLower:'C^-10',unitDirectionDerivativeCPower:power+12,absorption,unitDirectionDerivativeUpper:'R',lowerBoundProof:'The exact positive first term in A.54 and S13 bound b_theta>=C^-10 on this entire outer collar. Normalize (b_theta,delta^6*b_z), not the zero physical stress.',pass:absorption.pass};
+}
+
+function middleBound(){
+  const fieldRows=[
+    {id:'unchanged_premodulation',cPower:65536,absorption:directionCPowerAbsorption(65536),description:'Actual mixed8 fields on J; outside J the natural or literal outer formulas apply.'},
+    {id:'C12_exponent_value',upper:'R/N<1',description:'Use the actual exponential value, not exp of its high derivative norm.'},
+    {id:'C12_exponent_y',upper:'2R',description:'(A_y+N A_phase)/N.'},
+    {id:'C12_exponent_yy',upper:'4NR<R^53',description:'A_yy/N+2A_y,phase+N A_phase,phase; actual N<3R^50.'},
+    {id:'C12_mixed2_exponential',upper:'R^56',description:'Known exp(A/N)<=3; the second derivative includes both (D A/N)^2 and D²(A/N).'},
+    {id:'I1_repair_mixed2',upper:'R^60',description:'Actual Ceta6 root with same R,N; two bump radial derivatives are bounded by sigma derivatives through3 and the fixed normalized support. This deliberately looser bound retains both width factors.'},
+    {id:'I2_heat_repair_mixed2',upper:'C^32<R',description:'H12 bounds c, c_eta, c_etaeta by2^30/X*. The actual beta derivatives through2 use the verified step through3. h-differentiated heat moments use actual nonnegative Z; no analytic extension to negative Z is required.'},
+    {id:'entire_annulus_field_mixed2',upper:'R^64',description:'Sum the preserved natural, literal outer, actual C12/I1, and actual I2/heat terms; use their matching jets at every join.'},
+    {id:'entire_annulus_F_mixed2',upper:'R^70',description:'F=E/sqrt(2X), Xa<=X<=Xb; both radial coordinate and its reciprocal are <R.'},
+    {id:'all_five_moments_and_axis_pressure',upper:'R^140',description:'All eta2 and one-y/eta1 derivatives from actual full prefix integrals. Densities have at most two fields; integration adds Xb<R and the radial weights. The axis Cp integral is regular, and the actual P0 eta2 is bounded from the source datum.'}
+  ];
+  const a=new Ledger('R',2);a.put('field',70,'Actual E,U,F through total2.');a.put('moment',140,'Actual M,I,J,S,Cp,P0 through eta2 and y1/eta1.');a.put('geometry',2,'X,1/X,sqrt(2X),reciprocal,L^-1 and their first derivatives.');
+  a.product('W_terms',['geometry','geometry','moment']);a.sum('W',['W_terms','geometry']);
+  a.product('angular_terms',['geometry','moment']);a.sum('angular',['angular_terms','angular_terms','angular_terms','angular_terms']);
+  a.product('theta_stock',['geometry','geometry','field','W']);a.product('theta_integral',['geometry','geometry','angular']);a.sum('theta',['theta_stock','theta_integral','field']);
+  a.product('axial_stock',['geometry','W','field']);a.product('axial_moment',['geometry','moment']);a.product('axial_pressure',['geometry','geometry','moment']);a.sum('axial',['axial_stock','axial_moment','axial_moment','axial_moment','axial_pressure']);a.product('axial_normalized',['geometry','geometry','axial']);a.product('axial_viscosity',['geometry','field']);a.sum('z',['axial_normalized','axial_viscosity']);
+  const power=Math.max(a.at('theta'),a.at('z'))+1,unitDirectionPower=power+21;
+  const checks=[
+    {id:'same-fast-frequency-second-derivative',pass:12n<Rmin&&53<56&&59<64,proof:'N<=3R50; 4NR<=12R51<R53. First-derivative square and second derivative both enter the exponential.'},
+    {id:'no-log-singularity-in-axis-Cp',pass:true,proof:'At the axis E²/(2X)=F²; integrate this actual regular density before using the annulus X^-1 bound.'},
+    {id:'middle-flat-weight-lower',pass:3n**128n<1n<<256n&&256<260,proof:'For y>=t1/8 and delta>=1/4, zeta>=exp(-128)>C^-1.'},
+    {id:'middle-stress-lower',pass:12<20,proof:'S14 gives |T0|>=min(C^-11,R^-8) zeta>=R^-12>R^-20.'},
+    {id:'computed-stress-and-direction-powers',pass:power<256&&unitDirectionPower<512,proof:'|d(T/|T|)|<=2|dT|/|T|; the positive lower bound is used only on this middle region.'}
+  ];
+  return {schema:'MathScope.ActualMiddleStressDirectionBound/1',domain:{innerLogDistanceLower:'t1/8',outerLogDistanceLower:'1/4',eta:[-1,1]},fieldRows,ledger:a.rows,stressFirstJetPower:power,stressLower:'R^-20',unitDirectionDerivativePower:unitDirectionPower,unitDirectionDerivativeUpper:'R^512',exactStressFormulas:{theta:'-F*X*W/L + ((1-h)I-D eta I_eta-d J_eta+2(h-D)eta J)/(2XL) + 2D_y F',z:'[-XWU+D(M-eta M_eta)+4h eta S-d S_eta+X(4A eta Pi-d Pi_eta)]/(L sqrt(2X)) + 2D_y U/sqrt(2X)'},fieldInverseDividedBeforeBounding:true,checks,pass:fieldRows.filter(r=>r.absorption).every(r=>r.absorption.pass)&&checks.every(r=>r.pass)};
+}
+
+function frozenRatioBound(){
+  const rows=[
+    {id:'same-leading-shear-values',upper:'|a|,|b_s|<R^3',lower:'a, v_s-2>R^-10',proof:'C12 has raw gaps>=1/(2R), a,b<=2R. The inner collar has v_s-2>1/10 and a>=C^-122. Beyond J, O sections8-9 give slope<=-lambda/2 or -3h/4; H19, H22 and H25 retain a-2>=min(lambda,h). Also h^-1<Q<R. These are quantitative original gaps, not a compactness assertion.'},
+    {id:'leading-chart-F',upper:'R^71',lower:'R^-10',proof:'Global F lower follows S9-S13 and actual source geometry; s=q/Q lies in[1/2,2]. Its normalization factor is bounded by4.'},
+    {id:'frozen-normal-and-c0',upper:'v_s<R^18, |c0|<R^10',lower:'|N_theta|>R^-14, |c0|>R^-6',proof:'c0²=(v_s-2)/2; N_theta=-a/sqrt(a²+b_s²). From the displayed weaker bounds alone, v_s=a+b_s²/a<R^3+R^16<R^18. No stronger unstated lower bound for a is used.'},
+    {id:'frozen-growth-values',upper:'lambda0<R^83, |g0|<R^75',lower:'lambda0>R^-31, |g0|>R^-20',proof:'lambda0=2F|N_theta||c0| and |g0|=F sqrt(a²+b_s²).'},
+    {id:'target-direction-denominator-at-representative',lower:'-n dot N>R^-32',proof:'(4.26): n_theta+t_s*n_z>=kappa, |t_s|<R^13, kappa=R^-10. Thus -n dot N>=kappa/sqrt(1+t_s²)>R^-24.'},
+    {id:'chart-derivative-conversion',upper:'R^10',proof:'At s in[1/2,2], implicit s-Z²s^(2h)-T=0 has derivative1-2h eta²>=.98. The first s/eta derivatives are<32, and d(log X)/dR=2/R with Rchart>R^-1.'},
+    {id:'direction-first-slow-derivatives',upper:'R^524',proof:'The two profile derivatives are<R^512 on overlapping regions. Convert to (R,Z,T) using the preceding explicit coefficient bounds.'},
+    {id:'frozen-target-ratio-first-derivatives',upper:'R^2048',proof:'r=(A_c/u_star)(n dot K)/(-n dot N), A_c/u_star<=2|c0|<R^11. On a neighborhood with -n dot N>=R^-33, the quotient rule costs<4 R^66; 11+524+66+1<2048.'}
+  ];
+  const checks=[
+    {id:'c0-polynomial-identity',pass:true,identity:'lambda0²/(4F² Ntheta²)=(a²+b_s²-2a)/(2a)=(v_s-2)/2',proof:'Exact substitution of Ntheta=-a/sqrt(a²+b_s²), |g|=F sqrt(a²+b_s²).'},
+    {id:'all-power-gaps',pass:2*3+10+1<18&&11+524+66+1<2048&&1+71+10<83&&31<83},
+    {id:'same-cover-box-retains-negative-projection',pass:3*1024>524+33+1,proof:'For diameter<=4 Sstar^-3 and Sstar>=R^1024, direction change<R^-33, so -n dot N>R^-33 throughout.'},
+    {id:'actual-frozen-target-cone-budget',pass:64n<Rmin&&3*1024>2048+10+1,proof:'4 R^2048 Sstar^-3 <= kappa/16 once Sstar>=R^1024; the extra factor64 is absorbed by one R.'}
+  ];
+  return {schema:'MathScope.ActualFrozenStressRatioModulus/1',ratio:'(A_c/u_star)*(n dot K)/(-n dot N); N,K,c0 are held fixed at the representative',frozenCoefficients:'the actual order-zero profile; transfer to the completed background frame requires the separate positive-order C2 bound',completedBackgroundFrozenFrameIncluded:false,appliesTo:'the source box intersected with Xa<=X<=Xb, eta in[-1,1], s=q/Q in[1/2,2]; no unproved extension outside the physical profile domain',profileDirectionBound:'|partial_y n|,|partial_eta n|<R^512',slowRatioLipschitzUpper:'R^2048',sourceBoxDiameterUpper:'4*Sstar^-3',sufficientBandCondition:'Sstar>=R^1024',resultingRatioVariationUpper:'kappa/16',stressMagnitudeLowerDividedNearFlatEdges:false,rows,checks,pass:checks.every(r=>r.pass)};
+}
+
+function actualStressDirectionBounds(input={},context={}){
+  if(input===null||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Use a source-bound stress direction request.');
+  for(const k of Object.keys(input))if(k!=='sourceProfile')fail('INVALID_INPUT','No source function, modulus, or H-column premise is accepted: '+k);
+  const profileId=input.sourceProfile??SOURCE_PROFILE_ID;assertSourceProfile(profileId);context.checkCancelled?.();
+  const high=actualLeadingHighJetBounds({sourceProfile:profileId},context),kernel=flatKernelAudit(),inner=innerBound(),outer=outerBound(),middle=middleBound(),ratio=frozenRatioBound(),p=PINNED_N3.parametersExactExpressions;
+  const checks=[
+    {id:'actual-source-higher-jets-generated',pass:high.pass&&high.scope.actualLeadingHigherEtaNormsDerived},
+    {id:'same-C-R-width-and-margin',pass:same(p.C12EnvelopeR,{exp:{power:[{ref:'sourceEnvelopeS'},256]}})&&same(p.sourceEnvelopeS,{power:[{ref:'CSelected'},100000]})&&same(p.t1,{power:[{ref:'CSelected'},-120]})&&same(p.directionalMarginKappa,{power:[{ref:'C12EnvelopeR'},-10]})},
+    {id:'actual-edge-factor-kernel-bounds',pass:kernel.pass},
+    {id:'inner-factor-bounds-without-flat-division',pass:inner.pass},
+    {id:'outer-factor-bounds-without-flat-division',pass:outer.pass},
+    {id:'middle-positive-stress-and-derivatives',pass:middle.pass},
+    {id:'overlapping-closed-regions-cover-entire-annulus',pass:qcompare(Q(1,8),Q(1,4))<0&&qcompare(Q(1,4),Q(1,2))<0,proof:'Inner reaches t1/4; middle begins t1/8. Outer reaches delta1/2; middle reaches delta1/4. Thus there is no uncertified gap.'},
+    {id:'global-frozen-target-ratio-modulus',pass:ratio.pass}
+  ];
+  const program=compileActualStressDirectionProgram({sourceProfile:profileId,derivativeOrder:1},context);context.checkCancelled?.();
+  return {schema:'MathScope.ActualStressDirectionBounds/1',profileId,sourceHash:PINNED_N3.inputs.assembly.sha256,parameterExpressionSHA256:PINNED_N3.parameterExpressionSHA256,sourceBindings:structuredClone(ACTUAL_STRESS_DIRECTION_BINDINGS),kernel,inner,outer,middle,ratio,program,
+    generatedSourceInput:{schema:high.schema,pass:high.pass,originalRAndNPreserved:true,order:'leading U/M eta6 and actual loop total6; no unsupported derivative promotion'},
+    bounds:{closedAnnulus:{X:['Xa','Xb'],eta:[-1,1]},profileUnitDirectionFirstDerivativeUpper:'R^512',frozenSlowTargetRatioLipschitzUpper:'R^2048',sufficientDirectionBandCondition:'Sstar>=R^1024',directionConeVariation:'<=kappa/16',physicalCartesianVectorFieldClaimed:false},
+    checks,pass:checks.every(r=>r.pass),scope:{actualSourceFlatFactorsCompiled:true,actualClosedAnnulusDirectionModulusDerived:true,limitingDirectionsIncluded:true,finiteSamplingUsed:false,stressLowerBoundReplacedByMachineZero:false,completedPositiveOrderBackgroundBound:false,actualGeneralLabelHomogeneousPulseEnclosed:false,actualUniformHColumnsCertified:false,sourceUniformQStarCertified:false,globalEquation730Certified:false,originalN506Complete:false,newLeanKernelProof:false}};
+}
+
+return {ACTUAL_STRESS_DIRECTION_BINDINGS,directionCPowerAbsorption,flatKernelAudit,actualStressDirectionBounds};
+})();
+const __m2_122 = (()=>{
+/** Actual leading F0 C2 on the enlarged annulus.
+ * The already proved [Xa,Xb] field bound is combined with the actual
+ * unchanged inner collar and the explicit terminal heat solution.
+ * No positive-order background or H completion flag is supplied here.
+ */
+const {actualLeadingAllOrderJets} = __m2_114;
+const {actualStressDirectionBounds} = __m2_121;
+const {prepareActualFullLeadingProgram,assertActualHeatLeading} = __m2_101;
+const {ActualSourceExpressions} = __m2_65;
+const {assertSourceProfile,SOURCE_PROFILE_ID} = __m2_45;
+const {fail} = __m2_74;
+/** Pure arithmetic import. This helper itself authenticates no source. */
+function importActualPositiveNorm(G,program,root){
+  if(!G||!program?.nodes||!Number.isInteger(root)||!program.nodes[root])fail('INVALID_INPUT','Use a complete finite positive-norm expression.');
+  const cache=new Map();
+  function cp(id){
+    if(cache.has(id))return cache.get(id);const {op,args}=program.nodes[id];let out;
+    if(op==='rational')out=G.q(...args);else if(op==='source_parameter')out=G.parameter(args[0]);
+    else if(op==='add')out=G.add(...args.map(cp));else if(op==='multiply')out=G.mul(...args.map(cp));
+    else if(op==='inverse')out=G.inv(cp(args[0]));else if(op==='integer_power')out=G.pow(cp(args[0]),args[1]);
+    else if(op==='exp')out=G.exp(cp(args[0]));else if(op==='log_positive')out=G.log(cp(args[0]));else if(op==='sqrt_positive')out=G.sqrt(cp(args[0]));
+    else if(op==='maximum'&&typeof G.maximum==='function')out=G.maximum(...args.map(cp));
+    else if(op==='ceiling'&&typeof G.ceiling==='function')out=G.ceiling(cp(args[0]));
+    else fail('INVALID_INPUT','A bound must have explicit arithmetic operands: '+op);
+    cache.set(id,out);return out;
+  }
+  return cp(root);
+}
+
+/** All ordinary total-order-two heat bounds are computed from the
+ * original Gamma derivative moments and the exact Z=2d/X chain. */
+function actualExteriorHeatC2Arithmetic(){
+  const H=[1,2,12],Z={value:2,y:2,eta:4,yy:2,yeta:4,etaeta:4};
+  const heat={value:H[0],y:H[1]*Z.y,eta:H[1]*Z.eta,
+    yy:H[2]*Z.y**2+H[1]*Z.yy,
+    yeta:H[2]*Z.y*Z.eta+H[1]*Z.yeta,
+    etaeta:H[2]*Z.eta**2+H[1]*Z.etaeta};
+  // |b|=1+h<2 for F=Aext X^b H(Z). Derivatives of its
+  // exact power prefactor are retained, rather than bounded as constants.
+  const field={value:heat.value,y:2*heat.value+heat.y,eta:heat.eta,
+    yy:4*heat.value+4*heat.y+heat.yy,
+    yeta:2*heat.eta+heat.yeta,etaeta:heat.etaeta};
+  const coefficient=4096,checks={positiveHeatMoments:H.every(v=>v>0),allSixTotalJetsPresent:Object.keys(field).length===6,
+    actualPowerDerivativeRetained:field.yy>heat.yy&&field.yeta>heat.yeta,
+    exactOuterHeightFactorCovered:2*Math.max(...Object.values(field))<coefficient};
+  return {schema:'MathScope.ActualExteriorHeatC2Arithmetic/1',gammaDerivativeUpper:H,
+    gammaDerivation:['H<=1','h(1+h)<=2','h(1+h)^2(2+h)<=12; 0<h<1'],
+    heatArgumentJets:Z,heat,field,prefactorHeightUpper:'2*CSelected^2',coefficient,
+    exteriorFormula:'F0=Aext*X^(-1-h)*H(2*(1-eta^2)/X)',
+    domain:{X:['Xb','2*Xb'],eta:['-1','1'],XbLower:'1'},
+    etaEndpointConvention:'Continuous one-sided derivatives, justified by the same positive Gamma integrals.',
+    checks,pass:Object.values(checks).every(Boolean)};
+}
+
+let sourceFull=null;
+function actualLeadingEnlargedC2(input={},context={}){
+  if(input===null||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>k!=='sourceProfile'))fail('INVALID_INPUT','Only the immutable actual source profile may be selected.');
+  const profile=assertSourceProfile(input.sourceProfile??SOURCE_PROFILE_ID);context.checkCancelled?.();
+  const leading=actualLeadingAllOrderJets({sourceProfile:SOURCE_PROFILE_ID,radialOrder:2,etaOrder:2},context),direction=actualStressDirectionBounds({sourceProfile:SOURCE_PROFILE_ID},context);
+  if(!sourceFull)sourceFull=prepareActualFullLeadingProgram({sourceProfile:SOURCE_PROFILE_ID,iterations:0},context);
+  assertActualHeatLeading(sourceFull);
+  const exterior=sourceFull.program.heat.exterior,field=direction.middle.fieldRows.find(r=>r.id==='entire_annulus_F_mixed2'),arithmetic=actualExteriorHeatC2Arithmetic();
+  const checks={actualFiniteLeadingProducer:leading.pass,actualClosedAnnulusProducer:direction.pass,
+    exactFieldBoundMatched:field?.upper==='R^70',actualHeatExteriorEtaIndependent:exterior.amplitudeEtaDerivative===sourceFull.G.zero,
+    exactHeatExteriorStartsAtXb:exterior.start===sourceFull.heat.Xb&&exterior.terminalFoOneAfter===sourceFull.heat.Xb,
+    actualHeatTailNotTruncated:sourceFull.program.heat.tailTruncated===false,
+    sourceParameterIdentity:leading.parameterExpressionSHA256===profile.parameterExpressionSHA256&&direction.parameterExpressionSHA256===profile.parameterExpressionSHA256&&sourceFull.program.parameterExpressionSHA256===profile.parameterExpressionSHA256,
+    exactHeatC2Chain:arithmetic.pass};
+  if(!Object.values(checks).every(Boolean))fail('INVALID_SOURCE_CONSTRUCTION','The actual enlarged-annulus leading premises did not match their source definitions.');
+  const G=new ActualSourceExpressions(),q=(n,d=1)=>G.q(n,d),R=G.parameter('C12EnvelopeR'),C=G.parameter('CSelected'),Xa=G.parameter('Xa');
+  const active=importActualPositiveNorm(G,leading.normProgram,leading.bounds.F0active.root),middleLog=G.pow(R,70),outerLog=G.mul(q(arithmetic.coefficient),G.pow(C,2));
+  // For total order <=2, dX^2=X^-2(Dy^2-Dy). The factor8
+  // bounds every signed falling-Euler coefficient and every lower order.
+  const physicalFactor=G.mul(q(8),G.pow(G.add(G.one,G.inv(Xa)),2)),middle=G.mul(physicalFactor,middleLog),outer=G.mul(physicalFactor,outerLog),F=G.add(active,middle,outer);
+  const U=importActualPositiveNorm(G,leading.normProgram,leading.bounds.U0.root),roots={F0OrdinaryC2:F,U0OrdinaryC2:U,F0ActiveOrdinaryC2:active,F0ClosedAnnulusLogC2:middleLog,F0ExteriorLogC2:outerLog,physicalXConversionFactor:physicalFactor,actualSourceR:R,actualSourceXa:Xa};
+  return {schema:'MathScope.ActualLeadingEnlargedC2/1',profileId:SOURCE_PROFILE_ID,parameterExpressionSHA256:profile.parameterExpressionSHA256,
+    normProgram:G.pack(roots,{schema:'MathScope.ActualLeadingEnlargedPositiveNormProgram/1'}),roots,
+    bounds:{F0:{root:F,derivativeConvention:'ordinary physical X and ordinary eta, total order<=2',domain:{X:['Xa/2','2*Xb'],eta:['-1','1']}},
+      U0:{root:U,derivativeConvention:'ordinary physical X and ordinary eta, each order<=2',domain:{X:['0','infinity'],eta:['-1','1']}}},
+    regions:[{interval:['Xa/2','Xplus'],producer:'actualLeadingAllOrderJets',root:active,actualHeatI2Included:true},
+      {interval:['Xa','Xb'],producer:'actualStressDirectionBounds.middle.fieldRows:entire_annulus_F_mixed2',root:middle,logNorm:'R^70',originalFastNSecondDerivativeRetained:true},
+      {interval:['Xb','2*Xb'],producer:'actual terminal Gamma heat formula',root:outer,arithmetic}],
+    actualExterior:{definition:exterior.sourceDefinition,originalStartRoot:exterior.start,originalAmplitudeRoot:exterior.amplitude,originalExponentRoot:exterior.exponent,originalHeatArgumentRoot:exterior.argument,
+      heightMeaning:'The bound 2*C^2 applies to Aext*X^(-1-h), not to Aext alone.',
+      heightProof:'Aext*X^(-1-h)=Etail/(sqrt(2X)*(1-rho))*(X/Xtail)^(-A). Etail<=Pstar<C, X>=Xb>=Xtail>1 and rho<1/2 imply the stated bound.',
+      implementation:'actual-continuation-exact-heat.mjs:prepareActualFullLeadingProgram',positiveEtaIndependentAmplitude:true},
+    coverage:'Xa/2<Xa<Xplus<Xb<2Xb; first two regions overlap. At every original join the exact smooth source jets agree.',
+    physicalConversion:'dX=X^-1*Dy; dX^2=X^-2*(Dy^2-Dy), no term omitted. The first region already supplies ordinary physical derivatives.',
+    checks,pass:true,sourceBindings:[...leading.sourceBindings],
+    scope:{actualEnlargedAnnulusLeadingC2Bounded:true,actualFiniteDerivativesAndGammaTail:true,fieldSampleUsedAsWholeDomainBound:false,
+      arbitraryGlobalF0AllOrders:false,completedPositiveOrderBackgroundBoundedHere:false,actualGeneralProjectedODEBuiltHere:false,
+      actualUniformHColumnsCertified:false,sourceUniformQStarCertified:false,originalN506Complete:false,newLeanKernelProof:false}};
+}
+
+return {importActualPositiveNorm,actualExteriorHeatC2Arithmetic,actualLeadingEnlargedC2};
+})();
+const __m2_123 = (()=>{
+/** Constructive C2 part of the original summed background.
+ *
+ * Every coefficient is the actual repaired tuple. The canonical cutoff
+ * sequence is computed by one fixed finite recipe at each n. The uniform
+ * derivative proof uses its closed induction, not a truncation equated to
+ * the infinite field. Weighted stress and the physical flat residual are
+ * separate clauses and are never asserted by this certificate.
+ */
+const {prepareActualOrderInduction,assertActualOrderInduction} = __m2_112;
+const {attachActualCanonicalCutoffs,assertActualNormalizedCutoffs,actualNormalizedFiniteBlock} = __m2_116;
+const {verifyActualInductionInnerEquations,verifyActualInductionMoments,verifyActualInductionParametricKernel} = __m2_117;
+const {sourceAllOrderCutoffJets} = __m2_111;
+const {actualLeadingEnlargedC2,importActualPositiveNorm} = __m2_122;
+const {actualSupportOrderProof} = __m2_103;
+const {sourceGraphRationalIdentity} = __m2_102;
+const {factorial,readRational,fail} = __m2_74;
+const choose=(n,k)=>factorial(n)/(factorial(k)*factorial(n-k));
+const certificates=new WeakMap();
+
+/** Positive ordinary calculus in the COMMUTING profile coordinates
+ * (log q, X, eta). It is used only for derivative bounds. */
+function profileCalculus(G){
+  const q=(n,d=1)=>G.q(n,d),fn=body=>{const cache=new Map();return {get(e=0,r=0,m=0){const key=[e,r,m].join(':');if(!cache.has(key))cache.set(key,body(e,r,m));return cache.get(key);}};};
+  const constant=v=>fn((e,r,m)=>e||r||m?G.zero:v),add=(...f)=>fn((e,r,m)=>G.add(...f.map(v=>v.get(e,r,m))));
+  const multiply=(a,b)=>fn((e,r,m)=>{const terms=[];for(let i=0;i<=e;i++)for(let j=0;j<=r;j++)for(let k=0;k<=m;k++)terms.push(G.mul(q(choose(e,i)*choose(r,j)*choose(m,k)),a.get(i,j,k),b.get(e-i,r-j,m-k)));return G.add(...terms);});
+  const mul=(...fs)=>fs.reduce(multiply,constant(G.one));return {fn,constant,add,mul};
+}
+
+/** The exact source chart has T=s*(1-eta^2), Z=s^D*eta,
+ * X=R^2/(2s), s=q/Q. Q is fixed in every derivative. */
+function actualBackgroundChartBound(cutoffs,context={}){
+  assertActualNormalizedCutoffs(cutoffs);if(!cutoffs.canonical)fail('INVALID_SOURCE_CONSTRUCTION','The background must use the canonical, prefix-independent cutoff sequence.');
+  const {G}=cutoffs,norms=cutoffs.normPrefixes[1];if(!norms)fail('RESOURCE_LIMIT','The C2 finite block includes actual orders one and two.');
+  const block=actualNormalizedFiniteBlock(cutoffs,{derivativeOrder:2}),q=(n,d=1)=>G.q(n,d),h=G.parameter('h'),{fn,constant:C,add,mul}=profileCalculus(G),Xlo=norms.normalized[0].domain.X[0],Xhi=norms.normalized[0].domain.X[1];
+  const zero=C(G.zero),x=fn((e,r,m)=>e||m?G.zero:r===0?Xhi:r===1?G.one:G.zero),eta=fn((e,r,m)=>e||r?G.zero:m===0||m===1?G.one:G.zero),d=fn((e,r,m)=>e||r?G.zero:m===0?G.one:m<=2?q(2):G.zero);
+  const invL=fn((e,r,m)=>e||r?G.zero:q(2n*factorial(m)*8n**BigInt(m))),sInverse=fn((e,r,m)=>r||m?G.zero:q(2)),sMinusD=fn((e,r,m)=>r||m?G.zero:q(2));
+  const radial=fn((e,r,m)=>m?G.zero:G.mul(q(2n*factorial(r),1n<<BigInt(e)),G.sqrt(Xhi),G.pow(Xlo,-r)));
+  const rows=[
+    {name:'R',coefficients:[zero,radial,zero],exact:['0','sqrt(2X/s)','0']},
+    {name:'Z',coefficients:[mul(C(q(2)),eta,sMinusD,invL),mul(C(q(2)),eta,x,sMinusD,invL),mul(d,sMinusD,invL)],exact:['2*eta*s^(-D)/L','-2*eta*X*s^(-D)/L','d*s^(-D)/L']},
+    {name:'T',coefficients:[mul(sInverse,invL),mul(x,sInverse,invL),mul(C(q(1,2)),eta,sInverse,invL)],exact:['1/(s*L)','-X/(s*L)','-D*eta/(s*L)']}
+  ];
+  const firstRows=rows.map(({coefficients,...metadata})=>({...metadata,sum:G.add(...coefficients.map(f=>f.get())),firstDerivatives:[[1,0,0],[0,1,0],[0,0,1]].map(v=>G.add(...coefficients.map(f=>f.get(...v))))}));
+  const operatorA=G.maximum(G.one,...firstRows.map(r=>r.sum)),operatorB=G.maximum(G.one,...firstRows.flatMap(r=>r.firstDerivatives)),second=G.add(G.pow(operatorA,2),G.mul(operatorA,operatorB)),operatorC2=G.maximum(G.one,operatorA,second);
+  const multiplierF=fn((e,r,m)=>m?G.zero:G.div(G.mul(q(4n*2n**BigInt(e)*factorial(r)),G.pow(Xlo,-r)),G.sqrt(G.mul(q(2),Xlo))));
+  const multiplierV=fn((e,r,m)=>r||m?G.zero:q(2)),multiplierRadial=fn((e,r,m)=>r||m?G.zero:q(2,1n<<BigInt(e))),multiplierRawF=fn((e,r,m)=>r||m?G.zero:q(4n*2n**BigInt(e)));
+  const unitProfile=fn(()=>G.one),multiplierRows=[];
+  const multiplierBound=(name,f)=>{const product=mul(f,unitProfile),jets=[];for(let e=0;e<=2;e++)for(let r=0;e+r<=2;r++)for(let m=0;e+r+m<=2;m++)jets.push({eulerOrder:e,radialOrder:r,etaOrder:m,upper:product.get(e,r,m)});const bound=G.maximum(...jets.map(r=>r.upper));multiplierRows.push({name,jets,bound});return bound;};
+  const Ffactor=multiplierBound('s^(-A-1/2)/sqrt(2X)',multiplierF),Vfactor=multiplierBound('s^(-A)',multiplierV),bfactor=multiplierBound('s^(-1/2)',multiplierRadial),rawFfactor=multiplierBound('s^(-A-1/2) times the profile angular velocity F0',multiplierRawF);
+  // q^(2h)=epsilon^2*s^(2h), 1/2<=s<=2, 0<h<1.
+  // The extra factor4 is deliberately uniform. Derivatives of q^(2h)
+  // were already included in the actual profile Euler bounds.
+  const Ferror=G.mul(q(4),operatorC2,Ffactor,block.coefficient),Gerror=G.mul(q(4),operatorC2,Vfactor,block.coefficient),bError=G.mul(q(4),operatorC2,bfactor,block.coefficient);
+  const leadingRadial=G.maximum(...norms.leadingNormalized.radialBracket.map(r=>r.upper)),leadingU=G.maximum(...norms.leadingNormalized.U.map(r=>r.upper)),bLeading=G.mul(operatorC2,bfactor,leadingRadial),Gleading=G.mul(operatorC2,Vfactor,leadingU);
+  const FGM=G.maximum(G.one,Ferror,Gerror),bM=G.add(bLeading,bError),Gtotal=G.add(Gleading,Gerror),FActiveLeading=norms.leadingNormalized.FActive.length?G.maximum(...norms.leadingNormalized.FActive.map(r=>r.upper)):null,FActiveChart=FActiveLeading===null?null:G.mul(operatorC2,rawFfactor,FActiveLeading);
+  // This last F0 bound is on X<=Xplus only. It is NOT relabeled as a
+  // bound on the entire enlarged annulus. Proximity is global because
+  // every positive-order correction is exactly zero beyond Xplus.
+  // The full leading bound has its own internally constructed source
+  // proof: unchanged inner field + original closed annulus + actual
+  // terminal Gamma heat field. It is not extrapolated from F0active.
+  const enlarged=actualLeadingEnlargedC2({sourceProfile:norms.leading.profileId},context);
+  if(!enlarged.pass||enlarged.parameterExpressionSHA256!==norms.leading.parameterExpressionSHA256||!enlarged.scope.actualEnlargedAnnulusLeadingC2Bounded||enlarged.bounds.F0.derivativeConvention!=='ordinary physical X and ordinary eta, total order<=2')fail('INVALID_SOURCE_CONSTRUCTION','The full leading angular C2 bound is missing its actual enlarged source domain.');
+  const FLeadingRaw=importActualPositiveNorm(G,enlarged.normProgram,enlarged.bounds.F0.root),Fleading=G.mul(operatorC2,rawFfactor,FLeadingRaw),Ftotal=G.add(Fleading,Ferror);
+  return {schema:'MathScope.ActualCompletedBackgroundChartC2/1',profileCoefficient:block.coefficient,finiteBlock:block,operatorA,operatorB,operatorC2,operatorRows:firstRows,multiplierRows,
+    roots:{FErrorConstant:Ferror,GErrorConstant:Gerror,FGErrorConstant:FGM,bErrorConstant:bError,bLeadingConstant:bLeading,bTotalConstant:bM,FLeadingConstant:Fleading,FTotalConstant:Ftotal,GLeadingConstant:Gleading,GTotalConstant:Gtotal,...(FActiveChart===null?{}:{FLeadingOnPositiveSupportConstant:FActiveChart})},
+    domain:{X:[Xlo,Xhi],eta:['-1','1'],qOverQ:['1/2','2'],q:['positive','<=1'],Q:['positive','<=1/2'],closedEtaEndpoints:true,timeEndpoint:'T=0 one-sided'},
+    chart:{coordinateFrame:'BAND_CHART_Q_FIXED',T:'s*(1-eta^2)',Z:'s^D*eta',R:'sqrt(2*s*X)',s:'q/Q',epsilon:'Q^h',L:'1-2*h*eta^2',D:'1/2-h',A:'1/2+h',
+      qEuler:'partial_(log q) holding X,eta',slowTimeDerivative:'partial_T, with tau=Q*T; the physical normalized time operator is -epsilon*partial_T'},
+    exactFields:{F:'s^(-A-1/2)*[F0+sum_(n>=1) chi(c_n*q)*q^(2nh)*F_n]',G:'s^(-A)*[U0+sum_(n>=1) chi(c_n*q)*q^(2nh)*U_n]',
+      b:'epsilon*s^(-1/2)*[V0/sqrt(2X)+sum_(n>=1)q^(2nh)*(chi(c_n*q)*V_n-2*eta/L*(c_n*q)*chi_prime(c_n*q)*M_n)/sqrt(2X)]'},
+    bounds:{FGDifference:{constant:FGM,power:'epsilon^2',derivatives:'each ordinary slow derivative of total order<=2',comparison:'actual order-zero chart fields at the same slow point'},
+      radialDifference:{constant:bError,power:'epsilon^3'},radialTotal:{constant:bM,power:'epsilon'},FTotal:{constant:Ftotal,power:'1'},GTotal:{constant:Gtotal,power:'1'},
+      leadingFOnPositiveOrderSupport:{rawProfileJetConstant:FActiveLeading,rawProfileConvention:'F0=E0/sqrt(2X), ordinary physical X/eta derivatives',slowChartC2Constant:FActiveChart,
+        slowChartConvention:'s^(-A-1/2)*F0 with ordinary R,Z,T derivatives',rawDomain:norms.leadingNormalized.FActiveDomain,slowDomain:{X:[Xlo,norms.leadingNormalized.FActiveDomain.X[1]],eta:['-1','1'],qOverQ:['1/2','2']}},
+      leadingFOnEnlargedAnnulus:{rawProfileJetConstant:FLeadingRaw,slowChartC2Constant:Fleading,sourceParameterExpressionSHA256:enlarged.parameterExpressionSHA256,
+        sourceDomain:enlarged.bounds.F0.domain,regions:enlarged.regions.map(r=>({interval:r.interval,producer:r.producer})),checks:enlarged.checks,sourceBindings:enlarged.sourceBindings},leadingFOnEnlargedAnnulusSupplied:true},
+    derivation:{composition:'D_iD_j f=sum a_ik*a_jl*f_kl + sum a_ik*(partial_k a_jl)*f_l. The executed row sums give A^2+A*B; no derivative of a chart Jacobian is omitted.',
+      multipliers:'Each ordinary profile derivative of each normalization factor is included by the full binomial Leibniz sum.',
+      actualSequence:'The finite block uses actual n=1 and n=2. The n>=3 tail uses the all-order diagonal inequality, so its first q power is at least3h.',
+      leadingRadial:'The actual complete U0 and its radial average generate V0/X. No zero radial background is assumed on Imean.'},
+    scope:{actualNormalizedProximityConstantsComputed:true,wholeEnlargedAnnulusProximity:true,sourceProfileReplaced:false,finiteTruncationCalledComplete:false,
+      fullLeadingFAbsoluteBoundPending:false,fullProposition55ResidualAndStressCertified:false,originalN506Complete:false}};
+}
+
+/** Exact finite query of the locally finite function. The source time
+ * cutoff is the chosen C-infinity linear-exponential cutoff, including
+ * its full derivative body and flat endpoint extensions. */
+function timeCutoff(G){
+  const t=G.fresh('actual_summation_cutoff_argument'),u=G.sub(G.mul(G.q(2),t),G.one),a=G.exp(G.neg(G.inv(u))),b=G.exp(G.neg(G.inv(G.sub(G.one,u)))),body=G.choose(t,G.q(1,2),G.one,G.one,G.div(b,G.add(a,b)),G.zero);
+  return G.defineExpressionFunction({name:'ActualOriginalSummationTimeCutoff',parameters:[t],body,derivativeLimits:[G.maxDerivativeOrder??128],source:'chi(s)=1-sigma1(2s-1), sigma1 uses exp(-1/t); exact flat endpoints and generated all-order jets.'});
+}
+
+function buildActualPrefix(certificate,{qValue,possibleLast,plateauThrough=0},context){
+  const {G,prepared,cutoffs}=certificate,q=(n,d=1)=>G.q(n,d),{X,eta}=prepared.bootstrap.constants,{A,L}=G.core,h=G.parameter('h'),sqrt2X=G.sqrt(G.mul(q(2),X)),chiSystem=timeCutoff(G),rows=[],E0=G.mul(sqrt2X,prepared.records[0].global.F),U0=prepared.records[0].global.U,M0=prepared.bootstrap.finalM,V0=G.mul(X,prepared.records[0].global.v),angular=[E0],axial=[U0],radial=[G.div(V0,sqrt2X)],stream=[M0];
+  for(let n=1;n<=possibleLast;n++){
+    context.checkCancelled?.();const r=prepared.records[n],scale=cutoffs.rows[n-1].scale,sigma=G.mul(scale,qValue),chi=n<=plateauThrough?G.one:G.expressionValue(chiSystem,[sigma]),extra=n<=plateauThrough?G.zero:G.mul(sigma,G.expressionValue(chiSystem,[sigma],[1])),power=G.exp(G.mul(q(2*n),h,G.log(qValue))),M=r.global.M,V=G.mul(X,r.global.v);
+    const theta=G.mul(power,chi,sqrt2X,r.global.F),z=G.mul(power,chi,r.global.U),bracket=G.div(G.mul(power,G.sub(G.mul(chi,V),G.div(G.mul(q(2),eta,extra,M),L))),sqrt2X),potential=G.mul(power,chi,M);
+    angular.push(theta);axial.push(z);radial.push(bracket);stream.push(potential);rows.push({order:n,actualCoefficientRoots:{F:r.global.F,U:r.global.U,M,V},sigma,chi,extraCutoff:extra,qPower:power,angular:theta,axial:z,radialBracket:bracket,stream:potential});
+  }
+  const angularNormalized=G.add(...angular),roots={q:qValue,angularNormalized,axialNormalized:G.add(...axial),radialNormalized:G.add(...radial),profileAngularVelocity:G.div(angularNormalized,sqrt2X),physicalStream:G.mul(G.exp(G.mul(G.sub(G.one,A),G.log(qValue))),G.add(...stream))};
+  return {rows,roots,chiSystem};
+}
+
+function actualBackgroundFiniteQuery(certificate,input={},context={}){
+  assertActualCompletedBackgroundC2(certificate);for(const k of Object.keys(input))if(!['qExact','anchorOrder'].includes(k))fail('INVALID_INPUT','Supply a positive rational q or an internally constructed canonical anchor.');
+  if(input.qExact!==undefined&&input.anchorOrder!==undefined)fail('INVALID_INPUT','Choose one actual q representation.');
+  const {G,prepared,cutoffs}=certificate,q=(n,d=1)=>G.q(n,d);let qValue,possibleLast,offFrom,proof,anchor;
+  if(input.qExact!==undefined){
+    const v=readRational(input.qExact);if(v[0]<=0n||v[0]>v[1])fail('INVALID_INPUT','The exact rational q must lie in (0,1].');
+    let numerator=v[0],n=0;while(numerator<v[1]){context.checkCancelled?.();numerator*=2n;n++;if(n>prepared.order+1)fail('RESOURCE_LIMIT','Generate all coefficients potentially active for this positive q; a missing prefix is not a completed field.');}
+    offFrom=Math.max(1,n);possibleLast=offFrom-1;qValue=q(...v);proof={kind:'EXACT_POSITIVE_RATIONAL',qExact:[String(v[0]),String(v[1])],inequality:'2^offFrom*q>=1, c_n>=2^n, hence chi and every derivative vanish for all n>=offFrom',left:String(numerator),right:String(v[1])};
+  }else{
+    anchor=input.anchorOrder??1;if(!Number.isSafeInteger(anchor)||anchor<1||anchor+1>prepared.order)fail('RESOURCE_LIMIT','A canonical interior query requires its anchor and the next actual coefficient.');
+    qValue=G.div(q(1,4),cutoffs.rows[anchor-1].scale);possibleLast=anchor+1;offFrom=anchor+2;proof={kind:'CANONICAL_INTERIOR',anchorOrder:anchor,q:'1/(4*c_anchor)',inequality:'n<=anchor gives c_n*q<=1/4 and chi=1; n>=anchor+2 gives c_n*q>=1 and every cutoff derivative=0; the remaining coefficient uses the actual chi body.',qPositive:true};
+  }
+  if(possibleLast>prepared.order)fail('RESOURCE_LIMIT','The complete active source prefix has not been generated.');
+  const {rows,roots}=buildActualPrefix(certificate,{qValue,possibleLast,plateauThrough:anchor??0},context);
+  return {schema:'MathScope.ActualCompletedBackgroundFiniteQuery/1',q:qValue,rows,roots,completeActiveFamily:true,potentiallyActiveLastOrder:possibleLast,allLaterInactiveFrom:offFrom,proof,
+    sourceBindings:{profileId:prepared.program.profileId,parameterExpressionSHA256:prepared.program.parameterExpressionSHA256,canonicalSequence:true},
+    normalization:{angular:'q^A*u_theta',axial:'q^A*u_z',radial:'q^(1/2)*u_r',physicalStream:'S0+sum chi(c_n*q)*S_n'},
+    observationKind:'EXACT_CONVERGENT_SOURCE_FUNCTION_EXPRESSIONS',numericalValuesEnclosed:false,sourceUnderflowReplacedByZero:false,
+    completeFieldAtDeclaredQ:true,fullProposition55ResidualAndStressCertified:false};
+}
+
+/** An actual symbolic source FAMILY on a proved compact q band. This
+ * supplies q derivatives to the phase/ODE builder. It is not a fixed-q
+ * substitute and not a named oracle: every returned expression has the
+ * actual finite source body, whose omitted tail is identically zero on
+ * the entire declared band.
+ */
+function actualBackgroundSymbolicPrefix(certificate,input={},context={}){
+  assertActualCompletedBackgroundC2(certificate);for(const k of Object.keys(input))if(!['anchorOrder','derivativeOrder','dyadicBand'].includes(k))fail('INVALID_INPUT','The compact source band is selected from the actual canonical cutoff sequence.');
+  const anchorOrder=input.anchorOrder??1,derivativeOrder=input.derivativeOrder??2,dyadicBand=input.dyadicBand??false,{G,prepared,cutoffs}=certificate;
+  if(typeof dyadicBand!=='boolean')fail('INVALID_INPUT','dyadicBand must be a boolean.');
+  const extra=dyadicBand?3:2;
+  if(!Number.isSafeInteger(anchorOrder)||anchorOrder<1||anchorOrder+extra>prepared.order)fail('RESOURCE_LIMIT','Generate the actual anchor+'+extra+' coefficient before requesting this entire compact q band.');
+  if(!Number.isSafeInteger(derivativeOrder)||derivativeOrder<0)fail('INVALID_INPUT','Use a finite ordinary derivative order.');G.derivativeBudget(derivativeOrder);
+  const anchorScale=cutoffs.rows[anchorOrder-1].scale,logTwo=G.log(G.q(2)),ell=dyadicBand?G.ceiling(G.div(G.add(G.log(G.q(4)),cutoffs.rows[anchorOrder-1].logScale),logTwo)):null;
+  const Q=dyadicBand?G.exp(G.neg(G.mul(ell,logTwo))):G.div(G.q(1,4),anchorScale),qVariable=G.fresh('actual_completed_background_q'),{X,eta}=prepared.bootstrap.constants,built=buildActualPrefix(certificate,{qValue:qVariable,possibleLast:anchorOrder+extra,plateauThrough:anchorOrder},context),roots={},jets={};
+  for(const [field,body] of Object.entries(built.roots)){
+    if(field==='q')continue;const root=G.share(body,[qVariable,X,eta],'ActualCompletedBackground_'+field+'_Band'+anchorOrder);roots[field]=root;jets[field]=[];
+    for(let e=0;e<=derivativeOrder;e++)for(let r=0;e+r<=derivativeOrder;r++)for(let m=0;e+r+m<=derivativeOrder;m++){
+      let value=root;for(let j=0;j<e;j++)value=G.mul(qVariable,G.derivative(value,qVariable));for(let j=0;j<r;j++)value=G.derivative(value,X);for(let j=0;j<m;j++)value=G.derivative(value,eta);
+      jets[field].push({eulerOrder:e,radialOrder:r,etaOrder:m,value});
+    }
+  }
+  return {schema:'MathScope.ActualCompletedBackgroundSymbolicBand/1',qVariable,Q,ell,dyadicBand,coordinates:{q:qVariable,X,eta},roots,jets,rows:built.rows,cutoffSystem:built.chiSystem,derivativeOrder,
+    bandSelection:dyadicBand?{kind:'ORIGINAL_DYADIC_BAND',definition:'ell=ceil(log(4*c_anchor)/log(2)), Q=2^(-ell)',ellPositiveInteger:true,
+      QBounds:[G.div(G.q(1,8),anchorScale),G.div(G.q(1,4),anchorScale)],proof:'x<=ceil(x)<x+1 gives 1/(8*c_anchor)<=Q<=1/(4*c_anchor). The positive exact source scale and integer are not converted to binary64.'}
+      :{kind:'CANONICAL_NON_DYADIC_BAND',definition:'Q=1/(4*c_anchor)',originalDyadicLabelClaimed:false},
+    domain:{q:[G.div(Q,G.q(2)),G.mul(G.q(2),Q)],qOverQ:['1/2','2'],X:certificate.chart.domain.X,eta:['-1','1'],QPositive:true},
+    exactInactiveTail:{from:anchorOrder+extra+1,proof:dyadicBand?'c_n>=2^(n-anchor)*c_anchor and q>=1/(16*c_anchor), so c_n*q>=1 for every n>=anchor+4. All cutoff derivatives vanish there.':'c_n>=2^(n-anchor)*c_anchor and q>=1/(8*c_anchor), so c_n*q>=1 for every n>=anchor+3. All cutoff derivatives vanish there.'},
+    exactPlateau:{through:anchorOrder,proof:'c_n<=c_anchor and q<=1/(2*c_anchor), so chi=1 and all positive cutoff derivatives=0 for every n<=anchor.'},
+    sourceBindings:{profileId:prepared.program.profileId,parameterExpressionSHA256:prepared.program.parameterExpressionSHA256,canonicalSequence:true},
+    representation:'Actual shared function body plus arbitrary finite AD materializer; no coefficient values or derivatives are supplied by the caller.',
+    qDerivativePreserved:true,allInactiveSourceTermsProvedZero:true,completeBackgroundOnDeclaredBand:true,
+    mathematicalLocalFinitenessForAllQ:true,thisFiniteBandEqualsAllBands:false,numericalCoefficientValuesEnclosed:false,
+    fullProposition55ResidualAndStressCertified:false,originalN506Complete:false};
+}
+
+/** Definition of the SAME locally finite source on EVERY positive integer
+ * dyadic band. This deliberately conservative finite algorithm needs
+ * coefficients1..ell: c_n>=2^n and q>=2^(-ell-1) prove all n>=ell+1 off.
+ * The anchor API is an efficient source-specific compression of this
+ * definition, not a different all-band field. A huge requested integer
+ * which exceeds the generated prefix returns RESOURCE_LIMIT before any
+ * unsafe integer conversion or omission of possible source coefficients.
+ */
+function actualBackgroundDyadicPrefix(certificate,input={},context={}){
+  assertActualCompletedBackgroundC2(certificate);
+  for(const k of Object.keys(input))if(!['ellExact','derivativeOrder'].includes(k))fail('INVALID_INPUT','Supply a positive exact dyadic integer and a finite derivative order.');
+  const raw=input.ellExact,{G,prepared}=certificate,derivativeOrder=input.derivativeOrder??2;
+  if(!(typeof raw==='string'&&/^[0-9]+$/.test(raw)||typeof raw==='bigint'||typeof raw==='number'&&Number.isSafeInteger(raw)))fail('INVALID_INPUT','ellExact must be an exact integer string, BigInt or safe integer.');
+  const integerEll=BigInt(raw);if(integerEll<1n)fail('INVALID_INPUT','The original dyadic band label must be a positive integer.');
+  if(integerEll>BigInt(prepared.order))fail('RESOURCE_LIMIT','Generate the actual coefficient prefix through ell before requesting this conservative all-band function. No possible active source term was discarded.');
+  if(!Number.isSafeInteger(derivativeOrder)||derivativeOrder<0)fail('INVALID_INPUT','Use a finite ordinary derivative order.');G.derivativeBudget(derivativeOrder);
+  const ell=G.q(integerEll),Q=G.exp(G.neg(G.mul(ell,G.log(G.q(2))))),qVariable=G.fresh('actual_completed_background_dyadic_q'),{X,eta}=prepared.bootstrap.constants,
+    built=buildActualPrefix(certificate,{qValue:qVariable,possibleLast:Number(integerEll)},context),roots={},jets={};
+  for(const[field,body]of Object.entries(built.roots)){
+    if(field==='q')continue;const root=G.share(body,[qVariable,X,eta],'ActualCompletedDyadic_'+field+'_ell'+integerEll);roots[field]=root;jets[field]=[];
+    for(let e=0;e<=derivativeOrder;e++)for(let r=0;e+r<=derivativeOrder;r++)for(let m=0;e+r+m<=derivativeOrder;m++){
+      let value=root;for(let j=0;j<e;j++)value=G.mul(qVariable,G.derivative(value,qVariable));for(let j=0;j<r;j++)value=G.derivative(value,X);for(let j=0;j<m;j++)value=G.derivative(value,eta);
+      jets[field].push({eulerOrder:e,radialOrder:r,etaOrder:m,value});
+    }
+  }
+  return {schema:'MathScope.ActualCompletedBackgroundArbitraryDyadicBand/1',ellExact:String(integerEll),ell,Q,qVariable,coordinates:{q:qVariable,X,eta},roots,jets,rows:built.rows,cutoffSystem:built.chiSystem,derivativeOrder,
+    bandSelection:{kind:'ARBITRARY_ORIGINAL_DYADIC_INTEGER',definition:'Q=2^(-ell), exact positive integer ell',ellPositiveInteger:true},
+    domain:{q:[G.div(Q,G.q(2)),G.mul(G.q(2),Q)],qOverQ:['1/2','2'],X:certificate.chart.domain.X,eta:['-1','1'],QPositive:true},
+    exactInactiveTail:{from:String(integerEll+1n),proof:'q>=2^(-ell-1) and c_n>=2^n imply c_n*q>=1 for every integer n>=ell+1. The complete smooth cutoff and all its derivatives vanish.'},
+    sourceBindings:{profileId:prepared.program.profileId,parameterExpressionSHA256:prepared.program.parameterExpressionSHA256,canonicalSequence:true},
+    recurrence:'For each finite positive integer ell, construct the fixed actual coefficient/norm/cutoff recipes for n=1..ell, then form the displayed body. Resource exhaustion is an explicit failure, never a complete prefix.',
+    representation:'Actual finite source functions with retained q dependence and mixed AD; no unspecified coefficient or supplied norm.',
+    qDerivativePreserved:true,allInactiveSourceTermsProvedZero:true,completeBackgroundOnDeclaredBand:true,
+    sameCanonicalSequenceAsAnchorFamily:true,algorithmDefinedForEveryFiniteIntegerEll:true,thisFiniteBandEqualsAllBands:false,numericalCoefficientValuesEnclosed:false,
+    fullProposition55ResidualAndStressCertified:false,originalN506Complete:false};
+}
+
+/** Actual right branches and the five completed moments justify the
+ * compact global coefficients. A bare localized integral is never set0. */
+function coefficientSupport(prepared){
+  assertActualOrderInduction(prepared);const {G,records,bootstrap}=prepared,sourceOrder=actualSupportOrderProof(bootstrap.completedOrderOne),{X,eta}=bootstrap.constants,allowed=new Set(Object.entries(sourceOrder.endpoints).filter(([name])=>name!=='Xb').map(([,value])=>value));
+  for(const pair of bootstrap.orderOne.supports)for(const r of pair)allowed.add(G.mul(bootstrap.orderOne.X0,G.pow(r,2)));
+  const trace=[],cache=new Map();
+  function zero(id){
+    if(id===G.zero)return true;if(cache.has(id))return cache.get(id);const {op,args}=G.nodes[id];let value=false;
+    if(op==='multiply')value=zero(args[0])||zero(args[1]);else if(op==='add')value=zero(args[0])&&zero(args[1]);
+    else if(op==='integer_power'&&args[1]>0||op==='sqrt_positive')value=zero(args[0]);
+    else if(op==='smooth_piecewise'&&args[0]===X&&allowed.has(args[2])){value=zero(args[5]);if(value)trace.push({node:id,afterEndpoint:args[2],afterBody:args[5]});}
+    else if(op==='actual_expression_partial'){
+      const s=G.expressionSystems[args[0]];if(s.parameters.every((p,j)=>args[1][j]===p)&&s.parameters.every(p=>p===X||p===eta)){value=zero(s.body);if(value)trace.push({node:id,body:s.body,derivative:args[2],rule:'all finite derivatives of the same smooth zero exterior'});}
+    }
+    cache.set(id,value);return value;
+  }
+  const rows=records.slice(1).map(r=>({order:r.order,fields:Object.fromEntries(['F','U','M','Pi','v'].map(name=>[name,zero(r.global[name])])),actualMomentChecks:r.global.actualMomentChecks.map(c=>c.pass),coreIdentities:verifyActualInductionInnerEquations(prepared,{order:r.order}).checks}));
+  const pass=sourceOrder.pass&&rows.every(r=>Object.values(r.fields).every(Boolean)&&r.actualMomentChecks.every(Boolean));if(!pass)fail('INTERNAL_VALIDATION','An actual completed coefficient is missing its smooth zero exterior.');
+  const n2=records[2],t=G.fresh('uncorrected_local_mass_variable'),bare=G.integral(G.substitute(n2.actual.U,X,t),t,G.zero,bootstrap.orderOne.Xcut);
+  // The diagnostic below checks the reducer's refusal, not a nonzero
+  // numerical value of the uncorrected mass at a selected eta.
+  const bareLocalizedIntegralProvedZero=zero(bare);
+  if(bareLocalizedIntegralProvedZero)fail('INTERNAL_VALIDATION','A localized integrand alone must not certify a zero total moment.');
+  return {sourceOrder,rows,trace,bareLocalizedIntegralProvedZero,pass,scope:'actual coefficient support and all smooth exterior jets; stress conservation is a separate proof'};
+}
+
+function potentialIdentity(prepared){
+  const {G}=prepared,q=(n,d=1)=>G.q(n,d),{X,eta}=prepared.bootstrap.constants,{A,D,d,L}=G.core,M=G.fresh('Stokes_actual_stream_slot'),U=G.fresh('Stokes_actual_stream_X_slot'),Meta=G.fresh('Stokes_actual_stream_eta_slot'),chi=G.fresh('Stokes_actual_cutoff_slot'),extra=G.fresh('Stokes_sigma_chi_prime_slot'),rows=[];
+  for(let n=1;n<=prepared.order;n++){
+    const nu=G.mul(q(2*n),G.parameter('h')),v=G.div(G.sub(G.sub(G.mul(q(2),eta,X,U),G.mul(q(2),eta,G.add(D,nu),M)),G.mul(d,Meta)),L);
+    const differentiated=G.neg(G.div(G.add(G.mul(q(2),eta,G.add(G.sub(G.one,A),nu),chi,M),G.neg(G.mul(q(2),eta,chi,X,U)),G.mul(d,chi,Meta),G.mul(q(2),eta,extra,M)),L));
+    const displayed=G.sub(G.mul(chi,v),G.div(G.mul(q(2),eta,extra,M),L)),body=G.sub(differentiated,displayed),check=sourceGraphRationalIdentity(G,body,{atomicNodes:[M,U,Meta,chi,extra]}),negative=sourceGraphRationalIdentity(G,G.add(body,G.div(G.mul(q(2),eta,extra,M),L)),{atomicNodes:[M,U,Meta,chi,extra]});
+    rows.push({order:n,check,missingExtraCutoffRejected:!negative.pass,actualSourceStream:prepared.records[n].global.M,actualSourceU:prepared.records[n].global.U});
+  }
+  const pass=rows.every(r=>r.check.pass&&r.missingExtraCutoffRejected);if(!pass)fail('INTERNAL_VALIDATION','The original physical potential/cutoff identity failed.');
+  return {rows,pass,physicalPotential:'S_n=q^(1-A+2nh)*M_n(X,eta)',streamDerivative:'partial_X M_n=U_n follows from the actual core average PDE, FTC on the cutoff collar/Ipos, and completed mass zero branch.',
+    originalSourceCoordinateDerivatives:{q_z:'2*eta*q^(1-D)/L',X_z:'-2*eta*X*q^(-D)/L',eta_z:'d*q^(-D)/L'},
+    divergence:'u_r=-(1/r)*partial_z S and u_z=(1/r)*partial_r S; the two mixed physical derivatives cancel, including every cutoff transition.',
+    identityIsParametricAlgebra:true,actualCoefficientSlotsConnected:true,independentSourceFunctionsSubstituted:false};
+}
+
+function prepareActualCompletedBackgroundC2(input={},context={}){
+  for(const k of Object.keys(input))if(!['sourceProfile','order','maxNodes','maxDerivativeOrder'].includes(k))fail('INVALID_INPUT','Use the original source construction; arbitrary coefficient bounds and cutoff values are not accepted.');
+  const order=input.order??4;if(!Number.isSafeInteger(order)||order<3)fail('INVALID_INPUT','The independent induction verifier executes actual orders one, two, and at least one later order.');
+  const prepared=prepareActualOrderInduction({...input,order},context),cutoffs=attachActualCanonicalCutoffs(prepared,context),{G}=prepared,systems=[];
+  for(let n=1;n<=order;n++)for(const kind of ['actual','auxiliary'])systems.push(verifyActualInductionInnerEquations(prepared,{order:n,kind}));
+  const moments=Array.from({length:order-1},(_,i)=>verifyActualInductionMoments(prepared,{order:i+2})),parametricPDE=verifyActualInductionParametricKernel(prepared),support=coefficientSupport(prepared),potential=potentialIdentity(prepared),chart=actualBackgroundChartBound(cutoffs,context),primitive=sourceAllOrderCutoffJets({order:Math.max(16,order)},context);
+  const induction={
+    base:{sameActualLeading:true,actualArbitraryFiniteLeadingJetRecipe:cutoffs.norms.leading.scope.arbitraryFiniteRecurrence,allRequestedLeadingChecks:cutoffs.norms.leading.pass,sourceIdentity:cutoffs.norms.leading.sourceFunctionIdentity},
+    coefficientStep:{actualOrderedPairs:'i+j=n with0<i,j<n; Omega_(n-1) uses all0<=i,j<=n-1',actualAndAuxiliarySystems:true,knownForceUsesFinalizedLowerLocalCutoffs:true,
+      exponent:'nu_n=2*n*h, retained at every order',everyPreviousMomentGateExecuted:true,actualMomentCorrectionUsesFullSupport:true,parametricPDE},
+    analyticStep:{commonRadialDomain:'0<=X<=Xa*exp(t1/16)',auxiliaryRadii:'R_0=8, R_n=6+2^(1-n)>6',strictAuxiliaryGap:'R_(n-1)-R_n=2^(1-n)>0 for n>=2; R_0-R_1=1',
+      etaStrips:'delta_n=delta/(8*256^n)>0; every previous strip is at least256*delta_n',sourceStrip:'4*delta_n',noActivationCollarComplexAnalyticity:true,
+      auxiliaryAgreement:'0<=X<=Xa only, by the actual zero-datum system and induction; outside this interval the actual finalized-cutoff source is retained.'},
+    normStep:{leading:'The internally generated ordinary leading jet bound at the required finite derivative rectangle.',
+      radial:'At fixed n, r>=2 uses the original second-order equation and only smaller same-order radial derivatives; all lower-order derivatives are already constructed.',
+      global:'Finite actual eta-independent radial moments, the fixed continuous Ipos inverse, exact bump jets, average and regular V reconstruct every mixed jet.',
+      finite:'Only sums/products/positive inverses/exponentials/factorials and finite derivative recurrences occur. All positive source denominators are retained.',
+      callerBound:false},
+    cutoffStep:{canonical:true,definition:cutoffs.program.definition,derivativeBudget:'Each n selects all mixed norms with total derivative order<=n, including the extra stream cutoff derivative.',
+      smoothLocalFiniteness:'c_n>=2^n. Every compact q interval bounded away from0 has only finitely many active terms and derivatives.',
+      normalizedTail:'For each fixed m and all n>=max(2,m), every selected normalized derivative is<=2^-n*q^(n*h).'},
+    proofKind:'Executable recurrence plus mathematical induction on the actual source order and ordinary radial derivative; finite source checks are regression witnesses, not a truncation proof.',
+    verifiedFiniteOrders:order,allIntegerOrdersBySameWellFoundedRecipe:true,fixedSixOrTwelveOrderExtrapolation:false,
+    weightedStressAndPhysicalResidualClausesIncluded:false,sourceDefinitionChanged:false
+  };
+  const checks={actualLeadingArbitraryFiniteRecipe:induction.base.actualArbitraryFiniteLeadingJetRecipe&&induction.base.allRequestedLeadingChecks,
+    allGeneratedActualAndAuxiliaryPDEs:systems.every(s=>s.pass),indeterminateOrderPDEKernel:parametricPDE.pass,actualFiveMomentsBeforeEveryNextOrder:moments.every(m=>m.pass),actualSmoothExterior:support.pass,
+    originalPotentialExtraCutoff:potential.pass,originalAllFiniteCutoffJets:primitive.pass,canonicalPrefixIndependentDefinition:cutoffs.program.definition.prefixIndependent,
+    sameSourceParameters:cutoffs.norms.leading.parameterExpressionSHA256===prepared.program.parameterExpressionSHA256,positiveN2FiniteBlockRetained:chart.finiteBlock.finite.some(r=>r.order===2),
+    actualFullEnlargedLeadingAngularBound:chart.bounds.leadingFOnEnlargedAnnulusSupplied&&Object.values(chart.bounds.leadingFOnEnlargedAnnulus.checks).every(Boolean)};
+  const pass=Object.values(checks).every(Boolean);if(!pass)fail('INTERNAL_VALIDATION','The actual completed background C2 certificate failed.');
+  const result={prepared,cutoffs,G,chart,induction,systems,moments,parametricPDE,support,potential,checks,pass,roots:chart.roots};
+  result.program=G.pack(result.roots,{schema:'MathScope.ActualCompletedBackgroundC2/1',profileId:prepared.program.profileId,parameterExpressionSHA256:prepared.program.parameterExpressionSHA256,
+    chart,induction,checks,pass,scope:{actualLocallyFiniteBackgroundDefined:true,canonicalActualCutoffSequence:true,actualWholeEnlargedAnnulusNormalizedProximity:true,
+      actualSlowC2FGProximity:true,actualPotentialCurlAndExtraTerm:true,allRequestedSourceCoefficientsUseOriginalProfile:true,
+      actualGlobalTranscendentalValuesNumericallyEnclosed:false,fullLeadingFAbsoluteBoundPending:false,weightedStressSelectorComputed:false,physicalResidualSelectorComputed:false,
+      fullOriginalProposition55Certified:false,sourceUniformQStarCertified:false,originalN506Complete:false,newLeanKernelProof:false}});
+  certificates.set(result,{G,prepared,cutoffs,roots:result.roots,nodeCount:G.nodes.length,prefix:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),data:JSON.stringify({chart,induction,checks}),pass});return result;
+}
+
+function assertActualCompletedBackgroundC2(result){const c=certificates.get(result);if(!c||result.G!==c.G||result.prepared!==c.prepared||result.cutoffs!==c.cutoffs||result.roots!==c.roots||JSON.stringify(c.G.nodes.slice(0,c.nodeCount))!==c.prefix||!c.G.functionDefinitionsUnchanged(c.definitions)||JSON.stringify({chart:result.chart,induction:result.induction,checks:result.checks})!==c.data||!c.pass)fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged internally constructed actual C2 background.');assertActualNormalizedCutoffs(c.cutoffs);return true;}
+
+const actualCompletedBackgroundC2Certificate=(input={},context={})=>prepareActualCompletedBackgroundC2(input,context).program;
+
+return {actualBackgroundChartBound,actualBackgroundFiniteQuery,actualBackgroundSymbolicPrefix,actualBackgroundDyadicPrefix,prepareActualCompletedBackgroundC2,assertActualCompletedBackgroundC2,actualCompletedBackgroundC2Certificate};
+})();
+const __m2_124 = (()=>{
+/** Explicit Volterra limits for the actual two-component pulse.
+ * Each operation retains its matrix, independent parameters, norm bound and
+ * finite ordered-integral producer. A displayed finite sum is never the
+ * exact solution. Authentication of the coefficient bound belongs to the
+ * actual-source caller, not this general integration kernel.
+ */
+const {ActualInductionExpressions} = __m2_110;
+const {factorial,fail} = __m2_74;
+class ActualCovarianceExpressions extends ActualInductionExpressions {
+  constructor(base,options={}){super(base,options);this.covarianceSystems=structuredClone(base.covarianceSystems??[]);this.covariancePartialSums=new Map();}
+  defineCovarianceVolterra({name,variable,parameters,matrix,normUpper,length}){
+    if(this.nodes[variable]?.op!=='coordinate'||!Array.isArray(parameters)||new Set(parameters).size!==parameters.length||parameters.includes(variable)||parameters.some(x=>this.nodes[x]?.op!=='coordinate')||matrix?.length!==2||matrix.some(r=>r.length!==2||r.some(x=>!this.nodes[x]))||!this.nodes[normUpper]||!this.nodes[length])fail('INVALID_INPUT','A pulse Volterra operation needs its explicit 2x2 matrix, coordinates and finite interval/norm.');
+    const declared=new Set([variable,...parameters]),constants=new Set(parameters);
+    if(matrix.flat().some(root=>[...this.freeCoordinates(root)].some(c=>!declared.has(c))))fail('INVALID_INPUT','A Volterra coefficient has an undeclared free coordinate.');
+    if([normUpper,length].some(root=>[...this.freeCoordinates(root)].some(c=>!constants.has(c))))fail('INVALID_INPUT','The uniform norm and interval length must depend only on the explicit parameters, never on pulse time or a hidden coordinate.');
+    const id=this.covarianceSystems.length;
+    this.covarianceSystems.push({name,variable,parameters:[...parameters],matrix:structuredClone(matrix),normUpper,length,initial:[this.one,this.zero],
+      implementation:'actual-covariance-volterra.mjs:covariancePartialSum',
+      derivativeImplementation:'actual-covariance-volterra.mjs:covarianceRhs',
+      solution:'w(v)=e1+sum_(n>=1) integral_(0<s_n<...<s_1<v) M(s_1)...M(s_n)e1 ds',
+      normConvention:'Induced infinity matrix norm, uniform over the declared interval and parameters.',
+      coefficientNormMustBeBoundBySource:true,displayedPartialSumIsExactSolution:false});return id;
+  }
+  covarianceValue(system,component,v,values){
+    const s=this.covarianceSystems[system];
+    if(!s||![0,1].includes(component)||!this.nodes[v]||!Array.isArray(values)||values.length!==s.parameters.length||values.some(x=>!this.nodes[x]))fail('INVALID_INPUT','Unknown explicit covariance Volterra component or parameter list.');
+    if(v===this.zero)return s.initial[component];
+    return this.node('actual_covariance_volterra',[system,component,v,[...values]]);
+  }
+  covarianceRhs(system,component,v,values){
+    const s=this.covarianceSystems[system];if(!s)fail('INVALID_INPUT','Unknown actual pulse system.');
+    return this.add(...s.matrix[component].map((a,j)=>this.mul(this.simultaneousSubstitute(a,[s.variable,...s.parameters],[v,...values]),this.covarianceValue(system,j,v,values))));
+  }
+  covariancePartialSum(system,{terms=1,v,values}={}){
+    const s=this.covarianceSystems[system];if(!s||!Number.isSafeInteger(terms)||terms<0||terms>32)fail('RESOURCE_LIMIT','Choose zero through32 displayed exact Volterra terms. A missing tail is never reported as zero.');
+    v??=s.variable;values??=s.parameters;
+    if(!this.nodes[v]||!Array.isArray(values)||values.length!==s.parameters.length||values.some(x=>!this.nodes[x]))fail('INVALID_INPUT','A finite Volterra term needs its declared time and all explicit parameter values.');
+    const key=JSON.stringify([system,terms,v,values]);if(this.covariancePartialSums.has(key))return this.covariancePartialSums.get(key);
+    let term=[...s.initial],sum=[...term];const rows=[];
+    for(let n=1;n<=terms;n++){
+      this.checkCancelled?.();const t=this.fresh('actual_covariance_ordered_time'),at=x=>this.substitute(x,s.variable,t);
+      term=s.matrix.map(row=>this.integral(this.add(...row.map((a,j)=>this.mul(at(a),at(term[j])))),t,this.zero,s.variable));
+      sum=sum.map((a,j)=>this.add(a,term[j]));rows.push({order:n,term:[...term]});
+    }
+    const replace=x=>this.simultaneousSubstitute(x,[s.variable,...s.parameters],[v,...values]),K=replace(s.normUpper),length=replace(s.length),z=this.mul(K,length),tail=this.mul(this.exp(z),this.pow(z,terms+1),this.q(1,factorial(terms+1)));
+    const result={system,terms,values:sum.map(replace),rows:rows.map(r=>({...r,term:r.term.map(replace)})),tail,
+      tailFormula:'exp(K*L)*(K*L)^(N+1)/(N+1)!',tailValidOnWholeInterval:true,
+      tailTendsToZero:true,coefficientNormPremise:s.normUpper,exactLimitUsedByFunctionOperation:true,
+      finiteSumClaimedExact:false};this.covariancePartialSums.set(key,result);return result;
+  }
+  freeCoordinates(id){const n=this.nodes[id];if(n?.op==='actual_covariance_volterra'){const out=new Set();for(const x of [n.args[2],...n.args[3]])for(const y of this.freeCoordinates(x))out.add(y);return out;}return super.freeCoordinates(id);}
+  dependsOn(id,variable){if(this.nodes[id]?.op==='actual_covariance_volterra')return this.freeCoordinates(id).has(variable);return super.dependsOn(id,variable);}
+  substitute(id,variable,value){const n=this.nodes[id];if(n?.op==='actual_covariance_volterra')return this.covarianceValue(n.args[0],n.args[1],this.substitute(n.args[2],variable,value),n.args[3].map(x=>this.substitute(x,variable,value)));return super.substitute(id,variable,value);}
+  derivative(id,variable){
+    const n=this.nodes[id];if(n?.op!=='actual_covariance_volterra')return super.derivative(id,variable);
+    const [system,component,v,values]=n.args,dp=values.map(x=>this.derivative(x,variable));
+    if(dp.some(x=>x!==this.zero))fail('UNSUPPORTED','Use a differentiated variational Volterra system for a slow-parameter derivative; it is not set to zero.');
+    const dv=this.derivative(v,variable);return dv===this.zero?this.zero:this.mul(dv,this.covarianceRhs(system,component,v,values));
+  }
+  pack(roots,extra={}){return super.pack(roots,{covarianceSystems:structuredClone(this.covarianceSystems),covarianceKernel:{schema:'MathScope.ActualCovarianceVolterraKernel/1',partialSumImplementation:'actual-covariance-volterra.mjs:covariancePartialSum',rhsImplementation:'actual-covariance-volterra.mjs:covarianceRhs',factorialTail:'exp(KL)*(KL)^(N+1)/(N+1)!',sourceNormAuthenticationInCaller:true,exactLimitNotFiniteSum:true,slowDerivativeMaterializationSupported:false},...extra});}
+}
+
+return {ActualCovarianceExpressions};
+})();
+const __m2_125 = (()=>{
+/** Actual algebra of the moving constrained pulse. This small function is
+ * deliberately separate from source authentication so independent rational
+ * matrices can verify every connection, pressure and moving-basis term. */
+const {fail} = __m2_74;
+function covarianceMatrixAlgebra(G){
+  const dot=(a,b)=>G.add(...a.map((x,i)=>G.mul(x,b[i])));
+  const transpose=A=>A[0].map((_,j)=>A.map(r=>r[j]));
+  const mul=(A,B)=>{const BT=transpose(B);return A.map(r=>BT.map(c=>dot(r,c)));};
+  const add=(A,B)=>A.map((r,i)=>r.map((x,j)=>G.add(x,B[i][j])));
+  const sub=(A,B)=>A.map((r,i)=>r.map((x,j)=>G.sub(x,B[i][j])));
+  const scale=(a,A)=>A.map(r=>r.map(x=>G.mul(a,x)));
+  const identity=n=>Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?G.one:G.zero));
+  return {dot,transpose,mul,add,sub,scale,identity};
+}
+
+function actualMovingPulseFrame(G,input){
+  const names=['F','FR','GR','R','epsilon','k','p','pz','x0','v','Ls','u','c0','lambda0','HR','HZ'];
+  if(!input||names.some(k=>!Number.isSafeInteger(input[k])||!G.nodes[input[k]])||Object.keys(input).some(k=>!names.includes(k)&&k!=='sign')||![1,-1].includes(input.sign))fail('INVALID_INPUT','Supply each explicit actual field and phase operand. No omitted moving-frame term is accepted.');
+  const {F,FR,GR,R,epsilon,k,p,pz,x0,v,Ls,u,c0,lambda0,HR,HZ,sign}=input,q=(n,d=1)=>G.q(n,d),{dot,transpose,mul,sub,scale,identity}=covarianceMatrixAlgebra(G);
+  const n=[G.sub(x0,G.mul(v,HR)),G.div(p,R),G.sub(pz,G.mul(epsilon,v,HZ))],nPrime=[G.neg(HR),G.zero,G.neg(G.mul(epsilon,HZ))],n2=dot(n,n);
+  const K=[[G.zero,G.neg(G.mul(q(2),F)),G.zero],[G.add(G.mul(q(2),F),G.mul(R,FR)),G.zero,G.zero],[GR,G.zero,G.zero]];
+  const nTK=transpose(K).map(c=>dot(n,c)),pressureNumerator=nTK.map((x,j)=>G.sub(x,nPrime[j]));
+  const Aphi=K.map((row,i)=>row.map((x,j)=>G.add(G.neg(x),G.div(G.mul(n[i],pressureNumerator[j]),n2))));
+  const projection=sub(identity(3),scale(G.inv(n2),n.map(x=>n.map(y=>G.mul(x,y)))));
+  const nt=G.sqrt(G.add(G.pow(n[1],2),G.pow(n[2],2))),Ka=[G.div(n[1],nt),G.div(n[2],nt)],Na=[Ka[1],G.neg(Ka[0])],sa=G.div(n[0],nt);
+  const s=G.mul(q(sign),u,G.add(q(1,2),G.div(v,Ls))),sPrime=G.div(G.mul(q(sign),u),Ls),root=G.sqrt(G.add(G.one,G.pow(s,2))),c=G.mul(c0,root);
+  const U=[[G.one,G.zero],[G.neg(G.mul(sa,Ka[0])),Na[0]],[G.neg(G.mul(sa,Ka[1])),Na[1]]],J=[[G.one,G.one],[c,G.neg(c)]];
+  const Uleft=[[G.one,G.zero,G.zero],[G.zero,Na[0],Na[1]]],Jinverse=[[q(1,2),G.div(q(1,2),c)],[q(1,2),G.neg(G.div(q(1,2),c))]];
+  const B=mul(U,J),UPrime=U.map(row=>row.map(x=>G.derivative(x,v))),JPrime=J.map(row=>row.map(x=>G.derivative(x,v))),BPrime=G.nodes[v].op==='coordinate'?B.map(row=>row.map(x=>G.derivative(x,v))):null;
+  if(!BPrime)fail('INVALID_INPUT','The moving frame needs its independent pulse coordinate.');
+  const Bleft=mul(Jinverse,Uleft),projected=mul(Bleft,sub(mul(Aphi,B),BPrime)),lambda=G.div(lambda0,root),dref=G.div(G.mul(lambda0,G.add(G.one,G.pow(s,2))),G.pow(G.sqrt(G.add(G.one,G.pow(u,2))),3)),d=G.mul(epsilon,G.pow(k,2),n2);
+  const diagonal=[[lambda,G.zero],[G.zero,G.neg(lambda)]],error=sub(projected,diagonal),wMatrix=projected.map((row,i)=>row.map((x,j)=>i===j?G.sub(x,G.add(lambda,G.sub(d,dref))):x));
+  return {n,nPrime,nSquared:n2,principalK:K,Aphi,forcingProjection:projection,
+    pressureImaginaryRow:pressureNumerator.map(x=>G.div(x,G.mul(k,n2))),
+    nt,Ka,Na,sa,s,sPrime,U,J,UPrime,JPrime,B,BPrime,Bleft,projected,reference:{lambda,dref,diagonal},actualDamping:d,projectedError:error,wMatrix,
+    identities:{constraint:'n^T*A_phi+n_prime^T=0',pressure:'pi=i*(n^T*K-n_prime^T)*t/(k*|n|^2)',
+      leftInverse:'Bleft*B=I2',basisDerivative:'B_prime=U_prime*J+U*J_prime',
+      normalizedEquation:'w_prime=[Bleft*(Aphi*B-Bprime)-lambda*I-(d-dref)*I]*w; z=P*w',
+      fullCylindricalConnections:true,movingNormalRetained:true,movingBasisRetained:true},
+    sourceCertificate:false};
+}
+
+return {covarianceMatrixAlgebra,actualMovingPulseFrame};
+})();
+const __m2_126 = (()=>{
+/** The original two signs in one slow box, built from the actual completed
+ * source. Every field, frame, Volterra coefficient and H integrand retains
+ * its body. A finite active band is distinguished from the all-band theorem.
+ */
+const {prepareActualCompletedBackgroundC2,assertActualCompletedBackgroundC2,actualBackgroundSymbolicPrefix,actualBackgroundDyadicPrefix} = __m2_123;
+const {ActualCovarianceExpressions} = __m2_124;
+const {actualMovingPulseFrame,covarianceMatrixAlgebra} = __m2_125;
+const {actualStressDirectionBounds} = __m2_121;
+const {SOURCE_PROFILE_ID,assertSourceProfile} = __m2_45;
+const {fail} = __m2_74;
+const certificates=new WeakMap();
+const bindingData=r=>JSON.stringify({sourceProfile:r.sourceProfile,parameterExpressionSHA256:r.parameterExpressionSHA256,coordinates:r.coordinates,chart:r.chart,fields:r.fields,leadingFields:r.leadingFields,frozen:r.frozen,geometry:r.geometry,cutoffs:r.cutoffs,constants:r.constants,families:r.families,roots:r.roots,scope:r.scope,band:r.band,direction:r.direction});
+const validInput=input=>{if(!input||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Use an original source pulse request.');for(const k of Object.keys(input))if(!['sourceProfile','anchorOrder','ellExact','maxNodes'].includes(k))fail('INVALID_INPUT','Actual source functions and operator constants are not caller inputs: '+k);};
+
+function originalCutoffs(G,v,Ls,r0){
+  const q=(n,d=1)=>G.q(n,d),xi=G.fresh('actual_H_transverse_coordinate'),t=G.div(xi,r0),abs=G.sqrt(G.pow(t,2));
+  const bump=G.choose(abs,q(1,4),q(3,4),G.one,G.step(G.sub(q(3,2),G.mul(q(2),abs))),G.zero),mass=G.integral(G.pow(bump,2),xi,G.neg(r0),r0);
+  const psi=G.mul(G.step(G.sub(G.div(G.mul(q(20),v),Ls),q(4))),G.step(G.sub(q(16),G.div(G.mul(q(20),v),Ls))));
+  return {xi,chi:bump,transverseMass:mass,psi,
+    transverse:{definition:'b(xi/r0), b=1 on |t|<=1/4; b=sigma(3/2-2|t|) on 1/4<|t|<3/4; zero otherwise',massBounds:[G.div(r0,q(2)),G.mul(q(2),r0)],massNormalizedToOne:false},
+    longitudinal:{definition:'sigma(20*v/Ls-4)*sigma(16-20*v/Ls)',support:['Ls/5','4*Ls/5'],plateau:['Ls/4','3*Ls/4'],originalRequiredPlateau:['3*Ls/10','7*Ls/10'],originalOpenSupport:['Ls/6','5*Ls/6']}};
+}
+
+/** This routine accepts source identity and a finite representation budget;
+ * it never accepts a bound, target, field or completion predicate. */
+function prepareActualCovarianceOperator(input={},context={}){
+  validInput(input);const sourceProfile=input.sourceProfile??SOURCE_PROFILE_ID;assertSourceProfile(sourceProfile);const maxNodes=input.maxNodes??3000000;
+  if(!Number.isSafeInteger(maxNodes)||maxNodes<1||maxNodes>8000000)fail('INVALID_INPUT','Choose a finite positive node budget of at most eight million.');
+  if(input.ellExact!==undefined&&input.anchorOrder!==undefined)fail('INVALID_INPUT','Choose an actual arbitrary dyadic integer or an efficient canonical anchor, not both.');
+  let anchorOrder=input.ellExact===undefined?input.anchorOrder??1:null,ellExact=null,order;
+  if(anchorOrder!==null){if(!Number.isSafeInteger(anchorOrder)||anchorOrder<1)fail('INVALID_INPUT','Use a positive actual canonical cutoff anchor.');if(anchorOrder>8)fail('RESOURCE_LIMIT','This finite source graph budget supports canonical anchors through eight; no omitted coefficient is replaced by zero.');order=anchorOrder+3;}
+  else{
+    if(typeof input.ellExact!=='string'||!/^[0-9]+$/.test(input.ellExact)||input.ellExact.length>2048)fail('INVALID_INPUT','ellExact is a positive exact integer string.');
+    const integerEll=BigInt(input.ellExact);if(integerEll<1n)fail('INVALID_INPUT','The dyadic integer is positive.');
+    if(integerEll>128n||integerEll>BigInt(maxNodes))fail('RESOURCE_LIMIT','The conservative actual all-band prefix exceeds this finite derivative/node budget. No missing coefficient or H column was set to zero.');
+    ellExact=String(integerEll);order=Math.max(3,Number(integerEll));
+  }
+  context.checkCancelled?.();
+  // The band prefix appends real source functions and fresh coordinates.
+  // A fresh authenticated background keeps repeated and interleaved requests
+  // independent; reusing a mutable G would change root IDs and replay hashes.
+  const background=prepareActualCompletedBackgroundC2({sourceProfile,order,maxNodes},context);assertActualCompletedBackgroundC2(background);
+  const band=ellExact===null?actualBackgroundSymbolicPrefix(background,{anchorOrder,derivativeOrder:2,dyadicBand:true},context):actualBackgroundDyadicPrefix(background,{ellExact,derivativeOrder:2},context),direction=actualStressDirectionBounds({sourceProfile},context);
+  if(!background.pass||!direction.pass||background.program.parameterExpressionSHA256!==direction.parameterExpressionSHA256)fail('INVALID_SOURCE_CONSTRUCTION','The actual C2 field and leading-frame direction must have the same pinned source.');
+  const G=new ActualCovarianceExpressions(background.G,{maxNodes,checkCancelled:context.checkCancelled}),q=(n,d=1)=>G.q(n,d),powReal=(x,a)=>G.exp(G.mul(a,G.log(x))),{dot,mul}=covarianceMatrixAlgebra(G);
+  const h=G.parameter('h'),A=G.add(q(1,2),h),D=G.sub(q(1,2),h),Renv=G.parameter('C12EnvelopeR'),kappa=G.parameter('directionalMarginKappa'),u=G.div(q(2),kappa);
+  const R=G.fresh('actual_H_slow_R'),Z=G.fresh('actual_H_slow_Z'),T=G.fresh('actual_H_slow_T'),theta=G.fresh('actual_H_angle'),v=G.fresh('actual_H_pulse_v');
+  const Xrep=G.fresh('actual_H_representative_X'),etaRep=G.fresh('actual_H_representative_eta'),sRep=G.fresh('actual_H_representative_s');
+  const sVariable=G.fresh('actual_H_chart_s'),chartBody=G.sub(G.sub(sVariable,G.mul(G.pow(Z,2),powReal(sVariable,G.mul(q(2),h)))),T);
+  const chartSystem=G.defineMonotoneSystem({name:'ActualSourceBandChartInverse',variable:sVariable,parameters:[Z,T],body:chartBody,left:q(1,2),right:q(2),derivativeLower:q(1,2),derivativeUpper:G.one,
+    endpointProof:'Domain is the image of (s,eta) in [1/2,2]x[-1,1] under Z=s^D*eta,T=s*(1-eta^2). The actual root is s; opposite endpoint signs follow from F_s>=1-8h>1/2 throughout the bracket.',
+    sourceSmallness:'The unchanged pinned source has 0<h<1/16.',numericOracle:false});
+  const s=G.monotoneRoot(chartSystem,[Z,T]),X=G.div(G.pow(R,2),G.mul(q(2),s)),eta=G.div(Z,powReal(s,D)),epsilon=powReal(band.Q,h),qActual=G.mul(band.Q,s),coordinates=[R,Z,T];
+  const atProfile=body=>G.simultaneousSubstitute(body,[band.coordinates.q,band.coordinates.X,band.coordinates.eta],[qActual,X,eta]);
+  const fieldBodies={F:G.mul(powReal(s,G.neg(G.add(A,q(1,2)))),atProfile(band.roots.profileAngularVelocity)),G:G.mul(powReal(s,G.neg(A)),atProfile(band.roots.axialNormalized)),b:G.mul(epsilon,powReal(s,q(-1,2)),atProfile(band.roots.radialNormalized))};
+  const fields=Object.fromEntries(Object.entries(fieldBodies).map(([name,body])=>[name,G.share(body,coordinates,'ActualCovarianceCompleted_'+name)]));
+  const leadingFBody=G.mul(powReal(s,G.neg(G.add(A,q(1,2)))),G.simultaneousSubstitute(background.prepared.records[0].global.F,[band.coordinates.X,band.coordinates.eta],[X,eta]));
+  const leadingGBody=G.mul(powReal(s,G.neg(A)),G.simultaneousSubstitute(background.prepared.records[0].global.U,[band.coordinates.X,band.coordinates.eta],[X,eta]));
+  const leadingFields={F:G.share(leadingFBody,coordinates,'ActualCovarianceLeading_F'),G:G.share(leadingGBody,coordinates,'ActualCovarianceLeading_G')};
+  const Rrep=G.sqrt(G.mul(q(2),sRep,Xrep)),Zrep=G.mul(powReal(sRep,D),etaRep),Trep=G.mul(sRep,G.sub(G.one,G.pow(etaRep,2))),atRep=body=>G.simultaneousSubstitute(body,coordinates,[Rrep,Zrep,Trep]);
+  const F0=atRep(leadingFields.F),FR0=atRep(G.derivative(leadingFields.F,R)),GR0=atRep(G.derivative(leadingFields.G,R)),g0=[G.mul(Rrep,FR0),GR0],gabs=G.sqrt(dot(g0,g0)),N=g0.map(x=>G.div(x,gabs)),K=[G.neg(N[1]),N[0]];
+  const lambda0=G.sqrt(G.neg(G.mul(q(2),F0,N[0],G.add(gabs,G.mul(q(2),F0,N[0]))))),c0=G.div(lambda0,G.mul(q(2),F0,N[0]));
+  const ell=band.ell,S=G.pow(ell,2),k=G.ceiling(G.inv(G.sqrt(epsilon))),Tg=G.add(q(4),G.sqrt(q(2))),r0=q(1,1n<<34n),logTwo=G.log(q(2));
+  const paletteQuotient=G.div(G.sub(G.mul(G.add(G.one,h),ell,logTwo),G.mul(q(2),G.log(ell))),G.log(Tg)),paletteIndex=G.neg(G.ceiling(G.neg(paletteQuotient))),ci=G.mul(powReal(Tg,paletteIndex),powReal(band.Q,G.add(G.one,h))),Ls=G.div(G.mul(q(2),r0),ci);
+  const Bs=G.sqrt(G.div(lambda0,G.mul(epsilon,G.pow(k,2),G.pow(G.sqrt(G.add(G.one,G.pow(u,2))),3)))),cutoffs=originalCutoffs(G,v,Ls,r0),Dgeom=G.sub(q(4),G.mul(q(2),G.sqrt(q(2)))),haarFactor=G.mul(q(1,2),Dgeom,ci,cutoffs.transverseMass);
+  const Bnorm=G.add(q(1n<<128n),G.pow(Renv,4096),...['FGErrorConstant','bTotalConstant','FTotalConstant','GTotalConstant'].map(name=>background.roots[name]),background.chart.operatorA,background.chart.operatorB);
+  if(G.freeCoordinates(Bnorm).size)fail('INVALID_SOURCE_CONSTRUCTION','The uniform source norm must not depend on a display anchor or representative.');
+  const matrixNorm=G.mul(G.pow(Bnorm,256),G.pow(G.add(G.one,k),8),G.pow(G.add(G.one,Ls),8));
+  const parameters=[R,Z,T,Xrep,etaRep,sRep],families=[];
+  for(const sign of [1,-1]){
+    context.checkCancelled?.();const beta=K.map((x,j)=>G.mul(Bs,G.sub(x,G.div(G.mul(q(sign),u,N[j]),G.mul(Ls,gabs))))),pTilde=G.mul(Rrep,beta[0]),pz=beta[1],scaledP=G.mul(k,pTilde),rounded=G.neg(G.ceiling(G.neg(G.add(scaledP,q(1,2))))),fallback=G.choose(scaledP,G.zero,G.zero,q(-1),G.one,G.one),nonzero=G.choose(rounded,q(-1,2),q(1,2),rounded,fallback,rounded),p=G.div(nonzero,k),x0=G.mul(q(sign,2),Bs,u);
+    const H=G.add(G.mul(p,fields.F),G.mul(pz,fields.G)),HR=G.derivative(H,R),HZ=G.derivative(H,Z),HT=G.derivative(H,T),phase=G.sub(G.add(G.mul(p,theta),G.div(G.mul(pz,Z),epsilon),G.mul(x0,R)),G.mul(v,H));
+    const frame=actualMovingPulseFrame(G,{F:fields.F,FR:G.derivative(fields.F,R),GR:G.derivative(fields.G,R),R,epsilon,k,p,pz,x0,v,Ls,u,c0,lambda0,HR,HZ,sign});
+    const integrand=G.sub(frame.reference.lambda,frame.reference.dref),time=G.fresh('actual_H_log_P_time'),logP=G.integral(G.substitute(integrand,v,time),time,G.div(Ls,q(2)),v),P=G.exp(logP);
+    const system=G.defineCovarianceVolterra({name:'ActualSourceHomogeneousPulse_'+(sign===1?'plus':'minus'),variable:v,parameters,matrix:frame.wMatrix,normUpper:matrixNorm,length:Ls}),w=[0,1].map(j=>G.covarianceValue(system,j,v,parameters)),z=w.map(x=>G.mul(P,x)),t=mul(frame.B,z.map(x=>[x])).map(r=>r[0]),x=t[0];
+    const Htheta=G.mul(haarFactor,G.integral(G.mul(G.pow(cutoffs.psi,2),x,t[1]),v,G.zero,Ls)),Hz=G.mul(haarFactor,G.integral(G.mul(G.pow(cutoffs.psi,2),x,t[2]),v,G.zero,Ls)),mass=G.mul(haarFactor,G.integral(G.mul(G.pow(cutoffs.psi,2),G.pow(x,2)),v,G.zero,Ls));
+    const eikonalRemainder=G.add(G.mul(epsilon,v,G.sub(HT,G.mul(fields.G,HZ))),G.mul(fields.b,frame.n[0]));
+    families.push({sign,carrier:{pTilde,p,pz,x0,roundedInteger:nonzero,roundingErrorUpper:G.inv(k),nonzeroAngularInteger:true},phase,phaseSpeed:H,phaseDerivatives:{R:HR,Z:HZ,T:HT},frame,system,w,z,t,logP,P,
+      initial:{w:[G.one,G.zero],z:[G.substitute(P,v,G.zero),G.zero],midpointReferenceEnvelope:G.one,actualAmplitudeMidpointSetToOne:false},
+      covariance:{theta:Htheta,z:Hz,mass,normalizedRows:[G.neg(G.div(G.add(G.mul(N[0],Htheta),G.mul(N[1],Hz)),G.mul(G.neg(c0),G.sqrt(G.add(G.one,G.pow(u,2))),mass))),G.div(G.add(G.mul(K[0],Htheta),G.mul(K[1],Hz)),G.mul(u,mass))]},
+      fullEikonalRemainder:eikonalRemainder,fullEikonalRemainderSetToZero:false,
+      representation:'Exact ordered-integral limit with an explicit source-bound factorial tail; finite terms are not identified with the solution.'});
+  }
+  const roots={sourceNorm:Bnorm,volterraMatrixNorm:matrixNorm,Q:band.Q,ell,S,epsilon,k,Ls,ci,haarFactor,...Object.fromEntries(families.flatMap(f=>[['Htheta_'+f.sign,f.covariance.theta],['Hz_'+f.sign,f.covariance.z],['mass_'+f.sign,f.covariance.mass]]))};
+  const result={G,background,band,direction,sourceProfile,parameterExpressionSHA256:background.program.parameterExpressionSHA256,coordinates:{R,Z,T,theta,v,Xrep,etaRep,sRep},
+    chart:{system:chartSystem,s,X,eta,qActual,domain:'Image of [s=1/2..2, X=Xa/2..2Xb, eta=-1..1]; tau>=0. Comparisons use profile-coordinate paths, not unproved convexity of this slow image.',
+      representativeDomain:{X:['Xa','Xb'],eta:['-1','1'],s:['1/2','2']},
+      certifiedNearbySlowPoint:'For perturbation conclusions the slow point is in the same selected box, at slow Euclidean distance<=4/S^3 from its frozen representative. The two points are not arbitrary independent choices.',
+      enlargedDomainDoesNotExtendFrozenRayleighLowerBounds:true},
+    fields,leadingFields,frozen:{F0,FR0,GR0,g0,gabs,N,K,c0,lambda0,Rrep,Zrep,Trep,orderZero:true},
+    geometry:{ell,S,k,epsilon,Q:band.Q,Tg,paletteIndex,ci,Ls,r0,Dgeom,haarFactor,lengthRatioBounds:[G.mul(q(2),r0),G.mul(q(2),r0,Tg)],
+      rectangleBasis:[[G.one,G.sub(G.one,G.sqrt(q(2)))],[G.sub(G.sqrt(q(2)),G.one),G.one]],
+      haar:'Normalized Haar measure under the integer cover has no extra det(J)^i multiplicity. Both signs are rectangles of one slow box.',angularAverage:q(1,2),transverseIndependentAmplitude:true},
+    cutoffs,constants:{h,A,D,Renv,kappa,u,Bs,Bnorm,matrixNorm},families,roots,
+    scope:{actualCompletedSourceCoefficientsBound:true,originalDyadicBand:true,generalRepresentativeAndSlowPointFunctions:true,actualMovingNormalAndBasisIncluded:true,
+      actualTwoSignHIntegrandsConstructed:true,exactVolterraLimitDefined:true,candidateVolterraNormRetained:true,sourceNormTailProducerIncluded:false,
+      numericalWholeHEnclosure:false,displayBandProvedBelowUniformQStar:false,actualUniformHColumnsCertified:false,sourceUniformQStarCertified:false,globalEquation730Certified:false,originalN506Complete:false}};
+  result.program=G.pack(roots,{schema:'MathScope.ActualCovarianceSourceOperator/1',sourceProfile,parameterExpressionSHA256:result.parameterExpressionSHA256,
+    coordinates:result.coordinates,chart:result.chart,fields,leadingFields,frozen:result.frozen,geometry:result.geometry,cutoffs,families,scope:result.scope,
+    band:{anchorOrder,ellExact,selectionKind:band.bandSelection.kind,dyadicBand:true,exactInactiveTail:band.exactInactiveTail,...(band.exactPlateau?{exactPlateau:band.exactPlateau}:{}),completeBackgroundOnDeclaredBand:true,equalsEveryBand:false,
+      allBandImplementation:'actualBackgroundDyadicPrefix constructs actual n=1..ell and proves every n>=ell+1 inactive. The same operator code then constructs both source phases, constrained Volterra solutions and H integrals.',
+      efficientAnchorImplementation:'actualBackgroundSymbolicPrefix uses the same canonical coefficients but proves a much larger exact dyadic band from one cutoff scale.',
+      resourceLimitIsExplicitFailure:true},
+    sourceNormDerivation:'Each bounded primitive and its reciprocal is below B. Nonzero integer p*k gives |n_tan|>=1/(k*B). Direct finite products, sums, first v derivatives and inverse powers in Aphi,B,Bleft,Bprime are bounded by B^256*(1+k)^8*(1+Ls)^8 in the induced infinity norm; this tail needs no eventual smallness assumption.',
+    sourceC2:{fixedFiniteBlockOrders:[1,2],sameCanonicalSequence:true,wholeEnlargedAnnulus:true,originalRAndNUnchanged:true}});
+  certificates.set(result,{G,nodeCount:G.nodes.length,nodes:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),volterra:JSON.stringify(G.covarianceSystems),data:bindingData(result),background});
+  return result;
+}
+
+function assertActualCovarianceOperator(result){
+  const c=certificates.get(result);if(!c||result.G!==c.G||JSON.stringify(c.G.nodes.slice(0,c.nodeCount))!==c.nodes||!c.G.functionDefinitionsUnchanged(c.definitions)||JSON.stringify(c.G.covarianceSystems)!==c.volterra||bindingData(result)!==c.data)fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged actual covariance source operator.');
+  assertActualCompletedBackgroundC2(c.background);return true;
+}
+
+return {prepareActualCovarianceOperator,assertActualCovarianceOperator};
+})();
+const __m2_127 = (()=>{
+/** Quantitative Gaussian/cone lemma for the actual two-column assembly.
+ *
+ * This module supplies an algebraic positive-constant recipe, not a source
+ * field certificate. Its caller must bind E, d-dref, the moving frame and
+ * Ls/S to the actual completed background before using any conclusion.
+ * It never accepts an externally supplied completion flag.
+ */
+const {rational: Q,qadd,qsub,qmul,qdiv,qcompare,qtext,fail} = __m2_74;
+const keys=['h','kappa','u','lambdaLower','lambdaUpper','absoluteC0','operatorError','dampingError','unitFrameError','slopeError','lengthRatioLower','lengthRatioUpper'];
+
+/** Every numeric-looking value in this receipt is a node of the caller's
+ * exact positive expression graph. No source parameter is materialized as
+ * binary64, and neither H nor its unknown incoming target is fabricated.
+ */
+function covarianceConcentrationRecipe(G,input){
+  if(!G||typeof G.q!=='function'||!Array.isArray(G.nodes)||!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!keys.includes(k))||keys.some(k=>!Number.isSafeInteger(input[k])||!G.nodes[input[k]]))fail('INVALID_INPUT','Provide the complete exact-expression constants for the conditional covariance lemma.');
+  const q=(n,d=1)=>G.q(n,d),one=G.one,{h,kappa,u,lambdaLower,lambdaUpper,absoluteC0,operatorError:E,dampingError:Ed,unitFrameError:Ef,slopeError:Es,lengthRatioLower:Lmin,lengthRatioUpper:Lmax}=input;
+  const Ac=G.mul(absoluteC0,G.sqrt(G.add(one,G.pow(u,2)))),lambdaFloor=G.div(lambdaLower,G.mul(q(2),u));
+  const coneK=G.div(G.mul(q(4),E),lambdaFloor),logRatioBound=G.mul(G.add(G.mul(q(2),E),Ed),Lmax);
+  const amplitudeLower=G.mul(q(1,2),G.exp(G.neg(logRatioBound))),amplitudeUpper=G.mul(q(2),G.exp(logRatioBound));
+  const gaussianLower=G.div(lambdaLower,G.mul(q(4),u)),gaussianUpper=G.div(G.mul(q(15),lambdaUpper),G.mul(q(2),u)),centralRadiusDenominator=G.maximum(one,G.mul(q(2),gaussianUpper));
+  const massLowerCoefficient=G.div(G.pow(amplitudeLower,2),G.mul(q(15),centralRadiusDenominator));
+  const absoluteMomentUpper=G.div(G.pow(amplitudeUpper,2),G.mul(q(2),gaussianLower));
+  const concentrationK=G.div(absoluteMomentUpper,massLowerCoefficient);
+  const normalColumnError=G.add(G.mul(q(6),coneK),G.mul(G.add(q(2),G.div(G.mul(q(2),u),Ac)),Ef));
+  const tangentColumnError=G.add(G.div(Es,u),G.mul(G.add(q(2),G.div(G.mul(q(5),Ac),u)),Ef)),frameColumnK=G.maximum(normalColumnError,tangentColumnError);
+  const columnBudget=G.div(kappa,q(128)),halfBudget=G.div(kappa,q(256));
+  const conditions=[
+    {id:'positive-unit-band-scale',lower:one,inequality:'S >= 1'},
+    {id:'cone-ratio-at-most-one-half',lower:G.mul(q(2),coneK),inequality:'coneK/S <= 1/2'},
+    {id:'pulse-length-at-least-one',lower:G.inv(Lmin),inequality:'Ls >= Lmin*S >= 1'},
+    {id:'actual-slope-at-most-two-u',lower:G.div(G.mul(q(2),Es),u),inequality:'|s_a-s| <= u/2'},
+    {id:'normalized-frame-column-budget',lower:G.div(frameColumnK,halfBudget),inequality:'frameColumnK/S <= kappa/256'},
+    {id:'normalized-concentration-budget',lower:G.div(G.pow(G.div(concentrationK,halfBudget),2),Lmin),inequality:'concentrationK/sqrt(Ls) <= kappa/256'},
+  ];
+  const Sminimum=G.maximum(...conditions.map(c=>c.lower)),frequencyBandMinimum=G.pow(G.div(q(64),h),2);
+  const ellMinimum=G.ceiling(G.maximum(q(8),Sminimum,frequencyBandMinimum)),qStar=G.exp(G.neg(G.mul(G.add(ellMinimum,q(4)),G.log(q(2)))));
+  return {schema:'MathScope.CovarianceConcentrationRecipe/1',input:{...input},
+    premises:{sourceBindingRequired:true,parameters:'0<h<1, 0<kappa<=1, u=2/kappa>=2, 0<lambdaLower<=lambda0<=lambdaUpper, c0=-absoluteC0<0, E,Ed,Ef,Es>=0, 0<Lmin<=Ls/S<=Lmax',
+      negativeC0Required:true,c0Root:G.neg(absoluteC0),
+      exactSolution:'z_prime=(diag(lambda,-lambda)+E_actual-d*I)z; z(0)=(P(0),0); |E_actual_ij|<=E/S, |d-dref|<=Ed/S',
+      exactFrame:'t=Bz, x=t_r=z_plus+z_minus, B=[e_r-s_a*K_a+c0*sqrt(1+s^2)*N_a, e_r-s_a*K_a-c0*sqrt(1+s^2)*N_a]',
+      frameBounds:'N,K and N_a,K_a are oriented orthonormal pairs; |K_a-K|,|N_a-N|<=Ef/S, |s_a-s|<=Es/S',
+      cutoffs:'0<=psi<=1 and psi=1 on [Ls/4,3Ls/4]; 0<=v<=Ls, s=sign*(u/2+u*v/Ls)',
+      actualGlobalBackgroundRequired:true},
+    cone:{lambdaFloor,coneK,ratio:'|z_minus/z_plus|<=coneK/S<=1/2',logRatioBound,amplitudeLower,amplitudeUpper,
+      amplitude:'amplitudeLower*P <= x <= amplitudeUpper*P',
+      inwardProof:'r_prime=E21+(-2*lambda+E22-E11)*r-E12*r^2. At r=+beta, beta=4E/(lambdaFloor*S)<=1, r_prime<=(E/S)*(1-8+2*beta+beta^2)<=-4E/S; the lower boundary is symmetric. E=0 gives r=0 exactly.',
+      positivity:'z_plus is the positive exponential solution of its scalar equation after the invariant ratio is inserted; x=(1+r)*z_plus>0.'},
+    gaussian:{lower:gaussianLower,upper:gaussianUpper,
+      bounds:'exp(-gaussianUpper*(v-Ls/2)^2/Ls) <= P(v) <= exp(-gaussianLower*(v-Ls/2)^2/Ls)',
+      derivativeIdentity:'-Ls*(lambda-dref)_prime = lambda0*u*|s|*((1+s^2)^(-3/2)+2*(1+u^2)^(-3/2))',
+      continuousProof:'u>=2 and u/2<=|s|<=3u/2 give lambdaLower/(2u) <= -Ls*(lambda-dref)_prime <= 7*lambdaUpper/u <= 15*lambdaUpper/u. The lower bound uses (5/4)^3<4. Integrate from the exact zero at v=Ls/2.'},
+    mass:{centralRadiusDenominator,massLowerCoefficient,absoluteMomentUpper,concentrationK,
+      I0:'Integral_0^Ls psi^2*x^2 dv >= massLowerCoefficient*sqrt(Ls)',
+      I1:'Integral_0^Ls (|v-Ls/2|/Ls)*psi^2*x^2 dv <= absoluteMomentUpper',
+      ratio:'I1/I0 <= concentrationK/sqrt(Ls)',
+      lowerProof:'For |v-Ls/2|<=sqrt(Ls)/(10a), a=max(1,2*gaussianUpper), psi=1 and P^2>=exp(-1/100)>1/3. Integrate over the interval of length sqrt(Ls)/(5a).',
+      upperProof:'Extend the nonnegative integrand to the real line and set w=2*gaussianLower*(v-Ls/2)^2/Ls. The absolute first moment equals amplitudeUpper^2/(2*gaussianLower).',
+      noGaussianLimitSubstituted:true},
+    columns:{Ac,normalColumnError,tangentColumnError,frameColumnK,columnBudget,
+      exactH:'H_sign=(|det(v_r,v_t)|/2)*(Integral chi^2 dxi)*c_i*Integral psi^2*x*t_tan dv',
+      exactPositiveMass:'h_sign=(|det(v_r,v_t)|/2)*(Integral chi^2 dxi)*c_i*Integral psi^2*x^2 dv > 0',
+      normalizedRows:'C_1sign=-(N dot H_sign)/(Ac*h_sign); C_2sign=(K dot H_sign)/(u*h_sign)',
+      idealColumns:'[[1,1],[-1,1]] for sign=+1,-1',
+      error:'max_ij |C_ij-Cideal_ij| <= concentrationK/sqrt(Ls)+frameColumnK/S <= kappa/128',
+      normalProof:'|(1-r)/(1+r)-1|<=4*beta; sqrt(1+s^2)/sqrt(1+u^2)<=3/2; |s_a|<=2u. Normal-row error <=6*beta+(2+2u/Ac)*Ef/S.',
+      tangentProof:'Tangent-row error <=Es/(u*S)+(2+5*Ac/u)*Ef/S. Both reference normalized rows differ from their midpoint value by at most |v-Ls/2|/Ls; the factor u cancels.',
+      signsAreColumnsInsideOneSlowBox:true,angularHalfIncluded:true,haarJacobianIncluded:true},
+    selection:{conditions,Sminimum,frequencyBandMinimum,ellMinimum,qStar,
+      bandProof:'ell>=ellMinimum>=Sminimum>=1 implies S=ell^2>=Sminimum. For ell>=(64/h)^2, log(3)+4log(ell)-(h*log(2)/2)*ell<0, using log(2)>=1/2 and log(ell)<=sqrt(ell). Hence S^2*(epsilon+epsilon^2+k^-1)<=3ell^4*2^(-h*ell/2)<1.',
+      activeBandBuffer:4,higherDerivativeOrdersChangeQStar:false,
+      additionalSourceConditionsMustBeMerged:true},
+    scope:{conditionalAnalyticLemma:true,actualOperatorBoundsProducedHere:false,actualUniformHColumnsCertified:false,sourceUniformQStarCertified:false,originalN506Complete:false,numericQuadratureExecuted:false,formalKernelProof:false}};
+}
+
+/** Small exact inequalities used by the continuum proof. They are not
+ * samples of the source annulus or of its pulse amplitude.
+ */
+function covarianceConcentrationScalarAudit(){
+  const rows=[],add=(id,left,relation,right)=>{const c=qcompare(left,right),pass=relation==='<'?c<0:relation==='<='?c<=0:relation==='>'?c>0:c===0;rows.push({id,left:qtext(left),relation,right:qtext(right),pass});};
+  add('lower-growth-root-removal',Q(125,64),'<',Q(4));
+  add('upper-growth-two-terms',qadd(Q(4),Q(3)),'<=',Q(15));
+  add('riccati-inward-at-unit-boundary',qadd(qsub(Q(1),Q(8)),qadd(Q(2),Q(1))),'=',Q(-4));
+  add('positive-radial-factor',qsub(Q(1),Q(1,2)),'=',Q(1,2));
+  add('amplitude-factor-upper',qadd(Q(1),Q(1,2)),'<',Q(2));
+  add('central-cutoff-radius',Q(1,10),'<',Q(1,4));
+  add('gaussian-central-square-lower',qsub(Q(1),Q(1,100)),'>',Q(1,3));
+  add('mass-lower-factor',qmul(Q(1,5),Q(1,3)),'=',Q(1,15));
+  add('normal-cone-factor',qmul(Q(3,2),Q(4)),'=',Q(6));
+  add('tangent-frame-factor',qmul(Q(3,2),Q(3)),'<',Q(5));
+  add('two-error-budgets',qadd(Q(1,256),Q(1,256)),'=',Q(1,128));
+  add('band-linear-absorption',qsub(qdiv(Q(64),Q(4)),Q(4)),'=',Q(12));
+  return {schema:'MathScope.CovarianceConcentrationScalarAudit/1',checks:rows,pass:rows.every(r=>r.pass),sourceFieldCertificate:false};
+}
+
+return {covarianceConcentrationRecipe,covarianceConcentrationScalarAudit};
+})();
+const __m2_128 = (()=>{
+/** Exact finite kernels for the remaining uniform covariance obligations.
+ *
+ * The accepted N3 cone is bound to its immutable source expressions. The
+ * continuous perturbation inequalities below are actually checked as rational
+ * Bernstein polynomials, not inferred from finitely many sampled labels.
+ *
+ * A completed-background field/jet producer is not installed here. In
+ * particular the exact principal-operator routine accepts explicit numerical
+ * jets and says so; its successful algebra is never a source-field receipt.
+ */
+const {PINNED_N3} = __m2_44;
+const {SOURCE_PROFILE_ID,assertSourceProfile,validateParameterGraph} = __m2_45;
+const {ACTUAL_PULSE_BINDINGS} = __m2_62;
+const {boundActualMeanPatchJets} = __m2_63;
+const fail=message=>{throw Object.assign(Error(message),{code:'INVALID_INPUT'});};
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const gcd=(a,b)=>{a=a<0n?-a:a;b=b<0n?-b:b;while(b){const r=a%b;a=b;b=r;}return a;};
+const Q=(n,d=1n)=>{n=BigInt(n);d=BigInt(d);if(!d)fail('A rational denominator is zero.');if(d<0n){n=-n;d=-d;}const g=gcd(n,d);return[n/g,d/g];};
+const parse=v=>{
+  if(typeof v==='number'){if(!Number.isSafeInteger(v))fail('Use exact rational strings for noninteger values.');return Q(v);}
+  if(typeof v!=='string'||v.length>2048||!/^[-+]?\d+(?:\/[-+]?\d+)?$/.test(v))fail('Use an integer or an exact numerator/denominator string.');
+  const a=v.split('/');return Q(a[0],a[1]??1);
+};
+const add=(a,b)=>Q(a[0]*b[1]+b[0]*a[1],a[1]*b[1]);
+const neg=a=>[-a[0],a[1]];
+const sub=(a,b)=>add(a,neg(b));
+const mul=(a,b)=>Q(a[0]*b[0],a[1]*b[1]);
+const div=(a,b)=>Q(a[0]*b[1],a[1]*b[0]);
+const cmp=(a,b)=>{const n=a[0]*b[1]-b[0]*a[1];return n<0n?-1:n>0n?1:0;};
+const abs=a=>[a[0]<0n?-a[0]:a[0],a[1]];
+const min=(a,b)=>cmp(a,b)<=0?a:b;
+const max=(a,b)=>cmp(a,b)>=0?a:b;
+const text=a=>a[1]===1n?String(a[0]):a.join('/');
+const zero=()=>Q(0),one=()=>Q(1);
+const dot=(a,b)=>a.reduce((s,x,i)=>add(s,mul(x,b[i])),zero());
+const transpose=a=>a[0].map((_,j)=>a.map(row=>row[j]));
+const mv=(a,b)=>a.map(row=>dot(row,b));
+const serial=v=>Array.isArray(v)&&v.length===2&&typeof v[0]==='bigint'?text(v):Array.isArray(v)?v.map(serial):v;
+
+const polynomialAdd=(a,b)=>Array.from({length:Math.max(a.length,b.length)},(_,i)=>add(a[i]??zero(),b[i]??zero()));
+const polynomialScale=(a,c)=>a.map(x=>mul(x,c));
+const polynomialSub=(a,b)=>polynomialAdd(a,polynomialScale(b,Q(-1)));
+const polynomialMul=(a,b)=>{const c=Array.from({length:a.length+b.length-1},zero);for(let i=0;i<a.length;i++)for(let j=0;j<b.length;j++)c[i+j]=add(c[i+j],mul(a[i],b[j]));return c;};
+const trim=a=>{while(a.length>1&&a.at(-1)[0]===0n)a.pop();return a;};
+const choose=(n,k)=>{let r=1n;for(let i=1;i<=k;i++)r=r*BigInt(n+1-i)/BigInt(i);return r;};
+
+/** A power polynomial is converted, exactly, to the Bernstein basis on [0,1].
+ * Nonnegative Bernstein coefficients prove nonnegativity at every real point.
+ */
+function exactUnitIntervalPolynomial(coefficients){
+  if(!Array.isArray(coefficients)||!coefficients.length||coefficients.length>17)fail('Use a polynomial of degree at most sixteen.');
+  const a=trim(coefficients.map(parse)),degree=a.length-1;
+  const bernstein=Array.from({length:a.length},(_,j)=>{
+    let b=zero();for(let i=0;i<=j;i++)b=add(b,mul(a[i],Q(choose(j,i),choose(degree,i))));return b;
+  });
+  const lo=bernstein.reduce(min),hi=bernstein.reduce(max);
+  return{schema:'MathScope.ExactUnitIntervalPolynomial/1',variable:'kappa',domain:['0','1'],powerCoefficients:a.map(text),bernsteinCoefficients:bernstein.map(text),rangeByConvexCombination:[text(lo),text(hi)],nonnegative:cmp(lo,zero())>=0,strictlyPositive:cmp(lo,zero())>0,arithmetic:'BIGINT_RATIONAL_BERNSTEIN_CONVEX_COMBINATION',finiteSamplingUsed:false};
+}
+
+/** This is an executed universal inequality audit. Optional divisors exist for
+ * independent failure controls; only the fixed defaults enter the source
+ * certificate below. No caller-provided certification flags are accepted.
+ */
+function covarianceConePolynomialAudit({columnErrorDivisor=128,freezeErrorDivisor=16}={}){
+  if(!Number.isSafeInteger(columnErrorDivisor)||columnErrorDivisor<1||columnErrorDivisor>65536||!Number.isSafeInteger(freezeErrorDivisor)||freezeErrorDivisor<1||freezeErrorDivisor>65536)fail('Use positive bounded integer divisors.');
+  const d=Q(1,columnErrorDivisor),freeze=Q(1,freezeErrorDivisor),margin=sub(Q(1,8),freeze);
+  const targetRatioSquared=polynomialMul([one(),zero(),Q(1,4)],[one(),Q(-1,2)]);
+  const targetBoundSquared=polynomialMul([one(),Q(-1,8)],[one(),Q(-1,8)]);
+  const coneGap=polynomialSub(targetBoundSquared,targetRatioSquared);
+  if(coneGap[0][0]!==0n)throw Error('The source cone comparison lost its exact kappa factor.');
+  const detLower=[Q(2),mul(Q(-4),d),mul(Q(-2),mul(d,d))];
+  const detUpper=[Q(2),mul(Q(4),d),mul(Q(2),mul(d,d))];
+  const numeratorLowerCoefficient=sub(margin,mul(Q(2),d));
+  const numeratorUpper=[Q(2),mul(Q(2),d)];
+  const proofs=[
+    ['source-cone-margin-after-u-choice',coneGap.slice(1),'Divide the squared margin by kappa>0.'],
+    ['frozen-target-margin-positive',[margin],'The allowed slow-direction error is subtracted from kappa/8.'],
+    ['normalized-determinant-lower',polynomialSub(detLower,[Q(15,8)]),'det C >= 2-4 delta-2 delta^2 >15/8.'],
+    ['normalized-determinant-upper',polynomialSub([Q(17,8)],detUpper),'det C <=2+4 delta+2 delta^2 <17/8.'],
+    ['inverse-numerators-positive',[numeratorLowerCoefficient],'Each inverse numerator is >=(margin-2 delta/kappa)*kappa.'],
+    ['positive-inverse-lower',polynomialSub([mul(Q(64),numeratorLowerCoefficient)],detUpper),'Numerator/det >= kappa/64.'],
+    ['positive-inverse-upper',polynomialSub(polynomialScale(detLower,Q(2)),numeratorUpper),'Numerator/det <=2.'],
+    ['inverse-infinity-norm-upper',polynomialSub(polynomialScale(detLower,Q(2)),[Q(2),mul(Q(2),d)]),'Each absolute adjugate row sum is <=2+2 delta, so ||C^-1||_infinity<=2.']
+  ].map(([id,p,reason])=>{const certificate=exactUnitIntervalPolynomial(p.map(text));return{id,reason,certificate,pass:certificate.strictlyPositive};});
+  return{schema:'MathScope.CovarianceConePolynomialAudit/1',parameters:{columnErrorDivisor,freezeErrorDivisor},sourceInputInequality:'abs(c0*T_K/T_N)^2 <= 1-kappa/2',choice:'u_star=2/kappa; A_c=abs(c0)*sqrt(1+u_star^2)',normalizedTargetRatioSquaredUpper:targetRatioSquared.map(text),sourceTargetSlopeUpper:'1-kappa/8',frozenTargetSlopeUpper:'1-('+text(margin)+')*kappa',normalizedColumnErrorUpper:'kappa/'+columnErrorDivisor,normalizedMatrix:'C=[ [1+e11,1+e12],[-1+e21,1+e22] ]; each |eij|<=delta',normalizedDeterminant:[detLower.map(text),detUpper.map(text)],inverseNumeratorLowerCoefficient:text(numeratorLowerCoefficient),positiveInverseBounds:['kappa/64','2'],inverseInfinityNormUpper:'2',proofs,pass:proofs.every(p=>p.pass),actualWaveColumnErrorComputed:false};
+}
+
+function interval(v){
+  const a=Array.isArray(v)?v.map(parse):[parse(v),parse(v)];
+  if(a.length!==2||cmp(a[0],a[1])>0)fail('An exact interval must have ordered endpoints.');return a;
+}
+const ip=a=>[a,a],ia=(a,b)=>[add(a[0],b[0]),add(a[1],b[1])],in_=a=>[neg(a[1]),neg(a[0])],is=(a,b)=>ia(a,in_(b));
+const im=(a,b)=>{const c=[mul(a[0],b[0]),mul(a[0],b[1]),mul(a[1],b[0]),mul(a[1],b[1])];return[c.reduce(min),c.reduce(max)];};
+const inv=a=>{if(cmp(a[0],zero())<=0&&cmp(a[1],zero())>=0)fail('A reciprocal interval contains zero.');return[div(one(),a[1]),div(one(),a[0])];};
+const id=(a,b)=>im(a,inv(b));
+const maxabs=a=>max(abs(a[0]),abs(a[1]));
+
+/** Certify a full continuum of normalized matrices and target slopes using
+ * explicit exact interval inputs. This is a mathematical kernel for supplied
+ * boxes, not authentication of a field or of an entire source annulus.
+ */
+function certifyCovariancePerturbationBox(input,context={}){
+  if(!input||typeof input!=='object'||Array.isArray(input))fail('Provide an exact covariance perturbation box.');
+  for(const k of Object.keys(input))if(!['kappa','targetSlope','columnErrors'].includes(k))fail('Unknown perturbation-box input: '+k);
+  const kappa=parse(input.kappa);if(cmp(kappa,zero())<=0||cmp(kappa,one())>0)fail('Require exact 0<kappa<=1.');
+  if(!Array.isArray(input.columnErrors)||input.columnErrors.length!==2||input.columnErrors.some(r=>!Array.isArray(r)||r.length!==2))fail('Use a two by two array of exact column-error intervals.');
+  const errors=input.columnErrors.map(r=>r.map(interval)),slope=interval(input.targetSlope),delta=div(kappa,Q(128)),targetBound=sub(one(),div(kappa,Q(16)));
+  const C=errors.map((row,i)=>row.map((e,j)=>ia(ip(Q(i===0?1:j===0?-1:1)),e)));
+  const determinant=is(im(C[0][0],C[1][1]),im(C[0][1],C[1][0]));
+  const numerators=[is(C[1][1],im(C[0][1],slope)),is(im(C[0][0],slope),C[1][0])];
+  const safeDenominator=cmp(determinant[0],zero())>0;
+  const solution=safeDenominator?numerators.map(n=>id(n,determinant)):null;
+  const checks=[
+    {id:'target-inside-frozen-source-cone',pass:cmp(maxabs(slope),targetBound)<=0},
+    {id:'each-column-perturbation-within-source-budget',pass:errors.flat().every(e=>cmp(maxabs(e),delta)<=0)},
+    {id:'strict-determinant-on-entire-box',pass:cmp(determinant[0],Q(15,8))>0},
+    {id:'strict-positive-coefficients-on-entire-box',pass:!!solution&&solution.every(y=>cmp(y[0],div(kappa,Q(64)))>=0&&cmp(y[1],Q(2))<=0)}
+  ];context.checkCancelled?.();
+  return{schema:'MathScope.ExactCovariancePerturbationBox/1',arithmetic:'BIGINT_RATIONAL_INTERVALS',kappa:text(kappa),targetSlope:serial(slope),columnErrors:serial(errors),normalizedMatrix:serial(C),determinant:serial(determinant),inverseNumerators:serial(numerators),normalizedPositiveWeights:solution?serial(solution):null,normalization:{target:'T_normalized=(1,r)',columnPositiveFactors:'H_sigma=h_sigma*(-A_c*N*C_1sigma+u_star*K*C_2sigma)',weight:'y_sigma=(-T_N/A_c)*z_sigma/h_sigma; z=C^-1*(1,r)',absolutePhysicalDeterminantLower:'(15/8)*A_c*u_star*h_plus*h_minus',physicalDeterminantSign:'negative in the positively oriented (N,K) frame'},checks,pass:checks.every(c=>c.pass),scope:{allMatricesAndTargetsInSuppliedBox:true,finiteSamplingUsed:false,sourceFieldBinding:false,actualHomogeneousPulseEnclosed:false,wholeAnnulus:false}};
+}
+
+/** Exact original 3D principal equation for supplied frozen-label jets.
+ * All terms in (7.4)-(7.6), including n', the connection terms and the
+ * projected forcing, are evaluated. The input is deliberately NOT accepted
+ * as a source-profile certificate. No positive-order background is fabricated.
+ */
+function exactFrozenPulsePrincipalOperator(input,{omitMovingNormal=false,omitCylindricalConnections=false}={},context={}){
+  if(!input||typeof input!=='object'||Array.isArray(input))fail('Provide exact frozen-label jets.');
+  const scalarNames=['R','F','FR','FZ','G','GR','GZ','p','pz','epsilon','k','x0','v'];
+  for(const name of Object.keys(input))if(![...scalarNames,'amplitude','forcing'].includes(name))fail('Unknown frozen-operator field: '+name);
+  const x=Object.fromEntries(scalarNames.map(name=>[name,parse(input[name])]));
+  if(cmp(x.R,zero())<=0||cmp(x.F,zero())<=0||cmp(x.epsilon,zero())<=0||cmp(x.k,zero())<=0||x.k[1]!==1n||x.p[0]===0n||cmp(x.v,zero())<0)fail('Require R,F,epsilon,k>0, integer k, p!=0 and v>=0.');
+  const angularInteger=mul(x.k,x.p);if(angularInteger[1]!==1n)fail('The original angular label requires k*p to be a nonzero integer.');
+  const H=add(mul(x.p,x.F),mul(x.pz,x.G)),HR=add(mul(x.p,x.FR),mul(x.pz,x.GR)),HZ=add(mul(x.p,x.FZ),mul(x.pz,x.GZ));
+  const n=[sub(x.x0,mul(x.v,HR)),div(x.p,x.R),sub(x.pz,mul(mul(x.epsilon,x.v),HZ))];
+  const actualNprime=[neg(HR),zero(),neg(mul(x.epsilon,HZ))],selectedNprime=omitMovingNormal?[zero(),zero(),zero()]:actualNprime;
+  const norm2=dot(n,n),twoF=omitCylindricalConnections?zero():mul(Q(2),x.F);
+  const K=[[zero(),neg(twoF),zero()],[add(twoF,mul(x.R,x.FR)),zero(),zero()],[x.GR,zero(),zero()]],nK=transpose(K).map(c=>dot(n,c));
+  const A=K.map((row,i)=>row.map((value,j)=>add(neg(value),div(mul(n[i],sub(nK[j],selectedNprime[j])),norm2))));
+  const P=n.map((_,i)=>n.map((__,j)=>sub(Q(i===j?1:0),div(mul(n[i],n[j]),norm2))));
+  const damping=mul(mul(x.epsilon,mul(x.k,x.k)),norm2);
+  const rationalTangentBasis=[[one(),neg(div(n[0],n[1])),zero()],[zero(),neg(div(n[2],n[1])),one()]];
+  const vector=(v,name)=>{if(!Array.isArray(v)||v.length!==3)fail(name+' must have three exact components.');return v.map(parse);};
+  const t=input.amplitude?vector(input.amplitude,'amplitude'):rationalTangentBasis[0].map((a,i)=>add(a,rationalTangentBasis[1][i]));
+  const f=input.forcing?vector(input.forcing,'forcing'):[zero(),zero(),zero()],At=mv(A,t),Pf=mv(P,f),Kt=mv(K,t);
+  const derivative=At.map((a,i)=>add(sub(a,mul(damping,t[i])),Pf[i]));
+  const pressureImaginaryCoefficient=div(sub(dot(nK.map((a,i)=>sub(a,selectedNprime[i])),t),dot(n,f)),mul(x.k,norm2));
+  const constraintRow=transpose(A).map((c,j)=>add(actualNprime[j],dot(n,c))),projectedForcingRow=transpose(P).map(c=>dot(n,c));
+  const pressureEquation=derivative.map((a,i)=>sub(sub(add(add(a,Kt[i]),mul(damping,t[i])),mul(mul(x.k,n[i]),pressureImaginaryCoefficient)),f[i]));
+  const energyResidual=sub(add(add(dot(t,derivative),mul(damping,dot(t,t))),add(mul(mul(x.R,x.FR),mul(t[0],t[1])),mul(x.GR,mul(t[0],t[2])))),dot(t,f));
+  const normalConstraint=dot(n,t),epsilonK2=mul(x.epsilon,mul(x.k,x.k));
+  const checks=[
+    {id:'original-nonzero-integer-angular-frequency',pass:angularInteger[1]===1n&&angularInteger[0]!==0n},
+    {id:'normal-denominator-strictly-positive',pass:cmp(norm2,zero())>0},
+    {id:'original-connection-entries-retained',pass:cmp(K[0][1],neg(mul(Q(2),x.F)))===0&&cmp(K[1][0],add(mul(Q(2),x.F),mul(x.R,x.FR)))===0},
+    {id:'moving-normal-constraint-row-identity',pass:constraintRow.every(a=>a[0]===0n)},
+    {id:'forcing-projection-orthogonal-to-normal',pass:projectedForcingRow.every(a=>a[0]===0n)},
+    {id:'given-amplitude-satisfies-constraint',pass:normalConstraint[0]===0n},
+    {id:'original-complex-pressure-equation',pass:pressureEquation.every(a=>a[0]===0n)},
+    {id:'shear-energy-cancellation',pass:normalConstraint[0]===0n&&energyResidual[0]===0n}
+  ];context.checkCancelled?.();
+  return{schema:'MathScope.ExactFrozenPulsePrincipalOperator/1',sourceEquations:['7.3','7.4','7.5','7.6','7.13'],arithmetic:'BIGINT_RATIONAL_LINEAR_ALGEBRA',input:Object.fromEntries(scalarNames.map(name=>[name,text(x[name])])),phaseSpeed:text(H),n:serial(n),nPrime:serial(actualNprime),normalSquared:text(norm2),K:serial(K),Aphi:serial(A),forcingProjection:serial(P),damping:text(damping),epsilonK2:text(epsilonK2),rationalTangentBasis:serial(rationalTangentBasis),amplitude:serial(t),forcing:serial(f),amplitudeDerivative:serial(derivative),pressure:{form:'i*imaginaryCoefficient',imaginaryCoefficient:text(pressureImaginaryCoefficient),includesProjectedForcing:true},residuals:{constraintRow:serial(constraintRow),normalConstraint:text(normalConstraint),forcingProjectionRow:serial(projectedForcingRow),principalEquation:serial(pressureEquation),energy:text(energyResidual)},checks,pass:checks.every(c=>c.pass),scope:{suppliedJetsOnly:true,sourceFieldBinding:false,originalPrincipalTermsComputed:true,originalNormalizedBFrameConstructed:false,homogeneousOrForcedODEIntegrated:false,backgroundJetsGenerated:false,wholeAnnulus:false}};
+}
+
+/** Source-specific facts plus exact quantitative requirements for a future
+ * all-label receipt. Missing predicates cannot be set by user input.
+ */
+function actualCovarianceUniformSourceCertificate(input={},context={}){
+  if(!input||typeof input!=='object'||Array.isArray(input))fail('Use a source-bound uniform-obligation request.');
+  for(const name of Object.keys(input))if(name!=='sourceProfile')fail('Unknown source uniform-certificate input: '+name);
+  assertSourceProfile(input.sourceProfile??SOURCE_PROFILE_ID);context.checkCancelled?.();
+  const p=PINNED_N3.parametersExactExpressions,graph=validateParameterGraph(),cone=covarianceConePolynomialAudit(),meanJets=boundActualMeanPatchJets(2);
+  const checks=[
+    {id:'unchanged-source-parameter-graph',pass:graph.ok},
+    {id:'source-kappa-is-exact-envelope-inverse-tenth-power',pass:same(p.directionalMarginKappa,{power:[{ref:'C12EnvelopeR'},-10]})},
+    {id:'source-envelope-is-explicit-positive-expression',pass:same(p.C12EnvelopeR,{exp:{power:[{ref:'sourceEnvelopeS'},256]}})&&same(p.sourceEnvelopeS,{power:[{ref:'CSelected'},100000]})&&p.logCSelected.sum[1].power[1]===200},
+    {id:'same-N3-stress-and-loop-margin-attached',pass:PINNED_N3.attachedAnalyticConclusions.wholeClosedAnnulusDirectionalMargin==='R^-10'&&PINNED_N3.attachedAnalyticConclusions.actualLoopDerivativeBoundAttached&&PINNED_N3.attachedAnalyticConclusions.continuousC12DebtAndI1Restoration},
+    {id:'continuous-exact-cone-perturbation-inequalities',pass:cone.pass},
+    {id:'actual-entire-Imean-normalized-second-jets',pass:meanJets.pass&&meanJets.uniformOverEntireBox&&meanJets.order===2}
+  ];
+  const dependencies=[
+    {id:'completed-background-C2',available:false,requiredDomain:'A fixed radial enlargement of [Xa,Xb] x [-1,1], all 0<q<q_star',requiredQuantity:'Explicit C2 constants for the actual q-normalized Proposition 5.5 tangential background comparison in (5.42).',reason:'At fixed derivative order the Borel proof retains a finite initial positive-order block. Its actual coefficient seminorms and cutoff product terms are not supplied by the N3 preloop envelope or by a bound for the unseen high-order tail.',minimumOrderForValueProblem:2},
+    {id:'actual-frozen-label-jet-provider',available:false,requiredQuantity:'F,G and first slow derivatives of those same completed fields, with uniform second-derivative bounds on each enlarged slow box.',reason:'The exact operator kernel evaluates all supplied jets, but cannot identify arbitrary input jets with the original source. The actual Imean formula supplies one preserved patch only.'},
+    {id:'stress-direction-modulus',available:false,requiredQuantity:'An explicit Lipschitz bound for r=A_c*T_K/(-u_star*T_N), including the one-sided normalized direction at both flat shell edges; a box-size check yielding error<=kappa/16.',reason:'The same-source assembly proves a smooth limiting direction and positive margin. Its final section gives finiteness of requested derivative constants, not an executed numerical modulus for this normalized global ratio.'},
+    {id:'uniform-homogeneous-covariance-columns',available:false,requiredQuantity:'From the same actual principal coefficients and original growing datum: positive h_sigma lower bounds and normalized entrywise column errors<=kappa/128, including transverse and pulse integration.',reason:'The installed validated covariance integral is tied to the eta=0,s=1 Imean representative. A positive target cone does not bound an ODE solution or its integrated covariance by itself.'},
+    {id:'common-source-q-star',available:false,requiredQuantity:'One explicit smallness threshold satisfying all preceding value/second-jet and box-width inequalities, valid for every later label.',reason:'The finite support palette covers all discrete labels, but cannot supply the missing analytic coefficient or covariance error constants.'}
+  ];
+  return{schema:'MathScope.ActualCovarianceUniformSourceCertificate/1',profileId:SOURCE_PROFILE_ID,sourceHash:PINNED_N3.inputs.assembly.sha256,parameterExpressionSHA256:PINNED_N3.parameterExpressionSHA256,sourceBindings:structuredClone(ACTUAL_PULSE_BINDINGS),parameters:{kappa:{expression:structuredClone(p.directionalMarginKappa),range:'0<kappa<1',binary64:null,positiveUnderflowNotZero:true},uStar:{expression:{product:[{integer:2},{power:[{ref:'C12EnvelopeR'},10]}]}},flatStressLower:structuredClone(p.stressFlatLowerConstant)},sourceCone:{appliesTo:'Accepted N3 order-zero stress on the whole closed active annulus, with limiting edge direction.',sourceSquaredRatioBound:'abs(c0*T_K/T_N)^2<=1-kappa/2',computedSlopeBound:'abs(A_c*T_K/(-u_star*T_N))<=1-kappa/8',actualStressMagnitudePositiveInInterior:true,flatStressIsNotDividedByZeroAtEdges:true},cone,actualMeanPatchSecondJets:meanJets,certifiedSubclaims:['Actual-source choice of u_star and a quantitative frozen-point direction margin.','Exact sufficient normalized column and target perturbation budgets.','Continuous determinant and positive inverse lower bounds once those numerical budgets hold.','Actual normalized second-jet intervals on the entire preserved mean patch.'],uniformAcceptanceBudgets:{targetDirectionVariation:'<=kappa/16',eachNormalizedColumnError:'<=kappa/128',normalizedDeterminantLower:'15/8',normalizedPositiveInverseLower:'kappa/64',normalizedPositiveInverseUpper:'2',normalizedInverseInfinityNormUpper:'2',requiresPositiveActualColumnScales:true},dependencies,checks,pass:checks.every(c=>c.pass),status:'PARTIAL',scope:{sourceConeAndRobustInverseSubclaimComplete:true,allLabelsEnumerated:false,allLabelsEnumerationRequired:false,allDerivativeOrdersRequiredForThisValueSubclaim:false,sourceWholeAnnulusBackgroundBound:false,actualCovarianceOnAllSlowNeighborhoods:false,sourceUniformQStarCertified:false,wholeAnnulusEquation730Verified:false,originalN506Complete:false,fullM2PackageComplete:false,newLeanKernelProof:false}};
+}
+
+return {exactUnitIntervalPolynomial,covarianceConePolynomialAudit,certifyCovariancePerturbationBox,exactFrozenPulsePrincipalOperator,actualCovarianceUniformSourceCertificate};
+})();
+const __m2_129 = (()=>{
+/** Executed source operator and concentration budgets. Large constants are
+ * retained as positive expressions; they are not rounded to machine zero or
+ * forced into the old fixed R envelope. The source frame remains order zero.
+ */
+const {assertActualCovarianceOperator} = __m2_126;
+const {covarianceConcentrationRecipe,covarianceConcentrationScalarAudit} = __m2_127;
+const {covarianceConePolynomialAudit} = __m2_128;
+const {fail} = __m2_74;
+const max=(...v)=>v.filter(x=>x!==null).length?Math.max(...v.filter(x=>x!==null)):null;
+const plus=(a,b)=>a===null||b===null?null:a+b;
+/** For B>=2 and S>=1 a triple (v,e,d) records
+ * |f|,|f_ref|<=B^v; |f-f_ref|<=B^e/S; |f'|<=B^d/S.
+ * null means exactly zero. Sums absorb their finite coefficient in B.
+ * All reciprocal/square-root lower bounds are separate actual premises. */
+class FramePowerLedger{
+  rows=[];
+  put(label,v,e=null,d=null,rule='source primitive',inputs=[]){const r={label,v,e,d,rule,inputs};this.rows.push(r);return r;}
+  sum(label,...a){const nn=a.filter(x=>x.v!==null);if(!nn.length)return this.put(label,null,null,null,'zero sum');const reserve=Math.ceil(Math.log2(nn.length));return this.put(label,max(...nn.map(x=>x.v))+reserve,max(...nn.map(x=>x.e))===null?null:max(...nn.map(x=>x.e))+reserve,max(...nn.map(x=>x.d))===null?null:max(...nn.map(x=>x.d))+reserve,'triangle inequality; finite sum <= B^ceil(log2 count)',a.map(x=>x.label));}
+  product(label,a,b){return this.put(label,plus(a.v,b.v),max(plus(a.e,b.v),plus(a.v,b.e))===null?null:max(plus(a.e,b.v),plus(a.v,b.e))+1,max(plus(a.d,b.v),plus(a.v,b.d))===null?null:max(plus(a.d,b.v),plus(a.v,b.d))+1,'two-term difference and ordinary Leibniz rule',[a.label,b.label]);}
+  inv(label,a,lowerPower){return this.put(label,lowerPower,a.e===null?null:a.e+2*lowerPower,a.d===null?null:a.d+2*lowerPower,'both actual/reference absolute values >= B^-'+lowerPower,[a.label]);}
+  sqrt(label,a,sqrtLowerPower){return this.put(label,Math.ceil(a.v/2),a.e===null?null:a.e+sqrtLowerPower,a.d===null?null:a.d+sqrtLowerPower,'positive square root; both roots >= B^-'+sqrtLowerPower,[a.label]);}
+  tighten(label,a,v,reason){if(v>a.v)fail('INTERNAL_VALIDATION','A structure tightening cannot enlarge a bound.');return this.put(label,v,a.e,a.d,reason,[a.label]);}
+  derivativeError(label,a){return this.put(label,a.d,a.d,null,'actual v derivative with zero reference; the factor 1/S is retained',[a.label]);}
+}
+
+/** These finite scalar/matrix budgets are calculated, not copied as a
+ * predeclared E. Their primitive rows are connected to the actual source
+ * equations by certifyActualCovarianceOperatorBounds below. */
+function actualOperatorPowerAudit(){
+  const a=new FramePowerLedger(),zero=a.put('zero',null),one=a.put('one',0),two=a.put('two',1),F=a.put('F',1,5),FR=a.put('F_R',1,5),GR=a.put('G_R',1,5),radial=a.put('R_chart',1,1);
+  const n=Array.from({length:3},(_,i)=>a.put('n_'+i,4,12,12)),nPrime=n.map((x,i)=>a.derivativeError('n_prime_'+i,x));
+  const prod=(label,x,y)=>a.product(label,x,y),sum=(label,...x)=>a.sum(label,...x);
+  const dot=(label,x,y)=>sum(label,...x.map((v,i)=>prod(label+'_term'+i,v,y[i]))),mm=(label,A,B)=>A.map((row,i)=>B[0].map((_,j)=>sum(label+'_'+i+j,...row.map((x,k)=>prod(label+'_'+i+j+'_'+k,x,B[k][j])))));
+  const nn=dot('n_squared',n,n),invN2=a.inv('inverse_n_squared',nn,4),K=[[zero,prod('K_rtheta',two,F),zero],[sum('K_thetar',prod('twice_F',two,F),prod('R_FR',radial,FR)),zero,zero],[GR,zero,zero]];
+  const pressure=Array.from({length:3},(_,j)=>sum('pressure_numerator_'+j,dot('nTK_'+j,n,K.map(r=>r[j])),nPrime[j]));
+  const A=K.map((row,i)=>row.map((x,j)=>sum('Aphi_'+i+j,x,prod('Aphi_rank_'+i+j,prod('n_pressure_'+i+j,n[i],pressure[j]),invN2))));
+  const nt2=sum('nt_squared',prod('ntheta_squared',n[1],n[1]),prod('nz_squared',n[2],n[2])),nt=a.sqrt('nt',nt2,2),invNt=a.inv('inverse_nt',nt,2);
+  const Ka=[1,2].map((j,i)=>a.tighten('K_a_'+i,prod('K_a_raw_'+i,n[j],invNt),0,'exact normalized tangential unit vector')),Na=[Ka[1],Ka[0]];
+  const sa=a.tighten('s_a',prod('s_a_raw',n[0],invNt),3,'|s_a-s_ref|<=B^29/S, |s_ref|<=3u/2, S>=B^512');
+  const sr=a.put('s_reference',2,null,2),root=a.sqrt('reference_sqrt',sum('one_plus_s_squared',one,prod('s_reference_squared',sr,sr)),0),c0=a.put('c0',1),c=prod('c0_reference_sqrt',c0,root),invC=a.inv('inverse_c0_reference_sqrt',c,1);
+  const U=[[one,zero],[prod('U_theta_first',sa,Ka[0]),Na[0]],[prod('U_z_first',sa,Ka[1]),Na[1]]],J=[[one,one],[c,c]],Jinv=[[one,invC],[one,invC]],Uleft=[[one,zero,zero],[zero,Na[0],Na[1]]];
+  const B=mm('B',U,J),Bleft=mm('Bleft',Jinv,Uleft),Bprime=B.map((row,i)=>row.map((x,j)=>a.derivativeError('Bprime_'+i+j,x)));
+  const first=mm('Bleft_Aphi_B',mm('Bleft_Aphi',Bleft,A),B),second=mm('Bleft_Bprime',Bleft,Bprime),error=first.map((row,i)=>row.map((x,j)=>sum('projected_error_'+i+j,x,second[i][j])));
+  const damping=prod('damping_difference',a.put('epsilon_k_squared',1),nn),computed={operatorError:max(...error.flat().map(x=>x.e)),dampingError:damping.e,unitFrameError:max(...Ka.map(x=>x.e)),slopeError:sa.e};
+  const unconditional=[
+    {id:'nonzero-carrier-normal-floor',upperPower:1,formula:'1/|n| <= 1/|n_tan| <= k*B; p*k is a nonzero integer and R_chart<=B'},
+    {id:'unrounded-and-rounded-carrier',upperPower:5,formula:'|p|,|pz| <= B^5 using Ls>=1/B and actual frozen reciprocal bounds'},
+    {id:'phase-gradient',upperPower:8,formula:'|n| <= B^8*(1+Ls), |n_prime|<=B^8'},
+    {id:'rank-one-normal-projector',upperPower:12,formula:'|Aphi| <= B^12*(1+k), since ||n n_prime^T/|n|^2||<=|n_prime|/|n|'},
+    {id:'actual-tangent-frame',upperPower:20,formula:'|s_a|<=B^10*k*(1+Ls), |s_a_prime|+|K_a_prime|<=B^20*k^2*(1+Ls)'},
+    {id:'actual-moving-basis',upperPower:28,formula:'|B|<=B^16*k*(1+Ls), |B_prime|<=B^28*k^2*(1+Ls), |Bleft|<=B^3'},
+    {id:'normalized-w-ode',upperPower:40,formula:'Induced infinity ||Bleft(Aphi B-Bprime)-lambda I-(d-dref)I|| <= B^40*(1+k)^3*(1+Ls)^2'}
+  ];
+  const checks=[{id:'all-moving-matrix-terms-below-output',pass:Object.values(computed).every(v=>Number.isSafeInteger(v)&&v<256)},
+    {id:'unconditional-volterra-bound-dominates-all-products',pass:unconditional.at(-1).upperPower<256&&3<=8&&2<=8},
+    {id:'tangent-normal-floor-follows-smallness',pass:512>14+1},
+    {id:'reference-slope-value-tightening',pass:512>sa.e+1},
+    {id:'log-frequency-and-profile-path-reserve',pass:12>9+1&&5>=4+1&&2n**128n>8n}];
+  return {schema:'MathScope.ActualCovarianceOperatorPowerAudit/1',baseLower:'B>=2^128',smallness:'S>=B^512, S^2*(epsilon+epsilon^2+k^-1)<=1',
+    primitives:{fieldValueAndC2:'<=B',fieldJetDifference:'<=B^5/S^3, relaxed only after the n primitive is built',normalDifference:'|n-n_ref|<=B^12/S',normalDerivative:'|n_prime|<=B^12/S',
+      normalMagnitude:'|n|,|n_ref|<=B^4',tangentNormLower:'|n_tan|,Bs>=B^-2',referenceScalarDenominator:'|c0|*sqrt(1+s_ref^2)>=B^-1'},
+    rows:a.rows,computed,chosen:{operatorErrorPower:256,dampingErrorPower:256,unitFrameErrorPower:256,slopeErrorPower:256},unconditional,checks,pass:checks.every(r=>r.pass),
+    movingNormalIncluded:true,movingBasisIncluded:true,ordinaryProductDerivativesIncluded:true,referenceDiagonalizationRequiresSourceAlgebra:true};
+}
+
+/** Positive range propagation only through a single positive quantity.
+ * It is used to remove the representative-dependent |c0| from q*. Every
+ * generated condition keeps both its lower and upper bound where inversion
+ * needs them. No endpoint substitution asserts global monotonicity. */
+function positiveParameterRange(G,roots,parameter,lower,upper){
+  const dependent=new Map(),cache=new Map();
+  const has=id=>{if(id===parameter)return true;if(dependent.has(id))return dependent.get(id);const n=G.nodes[id];let ids=[];if(['add','multiply','maximum'].includes(n.op))ids=n.args;else if(['inverse','sqrt_positive','exp','log_positive','ceiling','integer_power'].includes(n.op))ids=[n.args[0]];const v=ids.some(has);dependent.set(id,v);return v;};
+  const visit=id=>{if(id===parameter)return[lower,upper];if(cache.has(id))return cache.get(id);if(!has(id))return[id,id];const {op,args}=G.nodes[id],v=args.map((x,j)=>op==='integer_power'&&j===1?x:visit(x));let out;
+    if(op==='add')out=[G.add(...v.map(x=>x[0])),G.add(...v.map(x=>x[1]))];
+    else if(op==='multiply'){const corners=[G.mul(v[0][0],v[1][0]),G.mul(v[0][0],v[1][1]),G.mul(v[0][1],v[1][0]),G.mul(v[0][1],v[1][1])];out=[G.neg(G.maximum(...corners.map(x=>G.neg(x)))),G.maximum(...corners)];}
+    else if(op==='inverse')out=[G.inv(v[0][1]),G.inv(v[0][0])];
+    else if(op==='sqrt_positive')out=[G.sqrt(v[0][0]),G.sqrt(v[0][1])];
+    else if(op==='exp')out=[G.exp(v[0][0]),G.exp(v[0][1])];
+    else if(op==='maximum')out=[G.maximum(...v.map(x=>x[0])),G.maximum(...v.map(x=>x[1]))];
+    else if(op==='integer_power'&&args[1]>=0)out=[G.pow(v[0][0],args[1]),G.pow(v[0][1],args[1])];
+    else fail('UNSUPPORTED','Positive covariance condition range cannot silently assume monotonicity for '+op);
+    cache.set(id,out);return out;};
+  return {ranges:roots.map(visit),visitedDependentNodes:cache.size,method:'Positive reciprocal/square-root interval arithmetic: inverse reverses endpoints; all four product corners are retained, including signed constant coefficients.'};
+}
+
+function certifyActualCovarianceOperatorBounds(operator){
+  assertActualCovarianceOperator(operator);const {G,background,direction,constants:c,geometry:g,frozen:f}=operator,q=(n,d=1)=>G.q(n,d),audit=actualOperatorPowerAudit(),scalar=covarianceConcentrationScalarAudit(),cone=covarianceConePolynomialAudit();
+  if(!audit.pass||!scalar.pass||!cone.pass||!direction.pass||!background.pass)fail('INTERNAL_VALIDATION','An actual source, matrix, concentration or inverse-cone gate failed.');
+  const E=G.pow(c.Bnorm,256),absoluteC0=G.neg(f.c0),lambdaLower=G.pow(c.Renv,-31),lambdaUpper=G.pow(c.Renv,83);
+  const recipe=covarianceConcentrationRecipe(G,{h:c.h,kappa:c.kappa,u:c.u,lambdaLower,lambdaUpper,absoluteC0,operatorError:E,dampingError:E,unitFrameError:E,slopeError:E,lengthRatioLower:g.lengthRatioBounds[0],lengthRatioUpper:g.lengthRatioBounds[1]});
+  const intervals=positiveParameterRange(G,recipe.selection.conditions.map(x=>x.lower),absoluteC0,G.pow(c.Renv,-6),G.pow(c.Renv,10)),sourceConditions=[
+    ...recipe.selection.conditions.map((r,i)=>({...r,lower:intervals.ranges[i][1],representativeRemoved:true})),
+    {id:'actual-moving-frame-denominators-and-primitive-budget',lower:G.pow(c.Bnorm,512),inequality:'S>=B^512'},
+    {id:'actual-flat-edge-direction-box',lower:G.pow(c.Renv,1024),inequality:'S>=R^1024'},
+  ];
+  const Sminimum=G.maximum(...sourceConditions.map(r=>r.lower)),frequencyMinimum=G.pow(G.div(q(64),c.h),2),ellMinimum=G.ceiling(G.maximum(q(8),Sminimum,frequencyMinimum)),qStar=G.exp(G.neg(G.mul(G.add(ellMinimum,q(4)),G.log(q(2)))));
+  if(G.freeCoordinates(qStar).size)fail('INVALID_SOURCE_CONSTRUCTION','The selected common q-star still depends on a representative or slow point.');
+  const primitiveDerivation={
+    fixedSourceInputs:{completedC2:background.roots,sourceNorm:c.Bnorm,leadingDirection:direction.bounds,sourceR:c.Renv,originalMargin:c.kappa},
+    profilePath:'Connect (s,X,eta) by its straight path inside [1/2,2]x[Xa/2,2Xb]x[-1,1]. For its slow image, both chart and inverse endpoint difference norms are bounded by B; integrate the known slow C2 gradient along this path. Including the finite dimension/norm factors yields <=B^4*|Delta slow|, without extending the nonconvex slow image.',
+    chartEndpointDifference:'Subtract s-Z^2*s^(2h)-T at the two endpoint roots. With 1-8h>1/2 on s in[1/2,2], |Delta s|<=2(|Delta T|+4|Delta Z|); eta=Z/s^D and X=R^2/(2s) give the remaining bounds <=B*|Delta slow|.',
+    closeFields:'The source box diameter <=4/S^3, leading C2<=B and completed-leading C2<=B*epsilon^2 give |F-F0|,|FR-FR0|,|GR-GR0|<=B^5/S^3.',
+    frozenPhaseCancellation:'pTilde*FR0+pz*GR0 = betaTilde dot (R0*FR0,GR0) = -sign*Bs*u/Ls, since K dot g0=0 and N dot g0=|g0|.',
+    rounding:'Choose the nearest nonzero integer to k*pTilde, retaining its sign in the zero-rounding cell. Thus |p-pTilde|<=1/k; p is never divided into a frame coordinate.',
+    radialNormal:'HR+sign*Bs*u/Ls=(p-pTilde)FR0+p(FR-FR0)+pz(GR-GR0), bounded by B^9/S^2. Since v<=Ls<=B*S, |nr-sign*Bs*(u/2+uv/Ls)|<=B^12/S.',
+    tangentNormal:'n_theta-pTilde/R0=(p-pTilde)/R+pTilde*(1/R-1/R0), plus the explicit -sign*Bs*u*Ntheta/(Ls*|g0|). For n_z retain both this designed O(1/Ls) tilt and -epsilon*v*(pF_Z+pzG_Z). Both are <=B^12/S.',
+    derivativeNormal:'n_prime=(-HR,0,-epsilon*HZ); the same cancellation gives |n_prime|<=B^12/S.',
+    positiveDenominators:'Bs>=R^-40>B^-1; S>=B^512 makes |n_tan-Bs*K|<=Bs/2, so |n_tan|>=B^-2. The frozen source supplies |c0|>=R^-6>B^-1. Every division in the frame is one of these or |n|^2.',
+    referenceDiagonal:'At nref=Bs*(s_ref,K), project the cylindrical K0 with no geometric derivative. In Uref=[er-s_ref*K,N] this is [[0,2F0*Ntheta/(1+s_ref^2)],[-(|g0|+2F0*Ntheta),0]]. The actual c0/lambda0 definitions diagonalize it by J; all nprime and Bprime terms remain in the calculated error.',
+    damping:'epsilon*k^2*Bs^2=lambda0/(1+u^2)^(3/2), so epsilon*k^2*|nref|^2=dref exactly. epsilon*k^2<=4; the n-nref product bound gives Ed.'};
+  const checks={actualSourcePrivateIdentity:true,actualCompletedAllOrderC2:background.program.scope.actualSlowC2FGProximity,
+    originalLeadingFrame:operator.frozen.orderZero,actualLeadingDirection:direction.scope.actualClosedAnnulusDirectionModulusDerived,
+    explicitMovingMatrixAudit:audit.pass,continuousConcentrationAudit:scalar.pass,continuousPositiveInverseAudit:cone.pass,
+    actualNegativeC0:direction.ratio.rows.some(x=>x.id==='frozen-normal-and-c0'),
+    originalPaletteLengthRatios:g.lengthRatioBounds.length===2,
+    fullHaarAndAngularFactor:operator.geometry.angularAverage===q(1,2)&&operator.geometry.transverseIndependentAmplitude,
+    fixedSourceOnlyThreshold:G.freeCoordinates(qStar).size===0};
+  return {schema:'MathScope.ActualCovarianceSourceOperatorBounds/1',G,sourceProfile:operator.sourceProfile,parameterExpressionSHA256:operator.parameterExpressionSHA256,
+    sourceOperator:operator,primitiveDerivation,audit,
+    domain:{representative:{X:['Xa','Xb'],eta:['-1','1'],s:['1/2','2']},
+      slowPoint:{profileX:['Xa/2','2*Xb'],eta:['-1','1'],s:['1/2','2'],image:'R=sqrt(2*s*X), Z=s^D*eta, T=s*(1-eta^2)'},
+      sameBoxDistance:{norm:'Euclidean distance in slow R,Z,T',upper:'4/S^3'},
+      operator:'All v in[0,Ls]; representatives and slow points are coupled by the same actual slow box, not independent arbitrary pairs.',
+      targetCone:'Intersect the slow box with Xa<=X<=Xb; limiting directions at its two flat endpoints.'},
+    operatorConstants:{operatorError:E,dampingError:E,unitFrameError:E,slopeError:E},recipe,scalar,cone,
+    representativeRange:{absoluteC0:[G.pow(c.Renv,-6),G.pow(c.Renv,10)],intervals},
+    selection:{conditions:sourceConditions,Sminimum,frequencyMinimum,ellMinimum,qStar,activeBandBuffer:4,
+      appliesTo:'Every original integer band ell>=ellMinimum and every certified slow box intersected with the original source closed annulus.',
+      sourceDependencies:'Fixed actual n1/n2 C2 finite block, the canonical all-n tail, fixed leading enlarged C2 and leading source direction/geometry.',
+      displayAnchorChangesThreshold:false,higherDerivativeOrdersChangeThreshold:false,positiveExactExpression:true,machineValueOfQStarRequested:false},
+    uniformColumns:{normalizedIdeal:[[1,1],[-1,1]],maximumEntryError:G.div(c.kappa,q(128)),positiveMassLower:'(Dg/2)*ci*(Integral chi^2)*massLowerCoefficient*sqrt(Ls)',
+      normalizedDeterminantLower:q(15,8),absolutePhysicalDeterminantLower:'(15/8)*Ac*u*h_plus*h_minus',physicalDeterminantSign:'negative: det([-N/Ac;K/u])=-1/(Ac*u), so det(H)=-Ac*u*h_plus*h_minus*det(C)',
+      positiveInverse:'kappa/64 <= normalized y_sign <= 2 on the open nonzero stress annulus',zeroStressEdge:'y_plus=y_minus=0; source flat direction and smooth zero extension retained'},
+    checks,pass:Object.values(checks).every(Boolean),scope:{actualSourceOperatorConstantsDerived:true,actualCompletedC2PremisesConsumed:true,actualUniformHColumnsCertified:true,
+      sourceUniformQStarCertified:true,exactHIsSourceVolterraIntegral:true,numericalWholeHEnclosure:false,pointSamplePromotedToAllLabels:false,
+      actualTargetAndPositiveInverseAssembled:false,globalEquation730Certified:false,originalN506Complete:false,newLeanKernelProof:false}};
+}
+
+return {actualOperatorPowerAudit,positiveParameterRange,certifyActualCovarianceOperatorBounds};
+})();
+const __m2_130 = (()=>{
+/** Actual completed leading stress and its exact two-column inverse.
+ * Every prefix below uses the original B8/C12/I1/I2/heat-prepared fields,
+ * including both viscosity/shear terms. No A2 fixture is substituted. */
+const {assertActualCovarianceOperator} = __m2_126;
+const {certifyActualCovarianceOperatorBounds} = __m2_129;
+const {sourceGraphRationalIdentity} = __m2_102;
+const {fail} = __m2_74;
+function attachActualCovarianceTarget(operator,context={}){
+  assertActualCovarianceOperator(operator);context.checkCancelled?.();const {G,background,chart,constants:c,geometry:g,frozen:f}=operator,q=(n,d=1)=>G.q(n,d),{X,eta}=background.prepared.bootstrap.constants;
+  const F=background.prepared.records[0].global.F,U=background.prepared.records[0].global.U,M=background.prepared.bootstrap.finalM,parameters=[X,eta],t=G.fresh('actual_H_target_prefix_X');
+  const integrate=(name,body)=>G.share(G.integral(G.substitute(body,X,t),t,G.zero,X),parameters,'ActualCovarianceTargetPrefix_'+name);
+  const I=integrate('I',G.mul(q(2),X,F)),J=integrate('J',G.mul(q(2),X,U,F)),S=integrate('S',G.sub(G.pow(U,2),G.mul(X,G.pow(F,2)))),Cp=integrate('Cp',G.pow(F,2));
+  const d=G.sub(G.one,G.pow(eta,2)),L=G.sub(G.one,G.mul(q(2),c.h,G.pow(eta,2))),Pi=G.add(G.core.P0,Cp),W=G.sub(G.one,G.div(G.add(G.mul(q(2),c.D,eta,M),G.mul(d,G.derivative(M,eta))),X)),sqrt2X=G.sqrt(G.mul(q(2),X));
+  const angularNumerator=G.add(G.mul(G.sub(G.one,c.h),I),G.neg(G.mul(c.D,eta,G.derivative(I,eta))),G.neg(G.mul(d,G.derivative(J,eta))),G.mul(q(2),G.sub(c.h,c.D),eta,J));
+  const thetaStock=G.neg(G.div(G.mul(F,X,W),L)),thetaMoment=G.div(angularNumerator,G.mul(q(2),X,L)),thetaShear=G.mul(q(2),X,G.derivative(F,X)),Ttheta=G.add(thetaStock,thetaMoment,thetaShear);
+  const axialNumerator=G.add(G.neg(G.mul(X,W,U)),G.mul(c.D,G.sub(M,G.mul(eta,G.derivative(M,eta)))),G.mul(q(4),c.h,eta,S),G.neg(G.mul(d,G.derivative(S,eta))),G.mul(X,G.sub(G.mul(q(4),c.A,eta,Pi),G.mul(d,G.derivative(Pi,eta)))));
+  const zMoment=G.div(axialNumerator,G.mul(L,sqrt2X)),zShear=G.div(G.mul(q(2),X,G.derivative(U,X)),sqrt2X),Tz=G.add(zMoment,zShear);
+  const raw=[Ttheta,Tz].map((body,i)=>G.share(body,parameters,'ActualFullLeadingCovarianceTarget_'+i)),profileAt=body=>G.simultaneousSubstitute(body,[X,eta],[chart.X,chart.eta]),rawAt=raw.map(profileAt),factor=G.exp(G.mul(G.neg(G.add(c.A,q(1,2))),G.log(chart.s))),target=rawAt.map(x=>G.mul(factor,x));
+  const H=operator.families[0].covariance.theta===undefined?null:[operator.families.map(a=>a.covariance.theta),operator.families.map(a=>a.covariance.z)];
+  if(!H)fail('INVALID_SOURCE_CONSTRUCTION','The actual two H columns are missing.');
+  const determinant=G.sub(G.mul(H[0][0],H[1][1]),G.mul(H[0][1],H[1][0])),adjugate=[[H[1][1],G.neg(H[0][1])],[G.neg(H[1][0]),H[0][0]]],weights=adjugate.map(row=>G.div(G.add(...row.map((x,j)=>G.mul(x,target[j]))),determinant));
+  const Hy=H.map(row=>G.add(...row.map((x,j)=>G.mul(x,weights[j])))),checks=Hy.map((v,i)=>sourceGraphRationalIdentity(G,G.sub(v,target[i]),{atomicNodes:[...H.flat(),...target],maxTerms:20000}));
+  if(!checks.every(x=>x.pass))fail('INTERNAL_VALIDATION','The exact actual H inverse failed its source-integral identity.');
+  const sourceBounds=certifyActualCovarianceOperatorBounds(operator),Ac=G.mul(G.neg(f.c0),G.sqrt(G.add(G.one,G.pow(c.u,2)))),targetN=G.add(G.mul(f.N[0],target[0]),G.mul(f.N[1],target[1])),targetK=G.add(G.mul(f.K[0],target[0]),G.mul(f.K[1],target[1])),targetScale=G.neg(G.div(targetN,Ac));
+  const normalizedWeights=weights.map((y,i)=>G.div(G.mul(operator.families[i].covariance.mass,y),targetScale));
+  const absolutePhysicalDetLower=G.mul(q(15,8),Ac,c.u,...operator.families.map(x=>x.covariance.mass));
+  return {schema:'MathScope.ActualCovarianceTargetAndInverse/1',G,operator,sourceProfile:operator.sourceProfile,parameterExpressionSHA256:operator.parameterExpressionSHA256,
+    raw:{coordinates:{X,eta},F,U,M,I,J,S,Cp,Pi,W,components:raw,atSlowProfile:rawAt,terms:{thetaStock,thetaMoment,thetaShear,zMoment,zShear}},
+    targetChart:{factor,components:target,definition:'s^(-A-1/2)*T0(X,eta), s=q/Q; T0 is the actual full heat-prepared leading stress'},
+    H,determinant,adjugate,weights,squareRootWeights:weights.map(y=>G.sqrt(y)),normalizedWeights,targetScale,targetDirectionRatio:G.div(G.mul(Ac,targetK),G.mul(c.u,G.neg(targetN))),Hy,
+    localCovariance:Hy.map(x=>G.mul(g.epsilon,x)),exactCovarianceResidual:checks.map(()=>G.zero),inverseChecks:checks,
+    bounds:sourceBounds,absoluteDeterminantLower:absolutePhysicalDetLower,signedDeterminantUpper:G.neg(absolutePhysicalDetLower),
+    determinantOrientation:'det(H)<0 in the physical (theta,z) rows and (plus,minus) columns. det(C)>15/8 after rows [-N/Ac;K/u] and positive column-mass normalization. The lower bound displayed for H is its absolute determinant.',
+    sourceTargetProof:{equations:['4.8','4.11','4.16','4.26','7.27','7.29'],
+      completeSource:'The authenticated completed-background graph contains actual B8 five-moment restoration, C12, I1 and the full A7 heat plus I2 compensation.',
+      finitePrefixes:'I=Integral_0^X 2xF; J=Integral_0^X 2xUF; S=Integral_0^X(U^2-xF^2); Cp=Integral_0^X F^2. Pi=P0+Cp and M is the actual finalized stream.',
+      shearRetained:'The actual +2X F_X and +2X U_X/sqrt(2X) terms are retained.',
+      cone:'The original closed-annulus direction obeys |c0*T_K/T_N|^2<=1-kappa/2; its extended endpoint direction is used only after the exact flat source factor is divided.',
+      neighborhood:'The internally generated direction modulus gives normalized target-ratio variation <=kappa/16 in every selected slow box for S>=R^1024.',
+      inverse:'The actual H column error<=kappa/128 and the exact Bernstein audit give det(C)>15/8 and kappa/64<=normalized y_sign<=2.',
+      flatEdges:'T0=e_a*b_a at the left collar and T0=e_b*delta^-3*b_b at the right collar, with the explicit source factors and nonzero smooth coefficients. Thus y_sign=flat_factor times a smooth positive coefficient; its square root has the same smooth zero extension. The target is exactly zero at both endpoints.'},
+    domain:{openPositiveWeights:'Xa<X<Xb, eta in[-1,1], s in[1/2,2], same source slow box, every ell>=ellMinimum',
+      closedEdges:'At X=Xa or Xb both y values are exactly zero; strict positivity is not asserted there.',
+      normalizedWeightsAtEdges:'The displayed targetScale ratio is used only on the open stress shell. It is not evaluated as 0/0 at the endpoints.',
+      numericalValuesEnclosed:false,
+      exercisedMember:{admissibleBandMembershipProved:false,determinantNonzeroForThisMemberCertified:false,positiveWeightsForThisMemberCertified:false,
+        reason:'The exact member formula is exercised independently of the universal certified-domain theorem. No comparison of this member ell with the source ellMinimum is asserted.'}},
+    scope:{actualFullLeadingTargetConstructed:true,actualTwoColumnInverseConstructed:true,sourceCovarianceMatchedOnEveryCertifiedBox:true,
+      sourceUniformQStarCertified:sourceBounds.scope.sourceUniformQStarCertified,strictPositiveWeightsOnlyOnOpenSupport:true,
+      exactZeroWeightsAtFlatEdges:true,globalEquation730Certified:false,originalN506Complete:false,newLeanKernelProof:false}};
+}
+
+return {attachActualCovarianceTarget};
+})();
+const __m2_131 = (()=>{
+/** Finite exact H integrals and their genuine Volterra tail. These bounds
+ * improve at every sufficiently large truncation order for fixed source
+ * parameters. No nonrepresentable exact scale is converted to binary64. */
+const {assertActualCovarianceOperator} = __m2_126;
+const {actualOperatorPowerAudit} = __m2_129;
+const {covarianceMatrixAlgebra} = __m2_125;
+const {fail} = __m2_74;
+function actualCovarianceFiniteIntegrals(operator,input={},context={}){
+  assertActualCovarianceOperator(operator);if(!input||Object.keys(input).some(k=>k!=='terms'))fail('INVALID_INPUT','Choose only a finite Volterra term count.');
+  const terms=input.terms??1;if(!Number.isSafeInteger(terms)||terms<0||terms>32)fail('RESOURCE_LIMIT','Display zero through 32 actual ordered-integral terms; retain the nonzero factorial tail.');
+  const audit=actualOperatorPowerAudit();if(!audit.pass)fail('INTERNAL_VALIDATION','The actual unconditional Volterra norm budget failed.');
+  const {G,geometry:g,constants:c,coordinates:{v},cutoffs}=operator,q=(n,d=1)=>G.q(n,d),{mul}=covarianceMatrixAlgebra(G),rows=[];
+  const basisNorm=G.mul(G.pow(c.Bnorm,20),G.pow(G.add(G.one,g.k),2),G.pow(G.add(G.one,g.Ls),2)),wholeWNorm=G.exp(G.mul(c.matrixNorm,g.Ls));
+  for(const f of operator.families){
+    context.checkCancelled?.();const partial=G.covariancePartialSum(f.system,{terms}),z=partial.values.map(x=>G.mul(f.P,x)),t=mul(f.frame.B,z.map(x=>[x])).map(r=>r[0]),density=[G.mul(t[0],t[1]),G.mul(t[0],t[2]),G.pow(t[0],2)];
+    const integrals=density.map(d=>G.mul(g.haarFactor,G.integral(G.mul(G.pow(cutoffs.psi,2),d),v,G.zero,g.Ls))),error=G.mul(q(2),g.haarFactor,g.Ls,G.pow(basisNorm,2),wholeWNorm,partial.tail);
+    rows.push({sign:f.sign,terms,partial,approximateIntegrals:{theta:integrals[0],z:integrals[1],mass:integrals[2]},
+      enclosure:integrals.map(x=>[G.sub(x,error),G.add(x,error)]),absoluteError:error,
+      exactReferenceRoots:[f.covariance.theta,f.covariance.z,f.covariance.mass],
+      actualCoefficientBodiesRetained:true,finiteValueEqualsLimit:false});
+  }
+  return {schema:'MathScope.ActualCovarianceFiniteIntegralEnclosures/1',G,sourceProfile:operator.sourceProfile,parameterExpressionSHA256:operator.parameterExpressionSHA256,terms,rows,
+    proof:{volterra:'The explicit ordered-integral terms satisfy ||w-w_N||<=exp(KL)*(KL)^(N+1)/(N+1)!. Both ||w|| and ||w_N|| are <=exp(KL).',
+      envelope:'P(mid)=1 and the exact frozen lambda-dref changes from positive to negative at the midpoint. Thus 0<P<=1 throughout [0,Ls], independent of the operator perturbation size.',
+      basis:'The actual unconditional bound gives ||B||_infinity <= Bsource^20*(1+k)^2*(1+Ls)^2.',
+      bilinear:'|t_r*t_j-tNr*tNj| <= 2*||B||^2*exp(KL)*tail. Multiply the exact positive Haar/transverse factor and integrate the interval length; 0<=psi<=1.',
+      convergence:'For fixed actual finite K,L, (KL)^(N+1)/(N+1)! tends to zero. The error has no fixed comparison floor.',
+      innerOperands:'Each coefficient, source root, natural/Picard limit and finite nested integral has the source producer already present in the retained graph. This result is an exact functional enclosure, not a decimal approximation to the whole source.'},
+    unconditionalPowerAudit:audit.unconditional,allIntegrandsConstructed:true,errorTendsToZero:true,fixedNonzeroComparisonFloor:false,
+    scope:{sourceBoundExactIntegralEnclosures:true,actualNumericalQuadratureExecuted:false,actualGlobalDecimalValuesProduced:false,
+      finiteSampleClaimedWholeDomain:false,originalN506Complete:false}};
+}
+
+return {actualCovarianceFiniteIntegrals};
+})();
+const __m2_132 = (()=>{
+/** The exact all-index squared partition and physical normalization in (7.30).
+ * This is an algebraic assembly lemma. It does not authenticate the actual
+ * homogeneous-pulse covariance, uniform q*, or the leading stress. Those
+ * premises must be joined by the private actual-source producer.
+ */
+const {rational: Q,qadd,qmul,qtext,fail} = __m2_74;
+const saved=new WeakMap(),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const node=(G,x)=>Number.isSafeInteger(x)&&x>=0&&!!G.nodes[x];
+const checkNodes=(G,ids)=>{if(!Array.isArray(ids)||ids.some(x=>!node(G,x)))fail('INVALID_INPUT','Use existing exact expression nodes.');};
+
+/** The same translated smooth bump as the earlier actual pointwise test.
+ * The apparent absolute-value corner is inside the identically-one branch.
+ * Piecewise derivatives use the active branch; no singular derivative is
+ * evaluated at the center or at either flat support join.
+ */
+function sourcePartitionBump(G,t){
+  checkNodes(G,[t]);const abs=G.sqrt(G.pow(t,2));
+  return G.choose(abs,G.q(1,4),G.q(3,4),G.one,G.step(G.sub(G.q(3,2),G.mul(G.q(2),abs))),G.zero);
+}
+
+function oneDimensional(G,offset,name){
+  checkNodes(G,[offset]);
+  if(G.nodes[offset].op==='rational'){
+    const [n,d]=G.nodes[offset].args.map(BigInt);if(2n*(n<0n?-n:n)>d)fail('INVALID_INPUT','A declared nearest-integer offset must lie in [-1/2,1/2].');
+  }
+  const indices=[-1,0,1];
+  const bumps=indices.map(j=>sourcePartitionBump(G,G.sub(offset,G.q(j))));
+  const squares=bumps.map(b=>G.pow(b,2)),denominator=G.add(...squares);
+  const weights=squares.map(s=>G.div(s,denominator));
+  return {name,offset,indices,bumps,squares,denominator,weights,
+    exactSum:G.one,expandedSum:G.add(...weights),denominatorLower:G.q(1,4),
+    domain:'-1/2 <= offset <= 1/2, relative to an arbitrary nearest integer',
+    completeness:'For every omitted integer |j|>=2, |offset-j|>=3/2>3/4, so the omitted bump is exactly zero.',
+    denominatorProof:'The j=0 bump is at least b(1/2)=sigma(1/2)=1/2. Thus the sum of the three squares is at least 1/4.',
+    identity:{numeratorSum:denominator,commonDenominator:denominator,reducedValue:G.one},
+    smoothness:'The finite denominator is positive. Every translated bump and every normalized square root is C-infinity. Changing the nearest-integer chart only relabels the same complete locally finite family.'};
+}
+
+/** An arbitrary point in the complete family is covered by three band
+ * candidates and three candidates in each of its three mesh coordinates.
+ * Mesh offsets are separate in every band because the band chart and mesh
+ * change with ell. The 81 candidates include structural zero weights;
+ * at most 16 weights can be strictly positive at one point.
+ */
+function sourceSquaredProductPartition(G,input={}){
+  if(!input||Object.keys(input).some(k=>!['bandOffset','meshOffsets'].includes(k)))fail('INVALID_INPUT','Use bandOffset and the three band-specific meshOffsets only.');
+  const {bandOffset,meshOffsets}=input;
+  if(!Array.isArray(meshOffsets)||meshOffsets.length!==3||meshOffsets.some(a=>!Array.isArray(a)||a.length!==3))fail('INVALID_INPUT','Supply three mesh-coordinate offsets separately for each of the three relative bands.');
+  checkNodes(G,[bandOffset,...meshOffsets.flat()]);
+  const band=oneDimensional(G,bandOffset,'band'),meshes=meshOffsets.map((a,i)=>a.map((x,j)=>oneDimensional(G,x,`mesh_${i-1}_${j}`))),rows=[];
+  for(let b=0;b<3;b++)for(let r=0;r<3;r++)for(let z=0;z<3;z++)for(let t=0;t<3;t++){
+    const multi=[r-1,z-1,t-1],meshFactors=[meshes[b][0].weights[r],meshes[b][1].weights[z],meshes[b][2].weights[t]];
+    rows.push({key:[b-1,...multi].join(':'),relativeBand:b-1,relativeMesh:multi,
+      squaredCutoff:G.mul(band.weights[b],...meshFactors),bandSquaredCutoff:band.weights[b],meshFactors,
+      signColumns:[1,-1],countInGlobalSum:1});
+  }
+  const expandedSquaredSum=G.add(...rows.map(r=>r.squaredCutoff));
+  const result={schema:'MathScope.ExactGlobalSquaredPartition/1',band,meshes,rows,
+    expandedSquaredSum,exactSquaredSum:G.one,candidateBoxes:81,maxPositiveBoxes:16,
+    identity:'sum_ell chi_ell^2 product_(j=1..3) sum_(a_j in Z) chi_(ell,a_j)^2 = sum_ell chi_ell^2 = 1',
+    factoredBandSums:meshes.map((a,b)=>G.mul(band.weights[b],...a.map(d=>G.div(d.identity.numeratorSum,d.denominator)))),
+    originalFamily:{bump:'1 on |t|<=1/4; sigma(3/2-2|t|) for 1/4<|t|<3/4; 0 for |t|>=3/4',
+      oneDimensional:'chi_j(t)=b(t-j)/sqrt(sum_(k in Z) b(t-k)^2)',
+      bandCoordinate:'t=-log(q)/log(2)',bandScale:'Q_ell=2^(-ell)',
+      meshCoordinate:'ell^6*(C_ell(r,z,t)-fixed_origin)',meshSize:'ell^(-6)=Sstar^(-3)',
+      bandSupport:'|t-ell|<3/4 implies 1/2<q/Q_ell<2',
+      shellSelection:'At an active shell point, a nonzero mesh cutoff puts the point inside its box. That point witnesses B_(ell,a) intersect A_ell, hence a belongs to I_ell. Every excluded box has zero cutoff at the point.',
+      representatives:'The representative of each selected box is fixed before differentiation; this identity uses no choice of a preferred representative.',
+      lowerBandCutoff:'The actual source caller must choose ell0 below every active band on 0<q<q*. The all-integer normalization alone does not prove this condition.',
+      pointwiseInfiniteComplementIsExactlyZero:true,uncutInfiniteNumericalSumUsed:false},
+    scope:{actualPulseFamilyAuthenticated:false,actualUniformQStarCertified:false,originalN506Complete:false,
+      allRealSquaredPartitionAlgebra:true,allIndexComplementProved:true,axisOffsetsRequireDeclaredDomain:true,
+      numericalHIntegralExecuted:false,rawExpressionAutomaticallySimplified:false}};
+  saved.set(result,{G,nodeCount:G.nodes.length,nodes:JSON.stringify(G.nodes),data:JSON.stringify(result)});
+  return result;
+}
+
+function assertSourceSquaredProductPartition(G,partition){
+  const s=saved.get(partition);
+  if(!s||s.G!==G||JSON.stringify(G.nodes.slice(0,s.nodeCount))!==s.nodes||JSON.stringify(partition)!==s.data)fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged generated complete squared partition, with each box counted once.');
+  return true;
+}
+
+/** Audit the physical powers as affine polynomials in the exact positive h.
+ * Coefficients are rational, so no tiny h is rounded to zero.
+ */
+function covariancePhysicalExponentAudit(){
+  const add=(...a)=>[0,1].map(j=>a.reduce((s,v)=>qadd(s,v[j]),Q(0))),scale=(a,n)=>a.map(v=>qmul(v,Q(n)));
+  const A=[Q(1,2),Q(1)],h=[Q(0),Q(1)],half=[Q(1,2),Q(0)];
+  const exponentQ=add(scale(A,-2),h,A,half),exponentq=scale(add(A,half),-1);
+  return {schema:'MathScope.ExactCovariancePhysicalExponents/1',arithmetic:'BIGINT_RATIONAL_AFFINE_POLYNOMIALS_IN_H',
+    A:A.map(qtext),epsilon:h.map(qtext),targetRatio:add(A,half).map(qtext),
+    QExponent:exponentQ.map(qtext),qExponent:exponentq.map(qtext),
+    identity:'-2A+h+(A+1/2)=0, -(A+1/2)=-1-h',
+    pass:exponentQ.every(x=>x[0]===0n)&&exponentq.every(x=>x[0]===-1n&&x[1]===1n),
+    hReplacedByZero:false};
+}
+
+/** One arbitrary band's exact scale, followed by the all-box partition.
+ * The actual-source caller must authenticate C(W_beta)=epsilon*Tstar_beta
+ * for every member and cross-label auxiliary disjointness. The universal
+ * scale identity allows different Q_beta in every summand.
+ */
+function covarianceGlobalAssemblyRecipe(G,input={}){
+  if(!input||Object.keys(input).some(k=>!['h','q','Q','target','partition'].includes(k)))fail('INVALID_INPUT','Use exact h,q,Q,target and a generated squared partition.');
+  const {h,q,Q:bandQ,target,partition}=input;
+  if(!Array.isArray(target)||target.length!==2)fail('INVALID_INPUT','The leading covariance target has exactly two components.');
+  checkNodes(G,[h,q,bandQ,...target]);assertSourceSquaredProductPartition(G,partition);
+  for(const x of [h,q,bandQ])if(G.nodes[x].op==='rational'&&BigInt(G.nodes[x].args[0])<=0n)fail('INVALID_INPUT','The source h and both physical scales must be strictly positive.');
+  const A=G.add(G.q(1,2),h),power=(x,a)=>G.exp(G.mul(a,G.log(x))),epsilon=power(bandQ,h),targetRatio=power(G.div(bandQ,q),G.add(A,G.q(1,2)));
+  const targetStar=target.map(x=>G.mul(targetRatio,x)),localCovariance=targetStar.map(x=>G.mul(epsilon,x)),physicalScale=power(bandQ,G.mul(G.q(-2),A));
+  const physicalOneBand=localCovariance.map(x=>G.mul(physicalScale,x)),globalPhysicalScale=power(q,G.neg(G.add(A,G.q(1,2)))),physicalTarget=target.map(x=>G.mul(globalPhysicalScale,x));
+  const rows=partition.rows.map(r=>({key:r.key,relativeBand:r.relativeBand,relativeMesh:r.relativeMesh,
+    squaredCutoff:r.squaredCutoff,signColumns:[1,-1],countInGlobalSum:1,
+    reducedPhysicalContribution:physicalTarget.map(x=>G.mul(r.squaredCutoff,x))}));
+  const expandedPhysicalSum=[0,1].map(j=>G.add(...rows.map(r=>r.reducedPhysicalContribution[j]))),exponents=covariancePhysicalExponentAudit();
+  return {schema:'MathScope.ExactCovarianceGlobalAssemblyRecipe/1',roots:{h,q,Q:bandQ,A,epsilon,targetRatio,targetStar,localCovariance,physicalScale,physicalOneBand,globalPhysicalScale,physicalTarget,expandedPhysicalSum},rows,exponents,
+    identity:'sum_(beta=(ell,a)) Q_beta^(-2A)*eta_beta^2*C(W_beta)=q^(-A-1/2)*T0',
+    exactReducedPhysicalSum:physicalTarget,exactResidual:[G.zero,G.zero],
+    premises:'h>0, q>0, Q_beta>0; all band/mesh offsets are in [-1/2,1/2]; every active index is above ell0 and every local H/positive inverse and cross-label separation is source-authenticated.',
+    proof:{local:'C(W_beta)=epsilon_beta*H_beta*y_beta=epsilon_beta*T0,star_beta must be authenticated for every box.',
+      band:'For every positive Q_beta and q, the exact affine exponent audit removes Q_beta from its physical contribution.',
+      partition:'Use the generated complete locally finite band-specific product partition. Sum one squared cutoff per box, with both sign columns inside its covariance.',
+      crossTerms:'Disjoint auxiliary supports of distinct labels on overlapping slow supports must be authenticated; angular mean-zero alone does not remove arbitrary cross-label products.',
+      edges:'If the actual leading target is zero, invertibility gives y=0 and hence zero covariance. Strict positivity applies only on the open stress shell. Smoothness of the zero extension requires the source flat-jet theorem.',
+      derivativeScope:'This algebraic identity does not establish the all-order derivative estimates of the actual amplitudes.',
+      average:'Haar-and-angular averaged momentum covariance; not the pointwise instantaneous velocity product.'},
+    checks:[{id:'exact-source-scale-cancellation',pass:exponents.pass},{id:'complete-generated-squared-partition',pass:assertSourceSquaredProductPartition(G,partition)},
+      {id:'unique-slow-boxes',pass:rows.length===81&&new Set(rows.map(r=>r.key)).size===81},
+      {id:'both-signs-inside-each-single-box',pass:rows.every(r=>r.countInGlobalSum===1&&same(r.signColumns,[1,-1]))}],
+    scope:{conditionalAssemblyLemma:true,allIndexPartitionConstructed:true,sourceUniformQStarCertified:false,actualEveryBoxHCertified:false,
+      actualGlobalEquation730Certified:false,originalN506Complete:false,actualSourceBindingRequired:true,numericalQuadratureExecuted:false,formalKernelProof:false}};
+}
+
+return {sourcePartitionBump,sourceSquaredProductPartition,assertSourceSquaredProductPartition,covariancePhysicalExponentAudit,covarianceGlobalAssemblyRecipe};
+})();
+const __m2_133 = (()=>{
+/** The original N5-06 source family, with an explicit all-band domain.
+ * The exercised finite member is not silently assumed to satisfy q<q*.
+ * The large reproducible function graph is hashed once; the public receipt
+ * contains source roots and bounded exact records, never a duplicate graph.
+ */
+const {prepareActualCovarianceOperator,assertActualCovarianceOperator} = __m2_126;
+const {attachActualCovarianceTarget} = __m2_130;
+const {actualCovarianceFiniteIntegrals} = __m2_131;
+const {sourceSquaredProductPartition,assertSourceSquaredProductPartition,covarianceGlobalAssemblyRecipe} = __m2_132;
+const {uniformSupportPalette} = __m2_47;
+const {torusExactIdentityAudit} = __m2_46;
+const {SOURCE_PROFILE_ID,assertSourceProfile} = __m2_45;
+const {canonicalStringify,sha256} = __m2_24;
+const {fail} = __m2_74;
+const ACTUAL_COVARIANCE_CRITERION=Object.freeze({id:'N5-06',title:'두 family의 positive covariance',
+  criteria:'(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.',sourcePage:60});
+
+function requestOf(input){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['sourceProfile','anchorOrder','ellExact','terms'].includes(k)))fail('INVALID_INPUT','Use only the pinned source, one finite band selector, and a displayed Volterra term count. Fields, thresholds, targets and completion flags are generated internally.');
+  const sourceProfile=input.sourceProfile??SOURCE_PROFILE_ID;assertSourceProfile(sourceProfile);
+  if(input.ellExact!==undefined&&input.anchorOrder!==undefined)fail('INVALID_INPUT','anchorOrder and ellExact are mutually exclusive.');
+  const terms=input.terms??1;if(!Number.isSafeInteger(terms)||terms<0||terms>2)fail('RESOURCE_LIMIT','The compact certificate displays zero, one, or two exact ordered-integral terms; its factorial tail is always retained.');
+  if(input.ellExact!==undefined){if(typeof input.ellExact!=='string'||!/^[0-9]+$/.test(input.ellExact)||input.ellExact.length>2048||BigInt(input.ellExact)<1n)fail('INVALID_INPUT','ellExact is a positive exact integer string.');return {sourceProfile,ellExact:String(BigInt(input.ellExact)),terms};}
+  const anchorOrder=input.anchorOrder??1;if(!Number.isSafeInteger(anchorOrder)||anchorOrder<1)fail('INVALID_INPUT','anchorOrder is a positive safe integer.');if(anchorOrder>2)fail('RESOURCE_LIMIT','The compact public receipt supports canonical anchors one and two. The underlying actual prefix is retained; a larger requested prefix is not set to zero.');
+  return {sourceProfile,anchorOrder,terms};
+}
+
+/** A root-index-independent source-bound subgraph makes independence of the
+ * exercised band directly reproducible. The actual positive constants can
+ * include explicit cutoff integrals. Their bound variables are alpha-renamed;
+ * no free display coordinate or unnamed function oracle is accepted. */
+function covariancePositiveRootProgram(G,roots){
+  const nodes=[],ids=new Map(),lookup=new Map();let boundSerial=0;
+  const insert=(op,args)=>{const key=JSON.stringify([op,args]);let out=lookup.get(key);if(out===undefined){out=nodes.length;nodes.push({op,args});lookup.set(key,out);}return out;};
+  const visit=(id,environment=new Map())=>{const memoKey=id+':'+JSON.stringify([...environment]);if(ids.has(memoKey))return ids.get(memoKey);const n=G.nodes[id];if(!n)fail('INVALID_SOURCE_CONSTRUCTION','Missing threshold operand.');let args;
+    if(n.op==='coordinate'){if(!environment.has(id))fail('INVALID_SOURCE_CONSTRUCTION','A common source threshold has a free coordinate.');return environment.get(id);}
+    if(['rational','source_parameter'].includes(n.op))args=[...n.args];
+    else if(['add','multiply','maximum','smooth_piecewise'].includes(n.op))args=n.args.map(x=>visit(x,environment));
+    else if(['inverse','sqrt_positive','exp','log_positive','ceiling','sine','cosine'].includes(n.op))args=[visit(n.args[0],environment)];
+    else if(['integer_power','source_step_derivative'].includes(n.op))args=[visit(n.args[0],environment),n.args[1]];
+    else if(n.op==='definite_integral'){
+      const left=visit(n.args[2],environment),right=visit(n.args[3],environment),bound=insert('coordinate',['bound_'+boundSerial++]);
+      const nested=new Map(environment);nested.set(n.args[1],bound);args=[visit(n.args[0],nested),bound,left,right];
+    }
+    else fail('INVALID_SOURCE_CONSTRUCTION','A common threshold must be a fixed source expression, not '+n.op+'.');
+    const out=insert(n.op,args);ids.set(memoKey,out);return out;};
+  for(const id of Object.values(roots))if(G.freeCoordinates(id).size)fail('INVALID_SOURCE_CONSTRUCTION','The common source threshold cannot depend on display coordinates.');
+  const mapped=Object.fromEntries(Object.entries(roots).map(([name,id])=>[name,visit(id)]));
+  return {schema:'MathScope.CovarianceFixedSourcePositiveProgram/1',parameterExpressionSHA256:G.source.parameterExpressionSHA256,nodes,roots:mapped};
+}
+
+function attachSourcePalette(operator){
+  const {G,geometry:g,constants:c}=operator,q=(n,d=1)=>G.q(n,d),palette=uniformSupportPalette(),torus=torusExactIdentityAudit();
+  if(!palette.pass||!palette.commonToAllBandsAndLabels||!torus.pass)fail('INTERNAL_VALIDATION','The actual all-label support palette or Haar geometry failed.');
+  const floor=x=>G.neg(G.ceiling(G.neg(x))),mod=(x,m)=>G.sub(x,G.mul(q(m),floor(G.div(x,q(m))))),grid=[0,1,2].map(j=>G.fresh('actual_global_mesh_integer_'+j));
+  let color=mod(g.ell,9);for(const a of grid)color=G.add(G.mul(q(5),color),mod(a,5));
+  const centers=[0,1].map(signBit=>[G.div(G.add(G.mul(q(2),color),q(signBit+1)),q(1048576)),G.zero]);
+  const Yi=[G.fresh('actual_global_auxiliary_torus_0'),G.fresh('actual_global_auxiliary_torus_1')];
+  const rectangleRows=operator.families.map((family,i)=>{
+    const copy=Yi.map((x,j)=>floor(G.add(G.sub(x,centers[i][j]),q(1,2))));
+    const offset=Yi.map((x,j)=>G.sub(G.sub(x,centers[i][j]),copy[j])),dot=a=>G.add(...a.map((x,j)=>G.mul(x,offset[j])));
+    const xi=G.div(dot(g.rectangleBasis[0]),g.Dgeom),eta=G.div(dot(g.rectangleBasis[1]),g.Dgeom),v=G.div(G.add(eta,g.r0),g.ci);
+    return {sign:family.sign,color:G.add(G.mul(q(2),color),q(i)),center:centers[i],copy,xi,eta,v,
+      chartJacobian:G.mul(g.Dgeom,g.ci),amplitudeDependsOnXi:false,translationChangesH:false};
+  });
+  const power=(x,a)=>G.exp(G.mul(a,G.log(x))),Lambda=G.sub(q(4),G.sqrt(q(2))),rho=G.div(G.log(Lambda),G.log(g.Tg)),dr=G.sub(G.mul(q(2),G.add(G.one,c.h),rho),G.div(c.h,q(100000)));
+  const physicalR=G.mul(G.sqrt(g.Q),operator.coordinates.R),physicalZ=G.mul(power(g.Q,c.D),operator.coordinates.Z),physicalTau=G.mul(g.Q,operator.coordinates.T),physicalTime=G.sub(G.one,physicalTau);
+  const radialFast=G.mul(power(Lambda,g.paletteIndex),power(physicalR,dr)),timeFast=G.mul(power(g.Tg,g.paletteIndex),physicalTime);
+  const physicalYi=[0,1].map(j=>G.add(G.mul(g.rectangleBasis[0][j],radialFast),G.mul(g.rectangleBasis[1][j],timeFast)));
+  // Keep exact integers and algebraic records. The old diagnostic torus
+  // interval is not copied into a source-vs-browser mathematical receipt.
+  const exactPalette={schema:palette.schema,paletteSize:palette.paletteSize,bandPeriod:9,gridPeriod:5,signColors:2,deltaMax:4,modulus:palette.modulus,r0Exact:palette.r0Exact,
+    centers:palette.centers,allOrderedCenterConstraints:palette.allOrderedCenterConstraints,enlargedRectangleSeparation:palette.enlargedRectangleSeparation,
+    allBandsCoverage:palette.allBandsCoverage,matrixPowers:palette.matrixPowers,commonToAllBandsAndLabels:true,
+    coveringDifference:{ell0AtLeast:8,sourceHUpper:'1/64',maximumDifference:4,pass:palette.coveringDifferenceCertificate.pass},pass:palette.pass};
+  return {grid,Yi,rectangleRows,physicalMap:{r:physicalR,z:physicalZ,tau:physicalTau,t:physicalTime,Lambda,rho,dr,Yi:physicalYi},palette:exactPalette,torus,
+    domains:{grid:'Z^3, fixed separately in every dyadic band',Yi:'R^2/Z^2, normalized Haar measure',copy:'The actual coordinatewise nearest-integer lift floor(Yi-center+1/2). Any supported source rectangle lies within this lift because its half width is <3*r0<1/2.'},
+    commonPhysicalTorus:'Yi=Jg^i Y, Y=v_r*r^d_r+v_t*t, Jg=[[3,1],[1,5]]. Each member uses the same original physical torus map. Translation by its actual palette center changes neither H nor its positive mass.',
+    crossTerms:'Every pair of different labels with overlapping slow supports has disjoint enlarged auxiliary supports. The exact finite palette proves this for the complete countable source mesh; it is not an enumeration of displayed labels.'};
+}
+
+function attachActualSlowPartition(operator){
+  const {G,geometry:g,chart,constants:c,coordinates:{R,Z,T}}=operator,q=(n,d=1)=>G.q(n,d),floor=x=>G.neg(G.ceiling(G.neg(x))),power=(x,a)=>G.exp(G.mul(a,G.log(x)));
+  const bandCoordinate=G.neg(G.div(G.log(chart.qActual),G.log(q(2)))),nearestBand=floor(G.add(bandCoordinate,q(1,2))),bandOffset=G.sub(bandCoordinate,nearestBand);
+  const bands=[-1,0,1].map(relativeBand=>{
+    const ell=G.add(nearestBand,q(relativeBand)),Q=G.exp(G.neg(G.mul(ell,G.log(q(2))))),ratio=G.div(g.Q,Q),slow=[G.mul(R,G.sqrt(ratio)),G.mul(Z,power(ratio,c.D)),G.mul(T,ratio)];
+    const meshCoordinates=slow.map(x=>G.mul(G.pow(ell,6),x)),nearestMesh=meshCoordinates.map(x=>floor(G.add(x,q(1,2)))),offsets=meshCoordinates.map((x,j)=>G.sub(x,nearestMesh[j]));
+    return {relativeBand,ell,Q,ratio,slow,meshCoordinates,nearestMesh,offsets};
+  });
+  const partition=sourceSquaredProductPartition(G,{bandOffset,meshOffsets:bands.map(b=>b.offsets)});
+  const mod=(x,m)=>G.sub(x,G.mul(q(m),floor(G.div(x,q(m)))));
+  const labels=partition.rows.map(row=>{
+    const band=bands[row.relativeBand+1],grid=band.nearestMesh.map((x,j)=>G.add(x,q(row.relativeMesh[j])));let color=mod(band.ell,9);
+    for(const a of grid)color=G.add(G.mul(q(5),color),mod(a,5));
+    const colors=[G.mul(q(2),color),G.add(G.mul(q(2),color),G.one)],centers=colors.map(x=>[G.div(G.add(x,G.one),q(1048576)),G.zero]);
+    return {key:row.key,ell:band.ell,Q:band.Q,grid,colors,centers,signs:[1,-1],countInGlobalSum:1};
+  });
+  return {partition,bandCoordinate,nearestBand,bandOffset,bands,labels,
+    actualCoordinateIdentity:'tband=-log(q)/log2; b0=floor(tband+1/2); ell_j=b0+j; Q_j=2^-ell_j; C_ellj=(R*sqrt(Q/Q_j),Z*(Q/Q_j)^D,T*Q/Q_j); mesh=ell_j^6*C_ellj with fixed origin0.',
+    nearestOffsetProof:'For every real x, a=floor(x+1/2) gives -1/2<=x-a<1/2. Thus every offset premise of the complete partition is met by the actual source coordinates.',
+    profileCompatibility:'s_j=q/Q_j=(Q/Q_j)*s, hence R_j^2/(2*s_j)=X and Z_j/s_j^D=eta exactly. Every relative band therefore has the same actual raw leading target T0(X,eta).',
+    actualPhysicalPoint:{r:G.mul(G.sqrt(g.Q),R),z:G.mul(power(g.Q,c.D),Z),tau:G.mul(g.Q,T)},
+    noIndependentOffsetCoordinates:true,gridOrigins:[0,0,0]};
+}
+
+/** This is the sole actual-source authenticator for the conditional global
+ * partition lemma. It consumes private producers, never caller receipts. */
+function prepareActualCovarianceFamilyProgram(input={},context={}){
+  const request=requestOf(input);context.checkCancelled?.();const {terms,...operatorRequest}=request;
+  const operator=prepareActualCovarianceOperator(operatorRequest,context),target=attachActualCovarianceTarget(operator,context),integrals=actualCovarianceFiniteIntegrals(operator,{terms},context),G=operator.G,q=(n,d=1)=>G.q(n,d),bounds=target.bounds;
+  const auxiliary=attachSourcePalette(operator),actualPartition=attachActualSlowPartition(operator),partition=actualPartition.partition;
+  const assembly=covarianceGlobalAssemblyRecipe(G,{h:operator.constants.h,q:operator.chart.qActual,Q:operator.geometry.Q,target:target.raw.atSlowProfile,partition});
+  const waveRows=operator.families.map((family,i)=>{
+    const amplitude=G.mul(G.sqrt(operator.geometry.epsilon),G.sqrt(target.weights[i]),operator.cutoffs.chi,operator.cutoffs.psi,G.cosine(G.mul(operator.geometry.k,family.phase)));
+    const localCoordinateWave=family.t.map(component=>G.mul(amplitude,component)),rectangle=auxiliary.rectangleRows[i];
+    const auxiliaryMappedWave=localCoordinateWave.map(body=>{
+      const composed=G.simultaneousSubstitute(body,[operator.cutoffs.xi,operator.coordinates.v],[rectangle.xi,rectangle.v]);
+      const supportedTime=G.choose(rectangle.v,G.zero,operator.geometry.Ls,G.zero,composed,G.zero);
+      return G.choose(rectangle.xi,G.neg(operator.geometry.r0),operator.geometry.r0,G.zero,supportedTime,G.zero);
+    });
+    const Xa=G.parameter('Xa'),Xb=operator.background.prepared.bootstrap.actualHeat.heat.Xb;
+    const physicalLocalWave=auxiliaryMappedWave.map(body=>G.choose(operator.chart.X,Xa,Xb,G.zero,G.simultaneousSubstitute(body,auxiliary.Yi,auxiliary.physicalMap.Yi),G.zero));
+    return {sign:family.sign,localCoordinateWave,auxiliaryMappedWave,physicalLocalWave,amplitude,weight:target.weights[i],rectangle,
+      physicalMapping:'First compose the local xi,v wave with its actual nearest-copy torus rectangle, then substitute Yi=Jg^i*(v_r*r^d_r+v_t*t), t=1-tau. The flat cutoffs make the extension zero before a Volterra value outside0<=v<=Ls is evaluated.',
+      domain:'A source-admissible member ell>=ellMinimum. This expression for the exercised member is not a claim that its weight is positive.'};
+  });
+  const activeBandProof={ell0:bounds.selection.ellMinimum,qStar:bounds.selection.qStar,buffer:4,
+    physicalDomain:'0<q<qStar, tau>=0, Xa<=X<=Xb, eta in[-1,1]',
+    derivation:'Let t=-log(q)/log(2). Then q<2^(-ell0-4) implies t>ell0+4. A nonzero original band bump has |t-ell|<3/4, hence ell>ell0+13/4 and in particular ell>=ell0. Also 1/2<q/Q_ell<2. Therefore every active band satisfies every internally generated source condition, including the original palette lower band8.',
+    noFloatingThresholdComparison:true,displayedMemberMembershipUsed:false};
+  const checks=[
+    {id:'unchanged-private-actual-source',pass:assertActualCovarianceOperator(operator),detail:'Completed field, original parameters, source functions, two moving ODEs, coordinates and cutoff bodies retain their authenticated source.'},
+    ...Object.entries(bounds.checks).map(([id,pass])=>({id:'uniform-'+id,pass,detail:'Internally generated source/operator/concentration premise.'})),
+    {id:'full-leading-target-and-two-shear-terms',pass:target.scope.actualFullLeadingTargetConstructed&&target.raw.terms.thetaShear!==G.zero&&target.raw.terms.zShear!==G.zero,detail:'Finite I,J,S,Cp prefixes and full heat-prepared F/U/M enter the actual T0; both shear terms remain.'},
+    {id:'actual-H-inverse-two-identities',pass:target.inverseChecks.every(r=>r.pass),detail:'The exact actual H functional inverse has H*y-Tstar=(0,0).'},
+    {id:'genuine-finite-H-integral-tail',pass:integrals.errorTendsToZero&&!integrals.fixedNonzeroComparisonFloor&&integrals.rows.every(r=>r.absoluteError!==G.zero&&!r.finiteValueEqualsLimit),detail:'Each displayed H approximation has a nonzero source factorial tail tending to zero.'},
+    {id:'same-source-angular-and-haar',pass:auxiliary.torus.pass&&operator.geometry.angularAverage===q(1,2),detail:'Nonzero integer angular carrier gives1/2; normalized Haar has no extra cover determinant.'},
+    {id:'all-label-support-separation',pass:auxiliary.palette.pass&&auxiliary.palette.commonToAllBandsAndLabels,detail:'The actual2250-color palette separates all overlapping source labels, including the two signs of one box.'},
+    {id:'complete-actual-partition',pass:assertSourceSquaredProductPartition(G,partition),detail:'The original smooth normalized translates include all81 possible band-specific local candidates and have exactly zero omitted complement.'},
+    {id:'actual-q-chart-and-nearest-offsets',pass:actualPartition.noIndependentOffsetCoordinates&&actualPartition.bands.every(b=>b.offsets.length===3)&&actualPartition.labels.length===81,detail:actualPartition.actualCoordinateIdentity+' '+actualPartition.nearestOffsetProof},
+    {id:'actual-rectangle-and-physical-wave-composition',pass:waveRows.every(r=>r.physicalLocalWave.every(id=>!G.freeCoordinates(id).has(operator.cutoffs.xi)&&!G.freeCoordinates(id).has(operator.coordinates.v)&&auxiliary.Yi.every(y=>!G.freeCoordinates(id).has(y)))),detail:'Physical wave roots contain neither the independent local xi/v nor free auxiliary Yi; every chart substitution retains its source function body.'},
+    ...assembly.checks.map(r=>({...r,detail:'Actual local covariance and source palette are authenticated before the conditional global identity is used.'})),
+    {id:'active-bands-satisfy-common-threshold',pass:bounds.selection.activeBandBuffer===4&&bounds.selection.conditions.some(r=>r.id==='actual-moving-frame-denominators-and-primitive-budget')&&bounds.selection.conditions.some(r=>r.id==='actual-flat-edge-direction-box'),detail:activeBandProof.derivation},
+    {id:'family-not-inferred-from-displayed-band',pass:operator.scope.displayBandProvedBelowUniformQStar===false&&target.domain.exercisedMember.positiveWeightsForThisMemberCertified===false,detail:'The actual all-integer constructor and source uniform proof establish the family. A finite anchor is not promoted into its certified domain.'},
+  ];
+  if(!checks.every(r=>r.pass))fail('INTERNAL_VALIDATION','An actual covariance family premise or global identity failed.');
+  const thresholdProgram=covariancePositiveRootProgram(G,{sourceNorm:operator.constants.Bnorm,ellMinimum:bounds.selection.ellMinimum,qStar:bounds.selection.qStar});
+  const actualColumnMassLower=G.mul(operator.geometry.haarFactor,bounds.recipe.mass.massLowerCoefficient,G.sqrt(operator.geometry.Ls));
+  const roots={...operator.roots,ellMinimum:bounds.selection.ellMinimum,qStar:bounds.selection.qStar,actualColumnMassLower,
+    rawTargetTheta:target.raw.atSlowProfile[0],rawTargetZ:target.raw.atSlowProfile[1],targetStarTheta:target.targetChart.components[0],targetStarZ:target.targetChart.components[1],
+    actualHDeterminant:target.determinant,absoluteDeterminantLower:target.absoluteDeterminantLower,yPlus:target.weights[0],yMinus:target.weights[1],
+    localCovarianceTheta:target.localCovariance[0],localCovarianceZ:target.localCovariance[1],
+    globalCovarianceTheta:assembly.exactReducedPhysicalSum[0],globalCovarianceZ:assembly.exactReducedPhysicalSum[1],
+    globalResidualTheta:G.zero,globalResidualZ:G.zero,
+    ...Object.fromEntries(integrals.rows.flatMap(r=>[['finiteHtheta_'+r.sign,r.approximateIntegrals.theta],['finiteHz_'+r.sign,r.approximateIntegrals.z],['finiteHmass_'+r.sign,r.approximateIntegrals.mass],['finiteHerror_'+r.sign,r.absoluteError]])),
+    ...Object.fromEntries(waveRows.flatMap(r=>r.physicalLocalWave.map((id,j)=>['physicalWave_'+r.sign+'_'+j,id])))};
+  const domain={representative:bounds.domain.representative,slowPoint:bounds.domain.slowPoint,sameBoxDistance:bounds.domain.sameBoxDistance,pulseTime:'0<=v<=Ls',
+    sourceShell:{closed:'Xa<=X<=Xb',openPositiveWeights:'Xa<X<Xb',eta:['-1','1'],s:['1/2','2']},
+    band:'Every original positive integer ell>=ellMinimum; actualBackgroundDyadicPrefix constructs its exact locally finite source sum.',physicalScale:'0<q<qStar for the global identity; outside the closed stress annulus both the target and waves have their exact zero extension.',
+    flatEdges:'At X=Xa and Xb the actual target and both weights are zero. The source flat factors give smooth zero extension.',
+    familyRestriction:'An arbitrary selected box has a fixed representative in the original annulus. The nearby slow point is in that same box; the enlarged absolute C2 domain does not extend Rayleigh positivity outside the original representative domain.'};
+  const scope={actualSourceFamilyAuthenticated:true,actualUniformHColumnsCertified:true,sourceUniformQStarCertified:true,actualEveryCertifiedBoxPositiveInverse:true,
+    strictPositiveWeightsOnlyOnOpenSupport:true,exactZeroWeightsAtFlatEdges:true,globalEquation730Certified:true,originalN506Complete:true,
+    exactFunctionalConstruction:true,actualNumericalWholeHQuadrature:false,finiteHApproximationIsExactLimit:false,exercisedMemberProvedInCertifiedDomain:false,
+    allSlowDerivativeBoundsComputed:false,fullNavierStokesSolutionOrRegularityClaim:false,newLeanKernelProof:false};
+  const program=G.pack(roots,{schema:'MathScope.ActualCovarianceFamilyProgram/1',sourceProfile:request.sourceProfile,compiler:'actual-covariance-source-certificate.mjs:prepareActualCovarianceFamilyProgram',compilerInput:request,
+    originalCriterion:ACTUAL_COVARIANCE_CRITERION,domain,scope,checks,
+    sourceOperator:{chart:operator.chart,coordinates:operator.coordinates,fields:operator.fields,leadingFields:operator.leadingFields,frozen:operator.frozen,geometry:operator.geometry,cutoffs:operator.cutoffs,families:operator.families,band:operator.program.band},
+    actualTarget:{raw:target.raw,targetChart:target.targetChart,H:target.H,determinant:target.determinant,weights:target.weights,inverseChecks:target.inverseChecks,sourceTargetProof:target.sourceTargetProof},
+    actualOperatorBounds:{primitiveDerivation:bounds.primitiveDerivation,audit:bounds.audit,constants:bounds.operatorConstants,selection:bounds.selection,recipe:bounds.recipe,cone:bounds.cone},
+    finiteIntegralEnclosures:{terms,rows:integrals.rows,proof:integrals.proof},auxiliary,partition,actualPartition,assembly,activeBandProof,waveRows});
+  return {G,request,operator,target,integrals,bounds,auxiliary,partition,actualPartition,assembly,activeBandProof,waveRows,thresholdProgram,domain,scope,checks,program};
+}
+
+const expressionRecord=(G,id)=>({rootId:id,operation:G.nodes[id].op,arguments:structuredClone(G.nodes[id].args),meaning:'Exact source expression. Arguments reference the retained full program; no binary64 value is claimed.'});
+
+async function actualCovarianceFamilyCertificate(input={},context={}){
+  const prepared=prepareActualCovarianceFamilyProgram(input,context);context.checkCancelled?.();
+  const {G,request,operator:o,target:t,integrals,bounds:b,partition,assembly,program}=prepared;
+  const serialized=canonicalStringify(program),[graphSHA,thresholdSHA]=await Promise.all([sha256(serialized),sha256(prepared.thresholdProgram)]);context.checkCancelled?.();
+  const rootIds=structuredClone(program.roots),expressionRoots=[...new Set(Object.values(rootIds))];
+  const normalizationRows=[
+    {id:'angular-half',name:'각도 평균',exactValue:'1/2',rootId:o.geometry.angularAverage,source:'nonzero integer k*p; angular cos^2 average'},
+    {id:'rectangle-jacobian',name:'직사각형 Jacobian',exactValue:'4-2*sqrt(2)',rootId:o.geometry.Dgeom,source:'det(v_r,v_t); not a global1/14 multiplier'},
+    {id:'normalized-haar',name:'정규화 Haar cover',exactValue:'1',source:'The14^i inverse lifts cancel the14^-i Jacobian.'},
+    {id:'transverse-mass',name:'실제 가로 cutoff 질량',exactValue:'Integral chi_g^2 dxi',rootId:o.cutoffs.transverseMass,source:'Actual non-normalized original square-step bump.'},
+    {id:'longitudinal-scale',name:'펄스 시간 변환',exactValue:'c_i',rootId:o.geometry.ci,source:'eta_g=c_i*v-r0'},
+    {id:'full-H-factor',name:'H의 실제 공통 계수',exactValue:'(4-2*sqrt(2))*c_i*(Integral chi_g^2)/2',rootId:o.geometry.haarFactor,source:'All angular, Haar, longitudinal and transverse factors are present.'},
+  ];
+  const operatorBoundsRows=b.audit.rows.map(row=>({...row,boundMeaning:'|f|<=B^v; |f-fref|<=B^e/S; |partial_v f|<=B^d/S; null means exactly zero.'}));
+  const columnBoundsRows=[{id:'normal-plus',row:'-N/Ac',sign:1,ideal:'1'},{id:'normal-minus',row:'-N/Ac',sign:-1,ideal:'1'},
+    {id:'tangent-plus',row:'K/u',sign:1,ideal:'-1'},{id:'tangent-minus',row:'K/u',sign:-1,ideal:'1'}]
+    .map(r=>({...r,errorUpper:'kappa/128',errorRoot:b.uniformColumns.maximumEntryError,domain:'Every admissible source band and box, all slow points in the box intersected with the original annulus.'}));
+  const inverseRows=[1,-1].map((sign,i)=>({id:'inverse-'+sign,sign,HthetaRoot:t.H[0][i],HzRoot:t.H[1][i],weightRoot:t.weights[i],
+    normalizedLower:'kappa/64',normalizedUpper:'2',normalization:'mass_sign*y_sign / (-N dot Tstar/Ac)',
+    openSupport:'strictly positive',flatEndpoints:'exactly0; normalized ratio is not evaluated as0/0',
+    exercisedMemberPositivityCertified:false,domain:'ell>=ellMinimum; Xa<X<Xb for strict positivity.'}));
+  const finiteIntegralRows=integrals.rows.flatMap(r=>['theta','z','mass'].map((component,i)=>({id:'finite-H-'+r.sign+'-'+component,sign:r.sign,component,terms:r.terms,
+    approximateIntegralRoot:r.approximateIntegrals[component],exactIntegralRoot:r.exactReferenceRoots[i],lowerRoot:r.enclosure[i][0],upperRoot:r.enclosure[i][1],absoluteErrorRoot:r.absoluteError,
+    factorialTailRoot:r.partial.tail,tailFormula:r.partial.tailFormula,finiteApproximationEqualsLimit:false,numericQuadratureExecuted:false})));
+  const packet={schema:'MathScope.ActualCovarianceFamilyCertificate/1',sourceProfile:request.sourceProfile,profileId:request.sourceProfile,
+    sourceBinding:{profileId:request.sourceProfile,parameterExpressionSHA256:o.parameterExpressionSHA256,graphSHA256:graphSHA,
+      background:'Actual completed all-n source with canonical cutoff sequence; fixed n1/n2 C2 block and generated all-n tail.',leadingTarget:'Actual B8/C12/I1/I2/full heat-prepared order-zero source.'},
+    originalCriterion:{...ACTUAL_COVARIANCE_CRITERION,status:'PASS',evidenceGrade:'THEOREM-BACKED'},
+    graph:{sha256:graphSHA,nodeCount:G.nodes.length,canonicalBytes:new TextEncoder().encode(serialized).byteLength,rootIds,
+      operations:program.operations,volterraSystems:G.covarianceSystems.length,compiler:program.compiler,compilerInput:request,graphIncluded:false,
+      reconstruction:'Run the source compiler with compilerInput; all retained source functions, matrix bodies, ordered-integral terms and tails are in its full graph.'},
+    uniformFamily:{certified:true,certifiedDomain:prepared.domain,
+      threshold:{ellMinimum:expressionRecord(G,b.selection.ellMinimum),qStar:expressionRecord(G,b.selection.qStar),sourceNorm:expressionRecord(G,o.constants.Bnorm),
+        fixedSourceProgramSHA256:thresholdSHA,sourceOnly:true,anchorChangesThreshold:false,additionalDerivativeOrdersChangeThreshold:false,conditions:b.selection.conditions,activeBandBuffer:4},
+      actualMemberAlgorithm:{name:'actualBackgroundDyadicPrefix plus the shared actual covariance operator',input:'Each positive integer ell, its selected source box and fixed representative.',
+        exactLocallyFiniteSum:'Actual n1..ell; every n>=ell+1 inactive for q in[2^(-ell-1),2^(-ell+1)].',
+        arbitraryIntegerDefinition:true,finiteResourceFailureExplicit:true,missingTermsNeverSetToZero:true,efficientAnchorIsSeparate:true},
+      columns:{ideal:[[1,1],[-1,1]],errorUpper:'kappa/128',positiveMass:'(Dg/2)*ci*Integral chi^2*Integral psi^2*x^2 >0',
+        gaussianMassCoefficientRoot:b.recipe.mass.massLowerCoefficient,actualMassLowerRoot:rootIds.actualColumnMassLower,
+        actualMassLowerFormula:'haarFactor * gaussianMassCoefficient * sqrt(Ls)',
+        determinantNormalizedLower:'15/8',absolutePhysicalDeterminantLowerRoot:t.absoluteDeterminantLower,physicalDeterminantSign:'negative',
+        physicalOrientation:'theta,z rows and plus,minus columns; the lower bound is for |det(H)|.'},
+      positiveInverse:{openAnnulus:true,normalizedBounds:['kappa/64','2'],flatEndpoints:'y_plus=y_minus=0',smoothZeroExtension:true,sourceTargetAndHAuthenticated:true,
+        exactLocalCovariance:'C(W0)=epsilon*H*y=epsilon*T0,star',exactResidual:['0','0']},
+      global730:{identity:assembly.identity,exactResidual:['0','0'],scope:'Haar-and-angular averaged momentum covariance for0<q<qStar on the original closed stress annulus, with the exact source zero extension outside it and the complete source slow partition; this is not a numerical Navier-Stokes PDE residual.',
+        actualFullPartition:true,allCandidateBoxes:81,maxPositiveBoxes:16,eachSlowBoxCountedOnce:true,plusMinusAreColumnsInsideBox:true,
+        allCrossLabelProductsVanish:true,physicalTarget:'q^(-A-1/2)*T0',activeBands:prepared.activeBandProof}},
+    exercisedMember:{selector:request.ellExact!==undefined?{ellExact:request.ellExact}:{anchorOrder:request.anchorOrder},selectionKind:o.program.band.selectionKind,
+      ell:expressionRecord(G,o.geometry.ell),Q:expressionRecord(G,o.geometry.Q),exactInactiveTail:o.program.band.exactInactiveTail,
+      certifiedBandMembership:false,determinantNonzeroForThisMemberCertified:false,positivityOfThisMemberCertified:false,
+      reason:'This finite graph exercises the same actual family constructor. Its ell has not been proved above ellMinimum; the universal certified-domain conclusion is not asserted at this exercised member.',
+      sourceFunctionsAndHIntegrandsConstructed:true,finiteIntegralTerms:request.terms,finiteTermsEqualSolution:false,nonzeroTailRetained:true,actualNumericalWholeHQuadrature:false},
+    normalizationRows,operatorBoundsRows,columnBoundsRows,inverseRows,finiteIntegralRows,
+    partitionRows:assembly.rows.map((r,i)=>({...r,actualLabel:prepared.actualPartition.labels[i],source:'Complete original normalized slow partition at the actual q/C_ell nearest offsets; both signs inside this one contribution.'})),
+    expressions:expressionRoots.map(id=>expressionRecord(G,id)),sourceProofs:{movingOperator:b.primitiveDerivation,concentration:b.recipe,cone:b.cone,
+      target:t.sourceTargetProof,finiteH:integrals.proof,palette:prepared.auxiliary.palette,torus:prepared.auxiliary.torus,partition:partition.originalFamily,
+      actualPartitionCoordinates:{bandCoordinate:prepared.actualPartition.bandCoordinate,nearestBand:prepared.actualPartition.nearestBand,bandOffset:prepared.actualPartition.bandOffset,bands:prepared.actualPartition.bands,
+        identity:prepared.actualPartition.actualCoordinateIdentity,nearestOffsetProof:prepared.actualPartition.nearestOffsetProof,profileCompatibility:prepared.actualPartition.profileCompatibility},globalAssembly:assembly.proof},
+    checks:prepared.checks,scope:prepared.scope,pass:true};
+  const packetBytes=new TextEncoder().encode(canonicalStringify(packet)).byteLength;
+  if(packetBytes>8*1024*1024)fail('RESOURCE_LIMIT','The compact source receipt exceeds eight MiB. The graph was not silently truncated.');
+  return packet;
+}
+
+return {ACTUAL_COVARIANCE_CRITERION,covariancePositiveRootProgram,prepareActualCovarianceFamilyProgram,actualCovarianceFamilyCertificate};
+})();
+const __m2_134 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
 const {iadd,isub,imul,idiv,iscale,ilog,point,nextUp,nextDown} = __m2_40;
 const {integrateAffineTangentPulse} = __m2_41;
@@ -9902,9 +13419,10 @@ const {actualContinuationConstruction} = __m2_79;
 const {actualMeanPulsePointwiseAssembly} = __m2_83;
 const {actualResidualOrderCertificate,verifyActualResidualOrderCertificate} = __m2_87;
 const {actualBackgroundMomentCertificate} = __m2_109;
+const {actualCovarianceFamilyCertificate} = __m2_133;
 const PAPER={title:'Finite Time Blowup for Navier–Stokes',url:'https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf',sha256:'0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f'};
 const PROFILE={id:'same-profile-2026-10-10.3',commit:'55dacb898f8c204bf0c5925ea901d75d6c2d0f46',assessmentSha256:'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c',role:'ACCEPTED_N3_ARCHIVE_REFERENCE',globalEvaluator:false,description:'Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.'};
-const KINDS=['ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
+const KINDS=['ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-uniform-covariance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
 const fail=(code,message)=>{throw Object.assign(Error(message),{code});};
 const finite=(v,name,lo=-1e6,hi=1e6)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)fail('INVALID_INPUT',name+' is outside the finite supported interval.');return v;};
 const int=(v,name,lo,hi)=>{finite(v,name,lo,hi);if(!Number.isSafeInteger(v))fail('INVALID_INPUT',name+' must be an integer.');return v;};
@@ -9973,7 +13491,7 @@ function actualCovarianceMatching(input,ctx){
   const data=actualMeanPulsePointwiseAssembly(input,ctx),rows=data.localMatch.rows;
   const checks=[...data.checks,...data.localMatch.checks,...data.localMatch.pulseCovariance.checks,...data.localMatch.meanStress.bounds.checks];
   const output=result({kind:'ACTUAL_SOURCE_COVARIANCE_STRESS_AND_POINTWISE_ASSEMBLY',sourceProfile:data.profileId},data,checks,
-    {axes:[axis('source sign family'),axis('normalized positive squared amplitude','NORMALIZED_ACTUAL_COVARIANCE_WEIGHT'),axis('0')],points:rows.map((r,i)=>({pos:[i,r.normalizedSquaredAmplitude[0]/2+r.normalizedSquaredAmplitude[1]/2,0],value:r.normalizedSquaredAmplitude,label:r.sign,sourceField:`result.results.localMatch.rows[${i}].normalizedSquaredAmplitude`})),lines:[],description:'Actual source pulse covariance, complete heat-prepared stress, positive inverse weights and the complete active squared-partition sum at the certified representative.',lostInformation:['All enormous positive physical scales remain exact source expressions; plotted intervals are their normalized coefficients.','The pointwise identity does not certify every slow neighborhood, the full annulus, or a uniform background q threshold.']},['The actual local inverse and complete representative-point sum are computed. N5-06 still requires a uniform actual-background bound and covariance/positive inverse certificate over the entire active domain.'],'ACTUAL_SOURCE_COVARIANCE_WITH_POSITIVE_INVERSE_AND_COMPLETE_POINT_SUM');
+    {axes:[axis('source sign family'),axis('normalized positive squared amplitude','NORMALIZED_ACTUAL_COVARIANCE_WEIGHT'),axis('0')],points:rows.map((r,i)=>({pos:[i,r.normalizedSquaredAmplitude[0]/2+r.normalizedSquaredAmplitude[1]/2,0],value:r.normalizedSquaredAmplitude,label:r.sign,sourceField:`result.results.localMatch.rows[${i}].normalizedSquaredAmplitude`})),lines:[],description:'Actual source pulse covariance, complete heat-prepared stress, positive inverse weights and the complete active squared-partition sum at the certified representative.',lostInformation:['All enormous positive physical scales remain exact source expressions; plotted intervals are their normalized coefficients.','The pointwise identity does not certify every slow neighborhood, the full annulus, or a uniform background q threshold.']},['This local fixture computes the actual inverse and complete representative-point sum. The separate ns.actual-uniform-covariance certificate supplies the all-band source threshold, full-annulus inverse and global family; those conclusions are not added to this local result.'],'ACTUAL_SOURCE_COVARIANCE_WITH_POSITIVE_INVERSE_AND_COMPLETE_POINT_SUM');
   return {...output,scope:{...output.scope,actualLocalCovarianceMatched:true,actualPointwiseEquation730Verified:true,wholeAnnulusCovarianceMatched:false,sourceUniformQStarCertified:false},sourceHash:data.sourceHash,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; exact F-expression matching, pulse integral, heat debt and active-set proofs are retained in results'};
 }
 
@@ -10002,6 +13520,16 @@ async function actualMomentRestoration(input,ctx){
   const output=result({kind:'ACTUAL_FIRST_AND_SECOND_ORDER_MOMENT_RESTORATION',sourceProfile:data.profileId,orders:[1,2]},data,data.checks,
     {axes:[axis('ordered source endpoint','CATEGORICAL_SOURCE_ENDPOINT'),axis('order and stress component','CATEGORICAL_COMPONENT'),axis('0')],points:[],lines:[],description:'Actual n=1 and n=2 five-moment repairs, reconstructed fields and pressure, executed source-order gate and separate stress-support certificates.',lostInformation:['The continuous functionals and convergent solutions are retained as exact construction operands. Their signed numerical values have not been quadrature evaluated.','Support endpoints are drawn in their verified order; screen spacing is not physical distance.']},[],'ACTUAL_CONVERGENT_FUNCTION_CONSTRUCTION_AND_EXACT_RATIONAL_IDENTITIES');
   return {...output,scope:{...output.scope,finiteCriterion:'N4-04',finiteCriterionPass:accepted,supportedBackgroundOrders:[1,2],actualMomentIdentitiesVerified:true,numericalGlobalMomentQuadrature:false,allOrdersComplete:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; the exact compiled graph digest, root operands and proof traces are retained in results'};
+}
+
+async function actualUniformCovariance(input,ctx){
+  ctx.checkCancelled?.();
+  const data=await actualCovarianceFamilyCertificate(input,ctx);
+  const accepted=data.pass===true&&data.scope?.originalN506Complete===true&&data.checks.every(r=>r.pass===true);
+  if(!accepted)fail('FAILED','The actual uniform covariance family, source threshold, positive inverse and global partition identity did not pass.');
+  const output=result({kind:'ACTUAL_SOURCE_UNIFORM_COVARIANCE_FAMILY',sourceProfile:data.profileId},data,data.checks,
+    {axes:[axis('physical covariance component','CATEGORICAL_COMPONENT'),axis('exact global covariance identity residual','EXACT_FUNCTIONAL_IDENTITY'),axis('0')],points:data.uniformFamily.global730.exactResidual.map((value,i)=>({pos:[i,0,0],value,label:i===0?'theta':'z',sourceField:`result.results.uniformFamily.global730.exactResidual[${i}]`})),lines:[],description:'The two exact global covariance identities on the certified source domain, with actual H integrals, a common source q threshold and every slow box counted once.',lostInformation:['Zero denotes a source-bound functional covariance identity on 0<q<qStar; it is not a numerical Navier-Stokes PDE residual.','The displayed finite member exercises the same constructor. Its membership in the certified band domain and its positive weights have not been established.','Finite ordered-integral terms retain a nonzero convergent tail; no signed numerical whole-H quadrature is claimed.']},[],'ACTUAL_SOURCE_UNIFORM_FUNCTIONAL_COVARIANCE_AND_EXACT_GLOBAL_ASSEMBLY');
+  return {...output,scope:{...output.scope,finite:false,originalCriterion:'N5-06',originalCriterionPass:accepted,actualUniformHColumnsCertified:true,sourceUniformQStarCertified:true,actualEveryCertifiedBoxPositiveInverse:true,globalEquation730Certified:true,strictPositiveWeightsOnlyOnOpenSupport:true,exactZeroWeightsAtFlatEdges:true,actualNumericalWholeHQuadrature:false,exercisedMemberProvedInCertifiedDomain:false,allSlowDerivativeBoundsComputed:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; exact source program, all-band domain, positive threshold, H roots, inverse and complete partition are bound in results'};
 }
 
 function backgroundRecursion(input,ctx){
@@ -10117,6 +13645,7 @@ const INPUT_FIELDS={
   'ns.actual-background':['sourceProfile','radialDegree','tailBits'],
   'ns.actual-picard-acceptance':['sourceProfile','tailBits'],
   'ns.actual-moment-restoration':['sourceProfile','terms','bits','etaOrder','heatIterations'],
+  'ns.actual-uniform-covariance':['sourceProfile','anchorOrder','ellExact','terms'],
   'ns.actual-pulse-amplitude':['sourceProfile','y','sign','steps'],
   'ns.actual-covariance-matching':['sourceProfile','y','cells','cutoffCells','bits'],
   'ns.actual-residual-order':['sourceProfile','bits','mesh','maxDerivativeOrder','timeIndices'],
@@ -10144,6 +13673,7 @@ const NUMERIC_FIELDS={
   'ns.actual-background':{radialDegree:[1,6,true],tailBits:[16,4096,true]},
   'ns.actual-picard-acceptance':{tailBits:[16,4096,true]},
   'ns.actual-moment-restoration':{terms:[0,2,true],bits:[16,4096,true],etaOrder:[0,2,true],heatIterations:[0,2,true]},
+  'ns.actual-uniform-covariance':{anchorOrder:[1,2,true],terms:[0,2,true]},
   'ns.actual-pulse-amplitude':{y:[.25,4.75],sign:[-1,1,true],steps:[8,256,true]},
   'ns.actual-covariance-matching':{y:[.25,4.75],cells:[64,512,true],cutoffCells:[64,512,true],bits:[16,4096,true]},
   'ns.actual-residual-order':{bits:[96,512,true],mesh:[4,32,true],maxDerivativeOrder:[0,6,true]},
@@ -10182,6 +13712,13 @@ function validate(kind,input={}){
     if(!input||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Input must be an object.');
     const unknown=Object.keys(input).filter(k=>!INPUT_FIELDS[kind].includes(k));if(unknown.length)fail('INVALID_INPUT','Unknown '+kind+' input fields: '+unknown.join(', ')+'.');
     finiteTree(input);
+    if(kind==='ns.actual-uniform-covariance'){
+      if(input.anchorOrder!==undefined&&input.ellExact!==undefined)fail('INVALID_INPUT','Choose anchorOrder or ellExact, not both.');
+      if(input.ellExact!==undefined){
+        if(typeof input.ellExact!=='string'||input.ellExact.length>2048||!/^[0-9]+$/.test(input.ellExact)||BigInt(input.ellExact)<1n)fail('INVALID_INPUT','ellExact requires a positive exact integer string.');
+        if(BigInt(input.ellExact)>128n)fail('BUDGET_EXCEEDED','The installed finite graph budget supports ellExact up to128. The all-band construction and its domain are recorded separately; missing coefficients are never set to zero.');
+      }
+    }
     if(kind==='ns.actual-covariance-matching')for(const field of ['cells','cutoffCells'])if(input[field]!==undefined&&![64,128,256,512].includes(input[field]))fail('INVALID_INPUT','Actual covariance cells must be 64,128,256 or 512.');
     if(kind==='ns.actual-pulse-amplitude'&&((input.sign!==undefined&&![1,-1].includes(input.sign))||(input.steps!==undefined&&(input.steps&(input.steps-1))!==0)))fail('INVALID_INPUT','Actual pulse sign must be +1 or -1 and steps must be 8,16,32,64,128 or 256.');
     if(kind==='ns.actual-residual-order'){
@@ -10234,6 +13771,11 @@ function validate(kind,input={}){
 function precisionContract(kind,value={},input={}){
   if(!value||typeof value!=='object'||Array.isArray(value))fail('INVALID_INPUT','precision must be an object.');
   const unknown=Object.keys(value).filter(k=>!['mode','bits'].includes(k));if(unknown.length)fail('UNSUPPORTED','This finite NS adapter does not implement requested tolerance/precision fields: '+unknown.join(', ')+'.');
+  if(kind==='ns.actual-uniform-covariance'){
+    if(!['AUTO','EXACT_CONSTRUCTIVE'].includes(value.mode??'AUTO'))fail('PRECISION_REQUIRED','Use AUTO or EXACT_CONSTRUCTIVE for the exact source family and convergent integral expressions. Numerical whole-H quadrature is not installed.');
+    if(value.bits!==undefined)fail('UNSUPPORTED','This certificate has no requested bit precision. terms changes the displayed finite Volterra prefix while its nonzero factorial tail remains.');
+    return {requested:value,arithmetic:'EXACT_BIGINT_RATIONAL_IDENTITIES_AND_CONVERGENT_FUNCTION_OPERATIONS',arithmeticBits:null,fullResultExact:false,exactAlgebra:true,finiteTermsAreNotTheSolution:true,actualNumericalWholeHQuadrature:false,exercisedMemberProvedInCertifiedDomain:false,displayArithmetic:'EXACT_SOURCE_EXPRESSIONS_AND_CERTIFIED_DOMAIN_IDENTITIES',formalPass:false};
+  }
   if(kind==='ns.actual-moment-restoration'){
     const mode=value.mode??'AUTO',targetBits=input.bits??value.bits??128;
     if(!['AUTO','EXACT_CONSTRUCTIVE'].includes(mode))fail('PRECISION_REQUIRED','Use AUTO or EXACT_CONSTRUCTIVE for exact function construction and algebraic identities. Numerical moment quadrature is not installed for this certificate.');
@@ -10265,6 +13807,7 @@ function resourceEstimate(kind,input){
     'ns.actual-background':()=>500000*((input.radialDegree??3)+1)**2,
     'ns.actual-picard-acceptance':()=>4000000,
     'ns.actual-moment-restoration':()=>30000000+5000000*(input.terms??0)+5000000*(input.heatIterations??0),
+    'ns.actual-uniform-covariance':()=>40000000+5000000*(input.terms??1),
     'ns.actual-pulse-amplitude':()=>5000000+8000*(input.steps??64),
     'ns.actual-covariance-matching':()=>8000000+8000*((input.cells??256)+(input.cutoffCells??input.cells??256)),
     'ns.actual-residual-order':()=>2000000+10000*(input.mesh??8)+2000*(input.bits??128),
@@ -10284,7 +13827,7 @@ function resourceEstimate(kind,input){
     'ns.pulse-curl':()=>1800000,
     'ns.pulse-tail':()=>500*(input.count??80)
   }[kind]();
-  const items=kind==='ns.actual-moment-restoration'?30000:kind==='ns.actual-residual-order'?12000+24*(input.mesh??8):kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
+  const items=kind==='ns.actual-uniform-covariance'?100000:kind==='ns.actual-moment-restoration'?30000:kind==='ns.actual-residual-order'?12000+24*(input.mesh??8):kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
   return {algorithmicOperationsEstimate:operations,outputItemsEstimate:items,policy:'STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE'};
 }
 function validateRequest(r){
@@ -10306,9 +13849,9 @@ function finiteJson(value){
   return value;
 }
 async function run(kind,input={},context={}){
-  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
-  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:'m2-ns-0.3.5',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
-  catch(error){if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
+  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-uniform-covariance':actualUniformCovariance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
+  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:'m2-ns-0.3.6',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
+  catch(error){if(kind==='ns.actual-uniform-covariance'&&error.code==='RESOURCE_LIMIT')return {kind,status:'BUDGET_EXCEEDED',checks:[],blockers:[error.message],message:error.message};if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
 }
 async function runJob(r,context={}){return run(r.kind,r.input,{...context,precision:r.precision??context.precision??{},budget:r.budget??context.budget??{}});}
 function getExamples(){return [
@@ -10318,6 +13861,7 @@ function getExamples(){return [
   ['ns-m2-actual-background','N4 · 실제 원본 1차 보정·양의 반경 구간·모멘트 기여','ns.actual-background',{sourceProfile:SOURCE_PROFILE_ID,radialDegree:3,tailBits:128}],
   ['ns-m2-actual-picard-acceptance','N4 · 실제 n=1 Picard 유한 합격·공통 구간·tail','ns.actual-picard-acceptance',{sourceProfile:SOURCE_PROFILE_ID,tailBits:128}],
   ['ns-m2-actual-moment-restoration','N4 · 실제 1·2차 모멘트 10개·소스 순서·응력 지지','ns.actual-moment-restoration',{sourceProfile:SOURCE_PROFILE_ID,terms:0,bits:128,etaOrder:2,heatIterations:0}],
+  ['ns-m2-actual-uniform-covariance','N5 · 전체 실제 공분산·공통 q*·양의 역원·전역 (7.30)','ns.actual-uniform-covariance',{sourceProfile:SOURCE_PROFILE_ID,anchorOrder:1,terms:1}],
   ['ns-m2-actual-pulse-amplitude','N5 · 실제 성장 펄스·위상·에너지·Gaussian 구간','ns.actual-pulse-amplitude',{sourceProfile:SOURCE_PROFILE_ID,y:2.5,sign:1,steps:64}],
   ['ns-m2-actual-covariance-matching','N5 · 실제 공분산·응력·양의 역행렬·전체 활성 합','ns.actual-covariance-matching',{sourceProfile:SOURCE_PROFILE_ID,y:2.5,cells:256,cutoffCells:256,bits:512}],
   ['ns-m2-actual-residual-order','N4 · 같은 배경의 N=0/1 잔차·고정 영역·독립 정련','ns.actual-residual-order',{sourceProfile:SOURCE_PROFILE_ID,bits:128,mesh:8,maxDerivativeOrder:2,timeIndices:[4,8,12,16]}],
@@ -10336,12 +13880,12 @@ function getExamples(){return [
   ['ns-m2-covariance','N5 · 두 family 공분산·정규화 Haar·실제 Jacobian','ns.pulse-covariance',{target:[-1,0],amplitude:1,liftedArea:1/64,epsilon:.1}],
   ['ns-m2-pulse-curl','N5 · 원문 C_m·전체 r_m·Cartesian curl 대조','ns.pulse-curl',{ell:8}],
   ['ns-m2-tail','N5 · 전체 cutoff 잔차 jet·조건부 고정차수 flatness','ns.pulse-tail',{c:.2,C:2,derivativeLoss:2,targetPower:4,ellStart:8,count:80}]
-].map(([id,label,kind,input])=>({id,label,request:{kind,input}}));}
-function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],implemented:'Actual first/second-order convergent functions, ten restored continuous moments, twelve inner PDE identities, preheat/heat invariant, four stress supports and private prior-order gates; actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order','EXACT_CONSTRUCTIVE with 16..4096 analytic tail target bits for ns.actual-moment-restoration; signed numerical quadrature is not implied'],checklist:getChecklist(),requiredNext:['all-order source recursion and canonical cutoff selection after finalized actual moments','extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N','whole-annulus background/pulse jets, all slow Gaussian derivatives, and actual covariance']};}
+].map(([id,label,kind,input])=>({id,label,request:{kind,input,...(kind==='ns.actual-uniform-covariance'?{precision:{mode:'EXACT_CONSTRUCTIVE'},budget:{maxMillis:60000}}:{})}}));}
+function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],implemented:'Actual uniform source covariance family with internally generated common qStar, all-band completed C2 background, actual moving operators, convergent H integrals, positive inverse on the open annulus, flat endpoint extension and complete global (7.30); actual first/second-order convergent functions, ten restored continuous moments, twelve inner PDE identities, preheat/heat invariant, four stress supports and private prior-order gates; actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order','EXACT_CONSTRUCTIVE with 16..4096 analytic tail target bits for ns.actual-moment-restoration; signed numerical quadrature is not implied','EXACT_CONSTRUCTIVE without requested bits for ns.actual-uniform-covariance; finite Volterra terms retain a nonzero factorial tail'],checklist:getChecklist(),requiredNext:['extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N','materialize all slow Gaussian derivative bounds and the complete physical flat-error assembly beyond the accepted original criteria']};}
 
 return {validate,validateRequest,run,runJob,getExamples,getCapabilities};
 })();
-const __m2_111 = (()=>{
+const __m2_135 = (()=>{
 const {requireCondition,groupDescriptor} = __m2_23;
 const {createField,normalizeFieldSpec} = __m2_25;
 function positive(x,name){requireCondition(Number.isFinite(x)&&x>0&&x>=1e-4&&x<=1e4,'DELTA_OR_SCALE_BOUNDS',`${name} must lie in [1e-4,1e4].`,name);}
@@ -10390,7 +13934,7 @@ function finiteSpectralModel(s){requireCondition(s&&Number.isFinite(s.delta)&&s.
 
 return {canonical,sha256,normalizeFamily,createStateFamily,stateFamilyDescriptor,finiteSpectralModel};
 })();
-const __m2_112 = (()=>{
+const __m2_136 = (()=>{
 const {requireCondition} = __m2_23;
 const {evaluateField,bpstMarginal,simpson} = __m2_25;
 function intervals(x,n,name){requireCondition(Array.isArray(x)&&x.length===n&&x.every(v=>Array.isArray(v)&&v.length===2&&v.every(w=>Number.isFinite(w)&&Math.abs(w)<=1e4)&&v[0]<v[1]),'OBSERVATION_BOUNDS',`${name} needs ${n} finite ordered intervals.`);return x.map(v=>v.slice());}
@@ -10434,13 +13978,13 @@ function sampleObservation(state,observation){
 
 return {normalizeObservation,observationCost,sampleObservation};
 })();
-const __m2_113 = (()=>{
+const __m2_137 = (()=>{
 /** MathScope M1 gauge facade. Pure bounded worker API; JSON-safe output. */
 const M = __m2_21;
 const {GaugeInputError,requireCondition,normalizeGroupSpec,createGroup,availableGroups,groupDescriptor,detailedDescriptor,verifyGroup} = __m2_23;
 const {createField,normalizeFieldSpec,verifyFieldAt,verifyDensityQuadrature,evaluateField,normalizeGauge,bpstBallMass,verifyCoordinateCurvature,verifyPeriodicSeam,normalizeFieldGauge} = __m2_25;
-const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_111;
-const {normalizeObservation,observationCost,sampleObservation} = __m2_112;
+const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_135;
+const {normalizeObservation,observationCost,sampleObservation} = __m2_136;
 const {normalizePath,wilsonLoop,plaquettePath} = __m2_27;
 const KINDS=['gauge.group','gauge.field','gauge.family','gauge.holonomy','gauge.spectral'];
 const SOURCES=[{"id":"YM-R01","title":"Quantum Yang–Mills Theory / Yang–Mills & the Mass Gap","authors":"Arthur Jaffe; Edward Witten; Clay Mathematics Institute","url":"https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf","locator":"인쇄 p. 6 §4: 존재·스펙트럼 간극 정의; p. 7 §5: 부피에 균일한 간극과 무한 부피 문제","status":"THEOREM_REFERENCE","role":"compact simple G, nontrivial R⁴ quantum theory, QFT axioms, positive spectral gap의 동시 요구. 현재 공식 상태 Unsolved.","leanImport":null,"kernelReceipt":null},{"id":"YM-R02","title":"Math 210C. Compact Lie Groups","authors":"Brian Conrad; Aaron Landesman","url":"https://math.stanford.edu/~conrad/210CPage/handouts/lie_groups_notes.pdf","locator":"§§17–18 pp.75–83; §26 p.114 이하; Appendices K,V,Y","status":"THEOREM_REFERENCE","role":"rank-one subgroup, character/cocharacter lattice, normal subgroup, global group center/fundamental group를 분리하는 구조 설계","leanImport":null,"kernelReceipt":null},{"id":"YM-R05","title":"Matter representations from geometry: under the spell of Dynkin","authors":"Mboyo Esole; Monica Jinwoo Kang","url":"https://arxiv.org/pdf/2012.13401","locator":"§2.5 pp.15–16(현재 PDF 페이지 16), Dynkin index of an embedding","status":"THEOREM_REFERENCE","role":"기본 불변형의 정규화에 대한 Lie algebra embedding index. 본 설계의 B_G(ιX,ιY)=IιB_SU2(X,Y) convention을 독립 명시.","leanImport":null,"kernelReceipt":null},{"id":"YM-R06","title":"Lectures on instantons","authors":"Stefan Vandoren; Peter van Nieuwenhuizen","url":"https://arxiv.org/pdf/0802.1862","locator":"§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding","status":"THEOREM_REFERENCE","role":"anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.","leanImport":null,"kernelReceipt":null},{"id":"YM-R07","title":"Gauge Theory — Chapter 4: Lattice Gauge Theory","authors":"David Tong","url":"https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf","locator":"§4.1; 인쇄 p.202 이하; link gauge transform eq.(4.8)","status":"THEOREM_REFERENCE","role":"4D Euclidean lattice, group links, Wilson loops와 작용 및 격자 cutoff의 의미","leanImport":null,"kernelReceipt":null},{"id":"YM-R08","title":"Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories","authors":"Martin Lüscher","url":"https://link.springer.com/article/10.1007/BF01614090","locator":"출판사 초록과 서지사항; 실제 선택한 모델의 가정 대응은 Y4-06/Y7-06의 후속 작업","status":"THEOREM_REFERENCE","role":"Wilson lattice gauge theory의 physical positivity와 transfer matrix 구성 근거","leanImport":null,"kernelReceipt":null},{"id":"YM-R09","title":"Gauge field theories on a lattice","authors":"Konrad Osterwalder; Erhard Seiler","url":"https://www.sciencedirect.com/science/article/abs/pii/0003491678900398","locator":"출판사 초록·서지사항; Euclidean lattice construction 및 positivity","status":"THEOREM_REFERENCE","role":"유클리드 격자 gauge theory의 positivity/constructive framework. continuum 존재 증명으로 확장하지 않음.","leanImport":null,"kernelReceipt":null},{"id":"YM-R13","title":"The Lean Language Reference — Axioms","authors":"Lean FRO contributors","url":"https://lean-lang.org/doc/reference/latest/Axioms/","locator":"axiom declaration, consistency 및 #print axioms","status":"THEOREM_REFERENCE","role":"사용자 axiom의 논리적 지위·의존성 감사. 기존 Lean 4.34.1 결과는 로컬 source/hash/log로 별도 증빙.","leanImport":null,"kernelReceipt":null},{"id":"YM-R14","title":"The Octonions","authors":"John C. Baez","url":"https://math.ucr.edu/home/baez/octonions/node14.html","locator":"§4.1 G2; Theorem 4, compact Der(O) subset so(Im O); 7-dimensional faithful representation and invariant cross product","status":"THEOREM_REFERENCE","role":"Compact G2 as octonion automorphisms/positive 3-form stabilizer, not split G2. The generator uses its explicitly documented equivalent Cayley–Dickson convention.","leanImport":null,"kernelReceipt":null},{"id":"YM-R15","title":"Math 249B. Root systems for split classical groups","authors":"Brian Conrad","url":"https://virtualmath1.stanford.edu/~conrad/249BW16Page/handouts/classicalgps.pdf","locator":"§§2–5 (8-page PDF), roots/coroots/character lattices for A/B/C/D; use complexification to connect with the separately constructed compact real form","status":"THEOREM_REFERENCE","role":"Classical root and coroot integer data. This split-algebra reference alone is not a proof of the compact form, which is constructed and checked separately.","leanImport":null,"kernelReceipt":null}];
@@ -10536,7 +14080,7 @@ function getExamples(){
 
 return {validateRequest,runJob,getCapabilities,getExamples,createGroup,createField,createStateFamily,evaluateField,verifyGroup,verifyFieldAt,verifyDensityQuadrature,sampleObservation,wilsonLoop,canonical,sha256};
 })();
-const __m2_114 = (()=>{
+const __m2_138 = (()=>{
 const {ComputeError,positive,finiteNumber} = __m2_40;
 function parameters(input={}){
   const tau=positive(input.tau??.1,'tau'),h=finiteNumber(input.h??.005,'h'),viscosity=positive(input.viscosity??1,'viscosity');
@@ -10576,7 +14120,7 @@ function coordinateFieldSample(input={},budget){
 
 return {parameters,fromSimilarity,toSimilarity,transformedDerivative,monomialJet,coordinateFieldSample};
 })();
-const __m2_115 = (()=>{
+const __m2_139 = (()=>{
 const {ComputeError,integrate,makeBudget,finiteNumber,positive,boundedInteger,point,iadd,isub,idiv,imul,iscale,nextUp,nextDown,ball} = __m2_40;
 // Real Taylor coefficients in eta. These are formal finite jets, not a tail proof.
 const jetC=(x,n)=>[x,...Array(n).fill(0)];
@@ -10647,7 +14191,7 @@ function evaluateAxis(solution,X){
 
 return {jetC,jetVar,jetAdd,jetScale,jetSub,jetMul,jetInv,jetDiv,jetDeriv,jetExp,jetLog,jetPow,jetEval,comparisonSeries,axisData,solveAxisCoefficients,evaluateAxis};
 })();
-const __m2_116 = (()=>{
+const __m2_140 = (()=>{
 const {ComputeError,point,interval,iadd,isub,imul,idiv,iscale,ipow,iexp,ilog,ipower,ball,midpoint,maxabs,nextUp,nextDown,jvar,jconst,jadd,jsub,jmul,jscale,jexp,jlog,certifiedSimpson,integrate,makeBudget,positive,finiteNumber} = __m2_40;
 const validateH=h=>{h=finiteNumber(h,'h');if(!(h>0&&h<.01))throw new ComputeError('INVALID_INPUT','0 < h < .01 required');return h;};
 const rising=(h,m)=>{let v=1;for(let i=0;i<m;i++)v*=h+i;return v;};
@@ -10719,10 +14263,10 @@ function heatTaylorFinite(Z,h=.005,N=8){
 
 return {heatIntegralCertificate,heatFast,exteriorJet,exteriorPoint,taylorGreenPoint,heatTaylorFinite};
 })();
-const __m2_117 = (()=>{
+const __m2_141 = (()=>{
 const {ComputeError,integrate,makeBudget,solveLinear,positive,boundedInteger,point,interval,iadd,isub,imul,idiv,ipow,ipower,ball} = __m2_40;
-const {heatFast} = __m2_116;
-const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_115;
+const {heatFast} = __m2_140;
+const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_139;
 function smoothStep(y){if(y<=0)return 0;if(y>=1)return 1;const z=-1/(y*y)+1/((1-y)**2);return z>0?1/(1+Math.exp(-z)):Math.exp(z)/(1+Math.exp(z));}
 function smoothStepDerivative(y){if(y<=0||y>=1)return 0;const s=smoothStep(y);return s*(1-s)*(2/y**3+2/(1-y)**3);}
 function compactBump(x,a,b){if(!(a<b))throw new ComputeError('INVALID_SUPPORT','Bump support must have positive width');if(x<=a||x>=b)return 0;return smoothStepDerivative((x-a)/(b-a))/(b-a);}
@@ -10844,11 +14388,11 @@ function coneModulationFixture({N=32,amplitude=.12,Xa=1,Xb=4}={}){
 
 return {smoothStep,smoothStepDerivative,compactBump,parameterOrder,buildOuterSchedule,fiveMoments,solveFiveMomentRepair,coneMargins,certifiedConeBox,coneModulationFixture};
 })();
-const __m2_118 = (()=>{
+const __m2_142 = (()=>{
 const {ComputeError,integrate,makeBudget,boundedInteger,positive} = __m2_40;
-const {parameters,fromSimilarity,toSimilarity} = __m2_114;
-const {solveAxisCoefficients,evaluateAxis} = __m2_115;
-const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_117;
+const {parameters,fromSimilarity,toSimilarity} = __m2_138;
+const {solveAxisCoefficients,evaluateAxis} = __m2_139;
+const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_141;
 /** Executable candidate, not Theorem 4.6 certification.
  * The nonlinear axis coefficients and outer unedited schedule are source formulae.
  * The intervening C-infinity diagnostic continuation is identified as such; the
@@ -10903,7 +14447,7 @@ function constructLeadingCandidate(input={},budget=makeBudget()){
 
 return {constructLeadingCandidate};
 })();
-const __m2_119 = (()=>{
+const __m2_143 = (()=>{
 const {matrix,identity,zero,multiply,equalMatrix} = __m2_0;
 const {p1Model,p1Retraction,checkComplex,checkRetraction,checkChainMap} = __m2_3;
 /** Integral unimodular coordinate changes, including a non-permutation shear. */
@@ -10939,15 +14483,15 @@ function transportRetraction(C,a){const R=p1Retraction(C);return {...R,i:R.i.map
 
 return {basisChange,transportComplex,complexBasis};
 })();
-const __m2_120 = (()=>{
+const __m2_144 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
-const LegacyGauge = __m2_113;
-const {finiteSpectralModel} = __m2_111;
-const {fromSimilarity} = __m2_114;
-const {constructLeadingCandidate} = __m2_118;
+const LegacyGauge = __m2_137;
+const {finiteSpectralModel} = __m2_135;
+const {fromSimilarity} = __m2_138;
+const {constructLeadingCandidate} = __m2_142;
 const {makeBudget} = __m2_40;
 const Gauge = __m2_39;
-const {complexBasis} = __m2_119;
+const {complexBasis} = __m2_143;
 const clone=x=>JSON.parse(JSON.stringify(x));
 const KINDS=['observation.delta-family','observation.gauge-4d','observation.blowup-pair','observation.complex-basis'];
 const MODES=['ASSUMED_BOUND','UNITS','EFFECTIVE_MODEL','ENSEMBLE_ESTIMATE'];
@@ -11092,13 +14636,13 @@ function getExamples(){
 
 return {validateRequest,verifyCorrelatorFamily,runJob,getCapabilities,getExamples};
 })();
-const __m2_121 = (()=>{
+const __m2_145 = (()=>{
 const Arithmetic = __m2_19;
 const Gauge = __m2_39;
-const Navier = __m2_110;
-const Observatory = __m2_120;
+const Navier = __m2_134;
+const Observatory = __m2_144;
 const {canonicalStringify,sha256} = __m2_24;
-const M2_VERSION='0.3.5';
+const M2_VERSION='0.3.6';
 const LIMITS=Object.freeze({maxMillis:60000,maxBytes:8*1024*1024,maxItems:250000,maxOperations:50000000,maxJobs:128,maxConcurrent:1,maxInputBytes:262144});
 const DOMAINS=Object.freeze({arithmetic:Arithmetic,gauge:Gauge,ns:Navier,observation:Observatory});
 const clone=x=>JSON.parse(canonicalStringify(x));
@@ -11132,8 +14676,8 @@ async function requestHash(request){return sha256(normalizeRequest(request));}
 
 return {M2_VERSION,LIMITS,clone,bytes,normalizeRequest,validateDomainRequest,listExamples,listCapabilities,executeDomain,requestHash};
 })();
-const __m2_122 = (()=>{
-const {executeDomain} = __m2_121;
+const __m2_146 = (()=>{
+const {executeDomain} = __m2_145;
 let cancelled=false;
 self.onmessage=async event=>{
   if(event.data?.type==='cancel'){cancelled=true;return;}

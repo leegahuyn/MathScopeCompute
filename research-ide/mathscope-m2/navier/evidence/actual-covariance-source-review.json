@@ -1,0 +1,114 @@
+{
+  "schema": "MathScope.ActualCovarianceIndependentSourceReview/1",
+  "reviewer": "/root/blueprint_review",
+  "criterion": "N5-06",
+  "sourceProfile": "same-profile-2026-10-10.3",
+  "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "sourceCaptureAt": "2026-10-10T13:35:30.980803+00:00",
+  "sourceHashScope": "Source bytes observed after the review execution. These are not represented as a pre-execution release manifest or an independently observed live HTML digest.",
+  "sourceFiles": [
+    {"path": "research-ide/mathscope-m2/navier/actual-covariance-source-certificate.mjs", "sha256": "45303f4d722346b11cbe685b0665fdf701186adeef4f24a7d81f3d3d8c08fa30", "bytes": 30672},
+    {"path": "research-ide/mathscope-m2/navier/actual-covariance-source-operator.mjs", "sha256": "8de6b94b5819ec7b7cdbf8312de32e0c7f8556d9e2d78fa250542f1d6ee3b759", "bytes": 15975},
+    {"path": "research-ide/mathscope-m2/navier/actual-covariance-source-target.mjs", "sha256": "c79f67ef6310d398703629782f3bf8ec41743443f108123593018810bf8f2885", "bytes": 7379},
+    {"path": "research-ide/mathscope-m2/navier/actual-covariance-source-integrals.mjs", "sha256": "7afcf40245266ad2d7f5f07f6124a588c177db1f0d4561bb9da774d5b2e2cbd0", "bytes": 3695},
+    {"path": "research-ide/mathscope-m2/navier/actual-covariance-operator-bounds.mjs", "sha256": "b5e96a01ba3a64c2d8b07c4562cccc3bf5c062180a1b0fb8cae9bd799e896d88", "bytes": 16587},
+    {"path": "research-ide/mathscope-m2/navier/actual-covariance-matrix.mjs", "sha256": "7419cc0aa5e08fb57c11264013f661f85a82fb481fb69e4610029d806c1efd26", "bytes": 3925},
+    {"path": "research-ide/mathscope-m2/navier/actual-covariance-volterra.mjs", "sha256": "b5f4b9f6e7eb4dde5259bd2df319c8c56882748b2a41a353a5627c7b91ccbdc7", "bytes": 6664},
+    {"path": "research-ide/mathscope-m2/navier/actual-covariance-global-assembly.mjs", "sha256": "bd0f09f78a2f93cad9fdb679ba25509ecb2891ba86eee1bc3e57df6da74e37cc", "bytes": 11207},
+    {"path": "research-ide/mathscope-m2/navier/source-geometry.mjs", "sha256": "cb870c627ac561ad47261453487b20bcf9083b3d41abe7d2a5cf3b9e55cfc310", "bytes": 11012},
+    {"path": "research-ide/mathscope-m2/navier/source-support.mjs", "sha256": "3cc1397c28894bcabc8f78705b1774e5785f75c6317f4c5d9af56a6ccea66ed9", "bytes": 7482}
+  ],
+  "execution": {
+    "environment": "Node.js v24.19.0, local executor",
+    "entry": "prepareActualCovarianceFamilyProgram",
+    "input": {"anchorOrder": 1, "terms": 1},
+    "initialPreparationElapsedMs": 24601.784729,
+    "initialGraphNodeCount": 316480,
+    "producerChecks": {"passed": 26, "total": 26},
+    "positiveReviewChecks": [
+      "physical-time-plus-tau-is-one",
+      "one-source-actual-h",
+      "one-source-actual-q",
+      "one-source-actual-Q",
+      "target-two-actual-H-inverse-identities",
+      "H-columns-preserved",
+      "actual-mass-lower-complete",
+      "partition-offsets-actual-physical-coordinates-only",
+      "actual-81-labels-and-two-signs",
+      "no-detached-physical-wave-coordinates",
+      "shared-hash-root-source-only",
+      "restored-private-operator-valid",
+      "restored-private-partition-valid"
+    ],
+    "positiveReviewPassed": 13,
+    "negativeReviewChecks": [
+      {"id": "copied-operator", "expected": "INVALID_SOURCE_CONSTRUCTION", "pass": true},
+      {"id": "copied-partition", "expected": "INVALID_SOURCE_CONSTRUCTION", "pass": true},
+      {"id": "changed-source-h", "expected": "INVALID_SOURCE_CONSTRUCTION", "pass": true},
+      {"id": "duplicate-box-row", "expected": "INVALID_SOURCE_CONSTRUCTION", "pass": true}
+    ],
+    "publicInputChecks": [
+      {"input": {"sourceProfile": "made-up"}, "expected": "UNSUPPORTED", "pass": true},
+      {"input": {"fields": {}}, "expected": "INVALID_INPUT", "pass": true},
+      {"input": {"target": [0, 0]}, "expected": "INVALID_INPUT", "pass": true},
+      {"input": {"scope": {"originalN506Complete": true}}, "expected": "INVALID_INPUT", "pass": true},
+      {"input": {"ellExact": "0"}, "expected": "INVALID_INPUT", "pass": true},
+      {"input": {"ellExact": "1", "anchorOrder": 1}, "expected": "INVALID_INPUT", "pass": true},
+      {"input": {"ellExact": 1}, "expected": "INVALID_INPUT", "pass": true},
+      {"input": {"terms": 3}, "expected": "RESOURCE_LIMIT", "pass": true},
+      {"input": {"anchorOrder": 3}, "expected": "RESOURCE_LIMIT", "pass": true},
+      {"input": {"ellExact": "129"}, "expected": "RESOURCE_LIMIT", "pass": true}
+    ],
+    "allPass": true,
+    "countingScope": "Independent ad-hoc review executions. Do not automatically add these counts to the committed project regression-suite total."
+  },
+  "hashObservations": {
+    "fixedSourceThresholdProgramSHA256": "da2db77ef2fdaaf4a61aeb7650a15e04cdc460a6f2a2810d079ea4ad741df1d2",
+    "postReviewDiagnosticGraphSHA256": "8f202b221f45b103e8d3de2075e47373f3e24dd9487dc94909f121909865a3e4",
+    "postReviewCanonicalBytes": 12675642,
+    "temporaryNodesWereAddedDuringReview": true,
+    "diagnosticGraphIsReleaseReplayHash": false,
+    "explanation": "Additional exact identities and a restored negative h-root reassignment appended temporary nodes after initial preparation. The final diagnostic digest cannot be used as the default compiler, Worker, live, or release digest."
+  },
+  "scope": {
+    "independentMathematicalReviewComplete": true,
+    "noAdditionalBlockerFoundForOriginalN506ExactFunctionalFamily": true,
+    "universalDomain": "All original integer bands ell>=internally generated ellMinimum, with 0<q<qStar for global730.",
+    "positivityDomain": "Strict positivity only on Xa<X<Xb; both weights have exact smooth zero extension at the two flat endpoints.",
+    "physicalDeterminantSign": "negative",
+    "positiveDeterminantLowerAppliesTo": "absolute value of det(H)",
+    "finiteDisplayedMemberProvedAdmissible": false,
+    "actualNumericalWholeHQuadratureExecuted": false,
+    "finiteVolterraPartialIdentifiedWithLimit": false,
+    "allSlowDerivativeBoundsComputedByThisReview": false,
+    "newLeanKernelProof": false,
+    "fullNavierStokesSolutionOrRegularityCertification": false,
+    "liveBrowserVerificationPerformedByThisReview": false
+  },
+  "replay": {
+    "reviewMethod": "Read the producer's actual replay artifact and the test that asserts canonical packet equality and root IDs. This reviewer did not re-run the producer suite or add its counts to the independent checks above.",
+    "producerSuite": "research-ide/mathscope-m2/navier/tests/actual-covariance-source.test.mjs",
+    "producerReportedSuiteCounts": {"passed": 11, "total": 11},
+    "observedArtifact": "/tmp/actual-covariance-source-replay.json",
+    "requests": [
+      {},
+      {"ellExact": "1", "terms": 1},
+      {"sourceProfile": "same-profile-2026-10-10.3", "anchorOrder": 1, "terms": 1}
+    ],
+    "graphSHA256": [
+      "c3c1979a569c2f995fe7c6332e34b5d5a7f068207be0f7690c14d1dccc6e1d4c",
+      "17d680972b2c9b564507a7836b633c804a2bd688d5be19b7678b723de594d319",
+      "c3c1979a569c2f995fe7c6332e34b5d5a7f068207be0f7690c14d1dccc6e1d4c"
+    ],
+    "defaultCanonicalPacketEqualsExplicitDefault": true,
+    "defaultRootIdsEqualExplicitDefault": true,
+    "allThreeThresholdProgramHashesEqual": true,
+    "defaultInitialGraphNodeCount": 316480,
+    "defaultCanonicalGraphBytes": 12675574,
+    "defaultCompactPacketBytes": 130618,
+    "defaultGraphMatchesPostReviewDiagnosticGraph": false,
+    "sourceRuntimeFilesModifiedByReviewer": false,
+    "gitOrDeploymentPerformedByReviewer": false
+  },
+  "documentation": "research-ide/mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_REVIEW_KO.md"
+}

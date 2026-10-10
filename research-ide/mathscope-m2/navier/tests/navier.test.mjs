@@ -19,12 +19,12 @@ const finiteTree=(value,path='result')=>{
   else if(value&&typeof value==='object')for(const[k,v]of Object.entries(value))finiteTree(v,path+'.'+k);
 };
 
-test('all twenty-four N4/N5 examples execute with source graphics and distinguish completed operators from unresolved constructions',async()=>{
-  assert.equal(examples.length,24);
+test('all twenty-five N4/N5 examples execute with source graphics and distinguish completed operators from unresolved constructions',async()=>{
+  assert.equal(examples.length,25);
   for(const e of examples){
     const result=await executeDomain(e.request),job={id:e.id,request:e.request,inputHash:await requestHash(e.request),status:result.status,result,resultHash:await sha256(result)};
     fixtures.set(e.id,job);finiteTree(result);
-    assert.equal(result.status,['ns-m2-actual-picard-acceptance','ns-m2-actual-pulse-amplitude','ns-m2-actual-moment-restoration','ns-m2-actual-residual-order','ns-m2-cutoffs','ns-m2-curl','ns-m2-dyadic','ns-m2-core-charts','ns-m2-torus','ns-m2-support','ns-m2-pulse-curl','ns-m2-tail'].includes(e.id)?'COMPLETED':'PARTIAL',e.id);assert.ok(result.checks.length>0,e.id);assert.ok(result.checks.every(c=>c.pass===true),e.id+' bounded default checks');
+    assert.equal(result.status,['ns-m2-actual-uniform-covariance','ns-m2-actual-picard-acceptance','ns-m2-actual-pulse-amplitude','ns-m2-actual-moment-restoration','ns-m2-actual-residual-order','ns-m2-cutoffs','ns-m2-curl','ns-m2-dyadic','ns-m2-core-charts','ns-m2-torus','ns-m2-support','ns-m2-pulse-curl','ns-m2-tail'].includes(e.id)?'COMPLETED':'PARTIAL',e.id);assert.ok(result.checks.length>0,e.id);assert.ok(result.checks.every(c=>c.pass===true),e.id+' bounded default checks');
     assert.equal(result.scope.fullSameProfileN4,false);assert.equal(result.scope.fullSameProfileN5,false);assert.equal(result.scope.formalPass,false);
     assert.equal(result.sourceLedger.n3Profile.commit,'55dacb898f8c204bf0c5925ea901d75d6c2d0f46');
     assert.equal(result.sourceLedger.n3Profile.assessmentSha256,'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c');
@@ -147,7 +147,16 @@ test('unknown fields, malformed shapes, unsupported precision and singular/under
     [{kind:'ns.background-cutoffs',input:{orders:2,tailIndex:3}},'FAILED'],
     [{kind:'ns.pulse-support',input:{labels:[{id:'a',slow:[0,1],unprovedDerivative:1}]}},'FAILED'],
     [{kind:'ns.pulse-support',input:{labels:[{id:'a',slow:[0,1]},{id:'a',slow:[2,3]}]}},'FAILED'],
-    [{kind:'ns.pulse-covariance',input:{target:[1,0,0]}},'FAILED']
+    [{kind:'ns.pulse-covariance',input:{target:[1,0,0]}},'FAILED'],
+    [{kind:'ns.actual-uniform-covariance',input:{anchorOrder:1,ellExact:'1'}},'FAILED'],
+    [{kind:'ns.actual-uniform-covariance',input:{anchorOrder:3}},'FAILED'],
+    [{kind:'ns.actual-uniform-covariance',input:{ellExact:'0'}},'FAILED'],
+    [{kind:'ns.actual-uniform-covariance',input:{ellExact:'129'}},'BUDGET_EXCEEDED'],
+    [{kind:'ns.actual-uniform-covariance',input:{ellExact:1}},'FAILED'],
+    [{kind:'ns.actual-uniform-covariance',input:{terms:3}},'FAILED'],
+    [{kind:'ns.actual-uniform-covariance',input:{qStar:'1/2'}},'FAILED'],
+    [{kind:'ns.actual-uniform-covariance',input:{},precision:{mode:'DIRECTED_BIGINT'}},'PRECISION_REQUIRED'],
+    [{kind:'ns.actual-uniform-covariance',input:{},precision:{bits:128}},'UNSUPPORTED']
   ];
   for(const [request,state]of cases){const r=await executeDomain(request);assert.equal(r.status,state,canonicalStringify(request));assert.ok(r.blockers.length>0);assert.equal(makeVisualization({id:'bad-input',request,result:r,status:r.status}).state,state);}
   assert.equal(validateRequest({kind:'ns.pulse-ode',input:{epsilon:Infinity}}).ok,false);assert.equal(validateRequest({kind:'ns.pulse-ode',input:{},inventedOption:true}).ok,false);
@@ -169,9 +178,9 @@ test('local engine replay recomputes the exact request and rejects a tampered re
   }finally{engine.dispose();}
 });
 
-test('all sixteen original blueprint criteria retain exact text and separate fifteen accepted finite gates from one remaining source construction',async()=>{
+test('all sixteen original blueprint criteria retain exact text and each accepted source domain without a new formal theorem claim',async()=>{
   const source=JSON.parse(await readFile(new URL('./fixtures/original-n4-n5.json',import.meta.url),'utf8')),list=getChecklist();
   assert.equal(source.sourceSHA256,BLUEPRINT_SOURCE.sha256);assert.equal(list.length,16);assert.deepEqual(list.map(({id,title,criteria,sourcePage})=>({id,title,criteria,sourcePage})),source.criteria);
-  assert.equal(list.filter(x=>x.status==='PARTIAL').length,1);assert.equal(list.filter(x=>x.status==='PASS').length,15);assert.equal(list.filter(x=>x.status==='OPEN').length,0);assert.ok(list.every(x=>x.formalComplete===false&&x.implementedScope&&x.evidencePath));
+  assert.equal(list.filter(x=>x.status==='PARTIAL').length,0);assert.equal(list.filter(x=>x.status==='PASS').length,16);assert.equal(list.filter(x=>x.status==='OPEN').length,0);assert.ok(list.every(x=>x.formalComplete===false&&x.implementedScope&&x.evidencePath));
   const c=getCapabilities();assert.equal(c.fullN4,false);assert.equal(c.fullN5,false);assert.equal(c.n3Profile.globalEvaluator,false);
 });

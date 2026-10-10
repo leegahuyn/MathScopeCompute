@@ -1,0 +1,120 @@
+{
+  "schema": "MathScope.CovarianceConcentrationLemmaReleaseAudit/1",
+  "pass": true,
+  "sourceByteVerification": {
+    "files": [
+      {
+        "path": "actual-covariance-concentration.mjs",
+        "bytes": 8753,
+        "sha256": "154460fb7d11eee113a2bd7f4d5a0f839824331f955775923291d4ab14104934"
+      },
+      {
+        "path": "tests/actual-covariance-concentration.test.mjs",
+        "bytes": 8457,
+        "sha256": "306774894ab1322005dd423252c65989e8f935ad3b5b8195d3486925ce7687b9"
+      }
+    ],
+    "match": true
+  },
+  "scalar": {
+    "schema": "MathScope.CovarianceConcentrationScalarAudit/1",
+    "checks": [
+      {
+        "id": "lower-growth-root-removal",
+        "left": "125/64",
+        "relation": "<",
+        "right": "4",
+        "pass": true
+      },
+      {
+        "id": "upper-growth-two-terms",
+        "left": "7",
+        "relation": "<=",
+        "right": "15",
+        "pass": true
+      },
+      {
+        "id": "riccati-inward-at-unit-boundary",
+        "left": "-4",
+        "relation": "=",
+        "right": "-4",
+        "pass": true
+      },
+      {
+        "id": "positive-radial-factor",
+        "left": "1/2",
+        "relation": "=",
+        "right": "1/2",
+        "pass": true
+      },
+      {
+        "id": "amplitude-factor-upper",
+        "left": "3/2",
+        "relation": "<",
+        "right": "2",
+        "pass": true
+      },
+      {
+        "id": "central-cutoff-radius",
+        "left": "1/10",
+        "relation": "<",
+        "right": "1/4",
+        "pass": true
+      },
+      {
+        "id": "gaussian-central-square-lower",
+        "left": "99/100",
+        "relation": ">",
+        "right": "1/3",
+        "pass": true
+      },
+      {
+        "id": "mass-lower-factor",
+        "left": "1/15",
+        "relation": "=",
+        "right": "1/15",
+        "pass": true
+      },
+      {
+        "id": "normal-cone-factor",
+        "left": "6",
+        "relation": "=",
+        "right": "6",
+        "pass": true
+      },
+      {
+        "id": "tangent-frame-factor",
+        "left": "9/2",
+        "relation": "<",
+        "right": "5",
+        "pass": true
+      },
+      {
+        "id": "two-error-budgets",
+        "left": "1/128",
+        "relation": "=",
+        "right": "1/128",
+        "pass": true
+      },
+      {
+        "id": "band-linear-absorption",
+        "left": "12",
+        "relation": "=",
+        "right": "12",
+        "pass": true
+      }
+    ],
+    "pass": true,
+    "sourceFieldCertificate": false
+  },
+  "independentPythonChecksClaimed": 0,
+  "scope": {
+    "conditionalAnalyticLemma": true,
+    "actualOperatorBoundsProducedHere": false,
+    "actualUniformHColumnsCertified": false,
+    "sourceUniformQStarCertified": false,
+    "originalN506Complete": false,
+    "numericQuadratureExecuted": false,
+    "formalKernelProof": false
+  }
+}

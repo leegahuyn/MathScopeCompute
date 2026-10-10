@@ -20,13 +20,13 @@
   },
   "current": {
     "path": "evidence/m2-criteria-status.json",
-    "sha256": "68d6908c3453631e1547a687b657d25df17eb021241e9ada8f10b3b8584c7125",
+    "sha256": "ecd2dbf47226b3f682097a1bf098cafe9cf532f76b8b3fbbcc92fc2673bd5c44",
     "counts": {
-      "PASS": 63,
-      "PARTIAL": 1,
+      "PASS": 64,
+      "PARTIAL": 0,
       "OPEN": 0
     },
-    "fullM2Complete": false
+    "fullM2Complete": true
   },
   "verification": {
     "same64CriterionIDs": true,
@@ -39,10 +39,9 @@
     "pass": true
   },
   "transitionCounts": {
-    "PARTIAL->PASS": 38,
+    "PARTIAL->PASS": 39,
     "PASS->PASS": 20,
-    "OPEN->PASS": 5,
-    "PARTIAL->PARTIAL": 1
+    "OPEN->PASS": 5
   },
   "transitionIDs": {
     "PARTIAL->PASS": [
@@ -74,6 +73,7 @@
       "N5-03",
       "N5-04",
       "N5-05",
+      "N5-06",
       "N5-07",
       "N5-08",
       "I2-01",
@@ -113,12 +113,9 @@
       "N4-03",
       "N4-04",
       "N4-05"
-    ],
-    "PARTIAL->PARTIAL": [
-      "N5-06"
     ]
   },
-  "newlyPassedCount": 43,
+  "newlyPassedCount": 44,
   "newlyPassedIDs": [
     "P4-01",
     "P4-04",
@@ -153,6 +150,7 @@
     "N5-03",
     "N5-04",
     "N5-05",
+    "N5-06",
     "N5-07",
     "N5-08",
     "I2-01",
@@ -164,9 +162,7 @@
     "I2-07",
     "I2-08"
   ],
-  "remainingPartialIDs": [
-    "N5-06"
-  ],
+  "remainingPartialIDs": [],
   "packages": [
     {
       "id": "P4",
@@ -301,8 +297,8 @@
         "OPEN": 0
       },
       "currentCounts": {
-        "PASS": 7,
-        "PARTIAL": 1,
+        "PASS": 8,
+        "PARTIAL": 0,
         "OPEN": 0
       },
       "newlyPassedIDs": [
@@ -311,6 +307,7 @@
         "N5-03",
         "N5-04",
         "N5-05",
+        "N5-06",
         "N5-07",
         "N5-08"
       ]
@@ -1229,17 +1226,20 @@
       "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
       "sourcePage": 60,
       "previousStatus": "PARTIAL",
-      "currentStatus": "PARTIAL",
-      "transition": "PARTIAL->PARTIAL",
-      "newlyPassed": false,
+      "currentStatus": "PASS",
+      "transition": "PARTIAL->PASS",
+      "newlyPassed": true,
       "originalTextPreserved": true,
-      "currentImplementedScope": "실제 homogeneous pulse의 Gaussian 좌표 적분과 양의 tail, angular 1/2·원래 Haar Jacobian·χ 질량을 계산했습니다. 동일한 N3의 heat-prepared T0,*와 정확한 F 식을 대조해 양의 y± 및 determinant 하계를 계산하고, 원문에서 허용한 smooth 제곱분할의 모든 활성 항을 대표점에서 합해 C(W0)=εT0,*와 (7.30)을 확인했습니다. 전체 slow 이웃·annulus에 공통인 실제 q* 및 uniform covariance는 남아 있습니다.",
-      "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-      "remainingObligations": [
-        "Certify actual completed-background C2 and edge-direction bounds on every enlarged slow neighborhood with a common source-derived q*.",
-        "Propagate the actual integrated covariance column and positive inverse bounds uniformly over the complete active annulus and sum the resulting full family."
-      ],
+      "currentImplementedScope": "동일한 실제 N3의 일반 차수 source·다섯 모멘트 복구·canonical cutoff·전체 tail에서 완성 배경 C²를 도출하고, 실제 phase·moving frame·B′·pressure·damping ODE와 두 H 적분을 수렴 함수로 구성했습니다. angular 1/2·normalized Haar·rectangle Jacobian·c_i·실제 χ² 질량을 유지합니다. source만으로 생성한 공통 q*>0 아래 모든 허용 band와 원래 annulus에서 H 열 오차·|det H| 하계·양의 inverse를 인증하고, 실제 q·band별 chart·mesh·물리 torus에 결속한 전체 squared partition으로 (7.30)을 확인했습니다. 같은 box의 두 signs는 한 번만 합산합니다.",
+      "currentAcceptanceScope": "The original N5-06 covariance-family criterion is met by exact convergent-function construction and source-derived uniform analytic bounds on ell>=ellMinimum and0<q<qStar. Strict y±>0 holds onXa<X<Xb; the two endpoints have exact zero weights and smooth zero extension. This does not assert signed numerical whole-H quadrature, admissibility of the exercised finite anchor, every slow derivative norm, the full physical PDE residual/flat-error package or a new formal/global Navier-Stokes theorem.",
+      "remainingObligations": [],
       "evidencePaths": [
+        "mathscope-m2/navier/evidence/ns-m2-actual-uniform-covariance.json",
+        "mathscope-m2/navier/evidence/actual-covariance-source-executed.json",
+        "mathscope-m2/navier/evidence/actual-covariance-source.json",
+        "mathscope-m2/navier/evidence/actual-covariance-source-certificate.json",
+        "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_KO.md",
+        "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_REVIEW_KO.md",
         "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json",
         "mathscope-m2/navier/evidence/actual-pulse-covariance-matching-independent.json",
         "mathscope-m2/navier/evidence/actual-pulse-covariance-independent.json",

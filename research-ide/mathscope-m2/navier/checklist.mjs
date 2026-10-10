@@ -76,7 +76,10 @@ export const CHECKLIST = [
     "sourceInstanceCertified": true,
     "allOrderSourceCertificate": false,
     "certifiedScope": {
-      "backgroundOrders": [1, 2],
+      "backgroundOrders": [
+        1,
+        2
+      ],
       "actualMomentIdentities": 10,
       "actualInnerPDEIdentities": 12,
       "actualStressSupports": 4,
@@ -105,8 +108,19 @@ export const CHECKLIST = [
     "sourceInstanceCertified": true,
     "allOrderSourceCertificate": false,
     "certifiedScope": {
-      "backgroundOrders": [0, 1],
-      "derivativeOrders": [0, 1, 2, 3, 4, 5, 6],
+      "backgroundOrders": [
+        0,
+        1
+      ],
+      "derivativeOrders": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "fixedSimilarityCompact": "X in [0,4*Xunit], eta in [-1,1], all theta; Xunit is a fixed positive source expression",
       "supremumDomain": "Original space-time set at fixed q; tau=q*(1-eta^2), z=q^D*eta",
       "finiteCriterionComplete": true,
@@ -287,25 +301,32 @@ export const CHECKLIST = [
     "title": "두 family의 positive covariance",
     "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
     "sourcePage": 60,
-    "status": "PARTIAL",
-    "implementedScope": "실제 homogeneous pulse의 Gaussian 좌표 적분과 양의 tail, angular 1/2·원래 Haar Jacobian·χ 질량을 계산했습니다. 동일한 N3의 heat-prepared T0,*와 정확한 F 식을 대조해 양의 y± 및 determinant 하계를 계산하고, 원문에서 허용한 smooth 제곱분할의 모든 활성 항을 대표점에서 합해 C(W0)=εT0,*와 (7.30)을 확인했습니다. 전체 slow 이웃·annulus에 공통인 실제 q* 및 uniform covariance는 남아 있습니다.",
-    "testStatus": "ACTUAL_COVARIANCE_STRESS_POSITIVE_INVERSE_AND_COMPLETE_POINT_SUM_PASS",
+    "status": "PASS",
+    "implementedScope": "동일한 실제 N3의 일반 차수 source·다섯 모멘트 복구·canonical cutoff·전체 tail에서 완성 배경 C²를 도출하고, 실제 phase·moving frame·B′·pressure·damping ODE와 두 H 적분을 수렴 함수로 구성했습니다. angular 1/2·normalized Haar·rectangle Jacobian·c_i·실제 χ² 질량을 유지합니다. source만으로 생성한 공통 q*>0 아래 모든 허용 band와 원래 annulus에서 H 열 오차·|det H| 하계·양의 inverse를 인증하고, 실제 q·band별 chart·mesh·물리 torus에 결속한 전체 squared partition으로 (7.30)을 확인했습니다. 같은 box의 두 signs는 한 번만 합산합니다.",
+    "testStatus": "ACTUAL_SOURCE_UNIFORM_H_QSTAR_POSITIVE_INVERSE_AND_GLOBAL_730_PASS",
     "formalComplete": false,
-    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json",
-    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-    "remainingObligations": [
-      "Certify actual completed-background C2 and edge-direction bounds on every enlarged slow neighborhood with a common source-derived q*.",
-      "Propagate the actual integrated covariance column and positive inverse bounds uniformly over the complete active annulus and sum the resulting full family."
-    ],
-    "independentEvidencePath": "mathscope-m2/navier/evidence/actual-pulse-covariance-matching-independent.json",
-    "sourceInstanceCertified": false,
+    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-uniform-covariance.json",
+    "acceptanceScope": "The original N5-06 covariance-family criterion is met by exact convergent-function construction and source-derived uniform analytic bounds on ell>=ellMinimum and0<q<qStar. Strict y±>0 holds onXa<X<Xb; the two endpoints have exact zero weights and smooth zero extension. This does not assert signed numerical whole-H quadrature, admissibility of the exercised finite anchor, every slow derivative norm, the full physical PDE residual/flat-error package or a new formal/global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "independentEvidencePath": "mathscope-m2/navier/evidence/actual-covariance-source-executed.json",
+    "sourceInstanceCertified": true,
     "allOrderSourceCertificate": false,
     "additionalEvidencePaths": [
+      "mathscope-m2/navier/evidence/actual-covariance-source.json",
+      "mathscope-m2/navier/evidence/actual-covariance-source-certificate.json",
+      "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_KO.md",
+      "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_REVIEW_KO.md",
       "mathscope-m2/navier/evidence/actual-pulse-covariance-independent.json",
       "mathscope-m2/navier/evidence/actual-mean-stress-executed.json",
       "mathscope-m2/navier/research/ACTUAL_PULSE_COVARIANCE_MATCHING.md"
     ],
     "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-actual-uniform-covariance.json",
+      "mathscope-m2/navier/evidence/actual-covariance-source-executed.json",
+      "mathscope-m2/navier/evidence/actual-covariance-source.json",
+      "mathscope-m2/navier/evidence/actual-covariance-source-certificate.json",
+      "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_KO.md",
+      "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_REVIEW_KO.md",
       "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json",
       "mathscope-m2/navier/evidence/actual-pulse-covariance-matching-independent.json",
       "mathscope-m2/navier/evidence/actual-pulse-covariance-independent.json",
@@ -326,7 +347,29 @@ export const CHECKLIST = [
       "actualCompletePointwiseActiveSumExecuted": true,
       "sourceUniformQStarCertified": false,
       "wholeAnnulusCovarianceMatched": false,
-      "originalWholeCriterionComplete": false
+      "originalWholeCriterionComplete": false,
+      "retainedEarlierExampleScope": true,
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json"
+    },
+    "actualUniformScope": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "domain": {
+        "band": "ell>=ellMinimum",
+        "physicalScale": "0<q<qStar",
+        "closedStressShell": "Xa<=X<=Xb",
+        "strictPositiveWeights": "Xa<X<Xb",
+        "flatEndpoints": "y+=y-=0, smooth zero extension"
+      },
+      "actualUniformHColumnsCertified": true,
+      "sourceUniformQStarCertified": true,
+      "wholeAnnulusCovarianceMatched": true,
+      "actualCompleteGlobalPartitionInstantiated": true,
+      "sameSlowBoxCountedOnce": true,
+      "originalWholeCriterionComplete": true,
+      "actualNumericalWholeHQuadrature": false,
+      "exercisedFiniteMemberProvedInCertifiedDomain": false,
+      "allSlowDerivativeBoundsComputed": false,
+      "fullPhysicalResidualAndFlatErrorPackageComplete": false
     }
   },
   {
