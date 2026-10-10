@@ -1,0 +1,180 @@
+{
+  "schema": "MathScope.ActualPulseCovarianceMatchingManifest/1",
+  "sourceProfile": "same-profile-2026-10-10.3",
+  "sourceAssemblySHA256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+  "artifacts": [
+    {
+      "path": "actual-pulse-covariance-matching.mjs",
+      "sha256": "924db93cd676a7f4ae4babe2a2a3687d78cf86cd8dbfec2931fe9c3dc2f08348",
+      "bytes": 12855
+    },
+    {
+      "path": "actual-pulse-covariance-partition.mjs",
+      "sha256": "3b1a04bca5e969fb3f331d9d04d320f21326f786099a232202cb1e75b2d67329",
+      "bytes": 13355
+    },
+    {
+      "path": "research/ACTUAL_PULSE_COVARIANCE_MATCHING.md",
+      "sha256": "8a519644f54182de31503f2dca2fdfe0d09327c3010067b7a9af7eb52c09f583",
+      "bytes": 14382
+    },
+    {
+      "path": "tests/actual-pulse-covariance-matching.test.mjs",
+      "sha256": "82701d4704fe258872c47b973e90aae46cfb62a2e617b01ec5076c6a7ffd649b",
+      "bytes": 9104
+    },
+    {
+      "path": "tests/actual-pulse-covariance-matching-fixture.mjs",
+      "sha256": "4f2833f8ddb994cdb9c19e732bd937196c9ab3eba93e3662f0e858374d307c4d",
+      "bytes": 2203
+    },
+    {
+      "path": "tests/actual-pulse-covariance-matching-independent.py",
+      "sha256": "c1c3bdfef39764c82da9cee50775d90ea9ac45d405e29763efb26dabe3f9c327",
+      "bytes": 6112
+    },
+    {
+      "path": "tests/actual-pulse-covariance-matching-independent.json",
+      "sha256": "52dee4bd253857b5284063cf63a3540dc00a0ddbf1c2ff8a786e33f87c349bf3",
+      "bytes": 87473
+    }
+  ],
+  "frozenInputs": [
+    {
+      "path": "actual-mean-stress.mjs",
+      "sha256": "7dc194a8a33ff5a3882c1bedf82cf1d26efe3220f0bd66a1e550482369ccad71",
+      "bytes": 20957
+    },
+    {
+      "path": "actual-pulse-covariance-integrals.mjs",
+      "sha256": "6690a62a744195fa733f8a3b3f61f90b291a88c9cbb490e94e96d4963e3065c5",
+      "bytes": 13175
+    },
+    {
+      "path": "actual-pulse-amplitude-phase.mjs",
+      "sha256": "0ed21e490d93a59caa578d91a4dd3df3791a0e9a07a845740a15cd7578c98224",
+      "bytes": 11467
+    },
+    {
+      "path": "actual-pulse-amplitude-integrator.mjs",
+      "sha256": "096eea803e7c17481c4926b4a8b811ddf54ddc4df615253477092780c3d1b60d",
+      "bytes": 12329
+    }
+  ],
+  "api": {
+    "module": "actual-pulse-covariance-partition.mjs",
+    "export": "actualMeanPulsePointwiseAssembly",
+    "inputs": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "y": {
+        "default": 2.5,
+        "minimum": 0.25,
+        "maximum": 4.75
+      },
+      "cells": {
+        "default": 256,
+        "allowed": [
+          64,
+          128,
+          256,
+          512
+        ]
+      },
+      "cutoffCells": {
+        "default": "cells",
+        "allowed": [
+          64,
+          128,
+          256,
+          512
+        ]
+      },
+      "bits": {
+        "default": 512,
+        "minimum": 16,
+        "maximum": 4096
+      }
+    },
+    "secondaryExports": [
+      "actualMeanPulseMatchedStress",
+      "verifyActualPulseMatchingInputs",
+      "exactPulseCovarianceAlgebra",
+      "sourcePulseSquaredPartitionAtOffset",
+      "verifyActualPulsePointwiseAssembly"
+    ],
+    "sourcePaths": [
+      "result.results.localMatch.rows[i]",
+      "result.results.localMatch.meanStress.rows[i]",
+      "result.results.localMatch.pulseCovariance.rows[i]",
+      "result.results.partition.rows[i]",
+      "result.results.rows[i]"
+    ]
+  },
+  "verification": {
+    "nodeTests": {
+      "passed": 12,
+      "failed": 0
+    },
+    "independentFractionDecimal": {
+      "checks": 1195,
+      "failed": 0,
+      "decimalPrecision": 100,
+      "actualSourceCases": 12,
+      "independentMatrixCases": 50,
+      "partitionOffsets": 129
+    },
+    "runtimeLocalChecks": 13,
+    "runtimePointChecks": 12,
+    "independentReview": {
+      "reviewer": "m2_gauge",
+      "approved": true,
+      "scope": "Actual same-source inverse and complete finite pointwise physical sum. Whole-neighborhood covariance and common global q-star remain uncertified."
+    }
+  },
+  "observation512": {
+    "positiveNormalizedSquaredAmplitude": [
+      2.619808939012956,
+      2.787057138136905
+    ],
+    "positiveNormalizedAmplitude": [
+      1.6185823856118524,
+      1.6694481537732477
+    ],
+    "exactSharedWeightScale": "F*X*sqrt(lambda)*sqrt(Gscale)/(r0^2*u_star)",
+    "positiveNormalizedDeterminant": [
+      0.06436922192916214,
+      0.07285020278808124
+    ],
+    "actualActiveSlowBoxes": 1,
+    "actualSignRectangles": 2,
+    "physicalScale": "q^(-1-h)*F*X*lambda",
+    "exactPhysicalResidual": [
+      0,
+      0
+    ]
+  },
+  "geometricDomain": {
+    "coordinate": "-log(q)/log(2)",
+    "integerAtObservation": "ell_actual=ceil((C12EnvelopeR^100)^100*h^-4)",
+    "Q": "2^-ell_actual",
+    "lowerBandIndex": "ell0=ell_actual-1",
+    "qBigObservation": "3*Q/2",
+    "qBigObservationBelowBandFloor": "Q<3Q/2<2Q=2^(-ell0); ell0>=8.",
+    "actualAmplitudeValidityFloor": "ell_actual; the only active band at this point is certified by actualMeanPulseIntegrationScales",
+    "globalQStarAdmissibilityClaimed": false
+  },
+  "scope": {
+    "actualSourceTargetJoined": true,
+    "actualPositiveWeightsMatched": true,
+    "actualCompletePointwiseActiveSumExecuted": true,
+    "actualPointwiseEquation730Verified": true,
+    "globalSquaredPartitionConstructed": true,
+    "wholeAnnulusCovarianceMatched": false,
+    "allSlowNeighborhoodsMatched": false,
+    "allOriginalN5PackageComplete": false,
+    "newLeanKernelProof": false
+  },
+  "sourceUniformQStarCertified": false,
+  "N506WholeCriterionClosed": false,
+  "status": "PARTIAL"
+}

@@ -797,17 +797,20 @@
       "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
       "sourcePage": 60,
       "status": "PARTIAL",
-      "implementedScope": "정확한 normalized Haar·angular 평균·실제 Jacobian과 두-family covariance 연산자, 실제 Imean의 방향 여유와 0이 아닌 radial moment를 보존합니다. heat-prepared T0와 실제 homogeneous pulses의 Hcov 적분 및 전역 양의 가중치 조립은 아직 미완료입니다.",
-      "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
+      "implementedScope": "실제 homogeneous pulse의 Gaussian 좌표 적분과 양의 tail, angular 1/2·원래 Haar Jacobian·χ 질량을 계산했습니다. 동일한 N3의 heat-prepared T0,*와 정확한 F 식을 대조해 양의 y± 및 determinant 하계를 계산하고, 원문에서 허용한 smooth 제곱분할의 모든 활성 항을 대표점에서 합해 C(W0)=εT0,*와 (7.30)을 확인했습니다. 전체 slow 이웃·annulus에 공통인 실제 q* 및 uniform covariance는 남아 있습니다.",
+      "testStatus": "ACTUAL_COVARIANCE_STRESS_POSITIVE_INVERSE_AND_COMPLETE_POINT_SUM_PASS",
       "formalComplete": false,
       "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
       "remainingObligations": [
-        "Construct the actual heat-prepared cumulative stress T0 and both homogeneous-pulse covariance integrals.",
-        "Certify the Hcov inverse, positive slow-varying weights and once-per-slow-box partition assembly on the complete required domain."
+        "Certify actual completed-background C2 and edge-direction bounds on every enlarged slow neighborhood with a common source-derived q*.",
+        "Propagate the actual integrated covariance column and positive inverse bounds uniformly over the complete active annulus and sum the resulting full family."
       ],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-covariance.json",
-        "mathscope-m2/navier/evidence/source-independent-checks.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json",
+        "mathscope-m2/navier/evidence/actual-pulse-covariance-matching-independent.json",
+        "mathscope-m2/navier/evidence/actual-pulse-covariance-independent.json",
+        "mathscope-m2/navier/evidence/actual-mean-stress-executed.json",
+        "mathscope-m2/navier/research/ACTUAL_PULSE_COVARIANCE_MATCHING.md"
       ]
     },
     {

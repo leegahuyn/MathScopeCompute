@@ -15,10 +15,11 @@ import {getSourceCoreObservations} from '../source-core-observations.mjs';
 import {sourcePulseCurlAudit} from '../source-pulse-curl.mjs';
 import {evaluateLocalPotentialSum} from '../source-gluing.mjs';
 import {evaluatePulseCutoffRemainder,defaultTailJet} from '../source-tail.mjs';
+import {evaluateActualMeanStress,verifyActualMeanStress} from '../actual-mean-stress.mjs';
 
 const base=new URL('../',import.meta.url),out=new URL('../evidence/',import.meta.url);
 await mkdir(out,{recursive:true});
-const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs','actual-picard-acceptance.test.mjs','actual-pulse-amplitude.test.mjs','actual-continuation.test.mjs'];
+const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs','actual-picard-acceptance.test.mjs','actual-pulse-amplitude.test.mjs','actual-continuation.test.mjs','actual-mean-stress.test.mjs','actual-pulse-covariance.test.mjs','actual-pulse-covariance-matching.test.mjs'];
 const testResult=spawnSync(process.execPath,['--test','--test-reporter=tap',...testSuites.map(name=>fileURLToPath(new URL(name,import.meta.url)))],{encoding:'utf8'});
 await writeFile(new URL('tests.tap',out),testResult.stdout+testResult.stderr);
 if(testResult.status!==0)throw Error('N4/N5 regression tests failed; evidence is not sealed.');
@@ -49,6 +50,49 @@ for(const [manifestName,listKey,prefix] of [['actual-pulse-amplitude-manifest.js
   const file='actual-continuation-independent.json',serialized=await readFile(new URL(file,import.meta.url),'utf8'),audit=JSON.parse(serialized);
   if(!audit.pass||audit.checksPassed!==audit.checksTotal||audit.checks.length!==audit.checksTotal||!audit.checks.every(c=>c.pass===true))throw Error('Incomplete actual continuation audit.');
   await writeFile(new URL(file,out),serialized);additionalIndependent.push({file,checks:audit.checksPassed,sha256:await sha256(serialized),verification:'FROZEN_INDEPENDENT_FRACTION_DECIMAL_RECEIPT_WITH_CURRENT_PRODUCER_HASHES'});
+}
+// Covariance and stress are source producers with separately executed oracles.
+// Verify their complete frozen inputs before accepting any independent result.
+for(const manifestName of ['actual-pulse-covariance-manifest.json','actual-pulse-covariance-matching-manifest.json']){
+  const manifest=JSON.parse(await readFile(new URL(manifestName,base),'utf8'));newSourcePaths.push(manifestName);
+  for(const f of [...manifest.artifacts,...(manifest.frozenAmplitudeInputs||[]),...(manifest.frozenInputs||[])]){
+    const bytes=await readFile(new URL(f.path,base),'utf8');
+    if(await sha256(bytes)!==f.sha256)throw Error('Stale actual covariance source: '+f.path);
+    newSourcePaths.push(f.path);
+  }
+}
+for(const [stem,countKey,count,manifestName] of [
+  ['actual-pulse-covariance','checks',294,'actual-pulse-covariance-manifest.json'],
+  ['actual-pulse-covariance-matching','passed',1195,'actual-pulse-covariance-matching-manifest.json'],
+]){
+  const script=stem+'-independent.py',input=stem+'-independent.json';
+  const executed=spawnSync('python',[fileURLToPath(new URL(script,import.meta.url))],{encoding:'utf8'});
+  if(executed.status!==0)throw Error('Independent '+stem+' failed: '+executed.stderr);
+  const audit=JSON.parse(executed.stdout);
+  if(audit[countKey]!==count||audit.pass===false||(audit.failed??0)!==0)throw Error('Incomplete independent '+stem+' acceptance.');
+  const body={schema:'MathScope.ExecutedActualCovarianceIndependentAudit/1',...audit,checks:count,inputSHA256:await sha256(await readFile(new URL(input,import.meta.url),'utf8')),checkerSHA256:await sha256(await readFile(new URL(script,import.meta.url),'utf8')),sourceManifest:'navier/'+manifestName,sourceManifestSHA256:await sha256(await readFile(new URL(manifestName,base),'utf8'))};
+  const serialized=JSON.stringify(body,null,2)+'\n',file=stem+'-independent.json';await writeFile(new URL(file,out),serialized);
+  additionalIndependent.push({file,checks:count,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_FRACTION_DECIMAL_WITH_ALL_CURRENT_SOURCE_AND_FIXTURE_HASHES'});
+}
+{
+  const frozenFile='actual-mean-stress.json',frozenText=await readFile(new URL(frozenFile,out),'utf8'),frozen=JSON.parse(frozenText),frozenSHA256=await sha256(frozenText);
+  if(frozenSHA256!=='130a3e7f468f519f5d769abf104f4c032ed84597fbc89160a794e17aacdf826f')throw Error('The frozen actual stress receipt changed; review and regenerate its source binding first.');
+  newSourcePaths.push('evidence/'+frozenFile);
+  for(const f of frozen.files){const p=f.path.replace(/^research-ide\/mathscope-m2\/navier\//,'');if(await sha256(await readFile(new URL(p,base),'utf8'))!==f.sha256)throw Error('Stale actual stress source: '+f.path);newSourcePaths.push(p);}
+  const executed=spawnSync('python',[fileURLToPath(new URL('actual-mean-stress-independent.py',import.meta.url))],{encoding:'utf8'});
+  if(executed.status!==0)throw Error('Independent actual stress failed: '+executed.stderr);
+  const audit=JSON.parse(executed.stdout);if(!audit.pass||audit.checks!==700)throw Error('Incomplete actual stress acceptance.');
+  // The checker's stdout deliberately omits files and receipt. The complete
+  // frozen file, current independent execution and current source replay are
+  // three separately verified records; do not assume the same JSON shape.
+  const expectedAudit=Object.fromEntries(Object.entries(frozen).filter(([k])=>!['files','receipt'].includes(k)));
+  if(canonicalStringify(audit)!==canonicalStringify(expectedAudit))throw Error('Independent actual stress output differs from the current bound receipt.');
+  const replay=verifyActualMeanStress(frozen.receipt),current=evaluateActualMeanStress(frozen.receipt.input);
+  const storedHash=await sha256(canonicalStringify(frozen.receipt)),currentHash=await sha256(canonicalStringify(current));
+  if(!replay.pass||storedHash!==currentHash)throw Error('Current actual stress producer does not replay the retained receipt.');
+  const file='actual-mean-stress-executed.json',body={...audit,schema:'MathScope.ActualMeanStressExecutedAudit/1',frozenEvidence:{path:'navier/evidence/'+frozenFile,sha256:frozenSHA256},sourceByteVerification:{checkedFiles:frozen.files,match:true},independentExecution:{command:'python navier/tests/actual-mean-stress-independent.py',scriptSHA256:await sha256(await readFile(new URL('actual-mean-stress-independent.py',import.meta.url),'utf8')),stdoutKeys:Object.keys(audit).sort(),pass:audit.pass,checks:audit.checks},receiptReplay:{input:frozen.receipt.input,storedHash,currentHash,match:true,verification:replay.reason}};
+  const serialized=JSON.stringify(body,null,2)+'\n';await writeFile(new URL(file,out),serialized);
+  additionalIndependent.push({file,checks:audit.checks,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_FRACTION_DECIMAL_HEAT_STRESS_WITH_CURRENT_SOURCE_HASHES'});
 }
 // Reuse independently executed, frozen receipts only after checking every
 // producer/source byte they bind. Regenerate those receipts with their own

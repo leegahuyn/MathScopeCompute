@@ -1,0 +1,540 @@
+{
+  "run": {
+    "ok": true,
+    "jobId": "m1-job:mv2agaus:1",
+    "status": "RUNNING"
+  },
+  "job": {
+    "ok": true,
+    "job": {
+      "attempt": 1,
+      "checkpoint": null,
+      "environmentHash": "fc67a6b29748d52cb295758caf972327655477a1c34283bac207d2b6b8864531",
+      "finishedAt": "2026-10-10T11:05:52.173Z",
+      "id": "m1-job:mv2agaus:1",
+      "inputHash": "8679921a2f5621244d501af4a2ab31262188b387fa0dec9e92aed0cdc88aba0b",
+      "mathematicalHash": "5648f8e36f7775dcb8421fd41fbd0a80eb7542aa91df02069478a6ba03de78fd",
+      "request": {
+        "budget": {
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxMillis": 30000,
+          "maxMilliseconds": 30000,
+          "maxOperations": 20000000,
+          "maxPoints": 480
+        },
+        "input": {
+          "Z": 1,
+          "derivativeOrder": 2,
+          "h": 0.005,
+          "taylorOrder": 8
+        },
+        "kind": "ns.heat",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        }
+      },
+      "result": {
+        "H": 0.997012970202767,
+        "Z": 1,
+        "certificate": {
+          "domain": "Z>=0, 0<h<.01; finite input parameters",
+          "errors": [
+            {
+              "cells": 1923,
+              "order": 0,
+              "quadratureDenominator": 7.257433145215939e-11,
+              "quadratureNumerator": 7.253280297055248e-11,
+              "roundingAndPropagationIncluded": true,
+              "tailDenominator": 3.4609535112358995e-18,
+              "tailNumerator": 3.4609535112358995e-18
+            },
+            {
+              "cells": 1623,
+              "order": 1,
+              "quadratureDenominator": 7.257433145215939e-11,
+              "quadratureNumerator": 8.645850068935889e-11,
+              "roundingAndPropagationIncluded": true,
+              "tailDenominator": 3.4609535112358995e-18,
+              "tailNumerator": 7.370011650760569e-36
+            },
+            {
+              "cells": 1511,
+              "order": 2,
+              "quadratureDenominator": 7.257433145215939e-11,
+              "quadratureNumerator": 1.7565879989452216e-11,
+              "roundingAndPropagationIncluded": true,
+              "tailDenominator": 3.4609535112358995e-18,
+              "tailNumerator": 2.0890979307160683e-53
+            }
+          ],
+          "gammaNormalization": {
+            "lower": 0.9971385352034765,
+            "midpoint": 0.9971385352761684,
+            "precisionBits": 53,
+            "radius": 7.26917970261809e-11,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 0.9971385353488601
+          },
+          "kind": "REAL_INTERVAL_QUADRATURE",
+          "logIntegrationDomain": [
+            -40,
+            6
+          ],
+          "method": "log-variable integral; outward arithmetic; bounded exp/log series; Simpson fourth derivative enclosure",
+          "notClaimed": "No full PDE solution error or global profile theorem is inferred.",
+          "tolerance": 1e-8,
+          "vIntegrationDomain": [
+            4.248354255282797e-18,
+            403.42879349284135
+          ]
+        },
+        "contract": {
+          "fullCertifiedProfile": false,
+          "fullNavierStokesSolution": false,
+          "precisionOfCandidate": "IEEE754 binary64; only individually labelled intervals are numerical enclosures",
+          "solutionErrorBound": null
+        },
+        "dH": -0.0020166177591333847,
+        "ddH": 0.0010600292796967383,
+        "derivatives": [
+          {
+            "lower": 0.9970129700572252,
+            "midpoint": 0.997012970202767,
+            "precisionBits": 53,
+            "radius": 1.4554174532221967e-10,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 0.9970129703483087
+          },
+          {
+            "lower": -0.00201661775971428,
+            "midpoint": -0.0020166177591333847,
+            "precisionBits": 53,
+            "radius": 5.808949241764562e-13,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": -0.00201661775855249
+          },
+          {
+            "lower": 0.0010600292795306572,
+            "midpoint": 0.0010600292796967383,
+            "precisionBits": 53,
+            "radius": 1.6608112454741255e-13,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 0.0010600292798628194
+          }
+        ],
+        "domainStatus": "VERIFIED_NUMERICAL_ENCLOSURE",
+        "evidenceGrade": "VERIFIED_NUMERICAL_ENCLOSURE",
+        "executionMetrics": {
+          "elapsedMilliseconds": 518,
+          "operations": 10478
+        },
+        "finiteTaylor": {
+          "N": 8,
+          "Z": 1,
+          "convergentInfiniteSeries": false,
+          "enclosure": {
+            "lower": -183.564019225001,
+            "midpoint": 23.69751012524648,
+            "precisionBits": 53,
+            "radius": 207.2615293502475,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 230.95903947549394
+          },
+          "h": 0.005,
+          "radiusOfConvergence": 0,
+          "reason": "Absolute coefficient ratio (h+n)(1+h+n)/(n+1) tends to infinity for h>0.",
+          "remainderBound": 207.26152935024714,
+          "source": {
+            "equation": "A.35",
+            "page": 138,
+            "source": "N00"
+          },
+          "sum": {
+            "lower": 23.69751012524617,
+            "midpoint": 23.697510125246474,
+            "precisionBits": 53,
+            "radius": 3.0553337637684313e-13,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 23.69751012524678
+          }
+        },
+        "h": 0.005,
+        "kind": "ns.heat",
+        "model": "paper-heat-factor",
+        "moduleVersion": "1.3.0-m1",
+        "odeEnclosure": {
+          "lower": -2.6717759948891033e-12,
+          "midpoint": -2.5846078749447443e-14,
+          "precisionBits": 53,
+          "radius": 2.6459299161396563e-12,
+          "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+          "type": "real-ball",
+          "upper": 2.6200838373902084e-12
+        },
+        "parameterHash": "972b69d4c0f8232d44d8a8fb0f28d8ab83a1f082f28a608611ba59015fb464e0",
+        "precision": {
+          "absoluteTolerance": 1e-8,
+          "bits": 53,
+          "relativeTolerance": 1e-8
+        },
+        "sourceLedger": {
+          "attachmentSha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+          "fullOriginalKernelBuild": false,
+          "repositoryCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+          "theoremReference": "Theorem1.1; N3 Theorem4.6"
+        },
+        "sources": [
+          {
+            "equations": [
+              "A.32",
+              "A.35",
+              "A.38"
+            ],
+            "pages": [
+              138
+            ],
+            "source": "N00"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "resultHash": "c12714a21fab83e6bab52c1d064985452af8745f5a984d6ad248498630c8888d",
+      "status": "COMPLETED",
+      "submittedAt": "2026-10-10T11:05:51.608Z"
+    }
+  },
+  "status": {
+    "ok": true,
+    "version": "1.2.0",
+    "session": {
+      "id": "rs-mv2a3bl6-r7n23d",
+      "m0Revision": null
+    },
+    "environment": {
+      "hash": "fc67a6b29748d52cb295758caf972327655477a1c34283bac207d2b6b8864531",
+      "workerSha256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca",
+      "execution": "BROWSER_WEB_WORKER"
+    },
+    "examples": [
+      {
+        "id": "prime-1000",
+        "label": "소수 구간 [2,1000] · π, ψ, Li₂",
+        "kind": "arithmetic.primes"
+      },
+      {
+        "id": "prime-million",
+        "label": "백만까지 정확한 소수 78,498개",
+        "kind": "arithmetic.primes"
+      },
+      {
+        "id": "prime-large-certificate",
+        "label": "Number 안전 범위를 넘는 Lucas 인증",
+        "kind": "arithmetic.primeCertificate"
+      },
+      {
+        "id": "point-p3",
+        "label": "점의 실제 crystalline/prismatic 비교 모델",
+        "kind": "arithmetic.point"
+      },
+      {
+        "id": "p1-p3",
+        "label": "P¹ · 두 chart · 전체 contraction · Frobenius",
+        "kind": "arithmetic.p1"
+      },
+      {
+        "id": "p1-p5-d2",
+        "label": "P¹ · p=5, D=2 → 10",
+        "kind": "arithmetic.p1"
+      },
+      {
+        "id": "delta-guard",
+        "label": "δ의 한 자리 손실과 정확 원본 증액",
+        "kind": "arithmetic.padic"
+      },
+      {
+        "id": "padic-torsion",
+        "label": "Z/27 위 ×3: kernel/cokernel = Z/3",
+        "kind": "arithmetic.padic"
+      },
+      {
+        "id": "derived-reduction",
+        "label": "derived mod p: 사라지지 않는 Tor",
+        "kind": "arithmetic.padic"
+      },
+      {
+        "id": "p1-local-factors",
+        "label": "p별 P¹ Frobenius·점계수·Euler 인자",
+        "kind": "arithmetic.localFactors"
+      },
+      {
+        "id": "elliptic-good-bad",
+        "label": "E:y²=x³−x · good/bad 국소 인자",
+        "kind": "arithmetic.localFactors"
+      },
+      {
+        "id": "su3-bpst",
+        "label": "SU(3): 실제 BPST 곡률·독립 적분",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "g2-full-color",
+        "label": "G2: 실제 7×7 BPST + 전 기저 섭동",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "sp2-full-basis",
+        "label": "Sp(2): 전 기저 4D off-shell 장",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "g2-projection",
+        "label": "G2: 실제 R4 → R3 선형 투영",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "g2-marginal",
+        "label": "G2: x4 적분 q3 · 지수 정규화",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "so3-periodic",
+        "label": "SO(3): 주기적 4D Fourier 시험장",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "delta-assumed_bound",
+        "label": "Δ 상태족: ASSUMED_BOUND",
+        "kind": "gauge.family"
+      },
+      {
+        "id": "delta-units",
+        "label": "Δ 상태족: UNITS",
+        "kind": "gauge.family"
+      },
+      {
+        "id": "delta-classical_scale",
+        "label": "Δ 상태족: CLASSICAL_SCALE",
+        "kind": "gauge.family"
+      },
+      {
+        "id": "delta-effective_model",
+        "label": "Δ 상태족: EFFECTIVE_MODEL",
+        "kind": "gauge.family"
+      },
+      {
+        "id": "g2-index-three",
+        "label": "G2: short-root SU(2) · Dynkin index 3",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "g2-wilson",
+        "label": "G2: 4D Wilson loop · 게이지 검사",
+        "kind": "gauge.holonomy"
+      },
+      {
+        "id": "finite-spectrum",
+        "label": "유한 H: 양의 채널 상관함수 · 조건 범위",
+        "kind": "gauge.spectral"
+      },
+      {
+        "id": "algebra-SU2",
+        "label": "SU(2): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SU3",
+        "label": "SU(3): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SU4",
+        "label": "SU(4): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SU5",
+        "label": "SU(5): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SU6",
+        "label": "SU(6): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO3",
+        "label": "SO(3): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO5",
+        "label": "SO(5): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO6",
+        "label": "SO(6): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO7",
+        "label": "SO(7): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO8",
+        "label": "SO(8): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-Sp1",
+        "label": "Sp(1): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-Sp2",
+        "label": "Sp(2): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-Sp3",
+        "label": "Sp(3): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-G2",
+        "label": "G2: 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "ns-source-contract",
+        "label": "논문 166쪽·정리·Lean 어댑터 계약",
+        "kind": "ns.provenance"
+      },
+      {
+        "id": "ns-similarity",
+        "label": "실제 similarity 좌표와 역변환",
+        "kind": "ns.coordinates"
+      },
+      {
+        "id": "ns-heat-interval",
+        "label": "Heat factor 적분·도함수 구간 인증",
+        "kind": "ns.heat"
+      },
+      {
+        "id": "ns-source-exterior",
+        "label": "원문 heat exterior · r > 0",
+        "kind": "ns.exterior"
+      },
+      {
+        "id": "ns-taylor-green",
+        "label": "별도 정확 Taylor–Green 기준 해",
+        "kind": "ns.benchmark"
+      },
+      {
+        "id": "ns-nonlinear-axis",
+        "label": "원문 비선형 축 급수 · 꼬리 미인증",
+        "kind": "ns.axis-series"
+      },
+      {
+        "id": "ns-five-moments",
+        "label": "비선형 5모멘트 · 독립 재적분",
+        "kind": "ns.moments"
+      },
+      {
+        "id": "ns-cone-operator",
+        "label": "Cone 부등식과 실제 radial modulation 연산",
+        "kind": "ns.cone"
+      },
+      {
+        "id": "ns-leading-candidate",
+        "label": "실제 축·외곽 + 미인증 접합 후보",
+        "kind": "ns.leading-profile"
+      },
+      {
+        "id": "ns-independent-checks",
+        "label": "FD·FFT·고정밀·음성 대조군",
+        "kind": "ns.validate"
+      },
+      {
+        "id": "ns-axis-exact-bounds",
+        "label": "실제 Bρ 국소 수렴·양성·무한 tail 상계",
+        "kind": "ns.axis-certificate"
+      },
+      {
+        "id": "ns-source-outer-repairs",
+        "label": "원문 외곽 진폭·모멘트·heat 보상",
+        "kind": "ns.source-outer"
+      },
+      {
+        "id": "ns-controlled-axis",
+        "label": "원문 B.22/B.26 · 실제 controlled continuation",
+        "kind": "ns.controlled-continuation"
+      },
+      {
+        "id": "ns-controlled-source-datum",
+        "label": "실제 A.21 압력을 연결한 유한 continuation 후보",
+        "kind": "ns.controlled-continuation"
+      },
+      {
+        "id": "ns-loop-zero-p2",
+        "label": "원문 C.1 · p₂=0의 제거 가능 분기",
+        "kind": "ns.admissible-loop"
+      },
+      {
+        "id": "ns-loop-tilted",
+        "label": "원문 C.1 · 비영 p₂와 위상 재매개화",
+        "kind": "ns.admissible-loop"
+      },
+      {
+        "id": "ns-source-pressure-bounds",
+        "label": "실제 A.21 압력 · 복소 영역과 모든 η 도함수 상계",
+        "kind": "ns.pressure-certificate"
+      },
+      {
+        "id": "ns-axis-source-exact-bounds",
+        "label": "실제 A.21 압력과 연결된 국소 축 상계",
+        "kind": "ns.axis-source-certificate"
+      },
+      {
+        "id": "ns-source-radial-modulation",
+        "label": "원문 C.12 · 실제 변조와 첫 patch 복원 (N=512)",
+        "kind": "ns.radial-modulation"
+      },
+      {
+        "id": "ns-source-radial-small-frequency",
+        "label": "작은 N=8 · 실제 cone 위반을 확인하는 대조",
+        "kind": "ns.radial-modulation"
+      },
+      {
+        "id": "ns-source-inner-gluing",
+        "label": "원문 B.34/B.8 · 실제 inner–outer 모멘트 접합 후보",
+        "kind": "ns.source-inner-gluing"
+      }
+    ],
+    "hostRuntime": {
+      "retainedJobLimit": 128,
+      "workerLimitsUnchanged": true
+    },
+    "jobs": [
+      {
+        "id": "m1-job:mv2agaus:1",
+        "status": "COMPLETED",
+        "kind": "ns.heat",
+        "inputHash": "8679921a2f5621244d501af4a2ab31262188b387fa0dec9e92aed0cdc88aba0b"
+      }
+    ],
+    "auditCount": 4,
+    "lastAdapters": null,
+    "formalPass": false
+  }
+}

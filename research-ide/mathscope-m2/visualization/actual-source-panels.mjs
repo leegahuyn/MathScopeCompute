@@ -217,6 +217,49 @@ function continuationPanels(d,options){
   return [main,core,reference,comparison,program];
 }
 
+function covarianceIntervals(d,options,id,title,description,records,sourceRoot,kind){
+  const marks=records.map((r,i)=>validInterval(r.interval)?{x:i,y:midpoint(r.interval),lower:r.interval[0],upper:r.interval[1],midpoint:midpoint(r.interval),label:r.label,sourceIndex:i,sourcePath:r.path,value:r.interval,sourceValue:r.interval,displayEnclosure:[...r.interval],displaySourcePath:r.path,displayTransform:'MIDPOINT_OF_STORED_OUTWARD_INTERVAL'}:null);
+  const table=sourceTable(title+' · 원본 구간',['원본 항목','보존한 [하한, 상한]','정규화 또는 배율'],records.map(r=>row(r.path,cell(r.label),cell(r.interval,r.path),cell(r.normalization,r.normalizationPath||null))),options);
+  return intervalPanel(id,title,description,marks,[axis('독립 원본 항목','CATEGORICAL_SOURCE_QUANTITY',sourceRoot),axis('성분별 정규화 구간','ACTUAL_SOURCE_INTERVAL',sourceRoot,'Stored normalized coefficient; positive physical scale retained')],kind,d,table,options);
+}
+
+function actualCovariancePanels(d,options){
+  const mp=ROOT+'.localMatch',m=d.localMatch,cp=mp+'.pulseCovariance',c=m.pulseCovariance,sp=mp+'.meanStress',s=m.meanStress;
+  const weights=covarianceIntervals(d,options,'main','실제 두 family · 양의 제곱 진폭','실제 pulse의 공분산과 같은 N3 소스의 열 보상 응력을 연결해 구한 두 양의 weight입니다. 실제 F 식과 요청점도 대조합니다. 세로값은 공통의 양의 물리 배율로 나눈 계수입니다.',array(m.rows).map((r,i)=>({label:r.sign,interval:r.normalizedSquaredAmplitude,path:mp+'.rows['+i+'].normalizedSquaredAmplitude',normalization:r.normalization,normalizationPath:mp+'.rows['+i+'].normalization'})),mp+'.rows','ACTUAL_POSITIVE_COVARIANCE_WEIGHTS');
+  weights.relatedTables.push(propertyTable('원래 물리 배율과 실제 inverse',m.weights,mp+'.weights',[['sourceScale','양의 원본 배율'],['waveFormula','실제 wave 조립식'],['exactEquality','두 sign의 정확 weight 일치']],options),propertyTable('실제 source 결속 검사',m.bindings,mp+'.bindings',[['checks','재계산·같은 F·대표점·cone'],['sourceFCanonical','F의 정확식 비교'],['dataReplayExecuted','원본 receipt 재실행']],options));
+
+  const integrals=covarianceIntervals(d,options,'actual-covariance-integrals','실제 공분산 · A, B와 양의 tail','중앙 Gaussian 좌표에서 실제 homogeneous solution의 곱을 적분하고, 전체 pulse의 생략 영역을 양의 tail 상계로 더했습니다. Gaussian 극한 적분값을 실제 source 값으로 대체하지 않습니다.',['A','B'].map(key=>({label:key,interval:c.integrals[key],path:cp+'.integrals.'+key,normalization:c.integrals['definition'+key],normalizationPath:cp+'.integrals.definition'+key})),cp+'.integrals','ACTUAL_FULL_PULSE_COVARIANCE_INTEGRALS');
+  integrals.relatedTables.push(propertyTable('중앙 적분·전체 tail',c.integrals,cp+'.integrals',[['centralA','중앙 A'],['centralB','중앙 B'],['tail','양의 전체 tail enclosure']],options),propertyTable('실제 Gaussian 변수와 오차',c,cp,[['gaussian','실제 양의 delta와 변수'],['cutoffs','실제 χ·ψ 정의와 support']],options));
+
+  const matrix=covarianceIntervals(d,options,'actual-covariance-matrix','실제 Hcov · 두 성분과 두 sign','실제 Hcov의 네 성분을 행별 물리 배율로 정규화했습니다. angular 성분의 양의 sqrt(lambda)는 별도 정확식으로 보존합니다. 두 axial 성분은 실제 sign 대칭으로 부호가 반대입니다.',array(c.covariance.normalizedMatrix).flatMap((r,i)=>r.map((interval,j)=>({label:c.covariance.rowOrder[i]+' / '+c.covariance.columnOrder[j],interval,path:cp+'.covariance.normalizedMatrix['+i+']['+j+']',normalization:c.covariance.normalization[i],normalizationPath:cp+'.covariance.normalization['+i+']'}))),cp+'.covariance.normalizedMatrix','ACTUAL_SOURCE_COVARIANCE_MATRIX');
+  matrix.relatedTables.push(propertyTable('행렬의 실제 배율과 비영 determinant',c.covariance,cp+'.covariance',[['exactMatrix','원래 Hcov'],['common','공통 물리 배율'],['determinant','정확 determinant와 양의 하계'],['inverseFormula','두 성분의 역행렬']],options),propertyTable('Haar와 angular 평균',c,cp,[['haar','angular 1/2·Haar Jacobian'],['parity','같은 box의 두 sign']],options));
+
+  const rp=cp+'.rows',densityRows=array(c.rows),densityFields=[['midpointThetaIntegrand','실제 radial × angular'],['midpointZIntegrand','실제 radial × axial +']];
+  const densityGroups=densityFields.map(([key,label],j)=>({label,color:COLORS[j],dash:j?[5,3]:[],connect:true,points:densityRows.map((r,i)=>validInterval(r[key])?{x:r.wMidpoint,y:midpoint(r[key]),sourceIndex:i,label,sourceValue:r[key],sourcePath:rp+'['+i+'].'+key,xSourcePath:rp+'['+i+'].wMidpoint',displayTransform:'MIDPOINT_OF_STORED_ACTUAL_INTEGRAND_INTERVAL',interval:[...r[key]]}:null)}));
+  const densityTable=sourceTable('실제 적분 cell · 전체 구간과 관측점',['w cell','w 중점','angular cell 구간','axial cell 구간','angular 중점 구간','axial 중점 구간'],densityRows.map((r,i)=>{const p=rp+'['+i+']';return row(p,...['wInterval','wMidpoint','thetaIntegrandBounds','zIntegrandBounds','midpointThetaIntegrand','midpointZIntegrand'].map(k=>cell(r[k],p+'.'+k)));}),options);
+  const density=seriesPanel('actual-covariance-density','실제 pulse 곱 · Gaussian 좌표 적분','w=sqrt(Gscale)(a−1)에서 보존한 실제 진폭 곱의 중점 구간입니다. 선은 cell 중점의 관측이며, 실제 적분은 표에 보존한 모든 cell의 상·하한과 별도 양의 tail을 사용합니다.',densityGroups,[axis('w · 정규화 Gaussian 좌표','NORMALIZED_GAUSSIAN_COORDINATE',rp+'[*].wMidpoint'),axis('실제 진폭 곱의 정규화 integrand','NORMALIZED_ACTUAL_PULSE_PRODUCT',rp+'[*]','Midpoint of stored outward product enclosure')],'ACTUAL_SOURCE_COVARIANCE_INTEGRAND',d,densityTable,options);
+  density.details.push({title:'원래 left datum부터의 전체 양의 전달',value:c.centerAmplitude,sourcePath:cp+'.centerAmplitude'});
+
+  const stress=covarianceIntervals(d,options,'actual-covariance-target','실제 T0,* · 열 보상과 두 응력 성분','같은 원본의 완전한 moment restoration과 열 보상 적분으로 얻은 응력입니다. angular 열 보상은 엄밀히 양수입니다. η=0의 axial 값 0은 복구된 함수와 heat parity에서 얻은 정확한 값입니다.',array(s.rows).map((r,i)=>({label:r.component,interval:r.normalizedInterval,path:sp+'.rows['+i+'].normalizedInterval',normalization:'T0 / (F X lambda)'})),sp+'.rows','ACTUAL_HEAT_PREPARED_SOURCE_TARGET');
+  stress.relatedTables.push(propertyTable('정확한 target 구간과 양의 열 보상',s,sp,[['normalizedTarget','정확 유리수 응력 구간'],['bounds','양의 heat lower·upper와 일곱 remainder'],['axialParity','같은 복구 함수의 정확 η parity'],['scope','실행한 target 영역']],options));
+  stress.details.push({title:'원래 heat 적분과 target의 명시적 소스 프로그램',value:s.program,sourcePath:sp+'.program'});
+
+  const tp=cp+'.transverseMass',t=c.transverseMass,cutoffRows=array(t.rows);
+  const cutoffRecords=cutoffRows.map((r,i)=>{const p=tp+'.rows['+i+']';return row(p,cell(r.sInterval,p+'.sInterval'),cell(r.stepSquaredBounds,p+'.stepSquaredBounds'),cell(r.integralInterval,p+'.integralInterval'));});
+  const cutoff=tablePanel('actual-covariance-cutoffs','실제 cutoff · 한 transverse 질량','원문에서 허용한 구체적인 smooth χ를 선택하고, 단조 source step의 제곱을 모든 cell에서 적분했습니다. transverse 적분은 한 번만 들어가며 angular 평균 1/2 및 c_i Ls=2r0를 함께 반영합니다.',propertyTable('실제 transverse cutoff와 전체 질량',t,tp,[['cutoff','구체적인 χ'],['normalizedMass','전체 질량 / r0'],['massInterval','전체 질량의 구간'],['exactMass','정확 적분식'],['oneTransverseCoordinate','transverse 적분 횟수'],['method','실행한 구간 적분']],options),tp,'ACTUAL_SINGLE_TRANSVERSE_CUTOFF_MASS',d);
+  cutoff.relatedTables.push(sourceTable('source step² · 모든 적분 cell',['s cell','step² enclosure','cell integral'],cutoffRecords,options));
+
+  const pp=ROOT+'.partition',partition=tablePanel('actual-covariance-partition','실제 활성 합 · 같은 box는 한 번','같은 원본 대표점에 고정한 실제 smooth product partition입니다. 여기서는 유일한 활성 band·slow box를 실행하고, 두 sign은 그 box의 내부 covariance에 포함합니다. 나머지 모든 정수 index가 support 밖임을 정확히 검사합니다.',propertyTable('선택한 실제 partition과 전체 활성 집합',d.partition,pp,[['origin','고정한 실제 원본 중심'],['mesh','원래 양의 mesh'],['physicalPoint','실제 물리 대표점'],['activeBands','활성 band'],['activeBoxes','활성 slow box'],['completeActiveSetProof','생략된 무한 index의 support 증명'],['scope','point 검증과 전영역 경계']],options),pp,'ACTUAL_COMPLETE_POINTWISE_ACTIVE_PARTITION',d);
+  partition.relatedTables.push(propertyTable('전체 실수 좌표의 제곱 분할',d.partition,pp,[['allRealPartition','실제 smooth bump와 정규화'],['band','선택한 band와 q cutoff'],['activeShellMembership','실제 shell과 미인증 uniform q*']],options));
+  partition.details.push({title:'두 원본 sign의 정확 phase와 검증',value:d.labels,sourcePath:ROOT+'.labels'});
+
+  const identity=tablePanel('actual-covariance-identity','실제 공분산 일치 · 대표점의 (7.30)','같은 source 적분 A,B와 응력으로 역행렬을 풀고 양의 weight를 구했습니다. C(W0)=epsilon T0,*와 이 대표점의 모든 활성 항을 합한 물리 scale 항등식을 검증합니다. 다른 slow box나 전체 annulus 인증은 남아 있습니다.',propertyTable('대표점의 실제 물리 합과 원문 항등식',d.physicalIdentity,ROOT+'.physicalIdentity',[['exact','원래 (7.30)'],['finiteActiveSumAtThisPoint','실행한 모든 활성 항'],['normalizedResult','보존된 실제 응력 결과'],['positivePhysicalScale','양의 원래 물리 배율'],['exactResidual','같은 원본 식의 정확 잔차'],['qPower','epsilon과 q/Q 지수의 정확 소거'],['globalIdentityAtThisActualPointVerified','이 대표점의 원문 항등식']],options),ROOT+'.physicalIdentity','ACTUAL_SOURCE_LOCAL_AND_POINTWISE_COVARIANCE_IDENTITIES',d);
+  identity.relatedTables.push(propertyTable('실제 local inverse와 전체 조건',m,mp,[['localIdentity','H y와 원래 stress'],['algebra','정확 Laurent 다항식 검사'],['checks','같은 source·양의 inverse 검사']],options),propertyTable('남은 원문 N5-06 범위',d,ROOT,[['scope','실행된 point와 미완료 전영역']],options));
+  const panels=[weights,integrals,matrix,density,stress,cutoff,partition,identity];
+  for(const p of panels){p.observation={...p.observation,actualCovarianceIntegral:true,actualSourceTarget:true,actualPositiveInverse:true,actualPointwiseEquation730:true,wholeAnnulusCovarianceMatched:false,sourceUniformQStarCertified:false,globalOriginalCriteriaComplete:false};p.details.push({title:'관측의 실제 요청과 source 범위',value:d.request,sourcePath:ROOT+'.request'});}
+  return panels;
+}
+
 /** Parent makeM2Visualization supplies current editor/job/hash state before merging one panel. */
 export function actualSourcePanels(job,options={}){
   if(!job?.result||options.currentEditorMatches===false)return [];
@@ -225,6 +268,7 @@ export function actualSourcePanels(job,options={}){
   if(kind==='ns.actual-background'&&d?.schema==='MathScope.ActualBackgroundConstruction/1')return backgroundPanels(d,options);
   if(kind==='ns.actual-picard-acceptance'&&d?.schema==='MathScope.ActualFixedOrderPicardAcceptance/1')return picardAcceptancePanels(d,options);
   if(kind==='ns.actual-pulse-amplitude'&&d?.schema==='MathScope.ActualMeanPulseAmplitude/1')return pulseAmplitudePanels(d,options);
+  if(kind==='ns.actual-covariance-matching'&&d?.schema==='MathScope.ActualPulsePointwiseAssembly/1')return actualCovariancePanels(d,options);
   if(kind==='ns.actual-continuation'&&d?.schema==='MathScope.ActualContinuationConstruction/1')return continuationPanels(d,options);
   if(kind==='ns.actual-mean-pulse'&&d?.schema==='MathScope.ActualMeanPatchPulseConstruction/1')return pulsePanels(d,options);
   return [];

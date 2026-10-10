@@ -1,24 +1,24 @@
 {
   "schema": "MathScope.LiveRelease/2",
   "dateUTC": "2026-10-10",
-  "checkpoint": "v65-actual-finite-Picard-amplitude-and-continuation",
+  "checkpoint": "v66-actual-covariance-stress-positive-matching-and-pointwise-assembly",
   "publication": {
     "status": "live",
     "url": "https://project29770.websitepublisher.ai/v0.3.1.html",
     "slug": "v0.3.1.html",
-    "version": 65,
-    "version_hash": "20ff2fd3",
-    "patches_applied": 2,
+    "version": 66,
+    "version_hash": "4cf1cb64",
+    "patches_applied": 1,
     "content_preview": "<!doctype html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1,viewport-fit=cover\">\n  <title>MathScope v0.3.1 — M1 / M2 Research IDE</title>\n  <meta name=\"description\" content=\"MathScope v0.3.1 DEV integrated web prototype: typed mathematical objects, 3D observations, identifiability and fidelity diagnostics, functional analysis, dynamics, arithmetic geometry, certificates, Claim Ledger, Lean bridge boundary, revision and repr",
     "size_change": "normal",
-    "message": "Page patched successfully (2 patches applied)"
+    "message": "Page patched successfully (1 patches applied)"
   },
-  "runtimeVersion": "0.3.2",
-  "workerSha256": "601be23fedcd6a152f7551c54f6c4f107517160c0902014a07f628ce2b205d5f",
-  "bundleSha256": "2ff4ef9389d792b1b6fd97732b7bbec525a631bf717ad0bec1f97d77d1a2e895",
+  "runtimeVersion": "0.3.3",
+  "workerSha256": "aefa26fcf4470c7cd91c71b337f49173f77134f404d58f57818e16a65b030b10",
+  "bundleSha256": "876c3b34af5c59cdc8fb262a07d8cdd5cbeb524dcab39decff49cb1a4ef61366",
   "git": {
     "branch": "mathscope-m2-visuals-20261010",
-    "previousRemoteCheckpoint": "d72142ae35da7aafc55c902e50d6690095223bff",
+    "previousRemoteCheckpoint": "1360871b46848740eaba218925f629b440949235",
     "scope": "Only research-ide/mathscope-m2; this record belongs to its containing commit."
   },
   "m1": {
@@ -36,10 +36,12 @@
       "evidence/v62-m1-all-59.jpg",
       "evidence/v63-m1-state-audit.json",
       "evidence/v65-m1-audit.json",
-      "evidence/v65-m1-interval.jpg"
+      "evidence/v65-m1-interval.jpg",
+      "evidence/v66-m1-audit.json",
+      "evidence/v66-m1-interval.jpg"
     ],
     "focusedRevalidation": {
-      "pageVersion": 65,
+      "pageVersion": 66,
       "example": "ns-heat-interval",
       "status": "COMPLETED",
       "renderer": "CPU_CANVAS2D_INTERVALS",
@@ -47,12 +49,12 @@
     }
   },
   "m2": {
-    "version": "0.3.2",
-    "examples": 71,
+    "version": "0.3.3",
+    "examples": 72,
     "byDomain": {
       "arithmetic": 25,
       "gauge": 14,
-      "navier": 21,
+      "navier": 22,
       "observationI2": 11
     },
     "originalCriteria": {
@@ -74,15 +76,15 @@
     "formalPass": false,
     "installedDefaultExecutionStatuses": {
       "COMPLETED": 59,
-      "PARTIAL": 12
+      "PARTIAL": 13
     },
-    "executionStatusSource": "All 71 local source/static-worker runs; browser scope is recorded separately."
+    "executionStatusSource": "All 72 local source/static-worker runs; browser scope is recorded separately."
   },
   "verification": {
     "navier": {
-      "nodeTests": 141,
-      "passed": 141,
-      "independentPythonChecks": 2778,
+      "nodeTests": 172,
+      "passed": 172,
+      "independentPythonChecks": 4967,
       "evidence": "navier/evidence/acceptance.json"
     },
     "integrationAndCore": {
@@ -90,25 +92,25 @@
       "passed": 30,
       "failed": 0,
       "skipped": 0,
-      "sourceVsStaticWorkerExamples": 71,
+      "sourceVsStaticWorkerExamples": 72,
       "evidence": [
-        "evidence/v65-integration-tests.tap",
-        "evidence/v65-core-tests.tap"
+        "evidence/v66-integration-tests.tap",
+        "evidence/v66-core-tests.tap"
       ]
     },
     "newVisualizationsAndM1Host": {
-      "tests": 45,
-      "passed": 45,
-      "evidence": "evidence/v65-visualization-tests.tap"
+      "tests": 51,
+      "passed": 51,
+      "evidence": "evidence/v66-visualization-tests.tap"
     },
     "replay": {
       "ok": true,
       "status": "MATCH",
-      "originalHash": "4d3b293e1a2479c69f670b5a47a1d753ae0a676f914dc979b1a87793b960a960",
-      "freshHash": "4d3b293e1a2479c69f670b5a47a1d753ae0a676f914dc979b1a87793b960a960",
+      "originalHash": "8c1d0e6d569fb9b30aa6053eed7eb0b7d98f2561915d73829125916351a1c06d",
+      "freshHash": "8c1d0e6d569fb9b30aa6053eed7eb0b7d98f2561915d73829125916351a1c06d",
       "artifactBytesMatch": true,
       "semanticHashPolicy": "EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY",
-      "freshJobId": "m2-job:mv28qm0m:5",
+      "freshJobId": "m2-job:mv2af3up:5",
       "sourceVerified": true,
       "importedEvidenceTrusted": false,
       "selected": true
@@ -129,6 +131,108 @@
       "evidence": "evidence/v64-m2-catalog-audit.json"
     },
     "currentBrowserFocusedSweep": {
+      "pageVersion": 66,
+      "versionHash": "4cf1cb64",
+      "examples": 4,
+      "newExamples": 1,
+      "panels": 23,
+      "newPanels": 8,
+      "allRendered": true,
+      "allPanelsFiniteAndBound": true,
+      "environment": {
+        "hash": "92e1b09e39645bf0bcbb6bf3b4f02dbb27363ee6f2ca0ea60cec10cca116293f",
+        "workerSha256": "aefa26fcf4470c7cd91c71b337f49173f77134f404d58f57818e16a65b030b10",
+        "execution": "BROWSER_WEB_WORKER"
+      },
+      "evidence": "evidence/v66-new-catalog-audit.json"
+    },
+    "replayEvidence": "evidence/v66-covariance-replay.json",
+    "historicalBrowserArtifact": {
+      "path": "evidence/v64-actual-core-replay.json",
+      "source": "DOM-visible export textarea; exact complete prepared JSON saved after browser download transport failed",
+      "downloadEventSucceeded": false
+    },
+    "screenshots": [
+      "evidence/v66-covariance-weights.jpg",
+      "evidence/v66-covariance-density.jpg",
+      "evidence/v66-m1-interval.jpg"
+    ],
+    "originalStatusDelta": "evidence/original-status-delta.json",
+    "rendering": {
+      "ok": true,
+      "left": {
+        "status": "UNAVAILABLE",
+        "sourceUnchanged": true,
+        "sameRetainedProjection": true,
+        "actualRenderer": "CPU_CANVAS2D_SERIES",
+        "gpu": {
+          "state": "NOT_REQUESTED",
+          "reason": null,
+          "last": null
+        },
+        "raster": {
+          "status": "UNAVAILABLE",
+          "reason": "WEBGL_CONTEXT_UNAVAILABLE",
+          "pass": false
+        },
+        "marks": 512,
+        "pixelTolerance": 0.001,
+        "exactTablePolicy": "GPU float32 values are display coordinates only; the unchanged retained exact table is authoritative."
+      },
+      "right": null,
+      "visualization": {
+        "state": "READY",
+        "kind": "SERIES",
+        "title": "실제 pulse 곱 · Gaussian 좌표 적분",
+        "binding": {
+          "jobId": "m2-job:mv2af3up:5",
+          "kind": "ns.actual-covariance-matching",
+          "inputHash": "a04e9619fe1593b7aa2dfd47288a3a7f4b7bfb594526f9ee0172f020084384ae",
+          "resultHash": "8c1d0e6d569fb9b30aa6053eed7eb0b7d98f2561915d73829125916351a1c06d",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+          "modelHash": null,
+          "sampleHash": null,
+          "observationHash": null,
+          "displayTransformHash": null,
+          "currentEditorMatches": true,
+          "calculationStatus": "PARTIAL",
+          "representationRevision": 1,
+          "formalPass": false,
+          "ensembleHash": null,
+          "observationHashScope": "SOURCE_OBSERVATION_CONTRACT; PANEL_ID_AND_DISPLAY_TRANSFORMS_ARE_SEPARATE",
+          "panelId": "actual-covariance-density"
+        },
+        "tableRows": 200,
+        "totalRows": 256,
+        "points": 512,
+        "lines": 0,
+        "arrows": 0,
+        "lod": {
+          "originalPoints": 512,
+          "displayedPoints": 512,
+          "invalidCoordinates": 0,
+          "changesComputation": false,
+          "method": "DETERMINISTIC_STORED_MARK_ORDER",
+          "fullSourceRetained": true
+        },
+        "renderer": {
+          "renderer": "CPU_CANVAS2D_SERIES",
+          "requestedMode": "AUTO",
+          "webgl": {
+            "state": "NOT_REQUESTED",
+            "reason": null,
+            "last": null
+          },
+          "samples": 53,
+          "p95Milliseconds": 13.799999999813735,
+          "targetMilliseconds": 100,
+          "representationRevision": 1
+        },
+        "panel": "actual-covariance-density",
+        "pair": null
+      }
+    },
+    "historicalBrowserFocusedSweepV65": {
       "pageVersion": 65,
       "versionHash": "20ff2fd3",
       "examples": 4,
@@ -143,28 +247,18 @@
         "execution": "BROWSER_WEB_WORKER"
       },
       "evidence": "evidence/v65-new-catalog-audit.json"
-    },
-    "replayEvidence": "evidence/v65-amplitude-replay.json",
-    "historicalBrowserArtifact": {
-      "path": "evidence/v64-actual-core-replay.json",
-      "source": "DOM-visible export textarea; exact complete prepared JSON saved after browser download transport failed",
-      "downloadEventSucceeded": false
-    },
-    "screenshots": [
-      "evidence/v65-actual-core.jpg",
-      "evidence/v65-actual-amplitude.jpg",
-      "evidence/v65-m1-interval.jpg"
-    ],
-    "originalStatusDelta": "evidence/original-status-delta.json"
+    }
   },
   "limitations": [
     "N4-04, N4-05 and N5-06 remain PARTIAL; their missing actual-source dependencies are documented.",
     "PASS of each finite criterion does not assert the full N4/N5 package or a new Lean kernel theorem.",
-    "v65 browser verification covers the three new examples/all 15 panels plus existing core five panels and an M1 interval example; v64 full 68-example audit is separately preserved.",
+    "v66 browser verification covers the new covariance example/all 8 panels plus three prior source examples/15 panels and an M1 interval example; v64 full 68-example audit is separately preserved.",
     "Browser verification uses CPU Canvas2D; historical software GLES evidence is not physical GPU testing.",
     "360/960 pixel geometry checks simulate layout and are not real mobile hardware tests.",
-    "v61 cross-runtime 52/64 agreement is historical; current same-runtime static-worker parity is 71/71."
+    "v61 cross-runtime 52/64 agreement is historical; current same-runtime static-worker parity is 72/72.",
+    "N5-06 now computes the actual two-family integrals, heat-prepared mean target, positive inverse and complete representative-point active sum; the whole-annulus uniform bound and source q* remain open."
   ],
-  "previousRelease": "evidence/live-release-v64.json",
-  "visualizationSha256": "cbf3e0c4a3615fa0ec52df9a3f282dd55e43c1d54e037752d2dbc167114cafe7"
+  "previousRelease": "evidence/live-release-v65.json",
+  "visualizationSha256": "cbf3e0c4a3615fa0ec52df9a3f282dd55e43c1d54e037752d2dbc167114cafe7",
+  "verifiedAtUTC": "2026-10-10T11:07:52.791467+00:00"
 }

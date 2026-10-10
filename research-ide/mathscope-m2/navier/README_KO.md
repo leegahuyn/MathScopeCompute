@@ -2,7 +2,7 @@
 
 ## 현재 상태
 
-원문 N4/N5 16개 기준 중 **13개 PASS, 3개 PARTIAL, 0개 OPEN**입니다. 21개 예제는 모두 실행되고 실제 계산 결과의 그래프와 수치표를 반환합니다. 기본 예제 결과는 10개 유한 인증·연산자·관측 `COMPLETED`, 11개 구성·국소 계산 `PARTIAL`로 구별됩니다. 원문 기준 문구는 `tests/fixtures/original-n4-n5.json`과 byte-equivalent 문자열 대조를 하며 바꾸지 않았습니다.
+원문 N4/N5 16개 기준 중 **13개 PASS, 3개 PARTIAL, 0개 OPEN**입니다. 22개 예제는 모두 실행되고 실제 계산 결과의 그래프와 수치표를 반환합니다. 기본 예제 결과는 10개 유한 인증·연산자·관측 `COMPLETED`, 12개 구성·국소 계산 `PARTIAL`로 구별됩니다. 원문 기준 문구는 `tests/fixtures/original-n4-n5.json`과 byte-equivalent 문자열 대조를 하며 바꾸지 않았습니다.
 
 여기서 PASS는 해당 원문 **연산자 또는 유한 관측 acceptance**를 뜻합니다. Blueprint의 M2 패키지 완료관문인 실제 배경·stress·flat error의 전체 연결은 아직 닫히지 않았습니다. 실제 N4-03과 N5-04/05의 명시된 유한 소스 영역은 `sourceInstanceCertified: true`이며, 전체 패키지와 모든 차수에는 `fullSameProfileN4/fullSameProfileN5: false`, `allOrderSourceCertificate: false`, `formalComplete: false`를 유지합니다. [원문 기준 재심사](research/FINITE_CRITERIA_REAUDIT_KO.md)에 개별 유한 합격과 전체 패키지의 차이를 기록합니다. 기존 N3 완료 상태를 변경하거나 새 Lean 커널 실행을 주장하지 않습니다.
 
@@ -36,6 +36,7 @@ h=\exp[-8002(\exp(1048576)+10)]>0
 | `ns.actual-continuation` | actual core 전체 적분 21개, 양의 폭 B.22 reference 적분 10개, 실제 U/M/V 물리 구간 10개와 전체 Ω remainder | 실제 구간과 reference를 구분; 정확한 전체 debt·복구는 PARTIAL |
 | `ns.actual-picard-acceptance` | 실제 n=1의 6성분 계, 원래 공통 collar, C1·strip·loss·finite K와 tail, 실제 관측 18개 | 원래 N4-03 유한 합격; K항 수치 합산과 전체 N4는 별도 |
 | `ns.actual-pulse-amplitude` | 실제 완성 배경의 Imean restriction, 원래 left datum의 전체 pulse 진폭 enclosure, phase·frame·energy·Gaussian | N5-04/05 명시된 대표점 및 이웃의 유한 합격; 전체 annulus는 별도 |
+| `ns.actual-covariance-matching` | 실제 Gaussian 적분·열 보상 응력·양의 H inverse와 완전한 대표점 활성 합, 8개 원본 패널 | 실제 local/point (7.30) 검증; 전체 slow 이웃·공통 q*·annulus는 PARTIAL |
 | `ns.actual-background` | 같은 N3의 실제 n=1 Taylor DAG, 공통 collar C1·Cauchy loss·무한 tail 식, 축 3개 미분과 양의 반경 15개 차분몫 구간, Imean의 0이 아닌 모멘트 기여 | 원본 기반 국소 계산; 전체 모멘트와 고차 잔차는 PARTIAL |
 | `ns.actual-mean-pulse` | 같은 N3의 Imean F/V/b/G와 3차 slow jet, whole-box 상계, 국소 phase/frame·원문 왼쪽 datum·Gaussian 값 비교 | 실제 Imean 국소 구성; 전역 phase/ODE/covariance는 PARTIAL |
 | `ns.background-recursion` | 원래 cylindrical PDE의 exact coefficient 추출, n=1,2 직접 대입 대조, 모든 i+j=n 항 | N4-01/02 PASS; 실제 계수 해는 미구성 |
@@ -137,13 +138,21 @@ h=\exp[-8002(\exp(1048576)+10)]>0
 
 정규화 Haar 평균에서 degree-14 covering의 **모든 inverse lift**를 포함하면 `14^Delta * 14^(-Delta)=1`입니다. 전역 factor를 `1/14`로 두지 않습니다. (6.19)/(7.27)의 국소 rectangle Jacobian은 `4−2√2`이고 angular 평균은 `1/2`입니다. 잘못된 과거 예제는 `evidence/historical-v0.1.1/`의 역사 자료로만 보존하며 현재 acceptance에서 제외됩니다.
 
+## 실제 응력과 공분산의 연결
+
+`ns.actual-covariance-matching`은 같은 원본의 homogeneous pulse를 `w=sqrt(Gscale)(a−1)`로 적분하고 양의 Gaussian tail을 보존합니다. 원문에서 허용한 구체적인 smooth χ의 제곱 질량, angular 평균 1/2와 원래 Haar Jacobian을 포함합니다. Gaussian 극한 값이나 균등 v 표본을 실제 적분으로 대체하지 않습니다.
+
+실제 B.8·I1 모멘트 복구와 I2 열 보상식의 leading stress를 만든 후 pulse와 stress의 F가 같은 정확한 식인지 비교합니다. 그 실제 target과 H로 양의 두 weight를 계산합니다. 512 cells의 정규화 제곱 진폭은 두 sign 모두 `[2.619808939012956, 2.787057138136905]`이며, 양의 거대한 물리 배율은 정확식으로 보존합니다. 열 보상의 양의 하한과 covariance tail을 0으로 없애지 않습니다.
+
+원문 smooth 제곱분할을 실제로 선택해 대표점에 활성인 한 band·한 slow box를 만들고, 생략한 모든 정수 index가 support 밖임을 확인합니다. 두 sign은 한 box의 내부에 포함합니다. 이 대표점의 원래 물리 (7.30) 잔차는 정확히 `[0,0]`입니다. 전체 annulus와 공통 analytic q*는 미완료이며 원문 N5-06은 PARTIAL입니다. 8개 패널에서 값·배율·근거와 이 범위를 함께 볼 수 있습니다. [실제 연결 증명과 범위](research/ACTUAL_PULSE_COVARIANCE_MATCHING.md), [열 보상 응력](research/ACTUAL_MEAN_STRESS_KO.md)에 상세를 기록합니다.
+
 ## 검증과 재현
 
 ```bash
 node research-ide/mathscope-m2/navier/tests/generate-evidence.mjs
 ```
 
-기존 105개 Node 검사에 실제 Picard 8개, homogeneous pulse 13개, 실제 연장 15개를 더해 **141개** 검사를 수행합니다. 독립 검사는 기존 1,152개에 Picard Laurent/Fraction 782개, pulse Fraction/Decimal 618개, 연장 Fraction/Decimal 226개를 더해 **2,778개**입니다. 각 manifest의 실제 소스 바이트를 대조한 후 독립 receipt를 포함합니다. 최종 개수·입력 hash·코드 hash·21개 example receipt는 `evidence/acceptance.json`에서 확인합니다.
+기존 141개 Node 검사에 실제 응력 9개, covariance 10개, 양의 inverse·활성 합 12개를 더해 **172개** 검사를 수행합니다. 독립 검사는 기존 2,778개에 실제 응력 700개, covariance 294개, inverse·분할 Fraction/Decimal 1,195개를 더해 **4,967개**입니다. 각 manifest의 실제 소스 바이트를 대조한 후 독립 receipt를 포함합니다. 최종 개수·입력 hash·코드 hash·22개 example receipt는 `evidence/acceptance.json`에서 확인합니다.
 
 음성 대조는 axial viscosity의 n−1 항, pressure shift, cylindrical connection, χ′ 또는 rm 누락, 빠른 auxiliary chain rule 누락, Q/T 배율 누락, 잘못된 Haar factor, source receipt·Y·interval 변조, 부족한 cutoff prefix, ψ의 최고차 도함수 누락, covariance cone 밖의 target 등을 실제로 실패시킵니다. `EXACT`, `FORMAL`과 설치 범위를 벗어나는 정밀도 요청은 거절합니다. 실제 core와 continuation에 96–512비트 `DIRECTED_BIGINT`를 허용하며, 구간 포함과 정확한 함수값·형식 증명을 구분합니다.
 

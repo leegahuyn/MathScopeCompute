@@ -1,0 +1,200 @@
+{
+  "schema": "MathScope.ActualPulseCovarianceManifest/1",
+  "sourceProfile": "same-profile-2026-10-10.3",
+  "sourceAssemblySHA256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+  "artifacts": [
+    {
+      "path": "actual-pulse-covariance-integrals.mjs",
+      "sha256": "6690a62a744195fa733f8a3b3f61f90b291a88c9cbb490e94e96d4963e3065c5",
+      "bytes": 13175
+    },
+    {
+      "path": "research/ACTUAL_PULSE_COVARIANCE.md",
+      "sha256": "b09a98af17af064afff8bb70ace23c548995e6d2663e1e14fe6670b65ea68f4d",
+      "bytes": 11616
+    },
+    {
+      "path": "tests/actual-pulse-covariance.test.mjs",
+      "sha256": "ef740e41f938f09bcce4bef230790e5f3e812b8e36beb6d348905641aa92eed6",
+      "bytes": 8799
+    },
+    {
+      "path": "tests/actual-pulse-covariance-fixture.mjs",
+      "sha256": "2a9c585422925c85294d716041d2efdad5af857d60cca728235edb7cb60287c4",
+      "bytes": 1308
+    },
+    {
+      "path": "tests/actual-pulse-covariance-independent.py",
+      "sha256": "6cd98ac98da7545791085e69f3d92432e81f21cd5a3d0d0df2d1999831d50a32",
+      "bytes": 6796
+    },
+    {
+      "path": "tests/actual-pulse-covariance-independent.json",
+      "sha256": "6f3dad5fb3600c8942883eaad815a3678ba73f7d5d5dc73e9b58d34920e32c8b",
+      "bytes": 72795
+    }
+  ],
+  "frozenAmplitudeInputs": [
+    {
+      "path": "actual-pulse-amplitude-phase.mjs",
+      "sha256": "0ed21e490d93a59caa578d91a4dd3df3791a0e9a07a845740a15cd7578c98224",
+      "bytes": 11467
+    },
+    {
+      "path": "actual-pulse-amplitude-integrator.mjs",
+      "sha256": "096eea803e7c17481c4926b4a8b811ddf54ddc4df615253477092780c3d1b60d",
+      "bytes": 12329
+    }
+  ],
+  "api": {
+    "module": "actual-pulse-covariance-integrals.mjs",
+    "export": "actualMeanPulseCovariance",
+    "inputs": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "y": {
+        "default": 2.5,
+        "minimum": 0.25,
+        "maximum": 4.75
+      },
+      "cells": {
+        "default": 256,
+        "allowed": [
+          64,
+          128,
+          256,
+          512
+        ]
+      },
+      "cutoffCells": {
+        "default": "cells",
+        "allowed": [
+          64,
+          128,
+          256,
+          512
+        ]
+      }
+    },
+    "secondaryExports": [
+      "observeActualPulseGaussianCenter",
+      "actualPulseTransverseMass"
+    ],
+    "coordinateFrame": "BAND_CHART_Q_FIXED",
+    "sourcePaths": [
+      "result.results.rows[i]",
+      "result.results.centerAmplitude",
+      "result.results.transverseMass.rows[i]",
+      "result.results.integrals",
+      "result.results.covariance"
+    ]
+  },
+  "verification": {
+    "nodeTests": {
+      "passed": 10,
+      "failed": 0
+    },
+    "independentFractionQSqrt2Decimal": {
+      "checks": 294,
+      "failed": 0,
+      "decimalPrecision": 80
+    },
+    "runtimeChecks": {
+      "passed": 9,
+      "failed": 0
+    },
+    "independentReview": {
+      "reviewer": "m2_gauge",
+      "approved": true,
+      "reviewedRuntimeSHA256": "6690a62a744195fa733f8a3b3f61f90b291a88c9cbb490e94e96d4963e3065c5",
+      "scope": "Actual source homogeneous pulse covariance producer at fixed Imean representatives, including source displacement, Gaussian-width quadrature, nonzero tail, one transverse mass, angular half and full normalized Haar measure."
+    }
+  },
+  "observation512Cells": {
+    "A": [
+      0.12400958849306987,
+      0.13182208849355787
+    ],
+    "B": [
+      0.12400958849306878,
+      0.13182208849355778
+    ],
+    "transverseMassNormalized": [
+      1.2348083495359463,
+      1.2357849120359587
+    ],
+    "tailUpper": 2.0262664878570962e-13,
+    "positiveDeterminantLower": [
+      0.030756756076440777,
+      0.03475412602960679
+    ],
+    "normalization": [
+      "H_rtheta/(sqrt(lambda)*r0^2*u_star/sqrt(Gscale))",
+      "H_rz/(r0^2*u_star/sqrt(Gscale))"
+    ],
+    "normalizedMatrix": [
+      [
+        [
+          0.17940069945399142,
+          0.19085361247312202
+        ],
+        [
+          0.17940069945399142,
+          0.19085361247312202
+        ]
+      ],
+      [
+        [
+          0.17940069945398984,
+          0.19085361247312188
+        ],
+        [
+          -0.19085361247312188,
+          -0.17940069945398984
+        ]
+      ]
+    ]
+  },
+  "exactSourceMatrix": "common*[[sqrt(lambda)*A,sqrt(lambda)*A],[B,-B]]",
+  "exactCommonScale": {
+    "expression": "(4-2*sqrt(2))*r0^2*massNormalized*u_star/sqrt(Gscale)",
+    "coefficientInterval": [
+      1.4466679684532382,
+      1.4478120825892467
+    ],
+    "remainingScale": {
+      "expression": "r0^2*u_star/sqrt(Gscale)",
+      "strictlyPositive": true,
+      "binary64": null,
+      "underflowIsNotZero": true
+    }
+  },
+  "exactTwoSignParity": {
+    "exact": true,
+    "reason": "kp_minus=-kp_plus by the same sign-symmetric nonzero-integer rounding. qAngular changes sign, thetaRound,D,x,ybar and t_theta remain identical; t_z changes sign.",
+    "sameSlowBoxCount": 1,
+    "signRectangles": 2,
+    "oppositeSignsIncludedAsSeparateBoxes": false
+  },
+  "producerScope": {
+    "actualHomogeneousPulseCovarianceEnclosed": true,
+    "actualSourceRepresentative": {
+      "y": 2.5,
+      "eta": 0,
+      "s": 1
+    },
+    "actualT0TargetSupplied": false,
+    "positiveWeightsMatched": false,
+    "globalSquaredPartitionMatched": false,
+    "slowNeighborhoodCovarianceCertified": false,
+    "fullCurlCovarianceCorrectionIncluded": false,
+    "allOriginalN5PackageComplete": false,
+    "newLeanKernelProof": false
+  },
+  "N506WholeCriterionClosedByProducerAlone": false,
+  "remaining": [
+    "Join the actual same-profile T0,* target and compute positive weights from these actual integral objects.",
+    "Verify the resulting source covariance identity and once-per-slow-box global algebra in the integrating module.",
+    "This representative producer does not provide a slow-neighborhood covariance proof or full curl covariance correction."
+  ],
+  "status": "PARTIAL"
+}

@@ -38,11 +38,11 @@ N5의 새 검증은 Node 13개 및 독립 Fraction/80자리 Decimal 618개를 �
 
 ### N5-06: 실제 공분산·positive inverse·global 조립
 
-두 실제 homogeneous pulse의 (7.27) 적분에는 angular 1/2, 원래 Haar Jacobian, χ²·ψ²와 원래 t_r t_tan이 필요하다. 같은 heat-prepared N3의 order-zero target T0,*에 대해 Hcov inverse와 양의 y±, determinant 하계, C(W0)=epsilon T0,*를 검증해야 한다. **같은 slow box의 ±를 두 box로 합산하지 않는 global (7.30)**도 원문에 명시된 별도 조건이다.
+실제 homogeneous pulse의 (7.27) 적분을 Gaussian 좌표로 계산하며 angular 1/2, 원래 Haar Jacobian, χ²·ψ², 원래 t_r t_tan과 양의 전체 tail을 유지한다. 같은 N3의 B.8·I1 moment restoration과 I2 열 보상으로 leading target T0,*를 만들고, pulse와 target의 F가 같은 정확식임을 확인한다. η=0 axial stress의 정확 0은 복구된 함수·heat parity의 결과이며 raw core parity 또는 positive-order pressure의 영성을 가정하지 않는다.
 
-Imean의 velocity가 정확히 알려져도 누적 stress는 자동으로 정해지지 않는다. 원래 core에는 j0 shift가 있으므로 단순한 η 반사를 가정할 수 없다. 실제 B.8·I1 모멘트 복원과 I2 heat compensation을 통해 target을 구성해야 한다. 완성 배경의 velocity restriction을 pressure 또는 stress의 영성으로 확대하지 않는다.
+`ns.actual-covariance-matching`은 이 actual H inverse와 양의 y± 및 determinant 하계를 계산한다. 원문에서 허용한 구체적인 smooth 제곱분할을 같은 source 대표점에 고정해 한 활성 band·한 slow box 및 내부의 두 signs를 실행한다. 생략된 모든 정수 index가 support 밖이라는 정확 증명이 있으므로 전체 활성 합이다. 그 대표점의 C(W0)=epsilon T0,*와 물리 (7.30) 잔차 `[0,0]`을 원래 양의 h와 q/Q 배율로 확인한다. 자세한 증명·검사는 [실제 응력–공분산 연결](research/ACTUAL_PULSE_COVARIANCE_MATCHING.md)에 있다.
 
-실제 펄스는 Gscale이 매우 커 중심 폭이 Gscale^-1/2이다. 균등 v 표본은 covariance 적분을 해결하지 않는다. w=sqrt(Gscale)(a−1)에서 중앙 적분과 양의 Gaussian tail을 분리하고 원래 scale을 보존해야 한다. 실제 local covariance가 완성돼도 전체 source annulus의 모든 local pair 및 global 조립의 미검증 범위를 별도로 기록한다.
+남은 것은 모든 enlarged slow neighborhoods에서의 실제 completed-background C²·edge-direction modulus, 원본에서 도출한 공통 q*, 그리고 이에 따른 actual integrated H column·positive inverse의 전영역 인증이다. 대표점에서 선택한 qBig=3Q/2는 공통 analytic q*가 아니다. 이러한 범위가 닫히기 전에는 N5-06과 whole-annulus flags를 PARTIAL/false로 유지한다.
 
 ## 이미 완료한 연산자 조건의 경계
 
@@ -54,6 +54,6 @@ N5-07은 원래 C_m와 전체 r_m의 mixed jet, cylindrical basis 미분, Cartes
 
 ## 재현과 출처
 
-같은 N3 identity, parameter expression graph, accepted assembly와 원본 소스 바이트를 변경하지 않는다. 각각의 새 manifest와 독립 검사 receipt는 사용한 바이트를 검증한다. `node research-ide/mathscope-m2/navier/tests/generate-evidence.mjs`가 모든 등록 예제, original criterion text, 소스 manifest와 독립 근거를 묶는다. 현재의 aggregate는 Node 141개, 독립 검사 2,778개이다.
+같은 N3 identity, parameter expression graph, accepted assembly와 원본 소스 바이트를 변경하지 않는다. 각각의 새 manifest와 독립 검사 receipt는 사용한 바이트를 검증한다. `node research-ide/mathscope-m2/navier/tests/generate-evidence.mjs`가 모든 등록 예제, original criterion text, 소스 manifest와 독립 근거를 묶는다. 현재의 aggregate는 Node 172개, 독립 검사 4,967개이다.
 
 새 Lean kernel proof나 전역 Navier–Stokes 정리의 완료를 주장하지 않는다. 원래 자료에 보존된 분석적 증명, 실행한 exact/interval 검사, 유한 criterion의 PASS, 전체 package의 미완료를 각각 기록한다.
