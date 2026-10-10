@@ -1,0 +1,102 @@
+name: Original Comparator guard transport diagnostic
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [handoff-resume-20261010]
+    paths:
+      - '.github/workflows/ns-guard-diagnostic.yml'
+      - 'tools/ns-guard-ci/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ns-guard-diagnostic-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify bounded transport behavior
+        run: python3 -B -m unittest discover -s tools/ns-guard-ci -p test_transport.py -v
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.2'
+          cache: false
+      - name: Prepare the original unprivileged systemd user
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo useradd --create-home --shell /bin/bash mathscopeverify
+          sudo install -d -m 755 /opt/mathscope-ci /opt/mathscope-guard-ci
+          sudo install -m 644 tools/ns-original-ci/pins.json /opt/mathscope-ci/pins.json
+          sudo install -m 755 tools/ns-original-ci/probe.py /opt/mathscope-ci/probe.py
+          sudo install -m 755 tools/ns-guard-ci/diagnose.py tools/ns-guard-ci/transport.py \
+            tools/ns-guard-ci/metadata_probe.py /opt/mathscope-guard-ci/
+          mathscope_go_root=$(go env GOROOT)
+          sudo cp -a "$mathscope_go_root" /opt/mathscope-ci/go
+          mathscope_uid=$(id -u mathscopeverify)
+          sudo loginctl enable-linger mathscopeverify
+          sudo systemctl start "user@${mathscope_uid}.service"
+          sudo -u mathscopeverify -H env XDG_RUNTIME_DIR="/run/user/${mathscope_uid}" \
+            DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/${mathscope_uid}/bus" \
+            systemctl --user is-active default.target
+      - name: Prepare only the pinned Landrun for the write-denial probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          mathscope_landrun_repository=$(python3 -c 'import json; print(json.load(open("tools/ns-original-ci/pins.json"))["landrun"]["repository"])')
+          mathscope_landrun_commit=$(python3 -c 'import json; print(json.load(open("tools/ns-original-ci/pins.json"))["landrun"]["commit"])')
+          mathscope_tool_dir=/home/mathscopeverify/guard-diagnostic-tools
+          sudo -u mathscopeverify -H mkdir -p "$mathscope_tool_dir/source"
+          sudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" init
+          sudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" remote add origin "$mathscope_landrun_repository"
+          sudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" fetch --depth=1 origin "$mathscope_landrun_commit"
+          sudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" checkout --detach FETCH_HEAD
+          test "$(sudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" rev-parse HEAD)" = "$mathscope_landrun_commit"
+          sudo -u mathscopeverify -H /opt/mathscope-ci/go/bin/go -C "$mathscope_tool_dir/source" \
+            build -mod=readonly -o "$mathscope_tool_dir/landrun" cmd/landrun/main.go
+      - name: Compare the same guarded command with PIPE and a real outer PTY
+        shell: bash
+        run: |
+          set -euo pipefail
+          mathscope_uid=$(id -u mathscopeverify)
+          sudo -u mathscopeverify -H env \
+            XDG_RUNTIME_DIR="/run/user/${mathscope_uid}" \
+            DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/${mathscope_uid}/bus" \
+            PATH="/opt/mathscope-ci/go/bin:/usr/local/bin:/usr/bin:/bin" \
+            /usr/bin/python3 -B /opt/mathscope-guard-ci/diagnose.py \
+            --output /home/mathscopeverify/guard-diagnostic-evidence \
+            --landrun /home/mathscopeverify/guard-diagnostic-tools/landrun
+      - name: Preserve actual observations even when a case fails
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p guard-diagnostic-evidence
+          if sudo test -d /home/mathscopeverify/guard-diagnostic-evidence; then
+            sudo cp -a /home/mathscopeverify/guard-diagnostic-evidence/. guard-diagnostic-evidence/
+            sudo chown -R "$(id -u):$(id -g)" guard-diagnostic-evidence
+          fi
+          cp tools/ns-original-ci/pins.json tools/ns-original-ci/probe.py guard-diagnostic-evidence/
+          cp tools/ns-guard-ci/transport.py tools/ns-guard-ci/diagnose.py \
+            tools/ns-guard-ci/metadata_probe.py guard-diagnostic-evidence/
+          if sudo test -x /home/mathscopeverify/guard-diagnostic-tools/landrun; then
+            sudo sha256sum /home/mathscopeverify/guard-diagnostic-tools/landrun > guard-diagnostic-evidence/landrun-binary.sha256
+            sudo -u mathscopeverify -H git -C /home/mathscopeverify/guard-diagnostic-tools/source \
+              rev-parse HEAD > guard-diagnostic-evidence/landrun-source-head.txt
+          fi
+          git rev-parse HEAD > guard-diagnostic-evidence/mathscope-commit.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: original-guard-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
+          path: guard-diagnostic-evidence/
+          retention-days: 30
+          if-no-files-found: error
