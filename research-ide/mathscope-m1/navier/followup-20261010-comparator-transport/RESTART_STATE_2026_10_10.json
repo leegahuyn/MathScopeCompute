@@ -1,0 +1,86 @@
+{
+  "schema": "MathScope.ConversationRestartState/1",
+  "recordedUTC": "2026-10-10T03:03:14.130454+00:00",
+  "purpose": "User requested a new-chat handoff because the conversation reached its length limit. Continue the original task from the exact remaining parser issue.",
+  "currentCounts": {
+    "PASS": 69,
+    "PARTIAL": 1,
+    "BLOCKED": 0,
+    "total": 70
+  },
+  "remainingGateIds": [
+    "N1-06"
+  ],
+  "originalNineFulfilled": 8,
+  "allOriginal70ConditionsComplete": false,
+  "historicalAssessment": {
+    "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/ORIGINAL_NINE_GATES_ASSESSMENT_2026_10_10_3.json",
+    "sha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+    "bytes": 45550
+  },
+  "currentActualProduction": {
+    "runId": 38014602021,
+    "jobId": 114101981614,
+    "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+    "status": "completed",
+    "conclusion": "success",
+    "controllerExitCode": 0,
+    "protectedComparatorExitCode": 0,
+    "stageCount": 35,
+    "allActualStageExitsZero": true,
+    "completedUTC": "2026-10-10T02:44:09.356301+00:00",
+    "artifactId": 11657065866,
+    "artifactBytes": 313326,
+    "artifactSHA256": "1bc9b8134308ee9d8205c3273b96558ccb4efc456d0054da3ea033879c70d9b8",
+    "trackedOriginalSourceFilesUnchanged": 2669
+  },
+  "actualPrimaryAudit": {
+    "path": "mathscope-m1/navier/followup-20261010-comparator-transport/terminal-run-0001/raw/terminal-actual-audit-0001/comparator-terminal-audit.json",
+    "sha256": "c1f5f3e62cb44a421722a89a5d310a4e42ddcb6e35a41a3be6477162bf1fc991",
+    "bytes": 33550,
+    "status": "FAIL_OR_INCOMPLETE",
+    "passed": 233,
+    "total": 234,
+    "N106Completed": false,
+    "failure": "both submitted theorem types actually printed"
+  },
+  "actualIndependentReview": {
+    "path": "mathscope-m1/navier/followup-20261010-comparator-transport/terminal-run-0001/raw/independent-terminal-actual-0001/independent-review.json",
+    "sha256": "6211680abccbd65ff6155dc5f3b6bd88308b63888c68e09e1ec25b5ce41d1ca7",
+    "bytes": 56185,
+    "status": "FAIL_OR_INCOMPLETE",
+    "passed": 347,
+    "total": 350,
+    "N106Completed": false,
+    "failures": [
+      "R3 submitted type regex expects a colon immediately after the theorem name",
+      "periodic submitted type regex expects a colon immediately after the theorem name",
+      "primary auditor must also have passed"
+    ]
+  },
+  "immediateProblem": "Both frozen parsers assume theorem-name followed directly by whitespace and a colon, while the actual Lean output prints (nu : ℝ) (hnu : nu > 0) before the colon. The real run passed; the recorded audits did not.",
+  "nextActions": [
+    "Preserve both failed actual audits and both frozen source files.",
+    "Independently verify printed parameterized types against the original C/D declarations and create new narrowly corrected auditor versions.",
+    "Execute new auditors against the same original ZIP and observation034, preserving all original security/source/kernel/exit checks.",
+    "Update a separate assessment-writer version with the reviewed new auditor identity; generate a new unchanged-criteria assessment only after actual PASS.",
+    "Update the English current status and RELEASE metadata only after gate closure; build and publish a fresh .4 full package and verify actual CI plus public download.",
+    "Update a separate final-report contract with the new auditor source identity, and generate/QA/save the final Korean completion PDF."
+  ],
+  "newParserVersionCreated": false,
+  "newAssessment70Created": false,
+  "release4Published": false,
+  "liveSiteDeploymentPerformed": false,
+  "currentPublishedRelease": "mathscope-research-en-2026.10.10.3",
+  "restartCheckpointBranch": "handoff-20261010-comparator-success",
+  "checkpointPublicationProof": "See the final handoff PDF and the separately retained actual Git publication receipt. This JSON intentionally does not invent a self-referential commit hash.",
+  "originalAcceptanceMeaning": "Original M0/M1 70 criteria, including Theorem 4.6 leading profile and annular stress.",
+  "entireNewProfileLeanFormalized": false,
+  "preservationReceipt": {
+    "path": "mathscope-m1/navier/followup-20261010-comparator-transport/terminal-run-0001/preservation-receipt.json",
+    "sha256": "f3f72609066d71d30d04e9f8e49b55b8f6876c9c72b11de3740b71767c259a37",
+    "passed": 331,
+    "total": 331,
+    "N106Completed": false
+  }
+}

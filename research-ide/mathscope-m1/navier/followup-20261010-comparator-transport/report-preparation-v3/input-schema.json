@@ -1,0 +1,633 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mathscope:final-handoff-addendum-input:3",
+  "title": "Actual protected Comparator handoff with historical trust and actual runtime binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "state",
+    "preparedUTC",
+    "finalizedUTC",
+    "intendedOutput",
+    "baseReport",
+    "baseVisualQA",
+    "historicalAssessment68_2",
+    "assessment69_1",
+    "originalCriteria",
+    "originalNsGates",
+    "publication3Frozen",
+    "publicationFollowup",
+    "oldFailedExecution",
+    "diagnosticHistory",
+    "gateExecution",
+    "newAssessmentAfterComparator",
+    "preservationPolicy",
+    "renderingPlan",
+    "displayTimezone",
+    "displayTimeRule"
+  ],
+  "properties": {
+    "schema": {
+      "const": "MathScope.FinalHandoffAddendumInput/3"
+    },
+    "state": {
+      "enum": [
+        "PREPARING_WAITING_FOR_ACTUAL_FOLLOWUP_N106",
+        "FINAL_ACTUAL_RESULTS_VERIFIED"
+      ]
+    },
+    "preparedUTC": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finalizedUTC": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "intendedOutput": {
+      "type": "string",
+      "pattern": "^/.*\\.pdf$"
+    },
+    "baseReport": {
+      "$ref": "#/$defs/fileReference"
+    },
+    "baseVisualQA": {
+      "$ref": "#/$defs/fileReference"
+    },
+    "historicalAssessment68_2": {
+      "$ref": "#/$defs/fileReference"
+    },
+    "assessment69_1": {
+      "$ref": "#/$defs/fileReference"
+    },
+    "originalCriteria": {
+      "$ref": "#/$defs/fileReference"
+    },
+    "originalNsGates": {
+      "$ref": "#/$defs/fileReference"
+    },
+    "publication3Frozen": {
+      "$ref": "#/$defs/publication"
+    },
+    "publicationFollowup": {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/publication"
+            },
+            {
+              "required": [
+                "releaseObservation"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "oldFailedExecution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "runId",
+        "jobId",
+        "artifactId",
+        "preservationReceipt",
+        "finalObservation",
+        "independentAudit",
+        "receivedReceipt",
+        "artifactZIP"
+      ],
+      "properties": {
+        "role": {
+          "const": "HISTORICAL_FAILED_RUN_ONLY"
+        },
+        "runId": {
+          "const": 37979127351
+        },
+        "jobId": {
+          "const": 113984853927
+        },
+        "artifactId": {
+          "const": 11654200401
+        },
+        "preservationReceipt": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "finalObservation": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "independentAudit": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "receivedReceipt": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "artifactZIP": {
+          "$ref": "#/$defs/fileReference"
+        }
+      }
+    },
+    "diagnosticHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "runId",
+          "jobId",
+          "observation"
+        ],
+        "properties": {
+          "role": {
+            "const": "TRANSPORT_DIAGNOSTIC_ONLY"
+          },
+          "runId": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "jobId": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "observation": {
+            "$ref": "#/$defs/fileReference"
+          }
+        }
+      }
+    },
+    "gateExecution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "runId",
+        "jobId",
+        "artifactId",
+        "headCommit",
+        "finalObservation",
+        "independentAudit",
+        "auditVerifier",
+        "auditInputsManifest",
+        "artifactZIP",
+        "findingsKO",
+        "expectedAuditSchema",
+        "actualRunBinding",
+        "actualJobStatus",
+        "actualJobConclusion"
+      ],
+      "properties": {
+        "role": {
+          "const": "ORIGINAL_PROTECTED_COMPARATOR_GATE"
+        },
+        "runId": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jobId": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "artifactId": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "headCommit": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "finalObservation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/fileReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "independentAudit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/fileReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "auditVerifier": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/fileReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "auditInputsManifest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/fileReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "artifactZIP": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/fileReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "findingsKO": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 480
+          }
+        },
+        "expectedAuditSchema": {
+          "enum": [
+            "MathScope.OriginalProtectedComparatorPortableAudit/1",
+            "MathScope.OriginalProtectedComparatorTerminalAudit/1"
+          ]
+        },
+        "actualRunBinding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/fileReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actualJobStatus": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actualJobConclusion": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "newAssessmentAfterComparator": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/fileReference"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "preservationPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modifyFrozenRepositoryFiles",
+        "replaceOriginal15PagePDF",
+        "frozenCounts",
+        "historicalCounts",
+        "currentBeforeFinalComparator",
+        "allOriginalConditionsCompleteWithoutNewN106Evidence",
+        "conditionalN106PassRequiresIndependentArtifactAuditAndNewUnchangedCriteriaAssessment"
+      ],
+      "properties": {
+        "modifyFrozenRepositoryFiles": {
+          "const": false
+        },
+        "replaceOriginal15PagePDF": {
+          "const": false
+        },
+        "frozenCounts": {
+          "const": [
+            61,
+            7,
+            2
+          ]
+        },
+        "historicalCounts": {
+          "const": [
+            68,
+            2,
+            0
+          ]
+        },
+        "currentBeforeFinalComparator": {
+          "const": [
+            69,
+            1,
+            0
+          ]
+        },
+        "allOriginalConditionsCompleteWithoutNewN106Evidence": {
+          "const": false
+        },
+        "conditionalN106PassRequiresIndependentArtifactAuditAndNewUnchangedCriteriaAssessment": {
+          "const": true
+        }
+      }
+    },
+    "renderingPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "appendixPages",
+        "mergedPagesWhenFinalized",
+        "supportedAppendixPages",
+        "noPDFBeforeActualFinalGateEvidence",
+        "followupPublicationRequiresThirdPage",
+        "requiredFinalQA"
+      ],
+      "properties": {
+        "appendixPages": {
+          "enum": [
+            2,
+            3
+          ]
+        },
+        "mergedPagesWhenFinalized": {
+          "enum": [
+            17,
+            18
+          ]
+        },
+        "supportedAppendixPages": {
+          "const": [
+            2,
+            3
+          ]
+        },
+        "noPDFBeforeActualFinalGateEvidence": {
+          "const": true
+        },
+        "followupPublicationRequiresThirdPage": {
+          "const": true
+        },
+        "requiredFinalQA": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "displayTimezone": {
+      "const": "Asia/Seoul"
+    },
+    "displayTimeRule": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "fileReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mainPublicationReceipt",
+        "downloadVerification",
+        "publishedCI",
+        "localZIP",
+        "downloadedZIP",
+        "mainCommit",
+        "tree",
+        "tag",
+        "releaseId",
+        "assetId",
+        "prerelease",
+        "releaseURL",
+        "downloadURL"
+      ],
+      "properties": {
+        "mainPublicationReceipt": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "downloadVerification": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "publishedCI": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "localZIP": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "downloadedZIP": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "releaseObservation": {
+          "$ref": "#/$defs/fileReference"
+        },
+        "mainCommit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "tree": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "tag": {
+          "type": "string",
+          "minLength": 1
+        },
+        "releaseId": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "assetId": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "prerelease": {
+          "type": "boolean"
+        },
+        "releaseURL": {
+          "type": "string",
+          "pattern": "^https://github\\.com/leegahuyn/MathScopeCompute/releases/tag/"
+        },
+        "downloadURL": {
+          "type": "string",
+          "pattern": "^https://github\\.com/leegahuyn/MathScopeCompute/releases/download/"
+        },
+        "metadataOrigin": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "FINAL_ACTUAL_RESULTS_VERIFIED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "finalizedUTC": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gateExecution": {
+            "properties": {
+              "runId": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "jobId": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "artifactId": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "headCommit": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "finalObservation": {
+                "$ref": "#/$defs/fileReference"
+              },
+              "independentAudit": {
+                "$ref": "#/$defs/fileReference"
+              },
+              "auditVerifier": {
+                "$ref": "#/$defs/fileReference"
+              },
+              "auditInputsManifest": {
+                "$ref": "#/$defs/fileReference"
+              },
+              "artifactZIP": {
+                "$ref": "#/$defs/fileReference"
+              },
+              "findingsKO": {
+                "minItems": 1
+              },
+              "actualJobStatus": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actualJobConclusion": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "FINAL_ACTUAL_RESULTS_VERIFIED"
+          },
+          "gateExecution": {
+            "properties": {
+              "expectedAuditSchema": {
+                "const": "MathScope.OriginalProtectedComparatorTerminalAudit/1"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "gateExecution": {
+            "properties": {
+              "actualRunBinding": {
+                "$ref": "#/$defs/fileReference"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

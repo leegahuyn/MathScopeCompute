@@ -1,0 +1,12 @@
+NavierStokes.Comparator.navier_stokes_breakdown_R3 (nu : ℝ) (hnu : nu > 0) :
+  ∃ u₀ f,
+    NavierStokes.Comparator.InitialVelocityConditionDecay u₀ ∧
+      NavierStokes.Comparator.ForceConditionDecay f ∧
+        ¬∃ v p, NavierStokes.Comparator.NavierStokesExistenceAndSmoothnessRn nu u₀ f v p
+'NavierStokes.Comparator.navier_stokes_breakdown_R3' depends on axioms: [propext, Classical.choice, Quot.sound]
+NavierStokes.Comparator.navier_stokes_breakdown_periodic (nu : ℝ) (hnu : nu > 0) :
+  ∃ u₀ f,
+    NavierStokes.Comparator.InitialVelocityConditionPeriodic u₀ ∧
+      NavierStokes.Comparator.ForceConditionPeriodic f ∧
+        ¬∃ v p, NavierStokes.Comparator.NavierStokesExistenceAndSmoothnessPeriodic nu u₀ f v p
+'NavierStokes.Comparator.navier_stokes_breakdown_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]

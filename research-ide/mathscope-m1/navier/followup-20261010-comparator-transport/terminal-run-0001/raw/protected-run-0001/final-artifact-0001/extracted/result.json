@@ -1,0 +1,1485 @@
+{
+  "schema": "MathScope.ProtectedOriginalCI/1",
+  "status": "PASS",
+  "mode": "comparator",
+  "startedUTC": "2026-10-10T01:49:38.160506+00:00",
+  "pins": {
+    "schema": "MathScope.OriginalVerificationPins/1",
+    "repository": "https://github.com/openai/NavierStokesAndEuler.git",
+    "commit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+    "toolchain": "leanprover/lean4:v4.34.0-rc2",
+    "sourceFileSHA256": {
+      "lean-toolchain": "8190e75a201741065fe508b28955dd64dd72d090babe5f70ce6848879d68ae88",
+      "lake-manifest.json": "5ec1dc8e009008d0efb9601cd38f6ba54e753fd538b0e5f8c3e6c5ec72ee1e09",
+      "lakefile.toml": "97b2804da5b9a2cd0aaf44ce42b7c39e9947beff9d2ac01a11e0d3d867af1c09"
+    },
+    "leanArchive": "https://github.com/leanprover/lean4/releases/download/v4.34.0-rc2/lean-4.34.0-rc2-linux.tar.zst",
+    "leanArchiveSHA256": "3d011041203acacf300d343a39673f7d233743397993797c941346ae9e5df1a8",
+    "leanKernelSHA256": "cddf08bd2b9239f8ce2e2aba8630c47e37b6b341b47705d9d0ba910ad6db13b5",
+    "comparatorCommit": "19e111e2141cf333c7daff0f64c5f24acc91dd2e",
+    "mathlibCommit": "85e3a25e006c35636f0e53b0e9296caca2685bc0",
+    "lean4exportCommit": "cacf989bd75f608700820f6afc595f32e7a99a4d",
+    "landrun": {
+      "repository": "https://github.com/Zouuup/landrun.git",
+      "commit": "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4"
+    },
+    "nanoda": {
+      "repository": "https://github.com/ammkrn/nanoda_lib.git",
+      "commit": "3a2407216ee84a75f9e1aead6803d0578be06ae7"
+    },
+    "goVersion": "1.27.2",
+    "rustVersion": "1.99.0",
+    "configuration": "ComparatorChallenges/NavierStokes.json",
+    "configurationSHA256": "7610ecead7b390d80ff7f4229a3ff8f18d630e046f7ad1de4f92c7e8e76845b8",
+    "theorems": [
+      "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+      "NavierStokes.Comparator.navier_stokes_breakdown_periodic"
+    ],
+    "permittedAxioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  "pinsSHA256": "e702d85ac8590d14c5ab131b6afaaab3ff56466b96da626739df4b0c364d4ae8",
+  "steps": [
+    {
+      "label": "identity",
+      "command": [
+        "id"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:49:38.160860+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:38.162776+00:00",
+      "logSHA256": "06e309bd695b54873d65dbcbba25d76fe334e6835a08094563789fcea87b1973"
+    },
+    {
+      "label": "system",
+      "command": [
+        "uname",
+        "-a"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:49:38.163157+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:38.164641+00:00",
+      "logSHA256": "13f109c96ec64fefcb66a09f876d5aab3f3352e13e8dc2a576692891bc902aa1"
+    },
+    {
+      "label": "extract-official-lean",
+      "command": [
+        "tar",
+        "--zstd",
+        "-xf",
+        "/home/mathscopeverify/audit/lean.tar.zst"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:49:41.258883+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:46.699956+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "lean-version",
+      "command": [
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lean",
+        "--version"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:49:47.064387+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:47.140946+00:00",
+      "logSHA256": "544b4920040fb4a18fbbf04c48a65f06739ab3268fc7d3c756bc1b64e823a094"
+    },
+    {
+      "label": "lean-prefix",
+      "command": [
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lean",
+        "--print-prefix"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:49:47.164284+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:47.249932+00:00",
+      "logSHA256": "d6728ecbf20256a3b29bd60aec386dc0ad31b5a34b3b3cac0b9906ae78f5b45a"
+    },
+    {
+      "label": "original-source-init",
+      "command": [
+        "git",
+        "init",
+        "/home/mathscopeverify/audit/original-source"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:49:47.258199+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:47.264135+00:00",
+      "logSHA256": "811663257542428b10182a376d635b291e2d13c99e20f378e9fb6511c2133278"
+    },
+    {
+      "label": "original-source-remote",
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/openai/NavierStokesAndEuler.git"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:49:47.264723+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:47.353107+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "original-source-fetch",
+      "command": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "origin",
+        "f9e8bc5b38b6e212696e8a30e3e91517af887bbd"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:49:47.353699+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:47.960175+00:00",
+      "logSHA256": "ccd4a46ac902f252d91daac334d48ba7b98e69da3674e4bfb15cad67d0aa91ac"
+    },
+    {
+      "label": "original-source-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:49:48.012801+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:48.301200+00:00",
+      "logSHA256": "6e166001747e1f16b9de6cc8f819fddcb166a8c4e73054a3b7e246c3e131afb7"
+    },
+    {
+      "label": "original-source-head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:49:48.301913+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:49:48.307212+00:00",
+      "logSHA256": "4cb8b85c992dd3fa1dfbd9e69f017bbea7939f5d6052778d545625550cd53468"
+    },
+    {
+      "label": "cache-get",
+      "command": [
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lake",
+        "exe",
+        "cache",
+        "get"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:49:48.487695+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:19.892565+00:00",
+      "logSHA256": "19a534bbbba5e51628e011a336c4b0e686f877fd83c3023f397a038adf54081e"
+    },
+    {
+      "label": "pin-Comparator",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source/.lake/packages/Comparator",
+      "startedUTC": "2026-10-10T01:51:19.893279+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:19.895665+00:00",
+      "logSHA256": "c7462dd28ef5f3d33af04327db4f213bfb3c86e008e221bf839a8e6258238a83"
+    },
+    {
+      "label": "pin-mathlib",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source/.lake/packages/mathlib",
+      "startedUTC": "2026-10-10T01:51:19.896667+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:19.899210+00:00",
+      "logSHA256": "41f09bc99f3e50964aeb698f2d3ed1c9799aa3ded14f2291f1de701569c2fc4e"
+    },
+    {
+      "label": "pin-lean4export",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source/.lake/packages/lean4export",
+      "startedUTC": "2026-10-10T01:51:19.899779+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:19.901792+00:00",
+      "logSHA256": "e1d3cac4cdff475728f321fb479572f2fce96eba2686d2195a2fe0f34bd12a9e"
+    },
+    {
+      "label": "landrun-source-init",
+      "command": [
+        "git",
+        "init",
+        "/home/mathscopeverify/audit/landrun-source"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:51:19.902335+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:19.906372+00:00",
+      "logSHA256": "56f43c019ae7e1ce023d3a2a8b94b2400cbeb5cd4abd60293bdaa7854e769279"
+    },
+    {
+      "label": "landrun-source-remote",
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/Zouuup/landrun.git"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-10T01:51:19.907095+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:19.909566+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "landrun-source-fetch",
+      "command": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "origin",
+        "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-10T01:51:19.910043+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.131904+00:00",
+      "logSHA256": "5236b9fb8cd4e085ff194e356bb8f7235b824d3598b30e372ba59a226fc326e8"
+    },
+    {
+      "label": "landrun-source-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-10T01:51:20.132644+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.138478+00:00",
+      "logSHA256": "1db07416293e9a68ebdfca26f4061ac5cfaaaefb3cb335d4dff3ee4124cfbc1c"
+    },
+    {
+      "label": "landrun-source-head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-10T01:51:20.139063+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.141010+00:00",
+      "logSHA256": "035068f52c1c430cc1733d04b44f82b74c0ea42811807e8e9a2acdf6328bbb16"
+    },
+    {
+      "label": "nanoda-source-init",
+      "command": [
+        "git",
+        "init",
+        "/home/mathscopeverify/audit/nanoda-source"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:51:20.141579+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.145666+00:00",
+      "logSHA256": "25c7bbd3ff44e8e3f3e20a237eeaccfb3050ea01dc7f9c6f03078533fad2d4c5"
+    },
+    {
+      "label": "nanoda-source-remote",
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/ammkrn/nanoda_lib.git"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-10T01:51:20.146359+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.148838+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "nanoda-source-fetch",
+      "command": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "origin",
+        "3a2407216ee84a75f9e1aead6803d0578be06ae7"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-10T01:51:20.149377+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.322324+00:00",
+      "logSHA256": "552cb6d19400093c52a70dcbedcf542affd7d15ca22ade89b76553f1de38bd86"
+    },
+    {
+      "label": "nanoda-source-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-10T01:51:20.323134+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.330852+00:00",
+      "logSHA256": "faebc357195e8916e9cf05c93739281d7e42262986bcbd96e618014b0de0eb99"
+    },
+    {
+      "label": "nanoda-source-head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-10T01:51:20.331501+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.333659+00:00",
+      "logSHA256": "7b5158cc60286df13d19d5f3c49eda88784307a726144c5a7a8142bab2efa599"
+    },
+    {
+      "label": "go-version",
+      "command": [
+        "go",
+        "version"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:51:20.334330+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.338359+00:00",
+      "logSHA256": "ed4307d760c597256afdc696a61d47d13e832615d7741ead11c64966a440b376"
+    },
+    {
+      "label": "rust-version",
+      "command": [
+        "rustc",
+        "--version"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-10T01:51:20.339051+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:20.347895+00:00",
+      "logSHA256": "8dc912acd5bfeafc70b01b1d2a2afb0844afa02f5dba2f1ae8d5c212d005afb6"
+    },
+    {
+      "label": "build-landrun",
+      "command": [
+        "go",
+        "build",
+        "-mod=readonly",
+        "-o",
+        "/home/mathscopeverify/audit/tool-bin/landrun",
+        "cmd/landrun/main.go"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-10T01:51:20.348612+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:30.002347+00:00",
+      "logSHA256": "5e09e7add5ffb69e6ec818cd8417bef048ede8025e5a71a6dc067b62b9776191"
+    },
+    {
+      "label": "build-nanoda",
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--locked",
+        "--jobs",
+        "2"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-10T01:51:30.003272+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:47.911240+00:00",
+      "logSHA256": "74f52696055df2b8a8041254fa9a6e02294918afab59d04202af97bb7d612cf5"
+    },
+    {
+      "label": "build-comparator-tools",
+      "command": [
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lake",
+        "build",
+        "comparator",
+        "lean4export"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:51:47.914066+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T01:51:58.831655+00:00",
+      "logSHA256": "3a7c20a5293ba3cfab99eb0378801afd59085e81d2806cd4b01bafd280919e96"
+    },
+    {
+      "label": "guard-preflight",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--pty",
+        "--wait",
+        "--collect",
+        "--property=RestrictAddressFamilies=~AF_UNIX",
+        "-E",
+        "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+        "--working-directory=/home/mathscopeverify/audit/original-source",
+        "--unit=mathscope-protected-guard-preflight-a01ced8a1c76.service",
+        "--",
+        "/usr/bin/python3",
+        "/opt/mathscope-ci/probe.py",
+        "unix-socket"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:51:59.264582+00:00",
+      "status": "PASS",
+      "exitCode": 0,
+      "transportRecord": {
+        "label": "guard-preflight",
+        "unit": "mathscope-protected-guard-preflight-a01ced8a1c76.service",
+        "command": [
+          "systemd-run",
+          "--user",
+          "--pty",
+          "--wait",
+          "--collect",
+          "--property=RestrictAddressFamilies=~AF_UNIX",
+          "-E",
+          "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+          "--working-directory=/home/mathscopeverify/audit/original-source",
+          "--unit=mathscope-protected-guard-preflight-a01ced8a1c76.service",
+          "--",
+          "/usr/bin/python3",
+          "/opt/mathscope-ci/probe.py",
+          "unix-socket"
+        ],
+        "cwd": "/home/mathscopeverify/audit/original-source",
+        "startedUTC": "2026-10-10T01:51:59.265452+00:00",
+        "timeoutSeconds": 25,
+        "passed": true,
+        "exitCodeBeforeCleanup": 0,
+        "captureError": null,
+        "transport": "outer-pty",
+        "timedOut": false,
+        "parentStdinIsTTY": false,
+        "parentStdoutIsTTY": false,
+        "eofObservedBeforeCleanup": true,
+        "cleanup": [],
+        "streamedBytes": 440,
+        "outerTTYPath": "/dev/pts/0",
+        "pid": 4710,
+        "clientProcessAtStart": {
+          "pid": 4710,
+          "sessionId": 4710,
+          "processGroup": 4710,
+          "fd0": "/dev/pts/0",
+          "fd1": "/dev/pts/0",
+          "fd2": "/dev/pts/0",
+          "status": {
+            "Name": "systemd-run",
+            "State": "R (running)",
+            "Uid": "1002\t1002\t1002\t1002",
+            "Gid": "1002\t1002\t1002\t1002",
+            "CapEff": "0000000000000000",
+            "NoNewPrivs": "0"
+          },
+          "stat": "4710 (systemd-run) R 2582 4710 4710 34816 4710 4194304 258 0 0 0 0 0 0 0 20 0 1 0 36928 6803456 125 18446744073709551615 94154734501888 94154734531733 140726713147264 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 94154734547440 94154734551312 94155009740800 140726713156420 140726713156873 140726713156873 140726713159651 0"
+        },
+        "onSpawn": {
+          "unit": "mathscope-protected-guard-preflight-a01ced8a1c76.service",
+          "observedUTC": "2026-10-10T01:51:59.282862+00:00",
+          "show": {
+            "command": [
+              "systemctl",
+              "--user",
+              "show",
+              "mathscope-protected-guard-preflight-a01ced8a1c76.service",
+              "--no-pager",
+              "--property=LoadState",
+              "--property=ActiveState",
+              "--property=SubState",
+              "--property=Result",
+              "--property=ExecMainPID",
+              "--property=ExecMainCode",
+              "--property=ExecMainStatus",
+              "--property=RestrictAddressFamilies",
+              "--property=NoNewPrivileges",
+              "--property=StandardInput",
+              "--property=StandardOutput",
+              "--property=StandardError",
+              "--property=TTYPath",
+              "--property=ControlGroup",
+              "--property=InvocationID"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.268143+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Result=success\nExecMainPID=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nStandardInput=null\nStandardOutput=inherit\nStandardError=inherit\nTTYPath=\nNoNewPrivileges=no\nRestrictAddressFamilies=~\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.282832+00:00"
+          },
+          "properties": {
+            "Result": "success",
+            "ExecMainPID": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "",
+            "StandardInput": "null",
+            "StandardOutput": "inherit",
+            "StandardError": "inherit",
+            "TTYPath": "",
+            "NoNewPrivileges": "no",
+            "RestrictAddressFamilies": "~",
+            "LoadState": "not-found",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "InvocationID": ""
+          }
+        },
+        "ptyEIOObserved": true,
+        "observationEndedUTC": "2026-10-10T01:51:59.369613+00:00",
+        "finalClientExitCode": 0,
+        "eofObservedAfterCleanup": true,
+        "completedUTC": "2026-10-10T01:51:59.385342+00:00",
+        "elapsedSeconds": 0.1042201380000165,
+        "afterObservation": {
+          "unit": "mathscope-protected-guard-preflight-a01ced8a1c76.service",
+          "observedUTC": "2026-10-10T01:51:59.375727+00:00",
+          "show": {
+            "command": [
+              "systemctl",
+              "--user",
+              "show",
+              "mathscope-protected-guard-preflight-a01ced8a1c76.service",
+              "--no-pager",
+              "--property=LoadState",
+              "--property=ActiveState",
+              "--property=SubState",
+              "--property=Result",
+              "--property=ExecMainPID",
+              "--property=ExecMainCode",
+              "--property=ExecMainStatus",
+              "--property=RestrictAddressFamilies",
+              "--property=NoNewPrivileges",
+              "--property=StandardInput",
+              "--property=StandardOutput",
+              "--property=StandardError",
+              "--property=TTYPath",
+              "--property=ControlGroup",
+              "--property=InvocationID"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.369708+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Result=success\nExecMainPID=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nStandardInput=null\nStandardOutput=inherit\nStandardError=inherit\nTTYPath=\nNoNewPrivileges=no\nRestrictAddressFamilies=~\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.375711+00:00"
+          },
+          "properties": {
+            "Result": "success",
+            "ExecMainPID": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "",
+            "StandardInput": "null",
+            "StandardOutput": "inherit",
+            "StandardError": "inherit",
+            "TTYPath": "",
+            "NoNewPrivileges": "no",
+            "RestrictAddressFamilies": "~",
+            "LoadState": "not-found",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "InvocationID": ""
+          },
+          "status": {
+            "command": [
+              "systemctl",
+              "--user",
+              "status",
+              "mathscope-protected-guard-preflight-a01ced8a1c76.service",
+              "--no-pager",
+              "--full"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.375733+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 4,
+            "timedOut": false,
+            "stdout": "",
+            "stderr": "Unit mathscope-protected-guard-preflight-a01ced8a1c76.service could not be found.\n",
+            "completedUTC": "2026-10-10T01:51:59.381131+00:00"
+          },
+          "journal": {
+            "command": [
+              "journalctl",
+              "--user",
+              "--unit",
+              "mathscope-protected-guard-preflight-a01ced8a1c76.service",
+              "--no-pager",
+              "--output=short-precise",
+              "--lines=80"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.381138+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Oct 10 01:51:59.310834 runnervmmprz5 systemd[2561]: Started mathscope-protected-guard-preflight-a01ced8a1c76.service - /usr/bin/python3 /opt/mathscope-ci/probe.py unix-socket.\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.385235+00:00"
+          }
+        },
+        "logBytes": 440,
+        "logSHA256": "d522b4fb61b8068e0c8100c480f1c3fd1b02db7a0d55c5ab2ead1a0e6373ebc7"
+      },
+      "completedUTC": "2026-10-10T01:51:59.385342+00:00",
+      "logSHA256": "d522b4fb61b8068e0c8100c480f1c3fd1b02db7a0d55c5ab2ead1a0e6373ebc7"
+    },
+    {
+      "label": "guard-metadata-preflight",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--pty",
+        "--wait",
+        "--collect",
+        "--property=RestrictAddressFamilies=~AF_UNIX",
+        "-E",
+        "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+        "--working-directory=/home/mathscopeverify/audit/original-source",
+        "--unit=mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+        "--",
+        "/usr/bin/python3",
+        "/opt/mathscope-guard-ci/metadata_probe.py"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:51:59.386507+00:00",
+      "status": "PASS",
+      "exitCode": 0,
+      "transportRecord": {
+        "label": "guard-metadata-preflight",
+        "unit": "mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+        "command": [
+          "systemd-run",
+          "--user",
+          "--pty",
+          "--wait",
+          "--collect",
+          "--property=RestrictAddressFamilies=~AF_UNIX",
+          "-E",
+          "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+          "--working-directory=/home/mathscopeverify/audit/original-source",
+          "--unit=mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+          "--",
+          "/usr/bin/python3",
+          "/opt/mathscope-guard-ci/metadata_probe.py"
+        ],
+        "cwd": "/home/mathscopeverify/audit/original-source",
+        "startedUTC": "2026-10-10T01:51:59.387414+00:00",
+        "timeoutSeconds": 25,
+        "passed": true,
+        "exitCodeBeforeCleanup": 0,
+        "captureError": null,
+        "transport": "outer-pty",
+        "timedOut": false,
+        "parentStdinIsTTY": false,
+        "parentStdoutIsTTY": false,
+        "eofObservedBeforeCleanup": true,
+        "cleanup": [],
+        "streamedBytes": 1253,
+        "outerTTYPath": "/dev/pts/0",
+        "pid": 4718,
+        "clientProcessAtStart": {
+          "pid": 4718,
+          "sessionId": 4718,
+          "processGroup": 4718,
+          "fd0": "/dev/pts/0",
+          "fd1": "/dev/pts/0",
+          "fd2": "/dev/pts/0",
+          "status": {
+            "Name": "systemd-run",
+            "State": "R (running)",
+            "Uid": "1002\t1002\t1002\t1002",
+            "Gid": "1002\t1002\t1002\t1002",
+            "CapEff": "0000000000000000",
+            "NoNewPrivs": "0"
+          },
+          "stat": "4718 (systemd-run) R 2582 4718 4718 34816 4718 4194304 260 0 0 0 0 0 0 0 20 0 1 0 36940 6803456 125 18446744073709551615 94081133568000 94081133597845 140727347052272 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 94081133613552 94081133617424 94082199273472 140727347053368 140727347053833 140727347053833 140727347056611 0"
+        },
+        "onSpawn": {
+          "unit": "mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+          "observedUTC": "2026-10-10T01:51:59.415711+00:00",
+          "show": {
+            "command": [
+              "systemctl",
+              "--user",
+              "show",
+              "mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+              "--no-pager",
+              "--property=LoadState",
+              "--property=ActiveState",
+              "--property=SubState",
+              "--property=Result",
+              "--property=ExecMainPID",
+              "--property=ExecMainCode",
+              "--property=ExecMainStatus",
+              "--property=RestrictAddressFamilies",
+              "--property=NoNewPrivileges",
+              "--property=StandardInput",
+              "--property=StandardOutput",
+              "--property=StandardError",
+              "--property=TTYPath",
+              "--property=ControlGroup",
+              "--property=InvocationID"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.389437+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Result=success\nExecMainPID=4720\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1002.slice/user@1002.service/app.slice/mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service\nStandardInput=tty\nStandardOutput=tty\nStandardError=tty\nTTYPath=/dev/pts/1\nNoNewPrivileges=no\nRestrictAddressFamilies=~AF_UNIX\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=0fb56d5ddc5b47869d1a5ffe045673b7\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.415689+00:00"
+          },
+          "properties": {
+            "Result": "success",
+            "ExecMainPID": "4720",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "/user.slice/user-1002.slice/user@1002.service/app.slice/mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+            "StandardInput": "tty",
+            "StandardOutput": "tty",
+            "StandardError": "tty",
+            "TTYPath": "/dev/pts/1",
+            "NoNewPrivileges": "no",
+            "RestrictAddressFamilies": "~AF_UNIX",
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "InvocationID": "0fb56d5ddc5b47869d1a5ffe045673b7"
+          },
+          "serviceProcess": {
+            "pid": 4720,
+            "sessionId": 4720,
+            "processGroup": 4720,
+            "fd0": "/dev/pts/1",
+            "fd1": "/dev/pts/1",
+            "fd2": "/dev/pts/1",
+            "status": {
+              "Name": "python3",
+              "State": "R (running)",
+              "Uid": "1002\t1002\t1002\t1002",
+              "Gid": "1002\t1002\t1002\t1002",
+              "CapEff": "0000000000000000",
+              "NoNewPrivs": "1"
+            },
+            "stat": "4720 (python3) R 2561 4720 4720 34817 4720 4194304 1075 0 0 0 0 0 0 0 20 0 1 0 36940 17068032 1665 18446744073709551615 4325376 7352253 140731486317728 0 0 0 0 4096 0 0 0 0 17 0 0 0 0 0 0 10653128 12216448 356622336 140731486323964 140731486324023 140731486324023 140731486326759 0"
+          }
+        },
+        "ptyEIOObserved": true,
+        "observationEndedUTC": "2026-10-10T01:51:59.455665+00:00",
+        "finalClientExitCode": 0,
+        "eofObservedAfterCleanup": true,
+        "completedUTC": "2026-10-10T01:51:59.470339+00:00",
+        "elapsedSeconds": 0.06830276900001309,
+        "afterObservation": {
+          "unit": "mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+          "observedUTC": "2026-10-10T01:51:59.461534+00:00",
+          "show": {
+            "command": [
+              "systemctl",
+              "--user",
+              "show",
+              "mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+              "--no-pager",
+              "--property=LoadState",
+              "--property=ActiveState",
+              "--property=SubState",
+              "--property=Result",
+              "--property=ExecMainPID",
+              "--property=ExecMainCode",
+              "--property=ExecMainStatus",
+              "--property=RestrictAddressFamilies",
+              "--property=NoNewPrivileges",
+              "--property=StandardInput",
+              "--property=StandardOutput",
+              "--property=StandardError",
+              "--property=TTYPath",
+              "--property=ControlGroup",
+              "--property=InvocationID"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.455753+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Result=success\nExecMainPID=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nStandardInput=null\nStandardOutput=inherit\nStandardError=inherit\nTTYPath=\nNoNewPrivileges=no\nRestrictAddressFamilies=~\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.461514+00:00"
+          },
+          "properties": {
+            "Result": "success",
+            "ExecMainPID": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "",
+            "StandardInput": "null",
+            "StandardOutput": "inherit",
+            "StandardError": "inherit",
+            "TTYPath": "",
+            "NoNewPrivileges": "no",
+            "RestrictAddressFamilies": "~",
+            "LoadState": "not-found",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "InvocationID": ""
+          },
+          "status": {
+            "command": [
+              "systemctl",
+              "--user",
+              "status",
+              "mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+              "--no-pager",
+              "--full"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.461563+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 4,
+            "timedOut": false,
+            "stdout": "",
+            "stderr": "Unit mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service could not be found.\n",
+            "completedUTC": "2026-10-10T01:51:59.466789+00:00"
+          },
+          "journal": {
+            "command": [
+              "journalctl",
+              "--user",
+              "--unit",
+              "mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service",
+              "--no-pager",
+              "--output=short-precise",
+              "--lines=80"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.466801+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Oct 10 01:51:59.411983 runnervmmprz5 systemd[2561]: Started mathscope-protected-guard-metadata-preflight-18ddec3f0b57.service - /usr/bin/python3 /opt/mathscope-guard-ci/metadata_probe.py.\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.470239+00:00"
+          }
+        },
+        "logBytes": 1253,
+        "logSHA256": "f7a3f72c0c7973b7dc703f05cb9fd9e6fac09bd18c3eb4ceeb82d44ace90012b"
+      },
+      "completedUTC": "2026-10-10T01:51:59.470339+00:00",
+      "logSHA256": "f7a3f72c0c7973b7dc703f05cb9fd9e6fac09bd18c3eb4ceeb82d44ace90012b"
+    },
+    {
+      "label": "landlock-preflight",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--pty",
+        "--wait",
+        "--collect",
+        "--property=RestrictAddressFamilies=~AF_UNIX",
+        "-E",
+        "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+        "--working-directory=/home/mathscopeverify/audit/original-source",
+        "--unit=mathscope-protected-landlock-preflight-7e8122f0a581.service",
+        "--",
+        "/home/mathscopeverify/audit/tool-bin/landrun",
+        "--best-effort",
+        "--ro",
+        "/",
+        "--rw",
+        "/dev",
+        "-ldd",
+        "-add-exec",
+        "--",
+        "/usr/bin/python3",
+        "/opt/mathscope-ci/probe.py",
+        "write-outside",
+        "/home/mathscopeverify/audit/forbidden-write"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:51:59.471805+00:00",
+      "status": "PASS",
+      "exitCode": 0,
+      "transportRecord": {
+        "label": "landlock-preflight",
+        "unit": "mathscope-protected-landlock-preflight-7e8122f0a581.service",
+        "command": [
+          "systemd-run",
+          "--user",
+          "--pty",
+          "--wait",
+          "--collect",
+          "--property=RestrictAddressFamilies=~AF_UNIX",
+          "-E",
+          "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+          "--working-directory=/home/mathscopeverify/audit/original-source",
+          "--unit=mathscope-protected-landlock-preflight-7e8122f0a581.service",
+          "--",
+          "/home/mathscopeverify/audit/tool-bin/landrun",
+          "--best-effort",
+          "--ro",
+          "/",
+          "--rw",
+          "/dev",
+          "-ldd",
+          "-add-exec",
+          "--",
+          "/usr/bin/python3",
+          "/opt/mathscope-ci/probe.py",
+          "write-outside",
+          "/home/mathscopeverify/audit/forbidden-write"
+        ],
+        "cwd": "/home/mathscopeverify/audit/original-source",
+        "startedUTC": "2026-10-10T01:51:59.472776+00:00",
+        "timeoutSeconds": 25,
+        "passed": true,
+        "exitCodeBeforeCleanup": 0,
+        "captureError": null,
+        "transport": "outer-pty",
+        "timedOut": false,
+        "parentStdinIsTTY": false,
+        "parentStdoutIsTTY": false,
+        "eofObservedBeforeCleanup": true,
+        "cleanup": [],
+        "streamedBytes": 406,
+        "outerTTYPath": "/dev/pts/0",
+        "pid": 4725,
+        "clientProcessAtStart": {
+          "pid": 4725,
+          "sessionId": 4725,
+          "processGroup": 4725,
+          "fd0": "/dev/pts/0",
+          "fd1": "/dev/pts/0",
+          "fd2": "/dev/pts/0",
+          "status": {
+            "Name": "systemd-run",
+            "State": "R (running)",
+            "Uid": "1002\t1002\t1002\t1002",
+            "Gid": "1002\t1002\t1002\t1002",
+            "CapEff": "0000000000000000",
+            "NoNewPrivs": "0"
+          },
+          "stat": "4725 (systemd-run) R 2582 4725 4725 34816 4725 4194304 265 0 0 0 0 0 0 0 20 0 1 0 36948 6803456 125 18446744073709551615 94837442703360 94837442733205 140728351325632 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 94837442748912 94837442752784 94838116364288 140728351326901 140728351327497 140728351327497 140728351330275 0"
+        },
+        "onSpawn": {
+          "unit": "mathscope-protected-landlock-preflight-7e8122f0a581.service",
+          "observedUTC": "2026-10-10T01:51:59.482029+00:00",
+          "show": {
+            "command": [
+              "systemctl",
+              "--user",
+              "show",
+              "mathscope-protected-landlock-preflight-7e8122f0a581.service",
+              "--no-pager",
+              "--property=LoadState",
+              "--property=ActiveState",
+              "--property=SubState",
+              "--property=Result",
+              "--property=ExecMainPID",
+              "--property=ExecMainCode",
+              "--property=ExecMainStatus",
+              "--property=RestrictAddressFamilies",
+              "--property=NoNewPrivileges",
+              "--property=StandardInput",
+              "--property=StandardOutput",
+              "--property=StandardError",
+              "--property=TTYPath",
+              "--property=ControlGroup",
+              "--property=InvocationID"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.474840+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Result=success\nExecMainPID=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nStandardInput=tty\nStandardOutput=tty\nStandardError=tty\nTTYPath=/dev/pts/1\nNoNewPrivileges=no\nRestrictAddressFamilies=~AF_UNIX\nLoadState=loaded\nActiveState=inactive\nSubState=dead\nInvocationID=\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.482003+00:00"
+          },
+          "properties": {
+            "Result": "success",
+            "ExecMainPID": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "",
+            "StandardInput": "tty",
+            "StandardOutput": "tty",
+            "StandardError": "tty",
+            "TTYPath": "/dev/pts/1",
+            "NoNewPrivileges": "no",
+            "RestrictAddressFamilies": "~AF_UNIX",
+            "LoadState": "loaded",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "InvocationID": ""
+          }
+        },
+        "ptyEIOObserved": true,
+        "observationEndedUTC": "2026-10-10T01:51:59.527258+00:00",
+        "finalClientExitCode": 0,
+        "eofObservedAfterCleanup": true,
+        "completedUTC": "2026-10-10T01:51:59.541669+00:00",
+        "elapsedSeconds": 0.05453213200001983,
+        "afterObservation": {
+          "unit": "mathscope-protected-landlock-preflight-7e8122f0a581.service",
+          "observedUTC": "2026-10-10T01:51:59.533043+00:00",
+          "show": {
+            "command": [
+              "systemctl",
+              "--user",
+              "show",
+              "mathscope-protected-landlock-preflight-7e8122f0a581.service",
+              "--no-pager",
+              "--property=LoadState",
+              "--property=ActiveState",
+              "--property=SubState",
+              "--property=Result",
+              "--property=ExecMainPID",
+              "--property=ExecMainCode",
+              "--property=ExecMainStatus",
+              "--property=RestrictAddressFamilies",
+              "--property=NoNewPrivileges",
+              "--property=StandardInput",
+              "--property=StandardOutput",
+              "--property=StandardError",
+              "--property=TTYPath",
+              "--property=ControlGroup",
+              "--property=InvocationID"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.527341+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Result=success\nExecMainPID=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nStandardInput=null\nStandardOutput=inherit\nStandardError=inherit\nTTYPath=\nNoNewPrivileges=no\nRestrictAddressFamilies=~\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.533020+00:00"
+          },
+          "properties": {
+            "Result": "success",
+            "ExecMainPID": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "",
+            "StandardInput": "null",
+            "StandardOutput": "inherit",
+            "StandardError": "inherit",
+            "TTYPath": "",
+            "NoNewPrivileges": "no",
+            "RestrictAddressFamilies": "~",
+            "LoadState": "not-found",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "InvocationID": ""
+          },
+          "status": {
+            "command": [
+              "systemctl",
+              "--user",
+              "status",
+              "mathscope-protected-landlock-preflight-7e8122f0a581.service",
+              "--no-pager",
+              "--full"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.533051+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 4,
+            "timedOut": false,
+            "stdout": "",
+            "stderr": "Unit mathscope-protected-landlock-preflight-7e8122f0a581.service could not be found.\n",
+            "completedUTC": "2026-10-10T01:51:59.538139+00:00"
+          },
+          "journal": {
+            "command": [
+              "journalctl",
+              "--user",
+              "--unit",
+              "mathscope-protected-landlock-preflight-7e8122f0a581.service",
+              "--no-pager",
+              "--output=short-precise",
+              "--lines=80"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.538148+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Oct 10 01:51:59.489906 runnervmmprz5 systemd[2561]: Started mathscope-protected-landlock-preflight-7e8122f0a581.service - /home/mathscopeverify/audit/tool-bin/landrun --best-effort --ro / --rw /dev -ldd -add-exec -- /usr/bin/python3 /opt/mathscope-ci/probe.py write-outside /home/mathscopeverify/audit/forbidden-write.\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.541566+00:00"
+          }
+        },
+        "logBytes": 406,
+        "logSHA256": "807ce11575833927db98f76ef37eb5e9ea126befa448add7cff920a00cc29e95"
+      },
+      "completedUTC": "2026-10-10T01:51:59.541669+00:00",
+      "logSHA256": "807ce11575833927db98f76ef37eb5e9ea126befa448add7cff920a00cc29e95"
+    },
+    {
+      "label": "protected-comparator",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--pty",
+        "--wait",
+        "--collect",
+        "--property=RestrictAddressFamilies=~AF_UNIX",
+        "-E",
+        "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+        "--working-directory=/home/mathscopeverify/audit/original-source",
+        "--unit=mathscope-protected-protected-comparator-5fea41d1a569.service",
+        "--",
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lake",
+        "env",
+        "/home/mathscopeverify/audit/original-source/.lake/packages/Comparator/.lake/build/bin/comparator",
+        "ComparatorChallenges/NavierStokes.json"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T01:51:59.543045+00:00",
+      "status": "PASS",
+      "exitCode": 0,
+      "transportRecord": {
+        "label": "protected-comparator",
+        "unit": "mathscope-protected-protected-comparator-5fea41d1a569.service",
+        "command": [
+          "systemd-run",
+          "--user",
+          "--pty",
+          "--wait",
+          "--collect",
+          "--property=RestrictAddressFamilies=~AF_UNIX",
+          "-E",
+          "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+          "--working-directory=/home/mathscopeverify/audit/original-source",
+          "--unit=mathscope-protected-protected-comparator-5fea41d1a569.service",
+          "--",
+          "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lake",
+          "env",
+          "/home/mathscopeverify/audit/original-source/.lake/packages/Comparator/.lake/build/bin/comparator",
+          "ComparatorChallenges/NavierStokes.json"
+        ],
+        "cwd": "/home/mathscopeverify/audit/original-source",
+        "startedUTC": "2026-10-10T01:51:59.544193+00:00",
+        "timeoutSeconds": 19800,
+        "passed": true,
+        "exitCodeBeforeCleanup": 0,
+        "captureError": null,
+        "transport": "outer-pty",
+        "timedOut": false,
+        "parentStdinIsTTY": false,
+        "parentStdoutIsTTY": false,
+        "eofObservedBeforeCleanup": true,
+        "cleanup": [],
+        "streamedBytes": 1709044,
+        "outerTTYPath": "/dev/pts/0",
+        "pid": 4736,
+        "clientProcessAtStart": {
+          "pid": 4736,
+          "sessionId": 4736,
+          "processGroup": 4736,
+          "fd0": "/dev/pts/0",
+          "fd1": "/dev/pts/0",
+          "fd2": "/dev/pts/0",
+          "status": {
+            "Name": "systemd-run",
+            "State": "R (running)",
+            "Uid": "1002\t1002\t1002\t1002",
+            "Gid": "1002\t1002\t1002\t1002",
+            "CapEff": "0000000000000000",
+            "NoNewPrivs": "0"
+          },
+          "stat": "4736 (systemd-run) R 2582 4736 4736 34816 4736 4194304 269 0 0 0 0 0 0 0 20 0 1 0 36955 6803456 139 18446744073709551615 94093882716160 94093882746005 140733367705616 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 94093882761712 94093882765584 94094868209664 140733367710384 140733367710985 140733367710985 140733367713763 0"
+        },
+        "onSpawn": {
+          "unit": "mathscope-protected-protected-comparator-5fea41d1a569.service",
+          "observedUTC": "2026-10-10T01:51:59.553383+00:00",
+          "show": {
+            "command": [
+              "systemctl",
+              "--user",
+              "show",
+              "mathscope-protected-protected-comparator-5fea41d1a569.service",
+              "--no-pager",
+              "--property=LoadState",
+              "--property=ActiveState",
+              "--property=SubState",
+              "--property=Result",
+              "--property=ExecMainPID",
+              "--property=ExecMainCode",
+              "--property=ExecMainStatus",
+              "--property=RestrictAddressFamilies",
+              "--property=NoNewPrivileges",
+              "--property=StandardInput",
+              "--property=StandardOutput",
+              "--property=StandardError",
+              "--property=TTYPath",
+              "--property=ControlGroup",
+              "--property=InvocationID"
+            ],
+            "startedUTC": "2026-10-10T01:51:59.546268+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Result=success\nExecMainPID=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nStandardInput=tty\nStandardOutput=tty\nStandardError=tty\nTTYPath=/dev/pts/1\nNoNewPrivileges=no\nRestrictAddressFamilies=~AF_UNIX\nLoadState=loaded\nActiveState=inactive\nSubState=dead\nInvocationID=\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T01:51:59.553366+00:00"
+          },
+          "properties": {
+            "Result": "success",
+            "ExecMainPID": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "",
+            "StandardInput": "tty",
+            "StandardOutput": "tty",
+            "StandardError": "tty",
+            "TTYPath": "/dev/pts/1",
+            "NoNewPrivileges": "no",
+            "RestrictAddressFamilies": "~AF_UNIX",
+            "LoadState": "loaded",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "InvocationID": ""
+          }
+        },
+        "ptyEIOObserved": true,
+        "observationEndedUTC": "2026-10-10T02:44:02.955873+00:00",
+        "finalClientExitCode": 0,
+        "eofObservedAfterCleanup": true,
+        "completedUTC": "2026-10-10T02:44:02.979392+00:00",
+        "elapsedSeconds": 3123.411742427,
+        "afterObservation": {
+          "unit": "mathscope-protected-protected-comparator-5fea41d1a569.service",
+          "observedUTC": "2026-10-10T02:44:02.966856+00:00",
+          "show": {
+            "command": [
+              "systemctl",
+              "--user",
+              "show",
+              "mathscope-protected-protected-comparator-5fea41d1a569.service",
+              "--no-pager",
+              "--property=LoadState",
+              "--property=ActiveState",
+              "--property=SubState",
+              "--property=Result",
+              "--property=ExecMainPID",
+              "--property=ExecMainCode",
+              "--property=ExecMainStatus",
+              "--property=RestrictAddressFamilies",
+              "--property=NoNewPrivileges",
+              "--property=StandardInput",
+              "--property=StandardOutput",
+              "--property=StandardError",
+              "--property=TTYPath",
+              "--property=ControlGroup",
+              "--property=InvocationID"
+            ],
+            "startedUTC": "2026-10-10T02:44:02.955973+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Result=success\nExecMainPID=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nStandardInput=null\nStandardOutput=inherit\nStandardError=inherit\nTTYPath=\nNoNewPrivileges=no\nRestrictAddressFamilies=~\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T02:44:02.966831+00:00"
+          },
+          "properties": {
+            "Result": "success",
+            "ExecMainPID": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "",
+            "StandardInput": "null",
+            "StandardOutput": "inherit",
+            "StandardError": "inherit",
+            "TTYPath": "",
+            "NoNewPrivileges": "no",
+            "RestrictAddressFamilies": "~",
+            "LoadState": "not-found",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "InvocationID": ""
+          },
+          "status": {
+            "command": [
+              "systemctl",
+              "--user",
+              "status",
+              "mathscope-protected-protected-comparator-5fea41d1a569.service",
+              "--no-pager",
+              "--full"
+            ],
+            "startedUTC": "2026-10-10T02:44:02.966865+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 4,
+            "timedOut": false,
+            "stdout": "",
+            "stderr": "Unit mathscope-protected-protected-comparator-5fea41d1a569.service could not be found.\n",
+            "completedUTC": "2026-10-10T02:44:02.972320+00:00"
+          },
+          "journal": {
+            "command": [
+              "journalctl",
+              "--user",
+              "--unit",
+              "mathscope-protected-protected-comparator-5fea41d1a569.service",
+              "--no-pager",
+              "--output=short-precise",
+              "--lines=80"
+            ],
+            "startedUTC": "2026-10-10T02:44:02.972344+00:00",
+            "timeoutSeconds": 3,
+            "exitCode": 0,
+            "timedOut": false,
+            "stdout": "Oct 10 01:51:59.555921 runnervmmprz5 systemd[2561]: Started mathscope-protected-protected-comparator-5fea41d1a569.service - /home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lake env /home/mathscopeverify/audit/original-source/.lake/packages/Comparator/.lake/build/bin/comparator ComparatorChallenges/NavierStokes.json.\nOct 10 02:44:02.953290 runnervmmprz5 systemd[2561]: mathscope-protected-protected-comparator-5fea41d1a569.service: Consumed 2h 45min 8.474s CPU time, 8.4M memory peak, 0B memory swap peak.\n",
+            "stderr": "",
+            "completedUTC": "2026-10-10T02:44:02.976306+00:00"
+          }
+        },
+        "logBytes": 1709044,
+        "logSHA256": "ff91c14b7515af7e13558ec5381ea48c1a40da414ba1b75ca9533de7cbad9b62"
+      },
+      "completedUTC": "2026-10-10T02:44:02.979392+00:00",
+      "logSHA256": "ff91c14b7515af7e13558ec5381ea48c1a40da414ba1b75ca9533de7cbad9b62"
+    },
+    {
+      "label": "submitted-type-and-axiom-audit",
+      "command": [
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lake",
+        "env",
+        "lean",
+        "/home/mathscopeverify/audit/SubmittedAxioms.lean"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T02:44:02.987883+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T02:44:08.330424+00:00",
+      "logSHA256": "b97f721789b851eafd1e922c022e86a0bd9feefc02b3c0292b5b53fe28585522"
+    },
+    {
+      "label": "source-status-after",
+      "command": [
+        "git",
+        "status",
+        "--porcelain",
+        "--untracked-files=no"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-10T02:44:09.234048+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-10T02:44:09.354664+00:00",
+      "stdoutLog": "source-status-after.stdout.log",
+      "stderrLog": "source-status-after.stderr.log",
+      "stdoutBytes": 0,
+      "stderrBytes": 162,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "98e09345263a2aa431da25836ad99ec0c5c7cff0cc4f97dea62022c441871426",
+      "logSHA256": "7e188d7d2e2ef0bd37cab1c8d93cc0a8e4619822058875a8e9f3ce5d5139358e"
+    }
+  ],
+  "sourceChanges": false,
+  "guardChanges": false,
+  "uid": 1002,
+  "euid": 1002,
+  "kernel": "6.17.0-1022-azure",
+  "exitCode": 0,
+  "transportOnlyAdaptation": {
+    "diagnosticRunId": 38013278865,
+    "copiedOriginalControllerSHA256": "47b0126a22ada5c2254377a458daac076948526f5e8eaa13b5c4e47f933bc220",
+    "validatedDiagnosticTransportSHA256": "307168863bcc5923339d698de00ed66b72a0425361d060337900bc533a1fe147",
+    "runProtectedSHA256": "ae500aaa9e3915bb1d988f527025f5a557c17a56b65cd326b78862286c666a11",
+    "protectedTransportSHA256": "2a247e2f60e2952ea57a1348ded5c0bd3c72d7379af52e6c0ca8d7f41d28e993",
+    "guardSecurityOptionsUnchanged": true,
+    "addedUniqueUnitOption": true,
+    "preflightTimeoutSeconds": 25,
+    "comparatorTimeoutSeconds": 19800
+  },
+  "parentEffectiveCapabilities": 0,
+  "downloadedArchiveSHA256": "3d011041203acacf300d343a39673f7d233743397993797c941346ae9e5df1a8",
+  "leanKernelSHA256": "cddf08bd2b9239f8ce2e2aba8630c47e37b6b341b47705d9d0ba910ad6db13b5",
+  "dependencyHeads": {
+    "Comparator": "19e111e2141cf333c7daff0f64c5f24acc91dd2e",
+    "mathlib": "85e3a25e006c35636f0e53b0e9296caca2685bc0",
+    "lean4export": "cacf989bd75f608700820f6afc595f32e7a99a4d"
+  },
+  "originalProjectOleansBeforeComparator": [],
+  "verificationToolSHA256": {
+    "landrun": "72e391e6a814507e177cc1ef86bb961b953cb287e3868a998035668369d88b38",
+    "nanoda_bin": "256e2bb37994ff342b44331d78f2a9e855526f9be6eaf6b880e31b1d49e53aa0",
+    "lean4export": "4fa9e14cada304109e85da5048bcd411cf781a03539b3e50953e5c537074bd9e"
+  },
+  "comparatorBinarySHA256": "514de8d2acbd6e0102575cd2c575e336b7c4a40daf3ae66abe97cef5e1e6b02a",
+  "guardProcessMetadata": {
+    "effectiveCapabilities": 0,
+    "effectiveCapabilitiesHex": "0000000000000000",
+    "euid": 1002,
+    "event": "guard-process-before-original-probe",
+    "fd": {
+      "0": {
+        "foregroundProcessGroup": 4720,
+        "isatty": true,
+        "target": "/dev/pts/1",
+        "ttyName": "/dev/pts/1"
+      },
+      "1": {
+        "foregroundProcessGroup": 4720,
+        "isatty": true,
+        "target": "/dev/pts/1",
+        "ttyName": "/dev/pts/1"
+      },
+      "2": {
+        "foregroundProcessGroup": 4720,
+        "isatty": true,
+        "target": "/dev/pts/1",
+        "ttyName": "/dev/pts/1"
+      }
+    },
+    "gid": 1002,
+    "noNewPrivileges": 1,
+    "pid": 4720,
+    "probeSHA256": "ed35362b4f1b4ede2271357d5cdc5258eb6d5c5cdef11ad5957827261043fb0e",
+    "processGroup": 4720,
+    "sessionId": 4720,
+    "uid": 1002
+  },
+  "landlockWriteControl": {
+    "uid": 1002,
+    "path": "/home/mathscopeverify/audit/forbidden-write",
+    "sha256": "c11c09cd2b8310a0385cd240f0a29cb139db74403d6b8f328313339b45156a0d",
+    "bytes": 43,
+    "succeededWithoutLandlock": true
+  },
+  "landlockForbiddenWriteAbsent": true,
+  "scope": "Original NavierStokes Comparator configuration, Lean kernel and required nanoda kernel",
+  "trackedSourceBytesUnchanged": true,
+  "completedUTC": "2026-10-10T02:44:09.356301+00:00",
+  "finalFreeDiskBytes": 73816260608
+}

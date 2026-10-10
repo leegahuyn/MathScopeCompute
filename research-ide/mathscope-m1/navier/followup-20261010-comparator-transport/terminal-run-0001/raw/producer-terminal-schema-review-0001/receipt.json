@@ -1,0 +1,56 @@
+{
+  "schema": "MathScope.ProducerTerminalReviewSchemaCompatibility/1",
+  "reviewedUTC": "2026-10-10T02:32:26.602417+00:00",
+  "status": "COMPATIBLE_BY_TARGETED_SOURCE_REVIEW",
+  "actualComparatorCompletionEstablished": false,
+  "finalArtifactInspected": false,
+  "testsReexecuted": false,
+  "inputs": {
+    "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/independent-terminal-review-preparation/review_actual_comparator.py": {
+      "sha256": "0b273238813506acf49689965009496df08b2aa8dc66c83778954340ded9765f",
+      "bytes": 35111
+    },
+    "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/tools/ns-guard-ci/protected_transport.py": {
+      "sha256": "2a247e2f60e2952ea57a1348ded5c0bd3c72d7379af52e6c0ca8d7f41d28e993",
+      "bytes": 13512
+    },
+    "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/tools/ns-guard-ci/run_protected.py": {
+      "sha256": "ae500aaa9e3915bb1d988f527025f5a557c17a56b65cd326b78862286c666a11",
+      "bytes": 19593
+    },
+    "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/tools/ns-guard-ci/metadata_probe.py": {
+      "sha256": "8afa01a2ad14e2a306a4a64f4638c0c5739ed5bfbd1a9dd5663c7916685005be",
+      "bytes": 2064
+    }
+  },
+  "findings": [
+    {
+      "topic": "cleanup list",
+      "finding": "Initialized empty and only appended to on timed-out client cleanup; empty on ordinary success."
+    },
+    {
+      "topic": "eofObservedAfterCleanup",
+      "finding": "Always assigned the final EOF state on completed observation, even when no cleanup occurred; true for ordinary success."
+    },
+    {
+      "topic": "unitCleanup",
+      "finding": "Created by on_timeout only; absent on ordinary success."
+    },
+    {
+      "topic": "exceptionOrTimeoutCleanup",
+      "finding": "Created only if not complete, timed out, or final client exit absent; absent on ordinary success."
+    },
+    {
+      "topic": "metadata",
+      "finding": "Literal before/after events, same PID, guarded metadata object, probe SHA and file-descriptor keys match. NNP and session/foreground equality are stronger actual-observation checks, matching the successful original diagnostic, not supplied by a generic controller assertion."
+    },
+    {
+      "topic": "Landlock write control",
+      "finding": "Exact control bytes, target path, UID, recorded SHA/length and final forbidden-file absence match."
+    },
+    {
+      "topic": "scope",
+      "finding": "Read-only source compatibility review. No conclusion about the still-running protected Comparator, no frozen source changes, and no final artifact or synthetic PASS result."
+    }
+  ]
+}

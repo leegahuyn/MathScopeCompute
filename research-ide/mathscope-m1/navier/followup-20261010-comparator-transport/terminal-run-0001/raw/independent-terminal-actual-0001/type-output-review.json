@@ -1,0 +1,90 @@
+{
+  "schema": "mathscope.independent.actual-type-output-diagnosis.v1",
+  "createdUTC": "2026-10-10T03:03:41.716004+00:00",
+  "status": "READ_ONLY_PARSER_DEFECT_DIAGNOSIS",
+  "runId": 38014602021,
+  "jobId": 114101981614,
+  "archiveSHA256": "1bc9b8134308ee9d8205c3273b96558ccb4efc456d0054da3ea033879c70d9b8",
+  "actualIndependentAudit": {
+    "path": "independent-review.json",
+    "SHA256": "6211680abccbd65ff6155dc5f3b6bd88308b63888c68e09e1ec25b5ce41d1ca7",
+    "status": "FAIL_OR_INCOMPLETE",
+    "N106Completed": false,
+    "passed": 347,
+    "total": 350
+  },
+  "executionReceiptSHA256": "981f6f1c6b4d895cbf6e7e1b89196560bfa6fa6d4f4c97f44563046ccb75e53f",
+  "sourceRefs": [
+    {
+      "path": "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/ComparatorChallenges/NavierStokes.lean",
+      "snapshot": "type-review-inputs/ComparatorChallenges/NavierStokes.lean",
+      "SHA256": "0cd193b8d5cbd0266e6e2f72e68dd5abcdcf2430ebd435dd9289737e9aa7da61",
+      "bytes": 13031,
+      "matchesActualArchivedBeforeAndAfter": true
+    },
+    {
+      "path": "/workspace/scratch/afa9cd11a21b/mathscope-m1/navier/official-validation/repo/NavierStokes/ComparatorSolution.lean",
+      "snapshot": "type-review-inputs/NavierStokes/ComparatorSolution.lean",
+      "SHA256": "52950d5d618a8d34c9bfbdb16641c81c276e97b6d7fd2a76c08577353f0b0227",
+      "bytes": 1359,
+      "matchesActualArchivedBeforeAndAfter": true
+    },
+    {
+      "path": "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/protected-run-0001/final-artifact-0001/extracted/submitted-type-and-axiom-audit.log",
+      "snapshot": "type-review-inputs/submitted-type-and-axiom-audit.log",
+      "SHA256": "b97f721789b851eafd1e922c022e86a0bd9feefc02b3c0292b5b53fe28585522",
+      "bytes": 868
+    },
+    {
+      "path": "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/protected-run-0001/final-artifact-0001/extracted/source-hashes-before.json",
+      "snapshot": "type-review-inputs/source-hashes-before.json",
+      "SHA256": "1511e4398e2825776b1f1f6de35925b02cba19237b42d26bd13a9a65cd8b0f28",
+      "bytes": 291101
+    },
+    {
+      "path": "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/protected-run-0001/final-artifact-0001/extracted/source-hashes-after.json",
+      "snapshot": "type-review-inputs/source-hashes-after.json",
+      "SHA256": "1511e4398e2825776b1f1f6de35925b02cba19237b42d26bd13a9a65cd8b0f28",
+      "bytes": 291101
+    }
+  ],
+  "declarations": [
+    {
+      "theorem": "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+      "originalOption": "C",
+      "sourceSignatureTextIdentical": true,
+      "signature": "(nu : ℝ) (hnu : nu > 0) :\n    ∃ (u₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),\n    InitialVelocityConditionDecay u₀ ∧ ForceConditionDecay f ∧\n    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessRn nu u₀ f v p)",
+      "actualPrintedBinders": "(nu : ℝ) (hnu : nu > 0)",
+      "initialCondition": "InitialVelocityConditionDecay",
+      "forcingCondition": "ForceConditionDecay",
+      "negatedExistencePredicate": "NavierStokesExistenceAndSmoothnessRn",
+      "printedAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "readOnlyComparison": "The actual qualified pretty-printed proposition matches the source signature; inferred existential types and negation parentheses are formatted by Lean."
+    },
+    {
+      "theorem": "NavierStokes.Comparator.navier_stokes_breakdown_periodic",
+      "originalOption": "D",
+      "sourceSignatureTextIdentical": true,
+      "signature": "(nu : ℝ) (hnu : nu > 0) :\n    ∃ (u₀ : ℝ³ → ℝ³) (f : ℝ³ → ℝ → ℝ³),\n    InitialVelocityConditionPeriodic u₀ ∧ ForceConditionPeriodic f ∧\n    ¬ (∃ v p, NavierStokesExistenceAndSmoothnessPeriodic nu u₀ f v p)",
+      "actualPrintedBinders": "(nu : ℝ) (hnu : nu > 0)",
+      "initialCondition": "InitialVelocityConditionPeriodic",
+      "forcingCondition": "ForceConditionPeriodic",
+      "negatedExistencePredicate": "NavierStokesExistenceAndSmoothnessPeriodic",
+      "printedAxioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "readOnlyComparison": "The actual qualified pretty-printed proposition matches the source signature; inferred existential types and negation parentheses are formatted by Lean."
+    }
+  ],
+  "memoSHA256": "7b37b70d87c0fbef1fe14f3f371335262992a9a47fd960b5d4ae0c2c04f31b8b",
+  "newComparatorRun": false,
+  "auditorChanged": false,
+  "sourceOrMathematicalEvidenceChanged": false,
+  "newCompletionAssessmentIssued": false
+}
