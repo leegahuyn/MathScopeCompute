@@ -4,6 +4,7 @@ import {actualSourcePanels} from './actual-source-panels.mjs';
 import {actualCorePanels} from './actual-core-panels.mjs';
 import {actualGlobalPanels} from './actual-global-panels.mjs';
 import {actualSensitivityPanels} from './actual-sensitivity-panels.mjs';
+import {actualDifferentialPanels} from './actual-differential-panels.mjs';
 export {makeObservationPair};
 
 const axis=(label,type,sourceField,unit='1')=>({label,type,sourceField,unit,scale:'linear',transform:'identity',dataDimension:1,physicalDimension:0});
@@ -150,7 +151,7 @@ function pulseCurlPanel(job,options={}){
 
 export function listM2Panels(job,options={}){
   const r=job?.result;if(!r)return [];
-  const actual=[...actualSensitivityPanels(job,options),...actualCorePanels(job,options),...actualGlobalPanels(job,options),...actualSourcePanels(job,options)];if(actual.length)return actual;
+  const actual=[...actualDifferentialPanels(job,options),...actualSensitivityPanels(job,options),...actualCorePanels(job,options),...actualGlobalPanels(job,options),...actualSourcePanels(job,options)];if(actual.length)return actual;
   const extra=observationPanels(job),out=r.pairs?.length?extra:[{id:'main',title:'원본 관측'},...extra];
   if(job.request.kind==='gauge.volume-refinement')out.push(gaugeVolumePanel(job,true,options));
   const corePanel=sourceCorePanel(job,options);if(corePanel)out.push(corePanel);
@@ -177,7 +178,7 @@ export function makeM2Visualization(job,options={}){
   view.binding={...view.binding,sourceHash:r.sourceHash||raw.sourceHash||r.provenance?.sourceHash||view.binding.sourceHash,modelHash:r.modelHash||view.binding.modelHash,sampleHash:r.sampleHash||view.binding.sampleHash||null,ensembleHash:r.ensembleHash||null,observationHash:raw.observationHash||view.binding.observationHash||null,observationHashScope:'SOURCE_OBSERVATION_CONTRACT; PANEL_ID_AND_DISPLAY_TRANSFORMS_ARE_SEPARATE',panelId:options.panel||'main'};
   if(job.request.kind.startsWith('gauge.'))view=gaugeMainView(job,view,options);
   if(job.request.kind==='ns.source-core-charts'&&(!options.panel||options.panel==='main')){const corePanel=sourceCorePanel(job,options);if(corePanel)view={...view,...corePanel,id:'main'};}
-  const panels=listM2Panels(job,options),panel=panels.find(x=>x.id===(options.panel||'main')&&(x.id!=='main'||['ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-uniform-covariance','ns.actual-residual-order','ns.actual-mean-pulse'].includes(job.request.kind)));
+  const panels=listM2Panels(job,options),panel=panels.find(x=>x.id===(options.panel||'main')&&(x.id!=='main'||['ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-uniform-covariance','ns.actual-residual-order','ns.actual-mean-pulse','ns.actual-pulse-sensitivity','ns.actual-covariance-sensitivity','ns.actual-pulse-jet','ns.actual-full-curl'].includes(job.request.kind)));
   if(panel?.table){view={...view,...panel};const t=view.table,ix=sampleIndices(t.rows.length,limit(options.maxRows,200,1000));view.table={...t,rows:ix.map(i=>t.rows[i]),sourcePaths:ix.map(i=>t.sourcePaths[i]),truncated:t.truncated||t.rows.length>ix.length};if(job.request.kind==='gauge.ensemble')view.binding={...view.binding,sourceHash:panel.sourceHash,historyHash:r.historyHash||null,configurationHash:r.sourceHash,observationHash:panel.observationHash,observationHashScope:'HISTORY_OBSERVATION_CONTRACT; DISPLAY_LOD_EXCLUDED'};}
   view.relatedTables=[...(view.relatedTables||[]),...(r.tables||[]).map((t,i)=>exactTable(t,`result.tables[${i}]`))];
   if(r.results?.rows?.length&&!r.tables?.length){const first=r.results.rows[0];if(typeof first==='object'&&!Array.isArray(first))view.relatedTables.push(exactTable({title:'구성 요소의 원본 기록',columns:Object.keys(first),rows:r.results.rows},'result.results'));}

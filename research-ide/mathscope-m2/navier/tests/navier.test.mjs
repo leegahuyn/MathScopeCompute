@@ -19,18 +19,20 @@ const finiteTree=(value,path='result')=>{
   else if(value&&typeof value==='object')for(const[k,v]of Object.entries(value))finiteTree(v,path+'.'+k);
 };
 
-test('all twenty-five N4/N5 examples execute with source graphics and distinguish completed operators from unresolved constructions',async()=>{
-  assert.equal(examples.length,25);
+test('all twenty-nine N4/N5 examples execute with source graphics and distinguish completed operators from unresolved constructions',async()=>{
+  assert.equal(examples.length,29);
   for(const e of examples){
     const result=await executeDomain(e.request),job={id:e.id,request:e.request,inputHash:await requestHash(e.request),status:result.status,result,resultHash:await sha256(result)};
     fixtures.set(e.id,job);finiteTree(result);
-    assert.equal(result.status,['ns-m2-actual-uniform-covariance','ns-m2-actual-picard-acceptance','ns-m2-actual-pulse-amplitude','ns-m2-actual-moment-restoration','ns-m2-actual-residual-order','ns-m2-cutoffs','ns-m2-curl','ns-m2-dyadic','ns-m2-core-charts','ns-m2-torus','ns-m2-support','ns-m2-pulse-curl','ns-m2-tail'].includes(e.id)?'COMPLETED':'PARTIAL',e.id);assert.ok(result.checks.length>0,e.id);assert.ok(result.checks.every(c=>c.pass===true),e.id+' bounded default checks');
+    assert.equal(result.status,['ns-m2-actual-pulse-sensitivity','ns-m2-actual-covariance-sensitivity','ns-m2-actual-pulse-jet','ns-m2-actual-full-curl','ns-m2-actual-uniform-covariance','ns-m2-actual-picard-acceptance','ns-m2-actual-pulse-amplitude','ns-m2-actual-moment-restoration','ns-m2-actual-residual-order','ns-m2-cutoffs','ns-m2-curl','ns-m2-dyadic','ns-m2-core-charts','ns-m2-torus','ns-m2-support','ns-m2-pulse-curl','ns-m2-tail'].includes(e.id)?'COMPLETED':'PARTIAL',e.id);assert.ok(result.checks.length>0,e.id);assert.ok(result.checks.every(c=>c.pass===true),e.id+' bounded default checks');
     assert.equal(result.scope.fullSameProfileN4,false);assert.equal(result.scope.fullSameProfileN5,false);assert.equal(result.scope.formalPass,false);
     assert.equal(result.sourceLedger.n3Profile.commit,'55dacb898f8c204bf0c5925ea901d75d6c2d0f46');
     assert.equal(result.sourceLedger.n3Profile.assessmentSha256,'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c');
     assert.equal(result.sourceLedger.n3Profile.globalEvaluator,false);if(result.status==='PARTIAL')assert.ok(result.blockers.length>0);
     const before=await sha256(result),view=makeVisualization(job);
-    assert.equal(view.state,'READY');assert.ok(view.table.rows.length>0,e.id+' has a numerical/source table');assert.ok(view.scene.points.length+view.scene.lines.length+view.scene.arrows.length>0,e.id+' has real finite marks');
+    assert.equal(view.state,'READY');assert.ok(view.table.rows.length>0,e.id+' has a numerical/source table');const markCount=view.scene.points.length+view.scene.lines.length+view.scene.arrows.length;
+    if(['ns-m2-actual-pulse-sensitivity','ns-m2-actual-covariance-sensitivity','ns-m2-actual-pulse-jet','ns-m2-actual-full-curl'].includes(e.id))assert.equal(markCount,0,e.id+' exposes exact source tables without numerical physical marks');
+    else assert.ok(markCount>0,e.id+' has real finite marks');
     assert.ok(view.axisMetadata.every(a=>a.sourceField.startsWith('result.')),e.id+' axis fields resolve to source result paths');assert.equal(view.binding.inputHash,job.inputHash);assert.equal(view.binding.resultHash,job.resultHash);assert.equal(await sha256(result),before);
   }
 });

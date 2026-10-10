@@ -167,6 +167,6 @@ test('WebMCP import rejects invalid modes, oversized text and aborted calls with
 });
 
 test('criterion evidence links stay inside the declared source tree',()=>{
-  assert.equal(evidenceURL('mathscope-m2/gauge/evidence/tests.tap'),'https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m2-visuals-20261010/research-ide/mathscope-m2/gauge/evidence/tests.tap');
+  assert.equal(evidenceURL('mathscope-m2/gauge/evidence/tests.tap'),'https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m2-completion-20261011/research-ide/mathscope-m2/gauge/evidence/tests.tap');
   for(const path of ['javascript:alert(1)','https://example.com/file','../x','mathscope-m2/../secret','mathscope-m2//file','mathscope-m2/a?x','mathscope-m2/./file'])assert.equal(evidenceURL(path),null);
 });
