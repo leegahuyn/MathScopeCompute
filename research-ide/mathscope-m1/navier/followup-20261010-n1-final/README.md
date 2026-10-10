@@ -93,3 +93,44 @@ These are the inherited requirements, not new proof assumptions. The existing
 runner preserves the required guard and mandatory nanoda; its source-status
 stream-separation fix belongs to the already pending second run. No original
 proof, configuration, kernel, or guard is modified in this directory.
+
+## Prepared portable Comparator artifact audit
+
+`verify_n106_artifact.py` is ready to read the actual Comparator ZIP after GitHub
+exposes it. It does not run Comparator, and its preparation does not complete
+N1-06. The protected workflow, controller, negative-probe source, pins, original
+configuration and Comparator acceptance code are copied under
+`comparator-auditor-inputs/`, with an exact input manifest. The full original
+2,669-file baseline comes from the separately audited default-build artifact.
+
+The verifier binds downloaded ZIP bytes to the actual GitHub artifact size and
+SHA-256, checks every recorded command-log digest, requires both negative guard
+probes, zero pre-existing original project oleans, actual nanoda and Lean kernel
+acceptance, the submitted theorem audit, and the unchanged source/kernel pins.
+It preserves the actual GitHub job and controller outcomes. A historical wrapper
+failure can be separated from a successful protected command only when its exact
+error and the two known permission-warning lines match and every substantive
+Comparator check succeeds.
+
+The prepared verifier was deliberately given the known **default-build** artifact
+as a negative scope control. `comparator-auditor-default-negative-002.json` records
+76 common checks passing and all 25 missing Comparator-specific conditions
+failing, with `N106Completed: false` and no Comparator exit code. This expected
+rejection is a test of the auditor's scope, not a new failed Comparator run.
+The earlier preparation revision is retained as `...negative-001.json`.
+
+Use a newly downloaded actual Comparator ZIP and its contemporaneous saved
+GitHub observation, choosing a new output filename:
+
+```sh
+python3 -B research-ide/mathscope-m1/navier/followup-20261010-n1-final/verify_n106_artifact.py \
+  --zip /absolute/path/to/original-comparator.zip \
+  --artifact-id ACTUAL_COMPARATOR_ARTIFACT_ID \
+  --observation /absolute/path/to/github-observation.json \
+  --output /absolute/path/to/new-comparator-audit.json
+```
+
+The alternative `--base64` accepts an exact base64 copy of the ZIP. The auditor
+does not extract the ZIP or write into the protected original checkout. An
+optional `--extracted` directory is only read and compared byte for byte. Output
+files are created exclusively; historical receipts are never overwritten.

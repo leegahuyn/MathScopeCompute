@@ -1,0 +1,217 @@
+{
+  "schema": "MathScope.KoreanReportFormalProgress/2",
+  "asOfUTC": "2026-10-10T00:19:33.821291+00:00",
+  "parts": [
+    {
+      "title": "실제 source·\n전체 적분",
+      "resultLabel": "PASS\n20개",
+      "proved": "실제 rho·clock·압력 함수와 전체 실수 적분 ≤64P*²",
+      "scope": "same h,j,sigma",
+      "modules": [
+        "SameDatumInputs",
+        "SameDatumMass"
+      ],
+      "auditedDeclarations": 20
+    },
+    {
+      "title": "field·pressure",
+      "resultLabel": "PASS\n15개",
+      "proved": "11개 가중 입력·compatibility·양의 hold·원래 PressureData",
+      "scope": "실제 A.21 적분",
+      "modules": [
+        "FieldBounds",
+        "PressureSelection"
+      ],
+      "auditedDeclarations": 15
+    },
+    {
+      "title": "진폭·미분",
+      "resultLabel": "PASS\n11개",
+      "proved": "실제 진폭 norm·phase·radial 계수·로그 도함수",
+      "scope": "same Q,Lambda,C",
+      "modules": [
+        "AmplitudeInput",
+        "AmplitudeDynamics"
+      ],
+      "auditedDeclarations": 11
+    },
+    {
+      "title": "원래 threshold·\n실제 operator",
+      "resultLabel": "PASS\n11개",
+      "proved": "모든 실제 norm 전제·threshold≤Q^64·sharp29/Q^53",
+      "scope": "빈 전제 없음",
+      "modules": [
+        "ThresholdBridge",
+        "OperatorBounds"
+      ],
+      "auditedDeclarations": 11
+    },
+    {
+      "title": "유한 radial jet",
+      "resultLabel": "PASS\n25개",
+      "proved": "정확 coefficient·25 dyadic box·radial tail·실제 rounding",
+      "scope": "actual eta=0",
+      "modules": [
+        "AxisFiniteJet",
+        "SelectedReferenceBoxes",
+        "ConcreteFiniteJet"
+      ],
+      "auditedDeclarations": 25
+    },
+    {
+      "title": "무한해·eta jet",
+      "resultLabel": "PASS\n28개",
+      "proved": "실제 고정점·전 차수 오차·25×5 projection·정확 eta chart",
+      "scope": "실제125에 결속",
+      "modules": [
+        "ConcreteProducer",
+        "ConcreteJetRecurrence",
+        "MixedEtaBindings"
+      ],
+      "auditedDeclarations": 28
+    }
+  ],
+  "receipts": {
+    "freshPrefix": {
+      "receiptPath": "mathscope-m1/navier/followup-20261010-symbolic-gluing/formal-clean-replay/attempts/0001/receipt.json",
+      "receiptSHA256": "510c83e7cb15554ababb559e842233cbd5aa806c0f814995360efe15274d2720"
+    },
+    "freshExtension": {
+      "receiptPath": "mathscope-m1/navier/followup-20261010-symbolic-gluing/formal-clean-replay/extension-attempts/0001/receipt.json",
+      "receiptSHA256": "f4890e49435a7848d426358180605a0636145897516de4f2515b63c8b7706b87"
+    },
+    "independentImports": {
+      "receiptPath": "mathscope-m1/navier/followup-20261010-same-datum-axis/formal-input-producer/replay-independent-audit/attempts/0001/receipt.json",
+      "receiptSHA256": "245086de9600df89ddac6868fb0716c733c1fc46fa29ceecc81e32796cb79ec8"
+    },
+    "actualMixedArray": {
+      "receiptPath": "mathscope-m1/navier/followup-20261010-same-datum-axis/independent-review/actual-mixed-eta-binding-001.json",
+      "receiptSHA256": "0fae9fcf7c5dfbf2d2533204d35e60f2f178caf702e5d0debb8eac95d2517200"
+    },
+    "independentFinalConnection": {
+      "receiptPath": "mathscope-m1/navier/followup-20261010-final-stress-audit/formal-connection-review/0001/receipt.json",
+      "receiptSHA256": "a78d75334b66b5468415840d1963ef62f28862b1f0a82ddef2b8a285e7dc146a"
+    }
+  },
+  "compiledModules": [
+    {
+      "module": "SameDatumInputs",
+      "sourceSHA256": "9f80d62caa58f5b4076eda552286752ad598c7214c1bafaf01778f7a02a5f5af",
+      "oleanSHA256": "80008d55342eb0dd647a47a2ea621110ed148b56bc0c99d29465961a0461c60f",
+      "logSHA256": "aa7ef765f09db47924e542cd3d59e1ba87df9229ad32b0bd1ae6cedc0db7eea3",
+      "auditedDeclarations": 15
+    },
+    {
+      "module": "SameDatumMass",
+      "sourceSHA256": "1fc57c2e62cc825e0bd3eb9d61931714eb7fbe0b06b866712bc68a5ad8cb04f9",
+      "oleanSHA256": "a3eb6677a7c3e92b3ecfab8b6281301a249b2f55384c7043d753fc5a8ea7a9a1",
+      "logSHA256": "f107e8c6b40fb5213c69dff711c50f98a6d123ec0ef31489d01b02b2ea2f6825",
+      "auditedDeclarations": 5
+    },
+    {
+      "module": "FieldBounds",
+      "sourceSHA256": "92a2f051c516ea1fe53e60b952e887dbdfda6f818ac2fc2116410b65445e58c6",
+      "oleanSHA256": "32108a9963953dc2cd7aad237f2fb2d478ca32d81ee046c887ebd31c72666818",
+      "logSHA256": "da391f53b1e8798f9219a2577dd523ef934efe1dc3335b3ddb4170b82509cfb2",
+      "auditedDeclarations": 8
+    },
+    {
+      "module": "ThresholdBridge",
+      "sourceSHA256": "94cb97efdd5a2db0eed8f01265e0bb70b7bfebcbab4ce326676e87110c549d3e",
+      "oleanSHA256": "f7274ce71bb902770c85137a1d6db6cb136ca3793795e42839f7ee71240b8dbe",
+      "logSHA256": "3ddf4b587c2c7c99903f83bdcf97ced82ef15d8d600af0e9fc6e2d22cfa127d3",
+      "auditedDeclarations": 6
+    },
+    {
+      "module": "PressureSelection",
+      "sourceSHA256": "b57060e0a69edc0257f943f8268c4d54bdeeb0e3ef12ace89b97b01b5bde6092",
+      "oleanSHA256": "a8a34adc64fc02422f77ebc030f8f88cc4415ff8627aa70fa9434e3de4e3e275",
+      "logSHA256": "481b298eee2636e63341fd36cd2b750189e1a5ca024f746e116d756a9743f0fc",
+      "auditedDeclarations": 7
+    },
+    {
+      "module": "AmplitudeInput",
+      "sourceSHA256": "a960171b872ba7968305bad8839519421edb4a8eb45d487e3c6f18bace105679",
+      "oleanSHA256": "008e35bd81b65111d0894e5b370be65e579528a9cbde943c8365051bd8884e26",
+      "logSHA256": "ed5bf3d39a360729492fa92fb7453c8ca099901fc0852a554c38209e71d39f64",
+      "auditedDeclarations": 8
+    },
+    {
+      "module": "AmplitudeDynamics",
+      "sourceSHA256": "cce9ee150d995d6eb88528ace461a66c21b4a5c3e1a795196a7ffb9ed76d48d7",
+      "oleanSHA256": "457de506112235858e4e80edd1c37e1c6bd0a176dc896b333c01e88bb46a9b4d",
+      "logSHA256": "e905b3145b2d4a2bcc65ed70a60ec6cf0879beebf32631b108e6929288f86a9f",
+      "auditedDeclarations": 3
+    },
+    {
+      "module": "OperatorBounds",
+      "sourceSHA256": "f3c8d76a316e3cd17144167948d9b7eaf95b4513079a5d56887e8aa146491a64",
+      "oleanSHA256": "db4a2f7895d883675590ba8f77612293f0494a20b6e6b75405c410c58405e413",
+      "logSHA256": "d24a2bf6be9ab18ecf4e5639aa154713418557181be366447286275eb793f407",
+      "auditedDeclarations": 5
+    },
+    {
+      "module": "AxisFiniteJet",
+      "sourceSHA256": "55f77717a1e5c70e472c9496d740a2edea6f1315a5dbe126b976d80d6049b5cd",
+      "oleanSHA256": "297024ff565e963ffe61a21820fc303e64948f1d1c6f9ee0ce04147e41248a19",
+      "logSHA256": "3f237062e48b22c5bfdd1996018cf088064497a6159337514f13dc197311dcbe",
+      "auditedDeclarations": 8
+    },
+    {
+      "module": "ConcreteProducer",
+      "sourceSHA256": "38b5ddc97514a00fcf9ee4f2cfc6a1030a2781bccb577fd8e14389ec97a3e7b2",
+      "oleanSHA256": "893a7d08e45eccc0752138854cdabaaf1133aa769a77479ba462a7abfae118ea",
+      "logSHA256": "6b0b770e89f60b756f59e822323dcd7b782dfdb4f5fa16003816163767de4d49",
+      "auditedDeclarations": 9
+    },
+    {
+      "module": "SelectedReferenceBoxes",
+      "sourceSHA256": "dccc9cef7f6cf01fab9c12d7f4f9106aedcd784bd4f4e0a342ae81da934cb584",
+      "oleanSHA256": "309d611273eedd70d1e58132d9c39f942b90100de4c2c85514c83595f69fcaa0",
+      "logSHA256": "39db9e6b0ccb9c2a28a344894bed54c8028be8d5d9f20f4d522046d3100c20b7",
+      "auditedDeclarations": 8
+    },
+    {
+      "module": "ConcreteFiniteJet",
+      "sourceSHA256": "1c078ba54e6c42eb808c48c44a32270d97e7086023e3269b5240b6b043eff96b",
+      "oleanSHA256": "547eec590359fa1cec6c9d1b960fbc9d6837c8d0e3c620c9db65b5a4ec83a51c",
+      "logSHA256": "6a5f6f2b4bb88c2f353afd7c2fb6f88554a9bf777afe156872444a1eda34ba34",
+      "auditedDeclarations": 9
+    },
+    {
+      "module": "ConcreteJetRecurrence",
+      "sourceSHA256": "8e7b8fdf8e60f2f52d7c88574cf3039c3c6abbe6253187f7b109a8e46df48561",
+      "oleanSHA256": "fbd9402fdfb481a3bcb8c498d9e8ed79cafd9a6bc741f4ed38f3bacbc7995db9",
+      "logSHA256": "1ecd9bbbf9cba4de6ba17ec9ff274e376646b32dea06db22e35a911975159f02",
+      "auditedDeclarations": 10
+    },
+    {
+      "module": "MixedEtaBindings",
+      "sourceSHA256": "2c8fea649e9259caf145e52ef3a5e46819df15ad4aa973d69e183c430feac8c1",
+      "oleanSHA256": "d7bacaa97197092f378e774cdd8fb33c3e9755841d16661c0161b8883fdd0f0d",
+      "logSHA256": "645562d8189c35d6d270dd846842e19d517341c88416010e5c3ae932cebc08ee",
+      "auditedDeclarations": 9
+    }
+  ],
+  "assessment": {
+    "receiptPath": "mathscope-m1/navier/followup-20261010-final-stress-audit/ORIGINAL_NINE_GATES_ASSESSMENT_2026_10_10_3.json",
+    "receiptSHA256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c"
+  },
+  "currentFormalWorkUnfinished": false,
+  "fullAnalyticInputProducerCompleted": true,
+  "fullOriginalN303Completion": true,
+  "entireFinalProfileLeanFormalized": false,
+  "all125NumericalRowsReevaluatedByLeanKernel": false,
+  "freshPrefixModules": 13,
+  "freshExtensionModules": 1,
+  "auditedDeclarations": 110,
+  "actualMixedChart": {
+    "radial": "0<=Y<=41/10",
+    "parameter": "|eta|<=rho/4",
+    "coordinate": "xi=eta/j, j=h^4>0",
+    "positiveRadius": true,
+    "xiUpper": "2^-16000"
+  },
+  "actualNamed125PolynomialErrorUpper": "2^-118",
+  "updateRule": "Load immutable successful 13-module prefix plus one-module extension, actual 812-check mixed consumer, 343-check imports and independent 883-check final connection. Require the separately reviewed 69/1 gate assessment. Keep all prior conditional receipts and 68/2 history unchanged. Comparator observations remain separately dated."
+}

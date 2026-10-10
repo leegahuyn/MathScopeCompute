@@ -1,0 +1,112 @@
+{
+  "schema": "mathscope.same-final-stress.scalar-audit.v1",
+  "generatedUTC": "2026-10-09T22:57:35.226286+00:00",
+  "sources": [
+    {
+      "path": "followup-20261010-final-stress-audit/GLOBAL_STRESS_ASSEMBLY_EN.md",
+      "sha256": "ddcc2f851218d9eb8659585dee752e7d4ffef8fcfc761b98a87e0d0276be698d"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/HEAT_COMPENSATION_PROOF_EN.md",
+      "sha256": "81446a5f1a6a18a4e1aa9a44fdc5695da1846a1c23fe412c9ac282af155688e3"
+    },
+    {
+      "path": "followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md",
+      "sha256": "2035fa202134d7ca0affcad7ad7aafbb05e3508fde3a5f34a3f2cea6fd003750"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/C12_FREQUENCY_CONTRACT.md",
+      "sha256": "1740353222f1a5ca727c2c8a2c7063bba8a990f9a4393754256d5c82f49f7a16"
+    },
+    {
+      "path": "followup-20261010-symbolic-gluing/LOOP_DERIVATIVE_ENVELOPE.md",
+      "sha256": "531e5addbe900564c22e0b44406c9c024e7d279c03a7188ea17431a567fe1250"
+    },
+    {
+      "path": "followup-20261010-same-datum-axis/REFERENCE_DERIVATIVE_BOUNDS.md",
+      "sha256": "c4f47c6a156052a007a55992345faa47c7c47cb5606a46bff693f0b69d5054d9"
+    }
+  ],
+  "checkerSHA256": "0cb0f2faed50cda25cd8600ee1d467f4563127a4034c2a5f2e182c6f42833237",
+  "scalarChecks": {
+    "T_denominator_from_h_and_Q": true,
+    "outer_T_coefficient": true,
+    "outer_T_terms_below_2Q": true,
+    "pulse_13_over_lambda_below_Q": true,
+    "release_Qb_below_Q": true,
+    "wait_below_3Q": true,
+    "outer_length_below_8Q": true,
+    "log110_below_7": true,
+    "XR_remaining_log_below_9Q": true,
+    "9Q_below_logC": true,
+    "outer_amplitude_lower": true,
+    "rho_lower_C_minus2": true,
+    "reference_exp_lower": true,
+    "activation_linear_error": true,
+    "activation_quadratic_error": true,
+    "collar_loop_cutoff_zero": true,
+    "C_large_for_reference_lower": true,
+    "inner_direction_denominator": true,
+    "inner_stress_exponents": true,
+    "outer_linear_gap": true,
+    "outer_quadratic_gap": true,
+    "outer_norm_of_shear_below_19": true,
+    "outer_stock_norm_bound": true,
+    "outer_projection_coefficient": true,
+    "outer_quadratic_direction_dyadic": true,
+    "log24_below_5": true,
+    "outer_projection_above_C_minus2": true,
+    "C_minus2_below_2_minus27": true,
+    "J_F_lower_R_minus2": true,
+    "J_shear_ratio": true,
+    "J_direction_denominator": true,
+    "J_stress_lower_R_minus8": true,
+    "J_margin_smaller_than_preserved": true,
+    "exterior_E_lower_C_minus2": true,
+    "sqrt2Xb_below_C6": true,
+    "exterior_F_exponents": true,
+    "exterior_t_below_8": true,
+    "exterior_direction_denominator": true,
+    "exterior_P_over72": true,
+    "terminal_sigma_at_quarter": true,
+    "terminal_middle_constant": true,
+    "terminal_middle_C_absorption": true,
+    "outer_flat_v_exponent": true,
+    "outer_flat_derivative_constant": true,
+    "outer_flat_boundary_heat_factor": true,
+    "outer_flat_C_absorption": true,
+    "outer_flat_distance_power": true,
+    "outer_flat_exponents": true,
+    "five_covering_regions_overlap": true
+  },
+  "negativeControls": {
+    "insufficient_pressure_rejected": true,
+    "insufficient_Q_rejected": true,
+    "insufficient_outer_flat_C_rejected": true,
+    "growing_normalized_majorant_rejected": true
+  },
+  "sourceBindings": {
+    "heat_proof_matches_accepted_scalar_receipt": true,
+    "activation_proof_matches_fixed_width_receipt": true,
+    "C12_proof_matches_scalar_receipt": true,
+    "C12_operator_matches_heat_operator": true
+  },
+  "allPassed": true,
+  "actualExpressions": {
+    "C": "(1+Q^300)^10 exp(Q^200)",
+    "allFourTransitionWidths": "C^(-120)",
+    "preservedOuterDirectionalMarginLowerBound": "C^(-2)",
+    "globalStressLowerBoundConstant": "min(C^(-11), R^(-8))",
+    "flatWeight": "exp(-t1^2/log(X/Xa)^2 - 4/log(Xb/X)^2)",
+    "finalDirectionalMargin": "R^(-10)"
+  },
+  "claimBoundary": {
+    "exactScalarImplicationVerified": true,
+    "continuousProofRequiredAlongsideReceipt": true,
+    "sameFinalAxisAndB8SourceInputsVerifiedByThisScript": false,
+    "actualWholeProfileRProvidedByThisScript": false,
+    "fullTheorem46ProfileCertified": false,
+    "N3_07AutomaticallyPromoted": false,
+    "newLeanProof": false
+  }
+}
