@@ -30,12 +30,18 @@ try{
   const certificate=job.result.results;assert.equal(certificate.pass,true);assert.ok(certificate.checks.every(c=>c.pass));
   assert.equal(certificate.scope.fullPhysicalResidualAndFlatErrorPackageComplete,false);
   const panels=listM2Panels(job);assert.equal(panels.length,kind==='ns.actual-covariance-sensitivity'?5:kind==='ns.actual-pulse-jet'?4:3);
+  let checkedSourcePathCells=0,unboundDisplayCells=0;
   for(const panel of panels){
     const view=makeM2Visualization(job,{panel:panel.id});assert.equal(view.state,'READY');assert.equal(view.scene.points.length,0);
     for(const table of [view.table,...view.relatedTables])for(let i=0;i<table.rows.length;i++)for(let j=0;j<table.rows[i].length;j++){
-      const path=table.cellSourcePaths?.[i]?.[j];if(!path)continue;
+      const path=table.cellSourcePaths?.[i]?.[j];
+      if(!path){
+        const value=table.rows[i][j],label=j===0&&table.columns[0]==='항목'&&typeof value==='string';
+        assert.ok(label||value===null,'Unbound cells must be display labels or empty placeholders');
+        unboundDisplayCells++;continue;
+      }
       const source=path.replace(/\[(\d+)\]/g,'.$1').split('.').reduce((x,k)=>x?.[k],job);
-      assert.deepEqual(table.rows[i][j],source,path);
+      assert.deepEqual(table.rows[i][j],source,path);checkedSourcePathCells++;
     }
   }
   const sourceName=kind.slice(3)+'-source-runtime.json';let reference=null;
@@ -50,7 +56,8 @@ try{
   const record={schema:'MathScope.DifferentialRuntimeCase/1',kind,mode,pass:true,command:'node research-ide/mathscope-m2/tests/differential-runtime-case.mjs '+kind+' '+mode,exitCode:0,
     request:job.request,elapsedMs:performance.now()-start,peakRSSBytes:process.resourceUsage().maxRSS*1024,environment:await engine.environment(),
     mathematicalHash:job.mathematicalHash,certificateSHA256:await sha256(certificate),graph:certificate.graph,
-    sourceCompilerReference:reference,sourceCompilerParity:mode==='worker',panelCount:panels.length,allCellsSourceBound:true,
+    sourceCompilerReference:reference,sourceCompilerParity:mode==='worker',panelCount:panels.length,
+    allCellsSourceBound:unboundDisplayCells===0,checkedCellsWithSourcePathsMatchSource:true,checkedSourcePathCells,unboundDisplayCells,
     numericalPhysicalMarks:0,scope:certificate.scope,runtimeSHA256};
   fs.writeFileSync(new URL(kind.slice(3)+'-'+mode+'-runtime.json',root),JSON.stringify(record,null,2)+'\n');
   fs.writeFileSync(new URL(kind.slice(3)+'-'+mode+'-replay.json',root),JSON.stringify(await engine.exportBundle(job.id),null,2)+'\n');

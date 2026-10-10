@@ -18,7 +18,7 @@ export const DIFFERENTIAL_BROWSER_EXAMPLES=[
   {id:'ns-m2-actual-full-curl',kind:'ns.actual-full-curl',schema:'MathScope.ActualFullCurlCertificate/1',panels:3,scopePanel:'full-curl-scope'}
 ];
 const demand=(condition,message)=>{if(!condition)throw Error(message);};
-const jsonText=async(tab,selector,controls=tab.playwright)=>JSON.parse(await controls.locator(selector).evaluate(el=>el.tagName==='TEXTAREA'||el.tagName==='INPUT'?el.value:el.textContent));
+const jsonText=async(tab,selector,controls=tab.playwright)=>controls.locator(selector).evaluate(el=>JSON.parse(el.tagName==='TEXTAREA'||el.tagName==='INPUT'?el.value:el.textContent));
 const fresh=tab=>tab.playwright.domSnapshot();
 const click=(tab,selector,controls=tab.playwright)=>controls.locator(selector).click();
 async function clickSettled(tab,selector,controls=tab.playwright){
@@ -84,9 +84,69 @@ async function runSelectedExample(tab,id,controls=tab.playwright){
   await controls.locator('#mathscopeResearchM2[data-result-status="COMPLETED"],#mathscopeResearchM2[data-result-status="PARTIAL"],#mathscopeResearchM2[data-result-status="FAILED"],#mathscopeResearchM2[data-result-status="BUDGET_EXCEEDED"]')
     .waitFor({state:'attached',timeoutMs:60000});
   await fresh(tab);
-  const job=await jsonText(tab,'#m2-result-json',controls);
+  const job=await readSelectedAuditJob(tab,controls);
   demand(['COMPLETED','PARTIAL'].includes(job.status),id+' did not complete: '+job.status+' '+(job.result?.message||''));
   return job;
+}
+
+async function readSelectedAuditJob(tab,controls=tab.playwright){
+  // Read only the audit fields from the actual rendered JSON. Transferring a
+  // whole >200k-character result as a string can truncate at the browser bridge.
+  // Parsing its complete DOM text locally preserves the genuine result while
+  // keeping the read-only browser response bounded.
+  return controls.locator('#m2-result-json').evaluate(el=>{
+    const j=JSON.parse(el.textContent),d=j.result?.results;
+    return {id:j.id,status:j.status,request:j.request,inputHash:j.inputHash,resultHash:j.resultHash,
+      result:j.result?{sourceHash:j.result.sourceHash,message:j.result.message,
+        results:d?{schema:d.schema,pass:d.pass,graph:d.graph,scope:d.scope,domain:d.domain,checks:d.checks,
+          divergenceRows:d.divergenceRows?.map(row=>({sign:row.sign,domainMembershipCertified:row.domainMembershipCertified}))}:null}:null};
+  });
+}
+
+/** Start once and return promptly. Some Cloud Browser locator waits end before
+ * their requested timeout; an unfinished worker must be observed again without
+ * re-submitting it. Inspect its terminal result with the function below.
+ */
+export async function startDifferentialBrowserSourceExample(tab,exampleId,{heavyRunsCoordinated=false}={}){
+  demand(heavyRunsCoordinated===true,'Coordinate the >1GiB source workers before this audit.');
+  demand(DIFFERENTIAL_BROWSER_EXAMPLES.some(item=>item.id===exampleId),'Unknown source audit example.');
+  const state=await tab.playwright.locator('#mathscopeResearchM2').getAttribute('data-result-status');
+  demand(!['RUNNING','QUEUED'].includes(state),'Wait for the current source worker before starting another.');
+  await click(tab,'#m2-tab-ns');await routeReady(tab,'ns');
+  await tab.playwright.locator('#m2-example').selectOption(exampleId);await fresh(tab);
+  await clickSettled(tab,'#m2-run');
+  const job=await readSelectedAuditJob(tab);
+  return {id:exampleId,jobId:job.id,status:job.status,request:job.request,inputHash:job.inputHash};
+}
+
+/** Read and test an already executed source result. Never starts a worker. */
+export async function inspectSelectedDifferentialBrowserSource(tab,exampleId){
+  const expected=DIFFERENTIAL_BROWSER_EXAMPLES.find(item=>item.id===exampleId);
+  demand(expected,'Unknown source audit example.');
+  const job=await readSelectedAuditJob(tab),d=job.result?.results;
+  demand(job.request?.kind===expected.kind,'The selected job is a different source example.');
+  if(['RUNNING','QUEUED'].includes(job.status))return {id:exampleId,jobId:job.id,status:job.status,pending:true};
+  demand(['COMPLETED','PARTIAL'].includes(job.status),'Source worker did not complete: '+job.status+' '+(job.result?.message||''));
+  demand(d?.schema===expected.schema&&d.pass===true,'Wrong actual source certificate.');
+  const options=await tab.playwright.locator('#m2-observation-select option').evaluateAll(els=>els.map(el=>({id:el.value,label:el.textContent})));
+  demand(options.length===expected.panels,'Missing differential panels.');
+  const panels=[];
+  for(const option of options){
+    await tab.playwright.locator('#m2-observation-select').selectOption(option.id);await fresh(tab);
+    const dom=await inspectDifferentialBrowserDOM(tab);
+    demand(dom.canvasDataset.visualizationState==='READY','Differential panel not ready.');
+    demand(dom.documentWidth<=dom.viewportWidth+1&&dom.unintendedOverflow.length===0,'Differential panel has unintended viewport overflow.');
+    demand(dom.canvasDataset.inputHash===job.inputHash&&dom.canvasDataset.resultHash===job.resultHash,'Panel selection lost the source-result binding.');
+    panels.push({id:option.id,...dom});
+  }
+  await tab.playwright.locator('#m2-observation-select').selectOption(expected.scopePanel);await fresh(tab);
+  if(expected.kind==='ns.actual-full-curl'){
+    demand(d.scope.exercisedBandPositiveWeightsCertified===false&&d.scope.actualGlobalSlowPartitionGluingComplete===false,'Local conditional curl was promoted.');
+    demand(d.divergenceRows.every(row=>row.domainMembershipCertified===false),'Conditional zero became an unconditional band claim.');
+  }
+  demand(d.scope.fullPhysicalResidualAndFlatErrorPackageComplete===false,'Global residual/flat-error scope was promoted.');
+  return {id:expected.id,jobId:job.id,status:job.status,inputHash:job.inputHash,resultHash:job.resultHash,
+    sourceHash:job.result.sourceHash,graph:d.graph,scope:d.scope,domain:d.domain,checks:d.checks,panels,functionalPass:true};
 }
 
 async function expand(tab,selector){
@@ -142,7 +202,9 @@ export async function runLightDifferentialBrowserAudit(tab,{baseUrl,capture=asyn
   const inputOnly=await jsonText(tab,'#m2-import-report');
   demand(inputOnly.status==='INPUT_LOADED'&&inputOnly.newJobSubmitted===false&&inputOnly.importedResultAdopted===false,'Input-only import incorrectly adopted a result.');
   await clickSettled(tab,'#m2-import-replay');
-  await tab.playwright.locator('#m2-import-report').filter({hasText:/"status"\s*:\s*"MATCH"/}).waitFor({state:'visible',timeoutMs:60000});
+  // The awaited replay handler writes its final report before clearing busy.
+  // Parse that report directly: regex transport quoting differs in browser
+  // bindings, and must not turn a completed MATCH into a false UI failure.
   await fresh(tab);
   const replay=await jsonText(tab,'#m2-import-report');
   demand(replay.status==='MATCH'&&replay.automaticEvidenceSave===false,'UI replay did not match or saved evidence automatically.');
@@ -173,10 +235,13 @@ export async function runLightDifferentialBrowserAudit(tab,{baseUrl,capture=asyn
 /** Call only after cross-agent memory coordination. Uses the shipped workers
  * and preserves their actual certificate DOM, never imported result adoption.
  */
-export async function runSourceDifferentialBrowserAudit(tab,{baseUrl,capture=async()=>null,heavyRunsCoordinated=false}={}){
+export async function runSourceDifferentialBrowserAudit(tab,{baseUrl,capture=async()=>null,heavyRunsCoordinated=false,exampleIds=DIFFERENTIAL_BROWSER_EXAMPLES.map(item=>item.id)}={}){
   demand(heavyRunsCoordinated===true,'Coordinate the >1GiB source workers before this audit.');
+  demand(exampleIds.length>0&&new Set(exampleIds).size===exampleIds.length,'Source audit examples must be distinct.');
+  const expectedExamples=exampleIds.map(id=>DIFFERENTIAL_BROWSER_EXAMPLES.find(item=>item.id===id));
+  demand(expectedExamples.every(Boolean),'Unknown source audit example.');
   const base=baseUrl.split('#')[0],report={schema:'MathScope.DifferentialBrowserSourceAudit/1',runs:[],screenshots:[],sourceJobsExecuted:true};
-  for(const expected of DIFFERENTIAL_BROWSER_EXAMPLES){
+  for(const expected of expectedExamples){
     if(await tab.url()!==base+'#research-m2/ns')await tab.goto(base+'#research-m2/ns');
     await tab.reload();await fresh(tab);
     await routeReady(tab,'ns');

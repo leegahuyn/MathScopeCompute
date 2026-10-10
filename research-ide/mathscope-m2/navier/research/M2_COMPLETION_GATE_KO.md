@@ -17,6 +17,8 @@ Handoff:   e5a3ff18db7c804ca972cf7105068b9f8c9ff49d4e5a3535184ac88fd5872cc5
 
 기준 구현 커밋은 `0d846135e72672f99a468ec5caa4e0115236b2a6`, 기준 최종 검증 기록은 `479af296749989a8c6a73cd3e184a0271390f679`이다. 이 추가 문서는 그 판정의 수학적 범위를 확장해서 읽지 않는다.
 
+이번 추가 구현은 `mathscope-m2-completion-20261011` branch의 [구현 커밋 cc075ec6](https://github.com/leegahuyn/MathScopeCompute/commit/cc075ec661b573671ac43a88cf30ccdc2dbb9bd8)에 저장되었고, 기존 공개 페이지의 **v74 (`b9e93d8d`)**로 게시되었다. 게시와 수학 범위의 완료 판정은 아래처럼 별도로 기록한다.
+
 | 근거 | 이 관문에서 사용하는 내용 |
 | --- | --- |
 | Blueprint PDF 12쪽 | M2는 I2/P4–P6/Y3–Y4/N4–N5, M3는 P7–P8/Y5–Y7/N6–N8. 실제 입력을 고정하는 선행 관문을 유지한다. |
@@ -33,7 +35,7 @@ Handoff:   e5a3ff18db7c804ca972cf7105068b9f8c9ff49d4e5a3535184ac88fd5872cc5
 | 항목 | 확보하거나 구현한 결과 | 별도로 필요한 결론 |
 | --- | --- | --- |
 | 기존 실제 1차 pulse 미분 | `ell=1`, 고정 label의 R/Z/T 1차 도함수, 원래 moving frame와 envelope, `terms:0` 및 factorial tail. 이전 실제 축별 receipt가 있다. | 전체 수치 도함수 값, 양의 covariance weight, 전체 물리 잔차 |
-| 실제 공분산 1차 미분 | 원래 두 sign의 theta/z/mass 적분과 전체 leading target을 미분한다. `H y=T`로부터 `y_a=H^{-1}(T_a-H_a y)`를 구성한다. 실제 R source 검사 5개가 통과했고 원본 log를 보관했다. | 실행 member의 `det(H)≠0` 및 `y_±>0`, 수치 inverse 조건수와 오차, 경계의 제곱근 미분 |
+| 실제 공분산 1차 미분 | 원래 두 sign의 theta/z/mass 적분과 전체 leading target을 미분한다. `H y=T`로부터 `y_a=H^{-1}(T_a-H_a y)`를 구성한다. 실제 R source 검사 5개와 별도 Z·T source 축 검사 각 8개 그룹이 통과했고 원본 log를 보관했다. | 실행 member의 `det(H)≠0` 및 `y_±>0`, 수치 inverse 조건수와 오차, 경계의 제곱근 미분 |
 | 실제 R/Z/T 2차·혼합 pulse 미분 | 각 sign의 20성분 변분계, RR/RZ/RT/ZZ/ZT/TT, 실제 coefficient에서 만든 FTC norm, 0항 또는 첫 ordered-integral 보정항과 별도 수렴 tail을 구성한다. 실제 `terms:1` source 검사 7개가 통과했고 실행 당시 source/kernel hash를 대조했다. | 공통 all-band C3/Gaussian 상수, 실제 quadrature, 전체 weighted field의 전역 오차 |
 | 실제 local full curl | 원래 phase, pulse, covariance weight, transverse/longitudinal cutoff, `sqrt(epsilon)`, 원통 기저항을 포함하는 local potential의 전체 curl을 구성한다. 최종 실제 source 검사 5개와 두 sign의 기하·혼합 미분 전제가 통과했다. | 양의 weight 정의역의 실행 member 인증, 모든 slow partition/label의 결합, 전역 물리 잔차·flat-error |
 | 새 Lean 대수 보조정리 | 공식 pinned Lean 4.34.0-rc2에서 14개 선언을 컴파일하고 별도 import 후 공리를 감사했다. | 실제 source의 해석학적 가정과 이 보조정리의 Lean 인스턴스 연결 |
@@ -55,9 +57,47 @@ Handoff:   e5a3ff18db7c804ca972cf7105068b9f8c9ff49d4e5a3535184ac88fd5872cc5
 | `actual-pulse-jet-worker-runtime.json` | R/Z/T 2차·혼합 미분, `terms:1`을 Worker로 실행했다. 앞서 source 검사에서 생성한 compiler hash와 같다. |
 | `actual-full-curl-worker-runtime.json` | `terms:0`의 조건부 local full curl을 Worker로 실행했다. 앞서 source 검사에서 생성한 compiler hash와 같다. |
 
-공분산의 source/Worker compiler hash는 `67e500546cd8dcbf5404aa5ce82900a8dabefe09fe76bae07ec6461b3ea1b7bd`이다. 세 Worker 결과의 5·4·3개 패널은 모든 cell이 source 식에 연결되었고 수치 물리 좌표를 생성하지 않았음을 각각 기록한다. 이는 정확한 식을 반환하는 runtime/Worker의 확인이며, numerical quadrature나 브라우저 화면 조작의 검증은 아니다.
+공분산의 source/Worker compiler hash는 `67e500546cd8dcbf5404aa5ce82900a8dabefe09fe76bae07ec6461b3ea1b7bd`이다. 세 Worker 결과의 5·4·3개 패널에서는 **source path가 있는 원본 값 셀**을 해당 source 값과 비교했고, 수치 물리 좌표는 생성하지 않았다. 각 행은 source 경로를 보존한다. 항목명 label 셀과 source path가 없는 보조 셀은 이 값 비교에서 제외되므로, 모든 표시 셀이 source에 연결되었다고 해석하지 않는다. 행 경로의 보존 역시 행 전체의 별도 동등성 비교를 의미하지 않는다. 이는 정확한 식을 반환하는 runtime/Worker와 값 셀의 연결 확인이며, numerical quadrature나 브라우저 화면 조작의 검증은 아니다.
 
-현재 JSON은 이 실행들의 module SHA와 Worker SHA를 실제 파일에 대조한 스냅샷이다. 이후 브라우저 QA나 build로 참조 파일이 바뀌면 실행과 source의 연결을 다시 판단하고 hash를 갱신해야 한다. hash만 새로 계산하여 과거 실행을 변경된 코드의 증거로 승격하지 않는다.
+추가로 [Z source 기록](evidence/differential-extension-20261011/actual-covariance-sensitivity-axis-Z-source.json)과 [T source 기록](evidence/differential-extension-20261011/actual-covariance-sensitivity-axis-T-source.json)은 `ell=1`, `terms:0`을 축별 별도 process에서 실행한 결과다. 두 sign의 실제 parameter root·index, 원래 H·전체 target body의 미분, inverse 항등식 6개, 유한식·적분 tail 및 조건부 정의역을 각 8개 검사 그룹으로 확인했다. 원래 program hash는 checker가 식을 추가하기 전에 기록했다. 두 실행의 48개 literal-import source manifest는 같고, 실행 전후 SHA 및 이번 최종 검토 시점의 실제 파일 SHA가 모두 일치한다. 이는 R/Z/T 각 방향의 실제 source 실행을 확보한 결과이며, Z/T를 Worker·브라우저에서 실행했다거나 양성·수치 구간을 추가로 증명했다는 뜻은 아니다.
+
+### 표시 셀 범위 교정과 원본 실행의 보존
+
+[별도 표 결속 감사](evidence/differential-extension-20261011/replay-view-binding-audit.json)는 보존된 replay의 bundle·계산 결과 hash를 검사한 뒤, source path가 있는 값 셀의 일치와 각 행이 가리키는 원래 값의 존재를 확인했다. source를 재컴파일하거나 브라우저를 다시 실행하지 않았다.
+
+| 실행 결과 | 경로가 있는 행 | 비교한 원본 값 셀 | 경로 없는 항목명 셀 | 빈 placeholder |
+| --- | ---: | ---: | ---: | ---: |
+| 공분산 R source 및 Worker 각각 | 69 | 183 | 45 | 0 |
+| 2차 pulse jet Worker | 173 | 1,132 | 52 | 0 |
+| local full curl Worker | 76 | 155 | 55 | 0 |
+
+이 수는 생성된 패널·관련 표의 검사 범위다. 행은 source 경로가 존재하는지 확인했으며, 행 전체를 별도로 동등성 비교한 것은 아니다. 원래 `allCellsSourceBound=true` 표기는 경로 없는 항목명까지 포함하는 것으로 읽힐 수 있어 `false`와 `checkedCellsWithSourcePathsMatchSource=true`로 교정했다.
+
+원본 runtime JSON과 원래 실행기는 구현 커밋 `cc075ec661b573671ac43a88cf30ccdc2dbb9bd8`에 보존되어 있다. 각 JSON의 `postRunMetadataCorrection`은 원래 record·실행기 SHA, 교정 후 reporter SHA와 사유, 별도 표 감사의 SHA를 구분한다. 이번 최종 검토에서 원본 커밋의 실제 바이트와 원래 SHA를 대조했고, 표시 범위 flag 이외의 원본 필드—요청·scope·graph·계산·certificate·runtime SHA 및 실행 시간—가 보존된 것을 확인했다. 추가된 셀 개수는 별도 감사에서 얻은 값이다. 현재 reporter의 SHA로 과거 실행기의 SHA를 바꾸지 않았다.
+
+현재 JSON은 최종 실행·배포·브라우저 기록, source module과 Worker, 관련 문서의 SHA를 실제 파일에 대조한 스냅샷이다. 참조 파일이 이후 바뀌면 실행과 source의 연결을 다시 판단해야 한다. hash만 새로 계산하여 과거 실행을 변경된 코드의 증거로 승격하지 않는다.
+
+### 공개 source와 실제 브라우저 QA
+
+`evidence/differential-extension-20261011/published-source-verification.json`은 [기존 공개 M2 페이지](https://project29770.websitepublisher.ai/v0.3.1.html)의 **v74 (`b9e93d8d`)**를 확인한 기록이다. 공개 HTML 전체가 로컬에서 생성한 정확한 patch candidate와 바이트 단위로 같았고, 두 파일의 SHA-256은 모두 다음 값이다.
+
+```text
+14c0cd8068fc27e5810df2cc82d988b8c1fc134bfbee5ee3aa6e075e939c6e75
+```
+
+검증한 bundle과 Worker가 게시물에 유지되었으며, 기존 M1 script와 visualization script도 보존되었다. 현재 파일의 bundle·Worker SHA도 이 공개 검증 기록과 일치한다. 새 페이지나 asset을 추가하지 않고 기존 페이지를 갱신했다.
+
+**실제 브라우저 QA 판정은 `COMPLETED_WITH_LIMITATIONS`이다.** [브라우저 기록](evidence/differential-extension-20261011/browser-qa.json)과 [원본 log](evidence/differential-extension-20261011/browser-qa.log)에 공개 페이지의 세 새 예제를 각각 한 번씩 직렬 실행하여 모두 `COMPLETED`에 도달한 결과를 남겼다. 12개 패널이 `READY`였고, 세 실제 요청의 compiler·수학 결과 hash가 현재 Node Worker 기록과 일치했다. 공분산의 브라우저 요청은 R 방향이며, 이 일치를 모든 요청·환경에 일반화하지 않는다.
+
+다섯 경로와 12개 패널에서 1348×936 CSS viewport의 의도하지 않은 가로 넘침은 관측하지 않았다. 긴 정확한 식을 위한 내부 스크롤은 유지한다. `arithmetic.elliptic` 실행 기록을 실제로 가져와 다시 계산한 결과는 `MATCH`였다. 입력만 불러온 단계에서는 새 job을 제출하거나 가져온 결과를 채택하지 않았고, 가져온 증거의 자동 신뢰·저장도 하지 않았다. 이 브라우저 replay를 세 NS 예제의 replay 검사로 확대하지 않는다.
+
+`i2-blowup-pair`에서 실제 카메라 버튼을 30회 조작한 뒤 표시된 runtime draw p95는 4.1ms였고, representation revision은 1에서 31로 바뀌었으며 입력·결과·source hash는 유지됐다. 이 측정 창에는 초기 페이지·결과 그리기도 포함된다. 카메라 동작만의 표본 백분위나 종단 간 지연을 측정한 값은 아니다.
+
+360/390/412 CSS px 검사는 **미실행**이다. 사용 가능한 브라우저에는 광고된 viewport emulation API가 없었고, 임시 `file://` iframe harness 이동은 명시적인 URL 보안 정책으로 거절됐다. 다른 경로나 숨은 API로 우회하지 않았다. 따라서 데스크톱 관측이나 screenshot을 모바일 QA로 표시하지 않는다.
+
+반환된 최근 console 200건은 extension metadata 오류 188건과 GPU가 비활성화된 환경의 WebGL context 생성 오류 12건이었다. 그 창에서 다른 오류는 관측하지 않았지만 전체 이력의 무오류를 보증하지 않는다. `strictConsoleClean=false`를 유지하고 WebGL 검증을 선언하지 않는다. M2의 CPU Canvas2D 표와 실제 Worker가 관측된 조작을 수행한 범위만 기능 확인으로 남긴다.
+
+이 브라우저·배포 검증은 G-POS/G-NUM/G-CURL/G-N4/G-N5의 남은 수학 의무를 바꾸지 않는다. M3 시작 관문도 여전히 닫혀 있다.
 
 ### 2.1 두 번 미분한 실제 변분계
 
@@ -132,12 +172,13 @@ y_{ij}=H^{-1}(T_{ij}-H_{ij}y-H_i y_j-H_j y_i)
 
 ### G-CURL: 실제 local curl에서 전체 source field로의 결합
 
-**입력:** 원래 `sqrt(epsilon)*sqrt(y)*chi*psi*t` amplitude, `n=grad Phi`, 같은 frozen carrier, potential `i n×amplitude/(k|n|²)`, 실제 slow partition과 auxiliary physical map.
+**입력:** 원래 `sqrt(epsilon)*sqrt(y)*chi*psi*t` amplitude, `n=grad Phi`, 같은 frozen carrier, `C=n×amplitude/(k|n|²)`와 local potential `i C exp(i k Phi)`, 실제 slow partition과 auxiliary physical map.
 
-**필요한 출력:** 각 label의 실제 전체 curl, conjugate와 physical scaling, 모든 cutoff 미분, 같은 source의 조립된 field, 원래 support/zero extension을 포함한 정확한 divergence 항등식. 기본 local curl은
+**필요한 출력:** 각 label의 실제 전체 curl, conjugate와 physical scaling, 모든 cutoff 미분, 같은 source의 조립된 field, 원래 support/zero extension을 포함한 정확한 divergence 항등식. phase factor를 분리한 정규화된 local curl은
 
 \[
--k\,n\times C
+e^{-ik\Phi}\operatorname{curl}(iC e^{ik\Phi})
+=-k\,n\times C
 +i\,(-D_zC_\theta,\ D_zC_r-D_rC_z,\ D_rC_\theta+C_\theta/R)
 \]
 
