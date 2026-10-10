@@ -1,0 +1,10 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {makeM1RetentionPatches,M1_RETAINED_JOB_LIMIT} from './m1-retention.mjs';
+const source=await readFile(new URL('../../mathscope-m1/core/engine.mjs',import.meta.url),'utf8');
+const sha=s=>createHash('sha256').update(s).digest('hex');
+const patches=makeM1RetentionPatches(source),body=JSON.stringify(patches,null,2)+'\n';
+await writeFile(new URL('./m1-retention-patches.json',import.meta.url),body);
+const report={schema:'MathScope.M1HostRetentionPatch/1',failure:'The original host retained 32 jobs, below the 59-example catalog. A refused submission also selected an ID never admitted by the engine.',previousLimit:32,retainedJobLimit:M1_RETAINED_JOB_LIMIT,sourceFile:'mathscope-m1/core/engine.mjs',originalSourceSha256:sha(source),patchesSha256:sha(body),patchCount:patches.length,workerSourceChanged:false,perJobBudgetChanged:false,storedJobEviction:false,receiptAndReplayPolicyChanged:false,failedAdmissionCreatesSelectedId:false,capacityScope:'Host history only; the original mathematical Worker and its registry limits remain untouched.'};
+await writeFile(new URL('../evidence/m1-retention-patch.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
+process.stdout.write(JSON.stringify(report)+'\n');

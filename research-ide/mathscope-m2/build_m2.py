@@ -38,11 +38,12 @@ def bundle(entry):
         def reexport(m):
             dependency=symbols[target(p,m.group(2))]
             if m.group(1)=='*':stars.append('...'+dependency);return ''
-            local=[]
             for field in m.group(1)[1:-1].split(','):
                 names=re.split(r'\s+as\s+',field.strip());src=names[0];dest=names[-1]
-                local.append(src if src==dest else src+': '+dest);exports.append(dest)
-            return 'const {'+','.join(local)+'} = '+dependency+';'
+                # A re-export has no local binding in ESM. Re-declaring it here
+                # collides when the same symbol is also imported for local use.
+                exports.append(dest+': '+dependency+'.'+src)
+            return ''
         s=REEXPORT.sub(reexport,s)
         exports.extend(re.findall(r'^export\s+(?:async\s+)?(?:function|class|const|let)\s+([\w$]+)',s,re.M))
         def list_export(m):
@@ -58,6 +59,7 @@ def bundle(entry):
     return '\n'.join(out),order
 
 subprocess.run(['node',str(ROOT/'prepare-evidence.mjs')],check=True)
+subprocess.run(['node',str(ROOT/'compat/build-m1-retention.mjs')],check=True)
 worker,workerfiles=bundle(ROOT/'core/worker-entry.mjs')
 (ROOT/'m2.worker.js').write_text(worker)
 (ROOT/'core/worker-data.mjs').write_text('export const WORKER_SOURCE = '+json.dumps(worker,ensure_ascii=False)+';\nexport const WORKER_SHA256 = '+json.dumps(sha(worker))+';\n')
@@ -78,6 +80,7 @@ def patch(find,replace):
     if count!=1:raise ValueError('Expected one exact anchor, found '+str(count)+': '+repr(find[:100]))
     patches.append({'operation':'replace','find':find,'replace':replace});candidate=candidate.replace(find,replace,1)
 for p in json.loads((ROOT/'visualization/live-m1-patch.json').read_text()):patch(p['find'],p['replace'])
+for p in json.loads((ROOT/'compat/m1-retention-patches.json').read_text()):patch(p['find'],p['replace'])
 audit=json.loads((ROOT/'visualization/live-patch-audit.json').read_text())
 textpatch=audit['recommendedHTMLTextPatch'];patch(textpatch['find'],textpatch['replace'])
 patch('<title>MathScope v0.3.1 DEV — Mathematical IDE</title>','<title>MathScope v0.3.1 — M1 / M2 Research IDE</title>')

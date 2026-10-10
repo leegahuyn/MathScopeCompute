@@ -6,15 +6,21 @@
 
 원문은 `checklist.mjs`에 그대로 보존했다. 수학 원전은 README에 기록한 PDF §5–7이며 원본 N3와 parameter expression/profile evidence hash를 변경하지 않았다. 아래에서 “미입력” 또는 “미구성”은 N3의 기존 완료 상태를 취소하는 말이 아니라 **새 M2 작업에 필요한 고차 함수·bound·실행 evaluator가 아직 만들어지지 않았음**을 뜻한다.
 
+## 재개 작업에서 실제로 완료한 부분
+
+원본에는 η=0 관측뿐 아니라 같은 nonlinear Φ의 mixed radial/η coefficient·derivative 자료와 전역 접합 명세가 있다. 이를 복구해 같은 원본에서 **n=1의 exact Taylor DAG, 실제 공통 collar의 C1·strip·Cauchy loss·무한 tail 식, 축 미분 3개 및 양의 Xi에서의 차분몫 구간 15개**를 구성했다. 또 보존된 Imean의 실제 F/V/b/G, 3차 slow jet와 whole-box 상계, 원문 왼쪽 pulse datum, 국소 phase/frame·Riccati·Gaussian 값 비교를 연결했다.
+
+이 진전은 [실제 배경](research/ACTUAL_BACKGROUND_KO.md), [실제 Imean pulse](research/ACTUAL_MEAN_PATCH_PULSE.md), [독립 원본 감사](research/RESUMED_SOURCE_AUDIT_KO.md)에 식·해시·검사 범위와 함께 기록돼 있다. 아래의 전역 의무를 제거하지는 않는다. 양의 Xi 관측은 bits에 따라 점을 바꾸므로 N4-05의 고정 점 정련이 아니고, 기준 log P 그래프는 실제 homogeneous amplitude의 수치 적분 결과가 아니다.
+
 ## 6개 기준별 정확한 잔여물
 
 | 기준 | 아직 필요한 실제 object 또는 inequality | 외부 정리를 그대로 적용할 수 있는 시점 | 구체적 다음 작업 |
 |---|---|---|---|
-| **N4-03 inner Picard** | 모든 필요한 n의 `F_n`, `A_0,n`, `A_1,n`이 같은 leading profile와 이미 복구한 이전 차수에서 계산되어야 한다. 전체 선택 eta strip과 공통 radial interval의 실제 `C_n` 및 Cauchy loss가 필요하다. 현재 API의 `Cn=.5`는 명시한 operator premise이며 실제 source norm이 아니다. | 원문 (5.7)/(5.8), Lemma 5.1의 실제 입력 함수·analytic domain·uniform norm을 구성하고 증명하면, 기존 6×6/block 및 두-parity tail backend로 tail implication을 검증할 수 있다. 지금의 finite eta-zero core 값 75개만으로 전체 strip의 Cn을 유도할 수는 없다. | 먼저 n=1의 full same-profile coefficient/forcing evaluator를 만들고 공통 `a²=X_a exp(t1/16)` 및 eta strip에서 majorant를 계산한다. interval/validated analytic arithmetic으로 Picard sum과 tail을 출력한다. radial interval을 n마다 임의로 축소해 문제를 피하지 않는다. |
-| **N4-04 five moments** | 실제 inner `phi_n,U_n`을 cutoff한 뒤 얻는 다섯 **total moment debt 함수** `m_n^0(eta)`가 필요하다. 실제 f(eta)와 양성·support 조건 하에서 correction coefficient 함수를 적용하고 V_n,Pi_n와 stress를 복원해야 한다. n=1과 n≥2의 stress support가 다르다. | 원문 (5.10)–(5.16), Lemma 5.2의 실제 debts와 source support 입력이 생기면 현재 실제 λ·Ipos 행렬 inverse에 넣을 수 있다. 행렬 가역성을 증명한 것과 debt 자체를 계산한 것은 별개다. | N4-03 결과로 실제 moments를 적분하고 eta derivatives를 enclosure한다. U의 2개 및 E의 3개 correction을 실제 계수에 적용해 다섯 모멘트가 0임을 확인한다. `nextOrderAllowed`는 이때만 true가 될 수 있다. |
+| **N4-03 inner Picard** | n=1의 실제 C1·strip·loss·tail 식과 유한 exact jet, 양의 반경에서의 제한된 함수 구간은 생겼다. 필요한 각 차수의 full coefficient/forcing 함수 평가와 공통 구간의 Picard sum은 아직 완료되지 않았다. 기존 `ns.background-picard`의 `Cn=.5`는 계속 별도 조건부 premise다. | 원문 (5.7)/(5.8), Lemma 5.1의 실제 입력·domain·uniform norm을 각 차수에서 구성해야 한다. 새 C1은 n=1에 대해 원본에서 도출한 값이고, 모든 차수의 Cn을 대체하지 않는다. | 정확한 원본 nonlinear 함수 evaluator를 전체 η strip과 원래 공통 collar에 연결하고, 이미 도출한 tail 식과 함께 실제 Picard partial sum을 계산한다. n≥2는 이전 차수의 전역 모멘트 복구 이후에만 진행한다. |
+| **N4-04 five moments** | 실제 다섯 functional의 의존 그래프와 Imean의 두 적분 기여는 계산했다. 전체 nonlinear leading profile를 거치는 두 Ω 적분과 실제 cutoff된 inner 함수의 debt는 아직 닫히지 않았다. U=0인 Imean에서도 V와 Ω는 0이 아니다. | 원문 (5.10)–(5.16), Lemma 5.2의 실제 total debts와 source support 입력이 완성되면 현재 실제 λ·Ipos 행렬 inverse에 적용할 수 있다. 일부 구간의 적분이나 행렬 가역성만으로 전체 debt를 결정할 수 없다. | B.26/B.34→B.8→C.12 이후의 실제 U0/M/V0와 전체 Ω 적분을 실행하고 η 도함수를 enclosure한다. 다섯 correction을 적용해 total moments=0을 확인한 뒤에만 다음 차수의 source를 허용한다. |
 | **N4-05 finite residual** | 복구된 실제 계수 0..N과 `R+div(T)`가 필요하다. (5.25)의 `C_N,m`, `K_m`을 계산하고, N 증가·공간격자·정밀도 변화의 효과를 분리한 실제 residual norm 감소가 있어야 한다. 현재 exact polynomial의 monomial 수는 residual norm이 아니다. | N4-03/04의 actual sequence 및 derivative bounds가 들어오면 원문 finite background estimate의 가정을 구성할 수 있다. 그 뒤 upper bound와 직접 residual interval 계산을 대조해야 한다. | 실제 coefficient/stress evaluator를 `finiteBackgroundResidual`에 대입하고 N=1,2부터 독립 Cartesian 잔차와 비교한다. grid/precision/N을 별도 축으로 refinement하고 실제 CNm/Km을 export한다. 미계산 상수를 verified tail로 표시하지 않는다. |
-| **N5-04 phase/frame** | 실제 source annulus의 F,G 및 모든 필요한 derivatives, lambda0>0의 하계, normal denominator gap과 frame determinant 하계가 필요하다. `q_star`가 충분히 작아 원문의 `Sstar²*(epsilon+epsilon²+1/k)` smallness 등 모든 조건을 동시에 만족해야 한다. | 실제 slow-domain norms·stress cone·frame 입력으로 원문 §7.1의 uniform hypotheses를 인증하면 현재 complete normal/chain-rule/frozen-frequency operator에 연결할 수 있다. | 실제 F/G jet evaluator와 uniform bounds를 source annulus에서 구성한다. 실제 h를 보존한 log/expression arithmetic으로 q_star 및 carrier ceil을 정하고 모든 source frame determinant를 enclosure한다. ell≤900의 core 관측 구간을 pulse 인증 영역으로 재라벨링하지 않는다. |
-| **N5-05 growing/decaying ODE** | 실제 source coefficient system (7.13)/(7.17)과 원문 growing-mode datum이 필요하다. 현재 midpoint unit seed는 그 datum이 아니다. `E=O(Sstar^-1)` 등의 comparison bound, actual damping의 reference와의 오차, integration error, 모든 요구 slow derivatives 및 양 끝 실제 t의 Gaussian constants가 필요하다. | Lemma 7.4의 실제 frame/coefficient hypotheses와 growing datum을 구성하면 reference P Gaussian bound 및 tangent integrator를 사용할 수 있다. reference P만의 Gaussian 상계는 t와 P의 비교 정리를 대신하지 않는다. | source left growing-mode seed를 log representation으로 생성하고 actual projected ODE를 검증된 오차를 가진 방식으로 적분한다. midpoint normalization은 그 해의 정규화로 수행한다. cP≤|t|≤CP 및 필요한 derivative Gaussian estimate를 bound해 N5-06/08에 넘긴다. |
+| **N5-04 phase/frame** | 실제 Imean의 F/V/b/G, 3차 slow jet, whole-box 상계, 양의 방향 여유 및 국소 frame 비교상수는 구성했다. 원래 annulus 전체의 완료된 N4 계수열과 공통 uniform bound가 아직 필요하다. | Imean의 국소 normal/projector/frame 비교는 명시한 실제 상수로 성립한다. scalar smallness threshold와 이 국소 결과만으로 전체 q_star 영역의 모든 §7.1 가정을 충족했다고 할 수 없다. | 완료된 전역 N4 배경을 전체 annulus의 jet evaluator와 연결하고, 실제 h·carrier ceil을 유지해 모든 요구 derivative 및 frame determinant를 enclosure한다. ell≤900 core 관측은 별도다. |
+| **N5-05 growing/decaying ODE** | 새 실제 Imean 구성은 원문 왼쪽 growing datum, 국소 Riccati/log 비교, Gaussian 값 상계를 보존한다. 전역 actual coefficient system, 검증된 실제 amplitude enclosure와 모든 요구 slow derivative Gaussian 상계는 아직 필요하다. 기존 midpoint unit seed 예제는 별도 연산자 probe다. | Lemma 7.4의 국소 값 비교에 필요한 실제 Imean 상수는 도출됐다. 모든 slow derivative 및 전체 annulus 조건을 인증해야 다음 전역 조립에 전달할 수 있다. 기준 P의 표본을 actual t의 적분값으로 사용할 수 없다. | 같은 왼쪽 datum의 actual projected system을 검증된 오차로 적분하거나 동등한 함수 enclosure를 구성하고, 필요한 모든 slow derivative majorant 및 Gaussian estimate를 계산한다. |
 | **N5-06 two-family covariance** | 실제 두 homogeneous pulse의 (7.27) Hcov 적분과 같은 N3의 `T0,*`가 필요하다. 전체 인증 영역에서 `det Hcov` 하계, y±>0, `C(W0)=epsilon*T0,*`, 그리고 once-per-slow-box global (7.30)을 확인해야 한다. 현재 constant-polarization target fixture는 이 target 함수가 아니다. | N5-04/05의 actual source pulses·bounds 및 source stress cone이 구성되면 원문의 positivity/inversion argument를 적용할 수 있다. 정확한 normalized Haar와 angular 1/2 backend는 준비됐다. | cutoff χψ와 실제 두 t를 적분하고 Hcov interval inverse 및 양의 weights를 계산한다. 원문의 한 방향/두 방향 영역을 구별한다. ±를 같은 slow box의 별도 두 box로 합산하지 않고, full pulse curl remainder를 포함한 실제 covariance/residual에 연결한다. |
 
 ## 완료한 조건부 gate가 위 의무를 숨기지 않는 방법
@@ -53,8 +59,16 @@ m≤8의 복소 interval jet에서 `D^k[(1−psi)f_m+psi_prime*t_m]`를 모든 L
 
 ## 현재 계산으로 source instance를 닫을 수 없는 이유
 
-남은 문제는 버튼·시각화·파일 링크 또는 더 촘촘한 유한 grid의 부족이 아니다. 현재 archive에서 실행에 사용할 수 있는 실제 core interval은 지정한 eta-zero 표본이고, M2의 실제 positive-order solutions·corrected total moments·uniform annular pulse coefficients를 반환하는 evaluator는 아직 없다. 선언된 operator premises를 원본에서 유도된 값으로 바꿀 근거도 없다.
+남은 문제에는 실제 전역 함수와 적분의 실행 단계가 포함된다. 원본 archive에는 mixed η/radial 자료와 전역 정의도 있고, 이번에는 그 자료에서 실제 n=1 국소 계수·C1 및 실제 Imean pulse 상수를 도출했다. 그러나 B.26/B.34·B.8·C.12를 합성한 전체 U0/M, 두 Ω 적분, 복구된 고차 total moments, uniform annular pulse coefficients를 반환하는 완전한 evaluator는 아직 없다. 기호 정의 또는 미구현 함수에 이름만 붙인 호출을 실행 완료로 취급하지 않는다.
 
 특히 실제 h는 `exp[-8002(exp(1048576)+10)]`로 양수이다. 일반 binary64에서 h를 0으로 읽고 k=1 또는 toy q_star를 선택하면 다른 계산이 된다. 극소 물리 배율을 exact expression으로 유지하는 관측은 구현했지만, 전체 analytic strip/annulus의 theorem-input certification과 validated ODE integration을 대신하지 않는다.
 
 외부 정리를 이름만 인용해 PASS로 바꾸지는 않는다. 실제 함수를 구성하고 해당 정리의 정량 입력·부등식·동일 datum의 provenance를 공급하면 닫을 수 있는 항목이며, 그 구체적 입력을 위 표에 고정했다. 현 상태에서는 **source-instance 완료, 원문 M2 패키지 완료 또는 전역 Navier–Stokes 증명 완료**라고 보고할 수 없다.
+
+## 추가로 닫힌 실제 원본 입력과 남은 연결
+
+새 `ns.actual-core-evaluation`은 실수 η∈[-1,1]의 요청점에서 actual Φ와 축방향 보정·평균의 0–2차 도함수를 96–512비트 구간으로 계산한다. 원문 Banach 오차와 압력 strip 오차를 별도로 유지한다. η=0의 유한 표본밖에 입력이 없다는 제한은 더 이상 현재 상태를 설명하지 않는다. 하지만 점별 구간은 B.26/B.34·B.8을 모두 통과한 셀 적분기가 아니다.
+
+새 `ns.actual-global-source`는 실제 전체 outer U/M의 scalar-root·적분 식, 외곽의 15개 원본 관측과 6개 정규 Ω 적분의 정확 축소를 제공한다. 실제 축 경계와 C.12/I1 omission 값의 상계도 유지한다. 다음 계산은 B.22 reference moments → B.26/B.34 continuation → B.8의 E-dependent 다섯 debt와 선택 root → 6개 실제 regular integral → Ipos inverse의 순서이다. Ω functional 값의 작은 remainder를 모든 η 도함수나 radial shear의 오차로 대체할 수 없다.
+
+현재 이 연결은 완료되지 않았으므로 N4-04의 다섯 전체 debt와 그 보정, 다음 차수 사용 gate를 PASS로 바꾸지 않는다. N4-03의 전 구간 Picard 풀이, N4-05의 실제 잔차, N5의 전체 영역 pulse/covariance도 같은 원본 연결이 필요하다. [점 평가기 독립 검토](research/ACTUAL_CORE_INDEPENDENT_REVIEW_KO.md)와 [전역 Ω 축소](research/WEIGHTED_OMEGA_REDUCTION_KO.md)에 확인 범위를 기록했다.

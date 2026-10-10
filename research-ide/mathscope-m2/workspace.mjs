@@ -1,6 +1,6 @@
 import {canonicalStringify} from '../mathscope-m0/contracts.mjs';
 import {createM2Engine} from './core/engine.mjs';
-import {M2_VERSION,normalizeRequest,validateDomainRequest,listExamples} from './core/registry.mjs';
+import {M2_VERSION,LIMITS,normalizeRequest,validateDomainRequest,listExamples} from './core/registry.mjs';
 import {commitM2SessionBundle} from './core/session-binding.mjs';
 import {SourceBoundScene,renderObservationTable,renderObservationDetails} from './visualization/renderer.mjs';
 import {numericValue,traceBasis} from './visualization/observations.mjs';
@@ -42,7 +42,7 @@ export async function bootM2(){
   function loadExample(){const ex=examples.find(e=>e.id===$('m2-example').value);if(!ex)return;presentationRevision++;selected=null;panelsFor=null;$('m2-input').value=pretty(ex.request);text('m2-kind',ex.request.kind);clearValidation();renderResult();renderJobs();status('예제 입력 준비 · '+ex.request.kind);}
   function selectJob(id){const j=engine.getJob(id);presentationRevision++;if(!root.classList.contains('active'))document.querySelector('[data-view-target="research-m2"]')?.click();setDomain(j.request.kind.split('.')[0]);selected=id;$('m2-input').value=pretty(j.request);text('m2-kind',j.request.kind);syncExample(j.request);clearValidation();panelsFor=null;renderResult();renderJobs();status(j.request.kind+' · '+j.status+' · 선택한 실행 기록');return {ok:true,jobId:id,status:j.status,visualization:visualStatus()};}
   function renderJobs(){
-    const jobs=engine.listSummaries();text('m2-job-count',jobs.length+' / 64 jobs');$('m2-jobs').replaceChildren();
+    const jobs=engine.listSummaries();text('m2-job-count',jobs.length+' / '+LIMITS.maxJobs+' jobs');$('m2-jobs').replaceChildren();
     for(const j of jobs.slice().reverse()){const b=document.createElement('button'),s=document.createElement('strong'),small=document.createElement('small');b.type='button';s.textContent=j.kind+' · '+j.status;small.textContent=j.id+(saved.has(j.id)?' · 세션 저장됨':'');b.append(s,small);b.dataset.selected=String(j.id===selected);b.addEventListener('click',()=>selectJob(j.id));$('m2-jobs').append(b);}
     const j=jobs.find(x=>x.id===selected),done=j&&TERMINAL.has(j.status),canSave=j&&['COMPLETED','PARTIAL'].includes(j.status)&&origins.has(j.id)&&!saved.has(j.id);
     $('m2-cancel').disabled=!j||done;$('m2-save').disabled=!canSave||currentView?.binding.currentEditorMatches===false||$('m2-save').dataset.busy==='true';$('m2-replay').disabled=!done||$('m2-replay').dataset.busy==='true';$('m2-export').disabled=!done;
@@ -83,7 +83,7 @@ export async function bootM2(){
   async function replayJob(id){const captured=origin(),initialPresentation=presentationRevision,report=await engine.replay(await engine.exportBundle(id));origins.set(report.freshJobId,captured);const present=initialPresentation===presentationRevision;if(present){selectJob(report.freshJobId);text('m2-validation',report);$('m2-validation-panel').open=true;}else renderJobs();status('동일 소스 재현 검사 · '+report.status+(present?'':' · 새 결과는 실행 목록에 보관했습니다.'),report.status!=='MATCH');return {ok:true,...report,selected:present};}
   async function runExampleSuite(ids,options={}){
     if(!Array.isArray(ids)||ids.length<1||ids.length>12||new Set(ids).size!==ids.length||ids.some(id=>typeof id!=='string'||!examples.some(e=>e.id===id)))throw Error('서로 다른 설치 예제 ID 1–12개가 필요합니다.');
-    if(engine.listSummaries().length+ids.length>64)throw Error('예제 묶음을 보관할 실행 공간이 부족합니다. 현재 기록을 내보낸 뒤 새 런타임에서 실행하세요.');
+    if(engine.listSummaries().length+ids.length>LIMITS.maxJobs)throw Error('예제 묶음을 보관할 실행 공간이 부족합니다. 현재 기록을 내보낸 뒤 새 런타임에서 실행하세요.');
     const controller=new AbortController(),abort=()=>controller.abort(),timer=setTimeout(abort,50000),runs=[];
     options.signal?.addEventListener('abort',abort,{once:true});if(options.signal?.aborted)abort();
     try{for(const id of ids){

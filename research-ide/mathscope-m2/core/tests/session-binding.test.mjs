@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync,existsSync} from 'node:fs';
+import {readFileSync} from 'node:fs';
+import {gunzipSync} from 'node:zlib';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {createM2Engine} from '../engine.mjs';
@@ -8,7 +9,7 @@ import {buildM2SessionBundle,commitM2SessionBundle} from '../session-binding.mjs
 import {createFoundationFixture,FOUNDATION_READ_PROJECTION_SHA256,FOUNDATION_SOURCE_SLICES} from './fixtures/foundation-v031.fixture.mjs';
 
 const copy=x=>JSON.parse(JSON.stringify(x));
-const sourcePath=process.env.MATHSCOPE_V031_ORIGINAL_HTML||fileURLToPath(new URL('../../../../../tmp/source/v0.3.1.original.html',import.meta.url));
+const sourcePath=process.env.MATHSCOPE_V031_ORIGINAL_HTML||fileURLToPath(new URL('../../evidence/baseline-v54-read-projection.html.gz',import.meta.url));
 
 function blankSession(){
   return {
@@ -26,8 +27,8 @@ async function setup(t,req=request){
   return {engine,job,foundation:createFoundationFixture(blankSession())};
 }
 
-test('validator fixture is verbatim within the provider read projection and its pinned projection digest',{skip:!existsSync(sourcePath)},()=>{
-  const html=readFileSync(sourcePath,'utf8');
+test('validator fixture is verbatim within the provider read projection and its pinned projection digest',()=>{
+  const bytes=readFileSync(sourcePath),html=(bytes[0]===0x1f&&bytes[1]===0x8b?gunzipSync(bytes):bytes).toString('utf8');
   assert.equal(createHash('sha256').update(html).digest('hex'),FOUNDATION_READ_PROJECTION_SHA256);
   for(const slice of FOUNDATION_SOURCE_SLICES)assert.ok(html.includes(slice),'source oracle differs from the provider read projection');
 });

@@ -1,0 +1,99 @@
+{
+  "schema": "MathScope.ActualCoreEvaluatorManifest/1",
+  "status": "POINT_EVALUATOR_VALIDATED_GLOBAL_OBLIGATIONS_REMAIN",
+  "profileId": "same-profile-2026-10-10.3",
+  "files": [
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-core-evaluator.mjs",
+      "sha256": "670952e4d28f1f6f81830e90a784192de3b387fc097db2576f9fd5716dc6d2a9",
+      "bytes": 13582
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/tests/actual-core-evaluator.test.mjs",
+      "sha256": "18f0266cd8d9c531f48b211da9e786c17dfaac59e8c61defd728c8ff14f4c7d2",
+      "bytes": 7103
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/tests/actual-core-evaluator-independent.py",
+      "sha256": "11a32f6aaa256970b6da95b8b4106a7b4eaf1551c39e8182105e5a94aca9e449",
+      "bytes": 1712
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/tests/actual-core-evaluator-independent.json",
+      "sha256": "0ae5f32d7744b1254987d312a24b31d620a6b201e1562b822336919940e65f77",
+      "bytes": 1529
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/research/ACTUAL_CORE_POINT_EVALUATOR.md",
+      "sha256": "3f3f62d8606d96662bfa749039eb1207ba9b1e2ed69076a89354abfaec08bef9",
+      "bytes": 9192
+    }
+  ],
+  "sourceBindings": {
+    "assembly": {
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+      "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+      "bytes": 77149
+    },
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "axisProof": {
+      "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/SAME_DATUM_ANALYTIC_AXIS.md",
+      "sha256": "1923770e721cd73d569150eec19eb8cf78a645b86207b6be90cb97aabb547920",
+      "bytes": 20071
+    },
+    "pressure": {
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/pressure-datum-0001/receipt.json",
+      "sha256": "f6b32aab94547230a538d544c81be58831e2555802b653e95a3bf81c56fb7be3",
+      "bytes": 144763
+    },
+    "pressureProof": {
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/PRESSURE_DATUM_INTERVAL.md",
+      "sha256": "8dfd40a7206871b425e69894ead0321fe6f476c338f0532739c1d055a920386d"
+    }
+  },
+  "checks": {
+    "nodeTests": {
+      "command": "node --test research-ide/mathscope-m2/navier/tests/actual-core-evaluator.test.mjs",
+      "passed": 14,
+      "failed": 0
+    },
+    "independentFraction": {
+      "passed": 68,
+      "failed": 0
+    },
+    "independentReadOnlyReview": {
+      "reviewer": "m2_gauge",
+      "scope": "actual real-eta bound, comparison circle, full-strip pressure, axial sign and average, tiny-rational handling, scale restoration",
+      "accepted": true
+    }
+  },
+  "scope": {
+    "sameN3ActualNonlinearPointEnclosed": true,
+    "comparisonReplacedActualPhi": false,
+    "positiveBanachErrorRetained": true,
+    "actualPressureAnalyticErrorRetained": true,
+    "actualUAndAverageEtaDerivativesEnclosed": true,
+    "wholeOriginalProfileEvaluatorComplete": false,
+    "globalMomentDebtEvaluated": false,
+    "allOriginalN4N5CriteriaComplete": false,
+    "newLeanKernelProof": false
+  },
+  "domain": {
+    "naturalAnalyticY": [
+      "0",
+      "41/10"
+    ],
+    "originalUnmodifiedCoreY": [
+      "0",
+      "4"
+    ],
+    "sourcePosition": "ACTUAL_UNMODIFIED_CORE",
+    "etaCharts": {
+      "RHO_SCALED": "eta/rho in [-1/4,1/4]",
+      "J_SCALED": "eta/j0 in [-1,1]",
+      "DIRECT_RATIONAL": "eta in [-1,1], finite exact rational with at most 4096 input bits"
+    },
+    "B26CutoffApplied": false,
+    "actualPhysicalCollarEvaluated": false
+  }
+}

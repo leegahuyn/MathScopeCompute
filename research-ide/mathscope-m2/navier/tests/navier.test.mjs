@@ -19,8 +19,8 @@ const finiteTree=(value,path='result')=>{
   else if(value&&typeof value==='object')for(const[k,v]of Object.entries(value))finiteTree(v,path+'.'+k);
 };
 
-test('all fourteen N4/N5 examples execute with source graphics and distinguish completed operators from unresolved constructions',async()=>{
-  assert.equal(examples.length,14);
+test('all eighteen N4/N5 examples execute with source graphics and distinguish completed operators from unresolved constructions',async()=>{
+  assert.equal(examples.length,18);
   for(const e of examples){
     const result=await executeDomain(e.request),job={id:e.id,request:e.request,inputHash:await requestHash(e.request),status:result.status,result,resultHash:await sha256(result)};
     fixtures.set(e.id,job);finiteTree(result);

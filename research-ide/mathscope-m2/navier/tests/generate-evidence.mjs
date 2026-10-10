@@ -5,7 +5,7 @@ import {getExamples,getCapabilities} from '../index.mjs';
 import {getChecklist,BLUEPRINT_SOURCE} from '../checklist.mjs';
 import {executeDomain,requestHash} from '../../core/registry.mjs';
 import {sha256,canonicalStringify} from '../../../mathscope-m0/contracts.mjs';
-import {makeVisualization} from '../../visualization/observations.mjs';
+import {makeM2Visualization,listM2Panels} from '../../visualization/m2-views.mjs';
 import {coefficientIdentityAudit,sourceDimensionAudit,sourceCutoffCurlAudit,finiteBackgroundResidual} from '../source-algebra.mjs';
 import {sourceTorusGeometry,torusExactIdentityAudit} from '../source-geometry.mjs';
 import {uniformSupportPalette} from '../source-support.mjs';
@@ -18,7 +18,7 @@ import {evaluatePulseCutoffRemainder,defaultTailJet} from '../source-tail.mjs';
 
 const base=new URL('../',import.meta.url),out=new URL('../evidence/',import.meta.url);
 await mkdir(out,{recursive:true});
-const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs'];
+const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs'];
 const testResult=spawnSync(process.execPath,['--test','--test-reporter=tap',...testSuites.map(name=>fileURLToPath(new URL(name,import.meta.url)))],{encoding:'utf8'});
 await writeFile(new URL('tests.tap',out),testResult.stdout+testResult.stderr);
 if(testResult.status!==0)throw Error('N4/N5 regression tests failed; evidence is not sealed.');
@@ -27,6 +27,39 @@ const independentInput={residual:finiteBackgroundResidual(2),support:uniformSupp
 const independent=spawnSync('python',[fileURLToPath(new URL('./source-independent-checks.py',import.meta.url))],{encoding:'utf8',input:JSON.stringify(independentInput)});if(independent.status!==0)throw Error('Independent source checks failed: '+independent.stderr);
 const independentEvidence=JSON.parse(independent.stdout);if(!independentEvidence.pass)throw Error('Independent checker did not accept.');await writeFile(new URL('source-independent-checks.json',out),JSON.stringify(independentEvidence,null,2)+'\n');
 const additionalIndependent=[];
+// Reuse independently executed, frozen receipts only after checking every
+// producer/source byte they bind. Regenerate those receipts with their own
+// --output commands whenever one of the bound files changes.
+const actualManifest=JSON.parse(await readFile(new URL('./actual-background-manifest.json',import.meta.url),'utf8'));
+for(const file of actualManifest.files){
+  const bytes=await readFile(new URL('../../'+file.path,import.meta.url),'utf8');
+  if(await sha256(bytes)!==file.sha256)throw Error('Frozen actual-background evidence is stale: '+file.path);
+}
+const pulseReceipt=JSON.parse(await readFile(new URL('./actual-pulse-independent.json',import.meta.url),'utf8'));
+for(const file of pulseReceipt.files){
+  const bytes=await readFile(new URL('../../../../'+file.path,import.meta.url),'utf8');
+  if(await sha256(bytes)!==file.sha256)throw Error('Frozen actual-pulse evidence is stale: '+file.path);
+}
+const extendedManifests=[];
+for(const manifestPath of ['../actual-core-evaluator-manifest.json','./actual-global-source-manifest.json']){
+  const manifest=JSON.parse(await readFile(new URL(manifestPath,import.meta.url),'utf8'));
+  for(const file of manifest.files){
+    if(await sha256(await readFile(new URL('../../../../'+file.path,import.meta.url),'utf8'))!==file.sha256)throw Error('Frozen actual-source manifest is stale: '+file.path);
+  }
+  extendedManifests.push(manifest);
+}
+for(const [name,countKey]of [['actual-background-independent.json','total'],['actual-pulse-independent.json','checkCount'],['actual-global-source-independent.json','total']]){
+  const serialized=await readFile(new URL(name,import.meta.url),'utf8'),data=JSON.parse(serialized);
+  if(!data.pass||!Number.isSafeInteger(data[countKey])||data.checks.length!==data[countKey]||!data.checks.every(c=>c.pass===true))throw Error('Incomplete independent actual-source receipt: '+name);
+  await writeFile(new URL(name,out),serialized);
+  additionalIndependent.push({file:name,checks:data[countKey],sha256:await sha256(serialized),verification:'FROZEN_INDEPENDENT_RECEIPT_WITH_CURRENT_PRODUCER_HASHES'});
+}
+{
+  const name='actual-core-evaluator-independent.json',serialized=await readFile(new URL(name,import.meta.url),'utf8'),data=JSON.parse(serialized);
+  if(data.failed!==0||!Number.isSafeInteger(data.passed)||data.passed!==extendedManifests[0].checks.independentFraction.passed||!data.outputDigest)throw Error('Incomplete independent actual-core receipt.');
+  await writeFile(new URL(name,out),serialized);
+  additionalIndependent.push({file:name,checks:data.passed,sha256:await sha256(serialized),verification:'FROZEN_INDEPENDENT_FRACTION_RECEIPT_WITH_CURRENT_RUNTIME_VERIFIER_AND_OUTPUT_DIGEST'});
+}
 const coreInput={observations:[8,16,900].map(ell=>getSourceCoreObservations({ell}))},contractInput={sums:[-3.75,-3.5,-3.25].map(log2q=>evaluateLocalPotentialSum({log2a:[2,3,4],log2qRange:[log2q,log2q+.125],log2q,potentials:[[1,2,3],[2,-1,1],[3,0,4]]})),tails:[0,2,4].map(m=>evaluatePulseCutoffRemainder(defaultTailJet(m)))};
 for(const [script,file,input]of [['source-core-independent.py','source-core-independent.json',coreInput],['source-contract-independent.py','source-contract-independent.json',contractInput]]){
   const run=spawnSync('python',[fileURLToPath(new URL(script,import.meta.url))],{encoding:'utf8',input:JSON.stringify(input)});if(run.status!==0)throw Error(script+' failed: '+run.stderr);const data=JSON.parse(run.stdout);if(!data.pass)throw Error(script+' did not accept.');const serialized=JSON.stringify(data,null,2)+'\n';await writeFile(new URL(file,out),serialized);additionalIndependent.push({file,checks:data.total,sha256:await sha256(serialized)});
@@ -35,11 +68,14 @@ const exactEvidence={schema:'MathScope.NavierSourceExactEvidence/2',sourceProfil
 await writeFile(new URL('source-exact-identities.json',out),JSON.stringify(exactEvidence,null,2)+'\n');
 const records=[];
 for(const example of getExamples()){
-  const result=await executeDomain(example.request),job={id:example.id,request:example.request,inputHash:await requestHash(example.request),result,status:result.status,resultHash:await sha256(result)},view=makeVisualization(job);
+  const result=await executeDomain(example.request),job={id:example.id,request:example.request,inputHash:await requestHash(example.request),result,status:result.status,resultHash:await sha256(result)},view=makeM2Visualization(job);
   await writeFile(new URL(example.id+'.json',out),JSON.stringify(job,null,2)+'\n');
-  records.push({id:example.id,kind:example.request.kind,status:result.status,inputHash:job.inputHash,resultHash:job.resultHash,checks:result.checks,scope:result.scope,visualization:{state:view.state,kind:view.kind,tableRows:view.table.rows.length,points:view.scene.points.length,lines:view.scene.lines.length,arrows:view.scene.arrows.length,axisMetadata:view.axisMetadata},diagnostics:result.results.diagnostics??null});
+  const panels=listM2Panels(job).map(panel=>{const v=makeM2Visualization(job,{panel:panel.id});return {id:panel.id,title:v.title,state:v.state,kind:v.kind,tableRows:v.table.rows.length,points:v.scene.points.length,lines:v.scene.lines.length,arrows:v.scene.arrows.length,sourcePaths:v.table.sourcePaths};});
+  records.push({id:example.id,kind:example.request.kind,status:result.status,inputHash:job.inputHash,resultHash:job.resultHash,checks:result.checks,scope:result.scope,visualization:{state:view.state,kind:view.kind,tableRows:view.table.rows.length,points:view.scene.points.length,lines:view.scene.lines.length,arrows:view.scene.arrows.length,axisMetadata:view.axisMetadata,panels},diagnostics:result.results.diagnostics??null});
 }
 const sourceFiles=['index.mjs','pulse-ode.mjs','checklist.mjs','source-algebra.mjs','source-background.mjs','source-envelope.mjs','source-geometry.mjs','source-profile.mjs','source-profile-data.mjs','source-support.mjs','source-core-data.mjs','source-core-observations.mjs','source-pulse-curl.mjs','source-gluing.mjs','source-tail.mjs','README_KO.md','PROOF_OBLIGATIONS_KO.md','research/SOURCE_PULSE_CURL_OPERATOR.md',...testSuites.map(name=>'tests/'+name),'tests/source-independent-checks.py','tests/source-core-independent.py','tests/source-contract-independent.py','tests/build-source-binding.py','tests/build-source-core-binding.py','tests/generate-evidence.mjs','tests/fixtures/original-n4-n5.json'],sourceHashes={};
+sourceFiles.push(...[...new Set([...actualManifest.files.map(f=>f.path.replace(/^navier\//,'')),...pulseReceipt.files.map(f=>f.path.replace(/^research-ide\/mathscope-m2\/navier\//,'')),'tests/actual-background-manifest.json','research/RESUMED_SOURCE_AUDIT_KO.md'])].filter(p=>!sourceFiles.includes(p)));
+sourceFiles.push(...[...new Set([...extendedManifests.flatMap(m=>m.files.map(f=>f.path.replace(/^research-ide\/mathscope-m2\/navier\//,''))),'actual-core-evaluator-manifest.json','tests/actual-global-source-manifest.json','research/ACTUAL_CORE_INDEPENDENT_REVIEW_KO.md'])].filter(p=>!sourceFiles.includes(p)));
 for(const name of sourceFiles)sourceHashes[name]=await sha256(await readFile(new URL(name,base),'utf8'));
 const convergence=[];
 for(const steps of[32,64,128,256]){const r=await executeDomain({kind:'ns.pulse-ode',input:{steps}});convergence.push({stepsPerHalf:steps,...r.results.diagnostics});}

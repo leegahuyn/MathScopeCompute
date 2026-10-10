@@ -1,0 +1,3291 @@
+{
+  "id": "ns-m2-actual-mean-pulse",
+  "request": {
+    "kind": "ns.actual-mean-pulse",
+    "input": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "y": 2.5,
+      "eta": 0.25,
+      "s": 1,
+      "order": 3,
+      "samples": 32
+    }
+  },
+  "inputHash": "0f668759926ec9b55e190e1974aa89565b31893b3b55820d3a51227a595d1219",
+  "result": {
+    "blockers": [
+      "This actual local field and pulse comparison covers Imean only. The completed background on the whole annulus, every required slow derivative Gaussian bound, and the actual heat-prepared T0 and covariance integrals remain unconstructed."
+    ],
+    "checks": [
+      {
+        "id": "actual-local-field-jets",
+        "pass": true
+      },
+      {
+        "id": "actual-local-phase-bound",
+        "pass": true
+      },
+      {
+        "id": "source-left-datum",
+        "pass": true
+      },
+      {
+        "id": "actual-local-growing-value-bound",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "ACTUAL_SOURCE_LOCAL_JETS_AND_LOCAL_ANALYTIC_PULSE_BOUNDS",
+    "kind": "ns.actual-mean-pulse",
+    "moduleVersion": "m2-ns-0.3.1",
+    "object": {
+      "kind": "ACTUAL_SAME_SOURCE_MEAN_PATCH_PULSE_INPUTS",
+      "sourceProfile": "same-profile-2026-10-10.3"
+    },
+    "precisionLedger": {
+      "arithmetic": "OUTWARD_FLOAT64_SCALAR_INTERVALS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 5032000,
+      "outputItemsEstimate": 544,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "d5dcc1b887358003c639683615745b04637e90f17aa8ad0a6b379246d66b91db",
+    "results": {
+      "checks": [
+        {
+          "id": "actual-local-field-jets",
+          "pass": true
+        },
+        {
+          "id": "actual-local-phase-bound",
+          "pass": true
+        },
+        {
+          "id": "source-left-datum",
+          "pass": true
+        },
+        {
+          "id": "actual-local-growing-value-bound",
+          "pass": true
+        }
+      ],
+      "definitions": {
+        "actualPulseIntegrated": false,
+        "backgroundAgreement": {
+          "equation": "5.44",
+          "scope": "Restriction of the eventual Proposition 5.5 background to the preserved mean patch; this does not construct its still missing positive-order fields elsewhere."
+        },
+        "cumulativeStressEvaluated": false,
+        "domain": {
+          "X": "X0Imean*exp(y)",
+          "closedObservationSubset": [
+            0.25,
+            4.75
+          ],
+          "etaClosed": [
+            -1,
+            1
+          ],
+          "localOnly": true,
+          "patch": "Imean",
+          "sClosed": [
+            "1/2",
+            "2"
+          ],
+          "sDefinition": "q/Q",
+          "yOpen": [
+            "0",
+            "5"
+          ]
+        },
+        "exact": {
+          "BOuter": "1000*T",
+          "E": "Kmean*(1+eta^2)^(-1)*exp(-(1/2+lambda)*y)",
+          "F": "Fscale*s^(-1-h)*(1+eta^2)^(-1)*exp(-(1+lambda)*y)",
+          "Fscale": "Kmean/sqrt(2*X0Imean)",
+          "G": "0",
+          "M": "eta*mConst",
+          "U": "0",
+          "X0": "XR*exp(T+2+60*BOuter-8)",
+          "b": "-epsilon*mConst/R",
+          "c0": "-sqrt(lambda)",
+          "lambda0": "2*F*sqrt(lambda)",
+          "logKmean": "(3/2)*T-7/10-lambda/2-(1/2+lambda)*(60*BOuter-8)",
+          "logKmeanCollected": "-(59997/2)*T+33/10+(15/2-60000*T)*lambda",
+          "mConst": "XR*exp(1)*(4+integral_0^T exp(w)*4*(1-sigma(log(1+w)/Md))dw)",
+          "mConstBounds": [
+            "4*XR*exp(1)",
+            "4*XR*exp(T+1)"
+          ],
+          "normal": "N=(-1,0), K=(0,-1)",
+          "normalizedPositiveFactors": {
+            "Fscale": "positive",
+            "h": "positive",
+            "lambda": "positive",
+            "mConst": "positive"
+          },
+          "physicalScalesAreNumbers": false,
+          "radialIdentity": "-(2D*eta^2+1-eta^2)*mConst/(1-2h*eta^2)=-mConst",
+          "radialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "radialV0": "-mConst",
+          "reflectionIdentity": "sigma(t)+sigma(1-t)=1; integral_0^1 sigma(t)dt=1/2",
+          "rhoR": "R/sqrt(2*X0Imean)=sqrt(s)*exp(y/2)",
+          "shear": "a=v_s=2+2*lambda; b_s=0",
+          "slowCoordinates": "Z=eta*s^(1/2-h); T_chart=s*(1-eta^2); T_chart=s-Z^2*s^(2h)",
+          "slowFormula": "F/Fscale=rhoR^(-2-2*lambda)*s^(lambda-h)/(1+Z^2*s^(-1+2h))",
+          "stageLogIncrements": [
+            "-1/5",
+            "-T/2",
+            "-1/2-lambda/2",
+            "-(1/2+lambda)*(60*BOuter-8)"
+          ]
+        },
+        "sourceBindings": {
+          "assembly": {
+            "bytes": 77149,
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+            "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+          },
+          "paper": {
+            "equations": [
+              "4.7",
+              "4.26",
+              "4.30",
+              "5.44",
+              "6.1",
+              "6.11",
+              "7.2",
+              "7.4",
+              "7.6",
+              "7.8",
+              "7.12",
+              "7.17",
+              "7.21",
+              "7.27"
+            ],
+            "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+            "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+          },
+          "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+          "profileEvidenceSHA256": "ff3b1590aa49499417910962736fe2deb8e6088acd7d77e281fd8aba6807c206",
+          "profileId": "same-profile-2026-10-10.3",
+          "schema": "MathScope.ActualPulseSourceBindings/1",
+          "sourceFiles": [
+            {
+              "path": "mathscope-m1/navier/followup-construction/outer.mjs",
+              "sha256": "4c0213f892a32611c79655fbe065cebbaca0fc9acdd0cf2dd057d2506a10c087",
+              "use": "Literal A.2 stage definitions only; the old finite parameter defaults are never used."
+            },
+            {
+              "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/ONE_PROFILE_SPECIFICATION.md",
+              "sha256": "38d8a88220094cf2e6b2571f214f38361783669b646c0c08eb206eb2b9100bdd",
+              "use": "Selected parameters and unchanged Imean interval."
+            },
+            {
+              "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/GLOBAL_STRESS_ASSEMBLY_EN.md",
+              "sha256": "3c89af370fb2728bc407f5192493eb7474666051289626c57b73f19da7e59516",
+              "use": "Same-profile closed annulus margin and preserved fields; cumulative stress is not inferred from local fields."
+            },
+            {
+              "path": "mathscope-m1/navier/followup-20261010-outer-reselection/OUTER_DERIVATION.md",
+              "sha256": "ffb859d1f6b79aad9aa45e7c5173e8b727cd7a554f6ea28697dc9a108b3dbd81",
+              "use": "Actual continuous outer datum and ordering of the pre-pulse reserved patches."
+            },
+            {
+              "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md",
+              "sha256": "f27e8d640e9b8e49805c0128c987f043d5667c298b2029dd061b820ae9e3117b",
+              "use": "Premodulation real mixed derivative order four. Not a bound for the completed background."
+            },
+            {
+              "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/LOOP_DERIVATIVE_ENVELOPE.md",
+              "sha256": "531e5addbe900564c22e0b44406c9c024e7d279c03a7188ea17431a567fe1250",
+              "use": "Fixed N3 loop derivative bounds, before constructing M2 coefficients."
+            },
+            {
+              "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/C12_FREQUENCY_CONTRACT.md",
+              "sha256": "1740353222f1a5ca727c2c8a2c7063bba8a990f9a4393754256d5c82f49f7a16",
+              "use": "Same finite N3 modulation frequency and final direction margin."
+            }
+          ]
+        },
+        "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+        "sourceMeanPatchFieldsConstructed": true,
+        "sourceProfile": "same-profile-2026-10-10.3",
+        "wholeAnnulusPhaseCertified": false
+      },
+      "growingComparison": {
+        "actualAmplitudeNumericallyIntegrated": false,
+        "actualLocalValueComparisonProved": true,
+        "actualRadialComparison": [
+          "exp(-M^66)*P(v) <= x(v)",
+          "x(v) <= exp(M^66)*P(v)"
+        ],
+        "actualValueGaussianUpper": "|t(v)| <= exp(M^67-M^-3*(v-L_s/2)^2/L_s)",
+        "allSlowDerivativeGaussianBoundsCertified": false,
+        "cutoffCollar": "|v-L_s/2|>=L_s/5 implies log|t(v)| <= -Sstar/(50*M^4)",
+        "datum": "z_plus(0)=P(0)>0, z_minus(0)=0",
+        "globalN505Certified": false,
+        "invariantBarrier": "-2*M^-3*(M^68/Sstar)+(M^64/Sstar)*(1+M^68/Sstar)^2<0",
+        "logComparison": "|log(z_plus/P)| <= 3*M^64; |log(x/P)| <= M^66",
+        "premiseChecksPass": true,
+        "premiseSourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+        "profileId": "same-profile-2026-10-10.3",
+        "proofLevel": "Local analytic invariant-barrier and Gaussian implication for the specified actual mean-patch velocity, with explicit constants. This is not numerical integration of amplitude values.",
+        "proofUsesFiniteSampling": false,
+        "ratioBound": "|z_minus/z_plus| <= M^68/Sstar < 1/4",
+        "schema": "MathScope.ActualMeanPatchGrowingComparison/1",
+        "sourceSystem": "Actual Imean K, affine n from (7.4), projected A_phi, d=epsilon*k^2*|n|^2; the rounded label is held fixed."
+      },
+      "growingDatum": {
+        "actualAmplitudePointValuesEvaluated": false,
+        "actualSourceHRetained": true,
+        "frozenConeChoice": {
+          "envelopeProof": "C12EnvelopeR=exp(S^256), S=CSelected^100000, CSelected>2, hence 0<kappa/2<2^-1000.",
+          "exactSquaredMarginLower": "kappa/4",
+          "frozenPointConeCertified": true,
+          "globalPulseConstructionCertified": false,
+          "inverseUStarEnclosure": [
+            0,
+            9.332636185032189e-302
+          ],
+          "inverseUStarExact": "C12EnvelopeR^(-10)/2",
+          "kappaExact": "C12EnvelopeR^(-10)",
+          "profileId": "same-profile-2026-10-10.3",
+          "proof": "4/(4+kappa^2)-(1-kappa/2)=kappa/2-kappa^2/(4+kappa^2)>=kappa/4 for 0<kappa<=1.",
+          "schema": "MathScope.ActualPulseConeChoice/1",
+          "selectedDirectionRatioSquared": "u_star^2/(1+u_star^2)=4/(4+kappa^2)",
+          "slowNeighborhoodConeCertified": false,
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+          "sourceInequality": "|c0*(T0_star dot K)/(T0_star dot N)|^2 <= 1-kappa/2",
+          "strictlyPositive": true,
+          "uStarExact": "2*C12EnvelopeR^10",
+          "zeroIsEnclosureEndpointOnly": true
+        },
+        "initial": {
+          "dividedByP0": [
+            1,
+            0
+          ],
+          "frameCoordinates": [
+            "P(0)",
+            "0"
+          ],
+          "location": "v=0",
+          "logP0CoefficientInterval": [
+            -0.4014805138933168,
+            -0.401480513893245
+          ],
+          "logP0Exact": "(lambda0*L_s/u_star)*f(1/2,1/u_star)",
+          "midpointUnitSeedUsed": false,
+          "physicalInitialVector": "B(0)*(P(0),0)^T",
+          "positiveLogScale": {
+            "binary64": null,
+            "expression": "lambda0*L_s/u_star",
+            "strictlyPositive": true,
+            "underflowNotZero": true
+          }
+        },
+        "normalizedEvolution": {
+          "allDampingTermsRetained": true,
+          "initial": [
+            0,
+            0
+          ],
+          "logRhs": "-(d-d_ref)+E11+E12*r",
+          "pressure": "i*(n dot Kt-n_prime dot t)/(k*|n|^2) for m=1, f=0",
+          "ratioRhs": "E21+(-2*lambda+E22-E11)*r-E12*r^2",
+          "reconstruction": [
+            "x=P*exp(w)*(1+r)",
+            "y=c0*sqrt(1+s(v)^2)*P*exp(w)*(1-r)",
+            "t=x*(e_r-s_a*K_a)+y*N_a"
+          ],
+          "variables": [
+            "r=z_minus/z_plus",
+            "w=log(z_plus/P)"
+          ]
+        },
+        "observationKind": "NORMALIZED_REFERENCE_LOG_ENVELOPE",
+        "pass": true,
+        "positiveAmplitudeUnderflowNotZero": true,
+        "profileId": "same-profile-2026-10-10.3",
+        "referenceGaussianCoefficient": [
+          0.49999999999999756,
+          0.5000000000000093
+        ],
+        "referenceOnly": true,
+        "rows": [
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.12500000000000236,
+              -0.12499999999999938
+            ],
+            "normalizedLogPInterval": [
+              -0.4014805138933168,
+              -0.401480513893245
+            ],
+            "sOverU": 0.5,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[0]",
+            "xi": 0
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.10986328125000207,
+              -0.10986328124999944
+            ],
+            "normalizedLogPInterval": [
+              -0.3491668458529145,
+              -0.3491668458528516
+            ],
+            "sOverU": 0.53125,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[1]",
+            "xi": 0.03125
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.0957031250000018,
+              -0.09570312499999951
+            ],
+            "normalizedLogPInterval": [
+              -0.30135698344525785,
+              -0.3013569834451946
+            ],
+            "sOverU": 0.5625,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[2]",
+            "xi": 0.0625
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.08251953125000155,
+              -0.08251953124999958
+            ],
+            "normalizedLogPInterval": [
+              -0.2577369464197737,
+              -0.2577369464197083
+            ],
+            "sOverU": 0.59375,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[3]",
+            "xi": 0.09375
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.07031250000000132,
+              -0.07031249999999964
+            ],
+            "normalizedLogPInterval": [
+              -0.21805050424575687,
+              -0.21805050424570946
+            ],
+            "sOverU": 0.625,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[4]",
+            "xi": 0.125
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.05908203125000111,
+              -0.0590820312499997
+            ],
+            "normalizedLogPInterval": [
+              -0.18208789541486806,
+              -0.18208789541481712
+            ],
+            "sOverU": 0.65625,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[5]",
+            "xi": 0.15625
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.048828125000000916,
+              -0.04882812499999976
+            ],
+            "normalizedLogPInterval": [
+              -0.14967717339976624,
+              -0.1496771733997159
+            ],
+            "sOverU": 0.6875,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[6]",
+            "xi": 0.1875
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.03955078125000074,
+              -0.0395507812499998
+            ],
+            "normalizedLogPInterval": [
+              -0.1206774778862217,
+              -0.12067747788617604
+            ],
+            "sOverU": 0.71875,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[7]",
+            "xi": 0.21875
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.03125000000000059,
+              -0.031249999999999844
+            ],
+            "normalizedLogPInterval": [
+              -0.09497373911846803,
+              -0.09497373911842268
+            ],
+            "sOverU": 0.75,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[8]",
+            "xi": 0.25
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.02392578125000045,
+              -0.02392578124999988
+            ],
+            "normalizedLogPInterval": [
+              -0.0724724639992501,
+              -0.07247246399921316
+            ],
+            "sOverU": 0.78125,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[9]",
+            "xi": 0.28125
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.01757812500000033,
+              -0.01757812499999991
+            ],
+            "normalizedLogPInterval": [
+              -0.05309834915326087,
+              -0.05309834915322347
+            ],
+            "sOverU": 0.8125,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[10]",
+            "xi": 0.3125
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.012207031250000229,
+              -0.01220703124999994
+            ],
+            "normalizedLogPInterval": [
+              -0.03679153354020726,
+              -0.03679153354016656
+            ],
+            "sOverU": 0.84375,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[11]",
+            "xi": 0.34375
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.007812500000000147,
+              -0.007812499999999961
+            ],
+            "normalizedLogPInterval": [
+              -0.02350535095787386,
+              -0.023505350957833678
+            ],
+            "sOverU": 0.875,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[12]",
+            "xi": 0.375
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.004394531250000082,
+              -0.0043945312499999774
+            ],
+            "normalizedLogPInterval": [
+              -0.0132044771101435,
+              -0.01320447711010815
+            ],
+            "sOverU": 0.90625,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[13]",
+            "xi": 0.40625
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.001953125000000037,
+              -0.0019531249999999902
+            ],
+            "normalizedLogPInterval": [
+              -0.005863390929253803,
+              -0.005863390929217677
+            ],
+            "sOverU": 0.9375,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[14]",
+            "xi": 0.4375
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.0004882812500000092,
+              -0.00048828124999999756
+            ],
+            "normalizedLogPInterval": [
+              -0.0014650882885544998,
+              -0.0014650882885192983
+            ],
+            "sOverU": 0.96875,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[15]",
+            "xi": 0.46875
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -5e-324,
+              5e-324
+            ],
+            "normalizedLogPInterval": [
+              0,
+              0
+            ],
+            "sOverU": 1,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[16]",
+            "xi": 0.5
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.0004882812500000092,
+              -0.00048828124999999756
+            ],
+            "normalizedLogPInterval": [
+              -0.0014650763592942743,
+              -0.0014650763592799659
+            ],
+            "sOverU": 1.03125,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[17]",
+            "xi": 0.53125
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.001953125000000037,
+              -0.0019531249999999902
+            ],
+            "normalizedLogPInterval": [
+              -0.0058630083919052065,
+              -0.005863008391890147
+            ],
+            "sOverU": 1.0625,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[18]",
+            "xi": 0.5625
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.004394531250000082,
+              -0.0043945312499999774
+            ],
+            "normalizedLogPInterval": [
+              -0.013201562013445621,
+              -0.013201562013428895
+            ],
+            "sOverU": 1.09375,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[19]",
+            "xi": 0.59375
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.007812500000000147,
+              -0.007812499999999961
+            ],
+            "normalizedLogPInterval": [
+              -0.023493006010291962,
+              -0.023493006010274205
+            ],
+            "sOverU": 1.125,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[20]",
+            "xi": 0.625
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.012207031250000229,
+              -0.01220703124999994
+            ],
+            "normalizedLogPInterval": [
+              -0.036753618410722645,
+              -0.036753618410698456
+            ],
+            "sOverU": 1.15625,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[21]",
+            "xi": 0.65625
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.01757812500000033,
+              -0.01757812499999991
+            ],
+            "normalizedLogPInterval": [
+              -0.05300325869835374,
+              -0.05300325869832836
+            ],
+            "sOverU": 1.1875,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[22]",
+            "xi": 0.6875
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.02392578125000045,
+              -0.02392578124999988
+            ],
+            "normalizedLogPInterval": [
+              -0.07226499560238593,
+              -0.07226499560235931
+            ],
+            "sOverU": 1.21875,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[23]",
+            "xi": 0.71875
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.03125000000000059,
+              -0.031249999999999844
+            ],
+            "normalizedLogPInterval": [
+              -0.09456478201913833,
+              -0.09456478201911094
+            ],
+            "sOverU": 1.25,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[24]",
+            "xi": 0.75
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.03955078125000074,
+              -0.0395507812499998
+            ],
+            "normalizedLogPInterval": [
+              -0.11993117007980951,
+              -0.11993117007978048
+            ],
+            "sOverU": 1.28125,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[25]",
+            "xi": 0.78125
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.048828125000000916,
+              -0.04882812499999976
+            ],
+            "normalizedLogPInterval": [
+              -0.14839506055804738,
+              -0.1483950605580057
+            ],
+            "sOverU": 1.3125,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[26]",
+            "xi": 0.8125
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.05908203125000111,
+              -0.0590820312499997
+            ],
+            "normalizedLogPInterval": [
+              -0.17998948176764598,
+              -0.1799894817676029
+            ],
+            "sOverU": 1.34375,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[27]",
+            "xi": 0.84375
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.07031250000000132,
+              -0.07031249999999964
+            ],
+            "normalizedLogPInterval": [
+              -0.2147493938814898,
+              -0.21474939388144496
+            ],
+            "sOverU": 1.375,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[28]",
+            "xi": 0.875
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.08251953125000155,
+              -0.08251953124999958
+            ],
+            "normalizedLogPInterval": [
+              -0.25271151524297436,
+              -0.2527115152429279
+            ],
+            "sOverU": 1.40625,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[29]",
+            "xi": 0.90625
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.0957031250000018,
+              -0.09570312499999951
+            ],
+            "normalizedLogPInterval": [
+              -0.2939141677689919,
+              -0.29391416776894413
+            ],
+            "sOverU": 1.4375,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[30]",
+            "xi": 0.9375
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.10986328125000207,
+              -0.10986328124999944
+            ],
+            "normalizedLogPInterval": [
+              -0.33839713898032164,
+              -0.3383971389802719
+            ],
+            "sOverU": 1.46875,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[31]",
+            "xi": 0.96875
+          },
+          {
+            "normalization": "u_star*log(P(v))/(lambda0*L_s)",
+            "normalizedGaussianUpperInterval": [
+              -0.12500000000000236,
+              -0.12499999999999938
+            ],
+            "normalizedLogPInterval": [
+              -0.386201558558532,
+              -0.3862015585584808
+            ],
+            "sOverU": 1.5,
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.growingDatum.rows[32]",
+            "xi": 1
+          }
+        ],
+        "scaledReferenceFormula": "f(a,delta)=log((a+sqrt(a^2+delta^2))/(1+sqrt(1+delta^2)))-((a-1)*delta^2+(a^3-1)/3)/(1+delta^2)^(3/2)",
+        "schema": "MathScope.ActualLeftGrowingDatum/1",
+        "sourceEquation": "Lemma 7.4, (7.12), (7.17), (7.21)",
+        "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+      },
+      "meanPatch": {
+        "actualPulseIntegrated": false,
+        "actualSourceRestriction": true,
+        "arithmetic": "Outward binary64 interval Taylor coefficients with exp/log Taylor remainder bounds; raw derivatives restored with factorials.",
+        "coordinateFrame": "BAND_CHART_Q_FIXED",
+        "coordinates": {
+          "RExact": "sqrt(2*X0Imean)*sqrt(1)*exp(2.5/2)",
+          "TChartInterval": [
+            0.9374999999999998,
+            0.9375000000000002
+          ],
+          "XExact": "X0Imean*exp(2.5)",
+          "ZInterval": [
+            0.24999999999999886,
+            0.2500000000000011
+          ],
+          "rhoRInterval": [
+            3.4903429574613702,
+            3.4903429574623317
+          ]
+        },
+        "cumulativeStressEvaluated": false,
+        "exactScales": {
+          "BOuter": "1000*T",
+          "E": "Kmean*(1+eta^2)^(-1)*exp(-(1/2+lambda)*y)",
+          "F": "Fscale*s^(-1-h)*(1+eta^2)^(-1)*exp(-(1+lambda)*y)",
+          "Fscale": "Kmean/sqrt(2*X0Imean)",
+          "G": "0",
+          "M": "eta*mConst",
+          "U": "0",
+          "X0": "XR*exp(T+2+60*BOuter-8)",
+          "b": "-epsilon*mConst/R",
+          "c0": "-sqrt(lambda)",
+          "lambda0": "2*F*sqrt(lambda)",
+          "logKmean": "(3/2)*T-7/10-lambda/2-(1/2+lambda)*(60*BOuter-8)",
+          "logKmeanCollected": "-(59997/2)*T+33/10+(15/2-60000*T)*lambda",
+          "mConst": "XR*exp(1)*(4+integral_0^T exp(w)*4*(1-sigma(log(1+w)/Md))dw)",
+          "mConstBounds": [
+            "4*XR*exp(1)",
+            "4*XR*exp(T+1)"
+          ],
+          "normal": "N=(-1,0), K=(0,-1)",
+          "normalizedPositiveFactors": {
+            "Fscale": "positive",
+            "h": "positive",
+            "lambda": "positive",
+            "mConst": "positive"
+          },
+          "physicalScalesAreNumbers": false,
+          "radialIdentity": "-(2D*eta^2+1-eta^2)*mConst/(1-2h*eta^2)=-mConst",
+          "radialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "radialV0": "-mConst",
+          "reflectionIdentity": "sigma(t)+sigma(1-t)=1; integral_0^1 sigma(t)dt=1/2",
+          "rhoR": "R/sqrt(2*X0Imean)=sqrt(s)*exp(y/2)",
+          "shear": "a=v_s=2+2*lambda; b_s=0",
+          "slowCoordinates": "Z=eta*s^(1/2-h); T_chart=s*(1-eta^2); T_chart=s-Z^2*s^(2h)",
+          "slowFormula": "F/Fscale=rhoR^(-2-2*lambda)*s^(lambda-h)/(1+Z^2*s^(-1+2h))",
+          "stageLogIncrements": [
+            "-1/5",
+            "-T/2",
+            "-1/2-lambda/2",
+            "-(1/2+lambda)*(60*BOuter-8)"
+          ]
+        },
+        "globalCertification": false,
+        "implicitCoordinateDenominator": [
+          0.9999999999999999,
+          1.0000000000000002
+        ],
+        "input": {
+          "eta": 0.25,
+          "order": 3,
+          "s": 1,
+          "y": 2.5
+        },
+        "jets": [
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              0,
+              0
+            ],
+            "normalizedFInterval": [
+              0.0772564692930708,
+              0.07725646929309127
+            ],
+            "normalizedRadialInterval": [
+              -0.2865047968602497,
+              -0.2865047968601289
+            ],
+            "normalizedVInterval": [
+              0.2696515735154002,
+              0.26965157351554603
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[0]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              0,
+              1
+            ],
+            "normalizedFInterval": [
+              0.004544498193708614,
+              0.004544498193712668
+            ],
+            "normalizedRadialInterval": [
+              -4e-323,
+              4e-323
+            ],
+            "normalizedVInterval": [
+              0.01586185726560677,
+              0.01586185726562531
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[1]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              1,
+              0
+            ],
+            "normalizedFInterval": [
+              -0.03408373645284478,
+              -0.034083736452814754
+            ],
+            "normalizedRadialInterval": [
+              -4e-323,
+              4e-323
+            ],
+            "normalizedVInterval": [
+              -0.11896392949218897,
+              -0.11896392949205133
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[2]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              1,
+              0,
+              0
+            ],
+            "normalizedFInterval": [
+              -0.044268698081924414,
+              -0.04426869808187388
+            ],
+            "normalizedRadialInterval": [
+              0.08208499862386959,
+              0.08208499862392714
+            ],
+            "normalizedVInterval": [
+              -0.07725646929322365,
+              -0.07725646929293802
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[3]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              0,
+              2
+            ],
+            "normalizedFInterval": [
+              -0.008554349541106274,
+              -0.008554349541098499
+            ],
+            "normalizedRadialInterval": [
+              -9.4e-323,
+              9.4e-323
+            ],
+            "normalizedVInterval": [
+              -0.029857613676471422,
+              -0.029857613676436037
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[4]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              1,
+              1
+            ],
+            "normalizedFInterval": [
+              0.02780163600857,
+              0.02780163600859548
+            ],
+            "normalizedRadialInterval": [
+              -6e-323,
+              6e-323
+            ],
+            "normalizedVInterval": [
+              0.09703724444841667,
+              0.09703724444853247
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[5]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              2,
+              0
+            ],
+            "normalizedFInterval": [
+              -0.07217732425308558,
+              -0.07217732425301689
+            ],
+            "normalizedRadialInterval": [
+              -9.4e-323,
+              9.4e-323
+            ],
+            "normalizedVInterval": [
+              -0.2519236153952326,
+              -0.25192361539492303
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[6]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              1,
+              0,
+              1
+            ],
+            "normalizedFInterval": [
+              -0.002604041063642656,
+              -0.002604041063639604
+            ],
+            "normalizedRadialInterval": [
+              -6e-323,
+              6e-323
+            ],
+            "normalizedVInterval": [
+              -0.004544498193719256,
+              -0.004544498193702034
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[7]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              1,
+              1,
+              0
+            ],
+            "normalizedFInterval": [
+              0.019530307977297115,
+              0.01953030797731978
+            ],
+            "normalizedRadialInterval": [
+              -6e-323,
+              6e-323
+            ],
+            "normalizedVInterval": [
+              0.03408373645276578,
+              0.034083736452893795
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[8]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              2,
+              0,
+              0
+            ],
+            "normalizedFInterval": [
+              0.03804958305363169,
+              0.03804958305368573
+            ],
+            "normalizedRadialInterval": [
+              -0.04703549171204088,
+              -0.04703549171199481
+            ],
+            "normalizedVInterval": [
+              0.04426869808173597,
+              0.044268698082062345
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-2/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-3/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-2/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[9]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              0,
+              3
+            ],
+            "normalizedFInterval": [
+              0.02415345752780731,
+              0.024153457527829707
+            ],
+            "normalizedRadialInterval": [
+              -3.3e-322,
+              3.3e-322
+            ],
+            "normalizedVInterval": [
+              0.08430385038052451,
+              0.084303850380626
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[10]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              1,
+              2
+            ],
+            "normalizedFInterval": [
+              -0.04428133880102193,
+              -0.044281338800979196
+            ],
+            "normalizedRadialInterval": [
+              -1.43e-322,
+              1.43e-322
+            ],
+            "normalizedVInterval": [
+              -0.15455705903115058,
+              -0.15455705903095845
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[11]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              2,
+              1
+            ],
+            "normalizedFInterval": [
+              -0.0015095910954959109,
+              -0.0015095910954815365
+            ],
+            "normalizedRadialInterval": [
+              -1.43e-322,
+              1.43e-322
+            ],
+            "normalizedVInterval": [
+              -0.005268990648812005,
+              -0.0052689906487603695
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[12]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              0,
+              3,
+              0
+            ],
+            "normalizedFInterval": [
+              0.5887405272402991,
+              0.588740527240852
+            ],
+            "normalizedRadialInterval": [
+              -3.3e-322,
+              3.3e-322
+            ],
+            "normalizedVInterval": [
+              2.0549063530252707,
+              2.05490635302777
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale",
+            "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+            "restoreVScale": "Kmean",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[13]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              1,
+              0,
+              2
+            ],
+            "normalizedFInterval": [
+              0.0049017243550862725,
+              0.004901724355092101
+            ],
+            "normalizedRadialInterval": [
+              -1.53e-322,
+              1.53e-322
+            ],
+            "normalizedVInterval": [
+              0.008554349541085958,
+              0.008554349541118821
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[14]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              1,
+              1,
+              1
+            ],
+            "normalizedFInterval": [
+              -0.015930604154049392,
+              -0.015930604154030307
+            ],
+            "normalizedRadialInterval": [
+              -1e-322,
+              1e-322
+            ],
+            "normalizedVInterval": [
+              -0.027801636008636502,
+              -0.027801636008529012
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[15]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              1,
+              2,
+              0
+            ],
+            "normalizedFInterval": [
+              0.04135829924603946,
+              0.041358299246090406
+            ],
+            "normalizedRadialInterval": [
+              -1.53e-322,
+              1.53e-322
+            ],
+            "normalizedVInterval": [
+              0.07217732425290802,
+              0.07217732425319456
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[16]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              2,
+              0,
+              1
+            ],
+            "normalizedFInterval": [
+              0.0022382107678606566,
+              0.0022382107678639036
+            ],
+            "normalizedRadialInterval": [
+              -1.63e-322,
+              1.63e-322
+            ],
+            "normalizedVInterval": [
+              0.002604041063631334,
+              0.0026040410636509284
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-2/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-3/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-2/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[17]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              2,
+              1,
+              0
+            ],
+            "normalizedFInterval": [
+              -0.01678658075897916,
+              -0.016786580758954995
+            ],
+            "normalizedRadialInterval": [
+              -1.63e-322,
+              1.63e-322
+            ],
+            "normalizedVInterval": [
+              -0.01953030797738139,
+              -0.019530307977235522
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-2/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-3/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-2/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[18]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          },
+          {
+            "GInterval": [
+              0,
+              0
+            ],
+            "multiIndex": [
+              3,
+              0,
+              0
+            ],
+            "normalizedFInterval": [
+              -0.0436055522536506,
+              -0.043605552253576534
+            ],
+            "normalizedRadialInterval": [
+              0.04042768199448694,
+              0.040427681994537806
+            ],
+            "normalizedVInterval": [
+              -0.03804958305389004,
+              -0.03804958305342741
+            ],
+            "rawDerivative": true,
+            "restoreFScale": "Fscale*(2*X0Imean)^(-3/2)",
+            "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-4/2)",
+            "restoreVScale": "Kmean*(2*X0Imean)^(-3/2)",
+            "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+            "sourcePath": "result.results.meanPatch.jets[19]",
+            "variables": [
+              "rhoR",
+              "Z",
+              "T_chart"
+            ]
+          }
+        ],
+        "normalization": "rhoR=R/sqrt(2*X0Imean); R derivatives multiply the displayed jet by (2*X0Imean)^(-r/2). No positive physical coefficient is rounded to zero.",
+        "normalizedValues": {
+          "EOverKmean": [
+            0.2696515735154553,
+            0.2696515735154901
+          ],
+          "FOverFscale": [
+            0.07725646929307081,
+            0.07725646929309125
+          ],
+          "G": [
+            0,
+            0
+          ],
+          "VOverKmean": [
+            0.26965157351540026,
+            0.269651573515546
+          ],
+          "bOverRadialScale": [
+            -0.28650479686024966,
+            -0.286504796860129
+          ]
+        },
+        "parameterEnclosures": {
+          "h": [
+            0,
+            9.332636185032189e-302
+          ],
+          "lambda": [
+            0,
+            9.332636185032189e-302
+          ],
+          "strictPositiveBoth": true,
+          "zeroIsEnclosureEndpointOnly": true
+        },
+        "profileId": "same-profile-2026-10-10.3",
+        "radialVelocityExactlyZero": false,
+        "restoredQuantitiesArePhysicalCartesian": false,
+        "schema": "MathScope.ActualMeanPatchSlowJet/1",
+        "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+      },
+      "phase": {
+        "actualMatrixEntriesRepresentedBySourceExpressions": true,
+        "actualRoundedIntegerEvaluated": false,
+        "domain": "Actual Imean velocity only",
+        "exactFrozenParameters": {
+          "F0": "F at the chosen source representative",
+          "K": [
+            "0",
+            "-1"
+          ],
+          "N": [
+            "-1",
+            "0"
+          ],
+          "c0": "-sqrt(lambda)",
+          "g0": "(-(2+2*lambda)*F0,0)",
+          "lambda0": "2*F0*sqrt(lambda)",
+          "uStar": "2*C12EnvelopeR^10"
+        },
+        "fieldSource": "meanPatch.jets",
+        "labelRounding": {
+          "error": "|p-pTilde|<=1/k",
+          "k": "ceil(epsilon^-1/2)",
+          "kp": "sigma*max(1,floor(abs(k*pTilde)+1/2))",
+          "materialized": false,
+          "p": "kp/k",
+          "pTilde": "sigma*R0*B_s*u_star/(L_s*(2+2*lambda)*F0)",
+          "pz": "-B_s",
+          "ties": "Away from zero; replace zero by the sign of pTilde."
+        },
+        "nonzeroAngularFrequencyByConstruction": true,
+        "normal": [
+          "sigma*B_s*u_star/2-v*p*F_R",
+          "p/R",
+          "-B_s-epsilon*v*p*F_Z"
+        ],
+        "normalDerivative": [
+          "-p*F_R",
+          "0",
+          "-epsilon*p*F_Z"
+        ],
+        "phaseDefect": "epsilon*v*p*F_T+b*n_r (G=0)",
+        "radialBackground": "b=-epsilon*mConst/R, with the actual positive pre-pulse cumulative moment",
+        "shearMatrix": [
+          [
+            "0",
+            "-2*F",
+            "0"
+          ],
+          [
+            "-2*lambda*F",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0"
+          ]
+        ],
+        "sourceProfile": "same-profile-2026-10-10.3",
+        "zeroAxialNormalDerivativeAssumed": false
+      },
+      "phaseBounds": {
+        "actualNonlinearBackgroundOutsidePatchConstructed": false,
+        "budgets": [
+          {
+            "bound": "M",
+            "object": "R, R^-1, F, F^-1, |g0|, |g0|^-1, lambda0, lambda0^-1, |c0|, |c0|^-1, u_star",
+            "source": "Actual field formulas, Fscale bounds, normalized jet box, and u_star=2 R_env^10."
+          },
+          {
+            "bound": "M",
+            "object": "all ordinary slow derivatives of F through order 3; (b/epsilon) through order 3",
+            "source": "Outward mean-patch jets; b/epsilon=-mConst/R and mConst<C^12."
+          },
+          {
+            "bound": "1/M <= L_s/Sstar <= 1",
+            "object": "L_s/Sstar",
+            "source": "r0=2^-34, c_i in (1/(T_g*Sstar),1/Sstar], T_g<6, M>2^50."
+          },
+          {
+            "bound": "M^-3 <= B_s <= M",
+            "object": "B_s",
+            "source": "1<=epsilon*k^2<=4 and lambda0/(epsilon*k^2*(1+u_star^2)^(3/2))."
+          },
+          {
+            "bound": "M^2",
+            "object": "|p|, |p_z|",
+            "source": "Imean K_theta=0; |p-p_tilde|<=1/k; Sstar>=M^200."
+          },
+          {
+            "bound": "M^10/Sstar",
+            "object": "|n-n_ref|+|n_prime|",
+            "source": "Affine normal (7.4), slow diameter <=4*Sstar^-3, actual F derivatives, and scalar epsilon inequality."
+          },
+          {
+            "bound": ">=M^-4",
+            "object": "|n_tan|, |n|",
+            "source": "B_s minus the preceding normal error."
+          },
+          {
+            "bound": "M^15/Sstar; M^16/Sstar",
+            "object": "|K_a-K|, |N_a-N|; |s_a-s|",
+            "source": "Normalized tangential vector and scalar quotient; their denominators are bounded below."
+          },
+          {
+            "bound": "M^18/Sstar; M^22/Sstar; M^19/Sstar",
+            "object": "|U-U_ref|, |B-B_ref|, |B_left-B_ref_left|",
+            "source": "Explicit matrices (7.7)-(7.8), with the same frozen c0 and s."
+          },
+          {
+            "bound": "M^26/Sstar",
+            "object": "|A_phi-A_ref|",
+            "source": "Projection difference, actual shear difference, and -n*n_prime^T/|n|^2."
+          },
+          {
+            "bound": "M^29/Sstar",
+            "object": "|B_prime|",
+            "source": "Differentiate U*M; both derivatives of the normal and M_prime are retained."
+          },
+          {
+            "bound": "M^64/Sstar",
+            "object": "|B_left*(A_phi*B-B_prime)-diag(lambda,-lambda)|",
+            "source": "Three product differences plus -B_left*B_prime; explicit exponent budget above."
+          },
+          {
+            "bound": "M^20/Sstar <= M^64/Sstar",
+            "object": "|d-d_ref|",
+            "source": "epsilon*k^2*(|n|^2-|n_ref|^2)."
+          },
+          {
+            "bound": ">=M^-3",
+            "object": "lambda(v)",
+            "source": "lambda0/sqrt(1+s(v)^2), with |s(v)|<=3*u_star/2."
+          }
+        ],
+        "checks": [
+          {
+            "id": "same-profile-scalar-threshold",
+            "pass": true
+          },
+          {
+            "id": "same-profile-cone-selection",
+            "pass": true
+          },
+          {
+            "id": "actual-uniform-third-jet",
+            "pass": true
+          },
+          {
+            "id": "actual-Fscale-lower",
+            "pass": true,
+            "proof": "logC>64016*T, logFscale>-5logC-120009*T, hence Fscale>C^-7."
+          },
+          {
+            "id": "actual-F-positive-on-closed-patch",
+            "pass": true,
+            "proof": "F/Fscale>2^-19>C^-1, hence F>C^-8."
+          },
+          {
+            "id": "actual-radial-moment-upper",
+            "pass": true,
+            "proof": "mConst<440*e*C^10*exp(21T)<C^12; log(440)+1<8 and T>1."
+          },
+          {
+            "id": "actual-lambda-inverse",
+            "pass": true,
+            "proof": "lambda^-1=exp(1000T)<Q<C."
+          },
+          {
+            "id": "Bs-lower",
+            "minimumM": "2^50",
+            "pass": true,
+            "proof": "Bs^2>=1/(12 M^4)>M^-6.",
+            "terms": [
+              {
+                "coefficient": 12,
+                "power": 4
+              }
+            ],
+            "uniform": true,
+            "uniformProof": "After division by M^upperPower every term is nonincreasing for M>=2^50.",
+            "upperPower": 6
+          },
+          {
+            "id": "phase-normal-error",
+            "minimumM": "2^50",
+            "pass": true,
+            "terms": [
+              {
+                "coefficient": 16,
+                "power": 5
+              },
+              {
+                "coefficient": 8,
+                "power": 4
+              }
+            ],
+            "uniform": true,
+            "uniformProof": "After division by M^upperPower every term is nonincreasing for M>=2^50.",
+            "upperPower": 10
+          },
+          {
+            "id": "normal-gap-at-selected-band",
+            "minimumM": "2^50",
+            "pass": true,
+            "proof": "2 M^13<Sstar, so M^10/Sstar<Bs/2.",
+            "terms": [
+              {
+                "coefficient": 2,
+                "power": 13
+              }
+            ],
+            "uniform": true,
+            "uniformProof": "After division by M^upperPower every term is nonincreasing for M>=2^50.",
+            "upperPower": 200
+          },
+          {
+            "id": "frame-operator-error",
+            "minimumM": "2^50",
+            "pass": true,
+            "terms": [
+              {
+                "coefficient": 6,
+                "power": 38
+              },
+              {
+                "coefficient": 4,
+                "power": 34
+              }
+            ],
+            "uniform": true,
+            "uniformProof": "After division by M^upperPower every term is nonincreasing for M>=2^50.",
+            "upperPower": 64
+          },
+          {
+            "id": "damping-error",
+            "minimumM": "2^50",
+            "pass": true,
+            "terms": [
+              {
+                "coefficient": 20,
+                "power": 16
+              }
+            ],
+            "uniform": true,
+            "uniformProof": "After division by M^upperPower every term is nonincreasing for M>=2^50.",
+            "upperPower": 20
+          },
+          {
+            "id": "riccati-bound-under-one-quarter",
+            "minimumM": "2^50",
+            "pass": true,
+            "terms": [
+              {
+                "coefficient": 4,
+                "power": 68
+              }
+            ],
+            "uniform": true,
+            "uniformProof": "After division by M^upperPower every term is nonincreasing for M>=2^50.",
+            "upperPower": 200
+          },
+          {
+            "id": "riccati-inward-boundary",
+            "minimumM": "2^50",
+            "pass": true,
+            "proof": "At |r|=M^68/Sstar, -2 lambda_min |r| + (M^64/Sstar)(1+|r|)^2<0.",
+            "terms": [
+              {
+                "coefficient": 2,
+                "power": 64
+              }
+            ],
+            "uniform": true,
+            "uniformProof": "After division by M^upperPower every term is nonincreasing for M>=2^50.",
+            "upperPower": 65
+          },
+          {
+            "id": "growing-log-comparison",
+            "minimumM": "2^50",
+            "pass": true,
+            "terms": [
+              {
+                "coefficient": 3,
+                "power": 64
+              },
+              {
+                "coefficient": 1,
+                "power": 0
+              }
+            ],
+            "uniform": true,
+            "uniformProof": "After division by M^upperPower every term is nonincreasing for M>=2^50.",
+            "upperPower": 66
+          },
+          {
+            "id": "cutoff-collar-tail",
+            "minimumM": "2^50",
+            "pass": true,
+            "proof": "M^67-Sstar/(25 M^4)<=-Sstar/(50 M^4).",
+            "terms": [
+              {
+                "coefficient": 50,
+                "power": 71
+              }
+            ],
+            "uniform": true,
+            "uniformProof": "After division by M^upperPower every term is nonincreasing for M>=2^50.",
+            "upperPower": 200
+          }
+        ],
+        "domain": {
+          "boundingY": [
+            0,
+            5
+          ],
+          "eta": [
+            -1,
+            1
+          ],
+          "maxSlowCoordinateDistance": "4*Sstar^-3",
+          "qOverQ": [
+            0.5,
+            2
+          ],
+          "relativeToTauBoundary": true,
+          "representativeY": [
+            0.25,
+            4.75
+          ],
+          "sourcePatch": "Imean only"
+        },
+        "fixedM": "C12EnvelopeR^100",
+        "globalPhaseCertified": false,
+        "localPhaseNormalAndFrameBoundCertified": true,
+        "minimumM": "2^50",
+        "pass": true,
+        "profileId": "same-profile-2026-10-10.3",
+        "proofLevel": "Written analytic derivation with actual source normalization, executed outward third-jet bounds and exact integer exponent absorptions.",
+        "schema": "MathScope.ActualMeanPatchPhaseBounds/1",
+        "slowStressDirectionVariationCertified": false,
+        "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+        "threshold": {
+          "QBoundExact": "2^(-ceil(C12EnvelopeR^10000*h^-4))",
+          "SstarLower": "M^200",
+          "ellLocalExact": "ceil(C12EnvelopeR^10000*h^-4)",
+          "integerCarrierMaterialized": false,
+          "localSourceDomainCertified": true,
+          "qStarGlobalCertified": false
+        }
+      },
+      "prerequisites": {
+        "actualCovarianceMatched": false,
+        "actualHomogeneousPulseCertified": false,
+        "available": [
+          {
+            "id": "selected-positive-h",
+            "source": "parametersExactExpressions.h",
+            "type": "EXACT_EXPRESSION"
+          },
+          {
+            "id": "selected-positive-lambda",
+            "source": "parametersExactExpressions.lambda",
+            "type": "EXACT_EXPRESSION"
+          },
+          {
+            "id": "closed-annulus-direction-margin",
+            "source": "attachedAnalyticConclusions.wholeClosedAnnulusDirectionalMargin",
+            "type": "ATTACHED_WRITTEN_ANALYTIC_BOUND",
+            "value": "C12EnvelopeR^-10"
+          },
+          {
+            "id": "unchanged-mean-patch-fields",
+            "source": "ONE_PROFILE_SPECIFICATION.md §4; GLOBAL_STRESS_ASSEMBLY_EN.md §6",
+            "type": "ACTUAL_LOCAL_EXPRESSION_AND_INTERVAL_JETS"
+          },
+          {
+            "domain": "|eta|<=rho/4; source finite mixed comparison is not a full annulus evaluator",
+            "id": "actual-core-mixed-comparison",
+            "type": "LIMITED_SOURCE_COMPARISON"
+          }
+        ],
+        "canPromoteN504": false,
+        "canPromoteN505": false,
+        "canPromoteN506": false,
+        "completedBackgroundSupplied": false,
+        "missing": [
+          {
+            "criterion": "N5-04",
+            "id": "realized-background",
+            "reason": "Section 7 uses F,G of the Proposition 5.5 background, including its actual positive-order coefficient sequence and the constants in (5.42).",
+            "requiredDomain": "[Xlo,Xhi] x [-1,1] x (0,q_star)",
+            "requires": [
+              "N4-03",
+              "N4-04",
+              "N4-05"
+            ],
+            "type": "ACTUAL_BACKGROUND_JET_WITH_UNIFORM_BOUND"
+          },
+          {
+            "criterion": "N5-04",
+            "id": "phase-comparison-constant",
+            "reason": "The scalar epsilon inequality alone supplies none of these coefficients.",
+            "requiredDomain": "Whole original annulus; the new Imean-only bounds do not supply this global input.",
+            "requiredQuantities": [
+              "normalErrorCoefficient",
+              "frameErrorCoefficient",
+              "dampingErrorCoefficient",
+              "slowDerivativeMajorants"
+            ],
+            "type": "SOURCE_DERIVED_BOUND"
+          },
+          {
+            "criterion": "N5-05",
+            "id": "homogeneous-amplitude",
+            "reason": "The installed reference curve is not the solution of the actual projected system.",
+            "requiredDatum": "z_plus(0)=P(0), z_minus(0)=0",
+            "type": "VALIDATED_ACTUAL_ODE_SOLUTION"
+          },
+          {
+            "criterion": "N5-06",
+            "id": "actual-stress-covariance",
+            "reason": "E,U on Imean alone do not determine its cumulative stress.",
+            "requiredQuantities": [
+              "heatPreparedPrefixMoments",
+              "T0_star",
+              "Hcov",
+              "positiveWeights",
+              "globalSquaredPartition"
+            ],
+            "type": "SAME_SOURCE_STRESS_AND_PULSE_QUADRATURE"
+          }
+        ],
+        "profileId": "same-profile-2026-10-10.3",
+        "schema": "MathScope.ActualPulsePrerequisites/1",
+        "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+        "wholeAnnulusPhaseCertified": false
+      },
+      "profileId": "same-profile-2026-10-10.3",
+      "remaining": "This actual local field and pulse comparison covers Imean only. The completed background on the whole annulus, every required slow derivative Gaussian bound, and the actual heat-prepared T0 and covariance integrals remain unconstructed.",
+      "scalarThreshold": {
+        "checks": [
+          {
+            "id": "actual-positive-h",
+            "pass": true
+          },
+          {
+            "denominator": "8",
+            "exactNumerator": "-575263748",
+            "id": "endpoint-log-majorant-negative",
+            "pass": true
+          },
+          {
+            "denominator": "4",
+            "exactNumerator": "-71954",
+            "id": "endpoint-log-majorant-decreasing",
+            "pass": true
+          },
+          {
+            "id": "all-later-bands-monotone",
+            "pass": true,
+            "proof": "e^(3L)>=9L^2/2>16, so 4/ell-(h*log(2))/2<0 when ell>=h^-4."
+          },
+          {
+            "id": "finite-observation-window-excluded",
+            "pass": true,
+            "proof": "ell*h<1 on 8..900, hence epsilon>1/2 and ell^4*(epsilon+epsilon^2+1/k)>1."
+          }
+        ],
+        "definitions": {
+          "L": "log(1/h)=8002*T",
+          "QScalarExact": "2^(-ceil(h^(-4)))",
+          "Sstar": "ell^2",
+          "carrier": "ceil(2^(h*ell/2))",
+          "ellScalar": {
+            "ceil": {
+              "power": [
+                {
+                  "ref": "h"
+                },
+                -4
+              ]
+            }
+          },
+          "ellScalarExact": "ceil(h^(-4))",
+          "epsilon": "2^(-h*ell)",
+          "logEllBounds": [
+            "4*log(1/h)",
+            "4*log(1/h)+log(2)"
+          ]
+        },
+        "h": {
+          "A": "1/2+h",
+          "D": "1/2-h",
+          "binary64Enclosure": [
+            0,
+            9.332636185032189e-302
+          ],
+          "hExact": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -8002
+                },
+                {
+                  "ref": "T"
+                }
+              ]
+            }
+          },
+          "hExpression": "exp(-8002*(exp(1048576)+10))",
+          "notNumericallyReplaced": true,
+          "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+          "positive": true,
+          "profileId": "same-profile-2026-10-10.3",
+          "proof": [
+            "T=exp(1048576)+10>1",
+            "h=exp(-8002*T)<exp(-8002)",
+            "e>2 implies exp(-8002)<2^-8002<2^-4096<2^-1000"
+          ],
+          "source": {
+            "bytes": 77149,
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+            "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+          },
+          "upperBoundExact": "2^-4096",
+          "zeroIsEnclosureEndpointOnly": true
+        },
+        "pass": true,
+        "profileId": "same-profile-2026-10-10.3",
+        "qStarCertified": false,
+        "schema": "MathScope.ActualPulseScalarThreshold/1",
+        "scope": "One necessary scalar estimate from Lemma 7.1, now quantified at the actual h. The additional source normal, frame, stress-direction and completed-background conditions have not been certified by this estimate.",
+        "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+        "theorem": {
+          "domain": "Every integer ell >= ceil(h^-4)",
+          "inequality": "ell^4*(epsilon+epsilon^2+1/k) <= 1",
+          "positiveScalesMaterialized": false,
+          "proof": [
+            "For epsilon in (0,1), epsilon+epsilon^2+1/k <= 3*sqrt(epsilon).",
+            "At ell0=ceil(exp(4L)), ell0<=2*exp(4L), h*ell0>=exp(3L), and log(2)>1/2.",
+            "Thus log(3*ell0^4*sqrt(epsilon)) <= log(48)+16L-exp(3L)/4 < 4+16L-9L^2/8.",
+            "The last polynomial is negative and decreasing for L>=8002, as verified by exact integer arithmetic.",
+            "The logarithmic derivative of ell^4*exp(-h*log(2)*ell/2) is negative for all ell>=ell0."
+          ],
+          "usesFiniteSampling": false
+        }
+      },
+      "schema": "MathScope.ActualMeanPatchPulseConstruction/1",
+      "scope": {
+        "actualSourceRestriction": true,
+        "allOriginalN5CriteriaComplete": false,
+        "globalCovarianceMatched": false,
+        "globalHomogeneousPulseCertified": false,
+        "globalPhaseCertified": false,
+        "otherProfileOrToyHUsed": false
+      },
+      "sourceBindings": {
+        "assembly": {
+          "bytes": 77149,
+          "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+          "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        "paper": {
+          "equations": [
+            "4.7",
+            "4.26",
+            "4.30",
+            "5.44",
+            "6.1",
+            "6.11",
+            "7.2",
+            "7.4",
+            "7.6",
+            "7.8",
+            "7.12",
+            "7.17",
+            "7.21",
+            "7.27"
+          ],
+          "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+          "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+        },
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "profileEvidenceSHA256": "ff3b1590aa49499417910962736fe2deb8e6088acd7d77e281fd8aba6807c206",
+        "profileId": "same-profile-2026-10-10.3",
+        "schema": "MathScope.ActualPulseSourceBindings/1",
+        "sourceFiles": [
+          {
+            "path": "mathscope-m1/navier/followup-construction/outer.mjs",
+            "sha256": "4c0213f892a32611c79655fbe065cebbaca0fc9acdd0cf2dd057d2506a10c087",
+            "use": "Literal A.2 stage definitions only; the old finite parameter defaults are never used."
+          },
+          {
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/ONE_PROFILE_SPECIFICATION.md",
+            "sha256": "38d8a88220094cf2e6b2571f214f38361783669b646c0c08eb206eb2b9100bdd",
+            "use": "Selected parameters and unchanged Imean interval."
+          },
+          {
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/GLOBAL_STRESS_ASSEMBLY_EN.md",
+            "sha256": "3c89af370fb2728bc407f5192493eb7474666051289626c57b73f19da7e59516",
+            "use": "Same-profile closed annulus margin and preserved fields; cumulative stress is not inferred from local fields."
+          },
+          {
+            "path": "mathscope-m1/navier/followup-20261010-outer-reselection/OUTER_DERIVATION.md",
+            "sha256": "ffb859d1f6b79aad9aa45e7c5173e8b727cd7a554f6ea28697dc9a108b3dbd81",
+            "use": "Actual continuous outer datum and ordering of the pre-pulse reserved patches."
+          },
+          {
+            "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md",
+            "sha256": "f27e8d640e9b8e49805c0128c987f043d5667c298b2029dd061b820ae9e3117b",
+            "use": "Premodulation real mixed derivative order four. Not a bound for the completed background."
+          },
+          {
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/LOOP_DERIVATIVE_ENVELOPE.md",
+            "sha256": "531e5addbe900564c22e0b44406c9c024e7d279c03a7188ea17431a567fe1250",
+            "use": "Fixed N3 loop derivative bounds, before constructing M2 coefficients."
+          },
+          {
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/C12_FREQUENCY_CONTRACT.md",
+            "sha256": "1740353222f1a5ca727c2c8a2c7063bba8a990f9a4393754256d5c82f49f7a16",
+            "use": "Same finite N3 modulation frequency and final direction margin."
+          }
+        ]
+      },
+      "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+      "status": "PARTIAL",
+      "uniformJets": {
+        "actualBScale": "epsilon*mConst/sqrt(2*X0Imean)",
+        "actualFScale": "Kmean/sqrt(2*X0Imean)",
+        "actualWholeAnnulusBound": false,
+        "coefficientNormalizationRequired": true,
+        "completedBackgroundBound": false,
+        "domain": {
+          "eta": [
+            -1,
+            1
+          ],
+          "s": [
+            0.5,
+            2
+          ],
+          "y": [
+            0,
+            5
+          ]
+        },
+        "lowerProof": "f>=1/2, s^(-1-h)>=1/4, exp(-(1+lambda)*y)>=exp(-10)>3^-10; (8*3^10)<2^19.",
+        "normalizedBounds": {
+          "FLowerExact": "2^-19",
+          "FMax": 79931.35054534968,
+          "FUpperExact": "4",
+          "VMax": 1377109.1173186845,
+          "bMax": 24.000000000003066
+        },
+        "order": 3,
+        "pass": true,
+        "perDerivative": [
+          {
+            "F": [
+              0.0016844867497708667,
+              2.0000000000000853
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              0.0011911120035818371,
+              34.45729636552129
+            ],
+            "bNormalized": [
+              -1.4142135623731633,
+              -0.05804285916062307
+            ],
+            "multiIndex": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "F": [
+              -8.000000000001295,
+              8.000000000001295
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -137.82918546210163,
+              137.82918546210163
+            ],
+            "bNormalized": [
+              -1.5e-322,
+              1.5e-322
+            ],
+            "multiIndex": [
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "F": [
+              -28.284271247466837,
+              28.284271247466837
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -487.2997584283579,
+              487.2997584283579
+            ],
+            "bNormalized": [
+              -1.5e-322,
+              1.5e-322
+            ],
+            "multiIndex": [
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "F": [
+              -5.656854249493185,
+              -0.00019554485434968661
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -97.45826719891869,
+              1.9998617289076954
+            ],
+            "bNormalized": [
+              0.0033689734995404003,
+              2.00000000000015
+            ],
+            "multiIndex": [
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "F": [
+              -104.00000000002042,
+              104.00000000002042
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -1791.7794110073828,
+              1791.7794110073828
+            ],
+            "bNormalized": [
+              -3.7e-322,
+              3.7e-322
+            ],
+            "multiIndex": [
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "F": [
+              -356.3818177180959,
+              356.3818177180959
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -6139.976956197548,
+              6139.976956197548
+            ],
+            "bNormalized": [
+              -2.3e-322,
+              2.3e-322
+            ],
+            "multiIndex": [
+              0,
+              1,
+              1
+            ]
+          },
+          {
+            "F": [
+              -1240.0000000002824,
+              1180.0000000002717
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -21363.52374662716,
+              20329.804855661383
+            ],
+            "bNormalized": [
+              -3.7e-322,
+              3.7e-322
+            ],
+            "multiIndex": [
+              0,
+              2,
+              0
+            ]
+          },
+          {
+            "F": [
+              -22.62741699797378,
+              22.62741699797378
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -397.8398067426931,
+              397.8398067426931
+            ],
+            "bNormalized": [
+              -3.3e-322,
+              3.3e-322
+            ],
+            "multiIndex": [
+              1,
+              0,
+              1
+            ]
+          },
+          {
+            "F": [
+              -80.0000000000161,
+              80.0000000000161
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -1406.5761258685377,
+              1406.5761258685377
+            ],
+            "bNormalized": [
+              -3.3e-322,
+              3.3e-322
+            ],
+            "multiIndex": [
+              1,
+              1,
+              0
+            ]
+          },
+          {
+            "F": [
+              0.00003404994732181501,
+              24.000000000004054
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -11.313684422037726,
+              413.48716529659913
+            ],
+            "bNormalized": [
+              -5.656854249492955,
+              -0.00039108970869944506
+            ],
+            "multiIndex": [
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "F": [
+              -1992.0000000004595,
+              1992.0000000004595
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -34319.46718006568,
+              34319.46718006568
+            ],
+            "bNormalized": [
+              -1.37e-321,
+              1.37e-321
+            ],
+            "multiIndex": [
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "F": [
+              -6748.627119646085,
+              6748.627119646085
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -116269.72236101484,
+              116269.72236101484
+            ],
+            "bNormalized": [
+              -6.27e-322,
+              6.27e-322
+            ],
+            "multiIndex": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "F": [
+              -23014.0000000061,
+              23104.000000006123
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -396500.109278142,
+              398050.68761459074
+            ],
+            "bNormalized": [
+              -6.27e-322,
+              6.27e-322
+            ],
+            "multiIndex": [
+              0,
+              2,
+              1
+            ]
+          },
+          {
+            "F": [
+              -79931.35054534968,
+              79931.35054534968
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -1377109.1173186845,
+              1377109.1173186845
+            ],
+            "bNormalized": [
+              -1.37e-321,
+              1.37e-321
+            ],
+            "multiIndex": [
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "F": [
+              -294.15642097366947,
+              294.15642097366947
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -5171.917487655194,
+              5171.917487655194
+            ],
+            "bNormalized": [
+              -8.94e-322,
+              8.94e-322
+            ],
+            "multiIndex": [
+              1,
+              0,
+              2
+            ]
+          },
+          {
+            "F": [
+              -1008.0000000002414,
+              1008.0000000002414
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -17722.85918594427,
+              17722.85918594427
+            ],
+            "bNormalized": [
+              -5.73e-322,
+              5.73e-322
+            ],
+            "multiIndex": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "F": [
+              -3337.544007201361,
+              3507.249634686167
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -58741.37149455128,
+              61605.17004512149
+            ],
+            "bNormalized": [
+              -8.94e-322,
+              8.94e-322
+            ],
+            "multiIndex": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "F": [
+              -96.00000000002062,
+              96.00000000002062
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -1699.2050595412552,
+              1699.2050595412552
+            ],
+            "bNormalized": [
+              -1.17e-321,
+              1.17e-321
+            ],
+            "multiIndex": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "F": [
+              -339.4112549696202,
+              339.4112549696202
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -6007.597101140644,
+              6007.597101140644
+            ],
+            "bNormalized": [
+              -1.17e-321,
+              1.17e-321
+            ],
+            "multiIndex": [
+              2,
+              1,
+              0
+            ]
+          },
+          {
+            "F": [
+              -135.76450198784363,
+              -0.000007905425187308093
+            ],
+            "G": [
+              0,
+              0
+            ],
+            "V": [
+              -2339.0387383063257,
+              71.99999441003246
+            ],
+            "bNormalized": [
+              0.00006809989464364256,
+              24.000000000003066
+            ],
+            "multiIndex": [
+              3,
+              0,
+              0
+            ]
+          }
+        ],
+        "profileId": "same-profile-2026-10-10.3",
+        "schema": "MathScope.ActualMeanPatchUniformJetBound/1",
+        "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+        "uniformOverEntireBox": true,
+        "usesFiniteSampling": false
+      }
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+    "sourceHashScope": "PINNED_N3_ACCEPTED_ASSEMBLY; full local source bindings remain in results.sourceBindings",
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "slow derivative index",
+          "name": "slow derivative index",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "NORMALIZED_FIELD_INTERVAL",
+          "label": "normalized F derivative",
+          "name": "normalized F derivative",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "0",
+          "name": "0",
+          "scale": "LINEAR",
+          "unit": "1"
+        }
+      ],
+      "description": "Actual preserved Imean velocity and normalized slow-coordinate derivatives, with the source growing datum and explicit local comparison bounds.",
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              0.0772564692930708,
+              0
+            ],
+            [
+              0,
+              0.07725646929309127,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              1,
+              0.004544498193708614,
+              0
+            ],
+            [
+              1,
+              0.004544498193712668,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              2,
+              -0.03408373645284478,
+              0
+            ],
+            [
+              2,
+              -0.034083736452814754,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              3,
+              -0.044268698081924414,
+              0
+            ],
+            [
+              3,
+              -0.04426869808187388,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              4,
+              -0.008554349541106274,
+              0
+            ],
+            [
+              4,
+              -0.008554349541098499,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              5,
+              0.02780163600857,
+              0
+            ],
+            [
+              5,
+              0.02780163600859548,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              6,
+              -0.07217732425308558,
+              0
+            ],
+            [
+              6,
+              -0.07217732425301689,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              7,
+              -0.002604041063642656,
+              0
+            ],
+            [
+              7,
+              -0.002604041063639604,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              8,
+              0.019530307977297115,
+              0
+            ],
+            [
+              8,
+              0.01953030797731978,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              9,
+              0.03804958305363169,
+              0
+            ],
+            [
+              9,
+              0.03804958305368573,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              10,
+              0.02415345752780731,
+              0
+            ],
+            [
+              10,
+              0.024153457527829707,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              11,
+              -0.04428133880102193,
+              0
+            ],
+            [
+              11,
+              -0.044281338800979196,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              12,
+              -0.0015095910954959109,
+              0
+            ],
+            [
+              12,
+              -0.0015095910954815365,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              13,
+              0.5887405272402991,
+              0
+            ],
+            [
+              13,
+              0.588740527240852,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              14,
+              0.0049017243550862725,
+              0
+            ],
+            [
+              14,
+              0.004901724355092101,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              15,
+              -0.015930604154049392,
+              0
+            ],
+            [
+              15,
+              -0.015930604154030307,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              16,
+              0.04135829924603946,
+              0
+            ],
+            [
+              16,
+              0.041358299246090406,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              17,
+              0.0022382107678606566,
+              0
+            ],
+            [
+              17,
+              0.0022382107678639036,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              18,
+              -0.01678658075897916,
+              0
+            ],
+            [
+              18,
+              -0.016786580758954995,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              19,
+              -0.0436055522536506,
+              0
+            ],
+            [
+              19,
+              -0.043605552253576534,
+              0
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "The displayed reference log envelope is not a numerical integration of the actual homogeneous amplitude.",
+        "These source bounds cover Imean; full annular pulses, every slow derivative, and source covariance remain unfinished."
+      ],
+      "points": [
+        {
+          "label": "d^(0,0,0) F/Fscale",
+          "pos": [
+            0,
+            0.07725646929308103,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[0].normalizedFInterval",
+          "value": 0.07725646929308103
+        },
+        {
+          "label": "d^(0,0,1) F/Fscale",
+          "pos": [
+            1,
+            0.004544498193710641,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[1].normalizedFInterval",
+          "value": 0.004544498193710641
+        },
+        {
+          "label": "d^(0,1,0) F/Fscale",
+          "pos": [
+            2,
+            -0.03408373645282976,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[2].normalizedFInterval",
+          "value": -0.03408373645282976
+        },
+        {
+          "label": "d^(1,0,0) F/Fscale",
+          "pos": [
+            3,
+            -0.04426869808189915,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[3].normalizedFInterval",
+          "value": -0.04426869808189915
+        },
+        {
+          "label": "d^(0,0,2) F/Fscale",
+          "pos": [
+            4,
+            -0.008554349541102386,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[4].normalizedFInterval",
+          "value": -0.008554349541102386
+        },
+        {
+          "label": "d^(0,1,1) F/Fscale",
+          "pos": [
+            5,
+            0.02780163600858274,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[5].normalizedFInterval",
+          "value": 0.02780163600858274
+        },
+        {
+          "label": "d^(0,2,0) F/Fscale",
+          "pos": [
+            6,
+            -0.07217732425305123,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[6].normalizedFInterval",
+          "value": -0.07217732425305123
+        },
+        {
+          "label": "d^(1,0,1) F/Fscale",
+          "pos": [
+            7,
+            -0.00260404106364113,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[7].normalizedFInterval",
+          "value": -0.00260404106364113
+        },
+        {
+          "label": "d^(1,1,0) F/Fscale",
+          "pos": [
+            8,
+            0.019530307977308446,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[8].normalizedFInterval",
+          "value": 0.019530307977308446
+        },
+        {
+          "label": "d^(2,0,0) F/Fscale",
+          "pos": [
+            9,
+            0.03804958305365871,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[9].normalizedFInterval",
+          "value": 0.03804958305365871
+        },
+        {
+          "label": "d^(0,0,3) F/Fscale",
+          "pos": [
+            10,
+            0.024153457527818507,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[10].normalizedFInterval",
+          "value": 0.024153457527818507
+        },
+        {
+          "label": "d^(0,1,2) F/Fscale",
+          "pos": [
+            11,
+            -0.04428133880100056,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[11].normalizedFInterval",
+          "value": -0.04428133880100056
+        },
+        {
+          "label": "d^(0,2,1) F/Fscale",
+          "pos": [
+            12,
+            -0.0015095910954887237,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[12].normalizedFInterval",
+          "value": -0.0015095910954887237
+        },
+        {
+          "label": "d^(0,3,0) F/Fscale",
+          "pos": [
+            13,
+            0.5887405272405756,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[13].normalizedFInterval",
+          "value": 0.5887405272405756
+        },
+        {
+          "label": "d^(1,0,2) F/Fscale",
+          "pos": [
+            14,
+            0.004901724355089187,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[14].normalizedFInterval",
+          "value": 0.004901724355089187
+        },
+        {
+          "label": "d^(1,1,1) F/Fscale",
+          "pos": [
+            15,
+            -0.01593060415403985,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[15].normalizedFInterval",
+          "value": -0.01593060415403985
+        },
+        {
+          "label": "d^(1,2,0) F/Fscale",
+          "pos": [
+            16,
+            0.04135829924606493,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[16].normalizedFInterval",
+          "value": 0.04135829924606493
+        },
+        {
+          "label": "d^(2,0,1) F/Fscale",
+          "pos": [
+            17,
+            0.00223821076786228,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[17].normalizedFInterval",
+          "value": 0.00223821076786228
+        },
+        {
+          "label": "d^(2,1,0) F/Fscale",
+          "pos": [
+            18,
+            -0.01678658075896708,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[18].normalizedFInterval",
+          "value": -0.01678658075896708
+        },
+        {
+          "label": "d^(3,0,0) F/Fscale",
+          "pos": [
+            19,
+            -0.043605552253613566,
+            0
+          ],
+          "sourceField": "results.meanPatch.jets[19].normalizedFInterval",
+          "value": -0.043605552253613566
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "7df29fe73a9f6c13232bf740423e80dead6cb7c52078451355077c8936bad86a"
+}

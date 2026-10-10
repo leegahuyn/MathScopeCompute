@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Worker} from 'node:worker_threads';
 import {createM2Engine} from '../core/engine.mjs';
-import {listExamples,executeDomain,normalizeRequest} from '../core/registry.mjs';
+import {listExamples,executeDomain,normalizeRequest,validateDomainRequest} from '../core/registry.mjs';
 import {makeM2Visualization,listM2Panels} from '../visualization/m2-views.mjs';
 import {createM2Tools} from '../webmcp.mjs';
 import {sha256} from '../../mathscope-m0/contracts.mjs';
@@ -38,4 +38,23 @@ test('M2 WebMCP rejects oversized, unknown and aborted mutations before dispatch
 });
 test('M2 request envelope rejects invalid resource scopes and precision container types',()=>{
   assert.throws(()=>normalizeRequest({kind:'ns.pulse-tail',input:{},budget:{maxMillis:60001}}));assert.throws(()=>normalizeRequest({kind:'ns.pulse-tail',input:{},precision:[]}));assert.throws(()=>normalizeRequest({kind:'arithmetic.witt',input:{},formalComplete:true}));
+});
+
+test('actual-source jobs enforce their own budgets and preserve cell-level source bindings after result normalization',async()=>{
+  const path=(job,key)=>key.replace(/\[(\d+)\]/g,'.$1').split('.').reduce((v,k)=>v?.[k],job);
+  for(const kind of ['ns.actual-background','ns.actual-mean-pulse','ns.actual-global-source']){
+    assert.equal((await validateDomainRequest({kind,input:{},budget:{maxItems:1}})).code,'BUDGET_EXCEEDED');
+    assert.equal((await validateDomainRequest({kind,input:{},budget:{maxOperations:1}})).code,'BUDGET_EXCEEDED');
+    assert.equal((await validateDomainRequest({kind,input:{},precision:{bits:128}})).code,'PRECISION_REQUIRED');
+    assert.equal((await validateDomainRequest({kind,input:{globalSourceCertified:true}})).ok,false);
+    const request=normalizeRequest({kind,input:{},precision:{mode:'OUTWARD_FLOAT64'}}),result=await executeDomain(request);
+    const job={id:kind,request,status:result.status,result,inputHash:await sha256(request),resultHash:await sha256(result)};
+    for(const p of listM2Panels(job)){
+      const v=makeM2Visualization(job,{panel:p.id,maxRows:10});
+      assert.equal(v.binding.jobId,job.id);assert.equal(v.binding.inputHash,job.inputHash);assert.equal(v.binding.resultHash,job.resultHash);assert.equal(v.binding.sourceHash,result.sourceHash);
+      for(const t of [v.table,...v.relatedTables])if(t.cellSourcePaths)for(let i=0;i<t.rows.length;i++)for(let j=0;j<t.rows[i].length;j++)if(t.cellSourcePaths[i][j])assert.deepEqual(t.rows[i][j],path(job,t.cellSourcePaths[i][j]));
+      for(const point of v.scene.points)assert.deepEqual(point.value,path(job,point.sourcePath));
+      assert.equal(v.observation.globalOriginalCriteriaComplete,false);
+    }
+  }
 });

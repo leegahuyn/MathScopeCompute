@@ -20,7 +20,7 @@
   },
   "current": {
     "path": "evidence/m2-criteria-status.json",
-    "sha256": "1c4170c06eb51ec2daf2e09a804061e156689c8f0b771fde39a7df331f292307",
+    "sha256": "0ae1514fed7fb478556d4d3e1e3938283fb3b29ba50173dc167217810fc260d6",
     "counts": {
       "PASS": 58,
       "PARTIAL": 6,
@@ -1033,15 +1033,15 @@
       "transition": "OPEN->PARTIAL",
       "newlyPassed": false,
       "originalTextPreserved": true,
-      "currentImplementedScope": "The full source six-component system, sparse A1 block identity, zero-axis inverse and a two-parity outward Picard tail are executable. The actual common radial interval is pinned; the displayed scalar tail uses explicitly declared operator bounds.",
+      "currentImplementedScope": "같은 accepted N3의 실제 n=1 exact Taylor DAG와 원래 공통 collar의 C1, analytic strip, Cauchy loss, 무한 Picard tail 식을 도출했습니다. 축 첫 미분 3개와 양의 Xi에서 정규화 차분몫 15개를 구간으로 계산합니다. 별도 n=0 core evaluator는 요청 실수 η에서 0–2차 mixed jet·압력·축방향 구간을 반환합니다. 전체 공통 구간의 Picard partial sum 및 필요한 고차 계수열은 아직 완료되지 않았습니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
       "remainingObligations": [
-        "Derive actual source C_n and the full eta-strip radius at each order.",
-        "Evaluate the same-profile six-component Picard solution with those bounds on the fixed common interval."
+        "Evaluate the actual six-component Picard partial sums throughout the unchanged common collar and full eta strip.",
+        "Construct each required higher-order source and C_n only after the previous global five moments are repaired."
       ],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-picard.json",
-        "mathscope-m2/navier/evidence/source-independent-checks.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-background.json",
+        "mathscope-m2/navier/evidence/actual-background-independent.json"
       ]
     },
     {
@@ -1054,15 +1054,15 @@
       "transition": "OPEN->PARTIAL",
       "newlyPassed": false,
       "originalTextPreserved": true,
-      "currentImplementedScope": "An outward-certified five-moment matrix operator uses the actual lambda and reserved Ipos. A confluent U row avoids replacing tiny lambda by zero. Five disjoint smooth bump supports, both stress support cases and a closed next-order reuse guard are recorded.",
+      "currentImplementedScope": "실제 lambda·Ipos inverse, Imean의 두 적분 기여, 실제 외곽 15관측과 전체 outer 식 그래프, Omega의 6개 정규 적분 축소·축 경계·C12/I1 값 오차를 구성했습니다. 새 core 점별 nonlinear 구간도 입력으로 사용할 수 있습니다. B.22/B.26/B.34/B.8을 통과한 전체 debt와 다섯 correction은 아직 미완료입니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
       "remainingObligations": [
-        "Evaluate actual extended positive-order profiles and five total moment functions for every eta.",
-        "Apply the resulting corrections, reconstruct V_n/Pi_n, and certify their derivatives before n+1 source reuse."
+        "Propagate the actual core point enclosures through B.22 reference moments, B.26/B.34 and the E-dependent B.8 debts/roots; enclose all six regular global integrals with the retained axis boundary and C.12/I1 value remainder.",
+        "Evaluate all five actual moment-debt functions, apply the exact repairs and reconstruct derivatives before n+1 source reuse."
       ],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-moments.json",
-        "mathscope-m2/navier/evidence/source-independent-checks.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-background.json",
+        "mathscope-m2/navier/evidence/actual-background-independent.json"
       ]
     },
     {
@@ -1075,11 +1075,11 @@
       "transition": "OPEN->PARTIAL",
       "newlyPassed": false,
       "originalTextPreserved": true,
-      "currentImplementedScope": "The full original finite physical PDE residual polynomial and source stress reconstruction (5.9) are exported. No uncomputed C_N,m, K_m, actual stress or numerical residual-decay claim is manufactured.",
+      "currentImplementedScope": "원래 finite physical PDE residual polynomial과 stress 재구성식을 보존합니다. 새 원본 n=1 국소 관측을 연결했지만 전체 repaired coefficient/stress, CNm/Km과 실제 residual refinement는 미계산입니다. tailBits에 따라 Xi가 달라지는 새 관측을 고정 점 정련으로 표시하지 않습니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
       "remainingObligations": [
-        "Substitute actual repaired coefficients and assemble R+div(T).",
-        "Measure order refinement independently of grid and precision, then certify C_N,m and K_m."
+        "Substitute the complete repaired actual coefficient/stress sequence into R+div(T).",
+        "Compute C_N,m and K_m; compare actual residual order, grid and precision refinement independently."
       ],
       "evidencePaths": [
         "mathscope-m2/navier/evidence/ns-m2-residual.json",
@@ -1204,14 +1204,15 @@
       "transition": "PARTIAL->PARTIAL",
       "newlyPassed": false,
       "originalTextPreserved": true,
-      "currentImplementedScope": "Full three-component source phase normal, including F_Z and G_Z, is retained. Fixed angular frequencies, tangent polarization and denominator checks execute on explicit local jets; a fixed orthogonal rotation supports the general affine normal.",
+      "currentImplementedScope": "같은 N3의 보존된 Imean에서 실제 F/V/b/G, 3차 slow jet와 whole-box 상계, 실제 방향 여유와 국소 normal/projector/frame 비교상수를 구성했습니다. 원래 h와 양의 극소 배율을 유지합니다. 원래 annulus 전체의 완료된 N4 배경과 uniform frame bounds는 아직 필요합니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
       "remainingObligations": [
-        "Derive the uniform source slow-domain q_star and certified frame determinant lower bounds from the actual N3 field."
+        "Complete the actual N4 background and required coefficient/derivative bounds throughout the original annulus.",
+        "Certify one global q_star satisfying all phase, frame, normal-denominator and determinant conditions."
       ],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-pulse-ode.json",
-        "mathscope-m2/navier/evidence/source-independent-checks.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-mean-pulse.json",
+        "mathscope-m2/navier/evidence/actual-pulse-independent.json"
       ]
     },
     {
@@ -1224,15 +1225,15 @@
       "transition": "PARTIAL->PARTIAL",
       "newlyPassed": false,
       "originalTextPreserved": true,
-      "currentImplementedScope": "Parallel tangent coordinates retain the normal constraint and separate analytic scalar damping from logarithmic amplitude. The source Bs-squared definition is corrected, and the reference P envelope has a continuous Gaussian bound for explicit parameters. General affine normals and fourth-order refinement are checked against an independent original Cartesian ODE solver; the actual source growing-mode datum and uniform constants remain unlinked.",
+      "currentImplementedScope": "실제 Imean의 원문 왼쪽 growing datum z_plus(0)=P(0)>0, z_minus(0)=0, 국소 Riccati/log 비교와 Gaussian 값 상계를 도출했습니다. 표시 곡선은 normalized reference log envelope입니다. 전역 실제 진폭 적분과 모든 slow derivative의 Gaussian bound는 아직 완료되지 않았습니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
       "remainingObligations": [
-        "Enclose actual pulse ODE integration error and all requested slow derivatives.",
-        "Derive actual uniform Gaussian constants and two-end decay bounds."
+        "Construct validated actual projected-amplitude and required slow-derivative enclosures with the original left growing datum.",
+        "Extend the Gaussian/comparison bounds from the actual Imean patch to all required original annular labels."
       ],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-pulse-ode.json",
-        "mathscope-m2/navier/evidence/source-independent-checks.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-mean-pulse.json",
+        "mathscope-m2/navier/evidence/actual-pulse-independent.json"
       ]
     },
     {
@@ -1245,10 +1246,11 @@
       "transition": "PARTIAL->PARTIAL",
       "newlyPassed": false,
       "originalTextPreserved": true,
-      "currentImplementedScope": "The covariance fixture now uses the source rectangle Jacobian 4-2*sqrt(2) and angular factor 1/2. The normalized covering factor is 1, because all inverse lifts are included. Historical incorrect 1/14 fixtures are explicitly excluded from acceptance.",
+      "currentImplementedScope": "정확한 normalized Haar·angular 평균·실제 Jacobian과 두-family covariance 연산자, 실제 Imean의 방향 여유와 0이 아닌 radial moment를 보존합니다. heat-prepared T0와 실제 homogeneous pulses의 Hcov 적분 및 전역 양의 가중치 조립은 아직 미완료입니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
       "remainingObligations": [
-        "Integrate the actual two source pulses, certify positive weights/determinant bounds, and assemble the once-per-box global (7.30) stress."
+        "Construct the actual heat-prepared cumulative stress T0 and both homogeneous-pulse covariance integrals.",
+        "Certify the Hcov inverse, positive slow-varying weights and once-per-slow-box partition assembly on the complete required domain."
       ],
       "evidencePaths": [
         "mathscope-m2/navier/evidence/ns-m2-covariance.json",

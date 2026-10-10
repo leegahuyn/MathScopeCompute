@@ -1,5 +1,5 @@
 // Original 16 N4/N5 criteria, preserved verbatim from the user-supplied blueprint.
-export const BLUEPRINT_SOURCE = {"name": "MathScope_Research_IDE_Blueprint_v1_KO(1)(9).pdf", "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac", "pages": [58, 60]};
+export const BLUEPRINT_SOURCE = {"name":"MathScope_Research_IDE_Blueprint_v1_KO(1)(9).pdf","sha256":"f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac","pages":[58,60]};
 export const CHECKLIST = [
   {
     "id": "N4-01",
@@ -39,16 +39,16 @@ export const CHECKLIST = [
     "criteria": "(5.7)의 6성분 선형계와 (5.8)의 convergent Picard series를 사용하고 영 axis datum을 유지한다. 합격: 선택 analytic\nstrip·Cn·Cauchy radius loss를 기록하고 Picard tail를 상계한다. 반경 interval은 차수에 따라 임의 축소하지 않으며 lemma\n의 공통 interval 조건을 검사한다.",
     "sourcePage": 58,
     "status": "PARTIAL",
-    "implementedScope": "The full source six-component system, sparse A1 block identity, zero-axis inverse and a two-parity outward Picard tail are executable. The actual common radial interval is pinned; the displayed scalar tail uses explicitly declared operator bounds.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "implementedScope": "같은 accepted N3의 실제 n=1 exact Taylor DAG와 원래 공통 collar의 C1, analytic strip, Cauchy loss, 무한 Picard tail 식을 도출했습니다. 축 첫 미분 3개와 양의 Xi에서 정규화 차분몫 15개를 구간으로 계산합니다. 별도 n=0 core evaluator는 요청 실수 η에서 0–2차 mixed jet·압력·축방향 구간을 반환합니다. 전체 공통 구간의 Picard partial sum 및 필요한 고차 계수열은 아직 완료되지 않았습니다.",
+    "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
     "formalComplete": false,
-    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-picard.json",
+    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-background.json",
     "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
     "remainingObligations": [
-      "Derive actual source C_n and the full eta-strip radius at each order.",
-      "Evaluate the same-profile six-component Picard solution with those bounds on the fixed common interval."
+      "Evaluate the actual six-component Picard partial sums throughout the unchanged common collar and full eta strip.",
+      "Construct each required higher-order source and C_n only after the previous global five moments are repaired."
     ],
-    "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+    "independentEvidencePath": "mathscope-m2/navier/evidence/actual-background-independent.json",
     "sourceInstanceCertified": false,
     "allOrderSourceCertificate": false
   },
@@ -58,16 +58,16 @@ export const CHECKLIST = [
     "criteria": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
     "sourcePage": 58,
     "status": "PARTIAL",
-    "implementedScope": "An outward-certified five-moment matrix operator uses the actual lambda and reserved Ipos. A confluent U row avoids replacing tiny lambda by zero. Five disjoint smooth bump supports, both stress support cases and a closed next-order reuse guard are recorded.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "implementedScope": "실제 lambda·Ipos inverse, Imean의 두 적분 기여, 실제 외곽 15관측과 전체 outer 식 그래프, Omega의 6개 정규 적분 축소·축 경계·C12/I1 값 오차를 구성했습니다. 새 core 점별 nonlinear 구간도 입력으로 사용할 수 있습니다. B.22/B.26/B.34/B.8을 통과한 전체 debt와 다섯 correction은 아직 미완료입니다.",
+    "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
     "formalComplete": false,
-    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-moments.json",
+    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-background.json",
     "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
     "remainingObligations": [
-      "Evaluate actual extended positive-order profiles and five total moment functions for every eta.",
-      "Apply the resulting corrections, reconstruct V_n/Pi_n, and certify their derivatives before n+1 source reuse."
+      "Propagate the actual core point enclosures through B.22 reference moments, B.26/B.34 and the E-dependent B.8 debts/roots; enclose all six regular global integrals with the retained axis boundary and C.12/I1 value remainder.",
+      "Evaluate all five actual moment-debt functions, apply the exact repairs and reconstruct derivatives before n+1 source reuse."
     ],
-    "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+    "independentEvidencePath": "mathscope-m2/navier/evidence/actual-background-independent.json",
     "sourceInstanceCertified": false,
     "allOrderSourceCertificate": false
   },
@@ -77,14 +77,14 @@ export const CHECKLIST = [
     "criteria": "Fslow=R+div T를 직접 계산하고 (5.25)의 q^[2h(N+1) −Km] bound와 비교한다. 합격: N 증가에 따른 실제 잔차 감소를\n정밀도·격자와 독립 추적한다. CN,m와 Km이 미계산이면 검증된 tail bound로 표시하지 않는다.",
     "sourcePage": 58,
     "status": "PARTIAL",
-    "implementedScope": "The full original finite physical PDE residual polynomial and source stress reconstruction (5.9) are exported. No uncomputed C_N,m, K_m, actual stress or numerical residual-decay claim is manufactured.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "implementedScope": "원래 finite physical PDE residual polynomial과 stress 재구성식을 보존합니다. 새 원본 n=1 국소 관측을 연결했지만 전체 repaired coefficient/stress, CNm/Km과 실제 residual refinement는 미계산입니다. tailBits에 따라 Xi가 달라지는 새 관측을 고정 점 정련으로 표시하지 않습니다.",
+    "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/navier/evidence/ns-m2-residual.json",
     "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
     "remainingObligations": [
-      "Substitute actual repaired coefficients and assemble R+div(T).",
-      "Measure order refinement independently of grid and precision, then certify C_N,m and K_m."
+      "Substitute the complete repaired actual coefficient/stress sequence into R+div(T).",
+      "Compute C_N,m and K_m; compare actual residual order, grid and precision refinement independently."
     ],
     "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
     "sourceInstanceCertified": false,
@@ -194,15 +194,16 @@ export const CHECKLIST = [
     "criteria": "k=ceil(ε^−1/2), kp는 0이 아닌 정수, (7.3)-(7.8)의 Φ,nΦ,K,AΦ,B를 생성한다. 합격: nΦ·tm=0과 nonzero denominators\n를 검사한다. 1≤ εk²≤4 및 frame determinant lower bound를 인증된 영역에서 만족한다.",
     "sourcePage": 60,
     "status": "PARTIAL",
-    "implementedScope": "Full three-component source phase normal, including F_Z and G_Z, is retained. Fixed angular frequencies, tangent polarization and denominator checks execute on explicit local jets; a fixed orthogonal rotation supports the general affine normal.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "implementedScope": "같은 N3의 보존된 Imean에서 실제 F/V/b/G, 3차 slow jet와 whole-box 상계, 실제 방향 여유와 국소 normal/projector/frame 비교상수를 구성했습니다. 원래 h와 양의 극소 배율을 유지합니다. 원래 annulus 전체의 완료된 N4 배경과 uniform frame bounds는 아직 필요합니다.",
+    "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
     "formalComplete": false,
-    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-pulse-ode.json",
+    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-mean-pulse.json",
     "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
     "remainingObligations": [
-      "Derive the uniform source slow-domain q_star and certified frame determinant lower bounds from the actual N3 field."
+      "Complete the actual N4 background and required coefficient/derivative bounds throughout the original annulus.",
+      "Certify one global q_star satisfying all phase, frame, normal-denominator and determinant conditions."
     ],
-    "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+    "independentEvidencePath": "mathscope-m2/navier/evidence/actual-pulse-independent.json",
     "sourceInstanceCertified": false,
     "allOrderSourceCertificate": false
   },
@@ -212,16 +213,16 @@ export const CHECKLIST = [
     "criteria": "(7.13),(7.17)의 projected ODE를 풀고 P(v)=exp∫( λ−dref)를 log envelope로 저장한다. 합격: (7.22)의 amplitude\nenergy balance, n Φ·tm 제약, midpoint normalization과 양 끝 Gaussian bound를 검사한다. underflow를 pulse가 정\n확히 0인 것으로 처리하지 않는다.",
     "sourcePage": 60,
     "status": "PARTIAL",
-    "implementedScope": "Parallel tangent coordinates retain the normal constraint and separate analytic scalar damping from logarithmic amplitude. The source Bs-squared definition is corrected, and the reference P envelope has a continuous Gaussian bound for explicit parameters. General affine normals and fourth-order refinement are checked against an independent original Cartesian ODE solver; the actual source growing-mode datum and uniform constants remain unlinked.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "implementedScope": "실제 Imean의 원문 왼쪽 growing datum z_plus(0)=P(0)>0, z_minus(0)=0, 국소 Riccati/log 비교와 Gaussian 값 상계를 도출했습니다. 표시 곡선은 normalized reference log envelope입니다. 전역 실제 진폭 적분과 모든 slow derivative의 Gaussian bound는 아직 완료되지 않았습니다.",
+    "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
     "formalComplete": false,
-    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-pulse-ode.json",
+    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-mean-pulse.json",
     "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
     "remainingObligations": [
-      "Enclose actual pulse ODE integration error and all requested slow derivatives.",
-      "Derive actual uniform Gaussian constants and two-end decay bounds."
+      "Construct validated actual projected-amplitude and required slow-derivative enclosures with the original left growing datum.",
+      "Extend the Gaussian/comparison bounds from the actual Imean patch to all required original annular labels."
     ],
-    "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+    "independentEvidencePath": "mathscope-m2/navier/evidence/actual-pulse-independent.json",
     "sourceInstanceCertified": false,
     "allOrderSourceCertificate": false
   },
@@ -231,17 +232,22 @@ export const CHECKLIST = [
     "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
     "sourcePage": 60,
     "status": "PARTIAL",
-    "implementedScope": "The covariance fixture now uses the source rectangle Jacobian 4-2*sqrt(2) and angular factor 1/2. The normalized covering factor is 1, because all inverse lifts are included. Historical incorrect 1/14 fixtures are explicitly excluded from acceptance.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "implementedScope": "정확한 normalized Haar·angular 평균·실제 Jacobian과 두-family covariance 연산자, 실제 Imean의 방향 여유와 0이 아닌 radial moment를 보존합니다. heat-prepared T0와 실제 homogeneous pulses의 Hcov 적분 및 전역 양의 가중치 조립은 아직 미완료입니다.",
+    "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/navier/evidence/ns-m2-covariance.json",
     "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
     "remainingObligations": [
-      "Integrate the actual two source pulses, certify positive weights/determinant bounds, and assemble the once-per-box global (7.30) stress."
+      "Construct the actual heat-prepared cumulative stress T0 and both homogeneous-pulse covariance integrals.",
+      "Certify the Hcov inverse, positive slow-varying weights and once-per-slow-box partition assembly on the complete required domain."
     ],
     "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
     "sourceInstanceCertified": false,
-    "allOrderSourceCertificate": false
+    "allOrderSourceCertificate": false,
+    "additionalEvidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-actual-mean-pulse.json",
+      "mathscope-m2/navier/research/ACTUAL_MEAN_PATCH_PULSE.md"
+    ]
   },
   {
     "id": "N5-07",
