@@ -15070,7 +15070,7 @@ function checkDepth(value){
 function parseReplayText(text){
   if(typeof text!=='string'||!text.trim())fail('IMPORT_JSON_REQUIRED','내보낸 M2 실행 JSON 파일을 선택하거나 내용을 붙여넣으세요.');
   if(text.length>IMPORT_TEXT_MAX_BYTES||new TextEncoder().encode(text).length>IMPORT_TEXT_MAX_BYTES)fail('IMPORT_TEXT_TOO_LARGE','가져오기 파일은 32 MiB 이하여야 합니다.');
-  let value;try{value=JSON.parse(text.replace(/^\uFEFF/,''));}catch{fail('IMPORT_INVALID_JSON','올바른 JSON 형식이 아닙니다. 원본 실행 기록을 다시 선택하세요.');}
+  let value;try{value=JSON.parse(text.charCodeAt(0)===0xfeff?text.slice(1):text);}catch{fail('IMPORT_INVALID_JSON','올바른 JSON 형식이 아닙니다. 원본 실행 기록을 다시 선택하세요.');}
   checkDepth(value);
   if(!object(value))fail('IMPORT_BUNDLE_REQUIRED','M2 실행 기록 객체가 필요합니다. 실행 입력만 있는 JSON은 입력 편집기에 넣으세요.');
   return value;
