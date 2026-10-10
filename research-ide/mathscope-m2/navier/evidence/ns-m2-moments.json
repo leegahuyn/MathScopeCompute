@@ -1,0 +1,1703 @@
+{
+  "id": "ns-m2-moments",
+  "request": {
+    "kind": "ns.background-moments",
+    "input": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "n": 1,
+      "normalizedDebts": [
+        1,
+        -0.25,
+        0.125,
+        -0.5,
+        0.375
+      ]
+    }
+  },
+  "inputHash": "639969af56246300d33b478fe7bafb96a44ba2ae8c9246109a0f57f8564d8b2f",
+  "result": {
+    "blockers": [
+      "N4-04 actual positive-order profiles, five total moment functions and their eta derivatives remain to be evaluated before correction/reuse."
+    ],
+    "checks": [
+      {
+        "detail": "The exact source lambda is retained by a confluent U row; directed matrix enclosures avoid a false singularity from lambda underflow.",
+        "id": "two-invertible-source-blocks",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "source-support-ordering",
+        "pass": true
+      },
+      {
+        "detail": "Actual source moment debts are unevaluated, so no corrected coefficient is reused.",
+        "id": "next-order-guard",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "OUTWARD_INTERVAL_SOURCE_MOMENT_OPERATOR",
+    "kind": "ns.background-moments",
+    "moduleVersion": "m2-ns-0.2.0",
+    "object": {
+      "kind": "SOURCE_FIVE_MOMENT_OPERATOR",
+      "sourceProfile": "same-profile-2026-10-10.3"
+    },
+    "precisionLedger": {
+      "arithmetic": "OUTWARD_FLOAT64_SCALAR_INTERVALS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 100000,
+      "outputItemsEstimate": 4,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "e77574eb29684a1b53f490cd2f154f35481c1fcf1d87eb076ecd293aef04472e",
+    "results": {
+      "actualMomentCorrectionsApplied": false,
+      "bumps": [
+        {
+          "center": 1.5,
+          "id": "U1",
+          "integral": 1,
+          "massNormalization": "Z is the exact positive integral; matrix enclosures use monotone weight extrema, not sampled quadrature.",
+          "normalizedSupport": [
+            1.499755859375,
+            1.500244140625
+          ],
+          "smoothDefinition": "b(x)=Z^-1*exp(-1/(1-((x-center)/width)^2)) for |x-center|<width; 0 otherwise",
+          "width": 0.000244140625
+        },
+        {
+          "center": 2,
+          "id": "U2",
+          "integral": 1,
+          "massNormalization": "Z is the exact positive integral; matrix enclosures use monotone weight extrema, not sampled quadrature.",
+          "normalizedSupport": [
+            1.999755859375,
+            2.000244140625
+          ],
+          "smoothDefinition": "b(x)=Z^-1*exp(-1/(1-((x-center)/width)^2)) for |x-center|<width; 0 otherwise",
+          "width": 0.000244140625
+        },
+        {
+          "center": 2.5,
+          "id": "E1",
+          "integral": 1,
+          "massNormalization": "Z is the exact positive integral; matrix enclosures use monotone weight extrema, not sampled quadrature.",
+          "normalizedSupport": [
+            2.499755859375,
+            2.500244140625
+          ],
+          "smoothDefinition": "b(x)=Z^-1*exp(-1/(1-((x-center)/width)^2)) for |x-center|<width; 0 otherwise",
+          "width": 0.000244140625
+        },
+        {
+          "center": 3,
+          "id": "E2",
+          "integral": 1,
+          "massNormalization": "Z is the exact positive integral; matrix enclosures use monotone weight extrema, not sampled quadrature.",
+          "normalizedSupport": [
+            2.999755859375,
+            3.000244140625
+          ],
+          "smoothDefinition": "b(x)=Z^-1*exp(-1/(1-((x-center)/width)^2)) for |x-center|<width; 0 otherwise",
+          "width": 0.000244140625
+        },
+        {
+          "center": 3.5,
+          "id": "E3",
+          "integral": 1,
+          "massNormalization": "Z is the exact positive integral; matrix enclosures use monotone weight extrema, not sampled quadrature.",
+          "normalizedSupport": [
+            3.499755859375,
+            3.500244140625
+          ],
+          "smoothDefinition": "b(x)=Z^-1*exp(-1/(1-((x-center)/width)^2)) for |x-center|<width; 0 otherwise",
+          "width": 0.000244140625
+        }
+      ],
+      "eSolve": {
+        "determinant": [
+          0.07641656128438089,
+          0.0792298226983066
+        ],
+        "solution": [
+          [
+            23.405246211214855,
+            24.31475318797264
+          ],
+          [
+            -46.268215338570585,
+            -44.580400883991416
+          ],
+          [
+            20.785565817384633,
+            21.593588644059906
+          ]
+        ]
+      },
+      "lambda": {
+        "enclosure": [
+          0,
+          9.332636185032189e-302
+        ],
+        "exactExpression": {
+          "exp": {
+            "product": [
+              {
+                "integer": -1000
+              },
+              {
+                "ref": "T"
+              }
+            ]
+          }
+        },
+        "lowerEndpointIsNotSubstitution": true,
+        "strictlyPositive": true
+      },
+      "matrices": {
+        "normalizedConfluentU": [
+          [
+            [
+              1.499755859375,
+              1.500244140625
+            ],
+            [
+              1.999755859375,
+              2.000244140625
+            ]
+          ],
+          [
+            [
+              0.6078545509016268,
+              0.6085408131592965
+            ],
+            [
+              1.3858810100107704,
+              1.3867077420313334
+            ]
+          ]
+        ],
+        "normalizedE": [
+          [
+            [
+              6.248779356479644,
+              6.251220762729646
+            ],
+            [
+              8.998535215854643,
+              9.001464903354647
+            ],
+            [
+              12.248291075229643,
+              12.251709043979647
+            ]
+          ],
+          [
+            [
+              0.1599687545770399,
+              0.1600312545782336
+            ],
+            [
+              0.11109302882770973,
+              0.11112919780967138
+            ],
+            [
+              0.08162126576874464,
+              0.08164404273689714
+            ]
+          ],
+          [
+            [
+              0.9999999999999956,
+              1.0000000000000042
+            ],
+            [
+              0.9999999999999956,
+              1.0000000000000042
+            ],
+            [
+              0.9999999999999956,
+              1.0000000000000042
+            ]
+          ]
+        ]
+      },
+      "n": 1,
+      "nextOrderAllowed": false,
+      "normalizedDebts": [
+        1,
+        -0.25,
+        0.125,
+        -0.5,
+        0.375
+      ],
+      "pass": true,
+      "rowTransform": {
+        "confluentWeightBound": "x*(log(x)-lambda*log(x)^2) <= x*(1-x^(-2*lambda))/(2*lambda) <= x*log(x)",
+        "identity": "row2new=(row1-row2old)/(2*lambda)",
+        "newUWeights": [
+          "x",
+          "x*(1-x^(-2*lambda))/(2*lambda)"
+        ],
+        "noLambdaZeroSubstitution": true,
+        "originalUExponents": [
+          "1",
+          "1-2*lambda"
+        ],
+        "physicalRowScaling": [
+          "Rbase",
+          "Rbase^(1-2*lambda)",
+          "Rbase^2",
+          "Rbase^(-2-2*lambda)",
+          "Rbase^(-2*lambda)"
+        ],
+        "transformedDebts": "The supplied first two debts are already transformed and physically normalized. They are not the unevaluated source m_n^0."
+      },
+      "schema": "MathScope.SourceConfluentMomentOperator/1",
+      "scope": "A certified finite-dimensional moment repair operator on the actual reserved source patch and actual lambda. The actual five incoming moment functions and their derivatives remain uncomputed.",
+      "sourceEquations": [
+        "5.10",
+        "5.11",
+        "5.12",
+        "5.14",
+        "5.15",
+        "5.16"
+      ],
+      "sourceMomentDebtsEvaluated": false,
+      "sourcePatch": {
+        "XLeft": {
+          "product": [
+            {
+              "ref": "XR"
+            },
+            {
+              "exp": {
+                "sum": [
+                  {
+                    "ref": "T"
+                  },
+                  {
+                    "integer": 2
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 60
+                      },
+                      {
+                        "ref": "BOuter"
+                      }
+                    ]
+                  },
+                  {
+                    "integer": -14
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "XRight": {
+          "product": [
+            {
+              "ref": "X0Ipos"
+            },
+            {
+              "exp": {
+                "integer": 5
+              }
+            }
+          ]
+        },
+        "name": "Ipos",
+        "normalizedR": "x=R/sqrt(2*X0Ipos)",
+        "radialBase": "Rbase=sqrt(2*X0Ipos)",
+        "supportedStrictlyInside": "1<x<exp(5/2)"
+      },
+      "sourceProfile": {
+        "attachedAnalyticConclusions": {
+          "actualLoopDerivativeBoundAttached": true,
+          "actualSAndPreloopMarginsAttached": true,
+          "actualStressFlatLower": "min(C^-11,R^-8)*zeta",
+          "continuousB8InclusionAllEta": true,
+          "continuousC12DebtAndI1Restoration": true,
+          "heatCompensationSameDatum": true,
+          "oneFiniteNSelected": true,
+          "preservedReservedPatches": [
+            "Ipos",
+            "Imean"
+          ],
+          "sameInfiniteAxisAndActualContinuationDebt": true,
+          "samePressureDatumAndAllFiveMoments": true,
+          "wholeClosedAnnulusDirectionalMargin": "R^-10"
+        },
+        "finiteEvaluations": {
+          "core": {
+            "etaDomain": "eta=0 with specified parameter derivatives",
+            "intervalValues": 75,
+            "points": 5
+          },
+          "mixedPhi": {
+            "coefficients": 125,
+            "comparisonOnlyComplexXiDisk": "|xi|<=1/16",
+            "etaChart": "|eta|<=rho/4",
+            "mixedValues": 75
+          }
+        },
+        "globalNumericalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "inputs": {
+          "activationRectangle": {
+            "bytes": 6843,
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md",
+            "sha256": "2035fa202134d7ca0affcad7ad7aafbb05e3508fde3a5f34a3f2cea6fd003750"
+          },
+          "assembly": {
+            "bytes": 77149,
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+            "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+          },
+          "assessment": {
+            "bytes": 45550,
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/ORIGINAL_NINE_GATES_ASSESSMENT_2026_10_10_3.json",
+            "sha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c"
+          },
+          "formalConnectionReview": {
+            "bytes": 14174,
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/FINAL_FORMAL_CONNECTION_REVIEW_2026_10_10_EN.md",
+            "sha256": "c9dca8753f12531a1103a8416ca7bfbe8af4a56accd1168b2cf5844d7e8d57b4"
+          },
+          "sourceEnvelope": {
+            "bytes": 14446,
+            "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/global-source-envelope-certificate.json",
+            "sha256": "bf9ca2766ad0ec90aa055becccc07b7ad882c71928e51c71529543c9d94efb4f"
+          },
+          "specification": {
+            "bytes": 10331,
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/ONE_PROFILE_SPECIFICATION.md",
+            "sha256": "38d8a88220094cf2e6b2571f214f38361783669b646c0c08eb206eb2b9100bdd"
+          }
+        },
+        "largeIntegerEncoding": "Original integer tokens are preserved as decimal strings when outside the safe JSON integer range.",
+        "m2HigherCoefficientsInArchive": false,
+        "n3AcceptedGates": [
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-01",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-02",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "ACTUAL_ORIGINAL_KERNEL_INPUT_AND_FIXED_POINT_WITH_EXACT_RATIONAL_FINITE_ARRAY_CONSUMER_AND_INDEPENDENT_REVIEW",
+            "id": "N3-03",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-04",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-05",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-06",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-07",
+            "status": "PASS"
+          }
+        ],
+        "newLeanExecution": false,
+        "originalLeanCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "parametersExactExpressions": {
+          "BOuter": {
+            "product": [
+              {
+                "integer": 1000
+              },
+              {
+                "ref": "T"
+              }
+            ]
+          },
+          "BRefUpper": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              300
+            ]
+          },
+          "Bcmp0": {
+            "product": [
+              {
+                "integer": 1000000
+              },
+              {
+                "power": [
+                  {
+                    "sum": [
+                      {
+                        "integer": 1
+                      },
+                      {
+                        "power": [
+                          {
+                            "ref": "Q"
+                          },
+                          1000
+                        ]
+                      },
+                      {
+                        "ref": "BRefUpper"
+                      },
+                      {
+                        "ref": "VA"
+                      },
+                      {
+                        "ref": "L0"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              }
+            ]
+          },
+          "Bk": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              80
+            ]
+          },
+          "C12EnvelopeR": {
+            "exp": {
+              "power": [
+                {
+                  "ref": "sourceEnvelopeS"
+                },
+                256
+              ]
+            }
+          },
+          "CSelected": {
+            "exp": {
+              "ref": "logCSelected"
+            }
+          },
+          "Caxis": {
+            "exp": {
+              "ref": "logCaxis"
+            }
+          },
+          "DeltaEarly": {
+            "exp": {
+              "quotient": [
+                {
+                  "product": [
+                    {
+                      "integer": -1
+                    },
+                    {
+                      "power": [
+                        {
+                          "ref": "Q"
+                        },
+                        200
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "integer": 4
+                }
+              ]
+            }
+          },
+          "Gamma": {
+            "product": [
+              {
+                "ref": "Bcmp0"
+              },
+              {
+                "exp": {
+                  "ref": "Lmath"
+                }
+              }
+            ]
+          },
+          "I1Right": {
+            "product": [
+              {
+                "ref": "X0I1"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "I2Right": {
+            "product": [
+              {
+                "ref": "X0I2"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "ImeanRight": {
+            "product": [
+              {
+                "ref": "X0Imean"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "IposRight": {
+            "product": [
+              {
+                "ref": "X0Ipos"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "K": {
+            "power": [
+              {
+                "ref": "Pstar"
+              },
+              2
+            ]
+          },
+          "Kcmp": {
+            "product": [
+              {
+                "integer": 1000
+              },
+              {
+                "power": [
+                  {
+                    "ref": "Gamma"
+                  },
+                  16
+                ]
+              }
+            ]
+          },
+          "L0": {
+            "log": {
+              "product": [
+                {
+                  "rational": "55/2"
+                },
+                {
+                  "ref": "Lambda"
+                }
+              ]
+            }
+          },
+          "Lambda": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              64
+            ]
+          },
+          "Lmath": {
+            "sum": [
+              {
+                "ref": "logCSelected"
+              },
+              {
+                "quotient": [
+                  {
+                    "product": [
+                      {
+                        "integer": 34
+                      },
+                      {
+                        "ref": "Lambda"
+                      }
+                    ]
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "sigmaStar"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Md": {
+            "integer": 1048576
+          },
+          "Pstar": {
+            "exp": {
+              "ref": "logP"
+            }
+          },
+          "Q": {
+            "quotient": [
+              {
+                "product": [
+                  {
+                    "integer": "1852673427797059126777135760139006525652319754650249024631321344126610074238976"
+                  },
+                  {
+                    "ref": "K"
+                  }
+                ]
+              },
+              {
+                "power": [
+                  {
+                    "ref": "sigmaStar"
+                  },
+                  2
+                ]
+              }
+            ]
+          },
+          "T": {
+            "sum": [
+              {
+                "exp": {
+                  "ref": "Md"
+                }
+              },
+              {
+                "integer": 10
+              }
+            ]
+          },
+          "Tf": {
+            "integer": 128
+          },
+          "Tsh": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              90
+            ]
+          },
+          "VA": {
+            "sum": [
+              {
+                "integer": 1
+              },
+              {
+                "ref": "BRefUpper"
+              },
+              {
+                "product": [
+                  {
+                    "integer": 1048576
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "BRefUpper"
+                      },
+                      2
+                    ]
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "Lambda"
+                      },
+                      4
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Vmax": {
+            "product": [
+              {
+                "ref": "VA"
+              },
+              {
+                "exp": {
+                  "product": [
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "ref": "Lmath"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0I1": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -25
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0I2": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -20
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0Imean": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -8
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0Ipos": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -14
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "XR": {
+            "product": [
+              {
+                "integer": 110
+              },
+              {
+                "power": [
+                  {
+                    "product": [
+                      {
+                        "ref": "CSelected"
+                      },
+                      {
+                        "ref": "Pstar"
+                      }
+                    ]
+                  },
+                  10
+                ]
+              }
+            ]
+          },
+          "Xa": {
+            "quotient": [
+              {
+                "integer": 4
+              },
+              {
+                "ref": "Lambda"
+              }
+            ]
+          },
+          "Xsep": {
+            "product": [
+              {
+                "integer": 110
+              },
+              {
+                "exp": {
+                  "ref": "Tsh"
+                }
+              }
+            ]
+          },
+          "barT": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              -200
+            ]
+          },
+          "co": {
+            "rational": "1/256"
+          },
+          "deltaStar": {
+            "quotient": [
+              {
+                "ref": "j0"
+              },
+              {
+                "integer": 10
+              }
+            ]
+          },
+          "directionalMarginKappa": {
+            "power": [
+              {
+                "ref": "C12EnvelopeR"
+              },
+              -10
+            ]
+          },
+          "epsilonMoment": {
+            "power": [
+              {
+                "ref": "h"
+              },
+              3
+            ]
+          },
+          "h": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -8002
+                },
+                {
+                  "ref": "T"
+                }
+              ]
+            }
+          },
+          "j0": {
+            "power": [
+              {
+                "ref": "h"
+              },
+              4
+            ]
+          },
+          "kappa0": {
+            "ref": "t1"
+          },
+          "lambda": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -1000
+                },
+                {
+                  "ref": "T"
+                }
+              ]
+            }
+          },
+          "logCSelected": {
+            "sum": [
+              {
+                "product": [
+                  {
+                    "integer": 10
+                  },
+                  {
+                    "log": {
+                      "sum": [
+                        {
+                          "integer": 1
+                        },
+                        {
+                          "ref": "BRefUpper"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "power": [
+                  {
+                    "ref": "Q"
+                  },
+                  200
+                ]
+              }
+            ]
+          },
+          "logCaxis": {
+            "sum": [
+              {
+                "quotient": [
+                  {
+                    "product": [
+                      {
+                        "integer": 64
+                      },
+                      {
+                        "ref": "Lambda"
+                      }
+                    ]
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "sigmaStar"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              },
+              {
+                "integer": 1
+              }
+            ]
+          },
+          "logP": {
+            "product": [
+              {
+                "integer": 2
+              },
+              {
+                "ref": "T"
+              }
+            ]
+          },
+          "loopD0": {
+            "quotient": [
+              {
+                "integer": 1
+              },
+              {
+                "product": [
+                  {
+                    "integer": 8
+                  },
+                  {
+                    "ref": "sourceEnvelopeS"
+                  }
+                ]
+              }
+            ]
+          },
+          "loopDelta": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -1
+                },
+                {
+                  "power": [
+                    {
+                      "ref": "sourceEnvelopeS"
+                    },
+                    16
+                  ]
+                }
+              ]
+            }
+          },
+          "loopILeft": {
+            "product": [
+              {
+                "quotient": [
+                  {
+                    "integer": 4
+                  },
+                  {
+                    "ref": "Lambda"
+                  }
+                ]
+              },
+              {
+                "exp": {
+                  "quotient": [
+                    {
+                      "ref": "t1"
+                    },
+                    {
+                      "integer": 8
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "loopIRight": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 3
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "loopMuMax": {
+            "power": [
+              {
+                "ref": "sourceEnvelopeS"
+              },
+              12
+            ]
+          },
+          "muMoment": {
+            "power": [
+              {
+                "ref": "h"
+              },
+              2
+            ]
+          },
+          "omega1": {
+            "ref": "t1"
+          },
+          "omega2": {
+            "ref": "t1"
+          },
+          "outerComplexRadius": {
+            "quotient": [
+              {
+                "power": [
+                  {
+                    "ref": "sigmaStar"
+                  },
+                  2
+                ]
+              },
+              {
+                "integer": 2048
+              }
+            ]
+          },
+          "radialFrequencyN": {
+            "sum": [
+              {
+                "integer": 1
+              },
+              {
+                "ceil": {
+                  "power": [
+                    {
+                      "ref": "C12EnvelopeR"
+                    },
+                    50
+                  ]
+                }
+              }
+            ]
+          },
+          "rho": {
+            "quotient": [
+              {
+                "power": [
+                  {
+                    "ref": "sigmaStar"
+                  },
+                  2
+                ]
+              },
+              {
+                "integer": 65536
+              }
+            ]
+          },
+          "sigmaStar": {
+            "quotient": [
+              {
+                "ref": "j0"
+              },
+              {
+                "integer": 2000
+              }
+            ]
+          },
+          "sourceEnvelopeS": {
+            "power": [
+              {
+                "ref": "CSelected"
+              },
+              100000
+            ]
+          },
+          "sourceJLeft": {
+            "product": [
+              {
+                "quotient": [
+                  {
+                    "integer": 4
+                  },
+                  {
+                    "ref": "Lambda"
+                  }
+                ]
+              },
+              {
+                "exp": {
+                  "quotient": [
+                    {
+                      "ref": "t1"
+                    },
+                    {
+                      "integer": 16
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "sourceJRight": {
+            "product": [
+              {
+                "integer": 16
+              },
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60000
+                        },
+                        {
+                          "ref": "T"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -25
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "stressFlatLowerConstant": {
+            "min": [
+              {
+                "power": [
+                  {
+                    "ref": "CSelected"
+                  },
+                  -11
+                ]
+              },
+              {
+                "power": [
+                  {
+                    "ref": "C12EnvelopeR"
+                  },
+                  -8
+                ]
+              }
+            ]
+          },
+          "t1": {
+            "power": [
+              {
+                "ref": "CSelected"
+              },
+              -120
+            ]
+          },
+          "tauBase": {
+            "min": [
+              {
+                "quotient": [
+                  {
+                    "ref": "barT"
+                  },
+                  {
+                    "integer": 4
+                  }
+                ]
+              },
+              {
+                "rational": "1/1000"
+              },
+              {
+                "quotient": [
+                  {
+                    "integer": 1
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 100
+                      },
+                      {
+                        "ref": "Gamma"
+                      },
+                      {
+                        "ref": "Bcmp0"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "quotient": [
+                  {
+                    "ref": "j0"
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 100000000
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "BRefUpper"
+                          }
+                        ]
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "L0"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "quotient": [
+                  {
+                    "power": [
+                      {
+                        "ref": "Q"
+                      },
+                      -200
+                    ]
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 1000000
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "BRefUpper"
+                          }
+                        ]
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "L0"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "quotient": [
+                  {
+                    "integer": 1
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 100000000
+                      },
+                      {
+                        "ref": "Bcmp0"
+                      },
+                      {
+                        "power": [
+                          {
+                            "sum": [
+                              {
+                                "integer": 1
+                              },
+                              {
+                                "ref": "Kcmp"
+                              }
+                            ]
+                          },
+                          2
+                        ]
+                      },
+                      {
+                        "power": [
+                          {
+                            "sum": [
+                              {
+                                "integer": 1
+                              },
+                              {
+                                "ref": "Vmax"
+                              }
+                            ]
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "profileEvidenceSHA256": "ff3b1590aa49499417910962736fe2deb8e6088acd7d77e281fd8aba6807c206",
+        "schema": "MathScope.PinnedN3SourceProfile/1",
+        "sourcePaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"
+      },
+      "stressSupport": {
+        "differentSupportsPreserved": true,
+        "n1": "[X_minus,X_b]",
+        "nAtLeast2": "[X_minus,X_plus]",
+        "requiresAllFiveMoments": true
+      },
+      "uSolve": {
+        "determinant": [
+          0.8612529693071395,
+          0.8648394649285452
+        ],
+        "solution": [
+          [
+            -2.1907254249648065,
+            -2.1805433855985394
+          ],
+          [
+            1.1363883768030596,
+            1.1420591665499102
+          ]
+        ]
+      }
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "correction coefficient index",
+          "name": "correction coefficient index",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "normalized coefficient",
+          "name": "normalized coefficient",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "0",
+          "name": "0",
+          "scale": "LINEAR",
+          "unit": "1"
+        }
+      ],
+      "description": "Certified moment operator response to the explicitly supplied normalized debt probe.",
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              -2.1907254249648065,
+              0
+            ],
+            [
+              0,
+              -2.1805433855985394,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              1,
+              1.1363883768030596,
+              0
+            ],
+            [
+              1,
+              1.1420591665499102,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              2,
+              23.405246211214855,
+              0
+            ],
+            [
+              2,
+              24.31475318797264,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              3,
+              -46.268215338570585,
+              0
+            ],
+            [
+              3,
+              -44.580400883991416,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              4,
+              20.785565817384633,
+              0
+            ],
+            [
+              4,
+              21.593588644059906,
+              0
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "The shown debts are operator inputs, not evaluated moments of the archived background.",
+        "Both source lambda and radial normalization remain in the exported exact contract."
+      ],
+      "points": [
+        {
+          "label": "coefficient 1: [-2.1907254249648065, -2.1805433855985394]",
+          "pos": [
+            0,
+            -2.185634405281673,
+            0
+          ],
+          "value": -2.185634405281673
+        },
+        {
+          "label": "coefficient 2: [1.1363883768030596, 1.1420591665499102]",
+          "pos": [
+            1,
+            1.1392237716764848,
+            0
+          ],
+          "value": 1.1392237716764848
+        },
+        {
+          "label": "coefficient 3: [23.405246211214855, 24.31475318797264]",
+          "pos": [
+            2,
+            23.85999969959375,
+            0
+          ],
+          "value": 23.85999969959375
+        },
+        {
+          "label": "coefficient 4: [-46.268215338570585, -44.580400883991416]",
+          "pos": [
+            3,
+            -45.424308111281,
+            0
+          ],
+          "value": -45.424308111281
+        },
+        {
+          "label": "coefficient 5: [20.785565817384633, 21.593588644059906]",
+          "pos": [
+            4,
+            21.18957723072227,
+            0
+          ],
+          "value": 21.18957723072227
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "682322eb558c34739162ac13936c6355122c536621977c175b2d401e99ea2b6c"
+}

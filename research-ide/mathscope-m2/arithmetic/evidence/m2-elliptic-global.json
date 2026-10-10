@@ -1,0 +1,564 @@
+{
+  "schema": "MathScope.M2.ArithmeticResult/1",
+  "version": "0.2.0-m2",
+  "kind": "arithmetic.elliptic",
+  "status": "COMPLETED",
+  "object": {
+    "kind": "ELLIPTIC_GOOD_GLOBAL_EULER_IDENTITY",
+    "model": {
+      "a": "-1",
+      "b": "0",
+      "discriminant": "64",
+      "base": "Z[1/2]",
+      "excludedPrimes": [
+        "2"
+      ],
+      "smoothProperOutsideS": true
+    }
+  },
+  "request": {
+    "budget": {},
+    "input": {
+      "excludedPrimes": [
+        2
+      ],
+      "operation": "globalIdentity",
+      "p": "5",
+      "primes": [
+        3,
+        5,
+        7
+      ]
+    },
+    "kind": "arithmetic.elliptic",
+    "precision": {}
+  },
+  "scope": {
+    "finite": true,
+    "finitePrimes": [
+      "3",
+      "5",
+      "7"
+    ],
+    "wholeEulerIdentityProvedByLocalFactorsAndAbsoluteConvergence": true,
+    "fullInfiniteProductNumericallyEvaluated": false
+  },
+  "results": {
+    "object": {
+      "kind": "ELLIPTIC_GOOD_GLOBAL_EULER_IDENTITY",
+      "model": {
+        "a": "-1",
+        "b": "0",
+        "discriminant": "64",
+        "base": "Z[1/2]",
+        "excludedPrimes": [
+          "2"
+        ],
+        "smoothProperOutsideS": true
+      }
+    },
+    "scope": {
+      "finite": true,
+      "finitePrimes": [
+        "3",
+        "5",
+        "7"
+      ],
+      "wholeEulerIdentityProvedByLocalFactorsAndAbsoluteConvergence": true,
+      "fullInfiniteProductNumericallyEvaluated": false
+    },
+    "checks": [
+      {
+        "name": "p=3: exact local zeta/L quotient identity",
+        "pass": true
+      },
+      {
+        "name": "p=5: exact local zeta/L quotient identity",
+        "pass": true
+      },
+      {
+        "name": "p=7: exact local zeta/L quotient identity",
+        "pass": true
+      }
+    ],
+    "tables": [
+      {
+        "title": "Good-place local factors",
+        "columns": [
+          "prime",
+          "pointCount",
+          "aP",
+          "numerator",
+          "localVariable"
+        ],
+        "rows": [
+          {
+            "prime": "3",
+            "pointCount": "4",
+            "aP": "0",
+            "numerator": "1,0,3",
+            "localVariable": "T_3"
+          },
+          {
+            "prime": "5",
+            "pointCount": "8",
+            "aP": "-2",
+            "numerator": "1,2,5",
+            "localVariable": "T_5"
+          },
+          {
+            "prime": "7",
+            "pointCount": "8",
+            "aP": "0",
+            "numerator": "1,0,7",
+            "localVariable": "T_7"
+          }
+        ]
+      }
+    ],
+    "visualization": {
+      "points": [
+        {
+          "pos": [
+            3,
+            0,
+            4
+          ],
+          "label": "p=3: #E=4",
+          "value": {
+            "prime": "3",
+            "pointCount": "4",
+            "aP": "0",
+            "numerator": "1,0,3",
+            "localVariable": "T_3"
+          }
+        },
+        {
+          "pos": [
+            5,
+            -2,
+            8
+          ],
+          "label": "p=5: #E=8",
+          "value": {
+            "prime": "5",
+            "pointCount": "8",
+            "aP": "-2",
+            "numerator": "1,2,5",
+            "localVariable": "T_5"
+          }
+        },
+        {
+          "pos": [
+            7,
+            0,
+            8
+          ],
+          "label": "p=7: #E=8",
+          "value": {
+            "prime": "7",
+            "pointCount": "8",
+            "aP": "0",
+            "numerator": "1,0,7",
+            "localVariable": "T_7"
+          }
+        }
+      ],
+      "lines": [],
+      "axes": [
+        {
+          "label": "Prime",
+          "type": "PRIME_INDEX"
+        },
+        {
+          "label": "Frobenius trace",
+          "type": "INTEGER_COEFFICIENT"
+        },
+        {
+          "label": "Point count",
+          "type": "CARDINALITY"
+        }
+      ],
+      "description": "Exact good-place Euler factors and a proved absolute-convergence tail bound",
+      "coordinateMeaning": "Prime-local exact data; an infinite Euler product is justified by its analytic bound, not by screen interpolation.",
+      "lostInformation": [
+        "The screen does not numerically evaluate the full infinite product."
+      ],
+      "sourceFields": [
+        "localFactors",
+        "convergence"
+      ]
+    },
+    "family": "ELLIPTIC_GOOD_MODEL",
+    "model": {
+      "a": "-1",
+      "b": "0",
+      "discriminant": "64",
+      "base": "Z[1/2]",
+      "excludedPrimes": [
+        "2"
+      ],
+      "smoothProperOutsideS": true
+    },
+    "localFactors": [
+      {
+        "p": "3",
+        "variable": "T_3",
+        "pointCount": "4",
+        "aP": "0",
+        "zetaNumerator": [
+          "1",
+          "0",
+          "3"
+        ],
+        "zetaDenominatorFactors": [
+          [
+            "1",
+            "-1"
+          ],
+          [
+            "1",
+            "-3"
+          ]
+        ],
+        "ellipticLDenominator": [
+          "1",
+          "0",
+          "3"
+        ],
+        "finiteIdentityVerified": true
+      },
+      {
+        "p": "5",
+        "variable": "T_5",
+        "pointCount": "8",
+        "aP": "-2",
+        "zetaNumerator": [
+          "1",
+          "2",
+          "5"
+        ],
+        "zetaDenominatorFactors": [
+          [
+            "1",
+            "-1"
+          ],
+          [
+            "1",
+            "-5"
+          ]
+        ],
+        "ellipticLDenominator": [
+          "1",
+          "2",
+          "5"
+        ],
+        "finiteIdentityVerified": true
+      },
+      {
+        "p": "7",
+        "variable": "T_7",
+        "pointCount": "8",
+        "aP": "0",
+        "zetaNumerator": [
+          "1",
+          "0",
+          "7"
+        ],
+        "zetaDenominatorFactors": [
+          [
+            "1",
+            "-1"
+          ],
+          [
+            "1",
+            "-7"
+          ]
+        ],
+        "ellipticLDenominator": [
+          "1",
+          "0",
+          "7"
+        ],
+        "finiteIdentityVerified": true
+      }
+    ],
+    "finiteIdentity": "product_(p in P) Z(E/F_p,T_p) = product_(p in P) (1-T_p)^-1 (1-p*T_p)^-1 / product_(p in P) L_p(E,T_p)",
+    "placeVariablesRemainDistinct": true,
+    "infiniteIdentity": "zeta(E over Z[1/S],s)=zeta^S(s) zeta^S(s-1) / L^S(E,s)",
+    "convergence": {
+      "schema": "MathScope.AbsoluteEulerTailBound/1",
+      "family": "elliptic",
+      "domain": "Re(s)>2",
+      "uniformHalfPlane": {
+        "numerator": "3",
+        "denominator": "1"
+      },
+      "cutoff": 100,
+      "logTailAbsoluteUpperBound": {
+        "numerator": "4",
+        "denominator": "75"
+      },
+      "delta": {
+        "numerator": "1",
+        "denominator": "1"
+      },
+      "rhoUpper": {
+        "numerator": "1",
+        "denominator": "4"
+      },
+      "cutoffPowerUpper": {
+        "numerator": "1",
+        "denominator": "100"
+      },
+      "coefficientCount": 4,
+      "argument": [
+        "For |z|<1, the power series for -log(1-z) is bounded in absolute value by |z|/(1-|z|).",
+        "Each local factor is bounded by 4 times p^(-1-delta)/(1-2^(-1-delta)).",
+        "Primes greater than L form a subset of the integers greater than L.",
+        "The decreasing-function integral bounds sum_(m>L) m^(-1-delta) by L^(-delta)/delta.",
+        "The bound tends to zero as L tends to infinity, uniformly on the declared closed right half-plane."
+      ],
+      "numericalMethod": "EXACT_RATIONAL_UPPER_BOUNDS_USING_INTEGER_ROOTS",
+      "sourceDependencies": [
+        "S07 Weil bounds for H1 of a good elliptic curve",
+        "Elementary absolutely convergent logarithm series and integral test"
+      ],
+      "analyticallyConvergent": true,
+      "meromorphicContinuationComputed": false,
+      "fullInfiniteProductNumericallyEvaluated": false,
+      "RHOrBSDClaim": false,
+      "formalComplete": false
+    },
+    "grade": "EXACT_FINITE_IDENTITY_WITH_EXPLICIT_ABSOLUTE_CONVERGENCE_BOUND",
+    "formalComplete": false
+  },
+  "checks": [
+    {
+      "name": "p=3: exact local zeta/L quotient identity",
+      "pass": true
+    },
+    {
+      "name": "p=5: exact local zeta/L quotient identity",
+      "pass": true
+    },
+    {
+      "name": "p=7: exact local zeta/L quotient identity",
+      "pass": true
+    }
+  ],
+  "blockers": [],
+  "tables": [
+    {
+      "title": "Good-place local factors",
+      "columns": [
+        "prime",
+        "pointCount",
+        "aP",
+        "numerator",
+        "localVariable"
+      ],
+      "rows": [
+        {
+          "prime": "3",
+          "pointCount": "4",
+          "aP": "0",
+          "numerator": "1,0,3",
+          "localVariable": "T_3"
+        },
+        {
+          "prime": "5",
+          "pointCount": "8",
+          "aP": "-2",
+          "numerator": "1,2,5",
+          "localVariable": "T_5"
+        },
+        {
+          "prime": "7",
+          "pointCount": "8",
+          "aP": "0",
+          "numerator": "1,0,7",
+          "localVariable": "T_7"
+        }
+      ]
+    }
+  ],
+  "precisionLedger": {
+    "requested": {},
+    "finiteScope": {
+      "finite": true,
+      "finitePrimes": [
+        "3",
+        "5",
+        "7"
+      ],
+      "wholeEulerIdentityProvedByLocalFactorsAndAbsoluteConvergence": true,
+      "fullInfiniteProductNumericallyEvaluated": false
+    },
+    "roundingError": "0 for exact integer, polynomial, finite-field and finite Witt operations; explicitly tagged complex roots are Float64 display only.",
+    "precisionAxesIndependent": true
+  },
+  "evidence": {
+    "calculation": "EXACT_FINITE_SCOPE",
+    "geometricComparison": "EXPLICIT_MODEL_PLUS_APPLIED_EXTERNAL_THEOREM_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "lean": "NO_NEW_KERNEL_EXECUTION",
+    "formalComplete": false,
+    "universalConjectureSolved": false
+  },
+  "provenance": {
+    "sources": [
+      {
+        "id": "BLUEPRINT_P4_P6",
+        "kind": "USER_SUPPLIED_SPECIFICATION",
+        "pages": [
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          69,
+          70,
+          71,
+          72
+        ],
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      {
+        "id": "S01",
+        "title": "Prisms and Prismatic Cohomology",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S06",
+        "title": "Counting Points on Hyperelliptic Curves Using Monsky–Washnitzer Cohomology",
+        "url": "https://arxiv.org/abs/math/0105031",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "STACKS_PROJECTIVE",
+        "title": "Derived projective bundle formula",
+        "url": "https://stacks.math.columbia.edu/tag/0FUN",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S03",
+        "title": "Integral p-adic Hodge Theory",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/integralpadicHodge.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S04",
+        "title": "Perfectoid Spaces",
+        "url": "https://www.math.uni-bonn.de/people/scholze/PerfectoidSpaces.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S07",
+        "title": "La conjecture de Weil I",
+        "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "C01",
+        "title": "Lectures on Etale Cohomology",
+        "url": "https://www.jmilne.org/math/CourseNotes/LEC.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      }
+    ],
+    "algorithmVersion": "0.2.0-m2",
+    "inputHash": "0c2d6babaee1eeadd998d3fb069ea1e922a353050bad2866636ab0b2b0f0fa56",
+    "sourceHash": "984b3ec8e9e60c68e38a951916db861e64d9a85d4d7c79cce3dc2663f9a85fa6",
+    "operations": 83
+  },
+  "visualization": {
+    "points": [
+      {
+        "pos": [
+          3,
+          0,
+          4
+        ],
+        "label": "p=3: #E=4",
+        "value": {
+          "prime": "3",
+          "pointCount": "4",
+          "aP": "0",
+          "numerator": "1,0,3",
+          "localVariable": "T_3"
+        }
+      },
+      {
+        "pos": [
+          5,
+          -2,
+          8
+        ],
+        "label": "p=5: #E=8",
+        "value": {
+          "prime": "5",
+          "pointCount": "8",
+          "aP": "-2",
+          "numerator": "1,2,5",
+          "localVariable": "T_5"
+        }
+      },
+      {
+        "pos": [
+          7,
+          0,
+          8
+        ],
+        "label": "p=7: #E=8",
+        "value": {
+          "prime": "7",
+          "pointCount": "8",
+          "aP": "0",
+          "numerator": "1,0,7",
+          "localVariable": "T_7"
+        }
+      }
+    ],
+    "lines": [],
+    "axes": [
+      {
+        "label": "Prime",
+        "type": "PRIME_INDEX"
+      },
+      {
+        "label": "Frobenius trace",
+        "type": "INTEGER_COEFFICIENT"
+      },
+      {
+        "label": "Point count",
+        "type": "CARDINALITY"
+      }
+    ],
+    "description": "Exact good-place Euler factors and a proved absolute-convergence tail bound",
+    "coordinateMeaning": "Prime-local exact data; an infinite Euler product is justified by its analytic bound, not by screen interpolation.",
+    "lostInformation": [
+      "The screen does not numerically evaluate the full infinite product."
+    ],
+    "sourceFields": [
+      "localFactors",
+      "convergence"
+    ],
+    "sourceHash": "984b3ec8e9e60c68e38a951916db861e64d9a85d4d7c79cce3dc2663f9a85fa6",
+    "sourceRevision": "984b3ec8e9e60c68e38a951916db861e64d9a85d4d7c79cce3dc2663f9a85fa6",
+    "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
+    "sampling": {
+      "displayPoints": 3,
+      "originalSourceHash": "984b3ec8e9e60c68e38a951916db861e64d9a85d4d7c79cce3dc2663f9a85fa6"
+    },
+    "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
+  },
+  "resultHash": "2d32bfa18715662adf8dc1ac152e2c2f479a192a8461eddd84fe5fba1e8915ed"
+}

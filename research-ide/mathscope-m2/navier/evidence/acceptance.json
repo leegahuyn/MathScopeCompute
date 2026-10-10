@@ -1,6 +1,6 @@
 {
-  "schema": "MathScope.M2.NavierAcceptance/1",
-  "generatedAt": "2026-10-10T04:01:38.231Z",
+  "schema": "MathScope.M2.NavierAcceptance/3",
+  "generatedAt": "2026-10-10T05:44:38.721Z",
   "source": {
     "name": "MathScope_Research_IDE_Blueprint_v1_KO(1)(9).pdf",
     "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
@@ -10,20 +10,75 @@
     ]
   },
   "sourceHashes": {
-    "index.mjs": "068b138e9ec676ba21f2dbd7f9be0ed57ece3c866813567ca7c46554ae5bc1df",
-    "pulse-ode.mjs": "d47bfdf98581ace4d4df26a8b9086bc8642a6bca385b955468dd7eeb753453fa",
-    "checklist.mjs": "8b2d96f435d35b2b4d7760319cf9a7787aad56d4bd7e4f7fae69fe97e2974956",
-    "tests/navier.test.mjs": "847ebf999435918d716e36fb2fe67578ac392df9dcef5e89b65082d81bd4faeb",
+    "index.mjs": "53c509acd21057de711102b5f834d243f497b4dd220e477c932ef3d9e0dd844f",
+    "pulse-ode.mjs": "3bfd092a4d99760949b3ee2ff810401e8d4a2d91af639aa756264bd09413a387",
+    "checklist.mjs": "83a3ec229ef3b6e2b1493703fdbacddbda7b268864b2491472e4b2bc3560a369",
+    "source-algebra.mjs": "afda4d8058c04b75ffef239475fdc79aa4ab0985de4d58d3c6bf544d3c3c26fb",
+    "source-background.mjs": "7e9b5c45cd6740dfff1005ce6dd877920f0d43d0d426a6c85c15345faecd6349",
+    "source-envelope.mjs": "fcbc6b76a058ecd0b9cd32d16d3dee4e5c718dae41deada11ff0a2d5f25935e1",
+    "source-geometry.mjs": "cb870c627ac561ad47261453487b20bcf9083b3d41abe7d2a5cf3b9e55cfc310",
+    "source-profile.mjs": "4578d632c3da8c6994557bcb4e78babf4dcede1e4893252c6a8ae2e342426133",
+    "source-profile-data.mjs": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a",
+    "source-support.mjs": "3cc1397c28894bcabc8f78705b1774e5785f75c6317f4c5d9af56a6ccea66ed9",
+    "source-core-data.mjs": "bc42fb9d5e7978180acab2835a5cadd8ec7295fe4f0af4532723503dc9ed6d20",
+    "source-core-observations.mjs": "61c01dc4680a88cbd7f6a8ae0731e4e09ed96b524148a0a8eb23eee4b7041dd9",
+    "source-pulse-curl.mjs": "ef026acbf748b752263b0dc98b48c6cb9da9b74f09c5e94f0818e1f2e6db7fd0",
+    "source-gluing.mjs": "669daa3eec7c9a6901cd937b5f657ff2e671bd41384dfcb5c3cd29033a30b4df",
+    "source-tail.mjs": "de2efbc65cb3ec129196b18ed22441a5305d4ccbacfee77e5d60adc8f77e21b0",
+    "README_KO.md": "3e445f634e67ef56ee45bf59953712370b4183f04e185187fd50d46733351ff7",
+    "PROOF_OBLIGATIONS_KO.md": "803dce4e0f0ab7e6f00301715b7382ec615fb319f5948e2c5edbd1bac89ad15d",
+    "research/SOURCE_PULSE_CURL_OPERATOR.md": "4861ea97b3fe1ab1be1ab2538958d311849a4321ae6f477c152175b13194e013",
+    "tests/navier.test.mjs": "a11ff9ac21183408f6ea578657d43ce0006132346bbf37911bc4a47fdd141082",
+    "tests/source.test.mjs": "52bec2b54b9f79fbacf9a74e68fb133a06ef9529e88fc972b2aace67aadd0c08",
+    "tests/source-core.test.mjs": "5aeceb94c0c25de97110ed530f7e4f6b9d5b6db51d57da74ebdc9a24a835ebc3",
+    "tests/source-pulse-curl.test.mjs": "a01964e11b48d426ab28f8ea85f27de0effcdc1c3bdfe04d0c6e5705becfa226",
+    "tests/source-contract.test.mjs": "67a0902e5f151d50b4ed19421114f32b957ac83706286d2ca69c6f2f54fe02e5",
+    "tests/source-independent-checks.py": "1593e0bc766cc455bc708074e79cf3161584ccdc70dae614cf10a3f165b994a1",
+    "tests/source-core-independent.py": "4698cdf52661d292934de2272119b5788667b9d8b5b2bb1dd7ad44242c821672",
+    "tests/source-contract-independent.py": "2d9483145058a06779f350e26bb956a5038846b9fdef55cb022b2ff237591fb3",
+    "tests/build-source-binding.py": "90c03b2f3feb98472b65a5457cc5e77e635b9fcd7483222e8566dcb70a903819",
+    "tests/build-source-core-binding.py": "b54b3579d8a6ed71bf0700f6cd3d434b1b91ec7dcc115bede8f4aafcdc4a8abf",
+    "tests/generate-evidence.mjs": "949de2dbf4b04b571f6767911604789423ed5472052d27b35abbad643a113315",
     "tests/fixtures/original-n4-n5.json": "f4b986ccc63dfd20cc58a5ca009310af7c50bcde9876a3304d42cd474107dba3"
   },
   "testEvidence": {
     "runner": "node --test --test-reporter=tap",
+    "suites": [
+      "navier.test.mjs",
+      "source.test.mjs",
+      "source-core.test.mjs",
+      "source-pulse-curl.test.mjs",
+      "source-contract.test.mjs"
+    ],
     "file": "tests.tap",
-    "total": 15,
-    "pass": 15,
+    "total": 51,
+    "pass": 51,
     "fail": 0,
-    "sha256": "34b87bfc17b3aafa03d6ba9f862b2317b567c02d181820891dfba83478534978",
+    "sha256": "e040a3c0ab28314b523d3e76eee3060b42c25a17284851c113198feaec630403",
     "scope": "LOCAL_NODE_DOMAIN_AND_ENGINE_REPLAY; browser/worker integration is verified separately by the page build."
+  },
+  "independentEvidence": {
+    "file": "source-independent-checks.json",
+    "sha256": "cc8f3b28a949d301b972efb3af18b3e2e754f71a6672c206c77cd86db58ba2b4",
+    "checks": 40,
+    "exactPhysicalPdeComparisons": 16,
+    "additional": [
+      {
+        "file": "source-core-independent.json",
+        "checks": 168,
+        "sha256": "20eb9834803bad41668682dc36210940930f6d47dc71179101952c5ae620a59d"
+      },
+      {
+        "file": "source-contract-independent.json",
+        "checks": 78,
+        "sha256": "3673abcda51311fd8fd299c90a85d88b584a76aaa5a019280a87176c339f88d0"
+      }
+    ],
+    "totalChecks": 286
+  },
+  "exactSourceEvidence": {
+    "file": "source-exact-identities.json",
+    "sha256": "9b931dbb0df79bbd465976682c6799d5a3ab7fb4e6d862d64484628039c02a20"
   },
   "archive": {
     "id": "same-profile-2026-10-10.3",
@@ -39,7 +94,7 @@
       "kind": "ns.background-recursion",
       "status": "PARTIAL",
       "inputHash": "2d2d1ac09bd7b265f3bf1e2139250efbb8b19e91582d94bdda34ea3428042c5f",
-      "resultHash": "db933c1bfc0ba3bed690bf75614464c8c9fd2f6de384d23cb7e5f487be9ddead",
+      "resultHash": "6545735c6864187c2f731120e1883f916144141fcc1e4ae7668f1da66d3a21a2",
       "checks": [
         {
           "detail": "background n, radial k, eta m are separate keys",
@@ -47,8 +102,13 @@
           "pass": true
         },
         {
-          "detail": "1-2D=2A-1=2h for A=1/2+h,D=1/2-h",
+          "detail": "Exact powers in the indeterminate h; the accepted source h is never replaced.",
           "id": "physical-exponent-shift",
+          "pass": true
+        },
+        {
+          "detail": "Independent cylindrical physical differentiation equals the source extractor, in exact BigInt rational differential polynomials.",
+          "id": "direct-original-pde-coefficients",
           "pass": true
         },
         {
@@ -81,7 +141,7 @@
             "label": "background order n",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "background order n",
+            "sourceField": "result.visualization.points[*].pos[0]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -94,7 +154,7 @@
             "label": "left order i",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "left order i",
+            "sourceField": "result.visualization.points[*].pos[1]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -107,7 +167,7 @@
             "label": "right order j",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "right order j",
+            "sourceField": "result.visualization.points[*].pos[2]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -121,11 +181,249 @@
       "diagnostics": null
     },
     {
+      "id": "ns-m2-picard",
+      "kind": "ns.background-picard",
+      "status": "PARTIAL",
+      "inputHash": "729e0c65363697480d0b962ff34d234860664f314e4d850eba004cd4c9eb4923",
+      "resultHash": "2d59e1a8ea318e22d4e4f53633a47c4a26c302715d03637796cbc2d12f00ccea",
+      "checks": [
+        {
+          "detail": "Exact sparse products certify A1*D*A1=0 including parameter derivatives.",
+          "id": "source-six-component-block",
+          "pass": true
+        },
+        {
+          "detail": "Outward tail for explicitly declared Cn and analytic strip; it does not certify those constants for the actual profile.",
+          "id": "two-parity-tail",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "common-interval-not-shrunk",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 18,
+        "points": 18,
+        "lines": 1,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "Picard iteration k",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[0]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "Picard iteration k",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "log coefficient bound",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[1]",
+            "scale": "LINEAR",
+            "transform": "log coordinates supplied by computation",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "log coefficient bound",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "0",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[2]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "0",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-moments",
+      "kind": "ns.background-moments",
+      "status": "PARTIAL",
+      "inputHash": "639969af56246300d33b478fe7bafb96a44ba2ae8c9246109a0f57f8564d8b2f",
+      "resultHash": "682322eb558c34739162ac13936c6355122c536621977c175b2d401e99ea2b6c",
+      "checks": [
+        {
+          "detail": "The exact source lambda is retained by a confluent U row; directed matrix enclosures avoid a false singularity from lambda underflow.",
+          "id": "two-invertible-source-blocks",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "source-support-ordering",
+          "pass": true
+        },
+        {
+          "detail": "Actual source moment debts are unevaluated, so no corrected coefficient is reused.",
+          "id": "next-order-guard",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 5,
+        "points": 5,
+        "lines": 5,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "correction coefficient index",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[0]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "correction coefficient index",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "normalized coefficient",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[1]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "normalized coefficient",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "0",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[2]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "0",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-residual",
+      "kind": "ns.background-residual",
+      "status": "PARTIAL",
+      "inputHash": "882966c5685d276ec9c11c843c62a9d2129bd794833c8aa0aaac7c4c021af227",
+      "resultHash": "c1708f3df2d70e4a6be146fb31d6c37060e05ba67baac0c4955a3c28e030453a",
+      "checks": [
+        {
+          "detail": "",
+          "id": "original-pde-coefficient-identity",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "uncomputed-constants-not-certified",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 19,
+        "points": 19,
+        "lines": 0,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "q exponent coefficient of h",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[0]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "q exponent coefficient of h",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "exact differential monomial count",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[1]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "exact differential monomial count",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "equation index",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[2]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "equation index",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
       "id": "ns-m2-cutoffs",
       "kind": "ns.background-cutoffs",
-      "status": "PARTIAL",
+      "status": "COMPLETED",
       "inputHash": "a1b211b6a1a70e0f67558ec07a073118c49213b682fd887a32410a3638d0f067",
-      "resultHash": "0f8429db5bf0b3d990b2e3ca92de4242b558a1e3ff1341530a7b6f638579a7ba",
+      "resultHash": "efb3249bed273c801dd964bb71eccf97a9ae58ce47a9efeeeae50993e54b78a6",
       "checks": [
         {
           "detail": "Exact powers of two.",
@@ -135,6 +433,16 @@
         {
           "detail": "Outward interval log inequality on entire q<=1/a_j, not samples.",
           "id": "all-q-all-supplied-m",
+          "pass": true
+        },
+        {
+          "detail": "No omitted positive-order coefficient is silently treated as zero.",
+          "id": "complete-prefix-or-safe-refusal",
+          "pass": true
+        },
+        {
+          "detail": "Each supplied potential is actually multiplied by its C-infinity cutoff before summation.",
+          "id": "actual-cutoff-potential-sum",
           "pass": true
         }
       ],
@@ -157,7 +465,7 @@
             "label": "order j",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "order j",
+            "sourceField": "result.visualization.points[*].pos[0]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -170,7 +478,7 @@
             "label": "log2(a_j)",
             "type": "CATEGORICAL",
             "unit": "log2",
-            "sourceField": "rows.log2a",
+            "sourceField": "result.results.rows[*].log2a",
             "scale": "LINEAR",
             "transform": "log coordinates supplied by computation",
             "dataDimension": 1,
@@ -183,7 +491,7 @@
             "label": "0",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "0",
+            "sourceField": "result.visualization.points[*].pos[2]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -199,10 +507,15 @@
     {
       "id": "ns-m2-curl",
       "kind": "ns.potential-curl",
-      "status": "PARTIAL",
+      "status": "COMPLETED",
       "inputHash": "b851ccb35ee96409356214cf75a468400ff949b306ebebfd6786ce96b7d884b2",
-      "resultHash": "ea6a6ddf778194a557093a3682ba3ac77a59e16d25510f8157db91354494e4cd",
+      "resultHash": "1a51be4404db46b5bddce153702cc0bf060402d93f9e51acbe93179167cd70e2",
       "checks": [
+        {
+          "detail": "Exact q-dependent potential cutoff includes the source chi-prime radial term.",
+          "id": "exact-source-5.45",
+          "pass": true
+        },
         {
           "detail": "div(curl A)=d_x d_y A_z-d_y d_x A_z=0 on every smooth piece, with matching derivatives through the collar",
           "id": "mixed-partial-identity",
@@ -238,7 +551,7 @@
             "label": "x",
             "type": "PHYSICAL_COORDINATE",
             "unit": "fixture length",
-            "sourceField": "x",
+            "sourceField": "result.visualization.points[*].pos[0]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -251,7 +564,7 @@
             "label": "y",
             "type": "PHYSICAL_COORDINATE",
             "unit": "fixture length",
-            "sourceField": "y",
+            "sourceField": "result.visualization.points[*].pos[1]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -264,7 +577,7 @@
             "label": "z",
             "type": "PHYSICAL_COORDINATE",
             "unit": "fixture length",
-            "sourceField": "z",
+            "sourceField": "result.visualization.points[*].pos[2]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -280,18 +593,28 @@
     {
       "id": "ns-m2-dyadic",
       "kind": "ns.dyadic-charts",
-      "status": "PARTIAL",
-      "inputHash": "847247b942e66b07145014b364e3274762588d501c1c19b9e67bc37d96df7ab9",
-      "resultHash": "18b28f15f1742a20bc63b08df9013775808988ce6106eed84e22eb8ceaef5f08",
+      "status": "COMPLETED",
+      "inputHash": "899f54783325757ba4511bf5fe2c0d4f35b177a0832918f8d381300e34f2998e",
+      "resultHash": "d4271d5f2c4853678960ea8ee1710348e898239a94c00488175362f4b1c1724c",
       "checks": [
         {
-          "detail": "Same physical point in adjacent bands.",
-          "id": "overlap-coordinate-identity",
+          "detail": "The full accepted N3 expression is retained; its lower binary64 enclosure endpoint zero is not substituted as h.",
+          "id": "same-profile-exact-h",
           "pass": true
         },
         {
-          "detail": "For 0<epsilon<=1, k=ceil(epsilon^-1/2) gives 1<=epsilon*k^2<=4.",
-          "id": "carrier-frequency-window",
+          "detail": "Exact scaling identity plus independent directed interval evaluations.",
+          "id": "same-physical-point-in-overlap",
+          "pass": true
+        },
+        {
+          "detail": "Ceil uses strict positivity of the source exponent; rounding epsilon to one would incorrectly choose k=1.",
+          "id": "frozen-covering-and-carrier",
+          "pass": true
+        },
+        {
+          "detail": "Both charts independently restore q, Y and the actual normalized physical swirl interval from the accepted N3 core receipt.",
+          "id": "actual-core-physical-field-overlap",
           "pass": true
         }
       ],
@@ -314,7 +637,7 @@
             "label": "r",
             "type": "PHYSICAL_COORDINATE",
             "unit": "length",
-            "sourceField": "r",
+            "sourceField": "result.visualization.points[*].pos[0]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -327,7 +650,7 @@
             "label": "z",
             "type": "PHYSICAL_COORDINATE",
             "unit": "length",
-            "sourceField": "z",
+            "sourceField": "result.visualization.points[*].pos[1]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -340,7 +663,7 @@
             "label": "tau=1-t",
             "type": "PHYSICAL_TIME",
             "unit": "time",
-            "sourceField": "tau=1-t",
+            "sourceField": "result.visualization.points[*].pos[2]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -354,20 +677,374 @@
       "diagnostics": null
     },
     {
-      "id": "ns-m2-support",
-      "kind": "ns.pulse-support",
-      "status": "PARTIAL",
-      "inputHash": "491d662b4ef3a9b3f250281d9a49b5a02c2ac3616762307d16e1fed91f99d917",
-      "resultHash": "ece6452867d534e866b1ce6d5db56edccae44200cf9c99326c9ba9f3ffe1c253",
+      "id": "ns-m2-core-charts",
+      "kind": "ns.source-core-charts",
+      "status": "COMPLETED",
+      "inputHash": "b10f2b7b01698c6a00d1f90b22a29baffc77aedc812498564ce83efa356120a9",
+      "resultHash": "6879b2bb5a7246a034e7a9541606ce465a9d7a5a45cdf817108cc03d3ecb1cff",
       "checks": [
         {
-          "detail": "Exact rational open gaps separate conflicting support intervals.",
-          "id": "every-active-conflict-pair",
+          "id": "accepted-assembly-to-core-sha-chain",
           "pass": true
         },
         {
-          "detail": "det Jg=14; this is a covering map globally, not a torus bijection.",
-          "id": "haar-jacobian",
+          "id": "exact-observation-domain",
+          "pass": true
+        },
+        {
+          "id": "source-row-0",
+          "pass": true
+        },
+        {
+          "id": "physical-point-0",
+          "pass": true
+        },
+        {
+          "id": "two-distinct-overlap-charts-0",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-0-0",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-0-0",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-0-0",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-0-0",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-0-1",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-0-1",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-0-1",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-0-1",
+          "pass": true
+        },
+        {
+          "id": "same-physical-quantity-in-overlap-0",
+          "pass": true
+        },
+        {
+          "id": "axis-extension-and-positive-symbolic-scale-0",
+          "pass": true
+        },
+        {
+          "id": "source-row-1",
+          "pass": true
+        },
+        {
+          "id": "physical-point-1",
+          "pass": true
+        },
+        {
+          "id": "two-distinct-overlap-charts-1",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-1-0",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-1-0",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-1-0",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-1-0",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-1-1",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-1-1",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-1-1",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-1-1",
+          "pass": true
+        },
+        {
+          "id": "same-physical-quantity-in-overlap-1",
+          "pass": true
+        },
+        {
+          "id": "axis-extension-and-positive-symbolic-scale-1",
+          "pass": true
+        },
+        {
+          "id": "source-row-2",
+          "pass": true
+        },
+        {
+          "id": "physical-point-2",
+          "pass": true
+        },
+        {
+          "id": "two-distinct-overlap-charts-2",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-2-0",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-2-0",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-2-0",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-2-0",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-2-1",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-2-1",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-2-1",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-2-1",
+          "pass": true
+        },
+        {
+          "id": "same-physical-quantity-in-overlap-2",
+          "pass": true
+        },
+        {
+          "id": "axis-extension-and-positive-symbolic-scale-2",
+          "pass": true
+        },
+        {
+          "id": "source-row-3",
+          "pass": true
+        },
+        {
+          "id": "physical-point-3",
+          "pass": true
+        },
+        {
+          "id": "two-distinct-overlap-charts-3",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-3-0",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-3-0",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-3-0",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-3-0",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-3-1",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-3-1",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-3-1",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-3-1",
+          "pass": true
+        },
+        {
+          "id": "same-physical-quantity-in-overlap-3",
+          "pass": true
+        },
+        {
+          "id": "axis-extension-and-positive-symbolic-scale-3",
+          "pass": true
+        },
+        {
+          "id": "source-row-4",
+          "pass": true
+        },
+        {
+          "id": "physical-point-4",
+          "pass": true
+        },
+        {
+          "id": "two-distinct-overlap-charts-4",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-4-0",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-4-0",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-4-0",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-4-0",
+          "pass": true
+        },
+        {
+          "id": "chart-Q-T-Y-restoration-4-1",
+          "pass": true
+        },
+        {
+          "id": "exact-physical-swirl-scale-4-1",
+          "pass": true
+        },
+        {
+          "id": "independent-field-interval-restoration-4-1",
+          "pass": true
+        },
+        {
+          "id": "frozen-source-label-4-1",
+          "pass": true
+        },
+        {
+          "id": "same-physical-quantity-in-overlap-4",
+          "pass": true
+        },
+        {
+          "id": "axis-extension-and-positive-symbolic-scale-4",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 10,
+        "points": 10,
+        "lines": 10,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "source Y = Lambda X",
+            "type": "SOURCE_COORDINATE",
+            "unit": "1",
+            "sourceField": "result.results.samples[*].sourceY",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "SOURCE_COORDINATE",
+            "name": "source Y = Lambda X",
+            "coordinateRole": "SOURCE_COORDINATE"
+          },
+          {
+            "label": "normalized Phi interval",
+            "type": "NORMALIZED_FIELD_INTERVAL",
+            "unit": "1",
+            "sourceField": "result.results.samples[*].normalizedRoundTripIntervals",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "NORMALIZED_FIELD_INTERVAL",
+            "name": "normalized Phi interval",
+            "coordinateRole": "NORMALIZED_FIELD_INTERVAL"
+          },
+          {
+            "label": "0",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[2]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "0",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-torus",
+      "kind": "ns.torus-derivatives",
+      "status": "COMPLETED",
+      "inputHash": "bcf9db3794f761b9cc5016d12f9647fdc6e7d0b9ebb39bd075096510b1d67132",
+      "resultHash": "91dd02fcfaf1c0383710e45eda21647607f950de89ee3186fed65e4531a7da5d",
+      "checks": [
+        {
+          "detail": "",
+          "id": "radial-eigenvector",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "time-eigenvector",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "dual-orthogonality",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "local-rectangle-jacobian",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "haar-normalized-covering",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "pulse-unit-time-chain-rule",
           "pass": true
         }
       ],
@@ -387,42 +1064,123 @@
         "arrows": 0,
         "axisMetadata": [
           {
-            "label": "auxiliary s",
+            "label": "derivative index",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "auxiliary s",
+            "sourceField": "result.visualization.points[*].pos[0]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
             "physicalDimension": 0,
             "kind": "CATEGORICAL",
-            "name": "auxiliary s",
+            "name": "derivative index",
             "coordinateRole": "CATEGORICAL"
           },
           {
-            "label": "auxiliary v",
+            "label": "operator value on supplied gradient",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "auxiliary v",
+            "sourceField": "result.visualization.points[*].pos[1]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
             "physicalDimension": 0,
             "kind": "CATEGORICAL",
-            "name": "auxiliary v",
+            "name": "operator value on supplied gradient",
             "coordinateRole": "CATEGORICAL"
           },
           {
-            "label": "label index",
+            "label": "0",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "label index",
+            "sourceField": "result.visualization.points[*].pos[2]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
             "physicalDimension": 0,
             "kind": "CATEGORICAL",
-            "name": "label index",
+            "name": "0",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-support",
+      "kind": "ns.pulse-support",
+      "status": "COMPLETED",
+      "inputHash": "7cffeca3130f9aa0c6e88c364be5b76bbf05a5674bd321a4ca8ea6c9e4b920b8",
+      "resultHash": "126902d8dc6904ae06b55ef17c51ad349624f906a0d5a6e02e590691866c9816",
+      "checks": [
+        {
+          "detail": "Exact rational centers and one r0 work for all source mesh labels and every covering difference 0..4.",
+          "id": "uniform-countable-palette",
+          "pass": true
+        },
+        {
+          "detail": "Displayed pair checks are backed by the uniform full-mesh proof.",
+          "id": "every-source-label-pair",
+          "pass": true
+        },
+        {
+          "detail": "All inverse lifts cancel their Jacobians in a normalized Haar average.",
+          "id": "normalized-haar-preserved",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 4,
+        "points": 4,
+        "lines": 4,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "auxiliary Y1",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[0]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "auxiliary Y1",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "auxiliary Y2",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[1]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "auxiliary Y2",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "source label index",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[2]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "source label index",
             "coordinateRole": "CATEGORICAL"
           }
         ]
@@ -434,8 +1192,18 @@
       "kind": "ns.pulse-ode",
       "status": "PARTIAL",
       "inputHash": "a0f1b3561c91d41e15dcce3693089405c709f1aa47465e082e96700e20f05fc0",
-      "resultHash": "1f6ca580eac0344a6d159051133f8bfea372488537ed6d7ee35ef77b64148f10",
+      "resultHash": "a3aac40e415c28b50c4ce0c2f8578496c0d605fcd73584618bdb674c133faa64",
       "checks": [
+        {
+          "detail": "Source (7.2) specifies Bs squared, not Bs; a missing square root is rejected.",
+          "id": "source-Bs-squared-definition",
+          "pass": true
+        },
+        {
+          "detail": "The continuous reference P bound is certified for the explicit parameters; it is not a bound for the actual local ODE solution.",
+          "id": "reference-Gaussian-envelope",
+          "pass": true
+        },
         {
           "detail": "k*p is the frozen nonzero integer kp.",
           "id": "integer-angular-frequency",
@@ -486,7 +1254,7 @@
             "label": "pulse coordinate v",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "pulse coordinate v",
+            "sourceField": "result.visualization.points[*].pos[0]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -499,7 +1267,7 @@
             "label": "log amplitude",
             "type": "CATEGORICAL",
             "unit": "log norm",
-            "sourceField": "log amplitude",
+            "sourceField": "result.visualization.points[*].pos[1]",
             "scale": "LINEAR",
             "transform": "log coordinates supplied by computation",
             "dataDimension": 1,
@@ -512,7 +1280,7 @@
             "label": "0",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "0",
+            "sourceField": "result.visualization.points[*].pos[2]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -524,13 +1292,13 @@
         ]
       },
       "diagnostics": {
-        "initialNormalError": 4.1542319472184016e-17,
-        "maxEnergyIdentityResidual": 2.4868995751603507e-14,
-        "maxReconstructedRhsRelativeResidual": 2.645703468227691e-16,
-        "maxRelativeOrthogonality": 3.9490144527619076e-16,
-        "maxStepRefinementDirectionDifference": 1.0060724615823736e-7,
-        "maxStepRefinementLogDifference": 4.335821746082047e-7,
-        "maxUnitNormResidual": 1.3322676295501878e-15,
+        "initialNormalError": 5.978152341624693e-17,
+        "maxEnergyIdentityResidual": 1.7763568394002505e-14,
+        "maxReconstructedRhsRelativeResidual": 1.7932607280046323e-16,
+        "maxRelativeOrthogonality": 4.67849642169758e-16,
+        "maxStepRefinementDirectionDifference": 4.55935032062602e-8,
+        "maxStepRefinementLogDifference": 2.808538734910826e-7,
+        "maxUnitNormResidual": 8.881784197001252e-16,
         "refinement": {
           "coarseStepsPerHalf": 64,
           "comparedSamples": 129,
@@ -544,8 +1312,8 @@
       "id": "ns-m2-covariance",
       "kind": "ns.pulse-covariance",
       "status": "PARTIAL",
-      "inputHash": "0774b5ed1ace0e6692a0e20e70f803ee416bc44fb68e03b4fd02d8eba2bd10f1",
-      "resultHash": "43de04a1ca87281603637763e8b5e61b066e263201ee686ad80db7ce0189fefc",
+      "inputHash": "46ab5710f44a7cffcd9ed5cc3be03e574a1cd10a0bb74297f07fa5b3a01e4f6a",
+      "resultHash": "7055343953b2638350f9d01ee04186f510af1f9cc95dd8b56e0b06e119f98516",
       "checks": [
         {
           "detail": "",
@@ -592,7 +1360,7 @@
             "label": "stress r-theta",
             "type": "CATEGORICAL",
             "unit": "stress",
-            "sourceField": "stress r-theta",
+            "sourceField": "result.visualization.points[*].pos[0]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -605,7 +1373,7 @@
             "label": "stress r-z",
             "type": "CATEGORICAL",
             "unit": "stress",
-            "sourceField": "stress r-z",
+            "sourceField": "result.visualization.points[*].pos[1]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -618,7 +1386,7 @@
             "label": "family index",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "family index",
+            "sourceField": "result.visualization.points[*].pos[2]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -632,15 +1400,126 @@
       "diagnostics": null
     },
     {
+      "id": "ns-m2-pulse-curl",
+      "kind": "ns.pulse-curl",
+      "status": "COMPLETED",
+      "inputHash": "3211b8480f9fe98f88f308e80f91b186f9c1e017246a0cb698974b1297205d89",
+      "resultHash": "e6893924fe9eec8a9e9a28c9d1d86281abe61986076627172af8642b23f0bb6a",
+      "checks": [
+        {
+          "id": "exact-source-curl-divergence",
+          "pass": true
+        },
+        {
+          "id": "radial-frame-negative",
+          "pass": true
+        },
+        {
+          "id": "all-coefficient-and-fast-derivatives",
+          "pass": true
+        },
+        {
+          "id": "source-principal-amplitude",
+          "pass": true
+        },
+        {
+          "id": "physical-cartesian-refinement",
+          "pass": true
+        },
+        {
+          "id": "omitted-remainder-divergence-negative",
+          "pass": true
+        },
+        {
+          "id": "omitted-remainder-covariance-negative",
+          "pass": true
+        },
+        {
+          "id": "conjugate-harmonics",
+          "pass": true
+        },
+        {
+          "id": "smooth-cutoff-zero-extension",
+          "pass": true
+        },
+        {
+          "id": "physical-potential-scale",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 17,
+        "points": 17,
+        "lines": 3,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "probe R",
+            "type": "SCALED_COORDINATE",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[0]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "SCALED_COORDINATE",
+            "name": "probe R",
+            "coordinateRole": "SCALED_COORDINATE"
+          },
+          {
+            "label": "complex vector norm",
+            "type": "OPERATOR_PROBE_VALUE",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[1]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "OPERATOR_PROBE_VALUE",
+            "name": "complex vector norm",
+            "coordinateRole": "OPERATOR_PROBE_VALUE"
+          },
+          {
+            "label": "0",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "result.visualization.points[*].pos[2]",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "0",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
       "id": "ns-m2-tail",
       "kind": "ns.pulse-tail",
-      "status": "PARTIAL",
+      "status": "COMPLETED",
       "inputHash": "9ae66ba7b5f01a65bf82d1238ab7fd71539ea2bb61d31da3c10618f396c0cb64",
-      "resultHash": "929974bfedb4d72b36c451b303fad25292d467b16e1dc654fc980aec4620ed32",
+      "resultHash": "68da48a5052dba1567f27894f2fdf40e22aadacc447c21916eed0685be80d8e2",
       "checks": [
         {
           "detail": "No positive tail is converted to an exact zero.",
           "id": "retains-nonzero-log-tail",
+          "pass": true
+        },
+        {
+          "detail": "Every supplied forcing/amplitude/cutoff derivative participates in the actual complex interval residual.",
+          "id": "full-cutoff-residual-jets",
           "pass": true
         },
         {
@@ -668,7 +1547,7 @@
             "label": "dyadic ell",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "dyadic ell",
+            "sourceField": "result.visualization.points[*].pos[0]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -681,7 +1560,7 @@
             "label": "log(tail / q^N)",
             "type": "CATEGORICAL",
             "unit": "log ratio",
-            "sourceField": "log(tail / q^N)",
+            "sourceField": "result.visualization.points[*].pos[1]",
             "scale": "LINEAR",
             "transform": "log coordinates supplied by computation",
             "dataDimension": 1,
@@ -694,7 +1573,7 @@
             "label": "0",
             "type": "CATEGORICAL",
             "unit": "1",
-            "sourceField": "0",
+            "sourceField": "result.visualization.points[*].pos[2]",
             "scale": "LINEAR",
             "transform": "identity",
             "dataDimension": 1,
@@ -711,13 +1590,13 @@
   "convergence": [
     {
       "stepsPerHalf": 32,
-      "initialNormalError": 4.1542319472184016e-17,
-      "maxEnergyIdentityResidual": 1.7763568394002505e-14,
-      "maxReconstructedRhsRelativeResidual": 1.8989434839467478e-16,
-      "maxRelativeOrthogonality": 2.1679033724185467e-16,
-      "maxStepRefinementDirectionDifference": 0.00002516267657724906,
-      "maxStepRefinementLogDifference": 0.00010371115281770926,
-      "maxUnitNormResidual": 8.881784197001252e-16,
+      "initialNormalError": 5.978152341624693e-17,
+      "maxEnergyIdentityResidual": 1.4210854715202004e-14,
+      "maxReconstructedRhsRelativeResidual": 1.9644187365818453e-16,
+      "maxRelativeOrthogonality": 4.210646779527823e-16,
+      "maxStepRefinementDirectionDifference": 0.000011399481331123864,
+      "maxStepRefinementLogDifference": 0.00006427632326655441,
+      "maxUnitNormResidual": 6.661338147750939e-16,
       "refinement": {
         "coarseStepsPerHalf": 16,
         "comparedSamples": 33,
@@ -728,12 +1607,12 @@
     },
     {
       "stepsPerHalf": 64,
-      "initialNormalError": 4.1542319472184016e-17,
-      "maxEnergyIdentityResidual": 2.4868995751603507e-14,
-      "maxReconstructedRhsRelativeResidual": 2.641229229352144e-16,
-      "maxRelativeOrthogonality": 2.5624790810984017e-16,
-      "maxStepRefinementDirectionDifference": 0.0000016165067312911448,
-      "maxStepRefinementLogDifference": 0.000006806804735859373,
+      "initialNormalError": 5.978152341624693e-17,
+      "maxEnergyIdentityResidual": 1.7763568394002505e-14,
+      "maxReconstructedRhsRelativeResidual": 1.9802027963944263e-16,
+      "maxRelativeOrthogonality": 3.7427971373580646e-16,
+      "maxStepRefinementDirectionDifference": 7.320535243735135e-7,
+      "maxStepRefinementLogDifference": 0.00000434009321814699,
       "maxUnitNormResidual": 8.881784197001252e-16,
       "refinement": {
         "coarseStepsPerHalf": 32,
@@ -745,13 +1624,13 @@
     },
     {
       "stepsPerHalf": 128,
-      "initialNormalError": 4.1542319472184016e-17,
-      "maxEnergyIdentityResidual": 2.4868995751603507e-14,
-      "maxReconstructedRhsRelativeResidual": 2.645703468227691e-16,
-      "maxRelativeOrthogonality": 3.9490144527619076e-16,
-      "maxStepRefinementDirectionDifference": 1.0060724615823736e-7,
-      "maxStepRefinementLogDifference": 4.335821746082047e-7,
-      "maxUnitNormResidual": 1.3322676295501878e-15,
+      "initialNormalError": 5.978152341624693e-17,
+      "maxEnergyIdentityResidual": 1.7763568394002505e-14,
+      "maxReconstructedRhsRelativeResidual": 1.7932607280046323e-16,
+      "maxRelativeOrthogonality": 4.67849642169758e-16,
+      "maxStepRefinementDirectionDifference": 4.55935032062602e-8,
+      "maxStepRefinementLogDifference": 2.808538734910826e-7,
+      "maxUnitNormResidual": 8.881784197001252e-16,
       "refinement": {
         "coarseStepsPerHalf": 64,
         "comparedSamples": 129,
@@ -762,12 +1641,12 @@
     },
     {
       "stepsPerHalf": 256,
-      "initialNormalError": 4.1542319472184016e-17,
-      "maxEnergyIdentityResidual": 1.4210854715202004e-14,
-      "maxReconstructedRhsRelativeResidual": 2.528921615926058e-16,
-      "maxRelativeOrthogonality": 4.591921284513693e-16,
-      "maxStepRefinementDirectionDifference": 6.251925350737042e-9,
-      "maxStepRefinementLogDifference": 2.733098014573443e-8,
+      "initialNormalError": 5.978152341624693e-17,
+      "maxEnergyIdentityResidual": 1.7763568394002505e-14,
+      "maxReconstructedRhsRelativeResidual": 2.0195458332658406e-16,
+      "maxRelativeOrthogonality": 4.4188774383011364e-16,
+      "maxStepRefinementDirectionDifference": 2.832645419981937e-9,
+      "maxStepRefinementLogDifference": 1.784514758185196e-8,
       "maxUnitNormResidual": 1.1102230246251565e-15,
       "refinement": {
         "coarseStepsPerHalf": 128,
@@ -782,8 +1661,8 @@
     "outsideCone": {
       "status": "PARTIAL",
       "weights": [
-        -14,
-        -14
+        -54.627416997969526,
+        -54.627416997969526
       ],
       "checks": [
         {
@@ -820,132 +1699,187 @@
       "title": "차수와 기호 충돌 분리",
       "criteria": "λn=2nh, En,Un,Vn,Πn와 scalar φn을 구분한다. η의 Fourier 차수·radial analytic 차수·배경 차수를 서로 다른 인덱스로 둔\n다. 합격: (5.1)의 q 지수와 E_n=√(2X) φn/C를 자동 단위 검사한다. Π0의 axis trace와 전체 pressure profile을 혼동하면\n실패다.",
       "sourcePage": 58,
-      "status": "PARTIAL",
-      "implementedScope": "Distinct background/radial/eta indices, source exponents and zero positive-order axis-data declarations are generated. Evaluated same-profile units and pressure reconstruction are not yet certified.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "Exact q-power arithmetic checks (5.1), 1-2D=2h, A+D=1 and the radial pressure shift. An axis-trace pressure substitution or replacement of the pinned N3 h is rejected. Background, radial and eta indices are distinct.",
+      "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-recursion.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N4-02",
       "title": "비선형 convolution 생성",
       "criteria": "(5.3)-(5.6)의 모든 i+j=n 곱을 생성한다. i=0,n 및 n,0은 현재 미지수에 선형이고 나머지는 확정된 이전 차수다. 합격: n=1,2\n의 직접 PDE 대입 결과와 coefficient extractor가 일치한다. axial viscosity의 n −1 shift와 압력 Ωn−1/(2X)를 반드시 포함\n한다.",
       "sourcePage": 58,
-      "status": "PARTIAL",
-      "implementedScope": "All ordered i+j=n source terms and the n-1 viscosity/pressure shift are generated. Independent direct-PDE substitution of solved same-profile coefficients remains open.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "The original cylindrical PDE is physically differentiated as an exact BigInt rational differential polynomial. Its n=1,2 coefficients equal independently generated (5.2)-(5.6), including all ordered pairs, vector connection terms and both n-1 shifts.",
+      "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-recursion.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N4-03",
       "title": "차수별 inner Picard 풀이",
       "criteria": "(5.7)의 6성분 선형계와 (5.8)의 convergent Picard series를 사용하고 영 axis datum을 유지한다. 합격: 선택 analytic\nstrip·Cn·Cauchy radius loss를 기록하고 Picard tail를 상계한다. 반경 interval은 차수에 따라 임의 축소하지 않으며 lemma\n의 공통 interval 조건을 검사한다.",
       "sourcePage": 58,
-      "status": "OPEN",
-      "implementedScope": "No same-profile six-component Picard solver with common analytic domain and certified tails is installed.",
-      "testStatus": "NOT_IMPLEMENTED",
+      "status": "PARTIAL",
+      "implementedScope": "The full source six-component system, sparse A1 block identity, zero-axis inverse and a two-parity outward Picard tail are executable. The actual common radial interval is pinned; the displayed scalar tail uses explicitly declared operator bounds.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-picard.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [
+        "Derive actual source C_n and the full eta-strip radius at each order.",
+        "Evaluate the same-profile six-component Picard solution with those bounds on the fixed common interval."
+      ],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N4-04",
       "title": "차수별 radial cutoff와 모멘트 복구",
       "criteria": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
       "sourcePage": 58,
-      "status": "OPEN",
-      "implementedScope": "Positive-order coefficient extension and five exact total-moment corrections are not installed. The next-order reuse guard remains closed.",
-      "testStatus": "NOT_IMPLEMENTED",
+      "status": "PARTIAL",
+      "implementedScope": "An outward-certified five-moment matrix operator uses the actual lambda and reserved Ipos. A confluent U row avoids replacing tiny lambda by zero. Five disjoint smooth bump supports, both stress support cases and a closed next-order reuse guard are recorded.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-moments.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [
+        "Evaluate actual extended positive-order profiles and five total moment functions for every eta.",
+        "Apply the resulting corrections, reconstruct V_n/Pi_n, and certify their derivatives before n+1 source reuse."
+      ],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N4-05",
       "title": "유한 배경 잔차 검증",
       "criteria": "Fslow=R+div T를 직접 계산하고 (5.25)의 q^[2h(N+1) −Km] bound와 비교한다. 합격: N 증가에 따른 실제 잔차 감소를\n정밀도·격자와 독립 추적한다. CN,m와 Km이 미계산이면 검증된 tail bound로 표시하지 않는다.",
       "sourcePage": 58,
-      "status": "OPEN",
-      "implementedScope": "The actual same-profile finite-background R+div(T), support-localized norms and order-refinement residual have not been assembled.",
-      "testStatus": "NOT_IMPLEMENTED",
+      "status": "PARTIAL",
+      "implementedScope": "The full original finite physical PDE residual polynomial and source stress reconstruction (5.9) are exported. No uncomputed C_N,m, K_m, actual stress or numerical residual-decay claim is manufactured.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-residual.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [
+        "Substitute actual repaired coefficients and assemble R+div(T).",
+        "Measure order refinement independently of grid and precision, then certify C_N,m and K_m."
+      ],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N4-06",
       "title": "Shrinking cutoff 스케줄",
       "criteria": "Lemma5.4에 따라 aj+1≥2aj와 (5.37)의 유한 조건을 차례로 만족시키는 cutoff를 선택한다. 합격: 0≤m≤j에서 Ĉj,m(1+|\nlogq|)^P q^(gj/2)≤2^−j를 전체 q≤1/aj에 대해 상계한다. constants 없는 경험적 aj는 미인증으로 표시한다.",
       "sourcePage": 58,
-      "status": "PARTIAL",
-      "implementedScope": "A shrinking cutoff schedule satisfies outward interval inequalities for every q in the stated interval for supplied derivative constants. Original same-profile derivative constants remain uninstantiated.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "The scalar schedule satisfies exact doubling and the outward (5.37) inequality for every supplied m<=j on the entire q interval. A separate ledger certifies only the conditional scalar implication and explicitly leaves actual source derivative-constant provenance unverified.",
+      "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-cutoffs.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-contract-independent.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false,
+      "conditionalSourceInstantiation": "The executable conditional operator is complete. Its supplied constants, potentials or local jets are not claimed to be the full actual N3/N4 source instance; those package obligations remain with the dependent construction criteria."
     },
     {
       "id": "N4-07",
       "title": "Potential에 cutoff 후 curl",
       "criteria": "χ(cnq)Sn 또는 potential을 먼저 합친다. (5.45)의 χ′ radial correction을 포함해 velocity를 복원한다. 합격: div curl=0 및\ndirect axisymmetric swirl의 div=0 항등식이 유지된다. χun만 사용하는 구현은 negative control에서 실패해야 한다.",
       "sourcePage": 58,
-      "status": "PARTIAL",
-      "implementedScope": "An explicit compact C3 potential includes grad(chi) cross A in curl(chi A), with independent finite-difference refinement and a missing-term negative control. The original C-infinity background potential remains unconnected.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "Exact differentiation of chi(c_n*q)*q^(1-A+lambda_n)*F_n yields the original (5.45) chi-prime radial correction. Full cylindrical divergence and direct axisymmetric swirl divergence vanish identically; omitting the correction gives a nonzero exact negative control.",
+      "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-curl.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N4-08",
       "title": "배경 합성과 tail 계약",
       "criteria": "실 제 locally finite sum 과 유 한 formal truncation 을 구 별 하 고 (5.35), (5.39), (5.42), (5.43) 를 기 록 한 다. 합 격: q>0\ncompact domain의 active cutoff index를 정확히 계산하고 tail bound의 유효 영역 q<(2aJ)^ −1을 함께 export한다.\nuncut series 수렴은 주장하지 않는다.",
       "sourcePage": 58,
-      "status": "PARTIAL",
-      "implementedScope": "Finite active-order queries and explicit tail-domain conditions are exposed. An all-order same-profile Borel-sum differentiability/tail certificate is not installed.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "Actual supplied three-component potentials are multiplied by a genuine C-infinity cutoff and summed. Exact compact-domain a_J*q_min>=1 plus the doubling continuation proves every unseen higher summand vanishes; exhausted prefixes export localSum=null. The strict q<(2*a_J)^-1 tail domain and the distinction from an uncut finite formal truncation are retained.",
+      "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-cutoffs.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-contract-independent.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false,
+      "conditionalSourceInstantiation": "The executable conditional operator is complete. Its supplied constants, potentials or local jets are not claimed to be the full actual N3/N4 source instance; those package obligations remain with the dependent construction criteria."
     },
     {
       "id": "N5-01",
       "title": "Dyadic chart 생성",
       "criteria": "Q=2^−ℓ, ε=Q^h, S*=ℓ², (R,Z,T)=(r/√Q,z/Q^D, τ/Q)를 고정하고 band마다 discrete labels를 생성한다. 합격: 동일 샘\n플이 겹치는 chart에서 같은 physical quantity를 준다. 미분 중 ceil/round 주파수와 labels를 다시 선택하지 않는다.",
       "sourcePage": 60,
-      "status": "PARTIAL",
-      "implementedScope": "Dyadic physical/scaled coordinates and adjacent-band overlap are computed. tau=0 and floating-point underflow are rejected. Original same-profile band/slow-data selection remains unconnected.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "The accepted assembly-to-core SHA chain binds actual eta-zero Phi intervals at the five recorded source Y values. Each chart independently reconstructs q=Q*T and Y=Lambda*R^2/(2*T). Exact affine-h exponent algebra proves physical swirl scaling; transformed and independently restored outward intervals agree. Axis extension and positive symbolic underflow factors are preserved.",
+      "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-core-charts.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-core-independent.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N5-02",
       "title": "Auxiliary torus와 chain rule",
       "criteria": "Jg=[[3,1],[1,5]], Y=vr r^dr+vt t mod Z² 및 (6.6)의 evaluated derivatives를 사용한다. 합격: Dr,Dz,t*의 chain-rule 항\n을 모두 포함한다. torus 평균 후 물리 phase 평가의 순서를 반대로 하여 pointwise 값을 평균으로 대체하지 않는다.",
       "sourcePage": 60,
-      "status": "PARTIAL",
-      "implementedScope": "Auxiliary torus matrix, determinant 14, Haar factor and the required chain-rule formula are represented. Original Y_g slow derivatives and the complete evaluated chain rule have not been instantiated.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "Exact Q(sqrt(2)) identities verify the source eigenvectors, dual coordinates and Jacobian. All slow and fast (6.6) chain-rule terms are applied with the actual source exponent and covering. Physical pointwise evaluation is explicitly distinct from normalized Haar averaging.",
+      "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-torus.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N5-03",
       "title": "겹치는 pulse의 지지 분리",
       "criteria": "Lemma6.1의 conflict graph에 따라 overlapping slow supports에 서로소 auxiliary rectangles를 할당한다. 합격: 모든\nactive label pair의 support intersection을 검사한다. 서로 다른 labels의 곱은 실제로 0이어야 하며 same-label harmonics\n는 유지한다.",
       "sourcePage": 60,
-      "status": "PARTIAL",
-      "implementedScope": "A finite slow-overlap conflict graph allocates exact-rational separated auxiliary supports and checks every active pair. Same-label harmonics are retained. The full original collection of labels has not been supplied.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "A deterministic 2,250-color palette covers the complete countable source mesh. Exact rational centers and one r0 certify every ordered covering constraint through Delta=4 and all enlarged support intersections; actual active labels are a subset. Same-label harmonics and once-per-slow-box counting are retained.",
+      "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-support.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N5-04",
@@ -953,11 +1887,17 @@
       "criteria": "k=ceil(ε^−1/2), kp는 0이 아닌 정수, (7.3)-(7.8)의 Φ,nΦ,K,AΦ,B를 생성한다. 합격: nΦ·tm=0과 nonzero denominators\n를 검사한다. 1≤ εk²≤4 및 frame determinant lower bound를 인증된 영역에서 만족한다.",
       "sourcePage": 60,
       "status": "PARTIAL",
-      "implementedScope": "The frozen local shear jet, integer angular frequency and tangent initial polarization are executable. Uniform same-profile phase/frame derivative bounds remain open.",
+      "implementedScope": "Full three-component source phase normal, including F_Z and G_Z, is retained. Fixed angular frequencies, tangent polarization and denominator checks execute on explicit local jets; a fixed orthogonal rotation supports the general affine normal.",
       "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-pulse-ode.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [
+        "Derive the uniform source slow-domain q_star and certified frame determinant lower bounds from the actual N3 field."
+      ],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N5-05",
@@ -965,11 +1905,18 @@
       "criteria": "(7.13),(7.17)의 projected ODE를 풀고 P(v)=exp∫( λ−dref)를 log envelope로 저장한다. 합격: (7.22)의 amplitude\nenergy balance, n Φ·tm 제약, midpoint normalization과 양 끝 Gaussian bound를 검사한다. underflow를 pulse가 정\n확히 0인 것으로 처리하지 않는다.",
       "sourcePage": 60,
       "status": "PARTIAL",
-      "implementedScope": "The projected pulse ODE is integrated in a parallel tangent frame with analytic scalar-damping separation and empirical step refinement. Rigorous ODE solution error, slow derivatives and Gaussian constants remain open.",
+      "implementedScope": "Parallel tangent coordinates retain the normal constraint and separate analytic scalar damping from logarithmic amplitude. The source Bs-squared definition is corrected, and the reference P envelope has a continuous Gaussian bound for explicit parameters. General affine normals and fourth-order refinement are checked against an independent original Cartesian ODE solver; the actual source growing-mode datum and uniform constants remain unlinked.",
       "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-pulse-ode.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [
+        "Enclose actual pulse ODE integration error and all requested slow derivatives.",
+        "Derive actual uniform Gaussian constants and two-end decay bounds."
+      ],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N5-06",
@@ -977,46 +1924,64 @@
       "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
       "sourcePage": 60,
       "status": "PARTIAL",
-      "implementedScope": "Two actual finite polarization covariance columns, positive weights, cosine factor 1/2 and the Haar Jacobian match a supplied admissible stress. Original nonconstant profile matching is not certified.",
+      "implementedScope": "The covariance fixture now uses the source rectangle Jacobian 4-2*sqrt(2) and angular factor 1/2. The normalized covering factor is 1, because all inverse lifts are included. Historical incorrect 1/14 fixtures are explicitly excluded from acceptance.",
       "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-covariance.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [
+        "Integrate the actual two source pulses, certify positive weights/determinant bounds, and assemble the once-per-box global (7.30) stress."
+      ],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N5-07",
       "title": "정확한 curl과 remainder",
       "criteria": "Cm=i(nΦ×tm)/(km|n Φ|²), physical potential scale Q^(1/2 −A)를 사용한다. cutoff 후 curl의 rm도 유지한다. 합격:\ndiv curl 항등식, physical Cartesian divergence numerical convergence, conjugate symmetry를 확인한다. rm 누락 시\ncovariance/residual test가 실패한다.",
       "sourcePage": 60,
-      "status": "PARTIAL",
-      "implementedScope": "Compact-potential curl and finite covariance components are checked. Original oscillatory pulse cutoff/curl remainder terms have not been assembled or bounded.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "The original Cm=i*(n cross t)/(km|n|^2) is differentiated by third-order mixed source jets, including every fast/slow and cylindrical-frame derivative in rm. Exact div-curl and physical Q exponent identities, independent Cartesian curl/divergence refinement, conjugate harmonics and omitted-rm covariance/residual negative controls pass. The numerical coefficients are explicitly an operator probe.",
+      "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-pulse-curl.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/tests.tap",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false
     },
     {
       "id": "N5-08",
       "title": "Cutoff tail의 flatness 추적",
       "criteria": "(7.40)의 (1 −ψ)fm+ψ′tm를 버리지 않고 별도 잔차로 기록한다. S*^C exp( −cS*)와 q의 관계를 상계한다. 합격: 각 고정\nm,N에 대해 −cℓ²+(M+N)ℓlog2+2Clogℓ를 써서 bound를 평가한다. machine-zero만으로 모든 차수 flatness를 인증하지\n않는다.",
       "sourcePage": 60,
-      "status": "PARTIAL",
-      "implementedScope": "Outward log-tail values and an all-later-label scalar monotonicity threshold are computed for fixed declared derivative order and constants. Actual original ODE constants and the all-order construction remain open.",
-      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "The full (1-psi)*f_m+psi_prime*t_m is actually evaluated from supplied complex interval derivative jets, with all Leibniz terms and resolvable input paths. Outward fixed-order log bounds and a monotone all-later-label threshold are certified conditionally on the declared Gaussian/derivative-loss envelope. Actual source envelope provenance is not inferred from finite jets.",
+      "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
       "formalComplete": false,
-      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
-      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+      "evidencePath": "mathscope-m2/navier/evidence/ns-m2-tail.json",
+      "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+      "remainingObligations": [],
+      "independentEvidencePath": "mathscope-m2/navier/evidence/source-contract-independent.json",
+      "sourceInstanceCertified": false,
+      "allOrderSourceCertificate": false,
+      "conditionalSourceInstantiation": "The executable conditional operator is complete. Its supplied constants, potentials or local jets are not claimed to be the full actual N3/N4 source instance; those package obligations remain with the dependent construction criteria."
     }
   ],
   "criterionCounts": {
-    "PARTIAL": 13,
-    "OPEN": 3,
-    "PASS": 0
+    "PASS": 10,
+    "PARTIAL": 6,
+    "OPEN": 0
   },
-  "acceptance": "BOUNDED_COMPONENT_IMPLEMENTATION_ONLY",
+  "acceptance": "TEN_ORIGINAL_FINITE_OPERATOR_OR_OBSERVATION_CRITERIA_PASS; SIX_ACTUAL_SOURCE_CONSTRUCTION_CRITERIA_PARTIAL",
+  "packageCompletionGate": false,
+  "sourceInstanceCertified": false,
+  "allOrderSourceCertificate": false,
   "fullN4": false,
   "fullN5": false,
   "formalComplete": false,
   "globalNavierStokesConstruction": false,
-  "artifactHash": "d490199ceb7f43a3a18cef5269bfcc654a9e52b6a479874f207bbb2efafbe903"
+  "artifactHash": "0d6bda43d9ff298ca53a3a74de3d30ac21ab1590798f3225f2d04c8414a31652"
 }

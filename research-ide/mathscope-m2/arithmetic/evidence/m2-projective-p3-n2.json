@@ -1,6 +1,6 @@
 {
   "schema": "MathScope.M2.ArithmeticResult/1",
-  "version": "0.1.0-m2",
+  "version": "0.2.0-m2",
   "kind": "arithmetic.projective",
   "status": "COMPLETED",
   "object": {
@@ -51,6 +51,254 @@
       "comparison": "External projective-space/crystalline comparison theorem; no new kernel execution.",
       "eInfinityCertified": false,
       "nativePrismaticComplexComputed": false
+    },
+    "finitePerfectComparison": {
+      "schema": "MathScope.ProjectiveFinitePerfectComparison/1",
+      "base": {
+        "schema": "MathScope.ArithmeticBase/1",
+        "kind": "SYMBOLIC_CRYSTALLINE_PRISM",
+        "p": "3",
+        "A": "Z_3",
+        "I": "(p)",
+        "phi": {
+          "kind": "IDENTITY_RING_ENDOMORPHISM",
+          "formula": "phi_A(a)=a"
+        },
+        "delta": "(a-a^p)/p",
+        "finiteObservationIsPrism": false,
+        "assumptions": [
+          {
+            "id": "base-p-prime",
+            "statement": "3 is prime",
+            "status": "EXACT_FINITE_CHECK"
+          },
+          {
+            "id": "base-torsionfree",
+            "statement": "Z_p is p-torsionfree",
+            "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+          },
+          {
+            "id": "base-complete",
+            "statement": "Z_p = inverse_limit_N Z/p^N is p-adically complete",
+            "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+          },
+          {
+            "id": "base-cartier",
+            "statement": "p is a nonzerodivisor and I=(p) is Cartier",
+            "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+          },
+          {
+            "id": "base-prism",
+            "statement": "p belongs to I+phi(I)A and A/I has bounded p-power torsion",
+            "status": "EXTERNAL_THEOREM_APPLICATION"
+          }
+        ],
+        "source": {
+          "id": "S01",
+          "locator": "Definition 1.1, Example 1.3(1), Definition 1.4",
+          "status": "THEOREM_REFERENCE"
+        },
+        "admissions": [],
+        "formalComplete": false
+      },
+      "geometry": {
+        "family": "P^n",
+        "n": 2,
+        "baseRing": "Z_p",
+        "specialFiber": "P^2/F_3",
+        "lift": "P^2/Z_3",
+        "cover": [
+          "U_0=D_+(X_0) ~= A^2",
+          "U_1=D_+(X_1) ~= A^2",
+          "U_2=D_+(X_2) ~= A^2"
+        ],
+        "smooth": true,
+        "proper": true
+      },
+      "specification": {
+        "dimension": "every n in Nat",
+        "displayDimension": [
+          0,
+          8
+        ],
+        "nZero": "The point with identity comparison",
+        "allNTheorem": "Stacks tags 0FMJ, 0FUN; rank of the trivial projective bundle is n+1"
+      },
+      "finitePerfectComplex": {
+        "coefficientRing": "Z_p",
+        "terms": [
+          {
+            "degree": 0,
+            "rank": 1,
+            "basis": [
+              "e_0"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "1"
+              ]
+            ]
+          },
+          {
+            "degree": 1,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 2,
+            "rank": 1,
+            "basis": [
+              "e_1"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "3"
+              ]
+            ]
+          },
+          {
+            "degree": 3,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 4,
+            "rank": 1,
+            "basis": [
+              "e_2"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "9"
+              ]
+            ]
+          }
+        ],
+        "formula": "direct sum(i=0..n) Z_p[-2i]",
+        "KFlatReason": "Bounded complex of finite free modules",
+        "derivedReduction": {
+          "N": 4,
+          "coefficientRing": "Z/3^4",
+          "modulus": "81",
+          "terms": [
+            {
+              "degree": 0,
+              "rank": 1,
+              "basis": [
+                "e_0"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "1"
+                ]
+              ]
+            },
+            {
+              "degree": 1,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 2,
+              "rank": 1,
+              "basis": [
+                "e_1"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "3"
+                ]
+              ]
+            },
+            {
+              "degree": 3,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 4,
+              "rank": 1,
+              "basis": [
+                "e_2"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "9"
+                ]
+              ]
+            }
+          ]
+        }
+      },
+      "comparisonMap": {
+        "from": "direct sum(i=0..n) Z_p[-2i]",
+        "to": "R Gamma_dR(P^n_Z_p/Z_p)",
+        "generatorImages": [
+          {
+            "generator": "e_0",
+            "degree": 0,
+            "image": "c1_dR(O(1))^0"
+          },
+          {
+            "generator": "e_1",
+            "degree": 2,
+            "image": "c1_dR(O(1))^1"
+          },
+          {
+            "generator": "e_2",
+            "degree": 4,
+            "image": "c1_dR(O(1))^2"
+          }
+        ],
+        "quasiIsomorphismSource": {
+          "url": "https://stacks.math.columbia.edu/tag/0FUN",
+          "locator": "Remark 50.14.2; Lemma 50.11.4 (0FMJ)",
+          "grade": "APPLIED_EXTERNAL_THEOREM",
+          "localKernelCheck": false
+        },
+        "frobeniusCompatibility": {
+          "geometricLift": "[X_0:...:X_n] -> [X_0^p:...:X_n^p]",
+          "lineBundlePullback": "F^* O(1) = O(p)",
+          "chernClass": "c1(O(p)) = p c1(O(1))",
+          "therefore": "F(e_i)=p^i e_i",
+          "coefficientFrobenius": "identity on Z_p"
+        }
+      },
+      "arrows": [
+        {
+          "from": "completed de Rham hypercohomology of the proper smooth lift",
+          "to": "crystalline cohomology of P^n/F_p over Z_p",
+          "source": "S02 Theorem 3.6 and Corollary 3.8",
+          "url": "https://arxiv.org/abs/1110.5001",
+          "grade": "APPLIED_EXTERNAL_THEOREM"
+        },
+        {
+          "from": "crystalline cohomology",
+          "to": "prismatic cohomology completed-base-changed along phi_Z_p=id",
+          "source": "S01 Theorem 1.8(1)",
+          "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+          "grade": "APPLIED_EXTERNAL_THEOREM"
+        }
+      ],
+      "moduleComparison": true,
+      "multiplicativeEInfinityCertificate": false,
+      "nativePrismaticSiteComputed": false,
+      "formalComplete": false,
+      "localKernelCheck": false
     },
     "cohomology": [
       {
@@ -360,7 +608,51 @@
       "arithmeticIdentity": "zeta(P^n_Z,s) = product(i=0..n) zeta(s-i)",
       "eulerSubstitution": "For each prime p, substitute T_p=p^(-s) in its own local factor before forming the arithmetic Euler product.",
       "convergenceDomain": "Re(s) > 3",
-      "infiniteProductStatus": "THEOREM_REFERENCE",
+      "infiniteProductStatus": "PROVED_ABSOLUTE_CONVERGENCE_BOUND",
+      "convergenceCertificate": {
+        "schema": "MathScope.AbsoluteEulerTailBound/1",
+        "family": "projective",
+        "domain": "Re(s)>3",
+        "uniformHalfPlane": {
+          "numerator": "4",
+          "denominator": "1"
+        },
+        "cutoff": 100,
+        "logTailAbsoluteUpperBound": {
+          "numerator": "1",
+          "denominator": "25"
+        },
+        "delta": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "rhoUpper": {
+          "numerator": "1",
+          "denominator": "4"
+        },
+        "cutoffPowerUpper": {
+          "numerator": "1",
+          "denominator": "100"
+        },
+        "coefficientCount": 3,
+        "argument": [
+          "For |z|<1, the power series for -log(1-z) is bounded in absolute value by |z|/(1-|z|).",
+          "Each local factor is bounded by 3 times p^(-1-delta)/(1-2^(-1-delta)).",
+          "Primes greater than L form a subset of the integers greater than L.",
+          "The decreasing-function integral bounds sum_(m>L) m^(-1-delta) by L^(-delta)/delta.",
+          "The bound tends to zero as L tends to infinity, uniformly on the declared closed right half-plane."
+        ],
+        "numericalMethod": "EXACT_RATIONAL_UPPER_BOUNDS_USING_INTEGER_ROOTS",
+        "sourceDependencies": [
+          "Exact projective Tate local factors",
+          "Elementary absolutely convergent logarithm series and integral test"
+        ],
+        "analyticallyConvergent": true,
+        "meromorphicContinuationComputed": false,
+        "fullInfiniteProductNumericallyEvaluated": false,
+        "RHOrBSDClaim": false,
+        "formalComplete": false
+      },
       "reference": {
         "id": "C01/S07",
         "locator": "Projective-space cohomology and trace/determinant formulas; blueprint pp.7,28,72"
@@ -708,7 +1000,7 @@
   },
   "evidence": {
     "calculation": "EXACT_FINITE_SCOPE",
-    "geometricComparison": "THEOREM_REFERENCE_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "geometricComparison": "EXPLICIT_MODEL_PLUS_APPLIED_EXTERNAL_THEOREM_OR_MODEL_DEVELOPMENT_AS_DECLARED",
     "lean": "NO_NEW_KERNEL_EXECUTION",
     "formalComplete": false,
     "universalConjectureSolved": false
@@ -736,6 +1028,20 @@
         "id": "S01",
         "title": "Prisms and Prismatic Cohomology",
         "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S06",
+        "title": "Counting Points on Hyperelliptic Curves Using Monsky–Washnitzer Cohomology",
+        "url": "https://arxiv.org/abs/math/0105031",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "STACKS_PROJECTIVE",
+        "title": "Derived projective bundle formula",
+        "url": "https://stacks.math.columbia.edu/tag/0FUN",
         "grade": "THEOREM_REFERENCE",
         "localKernelCheck": false
       },
@@ -768,9 +1074,9 @@
         "localKernelCheck": false
       }
     ],
-    "algorithmVersion": "0.1.0-m2",
+    "algorithmVersion": "0.2.0-m2",
     "inputHash": "6bc53a2b611023b9f429082d18f9e6d2b604c8d48c6d00c17b6b84927f38a751",
-    "sourceHash": "e401940f62baba329e297cf0c454e0ebe2c35285f52c06feb478e969fdd2b5b9",
+    "sourceHash": "fec8ac23b1fc62deaed7e646ad42dcf7fcfa10f99923d7893737e292093a3999",
     "operations": 35
   },
   "visualization": {
@@ -884,14 +1190,14 @@
       "cohomology.generator",
       "cohomology.frobeniusEigenvalue"
     ],
-    "sourceHash": "e401940f62baba329e297cf0c454e0ebe2c35285f52c06feb478e969fdd2b5b9",
-    "sourceRevision": "e401940f62baba329e297cf0c454e0ebe2c35285f52c06feb478e969fdd2b5b9",
+    "sourceHash": "fec8ac23b1fc62deaed7e646ad42dcf7fcfa10f99923d7893737e292093a3999",
+    "sourceRevision": "fec8ac23b1fc62deaed7e646ad42dcf7fcfa10f99923d7893737e292093a3999",
     "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
     "sampling": {
       "displayPoints": 3,
-      "originalSourceHash": "e401940f62baba329e297cf0c454e0ebe2c35285f52c06feb478e969fdd2b5b9"
+      "originalSourceHash": "fec8ac23b1fc62deaed7e646ad42dcf7fcfa10f99923d7893737e292093a3999"
     },
     "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
   },
-  "resultHash": "bd828a404a50920550d4217c41459a5ab1d6201a554e89876e97c986806f3dfc"
+  "resultHash": "2e2b45298d1917172475db569f3a2e905fa5c154bdcb95955ec1c2b357e0a9b5"
 }

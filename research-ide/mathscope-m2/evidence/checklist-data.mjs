@@ -5,10 +5,15 @@ export const CHECKLIST = [
     "title": "ℙⁿ의 고차원 모델을 일반화한다",
     "criteria": "n=0..8 화면 범위를 제공하고, 수학 명세는 모든 n∈ ℕ를 대상으로 둔다. H^{2i}= ℤ_p의 생성자·F=p^i와 odd vanishing을\nfinite-perfect 비교 모델에 연결한다. 합격: n=0,1,2,4,8에서 degree 0..2n이 정확하다. 화면 n 범위를 전체 정리의 증명 범\n위와 혼동하지 않는다. 고차원 cup/E∞ 정보는 별도 certificate가 필요하다.",
     "sourcePage": 28,
-    "status": "PARTIAL",
-    "implementedScope": "Exact even-degree Tate/cohomology observations and external references are implemented; no full high-dimensional prismatic chain-comparison certificate is generated.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "All-n projective-bundle derived quasi-isomorphism is applied with its explicit hyperplane generator map; the bounded finite-free model, crystalline/prismatic arrows, Frobenius and derived p-power reductions are computed. No cup/E-infinity or Lean certificate is claimed.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P4-02",
@@ -17,8 +22,13 @@ export const CHECKLIST = [
     "sourcePage": 28,
     "status": "PASS",
     "implementedScope": "Good reduction and bad/nonminimal boundaries are checked for the supported short Weierstrass models, with infinity included in counts.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P4-03",
@@ -27,28 +37,43 @@ export const CHECKLIST = [
     "sourcePage": 28,
     "status": "PASS",
     "implementedScope": "Explicit finite fields with irreducibility checks support exact extension counts and an independent all-pairs oracle.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P4-04",
     "title": "Frobenius 수치 backend를 제한된 범위부터 연다",
     "criteria": "우선 p≥5인 good elliptic curve에 대해 Kedlaya/Monsky-Washnitzer 방식을 선택한다. 역원·분모 감소와 working\nprecision→output precision의 손실을 certificate에 남긴다. 합격: S06의 reduction bound를 충족한 출력만 사용한다.\nMW의 rational Frobenius matrix를 integral prismatic complex 전체로 승격하지 않는다. p=2·미지원 확장체는 명시적으\n로 미지원 처리한다.",
     "sourcePage": 28,
-    "status": "PARTIAL",
-    "implementedScope": "A Kedlaya/Monsky-Washnitzer numerical Frobenius backend is not installed; it is explicitly UNSUPPORTED.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Direct rational Monsky–Washnitzer Frobenius for good short Weierstrass curves at 5<=p<=43; exact Bezout/vertical/horizontal reductions and proven conservative p-adic tail/loss gate. Matrices are independently checked against counts at two precisions. Unsupported small primes and extension MW are rejected.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P4-05",
     "title": "p-adic 값에서 정수 특성다항식을 복원한다",
     "criteria": "q=p^a 에 서 semilinear p-Frob 의 행 렬 M 으 로 q-Frob=M σ(M)…σ^{a−1} (M) 을 만 든 다. coefficient bound B_j 와\np^N>2B_j를 이용해 각 정수 계수를 유일 복원한다. 합격: 복원 상계가 부족하면 ambiguous로 남는다. E,p=5에서는\nX²+2X+5, p=7에서는 X²+7이 point-count oracle과 일치해야 한다.",
     "sourcePage": 28,
-    "status": "PARTIAL",
-    "implementedScope": "Exact bounded residue reconstruction is implemented; semilinear matrix iteration over extension coefficient rings remains unsupported.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Unramified coefficient rings use Hensel-lifted sigma, then M sigma(M)..., exact division-free characteristic polynomial and unique bounded integer reconstruction. Actual MW p=5/7 polynomials match independent point counts. Missing matrices, bounds and insufficient precision are rejected or ambiguous.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P4-06",
@@ -57,8 +82,13 @@ export const CHECKLIST = [
     "sourcePage": 28,
     "status": "PASS",
     "implementedScope": "Exact Newton polygons, rational root valuations, separate complex-eigenvalue display and Hodge metadata are implemented.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P4-07",
@@ -67,18 +97,28 @@ export const CHECKLIST = [
     "sourcePage": 28,
     "status": "PASS",
     "implementedScope": "Local determinant factors and extension trace recurrence are cross-checked against independent finite-field enumeration.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P4-08",
     "title": "실제 global ζ 연결을 첫 정리로 만든다",
     "criteria": "모 든 p 의 ℙⁿ 국 소 인 자 를 조 립 해 ζ(ℙⁿ_ℤ,s)=∏_{i=0}ⁿζ(s−i) 를 얻 는 과 정 을 기 록 한 다. good E/ ℤ[1/ S] 에 는\nζ(ℰ,s)=ζ^S(s)ζ^S(s−1)/ L^S(E,s) 를 별 도 정 리 로 둔 다. 합 격: 유 한 Euler-product 항 등 식 을 정 확 히 확 인 한 뒤 무 한\n곱에는 각각 Re(s)>n+1, Re(s)>2의 수렴 증거를 요구한다. 이 항등식에서 classical RH 또는 BSD의 일반 증명을 자동 출력하\n지 않는다.",
     "sourcePage": 28,
-    "status": "PARTIAL",
-    "implementedScope": "Finite polynomial regrouping and explicit infinite-product domains/references are provided; no new complete infinite-product theorem is kernel checked.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Exact place-indexed finite projective and good-elliptic Euler identities are connected to the full convergent products using explicit rational logarithmic tail bounds on Re(s)>n+1 or >2. All bad model primes must be excluded. No RH/BSD or full numerical infinite product is claimed.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P5-01",
@@ -87,8 +127,13 @@ export const CHECKLIST = [
     "sourcePage": 30,
     "status": "PASS",
     "implementedScope": "Formal q-prism and q-PD ideal metadata are distinct; exact [p]_(1+h) is computed and real q substitution is rejected.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P5-02",
@@ -97,28 +142,43 @@ export const CHECKLIST = [
     "sourcePage": 30,
     "status": "PASS",
     "implementedScope": "Two-variable framed monomial q-Koszul blocks, d-squared-zero and twisted q-Leibniz are exact over Z[h].",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P5-03",
     "title": "R과 Frobenius-base-changed R^(1)을 구분한다",
     "criteria": "첫 범 위 는 p-completely smooth R/ ℤ_p 와 고 정 framing 으 로 제 한 한 다. S01 §16 의 q-crystalline 비 교 를 통 해\nX=Spf(R⊗ℤ_pℤ_p[ζ_p])의 상대 prismatic complex와 연결한다. 합격: A/I, R, R^(1), 비교 map의 base homomor-\nphism이 명세에 있어야 한다. framing만 가진 임의 singular algebra는 이 경로로 승인하지 않는다.",
     "sourcePage": 30,
-    "status": "PARTIAL",
-    "implementedScope": "Typed R/R^(1)/base-map obligations are exposed; a local comparison certificate has not been constructed.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The smooth polynomial adapter supplies D/I, R, the actual phi-induced R^(1), every base homomorphism and the S01 Theorems 16.18/16.22 application with checked smooth standard framing. Singular/untyped algebras are rejected.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P5-04",
     "title": "좌표 변경을 실제 chain comparison으로 검사한다",
     "criteria": "T와 T+1의 두 framing을 첫 사례로 택하고 공통 q-PD Čech 모델 또는 명시적 quasi-isomorphism을 구성한다. cone의\nacyclicity 또는 homotopy equivalence를 인증한다. 합격: 특정 precision에서 Betti 수가 같다는 결과만으로 coordinate\nindependence를 승인하지 않는다. 표시상 동일 모델 여부는 비교 certificate 유무에 따른다.",
     "sourcePage": 30,
-    "status": "PARTIAL",
-    "implementedScope": "The T versus T+1 differential discrepancy is computed; a chain homotopy/common q-PD comparison remains to be built.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "An explicit all-degree integral q-binomial chain isomorphism for T and S=T+1, its unit-triangular inverse and zero composition homotopies are computed; its cone is contractible. At q=1 it is the identity on the same elements, and bounded integral operators extend to completion.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P5-05",
@@ -127,8 +187,13 @@ export const CHECKLIST = [
     "sourcePage": 30,
     "status": "PASS",
     "implementedScope": "q=1 and cyclotomic specializations are distinct and computed on exact polynomials; false ordinary-de-Rham identification is blocked.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P5-06",
@@ -137,38 +202,58 @@ export const CHECKLIST = [
     "sourcePage": 30,
     "status": "PASS",
     "implementedScope": "Eisenstein BK point inputs and exact delta(E) are implemented, including E=u-3 and its unit residue.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P5-07",
     "title": "BK base-change와 twist를 검증한다",
     "criteria": "u→0의 crystalline 경로와 A→A/I의 Hodge-Tate 경로, φ-twisted de Rham 경로를 구별한다. uniformizer 변경은 그 자\n체의 비교 certificate를 요구한다. 합격: u→π와 φ 이후 u→ π^p를 같은 map으로 저장할 수 없다. ℙ¹의 BK Tate twist\nFrobenius 계수를 임의로 p라 정하는 fixture는 거부한다.",
     "sourcePage": 30,
-    "status": "PARTIAL",
-    "implementedScope": "Three base-map images are distinguished and unsupported Tate multipliers/changes are rejected; full BK comparison certificates remain.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The three BK point coefficient homomorphisms are actually evaluated on an input polynomial. K-flat A[0] derived tensors and target generators/completions are recorded; u=pi and phi-twisted u=pi^p differ, and unsupported uniformizer/Tate assertions remain rejected.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P5-08",
     "title": "한 affine에서 실제 derived descent까지 진행한다",
     "criteria": "q-PD envelope와 작은 Čech-Alexander complex를 만들고 overlap·triple overlap의 coherent comparison을 저장한다.\n모듈 complex와 multiplicative/E∞ structure의 완료 범위를 분리한다. 합격: 최소 2개 affine cover의 gluing cocycle와 d²\n를 검증한다. global/ramified 일반ization이 정리 적용 범위를 넘으면 RESEARCH OPEN 또는 MODEL DEVELOPMENT로\n남긴다.",
     "sourcePage": 30,
-    "status": "PARTIAL",
-    "implementedScope": "Coherent multi-affine q-PD derived descent is not implemented.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Actual standard diagonal q-PD envelopes are constructed as full completed free delta presentations with all delta relations. Explicit face/degeneracy generator maps, two-affine inversion restrictions, triple cocycles and d^2 are checked; mixed naturality is proved modulo the defining relations using the source-proved [p]_q torsionfreeness. S01 Lemma 16.10, Remarks 16.15–16.16 and Theorem 16.22 apply to these same smooth lifts, diagonal ideals and canonical totalization. Finite delta-depth is an observation, not a quotient killing the infinite generators. E-infinity is separate.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P6-01",
     "title": "첫 perfectoid 예제를 고정한다",
     "criteria": "K=완비화(∪_m ℚ_p(p^{1/p^m}))에서 compatible roots를 고정하고 p=3을 첫 fixture로 삼는다. torus p-power tower\n의 완비화, valuation, theorem-backed perfectoid 증명 경로를 저장한다. 합격: 일반 ℙⁿ_K 또는 유한 root level을 바로\nperfectoid라고 부를 수 없다. base의 valuation·pseudo-uniformizer·완비화가 빠지면 거부한다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "The symbolic standard completed base, valuation and pseudo-uniformizer are recorded with external references; effective torus arithmetic is incomplete.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The selected completed standard field and torus carry valuation, pseudo-uniformizer, complete Gauss-norm and Frobenius-surjectivity witnesses for the S04 perfectoid theorem application; actual dense torus arithmetic is provided and missing base conditions or finite-level perfectoid claims fail.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P6-02",
@@ -177,58 +262,88 @@ export const CHECKLIST = [
     "sourcePage": 32,
     "status": "PASS",
     "implementedScope": "Independent root depth, valuation cutoff and Witt length plus exact compatible-prefix/refinement bookkeeping are implemented.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P6-03",
     "title": "tilt의 연산과 sharp map을 구현 계약에 둔다",
     "criteria": "R/p에서 Frobenius-compatible sequence를 다루고 sharp의 lift 독립성과 수렴 정밀도를 요구한다. tilt와 untilt의 덧셈을\n임의로 같은 좌표 덧셈이라 구현하지 않는다. 합격: x_{m+1}^p=x_m 관계 및 refinement 합치성을 확인한다. 실수/복소 그\n림의 근접성을 p-adic 수렴 인증서로 사용할 수 없다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "Sharp is explicit only on the selected compatible uniformizer; general tilt operations and sharp error certification remain.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Dense standard-tilt Laurent operations, actual Frobenius-compatible untilt-mod-p components and root refinement are computed. Sharp has a proved lift-independent p-adic error bound from successive inverse Frobenius approximants, with insufficient-depth gating and a non-additivity counterexample.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P6-04",
     "title": "Witt 연산과 Frobenius를 인증한다",
     "criteria": "Teichmüller representatives, Witt addition/multiplication, φ([x])=[x^p]를 정확한 universal polynomial 또는 검증된 라\n이브러리 경로로 다룬다. 합격: W₂(𝔽₃)≅ℤ/9에서 1+1+1=3≠0. Witt 좌표의 componentwise 덧셈으로 0을 내는 구현은\n실패한다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "Exact W_N(F_p) arithmetic is implemented; Witt arithmetic over the full tilt coefficient ring remains unsupported.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Universal p-typical Witt polynomial addition/multiplication over actual dense tilt coefficients are evaluated through exact ghost numerator divisions; Teichmuller multiplication/Frobenius and noncomponentwise carries are independently checked against the prime-field integer oracle.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P6-05",
     "title": "θ와 kernel generator를 실제 base에 묶는다",
     "criteria": "선택한 untilt에 대한 θ, ξ 및 ξ의 distinguished/nonzerodivisor 근거를 저장한다. ξ는 선택에 의존할 수 있으므로 ring 해시\n와 함께 관리한다. 합격: θ(ξ)=0과 A_inf/( ξ)≅R의 인증 범위를 제시한다. θ와 φ가 무조건 같은 base endomorphism으로\ncommute한다고 요구하지 않는다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "The selected theta/xi witness is bound to a base hash and an external theorem; a general computational theta/kernel certificate is incomplete.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Theta evaluates actual dense Witt coordinates via inverse-Frobenius sharp terms. The computed xi=[p^flat]-p has theta(xi)=0 and unit Witt carry xi_1=-1; regularity and kernel quotient use the S03/S01 theorem on the fixed completed base hash. Theta(phi(xi))=p^p-p is retained.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P6-06",
     "title": "A Ω와 단순 de Rham·group complex를 구별한다",
     "criteria": "pro-étale/group-cohomology 모델의 L η, 거의 동형, torsion-free replacement를 명세한다. S03의 A Ω 정리를 사용할 때\n는 C=K의 완비 대수폐포로 base extension하고 그 map을 기록하여 완비 대수폐쇄 base 조건을 충족한다. 합격: Lη를 생략\n한 raw Koszul complex는 A Ω_CERTIFIED가 될 수 없다. S03의 해당 comparison과 입력 가정이 certificate에 포함되어야\n한다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "An exact eta-complex diagnostic is implemented; the actual pro-etale/group model, complete algebraic closure base change and A-omega certificate remain.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The complete standard torus over C=completed algebraic closure of K has its actual mu-torsionfree continuous-group Koszul representative, L eta, integral and fractional-character formulas, explicit contraction and BMS Lemma 9.6/Theorem 9.4(iii) comparison through the almost step. Omission of base extension, eta or completion fails.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P6-07",
     "title": "perfect-prism 비교사상의 방향과 조건을 검사한다",
     "criteria": "perfect-prism 대응 및 étale·de Rham·crystalline 경로를 base change, completion, inversion, Frobenius fixed-points\n의 순서로 기록한다. 합격: étale 경로는 perfect base 등 적용 가정과 I inversion/derived fixed points를 누락하면 실패한\n다. modp 그림만으로 ℤ_p étale cohomology 전체를 결정하지 않는다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "Perfect-prism comparison requirements are exposed through theta metadata; a composable derived comparison-map backend remains.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The perfect-prism correspondence and etale, integral etale, de Rham and crystalline paths carry their actual base rings, coefficient maps and ordered derived operations. Missing perfectness, I inversion, derived fixed points, completion/order or false mod-p-to-Zp promotion fails.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "P6-08",
@@ -237,8 +352,13 @@ export const CHECKLIST = [
     "sourcePage": 32,
     "status": "PASS",
     "implementedScope": "Unsupported adapters, model-development obligations and open research claims are reported separately without fake certification.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
-    "formalComplete": false
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/arithmetic/evidence/acceptance.json"
+    ]
   },
   {
     "id": "Y3-01",
@@ -248,7 +368,10 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "Ns, Nt, spatial/Euclidean-time spacing and boundaries, anisotropy, representation, physical extents, site count and continuous group degrees of freedom are distinct.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y3-02",
@@ -258,7 +381,10 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "Oriented group products, inverse and empty paths use U_xy:y→x. Classical links retain ordered-midpoint approximation and refinement diagnostics.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y3-03",
@@ -268,7 +394,10 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "Actual ordered plaquettes, arbitrary signed paths, identity, pure gauge and nontrivial central temporal holonomy fixtures.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y3-04",
@@ -278,7 +407,10 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "Site-wise transformation recomputes every plaquette and the total action. M1 lawful-group adjacent telescoping theorem is reused with its historical audit; no new browser kernel execution.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y3-05",
@@ -288,27 +420,36 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "Wilson real character for every shipped faithful group representation; basic invariant form determines bare coupling and anisotropic coefficients.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y3-06",
     "title": "곡률·에너지·위상량의 이산화를 표시",
     "criteria": "plaquette/clover 등 측정법과 a의 차수를 명시한다. 위상 전하 추정값과 정수 위상 인증을 분리한다. 합격: 매끄러운 장에서\nas,at를 줄이면 지정한 연속량에 수렴한다. 거친 격자의 실수 Q 값을 반올림만 하여 정확한 정수 불변량으로 선언하지 않는다.",
     "sourcePage": 42,
-    "status": "PARTIAL",
-    "implementedScope": "Actual Lie-projected plaquette/clover curvature, energy and unrounded charge are measured. A local BPST refinement oracle is available; general continuum/topological convergence is not certified.",
+    "status": "PASS",
+    "implementedScope": "Actual full-Lie plaquette/clover curvature, energy and real charge converge as both spacings shrink. Independent analytic-derivative local fixtures and a fixed physical 4D box integral retain every source link/cell and directed error budgets. Observed clover order two is distinguished from the conservative order-one bound; real Q is never rounded into an integer certificate.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y3-07",
     "title": "고전장→링크 변환의 오차 예산",
     "criteria": "Y2 해를 path integration으로 격자화하고 미분 방식과 비교한다. 경계·사다리꼴 적분·행렬 exponential 오차를 따로 기록\n한다. 합격: ρ/a를 늘리는 refinement fixture에서 오차 감소를 확인한다. 다른 G·representation에 오차 기준을 근거 없이\n재사용하지 않는다.",
     "sourcePage": 42,
-    "status": "PARTIAL",
-    "implementedScope": "Actual M1 field→link midpoint transport, trapezoidal comparison and exponential/group residuals. No general certified boundary or integration-error bound is claimed.",
+    "status": "PASS",
+    "implementedScope": "Every classical M1 link has separate source-specific midpoint/trapezoidal integration, source evaluation, matrix exponential truncation/roundoff, product and boundary errors. Exact rational group data determine each of the fourteen representation bounds. Local rho/a and fixed-volume refinements are checked against independent BPST primitives/densities; finite-path/window bounds are not exported as arbitrary continuum theorems.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y3-08",
@@ -318,7 +459,10 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "Source allocation and JSON budgets checked before constructing arrays; raw links remain complete while x4 slice/stride changes only the observation hash.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y4-01",
@@ -328,7 +472,10 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "The finite normalized Haar-product Gibbs measure has an explicit positive partition-function bound; underflow is recorded in log scale.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y4-02",
@@ -338,27 +485,36 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "Full SU(2) Haar or symmetric full-basis Lie exponential random-scan Metropolis; target action difference and proposal symmetry are explicit.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y4-03",
     "title": "샘플러의 작은 사례 검사",
     "criteria": "단일 링크·작은 격자의 독립 quadrature/긴 reference chain과 비교하고 pure gauge fixture를 재사용한다. 합격: 관측 평\n균이 사전 정의한 오차 구간에서 reference와 맞는다. 고정 seed 재현성만으로 올바른 분포 sampling을 승인하지 않는다.",
     "sourcePage": 44,
-    "status": "PARTIAL",
-    "implementedScope": "Independent SU(2) one-link angular quadrature and product-Haar beta=0 lattice tests. Nonzero-beta multi-link and other-group quantitative reference validation remain open.",
+    "status": "PASS",
+    "implementedScope": "Both real SU(2) proposal algorithms meet independent Bessel/Haar one-link references. A nonzero-beta full 2×2×2×2 open lattice is compared with separate quaternion product-Haar importance sampling, predeclared Bernstein/Hoeffding intervals and pure-gauge controls. Wrong distribution/action controls fail; other-group quantitative validation is not inferred from these fixtures.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y4-04",
     "title": "열평형과 독립 반복 확인",
     "criteria": "hot/cold starts, burn-in, acceptance, action·loop·topology history를 기록한다. topology freezing을 별도 검사한다.\n합격: 초기 상태별 결과와 구간별 평균이 진단 기준을 통과한다. 표본 수가 커도 chain이 정체되면 연구용 정량 결과를 미완료\n로 표시한다.",
     "sourcePage": 44,
-    "status": "PARTIAL",
-    "implementedScope": "Independent starts, warmup, acceptance, action/loop/topology history and segment/replica diagnostics are implemented; finite short chains do not certify equilibration or topological-sector mixing.",
+    "status": "PASS",
+    "implementedScope": "Two starts pass recorded burn-in, acceptance, action/loop/real-topology, split-Rhat, segment/replica mean and ESS gates on the declared small reference fixture. Separate real-charge mobility diagnostics reject long stagnant histories. Inadequate short production examples remain PARTIAL; these finite diagnostic passes do not prove general thermal equilibrium or integer topological-sector mixing.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y4-05",
@@ -368,27 +524,36 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "Per-observable autocorrelation window, tau_int, ESS and batch-mean cross-check; insufficient ESS and constant/stalled series do not receive a confidence interval.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y4-06",
     "title": "Reflection positivity 적용 가능성 조사",
     "criteria": "선택한 작용·시간 반사·경계·observable algebra를 알려진 정리의 가정에 매핑한다. 새로운 개선·비국소 항은 별도 검토한\n다. 합격: 출처 정리와 대응표가 있어야 외부 정리 적용 상태를 준다. 숫자로 만든 양의 상관행렬 몇 개는 전체 reflection\npositivity 증명이 아니다.",
     "sourcePage": 44,
-    "status": "OPEN",
-    "implementedScope": "Model-specific reflection-positivity theorem/observable-algebra/boundary mapping is not complete. No numerical matrix is promoted to a proof.",
+    "status": "PASS",
+    "implementedScope": "Six explicit model/action/Haar/boundary/algebra hypotheses map to Lüscher 1977, §II, Propositions 1–2. Direct SU(N) periodic isotropic application is distinguished from the displayed compact-group/anisotropic/open-boundary derivation. Negative beta, arbitrary measure, gauge-variant algebra and extra action terms cannot receive an application status. Finite numeric PSD matrices are not the proof.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y4-07",
     "title": "전달 연산자와 유한 절단 구별",
     "criteria": "유한 공간 격자도 연속 compact G이면 보통 gauge-invariant L²(G^edges) 공간이 무한차원이다. Peter-Weyl/표현 cutoff\n또는 cubature를 별도 선언한다. 합격: finite-matrix 표시는 cutoff·기저·Gauss 제약·오차가 있을 때만 허용한다. 절단이\npositivity·unitarity·게이지 대칭을 보존하는지 별도 확인한다.",
     "sourcePage": 44,
-    "status": "OPEN",
-    "implementedScope": "Infinite-dimensional gauge-invariant L² group Hilbert space is explicitly identified. No finite transfer matrix is fabricated without cutoff, basis, Gauss constraints and error controls.",
+    "status": "PASS",
+    "implementedScope": "The infinite-dimensional gauge-invariant L² space is retained explicitly. The full SU(2) open spatial cube has an exhaustively enumerated total-spin-weight≤5 Gauss basis of seven states. Its positive Gram companion has separate deterministic omitted-spin, independent-Haar cubature and arithmetic errors; symmetry and finite real-time unitarity are checked. Unsupported graphs/cutoffs are rejected, and Euclidean transfer is not called unitary.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "Y4-08",
@@ -398,117 +563,195 @@ export const CHECKLIST = [
     "status": "PASS",
     "implementedScope": "Group/action/beta/spacing/volume/boundary, algorithm, seed, starts, flow=null, retained sample hashes and final raw configurations are sealed; source versus observation revisions are distinct.",
     "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": null,
+    "remainingObligations": [],
+    "evidencePaths": []
   },
   {
     "id": "N4-01",
     "title": "차수와 기호 충돌 분리",
     "criteria": "λn=2nh, En,Un,Vn,Πn와 scalar φn을 구분한다. η의 Fourier 차수·radial analytic 차수·배경 차수를 서로 다른 인덱스로 둔\n다. 합격: (5.1)의 q 지수와 E_n=√(2X) φn/C를 자동 단위 검사한다. Π0의 axis trace와 전체 pressure profile을 혼동하면\n실패다.",
     "sourcePage": 58,
-    "status": "PARTIAL",
-    "implementedScope": "Distinct background/radial/eta indices, source exponents and zero positive-order axis-data declarations are generated. Evaluated same-profile units and pressure reconstruction are not yet certified.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Exact q-power arithmetic checks (5.1), 1-2D=2h, A+D=1 and the radial pressure shift. An axis-trace pressure substitution or replacement of the pinned N3 h is rejected. Background, radial and eta indices are distinct.",
+    "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-recursion.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N4-02",
     "title": "비선형 convolution 생성",
     "criteria": "(5.3)-(5.6)의 모든 i+j=n 곱을 생성한다. i=0,n 및 n,0은 현재 미지수에 선형이고 나머지는 확정된 이전 차수다. 합격: n=1,2\n의 직접 PDE 대입 결과와 coefficient extractor가 일치한다. axial viscosity의 n −1 shift와 압력 Ωn−1/(2X)를 반드시 포함\n한다.",
     "sourcePage": 58,
-    "status": "PARTIAL",
-    "implementedScope": "All ordered i+j=n source terms and the n-1 viscosity/pressure shift are generated. Independent direct-PDE substitution of solved same-profile coefficients remains open.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The original cylindrical PDE is physically differentiated as an exact BigInt rational differential polynomial. Its n=1,2 coefficients equal independently generated (5.2)-(5.6), including all ordered pairs, vector connection terms and both n-1 shifts.",
+    "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-recursion.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N4-03",
     "title": "차수별 inner Picard 풀이",
     "criteria": "(5.7)의 6성분 선형계와 (5.8)의 convergent Picard series를 사용하고 영 axis datum을 유지한다. 합격: 선택 analytic\nstrip·Cn·Cauchy radius loss를 기록하고 Picard tail를 상계한다. 반경 interval은 차수에 따라 임의 축소하지 않으며 lemma\n의 공통 interval 조건을 검사한다.",
     "sourcePage": 58,
-    "status": "OPEN",
-    "implementedScope": "No same-profile six-component Picard solver with common analytic domain and certified tails is installed.",
-    "testStatus": "NOT_IMPLEMENTED",
-    "formalComplete": false
+    "status": "PARTIAL",
+    "implementedScope": "The full source six-component system, sparse A1 block identity, zero-axis inverse and a two-parity outward Picard tail are executable. The actual common radial interval is pinned; the displayed scalar tail uses explicitly declared operator bounds.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [
+      "Derive actual source C_n and the full eta-strip radius at each order.",
+      "Evaluate the same-profile six-component Picard solution with those bounds on the fixed common interval."
+    ],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-picard.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N4-04",
     "title": "차수별 radial cutoff와 모멘트 복구",
     "criteria": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
     "sourcePage": 58,
-    "status": "OPEN",
-    "implementedScope": "Positive-order coefficient extension and five exact total-moment corrections are not installed. The next-order reuse guard remains closed.",
-    "testStatus": "NOT_IMPLEMENTED",
-    "formalComplete": false
+    "status": "PARTIAL",
+    "implementedScope": "An outward-certified five-moment matrix operator uses the actual lambda and reserved Ipos. A confluent U row avoids replacing tiny lambda by zero. Five disjoint smooth bump supports, both stress support cases and a closed next-order reuse guard are recorded.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [
+      "Evaluate actual extended positive-order profiles and five total moment functions for every eta.",
+      "Apply the resulting corrections, reconstruct V_n/Pi_n, and certify their derivatives before n+1 source reuse."
+    ],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-moments.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N4-05",
     "title": "유한 배경 잔차 검증",
     "criteria": "Fslow=R+div T를 직접 계산하고 (5.25)의 q^[2h(N+1) −Km] bound와 비교한다. 합격: N 증가에 따른 실제 잔차 감소를\n정밀도·격자와 독립 추적한다. CN,m와 Km이 미계산이면 검증된 tail bound로 표시하지 않는다.",
     "sourcePage": 58,
-    "status": "OPEN",
-    "implementedScope": "The actual same-profile finite-background R+div(T), support-localized norms and order-refinement residual have not been assembled.",
-    "testStatus": "NOT_IMPLEMENTED",
-    "formalComplete": false
+    "status": "PARTIAL",
+    "implementedScope": "The full original finite physical PDE residual polynomial and source stress reconstruction (5.9) are exported. No uncomputed C_N,m, K_m, actual stress or numerical residual-decay claim is manufactured.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [
+      "Substitute actual repaired coefficients and assemble R+div(T).",
+      "Measure order refinement independently of grid and precision, then certify C_N,m and K_m."
+    ],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-residual.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N4-06",
     "title": "Shrinking cutoff 스케줄",
     "criteria": "Lemma5.4에 따라 aj+1≥2aj와 (5.37)의 유한 조건을 차례로 만족시키는 cutoff를 선택한다. 합격: 0≤m≤j에서 Ĉj,m(1+|\nlogq|)^P q^(gj/2)≤2^−j를 전체 q≤1/aj에 대해 상계한다. constants 없는 경험적 aj는 미인증으로 표시한다.",
     "sourcePage": 58,
-    "status": "PARTIAL",
-    "implementedScope": "A shrinking cutoff schedule satisfies outward interval inequalities for every q in the stated interval for supplied derivative constants. Original same-profile derivative constants remain uninstantiated.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The scalar schedule satisfies exact doubling and the outward (5.37) inequality for every supplied m<=j on the entire q interval. A separate ledger certifies only the conditional scalar implication and explicitly leaves actual source derivative-constant provenance unverified.",
+    "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-cutoffs.json",
+      "mathscope-m2/navier/evidence/source-contract-independent.json"
+    ]
   },
   {
     "id": "N4-07",
     "title": "Potential에 cutoff 후 curl",
     "criteria": "χ(cnq)Sn 또는 potential을 먼저 합친다. (5.45)의 χ′ radial correction을 포함해 velocity를 복원한다. 합격: div curl=0 및\ndirect axisymmetric swirl의 div=0 항등식이 유지된다. χun만 사용하는 구현은 negative control에서 실패해야 한다.",
     "sourcePage": 58,
-    "status": "PARTIAL",
-    "implementedScope": "An explicit compact C3 potential includes grad(chi) cross A in curl(chi A), with independent finite-difference refinement and a missing-term negative control. The original C-infinity background potential remains unconnected.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Exact differentiation of chi(c_n*q)*q^(1-A+lambda_n)*F_n yields the original (5.45) chi-prime radial correction. Full cylindrical divergence and direct axisymmetric swirl divergence vanish identically; omitting the correction gives a nonzero exact negative control.",
+    "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-curl.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N4-08",
     "title": "배경 합성과 tail 계약",
     "criteria": "실 제 locally finite sum 과 유 한 formal truncation 을 구 별 하 고 (5.35), (5.39), (5.42), (5.43) 를 기 록 한 다. 합 격: q>0\ncompact domain의 active cutoff index를 정확히 계산하고 tail bound의 유효 영역 q<(2aJ)^ −1을 함께 export한다.\nuncut series 수렴은 주장하지 않는다.",
     "sourcePage": 58,
-    "status": "PARTIAL",
-    "implementedScope": "Finite active-order queries and explicit tail-domain conditions are exposed. An all-order same-profile Borel-sum differentiability/tail certificate is not installed.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Actual supplied three-component potentials are multiplied by a genuine C-infinity cutoff and summed. Exact compact-domain a_J*q_min>=1 plus the doubling continuation proves every unseen higher summand vanishes; exhausted prefixes export localSum=null. The strict q<(2*a_J)^-1 tail domain and the distinction from an uncut finite formal truncation are retained.",
+    "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-cutoffs.json",
+      "mathscope-m2/navier/evidence/source-contract-independent.json"
+    ]
   },
   {
     "id": "N5-01",
     "title": "Dyadic chart 생성",
     "criteria": "Q=2^−ℓ, ε=Q^h, S*=ℓ², (R,Z,T)=(r/√Q,z/Q^D, τ/Q)를 고정하고 band마다 discrete labels를 생성한다. 합격: 동일 샘\n플이 겹치는 chart에서 같은 physical quantity를 준다. 미분 중 ceil/round 주파수와 labels를 다시 선택하지 않는다.",
     "sourcePage": 60,
-    "status": "PARTIAL",
-    "implementedScope": "Dyadic physical/scaled coordinates and adjacent-band overlap are computed. tau=0 and floating-point underflow are rejected. Original same-profile band/slow-data selection remains unconnected.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The accepted assembly-to-core SHA chain binds actual eta-zero Phi intervals at the five recorded source Y values. Each chart independently reconstructs q=Q*T and Y=Lambda*R^2/(2*T). Exact affine-h exponent algebra proves physical swirl scaling; transformed and independently restored outward intervals agree. Axis extension and positive symbolic underflow factors are preserved.",
+    "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-core-charts.json",
+      "mathscope-m2/navier/evidence/source-core-independent.json"
+    ]
   },
   {
     "id": "N5-02",
     "title": "Auxiliary torus와 chain rule",
     "criteria": "Jg=[[3,1],[1,5]], Y=vr r^dr+vt t mod Z² 및 (6.6)의 evaluated derivatives를 사용한다. 합격: Dr,Dz,t*의 chain-rule 항\n을 모두 포함한다. torus 평균 후 물리 phase 평가의 순서를 반대로 하여 pointwise 값을 평균으로 대체하지 않는다.",
     "sourcePage": 60,
-    "status": "PARTIAL",
-    "implementedScope": "Auxiliary torus matrix, determinant 14, Haar factor and the required chain-rule formula are represented. Original Y_g slow derivatives and the complete evaluated chain rule have not been instantiated.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "Exact Q(sqrt(2)) identities verify the source eigenvectors, dual coordinates and Jacobian. All slow and fast (6.6) chain-rule terms are applied with the actual source exponent and covering. Physical pointwise evaluation is explicitly distinct from normalized Haar averaging.",
+    "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-torus.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N5-03",
     "title": "겹치는 pulse의 지지 분리",
     "criteria": "Lemma6.1의 conflict graph에 따라 overlapping slow supports에 서로소 auxiliary rectangles를 할당한다. 합격: 모든\nactive label pair의 support intersection을 검사한다. 서로 다른 labels의 곱은 실제로 0이어야 하며 same-label harmonics\n는 유지한다.",
     "sourcePage": 60,
-    "status": "PARTIAL",
-    "implementedScope": "A finite slow-overlap conflict graph allocates exact-rational separated auxiliary supports and checks every active pair. Same-label harmonics are retained. The full original collection of labels has not been supplied.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "A deterministic 2,250-color palette covers the complete countable source mesh. Exact rational centers and one r0 certify every ordered covering constraint through Delta=4 and all enlarged support intersections; actual active labels are a subset. Same-label harmonics and once-per-slow-box counting are retained.",
+    "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-support.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N5-04",
@@ -516,9 +759,17 @@ export const CHECKLIST = [
     "criteria": "k=ceil(ε^−1/2), kp는 0이 아닌 정수, (7.3)-(7.8)의 Φ,nΦ,K,AΦ,B를 생성한다. 합격: nΦ·tm=0과 nonzero denominators\n를 검사한다. 1≤ εk²≤4 및 frame determinant lower bound를 인증된 영역에서 만족한다.",
     "sourcePage": 60,
     "status": "PARTIAL",
-    "implementedScope": "The frozen local shear jet, integer angular frequency and tangent initial polarization are executable. Uniform same-profile phase/frame derivative bounds remain open.",
+    "implementedScope": "Full three-component source phase normal, including F_Z and G_Z, is retained. Fixed angular frequencies, tangent polarization and denominator checks execute on explicit local jets; a fixed orthogonal rotation supports the general affine normal.",
     "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [
+      "Derive the uniform source slow-domain q_star and certified frame determinant lower bounds from the actual N3 field."
+    ],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-pulse-ode.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N5-05",
@@ -526,9 +777,18 @@ export const CHECKLIST = [
     "criteria": "(7.13),(7.17)의 projected ODE를 풀고 P(v)=exp∫( λ−dref)를 log envelope로 저장한다. 합격: (7.22)의 amplitude\nenergy balance, n Φ·tm 제약, midpoint normalization과 양 끝 Gaussian bound를 검사한다. underflow를 pulse가 정\n확히 0인 것으로 처리하지 않는다.",
     "sourcePage": 60,
     "status": "PARTIAL",
-    "implementedScope": "The projected pulse ODE is integrated in a parallel tangent frame with analytic scalar-damping separation and empirical step refinement. Rigorous ODE solution error, slow derivatives and Gaussian constants remain open.",
+    "implementedScope": "Parallel tangent coordinates retain the normal constraint and separate analytic scalar damping from logarithmic amplitude. The source Bs-squared definition is corrected, and the reference P envelope has a continuous Gaussian bound for explicit parameters. General affine normals and fourth-order refinement are checked against an independent original Cartesian ODE solver; the actual source growing-mode datum and uniform constants remain unlinked.",
     "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [
+      "Enclose actual pulse ODE integration error and all requested slow derivatives.",
+      "Derive actual uniform Gaussian constants and two-end decay bounds."
+    ],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-pulse-ode.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N5-06",
@@ -536,109 +796,193 @@ export const CHECKLIST = [
     "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
     "sourcePage": 60,
     "status": "PARTIAL",
-    "implementedScope": "Two actual finite polarization covariance columns, positive weights, cosine factor 1/2 and the Haar Jacobian match a supplied admissible stress. Original nonconstant profile matching is not certified.",
+    "implementedScope": "The covariance fixture now uses the source rectangle Jacobian 4-2*sqrt(2) and angular factor 1/2. The normalized covering factor is 1, because all inverse lifts are included. Historical incorrect 1/14 fixtures are explicitly excluded from acceptance.",
     "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [
+      "Integrate the actual two source pulses, certify positive weights/determinant bounds, and assemble the once-per-box global (7.30) stress."
+    ],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-covariance.json",
+      "mathscope-m2/navier/evidence/source-independent-checks.json"
+    ]
   },
   {
     "id": "N5-07",
     "title": "정확한 curl과 remainder",
     "criteria": "Cm=i(nΦ×tm)/(km|n Φ|²), physical potential scale Q^(1/2 −A)를 사용한다. cutoff 후 curl의 rm도 유지한다. 합격:\ndiv curl 항등식, physical Cartesian divergence numerical convergence, conjugate symmetry를 확인한다. rm 누락 시\ncovariance/residual test가 실패한다.",
     "sourcePage": 60,
-    "status": "PARTIAL",
-    "implementedScope": "Compact-potential curl and finite covariance components are checked. Original oscillatory pulse cutoff/curl remainder terms have not been assembled or bounded.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The original Cm=i*(n cross t)/(km|n|^2) is differentiated by third-order mixed source jets, including every fast/slow and cylindrical-frame derivative in rm. Exact div-curl and physical Q exponent identities, independent Cartesian curl/divergence refinement, conjugate harmonics and omitted-rm covariance/residual negative controls pass. The numerical coefficients are explicitly an operator probe.",
+    "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-pulse-curl.json",
+      "mathscope-m2/navier/evidence/tests.tap"
+    ]
   },
   {
     "id": "N5-08",
     "title": "Cutoff tail의 flatness 추적",
     "criteria": "(7.40)의 (1 −ψ)fm+ψ′tm를 버리지 않고 별도 잔차로 기록한다. S*^C exp( −cS*)와 q의 관계를 상계한다. 합격: 각 고정\nm,N에 대해 −cℓ²+(M+N)ℓlog2+2Clogℓ를 써서 bound를 평가한다. machine-zero만으로 모든 차수 flatness를 인증하지\n않는다.",
     "sourcePage": 60,
-    "status": "PARTIAL",
-    "implementedScope": "Outward log-tail values and an all-later-label scalar monotonicity threshold are computed for fixed declared derivative order and constants. Actual original ODE constants and the all-order construction remain open.",
-    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "The full (1-psi)*f_m+psi_prime*t_m is actually evaluated from supplied complex interval derivative jets, with all Leibniz terms and resolvable input paths. Outward fixed-order log bounds and a monotone all-later-label threshold are certified conditionally on the declared Gaussian/derivative-loss envelope. Actual source envelope provenance is not inferred from finite jets.",
+    "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+    "formalComplete": false,
+    "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "mathscope-m2/navier/evidence/ns-m2-tail.json",
+      "mathscope-m2/navier/evidence/source-contract-independent.json"
+    ]
   },
   {
     "id": "I2-01",
     "title": "축·색의 수학적 타입",
     "criteria": "좌표별 unit, source field, scale, log transform, data dimension/physical dimension을 표시한다. 데이터 배치용 축은\ncategorical로 구분한다. 합격: cohomological degree와 실제 공간 좌표, Euclidean x4와 물리 시간, p-adic valuation과\n실수 거리가 섞이지 않는다.",
     "sourcePage": 18,
-    "status": "PARTIAL",
-    "implementedScope": "Typed axes, source fields, units and stored log transforms are displayed; categorical, spectral, Euclidean x4 and physical coordinates are kept distinct. Cross-domain contract coverage is being verified.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "좌표와 색의 단위·원본 필드·scale·변환·데이터/물리 차원을 표시합니다. 차수·categorical 배치·p-adic valuation·공간·Euclidean x4·spectral time·Monte Carlo lag를 서로 다른 타입으로 유지합니다.",
+    "testStatus": "전체 관측의 축 계약·원본 경로 검사 및 실제 브라우저 4D/복합체 확인 통과.",
+    "formalComplete": false,
+    "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "evidence/observatory-audit.json",
+      "evidence/browser-i2-v58-audit.json",
+      "evidence/gpu-shader-raster-audit.json",
+      "visualization/evidence/adapted-inventory.json"
+    ]
   },
   {
     "id": "I2-02",
     "title": "정확한 4D 관측 선택",
     "criteria": "x4=c 단면, scalar marginal, Wilson line/loop, 조건부 평균 등 관측 연산을 분리하고 각각 잃는 정보를 표시한다. 열린\nWilson line은 endpoint와 gauge convention을 표시하고 불변 endpoint 결합/closed-loop character와 구별한다. 합격:\nscalar marginal이 gauge connection을 반환하지 않는다. 비단사 사영의 역변환 버튼은 reconstruction certificate 없이는\n활성화되지 않는다.",
     "sourcePage": 18,
-    "status": "PARTIAL",
-    "implementedScope": "Existing scalar slices, scalar marginals and Wilson observations retain their own contracts and loss notes. New lattice output is explicitly a scalar x4 slice; no uncertified reconstruction is enabled.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "동일한 실제 4D 장에서 단면, 유한 구간 scalar 적분, 정규화된 조건부 평균, 열린 Wilson line과 닫힌 loop를 각각 계산합니다. 적분 영역·정규화·endpoint·gauge convention·손실 정보를 보존하고, 비단사 관측의 역변환을 허용하지 않습니다.",
+    "testStatus": "Simpson 적분/조건부 평균 관계, 실제 경로와 endpoint, scalar/connection 분리, 브라우저 5종 실행 통과.",
+    "formalComplete": false,
+    "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "evidence/observatory-audit.json",
+      "evidence/browser-i2-v58-audit.json",
+      "evidence/gpu-shader-raster-audit.json",
+      "visualization/evidence/adapted-inventory.json"
+    ]
   },
   {
     "id": "I2-03",
     "title": "Δ 상태족 비교",
     "criteria": "가정/단위 재척도화/유효 모델/앙상블 추정 모드를 명확히 선택하고, 같은 카메라·색 범위에서 두 상태를 나란히 비교한다. 합\n격: 가정 모드에서 장이 변하지 않는 이유를 표시한다. 생성 규칙에 따라 원본과 관측을 재계산하고 모형 hash와 표본 hash를\n구별한다. correlator 변화는 명시된 spectral/ensemble 의존 관계에 따라 검사한다.",
     "sourcePage": 18,
-    "status": "PARTIAL",
-    "implementedScope": "Two completed M1 runs can be compared with a shared camera, bounds, colors and separate model/sample/observation hashes. A unified Delta-dependent ensemble family and correlator comparison remain to be integrated.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "ASSUMED_BOUND·UNITS·EFFECTIVE_MODEL·ENSEMBLE_ESTIMATE 네 모드를 실행합니다. 두 상태의 카메라·색 범위를 공유하고 model/sample/observation hash를 구분합니다. 명시한 유한 spectral 모형 또는 실제 Gibbs chain의 correlator 의존식을 독립 검사하며, 가정 모드에서 원본 장이 유지되는 이유를 표시합니다.",
+    "testStatus": "네 모드의 원본/표본 hash·correlator 항등식·변조 대조, 같은 카메라와 공통 색 범위의 실제 브라우저 검사 통과.",
+    "formalComplete": false,
+    "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "evidence/observatory-audit.json",
+      "evidence/browser-i2-v58-audit.json",
+      "evidence/gpu-shader-raster-audit.json",
+      "visualization/evidence/adapted-inventory.json"
+    ]
   },
   {
     "id": "I2-04",
     "title": "고차원 복합체 상세 보기",
     "criteria": "chain group, differential, kernel/image, Frobenius, filtration과 각 비교 map을 연결해 선택한 basis component의 변\n화를 추적한다. 합격: basis 교체 시 표시가 달라도 계산된 불변량이 일치한다. 화면상의 가까움이 p-adic/위상적 가까움이라\n는 주장을 만들지 않는다.",
     "sourcePage": 18,
-    "status": "PARTIAL",
-    "implementedScope": "Exact complex tables and selectable basis differential/Frobenius/filtration traces are connected. General higher-dimensional kernel/image and coherent comparison certificates remain incomplete.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "실제 chain group·미분·kernel/image 생성자와 완전성·Frobenius·Hodge inclusion·비교 사상을 연결합니다. 정수 unimodular 기저의 역순/shear 교체에서 D, F, i, r, h와 filtration을 함께 옮기고 cohomology와 그 Frobenius가 일치함을 검사합니다. 0차원 사상도 정확한 0 사상으로 표시합니다.",
+    "testStatus": "정수 chain/retract 항등식과 기저 교체 불변량·선택 성분·행렬 원본 경로·0차원 패널 브라우저 검사 통과.",
+    "formalComplete": false,
+    "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "evidence/observatory-audit.json",
+      "evidence/browser-i2-v58-audit.json",
+      "evidence/gpu-shader-raster-audit.json",
+      "visualization/evidence/adapted-inventory.json"
+    ]
   },
   {
     "id": "I2-05",
     "title": "소수의 범위 탐색",
     "criteria": "prime atlas는 segmented tiles로 확대·이동하며 각 tile의 계산 완료·추정·미계산 상태를 표시한다. 전체 소수집합의 정의를\n상단에 유지한다. 합격: 타일 경계에서 소수 누락·중복이 없고 미계산 영역이 빈 소수집합으로 렌더되지 않는다.",
     "sourcePage": 18,
-    "status": "PARTIAL",
-    "implementedScope": "Deterministic full-range LOD, disjoint prime tiles, explicit uncomputed intervals, viewport navigation and exact bounded interval recomputation are implemented; browser acceptance is recorded separately.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "M1 prime atlas의 전체 소수 정의를 유지하며 서로 겹치지 않는 segmented tile을 확대·이동·재계산합니다. 완료 tile과 미계산 구간을 명시하고, 미계산을 빈 소수집합으로 표시하지 않습니다.",
+    "testStatus": "타일 경계의 정확한 집합/누락/중복·미계산 대조와 실제 브라우저 구간 이동·재계산 검사 통과.",
+    "formalComplete": false,
+    "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "evidence/observatory-audit.json",
+      "evidence/browser-i2-v58-audit.json",
+      "evidence/gpu-shader-raster-audit.json",
+      "visualization/evidence/adapted-inventory.json"
+    ]
   },
   {
     "id": "I2-06",
     "title": "blowup의 물리·유사 좌표 동기화",
     "criteria": "같은 τ에서 두 좌표를 동기화하고 고정 색과 자동 색을 선택하게 한다. τ=0과 불충분한 정밀도 영역은 데이터 대신 상태를 표\n시한다. 합격: 고정 물리 시야에서 core 수축이 보이고, similarity 확대율이 저장된다. 샘플 overflow가 무한대의 수학적 증\n거가 되지 않는다.",
     "sourcePage": 18,
-    "status": "PARTIAL",
-    "implementedScope": "Physical/similarity coordinate contracts and out-of-domain states remain explicit. Full same-tau dual field views with fixed physical viewport and common color controls are not yet constructed.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "같은 실제 유한 profile의 같은 τ에서 물리/유사 좌표를 나란히 계산합니다. 전체 프레임 고정 물리 시야, 공통 고정/자동 색, 저장된 radial/axial 확대율을 제공합니다. τ=0과 정밀도 부족에서는 양쪽 데이터를 지우고 상태를 표시합니다. 선택한 유한 후보의 기존 PARTIAL 범위를 유지합니다.",
+    "testStatus": "좌표 지수·동일 profile·core 수축·고정 시야·색 범위·극소 τ 및 τ=0 검사와 브라우저 양쪽 상태 확인 통과.",
+    "formalComplete": false,
+    "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "evidence/observatory-audit.json",
+      "evidence/browser-i2-v58-audit.json",
+      "evidence/gpu-shader-raster-audit.json",
+      "visualization/evidence/adapted-inventory.json"
+    ]
   },
   {
     "id": "I2-07",
     "title": "수학 작업과 카메라 작업 구분",
     "criteria": "camera 변경은 representation revision만, 모델·가정 변경은 관련 계산과 claim revision을 갱신한다. 실행 중 값 변경 시 결\n과를 분리한다. 합격: 오래 걸린 job이 새 입력 화면을 덮어쓰지 않는다. 과거 결과는 자신의 입력과 연결된 탭에서만 보인다.",
     "sourcePage": 18,
-    "status": "PARTIAL",
-    "implementedScope": "Camera revisions do not alter computation; changed input closes the old observation, historical jobs restore their own requests, and saves check owned receipts and live session revisions. Browser acceptance is recorded separately.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "카메라는 표시 revision만 바꿉니다. 모델/가정 입력 변경은 현재 관측을 닫고, 비동기 완료가 새 편집·선택을 덮어쓰지 않습니다. 실행 기록 선택은 그 실행의 입력을 함께 복원하고, 저장은 실제 소유 receipt와 원래 세션 revision을 검사합니다.",
+    "testStatus": "경쟁 실행·입력 변경·과거 입력 복원·소유/세션 저장 gate·동일 소스 재현 MATCH의 로컬 및 브라우저 검사 통과.",
+    "formalComplete": false,
+    "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "evidence/observatory-audit.json",
+      "evidence/browser-i2-v58-audit.json",
+      "evidence/gpu-shader-raster-audit.json",
+      "visualization/evidence/adapted-inventory.json"
+    ]
   },
   {
     "id": "I2-08",
     "title": "접근성과 표시 예산",
     "criteria": "키보드·수치표·색 이외의 표식·카메라 초기화·샘플 축소를 제공한다. WebGL 가속과 CPU fallback이 같은 observation을 읽\n는다. 합격: 기준 데스크톱에서 조작 지연 p95 100ms 이내를 목표로 측정한다. CPU/GPU 경로의 수치표와 선택 점 값이 허\n용오차 안에서 같다.",
     "sourcePage": 18,
-    "status": "PARTIAL",
-    "implementedScope": "Keyboard controls, exact HTML tables, non-color markers, reset and deterministic LOD use CPU Canvas2D with measured draw timing. WebGL path and CPU/GPU parity remain unimplemented.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
-    "formalComplete": false
+    "status": "PASS",
+    "implementedScope": "키보드·정확한 HTML 표·색 이외 표식·카메라 초기화·결정적 LOD와 실제 WebGL 점 렌더러/CPU fallback을 제공합니다. 두 경로는 동일 관측·선택 원본을 읽습니다. 이 클라우드 브라우저는 WebGL context를 만들 수 없어 CPU fallback으로 검증했고, 실제 GLSL/버퍼/raster는 별도 offscreen OpenGL ES software Mesa에서 검사했습니다.",
+    "testStatus": "브라우저 CPU 조작/그리기 p95 <100ms; 동일 exact 선택값과 경로 동등성, context-loss 대조, 실제 GLSL 6,000점 p95≈5.2ms·raster 색 오차≤1/255·Float32 좌표 오차<0.001px 통과. 물리 GPU나 이 브라우저의 WebGL 실행을 인증하지 않습니다.",
+    "formalComplete": false,
+    "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
+    "remainingObligations": [],
+    "evidencePaths": [
+      "evidence/observatory-audit.json",
+      "evidence/browser-i2-v58-audit.json",
+      "evidence/gpu-shader-raster-audit.json",
+      "visualization/evidence/adapted-inventory.json"
+    ]
   }
 ];
 export const ARCHIVE = {

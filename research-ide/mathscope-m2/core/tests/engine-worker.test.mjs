@@ -94,6 +94,39 @@ test('an authentic serialized replay cannot cross local/worker environment bound
   await assert.rejects(worker.replay(await local.exportBundle(job.id)),/same installed source and environment/);
 });
 
+test('environment binds the actual runtime identity and finite IEEE754 math profile',async t=>{
+  const first=ownedEngine(t,{local:true}),second=ownedEngine(t,{local:true});
+  const a=await first.environment(),b=await second.environment();
+  assert.equal(a.schema,'MathScope.M2Environment/2');
+  assert.equal(a.runtime.identity.version,process.versions.node);
+  assert.equal(a.runtime.identity.engineVersion,process.versions.v8);
+  assert.equal(a.runtime.identity.platform,process.platform);
+  assert.equal(a.runtime.identity.architecture,process.arch);
+  assert.equal(a.runtime.portabilityGuarantee,false);
+  assert.equal(a.hash,b.hash,'same actual runtime must keep a stable replay environment');
+  const samples=a.runtime.mathProbe.samples;
+  assert.equal(samples.length,18);assert.ok(samples.every(x=>/^[0-9a-f]{16}$/.test(x.float64)));
+  assert.equal(a.runtime.mathProbe.sha256,await sha256(samples));
+  const {hash,...body}=a;assert.equal(hash,await sha256(body));
+});
+
+test('fully resealed runtime identity or Math-profile changes are rejected before replay dispatch',async t=>{
+  const engine=ownedEngine(t,{local:true}),job=await run(engine,finiteRequest),original=await engine.exportBundle(job.id);
+  for(const mutation of ['runtime-version','math-probe']){
+    const forged=copy(original);
+    if(mutation==='runtime-version')forged.environment.runtime.identity.engineVersion+='-different';
+    else {
+      forged.environment.runtime.mathProbe.samples[0].float64='0000000000000000';
+      forged.environment.runtime.mathProbe.sha256=await sha256(forged.environment.runtime.mathProbe.samples);
+    }
+    const {hash,...environmentBody}=forged.environment;
+    forged.environment.hash=await sha256(environmentBody);await reseal(forged);
+    const count=engine.listJobs().length;
+    await assert.rejects(engine.replay(forged),/same installed source and environment/);
+    assert.equal(engine.listJobs().length,count,'environment mismatch must not submit a new job');
+  }
+});
+
 test('worker cancellation produces a terminal diagnostic and late result messages cannot revive it',async t=>{
   let adapter;
   const factory=()=>adapter={postMessage(){},terminate(){},onmessage:null,onerror:null};

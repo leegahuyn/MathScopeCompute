@@ -1,11 +1,11 @@
 {
   "schema": "MathScope.M2.ArithmeticResult/1",
-  "version": "0.1.0-m2",
+  "version": "0.2.0-m2",
   "kind": "arithmetic.perfectoidTower",
   "status": "COMPLETED",
   "object": {
     "kind": "STANDARD_PERFECTOID_SYMBOLIC_TOWER",
-    "baseHash": "d341c21b3c1afe41561d09f2895cdd247717860dd75d4bb79b22c391f1ee29b3"
+    "baseHash": "1a817949672f9c0918a9c363e6e5fa6c9693bf8741fb5c22e89d0f126fd6cb5d"
   },
   "request": {
     "budget": {},
@@ -31,7 +31,7 @@
   "results": {
     "object": {
       "kind": "STANDARD_PERFECTOID_SYMBOLIC_TOWER",
-      "baseHash": "d341c21b3c1afe41561d09f2895cdd247717860dd75d4bb79b22c391f1ee29b3"
+      "baseHash": "1a817949672f9c0918a9c363e6e5fa6c9693bf8741fb5c22e89d0f126fd6cb5d"
     },
     "base": {
       "id": "standard-p-roots",
@@ -42,10 +42,38 @@
       "completion": "p-adic valuation completion",
       "torus": "completed O_K<T^(+/-1/p^infinity)>",
       "perfectoidEvidence": {
-        "grade": "THEOREM_REFERENCE",
-        "source": "S04 Perfectoid Spaces, standard perfectoid field and toric tower construction",
-        "localKernelCheck": false
-      }
+        "grade": "APPLIED_EXTERNAL_THEOREM",
+        "sources": [
+          {
+            "id": "S04",
+            "url": "https://www.math.uni-bonn.de/people/scholze/PerfectoidSpaces.pdf",
+            "locators": [
+              "Definition 3.1",
+              "Proposition 5.17",
+              "Proposition 5.20",
+              "rational-localization closure for Laurent coordinates"
+            ]
+          }
+        ],
+        "scope": "the selected completed standard field and its completed torus, all root levels together",
+        "finiteLevelIsPerfectoid": false,
+        "localKernelCheck": false,
+        "formalComplete": false
+      },
+      "verifiedConstructionHypotheses": [
+        {
+          "name": "complete rank-one non-discrete valuation",
+          "witness": "Completion is part of the construction; value group contains Z[1/p]."
+        },
+        {
+          "name": "uniform Banach torus",
+          "witness": "The multiplicative Gauss norm gives bounded power-bounded elements, before and after completion."
+        },
+        {
+          "name": "Frobenius modulo p is onto",
+          "witness": "Take a pth root of each finite monomial at the next level; compatible limits extend by completeness."
+        }
+      ]
     },
     "scope": {
       "finite": true,
@@ -120,6 +148,14 @@
       "prefixReduction": "Forget the last compatible-sequence component; this is not a claimed reverse ring homomorphism between finite field extensions.",
       "torusCoordinates": "T^(1/p^m) are tracked as formal invertible root symbols, not computed general torus coefficients."
     },
+    "arithmeticOperations": {
+      "tilt": "operation=tilt",
+      "sharp": "operation=sharp",
+      "theta": "operation=theta",
+      "Witt": "arithmetic.witt with coefficientRing=standard-tilt",
+      "Aomega": "operation=aomega",
+      "perfectPrism": "operation=perfectPrism"
+    },
     "sharp": {
       "input": "selected p-flat uniformizer sequence",
       "formula": "sharp((p,p^(1/p),p^(1/p^2),...)) = p",
@@ -127,7 +163,7 @@
       "generalSharpEvaluator": false
     },
     "theta": {
-      "untiltBaseHash": "d341c21b3c1afe41561d09f2895cdd247717860dd75d4bb79b22c391f1ee29b3",
+      "untiltBaseHash": "1a817949672f9c0918a9c363e6e5fa6c9693bf8741fb5c22e89d0f126fd6cb5d",
       "Ainf": "W(O_K^flat)",
       "xi": "[p^flat]-p",
       "thetaXi": "0",
@@ -541,7 +577,7 @@
   },
   "evidence": {
     "calculation": "EXACT_FINITE_SCOPE",
-    "geometricComparison": "THEOREM_REFERENCE_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "geometricComparison": "EXPLICIT_MODEL_PLUS_APPLIED_EXTERNAL_THEOREM_OR_MODEL_DEVELOPMENT_AS_DECLARED",
     "lean": "NO_NEW_KERNEL_EXECUTION",
     "formalComplete": false,
     "universalConjectureSolved": false
@@ -569,6 +605,20 @@
         "id": "S01",
         "title": "Prisms and Prismatic Cohomology",
         "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S06",
+        "title": "Counting Points on Hyperelliptic Curves Using Monsky–Washnitzer Cohomology",
+        "url": "https://arxiv.org/abs/math/0105031",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "STACKS_PROJECTIVE",
+        "title": "Derived projective bundle formula",
+        "url": "https://stacks.math.columbia.edu/tag/0FUN",
         "grade": "THEOREM_REFERENCE",
         "localKernelCheck": false
       },
@@ -601,9 +651,9 @@
         "localKernelCheck": false
       }
     ],
-    "algorithmVersion": "0.1.0-m2",
+    "algorithmVersion": "0.2.0-m2",
     "inputHash": "cb72672777042f390e646dd367c1ea6303821da4514dd6be45699eed6b8810c1",
-    "sourceHash": "113a2828278fa039ef076ef275600c2c13ab0d83cf312dd7e77dfb307bb6792c",
+    "sourceHash": "75234c048e48a5e5f5b3d32cd8d51a83b5fa997801dd715545a986c6682c11b2",
     "operations": 5
   },
   "visualization": {
@@ -814,14 +864,14 @@
       "afterLevel": 4,
       "status": "SYMBOLIC_NOT_COMPUTED"
     },
-    "sourceHash": "113a2828278fa039ef076ef275600c2c13ab0d83cf312dd7e77dfb307bb6792c",
-    "sourceRevision": "113a2828278fa039ef076ef275600c2c13ab0d83cf312dd7e77dfb307bb6792c",
+    "sourceHash": "75234c048e48a5e5f5b3d32cd8d51a83b5fa997801dd715545a986c6682c11b2",
+    "sourceRevision": "75234c048e48a5e5f5b3d32cd8d51a83b5fa997801dd715545a986c6682c11b2",
     "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
     "sampling": {
       "displayPoints": 5,
-      "originalSourceHash": "113a2828278fa039ef076ef275600c2c13ab0d83cf312dd7e77dfb307bb6792c"
+      "originalSourceHash": "75234c048e48a5e5f5b3d32cd8d51a83b5fa997801dd715545a986c6682c11b2"
     },
     "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
   },
-  "resultHash": "245851bf6670e1f1fcf222dd2382f362c9aa14f90c74b62987e77c1f5bed158d"
+  "resultHash": "ae9fb685dd07bb6038fa00234caef40731c1a9c8414a050fce621659829a5567"
 }

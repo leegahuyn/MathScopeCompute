@@ -2,30 +2,36 @@
   "id": "ns-m2-support",
   "request": {
     "kind": "ns.pulse-support",
-    "input": {}
+    "input": {
+      "sourceProfile": "same-profile-2026-10-10.3"
+    }
   },
-  "inputHash": "491d662b4ef3a9b3f250281d9a49b5a02c2ac3616762307d16e1fed91f99d917",
+  "inputHash": "7cffeca3130f9aa0c6e88c364be5b76bbf05a5674bd321a4ca8ea6c9e4b920b8",
   "result": {
-    "blockers": [
-      "N5-02/03 finite support allocation is implemented; full source chart derivatives and all active original labels remain to be connected."
-    ],
+    "blockers": [],
     "checks": [
       {
-        "detail": "Exact rational open gaps separate conflicting support intervals.",
-        "id": "every-active-conflict-pair",
+        "detail": "Exact rational centers and one r0 work for all source mesh labels and every covering difference 0..4.",
+        "id": "uniform-countable-palette",
         "pass": true
       },
       {
-        "detail": "det Jg=14; this is a covering map globally, not a torus bijection.",
-        "id": "haar-jacobian",
+        "detail": "Displayed pair checks are backed by the uniform full-mesh proof.",
+        "id": "every-source-label-pair",
+        "pass": true
+      },
+      {
+        "detail": "All inverse lifts cancel their Jacobians in a normalized Haar average.",
+        "id": "normalized-haar-preserved",
         "pass": true
       }
     ],
-    "evidenceGrade": "EXACT_FINITE_SUPPORT_CONTRACT",
+    "evidenceGrade": "EXACT_RATIONAL_UNIFORM_SOURCE_SUPPORT_CERTIFICATE",
     "kind": "ns.pulse-support",
-    "moduleVersion": "m2-ns-0.1.1",
+    "moduleVersion": "m2-ns-0.2.0",
     "object": {
-      "kind": "FINITE_PULSE_CONFLICT_GRAPH"
+      "kind": "UNIFORM_SOURCE_PULSE_SUPPORT",
+      "sourceProfile": "same-profile-2026-10-10.3"
     },
     "precisionLedger": {
       "arithmetic": "FLOAT64_WITH_EXACT_INDEX_AND_SOURCE_EXPRESSIONS",
@@ -36,153 +42,458 @@
       "rigorousOdeSolutionErrorBound": null
     },
     "resourceEstimate": {
-      "algorithmicOperationsEstimate": 8000,
+      "algorithmicOperationsEstimate": 108000,
       "outputItemsEstimate": 16,
       "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
     },
-    "resultHash": "95aad1de2a8ecc2bffee385ac2cfa6118687c1f0bbeb95c07a4872c7efda7092",
+    "resultHash": "ad2d1c37b9f5382adc14333e064c02e6e3b9748feab61931787c5775bfeabadb",
     "results": {
-      "edges": [
-        [
-          "a",
-          "b"
-        ],
-        [
-          "a",
-          "d"
-        ],
-        [
-          "b",
-          "c"
-        ],
-        [
-          "b",
-          "d"
-        ]
-      ],
+      "activeMembershipEnumerated": false,
+      "allActivePairsCoveredByUniformProof": true,
+      "displayedLabels": 4,
+      "distinctSlowBoxes": 3,
       "pairChecks": [
         {
-          "auxiliaryIntersects": false,
-          "left": "a",
-          "right": "b",
-          "slowOverlap": true
+          "auxiliarySupportsDisjoint": true,
+          "bandGap": "0",
+          "differentColors": true,
+          "left": "same-box-plus",
+          "method": "EXACT_INTEGER_EXPANDED_MESH_TEST",
+          "potentialSlowOverlap": true,
+          "reason": "All-delta rational center separation and uniform r0 bound.",
+          "right": "same-box-minus"
         },
         {
-          "auxiliaryIntersects": false,
-          "left": "a",
-          "right": "d",
-          "slowOverlap": true
+          "auxiliarySupportsDisjoint": true,
+          "bandGap": "0",
+          "differentColors": true,
+          "left": "same-box-plus",
+          "method": "EXACT_INTEGER_EXPANDED_MESH_TEST",
+          "potentialSlowOverlap": true,
+          "reason": "All-delta rational center separation and uniform r0 bound.",
+          "right": "neighbor"
         },
         {
-          "auxiliaryIntersects": false,
-          "left": "b",
-          "right": "c",
-          "slowOverlap": true
+          "auxiliarySupportsDisjoint": true,
+          "bandGap": "1",
+          "differentColors": true,
+          "left": "same-box-plus",
+          "method": "CONSERVATIVE_BAND_ENLARGEMENT",
+          "potentialSlowOverlap": true,
+          "reason": "All-delta rational center separation and uniform r0 bound.",
+          "right": "overlapping-band"
         },
         {
-          "auxiliaryIntersects": false,
-          "left": "b",
-          "right": "d",
-          "slowOverlap": true
+          "auxiliarySupportsDisjoint": true,
+          "bandGap": "0",
+          "differentColors": true,
+          "left": "same-box-minus",
+          "method": "EXACT_INTEGER_EXPANDED_MESH_TEST",
+          "potentialSlowOverlap": true,
+          "reason": "All-delta rational center separation and uniform r0 bound.",
+          "right": "neighbor"
+        },
+        {
+          "auxiliarySupportsDisjoint": true,
+          "bandGap": "1",
+          "differentColors": true,
+          "left": "same-box-minus",
+          "method": "CONSERVATIVE_BAND_ENLARGEMENT",
+          "potentialSlowOverlap": true,
+          "reason": "All-delta rational center separation and uniform r0 bound.",
+          "right": "overlapping-band"
+        },
+        {
+          "auxiliarySupportsDisjoint": true,
+          "bandGap": "1",
+          "differentColors": true,
+          "left": "neighbor",
+          "method": "CONSERVATIVE_BAND_ENLARGEMENT",
+          "potentialSlowOverlap": true,
+          "reason": "All-delta rational center separation and uniform r0 bound.",
+          "right": "overlapping-band"
         }
       ],
+      "palette": {
+        "allBandsCoverage": {
+          "farBands": "Actual dyadic cutoffs have disjoint q supports for |ell-ellPrime|>2; the proof conservatively separates all differences through 4.",
+          "lowerBand": "8",
+          "maximumCoveringDifferenceProof": "1+(4*(1+h)*log(2)+8/ell0)/log(4+sqrt(2))<4 for ell0>=8 and 0<h<1/100",
+          "nearbyBands": "If 0<|ell-ellPrime|<=4, ell modulo 9 differs.",
+          "oppositeSigns": "The final binary color separates the two signs of the same slow box.",
+          "sameBand": "Enlarged mesh boxes have half width 2*ell^-6; intersecting indices differ by at most 4 in each coordinate. Modulo 5 therefore separates distinct indices."
+        },
+        "allOrderedCenterConstraints": {
+          "delta0": "Distinct center numerators differ by at least 1 modulo 1048576.",
+          "largestJ21TimesNumerator": "648000",
+          "positiveDeltas": [
+            {
+              "delta": 1,
+              "denominator": "1048576",
+              "minimumVerticalIntegerDistanceNumerator": "1",
+              "pass": true,
+              "reason": "Every center has second coordinate zero, so this separates every ordered target/source center pair, including self pairs, at this covering difference."
+            },
+            {
+              "delta": 2,
+              "denominator": "1048576",
+              "minimumVerticalIntegerDistanceNumerator": "8",
+              "pass": true,
+              "reason": "Every center has second coordinate zero, so this separates every ordered target/source center pair, including self pairs, at this covering difference."
+            },
+            {
+              "delta": 3,
+              "denominator": "1048576",
+              "minimumVerticalIntegerDistanceNumerator": "50",
+              "pass": true,
+              "reason": "Every center has second coordinate zero, so this separates every ordered target/source center pair, including self pairs, at this covering difference."
+            },
+            {
+              "delta": 4,
+              "denominator": "1048576",
+              "minimumVerticalIntegerDistanceNumerator": "288",
+              "pass": true,
+              "reason": "Every center has second coordinate zero, so this separates every ordered target/source center pair, including self pairs, at this covering difference."
+            }
+          ],
+          "strictlyBelowModulus": true
+        },
+        "bandPeriod": 9,
+        "centers": "c_nu=((nu+1)/1048576,0), 0<=nu<2250",
+        "commonToAllBandsAndLabels": true,
+        "coveringDifferenceCertificate": {
+          "bandDifferenceAtMost": 4,
+          "ell0AtLeast": 8,
+          "hUpper": "1/64",
+          "integerBound": 4,
+          "interval": [
+            3.25923504034814,
+            3.2592350403481976
+          ],
+          "pass": true
+        },
+        "deltaMax": 4,
+        "dependsOnEnumeratedActiveSet": false,
+        "enlargedRectangleSeparation": {
+          "eigenvectorRowBound": "|v_r[row]|+|v_t[row]|<3/2",
+          "injective": true,
+          "maxCoveringRowNorm": "1028",
+          "minimumForbiddenDifference": "1/1048576",
+          "perturbationUpper": "3087/17179869184",
+          "strictlyLessThanSeparation": true
+        },
+        "gridPeriod": 5,
+        "matrixPowers": [
+          [
+            [
+              "1",
+              "0"
+            ],
+            [
+              "0",
+              "1"
+            ]
+          ],
+          [
+            [
+              "3",
+              "1"
+            ],
+            [
+              "1",
+              "5"
+            ]
+          ],
+          [
+            [
+              "10",
+              "8"
+            ],
+            [
+              "8",
+              "26"
+            ]
+          ],
+          [
+            [
+              "38",
+              "50"
+            ],
+            [
+              "50",
+              "138"
+            ]
+          ],
+          [
+            [
+              "164",
+              "288"
+            ],
+            [
+              "288",
+              "740"
+            ]
+          ]
+        ],
+        "modulus": "1048576",
+        "newLeanExecution": false,
+        "paletteSize": 2250,
+        "pass": true,
+        "r0": 5.820766091346741e-11,
+        "r0Exact": "1/17179869184",
+        "schema": "MathScope.UniformSourceSupportPalette/1",
+        "signColors": 2
+      },
       "products": {
-        "differentConflictingLabels": "zero on these disjoint auxiliary supports",
-        "nonconflictingSlowLabels": "zero only if their actual slow supports are disjoint",
+        "differentLabels": "Exactly zero for every pair whose physical slow supports overlap, by the uniform enlarged-support certificate.",
+        "sameBoxSigns": "Separate auxiliary rectangles; slow squared partition counts this box once.",
         "sameLabelHarmonics": "retained"
       },
+      "proofCoversAllActiveLabelsBecause": "The actual active set is a subset of the full source mesh; the palette works on that complete countable superset.",
       "rectangles": [
         {
-          "auxiliary": {
-            "s": [
-              0.1111111111111111,
-              0.2222222222222222
+          "boxKey": "16:100:0:100",
+          "center": [
+            0.0016698837280273438,
+            0
+          ],
+          "centerExact": [
+            "1751/1048576",
+            "0"
+          ],
+          "color": 1750,
+          "corners": [
+            [
+              0.0016698836457092804,
+              -3.40972583290949e-11,
+              0
             ],
-            "v": [
-              0.1,
-              0.9
+            [
+              0.0016698837621246022,
+              -8.231806349783991e-11,
+              0
+            ],
+            [
+              0.0016698838103454071,
+              3.40972583290949e-11,
+              0
+            ],
+            [
+              0.0016698836939300853,
+              8.231806349783991e-11,
+              0
+            ],
+            [
+              0.0016698836457092804,
+              -3.40972583290949e-11,
+              0
+            ]
+          ],
+          "eigenvectorCoordinates": {
+            "enlargement": 2,
+            "eta": [
+              -5.820766091346741e-11,
+              5.820766091346741e-11
+            ],
+            "xi": [
+              -5.820766091346741e-11,
+              5.820766091346741e-11
             ]
           },
-          "color": 0,
-          "exactAuxiliaryS": [
-            "1/9",
-            "2/9"
+          "ell": "16",
+          "grid": [
+            "100",
+            "0",
+            "100"
           ],
-          "id": "a",
-          "slow": [
-            0,
-            2
-          ]
+          "id": "same-box-plus",
+          "mathematicalLabel": "16:100:0:100:1",
+          "r0Exact": "1/17179869184",
+          "sign": 1
         },
         {
-          "auxiliary": {
-            "s": [
-              0.4444444444444444,
-              0.5555555555555556
+          "boxKey": "16:100:0:100",
+          "center": [
+            0.00167083740234375,
+            0
+          ],
+          "centerExact": [
+            "1752/1048576",
+            "0"
+          ],
+          "color": 1751,
+          "corners": [
+            [
+              0.0016708373200256866,
+              -3.40972583290949e-11,
+              1
             ],
-            "v": [
-              0.1,
-              0.9
+            [
+              0.0016708374364410084,
+              -8.231806349783991e-11,
+              1
+            ],
+            [
+              0.0016708374846618134,
+              3.40972583290949e-11,
+              1
+            ],
+            [
+              0.0016708373682464916,
+              8.231806349783991e-11,
+              1
+            ],
+            [
+              0.0016708373200256866,
+              -3.40972583290949e-11,
+              1
+            ]
+          ],
+          "eigenvectorCoordinates": {
+            "enlargement": 2,
+            "eta": [
+              -5.820766091346741e-11,
+              5.820766091346741e-11
+            ],
+            "xi": [
+              -5.820766091346741e-11,
+              5.820766091346741e-11
             ]
           },
-          "color": 1,
-          "exactAuxiliaryS": [
-            "4/9",
-            "5/9"
+          "ell": "16",
+          "grid": [
+            "100",
+            "0",
+            "100"
           ],
-          "id": "b",
-          "slow": [
-            1,
-            3
-          ]
+          "id": "same-box-minus",
+          "mathematicalLabel": "16:100:0:100:-1",
+          "r0Exact": "1/17179869184",
+          "sign": -1
         },
         {
-          "auxiliary": {
-            "s": [
-              0.1111111111111111,
-              0.2222222222222222
+          "boxKey": "16:101:0:100",
+          "center": [
+            0.0017175674438476562,
+            0
+          ],
+          "centerExact": [
+            "1801/1048576",
+            "0"
+          ],
+          "color": 1800,
+          "corners": [
+            [
+              0.0017175673615295929,
+              -3.40972583290949e-11,
+              2
             ],
-            "v": [
-              0.1,
-              0.9
+            [
+              0.0017175674779449147,
+              -8.231806349783991e-11,
+              2
+            ],
+            [
+              0.0017175675261657196,
+              3.40972583290949e-11,
+              2
+            ],
+            [
+              0.0017175674097503978,
+              8.231806349783991e-11,
+              2
+            ],
+            [
+              0.0017175673615295929,
+              -3.40972583290949e-11,
+              2
+            ]
+          ],
+          "eigenvectorCoordinates": {
+            "enlargement": 2,
+            "eta": [
+              -5.820766091346741e-11,
+              5.820766091346741e-11
+            ],
+            "xi": [
+              -5.820766091346741e-11,
+              5.820766091346741e-11
             ]
           },
-          "color": 0,
-          "exactAuxiliaryS": [
-            "1/9",
-            "2/9"
+          "ell": "16",
+          "grid": [
+            "101",
+            "0",
+            "100"
           ],
-          "id": "c",
-          "slow": [
-            2.5,
-            4
-          ]
+          "id": "neighbor",
+          "mathematicalLabel": "16:101:0:100:1",
+          "r0Exact": "1/17179869184",
+          "sign": 1
         },
         {
-          "auxiliary": {
-            "s": [
-              0.7777777777777778,
-              0.8888888888888888
+          "boxKey": "17:142:0:200",
+          "center": [
+            0.0020036697387695312,
+            0
+          ],
+          "centerExact": [
+            "2101/1048576",
+            "0"
+          ],
+          "color": 2100,
+          "corners": [
+            [
+              0.002003669656451468,
+              -3.40972583290949e-11,
+              3
             ],
-            "v": [
-              0.1,
-              0.9
+            [
+              0.0020036697728667897,
+              -8.231806349783991e-11,
+              3
+            ],
+            [
+              0.0020036698210875946,
+              3.40972583290949e-11,
+              3
+            ],
+            [
+              0.002003669704672273,
+              8.231806349783991e-11,
+              3
+            ],
+            [
+              0.002003669656451468,
+              -3.40972583290949e-11,
+              3
+            ]
+          ],
+          "eigenvectorCoordinates": {
+            "enlargement": 2,
+            "eta": [
+              -5.820766091346741e-11,
+              5.820766091346741e-11
+            ],
+            "xi": [
+              -5.820766091346741e-11,
+              5.820766091346741e-11
             ]
           },
-          "color": 2,
-          "exactAuxiliaryS": [
-            "7/9",
-            "8/9"
+          "ell": "17",
+          "grid": [
+            "142",
+            "0",
+            "200"
           ],
-          "id": "d",
-          "slow": [
-            0.5,
-            1.5
-          ]
+          "id": "overlapping-band",
+          "mathematicalLabel": "17:142:0:200:1",
+          "r0Exact": "1/17179869184",
+          "sign": 1
         }
       ],
+      "schema": "MathScope.SourcePulseSupport/1",
       "torus": {
-        "HaarJacobian": "1/14 per injective lifted coordinate rectangle",
         "Jg": [
           [
             3,
@@ -193,20 +504,106 @@
             5
           ]
         ],
-        "chainRuleRequiresInputDerivatives": true,
-        "coordinateMeaning": "s,v are auxiliary; physical evaluation happens after averaging",
-        "derivativeRule": "D_x f(x,Y(x))=partial_x f + (D_x Y) dot grad_Y f",
-        "determinant": 14,
-        "inverse": [
-          [
-            0.35714285714285715,
-            -0.07142857142857142
-          ],
-          [
-            -0.07142857142857142,
-            0.21428571428571427
+        "Lambda": {
+          "exact": "4-sqrt(2)",
+          "interval": [
+            2.585786437626904,
+            2.5857864376269055
           ]
-        ]
+        },
+        "Tg": {
+          "exact": "4+sqrt(2)",
+          "interval": [
+            5.414213562373094,
+            5.414213562373097
+          ]
+        },
+        "bg": {
+          "exact": "sqrt(2)-1",
+          "interval": [
+            0.41421356237309465,
+            0.4142135623730954
+          ]
+        },
+        "coveringDifferenceCertificate": {
+          "bandDifferenceAtMost": 4,
+          "ell0AtLeast": 8,
+          "hUpper": "1/64",
+          "integerBound": 4,
+          "interval": [
+            3.25923504034814,
+            3.2592350403481976
+          ],
+          "pass": true
+        },
+        "determinant": 14,
+        "haar": {
+          "cancellation": "14^Delta * 14^(-Delta)=1",
+          "covarianceFactor": "(4-2*sqrt(2))*c_i/2",
+          "normalizedCoveringFactor": "1",
+          "notGlobalOneFourteenth": true,
+          "perInverseLiftJacobian": "14^(-Delta)",
+          "preimageCount": "14^Delta",
+          "rectangleJacobianExact": "4-2*sqrt(2)",
+          "rectangleJacobianInterval": [
+            1.1715728752538086,
+            1.1715728752538113
+          ],
+          "sourceEquations": [
+            "6.19",
+            "7.27"
+          ]
+        },
+        "rho": {
+          "exact": "log(4-sqrt(2))/log(4+sqrt(2))",
+          "interval": [
+            0.5624713724158233,
+            0.5624713724158401
+          ]
+        },
+        "sqrt2": {
+          "exactRationalWitness": {
+            "criterion": "lower^2 < 2 < upper^2",
+            "lower": "14142135623730950/10000000000000000",
+            "upper": "14142135623730951/10000000000000000"
+          },
+          "interval": [
+            1.4142135623730947,
+            1.4142135623730954
+          ]
+        },
+        "vr": {
+          "exact": [
+            "1",
+            "1-sqrt(2)"
+          ],
+          "intervals": [
+            [
+              1,
+              1
+            ],
+            [
+              -0.4142135623730955,
+              -0.4142135623730946
+            ]
+          ]
+        },
+        "vt": {
+          "exact": [
+            "sqrt(2)-1",
+            "1"
+          ],
+          "intervals": [
+            [
+              0.41421356237309465,
+              0.4142135623730954
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        }
       }
     },
     "scope": {
@@ -231,61 +628,58 @@
         "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
       }
     },
-    "status": "PARTIAL",
+    "status": "COMPLETED",
     "visualization": {
       "axes": [
         {
           "kind": "CATEGORICAL",
-          "label": "auxiliary s",
-          "name": "auxiliary s",
+          "label": "auxiliary Y1",
+          "name": "auxiliary Y1",
           "scale": "LINEAR",
-          "sourceField": "auxiliary s",
           "unit": "1"
         },
         {
           "kind": "CATEGORICAL",
-          "label": "auxiliary v",
-          "name": "auxiliary v",
+          "label": "auxiliary Y2",
+          "name": "auxiliary Y2",
           "scale": "LINEAR",
-          "sourceField": "auxiliary v",
           "unit": "1"
         },
         {
           "kind": "CATEGORICAL",
-          "label": "label index",
-          "name": "label index",
+          "label": "source label index",
+          "name": "source label index",
           "scale": "LINEAR",
-          "sourceField": "label index",
           "unit": "1"
         }
       ],
-      "description": "Auxiliary support rectangles for the supplied finite slow-overlap graph.",
+      "description": "Actual rational source centers and enlarged supports. A single radius is certified for the complete countable source mesh.",
       "lines": [
         {
           "points": [
             [
-              0.1111111111111111,
-              0.1,
+              0.0016698836457092804,
+              -3.40972583290949e-11,
               0
             ],
             [
-              0.2222222222222222,
-              0.1,
+              0.0016698837621246022,
+              -8.231806349783991e-11,
               0
             ],
             [
-              0.2222222222222222,
-              0.9,
+              0.0016698838103454071,
+              3.40972583290949e-11,
               0
             ],
             [
-              0.1111111111111111,
-              0.9,
+              0.0016698836939300853,
+              8.231806349783991e-11,
               0
             ],
             [
-              0.1111111111111111,
-              0.1,
+              0.0016698836457092804,
+              -3.40972583290949e-11,
               0
             ]
           ]
@@ -293,28 +687,28 @@
         {
           "points": [
             [
-              0.4444444444444444,
-              0.1,
+              0.0016708373200256866,
+              -3.40972583290949e-11,
               1
             ],
             [
-              0.5555555555555556,
-              0.1,
+              0.0016708374364410084,
+              -8.231806349783991e-11,
               1
             ],
             [
-              0.5555555555555556,
-              0.9,
+              0.0016708374846618134,
+              3.40972583290949e-11,
               1
             ],
             [
-              0.4444444444444444,
-              0.9,
+              0.0016708373682464916,
+              8.231806349783991e-11,
               1
             ],
             [
-              0.4444444444444444,
-              0.1,
+              0.0016708373200256866,
+              -3.40972583290949e-11,
               1
             ]
           ]
@@ -322,28 +716,28 @@
         {
           "points": [
             [
-              0.1111111111111111,
-              0.1,
+              0.0017175673615295929,
+              -3.40972583290949e-11,
               2
             ],
             [
-              0.2222222222222222,
-              0.1,
+              0.0017175674779449147,
+              -8.231806349783991e-11,
               2
             ],
             [
-              0.2222222222222222,
-              0.9,
+              0.0017175675261657196,
+              3.40972583290949e-11,
               2
             ],
             [
-              0.1111111111111111,
-              0.9,
+              0.0017175674097503978,
+              8.231806349783991e-11,
               2
             ],
             [
-              0.1111111111111111,
-              0.1,
+              0.0017175673615295929,
+              -3.40972583290949e-11,
               2
             ]
           ]
@@ -351,77 +745,85 @@
         {
           "points": [
             [
-              0.7777777777777778,
-              0.1,
+              0.002003669656451468,
+              -3.40972583290949e-11,
               3
             ],
             [
-              0.8888888888888888,
-              0.1,
+              0.0020036697728667897,
+              -8.231806349783991e-11,
               3
             ],
             [
-              0.8888888888888888,
-              0.9,
+              0.0020036698210875946,
+              3.40972583290949e-11,
               3
             ],
             [
-              0.7777777777777778,
-              0.9,
+              0.002003669704672273,
+              8.231806349783991e-11,
               3
             ],
             [
-              0.7777777777777778,
-              0.1,
+              0.002003669656451468,
+              -3.40972583290949e-11,
               3
             ]
           ]
         }
       ],
       "lostInformation": [
-        "These auxiliary coordinates are not additional physical dimensions.",
-        "This graph has not yet been generated from all supports of the archived N3/N4 field."
+        "Auxiliary coordinates are not physical spatial dimensions.",
+        "Tiny rectangle width is retained in exact tables; support proof does not depend on screen pixels."
       ],
       "points": [
         {
-          "label": "a",
+          "label": "same-box-plus; color=1750",
           "pos": [
-            0.16666666666666666,
-            0.5,
+            0.0016698837280273438,
+            0,
             0
           ],
-          "value": 0
+          "sourceField": "results.rectangles[0].center",
+          "sourceIndex": 0,
+          "value": 1750
         },
         {
-          "label": "b",
+          "label": "same-box-minus; color=1751",
           "pos": [
-            0.5,
-            0.5,
+            0.00167083740234375,
+            0,
             1
           ],
-          "value": 1
+          "sourceField": "results.rectangles[1].center",
+          "sourceIndex": 1,
+          "value": 1751
         },
         {
-          "label": "c",
+          "label": "neighbor; color=1800",
           "pos": [
-            0.16666666666666666,
-            0.5,
+            0.0017175674438476562,
+            0,
             2
           ],
-          "value": 0
+          "sourceField": "results.rectangles[2].center",
+          "sourceIndex": 2,
+          "value": 1800
         },
         {
-          "label": "d",
+          "label": "overlapping-band; color=2100",
           "pos": [
-            0.8333333333333333,
-            0.5,
+            0.0020036697387695312,
+            0,
             3
           ],
-          "value": 2
+          "sourceField": "results.rectangles[3].center",
+          "sourceIndex": 3,
+          "value": 2100
         }
       ]
     }
   },
-  "status": "PARTIAL",
-  "resultHash": "ece6452867d534e866b1ce6d5db56edccae44200cf9c99326c9ba9f3ffe1c253"
+  "status": "COMPLETED",
+  "resultHash": "126902d8dc6904ae06b55ef17c51ad349624f906a0d5a6e02e590691866c9816"
 }

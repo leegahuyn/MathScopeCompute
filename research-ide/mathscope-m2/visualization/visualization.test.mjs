@@ -4,8 +4,10 @@ import {listExamples,executeDomain,requestHash} from '../../mathscope-m1/core/re
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 import {makeVisualization,numericValue,scalarText,sampleIndices,traceBasis,primeTiles,compareVisualizations,sealObservationIdentity} from './observations.mjs';
 import {SourceBoundScene} from './renderer.mjs';
+import fs from 'node:fs';
 
 const fixtures=new Map();
+let completeInventoryVerified=false;
 test('all 59 shipped M1 computations have truthful source-bound observations, including the 26 formerly empty results',async()=>{
   const examples=await listExamples();assert.equal(examples.length,59);let formerlyEmpty=0;
   for(const e of examples){
@@ -22,6 +24,7 @@ test('all 59 shipped M1 computations have truthful source-bound observations, in
     assert.equal(await sha256(result),before,e.id+' rendering must not change result');assert.equal(view.binding.formalPass,false,e.id);
   }
   assert.equal(formerlyEmpty,26);
+  completeInventoryVerified=true;
 },{timeout:120000});
 
 test('exact large integers, rational coordinates and typed Float64 are admitted without fabricating a real p-adic scalar',()=>{
@@ -67,6 +70,12 @@ test('complex basis trace returns exact outgoing maps and existing invariants',(
   assert.equal(makeVisualization(fixtures.get('point-p3')).axisMetadata[0].type,'COHOMOLOGICAL_DEGREE');
 });
 
+test('cohomological degree is linear while explicitly stored logarithms retain their transform',()=>{
+  const source=fixtures.get('p1-p3'),v=makeVisualization(source);assert.match(v.axisMetadata[0].label,/cohomological/);assert.equal(v.axisMetadata[0].scale,'linear');assert.equal(v.axisMetadata[0].transform,'identity');
+  const modified=structuredClone(source);modified.result.visualization.axes=[{label:'log2(N)',type:'LOG_COUNT'},'log |tail|','cohomological degree'];const a=makeVisualization(modified).axisMetadata;
+  assert.equal(a[0].scale,'stored-log');assert.equal(a[1].scale,'stored-log');assert.equal(a[2].scale,'linear');assert.deepEqual(makeVisualization(modified).scene.points.map(p=>p.pos),v.scene.points.map(p=>p.pos));
+});
+
 test('paired observations use one physical frame and color range and reject incompatible projection contracts',()=>{
   const a=fixtures.get('delta-assumed_bound'),b=structuredClone(a);b.id='same-field-independent-job';
   const comparison=compareVisualizations(a,b);assert.equal(comparison.ok,true);assert.equal(comparison.physicalFieldUnchanged,true);assert.deepEqual(comparison.left.scene.bounds,comparison.right.scene.bounds);assert.deepEqual(comparison.left.color.range,comparison.right.color.range);
@@ -82,6 +91,14 @@ function fakeCanvas(){
 test('all chart families paint finite canvas commands; camera changes only presentation revision and exact source selection is retained',()=>{
   globalThis.ResizeObserver=class{observe(){}disconnect(){}};globalThis.devicePixelRatio=1;
   const representatives=['su3-bpst','prime-million','finite-spectrum','prime-large-certificate','algebra-G2','ns-heat-interval','ns-independent-checks','derived-reduction'];
-  for(const id of representatives){const j=fixtures.get(id),before=canonicalStringify(j),canvas=fakeCanvas(),scene=new SourceBoundScene(canvas);scene.setVisualization(makeVisualization(j));assert.equal(canvas.dataset.renderReady,'true',id);assert.ok(canvas.calls.length,id);const revision=scene.representationRevision;scene.camera('left');assert.ok(scene.representationRevision>revision,id);assert.equal(canonicalStringify(j),before,id);assert.equal(canvas.dataset.inputHash,j.inputHash);assert.equal(canvas.dataset.gpuPath,'NOT_IMPLEMENTED');scene.destroy();}
+  for(const id of representatives){const j=fixtures.get(id),before=canonicalStringify(j),canvas=fakeCanvas(),scene=new SourceBoundScene(canvas);scene.setVisualization(makeVisualization(j));assert.equal(canvas.dataset.renderReady,'true',id);assert.ok(canvas.calls.length,id);const revision=scene.representationRevision;scene.camera('left');assert.ok(scene.representationRevision>revision,id);assert.equal(canonicalStringify(j),before,id);assert.equal(canvas.dataset.inputHash,j.inputHash);assert.ok(['NOT_REQUESTED','UNAVAILABLE'].includes(canvas.dataset.gpuPath));assert.match(scene.getMetrics().renderer,/^CPU_/);scene.destroy();}
   const canvas=fakeCanvas(),scene=new SourceBoundScene(canvas);scene.setVisualization(makeVisualization(fixtures.get('algebra-SU3')));const point=scene.projected[0];scene.pick({clientX:point.xy[0],clientY:point.xy[1]});assert.match(scene.lastPicked.sourcePath,/cartan\[0\]\[0\]/);assert.equal(scene.lastPicked.value,2);
+});
+
+test.after(async()=>{
+  if(!completeInventoryVerified)return;
+  const inventory=[...fixtures.values()].map(job=>{const v=makeVisualization(job),raw=job.result.visualization||job.result.values?.visualization;return {id:job.id,oldEmpty:!raw?.points?.length&&!raw?.lines?.length&&!raw?.arrows?.length,kind:v.kind,state:v.state,points:v.scene.points.length,lines:v.scene.lines.length,arrows:v.scene.arrows.length,rows:v.table.rows.length,totalRows:v.table.totalRows,finite:v.scene.points.every(p=>p.pos.every(Number.isFinite)),sourceBound:v.binding.inputHash===job.inputHash&&v.binding.resultHash===job.resultHash,coordinateTypes:v.axisMetadata.map(a=>a.type),units:v.axisMetadata.map(a=>a.unit),inputHash:job.inputHash,resultHash:job.resultHash,sourceHash:v.binding.sourceHash,modelHash:v.binding.modelHash};});
+  const sourceSHA256={};for(const path of ['observations.mjs','renderer.mjs','m2-views.mjs','observation-panels.mjs','webgl-marks.mjs','m1-controls.mjs'])sourceSHA256[path]=await sha256(fs.readFileSync(new URL(path,import.meta.url),'utf8'));
+  fs.writeFileSync(new URL('./evidence/adapted-inventory.json',import.meta.url),JSON.stringify(inventory,null,2));
+  fs.writeFileSync(new URL('./evidence/source-hashes.json',import.meta.url),JSON.stringify({generatedAt:new Date().toISOString(),sourceSHA256,inventoryCount:inventory.length,formerlyEmpty:inventory.filter(x=>x.oldEmpty).length,verification:'All 59 M1 computations executed by the current visualization test with finite geometry, nonempty exact tables and unchanged source hashes. Browser coverage is separately recorded.'},null,2));
 });

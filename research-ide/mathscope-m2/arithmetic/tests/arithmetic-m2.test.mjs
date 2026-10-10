@@ -47,9 +47,10 @@ test('P4-03: finite-field operations satisfy distributivity and Frobenius on eve
   const F=finiteField(3,2,[1,0,1]);for(let x=0;x<F.q;x++){assert.equal(F.pow(x,F.q),x);for(let y=0;y<F.q;y++)for(let z=0;z<F.q;z++)assert.equal(F.mul(x,F.add(y,z)),F.add(F.mul(x,y),F.mul(x,z)));}
 });
 
-test('P4-04/05: missing MW and semilinear extension algorithms remain unsupported',()=>{
-  const r=elliptic({p:5,backend:'mw'});assert.equal(r.status,'UNSUPPORTED');assert.match(r.blockers[0],/precision-loss/);
-  assert.throws(()=>reconstruct({extensionBaseDegree:2}),e=>e.code==='UNSUPPORTED');
+test('P4-04/05: actual MW is available; extension MW and missing semilinear inputs remain rejected',()=>{
+  const r=elliptic({p:5,N:3,backend:'mw'});assert.equal(r.status,'COMPLETED');assert.deepEqual(r.characteristicPolynomial.coefficients,['5','2','1']);
+  assert.throws(()=>elliptic({p:5,N:3,m:2,backend:'mw'}),e=>e.code==='UNSUPPORTED');
+  assert.throws(()=>reconstruct({extensionBaseDegree:2}),e=>e.code==='INVALID_RECONSTRUCTION');
 });
 
 test('P4-05: exact residue reconstruction rejects insufficient precision and inconsistent bounds',()=>{
@@ -81,7 +82,7 @@ test('P5-01/02/05: exact q polynomials, Koszul d-squared-zero and typed speciali
 });
 
 test('P5-03/04/08: local d-squared-zero cannot authorize framing or derived descent',()=>{
-  const r=qDeRham();assert.equal(r.framing.difference,'h=q-1');assert.equal(r.framing.comparisonStatus,'MODEL_DEVELOPMENT');assert.equal(r.scope.globalDerivedDescent,false);
+  const r=qDeRham();assert.equal(r.framing.difference,'h=q-1');assert.equal(r.framing.comparisonStatus,'EXPLICIT_CHAIN_ISOMORPHISM_AVAILABLE');assert.equal(r.scope.globalDerivedDescent,false);
   for(const flag of ['certifyFramingIndependence','certifyDescent','certifyEInfinity'])assert.throws(()=>qDeRham({[flag]:true}),e=>e.code==='UNSUPPORTED');
 });
 
@@ -132,5 +133,5 @@ test('API: unsafe numbers, false badges, unsupported inputs and tight budgets ar
   assert.equal(validate('arithmetic.projective',{formalComplete:true}).ok,false);assert.equal(validate('arithmetic.projective',{p:9007199254740993}).ok,false);assert.equal(validate('arithmetic.fake',{}).ok,false);
   await assert.rejects(run('arithmetic.projective',{p:4}),e=>e.code==='INVALID_PRIME');await assert.rejects(run('arithmetic.projective',{n:9}),e=>e.code==='INPUT_RANGE');
   await assert.rejects(runJob({kind:'arithmetic.elliptic',input:{p:7,m:4,fullPairs:true},budget:{maxOperations:1}}),e=>e.code==='RESOURCE_LIMIT');
-  assert.equal(getCapabilities().formalComplete,false);assert.equal(getChecklist().length,24);assert.equal(new Set(getChecklist().map(x=>x.id)).size,24);assert(getChecklist().some(x=>x.status==='PARTIAL'));
+  assert.equal(getCapabilities().formalComplete,false);assert.equal(getChecklist().length,24);assert.equal(new Set(getChecklist().map(x=>x.id)).size,24);assert(getChecklist().every(x=>x.status==='PASS'&&x.formalComplete===false));
 });

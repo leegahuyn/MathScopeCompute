@@ -5,12 +5,12 @@ export const CHECKLIST = [
     "title": "ℙⁿ의 고차원 모델을 일반화한다",
     "criteria": "n=0..8 화면 범위를 제공하고, 수학 명세는 모든 n∈ ℕ를 대상으로 둔다. H^{2i}= ℤ_p의 생성자·F=p^i와 odd vanishing을\nfinite-perfect 비교 모델에 연결한다. 합격: n=0,1,2,4,8에서 degree 0..2n이 정확하다. 화면 n 범위를 전체 정리의 증명 범\n위와 혼동하지 않는다. 고차원 cup/E∞ 정보는 별도 certificate가 필요하다.",
     "sourcePage": 28,
-    "status": "PARTIAL",
-    "implementedScope": "Exact even-degree Tate/cohomology observations and external references are implemented; no full high-dimensional prismatic chain-comparison certificate is generated.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "All-n projective-bundle derived quasi-isomorphism is applied with its explicit hyperplane generator map; the bounded finite-free model, crystalline/prismatic arrows, Frobenius and derived p-power reductions are computed. No cup/E-infinity or Lean certificate is claimed.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P4-02",
@@ -19,10 +19,10 @@ export const CHECKLIST = [
     "sourcePage": 28,
     "status": "PASS",
     "implementedScope": "Good reduction and bad/nonminimal boundaries are checked for the supported short Weierstrass models, with infinity included in counts.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P4-03",
@@ -31,34 +31,34 @@ export const CHECKLIST = [
     "sourcePage": 28,
     "status": "PASS",
     "implementedScope": "Explicit finite fields with irreducibility checks support exact extension counts and an independent all-pairs oracle.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P4-04",
     "title": "Frobenius 수치 backend를 제한된 범위부터 연다",
     "criteria": "우선 p≥5인 good elliptic curve에 대해 Kedlaya/Monsky-Washnitzer 방식을 선택한다. 역원·분모 감소와 working\nprecision→output precision의 손실을 certificate에 남긴다. 합격: S06의 reduction bound를 충족한 출력만 사용한다.\nMW의 rational Frobenius matrix를 integral prismatic complex 전체로 승격하지 않는다. p=2·미지원 확장체는 명시적으\n로 미지원 처리한다.",
     "sourcePage": 28,
-    "status": "PARTIAL",
-    "implementedScope": "A Kedlaya/Monsky-Washnitzer numerical Frobenius backend is not installed; it is explicitly UNSUPPORTED.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "Direct rational Monsky–Washnitzer Frobenius for good short Weierstrass curves at 5<=p<=43; exact Bezout/vertical/horizontal reductions and proven conservative p-adic tail/loss gate. Matrices are independently checked against counts at two precisions. Unsupported small primes and extension MW are rejected.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P4-05",
     "title": "p-adic 값에서 정수 특성다항식을 복원한다",
     "criteria": "q=p^a 에 서 semilinear p-Frob 의 행 렬 M 으 로 q-Frob=M σ(M)…σ^{a−1} (M) 을 만 든 다. coefficient bound B_j 와\np^N>2B_j를 이용해 각 정수 계수를 유일 복원한다. 합격: 복원 상계가 부족하면 ambiguous로 남는다. E,p=5에서는\nX²+2X+5, p=7에서는 X²+7이 point-count oracle과 일치해야 한다.",
     "sourcePage": 28,
-    "status": "PARTIAL",
-    "implementedScope": "Exact bounded residue reconstruction is implemented; semilinear matrix iteration over extension coefficient rings remains unsupported.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "Unramified coefficient rings use Hensel-lifted sigma, then M sigma(M)..., exact division-free characteristic polynomial and unique bounded integer reconstruction. Actual MW p=5/7 polynomials match independent point counts. Missing matrices, bounds and insufficient precision are rejected or ambiguous.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P4-06",
@@ -67,10 +67,10 @@ export const CHECKLIST = [
     "sourcePage": 28,
     "status": "PASS",
     "implementedScope": "Exact Newton polygons, rational root valuations, separate complex-eigenvalue display and Hodge metadata are implemented.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P4-07",
@@ -79,22 +79,22 @@ export const CHECKLIST = [
     "sourcePage": 28,
     "status": "PASS",
     "implementedScope": "Local determinant factors and extension trace recurrence are cross-checked against independent finite-field enumeration.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P4-08",
     "title": "실제 global ζ 연결을 첫 정리로 만든다",
     "criteria": "모 든 p 의 ℙⁿ 국 소 인 자 를 조 립 해 ζ(ℙⁿ_ℤ,s)=∏_{i=0}ⁿζ(s−i) 를 얻 는 과 정 을 기 록 한 다. good E/ ℤ[1/ S] 에 는\nζ(ℰ,s)=ζ^S(s)ζ^S(s−1)/ L^S(E,s) 를 별 도 정 리 로 둔 다. 합 격: 유 한 Euler-product 항 등 식 을 정 확 히 확 인 한 뒤 무 한\n곱에는 각각 Re(s)>n+1, Re(s)>2의 수렴 증거를 요구한다. 이 항등식에서 classical RH 또는 BSD의 일반 증명을 자동 출력하\n지 않는다.",
     "sourcePage": 28,
-    "status": "PARTIAL",
-    "implementedScope": "Finite polynomial regrouping and explicit infinite-product domains/references are provided; no new complete infinite-product theorem is kernel checked.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "Exact place-indexed finite projective and good-elliptic Euler identities are connected to the full convergent products using explicit rational logarithmic tail bounds on Re(s)>n+1 or >2. All bad model primes must be excluded. No RH/BSD or full numerical infinite product is claimed.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P5-01",
@@ -103,10 +103,10 @@ export const CHECKLIST = [
     "sourcePage": 30,
     "status": "PASS",
     "implementedScope": "Formal q-prism and q-PD ideal metadata are distinct; exact [p]_(1+h) is computed and real q substitution is rejected.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P5-02",
@@ -115,34 +115,34 @@ export const CHECKLIST = [
     "sourcePage": 30,
     "status": "PASS",
     "implementedScope": "Two-variable framed monomial q-Koszul blocks, d-squared-zero and twisted q-Leibniz are exact over Z[h].",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P5-03",
     "title": "R과 Frobenius-base-changed R^(1)을 구분한다",
     "criteria": "첫 범 위 는 p-completely smooth R/ ℤ_p 와 고 정 framing 으 로 제 한 한 다. S01 §16 의 q-crystalline 비 교 를 통 해\nX=Spf(R⊗ℤ_pℤ_p[ζ_p])의 상대 prismatic complex와 연결한다. 합격: A/I, R, R^(1), 비교 map의 base homomor-\nphism이 명세에 있어야 한다. framing만 가진 임의 singular algebra는 이 경로로 승인하지 않는다.",
     "sourcePage": 30,
-    "status": "PARTIAL",
-    "implementedScope": "Typed R/R^(1)/base-map obligations are exposed; a local comparison certificate has not been constructed.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "The smooth polynomial adapter supplies D/I, R, the actual phi-induced R^(1), every base homomorphism and the S01 Theorems 16.18/16.22 application with checked smooth standard framing. Singular/untyped algebras are rejected.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P5-04",
     "title": "좌표 변경을 실제 chain comparison으로 검사한다",
     "criteria": "T와 T+1의 두 framing을 첫 사례로 택하고 공통 q-PD Čech 모델 또는 명시적 quasi-isomorphism을 구성한다. cone의\nacyclicity 또는 homotopy equivalence를 인증한다. 합격: 특정 precision에서 Betti 수가 같다는 결과만으로 coordinate\nindependence를 승인하지 않는다. 표시상 동일 모델 여부는 비교 certificate 유무에 따른다.",
     "sourcePage": 30,
-    "status": "PARTIAL",
-    "implementedScope": "The T versus T+1 differential discrepancy is computed; a chain homotopy/common q-PD comparison remains to be built.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "An explicit all-degree integral q-binomial chain isomorphism for T and S=T+1, its unit-triangular inverse and zero composition homotopies are computed; its cone is contractible. At q=1 it is the identity on the same elements, and bounded integral operators extend to completion.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P5-05",
@@ -151,10 +151,10 @@ export const CHECKLIST = [
     "sourcePage": 30,
     "status": "PASS",
     "implementedScope": "q=1 and cyclotomic specializations are distinct and computed on exact polynomials; false ordinary-de-Rham identification is blocked.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P5-06",
@@ -163,46 +163,46 @@ export const CHECKLIST = [
     "sourcePage": 30,
     "status": "PASS",
     "implementedScope": "Eisenstein BK point inputs and exact delta(E) are implemented, including E=u-3 and its unit residue.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P5-07",
     "title": "BK base-change와 twist를 검증한다",
     "criteria": "u→0의 crystalline 경로와 A→A/I의 Hodge-Tate 경로, φ-twisted de Rham 경로를 구별한다. uniformizer 변경은 그 자\n체의 비교 certificate를 요구한다. 합격: u→π와 φ 이후 u→ π^p를 같은 map으로 저장할 수 없다. ℙ¹의 BK Tate twist\nFrobenius 계수를 임의로 p라 정하는 fixture는 거부한다.",
     "sourcePage": 30,
-    "status": "PARTIAL",
-    "implementedScope": "Three base-map images are distinguished and unsupported Tate multipliers/changes are rejected; full BK comparison certificates remain.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "The three BK point coefficient homomorphisms are actually evaluated on an input polynomial. K-flat A[0] derived tensors and target generators/completions are recorded; u=pi and phi-twisted u=pi^p differ, and unsupported uniformizer/Tate assertions remain rejected.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P5-08",
     "title": "한 affine에서 실제 derived descent까지 진행한다",
     "criteria": "q-PD envelope와 작은 Čech-Alexander complex를 만들고 overlap·triple overlap의 coherent comparison을 저장한다.\n모듈 complex와 multiplicative/E∞ structure의 완료 범위를 분리한다. 합격: 최소 2개 affine cover의 gluing cocycle와 d²\n를 검증한다. global/ramified 일반ization이 정리 적용 범위를 넘으면 RESEARCH OPEN 또는 MODEL DEVELOPMENT로\n남긴다.",
     "sourcePage": 30,
-    "status": "PARTIAL",
-    "implementedScope": "Coherent multi-affine q-PD derived descent is not implemented.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "Actual standard diagonal q-PD envelopes are constructed as full completed free delta presentations with all delta relations. Explicit face/degeneracy generator maps, two-affine inversion restrictions, triple cocycles and d^2 are checked; mixed naturality is proved modulo the defining relations using the source-proved [p]_q torsionfreeness. S01 Lemma 16.10, Remarks 16.15–16.16 and Theorem 16.22 apply to these same smooth lifts, diagonal ideals and canonical totalization. Finite delta-depth is an observation, not a quotient killing the infinite generators. E-infinity is separate.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P6-01",
     "title": "첫 perfectoid 예제를 고정한다",
     "criteria": "K=완비화(∪_m ℚ_p(p^{1/p^m}))에서 compatible roots를 고정하고 p=3을 첫 fixture로 삼는다. torus p-power tower\n의 완비화, valuation, theorem-backed perfectoid 증명 경로를 저장한다. 합격: 일반 ℙⁿ_K 또는 유한 root level을 바로\nperfectoid라고 부를 수 없다. base의 valuation·pseudo-uniformizer·완비화가 빠지면 거부한다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "The symbolic standard completed base, valuation and pseudo-uniformizer are recorded with external references; effective torus arithmetic is incomplete.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "The selected completed standard field and torus carry valuation, pseudo-uniformizer, complete Gauss-norm and Frobenius-surjectivity witnesses for the S04 perfectoid theorem application; actual dense torus arithmetic is provided and missing base conditions or finite-level perfectoid claims fail.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P6-02",
@@ -211,70 +211,70 @@ export const CHECKLIST = [
     "sourcePage": 32,
     "status": "PASS",
     "implementedScope": "Independent root depth, valuation cutoff and Witt length plus exact compatible-prefix/refinement bookkeeping are implemented.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P6-03",
     "title": "tilt의 연산과 sharp map을 구현 계약에 둔다",
     "criteria": "R/p에서 Frobenius-compatible sequence를 다루고 sharp의 lift 독립성과 수렴 정밀도를 요구한다. tilt와 untilt의 덧셈을\n임의로 같은 좌표 덧셈이라 구현하지 않는다. 합격: x_{m+1}^p=x_m 관계 및 refinement 합치성을 확인한다. 실수/복소 그\n림의 근접성을 p-adic 수렴 인증서로 사용할 수 없다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "Sharp is explicit only on the selected compatible uniformizer; general tilt operations and sharp error certification remain.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "Dense standard-tilt Laurent operations, actual Frobenius-compatible untilt-mod-p components and root refinement are computed. Sharp has a proved lift-independent p-adic error bound from successive inverse Frobenius approximants, with insufficient-depth gating and a non-additivity counterexample.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P6-04",
     "title": "Witt 연산과 Frobenius를 인증한다",
     "criteria": "Teichmüller representatives, Witt addition/multiplication, φ([x])=[x^p]를 정확한 universal polynomial 또는 검증된 라\n이브러리 경로로 다룬다. 합격: W₂(𝔽₃)≅ℤ/9에서 1+1+1=3≠0. Witt 좌표의 componentwise 덧셈으로 0을 내는 구현은\n실패한다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "Exact W_N(F_p) arithmetic is implemented; Witt arithmetic over the full tilt coefficient ring remains unsupported.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "Universal p-typical Witt polynomial addition/multiplication over actual dense tilt coefficients are evaluated through exact ghost numerator divisions; Teichmuller multiplication/Frobenius and noncomponentwise carries are independently checked against the prime-field integer oracle.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P6-05",
     "title": "θ와 kernel generator를 실제 base에 묶는다",
     "criteria": "선택한 untilt에 대한 θ, ξ 및 ξ의 distinguished/nonzerodivisor 근거를 저장한다. ξ는 선택에 의존할 수 있으므로 ring 해시\n와 함께 관리한다. 합격: θ(ξ)=0과 A_inf/( ξ)≅R의 인증 범위를 제시한다. θ와 φ가 무조건 같은 base endomorphism으로\ncommute한다고 요구하지 않는다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "The selected theta/xi witness is bound to a base hash and an external theorem; a general computational theta/kernel certificate is incomplete.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "Theta evaluates actual dense Witt coordinates via inverse-Frobenius sharp terms. The computed xi=[p^flat]-p has theta(xi)=0 and unit Witt carry xi_1=-1; regularity and kernel quotient use the S03/S01 theorem on the fixed completed base hash. Theta(phi(xi))=p^p-p is retained.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P6-06",
     "title": "A Ω와 단순 de Rham·group complex를 구별한다",
     "criteria": "pro-étale/group-cohomology 모델의 L η, 거의 동형, torsion-free replacement를 명세한다. S03의 A Ω 정리를 사용할 때\n는 C=K의 완비 대수폐포로 base extension하고 그 map을 기록하여 완비 대수폐쇄 base 조건을 충족한다. 합격: Lη를 생략\n한 raw Koszul complex는 A Ω_CERTIFIED가 될 수 없다. S03의 해당 comparison과 입력 가정이 certificate에 포함되어야\n한다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "An exact eta-complex diagnostic is implemented; the actual pro-etale/group model, complete algebraic closure base change and A-omega certificate remain.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "The complete standard torus over C=completed algebraic closure of K has its actual mu-torsionfree continuous-group Koszul representative, L eta, integral and fractional-character formulas, explicit contraction and BMS Lemma 9.6/Theorem 9.4(iii) comparison through the almost step. Omission of base extension, eta or completion fails.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P6-07",
     "title": "perfect-prism 비교사상의 방향과 조건을 검사한다",
     "criteria": "perfect-prism 대응 및 étale·de Rham·crystalline 경로를 base change, completion, inversion, Frobenius fixed-points\n의 순서로 기록한다. 합격: étale 경로는 perfect base 등 적용 가정과 I inversion/derived fixed points를 누락하면 실패한\n다. modp 그림만으로 ℤ_p étale cohomology 전체를 결정하지 않는다.",
     "sourcePage": 32,
-    "status": "PARTIAL",
-    "implementedScope": "Perfect-prism comparison requirements are exposed through theta metadata; a composable derived comparison-map backend remains.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "The perfect-prism correspondence and etale, integral etale, de Rham and crystalline paths carry their actual base rings, coefficient maps and ordered derived operations. Missing perfectness, I inversion, derived fixed points, completion/order or false mod-p-to-Zp promotion fails.",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   },
   {
     "id": "P6-08",
@@ -283,9 +283,9 @@ export const CHECKLIST = [
     "sourcePage": 32,
     "status": "PASS",
     "implementedScope": "Unsupported adapters, model-development obligations and open research claims are reported separately without fake certification.",
-    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
     "formalComplete": false,
     "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
-    "acceptanceScope": "Original criterion evaluated within the explicitly supported bounded adapter; no new Lean or universal theorem claim."
+    "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof."
   }
 ];

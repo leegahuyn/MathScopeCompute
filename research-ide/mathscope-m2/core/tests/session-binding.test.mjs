@@ -80,7 +80,9 @@ test('a JSON copy of an owned receipt and altered public job hashes cannot grant
 });
 
 test('a terminal UNSUPPORTED computation is not saved as a completed claim',async t=>{
-  const {engine,job,foundation}=await setup(t,{kind:'arithmetic.elliptic',input:{p:'5',backend:'kedlaya'}});
+  // The prime-field MW/Kedlaya adapter is now supported. Extension-field MW
+  // remains outside its scope and must still be refused by the save boundary.
+  const {engine,job,foundation}=await setup(t,{kind:'arithmetic.elliptic',input:{p:'5',m:2,backend:'kedlaya'}});
   assert.equal(job.status,'UNSUPPORTED');
   await assert.rejects(commitM2SessionBundle(job,engine,foundation,origin(foundation.getSession())),/완료 또는 부분/);
   assert.equal(foundation.effects.length,0);

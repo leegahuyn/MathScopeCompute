@@ -563,7 +563,7 @@ function checksView(r){
 function complexView(r,raw){
   const d=r.results;if(!d?.complex)return null;
   const groups=d.complex.basis||[],dims=d.complex.dims||groups.map(b=>b.length);
-  const inherited=raw?.points?.length?null:{kind:'SERIES',title:'점의 finite-perfect 복합체',description:'C⁰의 한 생성자와 해당 Frobenius를 표시합니다. cochain 차수와 공간 좌표는 다릅니다.',chart:{kind:'SERIES',series:[{label:'chain group rank',connect:false,points:dims.map((v,i)=>({x:i,y:v,sourcePath:`result.results.complex.dims[${i}]`}))}],xLabel:'cohomological degree k',yLabel:'chain group rank',xInteger:true},axisMetadata:[axis('k','COHOMOLOGICAL_DEGREE','result.results.complex.dims'),axis('rank Cᵏ','MODULE_RANK','result.results.complex.dims')],table:table(['cochain degree','basis index','정확한 basis','Frobenius'],groups.flatMap((b,k)=>b.map((v,i)=>[k,i,v,d.frobenius?.cohomology?.find(x=>x.degree===k)?.multiplier??'—'])),groups.flatMap((b,k)=>b.map((_,i)=>`result.results.complex.basis[${k}][${i}]`))),lostInformation:['표시상 간격은 p-adic 거리나 위상적 인접성이 아닙니다.']};
+  const inherited=raw?.points?.length?null:{kind:'SERIES',title:'정확한 복합체 · 차수별 모듈',description:'차수별 생성자, 미분, Frobenius와 비교 사상을 표시합니다. cochain 차수는 공간 좌표가 아닙니다.',chart:{kind:'SERIES',series:[{label:'chain group rank',connect:false,points:dims.map((v,i)=>({x:i,y:v,sourcePath:`result.results.complex.dims[${i}]`}))}],xLabel:'cohomological degree k',yLabel:'chain group rank',xInteger:true},axisMetadata:[axis('k','COHOMOLOGICAL_DEGREE','result.results.complex.dims'),axis('rank Cᵏ','MODULE_RANK','result.results.complex.dims')],table:table(['cochain degree','basis index','정확한 basis','Frobenius'],groups.flatMap((b,k)=>b.map((v,i)=>[k,i,v,d.frobenius?.cohomology?.find(x=>x.degree===k)?.multiplier??'—'])),groups.flatMap((b,k)=>b.map((_,i)=>`result.results.complex.basis[${k}][${i}]`))),lostInformation:['표시상 간격은 p-adic 거리나 위상적 인접성이 아닙니다.']};
   const details=[{title:'chain groups · differential',value:d.complex},{title:'kernel/image와 cohomology',value:d.smith||d.cohomology},{title:'Frobenius chain maps',value:d.frobenius},{title:'filtration · inclusion',value:d.filtration},{title:'comparison maps · 가정',value:d.comparison?.arrows},{title:'strong deformation retraction',value:d.retraction}].filter(x=>x.value!==undefined);
   return inherited?{...inherited,details}:{details};
 }
@@ -572,9 +572,31 @@ function complexView(r,raw){
 function traceBasis(job,degree,index){
   const d=job?.result?.results,c=d?.complex;
   if(!Number.isSafeInteger(degree)||!Number.isSafeInteger(index)||degree<0||index<0||!c?.basis?.[degree]||index>=c.basis[degree].length)return {ok:false,status:'INVALID_BASIS'};
-  const outgoing=(matrix,targetBasis,sourceField)=>!matrix?[]:(matrix.entries||[]).filter(([,j])=>j===index).map(([i,,value])=>({targetIndex:i,target:targetBasis?.[i]??i,coefficient:value,sourceField}));
-  const basis=c.basis[degree][index];
-  return {ok:true,inputHash:job.inputHash??null,jobId:job.id,basis: COPY(basis),degree,index,differential:outgoing(c.differentials?.[degree],c.basis[degree+1],`result.results.complex.differentials[${degree}]`),frobenius:outgoing(d.frobenius?.maps?.[degree],d.frobenius?.target?.basis?.[degree]||c.basis[degree],`result.results.frobenius.maps[${degree}]`),filtrationMembership:d.filtration?.basis?.[degree]?.some(b=>typeof b==='object'&&typeof basis==='object'?b.id===basis.id:canonicalStringify(b)===canonicalStringify(basis))??null,computedInvariants:COPY(d.smith?.cohomology||d.cohomology||null),invariantSource:'EXISTING_COMPUTATION_RESULT',comparison:COPY(d.comparison?.arrows||[])};
+  const column=(matrix,selected,targetBasis,matrixSourceField)=>!matrix?[]:(matrix.entries||[]).flatMap(([i,j,value],entry)=>j===selected?[{targetIndex:i,target:COPY(targetBasis?.[i]??i),coefficient:value,matrixSourceField,sourceField:`${matrixSourceField}.entries[${entry}][2]`}]:[]);
+  const outgoing=(matrix,targetBasis,sourceField)=>column(matrix,index,targetBasis,sourceField);
+  const basis=c.basis[degree][index],filtrationBasis=d.filtration?.basis?.[degree],same=(a,b)=>typeof a==='object'&&typeof b==='object'&&a?.id&&b?.id?a.id===b.id:canonicalStringify(a)===canonicalStringify(b);
+  const filtrationMembership=Array.isArray(filtrationBasis)?basis?.inOriginal?basis.inOriginal.every(term=>filtrationBasis.some(b=>same(b,term.basis))):filtrationBasis.some(b=>same(b,basis)):null;
+  let computedComparison=null;
+  const R=d.retraction,r=R?.r?.[degree],h=R?.h?.[degree],inc=R?.i?.[degree];
+  if(r&&inc){
+    const rPath=`result.results.retraction.r[${degree}]`,iPath=`result.results.retraction.i[${degree}]`,hPath=`result.results.retraction.h[${degree}]`;
+    const projectionTerms=column(r,index,R.K?.basis?.[degree],rPath),homotopyTerms=column(h,index,c.basis[degree-1],hPath);
+    const inclusionImages=projectionTerms.map(term=>({cohomologyIndex:term.targetIndex,cohomologyBasis:COPY(term.target),projectionCoefficient:term.coefficient,projectionSourceField:term.sourceField,inclusionSourceField:iPath,terms:column(inc,term.targetIndex,c.basis[degree],iPath)}));
+    const integerCoefficients=inclusionImages.every(image=>/^-?\d+$/.test(String(image.projectionCoefficient))&&image.terms.every(t=>/^-?\d+$/.test(String(t.coefficient))));
+    const accumulated=new Map();
+    if(integerCoefficients)for(const image of inclusionImages)for(const term of image.terms)accumulated.set(term.targetIndex,(accumulated.get(term.targetIndex)||0n)+BigInt(image.projectionCoefficient)*BigInt(term.coefficient));
+    const roundtripTerms=[...accumulated].filter(([,value])=>value!==0n).sort(([a],[b])=>a-b).map(([targetIndex,value])=>({targetIndex,target:COPY(c.basis[degree][targetIndex]),coefficient:String(value)}));
+    computedComparison={
+      kind:'EXPLICIT_REPLACEMENT_SELECTED_COLUMN',sourceDegree:degree,sourceIndex:index,
+      projection:{map:'r : C^k → H^k',sourceField:rPath,terms:projectionTerms,zero:projectionTerms.length===0},
+      inclusionImages,
+      roundtrip:{map:'i(r(b)) : C^k → C^k',sourceFields:[rPath,iPath],arithmetic:integerCoefficients?'EXACT_INTEGER_COMPOSITION':'COEFFICIENT_PRODUCTS_RETAINED',terms:integerCoefficients?roundtripTerms:null,zero:integerCoefficients?roundtripTerms.length===0:null},
+      homotopy:h?{map:'h : C^k → C^(k−1)',sourceField:hPath,terms:homotopyTerms,zero:homotopyTerms.length===0}:null,
+      identity:'id_C − i r = d h + h d',identitySource:'Existing verified retraction; selected columns do not create a new cohomology or comparison theorem.',
+      formalPass:false
+    };
+  }
+  return {ok:true,inputHash:job.inputHash??null,jobId:job.id,basis:COPY(basis),degree,index,differential:outgoing(c.differentials?.[degree],c.basis[degree+1],`result.results.complex.differentials[${degree}]`),frobenius:outgoing(d.frobenius?.maps?.[degree],d.frobenius?.target?.basis?.[degree]||c.basis[degree],`result.results.frobenius.maps[${degree}]`),filtrationMembership,filtrationMembershipRule:basis?.inOriginal?'Exact support in the original coordinate filtration; basis coefficients are integral.':'Original coordinate-filtration basis membership',computedInvariants:COPY(d.smith?.cohomology||d.cohomology||null),invariantSource:'EXISTING_COMPUTATION_RESULT',computedComparison,comparison:COPY(d.comparison?.arrows||[])};
 }
 
 /** Exact coverage tiles; never represents an uncomputed interval as zero primes. */
@@ -608,7 +630,7 @@ function rawView(job,raw,options){
   const physicalGaugeKinds=['gauge.field','gauge.family','gauge.holonomy','gauge.lattice','gauge.ensemble'];
   const legacyPhysical=physicalGaugeKinds.includes(kind)||['ns.exterior','ns.benchmark','ns.leading-profile'].includes(kind);
   const axisMetadata=axes.map((label,i)=>{
-    const declared=typeof raw.axes?.[i]==='object'?raw.axes[i]:{},log=/log/i.test(label),unit=declared.unit|| (legacyPhysical?'declared source length':'1');
+    const declared=typeof raw.axes?.[i]==='object'?raw.axes[i]:{},log=/\blog(?:2|10|₂|₁₀)?(?=\W|_|$)|로그/i.test(label)||/^LOG_/.test(declared.type||''),unit=declared.unit|| (legacyPhysical?'declared source length':'1');
     let type=declared.type||declared.kind||(legacyPhysical?'PHYSICAL_CARTESIAN':/index|degree|weight|prime|p$|정수|속성|간격/i.test(label)?'DATA_ATTRIBUTE':'PROFILE_COORDINATE');
     if(type==='PHYSICAL')type=/time|시간/i.test(unit)||/tau|τ|time|^t$|1-t/i.test(label)?'PHYSICAL_TIME':'PHYSICAL_COORDINATE';
     const dimension=declared.physicalDimension??(/^PHYSICAL_(CARTESIAN|CARTESIAN_COORDINATE|SPACE_COORDINATE|COORDINATE|LENGTH|TIME)$/.test(type)?1:0);
@@ -655,7 +677,7 @@ function makeVisualization(job,options={}) {
   else if(kind==='ns.provenance')view=nsProvenance(r);
   else if(kind==='ns.validate')view=checksView(r);
   if(!view&&raw&&((raw.points?.length||0)+(raw.lines?.length||0)+(raw.arrows?.length||0)>0))view=rawView(job,raw,options);
-  if(kind==='arithmetic.point'||kind==='arithmetic.p1'){const complex=complexView(r,raw);if(complex)view=view?{...view,details:[...(view.details||[]),...complex.details]}:complex;}
+  if(r.results?.complex?.basis){const complex=complexView(r,raw);if(complex)view=view?{...view,details:[...(view.details||[]),...complex.details]}:complex;}
   view=view||fallbackTable(r);
   if(!view.scene)view.scene=view.chart?sceneFromChart(view.chart):emptyScene();
   const maxRows=cap(options.maxRows,200,1000),t=view.table;
@@ -831,9 +853,62 @@ function plot2D(canvas, series, { xLabel = 'x', yLabel = 'y', xBounds, yBounds }
 return {palette,heatColor,Scene3D,plot2D};
 })();
 const __m2_3 = (()=>{
-/** One CPU Canvas2D surface, event-driven redraw, shared exact HTML table. */
+/** Bounded WebGL point rasterization. Exact mathematical values stay in the retained CPU scene. */
+const vertex='attribute vec2 a_position;attribute float a_radius;attribute vec4 a_color;uniform vec2 u_resolution;uniform float u_dpr;varying vec4 v_color;void main(){vec2 clip=a_position/u_resolution*2.0-1.0;gl_Position=vec4(clip.x,-clip.y,0.0,1.0);gl_PointSize=2.0*a_radius*u_dpr;v_color=a_color;}';
+const fragment='precision mediump float;varying vec4 v_color;void main(){vec2 p=gl_PointCoord*2.0-1.0;if(dot(p,p)>1.0)discard;gl_FragColor=vec4(v_color.rgb*v_color.a,v_color.a);}';
+function rgb(color){
+  if(/^#[\da-f]{6}$/i.test(color||''))return [1,3,5].map(i=>parseInt(color.slice(i,i+2),16)/255);
+  const m=String(color||'').match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/);return m?m.slice(1).map(x=>Number(x)/255):[118/255,226/255,205/255];
+}
+function packMarks(points){
+  const buffer=new Float32Array(points.length*7);let maxFloat32PixelError=0;
+  for(const[i,p]of points.entries()){buffer.set([p.xy[0],p.xy[1],p.radius||3,...rgb(p.color),p.alpha??.85],i*7);maxFloat32PixelError=Math.max(maxFloat32PixelError,Math.abs(buffer[i*7]-p.xy[0]),Math.abs(buffer[i*7+1]-p.xy[1]));}
+  return {buffer,maxFloat32PixelError};
+}
+class WebGLMarks {
+  constructor(doc){this.doc=doc;this.canvas=null;this.gl=null;this.state='NOT_REQUESTED';this.reason=null;this.last=null;this.lost=false;}
+  initialize(){
+    if(this.gl&&!this.lost)return true;if(this.state==='UNAVAILABLE'||this.lost)return false;
+    try{
+      this.canvas=this.doc.createElement('canvas');
+      const gl=this.canvas.getContext('webgl',{alpha:true,premultipliedAlpha:true,antialias:false,preserveDrawingBuffer:true,depth:false,stencil:false});
+      if(!gl){this.state='UNAVAILABLE';this.reason='WEBGL_CONTEXT_UNAVAILABLE';return false;}
+      this.gl=gl;this.canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.lost=true;this.state='CONTEXT_LOST';this.reason='WEBGL_CONTEXT_LOST';});
+      this.canvas.addEventListener('webglcontextrestored',()=>{this.lost=false;this.gl=null;this.state='NOT_REQUESTED';});
+      const shader=(type,source)=>{const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
+      const vs=shader(gl.VERTEX_SHADER,vertex),fs=shader(gl.FRAGMENT_SHADER,fragment),p=gl.createProgram();gl.attachShader(p,vs);gl.attachShader(p,fs);gl.linkProgram(p);gl.deleteShader(vs);gl.deleteShader(fs);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(p));
+      this.program=p;this.buffer=gl.createBuffer();this.position=gl.getAttribLocation(p,'a_position');this.radius=gl.getAttribLocation(p,'a_radius');this.color=gl.getAttribLocation(p,'a_color');this.resolution=gl.getUniformLocation(p,'u_resolution');this.dpr=gl.getUniformLocation(p,'u_dpr');this.state='AVAILABLE';return true;
+    }catch(e){this.state='UNAVAILABLE';this.reason=String(e.message).slice(0,300);return false;}
+  }
+  draw(points,width,height,dpr=1){
+    if(!this.initialize()||points.length>6000||width<2||height<2)return false;
+    const gl=this.gl;if(gl.isContextLost()){this.lost=true;this.state='CONTEXT_LOST';return false;}
+    try{
+      const packed=packMarks(points);this.canvas.width=Math.round(width*dpr);this.canvas.height=Math.round(height*dpr);gl.viewport(0,0,this.canvas.width,this.canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.useProgram(this.program);gl.bindBuffer(gl.ARRAY_BUFFER,this.buffer);gl.bufferData(gl.ARRAY_BUFFER,packed.buffer,gl.DYNAMIC_DRAW);
+      for(const[loc,size,offset]of[[this.position,2,0],[this.radius,1,8],[this.color,4,12]]){gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,size,gl.FLOAT,false,28,offset);}
+      gl.uniform2f(this.resolution,width,height);gl.uniform1f(this.dpr,dpr);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.disable(gl.DEPTH_TEST);gl.drawArrays(gl.POINTS,0,points.length);
+      if(gl.getError()!==gl.NO_ERROR)throw Error('WebGL draw error');this.last={count:points.length,bytes:packed.buffer.byteLength,maxFloat32PixelError:packed.maxFloat32PixelError,width,height,dpr,backend:'WEBGL_POINTS'};return true;
+    }catch(e){this.reason=String(e.message).slice(0,300);return false;}
+  }
+  rasterAudit(){
+    const points=Array.from({length:16},(_,i)=>({xy:[20+(i%4)*32,20+Math.floor(i/4)*32,0],radius:4,color:i%2?'#ffd282':'#76e2cd',alpha:1}));
+    if(!this.draw(points,140,140,1))return {status:'UNAVAILABLE',reason:this.reason||this.state,pass:false};
+    const gl=this.gl,pixel=new Uint8Array(4);let hit=0,empty=0,maxColorError=0;
+    for(const p of points){gl.readPixels(Math.floor(p.xy[0]),139-Math.floor(p.xy[1]),1,1,gl.RGBA,gl.UNSIGNED_BYTE,pixel);if(pixel[3]>250)hit++;const expected=rgb(p.color).map(x=>Math.round(x*255));for(let k=0;k<3;k++)maxColorError=Math.max(maxColorError,Math.abs(pixel[k]-expected[k]));gl.readPixels(Math.floor(p.xy[0])+8,139-Math.floor(p.xy[1]),1,1,gl.RGBA,gl.UNSIGNED_BYTE,pixel);if(pixel[3]===0)empty++;}
+    const pass=hit===16&&empty===16&&maxColorError<=1&&gl.getError()===gl.NO_ERROR;
+    return {status:pass?'PASS':'FAIL',pass,fixture:'16 explicitly synthetic isolated audit glyphs; not a mathematical result',hitCenters:hit,transparentOutside:empty,maxColorError,tolerance8BitColor:1};
+  }
+  metrics(){return {state:this.state,reason:this.reason,last:this.last};}
+  destroy(){if(this.gl&&!this.lost){if(this.buffer)this.gl.deleteBuffer(this.buffer);if(this.program)this.gl.deleteProgram(this.program);}this.gl=null;this.canvas=null;this.state='DISPOSED';}
+}
+
+return {rgb,packMarks,WebGLMarks};
+})();
+const __m2_4 = (()=>{
+/** Event-driven Canvas2D with optional WebGL point batches and a shared exact HTML table. */
 const {Scene3D,heatColor,palette} = __m2_2;
 const {numericValue,scalarText} = __m2_1;
+const {WebGLMarks} = __m2_3;
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const tick=n=>!Number.isFinite(n)?'—':Math.abs(n)>=10000||(n!==0&&Math.abs(n)<.001)?n.toExponential(3):String(Number(n.toPrecision(5)));
 function range(values){let lo=Infinity,hi=-Infinity;for(const n of values)if(Number.isFinite(n)){lo=Math.min(lo,n);hi=Math.max(hi,n);}if(lo===Infinity)return [0,1];if(lo===hi){const pad=Math.abs(lo)*.05||.5;lo-=pad;hi+=pad;}return [lo,hi];}
@@ -843,11 +918,11 @@ function rounded(c,x,y,w,h,r=5){if(c.roundRect){c.beginPath();c.roundRect(x,y,w,
 /**
  * Scene3D-compatible interface. Camera work touches representationRevision only.
  * CPU 3D and chart routes read the same source-bound view and exact table.
- * WebGL is deliberately reported NOT_IMPLEMENTED, never silently claimed.
+ * WebGL only rasterizes retained points; CPU projection, selection and exact values remain identical.
  */
 class SourceBoundScene extends Scene3D {
   constructor(canvas){
-    super(canvas);this.presentation=null;this.representationRevision=0;this.cameraStamp=null;this.cameraListener=null;this.drawDurations=[];this.lastPicked=null;
+    super(canvas);this.presentation=null;this.representationRevision=0;this.cameraStamp=null;this.cameraListener=null;this.drawDurations=[];this.lastPicked=null;this.renderMode='AUTO';this.gpu=new WebGLMarks(canvas.ownerDocument||(typeof document!=='undefined'?document:null));this.actualRenderer='CPU_CANVAS2D';
     canvas.setAttribute('role','img');canvas.setAttribute('tabindex','0');
   }
   set(data){
@@ -871,14 +946,17 @@ class SourceBoundScene extends Scene3D {
     this.canvas.dataset.sourceHash=view.binding?.sourceHash||'';
     for(const key of ['modelHash','sampleHash','observationHash','ensembleHash','historyHash','configurationHash'])this.canvas.dataset[key]=view.binding?.[key]||'';
     this.canvas.dataset.sourceJobId=view.binding?.jobId||'';
-    this.canvas.dataset.gpuPath='NOT_IMPLEMENTED';
+    this.canvas.dataset.gpuPath=this.gpu?.state||'NOT_REQUESTED';
     this.canvas.setAttribute('aria-label',`${view.title}. ${view.description}. 원본 값은 바로 아래 수치표에 있습니다.`);
     return view;
   }
   getCamera(){return {yaw:this.yaw,pitch:this.pitch,zoom:this.zoom};}
   setCamera(camera){if(!camera||![camera.yaw,camera.pitch,camera.zoom].every(Number.isFinite))return false;this.yaw=camera.yaw;this.pitch=clamp(camera.pitch,-1.35,1.35);this.zoom=clamp(camera.zoom,.4,2.2);this.draw();return true;}
   onCameraChange(listener){this.cameraListener=typeof listener==='function'?listener:null;}
-  getMetrics(){const a=(this.drawDurations||[]).slice().sort((a,b)=>a-b);return {renderer:'CPU_CANVAS2D',webgl:'NOT_IMPLEMENTED',samples:a.length,p95Milliseconds:a.length?a[Math.min(a.length-1,Math.ceil(a.length*.95)-1)]:null,targetMilliseconds:100,representationRevision:this.representationRevision};}
+  setRenderMode(mode){if(!['AUTO','CPU','WEBGL'].includes(mode))return false;this.renderMode=mode;this.draw();return true;}
+  getMetrics(){const a=(this.drawDurations||[]).slice().sort((a,b)=>a-b);return {renderer:this.actualRenderer||'CPU_CANVAS2D',requestedMode:this.renderMode,webgl:this.gpu?.metrics()||{state:'NOT_REQUESTED'},samples:a.length,p95Milliseconds:a.length?a[Math.min(a.length-1,Math.ceil(a.length*.95)-1)]:null,targetMilliseconds:100,representationRevision:this.representationRevision};}
+  renderingAudit(){const before=JSON.stringify({binding:this.presentation?.binding,table:this.presentation?.table,points:this.presentation?.scene.points}),mode=this.renderMode;this.setRenderMode('CPU');const cpu=this.projected.map(p=>({pos:p.pos,xy:p.xy,sourcePath:p.sourcePath,value:p.value}));this.setRenderMode('WEBGL');const gpu=this.projected.map(p=>({pos:p.pos,xy:p.xy,sourcePath:p.sourcePath,value:p.value})),actual=this.actualRenderer,details=this.gpu.metrics(),probe=new WebGLMarks(this.canvas.ownerDocument),raster=probe.rasterAudit();probe.destroy();const unchanged=before===JSON.stringify({binding:this.presentation?.binding,table:this.presentation?.table,points:this.presentation?.scene.points}),sameRetainedProjection=JSON.stringify(cpu)===JSON.stringify(gpu);this.setRenderMode(mode);return {status:raster.pass&&unchanged&&sameRetainedProjection?'PASS':raster.pass?'FAIL':'UNAVAILABLE',sourceUnchanged:unchanged,sameRetainedProjection,actualRenderer:actual,gpu:details,raster,marks:cpu.length,pixelTolerance:.001,exactTablePolicy:'GPU float32 values are display coordinates only; the unchanged retained exact table is authoritative.'};}
+  destroy(){this.gpu?.destroy();super.destroy();}
   draw(){
     const started=globalThis.performance?.now?.()??Date.now(),view=this.presentation;
     if(!view){super.draw();return;}
@@ -886,11 +964,22 @@ class SourceBoundScene extends Scene3D {
     if(this.cameraStamp&&stamp!==this.cameraStamp){this.representationRevision++;this.cameraStamp=stamp;this.cameraListener?.(this.getCamera());}
     this.canvas.dataset.representationRevision=String(this.representationRevision||1);
     if(view.kind==='SPATIAL_3D'||view.kind==='RELATION_3D'){
-      super.draw();this.canvas.dataset.renderer=view.kind==='SPATIAL_3D'?'CPU_ORTHOGRAPHIC_PHYSICAL':'CPU_ORTHOGRAPHIC_RELATION';
+      this.drawSpatial();
       if(view.kind==='RELATION_3D'&&this.ctx&&this.width&&this.height){this.ctx.fillStyle='#081522';this.ctx.fillRect(0,this.height-24,this.width,24);this.ctx.fillStyle='#adc6d5';this.ctx.font='10px sans-serif';this.ctx.fillText('Typed data coordinates · diagram layout / profile attributes · camera only',12,this.height-10);}
-    }else this.drawChart(view);
+    }else{this.drawChart(view);this.actualRenderer='CPU_CANVAS2D_'+(view.chart?.kind||'STATE');}
     const elapsed=(globalThis.performance?.now?.()??Date.now())-started;
     if(this.drawDurations){this.drawDurations.push(elapsed);if(this.drawDurations.length>120)this.drawDurations.shift();}
+  }
+  drawSpatial(){
+    const data=this.data,wantsGPU=this.renderMode==='WEBGL'||this.renderMode==='AUTO'&&(data.points?.length||0)>=1000;
+    if(!wantsGPU||!this.gpu?.initialize()){super.draw();this.actualRenderer='CPU_CANVAS2D';this.canvas.dataset.renderer='CPU_ORTHOGRAPHIC_'+(this.presentation.kind==='SPATIAL_3D'?'PHYSICAL':'RELATION');this.canvas.dataset.gpuPath=this.gpu?.state||'NOT_REQUESTED';return;}
+    // Paint axes/paths/vectors once, without the bulk CPU point loop. Restore the retained scene immediately.
+    this.data={...data,points:[]};super.draw();this.data=data;if(!this.width||!this.height)return;
+    this.projected=data.points.map((p,i)=>({...p,xy:this.project(p.pos),index:i})).sort((a,b)=>a.xy[2]-b.xy[2]);
+    const dpr=Math.min(globalThis.devicePixelRatio||1,1.5);
+    if(this.gpu.draw(this.projected,this.width,this.height,dpr)){this.ctx.drawImage(this.gpu.canvas,0,0,this.gpu.canvas.width,this.gpu.canvas.height,0,0,this.width,this.height);this.actualRenderer='WEBGL_POINTS_WITH_CANVAS_AXES';}else{super.draw();this.actualRenderer='CPU_CANVAS2D_FALLBACK';}
+    this.canvas.dataset.gpuPath=this.gpu.state;this.canvas.dataset.renderer=this.actualRenderer;this.canvas.dataset.markCount=String(data.points.length+data.lines.reduce((n,l)=>n+l.points.length,0)+data.arrows.length);
+    if(this.selected){this.ctx.fillStyle='#102c3d';this.ctx.fillRect(8,32,Math.min(this.width-16,420),27);this.ctx.fillStyle='#ffe1a6';this.ctx.font='11px monospace';this.ctx.fillText(short(this.selected.label||String(this.selected.value),78),15,50);}
   }
   drawChart(view){
     const box=this.canvas.getBoundingClientRect(),c=this.ctx;
@@ -951,7 +1040,7 @@ class SourceBoundScene extends Scene3D {
         const v=chart.values[i][j],n=numericValue(v),x=left+j*cell,y=top+i*cell;
         c.fillStyle=Number.isFinite(n)?heatColor((n+extent)/(2*extent)):'#334658';c.fillRect(x+1,y+1,Math.max(0,cell-2),Math.max(0,cell-2));
         if(cell>=24){c.fillStyle='#06131e';c.font=Math.max(10,Math.min(19,cell*.22))+'px monospace';c.textAlign='center';c.fillText(short(scalarText(v),Math.floor(cell/7)),x+cell/2,y+cell/2+5);c.textAlign='left';}
-        this.projected.push({pos:[j,i,0],xy:[x+cell/2,y+cell/2,0],value:v,label:chart.rowLabels[i]+', '+chart.columnLabels[j]+': '+scalarText(v),sourcePath:`${chart.sourceField}[${i}][${j}]`});
+        this.projected.push({pos:[j,i,0],xy:[x+cell/2,y+cell/2,0],value:v,label:chart.rowLabels[i]+', '+chart.columnLabels[j]+': '+scalarText(v),sourcePath:chart.sourcePaths?.[i]?.[j]||`${chart.sourceField}[${i}][${j}]`});
       }
     }
     c.fillStyle='#adc6d5';c.font='10px sans-serif';c.fillText(short('row / column are categorical indices · exact entries shown',Math.floor((width+left-12)/6)),left,top+rows*cell+23);
@@ -1026,9 +1115,9 @@ function renderObservationDetails(container,view){
 
 return {SourceBoundScene,renderObservationTable,renderObservationDetails};
 })();
-const __m2_4 = (()=>{
+const __m2_5 = (()=>{
 const observations = __m2_1;
-const renderers = __m2_3;
+const renderers = __m2_4;
 const visualization=Object.freeze({...observations,...renderers});
 if(typeof window!=='undefined')window.MathScopeM2Visualization=visualization;
 

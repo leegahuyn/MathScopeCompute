@@ -1,11 +1,12 @@
 import * as Arithmetic from '../arithmetic/index.mjs';
 import * as Gauge from '../gauge/index.mjs';
 import * as Navier from '../navier/index.mjs';
+import * as Observatory from '../observatory/index.mjs';
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 
-export const M2_VERSION='0.1.0';
+export const M2_VERSION='0.2.0';
 export const LIMITS=Object.freeze({maxMillis:60000,maxBytes:8*1024*1024,maxItems:250000,maxOperations:50000000,maxJobs:64,maxConcurrent:1,maxInputBytes:262144});
-const DOMAINS=Object.freeze({arithmetic:Arithmetic,gauge:Gauge,ns:Navier});
+const DOMAINS=Object.freeze({arithmetic:Arithmetic,gauge:Gauge,ns:Navier,observation:Observatory});
 export const clone=x=>JSON.parse(canonicalStringify(x));
 export const bytes=x=>new TextEncoder().encode(typeof x==='string'?x:canonicalStringify(x)).length;
 export function normalizeRequest(value){

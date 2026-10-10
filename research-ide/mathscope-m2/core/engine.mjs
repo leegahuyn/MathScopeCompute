@@ -5,13 +5,35 @@ import {WORKER_SOURCE,WORKER_SHA256} from './worker-data.mjs';
 const TERMINAL=new Set(['COMPLETED','PARTIAL','FAILED','CANCELLED','PRECISION_REQUIRED','UNSUPPORTED','BUDGET_EXCEEDED']);
 const resultStatus=result=>TERMINAL.has(result.status)?result.status:result.message||/ERROR|FAILED|INVALID|REJECTED/.test(result.status||'')?'FAILED':result.blockers?.length?'PARTIAL':'FAILED';
 function mathematicalBody(result){const {executionMetrics,...body}=result;return body;}
+function float64Hex(value){
+  const buffer=new ArrayBuffer(8),view=new DataView(buffer);view.setFloat64(0,value,false);
+  return Array.from(new Uint8Array(buffer),byte=>byte.toString(16).padStart(2,'0')).join('');
+}
+async function runtimeBinding(){
+  // This describes the calling runtime. A supplied workerFactory is not a
+  // remotely attested worker; exact replay still recomputes every result byte.
+  const identity=typeof process==='object'&&process?.versions?.node
+    ?{kind:'NODE',version:process.versions.node,engine:'V8',engineVersion:process.versions.v8,platform:process.platform,architecture:process.arch}
+    :typeof navigator==='object'
+      ?{kind:'BROWSER',userAgent:String(navigator.userAgent||''),platform:String(navigator.platform||'')}
+      :{kind:'UNKNOWN_JS_RUNTIME'};
+  const probes=[
+    ['sin(1)',Math.sin(1)],['sin(1e6)',Math.sin(1e6)],['cos(0.7)',Math.cos(.7)],['cos(1e6)',Math.cos(1e6)],
+    ['exp(0.1)',Math.exp(.1)],['exp(-17.3)',Math.exp(-17.3)],['expm1(1e-8)',Math.expm1(1e-8)],
+    ['exp(-0.375)',Math.exp(-.375)],['asinh(2.6875)',Math.asinh(2.6875)],
+    ['log(0.7)',Math.log(.7)],['log(17.3)',Math.log(17.3)],['log1p(1e-8)',Math.log1p(1e-8)],
+    ['sqrt(2)',Math.sqrt(2)],['pow(1.1,3.7)',Math.pow(1.1,3.7)],['atan2(0.3,0.7)',Math.atan2(.3,.7)],
+    ['acos(0.3)',Math.acos(.3)],['hypot(0.3,0.7,1.1)',Math.hypot(.3,.7,1.1)],['tanh(0.7)',Math.tanh(.7)]
+  ].map(([name,value])=>({name,float64:float64Hex(value)}));
+  return {schema:'MathScope.RuntimeBinding/1',identity,mathProbe:{schema:'MathScope.MathProbe/1',encoding:'IEEE754_BINARY64_BIG_ENDIAN_HEX',samples:probes,sha256:await sha256(probes)},scope:'CALLING_RUNTIME_IDENTITY_AND_FINITE_MATH_PROBE',portabilityGuarantee:false};
+}
 export function createM2Engine(options={}) {
   const jobs=new Map(),queue=[],listeners=new Set(),waiters=new Map(),ownedResults=new WeakSet();
   let disposed=false,active=null,workerURL=null,sequence=0;
   const workerMode=options.workerFactory||(!options.local&&typeof Worker==='function');
   const environmentPromise=(async()=>{
     const workerHash=await sha256(WORKER_SOURCE);if(workerHash!==WORKER_SHA256)throw Error('Installed M2 worker digest mismatch.');
-    const environment={schema:'MathScope.M2Environment/1',version:M2_VERSION,workerSha256:workerHash,execution:options.workerFactory?'APPLICATION_WORKER_FACTORY':workerMode?'BROWSER_WEB_WORKER':'EXPLICIT_LOCAL_RUNTIME',server:false,capabilities:await listCapabilities()};
+    const environment={schema:'MathScope.M2Environment/2',version:M2_VERSION,workerSha256:workerHash,execution:options.workerFactory?'APPLICATION_WORKER_FACTORY':workerMode?'BROWSER_WEB_WORKER':'EXPLICIT_LOCAL_RUNTIME',runtime:await runtimeBinding(),replayScope:'IDENTICAL_SOURCE_ENVIRONMENT_AND_EXACT_RECOMPUTED_RESULT',server:false,capabilities:await listCapabilities()};
     return {...environment,hash:await sha256(environment)};
   })();
   const publicJob=j=>clone({id:j.id,request:j.request,inputHash:j.inputHash,environmentHash:j.environmentHash,status:j.status,submittedAt:j.submittedAt,finishedAt:j.finishedAt,checkpoint:j.checkpoint,result:j.result,resultHash:j.resultHash,mathematicalHash:j.mathematicalHash,attempt:j.attempt});

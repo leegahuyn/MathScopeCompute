@@ -1,5 +1,7 @@
 import {bigint,small,fail,mod,powmod,hash} from '../../mathscope-m1/arithmetic/exact.mjs';
 import {primeBase} from '../../mathscope-m1/arithmetic/padic.mjs';
+import {standardTiltOperation,sharpOperation,standardTiltWitt,thetaOperation} from './tilt-arithmetic.mjs';
+import {standardPerfectoidBase,aomegaTorus,perfectPrismComparison} from './perfectoid-comparisons.mjs';
 
 const axis=(label,type)=>({label,type,unit:'dimensionless'});
 const check=(name,pass,details={})=>({name,pass,...details});
@@ -18,6 +20,7 @@ export function wittDecode(value,p,N){
 }
 
 export function witt(input={},tracker=null){
+  if(input.coefficientRing==='standard-tilt')return standardTiltWitt(input,tracker);
   const p=primeBase(input.p??3);if(p>97n)fail('UNSUPPORTED','The finite Witt subring supports p <= 97.');
   if(input.coefficientRing&&input.coefficientRing!==`F_${p}`&&input.coefficientRing!=='Fp')fail('UNSUPPORTED','Only W_N(F_p) is implemented. General Witt vectors over the tilt are not replaced with componentwise arithmetic.');
   const N=small(input.N??2,'Witt length N',1,32),a=input.a??Array.from({length:N},(_,i)=>i?'0':'1'),b=input.b??Array.from({length:N},(_,i)=>i?'0':'1');
@@ -41,12 +44,19 @@ export function validateRootPrefix(levels,p){
 }
 
 export async function perfectoidTower(input={},tracker=null){
+  standardPerfectoidBase(input);
+  if(input.operation==='tilt')return standardTiltOperation(input,tracker);
+  if(input.operation==='sharp')return sharpOperation(input,tracker);
+  if(input.operation==='theta')return thetaOperation(input,tracker);
+  if(input.operation==='aomega')return aomegaTorus(input,tracker);
+  if(input.operation==='perfectPrism')return perfectPrismComparison(input);
   const p=primeBase(input.p??3);if(p>7n)fail('UNSUPPORTED','The standard tower view currently supports p=2,3,5,7.');
   const M=small(input.M??4,'root depth M',1,8),V=small(input.V??8,'valuation cutoff V',1,64),N=small(input.N??2,'Witt length N',1,32);
   if(input.base&&input.base!=='standard-p-roots')fail('UNSUPPORTED','Only the completed standard p-power root tower is described by this adapter. Arbitrary perfectoid algebras require their own presentation and comparison.');
   if(input.operation&&input.operation!=='tower'&&input.operation!=='thetaFixture')fail('UNSUPPORTED','General tilt addition, sharp evaluation and effective descent are not implemented; only the compatible uniformizer tower and its theta fixture are available.');
   if(input.complete===false||input.pseudoUniformizer===null||input.valuation===null)fail('INVALID_PERFECTOID_BASE','Completion, valuation and a pseudo-uniformizer are mandatory for the symbolic base.');
-  const base={id:'standard-p-roots',p:String(p),K:'completion of union_m Q_p(p^(1/p^m))',valuation:'v_p(p)=1',pseudoUniformizer:'p^(1/p)',completion:'p-adic valuation completion',torus:'completed O_K<T^(+/-1/p^infinity)>',perfectoidEvidence:{grade:'THEOREM_REFERENCE',source:'S04 Perfectoid Spaces, standard perfectoid field and toric tower construction',localKernelCheck:false}},baseHash=await hash(base);
+  const theoremBase=standardPerfectoidBase(input);
+  const base={id:'standard-p-roots',p:String(p),K:'completion of union_m Q_p(p^(1/p^m))',valuation:'v_p(p)=1',pseudoUniformizer:'p^(1/p)',completion:'p-adic valuation completion',torus:'completed O_K<T^(+/-1/p^infinity)>',perfectoidEvidence:theoremBase.theoremApplication,verifiedConstructionHypotheses:theoremBase.hypotheses},baseHash=await hash(base);
   const levels=Array.from({length:M+1},(_,i)=>({level:i,symbol:i===0?'p':`p^(1/${p}^${i})`,exponentNumerator:'1',exponentDenominator:String(p**BigInt(i)),valuationNumerator:'1',valuationDenominator:String(p**BigInt(i)),modPRingMonomial:i===0?'0':`pi_${M}^${p**BigInt(M-i)}`,sharpPower:String(p**BigInt(i)),sharpResult:String(p)}));
   if(input.levels){const report=validateRootPrefix(input.levels,p);if(!report.pass)fail('INVALID_ROOT_PREFIX',report.reason);if(input.levels.length!==M+1)fail('INVALID_ROOT_PREFIX','The prefix length must equal M+1.');}
   const checks=validateRootPrefix(levels,p),xiReduction=p**(p-1n)-1n;
@@ -54,6 +64,7 @@ export async function perfectoidTower(input={},tracker=null){
   return{
     object:{kind:'STANDARD_PERFECTOID_SYMBOLIC_TOWER',baseHash},base,scope:{finite:true,rootDepth:M,valuationCutoff:V,wittLength:N,finiteLevelIsPerfectoid:false,finiteObservationIsInverseLimit:false,computedGeneralTiltArithmetic:false},levels,
     finiteObservation:{coefficientRing:`F_${p}[pi_${M}]/(pi_${M}^${p**BigInt(M)})`,meaning:'O_(Q_p(p^(1/p^M)))/(p), a finite nonreduced coefficient-ring view; the complete tower is a separate symbolic object.',refinement:`pi_${M} -> pi_${M+1}^${p}`,prefixReduction:'Forget the last compatible-sequence component; this is not a claimed reverse ring homomorphism between finite field extensions.',torusCoordinates:'T^(1/p^m) are tracked as formal invertible root symbols, not computed general torus coefficients.'},
+    arithmeticOperations:{tilt:'operation=tilt',sharp:'operation=sharp',theta:'operation=theta',Witt:'arithmetic.witt with coefficientRing=standard-tilt',Aomega:'operation=aomega',perfectPrism:'operation=perfectPrism'},
     sharp:{input:'selected p-flat uniformizer sequence',formula:'sharp((p,p^(1/p),p^(1/p^2),...)) = p',exactCompatibility:'(p^(1/p^m))^(p^m)=p for every m in the selected symbolic system',generalSharpEvaluator:false},
     theta:{untiltBaseHash:baseHash,Ainf:'W(O_K^flat)',xi:'[p^flat]-p',thetaXi:'0',thetaTeichmullerUniformizer:String(p),thetaAfterFrobeniusXi:String(p**p-p),distinguishedWitness:{deltaXiModuloXi:String(xiReduction),residueModuloP:String(mod(xiReduction,p)),isUnitResidue:mod(xiReduction,p)!==0n},kernelQuotient:{statement:'ker(theta)=(xi), A_inf/(xi) ~= O_K',grade:'THEOREM_REFERENCE',source:'S03 integral p-adic Hodge theory §3.2, perfectoid untilt theta; S01 perfect-prism correspondence',localKernelCheck:false},commutation:'theta(phi(xi)) is not zero in this fixture; an untilt Frobenius endomorphism and a commuting diagram are not assumed.'},
     checks:[check('every displayed root level satisfies the exact p-power compatibility',checks.pass),check('sharp of the selected uniformizer is consistent at every level',levels.every(x=>BigInt(x.sharpPower)===BigInt(x.exponentDenominator))),check('distinguished-generator witness has nonzero residue modulo p',mod(xiReduction,p)!==0n)],

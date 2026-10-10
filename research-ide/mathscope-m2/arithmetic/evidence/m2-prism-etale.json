@@ -1,0 +1,493 @@
+{
+  "schema": "MathScope.M2.ArithmeticResult/1",
+  "version": "0.2.0-m2",
+  "kind": "arithmetic.comparison",
+  "status": "COMPLETED",
+  "object": {
+    "kind": "PERFECT_PRISM_TYPED_COMPARISON",
+    "baseHash": "58ed6635da966a7885a1e4bff63731a1a652cc973d9d42921e01023c0b6b99d5",
+    "target": "etale"
+  },
+  "request": {
+    "budget": {},
+    "input": {
+      "operation": "perfectPrism",
+      "p": "3",
+      "target": "etale"
+    },
+    "kind": "arithmetic.comparison",
+    "precision": {
+      "N": 3
+    }
+  },
+  "scope": {
+    "finite": true,
+    "displayedModPpower": 3,
+    "routeForCompletedObjects": true,
+    "finiteModPObservationIsZpCertificate": false,
+    "geometry": "standard smooth formal torus; coefficient-level derived maps also evaluated on the point",
+    "formalComplete": false
+  },
+  "results": {
+    "object": {
+      "kind": "PERFECT_PRISM_TYPED_COMPARISON",
+      "baseHash": "58ed6635da966a7885a1e4bff63731a1a652cc973d9d42921e01023c0b6b99d5",
+      "target": "etale"
+    },
+    "base": {
+      "schema": "MathScope.StandardPerfectoidBase/2",
+      "id": "standard-p-roots",
+      "p": "3",
+      "dimensions": 1,
+      "K": "valuation completion of union_m Q_p(p^(1/p^m))",
+      "integralK": "completion of union_m Z_p[p^(1/p^m)]",
+      "valuation": "v(p)=1",
+      "pseudoUniformizer": "p^(1/p)",
+      "torus": "(p,pi)-completed O_K[T_1^(+/-1/p^infinity),...,T_1^(+/-1/p^infinity)]",
+      "tilt": "the corresponding t-adically completed perfect Laurent torus over F_p[t^(1/p^infinity)]",
+      "hypotheses": [
+        {
+          "name": "complete rank-one non-discrete valuation",
+          "witness": "Completion is part of the construction; value group contains Z[1/p]."
+        },
+        {
+          "name": "uniform Banach torus",
+          "witness": "The multiplicative Gauss norm gives bounded power-bounded elements, before and after completion."
+        },
+        {
+          "name": "Frobenius modulo p is onto",
+          "witness": "Take a pth root of each finite monomial at the next level; compatible limits extend by completeness."
+        }
+      ],
+      "theoremApplication": {
+        "grade": "APPLIED_EXTERNAL_THEOREM",
+        "sources": [
+          {
+            "id": "S04",
+            "url": "https://www.math.uni-bonn.de/people/scholze/PerfectoidSpaces.pdf",
+            "locators": [
+              "Definition 3.1",
+              "Proposition 5.17",
+              "Proposition 5.20",
+              "rational-localization closure for Laurent coordinates"
+            ]
+          }
+        ],
+        "scope": "the selected completed standard field and its completed torus, all root levels together",
+        "finiteLevelIsPerfectoid": false,
+        "localKernelCheck": false,
+        "formalComplete": false
+      }
+    },
+    "scope": {
+      "finite": true,
+      "displayedModPpower": 3,
+      "routeForCompletedObjects": true,
+      "finiteModPObservationIsZpCertificate": false,
+      "geometry": "standard smooth formal torus; coefficient-level derived maps also evaluated on the point",
+      "formalComplete": false
+    },
+    "perfectPrism": {
+      "A": "W(O_K^flat)",
+      "I": "(xi)",
+      "xi": "[p^flat]-p",
+      "untilt": "O_K, the valuation ring of the same completed standard field",
+      "phiInverse": "inverse Frobenius on the perfect tilt in every Witt coordinate",
+      "kernel": "theta quotient by the distinguished regular element xi",
+      "source": {
+        "id": "S01",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "locator": "Theorem 3.10"
+      },
+      "proofInputs": [
+        "the completed tilt is perfect",
+        "W of a perfect characteristic-p ring is p-torsionfree and has invertible Frobenius",
+        "xi_1=-1 is a unit; theta(xi)=0",
+        "theta quotient recovers the selected untilt by S03 Lemmas 3.10–3.12"
+      ],
+      "grade": "APPLIED_EXTERNAL_THEOREM",
+      "localKernelCheck": false
+    },
+    "route": {
+      "orderedOperations": [
+        "DERIVED_REDUCTION_MOD_PN",
+        "INVERT_PRISM_IDEAL",
+        "DERIVED_FROBENIUS_FIXED_POINTS"
+      ],
+      "details": {
+        "source": "Delta_(R/A_inf)",
+        "target": "R Gamma_et(X_eta,Z/p^3)",
+        "ring": "(A_inf/p^N)[1/xi]",
+        "frobenius": "the induced Frobenius after the indicated localization",
+        "derivedFixedPoints": "Cone(phi-1:C -> C)[-1]; phi is F_p-linear, not assumed A_inf-linear",
+        "completion": "the original Delta is derived (p,xi)-complete before reduction"
+      },
+      "sources": [
+        {
+          "id": "S01",
+          "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+          "locators": [
+            "Theorem 1.8: crystalline, de Rham, etale and base-change clauses",
+            "Theorem 3.10"
+          ]
+        }
+      ],
+      "proofGrade": "TYPED_EXTERNAL_COMPARISON_WITH_CHECKED_STANDARD_HYPOTHESES",
+      "formalComplete": false
+    },
+    "checks": [
+      {
+        "name": "perfect-prism correspondence uses the same completed untilt base",
+        "pass": true
+      },
+      {
+        "name": "the target has all required operations in their mathematical order",
+        "pass": true
+      },
+      {
+        "name": "a finite mod-p observation is not promoted to Z_p cohomology",
+        "pass": true
+      }
+    ],
+    "tables": [
+      {
+        "title": "Derived comparison route",
+        "columns": [
+          "stage",
+          "operation"
+        ],
+        "rows": [
+          {
+            "stage": 0,
+            "operation": "DERIVED_REDUCTION_MOD_PN"
+          },
+          {
+            "stage": 1,
+            "operation": "INVERT_PRISM_IDEAL"
+          },
+          {
+            "stage": 2,
+            "operation": "DERIVED_FROBENIUS_FIXED_POINTS"
+          }
+        ]
+      }
+    ],
+    "visualization": {
+      "points": [
+        {
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "label": "DERIVED_REDUCTION_MOD_PN",
+          "value": {
+            "stage": 0,
+            "operation": "DERIVED_REDUCTION_MOD_PN"
+          }
+        },
+        {
+          "pos": [
+            1,
+            0,
+            0
+          ],
+          "label": "INVERT_PRISM_IDEAL",
+          "value": {
+            "stage": 1,
+            "operation": "INVERT_PRISM_IDEAL"
+          }
+        },
+        {
+          "pos": [
+            2,
+            0,
+            0
+          ],
+          "label": "DERIVED_FROBENIUS_FIXED_POINTS",
+          "value": {
+            "stage": 2,
+            "operation": "DERIVED_FROBENIUS_FIXED_POINTS"
+          }
+        }
+      ],
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "label": "Required ordered derived operation"
+        },
+        {
+          "points": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ]
+          ],
+          "label": "Required ordered derived operation"
+        }
+      ],
+      "axes": [
+        {
+          "label": "Derived operation order",
+          "type": "CATEGORICAL"
+        }
+      ],
+      "description": "Perfect-prism etale comparison with typed base maps",
+      "coordinateMeaning": "Nodes are derived operations, not cohomology dimensions or an approximate topological space.",
+      "lostInformation": [
+        "The complete comparison is an applied published theorem, not a newly executed proof kernel."
+      ],
+      "sourceFields": [
+        "perfectPrism",
+        "route"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "perfect-prism correspondence uses the same completed untilt base",
+      "pass": true
+    },
+    {
+      "name": "the target has all required operations in their mathematical order",
+      "pass": true
+    },
+    {
+      "name": "a finite mod-p observation is not promoted to Z_p cohomology",
+      "pass": true
+    }
+  ],
+  "blockers": [],
+  "tables": [
+    {
+      "title": "Derived comparison route",
+      "columns": [
+        "stage",
+        "operation"
+      ],
+      "rows": [
+        {
+          "stage": 0,
+          "operation": "DERIVED_REDUCTION_MOD_PN"
+        },
+        {
+          "stage": 1,
+          "operation": "INVERT_PRISM_IDEAL"
+        },
+        {
+          "stage": 2,
+          "operation": "DERIVED_FROBENIUS_FIXED_POINTS"
+        }
+      ]
+    }
+  ],
+  "precisionLedger": {
+    "requested": {
+      "N": 3
+    },
+    "finiteScope": {
+      "finite": true,
+      "displayedModPpower": 3,
+      "routeForCompletedObjects": true,
+      "finiteModPObservationIsZpCertificate": false,
+      "geometry": "standard smooth formal torus; coefficient-level derived maps also evaluated on the point",
+      "formalComplete": false
+    },
+    "roundingError": "0 for exact integer, polynomial, finite-field and finite Witt operations; explicitly tagged complex roots are Float64 display only.",
+    "precisionAxesIndependent": true
+  },
+  "evidence": {
+    "calculation": "EXACT_FINITE_SCOPE",
+    "geometricComparison": "EXPLICIT_MODEL_PLUS_APPLIED_EXTERNAL_THEOREM_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "lean": "NO_NEW_KERNEL_EXECUTION",
+    "formalComplete": false,
+    "universalConjectureSolved": false
+  },
+  "provenance": {
+    "sources": [
+      {
+        "id": "BLUEPRINT_P4_P6",
+        "kind": "USER_SUPPLIED_SPECIFICATION",
+        "pages": [
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          69,
+          70,
+          71,
+          72
+        ],
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      {
+        "id": "S01",
+        "title": "Prisms and Prismatic Cohomology",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S06",
+        "title": "Counting Points on Hyperelliptic Curves Using Monsky–Washnitzer Cohomology",
+        "url": "https://arxiv.org/abs/math/0105031",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "STACKS_PROJECTIVE",
+        "title": "Derived projective bundle formula",
+        "url": "https://stacks.math.columbia.edu/tag/0FUN",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S03",
+        "title": "Integral p-adic Hodge Theory",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/integralpadicHodge.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S04",
+        "title": "Perfectoid Spaces",
+        "url": "https://www.math.uni-bonn.de/people/scholze/PerfectoidSpaces.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S07",
+        "title": "La conjecture de Weil I",
+        "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "C01",
+        "title": "Lectures on Etale Cohomology",
+        "url": "https://www.jmilne.org/math/CourseNotes/LEC.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      }
+    ],
+    "algorithmVersion": "0.2.0-m2",
+    "inputHash": "2dc953ef7de28537d42f55e4165b2dc8e48958c78b3482ff89920f99b3d92cd5",
+    "sourceHash": "8f39df53f318bf00d0d15b10c69251a84fb030142cc7ccfc71b6e0701402b21d",
+    "operations": 0
+  },
+  "visualization": {
+    "points": [
+      {
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "label": "DERIVED_REDUCTION_MOD_PN",
+        "value": {
+          "stage": 0,
+          "operation": "DERIVED_REDUCTION_MOD_PN"
+        }
+      },
+      {
+        "pos": [
+          1,
+          0,
+          0
+        ],
+        "label": "INVERT_PRISM_IDEAL",
+        "value": {
+          "stage": 1,
+          "operation": "INVERT_PRISM_IDEAL"
+        }
+      },
+      {
+        "pos": [
+          2,
+          0,
+          0
+        ],
+        "label": "DERIVED_FROBENIUS_FIXED_POINTS",
+        "value": {
+          "stage": 2,
+          "operation": "DERIVED_FROBENIUS_FIXED_POINTS"
+        }
+      }
+    ],
+    "lines": [
+      {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "label": "Required ordered derived operation"
+      },
+      {
+        "points": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ]
+        ],
+        "label": "Required ordered derived operation"
+      }
+    ],
+    "axes": [
+      {
+        "label": "Derived operation order",
+        "type": "CATEGORICAL"
+      }
+    ],
+    "description": "Perfect-prism etale comparison with typed base maps",
+    "coordinateMeaning": "Nodes are derived operations, not cohomology dimensions or an approximate topological space.",
+    "lostInformation": [
+      "The complete comparison is an applied published theorem, not a newly executed proof kernel."
+    ],
+    "sourceFields": [
+      "perfectPrism",
+      "route"
+    ],
+    "sourceHash": "8f39df53f318bf00d0d15b10c69251a84fb030142cc7ccfc71b6e0701402b21d",
+    "sourceRevision": "8f39df53f318bf00d0d15b10c69251a84fb030142cc7ccfc71b6e0701402b21d",
+    "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
+    "sampling": {
+      "displayPoints": 3,
+      "originalSourceHash": "8f39df53f318bf00d0d15b10c69251a84fb030142cc7ccfc71b6e0701402b21d"
+    },
+    "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
+  },
+  "resultHash": "33467c7638a24e4cca5a55d569f8830a8eddbc689cd1ea6a4d7ed11ed4882267"
+}

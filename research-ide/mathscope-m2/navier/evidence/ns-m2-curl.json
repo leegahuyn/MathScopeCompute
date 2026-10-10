@@ -10,10 +10,13 @@
   },
   "inputHash": "b851ccb35ee96409356214cf75a468400ff949b306ebebfd6786ce96b7d884b2",
   "result": {
-    "blockers": [
-      "N4-07/N5-07 product-rule implementation works; the archived-profile C-infinity potential and original pulse remainders are not yet linked."
-    ],
+    "blockers": [],
     "checks": [
+      {
+        "detail": "Exact q-dependent potential cutoff includes the source chi-prime radial term.",
+        "id": "exact-source-5.45",
+        "pass": true
+      },
       {
         "detail": "div(curl A)=d_x d_y A_z-d_y d_x A_z=0 on every smooth piece, with matching derivatives through the collar",
         "id": "mixed-partial-identity",
@@ -32,7 +35,7 @@
     ],
     "evidenceGrade": "FINITE_NUMERICAL_COMPONENT",
     "kind": "ns.potential-curl",
-    "moduleVersion": "m2-ns-0.1.1",
+    "moduleVersion": "m2-ns-0.2.0",
     "object": {
       "kind": "CUTOFF_POTENTIAL_CURL_FIXTURE"
     },
@@ -49,7 +52,7 @@
       "outputItemsEstimate": 343,
       "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
     },
-    "resultHash": "3d3786f7c15948ce9761d0136dcf25cb0b279afb80df8577f07d107ab792263f",
+    "resultHash": "f522124f0d64b9e771f573f8f8793778e2709cfec30283fa03460231c0335fd7",
     "results": {
       "curlRule": "curl(chi*A)=grad(chi) cross A + chi*curl(A)",
       "errors": [
@@ -67,11 +70,75 @@
         }
       ],
       "frequency": 2,
+      "negativeSourceCutoffCurl": {
+        "angularCutoffPreservesDivergence": true,
+        "arithmetic": "EXACT_BIGINT_RATIONAL_DIFFERENTIAL_POLYNOMIALS",
+        "axialFormula": "u_z,n^cut=q^(-A+2*n*h)*chi(sigma)*U_n",
+        "axialFormulaMatches": true,
+        "axisRegularity": "F_n/X is smooth by its exact radial-average reconstruction, so the Cartesian potential is smooth at r=0.",
+        "directSwirlDivergence": "r^-1*d_theta(chi(c_n*q)*u_theta,n)=0 because all factors are axisymmetric.",
+        "divergenceTerms": [
+          {
+            "physicalPower": "0,-1,2",
+            "terms": [
+              {
+                "coefficient": "2",
+                "monomial": "chi_1^1;eta^1;F_1_1_0^1;L^-1;sigma^1"
+              }
+            ]
+          }
+        ],
+        "divergenceZero": false,
+        "n": 1,
+        "omitCutoffDerivative": true,
+        "pass": false,
+        "potentialCartesian": "A_n=(S_n/r^2)*(-x2,x1,0)",
+        "radialFormula": "r*u_r,n^cut=q^(2*n*h)*(chi(sigma)*V_n-2*eta*sigma*chiPrime(sigma)*F_n/L)",
+        "radialFormulaMatches": false,
+        "reconstruction": "F_n,X=U_n; V_n=-Z_(1-A+lambda_n)F_n",
+        "schema": "MathScope.SourceCutoffCurlIdentity/1",
+        "scope": "Universal exact operator identity for the actual source construction; it does not assert that positive-order profiles or Borel coefficients have already been solved.",
+        "sigma": "c_n*q",
+        "sourceEquations": [
+          "5.27",
+          "5.34",
+          "5.45"
+        ],
+        "sourceProfileValuesSubstituted": false,
+        "streamfunction": "S_n=q^(1-A+lambda_n)*F_n"
+      },
       "omittedCutoffDerivativeMaxDivergence": 1.8728839140380593,
       "potential": "A=(0,0,(1-|x|^2/R^2)^4_+ sin(k*x))",
       "radius": 2,
       "regularity": "C3 compact cutoff fixture, deliberately not a C-infinity Borel sum",
-      "sourceFormula": "5.45/7.24 product-rule verification fixture"
+      "sourceCutoffCurl": {
+        "angularCutoffPreservesDivergence": true,
+        "arithmetic": "EXACT_BIGINT_RATIONAL_DIFFERENTIAL_POLYNOMIALS",
+        "axialFormula": "u_z,n^cut=q^(-A+2*n*h)*chi(sigma)*U_n",
+        "axialFormulaMatches": true,
+        "axisRegularity": "F_n/X is smooth by its exact radial-average reconstruction, so the Cartesian potential is smooth at r=0.",
+        "directSwirlDivergence": "r^-1*d_theta(chi(c_n*q)*u_theta,n)=0 because all factors are axisymmetric.",
+        "divergenceTerms": [],
+        "divergenceZero": true,
+        "n": 1,
+        "omitCutoffDerivative": false,
+        "pass": true,
+        "potentialCartesian": "A_n=(S_n/r^2)*(-x2,x1,0)",
+        "radialFormula": "r*u_r,n^cut=q^(2*n*h)*(chi(sigma)*V_n-2*eta*sigma*chiPrime(sigma)*F_n/L)",
+        "radialFormulaMatches": true,
+        "reconstruction": "F_n,X=U_n; V_n=-Z_(1-A+lambda_n)F_n",
+        "schema": "MathScope.SourceCutoffCurlIdentity/1",
+        "scope": "Universal exact operator identity for the actual source construction; it does not assert that positive-order profiles or Borel coefficients have already been solved.",
+        "sigma": "c_n*q",
+        "sourceEquations": [
+          "5.27",
+          "5.34",
+          "5.45"
+        ],
+        "sourceProfileValuesSubstituted": false,
+        "streamfunction": "S_n=q^(1-A+lambda_n)*F_n"
+      },
+      "sourceFormula": "5.45 exact source identity plus an independent Cartesian verification fixture"
     },
     "scope": {
       "finite": true,
@@ -95,7 +162,7 @@
         "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
       }
     },
-    "status": "PARTIAL",
+    "status": "COMPLETED",
     "visualization": {
       "arrows": [
         {
@@ -1221,7 +1288,6 @@
           "label": "x",
           "name": "x",
           "scale": "LINEAR",
-          "sourceField": "x",
           "unit": "fixture length"
         },
         {
@@ -1229,7 +1295,6 @@
           "label": "y",
           "name": "y",
           "scale": "LINEAR",
-          "sourceField": "y",
           "unit": "fixture length"
         },
         {
@@ -1237,7 +1302,6 @@
           "label": "z",
           "name": "z",
           "scale": "LINEAR",
-          "sourceField": "z",
           "unit": "fixture length"
         }
       ],
@@ -2088,6 +2152,6 @@
       ]
     }
   },
-  "status": "PARTIAL",
-  "resultHash": "ea6a6ddf778194a557093a3682ba3ac77a59e16d25510f8157db91354494e4cd"
+  "status": "COMPLETED",
+  "resultHash": "1a51be4404db46b5bddce153702cc0bf060402d93f9e51acbe93179167cd70e2"
 }

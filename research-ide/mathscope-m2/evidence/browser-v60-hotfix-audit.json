@@ -1,0 +1,5513 @@
+{
+  "schema": "MathScope.AxisMetadataHotfixLiveAudit/1",
+  "pageVersion": 60,
+  "pageVersionHash": "9a2943ad",
+  "started": "2026-10-10T06:02:02.841Z",
+  "m1Runs": [
+    {
+      "exampleId": "p1-p3",
+      "started": {
+        "ok": true,
+        "jobId": "m1-job:mv1zltzr:1",
+        "status": "RUNNING"
+      },
+      "result": {
+        "ok": true,
+        "job": {
+          "attempt": 1,
+          "checkpoint": null,
+          "environmentHash": "fc67a6b29748d52cb295758caf972327655477a1c34283bac207d2b6b8864531",
+          "finishedAt": "2026-10-10T06:02:14.149Z",
+          "id": "m1-job:mv1zltzr:1",
+          "inputHash": "fdad3e06c8e587977c62a28481801fd83710202a23b41d6307775b878897ae1b",
+          "mathematicalHash": "ecf9f7cc464eefc74ef881b0cc0bb6c9fcdb320b13f4c9268716bcabe67bcfa3",
+          "request": {
+            "budget": {
+              "maxBytes": 8388608,
+              "maxItems": 250000,
+              "maxMillis": 30000,
+              "maxOperations": 50000000
+            },
+            "input": {
+              "p": "3"
+            },
+            "kind": "arithmetic.p1",
+            "precision": {
+              "D": 1,
+              "N": 4
+            }
+          },
+          "result": {
+            "checks": [
+              {
+                "name": "integer d^2=0",
+                "pass": true,
+                "scope": "INTEGER_IDENTITY"
+              },
+              {
+                "checks": [
+                  {
+                    "degree": 0,
+                    "homotopy": true,
+                    "retraction": true
+                  },
+                  {
+                    "degree": 1,
+                    "homotopy": true,
+                    "retraction": true
+                  },
+                  {
+                    "degree": 2,
+                    "homotopy": true,
+                    "retraction": true
+                  }
+                ],
+                "coefficientScope": "Z",
+                "iChain": {
+                  "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                  "pass": true,
+                  "scope": "INTEGER_IDENTITY",
+                  "sigma": "IDENTITY_ON_Z_P"
+                },
+                "name": "integer strong deformation retract",
+                "pass": true,
+                "rChain": {
+                  "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                  "pass": true,
+                  "scope": "INTEGER_IDENTITY",
+                  "sigma": "IDENTITY_ON_Z_P"
+                }
+              },
+              {
+                "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                "name": "Frobenius chain map",
+                "pass": true,
+                "scope": "INTEGER_IDENTITY",
+                "sigma": "IDENTITY_ON_Z_P"
+              },
+              {
+                "checks": [
+                  {
+                    "degree": 0,
+                    "homotopy": true,
+                    "retraction": true
+                  },
+                  {
+                    "degree": 1,
+                    "homotopy": true,
+                    "retraction": true
+                  },
+                  {
+                    "degree": 2,
+                    "homotopy": true,
+                    "retraction": true
+                  }
+                ],
+                "coefficientScope": "mod 81",
+                "iChain": {
+                  "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                  "pass": true,
+                  "scope": "mod 81",
+                  "sigma": "IDENTITY_ON_Z_P"
+                },
+                "name": "mod p^N homotopy",
+                "pass": true,
+                "rChain": {
+                  "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                  "pass": true,
+                  "scope": "mod 81",
+                  "sigma": "IDENTITY_ON_Z_P"
+                }
+              },
+              {
+                "name": "unit Smith minors",
+                "pass": true
+              }
+            ],
+            "evidence": {
+              "calculation": "EXACT_FINITE_OR_EXACT_MODULAR",
+              "formalComplete": false,
+              "geometricComparison": "THEOREM_REFERENCE",
+              "lean": "See separately hashed static Lean audit; this browser job is not a kernel execution."
+            },
+            "kind": "arithmetic.p1",
+            "object": {
+              "cohomologicalDegrees": [
+                0,
+                1,
+                2
+              ],
+              "kind": "PRISMATIC_VIA_COMPARISON",
+              "model": "P1",
+              "p": "3",
+              "relativeDimension": 1
+            },
+            "precisionLedger": {
+              "coefficientFrobenius": "identity",
+              "coordinateDegree": {
+                "source": 1,
+                "target": 3
+              },
+              "formCoefficient": "3",
+              "lossDigits": 0,
+              "operation": "frobenius_pullback",
+              "reason": "Integral pullback; multiplication by p does not lose input p-adic digits."
+            },
+            "provenance": {
+              "algorithmVersion": "1.0.0",
+              "assumptions": [
+                {
+                  "id": "base-p-prime",
+                  "statement": "3 is prime",
+                  "status": "EXACT_FINITE_CHECK"
+                },
+                {
+                  "id": "base-torsionfree",
+                  "statement": "Z_p is p-torsionfree",
+                  "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+                },
+                {
+                  "id": "base-complete",
+                  "statement": "Z_p = inverse_limit_N Z/p^N is p-adically complete",
+                  "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+                },
+                {
+                  "id": "base-cartier",
+                  "statement": "p is a nonzerodivisor and I=(p) is Cartier",
+                  "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+                },
+                {
+                  "id": "base-prism",
+                  "statement": "p belongs to I+phi(I)A and A/I has bounded p-power torsion",
+                  "status": "EXTERNAL_THEOREM_APPLICATION"
+                }
+              ],
+              "localDesign": [
+                "blueprint-work/arithmetic-stages.json: P1-01..P3-08",
+                "blueprint-work/arithmetic-design.md: §§3–5, §§9–11",
+                "blueprint-work/appendix-arithmetic.tex: A1–A4",
+                "blueprint-work/platform-stages.json: I1-03,I1-07,I3-02,I3-04"
+              ],
+              "operations": 72,
+              "sources": [
+                {
+                  "accessed": "2026-10-09",
+                  "id": "S01",
+                  "leanImport": null,
+                  "locator": "Definition 1.1; Example 1.3(1); Definition 1.4; Theorem 1.8(1), printed pp.2–4; Theorem 5.2",
+                  "role": "Bounded crystalline prism and Frobenius-compatible crystalline comparison",
+                  "status": "THEOREM_REFERENCE",
+                  "title": "Bhatt–Scholze, Prisms and Prismatic Cohomology",
+                  "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf"
+                },
+                {
+                  "accessed": "2026-10-09",
+                  "id": "S02",
+                  "leanImport": null,
+                  "locator": "Theorem 3.6 and Corollary 3.8",
+                  "role": "De Rham hypercohomology of a proper smooth Z_p lift computes crystalline cohomology of its special fiber.",
+                  "status": "THEOREM_REFERENCE",
+                  "title": "Bhatt–de Jong, Crystalline cohomology and de Rham cohomology",
+                  "url": "https://arxiv.org/html/1110.5001v1"
+                },
+                {
+                  "accessed": "2026-10-09",
+                  "id": "S07",
+                  "leanImport": null,
+                  "locator": "(1.5.1)–(1.5.4), printed pp.275–276",
+                  "role": "Finite-field trace and alternating determinant convention; not a classical RH bridge.",
+                  "status": "THEOREM_REFERENCE",
+                  "title": "Deligne, La conjecture de Weil I",
+                  "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf"
+                },
+                {
+                  "accessed": "2026-10-09",
+                  "id": "S08",
+                  "leanImport": null,
+                  "locator": "pp.1–2, good elliptic Euler factors and the BSD statement",
+                  "role": "Local H1 L-factor and distinction from the scheme zeta factor.",
+                  "status": "THEOREM_REFERENCE",
+                  "title": "Wiles, The Birch and Swinnerton-Dyer Conjecture",
+                  "url": "https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf"
+                },
+                {
+                  "accessed": "2026-10-09",
+                  "id": "S10",
+                  "leanImport": null,
+                  "locator": "§25.16(i), equations 25.16.1–25.16.4",
+                  "role": "Chebyshev psi, prime counting, PNT/RH scope.",
+                  "status": "THEOREM_REFERENCE",
+                  "title": "NIST DLMF §25.16 Mathematical Applications",
+                  "url": "https://dlmf.nist.gov/25.16"
+                },
+                {
+                  "accessed": "2026-10-09",
+                  "audit": "evidence/lean-audit.json",
+                  "id": "MATHLIB-LUCAS",
+                  "leanImport": "MathScope.M1.Arithmetic.lucas_certificate_sound",
+                  "locator": "lucas_primality, reverse_lucas_primality",
+                  "role": "The library theorem is imported by the arithmetic Lean adapter. The JavaScript Pratt certificate checker is separately tested.",
+                  "status": "LEAN_IMPORT_CHECKED",
+                  "title": "mathlib Lucas primality theorem",
+                  "url": "https://github.com/leanprover-community/mathlib4/blob/d13f23b723b8a846827a245b89c10fc7d3f11612/Mathlib/NumberTheory/LucasPrimality.lean"
+                },
+                {
+                  "accessed": "2026-10-09",
+                  "id": "S14",
+                  "leanImport": null,
+                  "locator": "WeierstrassIsomorphism: explicit (u,r,s,t) coordinate and coefficient transformation formulas",
+                  "role": "A displayed singular nonminimal model is distinguished from the reduction of the curve; x=u^2*x_new, y=u^3*y_new rescales short coefficients by u^4 and u^6.",
+                  "status": "THEOREM_REFERENCE",
+                  "title": "SageMath, Isomorphisms between Weierstrass models",
+                  "url": "https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/weierstrass_morphism.html"
+                }
+              ]
+            },
+            "request": {
+              "budget": {
+                "maxBytes": 8388608,
+                "maxItems": 250000,
+                "maxMillis": 30000,
+                "maxOperations": 50000000
+              },
+              "input": {
+                "p": "3"
+              },
+              "kind": "arithmetic.p1",
+              "precision": {
+                "D": 1,
+                "N": 4
+              }
+            },
+            "resultHash": "bfb95495eebf3b9e74c57082a62b8144cab722b00cb72df2ea9019867eee12ac",
+            "results": {
+              "checks": [
+                {
+                  "name": "integer d^2=0",
+                  "pass": true,
+                  "scope": "INTEGER_IDENTITY"
+                },
+                {
+                  "checks": [
+                    {
+                      "degree": 0,
+                      "homotopy": true,
+                      "retraction": true
+                    },
+                    {
+                      "degree": 1,
+                      "homotopy": true,
+                      "retraction": true
+                    },
+                    {
+                      "degree": 2,
+                      "homotopy": true,
+                      "retraction": true
+                    }
+                  ],
+                  "coefficientScope": "Z",
+                  "iChain": {
+                    "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                    "pass": true,
+                    "scope": "INTEGER_IDENTITY",
+                    "sigma": "IDENTITY_ON_Z_P"
+                  },
+                  "name": "integer strong deformation retract",
+                  "pass": true,
+                  "rChain": {
+                    "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                    "pass": true,
+                    "scope": "INTEGER_IDENTITY",
+                    "sigma": "IDENTITY_ON_Z_P"
+                  }
+                },
+                {
+                  "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                  "name": "Frobenius chain map",
+                  "pass": true,
+                  "scope": "INTEGER_IDENTITY",
+                  "sigma": "IDENTITY_ON_Z_P"
+                },
+                {
+                  "checks": [
+                    {
+                      "degree": 0,
+                      "homotopy": true,
+                      "retraction": true
+                    },
+                    {
+                      "degree": 1,
+                      "homotopy": true,
+                      "retraction": true
+                    },
+                    {
+                      "degree": 2,
+                      "homotopy": true,
+                      "retraction": true
+                    }
+                  ],
+                  "coefficientScope": "mod 81",
+                  "iChain": {
+                    "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                    "pass": true,
+                    "scope": "mod 81",
+                    "sigma": "IDENTITY_ON_Z_P"
+                  },
+                  "name": "mod p^N homotopy",
+                  "pass": true,
+                  "rChain": {
+                    "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                    "pass": true,
+                    "scope": "mod 81",
+                    "sigma": "IDENTITY_ON_Z_P"
+                  }
+                },
+                {
+                  "name": "unit Smith minors",
+                  "pass": true
+                }
+              ],
+              "comparison": {
+                "arrows": [
+                  {
+                    "formalCoverage": "Universal block identities plus finite matrix fixtures; see the actual Lean audit.",
+                    "from": "finite-perfect K",
+                    "id": "explicit-replacement",
+                    "method": "integral strong deformation retract and uniformly continuous weight contraction",
+                    "status": "EXPLICIT_MATHEMATICAL_CONSTRUCTION",
+                    "to": "completed Cech-de Rham"
+                  },
+                  {
+                    "from": "completed Cech-de Rham",
+                    "hypotheses": [
+                      "proper smooth lift over Z_p",
+                      "special fiber X over F_p",
+                      "completed de Rham hypercohomology"
+                    ],
+                    "id": "de-rham-crystalline",
+                    "leanImport": null,
+                    "locator": "Theorem 3.6 and Corollary 3.8",
+                    "source": "S02",
+                    "status": "THEOREM_REFERENCE",
+                    "to": "RΓ_crys(X/Z_p)"
+                  },
+                  {
+                    "frobeniusCompatible": true,
+                    "from": "RΓ_crys(X/Z_p)",
+                    "hypotheses": [
+                      "bounded prism (Z_p,(p))",
+                      "smooth X/F_p",
+                      "phi_A=id"
+                    ],
+                    "id": "crystalline-prismatic",
+                    "leanImport": null,
+                    "locator": "Theorem 1.8(1), Theorem 5.2",
+                    "source": "S01",
+                    "status": "THEOREM_REFERENCE",
+                    "to": "RΓ_Delta(X/Z_p) completed-tensor_(Z_p,phi) Z_p",
+                    "twist": "The base-change is along the identity, so no nontrivial coefficient twist remains."
+                  }
+                ],
+                "base": {
+                  "A": "Z_3",
+                  "I": "(p)",
+                  "admissions": [],
+                  "assumptions": [
+                    {
+                      "id": "base-p-prime",
+                      "statement": "3 is prime",
+                      "status": "EXACT_FINITE_CHECK"
+                    },
+                    {
+                      "id": "base-torsionfree",
+                      "statement": "Z_p is p-torsionfree",
+                      "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+                    },
+                    {
+                      "id": "base-complete",
+                      "statement": "Z_p = inverse_limit_N Z/p^N is p-adically complete",
+                      "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+                    },
+                    {
+                      "id": "base-cartier",
+                      "statement": "p is a nonzerodivisor and I=(p) is Cartier",
+                      "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+                    },
+                    {
+                      "id": "base-prism",
+                      "statement": "p belongs to I+phi(I)A and A/I has bounded p-power torsion",
+                      "status": "EXTERNAL_THEOREM_APPLICATION"
+                    }
+                  ],
+                  "delta": "(a-a^p)/p",
+                  "finiteObservationIsPrism": false,
+                  "formalComplete": false,
+                  "kind": "SYMBOLIC_CRYSTALLINE_PRISM",
+                  "p": "3",
+                  "phi": {
+                    "formula": "phi_A(a)=a",
+                    "kind": "IDENTITY_RING_ENDOMORPHISM"
+                  },
+                  "schema": "MathScope.ArithmeticBase/1",
+                  "source": {
+                    "id": "S01",
+                    "locator": "Definition 1.1, Example 1.3(1), Definition 1.4",
+                    "status": "THEOREM_REFERENCE"
+                  }
+                },
+                "formalComplete": false,
+                "geometry": {
+                  "completion": "p-adic completion of the Cech-de Rham coefficient modules",
+                  "cover": [
+                    "Spec(Z_p[t])",
+                    "Spec(Z_p[s])"
+                  ],
+                  "lift": "P1/Z_p",
+                  "overlap": "Spec(Z_p[t,t^-1]), s=t^-1",
+                  "proper": true,
+                  "smooth": true,
+                  "specialFiber": "P1/F_p"
+                },
+                "model": "P1",
+                "multiplicativeCertification": "NOT_CLAIMED_FOR_THE_EXPLICIT_FINITE_REPLACEMENT",
+                "nativePrismaticSiteImplementation": false,
+                "objectIdentity": "PRISMATIC_VIA_COMPARISON",
+                "remainingFormalization": [
+                  "Scheme/formal-scheme geometry and Cech descent in Lean",
+                  "The exact exported S02 and S01 comparison theorems are not imported into this Lean project."
+                ],
+                "schema": "MathScope.PrismaticComparisonApplication/1"
+              },
+              "completedWeightCertificate": {
+                "allWeights": "UNIVERSAL_INTEGER_IDENTITIES",
+                "completion": "EXPLICIT_CONTINUOUS_EXTENSION_ARGUMENT",
+                "finiteCutoffIsJustifiedBy": "Uniform strong deformation retract, not stability of sampled Betti numbers.",
+                "leanTargets": [
+                  "positive_weight_contractible",
+                  "negative_weight_contractible",
+                  "restricted_neg",
+                  "restricted_mul_weight",
+                  "restricted_select",
+                  "inverse_system_identity"
+                ],
+                "negativeWeight": {
+                  "a": "x -> (-k*x,x)",
+                  "b": "(u,v) -> -u-k*v",
+                  "h1": "(u,v) -> v",
+                  "h2": "w -> (-w,0)"
+                },
+                "positiveWeight": {
+                  "a": "x -> (k*x,-x)",
+                  "b": "(u,v) -> -u-k*v",
+                  "h1": "(u,v) -> -v",
+                  "h2": "w -> (-w,0)"
+                },
+                "proof": "Each nonzero weight has h1*a=id, a*h1+h2*b=id and b*h2=id. Every h,i,r coefficient is 0 or +/-1. Thus the maps preserve p^N divisibility for every N, preserve restricted coefficient families, and extend continuously to the p-adic completion. The identities hold in every coefficient modulo p^N and hence in the separated inverse limit. No k is inverted, including p|k.",
+                "schema": "MathScope.CompletedWeightCertificate/1",
+                "scope": "The underlying A-module complex and Frobenius; no claim of multiplicative or E-infinity formality.",
+                "support": "The p-adic completion of the algebraic direct sum consists of Laurent coefficient families tending to zero p-adically as |k| tends to infinity. At every N only finitely many coefficients are nonzero modulo p^N.",
+                "zeroWeight": {
+                  "H2": "overlap form dt/t",
+                  "d0": "(a,b) -> b-a",
+                  "h1": "c -> (0,c)",
+                  "i0": "a -> (a,a)",
+                  "r0": "(a,b) -> a"
+                }
+              },
+              "complex": {
+                "D": 1,
+                "basis": [
+                  [
+                    {
+                      "cechDegree": 0,
+                      "chart": "U0",
+                      "cohomologicalDegree": 0,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 0,
+                      "id": "U0:function:0",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 0,
+                      "chart": "U0",
+                      "cohomologicalDegree": 0,
+                      "coordinate": "t",
+                      "exponent": 1,
+                      "formDegree": 0,
+                      "id": "U0:function:1",
+                      "laurentWeight": 1
+                    },
+                    {
+                      "cechDegree": 0,
+                      "chart": "U1",
+                      "cohomologicalDegree": 0,
+                      "coordinate": "s",
+                      "exponent": 0,
+                      "formDegree": 0,
+                      "id": "U1:function:0",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 0,
+                      "chart": "U1",
+                      "cohomologicalDegree": 0,
+                      "coordinate": "s",
+                      "exponent": 1,
+                      "formDegree": 0,
+                      "id": "U1:function:1",
+                      "laurentWeight": -1
+                    }
+                  ],
+                  [
+                    {
+                      "cechDegree": 0,
+                      "chart": "U0",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 1,
+                      "id": "U0:form:0",
+                      "laurentWeight": 1
+                    },
+                    {
+                      "cechDegree": 0,
+                      "chart": "U1",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "s",
+                      "exponent": 0,
+                      "formDegree": 1,
+                      "id": "U1:form:0",
+                      "laurentWeight": -1
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": -1,
+                      "formDegree": 0,
+                      "id": "U01:function:-1",
+                      "laurentWeight": -1
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 0,
+                      "id": "U01:function:0",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": 1,
+                      "formDegree": 0,
+                      "id": "U01:function:1",
+                      "laurentWeight": 1
+                    }
+                  ],
+                  [
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 2,
+                      "coordinate": "t",
+                      "exponent": -2,
+                      "formDegree": 1,
+                      "id": "U01:form:-2",
+                      "laurentWeight": -1
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 2,
+                      "coordinate": "t",
+                      "exponent": -1,
+                      "formDegree": 1,
+                      "id": "U01:form:-1",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 2,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 1,
+                      "id": "U01:form:0",
+                      "laurentWeight": 1
+                    }
+                  ]
+                ],
+                "coefficientRing": {
+                  "kind": "INTEGER_RING"
+                },
+                "convention": {
+                  "columns": "source",
+                  "d0": "(df0, df1, f1-f0)",
+                  "d1": "omega1-omega0-dg",
+                  "rows": "target",
+                  "transition": "s=t^(-1); s^j ds = -t^(-j-2) dt"
+                },
+                "differentials": [
+                  {
+                    "cols": 4,
+                    "entries": [
+                      [
+                        0,
+                        1,
+                        "1"
+                      ],
+                      [
+                        1,
+                        3,
+                        "1"
+                      ],
+                      [
+                        2,
+                        3,
+                        "1"
+                      ],
+                      [
+                        3,
+                        0,
+                        "-1"
+                      ],
+                      [
+                        3,
+                        2,
+                        "1"
+                      ],
+                      [
+                        4,
+                        1,
+                        "-1"
+                      ]
+                    ],
+                    "rows": 5
+                  },
+                  {
+                    "cols": 5,
+                    "entries": [
+                      [
+                        0,
+                        1,
+                        "-1"
+                      ],
+                      [
+                        0,
+                        2,
+                        "1"
+                      ],
+                      [
+                        2,
+                        0,
+                        "-1"
+                      ],
+                      [
+                        2,
+                        4,
+                        "-1"
+                      ]
+                    ],
+                    "rows": 3
+                  }
+                ],
+                "dims": [
+                  4,
+                  5,
+                  3
+                ],
+                "kind": "P1_CECH_DE_RHAM_SUBCOMPLEX",
+                "multiplicativeStructure": {
+                  "certifiedEInfinity": false,
+                  "closedUnderProduct": false
+                },
+                "schema": "MathScope.IntegralCechDeRhamComplex/1"
+              },
+              "error": {
+                "omittedCoordinates": "Eliminated by the explicit all-weight contraction; not by numeric convergence.",
+                "pAdic": "An exact residue class modulo p^N; no extra unknown digits.",
+                "rounding": "0"
+              },
+              "filtration": {
+                "basis": [
+                  [],
+                  [
+                    {
+                      "cechDegree": 0,
+                      "chart": "U0",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 1,
+                      "id": "U0:form:0",
+                      "laurentWeight": 1
+                    },
+                    {
+                      "cechDegree": 0,
+                      "chart": "U1",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "s",
+                      "exponent": 0,
+                      "formDegree": 1,
+                      "id": "U1:form:0",
+                      "laurentWeight": -1
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": -1,
+                      "formDegree": 0,
+                      "id": "U01:function:-1",
+                      "laurentWeight": -1
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 0,
+                      "id": "U01:function:0",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": 1,
+                      "formDegree": 0,
+                      "id": "U01:function:1",
+                      "laurentWeight": 1
+                    }
+                  ],
+                  [
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 2,
+                      "coordinate": "t",
+                      "exponent": -2,
+                      "formDegree": 1,
+                      "id": "U01:form:-2",
+                      "laurentWeight": -1
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 2,
+                      "coordinate": "t",
+                      "exponent": -1,
+                      "formDegree": 1,
+                      "id": "U01:form:-1",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 2,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 1,
+                      "id": "U01:form:0",
+                      "laurentWeight": 1
+                    }
+                  ]
+                ],
+                "cohomologyDimensions": null,
+                "differentials": [
+                  {
+                    "cols": 0,
+                    "entries": [],
+                    "rows": 5
+                  },
+                  {
+                    "cols": 5,
+                    "entries": [
+                      [
+                        0,
+                        1,
+                        "-1"
+                      ],
+                      [
+                        0,
+                        2,
+                        "1"
+                      ],
+                      [
+                        2,
+                        0,
+                        "-1"
+                      ],
+                      [
+                        2,
+                        4,
+                        "-1"
+                      ]
+                    ],
+                    "rows": 3
+                  }
+                ],
+                "dims": [
+                  0,
+                  5,
+                  3
+                ],
+                "explanation": "Returned dimensions are cochain groups, not filtered cohomology dimensions.",
+                "inclusion": [
+                  {
+                    "cols": 0,
+                    "entries": [],
+                    "rows": 4
+                  },
+                  {
+                    "cols": 5,
+                    "entries": [
+                      [
+                        0,
+                        0,
+                        "1"
+                      ],
+                      [
+                        1,
+                        1,
+                        "1"
+                      ],
+                      [
+                        2,
+                        2,
+                        "1"
+                      ],
+                      [
+                        3,
+                        3,
+                        "1"
+                      ],
+                      [
+                        4,
+                        4,
+                        "1"
+                      ]
+                    ],
+                    "rows": 5
+                  },
+                  {
+                    "cols": 3,
+                    "entries": [
+                      [
+                        0,
+                        0,
+                        "1"
+                      ],
+                      [
+                        1,
+                        1,
+                        "1"
+                      ],
+                      [
+                        2,
+                        2,
+                        "1"
+                      ]
+                    ],
+                    "rows": 3
+                  }
+                ],
+                "kind": "DECREASING_COCHAIN_DEGREE",
+                "r": 1,
+                "subcomplex": true
+              },
+              "finiteObservation": {
+                "D": 1,
+                "basis": [
+                  [
+                    {
+                      "cechDegree": 0,
+                      "chart": "U0",
+                      "cohomologicalDegree": 0,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 0,
+                      "id": "U0:function:0",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 0,
+                      "chart": "U0",
+                      "cohomologicalDegree": 0,
+                      "coordinate": "t",
+                      "exponent": 1,
+                      "formDegree": 0,
+                      "id": "U0:function:1",
+                      "laurentWeight": 1
+                    },
+                    {
+                      "cechDegree": 0,
+                      "chart": "U1",
+                      "cohomologicalDegree": 0,
+                      "coordinate": "s",
+                      "exponent": 0,
+                      "formDegree": 0,
+                      "id": "U1:function:0",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 0,
+                      "chart": "U1",
+                      "cohomologicalDegree": 0,
+                      "coordinate": "s",
+                      "exponent": 1,
+                      "formDegree": 0,
+                      "id": "U1:function:1",
+                      "laurentWeight": -1
+                    }
+                  ],
+                  [
+                    {
+                      "cechDegree": 0,
+                      "chart": "U0",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 1,
+                      "id": "U0:form:0",
+                      "laurentWeight": 1
+                    },
+                    {
+                      "cechDegree": 0,
+                      "chart": "U1",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "s",
+                      "exponent": 0,
+                      "formDegree": 1,
+                      "id": "U1:form:0",
+                      "laurentWeight": -1
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": -1,
+                      "formDegree": 0,
+                      "id": "U01:function:-1",
+                      "laurentWeight": -1
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 0,
+                      "id": "U01:function:0",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 1,
+                      "coordinate": "t",
+                      "exponent": 1,
+                      "formDegree": 0,
+                      "id": "U01:function:1",
+                      "laurentWeight": 1
+                    }
+                  ],
+                  [
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 2,
+                      "coordinate": "t",
+                      "exponent": -2,
+                      "formDegree": 1,
+                      "id": "U01:form:-2",
+                      "laurentWeight": -1
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 2,
+                      "coordinate": "t",
+                      "exponent": -1,
+                      "formDegree": 1,
+                      "id": "U01:form:-1",
+                      "laurentWeight": 0
+                    },
+                    {
+                      "cechDegree": 1,
+                      "chart": "U01",
+                      "cohomologicalDegree": 2,
+                      "coordinate": "t",
+                      "exponent": 0,
+                      "formDegree": 1,
+                      "id": "U01:form:0",
+                      "laurentWeight": 1
+                    }
+                  ]
+                ],
+                "coefficientRing": {
+                  "N": 4,
+                  "kind": "FINITE_P_POWER_RING",
+                  "modulus": "81",
+                  "p": "3"
+                },
+                "convention": {
+                  "columns": "source",
+                  "d0": "(df0, df1, f1-f0)",
+                  "d1": "omega1-omega0-dg",
+                  "rows": "target",
+                  "transition": "s=t^(-1); s^j ds = -t^(-j-2) dt"
+                },
+                "differentials": [
+                  {
+                    "cols": 4,
+                    "entries": [
+                      [
+                        0,
+                        1,
+                        "1"
+                      ],
+                      [
+                        1,
+                        3,
+                        "1"
+                      ],
+                      [
+                        2,
+                        3,
+                        "1"
+                      ],
+                      [
+                        3,
+                        0,
+                        "80"
+                      ],
+                      [
+                        3,
+                        2,
+                        "1"
+                      ],
+                      [
+                        4,
+                        1,
+                        "80"
+                      ]
+                    ],
+                    "rows": 5
+                  },
+                  {
+                    "cols": 5,
+                    "entries": [
+                      [
+                        0,
+                        1,
+                        "80"
+                      ],
+                      [
+                        0,
+                        2,
+                        "1"
+                      ],
+                      [
+                        2,
+                        0,
+                        "80"
+                      ],
+                      [
+                        2,
+                        4,
+                        "80"
+                      ]
+                    ],
+                    "rows": 3
+                  }
+                ],
+                "dims": [
+                  4,
+                  5,
+                  3
+                ],
+                "kind": "P1_CECH_DE_RHAM_SUBCOMPLEX",
+                "multiplicativeStructure": {
+                  "certifiedEInfinity": false,
+                  "closedUnderProduct": false
+                },
+                "schema": "MathScope.IntegralCechDeRhamComplex/1"
+              },
+              "formalComplete": false,
+              "frobenius": {
+                "cohomologyFrobenius": [
+                  {
+                    "degree": 0,
+                    "multiplier": "1"
+                  },
+                  {
+                    "degree": 2,
+                    "multiplier": "3"
+                  }
+                ],
+                "maps": [
+                  {
+                    "cols": 4,
+                    "entries": [
+                      [
+                        0,
+                        0,
+                        "1"
+                      ],
+                      [
+                        3,
+                        1,
+                        "1"
+                      ],
+                      [
+                        4,
+                        2,
+                        "1"
+                      ],
+                      [
+                        7,
+                        3,
+                        "1"
+                      ]
+                    ],
+                    "rows": 8
+                  },
+                  {
+                    "cols": 5,
+                    "entries": [
+                      [
+                        2,
+                        0,
+                        "3"
+                      ],
+                      [
+                        5,
+                        1,
+                        "3"
+                      ],
+                      [
+                        6,
+                        2,
+                        "1"
+                      ],
+                      [
+                        9,
+                        3,
+                        "1"
+                      ],
+                      [
+                        12,
+                        4,
+                        "1"
+                      ]
+                    ],
+                    "rows": 13
+                  },
+                  {
+                    "cols": 3,
+                    "entries": [
+                      [
+                        0,
+                        0,
+                        "3"
+                      ],
+                      [
+                        3,
+                        1,
+                        "3"
+                      ],
+                      [
+                        6,
+                        2,
+                        "3"
+                      ]
+                    ],
+                    "rows": 7
+                  }
+                ],
+                "precision": {
+                  "coefficientFrobenius": "identity",
+                  "coordinateDegree": {
+                    "source": 1,
+                    "target": 3
+                  },
+                  "formCoefficient": "3",
+                  "lossDigits": 0,
+                  "operation": "frobenius_pullback",
+                  "reason": "Integral pullback; multiplication by p does not lose input p-adic digits."
+                },
+                "target": {
+                  "D": 3,
+                  "basis": [
+                    [
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "t",
+                        "exponent": 0,
+                        "formDegree": 0,
+                        "id": "U0:function:0",
+                        "laurentWeight": 0
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "t",
+                        "exponent": 1,
+                        "formDegree": 0,
+                        "id": "U0:function:1",
+                        "laurentWeight": 1
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "t",
+                        "exponent": 2,
+                        "formDegree": 0,
+                        "id": "U0:function:2",
+                        "laurentWeight": 2
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "t",
+                        "exponent": 3,
+                        "formDegree": 0,
+                        "id": "U0:function:3",
+                        "laurentWeight": 3
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "s",
+                        "exponent": 0,
+                        "formDegree": 0,
+                        "id": "U1:function:0",
+                        "laurentWeight": 0
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "s",
+                        "exponent": 1,
+                        "formDegree": 0,
+                        "id": "U1:function:1",
+                        "laurentWeight": -1
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "s",
+                        "exponent": 2,
+                        "formDegree": 0,
+                        "id": "U1:function:2",
+                        "laurentWeight": -2
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "s",
+                        "exponent": 3,
+                        "formDegree": 0,
+                        "id": "U1:function:3",
+                        "laurentWeight": -3
+                      }
+                    ],
+                    [
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 0,
+                        "formDegree": 1,
+                        "id": "U0:form:0",
+                        "laurentWeight": 1
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 1,
+                        "formDegree": 1,
+                        "id": "U0:form:1",
+                        "laurentWeight": 2
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 2,
+                        "formDegree": 1,
+                        "id": "U0:form:2",
+                        "laurentWeight": 3
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "s",
+                        "exponent": 0,
+                        "formDegree": 1,
+                        "id": "U1:form:0",
+                        "laurentWeight": -1
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "s",
+                        "exponent": 1,
+                        "formDegree": 1,
+                        "id": "U1:form:1",
+                        "laurentWeight": -2
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "s",
+                        "exponent": 2,
+                        "formDegree": 1,
+                        "id": "U1:form:2",
+                        "laurentWeight": -3
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": -3,
+                        "formDegree": 0,
+                        "id": "U01:function:-3",
+                        "laurentWeight": -3
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": -2,
+                        "formDegree": 0,
+                        "id": "U01:function:-2",
+                        "laurentWeight": -2
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": -1,
+                        "formDegree": 0,
+                        "id": "U01:function:-1",
+                        "laurentWeight": -1
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 0,
+                        "formDegree": 0,
+                        "id": "U01:function:0",
+                        "laurentWeight": 0
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 1,
+                        "formDegree": 0,
+                        "id": "U01:function:1",
+                        "laurentWeight": 1
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 2,
+                        "formDegree": 0,
+                        "id": "U01:function:2",
+                        "laurentWeight": 2
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 3,
+                        "formDegree": 0,
+                        "id": "U01:function:3",
+                        "laurentWeight": 3
+                      }
+                    ],
+                    [
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": -4,
+                        "formDegree": 1,
+                        "id": "U01:form:-4",
+                        "laurentWeight": -3
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": -3,
+                        "formDegree": 1,
+                        "id": "U01:form:-3",
+                        "laurentWeight": -2
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": -2,
+                        "formDegree": 1,
+                        "id": "U01:form:-2",
+                        "laurentWeight": -1
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": -1,
+                        "formDegree": 1,
+                        "id": "U01:form:-1",
+                        "laurentWeight": 0
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": 0,
+                        "formDegree": 1,
+                        "id": "U01:form:0",
+                        "laurentWeight": 1
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": 1,
+                        "formDegree": 1,
+                        "id": "U01:form:1",
+                        "laurentWeight": 2
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": 2,
+                        "formDegree": 1,
+                        "id": "U01:form:2",
+                        "laurentWeight": 3
+                      }
+                    ]
+                  ],
+                  "coefficientRing": {
+                    "kind": "INTEGER_RING"
+                  },
+                  "convention": {
+                    "columns": "source",
+                    "d0": "(df0, df1, f1-f0)",
+                    "d1": "omega1-omega0-dg",
+                    "rows": "target",
+                    "transition": "s=t^(-1); s^j ds = -t^(-j-2) dt"
+                  },
+                  "differentials": [
+                    {
+                      "cols": 8,
+                      "entries": [
+                        [
+                          0,
+                          1,
+                          "1"
+                        ],
+                        [
+                          1,
+                          2,
+                          "2"
+                        ],
+                        [
+                          2,
+                          3,
+                          "3"
+                        ],
+                        [
+                          3,
+                          5,
+                          "1"
+                        ],
+                        [
+                          4,
+                          6,
+                          "2"
+                        ],
+                        [
+                          5,
+                          7,
+                          "3"
+                        ],
+                        [
+                          6,
+                          7,
+                          "1"
+                        ],
+                        [
+                          7,
+                          6,
+                          "1"
+                        ],
+                        [
+                          8,
+                          5,
+                          "1"
+                        ],
+                        [
+                          9,
+                          0,
+                          "-1"
+                        ],
+                        [
+                          9,
+                          4,
+                          "1"
+                        ],
+                        [
+                          10,
+                          1,
+                          "-1"
+                        ],
+                        [
+                          11,
+                          2,
+                          "-1"
+                        ],
+                        [
+                          12,
+                          3,
+                          "-1"
+                        ]
+                      ],
+                      "rows": 13
+                    },
+                    {
+                      "cols": 13,
+                      "entries": [
+                        [
+                          0,
+                          5,
+                          "-1"
+                        ],
+                        [
+                          0,
+                          6,
+                          "3"
+                        ],
+                        [
+                          1,
+                          4,
+                          "-1"
+                        ],
+                        [
+                          1,
+                          7,
+                          "2"
+                        ],
+                        [
+                          2,
+                          3,
+                          "-1"
+                        ],
+                        [
+                          2,
+                          8,
+                          "1"
+                        ],
+                        [
+                          4,
+                          0,
+                          "-1"
+                        ],
+                        [
+                          4,
+                          10,
+                          "-1"
+                        ],
+                        [
+                          5,
+                          1,
+                          "-1"
+                        ],
+                        [
+                          5,
+                          11,
+                          "-2"
+                        ],
+                        [
+                          6,
+                          2,
+                          "-1"
+                        ],
+                        [
+                          6,
+                          12,
+                          "-3"
+                        ]
+                      ],
+                      "rows": 7
+                    }
+                  ],
+                  "dims": [
+                    8,
+                    13,
+                    7
+                  ],
+                  "kind": "P1_CECH_DE_RHAM_SUBCOMPLEX",
+                  "multiplicativeStructure": {
+                    "certifiedEInfinity": false,
+                    "closedUnderProduct": false
+                  },
+                  "schema": "MathScope.IntegralCechDeRhamComplex/1"
+                },
+                "transported": [
+                  {
+                    "cols": 1,
+                    "entries": [
+                      [
+                        0,
+                        0,
+                        "1"
+                      ]
+                    ],
+                    "rows": 1
+                  },
+                  {
+                    "cols": 0,
+                    "entries": [],
+                    "rows": 0
+                  },
+                  {
+                    "cols": 1,
+                    "entries": [
+                      [
+                        0,
+                        0,
+                        "3"
+                      ]
+                    ],
+                    "rows": 1
+                  }
+                ],
+                "verification": {
+                  "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+                  "pass": true,
+                  "scope": "INTEGER_IDENTITY",
+                  "sigma": "IDENTITY_ON_Z_P"
+                }
+              },
+              "integrityPayload": {
+                "N": 4,
+                "comparison": {
+                  "arrows": [
+                    {
+                      "formalCoverage": "Universal block identities plus finite matrix fixtures; see the actual Lean audit.",
+                      "from": "finite-perfect K",
+                      "id": "explicit-replacement",
+                      "method": "integral strong deformation retract and uniformly continuous weight contraction",
+                      "status": "EXPLICIT_MATHEMATICAL_CONSTRUCTION",
+                      "to": "completed Cech-de Rham"
+                    },
+                    {
+                      "from": "completed Cech-de Rham",
+                      "hypotheses": [
+                        "proper smooth lift over Z_p",
+                        "special fiber X over F_p",
+                        "completed de Rham hypercohomology"
+                      ],
+                      "id": "de-rham-crystalline",
+                      "leanImport": null,
+                      "locator": "Theorem 3.6 and Corollary 3.8",
+                      "source": "S02",
+                      "status": "THEOREM_REFERENCE",
+                      "to": "RΓ_crys(X/Z_p)"
+                    },
+                    {
+                      "frobeniusCompatible": true,
+                      "from": "RΓ_crys(X/Z_p)",
+                      "hypotheses": [
+                        "bounded prism (Z_p,(p))",
+                        "smooth X/F_p",
+                        "phi_A=id"
+                      ],
+                      "id": "crystalline-prismatic",
+                      "leanImport": null,
+                      "locator": "Theorem 1.8(1), Theorem 5.2",
+                      "source": "S01",
+                      "status": "THEOREM_REFERENCE",
+                      "to": "RΓ_Delta(X/Z_p) completed-tensor_(Z_p,phi) Z_p",
+                      "twist": "The base-change is along the identity, so no nontrivial coefficient twist remains."
+                    }
+                  ],
+                  "base": {
+                    "A": "Z_3",
+                    "I": "(p)",
+                    "admissions": [],
+                    "assumptions": [
+                      {
+                        "id": "base-p-prime",
+                        "statement": "3 is prime",
+                        "status": "EXACT_FINITE_CHECK"
+                      },
+                      {
+                        "id": "base-torsionfree",
+                        "statement": "Z_p is p-torsionfree",
+                        "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+                      },
+                      {
+                        "id": "base-complete",
+                        "statement": "Z_p = inverse_limit_N Z/p^N is p-adically complete",
+                        "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+                      },
+                      {
+                        "id": "base-cartier",
+                        "statement": "p is a nonzerodivisor and I=(p) is Cartier",
+                        "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+                      },
+                      {
+                        "id": "base-prism",
+                        "statement": "p belongs to I+phi(I)A and A/I has bounded p-power torsion",
+                        "status": "EXTERNAL_THEOREM_APPLICATION"
+                      }
+                    ],
+                    "delta": "(a-a^p)/p",
+                    "finiteObservationIsPrism": false,
+                    "formalComplete": false,
+                    "kind": "SYMBOLIC_CRYSTALLINE_PRISM",
+                    "p": "3",
+                    "phi": {
+                      "formula": "phi_A(a)=a",
+                      "kind": "IDENTITY_RING_ENDOMORPHISM"
+                    },
+                    "schema": "MathScope.ArithmeticBase/1",
+                    "source": {
+                      "id": "S01",
+                      "locator": "Definition 1.1, Example 1.3(1), Definition 1.4",
+                      "status": "THEOREM_REFERENCE"
+                    }
+                  },
+                  "formalComplete": false,
+                  "geometry": {
+                    "completion": "p-adic completion of the Cech-de Rham coefficient modules",
+                    "cover": [
+                      "Spec(Z_p[t])",
+                      "Spec(Z_p[s])"
+                    ],
+                    "lift": "P1/Z_p",
+                    "overlap": "Spec(Z_p[t,t^-1]), s=t^-1",
+                    "proper": true,
+                    "smooth": true,
+                    "specialFiber": "P1/F_p"
+                  },
+                  "model": "P1",
+                  "multiplicativeCertification": "NOT_CLAIMED_FOR_THE_EXPLICIT_FINITE_REPLACEMENT",
+                  "nativePrismaticSiteImplementation": false,
+                  "objectIdentity": "PRISMATIC_VIA_COMPARISON",
+                  "remainingFormalization": [
+                    "Scheme/formal-scheme geometry and Cech descent in Lean",
+                    "The exact exported S02 and S01 comparison theorems are not imported into this Lean project."
+                  ],
+                  "schema": "MathScope.PrismaticComparisonApplication/1"
+                },
+                "complex": {
+                  "D": 1,
+                  "basis": [
+                    [
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "t",
+                        "exponent": 0,
+                        "formDegree": 0,
+                        "id": "U0:function:0",
+                        "laurentWeight": 0
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "t",
+                        "exponent": 1,
+                        "formDegree": 0,
+                        "id": "U0:function:1",
+                        "laurentWeight": 1
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "s",
+                        "exponent": 0,
+                        "formDegree": 0,
+                        "id": "U1:function:0",
+                        "laurentWeight": 0
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 0,
+                        "coordinate": "s",
+                        "exponent": 1,
+                        "formDegree": 0,
+                        "id": "U1:function:1",
+                        "laurentWeight": -1
+                      }
+                    ],
+                    [
+                      {
+                        "cechDegree": 0,
+                        "chart": "U0",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 0,
+                        "formDegree": 1,
+                        "id": "U0:form:0",
+                        "laurentWeight": 1
+                      },
+                      {
+                        "cechDegree": 0,
+                        "chart": "U1",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "s",
+                        "exponent": 0,
+                        "formDegree": 1,
+                        "id": "U1:form:0",
+                        "laurentWeight": -1
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": -1,
+                        "formDegree": 0,
+                        "id": "U01:function:-1",
+                        "laurentWeight": -1
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 0,
+                        "formDegree": 0,
+                        "id": "U01:function:0",
+                        "laurentWeight": 0
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 1,
+                        "coordinate": "t",
+                        "exponent": 1,
+                        "formDegree": 0,
+                        "id": "U01:function:1",
+                        "laurentWeight": 1
+                      }
+                    ],
+                    [
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": -2,
+                        "formDegree": 1,
+                        "id": "U01:form:-2",
+                        "laurentWeight": -1
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": -1,
+                        "formDegree": 1,
+                        "id": "U01:form:-1",
+                        "laurentWeight": 0
+                      },
+                      {
+                        "cechDegree": 1,
+                        "chart": "U01",
+                        "cohomologicalDegree": 2,
+                        "coordinate": "t",
+                        "exponent": 0,
+                        "formDegree": 1,
+                        "id": "U01:form:0",
+                        "laurentWeight": 1
+                      }
+                    ]
+                  ],
+                  "coefficientRing": {
+                    "kind": "INTEGER_RING"
+                  },
+                  "convention": {
+                    "columns": "source",
+                    "d0": "(df0, df1, f1-f0)",
+                    "d1": "omega1-omega0-dg",
+                    "rows": "target",
+                    "transition": "s=t^(-1); s^j ds = -t^(-j-2) dt"
+                  },
+                  "differentials": [
+                    {
+                      "cols": 4,
+                      "entries": [
+                        [
+                          0,
+                          1,
+                          "1"
+                        ],
+                        [
+                          1,
+                          3,
+                          "1"
+                        ],
+                        [
+                          2,
+                          3,
+                          "1"
+                        ],
+                        [
+                          3,
+                          0,
+                          "-1"
+                        ],
+                        [
+                          3,
+                          2,
+                          "1"
+                        ],
+                        [
+                          4,
+                          1,
+                          "-1"
+                        ]
+                      ],
+                      "rows": 5
+                    },
+                    {
+                      "cols": 5,
+                      "entries": [
+                        [
+                          0,
+                          1,
+                          "-1"
+                        ],
+                        [
+                          0,
+                          2,
+                          "1"
+                        ],
+                        [
+                          2,
+                          0,
+                          "-1"
+                        ],
+                        [
+                          2,
+                          4,
+                          "-1"
+                        ]
+                      ],
+                      "rows": 3
+                    }
+                  ],
+                  "dims": [
+                    4,
+                    5,
+                    3
+                  ],
+                  "kind": "P1_CECH_DE_RHAM_SUBCOMPLEX",
+                  "multiplicativeStructure": {
+                    "certifiedEInfinity": false,
+                    "closedUnderProduct": false
+                  },
+                  "schema": "MathScope.IntegralCechDeRhamComplex/1"
+                },
+                "frobenius": {
+                  "maps": [
+                    {
+                      "cols": 4,
+                      "entries": [
+                        [
+                          0,
+                          0,
+                          "1"
+                        ],
+                        [
+                          3,
+                          1,
+                          "1"
+                        ],
+                        [
+                          4,
+                          2,
+                          "1"
+                        ],
+                        [
+                          7,
+                          3,
+                          "1"
+                        ]
+                      ],
+                      "rows": 8
+                    },
+                    {
+                      "cols": 5,
+                      "entries": [
+                        [
+                          2,
+                          0,
+                          "3"
+                        ],
+                        [
+                          5,
+                          1,
+                          "3"
+                        ],
+                        [
+                          6,
+                          2,
+                          "1"
+                        ],
+                        [
+                          9,
+                          3,
+                          "1"
+                        ],
+                        [
+                          12,
+                          4,
+                          "1"
+                        ]
+                      ],
+                      "rows": 13
+                    },
+                    {
+                      "cols": 3,
+                      "entries": [
+                        [
+                          0,
+                          0,
+                          "3"
+                        ],
+                        [
+                          3,
+                          1,
+                          "3"
+                        ],
+                        [
+                          6,
+                          2,
+                          "3"
+                        ]
+                      ],
+                      "rows": 7
+                    }
+                  ],
+                  "sourceD": 1,
+                  "targetD": 3,
+                  "transported": [
+                    {
+                      "cols": 1,
+                      "entries": [
+                        [
+                          0,
+                          0,
+                          "1"
+                        ]
+                      ],
+                      "rows": 1
+                    },
+                    {
+                      "cols": 0,
+                      "entries": [],
+                      "rows": 0
+                    },
+                    {
+                      "cols": 1,
+                      "entries": [
+                        [
+                          0,
+                          0,
+                          "3"
+                        ]
+                      ],
+                      "rows": 1
+                    }
+                  ]
+                },
+                "p": "3",
+                "retraction": {
+                  "K": {
+                    "basis": [
+                      [
+                        "1"
+                      ],
+                      [],
+                      [
+                        "dt/t"
+                      ]
+                    ],
+                    "differentials": [
+                      {
+                        "cols": 1,
+                        "entries": [],
+                        "rows": 0
+                      },
+                      {
+                        "cols": 0,
+                        "entries": [],
+                        "rows": 1
+                      }
+                    ],
+                    "dims": [
+                      1,
+                      0,
+                      1
+                    ]
+                  },
+                  "denominators": [],
+                  "h": [
+                    {
+                      "cols": 4,
+                      "entries": [],
+                      "rows": 0
+                    },
+                    {
+                      "cols": 5,
+                      "entries": [
+                        [
+                          1,
+                          4,
+                          "-1"
+                        ],
+                        [
+                          2,
+                          3,
+                          "1"
+                        ],
+                        [
+                          3,
+                          2,
+                          "1"
+                        ]
+                      ],
+                      "rows": 4
+                    },
+                    {
+                      "cols": 3,
+                      "entries": [
+                        [
+                          0,
+                          2,
+                          "-1"
+                        ],
+                        [
+                          1,
+                          0,
+                          "-1"
+                        ]
+                      ],
+                      "rows": 5
+                    }
+                  ],
+                  "i": [
+                    {
+                      "cols": 1,
+                      "entries": [
+                        [
+                          0,
+                          0,
+                          "1"
+                        ],
+                        [
+                          2,
+                          0,
+                          "1"
+                        ]
+                      ],
+                      "rows": 4
+                    },
+                    {
+                      "cols": 0,
+                      "entries": [],
+                      "rows": 5
+                    },
+                    {
+                      "cols": 1,
+                      "entries": [
+                        [
+                          1,
+                          0,
+                          "1"
+                        ]
+                      ],
+                      "rows": 3
+                    }
+                  ],
+                  "identity": "r i=id_K and id_C-i r=d h+h d",
+                  "r": [
+                    {
+                      "cols": 4,
+                      "entries": [
+                        [
+                          0,
+                          0,
+                          "1"
+                        ]
+                      ],
+                      "rows": 1
+                    },
+                    {
+                      "cols": 5,
+                      "entries": [],
+                      "rows": 0
+                    },
+                    {
+                      "cols": 3,
+                      "entries": [
+                        [
+                          0,
+                          1,
+                          "1"
+                        ]
+                      ],
+                      "rows": 1
+                    }
+                  ],
+                  "schema": "MathScope.StrongDeformationRetract/1",
+                  "uniformCoefficientBound": "Every h,i,r entry is 0, 1, or -1; maps preserve p^N divisibility for every p,N."
+                }
+              },
+              "object": {
+                "cohomologicalDegrees": [
+                  0,
+                  1,
+                  2
+                ],
+                "kind": "PRISMATIC_VIA_COMPARISON",
+                "model": "P1",
+                "p": "3",
+                "relativeDimension": 1
+              },
+              "rawHash": "b378df3dbf9045e989393af46bb13dd62a7aadbc808a7854a06bef9a670ff0b2",
+              "retraction": {
+                "K": {
+                  "basis": [
+                    [
+                      "1"
+                    ],
+                    [],
+                    [
+                      "dt/t"
+                    ]
+                  ],
+                  "differentials": [
+                    {
+                      "cols": 1,
+                      "entries": [],
+                      "rows": 0
+                    },
+                    {
+                      "cols": 0,
+                      "entries": [],
+                      "rows": 1
+                    }
+                  ],
+                  "dims": [
+                    1,
+                    0,
+                    1
+                  ]
+                },
+                "denominators": [],
+                "h": [
+                  {
+                    "cols": 4,
+                    "entries": [],
+                    "rows": 0
+                  },
+                  {
+                    "cols": 5,
+                    "entries": [
+                      [
+                        1,
+                        4,
+                        "-1"
+                      ],
+                      [
+                        2,
+                        3,
+                        "1"
+                      ],
+                      [
+                        3,
+                        2,
+                        "1"
+                      ]
+                    ],
+                    "rows": 4
+                  },
+                  {
+                    "cols": 3,
+                    "entries": [
+                      [
+                        0,
+                        2,
+                        "-1"
+                      ],
+                      [
+                        1,
+                        0,
+                        "-1"
+                      ]
+                    ],
+                    "rows": 5
+                  }
+                ],
+                "i": [
+                  {
+                    "cols": 1,
+                    "entries": [
+                      [
+                        0,
+                        0,
+                        "1"
+                      ],
+                      [
+                        2,
+                        0,
+                        "1"
+                      ]
+                    ],
+                    "rows": 4
+                  },
+                  {
+                    "cols": 0,
+                    "entries": [],
+                    "rows": 5
+                  },
+                  {
+                    "cols": 1,
+                    "entries": [
+                      [
+                        1,
+                        0,
+                        "1"
+                      ]
+                    ],
+                    "rows": 3
+                  }
+                ],
+                "identity": "r i=id_K and id_C-i r=d h+h d",
+                "r": [
+                  {
+                    "cols": 4,
+                    "entries": [
+                      [
+                        0,
+                        0,
+                        "1"
+                      ]
+                    ],
+                    "rows": 1
+                  },
+                  {
+                    "cols": 5,
+                    "entries": [],
+                    "rows": 0
+                  },
+                  {
+                    "cols": 3,
+                    "entries": [
+                      [
+                        0,
+                        1,
+                        "1"
+                      ]
+                    ],
+                    "rows": 1
+                  }
+                ],
+                "schema": "MathScope.StrongDeformationRetract/1",
+                "uniformCoefficientBound": "Every h,i,r entry is 0, 1, or -1; maps preserve p^N divisibility for every p,N."
+              },
+              "schema": "MathScope.PrismaticModelResult/1",
+              "scope": {
+                "arithmetic": "EXACT_INTEGER_CONSTRUCTION_AND_MOD_PN_OBSERVATION",
+                "geometricModels": [
+                  "P1/F_p with its standard smooth proper Z_p lift"
+                ],
+                "precision": {
+                  "D": 1,
+                  "N": 4,
+                  "cechDegree": 1,
+                  "cohomologicalDegree": 2,
+                  "qOrUDegree": null,
+                  "rootDepth": null,
+                  "targetD": 3
+                },
+                "proof": "FINITE_AND_UNIVERSAL_ALGEBRA_KERNEL_CHECKS_PLUS_EXTERNAL_COMPARISON_THEOREMS"
+              },
+              "smith": {
+                "coefficientIndependence": "The integral strong deformation retract, not field-rank subtraction, proves these modules after arbitrary coefficient base change.",
+                "cohomology": {
+                  "H0": {
+                    "freeRank": 1,
+                    "generator": "diagonal constant (1,1)",
+                    "torsion": []
+                  },
+                  "H1": {
+                    "freeRank": 0,
+                    "torsion": []
+                  },
+                  "H2": {
+                    "freeRank": 1,
+                    "generator": "[dt/t]",
+                    "torsion": []
+                  }
+                },
+                "d0": {
+                  "nonzeroInvariantFactors": [
+                    "1",
+                    "1",
+                    "1"
+                  ],
+                  "rankUpperBound": 3,
+                  "unitMinor": {
+                    "absoluteDeterminant": "1",
+                    "cols": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "method": "Signed permutation minor",
+                    "pass": true,
+                    "rows": [
+                      2,
+                      3,
+                      4
+                    ]
+                  },
+                  "upperBoundReason": "The nonzero diagonal-constant vector lies in the kernel."
+                },
+                "d1": {
+                  "nonzeroInvariantFactors": [
+                    "1",
+                    "1"
+                  ],
+                  "rankUpperBound": 2,
+                  "unitMinor": {
+                    "absoluteDeterminant": "1",
+                    "cols": [
+                      0,
+                      1
+                    ],
+                    "method": "Signed permutation minor",
+                    "pass": true,
+                    "rows": [
+                      0,
+                      2
+                    ]
+                  },
+                  "upperBoundReason": "The row of dt/t is zero."
+                }
+              }
+            },
+            "schema": "MathScope.M1.ArithmeticResult/1",
+            "scope": {
+              "arithmetic": "EXACT_INTEGER_CONSTRUCTION_AND_MOD_PN_OBSERVATION",
+              "geometricModels": [
+                "P1/F_p with its standard smooth proper Z_p lift"
+              ],
+              "precision": {
+                "D": 1,
+                "N": 4,
+                "cechDegree": 1,
+                "cohomologicalDegree": 2,
+                "qOrUDegree": null,
+                "rootDepth": null,
+                "targetD": 3
+              },
+              "proof": "FINITE_AND_UNIVERSAL_ALGEBRA_KERNEL_CHECKS_PLUS_EXTERNAL_COMPARISON_THEOREMS"
+            },
+            "status": "COMPLETED",
+            "version": "1.0.0",
+            "visualization": {
+              "axes": [
+                {
+                  "label": "cohomological degree k",
+                  "type": "DEGREE"
+                },
+                {
+                  "label": "ordered basis index",
+                  "type": "CATEGORICAL"
+                },
+                {
+                  "label": "Laurent weight",
+                  "type": "INTEGER_WEIGHT"
+                }
+              ],
+              "coordinateMeaning": "고차원 복합체의 관계를 배치한 3D 도식이다. 공간의 물리적 사영이 아니다.",
+              "description": "P¹의 실제 Čech–de Rham 비교 모델과 미분",
+              "lines": [
+                {
+                  "label": "d0: 1",
+                  "points": [
+                    [
+                      0,
+                      1,
+                      1
+                    ],
+                    [
+                      1,
+                      0,
+                      1
+                    ]
+                  ],
+                  "value": "1"
+                },
+                {
+                  "label": "d0: 1",
+                  "points": [
+                    [
+                      0,
+                      3,
+                      -1
+                    ],
+                    [
+                      1,
+                      1,
+                      -1
+                    ]
+                  ],
+                  "value": "1"
+                },
+                {
+                  "label": "d0: 1",
+                  "points": [
+                    [
+                      0,
+                      3,
+                      -1
+                    ],
+                    [
+                      1,
+                      2,
+                      -1
+                    ]
+                  ],
+                  "value": "1"
+                },
+                {
+                  "label": "d0: -1",
+                  "points": [
+                    [
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      1,
+                      3,
+                      0
+                    ]
+                  ],
+                  "value": "-1"
+                },
+                {
+                  "label": "d0: 1",
+                  "points": [
+                    [
+                      0,
+                      2,
+                      0
+                    ],
+                    [
+                      1,
+                      3,
+                      0
+                    ]
+                  ],
+                  "value": "1"
+                },
+                {
+                  "label": "d0: -1",
+                  "points": [
+                    [
+                      0,
+                      1,
+                      1
+                    ],
+                    [
+                      1,
+                      4,
+                      1
+                    ]
+                  ],
+                  "value": "-1"
+                },
+                {
+                  "label": "d1: -1",
+                  "points": [
+                    [
+                      1,
+                      1,
+                      -1
+                    ],
+                    [
+                      2,
+                      0,
+                      -1
+                    ]
+                  ],
+                  "value": "-1"
+                },
+                {
+                  "label": "d1: 1",
+                  "points": [
+                    [
+                      1,
+                      2,
+                      -1
+                    ],
+                    [
+                      2,
+                      0,
+                      -1
+                    ]
+                  ],
+                  "value": "1"
+                },
+                {
+                  "label": "d1: -1",
+                  "points": [
+                    [
+                      1,
+                      0,
+                      1
+                    ],
+                    [
+                      2,
+                      2,
+                      1
+                    ]
+                  ],
+                  "value": "-1"
+                },
+                {
+                  "label": "d1: -1",
+                  "points": [
+                    [
+                      1,
+                      4,
+                      1
+                    ],
+                    [
+                      2,
+                      2,
+                      1
+                    ]
+                  ],
+                  "value": "-1"
+                }
+              ],
+              "lostInformation": [
+                "무한 weight는 전체 contraction 공식으로 다룬다. 화면에는 요청한 유한 D만 표시한다.",
+                "배치 거리·각도는 p-adic 거리나 cohomological 불변량이 아니다."
+              ],
+              "points": [
+                {
+                  "label": "U0:function:0",
+                  "pos": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "value": {
+                    "basisIndex": 0,
+                    "cechDegree": 0,
+                    "cohomologicalDegree": 0,
+                    "formDegree": 0,
+                    "laurentWeight": 0
+                  }
+                },
+                {
+                  "label": "U0:function:1",
+                  "pos": [
+                    0,
+                    1,
+                    1
+                  ],
+                  "value": {
+                    "basisIndex": 1,
+                    "cechDegree": 0,
+                    "cohomologicalDegree": 0,
+                    "formDegree": 0,
+                    "laurentWeight": 1
+                  }
+                },
+                {
+                  "label": "U1:function:0",
+                  "pos": [
+                    0,
+                    2,
+                    0
+                  ],
+                  "value": {
+                    "basisIndex": 2,
+                    "cechDegree": 0,
+                    "cohomologicalDegree": 0,
+                    "formDegree": 0,
+                    "laurentWeight": 0
+                  }
+                },
+                {
+                  "label": "U1:function:1",
+                  "pos": [
+                    0,
+                    3,
+                    -1
+                  ],
+                  "value": {
+                    "basisIndex": 3,
+                    "cechDegree": 0,
+                    "cohomologicalDegree": 0,
+                    "formDegree": 0,
+                    "laurentWeight": -1
+                  }
+                },
+                {
+                  "label": "U0:form:0",
+                  "pos": [
+                    1,
+                    0,
+                    1
+                  ],
+                  "value": {
+                    "basisIndex": 0,
+                    "cechDegree": 0,
+                    "cohomologicalDegree": 1,
+                    "formDegree": 1,
+                    "laurentWeight": 1
+                  }
+                },
+                {
+                  "label": "U1:form:0",
+                  "pos": [
+                    1,
+                    1,
+                    -1
+                  ],
+                  "value": {
+                    "basisIndex": 1,
+                    "cechDegree": 0,
+                    "cohomologicalDegree": 1,
+                    "formDegree": 1,
+                    "laurentWeight": -1
+                  }
+                },
+                {
+                  "label": "U01:function:-1",
+                  "pos": [
+                    1,
+                    2,
+                    -1
+                  ],
+                  "value": {
+                    "basisIndex": 2,
+                    "cechDegree": 1,
+                    "cohomologicalDegree": 1,
+                    "formDegree": 0,
+                    "laurentWeight": -1
+                  }
+                },
+                {
+                  "label": "U01:function:0",
+                  "pos": [
+                    1,
+                    3,
+                    0
+                  ],
+                  "value": {
+                    "basisIndex": 3,
+                    "cechDegree": 1,
+                    "cohomologicalDegree": 1,
+                    "formDegree": 0,
+                    "laurentWeight": 0
+                  }
+                },
+                {
+                  "label": "U01:function:1",
+                  "pos": [
+                    1,
+                    4,
+                    1
+                  ],
+                  "value": {
+                    "basisIndex": 4,
+                    "cechDegree": 1,
+                    "cohomologicalDegree": 1,
+                    "formDegree": 0,
+                    "laurentWeight": 1
+                  }
+                },
+                {
+                  "label": "U01:form:-2",
+                  "pos": [
+                    2,
+                    0,
+                    -1
+                  ],
+                  "value": {
+                    "basisIndex": 0,
+                    "cechDegree": 1,
+                    "cohomologicalDegree": 2,
+                    "formDegree": 1,
+                    "laurentWeight": -1
+                  }
+                },
+                {
+                  "label": "U01:form:-1",
+                  "pos": [
+                    2,
+                    1,
+                    0
+                  ],
+                  "value": {
+                    "basisIndex": 1,
+                    "cechDegree": 1,
+                    "cohomologicalDegree": 2,
+                    "formDegree": 1,
+                    "laurentWeight": 0
+                  }
+                },
+                {
+                  "label": "U01:form:0",
+                  "pos": [
+                    2,
+                    2,
+                    1
+                  ],
+                  "value": {
+                    "basisIndex": 2,
+                    "cechDegree": 1,
+                    "cohomologicalDegree": 2,
+                    "formDegree": 1,
+                    "laurentWeight": 1
+                  }
+                }
+              ],
+              "sourceHash": "b378df3dbf9045e989393af46bb13dd62a7aadbc808a7854a06bef9a670ff0b2"
+            }
+          },
+          "resultHash": "ecf9f7cc464eefc74ef881b0cc0bb6c9fcdb320b13f4c9268716bcabe67bcfa3",
+          "status": "COMPLETED",
+          "submittedAt": "2026-10-10T06:02:13.984Z"
+        }
+      },
+      "dom": {
+        "canvas": {
+          "configurationHash": "",
+          "ensembleHash": "",
+          "gpuPath": "NOT_REQUESTED",
+          "historyHash": "",
+          "inputHash": "fdad3e06c8e587977c62a28481801fd83710202a23b41d6307775b878897ae1b",
+          "markCount": "32",
+          "modelHash": "",
+          "observationHash": "",
+          "observationKind": "RELATION_3D",
+          "renderer": "CPU_ORTHOGRAPHIC_RELATION",
+          "representationRevision": "1",
+          "resultHash": "ecf9f7cc464eefc74ef881b0cc0bb6c9fcdb320b13f4c9268716bcabe67bcfa3",
+          "sampleHash": "",
+          "selectedSourcePath": "",
+          "sourceHash": "b378df3dbf9045e989393af46bb13dd62a7aadbc808a7854a06bef9a670ff0b2",
+          "sourceJobId": "m1-job:mv1zltzr:1",
+          "visualizationState": "READY"
+        },
+        "rows": 12,
+        "summary": "P¹의 실제 Čech–de Rham 비교 모델과 미분\n고차원 복합체의 관계를 배치한 3D 도식이다. 공간의 물리적 사영이 아니다.\n원본 실행: m1-job:mv1zltzr:1 · 입력 SHA-256 fdad3e06c8e587977c62a28481801fd83710202a23b41d6307775b878897ae1b\ncohomological degree k [DEGREE; unit=1; identity] · ordered basis index [CATEGORICAL; unit=1; identity] · Laurent weight [INTEGER_WEIGHT; unit=1; identity]\n무한 weight는 전체 contraction 공식으로 다룬다. 화면에는 요청한 유한 D만 표시한다.\n배치 거리·각도는 p-adic 거리나 cohomological 불변량이 아니다."
+      }
+    },
+    {
+      "exampleId": "ns-heat-interval",
+      "started": {
+        "ok": true,
+        "jobId": "m1-job:mv1zm39g:2",
+        "status": "RUNNING"
+      },
+      "result": {
+        "ok": true,
+        "job": {
+          "attempt": 1,
+          "checkpoint": null,
+          "environmentHash": "fc67a6b29748d52cb295758caf972327655477a1c34283bac207d2b6b8864531",
+          "finishedAt": "2026-10-10T06:02:26.654Z",
+          "id": "m1-job:mv1zm39g:2",
+          "inputHash": "8679921a2f5621244d501af4a2ab31262188b387fa0dec9e92aed0cdc88aba0b",
+          "mathematicalHash": "5648f8e36f7775dcb8421fd41fbd0a80eb7542aa91df02069478a6ba03de78fd",
+          "request": {
+            "budget": {
+              "maxBytes": 8388608,
+              "maxItems": 250000,
+              "maxMillis": 30000,
+              "maxMilliseconds": 30000,
+              "maxOperations": 20000000,
+              "maxPoints": 480
+            },
+            "input": {
+              "Z": 1,
+              "derivativeOrder": 2,
+              "h": 0.005,
+              "taylorOrder": 8
+            },
+            "kind": "ns.heat",
+            "precision": {
+              "absoluteTolerance": 1e-8,
+              "bits": 53,
+              "relativeTolerance": 1e-8
+            }
+          },
+          "result": {
+            "H": 0.997012970202767,
+            "Z": 1,
+            "certificate": {
+              "domain": "Z>=0, 0<h<.01; finite input parameters",
+              "errors": [
+                {
+                  "cells": 1923,
+                  "order": 0,
+                  "quadratureDenominator": 7.257433145215939e-11,
+                  "quadratureNumerator": 7.253280297055248e-11,
+                  "roundingAndPropagationIncluded": true,
+                  "tailDenominator": 3.4609535112358995e-18,
+                  "tailNumerator": 3.4609535112358995e-18
+                },
+                {
+                  "cells": 1623,
+                  "order": 1,
+                  "quadratureDenominator": 7.257433145215939e-11,
+                  "quadratureNumerator": 8.645850068935889e-11,
+                  "roundingAndPropagationIncluded": true,
+                  "tailDenominator": 3.4609535112358995e-18,
+                  "tailNumerator": 7.370011650760569e-36
+                },
+                {
+                  "cells": 1511,
+                  "order": 2,
+                  "quadratureDenominator": 7.257433145215939e-11,
+                  "quadratureNumerator": 1.7565879989452216e-11,
+                  "roundingAndPropagationIncluded": true,
+                  "tailDenominator": 3.4609535112358995e-18,
+                  "tailNumerator": 2.0890979307160683e-53
+                }
+              ],
+              "gammaNormalization": {
+                "lower": 0.9971385352034765,
+                "midpoint": 0.9971385352761684,
+                "precisionBits": 53,
+                "radius": 7.26917970261809e-11,
+                "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+                "type": "real-ball",
+                "upper": 0.9971385353488601
+              },
+              "kind": "REAL_INTERVAL_QUADRATURE",
+              "logIntegrationDomain": [
+                -40,
+                6
+              ],
+              "method": "log-variable integral; outward arithmetic; bounded exp/log series; Simpson fourth derivative enclosure",
+              "notClaimed": "No full PDE solution error or global profile theorem is inferred.",
+              "tolerance": 1e-8,
+              "vIntegrationDomain": [
+                4.248354255282797e-18,
+                403.42879349284135
+              ]
+            },
+            "contract": {
+              "fullCertifiedProfile": false,
+              "fullNavierStokesSolution": false,
+              "precisionOfCandidate": "IEEE754 binary64; only individually labelled intervals are numerical enclosures",
+              "solutionErrorBound": null
+            },
+            "dH": -0.0020166177591333847,
+            "ddH": 0.0010600292796967383,
+            "derivatives": [
+              {
+                "lower": 0.9970129700572252,
+                "midpoint": 0.997012970202767,
+                "precisionBits": 53,
+                "radius": 1.4554174532221967e-10,
+                "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+                "type": "real-ball",
+                "upper": 0.9970129703483087
+              },
+              {
+                "lower": -0.00201661775971428,
+                "midpoint": -0.0020166177591333847,
+                "precisionBits": 53,
+                "radius": 5.808949241764562e-13,
+                "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+                "type": "real-ball",
+                "upper": -0.00201661775855249
+              },
+              {
+                "lower": 0.0010600292795306572,
+                "midpoint": 0.0010600292796967383,
+                "precisionBits": 53,
+                "radius": 1.6608112454741255e-13,
+                "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+                "type": "real-ball",
+                "upper": 0.0010600292798628194
+              }
+            ],
+            "domainStatus": "VERIFIED_NUMERICAL_ENCLOSURE",
+            "evidenceGrade": "VERIFIED_NUMERICAL_ENCLOSURE",
+            "executionMetrics": {
+              "elapsedMilliseconds": 515,
+              "operations": 10478
+            },
+            "finiteTaylor": {
+              "N": 8,
+              "Z": 1,
+              "convergentInfiniteSeries": false,
+              "enclosure": {
+                "lower": -183.564019225001,
+                "midpoint": 23.69751012524648,
+                "precisionBits": 53,
+                "radius": 207.2615293502475,
+                "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+                "type": "real-ball",
+                "upper": 230.95903947549394
+              },
+              "h": 0.005,
+              "radiusOfConvergence": 0,
+              "reason": "Absolute coefficient ratio (h+n)(1+h+n)/(n+1) tends to infinity for h>0.",
+              "remainderBound": 207.26152935024714,
+              "source": {
+                "equation": "A.35",
+                "page": 138,
+                "source": "N00"
+              },
+              "sum": {
+                "lower": 23.69751012524617,
+                "midpoint": 23.697510125246474,
+                "precisionBits": 53,
+                "radius": 3.0553337637684313e-13,
+                "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+                "type": "real-ball",
+                "upper": 23.69751012524678
+              }
+            },
+            "h": 0.005,
+            "kind": "ns.heat",
+            "model": "paper-heat-factor",
+            "moduleVersion": "1.3.0-m1",
+            "odeEnclosure": {
+              "lower": -2.6717759948891033e-12,
+              "midpoint": -2.5846078749447443e-14,
+              "precisionBits": 53,
+              "radius": 2.6459299161396563e-12,
+              "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+              "type": "real-ball",
+              "upper": 2.6200838373902084e-12
+            },
+            "parameterHash": "972b69d4c0f8232d44d8a8fb0f28d8ab83a1f082f28a608611ba59015fb464e0",
+            "precision": {
+              "absoluteTolerance": 1e-8,
+              "bits": 53,
+              "relativeTolerance": 1e-8
+            },
+            "sourceLedger": {
+              "attachmentSha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+              "fullOriginalKernelBuild": false,
+              "repositoryCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+              "theoremReference": "Theorem1.1; N3 Theorem4.6"
+            },
+            "sources": [
+              {
+                "equations": [
+                  "A.32",
+                  "A.35",
+                  "A.38"
+                ],
+                "pages": [
+                  138
+                ],
+                "source": "N00"
+              }
+            ],
+            "status": "COMPLETED"
+          },
+          "resultHash": "5afa35548a7851633b4c5b08e9fbe06df9238f58442ab571c4ccddcb8244798e",
+          "status": "COMPLETED",
+          "submittedAt": "2026-10-10T06:02:26.000Z"
+        }
+      },
+      "dom": {
+        "canvas": {
+          "configurationHash": "",
+          "ensembleHash": "",
+          "gpuPath": "NOT_REQUESTED",
+          "historyHash": "",
+          "inputHash": "8679921a2f5621244d501af4a2ab31262188b387fa0dec9e92aed0cdc88aba0b",
+          "markCount": "9",
+          "modelHash": "",
+          "observationHash": "",
+          "observationKind": "INTERVALS",
+          "renderer": "CPU_ORTHOGRAPHIC_3D",
+          "representationRevision": "1",
+          "resultHash": "5afa35548a7851633b4c5b08e9fbe06df9238f58442ab571c4ccddcb8244798e",
+          "sampleHash": "",
+          "selectedSourcePath": "",
+          "sourceHash": "972b69d4c0f8232d44d8a8fb0f28d8ab83a1f082f28a608611ba59015fb464e0",
+          "sourceJobId": "m1-job:mv1zm39g:2",
+          "visualizationState": "READY"
+        },
+        "rows": 3,
+        "summary": "Heat 함수와 도함수의 인증 구간\n고정 입력 Z=1, h=0.005. 각 행에 서로 다른 도함수 구간을 표시합니다. 작은 구간 폭은 아래 정확 수치표에서 확인할 수 있습니다.\n원본 실행: m1-job:mv1zm39g:2 · 입력 SHA-256 8679921a2f5621244d501af4a2ab31262188b387fa0dec9e92aed0cdc88aba0b\n도함수 차수 [DERIVATIVE_ORDER; unit=1; identity] · 구간 값 [REAL_INTERVAL; unit=source normalization; identity]\n서로 다른 도함수의 구간 확대율은 행마다 다릅니다. 구간 사이의 시각적 길이를 크기 비교에 사용하지 않습니다.\n유한 Taylor의 표시값을 수렴하는 무한 급수로 해석하지 않습니다."
+      }
+    }
+  ],
+  "m2Status": {
+    "ok": true,
+    "version": "0.2.0",
+    "examples": [
+      {
+        "id": "m2-projective-p3-n2",
+        "label": "P² · exact cohomology, Frobenius and local zeta",
+        "kind": "arithmetic.projective",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-projective-p5-n8",
+        "label": "P⁸ · all 17 cohomological degrees",
+        "kind": "arithmetic.projective",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-elliptic-p5",
+        "label": "E / F₅ · ordinary slopes (0,1)",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-elliptic-p7",
+        "label": "E / F₇ · supersingular slopes (½,½)",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-elliptic-f9",
+        "label": "E / F₉ · explicit extension field, 16 points",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-residue-reconstruction",
+        "label": "Frobenius polynomial · unique integer residue lift",
+        "kind": "arithmetic.frobeniusReconstruct",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-q-koszul",
+        "label": "Formal q · two-variable Koszul and specializations",
+        "kind": "arithmetic.qDeRham",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-bk-point",
+        "label": "BK point · δ(u−3)=3u²−9u+8",
+        "kind": "arithmetic.breuilKisin",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-perfectoid-tower",
+        "label": "Perfectoid standard tower · finite prefix and θ",
+        "kind": "arithmetic.perfectoidTower",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-witt-carry",
+        "label": "W₂(F₃) · Witt addition carries into the second coordinate",
+        "kind": "arithmetic.witt",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-eta-complex",
+        "label": "Lη diagnostic · raw torsion and corrected complex",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-mw-p5",
+        "label": "MW Frobenius · p=5 rational reduction and precision certificate",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-mw-p7",
+        "label": "MW Frobenius · p=7 matrix from differential reduction",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-semilinear-f9",
+        "label": "F₉ coefficients · M σ(M), not M²",
+        "kind": "arithmetic.frobeniusReconstruct",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-elliptic-global",
+        "label": "Good elliptic model · exact Euler identity and convergence bound",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-q-framing",
+        "label": "T ↔ T+1 · explicit integral chain isomorphism",
+        "kind": "arithmetic.qDeRham",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-q-cech-p1",
+        "label": "P¹ · actual q-PD diagonal envelopes and canonical two-affine descent",
+        "kind": "arithmetic.qDeRham",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-tilt-arithmetic",
+        "label": "Standard tilt · actual Laurent addition and Frobenius inverse",
+        "kind": "arithmetic.perfectoidTower",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-sharp-precision",
+        "label": "Sharp(1+t) · lift-independent p-adic error bound",
+        "kind": "arithmetic.perfectoidTower",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-witt-tilt",
+        "label": "Universal Witt · nonconstant tilt coefficients and carries",
+        "kind": "arithmetic.witt",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-theta-kernel",
+        "label": "Theta · computed xi, distinguished carry and untilt base hash",
+        "kind": "arithmetic.perfectoidTower",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-aomega-torus",
+        "label": "AΩ · complete torus, actual group model, Lη and BMS comparison",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-prism-etale",
+        "label": "Perfect prism · reduction, inversion and derived fixed points",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-prism-de-rham",
+        "label": "Perfect prism · Frobenius-twisted derived de Rham base change",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-prism-crystalline",
+        "label": "Perfect prism · reduction to W(k) and crystalline comparison",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-su2-identity-lattice",
+        "label": "SU(2) · 4D identity lattice and exact flat baseline",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-center-holonomy",
+        "label": "SU(2) · flat plaquettes with nontrivial temporal holonomy",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-pure-gauge",
+        "label": "SU(2) · nonconstant site gauge frames, invariant action",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-g2-wilson-lattice",
+        "label": "G2 · actual 7×7 links, Wilson action and Lie-projected curvature",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-bpst-lattice",
+        "label": "BPST · classical field to open links and scalar slice",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-bpst-refinement",
+        "label": "BPST · increasing rho/a, actual curvature convergence",
+        "kind": "gauge.lattice-refinement",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-bpst-clover-anisotropic",
+        "label": "BPST · clover, both spacings, energy/topology error bounds",
+        "kind": "gauge.lattice-refinement",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-bpst-fixed-volume",
+        "label": "BPST · fixed 4D volume, energy and real-charge convergence",
+        "kind": "gauge.volume-refinement",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-wilson-ensemble",
+        "label": "SU(2) · Haar Metropolis, independent starts and ESS diagnostics",
+        "kind": "gauge.ensemble",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-wilson-reflection-audit",
+        "label": "Wilson · theorem hypotheses and exact reflection factorization",
+        "kind": "gauge.reflection-positivity",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-cube-transfer-cutoff",
+        "label": "SU(2) · physical cube spin cutoff and transfer error",
+        "kind": "gauge.transfer-cutoff",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-small-lattice-reference",
+        "label": "SU(2) · nonzero beta, independent 4D Haar reference",
+        "kind": "gauge.small-lattice-reference",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-lie-reference",
+        "label": "SU(2) · symmetric full-basis proposal against independent Bessel/Haar oracle",
+        "kind": "gauge.sampler-reference",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-haar-reference",
+        "label": "SU(2) · independent one-link Haar quadrature reference",
+        "kind": "gauge.sampler-reference",
+        "domain": "gauge"
+      },
+      {
+        "id": "ns-m2-recursion",
+        "label": "N4 · 원래 PDE 직접 대입·exact coefficient 항등식",
+        "kind": "ns.background-recursion",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-picard",
+        "label": "N4 · 원문 6성분 Picard operator·조건부 엄밀 tail",
+        "kind": "ns.background-picard",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-moments",
+        "label": "N4 · 실제 λ·Ipos의 5-moment 복구 operator",
+        "kind": "ns.background-moments",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-residual",
+        "label": "N4 · 원래 PDE 유한 잔차 exact polynomial",
+        "kind": "ns.background-residual",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-cutoffs",
+        "label": "N4 · 조건부 cutoff 인증·실제 locally finite potential 합",
+        "kind": "ns.background-cutoffs",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-curl",
+        "label": "N4/N5 · cutoff 후 실제 curl·divergence 검사",
+        "kind": "ns.potential-curl",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-dyadic",
+        "label": "N5 · 실제 N3 h·dyadic chart·고정 label",
+        "kind": "ns.dyadic-charts",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-core-charts",
+        "label": "N5 · 실제 N3 core 구간·두 chart의 물리량 일치",
+        "kind": "ns.source-core-charts",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-torus",
+        "label": "N5 · 실제 torus 고유방향·chain rule·Haar",
+        "kind": "ns.torus-derivatives",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-support",
+        "label": "N5 · 모든 source label의 유리수 지지 분리 증명",
+        "kind": "ns.pulse-support",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-pulse-ode",
+        "label": "N5 · 실제 projected pulse ODE·log 진폭",
+        "kind": "ns.pulse-ode",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-covariance",
+        "label": "N5 · 두 family 공분산·정규화 Haar·실제 Jacobian",
+        "kind": "ns.pulse-covariance",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-pulse-curl",
+        "label": "N5 · 원문 C_m·전체 r_m·Cartesian curl 대조",
+        "kind": "ns.pulse-curl",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-tail",
+        "label": "N5 · 전체 cutoff 잔차 jet·조건부 고정차수 flatness",
+        "kind": "ns.pulse-tail",
+        "domain": "ns"
+      },
+      {
+        "id": "i2-delta-assumed_bound",
+        "label": "Δ 비교 · ASSUMED_BOUND",
+        "kind": "observation.delta-family",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-delta-units",
+        "label": "Δ 비교 · UNITS",
+        "kind": "observation.delta-family",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-delta-effective_model",
+        "label": "Δ 비교 · EFFECTIVE_MODEL",
+        "kind": "observation.delta-family",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-delta-ensemble_estimate",
+        "label": "Δ 비교 · ENSEMBLE_ESTIMATE",
+        "kind": "observation.delta-family",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-slice",
+        "label": "4D 관측 · SLICE",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-finite_marginal",
+        "label": "4D 관측 · FINITE_MARGINAL",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-conditional_mean",
+        "label": "4D 관측 · CONDITIONAL_MEAN",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-wilson_open",
+        "label": "4D 관측 · WILSON_OPEN",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-wilson_closed",
+        "label": "4D 관측 · WILSON_CLOSED",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-blowup-pair",
+        "label": "동일 τ · 물리/유사 좌표와 고정 시야",
+        "kind": "observation.blowup-pair",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-complex-basis",
+        "label": "정수 기저 교체 · kernel/image/Frobenius/filtration",
+        "kind": "observation.complex-basis",
+        "domain": "observation"
+      }
+    ],
+    "jobs": [],
+    "checklist": {
+      "total": 64,
+      "counts": {
+        "PASS": 58,
+        "PARTIAL": 6,
+        "OPEN": 0
+      },
+      "fullM2Complete": false
+    },
+    "environment": {
+      "hash": "e258f36ae5672c31a8540bade668a22531acecfe48e971331b616fc2373b64e2",
+      "workerSha256": "278db3418c643a3978437388c634cbde9e7360c58bd223edc1d2e648e8620e40",
+      "execution": "BROWSER_WEB_WORKER"
+    },
+    "visualization": {
+      "state": "NOT_RUN",
+      "kind": "STATE",
+      "title": "예제를 선택하고 실행하세요",
+      "binding": {
+        "jobId": null,
+        "kind": "none",
+        "inputHash": null,
+        "resultHash": null,
+        "sourceHash": null,
+        "modelHash": null,
+        "sampleHash": null,
+        "observationHash": null,
+        "displayTransformHash": null,
+        "currentEditorMatches": true,
+        "calculationStatus": "NOT_RUN",
+        "representationRevision": 1,
+        "formalPass": false
+      },
+      "tableRows": 0,
+      "totalRows": 0,
+      "points": 0,
+      "lines": 0,
+      "arrows": 0,
+      "lod": {
+        "originalPoints": 0,
+        "displayedPoints": 0,
+        "changesComputation": false
+      },
+      "renderer": {
+        "renderer": "CPU_CANVAS2D_STATE",
+        "requestedMode": "AUTO",
+        "webgl": {
+          "state": "NOT_REQUESTED",
+          "reason": null,
+          "last": null
+        },
+        "samples": 7,
+        "p95Milliseconds": 2.5,
+        "targetMilliseconds": 100,
+        "representationRevision": 1
+      },
+      "panel": "main",
+      "pair": null
+    },
+    "session": {
+      "id": "rs-mv0tg8vv-bgefzg",
+      "revision": 24
+    },
+    "formalPass": false
+  },
+  "m1URL": "https://project29770.websitepublisher.ai/v0.3.1.html#research-objects/ns",
+  "m1Visible": true,
+  "m1ActiveCohomology": {
+    "started": {
+      "ok": true,
+      "jobId": "m1-job:mv1zo2q6:3",
+      "status": "RUNNING"
+    },
+    "dom": {
+      "canvas": {
+        "configurationHash": "",
+        "ensembleHash": "",
+        "gpuPath": "NOT_REQUESTED",
+        "historyHash": "",
+        "inputHash": "fdad3e06c8e587977c62a28481801fd83710202a23b41d6307775b878897ae1b",
+        "markCount": "32",
+        "modelHash": "",
+        "observationHash": "",
+        "observationKind": "RELATION_3D",
+        "renderReady": "true",
+        "renderer": "CPU_ORTHOGRAPHIC_RELATION",
+        "representationRevision": "1",
+        "resultHash": "ecf9f7cc464eefc74ef881b0cc0bb6c9fcdb320b13f4c9268716bcabe67bcfa3",
+        "sampleHash": "",
+        "selectedSourcePath": "",
+        "sourceHash": "b378df3dbf9045e989393af46bb13dd62a7aadbc808a7854a06bef9a670ff0b2",
+        "sourceJobId": "m1-job:mv1zo2q6:3",
+        "visualizationState": "READY"
+      },
+      "summary": "P¹의 실제 Čech–de Rham 비교 모델과 미분\n고차원 복합체의 관계를 배치한 3D 도식이다. 공간의 물리적 사영이 아니다.\n원본 실행: m1-job:mv1zo2q6:3 · 입력 SHA-256 fdad3e06c8e587977c62a28481801fd83710202a23b41d6307775b878897ae1b\ncohomological degree k [DEGREE; unit=1; identity] · ordered basis index [CATEGORICAL; unit=1; identity] · Laurent weight [INTEGER_WEIGHT; unit=1; identity]\n무한 weight는 전체 contraction 공식으로 다룬다. 화면에는 요청한 유한 D만 표시한다.\n배치 거리·각도는 p-adic 거리나 cohomological 불변량이 아니다.",
+      "visible": true
+    },
+    "url": "https://project29770.websitepublisher.ai/v0.3.1.html#research-objects/arithmetic"
+  },
+  "m2Rechecks": {
+    "ok": true,
+    "scope": "INSTALLED_EXAMPLES_AND_VISIBLE_PANELS",
+    "requested": [
+      "m2-projective-p3-n2",
+      "ns-m2-tail",
+      "m2-bpst-fixed-volume",
+      "i2-complex-basis"
+    ],
+    "completed": 4,
+    "cancelled": false,
+    "runs": [
+      {
+        "exampleId": "m2-projective-p3-n2",
+        "jobId": "m2-job:mv1zo8le:1",
+        "status": "COMPLETED",
+        "inputHash": "f9a020ddd37e4cb68ee196e803cf67966e5bb938a344ccff5568c5896254582f",
+        "mathematicalHash": "471f0377c22ab069e99c5432124c435ba999376665681edec0609421f431ac24",
+        "resultHash": "471f0377c22ab069e99c5432124c435ba999376665681edec0609421f431ac24",
+        "sourceHash": null,
+        "checks": [
+          {
+            "name": "cohomological degrees are exactly 0 through 2n",
+            "pass": true
+          },
+          {
+            "name": "odd cohomology vanishes in the comparison model",
+            "pass": true
+          },
+          {
+            "name": "affine-cell count equals Frobenius trace at extension degree m",
+            "pass": true
+          },
+          {
+            "name": "finite local-factor multiplication commutes with regrouping by cohomological degree",
+            "pass": true
+          },
+          {
+            "name": "place-indexed symbolic factor identity retains a separate T_p for each prime",
+            "pass": true
+          }
+        ],
+        "panels": [
+          {
+            "id": "main",
+            "state": "READY",
+            "kind": "RELATION_3D",
+            "tableRows": 3,
+            "points": 3,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "fec8ac23b1fc62deaed7e646ad42dcf7fcfa10f99923d7893737e292093a3999",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 15,
+              "p95Milliseconds": 3.5,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          }
+        ],
+        "rendered": true
+      },
+      {
+        "exampleId": "ns-m2-tail",
+        "jobId": "m2-job:mv1zo8qa:2",
+        "status": "COMPLETED",
+        "inputHash": "9ae66ba7b5f01a65bf82d1238ab7fd71539ea2bb61d31da3c10618f396c0cb64",
+        "mathematicalHash": "68da48a5052dba1567f27894f2fdf40e22aadacc447c21916eed0685be80d8e2",
+        "resultHash": "68da48a5052dba1567f27894f2fdf40e22aadacc447c21916eed0685be80d8e2",
+        "sourceHash": null,
+        "checks": [
+          {
+            "detail": "No positive tail is converted to an exact zero.",
+            "id": "retains-nonzero-log-tail",
+            "pass": true
+          },
+          {
+            "detail": "Every supplied forcing/amplitude/cutoff derivative participates in the actual complex interval residual.",
+            "id": "full-cutoff-residual-jets",
+            "pass": true
+          },
+          {
+            "detail": "The log expression decreases beyond the displayed threshold; no all-order shortcut.",
+            "id": "fixed-order-tail-threshold",
+            "pass": true
+          }
+        ],
+        "panels": [
+          {
+            "id": "main",
+            "state": "READY",
+            "kind": "RELATION_3D",
+            "tableRows": 80,
+            "points": 80,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "9ae66ba7b5f01a65bf82d1238ab7fd71539ea2bb61d31da3c10618f396c0cb64",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 21,
+              "p95Milliseconds": 3.5999999940395355,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "cutoff-residual",
+            "state": "READY",
+            "kind": "SERIES",
+            "tableRows": 9,
+            "points": 9,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "9ae66ba7b5f01a65bf82d1238ab7fd71539ea2bb61d31da3c10618f396c0cb64",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_SERIES",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 22,
+              "p95Milliseconds": 11,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "tail-bound",
+            "state": "READY",
+            "kind": "SERIES",
+            "tableRows": 80,
+            "points": 80,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "9ae66ba7b5f01a65bf82d1238ab7fd71539ea2bb61d31da3c10618f396c0cb64",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_SERIES",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 23,
+              "p95Milliseconds": 11,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          }
+        ],
+        "rendered": true
+      },
+      {
+        "exampleId": "m2-bpst-fixed-volume",
+        "jobId": "m2-job:mv1zo9k2:3",
+        "status": "COMPLETED",
+        "inputHash": "74435dd2623a9685859bbe03badf88544ee7bb3cbc063f2a06aa6b1f6e8b9491",
+        "mathematicalHash": "be824cc498a3bf308ff5f0470f14a681aebf8584e8dbe3ea6afa3d78b2b2b1a1",
+        "resultHash": "2ad8b0040ce0eb864c3e0a233c67acaac94c472a2ead7305e509a1add30d057b",
+        "sourceHash": "756e0dff0b5dd21326324da59fbcac855bf6c081425ecb8770cb2edaf8b89f86",
+        "checks": [
+          {
+            "id": "Y3-06-fixed-volume-energy-and-real-charge",
+            "ok": true
+          },
+          {
+            "id": "Y3-07-separated-global-error-budget",
+            "ok": true
+          }
+        ],
+        "panels": [
+          {
+            "id": "main",
+            "state": "READY",
+            "kind": "SERIES",
+            "tableRows": 3,
+            "points": 9,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "756e0dff0b5dd21326324da59fbcac855bf6c081425ecb8770cb2edaf8b89f86",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_SERIES",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 59,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "volume-energy",
+            "state": "READY",
+            "kind": "SERIES",
+            "tableRows": 3,
+            "points": 9,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "756e0dff0b5dd21326324da59fbcac855bf6c081425ecb8770cb2edaf8b89f86",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_SERIES",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 60,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          }
+        ],
+        "rendered": true
+      },
+      {
+        "exampleId": "i2-complex-basis",
+        "jobId": "m2-job:mv1zoaj4:4",
+        "status": "COMPLETED",
+        "inputHash": "5af51e76eed3f43ad790ef49ad665528efb2d7ec4ebb19d36e003302d926f397",
+        "mathematicalHash": "58f870073b97cfa37037d556b169f3d227bf445cd1b0c2f43be96414cdeebf08",
+        "resultHash": "58f870073b97cfa37037d556b169f3d227bf445cd1b0c2f43be96414cdeebf08",
+        "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+        "checks": [
+          {
+            "name": "integral transformed d²",
+            "pass": true,
+            "scope": "INTEGER_IDENTITY"
+          },
+          {
+            "checks": [
+              {
+                "degree": 0,
+                "homotopy": true,
+                "retraction": true
+              },
+              {
+                "degree": 1,
+                "homotopy": true,
+                "retraction": true
+              },
+              {
+                "degree": 2,
+                "homotopy": true,
+                "retraction": true
+              }
+            ],
+            "coefficientScope": "Z",
+            "iChain": {
+              "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+              "pass": true,
+              "scope": "INTEGER_IDENTITY",
+              "sigma": "IDENTITY_ON_Z_P"
+            },
+            "name": "integral transformed deformation retract",
+            "pass": true,
+            "rChain": {
+              "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+              "pass": true,
+              "scope": "INTEGER_IDENTITY",
+              "sigma": "IDENTITY_ON_Z_P"
+            }
+          },
+          {
+            "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+            "name": "Frobenius with transformed source and target",
+            "pass": true,
+            "scope": "INTEGER_IDENTITY",
+            "sigma": "IDENTITY_ON_Z_P"
+          },
+          {
+            "formula": "D_target,k F_k = F_(k+1) sigma(D_source,k)",
+            "name": "Hodge inclusion after basis change",
+            "pass": true,
+            "scope": "INTEGER_IDENTITY",
+            "sigma": "IDENTITY_ON_Z_P"
+          },
+          {
+            "name": "cohomology Frobenius unchanged",
+            "pass": true
+          }
+        ],
+        "panels": [
+          {
+            "id": "main",
+            "state": "READY",
+            "kind": "SERIES",
+            "tableRows": 20,
+            "points": 3,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_SERIES",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 66,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "d-0",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 54,
+            "points": 54,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 67,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "d-1",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 45,
+            "points": 45,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 68,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "f-0",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 84,
+            "points": 84,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 69,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "f-1",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 200,
+            "points": 225,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 70,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "f-2",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 65,
+            "points": 65,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 71,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "basis-0",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 36,
+            "points": 36,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 72,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "basis-1",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 81,
+            "points": 81,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 73,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "basis-2",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 25,
+            "points": 25,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 74,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "filtration-0",
+            "state": "READY",
+            "kind": "TABLE",
+            "tableRows": 1,
+            "points": 0,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_COMPARISON_TABLE",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 75,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "filtration-1",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 36,
+            "points": 36,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 76,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "filtration-2",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 25,
+            "points": 25,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 77,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "kernel-0",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 6,
+            "points": 6,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 78,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "kernel-1",
+            "state": "READY",
+            "kind": "TABLE",
+            "tableRows": 1,
+            "points": 0,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_COMPARISON_TABLE",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 79,
+              "p95Milliseconds": 8.200000002980232,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "kernel-2",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 5,
+            "points": 5,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 80,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "comparison-r-0",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 6,
+            "points": 6,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 81,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "comparison-r-1",
+            "state": "READY",
+            "kind": "TABLE",
+            "tableRows": 1,
+            "points": 0,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_COMPARISON_TABLE",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 82,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "comparison-r-2",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 5,
+            "points": 5,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 83,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "comparison-h-0",
+            "state": "READY",
+            "kind": "TABLE",
+            "tableRows": 1,
+            "points": 0,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_COMPARISON_TABLE",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 84,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "comparison-h-1",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 54,
+            "points": 54,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 85,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          },
+          {
+            "id": "comparison-h-2",
+            "state": "READY",
+            "kind": "MATRIX",
+            "tableRows": 45,
+            "points": 45,
+            "finiteCoordinates": true,
+            "inputBound": true,
+            "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+            "renderer": {
+              "renderer": "CPU_CANVAS2D_MATRIX",
+              "requestedMode": "AUTO",
+              "webgl": {
+                "state": "NOT_REQUESTED",
+                "reason": null,
+                "last": null
+              },
+              "samples": 86,
+              "p95Milliseconds": 6,
+              "targetMilliseconds": 100,
+              "representationRevision": 1
+            },
+            "pair": null
+          }
+        ],
+        "rendered": true
+      }
+    ],
+    "environment": {
+      "hash": "e258f36ae5672c31a8540bade668a22531acecfe48e971331b616fc2373b64e2",
+      "workerSha256": "278db3418c643a3978437388c634cbde9e7360c58bd223edc1d2e648e8620e40",
+      "execution": "BROWSER_WEB_WORKER"
+    },
+    "automaticEvidenceSave": false,
+    "formalPass": false
+  },
+  "m1Status": {
+    "ok": true,
+    "version": "1.2.0",
+    "session": {
+      "id": "rs-mv0tg8vv-bgefzg",
+      "m0Revision": 68
+    },
+    "environment": {
+      "hash": "fc67a6b29748d52cb295758caf972327655477a1c34283bac207d2b6b8864531",
+      "workerSha256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca",
+      "execution": "BROWSER_WEB_WORKER"
+    },
+    "examples": [
+      {
+        "id": "prime-1000",
+        "label": "소수 구간 [2,1000] · π, ψ, Li₂",
+        "kind": "arithmetic.primes"
+      },
+      {
+        "id": "prime-million",
+        "label": "백만까지 정확한 소수 78,498개",
+        "kind": "arithmetic.primes"
+      },
+      {
+        "id": "prime-large-certificate",
+        "label": "Number 안전 범위를 넘는 Lucas 인증",
+        "kind": "arithmetic.primeCertificate"
+      },
+      {
+        "id": "point-p3",
+        "label": "점의 실제 crystalline/prismatic 비교 모델",
+        "kind": "arithmetic.point"
+      },
+      {
+        "id": "p1-p3",
+        "label": "P¹ · 두 chart · 전체 contraction · Frobenius",
+        "kind": "arithmetic.p1"
+      },
+      {
+        "id": "p1-p5-d2",
+        "label": "P¹ · p=5, D=2 → 10",
+        "kind": "arithmetic.p1"
+      },
+      {
+        "id": "delta-guard",
+        "label": "δ의 한 자리 손실과 정확 원본 증액",
+        "kind": "arithmetic.padic"
+      },
+      {
+        "id": "padic-torsion",
+        "label": "Z/27 위 ×3: kernel/cokernel = Z/3",
+        "kind": "arithmetic.padic"
+      },
+      {
+        "id": "derived-reduction",
+        "label": "derived mod p: 사라지지 않는 Tor",
+        "kind": "arithmetic.padic"
+      },
+      {
+        "id": "p1-local-factors",
+        "label": "p별 P¹ Frobenius·점계수·Euler 인자",
+        "kind": "arithmetic.localFactors"
+      },
+      {
+        "id": "elliptic-good-bad",
+        "label": "E:y²=x³−x · good/bad 국소 인자",
+        "kind": "arithmetic.localFactors"
+      },
+      {
+        "id": "su3-bpst",
+        "label": "SU(3): 실제 BPST 곡률·독립 적분",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "g2-full-color",
+        "label": "G2: 실제 7×7 BPST + 전 기저 섭동",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "sp2-full-basis",
+        "label": "Sp(2): 전 기저 4D off-shell 장",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "g2-projection",
+        "label": "G2: 실제 R4 → R3 선형 투영",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "g2-marginal",
+        "label": "G2: x4 적분 q3 · 지수 정규화",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "so3-periodic",
+        "label": "SO(3): 주기적 4D Fourier 시험장",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "delta-assumed_bound",
+        "label": "Δ 상태족: ASSUMED_BOUND",
+        "kind": "gauge.family"
+      },
+      {
+        "id": "delta-units",
+        "label": "Δ 상태족: UNITS",
+        "kind": "gauge.family"
+      },
+      {
+        "id": "delta-classical_scale",
+        "label": "Δ 상태족: CLASSICAL_SCALE",
+        "kind": "gauge.family"
+      },
+      {
+        "id": "delta-effective_model",
+        "label": "Δ 상태족: EFFECTIVE_MODEL",
+        "kind": "gauge.family"
+      },
+      {
+        "id": "g2-index-three",
+        "label": "G2: short-root SU(2) · Dynkin index 3",
+        "kind": "gauge.field"
+      },
+      {
+        "id": "g2-wilson",
+        "label": "G2: 4D Wilson loop · 게이지 검사",
+        "kind": "gauge.holonomy"
+      },
+      {
+        "id": "finite-spectrum",
+        "label": "유한 H: 양의 채널 상관함수 · 조건 범위",
+        "kind": "gauge.spectral"
+      },
+      {
+        "id": "algebra-SU2",
+        "label": "SU(2): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SU3",
+        "label": "SU(3): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SU4",
+        "label": "SU(4): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SU5",
+        "label": "SU(5): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SU6",
+        "label": "SU(6): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO3",
+        "label": "SO(3): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO5",
+        "label": "SO(5): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO6",
+        "label": "SO(6): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO7",
+        "label": "SO(7): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-SO8",
+        "label": "SO(8): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-Sp1",
+        "label": "Sp(1): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-Sp2",
+        "label": "Sp(2): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-Sp3",
+        "label": "Sp(3): 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "algebra-G2",
+        "label": "G2: 정확 행렬 · 근 자료 · Chevalley",
+        "kind": "gauge.group"
+      },
+      {
+        "id": "ns-source-contract",
+        "label": "논문 166쪽·정리·Lean 어댑터 계약",
+        "kind": "ns.provenance"
+      },
+      {
+        "id": "ns-similarity",
+        "label": "실제 similarity 좌표와 역변환",
+        "kind": "ns.coordinates"
+      },
+      {
+        "id": "ns-heat-interval",
+        "label": "Heat factor 적분·도함수 구간 인증",
+        "kind": "ns.heat"
+      },
+      {
+        "id": "ns-source-exterior",
+        "label": "원문 heat exterior · r > 0",
+        "kind": "ns.exterior"
+      },
+      {
+        "id": "ns-taylor-green",
+        "label": "별도 정확 Taylor–Green 기준 해",
+        "kind": "ns.benchmark"
+      },
+      {
+        "id": "ns-nonlinear-axis",
+        "label": "원문 비선형 축 급수 · 꼬리 미인증",
+        "kind": "ns.axis-series"
+      },
+      {
+        "id": "ns-five-moments",
+        "label": "비선형 5모멘트 · 독립 재적분",
+        "kind": "ns.moments"
+      },
+      {
+        "id": "ns-cone-operator",
+        "label": "Cone 부등식과 실제 radial modulation 연산",
+        "kind": "ns.cone"
+      },
+      {
+        "id": "ns-leading-candidate",
+        "label": "실제 축·외곽 + 미인증 접합 후보",
+        "kind": "ns.leading-profile"
+      },
+      {
+        "id": "ns-independent-checks",
+        "label": "FD·FFT·고정밀·음성 대조군",
+        "kind": "ns.validate"
+      },
+      {
+        "id": "ns-axis-exact-bounds",
+        "label": "실제 Bρ 국소 수렴·양성·무한 tail 상계",
+        "kind": "ns.axis-certificate"
+      },
+      {
+        "id": "ns-source-outer-repairs",
+        "label": "원문 외곽 진폭·모멘트·heat 보상",
+        "kind": "ns.source-outer"
+      },
+      {
+        "id": "ns-controlled-axis",
+        "label": "원문 B.22/B.26 · 실제 controlled continuation",
+        "kind": "ns.controlled-continuation"
+      },
+      {
+        "id": "ns-controlled-source-datum",
+        "label": "실제 A.21 압력을 연결한 유한 continuation 후보",
+        "kind": "ns.controlled-continuation"
+      },
+      {
+        "id": "ns-loop-zero-p2",
+        "label": "원문 C.1 · p₂=0의 제거 가능 분기",
+        "kind": "ns.admissible-loop"
+      },
+      {
+        "id": "ns-loop-tilted",
+        "label": "원문 C.1 · 비영 p₂와 위상 재매개화",
+        "kind": "ns.admissible-loop"
+      },
+      {
+        "id": "ns-source-pressure-bounds",
+        "label": "실제 A.21 압력 · 복소 영역과 모든 η 도함수 상계",
+        "kind": "ns.pressure-certificate"
+      },
+      {
+        "id": "ns-axis-source-exact-bounds",
+        "label": "실제 A.21 압력과 연결된 국소 축 상계",
+        "kind": "ns.axis-source-certificate"
+      },
+      {
+        "id": "ns-source-radial-modulation",
+        "label": "원문 C.12 · 실제 변조와 첫 patch 복원 (N=512)",
+        "kind": "ns.radial-modulation"
+      },
+      {
+        "id": "ns-source-radial-small-frequency",
+        "label": "작은 N=8 · 실제 cone 위반을 확인하는 대조",
+        "kind": "ns.radial-modulation"
+      },
+      {
+        "id": "ns-source-inner-gluing",
+        "label": "원문 B.34/B.8 · 실제 inner–outer 모멘트 접합 후보",
+        "kind": "ns.source-inner-gluing"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "m1-job:mv1zltzr:1",
+        "status": "COMPLETED",
+        "kind": "arithmetic.p1",
+        "inputHash": "fdad3e06c8e587977c62a28481801fd83710202a23b41d6307775b878897ae1b"
+      },
+      {
+        "id": "m1-job:mv1zm39g:2",
+        "status": "COMPLETED",
+        "kind": "ns.heat",
+        "inputHash": "8679921a2f5621244d501af4a2ab31262188b387fa0dec9e92aed0cdc88aba0b"
+      },
+      {
+        "id": "m1-job:mv1zo2q6:3",
+        "status": "COMPLETED",
+        "kind": "arithmetic.p1",
+        "inputHash": "fdad3e06c8e587977c62a28481801fd83710202a23b41d6307775b878897ae1b"
+      }
+    ],
+    "auditCount": 4,
+    "lastAdapters": null,
+    "formalPass": false
+  },
+  "finalStatus": {
+    "ok": true,
+    "version": "0.2.0",
+    "examples": [
+      {
+        "id": "m2-projective-p3-n2",
+        "label": "P² · exact cohomology, Frobenius and local zeta",
+        "kind": "arithmetic.projective",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-projective-p5-n8",
+        "label": "P⁸ · all 17 cohomological degrees",
+        "kind": "arithmetic.projective",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-elliptic-p5",
+        "label": "E / F₅ · ordinary slopes (0,1)",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-elliptic-p7",
+        "label": "E / F₇ · supersingular slopes (½,½)",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-elliptic-f9",
+        "label": "E / F₉ · explicit extension field, 16 points",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-residue-reconstruction",
+        "label": "Frobenius polynomial · unique integer residue lift",
+        "kind": "arithmetic.frobeniusReconstruct",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-q-koszul",
+        "label": "Formal q · two-variable Koszul and specializations",
+        "kind": "arithmetic.qDeRham",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-bk-point",
+        "label": "BK point · δ(u−3)=3u²−9u+8",
+        "kind": "arithmetic.breuilKisin",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-perfectoid-tower",
+        "label": "Perfectoid standard tower · finite prefix and θ",
+        "kind": "arithmetic.perfectoidTower",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-witt-carry",
+        "label": "W₂(F₃) · Witt addition carries into the second coordinate",
+        "kind": "arithmetic.witt",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-eta-complex",
+        "label": "Lη diagnostic · raw torsion and corrected complex",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-mw-p5",
+        "label": "MW Frobenius · p=5 rational reduction and precision certificate",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-mw-p7",
+        "label": "MW Frobenius · p=7 matrix from differential reduction",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-semilinear-f9",
+        "label": "F₉ coefficients · M σ(M), not M²",
+        "kind": "arithmetic.frobeniusReconstruct",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-elliptic-global",
+        "label": "Good elliptic model · exact Euler identity and convergence bound",
+        "kind": "arithmetic.elliptic",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-q-framing",
+        "label": "T ↔ T+1 · explicit integral chain isomorphism",
+        "kind": "arithmetic.qDeRham",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-q-cech-p1",
+        "label": "P¹ · actual q-PD diagonal envelopes and canonical two-affine descent",
+        "kind": "arithmetic.qDeRham",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-tilt-arithmetic",
+        "label": "Standard tilt · actual Laurent addition and Frobenius inverse",
+        "kind": "arithmetic.perfectoidTower",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-sharp-precision",
+        "label": "Sharp(1+t) · lift-independent p-adic error bound",
+        "kind": "arithmetic.perfectoidTower",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-witt-tilt",
+        "label": "Universal Witt · nonconstant tilt coefficients and carries",
+        "kind": "arithmetic.witt",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-theta-kernel",
+        "label": "Theta · computed xi, distinguished carry and untilt base hash",
+        "kind": "arithmetic.perfectoidTower",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-aomega-torus",
+        "label": "AΩ · complete torus, actual group model, Lη and BMS comparison",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-prism-etale",
+        "label": "Perfect prism · reduction, inversion and derived fixed points",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-prism-de-rham",
+        "label": "Perfect prism · Frobenius-twisted derived de Rham base change",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-prism-crystalline",
+        "label": "Perfect prism · reduction to W(k) and crystalline comparison",
+        "kind": "arithmetic.comparison",
+        "domain": "arithmetic"
+      },
+      {
+        "id": "m2-su2-identity-lattice",
+        "label": "SU(2) · 4D identity lattice and exact flat baseline",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-center-holonomy",
+        "label": "SU(2) · flat plaquettes with nontrivial temporal holonomy",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-pure-gauge",
+        "label": "SU(2) · nonconstant site gauge frames, invariant action",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-g2-wilson-lattice",
+        "label": "G2 · actual 7×7 links, Wilson action and Lie-projected curvature",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-bpst-lattice",
+        "label": "BPST · classical field to open links and scalar slice",
+        "kind": "gauge.lattice",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-bpst-refinement",
+        "label": "BPST · increasing rho/a, actual curvature convergence",
+        "kind": "gauge.lattice-refinement",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-bpst-clover-anisotropic",
+        "label": "BPST · clover, both spacings, energy/topology error bounds",
+        "kind": "gauge.lattice-refinement",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-bpst-fixed-volume",
+        "label": "BPST · fixed 4D volume, energy and real-charge convergence",
+        "kind": "gauge.volume-refinement",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-wilson-ensemble",
+        "label": "SU(2) · Haar Metropolis, independent starts and ESS diagnostics",
+        "kind": "gauge.ensemble",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-wilson-reflection-audit",
+        "label": "Wilson · theorem hypotheses and exact reflection factorization",
+        "kind": "gauge.reflection-positivity",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-cube-transfer-cutoff",
+        "label": "SU(2) · physical cube spin cutoff and transfer error",
+        "kind": "gauge.transfer-cutoff",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-small-lattice-reference",
+        "label": "SU(2) · nonzero beta, independent 4D Haar reference",
+        "kind": "gauge.small-lattice-reference",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-lie-reference",
+        "label": "SU(2) · symmetric full-basis proposal against independent Bessel/Haar oracle",
+        "kind": "gauge.sampler-reference",
+        "domain": "gauge"
+      },
+      {
+        "id": "m2-su2-haar-reference",
+        "label": "SU(2) · independent one-link Haar quadrature reference",
+        "kind": "gauge.sampler-reference",
+        "domain": "gauge"
+      },
+      {
+        "id": "ns-m2-recursion",
+        "label": "N4 · 원래 PDE 직접 대입·exact coefficient 항등식",
+        "kind": "ns.background-recursion",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-picard",
+        "label": "N4 · 원문 6성분 Picard operator·조건부 엄밀 tail",
+        "kind": "ns.background-picard",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-moments",
+        "label": "N4 · 실제 λ·Ipos의 5-moment 복구 operator",
+        "kind": "ns.background-moments",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-residual",
+        "label": "N4 · 원래 PDE 유한 잔차 exact polynomial",
+        "kind": "ns.background-residual",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-cutoffs",
+        "label": "N4 · 조건부 cutoff 인증·실제 locally finite potential 합",
+        "kind": "ns.background-cutoffs",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-curl",
+        "label": "N4/N5 · cutoff 후 실제 curl·divergence 검사",
+        "kind": "ns.potential-curl",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-dyadic",
+        "label": "N5 · 실제 N3 h·dyadic chart·고정 label",
+        "kind": "ns.dyadic-charts",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-core-charts",
+        "label": "N5 · 실제 N3 core 구간·두 chart의 물리량 일치",
+        "kind": "ns.source-core-charts",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-torus",
+        "label": "N5 · 실제 torus 고유방향·chain rule·Haar",
+        "kind": "ns.torus-derivatives",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-support",
+        "label": "N5 · 모든 source label의 유리수 지지 분리 증명",
+        "kind": "ns.pulse-support",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-pulse-ode",
+        "label": "N5 · 실제 projected pulse ODE·log 진폭",
+        "kind": "ns.pulse-ode",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-covariance",
+        "label": "N5 · 두 family 공분산·정규화 Haar·실제 Jacobian",
+        "kind": "ns.pulse-covariance",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-pulse-curl",
+        "label": "N5 · 원문 C_m·전체 r_m·Cartesian curl 대조",
+        "kind": "ns.pulse-curl",
+        "domain": "ns"
+      },
+      {
+        "id": "ns-m2-tail",
+        "label": "N5 · 전체 cutoff 잔차 jet·조건부 고정차수 flatness",
+        "kind": "ns.pulse-tail",
+        "domain": "ns"
+      },
+      {
+        "id": "i2-delta-assumed_bound",
+        "label": "Δ 비교 · ASSUMED_BOUND",
+        "kind": "observation.delta-family",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-delta-units",
+        "label": "Δ 비교 · UNITS",
+        "kind": "observation.delta-family",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-delta-effective_model",
+        "label": "Δ 비교 · EFFECTIVE_MODEL",
+        "kind": "observation.delta-family",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-delta-ensemble_estimate",
+        "label": "Δ 비교 · ENSEMBLE_ESTIMATE",
+        "kind": "observation.delta-family",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-slice",
+        "label": "4D 관측 · SLICE",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-finite_marginal",
+        "label": "4D 관측 · FINITE_MARGINAL",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-conditional_mean",
+        "label": "4D 관측 · CONDITIONAL_MEAN",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-wilson_open",
+        "label": "4D 관측 · WILSON_OPEN",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-4d-wilson_closed",
+        "label": "4D 관측 · WILSON_CLOSED",
+        "kind": "observation.gauge-4d",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-blowup-pair",
+        "label": "동일 τ · 물리/유사 좌표와 고정 시야",
+        "kind": "observation.blowup-pair",
+        "domain": "observation"
+      },
+      {
+        "id": "i2-complex-basis",
+        "label": "정수 기저 교체 · kernel/image/Frobenius/filtration",
+        "kind": "observation.complex-basis",
+        "domain": "observation"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "m2-job:mv1zo8le:1",
+        "kind": "arithmetic.projective",
+        "status": "COMPLETED",
+        "inputHash": "f9a020ddd37e4cb68ee196e803cf67966e5bb938a344ccff5568c5896254582f",
+        "resultHash": "471f0377c22ab069e99c5432124c435ba999376665681edec0609421f431ac24",
+        "submittedAt": "2026-10-10T06:04:06.166Z"
+      },
+      {
+        "id": "m2-job:mv1zo8qa:2",
+        "kind": "ns.pulse-tail",
+        "status": "COMPLETED",
+        "inputHash": "9ae66ba7b5f01a65bf82d1238ab7fd71539ea2bb61d31da3c10618f396c0cb64",
+        "resultHash": "68da48a5052dba1567f27894f2fdf40e22aadacc447c21916eed0685be80d8e2",
+        "submittedAt": "2026-10-10T06:04:06.322Z"
+      },
+      {
+        "id": "m2-job:mv1zo9k2:3",
+        "kind": "gauge.volume-refinement",
+        "status": "COMPLETED",
+        "inputHash": "74435dd2623a9685859bbe03badf88544ee7bb3cbc063f2a06aa6b1f6e8b9491",
+        "resultHash": "2ad8b0040ce0eb864c3e0a233c67acaac94c472a2ead7305e509a1add30d057b",
+        "submittedAt": "2026-10-10T06:04:07.394Z"
+      },
+      {
+        "id": "m2-job:mv1zoaj4:4",
+        "kind": "observation.complex-basis",
+        "status": "COMPLETED",
+        "inputHash": "5af51e76eed3f43ad790ef49ad665528efb2d7ec4ebb19d36e003302d926f397",
+        "resultHash": "58f870073b97cfa37037d556b169f3d227bf445cd1b0c2f43be96414cdeebf08",
+        "submittedAt": "2026-10-10T06:04:08.656Z"
+      }
+    ],
+    "checklist": {
+      "total": 64,
+      "counts": {
+        "PASS": 58,
+        "PARTIAL": 6,
+        "OPEN": 0
+      },
+      "fullM2Complete": false
+    },
+    "environment": {
+      "hash": "e258f36ae5672c31a8540bade668a22531acecfe48e971331b616fc2373b64e2",
+      "workerSha256": "278db3418c643a3978437388c634cbde9e7360c58bd223edc1d2e648e8620e40",
+      "execution": "BROWSER_WEB_WORKER"
+    },
+    "visualization": {
+      "state": "READY",
+      "kind": "SERIES",
+      "title": "정확한 복합체 · 차수별 모듈",
+      "binding": {
+        "jobId": "m2-job:mv1zoaj4:4",
+        "kind": "observation.complex-basis",
+        "inputHash": "5af51e76eed3f43ad790ef49ad665528efb2d7ec4ebb19d36e003302d926f397",
+        "resultHash": "58f870073b97cfa37037d556b169f3d227bf445cd1b0c2f43be96414cdeebf08",
+        "sourceHash": "931940c14036cdc1521671c7456006bb93eac69ad6797793c265b67404ffb87c",
+        "modelHash": null,
+        "sampleHash": null,
+        "observationHash": null,
+        "displayTransformHash": null,
+        "currentEditorMatches": true,
+        "calculationStatus": "COMPLETED",
+        "representationRevision": 1,
+        "formalPass": false,
+        "ensembleHash": null,
+        "observationHashScope": "SOURCE_OBSERVATION_CONTRACT; PANEL_ID_AND_DISPLAY_TRANSFORMS_ARE_SEPARATE",
+        "panelId": "main"
+      },
+      "tableRows": 20,
+      "totalRows": 20,
+      "points": 3,
+      "lines": 0,
+      "arrows": 0,
+      "lod": {
+        "originalPoints": 0,
+        "displayedPoints": 0,
+        "changesComputation": false
+      },
+      "renderer": {
+        "renderer": "CPU_CANVAS2D_SERIES",
+        "requestedMode": "AUTO",
+        "webgl": {
+          "state": "NOT_REQUESTED",
+          "reason": null,
+          "last": null
+        },
+        "samples": 87,
+        "p95Milliseconds": 6,
+        "targetMilliseconds": 100,
+        "representationRevision": 1
+      },
+      "panel": "main",
+      "pair": null
+    },
+    "session": {
+      "id": "rs-mv0tg8vv-bgefzg",
+      "revision": 24
+    },
+    "formalPass": false
+  },
+  "consoleErrors": [
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:53:42.868Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:53:49.292Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:53:49.297Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:54:04.043Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:54:04.046Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:54:04.098Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:54:42.918Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:54:42.985Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:54:42.986Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:55:17.265Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:55:28.942Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:55:29.011Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:55:29.676Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T05:55:56.518Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Could not create a WebGL context, VENDOR = 0xffff, DEVICE = 0xffff, GL_VENDOR = Disabled, GL_RENDERER = Disabled, Sandboxed = yes, Optimus = no, AMD switchable = no, Reset notification strategy = 0x0000, ErrorMessage = BindToCurrentSequence failed: .",
+      "timestamp": "2026-10-10T05:55:58.043Z",
+      "url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+    },
+    {
+      "level": "error",
+      "message": "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Could not create a WebGL context, VENDOR = 0xffff, DEVICE = 0xffff, GL_VENDOR = Disabled, GL_RENDERER = Disabled, Sandboxed = yes, Optimus = no, AMD switchable = no, Reset notification strategy = 0x0000, ErrorMessage = BindToCurrentSequence failed: .",
+      "timestamp": "2026-10-10T05:55:58.044Z",
+      "url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+    },
+    {
+      "level": "error",
+      "message": "THREE.WebGLRenderer: Error creating WebGL context.",
+      "timestamp": "2026-10-10T05:55:58.044Z",
+      "url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T06:01:10.695Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Could not create a WebGL context, VENDOR = 0xffff, DEVICE = 0xffff, GL_VENDOR = Disabled, GL_RENDERER = Disabled, Sandboxed = yes, Optimus = no, AMD switchable = no, Reset notification strategy = 0x0000, ErrorMessage = BindToCurrentSequence failed: .",
+      "timestamp": "2026-10-10T06:01:12.385Z",
+      "url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+    },
+    {
+      "level": "error",
+      "message": "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Could not create a WebGL context, VENDOR = 0xffff, DEVICE = 0xffff, GL_VENDOR = Disabled, GL_RENDERER = Disabled, Sandboxed = yes, Optimus = no, AMD switchable = no, Reset notification strategy = 0x0000, ErrorMessage = BindToCurrentSequence failed: .",
+      "timestamp": "2026-10-10T06:01:12.388Z",
+      "url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+    },
+    {
+      "level": "error",
+      "message": "THREE.WebGLRenderer: Error creating WebGL context.",
+      "timestamp": "2026-10-10T06:01:12.388Z",
+      "url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T06:03:18.358Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T06:03:19.530Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T06:03:19.531Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-10T06:04:06.211Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    }
+  ],
+  "checklistURL": "https://project29770.websitepublisher.ai/v0.3.1.html#research-m2/checklist",
+  "checklistSummary": "58\n명시한 구현·검증 범위 통과\n6\n부분 구현 · 추가 검증\n0\n미구현 · 연구 진행",
+  "remaining": "PARTIAL\nN4-03 · 차수별 inner Picard 풀이\nPARTIAL\nN4-04 · 차수별 radial cutoff와 모멘트 복구\nPARTIAL\nN4-05 · 유한 배경 잔차 검증\nPARTIAL\nN5-04 · 위상·편극·주파수\nPARTIAL\nN5-05 · 성장·감쇠 ODE 풀이\nPARTIAL\nN5-06 · 두 family의 positive covariance",
+  "finished": "2026-10-10T06:04:46.961Z"
+}

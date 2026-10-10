@@ -13,13 +13,16 @@
   },
   "inputHash": "9ae66ba7b5f01a65bf82d1238ab7fd71539ea2bb61d31da3c10618f396c0cb64",
   "result": {
-    "blockers": [
-      "N5-08 needs the actual original pulse ODE constants and cutoff source to close the whole-profile criterion."
-    ],
+    "blockers": [],
     "checks": [
       {
         "detail": "No positive tail is converted to an exact zero.",
         "id": "retains-nonzero-log-tail",
+        "pass": true
+      },
+      {
+        "detail": "Every supplied forcing/amplitude/cutoff derivative participates in the actual complex interval residual.",
+        "id": "full-cutoff-residual-jets",
         "pass": true
       },
       {
@@ -28,11 +31,11 @@
         "pass": true
       }
     ],
-    "evidenceGrade": "OUTWARD_INTERVAL_FIXED_ORDER_BOUND",
+    "evidenceGrade": "CONDITIONAL_OUTWARD_RESIDUAL_JET_AND_FIXED_ORDER_BOUND",
     "kind": "ns.pulse-tail",
-    "moduleVersion": "m2-ns-0.1.1",
+    "moduleVersion": "m2-ns-0.2.0",
     "object": {
-      "kind": "FIXED_ORDER_LOG_FLAT_TAIL"
+      "kind": "CONDITIONAL_CUTOFF_RESIDUAL_AND_FIXED_ORDER_LOG_TAIL"
     },
     "precisionLedger": {
       "arithmetic": "OUTWARD_FLOAT64_SCALAR_INTERVALS",
@@ -47,10 +50,617 @@
       "outputItemsEstimate": 80,
       "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
     },
-    "resultHash": "3635f5011c547fc16b8bc7e9f43e9c46f89ddcdb3173e09fe78c58303b12563e",
+    "resultHash": "234ee11bad568d081d458898ce0907386161dfb7c70971a32f2acc5df759568e",
     "results": {
       "allDerivativeOrdersInstantiated": false,
       "constantScope": "Declared positive Gaussian constant and polynomial loss; not derived from the original ODE.",
+      "cutoffRemainder": {
+        "actualSourcePulseEvaluated": false,
+        "allOrderSourceCertificate": false,
+        "allTermsRetained": true,
+        "derivativeFormula": "D^k tail = sum_j binom(k,j) [D^j(1-psi)*D^(k-j) f_m + D^(j+1)psi*D^(k-j)t_m]",
+        "dyadicFamilyBinding": null,
+        "inputJet": {
+          "amplitudeDerivatives": [
+            [
+              {
+                "im": [
+                  0.02,
+                  0.02
+                ],
+                "re": [
+                  0.016487212707001025,
+                  0.016487212707001524
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0.02,
+                  0.02
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  -0.015,
+                  -0.015
+                ]
+              }
+            ],
+            [
+              {
+                "im": [
+                  0.02,
+                  0.02
+                ],
+                "re": [
+                  0.016487212707001025,
+                  0.016487212707001524
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  -0.01,
+                  -0.01
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0.02,
+                  0.02
+                ]
+              }
+            ],
+            [
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0.016487212707001025,
+                  0.016487212707001524
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0,
+                  0
+                ]
+              }
+            ]
+          ],
+          "derivativeOrder": 2,
+          "forcingDerivatives": [
+            [
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0.2,
+                  0.2
+                ]
+              },
+              {
+                "im": [
+                  0.05,
+                  0.05
+                ],
+                "re": [
+                  -0.3,
+                  -0.3
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0.15,
+                  0.15
+                ]
+              }
+            ],
+            [
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0.1,
+                  0.1
+                ]
+              },
+              {
+                "im": [
+                  0.05,
+                  0.05
+                ],
+                "re": [
+                  0.2,
+                  0.2
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0,
+                  0
+                ]
+              }
+            ],
+            [
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0.05,
+                  0.05
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "im": [
+                  0,
+                  0
+                ],
+                "re": [
+                  0,
+                  0
+                ]
+              }
+            ]
+          ],
+          "inputRole": "EXPLICIT_SMOOTH_OPERATOR_PROBE",
+          "point": 0.5,
+          "psiDerivatives": [
+            [
+              0.49999999999999784,
+              0.5000000000000026
+            ],
+            [
+              -2.0000000000000426,
+              -1.9999999999999634
+            ],
+            [
+              -7.815970093361142e-13,
+              7.887024366937152e-13
+            ],
+            [
+              15.999999999979995,
+              16.000000000020304
+            ]
+          ],
+          "variable": "v"
+        },
+        "residualVsEnvelopeComparisonPerformed": false,
+        "retainedRemainder": "(1-psi)*f_m + psi_prime*t_m",
+        "rows": [
+          {
+            "componentAbsUpper": [
+              0.10702557458599998,
+              0.2150000000000018,
+              0.10500000000000105
+            ],
+            "cutoffDerivativeTail": [
+              {
+                "im": [
+                  -0.040000000000000875,
+                  -0.03999999999999925
+                ],
+                "re": [
+                  -0.03297442541400377,
+                  -0.032974425414001425
+                ]
+              },
+              {
+                "im": [
+                  -1e-323,
+                  1e-323
+                ],
+                "re": [
+                  -0.040000000000000875,
+                  -0.03999999999999925
+                ]
+              },
+              {
+                "im": [
+                  -1e-323,
+                  1e-323
+                ],
+                "re": [
+                  0.02999999999999944,
+                  0.03000000000000065
+                ]
+              }
+            ],
+            "derivativeOrder": 0,
+            "forcingTail": [
+              {
+                "im": [
+                  -1e-323,
+                  1e-323
+                ],
+                "re": [
+                  0.09999999999999945,
+                  0.10000000000000052
+                ]
+              },
+              {
+                "im": [
+                  0.024999999999999863,
+                  0.02500000000000013
+                ],
+                "re": [
+                  -0.15000000000000077,
+                  -0.14999999999999913
+                ]
+              },
+              {
+                "im": [
+                  -1e-323,
+                  1e-323
+                ],
+                "re": [
+                  0.07499999999999957,
+                  0.07500000000000039
+                ]
+              }
+            ],
+            "residual": [
+              {
+                "im": [
+                  -0.04000000000000088,
+                  -0.039999999999999244
+                ],
+                "re": [
+                  0.06702557458599566,
+                  0.0670255745859991
+                ]
+              },
+              {
+                "im": [
+                  0.02499999999999986,
+                  0.025000000000000133
+                ],
+                "re": [
+                  -0.19000000000000167,
+                  -0.18999999999999836
+                ]
+              },
+              {
+                "im": [
+                  -2.5e-323,
+                  2.5e-323
+                ],
+                "re": [
+                  0.104999999999999,
+                  0.10500000000000105
+                ]
+              }
+            ],
+            "sourcePaths": {
+              "amplitude": [
+                "results.cutoffRemainder.inputJet.amplitudeDerivatives[0]"
+              ],
+              "cutoff": [
+                "results.cutoffRemainder.inputJet.psiDerivatives[0]",
+                "results.cutoffRemainder.inputJet.psiDerivatives[1]"
+              ],
+              "forcing": [
+                "results.cutoffRemainder.inputJet.forcingDerivatives[0]"
+              ]
+            }
+          },
+          {
+            "componentAbsUpper": [
+              0.45702557458603726,
+              0.6050000000000324,
+              0.26000000000001916
+            ],
+            "cutoffDerivativeTail": [
+              {
+                "im": [
+                  -0.040000000000016515,
+                  -0.03999999999998347
+                ],
+                "re": [
+                  -0.03297442541401666,
+                  -0.032974425413988415
+                ]
+              },
+              {
+                "im": [
+                  -2e-323,
+                  2e-323
+                ],
+                "re": [
+                  0.01999999999998399,
+                  0.020000000000016217
+                ]
+              },
+              {
+                "im": [
+                  -2e-323,
+                  2e-323
+                ],
+                "re": [
+                  -0.04000000000001271,
+                  -0.03999999999998752
+                ]
+              }
+            ],
+            "derivativeOrder": 1,
+            "forcingTail": [
+              {
+                "im": [
+                  -2e-323,
+                  2e-323
+                ],
+                "re": [
+                  0.4499999999999922,
+                  0.4500000000000091
+                ]
+              },
+              {
+                "im": [
+                  0.12499999999999799,
+                  0.12500000000000236
+                ],
+                "re": [
+                  -0.5000000000000139,
+                  -0.4999999999999882
+                ]
+              },
+              {
+                "im": [
+                  -2e-323,
+                  2e-323
+                ],
+                "re": [
+                  0.2999999999999943,
+                  0.30000000000000665
+                ]
+              }
+            ],
+            "residual": [
+              {
+                "im": [
+                  -0.04000000000001652,
+                  -0.039999999999983465
+                ],
+                "re": [
+                  0.41702557458597544,
+                  0.41702557458602074
+                ]
+              },
+              {
+                "im": [
+                  0.12499999999999797,
+                  0.1250000000000024
+                ],
+                "re": [
+                  -0.48000000000002996,
+                  -0.4799999999999719
+                ]
+              },
+              {
+                "im": [
+                  -4.4e-323,
+                  4.4e-323
+                ],
+                "re": [
+                  0.2599999999999816,
+                  0.26000000000001916
+                ]
+              }
+            ],
+            "sourcePaths": {
+              "amplitude": [
+                "results.cutoffRemainder.inputJet.amplitudeDerivatives[0]",
+                "results.cutoffRemainder.inputJet.amplitudeDerivatives[1]"
+              ],
+              "cutoff": [
+                "results.cutoffRemainder.inputJet.psiDerivatives[0]",
+                "results.cutoffRemainder.inputJet.psiDerivatives[1]",
+                "results.cutoffRemainder.inputJet.psiDerivatives[2]"
+              ],
+              "forcing": [
+                "results.cutoffRemainder.inputJet.forcingDerivatives[0]",
+                "results.cutoffRemainder.inputJet.forcingDerivatives[1]"
+              ]
+            }
+          },
+          {
+            "componentAbsUpper": [
+              0.9758209778989871,
+              1.32000000000072,
+              0.24000000000045424
+            ],
+            "cutoffDerivativeTail": [
+              {
+                "im": [
+                  0.3199999999995685,
+                  0.32000000000043777
+                ],
+                "re": [
+                  0.2308209778976569,
+                  0.23082097789838385
+                ]
+              },
+              {
+                "im": [
+                  -3e-323,
+                  3e-323
+                ],
+                "re": [
+                  0.319999999999584,
+                  0.3200000000004219
+                ]
+              },
+              {
+                "im": [
+                  -3e-323,
+                  3e-323
+                ],
+                "re": [
+                  -0.24000000000033592,
+                  -0.23999999999966828
+                ]
+              }
+            ],
+            "derivativeOrder": 2,
+            "forcingTail": [
+              {
+                "im": [
+                  -3e-323,
+                  3e-323
+                ],
+                "re": [
+                  0.4249999999998345,
+                  0.42500000000016536
+                ]
+              },
+              {
+                "im": [
+                  0.19999999999995677,
+                  0.20000000000004353
+                ],
+                "re": [
+                  0.7999999999997504,
+                  0.8000000000002544
+                ]
+              },
+              {
+                "im": [
+                  -3e-323,
+                  3e-323
+                ],
+                "re": [
+                  -1.1830536550405735e-13,
+                  1.172395514004172e-13
+                ]
+              }
+            ],
+            "residual": [
+              {
+                "im": [
+                  0.31999999999956846,
+                  0.3200000000004378
+                ],
+                "re": [
+                  0.6558209778974913,
+                  0.6558209778985493
+                ]
+              },
+              {
+                "im": [
+                  0.19999999999995674,
+                  0.20000000000004356
+                ],
+                "re": [
+                  1.1199999999993342,
+                  1.1200000000006765
+                ]
+              },
+              {
+                "im": [
+                  -6.4e-323,
+                  6.4e-323
+                ],
+                "re": [
+                  -0.24000000000045424,
+                  -0.23999999999955102
+                ]
+              }
+            ],
+            "sourcePaths": {
+              "amplitude": [
+                "results.cutoffRemainder.inputJet.amplitudeDerivatives[0]",
+                "results.cutoffRemainder.inputJet.amplitudeDerivatives[1]",
+                "results.cutoffRemainder.inputJet.amplitudeDerivatives[2]"
+              ],
+              "cutoff": [
+                "results.cutoffRemainder.inputJet.psiDerivatives[0]",
+                "results.cutoffRemainder.inputJet.psiDerivatives[1]",
+                "results.cutoffRemainder.inputJet.psiDerivatives[2]",
+                "results.cutoffRemainder.inputJet.psiDerivatives[3]"
+              ],
+              "forcing": [
+                "results.cutoffRemainder.inputJet.forcingDerivatives[0]",
+                "results.cutoffRemainder.inputJet.forcingDerivatives[1]",
+                "results.cutoffRemainder.inputJet.forcingDerivatives[2]"
+              ]
+            }
+          }
+        ],
+        "schema": "MathScope.ActualPulseCutoffResidualJet/1",
+        "scope": "Outward interval linear differential operator on supplied local jets. This local probe and the independent conditional Gaussian envelope are not bound to one source family or a specific ell, and no residual-versus-envelope comparison is performed.",
+        "sourceEquation": "7.40",
+        "sourceInstanceCertified": false
+      },
+      "envelopeLedger": {
+        "actualPulseGaussianBound": null,
+        "allOrderSourceCertificate": false,
+        "finiteJetValuesDoNotProveTheEnvelope": true,
+        "inputPaths": [
+          "results.parameters.c",
+          "results.parameters.C",
+          "results.parameters.M"
+        ],
+        "localJetNotBoundToSpecificEll": true,
+        "requiredPremise": "On the cutoff collar, the chosen fixed derivative of the full (1-psi)*f_m+psi_prime*t_m is bounded by q^(-M)*Sstar^C*exp(-c*Sstar).",
+        "residualVsEnvelopeComparisonPerformed": false,
+        "scope": "DECLARED_GAUSSIAN_AND_DERIVATIVE_LOSS_PREMISES",
+        "sourceInstanceCertified": false
+      },
       "formula": "-c*ell^2+(M+N)*ell*log(2)+2*C*log(ell)",
       "parameters": {
         "C": 2,
@@ -969,7 +1579,7 @@
         "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
       }
     },
-    "status": "PARTIAL",
+    "status": "COMPLETED",
     "visualization": {
       "axes": [
         {
@@ -977,7 +1587,6 @@
           "label": "dyadic ell",
           "name": "dyadic ell",
           "scale": "LINEAR",
-          "sourceField": "dyadic ell",
           "unit": "1"
         },
         {
@@ -985,7 +1594,6 @@
           "label": "log(tail / q^N)",
           "name": "log(tail / q^N)",
           "scale": "LINEAR",
-          "sourceField": "log(tail / q^N)",
           "unit": "log ratio"
         },
         {
@@ -993,11 +1601,10 @@
           "label": "0",
           "name": "0",
           "scale": "LINEAR",
-          "sourceField": "0",
           "unit": "1"
         }
       ],
-      "description": "Outward interval values of the fixed-order flat-tail exponent.",
+      "description": "Conditional fixed-order flat-tail exponent with the full supplied cutoff residual jet retained and evaluated.",
       "lines": [
         {
           "points": [
@@ -1405,8 +2012,8 @@
         }
       ],
       "lostInformation": [
-        "The supplied Gaussian constant is a premise.",
-        "Fixed m,N are checked; an all-order proof is not issued."
+        "The supplied Gaussian envelope remains a premise; its validity for the actual source pulse is not inferred from these finite jets.",
+        "Fixed m,N are checked; an all-order source construction is not issued."
       ],
       "points": [
         {
@@ -2132,6 +2739,6 @@
       ]
     }
   },
-  "status": "PARTIAL",
-  "resultHash": "929974bfedb4d72b36c451b303fad25292d467b16e1dc654fc980aec4620ed32"
+  "status": "COMPLETED",
+  "resultHash": "68da48a5052dba1567f27894f2fdf40e22aadacc447c21916eed0685be80d8e2"
 }

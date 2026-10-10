@@ -1,0 +1,1540 @@
+{
+  "schema": "MathScope.CrossRuntimeComparison/1",
+  "scope": {
+    "selection": "The 12 M2 examples whose v59 Chrome mathematical hashes differed from the 64-example Node/static-Worker baseline; full Chrome receipts were captured on page v60 with the same Worker.",
+    "evidenceKind": "EXACT_RECEIPT_COMPARISON_AND_SOURCE_DEPENDENCY_DIAGNOSIS",
+    "comparison": "Compare exact normalized requests and mathematical result objects recursively. Exclude only the top-level result.executionMetrics, exactly as the engine mathematical hash does. Do not round values or suppress nested metadata, checks, statuses, booleans, keys, or array lengths.",
+    "numericPolicy": "Absolute error is |a-b|. Relative error is |a-b|/max(|a|,|b|,1e-300). ULP distance is the distance between sign-ordered IEEE754 binary64 bit patterns; signed zeros compare equal. Bins are exclusive. Large relative/ULP differences in near-zero residuals are not evidence of a large absolute physical error.",
+    "counting": "Repeated occurrences of the same quantity and visualization aliases count as separate stored leaves. Job timestamps/IDs/outer receipt hashes are not mathematical result leaves. Top-level job status and checkpoint are compared separately.",
+    "runtimeBoundary": "These receipts predate MathScope.M2Environment/2 and do not retrospectively contain its runtime fingerprint. Exact mathematical hashes intentionally remain different across these runtimes. A finite runtime fingerprint is not a portability theorem or a remote-worker attestation.",
+    "allInputsOrSeedsCertified": false,
+    "crossRuntimeBitwiseEquality": false,
+    "toleranceGateApplied": false,
+    "algorithmsChangedByDiagnostic": false,
+    "separateBrowserPrimitiveInstrumentation": false
+  },
+  "inputs": {
+    "node": {
+      "name": "node-cross-runtime-receipts.json.gz",
+      "bytes": 1259631,
+      "sha256": "455df5ba4df0919c532f9b4d5c4b3fe441c5be5a5da98f073388c5d05da452d5",
+      "decodedBytes": 5522408,
+      "decodedSha256": "51533395c677c936411f7d0991d098769a553473eb2fae675e8496ba525c427a"
+    },
+    "browser": {
+      "name": "browser-v60-cross-runtime-receipts.json.gz",
+      "bytes": 1221051,
+      "sha256": "0eea1512dd546e0976f7ef1f0f42b12b5ef4b31c2a7a9cbf40f2d6f971414523",
+      "decodedBytes": 5453131,
+      "decodedSha256": "6ed67def86925ce08265caa20d35e847ee77058f7588cd07933e13cdd5bf95d5"
+    }
+  },
+  "runtime": {
+    "node": {
+      "kind": "NODE_LOCAL_MODULES",
+      "versions": {
+        "node": "24.19.0",
+        "acorn": "8.17.0",
+        "ada": "3.4.4",
+        "amaro": "1.1.10",
+        "ares": "1.34.6",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.3",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "137",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.69.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "3.5.7",
+        "simdjson": "4.6.4",
+        "simdutf": "6.4.0",
+        "sqlite": "3.53.3",
+        "tz": "2026b",
+        "undici": "7.29.0",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "13.6.233.17-node.51",
+        "zlib": "1.3.2.1-motley-3246f1b",
+        "zstd": "1.5.7"
+      },
+      "platform": "linux",
+      "arch": "x64"
+    },
+    "browserPageVersion": 60,
+    "browserIdentityInReceipt": null,
+    "browserIdentityScope": "The stored browser receipts identify the page version and Worker source digest; no user-agent or JS-engine version was stored in this capture."
+  },
+  "worker": {
+    "nodeDeclaredSha256": "278db3418c643a3978437388c634cbde9e7360c58bd223edc1d2e648e8620e40",
+    "browserDeclaredSha256": "278db3418c643a3978437388c634cbde9e7360c58bd223edc1d2e648e8620e40",
+    "declarationsEqual": true,
+    "independentStaticWorkerBaseline": {
+      "name": "static-worker-parity.json",
+      "bytes": 21093,
+      "sha256": "4f9fea5aabc3a896d96107e02b5bade3028117adae6ec095bf343ba50a3ffce5",
+      "decodedBytes": 21093,
+      "decodedSha256": "4f9fea5aabc3a896d96107e02b5bade3028117adae6ec095bf343ba50a3ffce5"
+    },
+    "baselineCount": 64,
+    "baselineWorkerSha256": "278db3418c643a3978437388c634cbde9e7360c58bd223edc1d2e648e8620e40"
+  },
+  "originalEnvironment": {
+    "nodeSchema": "MathScope.M2Environment/1",
+    "nodeHash": "8230d38a4cfa6c477d0946894c10d0db7aba7fbb9ae0c004a4d0cb62aac07bc7",
+    "browserHashes": [
+      "e258f36ae5672c31a8540bade668a22531acecfe48e971331b616fc2373b64e2"
+    ],
+    "nodeContainsRuntimeIdentity": false,
+    "note": "The original environment distinguishes execution mode but not a JS-runtime/Math identity. The later application-only environment fix is outside this unchanged-Worker result comparison."
+  },
+  "totals": {
+    "nodeJobs": 12,
+    "browserJobs": 12,
+    "comparedJobs": 12,
+    "missingJobs": [],
+    "identicalRequests": 12,
+    "identicalInputHashes": 12,
+    "identicalStatuses": 12,
+    "identicalCheckpoints": 12,
+    "identicalMathematicalHashes": 0,
+    "nodeStaticWorkerBaselineMatches": 12,
+    "examined": {
+      "objects": 39718,
+      "arrays": 18261,
+      "stringLeaves": 22839,
+      "booleanLeaves": 1139,
+      "digestLeaves": 1772,
+      "numericLeaves": 188561,
+      "otherLeaves": 1270,
+      "excludedTopLevelExecutionMetrics": 4
+    },
+    "differenceCounts": {
+      "NUMBER": 30385,
+      "HASH": 1548,
+      "STRING": 131,
+      "BOOLEAN": 0,
+      "TYPE": 0,
+      "ARRAY_LENGTH": 0,
+      "MISSING_KEY": 0,
+      "VALUE": 0,
+      "NONFINITE_NUMBER": 0
+    },
+    "numericULPBinsExclusive": {
+      "1": 11006,
+      "2..4": 11112,
+      "5..16": 5335,
+      "17..1024": 2681,
+      ">1024": 251
+    },
+    "maximumAbsolute": {
+      "path": "result.pairs[2].left.result.visualization.points[36].velocity[0]",
+      "type": "NUMBER",
+      "node": 19.65018034627658,
+      "browser": 19.650180346307234,
+      "nodeFloat64": "4033a672381bc287",
+      "browserFloat64": "4033a672381be43b",
+      "absoluteError": 3.065281362069072e-11,
+      "relativeError": 1.5599253075787246e-12,
+      "ulpDistance": 8628
+    },
+    "maximumRelative": {
+      "path": "result.pairs[0].left.result.gaugeCheck.normalizedActionDifference",
+      "type": "NUMBER",
+      "node": 0,
+      "browser": 1.8200628569259796e-16,
+      "nodeFloat64": "0000000000000000",
+      "browserFloat64": "3caa3ad8c4363d8d",
+      "absoluteError": 1.8200628569259796e-16,
+      "relativeError": 1.0,
+      "ulpDistance": 4371371090995723661
+    },
+    "maximumULP": {
+      "path": "result.pairs[0].left.result.gaugeCheck.normalizedActionDifference",
+      "type": "NUMBER",
+      "node": 0,
+      "browser": 1.8200628569259796e-16,
+      "nodeFloat64": "0000000000000000",
+      "browserFloat64": "3caa3ad8c4363d8d",
+      "absoluteError": 1.8200628569259796e-16,
+      "relativeError": 1.0,
+      "ulpDistance": 4371371090995723661
+    },
+    "hashFieldsByName": {
+      "configurationHash": 1408,
+      "ensembleHash": 12,
+      "finalConfigurationHash": 12,
+      "historyHash": 6,
+      "modelHash": 7,
+      "observationHash": 32,
+      "profileHash": 1,
+      "resultHash": 3,
+      "sampleHash": 19,
+      "sourceHash": 48
+    },
+    "stringClassification": {
+      "NUMERIC_DISPLAY_LABEL": 131,
+      "OTHER_STRING": 0
+    },
+    "stringExamples": [
+      {
+        "path": "result.pairs[0].left.result.visualization.points[12].label",
+        "type": "STRING",
+        "node": "X=0.003049209711097672; eta=-0.9; theta=0; tau=0.1; nonlinear-axis-finite-series",
+        "browser": "X=0.0030492097110976723; eta=-0.9; theta=0; tau=0.1; nonlinear-axis-finite-series",
+        "classification": "NUMERIC_DISPLAY_LABEL"
+      },
+      {
+        "path": "result.pairs[0].left.result.visualization.points[13].label",
+        "type": "STRING",
+        "node": "X=0.003049209711097672; eta=-0.9; theta=1.0471975511965976; tau=0.1; nonlinear-axis-finite-series",
+        "browser": "X=0.0030492097110976723; eta=-0.9; theta=1.0471975511965976; tau=0.1; nonlinear-axis-finite-series",
+        "classification": "NUMERIC_DISPLAY_LABEL"
+      }
+    ]
+  },
+  "records": [
+    {
+      "exampleId": "i2-blowup-pair",
+      "kind": "observation.blowup-pair",
+      "nodeStatus": "COMPLETED",
+      "browserStatus": "COMPLETED",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "c28b73e9cbe87eb4bcb4674abf395373c8b0293d4ac2427997409af1cbbe31fd",
+      "browserMathematicalHash": "1c25c78ac7ab9d21b40c5d456ccc424403a3fa7f13becc840cf860c4ca8462b2",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 2148,
+        "arrays": 3116,
+        "stringLeaves": 3036,
+        "booleanLeaves": 176,
+        "digestLeaves": 21,
+        "numericLeaves": 17415,
+        "otherLeaves": 5
+      },
+      "sourceDependencyTraceIds": [
+        "finite_blowup_profile"
+      ],
+      "differenceCounts": {
+        "NUMBER": 1186,
+        "HASH": 21,
+        "STRING": 126,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 821,
+        "2..4": 162,
+        "5..16": 1,
+        "17..1024": 43,
+        ">1024": 159
+      },
+      "maximumAbsolute": {
+        "path": "result.pairs[2].left.result.visualization.points[36].velocity[0]",
+        "type": "NUMBER",
+        "node": 19.65018034627658,
+        "browser": 19.650180346307234,
+        "nodeFloat64": "4033a672381bc287",
+        "browserFloat64": "4033a672381be43b",
+        "absoluteError": 3.065281362069072e-11,
+        "relativeError": 1.5599253075787246e-12,
+        "ulpDistance": 8628
+      },
+      "maximumRelative": {
+        "path": "result.source.sliceReports[2].axisAnchorResidual.angular",
+        "type": "NUMBER",
+        "node": 8.153995359805322e-06,
+        "browser": 8.153995352699894e-06,
+        "nodeFloat64": "3ee119a496c00000",
+        "browserFloat64": "3ee119a496800000",
+        "absoluteError": 7.105427357601002e-15,
+        "relativeError": 8.714043906165094e-10,
+        "ulpDistance": 4194304
+      },
+      "maximumULP": {
+        "path": "result.source.sliceReports[2].axisAnchorResidual.angular",
+        "type": "NUMBER",
+        "node": 8.153995359805322e-06,
+        "browser": 8.153995352699894e-06,
+        "nodeFloat64": "3ee119a496c00000",
+        "browserFloat64": "3ee119a496800000",
+        "absoluteError": 7.105427357601002e-15,
+        "relativeError": 8.714043906165094e-10,
+        "ulpDistance": 4194304
+      },
+      "hashFieldsByName": {
+        "modelHash": 7,
+        "observationHash": 6,
+        "profileHash": 1,
+        "sampleHash": 6,
+        "sourceHash": 1
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 126,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": [
+        {
+          "path": "result.pairs[0].left.result.visualization.points[12].label",
+          "type": "STRING",
+          "node": "X=0.003049209711097672; eta=-0.9; theta=0; tau=0.1; nonlinear-axis-finite-series",
+          "browser": "X=0.0030492097110976723; eta=-0.9; theta=0; tau=0.1; nonlinear-axis-finite-series",
+          "classification": "NUMERIC_DISPLAY_LABEL"
+        },
+        {
+          "path": "result.pairs[0].left.result.visualization.points[13].label",
+          "type": "STRING",
+          "node": "X=0.003049209711097672; eta=-0.9; theta=1.0471975511965976; tau=0.1; nonlinear-axis-finite-series",
+          "browser": "X=0.0030492097110976723; eta=-0.9; theta=1.0471975511965976; tau=0.1; nonlinear-axis-finite-series",
+          "classification": "NUMERIC_DISPLAY_LABEL"
+        }
+      ]
+    },
+    {
+      "exampleId": "i2-delta-assumed_bound",
+      "kind": "observation.delta-family",
+      "nodeStatus": "COMPLETED",
+      "browserStatus": "COMPLETED",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "8c67232bbf0ba39409572e491b8b243498e70de06676597bd977e7d2ce7c04d1",
+      "browserMathematicalHash": "893844404d96d33fccdb781bf6c43ec7ebc500039c7f7ce5d0aff6b62b32eb26",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 2795,
+        "arrays": 1700,
+        "stringLeaves": 3486,
+        "booleanLeaves": 93,
+        "numericLeaves": 9573,
+        "digestLeaves": 50,
+        "otherLeaves": 116
+      },
+      "sourceDependencyTraceIds": [
+        "finite_spectral_exp"
+      ],
+      "differenceCounts": {
+        "NUMBER": 32,
+        "HASH": 1,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 32,
+        "2..4": 0,
+        "5..16": 0,
+        "17..1024": 0,
+        ">1024": 0
+      },
+      "maximumAbsolute": {
+        "path": "result.pairs[0].left.correlator[6].upperBound",
+        "type": "NUMBER",
+        "node": 0.6872892787909721,
+        "browser": 0.6872892787909722,
+        "nodeFloat64": "3fe5fe4615e98e8e",
+        "browserFloat64": "3fe5fe4615e98e8f",
+        "absoluteError": 1.1102230246251565e-16,
+        "relativeError": 1.6153649691410546e-16,
+        "ulpDistance": 1
+      },
+      "maximumRelative": {
+        "path": "result.pairs[0].right.correlator[21].upperBound",
+        "type": "NUMBER",
+        "node": 0.005247518399181384,
+        "browser": 0.005247518399181385,
+        "nodeFloat64": "3f757e6bfe8de51a",
+        "browserFloat64": "3f757e6bfe8de51b",
+        "absoluteError": 8.673617379884035e-19,
+        "relativeError": 1.65289889812242e-16,
+        "ulpDistance": 1
+      },
+      "maximumULP": {
+        "path": "result.pairs[0].left.correlator[6].upperBound",
+        "type": "NUMBER",
+        "node": 0.6872892787909721,
+        "browser": 0.6872892787909722,
+        "nodeFloat64": "3fe5fe4615e98e8e",
+        "browserFloat64": "3fe5fe4615e98e8f",
+        "absoluteError": 1.1102230246251565e-16,
+        "relativeError": 1.6153649691410546e-16,
+        "ulpDistance": 1
+      },
+      "hashFieldsByName": {
+        "sourceHash": 1
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    },
+    {
+      "exampleId": "i2-delta-effective_model",
+      "kind": "observation.delta-family",
+      "nodeStatus": "COMPLETED",
+      "browserStatus": "COMPLETED",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "276d536e082b2aef92fd760cd8b337aa1115a123fa437d07c7dedecc3a542823",
+      "browserMathematicalHash": "3e476aed4f255446e5ddea9028db0be2c5a00cf59b0d44dc457355f5545874c5",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 2795,
+        "arrays": 1700,
+        "stringLeaves": 3486,
+        "booleanLeaves": 93,
+        "numericLeaves": 9589,
+        "digestLeaves": 50,
+        "otherLeaves": 116
+      },
+      "sourceDependencyTraceIds": [
+        "finite_spectral_exp",
+        "effective_field_covariance"
+      ],
+      "differenceCounts": {
+        "NUMBER": 34,
+        "HASH": 1,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 32,
+        "2..4": 0,
+        "5..16": 0,
+        "17..1024": 0,
+        ">1024": 2
+      },
+      "maximumAbsolute": {
+        "path": "result.pairs[0].left.result.verification.gauge.independentDifferenceCovariance",
+        "type": "NUMBER",
+        "node": 1.87290696951441e-07,
+        "browser": 1.8729068820941514e-07,
+        "nodeFloat64": "3e89234264800f68",
+        "browserFloat64": "3e89234250d0a019",
+        "absoluteError": 8.742025851816881e-15,
+        "relativeError": 4.667624176807582e-08,
+        "ulpDistance": 330264399
+      },
+      "maximumRelative": {
+        "path": "result.pairs[0].left.result.verification.gauge.independentDifferenceCovariance",
+        "type": "NUMBER",
+        "node": 1.87290696951441e-07,
+        "browser": 1.8729068820941514e-07,
+        "nodeFloat64": "3e89234264800f68",
+        "browserFloat64": "3e89234250d0a019",
+        "absoluteError": 8.742025851816881e-15,
+        "relativeError": 4.667624176807582e-08,
+        "ulpDistance": 330264399
+      },
+      "maximumULP": {
+        "path": "result.pairs[0].left.result.verification.gauge.independentDifferenceCovariance",
+        "type": "NUMBER",
+        "node": 1.87290696951441e-07,
+        "browser": 1.8729068820941514e-07,
+        "nodeFloat64": "3e89234264800f68",
+        "browserFloat64": "3e89234250d0a019",
+        "absoluteError": 8.742025851816881e-15,
+        "relativeError": 4.667624176807582e-08,
+        "ulpDistance": 330264399
+      },
+      "hashFieldsByName": {
+        "sourceHash": 1
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    },
+    {
+      "exampleId": "i2-delta-ensemble_estimate",
+      "kind": "observation.delta-family",
+      "nodeStatus": "COMPLETED",
+      "browserStatus": "COMPLETED",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "e82c75f6ff0e53be4c753bc9e19e88340cabaf076c5fd30679daaf4d1f0bd50a",
+      "browserMathematicalHash": "1a7d6f241aa5c39eb78be78d5cedb6e87d1427249f836a08d67fed60370b7e52",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 3516,
+        "arrays": 2204,
+        "stringLeaves": 3118,
+        "booleanLeaves": 359,
+        "numericLeaves": 19397,
+        "digestLeaves": 624,
+        "otherLeaves": 109
+      },
+      "sourceDependencyTraceIds": [
+        "haar_sampling"
+      ],
+      "differenceCounts": {
+        "NUMBER": 5931,
+        "HASH": 583,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 1493,
+        "2..4": 2292,
+        "5..16": 1516,
+        "17..1024": 596,
+        ">1024": 34
+      },
+      "maximumAbsolute": {
+        "path": "result.pairs[0].left.result.measurements.sites[14].curvatureEnergyDensity",
+        "type": "NUMBER",
+        "node": 164.3342626312982,
+        "browser": 164.33426263129792,
+        "nodeFloat64": "40648ab2478bb66c",
+        "browserFloat64": "40648ab2478bb662",
+        "absoluteError": 2.8421709430404007e-13,
+        "relativeError": 1.7295060065575738e-15,
+        "ulpDistance": 10
+      },
+      "maximumRelative": {
+        "path": "result.pairs[0].left.result.gaugeCheck.normalizedActionDifference",
+        "type": "NUMBER",
+        "node": 0,
+        "browser": 1.8200628569259796e-16,
+        "nodeFloat64": "0000000000000000",
+        "browserFloat64": "3caa3ad8c4363d8d",
+        "absoluteError": 1.8200628569259796e-16,
+        "relativeError": 1.0,
+        "ulpDistance": 4371371090995723661
+      },
+      "maximumULP": {
+        "path": "result.pairs[0].left.result.gaugeCheck.normalizedActionDifference",
+        "type": "NUMBER",
+        "node": 0,
+        "browser": 1.8200628569259796e-16,
+        "nodeFloat64": "0000000000000000",
+        "browserFloat64": "3caa3ad8c4363d8d",
+        "absoluteError": 1.8200628569259796e-16,
+        "relativeError": 1.0,
+        "ulpDistance": 4371371090995723661
+      },
+      "hashFieldsByName": {
+        "configurationHash": 512,
+        "ensembleHash": 8,
+        "finalConfigurationHash": 8,
+        "historyHash": 4,
+        "observationHash": 17,
+        "sampleHash": 8,
+        "sourceHash": 26
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    },
+    {
+      "exampleId": "i2-delta-units",
+      "kind": "observation.delta-family",
+      "nodeStatus": "COMPLETED",
+      "browserStatus": "COMPLETED",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "feb5deb20375b4b0097ad81b901cbbd7971977c381be537cfad785c59a130622",
+      "browserMathematicalHash": "413b8c10699506338247affeafa5005b7041499499af6ce174e9800b4bf288cb",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 2783,
+        "arrays": 1692,
+        "stringLeaves": 3434,
+        "booleanLeaves": 93,
+        "numericLeaves": 9573,
+        "digestLeaves": 46,
+        "otherLeaves": 116
+      },
+      "sourceDependencyTraceIds": [
+        "finite_spectral_exp"
+      ],
+      "differenceCounts": {
+        "NUMBER": 32,
+        "HASH": 1,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 32,
+        "2..4": 0,
+        "5..16": 0,
+        "17..1024": 0,
+        ">1024": 0
+      },
+      "maximumAbsolute": {
+        "path": "result.pairs[0].left.correlator[6].upperBound",
+        "type": "NUMBER",
+        "node": 0.6872892787909721,
+        "browser": 0.6872892787909722,
+        "nodeFloat64": "3fe5fe4615e98e8e",
+        "browserFloat64": "3fe5fe4615e98e8f",
+        "absoluteError": 1.1102230246251565e-16,
+        "relativeError": 1.6153649691410546e-16,
+        "ulpDistance": 1
+      },
+      "maximumRelative": {
+        "path": "result.pairs[0].right.correlator[21].upperBound",
+        "type": "NUMBER",
+        "node": 0.005247518399181384,
+        "browser": 0.005247518399181385,
+        "nodeFloat64": "3f757e6bfe8de51a",
+        "browserFloat64": "3f757e6bfe8de51b",
+        "absoluteError": 8.673617379884035e-19,
+        "relativeError": 1.65289889812242e-16,
+        "ulpDistance": 1
+      },
+      "maximumULP": {
+        "path": "result.pairs[0].left.correlator[6].upperBound",
+        "type": "NUMBER",
+        "node": 0.6872892787909721,
+        "browser": 0.6872892787909722,
+        "nodeFloat64": "3fe5fe4615e98e8e",
+        "browserFloat64": "3fe5fe4615e98e8f",
+        "absoluteError": 1.1102230246251565e-16,
+        "relativeError": 1.6153649691410546e-16,
+        "ulpDistance": 1
+      },
+      "hashFieldsByName": {
+        "sourceHash": 1
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    },
+    {
+      "exampleId": "m2-su2-cube-transfer-cutoff",
+      "kind": "gauge.transfer-cutoff",
+      "nodeStatus": "COMPLETED",
+      "browserStatus": "COMPLETED",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "a6878be8a51be1b76097d5714be857dbd0add919b21ecee72d02edb979d01a0d",
+      "browserMathematicalHash": "1025ff720f25ad95c8af0974ddf6e50d4a0be20e60c757ef4867fdf0b5d5208f",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 4266,
+        "arrays": 4184,
+        "stringLeaves": 216,
+        "booleanLeaves": 40,
+        "numericLeaves": 41650,
+        "excludedTopLevelExecutionMetrics": 1,
+        "otherLeaves": 2,
+        "digestLeaves": 10
+      },
+      "sourceDependencyTraceIds": [
+        "haar_sampling",
+        "transfer_cutoff"
+      ],
+      "differenceCounts": {
+        "NUMBER": 10293,
+        "HASH": 4,
+        "STRING": 5,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 4371,
+        "2..4": 4400,
+        "5..16": 1170,
+        "17..1024": 341,
+        ">1024": 11
+      },
+      "maximumAbsolute": {
+        "path": "result.errorBudget.operatorNorm.numericalEnclosureAllowance",
+        "type": "NUMBER",
+        "node": 3.3478965478008825e-10,
+        "browser": 3.3480597505855024e-10,
+        "nodeFloat64": "3df701ae90840fcf",
+        "browserFloat64": "3df701f810840fcf",
+        "absoluteError": 1.63202784619898e-14,
+        "relativeError": 4.8745481496068705e-05,
+        "ulpDistance": 315680096256
+      },
+      "maximumRelative": {
+        "path": "result.transferOperator.unitarity.finiteRealTimeEvolution.maxUnitaryResidual",
+        "type": "NUMBER",
+        "node": 1.2212453270876722e-15,
+        "browser": 8.600512733049339e-16,
+        "nodeFloat64": "3cd6000000000000",
+        "browserFloat64": "3ccefc92a73ed1a3",
+        "absoluteError": 3.6119405378273834e-16,
+        "relativeError": 0.2957588010953417,
+        "ulpDistance": 1974093012348509
+      },
+      "maximumULP": {
+        "path": "result.transferOperator.unitarity.finiteRealTimeEvolution.maxUnitaryResidual",
+        "type": "NUMBER",
+        "node": 1.2212453270876722e-15,
+        "browser": 8.600512733049339e-16,
+        "nodeFloat64": "3cd6000000000000",
+        "browserFloat64": "3ccefc92a73ed1a3",
+        "absoluteError": 3.6119405378273834e-16,
+        "relativeError": 0.2957588010953417,
+        "ulpDistance": 1974093012348509
+      },
+      "hashFieldsByName": {
+        "observationHash": 1,
+        "sampleHash": 1,
+        "sourceHash": 2
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 5,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": [
+        {
+          "path": "result.visualization.points[1].label",
+          "type": "STRING",
+          "node": "cutoff eigenvalue 1: 0.00001457867292039946",
+          "browser": "cutoff eigenvalue 1: 0.000014578672920399463",
+          "classification": "NUMERIC_DISPLAY_LABEL"
+        },
+        {
+          "path": "result.visualization.points[2].label",
+          "type": "STRING",
+          "node": "cutoff eigenvalue 2: 0.000014138946597330747",
+          "browser": "cutoff eigenvalue 2: 0.000014138946597330742",
+          "classification": "NUMERIC_DISPLAY_LABEL"
+        }
+      ]
+    },
+    {
+      "exampleId": "m2-su2-haar-reference",
+      "kind": "gauge.sampler-reference",
+      "nodeStatus": "COMPLETED",
+      "browserStatus": "COMPLETED",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "e2ff122dce9baed2f60c9be548aa9f8ee4bd25a15be331ec74e1dd04f0a62ff0",
+      "browserMathematicalHash": "36e16f547988f4c2683423f60851092cec13a12fbeb7a62b34fba9e313f46183",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 12642,
+        "numericLeaves": 39599,
+        "arrays": 615,
+        "stringLeaves": 1301,
+        "booleanLeaves": 10,
+        "excludedTopLevelExecutionMetrics": 1,
+        "otherLeaves": 3,
+        "digestLeaves": 7
+      },
+      "sourceDependencyTraceIds": [
+        "haar_sampling"
+      ],
+      "differenceCounts": {
+        "NUMBER": 2015,
+        "HASH": 4,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 1083,
+        "2..4": 654,
+        "5..16": 208,
+        "17..1024": 70,
+        ">1024": 0
+      },
+      "maximumAbsolute": {
+        "path": "result.secondMomentStatistics.effectiveSampleSize",
+        "type": "NUMBER",
+        "node": 2190.6509858666154,
+        "browser": 2190.6509858666172,
+        "nodeFloat64": "40a11d4d4e04fe8b",
+        "browserFloat64": "40a11d4d4e04fe8f",
+        "absoluteError": 1.8189894035458565e-12,
+        "relativeError": 8.303419464266088e-16,
+        "ulpDistance": 4
+      },
+      "maximumRelative": {
+        "path": "result.statistics.autocorrelation[195]",
+        "type": "NUMBER",
+        "node": -2.8405055847484982e-05,
+        "browser": -2.8405055847487862e-05,
+        "nodeFloat64": "befdc8ec93122be7",
+        "browserFloat64": "befdc8ec93122f39",
+        "absoluteError": 2.879912020664621e-18,
+        "relativeError": 1.0138730358874898e-13,
+        "ulpDistance": 850
+      },
+      "maximumULP": {
+        "path": "result.statistics.autocorrelation[195]",
+        "type": "NUMBER",
+        "node": -2.8405055847484982e-05,
+        "browser": -2.8405055847487862e-05,
+        "nodeFloat64": "befdc8ec93122be7",
+        "browserFloat64": "befdc8ec93122f39",
+        "absoluteError": 2.879912020664621e-18,
+        "relativeError": 1.0138730358874898e-13,
+        "ulpDistance": 850
+      },
+      "hashFieldsByName": {
+        "observationHash": 1,
+        "sampleHash": 1,
+        "sourceHash": 2
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    },
+    {
+      "exampleId": "m2-su2-small-lattice-reference",
+      "kind": "gauge.small-lattice-reference",
+      "nodeStatus": "COMPLETED",
+      "browserStatus": "COMPLETED",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "db9b7c1b1fac2a73d14d85e67f6c47f7c9c76062ff3667b8c59a8b626eb2245b",
+      "browserMathematicalHash": "cdd2b4e69f1aba0d1a9a30d8de1a4249de02867210bc87240e6e4ec6e7838ff8",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 6471,
+        "arrays": 1019,
+        "stringLeaves": 2821,
+        "booleanLeaves": 99,
+        "numericLeaves": 27645,
+        "digestLeaves": 543,
+        "otherLeaves": 779,
+        "excludedTopLevelExecutionMetrics": 1
+      },
+      "sourceDependencyTraceIds": [
+        "haar_sampling",
+        "small_lattice_reference"
+      ],
+      "differenceCounts": {
+        "NUMBER": 7500,
+        "HASH": 531,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 2409,
+        "2..4": 2443,
+        "5..16": 1531,
+        "17..1024": 1085,
+        ">1024": 32
+      },
+      "maximumAbsolute": {
+        "path": "result.ensemble.measurements.sites[0].curvatureEnergyDensity",
+        "type": "NUMBER",
+        "node": 157.27148854657722,
+        "browser": 157.2714885465774,
+        "nodeFloat64": "4063a8b008bf9935",
+        "browserFloat64": "4063a8b008bf993b",
+        "absoluteError": 1.7053025658242404e-13,
+        "relativeError": 1.0843049694409165e-15,
+        "ulpDistance": 6
+      },
+      "maximumRelative": {
+        "path": "result.independentControls.lastConfiguration.actionAgreement",
+        "type": "NUMBER",
+        "node": 5.551115123125783e-17,
+        "browser": 0,
+        "nodeFloat64": "3c90000000000000",
+        "browserFloat64": "0000000000000000",
+        "absoluteError": 5.551115123125783e-17,
+        "relativeError": 1.0,
+        "ulpDistance": 4363988038922010624
+      },
+      "maximumULP": {
+        "path": "result.independentControls.lastConfiguration.actionAgreement",
+        "type": "NUMBER",
+        "node": 5.551115123125783e-17,
+        "browser": 0,
+        "nodeFloat64": "3c90000000000000",
+        "browserFloat64": "0000000000000000",
+        "absoluteError": 5.551115123125783e-17,
+        "relativeError": 1.0,
+        "ulpDistance": 4363988038922010624
+      },
+      "hashFieldsByName": {
+        "configurationHash": 512,
+        "ensembleHash": 2,
+        "finalConfigurationHash": 2,
+        "historyHash": 1,
+        "observationHash": 4,
+        "sampleHash": 2,
+        "sourceHash": 8
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    },
+    {
+      "exampleId": "m2-su2-wilson-ensemble",
+      "kind": "gauge.ensemble",
+      "nodeStatus": "PARTIAL",
+      "browserStatus": "PARTIAL",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "492687bdf93eb5662f48acf2b8bf7512cb8352dd64f5882ba14f7ac24189da9f",
+      "browserMathematicalHash": "1ca9f80d23d7e66db3364d41b4f49e28bad7fbdaff72f547cce8714f2531d3cd",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 1594,
+        "arrays": 529,
+        "stringLeaves": 1356,
+        "booleanLeaves": 90,
+        "digestLeaves": 408,
+        "numericLeaves": 8245,
+        "otherLeaves": 18,
+        "excludedTopLevelExecutionMetrics": 1
+      },
+      "sourceDependencyTraceIds": [
+        "haar_sampling"
+      ],
+      "differenceCounts": {
+        "NUMBER": 3342,
+        "HASH": 399,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 729,
+        "2..4": 1152,
+        "5..16": 906,
+        "17..1024": 544,
+        ">1024": 11
+      },
+      "maximumAbsolute": {
+        "path": "result.measurements.sites[15].curvatureEnergyDensity",
+        "type": "NUMBER",
+        "node": 173.00142412731682,
+        "browser": 173.00142412731722,
+        "nodeFloat64": "4065a00baa9c8809",
+        "browserFloat64": "4065a00baa9c8817",
+        "absoluteError": 3.979039320256561e-13,
+        "relativeError": 2.3000037949561965e-15,
+        "ulpDistance": 14
+      },
+      "maximumRelative": {
+        "path": "result.replicas[0].maxActionCacheDrift",
+        "type": "NUMBER",
+        "node": 4.809620603811977e-15,
+        "browser": 2.074336728084187e-15,
+        "nodeFloat64": "3cf5a91d7227fb18",
+        "browserFloat64": "3ce2af1847a4fd2a",
+        "absoluteError": 2.7352838757277903e-15,
+        "relativeError": 0.568710944385068,
+        "ulpDistance": 5341449675800046
+      },
+      "maximumULP": {
+        "path": "result.replicas[0].maxActionCacheDrift",
+        "type": "NUMBER",
+        "node": 4.809620603811977e-15,
+        "browser": 2.074336728084187e-15,
+        "nodeFloat64": "3cf5a91d7227fb18",
+        "browserFloat64": "3ce2af1847a4fd2a",
+        "absoluteError": 2.7352838757277903e-15,
+        "relativeError": 0.568710944385068,
+        "ulpDistance": 5341449675800046
+      },
+      "hashFieldsByName": {
+        "configurationHash": 384,
+        "ensembleHash": 2,
+        "finalConfigurationHash": 2,
+        "historyHash": 1,
+        "observationHash": 3,
+        "sampleHash": 1,
+        "sourceHash": 6
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    },
+    {
+      "exampleId": "ns-m2-covariance",
+      "kind": "ns.pulse-covariance",
+      "nodeStatus": "PARTIAL",
+      "browserStatus": "PARTIAL",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "7055343953b2638350f9d01ee04186f510af1f9cc95dd8b56e0b06e119f98516",
+      "browserMathematicalHash": "03c76b4ad0734cd6f4c3cfce3d0d11da912a0301a9a80ccc851bee2079b8a21c",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 28,
+        "arrays": 33,
+        "stringLeaves": 59,
+        "booleanLeaves": 16,
+        "numericLeaves": 65,
+        "otherLeaves": 1,
+        "digestLeaves": 3
+      },
+      "sourceDependencyTraceIds": [
+        "angular_quadrature"
+      ],
+      "differenceCounts": {
+        "NUMBER": 1,
+        "HASH": 1,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 1,
+        "2..4": 0,
+        "5..16": 0,
+        "17..1024": 0,
+        ">1024": 0
+      },
+      "maximumAbsolute": {
+        "path": "result.results.angularAverage.discreteQuadrature",
+        "type": "NUMBER",
+        "node": 0.49999999999999994,
+        "browser": 0.5,
+        "nodeFloat64": "3fdfffffffffffff",
+        "browserFloat64": "3fe0000000000000",
+        "absoluteError": 5.551115123125783e-17,
+        "relativeError": 1.1102230246251565e-16,
+        "ulpDistance": 1
+      },
+      "maximumRelative": {
+        "path": "result.results.angularAverage.discreteQuadrature",
+        "type": "NUMBER",
+        "node": 0.49999999999999994,
+        "browser": 0.5,
+        "nodeFloat64": "3fdfffffffffffff",
+        "browserFloat64": "3fe0000000000000",
+        "absoluteError": 5.551115123125783e-17,
+        "relativeError": 1.1102230246251565e-16,
+        "ulpDistance": 1
+      },
+      "maximumULP": {
+        "path": "result.results.angularAverage.discreteQuadrature",
+        "type": "NUMBER",
+        "node": 0.49999999999999994,
+        "browser": 0.5,
+        "nodeFloat64": "3fdfffffffffffff",
+        "browserFloat64": "3fe0000000000000",
+        "absoluteError": 5.551115123125783e-17,
+        "relativeError": 1.1102230246251565e-16,
+        "ulpDistance": 1
+      },
+      "hashFieldsByName": {
+        "resultHash": 1
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    },
+    {
+      "exampleId": "ns-m2-pulse-curl",
+      "kind": "ns.pulse-curl",
+      "nodeStatus": "COMPLETED",
+      "browserStatus": "COMPLETED",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "e6893924fe9eec8a9e9a28c9d1d86281abe61986076627172af8642b23f0bb6a",
+      "browserMathematicalHash": "9fa3e9926c8fd1273c1e96719a3ba3ea9f49737b4df2fcbb58c78f092bf152e2",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 102,
+        "arrays": 171,
+        "stringLeaves": 153,
+        "booleanLeaves": 48,
+        "numericLeaves": 499,
+        "otherLeaves": 1,
+        "digestLeaves": 7
+      },
+      "sourceDependencyTraceIds": [
+        "source_pulse_curl"
+      ],
+      "differenceCounts": {
+        "NUMBER": 18,
+        "HASH": 1,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 3,
+        "2..4": 9,
+        "5..16": 2,
+        "17..1024": 2,
+        ">1024": 2
+      },
+      "maximumAbsolute": {
+        "path": "result.results.convergence[2].fullDivergence",
+        "type": "NUMBER",
+        "node": -0.0031596686464325785,
+        "browser": -0.0031596686473136515,
+        "nodeFloat64": "bf69e24e30158000",
+        "browserFloat64": "bf69e24e30348000",
+        "absoluteError": 8.810729923425242e-13,
+        "relativeError": 2.788498069541602e-10,
+        "ulpDistance": 2031616
+      },
+      "maximumRelative": {
+        "path": "result.results.convergence[2].normalizedFullDivergence",
+        "type": "NUMBER",
+        "node": -1.181917602243851e-05,
+        "browser": -1.1819176025734287e-05,
+        "nodeFloat64": "bee8c95f2ef4f5f4",
+        "browserFloat64": "bee8c95f2f12a57f",
+        "absoluteError": 3.295776398646276e-15,
+        "relativeError": 2.788499292565126e-10,
+        "ulpDistance": 1945483
+      },
+      "maximumULP": {
+        "path": "result.results.convergence[2].fullDivergence",
+        "type": "NUMBER",
+        "node": -0.0031596686464325785,
+        "browser": -0.0031596686473136515,
+        "nodeFloat64": "bf69e24e30158000",
+        "browserFloat64": "bf69e24e30348000",
+        "absoluteError": 8.810729923425242e-13,
+        "relativeError": 2.788498069541602e-10,
+        "ulpDistance": 2031616
+      },
+      "hashFieldsByName": {
+        "resultHash": 1
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    },
+    {
+      "exampleId": "ns-m2-pulse-ode",
+      "kind": "ns.pulse-ode",
+      "nodeStatus": "PARTIAL",
+      "browserStatus": "PARTIAL",
+      "statusEqual": true,
+      "requestEqual": true,
+      "inputHashEqual": true,
+      "checkpointEqual": true,
+      "nodeMathematicalHash": "a3aac40e415c28b50c4ce0c2f8578496c0d605fcd73584618bdb674c133faa64",
+      "browserMathematicalHash": "ea998fc92f4a2325cb1e747a566ddf9da6a3d85ab74ff14c8e6adb6df3e38557",
+      "mathematicalHashEqual": false,
+      "nodeMatchesIndependentStaticWorkerBaseline": true,
+      "environmentHashEqual": false,
+      "examined": {
+        "objects": 578,
+        "arrays": 1298,
+        "stringLeaves": 373,
+        "booleanLeaves": 22,
+        "numericLeaves": 5311,
+        "otherLeaves": 4,
+        "digestLeaves": 3
+      },
+      "sourceDependencyTraceIds": [
+        "reference_envelope"
+      ],
+      "differenceCounts": {
+        "NUMBER": 1,
+        "HASH": 1,
+        "STRING": 0,
+        "BOOLEAN": 0,
+        "TYPE": 0,
+        "ARRAY_LENGTH": 0,
+        "MISSING_KEY": 0,
+        "VALUE": 0,
+        "NONFINITE_NUMBER": 0
+      },
+      "numericULPBinsExclusive": {
+        "1": 0,
+        "2..4": 0,
+        "5..16": 1,
+        "17..1024": 0,
+        ">1024": 0
+      },
+      "maximumAbsolute": {
+        "path": "result.results.referenceEnvelope.rows[27].logP",
+        "type": "NUMBER",
+        "node": -0.7389704416671112,
+        "browser": -0.7389704416671099,
+        "nodeFloat64": "bfe7a5a556f5782a",
+        "browserFloat64": "bfe7a5a556f5781e",
+        "absoluteError": 1.3322676295501878e-15,
+        "relativeError": 1.802869985631094e-15,
+        "ulpDistance": 12
+      },
+      "maximumRelative": {
+        "path": "result.results.referenceEnvelope.rows[27].logP",
+        "type": "NUMBER",
+        "node": -0.7389704416671112,
+        "browser": -0.7389704416671099,
+        "nodeFloat64": "bfe7a5a556f5782a",
+        "browserFloat64": "bfe7a5a556f5781e",
+        "absoluteError": 1.3322676295501878e-15,
+        "relativeError": 1.802869985631094e-15,
+        "ulpDistance": 12
+      },
+      "maximumULP": {
+        "path": "result.results.referenceEnvelope.rows[27].logP",
+        "type": "NUMBER",
+        "node": -0.7389704416671112,
+        "browser": -0.7389704416671099,
+        "nodeFloat64": "bfe7a5a556f5782a",
+        "browserFloat64": "bfe7a5a556f5781e",
+        "absoluteError": 1.3322676295501878e-15,
+        "relativeError": 1.802869985631094e-15,
+        "ulpDistance": 12
+      },
+      "hashFieldsByName": {
+        "resultHash": 1
+      },
+      "stringClassification": {
+        "NUMERIC_DISPLAY_LABEL": 0,
+        "OTHER_STRING": 0
+      },
+      "stringExamples": []
+    }
+  ],
+  "directNativeExpWitness": {
+    "exampleId": "i2-delta-assumed_bound",
+    "path": "result.pairs[0].left.correlator[6].upperBound",
+    "sourceFile": "research-ide/mathscope-m1/gauge/family.mjs",
+    "sourceExpression": "upperBound=C0*Math.exp(-s.delta*t/s.hbar)",
+    "sourceExpressionPresent": true,
+    "sourceLine": 43,
+    "inputs": [
+      {
+        "C0": 1.0,
+        "delta": 0.5,
+        "time": 0.75,
+        "hbar": 1
+      },
+      {
+        "C0": 1.0,
+        "delta": 0.5,
+        "time": 0.75,
+        "hbar": 1
+      }
+    ],
+    "inputsEqual": true,
+    "exponent": -0.375,
+    "node": 0.6872892787909721,
+    "browser": 0.6872892787909722,
+    "nodeFloat64": "3fe5fe4615e98e8e",
+    "browserFloat64": "3fe5fe4615e98e8f",
+    "ulpDistance": 1,
+    "grade": "DIRECT_SAME_INPUT_SOURCE_EXPRESSION_WITNESS",
+    "reason": "C0 is exactly 1 and the identical binary64 exponent is exactly -0.375; multiplication by 1 leaves the native Math.exp output unchanged. The stored upperBound therefore exposes that direct call's result, rather than merely a downstream difference.",
+    "separateBrowserPrimitiveInstrumentation": false,
+    "laterBrowserCallingRuntimeProbeFloat64": "3fe5fe4615e98e8f",
+    "laterBrowserProbeMatchesOriginalReceipt": true
+  },
+  "laterBrowserRuntimeAudit": {
+    "source": {
+      "name": "browser-v61-runtime-audit.json",
+      "bytes": 127136,
+      "sha256": "69b50914cd933c60342cf01865c9d6d20f98d7c84712c4658fef1ee42f8cbb5d",
+      "decodedBytes": 127136,
+      "decodedSha256": "69b50914cd933c60342cf01865c9d6d20f98d7c84712c4658fef1ee42f8cbb5d"
+    },
+    "pageVersion": 61,
+    "environmentSchema": "MathScope.M2Environment/2",
+    "environmentHash": "a0e157da519a0c25a77da9feff53b2834b3f5a124cd56464ba5073d2d55d961a",
+    "reportedBrowserIdentity": {
+      "kind": "BROWSER",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "platform": "MacIntel"
+    },
+    "probeCount": 18,
+    "probeSha256": "b77119efd7afbd86820a42c2ef5a30cf9df959b7425b300dd47000d9dccfbc7b",
+    "scope": "CALLING_RUNTIME_IDENTITY_AND_FINITE_MATH_PROBE",
+    "portabilityGuarantee": false,
+    "workerSha256MatchesOriginalReceipts": true,
+    "relevantProbes": [
+      {
+        "name": "exp(-0.375)",
+        "float64": "3fe5fe4615e98e8f"
+      },
+      {
+        "name": "asinh(2.6875)",
+        "float64": "3ffb6f6ae7b3f865"
+      }
+    ],
+    "interpretation": "Separate later calling-runtime probes corroborate the native Math behavior. This metadata does not retrospectively become part of the older job receipts and does not attest a remote or custom worker runtime."
+  },
+  "sourceDependencyTraces": {
+    "angular_quadrature": {
+      "grade": "SOURCE_FORMULA_TRACED; NATIVE_PRIMITIVE_NOT_INDEPENDENTLY_ISOLATED",
+      "files": [
+        "research-ide/mathscope-m2/navier/index.mjs"
+      ],
+      "dependency": "The differing scalar is sum_{i=0}^{127} cos(2*pi*i/128)^2/128. The analytic angular factor, covariance matrix, reconstructed target, and checks are unchanged.",
+      "limit": "Individual browser cosine evaluations were not instrumented in these receipts."
+    },
+    "effective_field_covariance": {
+      "grade": "SOURCE_DEPENDENCY_TRACED; FIRST_DIFFERING_NATIVE_PRIMITIVE_NOT_ISOLATED",
+      "files": [
+        "research-ide/mathscope-m1/gauge/fields.mjs",
+        "research-ide/mathscope-m1/gauge/matrix.mjs",
+        "research-ide/mathscope-m2/observatory/index.mjs"
+      ],
+      "dependency": "The additional small difference is in the classical field's independent finite-difference covariance residual; its recorded tolerance verdict is unchanged.",
+      "limit": "A cancellation-sensitive verification residual can have a large ULP/relative change despite a small absolute difference."
+    },
+    "finite_blowup_profile": {
+      "grade": "SOURCE_DEPENDENCY_TRACED; FIRST_DIFFERING_NATIVE_PRIMITIVE_NOT_ISOLATED",
+      "files": [
+        "research-ide/mathscope-m1/navier/profile.mjs",
+        "research-ide/mathscope-m1/navier/coordinates.mjs",
+        "research-ide/mathscope-m2/observatory/index.mjs"
+      ],
+      "dependency": "M1 constructs logarithmically spaced X using exp/log. Stored X differs in a low bit; finite profile evaluation and similarity-to-physical velocity use sqrt/powers/trigonometry. The displayed X labels preserve that actual source difference.",
+      "limit": "No equal-velocity/different-hypot witness was found; therefore this diagnostic does not attribute these values specifically to Math.hypot. This remains a finite candidate observation, not a blowup theorem."
+    },
+    "finite_spectral_exp": {
+      "grade": "DIRECT_SAME_INPUT_SOURCE_EXPRESSION_WITNESS_AVAILABLE",
+      "files": [
+        "research-ide/mathscope-m1/gauge/family.mjs",
+        "research-ide/mathscope-m2/observatory/index.mjs"
+      ],
+      "dependency": "upperBound=C0*Math.exp(-delta*time/hbar). For the stored witness C0=1, delta=.5, time=.75, hbar=1, the expression is exactly Math.exp(-.375); the two recorded values differ by one binary64 ULP.",
+      "limit": "This isolates one direct native exp discrepancy. It does not identify every primitive responsible for every other differing leaf."
+    },
+    "haar_sampling": {
+      "grade": "SOURCE_DEPENDENCY_TRACED; FIRST_DIFFERING_NATIVE_PRIMITIVE_NOT_ISOLATED",
+      "files": [
+        "research-ide/mathscope-m2/gauge/contracts.mjs",
+        "research-ide/mathscope-m2/gauge/lattice.mjs",
+        "research-ide/mathscope-m2/gauge/quaternion-oracle.mjs",
+        "research-ide/mathscope-m2/gauge/ensemble.mjs"
+      ],
+      "dependency": "Seeded integer RNG -> Box-Muller sqrt(-2*log(u))*cos(2*pi*v) -> four-dimensional Math.hypot normalization -> SU(2) links -> Wilson measurements and derived statistics. Metropolis also calls Math.log.",
+      "limit": "Matching stored acceptance/count/checkpoint data does not record or prove equality of every unpersisted proposal decision. No claim that Math.hypot alone caused this result."
+    },
+    "reference_envelope": {
+      "grade": "SOURCE_FORMULA_TRACED; NATIVE_PRIMITIVE_NOT_INDEPENDENTLY_ISOLATED",
+      "files": [
+        "research-ide/mathscope-m2/navier/source-envelope.mjs"
+      ],
+      "dependency": "For identical lambda0=sqrt(2), u=2, length=8, row 27 has s=2.6875. logP uses asinh(s)-asinh(u) and (1+u*u)**1.5. Only this reference-envelope scalar differs; the stored integrated ODE samples and ODE diagnostics are identical.",
+      "limit": "This identifies the executed reference formula, not a separately measured browser asinh primitive or an actual ODE-solution discrepancy."
+    },
+    "small_lattice_reference": {
+      "grade": "SOURCE_DEPENDENCY_TRACED; FIRST_DIFFERING_NATIVE_PRIMITIVE_NOT_ISOLATED",
+      "files": [
+        "research-ide/mathscope-m2/gauge/reference.mjs",
+        "research-ide/mathscope-m2/gauge/quaternion-oracle.mjs",
+        "research-ide/mathscope-m2/gauge/ensemble.mjs"
+      ],
+      "dependency": "Independent Haar quaternion importance sampling and the matrix ensemble both contain native normal draws/normalization; confidence radii use log/sqrt. Their implementations remain separate.",
+      "limit": "The independent oracle and all stored pass/fail values agree across these two runs; this does not establish equality for every input or seed."
+    },
+    "source_pulse_curl": {
+      "grade": "SOURCE_DEPENDENCY_TRACED; FIRST_DIFFERING_NATIVE_PRIMITIVE_NOT_ISOLATED",
+      "files": [
+        "research-ide/mathscope-m2/navier/source-pulse-curl.mjs"
+      ],
+      "dependency": "The source jets call exp/sin/cos; Cartesian evaluation uses hypot/atan2/powers and finite differences. The largest difference is in a cancellation-sensitive centered finite-difference divergence. Source checks, conjugacy, and negative-control verdicts are unchanged.",
+      "limit": "The discrepancy in a finite-difference residual is not itself a rigorous bound on the field error."
+    },
+    "transfer_cutoff": {
+      "grade": "SOURCE_DEPENDENCY_TRACED; FIRST_DIFFERING_NATIVE_PRIMITIVE_NOT_ISOLATED",
+      "files": [
+        "research-ide/mathscope-m2/gauge/transfer.mjs",
+        "research-ide/mathscope-m2/gauge/quaternion-oracle.mjs",
+        "research-ide/mathscope-m2/gauge/contracts.mjs",
+        "research-ide/mathscope-m2/gauge/enclosures.mjs"
+      ],
+      "dependency": "Haar quadrature inputs depend on Box-Muller/normalization; the symmetric eigensolver uses atan2/sin/cos; finite real-time verification uses log/sin/cos/hypot. The transfer exponential enclosure itself uses the explicit enclosure implementation, not an unqualified native-exp enclosure.",
+      "limit": "The reported operator-error allowance changes by a small absolute amount; no universal bound on all runtimes follows from this comparison."
+    }
+  },
+  "sourceArtifactsAtDiagnosis": [
+    {
+      "path": "research-ide/mathscope-m1/gauge/family.mjs",
+      "sha256": "e1008deb11424bde74025446ed1dbde90e04b6bcee198a965a7e121521bd423c"
+    },
+    {
+      "path": "research-ide/mathscope-m1/gauge/fields.mjs",
+      "sha256": "5335fb6307b70cc31b24d3ca8fb00f936f79fe9aac1139c88861337040b1f288"
+    },
+    {
+      "path": "research-ide/mathscope-m1/gauge/matrix.mjs",
+      "sha256": "b64936bab882ddaed9849112110a6114a19bf7d6c8105c59d311b542b18fced5"
+    },
+    {
+      "path": "research-ide/mathscope-m1/navier/coordinates.mjs",
+      "sha256": "aaf25139e73440f5a365ec627d33ba8f4f66b34f2d15c3f25966fecce4c5eddd"
+    },
+    {
+      "path": "research-ide/mathscope-m1/navier/profile.mjs",
+      "sha256": "d5a007cbcb141e728fc4bf9b3bdca08e8be74a6f6bb18a88c1a5e8389b4a99ab"
+    },
+    {
+      "path": "research-ide/mathscope-m2/gauge/contracts.mjs",
+      "sha256": "700e462ff3731899daa98f6453a04188d990b81e09c11e2ebb639fd1bd86e24c"
+    },
+    {
+      "path": "research-ide/mathscope-m2/gauge/enclosures.mjs",
+      "sha256": "52d48aa5e0a8f9db6d1a5c36fb6f70e29affa6b09d8d57c9f2efba7ae68d40fc"
+    },
+    {
+      "path": "research-ide/mathscope-m2/gauge/ensemble.mjs",
+      "sha256": "b51e4c23b82fdfca7affa125e6a4f4971f519526190f956a39f42fc812d645bf"
+    },
+    {
+      "path": "research-ide/mathscope-m2/gauge/lattice.mjs",
+      "sha256": "6e6b31ad5fefd945630e8aebf5e42a5b41c0b05154a2cb3a514cb162f0a10e30"
+    },
+    {
+      "path": "research-ide/mathscope-m2/gauge/quaternion-oracle.mjs",
+      "sha256": "5af716b7e3161fcdf775b7c80f0d92a6b52736a30fa560ece9458f9276fbf20e"
+    },
+    {
+      "path": "research-ide/mathscope-m2/gauge/reference.mjs",
+      "sha256": "d81516d5a3a7626ecf0ea257fcc930603522de3ed9a0b9d562e30450f3110548"
+    },
+    {
+      "path": "research-ide/mathscope-m2/gauge/transfer.mjs",
+      "sha256": "7fd64613e4b95d880e15c733e343227ce0239a9e7edab7805d4fa520c0217f9b"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/index.mjs",
+      "sha256": "53c509acd21057de711102b5f834d243f497b4dd220e477c932ef3d9e0dd844f"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/source-envelope.mjs",
+      "sha256": "fcbc6b76a058ecd0b9cd32d16d3dee4e5c718dae41deada11ff0a2d5f25935e1"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/source-pulse-curl.mjs",
+      "sha256": "ef026acbf748b752263b0dc98b48c6cb9da9b74f09c5e94f0818e1f2e6db7fd0"
+    },
+    {
+      "path": "research-ide/mathscope-m2/observatory/index.mjs",
+      "sha256": "b52d5143fca71dcb0330ea200153f3440f274ccc504315e91d7c3256bd735ada"
+    }
+  ],
+  "ecmaScriptReference": {
+    "url": "https://tc39.es/ecma262/multipage/numbers-and-dates.html",
+    "sections": [
+      "21.3.2.12 Math.cos",
+      "21.3.2.14 Math.exp",
+      "21.3.2.19 Math.hypot"
+    ],
+    "statement": "These Math functions return implementation-approximated Number values. This specification fact permits the kind of runtime difference observed; the receipt and direct-expression witness establish the actual difference here."
+  },
+  "reproduction": {
+    "script": "research-ide/mathscope-m2/tests/compare-cross-runtime.py",
+    "scriptSha256": "6ad8ba5081edfb927fafaa6eb97dd2188c8233784ea6a78a663809f633b9d276",
+    "selfTestsPassed": 12,
+    "fullLeaves": {
+      "name": "cross-runtime-comparison-leaves.json.gz",
+      "bytes": 1503927,
+      "sha256": "52e4ebfef4cab873072663095f5c173da0a17dded3465658ac19538110af15ff",
+      "decodedBytes": 9866904,
+      "decodedSha256": "52b240e1e2dbcd7c87b7a00a5fa6ca5af61a5cc10afe75ae3c14502e0a8a0c9a"
+    },
+    "commandFromRepositoryRoot": "python research-ide/mathscope-m2/tests/compare-cross-runtime.py research-ide/mathscope-m2/evidence/node-cross-runtime-receipts.json.gz research-ide/mathscope-m2/evidence/browser-v60-cross-runtime-receipts.json.gz research-ide/mathscope-m2/evidence/cross-runtime-comparison.json"
+  }
+}

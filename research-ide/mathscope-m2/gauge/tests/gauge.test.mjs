@@ -29,7 +29,7 @@ test('a pure gauge has flat plaquettes; central holonomy is distinguishable from
     close(r.meanPolyakovReal,initial.kind==='CENTER_HOLONOMY'?-1:1);
   }
 });
-test('all fifteen actual M1 groups preserve plaquette trace and action under independent site frames',async()=>{
+test('all fourteen actual M1 groups preserve plaquette trace and action under independent site frames',async()=>{
   for(const g of availableGroups()){
     const c=await conf({...base,group:g.spec}),r=gaugeDiagnostics(c,`gauge-${g.id}`),d=descriptor(c);assert.equal(r.passed,true,g.id);const a=action(c);assert.ok(a>=-1e-10&&a<=d.actionBound.upper+1e-10,g.id);
     assert.equal(c.group.dimension,g.dimension);assert.equal(c.group.matrixDimension,g.matrixDimension);
@@ -81,7 +81,7 @@ test('one-link Markov samples pass independent distribution checks, not just fix
 test('finite beta=0 lattice matches product Haar expectation; manifests and histories are complete',async()=>{
   const input={...ensembleBase,beta:0,sampler:{algorithm:'SU2_HAAR_METROPOLIS',seed:'product-Haar-control',starts:['COLD','HOT_HAAR'],burnIn:16,samples:128,thin:1,maxLag:24,minimumESS:40}},r=await run('gauge.ensemble',input);
   assert.equal(r.replicas.length,2);for(const replica of r.replicas){assert.equal(replica.samples.length,128);assert.equal(replica.history.length,144);assert.equal(replica.acceptance,1);assert.equal(replica.statistics.action.status,'DETERMINISTIC_OBSERVABLE');assert.equal(replica.finalSource.links.length,64);}
-  for(const reference of r.diagnostics.betaZeroReference)assert.equal(reference.withinTolerance,true);assert.equal(r.lattice.partitionFunction.lowerBoundFloat64,1);assert.equal(r.transferOperator.finiteMatrix,null);assert.equal(r.reflectionPositivity.status,'RESEARCH_OPEN');
+  for(const reference of r.diagnostics.betaZeroReference)assert.equal(reference.withinTolerance,true);assert.equal(r.lattice.partitionFunction.lowerBoundFloat64,1);assert.equal(r.transferOperator.finiteMatrix,null);assert.equal(r.reflectionPositivity.status,'ANALYTIC_EXTENSION_APPLIED');assert.equal(r.reflectionPositivity.operator.positivity,'POSITIVE_SEMIDEFINITE');
 });
 test('full-basis general-group proposal runs in the actual SU3 group with conservative small-chain status',async()=>{
   const group=availableGroups().find(x=>x.id==='SU3').spec,r=await run('gauge.ensemble',{...ensembleBase,group,sampler:{algorithm:'FULL_BASIS_LIE_METROPOLIS',seed:'su3-full-basis',starts:['COLD'],samples:8,burnIn:2,stepSize:.4}});

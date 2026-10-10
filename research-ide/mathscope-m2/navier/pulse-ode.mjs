@@ -14,6 +14,21 @@ const norm=a=>Math.hypot(...a);
 const add=(a,b)=>a.map((v,i)=>v+b[i]);
 const scale=(a,s)=>a.map(v=>v*s);
 const matvec=(M,x)=>M.map(r=>dot(r,x));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+
+/** Orthogonal change of coordinates handles the full affine normal in (7.4). */
+export function integrateAffineTangentPulse(options){
+  const {normalAtMidpoint:n,normalDerivative:nd,matrix,initial}=options;
+  if(!Array.isArray(nd)||nd.length!==3||!nd.every(Number.isFinite))throw Error('A finite three-component affine normal derivative is required.');
+  if(nd[1]===0&&nd[2]===0)return integrateTangentPulse(options);
+  if(!Array.isArray(n)||n.length!==3||!n.every(Number.isFinite)||!Array.isArray(initial)||initial.length!==3||!initial.every(Number.isFinite))throw Error('Finite three-component normal and polarization are required.');
+  const ndNorm=norm(nd),e0=scale(nd,1/ndNorm),longitudinal=dot(n,e0),transverse=add(n,scale(e0,-longitudinal)),q=norm(transverse);
+  if(!(q>1e-14*norm(n)))throw Error('The affine normal line approaches zero; the installed frame needs a positive transverse gap.');
+  const e1=scale(transverse,1/q),e2=cross(e0,e1),basis=[e0,e1,e2],to=x=>basis.map(e=>dot(e,x)),from=x=>basis.reduce((s,e,i)=>add(s,scale(e,x[i])),[0,0,0]);
+  const transformedMatrix=basis.map(e=>basis.map(f=>dot(e,matvec(matrix,f))));
+  const output=integrateTangentPulse({...options,matrix:transformedMatrix,normalAtMidpoint:[longitudinal,q,0],normalDerivative:[ndNorm,0,0],initial:to(initial)});
+  return {...output,rows:output.rows.map(row=>({...row,t:from(row.t)})),method:{...output.method,name:'AFFINE_NORMAL_ORTHOGONAL_ROTATION_AND_PARALLEL_TANGENT_RK4',originalNormal:'n(midpoint)+(v-midpoint)*nPrime with all three source components retained',fixedOrthogonalBasis:basis,retainsAxialNormalDerivative:true,rotationIsParameterFree:true}};
+}
 
 export function integrateTangentPulse({matrix,normalAtMidpoint,normalDerivative,midpoint,length,steps,dampingCoefficient,initial,checkCancelled}){
   const vector3=v=>Array.isArray(v)&&v.length===3&&v.every(Number.isFinite);

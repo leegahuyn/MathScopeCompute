@@ -13,7 +13,7 @@ async function jobFor(e){
   return {id:e.id,request:e.request,status:result.status,result,inputHash:await sha256(e.request),resultHash:await sha256(result),mathematicalHash:await sha256(body)};
 }
 
-test('all eight actual gauge examples bind finite views, complete exact tables and real model/sample/observation hashes',async()=>{
+test('all registered actual gauge examples bind finite views, complete exact tables and real model/sample/observation hashes',async()=>{
   for(const e of getExamples()){
     const job=await jobFor(e);fixtures.set(e.id,job);
     const before=canonicalStringify(job),view=makeM2Visualization(job,{maxPoints:31,maxRows:19});

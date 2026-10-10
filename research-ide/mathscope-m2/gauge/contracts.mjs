@@ -2,8 +2,8 @@
 import {normalizeGroupSpec,createGroup,requireCondition} from '../../mathscope-m1/gauge/groups.mjs';
 import {normalizeFieldSpec,seedGenerator} from '../../mathscope-m1/gauge/fields.mjs';
 
-export const REVISION='m2-gauge-1.0.0';
-export const KINDS=['gauge.lattice','gauge.ensemble','gauge.sampler-reference','gauge.lattice-refinement'];
+export const REVISION='m2-gauge-1.1.0';
+export const KINDS=['gauge.lattice','gauge.ensemble','gauge.sampler-reference','gauge.lattice-refinement','gauge.reflection-positivity','gauge.transfer-cutoff','gauge.small-lattice-reference','gauge.volume-refinement'];
 export const LIMITS=Object.freeze({maxSites:4096,maxEnsembleSites:256,maxRawBytes:8388608,maxUpdates:1500000,maxLinkIntegrations:131072,maxRetainedSamples:4096,maxMilliseconds:60000});
 export const SU2={family:'SU',parameter:2,globalForm:'SIMPLY_CONNECTED',representation:'DEFINING'};
 const finite=(v,lo,hi)=>typeof v==='number'&&Number.isFinite(v)&&v>=lo&&v<=hi;
@@ -43,19 +43,51 @@ export function normalizeInput(kind,input){
   check(KINDS.includes(kind),'UNSUPPORTED','Unsupported M2 gauge kind.');
   check(input&&typeof input==='object'&&!Array.isArray(input),'INVALID_INPUT','Gauge input must be an object.');
   check(input.continuumCertificate===undefined&&input.claimQuantumMassGap!==true,'UNSUPPORTED','This module constructs finite lattice models and diagnostics; it cannot issue a continuum or quantum mass-gap certificate.');
-  knownKeys(input,kind==='gauge.lattice'?['group','lattice','beta','measurement','view','initial','gaugeCheckSeed']:kind==='gauge.ensemble'?['group','lattice','beta','measurement','view','sampler']:kind==='gauge.sampler-reference'?['group','beta','seed','samples','burnIn','quadraturePanels']:['group','field','origin','spacing','levels','transportSteps'],'gauge input');
+  const keys={'gauge.lattice':['group','lattice','beta','measurement','view','initial','gaugeCheckSeed'],'gauge.ensemble':['group','lattice','beta','measurement','view','sampler'],'gauge.sampler-reference':['group','beta','seed','samples','burnIn','quadraturePanels','algorithm','stepSize'],'gauge.lattice-refinement':['group','field','origin','spacing','levels','transportSteps','temporalRatio','measurement'],'gauge.reflection-positivity':['group','lattice','beta','actionKind','extraTerms','measure','observableAlgebra'],'gauge.transfer-cutoff':['group','lattice','beta','quadratureSamples','seed','failureProbability','maxOperatorError','cutoffWeight'],'gauge.small-lattice-reference':['group','lattice','beta','oracleSamples','seed','failureProbability','sampler','measurement','view'],'gauge.volume-refinement':['group','field','origin','spatialLength','temporalLength','cellCounts','transportSteps','referencePanels']};
+  knownKeys(input,keys[kind],'gauge input');
   const groupSpec=normalizeGroupSpec(input.group??SU2),group=createGroup(groupSpec);
+  if(kind==='gauge.reflection-positivity'){
+    const lattice=normalizeLattice(input.lattice),beta=input.beta??2;check(finite(beta,-1000,1000),'INVALID_INPUT','The theorem applicability audit requires finite beta in [-1000,1000].');
+    const actionKind=input.actionKind??'WILSON_REAL_CHARACTER',extraTerms=input.extraTerms??[],measure=input.measure??'PRODUCT_NORMALIZED_HAAR',observableAlgebra=input.observableAlgebra??'POSITIVE_TIME_GAUGE_INVARIANT_CYLINDER_FUNCTIONS';
+    check([actionKind,measure,observableAlgebra].every(v=>typeof v==='string'&&v.length<=200)&&Array.isArray(extraTerms)&&JSON.stringify(extraTerms).length<8192,'INVALID_INPUT','The audit requires bounded explicit action, measure, algebra and extra-term labels. Unproved variants return NOT_APPLICABLE.');
+    return {group:groupSpec,lattice,beta,actionKind,extraTerms:structuredClone(extraTerms),measure,observableAlgebra};
+  }
+  if(kind==='gauge.transfer-cutoff'){
+    const lattice=normalizeLattice(input.lattice),beta=input.beta??.5,bt=beta*(lattice.as/lattice.at),bs=beta/(lattice.as/lattice.at);
+    check(group.id==='SU2'&&lattice.Ns===2&&lattice.spatialBoundary==='OPEN','UNSUPPORTED','The implemented transfer basis is the full SU(2) open 2×2×2 spatial cube, with a separately declared Euclidean-time lattice.');
+    check(finite(beta,.0001,8)&&bt<=4&&bs<=8,'INVALID_INPUT','The explicit transfer enclosure requires 0<beta_t<=4 and 0<beta_s<=8.');
+    const failureProbability=input.failureProbability??.001,maxOperatorError=input.maxOperatorError??.1;check(finite(failureProbability,1e-9,.1)&&finite(maxOperatorError,1e-6,2),'INVALID_INPUT','Declare failure probability in [1e-9,.1] and operator tolerance in [1e-6,2].');
+    check(input.cutoffWeight===undefined||input.cutoffWeight===5,'UNSUPPORTED','The exhaustively checked spin-network basis has total sum(2j)<=5; no other cutoff is relabeled as this basis.');
+    return {group:groupSpec,lattice,beta,quadratureSamples:integer(input.quadratureSamples??4096,256,16384,'quadratureSamples'),seed:seed(input.seed??'m2-transfer-cube'),failureProbability,maxOperatorError,cutoffWeight:5};
+  }
+  if(kind==='gauge.small-lattice-reference'){
+    const lattice=normalizeLattice(input.lattice),beta=input.beta??.02;check(group.id==='SU2'&&lattice.Ns===2&&lattice.Nt===2&&lattice.spatialBoundary==='OPEN'&&lattice.temporalBoundary==='OPEN'&&lattice.as===lattice.at,'UNSUPPORTED','The independent nonzero-beta reference is the isotropic full SU(2) open 2×2×2×2 lattice. This graph has nondegenerate elementary loops; the variance oracle is not reused for another graph.');
+    check(finite(beta,.0001,.1),'INVALID_INPUT','This bounded product-Haar importance reference has beta in [.0001,.1]; strong-coupling one-link references separately cover beta up to 20.');
+    const failureProbability=input.failureProbability??.001;check(finite(failureProbability,1e-9,.1),'INVALID_INPUT','Reference failure probability must lie in [1e-9,.1].');
+    const base=normalizeInput('gauge.ensemble',{group:groupSpec,lattice,beta,measurement:input.measurement??'PLAQUETTE',view:input.view,sampler:{algorithm:'SU2_HAAR_METROPOLIS',starts:['COLD','HOT_HAAR'],burnIn:32,samples:128,maxLag:32,minimumESS:50,seed:input.seed??'m2-reference-chain',...input.sampler}});
+    return {...base,oracleSamples:integer(input.oracleSamples??4096,256,16384,'oracleSamples'),seed:seed(input.seed??'m2-independent-small-lattice'),failureProbability};
+  }
+  if(kind==='gauge.volume-refinement'){
+    const field=normalizeFieldSpec(group,input.field),origin=input.origin??[-.5,-.5,-.5,-.375],spatialLength=input.spatialLength??1,temporalLength=input.temporalLength??.75,cellCounts=input.cellCounts??[1,2,3];
+    check(field.kind==='EMBEDDED_BPST','UNSUPPORTED','The independent fixed-volume integral oracle currently requires a genuine embedded BPST field. Other actual M1 rules retain their source-specific local certificates.');
+    check(Array.isArray(origin)&&origin.length===4&&origin.every(v=>finite(v,-100,100))&&finite(spatialLength,.01,2)&&finite(temporalLength,.01,2),'INVALID_INPUT','An explicit positive bounded fixed physical box is required.');
+    check(origin.every((x,j)=>x-1e-12>=field.domain.bounds[j][0]&&x+(j===3?temporalLength:spatialLength)+1e-12<=field.domain.bounds[j][1]),'INVALID_INPUT','The entire fixed physical box and its rounding enclosure must lie inside the declared source window.');
+    check(Array.isArray(cellCounts)&&cellCounts.length>=2&&cellCounts.length<=4&&cellCounts.every((n,i)=>Number.isInteger(n)&&n>=1&&n<=4&&(i===0||n>cellCounts[i-1])),'INVALID_INPUT','Declare two to four increasing cell counts in [1,4].');
+    return {group:groupSpec,field,origin:origin.slice(),spatialLength,temporalLength,cellCounts:cellCounts.slice(),transportSteps:integer(input.transportSteps??2,1,8,'transportSteps'),referencePanels:integer(input.referencePanels??20,8,24,'referencePanels')};
+  }
   if(kind==='gauge.sampler-reference'){
     check(group.id==='SU2','UNSUPPORTED','The independent one-link Haar quadrature oracle is for actual SU(2), defining representation.');
     const beta=input.beta??2;check(finite(beta,0,20),'INVALID_INPUT','Reference beta must lie in [0,20].');
-    return {group:groupSpec,beta,seed:seed(input.seed??'m2-single-link-reference'),samples:integer(input.samples??12000,128,100000,'samples'),burnIn:integer(input.burnIn??1000,0,50000,'burnIn'),quadraturePanels:integer(input.quadraturePanels??2048,128,16384,'quadraturePanels')};
+    const algorithm=input.algorithm??'SU2_HAAR_METROPOLIS',stepSize=input.stepSize??1;check(['SU2_HAAR_METROPOLIS','FULL_BASIS_LIE_METROPOLIS'].includes(algorithm)&&finite(stepSize,.000001,3),'UNSUPPORTED','One-link controls run either full SU2 Haar increments or the symmetric full-basis Lie proposal.');
+    return {group:groupSpec,beta,algorithm,stepSize,seed:seed(input.seed??'m2-single-link-reference'),samples:integer(input.samples??12000,128,100000,'samples'),burnIn:integer(input.burnIn??1000,0,50000,'burnIn'),quadraturePanels:integer(input.quadraturePanels??2048,128,16384,'quadraturePanels')};
   }
   if(kind==='gauge.lattice-refinement'){
-    const field=normalizeFieldSpec(group,input.field),origin=input.origin??[.2,-.3,.1,.4],spacing=input.spacing??.4;
+    const field=normalizeFieldSpec(group,input.field),origin=input.origin??[.2,-.3,.1,.4],spacing=input.spacing??.4,temporalRatio=input.temporalRatio??1,measurement=input.measurement??'PLAQUETTE';
+    check(finite(temporalRatio,.25,4)&&['PLAQUETTE','CLOVER'].includes(measurement),'INVALID_INPUT','Refinement needs fixed temporalRatio in [.25,4] and an implemented plaquette/clover estimator.');
     check(Array.isArray(origin)&&origin.length===4&&origin.every(v=>finite(v,-100,100)),'INVALID_INPUT','refinement origin requires four finite coordinates.');
     check(finite(spacing,.0001,2),'INVALID_INPUT','Refinement spacing must lie in [.0001,2].');
-    if(field.domain.kind==='R4_WINDOW')check(origin.every((v,j)=>v>=field.domain.bounds[j][0]&&v+spacing<=field.domain.bounds[j][1]),'INVALID_INPUT','Every refinement loop must remain inside the declared classical source window.');
-    return {group:groupSpec,field,origin:origin.slice(),spacing,levels:integer(input.levels??4,2,6,'levels'),transportSteps:integer(input.transportSteps??8,1,32,'transportSteps')};
+    if(field.domain.kind==='R4_WINDOW')check(origin.every((v,j)=>v-(measurement==='CLOVER'?spacing*(j===3?temporalRatio:1):0)>=field.domain.bounds[j][0]&&v+spacing*(j===3?temporalRatio:1)<=field.domain.bounds[j][1]),'INVALID_INPUT','Every refinement loop must remain inside the declared classical source window.');
+    return {group:groupSpec,field,origin:origin.slice(),spacing,temporalRatio,measurement,levels:integer(input.levels??4,2,6,'levels'),transportSteps:integer(input.transportSteps??8,1,32,'transportSteps')};
   }
   const lattice=normalizeLattice(input.lattice),beta=input.beta??2;
   check(finite(beta,0,1000),'INVALID_INPUT','Wilson beta must lie in [0,1000].');

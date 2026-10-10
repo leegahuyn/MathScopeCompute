@@ -19,19 +19,19 @@ const finiteTree=(value,path='result')=>{
   else if(value&&typeof value==='object')for(const[k,v]of Object.entries(value))finiteTree(v,path+'.'+k);
 };
 
-test('all eight N4/N5 examples execute, retain archive identity, expose finite source graphics and remain honestly PARTIAL',async()=>{
-  assert.equal(examples.length,8);
+test('all fourteen N4/N5 examples execute with source graphics and distinguish completed operators from unresolved constructions',async()=>{
+  assert.equal(examples.length,14);
   for(const e of examples){
     const result=await executeDomain(e.request),job={id:e.id,request:e.request,inputHash:await requestHash(e.request),status:result.status,result,resultHash:await sha256(result)};
     fixtures.set(e.id,job);finiteTree(result);
-    assert.equal(result.status,'PARTIAL',e.id);assert.ok(result.checks.length>0,e.id);assert.ok(result.checks.every(c=>c.pass===true),e.id+' bounded default checks');
+    assert.equal(result.status,['ns-m2-cutoffs','ns-m2-curl','ns-m2-dyadic','ns-m2-core-charts','ns-m2-torus','ns-m2-support','ns-m2-pulse-curl','ns-m2-tail'].includes(e.id)?'COMPLETED':'PARTIAL',e.id);assert.ok(result.checks.length>0,e.id);assert.ok(result.checks.every(c=>c.pass===true),e.id+' bounded default checks');
     assert.equal(result.scope.fullSameProfileN4,false);assert.equal(result.scope.fullSameProfileN5,false);assert.equal(result.scope.formalPass,false);
     assert.equal(result.sourceLedger.n3Profile.commit,'55dacb898f8c204bf0c5925ea901d75d6c2d0f46');
     assert.equal(result.sourceLedger.n3Profile.assessmentSha256,'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c');
-    assert.equal(result.sourceLedger.n3Profile.globalEvaluator,false);assert.ok(result.blockers.length>0);
+    assert.equal(result.sourceLedger.n3Profile.globalEvaluator,false);if(result.status==='PARTIAL')assert.ok(result.blockers.length>0);
     const before=await sha256(result),view=makeVisualization(job);
     assert.equal(view.state,'READY');assert.ok(view.table.rows.length>0,e.id+' has a numerical/source table');assert.ok(view.scene.points.length+view.scene.lines.length+view.scene.arrows.length>0,e.id+' has real finite marks');
-    assert.equal(view.binding.inputHash,job.inputHash);assert.equal(view.binding.resultHash,job.resultHash);assert.equal(await sha256(result),before);
+    assert.ok(view.axisMetadata.every(a=>a.sourceField.startsWith('result.')),e.id+' axis fields resolve to source result paths');assert.equal(view.binding.inputHash,job.inputHash);assert.equal(view.binding.resultHash,job.resultHash);assert.equal(await sha256(result),before);
   }
 });
 
@@ -65,7 +65,7 @@ test('cutoff inequalities certify the whole stated q domain using an outward der
   const on=await runJob({kind:'ns.background-cutoffs',input:{orders:2,tailIndex:2,log2q:boundary}}),inside=await runJob({kind:'ns.background-cutoffs',input:{orders:2,tailIndex:2,log2q:boundary-1}});
   assert.equal(on.results.tailContract.valid,false,'strict q<(2*a_J)^-1 must not include its boundary');assert.equal(inside.results.tailContract.valid,true);
   const inactive=await runJob({kind:'ns.background-cutoffs',input:{orders:2,log2q:0}});assert.deepEqual(inactive.results.query.activePositiveOrders,[]);assert.deepEqual(inactive.results.query.inactivePositiveOrders,[1,2]);
-  const large=await executeDomain({kind:'ns.background-cutoffs',input:{orders:1,constants:[[{kind:'FLOAT64',value:1e100},{kind:'FLOAT64',value:1e90}]]}});assert.equal(large.status,'PARTIAL');assert.equal(large.results.tailContract.J,1);assert.deepEqual(large.results.rows[0].constants[0],{kind:'FLOAT64',value:1e100});assert.ok(large.results.rows[0].allQBoundPassed);
+  const large=await executeDomain({kind:'ns.background-cutoffs',input:{orders:1,constants:[[{kind:'FLOAT64',value:1e100},{kind:'FLOAT64',value:1e90}]]}});assert.equal(large.status,'COMPLETED');assert.equal(large.results.tailContract.J,1);assert.deepEqual(large.results.rows[0].constants[0],{kind:'FLOAT64',value:1e100});assert.ok(large.results.rows[0].allQBoundPassed);
   const maximum=await executeDomain({kind:'ns.background-cutoffs',input:{orders:10}});assert.equal(maximum.results.rows.length,10);assert.deepEqual(maximum.results.rows.at(-1).constants.at(-1),{kind:'FLOAT64',value:1e20});assert.ok(maximum.results.rows.every(row=>row.allQBoundPassed));
 });
 
@@ -76,18 +76,16 @@ test('full potential curl converges in independent Cartesian divergence and omit
   assert.match(r.results.regularity,/C3/);assert.match(r.results.regularity,/not a C-infinity/);assert.match(r.results.curlRule,/grad\(chi\) cross A/);
 });
 
-test('dyadic charts identify space-time and preserve the same point in adjacent bands',()=>{
+test('dyadic charts use the actual source h and preserve the same physical point across interval reconstructions',()=>{
   const r=fixtures.get('ns-m2-dyadic').result;
-  for(const row of r.results.rows){for(const key of['r','z','tau'])assert.ok(Math.abs(row.overlapAtNextBand.reconstructed[key]-row[key])<=1e-13*Math.max(1,Math.abs(row[key])));assert.ok(row.epsilonK2>=1&&row.epsilonK2<=4);assert.ok(row.tau>0);}
+  for(const row of r.results.rows){assert.ok(Object.values(row.overlapAtNextBand.intervalsOverlap).every(Boolean));assert.ok(row.epsilonK2[0]>=1&&row.epsilonK2[1]<=4);assert.ok(row.tau>0);assert.equal(row.k,2);assert.equal(row.h.notNumericallyReplaced,true);}
   assert.equal(r.results.labelsFrozenDuringDifferentiation,true);assert.match(r.visualization.lostInformation.join(' '),/space-time chart/);assert.match(r.results.definitions.auxiliaryTorus,/not a physical spatial dimension/);
 });
 
-test('every conflicting support pair is separated; nonconflicting supports and same-label harmonics are not erased',async()=>{
-  const labels=[{id:'a',slow:[0,3]},{id:'b',slow:[1,4]},{id:'c',slow:[2,5]},{id:'d',slow:[7,8]},{id:'e',slow:[4,6]}],r=await runJob({kind:'ns.pulse-support',input:{labels}}),expected=[];
-  for(let i=0;i<labels.length;i++)for(let j=i+1;j<labels.length;j++)if(Math.max(labels[i].slow[0],labels[j].slow[0])<=Math.min(labels[i].slow[1],labels[j].slow[1]))expected.push([labels[i].id,labels[j].id]);
-  assert.deepEqual(r.results.edges,expected);assert.equal(r.results.pairChecks.length,expected.length);assert.ok(r.results.pairChecks.every(p=>p.auxiliaryIntersects===false));
-  for(const [a,b]of expected){const A=r.results.rectangles.find(x=>x.id===a),B=r.results.rectangles.find(x=>x.id===b);assert.notEqual(A.color,B.color);assert.ok(A.auxiliary.s[1]<B.auxiliary.s[0]||B.auxiliary.s[1]<A.auxiliary.s[0]);}
-  assert.equal(r.results.torus.determinant,14);assert.match(r.results.torus.HaarJacobian,/1\/14/);assert.equal(r.results.products.sameLabelHarmonics,'retained');assert.equal(r.results.torus.chainRuleRequiresInputDerivatives,true);
+test('uniform source supports cover the full countable mesh and retain same-label harmonics and once-per-box counting',async()=>{
+  const labels=[{id:'a',ell:16,grid:[0,0,0],sign:1},{id:'b',ell:16,grid:[0,0,0],sign:-1},{id:'c',ell:16,grid:[4,4,4],sign:1},{id:'d',ell:16,grid:[5,0,0],sign:1},{id:'e',ell:20,grid:[123,456,789],sign:1}],r=await runJob({kind:'ns.pulse-support',input:{labels}});
+  assert.equal(r.results.pairChecks.length,10);assert.ok(r.results.pairChecks.every(p=>p.auxiliarySupportsDisjoint));assert.ok(r.results.pairChecks.some(p=>p.potentialSlowOverlap));assert.equal(r.results.distinctSlowBoxes,4);assert.equal(r.results.palette.commonToAllBandsAndLabels,true);assert.equal(r.results.palette.dependsOnEnumeratedActiveSet,false);
+  assert.equal(r.results.torus.determinant,14);assert.equal(r.results.torus.haar.normalizedCoveringFactor,'1');assert.equal(r.results.torus.haar.rectangleJacobianExact,'4-2*sqrt(2)');assert.equal(r.results.products.sameLabelHarmonics,'retained');
 });
 
 function cartesianReference(options,end,steps=8192){
@@ -117,7 +115,7 @@ test('default pulse ODE refines at fourth order and reports constraints and empi
 });
 
 test('covariance matches its cone fixture and preserves a visible negative-weight failure outside the cone',async()=>{
-  const good=fixtures.get('ns-m2-covariance').result;assert.ok(good.results.weights.every(x=>x>0));assert.equal(good.results.cosineHalfFactor,.5);assert.equal(good.results.haar.jacobian,'1/14');assert.deepEqual(good.results.reconstructed,[-1,0]);
+  const good=fixtures.get('ns-m2-covariance').result;assert.ok(good.results.weights.every(x=>x>0));assert.equal(good.results.cosineHalfFactor,.5);assert.equal(good.results.haar.jacobian,'4-2*sqrt(2)');assert.equal(good.results.haar.normalizedCoveringFactor,'1');assert.ok(Math.abs(good.results.reconstructed[0]+1)<1e-12);assert.equal(good.results.reconstructed[1],0);
   const r=await runJob({kind:'ns.pulse-covariance',input:{target:[1,0]}});assert.equal(r.status,'PARTIAL');assert.ok(r.results.weights.every(x=>x<0));assert.equal(r.checks.find(c=>c.id==='positive-two-family-weights').pass,false);assert.equal(r.results.globalProfileMatching,false);
   const view=makeVisualization({id:'outside-cone',request:{kind:'ns.pulse-covariance',input:{target:[1,0]}},result:r,status:r.status,inputHash:'outside-cone-source'});assert.equal(view.state,'READY');assert.ok(view.table.rows.length>0);assert.ok(view.scene.points.length>0);
 });
@@ -171,9 +169,9 @@ test('local engine replay recomputes the exact request and rejects a tampered re
   }finally{engine.dispose();}
 });
 
-test('all sixteen original blueprint criteria retain their exact text and honest PARTIAL/OPEN states',async()=>{
+test('all sixteen original blueprint criteria retain exact text and separate ten accepted operator/observation gates from six remaining source constructions',async()=>{
   const source=JSON.parse(await readFile(new URL('./fixtures/original-n4-n5.json',import.meta.url),'utf8')),list=getChecklist();
   assert.equal(source.sourceSHA256,BLUEPRINT_SOURCE.sha256);assert.equal(list.length,16);assert.deepEqual(list.map(({id,title,criteria,sourcePage})=>({id,title,criteria,sourcePage})),source.criteria);
-  assert.equal(list.filter(x=>x.status==='PARTIAL').length,13);assert.equal(list.filter(x=>x.status==='OPEN').length,3);assert.ok(list.every(x=>x.formalComplete===false&&x.implementedScope&&x.evidencePath));
+  assert.equal(list.filter(x=>x.status==='PARTIAL').length,6);assert.equal(list.filter(x=>x.status==='PASS').length,10);assert.equal(list.filter(x=>x.status==='OPEN').length,0);assert.ok(list.every(x=>x.formalComplete===false&&x.implementedScope&&x.evidencePath));
   const c=getCapabilities();assert.equal(c.fullN4,false);assert.equal(c.fullN5,false);assert.equal(c.n3Profile.globalEvaluator,false);
 });

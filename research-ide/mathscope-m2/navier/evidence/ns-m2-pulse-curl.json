@@ -1,0 +1,1257 @@
+{
+  "id": "ns-m2-pulse-curl",
+  "request": {
+    "kind": "ns.pulse-curl",
+    "input": {
+      "ell": 8
+    }
+  },
+  "inputHash": "3211b8480f9fe98f88f308e80f91b186f9c1e017246a0cb698974b1297205d89",
+  "result": {
+    "blockers": [],
+    "checks": [
+      {
+        "id": "exact-source-curl-divergence",
+        "pass": true
+      },
+      {
+        "id": "radial-frame-negative",
+        "pass": true
+      },
+      {
+        "id": "all-coefficient-and-fast-derivatives",
+        "pass": true
+      },
+      {
+        "id": "source-principal-amplitude",
+        "pass": true
+      },
+      {
+        "id": "physical-cartesian-refinement",
+        "pass": true
+      },
+      {
+        "id": "omitted-remainder-divergence-negative",
+        "pass": true
+      },
+      {
+        "id": "omitted-remainder-covariance-negative",
+        "pass": true
+      },
+      {
+        "id": "conjugate-harmonics",
+        "pass": true
+      },
+      {
+        "id": "smooth-cutoff-zero-extension",
+        "pass": true
+      },
+      {
+        "id": "physical-potential-scale",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "EXACT_SOURCE_CURL_OPERATOR_WITH_INDEPENDENT_CARTESIAN_CHECKS",
+    "kind": "ns.pulse-curl",
+    "moduleVersion": "m2-ns-0.2.0",
+    "object": {
+      "kind": "SOURCE_HARMONIC_CURL_DIFFERENTIAL_OPERATOR"
+    },
+    "precisionLedger": {
+      "arithmetic": "FLOAT64_WITH_EXACT_INDEX_AND_SOURCE_EXPRESSIONS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 1800000,
+      "outputItemsEstimate": 17,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "f4cb82b6a394ff277d83713d9ae0dff22ada65f45ac18241a7e01d6f50e1cfd4",
+    "results": {
+      "checks": [
+        {
+          "id": "exact-source-curl-divergence",
+          "pass": true
+        },
+        {
+          "id": "radial-frame-negative",
+          "pass": true
+        },
+        {
+          "id": "all-coefficient-and-fast-derivatives",
+          "pass": true
+        },
+        {
+          "id": "source-principal-amplitude",
+          "pass": true
+        },
+        {
+          "id": "physical-cartesian-refinement",
+          "pass": true
+        },
+        {
+          "id": "omitted-remainder-divergence-negative",
+          "pass": true
+        },
+        {
+          "id": "omitted-remainder-covariance-negative",
+          "pass": true
+        },
+        {
+          "id": "conjugate-harmonics",
+          "pass": true
+        },
+        {
+          "id": "smooth-cutoff-zero-extension",
+          "pass": true
+        },
+        {
+          "id": "physical-potential-scale",
+          "pass": true
+        }
+      ],
+      "conjugacyError": 0,
+      "contract": {
+        "amplitudeCondition": "nPhi dot t_m=0; independent of theta; prescribed smooth support and zero extensions",
+        "conjugateConvention": "t_-m=conjugate(t_m), C_-m=conjugate(C_m), r_-m=conjugate(r_m); a real wave uses 1/2 of each conjugate coefficient",
+        "discreteLabelsFrozen": true,
+        "fullVelocity": "(t_m+r_m)*exp(i*k*m*Phi)",
+        "physicalPotentialScale": "Q^(1/2-A)",
+        "potential": "C_m=i*(nPhi cross t_m)/(k*m*|nPhi|^2)",
+        "remainder": [
+          "-D_z(C_m)_theta",
+          "D_z(C_m)_r-D_r(C_m)_z",
+          "(D_r+R^-1)(C_m)_theta"
+        ]
+      },
+      "convergence": [
+        {
+          "fullDivergence": -0.05058668185190385,
+          "normalizedFullDivergence": -0.00018922645508218019,
+          "normalizedOmittedDivergence": -0.06690988279812189,
+          "normalizedStep": 0.024,
+          "omittedRemainderDivergence": -17.88729251619064,
+          "physicalStep": 0.0015
+        },
+        {
+          "fullDivergence": -0.012640275818853297,
+          "normalizedFullDivergence": -0.000047282693722924875,
+          "normalizedOmittedDivergence": -0.06704311476855507,
+          "normalizedStep": 0.012,
+          "omittedRemainderDivergence": -17.922909963539,
+          "physicalStep": 0.00075
+        },
+        {
+          "fullDivergence": -0.0031596686464325785,
+          "normalizedFullDivergence": -0.00001181917602243851,
+          "normalizedOmittedDivergence": -0.06707643560272078,
+          "normalizedStep": 0.006,
+          "omittedRemainderDivergence": -17.93181775836213,
+          "physicalStep": 0.000375
+        }
+      ],
+      "covariance": {
+        "angularConvention": "Re(a*exp(i*k*m*Phi)); normalized angular average is 1/2 Re(a_r conjugate(a_tan)).",
+        "full": [
+          0.0013740223028873262,
+          -0.03774189714903142
+        ],
+        "omittedRemainderDifference": [
+          -0.004370799064626259,
+          -0.00031685652727835023
+        ],
+        "withoutRemainder": [
+          0.005744821367513585,
+          -0.03742504062175307
+        ]
+      },
+      "exact": {
+        "divergenceResidual": [],
+        "divergenceZero": true,
+        "method": "EXACT_BIGINT_DIFFERENTIAL_POLYNOMIAL",
+        "pass": true,
+        "physicalExponentIdentity": {
+          "basis": [
+            "constant",
+            "h"
+          ],
+          "curlDerivative": [
+            -0.5,
+            0
+          ],
+          "pass": true,
+          "potential": [
+            0,
+            -1
+          ],
+          "velocity": [
+            -0.5,
+            -1
+          ]
+        },
+        "relations": [
+          "D_r D_z C=D_z D_r C",
+          "D_r n_z=D_z n_r",
+          "D_r n_theta=-n_theta/R",
+          "D_z n_theta=0",
+          "D_r(1/R)=-1/R^2"
+        ],
+        "sourceEquations": [
+          "6.6",
+          "7.37",
+          "7.38",
+          "7.39"
+        ],
+        "tripleProductIdentity": true,
+        "tripleProductResidual": [
+          [],
+          [],
+          []
+        ]
+      },
+      "negativeRadialFrame": {
+        "divergenceResidual": [
+          {
+            "coefficient": "-1",
+            "monomial": "Ct*ir*nz*w"
+          },
+          {
+            "coefficient": "-1",
+            "monomial": "Ct_z*ir"
+          }
+        ],
+        "divergenceZero": false,
+        "method": "EXACT_BIGINT_DIFFERENTIAL_POLYNOMIAL",
+        "pass": false,
+        "physicalExponentIdentity": {
+          "basis": [
+            "constant",
+            "h"
+          ],
+          "curlDerivative": [
+            -0.5,
+            0
+          ],
+          "pass": true,
+          "potential": [
+            0,
+            -1
+          ],
+          "velocity": [
+            -0.5,
+            -1
+          ]
+        },
+        "relations": [
+          "D_r D_z C=D_z D_r C",
+          "D_r n_z=D_z n_r",
+          "D_r n_theta=-n_theta/R",
+          "D_z n_theta=0",
+          "D_r(1/R)=-1/R^2"
+        ],
+        "sourceEquations": [
+          "6.6",
+          "7.37",
+          "7.38",
+          "7.39"
+        ],
+        "tripleProductIdentity": true,
+        "tripleProductResidual": [
+          [],
+          [],
+          []
+        ]
+      },
+      "pass": true,
+      "probe": {
+        "diagnostics": {
+          "fullDivergence": [
+            0,
+            4.163336342344337e-17
+          ],
+          "leadingReconstructionError": 2.7755575615628914e-17,
+          "normalSquare": 0.3566535708613402,
+          "omittedRemainderDivergence": [
+            -0.2471201340394004,
+            0.025360960872682317
+          ],
+          "tangentJetNorm": 2.220446049250313e-16,
+          "tangentValue": 1.3904866443919908e-17
+        },
+        "parameters": {
+          "A": 0.5078125,
+          "D": 0.4921875,
+          "Mi": 0.31,
+          "Q": 0.00390625,
+          "center": {
+            "R": 1.3,
+            "Z": 0.2,
+            "v": 1,
+            "xi": 0.05
+          },
+          "ci": 0.4,
+          "dr": 1.07,
+          "ell": 8,
+          "epsilon": 0.9576032806985737,
+          "h": 0.0078125,
+          "k": 2,
+          "p": 0.5,
+          "pz": 0.37,
+          "role": "EXPLICIT_SMOOTH_VERIFICATION_COEFFICIENTS; NOT_N3_PROFILE_VALUES",
+          "sourceH": {
+            "A": "1/2+h",
+            "D": "1/2-h",
+            "binary64Enclosure": [
+              0,
+              9.332636185032189e-302
+            ],
+            "hExact": {
+              "exp": {
+                "product": [
+                  {
+                    "integer": -8002
+                  },
+                  {
+                    "ref": "T"
+                  }
+                ]
+              }
+            },
+            "hExpression": "exp(-8002*(exp(1048576)+10))",
+            "notNumericallyReplaced": true,
+            "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+            "positive": true,
+            "profileId": "same-profile-2026-10-10.3",
+            "proof": [
+              "T=exp(1048576)+10>1",
+              "h=exp(-8002*T)<exp(-8002)",
+              "e>2 implies exp(-8002)<2^-8002<2^-4096<2^-1000"
+            ],
+            "source": {
+              "bytes": 77149,
+              "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+              "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+            },
+            "upperBoundExact": "2^-4096",
+            "zeroIsEnclosureEndpointOnly": true
+          },
+          "sourceProfile": "same-profile-2026-10-10.3",
+          "torusJacobian": 1.1715728752538097,
+          "vr": [
+            1,
+            -0.41421356237309515
+          ],
+          "vt": [
+            0.41421356237309515,
+            1
+          ],
+          "x0": 0.28
+        },
+        "physical": {
+          "A": 0.5078125,
+          "D": 0.4921875,
+          "Q": 0.00390625,
+          "hNumericalProbe": 0.0078125,
+          "realLeadingVelocity": [
+            1.1270986787476622,
+            -0.047257355658625266,
+            -0.5996835532860578
+          ],
+          "realPotential": [
+            0.2909259390507376,
+            -0.17312469106753217,
+            0.08219107712642117
+          ],
+          "realVelocity": [
+            -0.6288305437015878,
+            2.6045360534214885,
+            2.816557844962393
+          ],
+          "scaleIdentity": "Q^(1/2-A) * Q^(-1/2) = Q^(-A)",
+          "scalePotential": 1.0442737824274138,
+          "scaleVelocity": 16.70838051883862
+        },
+        "point": {
+          "R": 1.44,
+          "Y1": 0.2758031739553295,
+          "Y2": 0.29815223689149767,
+          "Z": 0.31,
+          "theta": 0.43
+        },
+        "values": {
+          "Cm": [
+            [
+              0.02764304082231522,
+              -0.18207166447650713
+            ],
+            [
+              -0.0008114885293758531,
+              0.27064710857552043
+            ],
+            [
+              -0.031004551371188273,
+              -0.0852339488575117
+            ]
+          ],
+          "full": [
+            [
+              0.2282753895474977,
+              0.00823424546567049
+            ],
+            [
+              0.01768914785125797,
+              -0.1566570387186661
+            ],
+            [
+              -0.32248800913330067,
+              -0.2268232586153001
+            ]
+          ],
+          "normal": [
+            0.36715344000000005,
+            0.3472222222222222,
+            0.31825877953729464
+          ],
+          "remainder": [
+            [
+              -0.003186489635748843,
+              0.029248657219949223
+            ],
+            [
+              -0.03561478854233698,
+              -0.1970191749714624
+            ],
+            [
+              0.002688680632274289,
+              -0.20703082087853053
+            ]
+          ],
+          "t": [
+            [
+              0.23146187918324654,
+              -0.021014411754278733
+            ],
+            [
+              0.05330393639359495,
+              0.0403621362527963
+            ],
+            [
+              -0.32517668976557496,
+              -0.01979243773676956
+            ]
+          ]
+        }
+      },
+      "samples": [
+        {
+          "R": 1.05,
+          "fullCovariance": [
+            0.012631011769307705,
+            -0.057036673964104896
+          ],
+          "fullNorm": 0.7603271709293762,
+          "remainderNorm": 0.580620249290866,
+          "tNorm": 0.5152372395504222,
+          "withoutRemainderCovariance": [
+            0.00724700061437523,
+            -0.061199531165026765
+          ]
+        },
+        {
+          "R": 1.085,
+          "fullCovariance": [
+            0.01170956594423138,
+            -0.059330623063632924
+          ],
+          "fullNorm": 0.6998641056003448,
+          "remainderNorm": 0.49142809747413596,
+          "tNorm": 0.5232257090226784,
+          "withoutRemainderCovariance": [
+            0.007668109590500213,
+            -0.06305758723347377
+          ]
+        },
+        {
+          "R": 1.12,
+          "fullCovariance": [
+            0.010711680219405618,
+            -0.06041411580641529
+          ],
+          "fullNorm": 0.6480838049383043,
+          "remainderNorm": 0.41149543309829745,
+          "tNorm": 0.5259132249655597,
+          "withoutRemainderCovariance": [
+            0.007941877388998058,
+            -0.06364779210084036
+          ]
+        },
+        {
+          "R": 1.155,
+          "fullCovariance": [
+            0.00967522084561472,
+            -0.06044567705887843
+          ],
+          "fullNorm": 0.6040375304366233,
+          "remainderNorm": 0.3406009804061073,
+          "tNorm": 0.5241582636897603,
+          "withoutRemainderCovariance": [
+            0.00808071262986475,
+            -0.06316048317326782
+          ]
+        },
+        {
+          "R": 1.19,
+          "fullCovariance": [
+            0.008623810073099897,
+            -0.05957842211921779
+          ],
+          "fullNorm": 0.5669678778644588,
+          "remainderNorm": 0.27918233057005043,
+          "tNorm": 0.5186515249277021,
+          "withoutRemainderCovariance": [
+            0.008097944540252588,
+            -0.06177399889474702
+          ]
+        },
+        {
+          "R": 1.225,
+          "fullCovariance": [
+            0.007571584717963309,
+            -0.05795308678829068
+          ],
+          "fullNorm": 0.5363328920894227,
+          "remainderNorm": 0.22884905291868782,
+          "tNorm": 0.5099441958386167,
+          "withoutRemainderCovariance": [
+            0.008006782783735128,
+            -0.05964867385265872
+          ]
+        },
+        {
+          "R": 1.26,
+          "fullCovariance": [
+            0.006526545825327679,
+            -0.055695393450021675
+          ],
+          "fullNorm": 0.5117998572723003,
+          "remainderNorm": 0.1929429140116792,
+          "tNorm": 0.4984720375977926,
+          "withoutRemainderCovariance": [
+            0.007819767093387076,
+            -0.05692514549377462
+          ]
+        },
+        {
+          "R": 1.2950000000000002,
+          "fullCovariance": [
+            0.005492923416137774,
+            -0.052915821219690906
+          ],
+          "fullNorm": 0.4932255263934001,
+          "remainderNorm": 0.1760627167353813,
+          "tNorm": 0.48457501999697855,
+          "withoutRemainderCovariance": [
+            0.00754851934344872,
+            -0.053724971693334754
+          ]
+        },
+        {
+          "R": 1.33,
+          "fullCovariance": [
+            0.004472881976949058,
+            -0.04971065354505526
+          ],
+          "fullNorm": 0.4806292338025541,
+          "remainderNorm": 0.18065862291100532,
+          "tNorm": 0.46851288861857354,
+          "withoutRemainderCovariance": [
+            0.007203681968870866,
+            -0.050152409511387566
+          ]
+        },
+        {
+          "R": 1.3650000000000002,
+          "fullCovariance": [
+            0.003467810643712177,
+            -0.04616367251715636
+          ],
+          "fullNorm": 0.4741611822754596,
+          "remainderNorm": 0.2036974588869469,
+          "tNorm": 0.4504772447842018,
+          "withoutRemainderCovariance": [
+            0.006794973273650943,
+            -0.0462967200508395
+          ]
+        },
+        {
+          "R": 1.4000000000000001,
+          "fullCovariance": [
+            0.002479385349193405,
+            -0.042348172718675504
+          ],
+          "fullNorm": 0.4740675485998996,
+          "remainderNorm": 0.2393000959486241,
+          "tNorm": 0.430600733231829,
+          "withoutRemainderCovariance": [
+            0.006331320756721535,
+            -0.0422346730425999
+          ]
+        },
+        {
+          "R": 1.435,
+          "fullCovariance": [
+            0.0015105569995195354,
+            -0.03832915685283858
+          ],
+          "fullNorm": 0.48065501799740895,
+          "remainderNorm": 0.28282251434261185,
+          "tNorm": 0.4089638990436369,
+          "withoutRemainderCovariance": [
+            0.005821054308305671,
+            -0.03803311148091173
+          ]
+        },
+        {
+          "R": 1.4700000000000002,
+          "fullCovariance": [
+            0.0005666065750585438,
+            -0.034165701019501754
+          ],
+          "fullNorm": 0.4942577436146936,
+          "remainderNorm": 0.3317101064383419,
+          "tNorm": 0.385600266820914,
+          "withoutRemainderCovariance": [
+            0.005272156221609377,
+            -0.0337515534058908
+          ]
+        },
+        {
+          "R": 1.5050000000000001,
+          "fullCovariance": [
+            -0.00034358874537987027,
+            -0.02991357167977554
+          ],
+          "fullNorm": 0.5152070292020731,
+          "remainderNorm": 0.38483439375511,
+          "tNorm": 0.3605002733885055,
+          "withoutRemainderCovariance": [
+            0.004692577264719575,
+            -0.029444886470665538
+          ]
+        },
+        {
+          "R": 1.54,
+          "fullCovariance": [
+            -0.0012059205764220864,
+            -0.025628259392361217
+          ],
+          "fullNorm": 0.5437961383002485,
+          "remainderNorm": 0.4418422415723866,
+          "tNorm": 0.33361493941880105,
+          "withoutRemainderCovariance": [
+            0.0040906393069005745,
+            -0.025166269224021872
+          ]
+        },
+        {
+          "R": 1.5750000000000002,
+          "fullCovariance": [
+            -0.0019988782427757604,
+            -0.021368675452663556
+          ],
+          "fullNorm": 0.5802177964995688,
+          "remainderNorm": 0.5027279747911112,
+          "tNorm": 0.3048607635072018,
+          "withoutRemainderCovariance": [
+            0.0034755555859487825,
+            -0.020970397060324542
+          ]
+        },
+        {
+          "R": 1.61,
+          "fullCovariance": [
+            -0.0026907126999974585,
+            -0.017201825915414613
+          ],
+          "fullNorm": 0.6244263390110835,
+          "remainderNorm": 0.5674946719507861,
+          "tNorm": 0.274128610775289,
+          "withoutRemainderCovariance": [
+            0.002858107271551597,
+            -0.01691730886131814
+          ]
+        }
+      ],
+      "schema": "mathscope.source-pulse-curl-audit/1",
+      "scope": {
+        "criterion": "N5-07 generic source harmonic operator",
+        "exactH": {
+          "A": "1/2+h",
+          "D": "1/2-h",
+          "binary64Enclosure": [
+            0,
+            9.332636185032189e-302
+          ],
+          "hExact": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -8002
+                },
+                {
+                  "ref": "T"
+                }
+              ]
+            }
+          },
+          "hExpression": "exp(-8002*(exp(1048576)+10))",
+          "notNumericallyReplaced": true,
+          "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+          "positive": true,
+          "profileId": "same-profile-2026-10-10.3",
+          "proof": [
+            "T=exp(1048576)+10>1",
+            "h=exp(-8002*T)<exp(-8002)",
+            "e>2 implies exp(-8002)<2^-8002<2^-4096<2^-1000"
+          ],
+          "source": {
+            "bytes": 77149,
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+            "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+          },
+          "upperBoundExact": "2^-4096",
+          "zeroIsEnclosureEndpointOnly": true
+        },
+        "formalComplete": false,
+        "globalN3PulseEvaluated": false,
+        "newLeanKernelExecution": false,
+        "numericalProbe": "Explicit smooth coefficients verify the operator. They are not the actual N3/N4 background or a Lemma 7.4 homogeneous solution.",
+        "pulseClassBoundsCertified": false,
+        "sourceProfile": "same-profile-2026-10-10.3"
+      },
+      "sourceEquations": [
+        "6.6",
+        "7.37",
+        "7.38",
+        "7.39"
+      ]
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "COMPLETED",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "SCALED_COORDINATE",
+          "label": "probe R",
+          "name": "probe R",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "OPERATOR_PROBE_VALUE",
+          "label": "complex vector norm",
+          "name": "complex vector norm",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "0",
+          "name": "0",
+          "scale": "LINEAR",
+          "unit": "1"
+        }
+      ],
+      "description": "Original C_m and full curl remainder on explicit smooth verification coefficients. Three series retain t_m, r_m and the full amplitude.",
+      "lines": [
+        {
+          "points": [
+            [
+              1.05,
+              0.5152372395504222,
+              0
+            ],
+            [
+              1.085,
+              0.5232257090226784,
+              0
+            ],
+            [
+              1.12,
+              0.5259132249655597,
+              0
+            ],
+            [
+              1.155,
+              0.5241582636897603,
+              0
+            ],
+            [
+              1.19,
+              0.5186515249277021,
+              0
+            ],
+            [
+              1.225,
+              0.5099441958386167,
+              0
+            ],
+            [
+              1.26,
+              0.4984720375977926,
+              0
+            ],
+            [
+              1.2950000000000002,
+              0.48457501999697855,
+              0
+            ],
+            [
+              1.33,
+              0.46851288861857354,
+              0
+            ],
+            [
+              1.3650000000000002,
+              0.4504772447842018,
+              0
+            ],
+            [
+              1.4000000000000001,
+              0.430600733231829,
+              0
+            ],
+            [
+              1.435,
+              0.4089638990436369,
+              0
+            ],
+            [
+              1.4700000000000002,
+              0.385600266820914,
+              0
+            ],
+            [
+              1.5050000000000001,
+              0.3605002733885055,
+              0
+            ],
+            [
+              1.54,
+              0.33361493941880105,
+              0
+            ],
+            [
+              1.5750000000000002,
+              0.3048607635072018,
+              0
+            ],
+            [
+              1.61,
+              0.274128610775289,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              1.05,
+              0.580620249290866,
+              0
+            ],
+            [
+              1.085,
+              0.49142809747413596,
+              0
+            ],
+            [
+              1.12,
+              0.41149543309829745,
+              0
+            ],
+            [
+              1.155,
+              0.3406009804061073,
+              0
+            ],
+            [
+              1.19,
+              0.27918233057005043,
+              0
+            ],
+            [
+              1.225,
+              0.22884905291868782,
+              0
+            ],
+            [
+              1.26,
+              0.1929429140116792,
+              0
+            ],
+            [
+              1.2950000000000002,
+              0.1760627167353813,
+              0
+            ],
+            [
+              1.33,
+              0.18065862291100532,
+              0
+            ],
+            [
+              1.3650000000000002,
+              0.2036974588869469,
+              0
+            ],
+            [
+              1.4000000000000001,
+              0.2393000959486241,
+              0
+            ],
+            [
+              1.435,
+              0.28282251434261185,
+              0
+            ],
+            [
+              1.4700000000000002,
+              0.3317101064383419,
+              0
+            ],
+            [
+              1.5050000000000001,
+              0.38483439375511,
+              0
+            ],
+            [
+              1.54,
+              0.4418422415723866,
+              0
+            ],
+            [
+              1.5750000000000002,
+              0.5027279747911112,
+              0
+            ],
+            [
+              1.61,
+              0.5674946719507861,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              1.05,
+              0.7603271709293762,
+              0
+            ],
+            [
+              1.085,
+              0.6998641056003448,
+              0
+            ],
+            [
+              1.12,
+              0.6480838049383043,
+              0
+            ],
+            [
+              1.155,
+              0.6040375304366233,
+              0
+            ],
+            [
+              1.19,
+              0.5669678778644588,
+              0
+            ],
+            [
+              1.225,
+              0.5363328920894227,
+              0
+            ],
+            [
+              1.26,
+              0.5117998572723003,
+              0
+            ],
+            [
+              1.2950000000000002,
+              0.4932255263934001,
+              0
+            ],
+            [
+              1.33,
+              0.4806292338025541,
+              0
+            ],
+            [
+              1.3650000000000002,
+              0.4741611822754596,
+              0
+            ],
+            [
+              1.4000000000000001,
+              0.4740675485998996,
+              0
+            ],
+            [
+              1.435,
+              0.48065501799740895,
+              0
+            ],
+            [
+              1.4700000000000002,
+              0.4942577436146936,
+              0
+            ],
+            [
+              1.5050000000000001,
+              0.5152070292020731,
+              0
+            ],
+            [
+              1.54,
+              0.5437961383002485,
+              0
+            ],
+            [
+              1.5750000000000002,
+              0.5802177964995688,
+              0
+            ],
+            [
+              1.61,
+              0.6244263390110835,
+              0
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "The displayed coefficient probe is not the actual N3 background or a source growing-mode pulse.",
+        "The exact operator identity is verified; same-profile pulse class bounds and global covariance assembly remain separate."
+      ],
+      "points": [
+        {
+          "label": "R=1.05; full t+r_m",
+          "pos": [
+            1.05,
+            0.7603271709293762,
+            0
+          ],
+          "sourceField": "results.samples[0].fullNorm",
+          "sourceIndex": 0,
+          "value": 0.7603271709293762
+        },
+        {
+          "label": "R=1.085; full t+r_m",
+          "pos": [
+            1.085,
+            0.6998641056003448,
+            0
+          ],
+          "sourceField": "results.samples[1].fullNorm",
+          "sourceIndex": 1,
+          "value": 0.6998641056003448
+        },
+        {
+          "label": "R=1.12; full t+r_m",
+          "pos": [
+            1.12,
+            0.6480838049383043,
+            0
+          ],
+          "sourceField": "results.samples[2].fullNorm",
+          "sourceIndex": 2,
+          "value": 0.6480838049383043
+        },
+        {
+          "label": "R=1.155; full t+r_m",
+          "pos": [
+            1.155,
+            0.6040375304366233,
+            0
+          ],
+          "sourceField": "results.samples[3].fullNorm",
+          "sourceIndex": 3,
+          "value": 0.6040375304366233
+        },
+        {
+          "label": "R=1.19; full t+r_m",
+          "pos": [
+            1.19,
+            0.5669678778644588,
+            0
+          ],
+          "sourceField": "results.samples[4].fullNorm",
+          "sourceIndex": 4,
+          "value": 0.5669678778644588
+        },
+        {
+          "label": "R=1.225; full t+r_m",
+          "pos": [
+            1.225,
+            0.5363328920894227,
+            0
+          ],
+          "sourceField": "results.samples[5].fullNorm",
+          "sourceIndex": 5,
+          "value": 0.5363328920894227
+        },
+        {
+          "label": "R=1.26; full t+r_m",
+          "pos": [
+            1.26,
+            0.5117998572723003,
+            0
+          ],
+          "sourceField": "results.samples[6].fullNorm",
+          "sourceIndex": 6,
+          "value": 0.5117998572723003
+        },
+        {
+          "label": "R=1.2950000000000002; full t+r_m",
+          "pos": [
+            1.2950000000000002,
+            0.4932255263934001,
+            0
+          ],
+          "sourceField": "results.samples[7].fullNorm",
+          "sourceIndex": 7,
+          "value": 0.4932255263934001
+        },
+        {
+          "label": "R=1.33; full t+r_m",
+          "pos": [
+            1.33,
+            0.4806292338025541,
+            0
+          ],
+          "sourceField": "results.samples[8].fullNorm",
+          "sourceIndex": 8,
+          "value": 0.4806292338025541
+        },
+        {
+          "label": "R=1.3650000000000002; full t+r_m",
+          "pos": [
+            1.3650000000000002,
+            0.4741611822754596,
+            0
+          ],
+          "sourceField": "results.samples[9].fullNorm",
+          "sourceIndex": 9,
+          "value": 0.4741611822754596
+        },
+        {
+          "label": "R=1.4000000000000001; full t+r_m",
+          "pos": [
+            1.4000000000000001,
+            0.4740675485998996,
+            0
+          ],
+          "sourceField": "results.samples[10].fullNorm",
+          "sourceIndex": 10,
+          "value": 0.4740675485998996
+        },
+        {
+          "label": "R=1.435; full t+r_m",
+          "pos": [
+            1.435,
+            0.48065501799740895,
+            0
+          ],
+          "sourceField": "results.samples[11].fullNorm",
+          "sourceIndex": 11,
+          "value": 0.48065501799740895
+        },
+        {
+          "label": "R=1.4700000000000002; full t+r_m",
+          "pos": [
+            1.4700000000000002,
+            0.4942577436146936,
+            0
+          ],
+          "sourceField": "results.samples[12].fullNorm",
+          "sourceIndex": 12,
+          "value": 0.4942577436146936
+        },
+        {
+          "label": "R=1.5050000000000001; full t+r_m",
+          "pos": [
+            1.5050000000000001,
+            0.5152070292020731,
+            0
+          ],
+          "sourceField": "results.samples[13].fullNorm",
+          "sourceIndex": 13,
+          "value": 0.5152070292020731
+        },
+        {
+          "label": "R=1.54; full t+r_m",
+          "pos": [
+            1.54,
+            0.5437961383002485,
+            0
+          ],
+          "sourceField": "results.samples[14].fullNorm",
+          "sourceIndex": 14,
+          "value": 0.5437961383002485
+        },
+        {
+          "label": "R=1.5750000000000002; full t+r_m",
+          "pos": [
+            1.5750000000000002,
+            0.5802177964995688,
+            0
+          ],
+          "sourceField": "results.samples[15].fullNorm",
+          "sourceIndex": 15,
+          "value": 0.5802177964995688
+        },
+        {
+          "label": "R=1.61; full t+r_m",
+          "pos": [
+            1.61,
+            0.6244263390110835,
+            0
+          ],
+          "sourceField": "results.samples[16].fullNorm",
+          "sourceIndex": 16,
+          "value": 0.6244263390110835
+        }
+      ]
+    }
+  },
+  "status": "COMPLETED",
+  "resultHash": "e6893924fe9eec8a9e9a28c9d1d86281abe61986076627172af8642b23f0bb6a"
+}

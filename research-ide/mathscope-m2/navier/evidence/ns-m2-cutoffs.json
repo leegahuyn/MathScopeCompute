@@ -10,9 +10,7 @@
   },
   "inputHash": "a1b211b6a1a70e0f67558ec07a073118c49213b682fd887a32410a3638d0f067",
   "result": {
-    "blockers": [
-      "N4-06/08 same-profile derivative constants and all-order tail link remain to be supplied."
-    ],
+    "blockers": [],
     "checks": [
       {
         "detail": "Exact powers of two.",
@@ -23,13 +21,23 @@
         "detail": "Outward interval log inequality on entire q<=1/a_j, not samples.",
         "id": "all-q-all-supplied-m",
         "pass": true
+      },
+      {
+        "detail": "No omitted positive-order coefficient is silently treated as zero.",
+        "id": "complete-prefix-or-safe-refusal",
+        "pass": true
+      },
+      {
+        "detail": "Each supplied potential is actually multiplied by its C-infinity cutoff before summation.",
+        "id": "actual-cutoff-potential-sum",
+        "pass": true
       }
     ],
-    "evidenceGrade": "OUTWARD_INTERVAL_SCALAR_BOUND",
+    "evidenceGrade": "CONDITIONAL_OUTWARD_CUTOFF_AND_LOCALLY_FINITE_POTENTIAL_OPERATOR",
     "kind": "ns.background-cutoffs",
-    "moduleVersion": "m2-ns-0.1.1",
+    "moduleVersion": "m2-ns-0.2.0",
     "object": {
-      "kind": "FINITE_SHRINKING_CUTOFF_SCHEDULE"
+      "kind": "CONDITIONAL_SHRINKING_CUTOFF_AND_LOCAL_POTENTIAL_OPERATOR"
     },
     "precisionLedger": {
       "arithmetic": "OUTWARD_FLOAT64_SCALAR_INTERVALS",
@@ -44,11 +52,376 @@
       "outputItemsEstimate": 4,
       "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
     },
-    "resultHash": "362cfa0ca9f251a730358bbb84618cc12b72b6f02042f6c2ba0a92716f38d4e7",
+    "resultHash": "a019d6d622b49a49a62cf9a35a38c2d5061434b910070c6d65f3e31497ec18b4",
     "results": {
+      "constantLedger": {
+        "allOrderSourceCertificate": false,
+        "constantsInputPaths": [
+          "results.rows[0].constants[0]",
+          "results.rows[0].constants[1]",
+          "results.rows[1].constants[0]",
+          "results.rows[1].constants[1]",
+          "results.rows[1].constants[2]",
+          "results.rows[2].constants[0]",
+          "results.rows[2].constants[1]",
+          "results.rows[2].constants[2]",
+          "results.rows[2].constants[3]",
+          "results.rows[3].constants[0]",
+          "results.rows[3].constants[1]",
+          "results.rows[3].constants[2]",
+          "results.rows[3].constants[3]",
+          "results.rows[3].constants[4]"
+        ],
+        "constantsProvenance": "EXPLICITLY_DECLARED_BOUND_PREMISES",
+        "empiricalSamplingUsedAsProof": false,
+        "necessarySourceInstantiation": "For a same-profile background, separately supply valid C_hat[j,m], P and g bounds derived from the repaired coefficient sequence.",
+        "operatorCertificate": true,
+        "scope": "CONDITIONAL_SCALAR_INEQUALITY_FOR_THE_SUPPLIED_POSITIVE_CONSTANTS",
+        "sourceDerivativeBoundsVerified": false,
+        "sourceInstanceCertified": false
+      },
       "cutoff": {
-        "definition": "chi(s)=1 for s<=1/2, chi(s)=0 for s>=1; smooth transition inside",
+        "definition": "chi(s)=1 for s<=1/2, chi(s)=0 for s>=1; exact C-infinity exponential transition inside",
         "potentialBeforeCurl": true
+      },
+      "defaultPotentialRole": "EXPLICIT_CONSTANT_VECTOR_OPERATOR_PROBE; NOT_N3_COEFFICIENTS",
+      "localPotentialSum": {
+        "activity": {
+          "activePositiveOrders": [
+            1,
+            2,
+            3
+          ],
+          "actualN3HigherOrderSequenceEvaluated": false,
+          "domain": {
+            "log2EndpointEncoding": "EXACT_BINARY64_DYADIC; decimal UI text is only a display",
+            "log2qMax": -102.5,
+            "log2qMin": -102.75,
+            "qMaxExact": "2^(-205/2)",
+            "qMinExact": "2^(-411/4)",
+            "strictlyPositive": true
+          },
+          "inactivePositiveOrders": [
+            4
+          ],
+          "lastCutoffAtQMin": {
+            "denominator": "70368744177664",
+            "numerator": "17592186044416",
+            "sign": 1
+          },
+          "log2a": [
+            100,
+            101,
+            102,
+            103
+          ],
+          "omittedHigherOrdersAreZero": true,
+          "prefixComplete": true,
+          "proof": {
+            "comparisonArithmetic": "Exact BigInt sign of integer log2(a_J) plus the exact binary64 log2(q_min).",
+            "cutoffSupport": "chi(s)=0 for every s>=1",
+            "doesNotNeedUnseenCoefficientValues": true,
+            "futurePolicy": "ALL_FUTURE_CUTOFFS_CONTINUE_THE_SAME_DOUBLING_CONSTRUCTION",
+            "inequality": "a_J*q_min>=1; a_j>=2^(j-J)*a_J for every j>J; hence a_j*q>=1 on the entire compact domain."
+          },
+          "requestMorePrefix": null,
+          "schema": "MathScope.CompactActiveCutoffPrefix/1",
+          "status": "COMPLETE_FOR_ANY_DOUBLING_CONTINUATION",
+          "uncutSeriesConvergenceClaimed": false
+        },
+        "allOrderSourceCertificate": false,
+        "allUnseenCoefficientsReplacedByZero": false,
+        "datumRole": "SUPPLIED_POTENTIAL_VALUES_AT_THE_QUERY_POINT; NOT_N3_COEFFICIENTS",
+        "finiteCutoffPrefixValue": [
+          [
+            1.8276357082342092,
+            1.8276357082342287
+          ],
+          [
+            -0.4123934478423378,
+            -0.4123934478423239
+          ],
+          [
+            0.5948721374107886,
+            0.5948721374108054
+          ]
+        ],
+        "inputPotentials": [
+          [
+            [
+              1,
+              1
+            ],
+            [
+              -0.5,
+              -0.5
+            ],
+            [
+              0.1,
+              0.1
+            ]
+          ],
+          [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            [
+              0.2,
+              0.2
+            ]
+          ],
+          [
+            [
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            [
+              -0.25,
+              -0.25
+            ],
+            [
+              0.3,
+              0.3
+            ]
+          ],
+          [
+            [
+              0.25,
+              0.25
+            ],
+            [
+              0.2,
+              0.2
+            ],
+            [
+              0.4,
+              0.4
+            ]
+          ]
+        ],
+        "localSum": {
+          "completeOnCompact": true,
+          "omittedHigherContributionExactlyZero": true,
+          "value": [
+            [
+              1.8276357082342092,
+              1.8276357082342287
+            ],
+            [
+              -0.4123934478423378,
+              -0.4123934478423239
+            ],
+            [
+              0.5948721374107886,
+              0.5948721374108054
+            ]
+          ]
+        },
+        "potentialBeforeCurl": true,
+        "query": {
+          "log2Exact": "-411/4",
+          "log2q": -102.75,
+          "qExact": "2^(-411/4)"
+        },
+        "schema": "MathScope.ActualLocallyFinitePotentialSum/1",
+        "sourceEquations": [
+          "5.35",
+          "5.39",
+          "5.42",
+          "5.43",
+          "5.45"
+        ],
+        "sourceInstanceCertified": false,
+        "summands": [
+          {
+            "cutoff": {
+              "exact": "1",
+              "interval": [
+                1,
+                1
+              ],
+              "region": "ONE"
+            },
+            "cutoffPotentialValue": [
+              [
+                1,
+                1
+              ],
+              [
+                -0.5,
+                -0.5
+              ],
+              [
+                0.1,
+                0.1
+              ]
+            ],
+            "order": 1,
+            "sourcePath": "results.localPotentialSum.inputPotentials[0]",
+            "value": [
+              [
+                1,
+                1
+              ],
+              [
+                -0.5,
+                -0.5
+              ],
+              [
+                0.1,
+                0.1
+              ]
+            ]
+          },
+          {
+            "cutoff": {
+              "exact": "1",
+              "interval": [
+                1,
+                1
+              ],
+              "region": "ONE"
+            },
+            "cutoffPotentialValue": [
+              [
+                0.5,
+                0.5
+              ],
+              [
+                0.3333333333333333,
+                0.3333333333333333
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ],
+            "order": 2,
+            "sourcePath": "results.localPotentialSum.inputPotentials[1]",
+            "value": [
+              [
+                0.5,
+                0.5
+              ],
+              [
+                0.3333333333333333,
+                0.3333333333333333
+              ],
+              [
+                0.2,
+                0.2
+              ]
+            ]
+          },
+          {
+            "cutoff": {
+              "argumentInterval": [
+                0.5946035575013384,
+                0.594603557501382
+              ],
+              "exact": "1/(1+exp(1/(2-2*2^(-3/4))-1/(2*2^(-3/4)-1)))",
+              "interval": [
+                0.9829071247026298,
+                0.9829071247026834
+              ],
+              "region": "C_INFINITY_COLLAR",
+              "strictlyBetweenZeroAndOne": true
+            },
+            "cutoffPotentialValue": [
+              [
+                0.32763570823420984,
+                0.32763570823422783
+              ],
+              [
+                -0.24572678117567087,
+                -0.2457267811756574
+              ],
+              [
+                0.2948721374107889,
+                0.29487213741080504
+              ]
+            ],
+            "order": 3,
+            "sourcePath": "results.localPotentialSum.inputPotentials[2]",
+            "value": [
+              [
+                0.3333333333333333,
+                0.3333333333333333
+              ],
+              [
+                -0.25,
+                -0.25
+              ],
+              [
+                0.3,
+                0.3
+              ]
+            ]
+          },
+          {
+            "cutoff": {
+              "exact": "0",
+              "interval": [
+                0,
+                0
+              ],
+              "region": "OFF"
+            },
+            "cutoffPotentialValue": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                0
+              ]
+            ],
+            "order": 4,
+            "sourcePath": "results.localPotentialSum.inputPotentials[3]",
+            "value": [
+              [
+                0.25,
+                0.25
+              ],
+              [
+                0.2,
+                0.2
+              ],
+              [
+                0.4,
+                0.4
+              ]
+            ]
+          }
+        ],
+        "uncutFiniteFormalTruncation": {
+          "orders": 4,
+          "role": "FORMAL_FINITE_PREFIX; NOT_THE_LOCALLY_FINITE_CUTOFF_SUM",
+          "value": [
+            [
+              2.0833333333333326,
+              2.0833333333333344
+            ],
+            [
+              -0.21666666666666692,
+              -0.21666666666666654
+            ],
+            [
+              0.9999999999999997,
+              1.0000000000000004
+            ]
+          ]
+        }
       },
       "parameters": {
         "growth": 0.4,
@@ -59,12 +432,13 @@
         "activePositiveOrders": [
           1,
           2,
-          3,
+          3
+        ],
+        "inactivePositiveOrders": [
           4
         ],
-        "inactivePositiveOrders": [],
-        "log2q": -105,
-        "scope": "Only the supplied finite schedule. No claim about omitted infinite orders."
+        "log2q": -102.75,
+        "scope": "Exact active prefix; every omitted higher cutoff is identically zero for any doubling continuation."
       },
       "rows": [
         {
@@ -364,9 +738,18 @@
       ],
       "tailContract": {
         "J": 2,
+        "allOrderSourceCertificate": false,
+        "sourceEquations": [
+          "5.35",
+          "5.39",
+          "5.42",
+          "5.43"
+        ],
+        "sourceInstanceCertified": false,
         "uncomputedHigherConstants": true,
         "valid": true,
-        "validDomain": "q<2^(-102)"
+        "validDomain": "q<2^(-102)",
+        "validOnEntireCompact": true
       }
     },
     "scope": {
@@ -391,7 +774,7 @@
         "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
       }
     },
-    "status": "PARTIAL",
+    "status": "COMPLETED",
     "visualization": {
       "axes": [
         {
@@ -399,7 +782,6 @@
           "label": "order j",
           "name": "order j",
           "scale": "LINEAR",
-          "sourceField": "order j",
           "unit": "1"
         },
         {
@@ -407,7 +789,7 @@
           "label": "log2(a_j)",
           "name": "log2(a_j)",
           "scale": "LINEAR",
-          "sourceField": "rows.log2a",
+          "sourceField": "result.results.rows[*].log2a",
           "unit": "log2"
         },
         {
@@ -415,11 +797,10 @@
           "label": "0",
           "name": "0",
           "scale": "LINEAR",
-          "sourceField": "0",
           "unit": "1"
         }
       ],
-      "description": "Certified scalar cutoff inequality for the supplied constants.",
+      "description": "Conditional scalar cutoff certificate plus an actual locally finite sum of the supplied potentials on an exhaustively covered compact domain.",
       "lines": [
         {
           "points": [
@@ -447,8 +828,8 @@
         }
       ],
       "lostInformation": [
-        "The supplied constants have not been derived from the archived N3 profile.",
-        "Only a finite schedule is instantiated."
+        "The supplied constants and potential values have not been derived from the archived N3 positive-order sequence.",
+        "Operator acceptance does not issue an all-order source background or verified source tail bound."
       ],
       "points": [
         {
@@ -490,6 +871,6 @@
       ]
     }
   },
-  "status": "PARTIAL",
-  "resultHash": "0f8429db5bf0b3d990b2e3ca92de4242b558a1e3ff1341530a7b6f638579a7ba"
+  "status": "COMPLETED",
+  "resultHash": "efb3249bed273c801dd964bb71eccf97a9ae58ce47a9efeeeae50993e54b78a6"
 }

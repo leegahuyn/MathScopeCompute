@@ -1,0 +1,658 @@
+{
+  "id": "ns-m2-torus",
+  "request": {
+    "kind": "ns.torus-derivatives",
+    "input": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "ell": 16,
+      "R": 1,
+      "gradient": {
+        "R": 1,
+        "Z": 2,
+        "T": 3,
+        "theta": 4,
+        "Y1": 5,
+        "Y2": 6
+      }
+    }
+  },
+  "inputHash": "bcf9db3794f761b9cc5016d12f9647fdc6e7d0b9ebb39bd075096510b1d67132",
+  "result": {
+    "blockers": [],
+    "checks": [
+      {
+        "detail": "",
+        "id": "radial-eigenvector",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "time-eigenvector",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "dual-orthogonality",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "local-rectangle-jacobian",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "haar-normalized-covering",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "pulse-unit-time-chain-rule",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "EXACT_QUADRATIC_FIELD_SOURCE_IDENTITIES_AND_OUTWARD_OPERATOR_ACTION",
+    "kind": "ns.torus-derivatives",
+    "moduleVersion": "m2-ns-0.2.0",
+    "object": {
+      "kind": "SOURCE_EVALUATED_TORUS_DERIVATIVES",
+      "sourceProfile": "same-profile-2026-10-10.3"
+    },
+    "precisionLedger": {
+      "arithmetic": "OUTWARD_FLOAT64_SCALAR_INTERVALS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 30000,
+      "outputItemsEstimate": 4,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "5381ae901b8dd3363ee00123f7149ddfb4be4f0918c48ae4527076b068b676de",
+    "results": {
+      "applied": {
+        "Dr": [
+          1.0955577027598298,
+          1.0955577027600099
+        ],
+        "Dz": [
+          1.9999999999999902,
+          2.0000000000000018
+        ],
+        "theta": [
+          3.9999999999999982,
+          4.0000000000000036
+        ],
+        "time": [
+          -2.9804540306768463,
+          -2.980454030676814
+        ]
+      },
+      "contract": {
+        "Dr": {
+          "coefficient": [
+            0.03799936175004703,
+            0.03799936175007084
+          ],
+          "fast": [
+            [
+              0.03799936175004702,
+              0.03799936175007085
+            ],
+            [
+              -0.01573985099840079,
+              -0.015739850998390887
+            ]
+          ],
+          "formula": "partial_R + M_i*d_r*R^(d_r-1)*(v_r dot grad_Yi)",
+          "slow": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        "Dz": {
+          "fast": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "formula": "epsilon*partial_Z",
+          "slow": [
+            0,
+            [
+              0.9999999999999956,
+              1
+            ],
+            0,
+            0
+          ]
+        },
+        "R": 1,
+        "band": {
+          "D": [
+            0.49999999999999994,
+            0.5000000000000001
+          ],
+          "Mi": {
+            "exact": "(4-sqrt(2))^3*2^(-16*d_r/2)",
+            "interval": [
+              0.03377892957186371,
+              0.0337789295718835
+            ],
+            "logInterval": [
+              -3.387918056326352,
+              -3.3879180563260216
+            ]
+          },
+          "Q": 0.0000152587890625,
+          "QExact": "2^(-16)",
+          "Sstar": 256,
+          "carrier": {
+            "epsilonK2": [
+              3.999999999999982,
+              4
+            ],
+            "k": 2,
+            "reason": "The pinned strictly positive h gives 1/2<epsilon<1 on ell=8..900, hence 1<epsilon^(-1/2)<sqrt(2)<2 and ceil=2."
+          },
+          "ci": {
+            "exact": "(4+sqrt(2))^3*2^(-16*(1+h))",
+            "interval": [
+              0.002421732759378034,
+              0.0024217327593798166
+            ],
+            "logInterval": [
+              -6.023271978758744,
+              -6.023271978758509
+            ]
+          },
+          "covering": {
+            "formula": "floor(((1+h)*ell*log(2)-2*log(ell))/log(T_g))",
+            "frozen": true,
+            "index": 3,
+            "indexInterval": [
+              3.283059035791456,
+              3.2830590357916454
+            ]
+          },
+          "dr": {
+            "exact": "2*(1+h)*rho_g-h*10^-5",
+            "interval": [
+              1.1249427448316458,
+              1.124942744831681
+            ]
+          },
+          "ell": 16,
+          "epsilon": {
+            "exact": "exp(-16*h*log(2))",
+            "interval": [
+              0.9999999999999956,
+              1
+            ],
+            "notRoundedToAnExactOne": true,
+            "strictlyLessThanOne": true,
+            "strictlyPositive": true
+          },
+          "h": {
+            "A": "1/2+h",
+            "D": "1/2-h",
+            "binary64Enclosure": [
+              0,
+              9.332636185032189e-302
+            ],
+            "hExact": {
+              "exp": {
+                "product": [
+                  {
+                    "integer": -8002
+                  },
+                  {
+                    "ref": "T"
+                  }
+                ]
+              }
+            },
+            "hExpression": "exp(-8002*(exp(1048576)+10))",
+            "notNumericallyReplaced": true,
+            "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+            "positive": true,
+            "profileId": "same-profile-2026-10-10.3",
+            "proof": [
+              "T=exp(1048576)+10>1",
+              "h=exp(-8002*T)<exp(-8002)",
+              "e>2 implies exp(-8002)<2^-8002<2^-4096<2^-1000"
+            ],
+            "source": {
+              "bytes": 77149,
+              "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+              "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+            },
+            "upperBoundExact": "2^-4096",
+            "zeroIsEnclosureEndpointOnly": true
+          },
+          "sourceGeometry": {
+            "Jg": [
+              [
+                3,
+                1
+              ],
+              [
+                1,
+                5
+              ]
+            ],
+            "Lambda": {
+              "exact": "4-sqrt(2)",
+              "interval": [
+                2.585786437626904,
+                2.5857864376269055
+              ]
+            },
+            "Tg": {
+              "exact": "4+sqrt(2)",
+              "interval": [
+                5.414213562373094,
+                5.414213562373097
+              ]
+            },
+            "bg": {
+              "exact": "sqrt(2)-1",
+              "interval": [
+                0.41421356237309465,
+                0.4142135623730954
+              ]
+            },
+            "coveringDifferenceCertificate": {
+              "bandDifferenceAtMost": 4,
+              "ell0AtLeast": 8,
+              "hUpper": "1/64",
+              "integerBound": 4,
+              "interval": [
+                3.25923504034814,
+                3.2592350403481976
+              ],
+              "pass": true
+            },
+            "determinant": 14,
+            "haar": {
+              "cancellation": "14^Delta * 14^(-Delta)=1",
+              "covarianceFactor": "(4-2*sqrt(2))*c_i/2",
+              "normalizedCoveringFactor": "1",
+              "notGlobalOneFourteenth": true,
+              "perInverseLiftJacobian": "14^(-Delta)",
+              "preimageCount": "14^Delta",
+              "rectangleJacobianExact": "4-2*sqrt(2)",
+              "rectangleJacobianInterval": [
+                1.1715728752538086,
+                1.1715728752538113
+              ],
+              "sourceEquations": [
+                "6.19",
+                "7.27"
+              ]
+            },
+            "rho": {
+              "exact": "log(4-sqrt(2))/log(4+sqrt(2))",
+              "interval": [
+                0.5624713724158233,
+                0.5624713724158401
+              ]
+            },
+            "sqrt2": {
+              "exactRationalWitness": {
+                "criterion": "lower^2 < 2 < upper^2",
+                "lower": "14142135623730950/10000000000000000",
+                "upper": "14142135623730951/10000000000000000"
+              },
+              "interval": [
+                1.4142135623730947,
+                1.4142135623730954
+              ]
+            },
+            "vr": {
+              "exact": [
+                "1",
+                "1-sqrt(2)"
+              ],
+              "intervals": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  -0.4142135623730955,
+                  -0.4142135623730946
+                ]
+              ]
+            },
+            "vt": {
+              "exact": [
+                "sqrt(2)-1",
+                "1"
+              ],
+              "intervals": [
+                [
+                  0.41421356237309465,
+                  0.4142135623730954
+                ],
+                [
+                  1,
+                  1
+                ]
+              ]
+            }
+          }
+        },
+        "discreteChoicesDifferentiated": false,
+        "dualCoordinates": {
+          "eta": "dual to v_t",
+          "identities": {
+            "Dr_v": 0,
+            "Dz_v": 0,
+            "Ni_xi": 0,
+            "time_v": 1
+          },
+          "v": "(eta+r0)/c_i",
+          "xi": "dual to v_r"
+        },
+        "independentCoordinates": [
+          "R",
+          "Z",
+          "T",
+          "theta",
+          "Y_i1",
+          "Y_i2"
+        ],
+        "normalization": {
+          "axial": "sqrt(Q)",
+          "radial": "sqrt(Q)",
+          "time": "Q^(1+h)"
+        },
+        "order": "Differentiate on the extended domain, evaluate at the physical map, and keep averaging at fixed slow variables distinct.",
+        "physicalPhaseMap": "Y=v_r*r^d_r+v_t*t mod Z^2; Y_i=J_g^i*Y",
+        "physicalPointwiseEqualsTorusAverage": false,
+        "sourceEquations": [
+          "6.3",
+          "6.4",
+          "6.6",
+          "6.12"
+        ],
+        "theta": {
+          "fast": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "formula": "R^-1*partial_theta",
+          "slow": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        "time": {
+          "fast": [
+            [
+              0.0010031145533775999,
+              0.0010031145533783404
+            ],
+            [
+              0.0024217327593780338,
+              0.002421732759379817
+            ]
+          ],
+          "formula": "-epsilon*partial_T+c_i*(v_t dot grad_Yi)",
+          "slow": [
+            0,
+            0,
+            [
+              -1.0000000000000002,
+              -0.9999999999999954
+            ],
+            0
+          ]
+        }
+      },
+      "gradient": {
+        "R": 1,
+        "T": 3,
+        "Y1": 5,
+        "Y2": 6,
+        "Z": 2,
+        "theta": 4
+      },
+      "gradientRole": "EXPLICIT_OPERATOR_PROBE; NOT_AN_EVALUATED_N3_JET",
+      "identity": {
+        "arithmetic": "BIGINT_Q_SQRT2",
+        "chainRule": {
+          "Dr_v": 0,
+          "Dz_v": 0,
+          "Ni_xi": 0,
+          "derivation": "Jg*v_r=Lambda_g*v_r; Jg*v_t=T_g*v_t. d_eta(v)=1/c_i. The fast time coefficient c_i cancels; slow derivatives hold Yi fixed.",
+          "spatialNormalization": "sqrt(Q)*partial_z = Q^(1/2-D)*partial_Z = epsilon*partial_Z",
+          "timeNormalization": "Q^(1+h)*partial_t = -epsilon*partial_T + c_i*N_i",
+          "time_v": 1
+        },
+        "checks": [
+          {
+            "id": "radial-eigenvector",
+            "pass": true
+          },
+          {
+            "id": "time-eigenvector",
+            "pass": true
+          },
+          {
+            "id": "dual-orthogonality",
+            "pass": true
+          },
+          {
+            "id": "local-rectangle-jacobian",
+            "pass": true
+          },
+          {
+            "id": "haar-normalized-covering",
+            "pass": true
+          },
+          {
+            "id": "pulse-unit-time-chain-rule",
+            "pass": true
+          }
+        ],
+        "dualBasis": {
+          "Jrect": "4-2*sqrt(2)",
+          "eta": "(v_t dot (Yi-c))/Jrect",
+          "v": "(eta+r0)/c_i",
+          "xi": "(v_r dot (Yi-c))/Jrect"
+        },
+        "haar": {
+          "eachLiftJacobian": "14^-Delta",
+          "fourierProof": "(Jg^Delta)^T*n=0 iff n=0, since det(Jg)=14 != 0.",
+          "fullCoveringFactor": "1",
+          "preimages": "14^Delta"
+        },
+        "newLeanKernelExecution": false,
+        "pass": true,
+        "schema": "MathScope.SourceTorusExactIdentities/1",
+        "sourceEquations": [
+          "6.2",
+          "6.3",
+          "6.4",
+          "6.6",
+          "6.11",
+          "6.12",
+          "6.19",
+          "7.27"
+        ],
+        "sourceProfileValuesSubstituted": false
+      },
+      "pointwiseEvaluationNotAverage": true
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "COMPLETED",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "derivative index",
+          "name": "derivative index",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "operator value on supplied gradient",
+          "name": "operator value on supplied gradient",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "0",
+          "name": "0",
+          "scale": "LINEAR",
+          "unit": "1"
+        }
+      ],
+      "description": "Complete chain-rule operators with the actual source covering and exponent; an explicit gradient is used only to display their action.",
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              1.0955577027598298,
+              0
+            ],
+            [
+              0,
+              1.0955577027600099,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              1,
+              1.9999999999999902,
+              0
+            ],
+            [
+              1,
+              2.0000000000000018,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              2,
+              -2.9804540306768463,
+              0
+            ],
+            [
+              2,
+              -2.980454030676814,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              3,
+              3.9999999999999982,
+              0
+            ],
+            [
+              3,
+              4.0000000000000036,
+              0
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "This is a derivative operator audit, not a sampled global profile derivative."
+      ],
+      "points": [
+        {
+          "label": "Dr: [1.0955577027598298, 1.0955577027600099]",
+          "pos": [
+            0,
+            1.09555770275992,
+            0
+          ],
+          "value": 1.09555770275992
+        },
+        {
+          "label": "Dz: [1.9999999999999902, 2.0000000000000018]",
+          "pos": [
+            1,
+            1.999999999999996,
+            0
+          ],
+          "value": 1.999999999999996
+        },
+        {
+          "label": "time: [-2.9804540306768463, -2.980454030676814]",
+          "pos": [
+            2,
+            -2.98045403067683,
+            0
+          ],
+          "value": -2.98045403067683
+        },
+        {
+          "label": "theta: [3.9999999999999982, 4.0000000000000036]",
+          "pos": [
+            3,
+            4.000000000000001,
+            0
+          ],
+          "value": 4.000000000000001
+        }
+      ]
+    }
+  },
+  "status": "COMPLETED",
+  "resultHash": "91dd02fcfaf1c0383710e45eda21647607f950de89ee3186fed65e4531a7da5d"
+}

@@ -1,6 +1,6 @@
 {
   "schema": "MathScope.M2.ArithmeticResult/1",
-  "version": "0.1.0-m2",
+  "version": "0.2.0-m2",
   "kind": "arithmetic.projective",
   "status": "COMPLETED",
   "object": {
@@ -51,6 +51,530 @@
       "comparison": "External projective-space/crystalline comparison theorem; no new kernel execution.",
       "eInfinityCertified": false,
       "nativePrismaticComplexComputed": false
+    },
+    "finitePerfectComparison": {
+      "schema": "MathScope.ProjectiveFinitePerfectComparison/1",
+      "base": {
+        "schema": "MathScope.ArithmeticBase/1",
+        "kind": "SYMBOLIC_CRYSTALLINE_PRISM",
+        "p": "5",
+        "A": "Z_5",
+        "I": "(p)",
+        "phi": {
+          "kind": "IDENTITY_RING_ENDOMORPHISM",
+          "formula": "phi_A(a)=a"
+        },
+        "delta": "(a-a^p)/p",
+        "finiteObservationIsPrism": false,
+        "assumptions": [
+          {
+            "id": "base-p-prime",
+            "statement": "5 is prime",
+            "status": "EXACT_FINITE_CHECK"
+          },
+          {
+            "id": "base-torsionfree",
+            "statement": "Z_p is p-torsionfree",
+            "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+          },
+          {
+            "id": "base-complete",
+            "statement": "Z_p = inverse_limit_N Z/p^N is p-adically complete",
+            "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+          },
+          {
+            "id": "base-cartier",
+            "statement": "p is a nonzerodivisor and I=(p) is Cartier",
+            "status": "STANDARD_MATHEMATICAL_CONSTRUCTION"
+          },
+          {
+            "id": "base-prism",
+            "statement": "p belongs to I+phi(I)A and A/I has bounded p-power torsion",
+            "status": "EXTERNAL_THEOREM_APPLICATION"
+          }
+        ],
+        "source": {
+          "id": "S01",
+          "locator": "Definition 1.1, Example 1.3(1), Definition 1.4",
+          "status": "THEOREM_REFERENCE"
+        },
+        "admissions": [],
+        "formalComplete": false
+      },
+      "geometry": {
+        "family": "P^n",
+        "n": 8,
+        "baseRing": "Z_p",
+        "specialFiber": "P^8/F_5",
+        "lift": "P^8/Z_5",
+        "cover": [
+          "U_0=D_+(X_0) ~= A^8",
+          "U_1=D_+(X_1) ~= A^8",
+          "U_2=D_+(X_2) ~= A^8",
+          "U_3=D_+(X_3) ~= A^8",
+          "U_4=D_+(X_4) ~= A^8",
+          "U_5=D_+(X_5) ~= A^8",
+          "U_6=D_+(X_6) ~= A^8",
+          "U_7=D_+(X_7) ~= A^8",
+          "U_8=D_+(X_8) ~= A^8"
+        ],
+        "smooth": true,
+        "proper": true
+      },
+      "specification": {
+        "dimension": "every n in Nat",
+        "displayDimension": [
+          0,
+          8
+        ],
+        "nZero": "The point with identity comparison",
+        "allNTheorem": "Stacks tags 0FMJ, 0FUN; rank of the trivial projective bundle is n+1"
+      },
+      "finitePerfectComplex": {
+        "coefficientRing": "Z_p",
+        "terms": [
+          {
+            "degree": 0,
+            "rank": 1,
+            "basis": [
+              "e_0"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "1"
+              ]
+            ]
+          },
+          {
+            "degree": 1,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 2,
+            "rank": 1,
+            "basis": [
+              "e_1"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "5"
+              ]
+            ]
+          },
+          {
+            "degree": 3,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 4,
+            "rank": 1,
+            "basis": [
+              "e_2"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "25"
+              ]
+            ]
+          },
+          {
+            "degree": 5,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 6,
+            "rank": 1,
+            "basis": [
+              "e_3"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "125"
+              ]
+            ]
+          },
+          {
+            "degree": 7,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 8,
+            "rank": 1,
+            "basis": [
+              "e_4"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "625"
+              ]
+            ]
+          },
+          {
+            "degree": 9,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 10,
+            "rank": 1,
+            "basis": [
+              "e_5"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "3125"
+              ]
+            ]
+          },
+          {
+            "degree": 11,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 12,
+            "rank": 1,
+            "basis": [
+              "e_6"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "15625"
+              ]
+            ]
+          },
+          {
+            "degree": 13,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 14,
+            "rank": 1,
+            "basis": [
+              "e_7"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "78125"
+              ]
+            ]
+          },
+          {
+            "degree": 15,
+            "rank": 0,
+            "basis": [],
+            "differentialToNext": "zero",
+            "frobenius": []
+          },
+          {
+            "degree": 16,
+            "rank": 1,
+            "basis": [
+              "e_8"
+            ],
+            "differentialToNext": "zero",
+            "frobenius": [
+              [
+                "390625"
+              ]
+            ]
+          }
+        ],
+        "formula": "direct sum(i=0..n) Z_p[-2i]",
+        "KFlatReason": "Bounded complex of finite free modules",
+        "derivedReduction": {
+          "N": 8,
+          "coefficientRing": "Z/5^8",
+          "modulus": "390625",
+          "terms": [
+            {
+              "degree": 0,
+              "rank": 1,
+              "basis": [
+                "e_0"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "1"
+                ]
+              ]
+            },
+            {
+              "degree": 1,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 2,
+              "rank": 1,
+              "basis": [
+                "e_1"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "5"
+                ]
+              ]
+            },
+            {
+              "degree": 3,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 4,
+              "rank": 1,
+              "basis": [
+                "e_2"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "25"
+                ]
+              ]
+            },
+            {
+              "degree": 5,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 6,
+              "rank": 1,
+              "basis": [
+                "e_3"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "125"
+                ]
+              ]
+            },
+            {
+              "degree": 7,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 8,
+              "rank": 1,
+              "basis": [
+                "e_4"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "625"
+                ]
+              ]
+            },
+            {
+              "degree": 9,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 10,
+              "rank": 1,
+              "basis": [
+                "e_5"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "3125"
+                ]
+              ]
+            },
+            {
+              "degree": 11,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 12,
+              "rank": 1,
+              "basis": [
+                "e_6"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "15625"
+                ]
+              ]
+            },
+            {
+              "degree": 13,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 14,
+              "rank": 1,
+              "basis": [
+                "e_7"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "78125"
+                ]
+              ]
+            },
+            {
+              "degree": 15,
+              "rank": 0,
+              "basis": [],
+              "differentialToNext": "zero",
+              "frobenius": []
+            },
+            {
+              "degree": 16,
+              "rank": 1,
+              "basis": [
+                "e_8"
+              ],
+              "differentialToNext": "zero",
+              "frobenius": [
+                [
+                  "0"
+                ]
+              ]
+            }
+          ]
+        }
+      },
+      "comparisonMap": {
+        "from": "direct sum(i=0..n) Z_p[-2i]",
+        "to": "R Gamma_dR(P^n_Z_p/Z_p)",
+        "generatorImages": [
+          {
+            "generator": "e_0",
+            "degree": 0,
+            "image": "c1_dR(O(1))^0"
+          },
+          {
+            "generator": "e_1",
+            "degree": 2,
+            "image": "c1_dR(O(1))^1"
+          },
+          {
+            "generator": "e_2",
+            "degree": 4,
+            "image": "c1_dR(O(1))^2"
+          },
+          {
+            "generator": "e_3",
+            "degree": 6,
+            "image": "c1_dR(O(1))^3"
+          },
+          {
+            "generator": "e_4",
+            "degree": 8,
+            "image": "c1_dR(O(1))^4"
+          },
+          {
+            "generator": "e_5",
+            "degree": 10,
+            "image": "c1_dR(O(1))^5"
+          },
+          {
+            "generator": "e_6",
+            "degree": 12,
+            "image": "c1_dR(O(1))^6"
+          },
+          {
+            "generator": "e_7",
+            "degree": 14,
+            "image": "c1_dR(O(1))^7"
+          },
+          {
+            "generator": "e_8",
+            "degree": 16,
+            "image": "c1_dR(O(1))^8"
+          }
+        ],
+        "quasiIsomorphismSource": {
+          "url": "https://stacks.math.columbia.edu/tag/0FUN",
+          "locator": "Remark 50.14.2; Lemma 50.11.4 (0FMJ)",
+          "grade": "APPLIED_EXTERNAL_THEOREM",
+          "localKernelCheck": false
+        },
+        "frobeniusCompatibility": {
+          "geometricLift": "[X_0:...:X_n] -> [X_0^p:...:X_n^p]",
+          "lineBundlePullback": "F^* O(1) = O(p)",
+          "chernClass": "c1(O(p)) = p c1(O(1))",
+          "therefore": "F(e_i)=p^i e_i",
+          "coefficientFrobenius": "identity on Z_p"
+        }
+      },
+      "arrows": [
+        {
+          "from": "completed de Rham hypercohomology of the proper smooth lift",
+          "to": "crystalline cohomology of P^n/F_p over Z_p",
+          "source": "S02 Theorem 3.6 and Corollary 3.8",
+          "url": "https://arxiv.org/abs/1110.5001",
+          "grade": "APPLIED_EXTERNAL_THEOREM"
+        },
+        {
+          "from": "crystalline cohomology",
+          "to": "prismatic cohomology completed-base-changed along phi_Z_p=id",
+          "source": "S01 Theorem 1.8(1)",
+          "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+          "grade": "APPLIED_EXTERNAL_THEOREM"
+        }
+      ],
+      "moduleComparison": true,
+      "multiplicativeEInfinityCertificate": false,
+      "nativePrismaticSiteComputed": false,
+      "formalComplete": false,
+      "localKernelCheck": false
     },
     "cohomology": [
       {
@@ -906,7 +1430,51 @@
       "arithmeticIdentity": "zeta(P^n_Z,s) = product(i=0..n) zeta(s-i)",
       "eulerSubstitution": "For each prime p, substitute T_p=p^(-s) in its own local factor before forming the arithmetic Euler product.",
       "convergenceDomain": "Re(s) > 9",
-      "infiniteProductStatus": "THEOREM_REFERENCE",
+      "infiniteProductStatus": "PROVED_ABSOLUTE_CONVERGENCE_BOUND",
+      "convergenceCertificate": {
+        "schema": "MathScope.AbsoluteEulerTailBound/1",
+        "family": "projective",
+        "domain": "Re(s)>9",
+        "uniformHalfPlane": {
+          "numerator": "10",
+          "denominator": "1"
+        },
+        "cutoff": 100,
+        "logTailAbsoluteUpperBound": {
+          "numerator": "3",
+          "denominator": "25"
+        },
+        "delta": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "rhoUpper": {
+          "numerator": "1",
+          "denominator": "4"
+        },
+        "cutoffPowerUpper": {
+          "numerator": "1",
+          "denominator": "100"
+        },
+        "coefficientCount": 9,
+        "argument": [
+          "For |z|<1, the power series for -log(1-z) is bounded in absolute value by |z|/(1-|z|).",
+          "Each local factor is bounded by 9 times p^(-1-delta)/(1-2^(-1-delta)).",
+          "Primes greater than L form a subset of the integers greater than L.",
+          "The decreasing-function integral bounds sum_(m>L) m^(-1-delta) by L^(-delta)/delta.",
+          "The bound tends to zero as L tends to infinity, uniformly on the declared closed right half-plane."
+        ],
+        "numericalMethod": "EXACT_RATIONAL_UPPER_BOUNDS_USING_INTEGER_ROOTS",
+        "sourceDependencies": [
+          "Exact projective Tate local factors",
+          "Elementary absolutely convergent logarithm series and integral test"
+        ],
+        "analyticallyConvergent": true,
+        "meromorphicContinuationComputed": false,
+        "fullInfiniteProductNumericallyEvaluated": false,
+        "RHOrBSDClaim": false,
+        "formalComplete": false
+      },
       "reference": {
         "id": "C01/S07",
         "locator": "Projective-space cohomology and trace/determinant formulas; blueprint pp.7,28,72"
@@ -1704,7 +2272,7 @@
   },
   "evidence": {
     "calculation": "EXACT_FINITE_SCOPE",
-    "geometricComparison": "THEOREM_REFERENCE_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "geometricComparison": "EXPLICIT_MODEL_PLUS_APPLIED_EXTERNAL_THEOREM_OR_MODEL_DEVELOPMENT_AS_DECLARED",
     "lean": "NO_NEW_KERNEL_EXECUTION",
     "formalComplete": false,
     "universalConjectureSolved": false
@@ -1732,6 +2300,20 @@
         "id": "S01",
         "title": "Prisms and Prismatic Cohomology",
         "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S06",
+        "title": "Counting Points on Hyperelliptic Curves Using Monsky–Washnitzer Cohomology",
+        "url": "https://arxiv.org/abs/math/0105031",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "STACKS_PROJECTIVE",
+        "title": "Derived projective bundle formula",
+        "url": "https://stacks.math.columbia.edu/tag/0FUN",
         "grade": "THEOREM_REFERENCE",
         "localKernelCheck": false
       },
@@ -1764,9 +2346,9 @@
         "localKernelCheck": false
       }
     ],
-    "algorithmVersion": "0.1.0-m2",
+    "algorithmVersion": "0.2.0-m2",
     "inputHash": "a369d929e5a227d32df33a819075e0e3281665f798384773928b05ad8ff031aa",
-    "sourceHash": "985f926bc0f6bd2b245b4b64f93d317f9b3a709ecbb072240f7b751cd4cf73d9",
+    "sourceHash": "0f3f79c3cd24e37bf5611ed15907d6e34ee02a54ff3dcf54584aeb1dc3bab7c1",
     "operations": 101
   },
   "visualization": {
@@ -2066,14 +2648,14 @@
       "cohomology.generator",
       "cohomology.frobeniusEigenvalue"
     ],
-    "sourceHash": "985f926bc0f6bd2b245b4b64f93d317f9b3a709ecbb072240f7b751cd4cf73d9",
-    "sourceRevision": "985f926bc0f6bd2b245b4b64f93d317f9b3a709ecbb072240f7b751cd4cf73d9",
+    "sourceHash": "0f3f79c3cd24e37bf5611ed15907d6e34ee02a54ff3dcf54584aeb1dc3bab7c1",
+    "sourceRevision": "0f3f79c3cd24e37bf5611ed15907d6e34ee02a54ff3dcf54584aeb1dc3bab7c1",
     "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
     "sampling": {
       "displayPoints": 9,
-      "originalSourceHash": "985f926bc0f6bd2b245b4b64f93d317f9b3a709ecbb072240f7b751cd4cf73d9"
+      "originalSourceHash": "0f3f79c3cd24e37bf5611ed15907d6e34ee02a54ff3dcf54584aeb1dc3bab7c1"
     },
     "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
   },
-  "resultHash": "64d834a15e308d7608bb2269c87e7ef00029367d3cfd380ffcf1b14bb5dbfa21"
+  "resultHash": "4e510e3d16d4bda7ae79a22b58500184d543a2591a0068967f2800ea52929aee"
 }

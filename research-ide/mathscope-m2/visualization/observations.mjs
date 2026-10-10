@@ -163,7 +163,7 @@ function checksView(r){
 function complexView(r,raw){
   const d=r.results;if(!d?.complex)return null;
   const groups=d.complex.basis||[],dims=d.complex.dims||groups.map(b=>b.length);
-  const inherited=raw?.points?.length?null:{kind:'SERIES',title:'점의 finite-perfect 복합체',description:'C⁰의 한 생성자와 해당 Frobenius를 표시합니다. cochain 차수와 공간 좌표는 다릅니다.',chart:{kind:'SERIES',series:[{label:'chain group rank',connect:false,points:dims.map((v,i)=>({x:i,y:v,sourcePath:`result.results.complex.dims[${i}]`}))}],xLabel:'cohomological degree k',yLabel:'chain group rank',xInteger:true},axisMetadata:[axis('k','COHOMOLOGICAL_DEGREE','result.results.complex.dims'),axis('rank Cᵏ','MODULE_RANK','result.results.complex.dims')],table:table(['cochain degree','basis index','정확한 basis','Frobenius'],groups.flatMap((b,k)=>b.map((v,i)=>[k,i,v,d.frobenius?.cohomology?.find(x=>x.degree===k)?.multiplier??'—'])),groups.flatMap((b,k)=>b.map((_,i)=>`result.results.complex.basis[${k}][${i}]`))),lostInformation:['표시상 간격은 p-adic 거리나 위상적 인접성이 아닙니다.']};
+  const inherited=raw?.points?.length?null:{kind:'SERIES',title:'정확한 복합체 · 차수별 모듈',description:'차수별 생성자, 미분, Frobenius와 비교 사상을 표시합니다. cochain 차수는 공간 좌표가 아닙니다.',chart:{kind:'SERIES',series:[{label:'chain group rank',connect:false,points:dims.map((v,i)=>({x:i,y:v,sourcePath:`result.results.complex.dims[${i}]`}))}],xLabel:'cohomological degree k',yLabel:'chain group rank',xInteger:true},axisMetadata:[axis('k','COHOMOLOGICAL_DEGREE','result.results.complex.dims'),axis('rank Cᵏ','MODULE_RANK','result.results.complex.dims')],table:table(['cochain degree','basis index','정확한 basis','Frobenius'],groups.flatMap((b,k)=>b.map((v,i)=>[k,i,v,d.frobenius?.cohomology?.find(x=>x.degree===k)?.multiplier??'—'])),groups.flatMap((b,k)=>b.map((_,i)=>`result.results.complex.basis[${k}][${i}]`))),lostInformation:['표시상 간격은 p-adic 거리나 위상적 인접성이 아닙니다.']};
   const details=[{title:'chain groups · differential',value:d.complex},{title:'kernel/image와 cohomology',value:d.smith||d.cohomology},{title:'Frobenius chain maps',value:d.frobenius},{title:'filtration · inclusion',value:d.filtration},{title:'comparison maps · 가정',value:d.comparison?.arrows},{title:'strong deformation retraction',value:d.retraction}].filter(x=>x.value!==undefined);
   return inherited?{...inherited,details}:{details};
 }
@@ -172,9 +172,31 @@ function complexView(r,raw){
 export function traceBasis(job,degree,index){
   const d=job?.result?.results,c=d?.complex;
   if(!Number.isSafeInteger(degree)||!Number.isSafeInteger(index)||degree<0||index<0||!c?.basis?.[degree]||index>=c.basis[degree].length)return {ok:false,status:'INVALID_BASIS'};
-  const outgoing=(matrix,targetBasis,sourceField)=>!matrix?[]:(matrix.entries||[]).filter(([,j])=>j===index).map(([i,,value])=>({targetIndex:i,target:targetBasis?.[i]??i,coefficient:value,sourceField}));
-  const basis=c.basis[degree][index];
-  return {ok:true,inputHash:job.inputHash??null,jobId:job.id,basis: COPY(basis),degree,index,differential:outgoing(c.differentials?.[degree],c.basis[degree+1],`result.results.complex.differentials[${degree}]`),frobenius:outgoing(d.frobenius?.maps?.[degree],d.frobenius?.target?.basis?.[degree]||c.basis[degree],`result.results.frobenius.maps[${degree}]`),filtrationMembership:d.filtration?.basis?.[degree]?.some(b=>typeof b==='object'&&typeof basis==='object'?b.id===basis.id:canonicalStringify(b)===canonicalStringify(basis))??null,computedInvariants:COPY(d.smith?.cohomology||d.cohomology||null),invariantSource:'EXISTING_COMPUTATION_RESULT',comparison:COPY(d.comparison?.arrows||[])};
+  const column=(matrix,selected,targetBasis,matrixSourceField)=>!matrix?[]:(matrix.entries||[]).flatMap(([i,j,value],entry)=>j===selected?[{targetIndex:i,target:COPY(targetBasis?.[i]??i),coefficient:value,matrixSourceField,sourceField:`${matrixSourceField}.entries[${entry}][2]`}]:[]);
+  const outgoing=(matrix,targetBasis,sourceField)=>column(matrix,index,targetBasis,sourceField);
+  const basis=c.basis[degree][index],filtrationBasis=d.filtration?.basis?.[degree],same=(a,b)=>typeof a==='object'&&typeof b==='object'&&a?.id&&b?.id?a.id===b.id:canonicalStringify(a)===canonicalStringify(b);
+  const filtrationMembership=Array.isArray(filtrationBasis)?basis?.inOriginal?basis.inOriginal.every(term=>filtrationBasis.some(b=>same(b,term.basis))):filtrationBasis.some(b=>same(b,basis)):null;
+  let computedComparison=null;
+  const R=d.retraction,r=R?.r?.[degree],h=R?.h?.[degree],inc=R?.i?.[degree];
+  if(r&&inc){
+    const rPath=`result.results.retraction.r[${degree}]`,iPath=`result.results.retraction.i[${degree}]`,hPath=`result.results.retraction.h[${degree}]`;
+    const projectionTerms=column(r,index,R.K?.basis?.[degree],rPath),homotopyTerms=column(h,index,c.basis[degree-1],hPath);
+    const inclusionImages=projectionTerms.map(term=>({cohomologyIndex:term.targetIndex,cohomologyBasis:COPY(term.target),projectionCoefficient:term.coefficient,projectionSourceField:term.sourceField,inclusionSourceField:iPath,terms:column(inc,term.targetIndex,c.basis[degree],iPath)}));
+    const integerCoefficients=inclusionImages.every(image=>/^-?\d+$/.test(String(image.projectionCoefficient))&&image.terms.every(t=>/^-?\d+$/.test(String(t.coefficient))));
+    const accumulated=new Map();
+    if(integerCoefficients)for(const image of inclusionImages)for(const term of image.terms)accumulated.set(term.targetIndex,(accumulated.get(term.targetIndex)||0n)+BigInt(image.projectionCoefficient)*BigInt(term.coefficient));
+    const roundtripTerms=[...accumulated].filter(([,value])=>value!==0n).sort(([a],[b])=>a-b).map(([targetIndex,value])=>({targetIndex,target:COPY(c.basis[degree][targetIndex]),coefficient:String(value)}));
+    computedComparison={
+      kind:'EXPLICIT_REPLACEMENT_SELECTED_COLUMN',sourceDegree:degree,sourceIndex:index,
+      projection:{map:'r : C^k → H^k',sourceField:rPath,terms:projectionTerms,zero:projectionTerms.length===0},
+      inclusionImages,
+      roundtrip:{map:'i(r(b)) : C^k → C^k',sourceFields:[rPath,iPath],arithmetic:integerCoefficients?'EXACT_INTEGER_COMPOSITION':'COEFFICIENT_PRODUCTS_RETAINED',terms:integerCoefficients?roundtripTerms:null,zero:integerCoefficients?roundtripTerms.length===0:null},
+      homotopy:h?{map:'h : C^k → C^(k−1)',sourceField:hPath,terms:homotopyTerms,zero:homotopyTerms.length===0}:null,
+      identity:'id_C − i r = d h + h d',identitySource:'Existing verified retraction; selected columns do not create a new cohomology or comparison theorem.',
+      formalPass:false
+    };
+  }
+  return {ok:true,inputHash:job.inputHash??null,jobId:job.id,basis:COPY(basis),degree,index,differential:outgoing(c.differentials?.[degree],c.basis[degree+1],`result.results.complex.differentials[${degree}]`),frobenius:outgoing(d.frobenius?.maps?.[degree],d.frobenius?.target?.basis?.[degree]||c.basis[degree],`result.results.frobenius.maps[${degree}]`),filtrationMembership,filtrationMembershipRule:basis?.inOriginal?'Exact support in the original coordinate filtration; basis coefficients are integral.':'Original coordinate-filtration basis membership',computedInvariants:COPY(d.smith?.cohomology||d.cohomology||null),invariantSource:'EXISTING_COMPUTATION_RESULT',computedComparison,comparison:COPY(d.comparison?.arrows||[])};
 }
 
 /** Exact coverage tiles; never represents an uncomputed interval as zero primes. */
@@ -208,7 +230,7 @@ function rawView(job,raw,options){
   const physicalGaugeKinds=['gauge.field','gauge.family','gauge.holonomy','gauge.lattice','gauge.ensemble'];
   const legacyPhysical=physicalGaugeKinds.includes(kind)||['ns.exterior','ns.benchmark','ns.leading-profile'].includes(kind);
   const axisMetadata=axes.map((label,i)=>{
-    const declared=typeof raw.axes?.[i]==='object'?raw.axes[i]:{},log=/log/i.test(label),unit=declared.unit|| (legacyPhysical?'declared source length':'1');
+    const declared=typeof raw.axes?.[i]==='object'?raw.axes[i]:{},log=/\blog(?:2|10|₂|₁₀)?(?=\W|_|$)|로그/i.test(label)||/^LOG_/.test(declared.type||''),unit=declared.unit|| (legacyPhysical?'declared source length':'1');
     let type=declared.type||declared.kind||(legacyPhysical?'PHYSICAL_CARTESIAN':/index|degree|weight|prime|p$|정수|속성|간격/i.test(label)?'DATA_ATTRIBUTE':'PROFILE_COORDINATE');
     if(type==='PHYSICAL')type=/time|시간/i.test(unit)||/tau|τ|time|^t$|1-t/i.test(label)?'PHYSICAL_TIME':'PHYSICAL_COORDINATE';
     const dimension=declared.physicalDimension??(/^PHYSICAL_(CARTESIAN|CARTESIAN_COORDINATE|SPACE_COORDINATE|COORDINATE|LENGTH|TIME)$/.test(type)?1:0);
@@ -255,7 +277,7 @@ export function makeVisualization(job,options={}) {
   else if(kind==='ns.provenance')view=nsProvenance(r);
   else if(kind==='ns.validate')view=checksView(r);
   if(!view&&raw&&((raw.points?.length||0)+(raw.lines?.length||0)+(raw.arrows?.length||0)>0))view=rawView(job,raw,options);
-  if(kind==='arithmetic.point'||kind==='arithmetic.p1'){const complex=complexView(r,raw);if(complex)view=view?{...view,details:[...(view.details||[]),...complex.details]}:complex;}
+  if(r.results?.complex?.basis){const complex=complexView(r,raw);if(complex)view=view?{...view,details:[...(view.details||[]),...complex.details]}:complex;}
   view=view||fallbackTable(r);
   if(!view.scene)view.scene=view.chart?sceneFromChart(view.chart):emptyScene();
   const maxRows=cap(options.maxRows,200,1000),t=view.table;

@@ -1,0 +1,690 @@
+{
+  "id": "ns-m2-dyadic",
+  "request": {
+    "kind": "ns.dyadic-charts",
+    "input": {
+      "ellStart": 4,
+      "count": 14,
+      "h": 0.005
+    }
+  },
+  "inputHash": "847247b942e66b07145014b364e3274762588d501c1c19b9e67bc37d96df7ab9",
+  "result": {
+    "blockers": [
+      "N5-01 formulas and finite overlap check are implemented; original same-profile band selection remains unconnected."
+    ],
+    "checks": [
+      {
+        "detail": "Same physical point in adjacent bands.",
+        "id": "overlap-coordinate-identity",
+        "pass": true
+      },
+      {
+        "detail": "For 0<epsilon<=1, k=ceil(epsilon^-1/2) gives 1<=epsilon*k^2<=4.",
+        "id": "carrier-frequency-window",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "FINITE_NUMERICAL_COMPONENT",
+    "kind": "ns.dyadic-charts",
+    "moduleVersion": "m2-ns-0.1.1",
+    "object": {
+      "kind": "DYADIC_CHART_CONTRACT"
+    },
+    "precisionLedger": {
+      "arithmetic": "FLOAT64_WITH_EXACT_INDEX_AND_SOURCE_EXPRESSIONS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 7000,
+      "outputItemsEstimate": 14,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "cffe93bdb0571c0ea1776602f3e726b4f8a1783b8b46843044fdf3648f58081c",
+    "results": {
+      "definitions": {
+        "Q": "2^-ell",
+        "R": "r/sqrt(Q)",
+        "Sstar": "ell^2",
+        "T": "tau/Q",
+        "Z": "z/Q^D",
+        "auxiliaryTorus": "T^2 is an averaging variable, not a physical spatial dimension",
+        "epsilon": "Q^h",
+        "physicalTime": "t=1-tau"
+      },
+      "labelsFrozenDuringDifferentiation": true,
+      "rows": [
+        {
+          "Q": 0.0625,
+          "QExact": "2^(-4)",
+          "R": 1,
+          "Sstar": 16,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 4,
+          "epsilon": 0.9862327044933592,
+          "epsilonExact": "2^(-4*0.005)",
+          "epsilonK2": 3.944930817973437,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.25000000000000006,
+              "tau": 0.0625,
+              "z": 0.05069797398950146
+            }
+          },
+          "r": 0.25,
+          "tau": 0.0625,
+          "z": 0.05069797398950146
+        },
+        {
+          "Q": 0.03125,
+          "QExact": "2^(-5)",
+          "R": 1,
+          "Sstar": 25,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 5,
+          "epsilon": 0.9828205985452511,
+          "epsilonExact": "2^(-5*0.005)",
+          "epsilonK2": 3.9312823941810042,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.1767766952966369,
+              "tau": 0.03125,
+              "z": 0.035973339500270506
+            }
+          },
+          "r": 0.1767766952966369,
+          "tau": 0.03125,
+          "z": 0.035973339500270506
+        },
+        {
+          "Q": 0.015625,
+          "QExact": "2^(-6)",
+          "R": 1,
+          "Sstar": 36,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 6,
+          "epsilon": 0.9794202975869268,
+          "epsilonExact": "2^(-6*0.005)",
+          "epsilonK2": 3.9176811903477073,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.12500000000000003,
+              "tau": 0.015625,
+              "z": 0.025525303142679832
+            }
+          },
+          "r": 0.125,
+          "tau": 0.015625,
+          "z": 0.025525303142679836
+        },
+        {
+          "Q": 0.0078125,
+          "QExact": "2^(-7)",
+          "R": 1,
+          "Sstar": 49,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 7,
+          "epsilon": 0.9760317607762247,
+          "epsilonExact": "2^(-7*0.005)",
+          "epsilonK2": 3.9041270431048987,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.08838834764831845,
+              "tau": 0.0078125,
+              "z": 0.018111776931935986
+            }
+          },
+          "r": 0.08838834764831845,
+          "tau": 0.0078125,
+          "z": 0.018111776931935986
+        },
+        {
+          "Q": 0.00390625,
+          "QExact": "2^(-8)",
+          "R": 1,
+          "Sstar": 64,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 8,
+          "epsilon": 0.9726549474122855,
+          "epsilonExact": "2^(-8*0.005)",
+          "epsilonK2": 3.890619789649142,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.06250000000000001,
+              "tau": 0.00390625,
+              "z": 0.012851422833200832
+            }
+          },
+          "r": 0.0625,
+          "tau": 0.00390625,
+          "z": 0.012851422833200832
+        },
+        {
+          "Q": 0.001953125,
+          "QExact": "2^(-9)",
+          "R": 1,
+          "Sstar": 81,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 9,
+          "epsilon": 0.969289816935065,
+          "epsilonExact": "2^(-9*0.005)",
+          "epsilonK2": 3.87715926774026,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.04419417382415922,
+              "tau": 0.001953125,
+              "z": 0.009118877151501097
+            }
+          },
+          "r": 0.04419417382415922,
+          "tau": 0.001953125,
+          "z": 0.009118877151501097
+        },
+        {
+          "Q": 0.0009765625,
+          "QExact": "2^(-10)",
+          "R": 1,
+          "Sstar": 100,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 10,
+          "epsilon": 0.9659363289248456,
+          "epsilonExact": "2^(-10*0.005)",
+          "epsilonK2": 3.8637453156993824,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.03125000000000001,
+              "tau": 0.0009765625,
+              "z": 0.006470405774008611
+            }
+          },
+          "r": 0.03125,
+          "tau": 0.0009765625,
+          "z": 0.00647040577400861
+        },
+        {
+          "Q": 0.00048828125,
+          "QExact": "2^(-11)",
+          "R": 1,
+          "Sstar": 121,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 11,
+          "epsilon": 0.9625944431017514,
+          "epsilonExact": "2^(-11*0.005)",
+          "epsilonK2": 3.8503777724070054,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.02209708691207961,
+              "tau": 0.00048828125,
+              "z": 0.004591151978994716
+            }
+          },
+          "r": 0.02209708691207961,
+          "tau": 0.00048828125,
+          "z": 0.004591151978994716
+        },
+        {
+          "Q": 0.000244140625,
+          "QExact": "2^(-12)",
+          "R": 1,
+          "Sstar": 144,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 12,
+          "epsilon": 0.9592641193252643,
+          "epsilonExact": "2^(-12*0.005)",
+          "epsilonK2": 3.8370564773010574,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.015625000000000003,
+              "tau": 0.000244140625,
+              "z": 0.003257705502628505
+            }
+          },
+          "r": 0.015625,
+          "tau": 0.000244140625,
+          "z": 0.0032577055026285044
+        },
+        {
+          "Q": 0.0001220703125,
+          "QExact": "2^(-13)",
+          "R": 1,
+          "Sstar": 169,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 13,
+          "epsilon": 0.9559453175937421,
+          "epsilonExact": "2^(-13*0.005)",
+          "epsilonK2": 3.8237812703749685,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.011048543456039806,
+              "tau": 0.0001220703125,
+              "z": 0.0023115429832013088
+            }
+          },
+          "r": 0.011048543456039806,
+          "tau": 0.0001220703125,
+          "z": 0.0023115429832013088
+        },
+        {
+          "Q": 0.00006103515625,
+          "QExact": "2^(-14)",
+          "R": 1,
+          "Sstar": 196,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 14,
+          "epsilon": 0.9526379980439373,
+          "epsilonExact": "2^(-14*0.005)",
+          "epsilonK2": 3.8105519921757494,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.007812500000000002,
+              "tau": 0.00006103515625,
+              "z": 0.0016401823181610427
+            }
+          },
+          "r": 0.0078125,
+          "tau": 0.00006103515625,
+          "z": 0.0016401823181610429
+        },
+        {
+          "Q": 0.000030517578125,
+          "QExact": "2^(-15)",
+          "R": 1,
+          "Sstar": 225,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 15,
+          "epsilon": 0.9493421209505192,
+          "epsilonExact": "2^(-15*0.005)",
+          "epsilonK2": 3.7973684838020767,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.005524271728019903,
+              "tau": 0.000030517578125,
+              "z": 0.0011638105180646113
+            }
+          },
+          "r": 0.005524271728019903,
+          "tau": 0.000030517578125,
+          "z": 0.0011638105180646113
+        },
+        {
+          "Q": 0.0000152587890625,
+          "QExact": "2^(-16)",
+          "R": 1,
+          "Sstar": 256,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 16,
+          "epsilon": 0.9460576467255959,
+          "epsilonExact": "2^(-16*0.005)",
+          "epsilonK2": 3.7842305869023836,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.003906250000000001,
+              "tau": 0.0000152587890625,
+              "z": 0.0008257953441885785
+            }
+          },
+          "r": 0.00390625,
+          "tau": 0.0000152587890625,
+          "z": 0.0008257953441885785
+        },
+        {
+          "Q": 0.00000762939453125,
+          "QExact": "2^(-17)",
+          "R": 1,
+          "Sstar": 289,
+          "T": 1,
+          "Z": 0.2,
+          "ell": 17,
+          "epsilon": 0.9427845359182395,
+          "epsilonExact": "2^(-17*0.005)",
+          "epsilonK2": 3.771138143672958,
+          "k": 2,
+          "overlapAtNextBand": {
+            "R": 1.4142135623730951,
+            "T": 2,
+            "Z": 0.2818641510284039,
+            "reconstructed": {
+              "r": 0.0027621358640099515,
+              "tau": 0.00000762939453125,
+              "z": 0.0005859527301897728
+            }
+          },
+          "r": 0.0027621358640099515,
+          "tau": 0.00000762939453125,
+          "z": 0.0005859527301897727
+        }
+      ]
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "PHYSICAL",
+          "label": "r",
+          "name": "r",
+          "scale": "LINEAR",
+          "sourceField": "r",
+          "unit": "length"
+        },
+        {
+          "kind": "PHYSICAL",
+          "label": "z",
+          "name": "z",
+          "scale": "LINEAR",
+          "sourceField": "z",
+          "unit": "length"
+        },
+        {
+          "kind": "PHYSICAL",
+          "label": "tau=1-t",
+          "name": "tau=1-t",
+          "scale": "LINEAR",
+          "sourceField": "tau=1-t",
+          "unit": "time"
+        }
+      ],
+      "description": "Physical (r,z,tau) for fixed scaled coordinates in explicitly selected dyadic bands.",
+      "lines": [
+        {
+          "points": [
+            [
+              0.25,
+              0.05069797398950146,
+              0.0625
+            ],
+            [
+              0.1767766952966369,
+              0.035973339500270506,
+              0.03125
+            ],
+            [
+              0.125,
+              0.025525303142679836,
+              0.015625
+            ],
+            [
+              0.08838834764831845,
+              0.018111776931935986,
+              0.0078125
+            ],
+            [
+              0.0625,
+              0.012851422833200832,
+              0.00390625
+            ],
+            [
+              0.04419417382415922,
+              0.009118877151501097,
+              0.001953125
+            ],
+            [
+              0.03125,
+              0.00647040577400861,
+              0.0009765625
+            ],
+            [
+              0.02209708691207961,
+              0.004591151978994716,
+              0.00048828125
+            ],
+            [
+              0.015625,
+              0.0032577055026285044,
+              0.000244140625
+            ],
+            [
+              0.011048543456039806,
+              0.0023115429832013088,
+              0.0001220703125
+            ],
+            [
+              0.0078125,
+              0.0016401823181610429,
+              0.00006103515625
+            ],
+            [
+              0.005524271728019903,
+              0.0011638105180646113,
+              0.000030517578125
+            ],
+            [
+              0.00390625,
+              0.0008257953441885785,
+              0.0000152587890625
+            ],
+            [
+              0.0027621358640099515,
+              0.0005859527301897727,
+              0.00000762939453125
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "The display is a space-time chart, not three physical spatial axes.",
+        "The small fixture h is not substituted into the archived N3 profile."
+      ],
+      "points": [
+        {
+          "label": "ell=4, Q=2^(-4)",
+          "pos": [
+            0.25,
+            0.05069797398950146,
+            0.0625
+          ],
+          "value": 4
+        },
+        {
+          "label": "ell=5, Q=2^(-5)",
+          "pos": [
+            0.1767766952966369,
+            0.035973339500270506,
+            0.03125
+          ],
+          "value": 5
+        },
+        {
+          "label": "ell=6, Q=2^(-6)",
+          "pos": [
+            0.125,
+            0.025525303142679836,
+            0.015625
+          ],
+          "value": 6
+        },
+        {
+          "label": "ell=7, Q=2^(-7)",
+          "pos": [
+            0.08838834764831845,
+            0.018111776931935986,
+            0.0078125
+          ],
+          "value": 7
+        },
+        {
+          "label": "ell=8, Q=2^(-8)",
+          "pos": [
+            0.0625,
+            0.012851422833200832,
+            0.00390625
+          ],
+          "value": 8
+        },
+        {
+          "label": "ell=9, Q=2^(-9)",
+          "pos": [
+            0.04419417382415922,
+            0.009118877151501097,
+            0.001953125
+          ],
+          "value": 9
+        },
+        {
+          "label": "ell=10, Q=2^(-10)",
+          "pos": [
+            0.03125,
+            0.00647040577400861,
+            0.0009765625
+          ],
+          "value": 10
+        },
+        {
+          "label": "ell=11, Q=2^(-11)",
+          "pos": [
+            0.02209708691207961,
+            0.004591151978994716,
+            0.00048828125
+          ],
+          "value": 11
+        },
+        {
+          "label": "ell=12, Q=2^(-12)",
+          "pos": [
+            0.015625,
+            0.0032577055026285044,
+            0.000244140625
+          ],
+          "value": 12
+        },
+        {
+          "label": "ell=13, Q=2^(-13)",
+          "pos": [
+            0.011048543456039806,
+            0.0023115429832013088,
+            0.0001220703125
+          ],
+          "value": 13
+        },
+        {
+          "label": "ell=14, Q=2^(-14)",
+          "pos": [
+            0.0078125,
+            0.0016401823181610429,
+            0.00006103515625
+          ],
+          "value": 14
+        },
+        {
+          "label": "ell=15, Q=2^(-15)",
+          "pos": [
+            0.005524271728019903,
+            0.0011638105180646113,
+            0.000030517578125
+          ],
+          "value": 15
+        },
+        {
+          "label": "ell=16, Q=2^(-16)",
+          "pos": [
+            0.00390625,
+            0.0008257953441885785,
+            0.0000152587890625
+          ],
+          "value": 16
+        },
+        {
+          "label": "ell=17, Q=2^(-17)",
+          "pos": [
+            0.0027621358640099515,
+            0.0005859527301897727,
+            0.00000762939453125
+          ],
+          "value": 17
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "18b28f15f1742a20bc63b08df9013775808988ce6106eed84e22eb8ceaef5f08"
+}

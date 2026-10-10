@@ -1,6 +1,7 @@
-/** One CPU Canvas2D surface, event-driven redraw, shared exact HTML table. */
+/** Event-driven Canvas2D with optional WebGL point batches and a shared exact HTML table. */
 import {Scene3D,heatColor,palette} from '../../mathscope-extension/renderer.mjs';
 import {numericValue,scalarText} from './observations.mjs';
+import {WebGLMarks} from './webgl-marks.mjs';
 
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const tick=n=>!Number.isFinite(n)?'—':Math.abs(n)>=10000||(n!==0&&Math.abs(n)<.001)?n.toExponential(3):String(Number(n.toPrecision(5)));
@@ -11,11 +12,11 @@ function rounded(c,x,y,w,h,r=5){if(c.roundRect){c.beginPath();c.roundRect(x,y,w,
 /**
  * Scene3D-compatible interface. Camera work touches representationRevision only.
  * CPU 3D and chart routes read the same source-bound view and exact table.
- * WebGL is deliberately reported NOT_IMPLEMENTED, never silently claimed.
+ * WebGL only rasterizes retained points; CPU projection, selection and exact values remain identical.
  */
 export class SourceBoundScene extends Scene3D {
   constructor(canvas){
-    super(canvas);this.presentation=null;this.representationRevision=0;this.cameraStamp=null;this.cameraListener=null;this.drawDurations=[];this.lastPicked=null;
+    super(canvas);this.presentation=null;this.representationRevision=0;this.cameraStamp=null;this.cameraListener=null;this.drawDurations=[];this.lastPicked=null;this.renderMode='AUTO';this.gpu=new WebGLMarks(canvas.ownerDocument||(typeof document!=='undefined'?document:null));this.actualRenderer='CPU_CANVAS2D';
     canvas.setAttribute('role','img');canvas.setAttribute('tabindex','0');
   }
   set(data){
@@ -39,14 +40,17 @@ export class SourceBoundScene extends Scene3D {
     this.canvas.dataset.sourceHash=view.binding?.sourceHash||'';
     for(const key of ['modelHash','sampleHash','observationHash','ensembleHash','historyHash','configurationHash'])this.canvas.dataset[key]=view.binding?.[key]||'';
     this.canvas.dataset.sourceJobId=view.binding?.jobId||'';
-    this.canvas.dataset.gpuPath='NOT_IMPLEMENTED';
+    this.canvas.dataset.gpuPath=this.gpu?.state||'NOT_REQUESTED';
     this.canvas.setAttribute('aria-label',`${view.title}. ${view.description}. 원본 값은 바로 아래 수치표에 있습니다.`);
     return view;
   }
   getCamera(){return {yaw:this.yaw,pitch:this.pitch,zoom:this.zoom};}
   setCamera(camera){if(!camera||![camera.yaw,camera.pitch,camera.zoom].every(Number.isFinite))return false;this.yaw=camera.yaw;this.pitch=clamp(camera.pitch,-1.35,1.35);this.zoom=clamp(camera.zoom,.4,2.2);this.draw();return true;}
   onCameraChange(listener){this.cameraListener=typeof listener==='function'?listener:null;}
-  getMetrics(){const a=(this.drawDurations||[]).slice().sort((a,b)=>a-b);return {renderer:'CPU_CANVAS2D',webgl:'NOT_IMPLEMENTED',samples:a.length,p95Milliseconds:a.length?a[Math.min(a.length-1,Math.ceil(a.length*.95)-1)]:null,targetMilliseconds:100,representationRevision:this.representationRevision};}
+  setRenderMode(mode){if(!['AUTO','CPU','WEBGL'].includes(mode))return false;this.renderMode=mode;this.draw();return true;}
+  getMetrics(){const a=(this.drawDurations||[]).slice().sort((a,b)=>a-b);return {renderer:this.actualRenderer||'CPU_CANVAS2D',requestedMode:this.renderMode,webgl:this.gpu?.metrics()||{state:'NOT_REQUESTED'},samples:a.length,p95Milliseconds:a.length?a[Math.min(a.length-1,Math.ceil(a.length*.95)-1)]:null,targetMilliseconds:100,representationRevision:this.representationRevision};}
+  renderingAudit(){const before=JSON.stringify({binding:this.presentation?.binding,table:this.presentation?.table,points:this.presentation?.scene.points}),mode=this.renderMode;this.setRenderMode('CPU');const cpu=this.projected.map(p=>({pos:p.pos,xy:p.xy,sourcePath:p.sourcePath,value:p.value}));this.setRenderMode('WEBGL');const gpu=this.projected.map(p=>({pos:p.pos,xy:p.xy,sourcePath:p.sourcePath,value:p.value})),actual=this.actualRenderer,details=this.gpu.metrics(),probe=new WebGLMarks(this.canvas.ownerDocument),raster=probe.rasterAudit();probe.destroy();const unchanged=before===JSON.stringify({binding:this.presentation?.binding,table:this.presentation?.table,points:this.presentation?.scene.points}),sameRetainedProjection=JSON.stringify(cpu)===JSON.stringify(gpu);this.setRenderMode(mode);return {status:raster.pass&&unchanged&&sameRetainedProjection?'PASS':raster.pass?'FAIL':'UNAVAILABLE',sourceUnchanged:unchanged,sameRetainedProjection,actualRenderer:actual,gpu:details,raster,marks:cpu.length,pixelTolerance:.001,exactTablePolicy:'GPU float32 values are display coordinates only; the unchanged retained exact table is authoritative.'};}
+  destroy(){this.gpu?.destroy();super.destroy();}
   draw(){
     const started=globalThis.performance?.now?.()??Date.now(),view=this.presentation;
     if(!view){super.draw();return;}
@@ -54,11 +58,22 @@ export class SourceBoundScene extends Scene3D {
     if(this.cameraStamp&&stamp!==this.cameraStamp){this.representationRevision++;this.cameraStamp=stamp;this.cameraListener?.(this.getCamera());}
     this.canvas.dataset.representationRevision=String(this.representationRevision||1);
     if(view.kind==='SPATIAL_3D'||view.kind==='RELATION_3D'){
-      super.draw();this.canvas.dataset.renderer=view.kind==='SPATIAL_3D'?'CPU_ORTHOGRAPHIC_PHYSICAL':'CPU_ORTHOGRAPHIC_RELATION';
+      this.drawSpatial();
       if(view.kind==='RELATION_3D'&&this.ctx&&this.width&&this.height){this.ctx.fillStyle='#081522';this.ctx.fillRect(0,this.height-24,this.width,24);this.ctx.fillStyle='#adc6d5';this.ctx.font='10px sans-serif';this.ctx.fillText('Typed data coordinates · diagram layout / profile attributes · camera only',12,this.height-10);}
-    }else this.drawChart(view);
+    }else{this.drawChart(view);this.actualRenderer='CPU_CANVAS2D_'+(view.chart?.kind||'STATE');}
     const elapsed=(globalThis.performance?.now?.()??Date.now())-started;
     if(this.drawDurations){this.drawDurations.push(elapsed);if(this.drawDurations.length>120)this.drawDurations.shift();}
+  }
+  drawSpatial(){
+    const data=this.data,wantsGPU=this.renderMode==='WEBGL'||this.renderMode==='AUTO'&&(data.points?.length||0)>=1000;
+    if(!wantsGPU||!this.gpu?.initialize()){super.draw();this.actualRenderer='CPU_CANVAS2D';this.canvas.dataset.renderer='CPU_ORTHOGRAPHIC_'+(this.presentation.kind==='SPATIAL_3D'?'PHYSICAL':'RELATION');this.canvas.dataset.gpuPath=this.gpu?.state||'NOT_REQUESTED';return;}
+    // Paint axes/paths/vectors once, without the bulk CPU point loop. Restore the retained scene immediately.
+    this.data={...data,points:[]};super.draw();this.data=data;if(!this.width||!this.height)return;
+    this.projected=data.points.map((p,i)=>({...p,xy:this.project(p.pos),index:i})).sort((a,b)=>a.xy[2]-b.xy[2]);
+    const dpr=Math.min(globalThis.devicePixelRatio||1,1.5);
+    if(this.gpu.draw(this.projected,this.width,this.height,dpr)){this.ctx.drawImage(this.gpu.canvas,0,0,this.gpu.canvas.width,this.gpu.canvas.height,0,0,this.width,this.height);this.actualRenderer='WEBGL_POINTS_WITH_CANVAS_AXES';}else{super.draw();this.actualRenderer='CPU_CANVAS2D_FALLBACK';}
+    this.canvas.dataset.gpuPath=this.gpu.state;this.canvas.dataset.renderer=this.actualRenderer;this.canvas.dataset.markCount=String(data.points.length+data.lines.reduce((n,l)=>n+l.points.length,0)+data.arrows.length);
+    if(this.selected){this.ctx.fillStyle='#102c3d';this.ctx.fillRect(8,32,Math.min(this.width-16,420),27);this.ctx.fillStyle='#ffe1a6';this.ctx.font='11px monospace';this.ctx.fillText(short(this.selected.label||String(this.selected.value),78),15,50);}
   }
   drawChart(view){
     const box=this.canvas.getBoundingClientRect(),c=this.ctx;
@@ -119,7 +134,7 @@ export class SourceBoundScene extends Scene3D {
         const v=chart.values[i][j],n=numericValue(v),x=left+j*cell,y=top+i*cell;
         c.fillStyle=Number.isFinite(n)?heatColor((n+extent)/(2*extent)):'#334658';c.fillRect(x+1,y+1,Math.max(0,cell-2),Math.max(0,cell-2));
         if(cell>=24){c.fillStyle='#06131e';c.font=Math.max(10,Math.min(19,cell*.22))+'px monospace';c.textAlign='center';c.fillText(short(scalarText(v),Math.floor(cell/7)),x+cell/2,y+cell/2+5);c.textAlign='left';}
-        this.projected.push({pos:[j,i,0],xy:[x+cell/2,y+cell/2,0],value:v,label:chart.rowLabels[i]+', '+chart.columnLabels[j]+': '+scalarText(v),sourcePath:`${chart.sourceField}[${i}][${j}]`});
+        this.projected.push({pos:[j,i,0],xy:[x+cell/2,y+cell/2,0],value:v,label:chart.rowLabels[i]+', '+chart.columnLabels[j]+': '+scalarText(v),sourcePath:chart.sourcePaths?.[i]?.[j]||`${chart.sourceField}[${i}][${j}]`});
       }
     }
     c.fillStyle='#adc6d5';c.font='10px sans-serif';c.fillText(short('row / column are categorical indices · exact entries shown',Math.floor((width+left-12)/6)),left,top+rows*cell+23);

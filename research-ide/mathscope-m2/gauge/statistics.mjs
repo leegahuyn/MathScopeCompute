@@ -25,3 +25,29 @@ export function compareReplicas(replicas,observable){
   }
   return {status:pairs.every(p=>p.withinDiagnosticThreshold===true)?'MEANS_COMPATIBLE_AT_DIAGNOSTIC_THRESHOLD':'REPLICA_DIAGNOSTIC_UNRESOLVED',observable,pairs,thresholdZ:4,meaning:'Predeclared four-standard-error compatibility diagnostic; it is not a proof of equilibrium.'};
 }
+
+export function splitRhat(series){
+  if(series.length<2||series.some(a=>a.length<64))return {value:null,status:'INSUFFICIENT_INDEPENDENT_CHAINS'};
+  if(series.some(a=>Math.max(...a)-Math.min(...a)<=1e-12*Math.max(1,...a.map(Math.abs))))return {value:null,status:'CONSTANT_WITHIN_CHAIN'};
+  const n=Math.min(...series.map(a=>Math.floor(a.length/2))),halves=series.flatMap(a=>[a.slice(0,n),a.slice(-n)]),means=halves.map(mean),grand=mean(means),m=halves.length,W=mean(halves.map((a,k)=>a.reduce((s,v)=>s+(v-means[k])**2,0)/(n-1))),B=n*means.reduce((s,v)=>s+(v-grand)**2,0)/(m-1);
+  if(W===0)return {value:null,status:'CONSTANT_WITHIN_CHAIN',withinChainVariance:W,betweenChainVariance:B};
+  const value=Math.sqrt(((n-1)*W/n+B/n)/W);return {value,status:value<=1.1?'SPLIT_RHAT_ACCEPTABLE':'SPLIT_RHAT_FAILED',threshold:1.1,splitChainCount:m,splitLength:n,withinChainVariance:W,betweenChainVariance:B,meaning:'A predeclared finite stationarity diagnostic, not a proof of equilibrium.'};
+}
+export function topologyMobility(values,statistics){
+  if(!values.length||!values.every(Number.isFinite))return {status:'BOUNDARY_STENCIL_INCOMPLETE',passed:false,integerSectorLabels:null};
+  const range=Math.max(...values)-Math.min(...values),scale=Math.max(1,...values.map(Math.abs)),epsilon=1e-10*scale;let longest=1,run=1;
+  for(let i=1;i<values.length;i++){run=Math.abs(values[i]-values[i-1])<=epsilon?run+1:1;longest=Math.max(longest,run);}
+  const passed=range>100*epsilon&&longest<=Math.max(8,Math.floor(values.length/10))&&statistics?.status==='FINITE_SAMPLE_DIAGNOSTICS_ACCEPTABLE';
+  return {status:passed?'ESTIMATOR_MOBILITY_DIAGNOSTIC_PASSED':'STALLED_OR_INSUFFICIENT_TOPOLOGY_HISTORY',passed,range,nearConstantTolerance:epsilon,longestNearConstantRun:longest,maximumAllowedRun:Math.max(8,Math.floor(values.length/10)),effectiveSampleSize:statistics?.effectiveSampleSize??null,lagOneCorrelation:statistics?.autocorrelation?.[1]??null,integerSectorLabels:null,scope:'Mobility of the explicitly measured unrounded plaquette/clover charge estimator. No certified integer-sector observable is available for rough links; sector mixing and topology conservation are not inferred by rounding.'};
+}
+export function diagnoseEnsemble(replicas,{beta=1}={}){
+  const fields={action:'action',plaquette:'meanPlaquette',topology:'topologyEstimate'};
+  if(replicas.every(r=>r.statistics.polyakov))fields.polyakov='meanPolyakovReal';
+  const observables=Object.fromEntries(Object.entries(fields).map(([name,key])=>{
+    const available=replicas.every(r=>r.statistics[name]),deterministic=name==='action'&&beta===0,comparison=available?compareReplicas(replicas,name):{status:'UNAVAILABLE_OBSERVABLE'},rhat=available?splitRhat(replicas.map(r=>r.samples.map(s=>s[key]))):{status:'UNAVAILABLE_OBSERVABLE',value:null};
+    const passed=deterministic||(available&&replicas.every(r=>r.statistics[name].status==='FINITE_SAMPLE_DIAGNOSTICS_ACCEPTABLE'&&r.statistics[name].segmentMeans?.diagnosticZ<=4)&&comparison.status==='MEANS_COMPATIBLE_AT_DIAGNOSTIC_THRESHOLD'&&rhat.status==='SPLIT_RHAT_ACCEPTABLE');
+    return [name,{passed,comparison,splitRhat:rhat,segmentThresholdZ:4,minimumESS:replicas[0]?.statistics[name]?.minimumESS??null}];
+  }));
+  const starts=new Set(replicas.map(r=>r.start)),differentStarts=starts.has('COLD')&&(starts.has('HOT_HAAR')||starts.has('DISORDERED_EXPONENTIAL')),warmup=replicas.every(r=>r.history.some(h=>h.phase==='BURN_IN')),acceptance=replicas.every(r=>r.acceptance>0&&r.acceptance<=1),mobility=replicas.every(r=>r.topologyDiagnostic.passed===true),passed=differentStarts&&warmup&&acceptance&&mobility&&Object.values(observables).every(o=>o.passed);
+  return {status:passed?'FINITE_EQUILIBRIUM_DIAGNOSTICS_PASSED':'INCOMPLETE_FINITE_EQUILIBRIUM_DIAGNOSTICS',passed,differentStarts,warmupRecorded:warmup,nonzeroAcceptance:acceptance,topologyEstimatorMobilityPassed:mobility,observables,quantitativeClaim:passed?'The stated finite observables passed the predeclared independent-start, segment, split-Rhat, ESS and mobility diagnostics.':'Quantitative research output remains incomplete even if the nominal retained sample count is large.',equilibriumTheorem:false,certifiedTopologicalSectorMixing:false};
+}

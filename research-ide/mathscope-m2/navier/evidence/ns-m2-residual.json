@@ -1,0 +1,2566 @@
+{
+  "id": "ns-m2-residual",
+  "request": {
+    "kind": "ns.background-residual",
+    "input": {
+      "maxOrder": 2
+    }
+  },
+  "inputHash": "882966c5685d276ec9c11c843c62a9d2129bd794833c8aa0aaac7c4c021af227",
+  "result": {
+    "blockers": [
+      "N4-05 requires repaired actual coefficients, R+div(T), independent numerical norm refinement and evaluated CNm/Km."
+    ],
+    "checks": [
+      {
+        "detail": "",
+        "id": "original-pde-coefficient-identity",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "uncomputed-constants-not-certified",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "EXACT_FINITE_DIFFERENTIAL_POLYNOMIAL",
+    "kind": "ns.background-residual",
+    "moduleVersion": "m2-ns-0.2.0",
+    "object": {
+      "kind": "ORIGINAL_PDE_FINITE_RESIDUAL_POLYNOMIAL",
+      "sourceProfile": "same-profile-2026-10-10.3"
+    },
+    "precisionLedger": {
+      "arithmetic": "FLOAT64_WITH_EXACT_INDEX_AND_SOURCE_EXPRESSIONS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 1200000,
+      "outputItemsEstimate": 4,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "dca4364efaeb94caa4fa3270cd601f6460c7dbda17e43fde0a424579db8c2a6e",
+    "results": {
+      "CNm": null,
+      "Km": null,
+      "actualProfileCoefficientsEvaluated": false,
+      "actualStressAssembled": false,
+      "arithmetic": "EXACT_BIGINT_RATIONAL_DIFFERENTIAL_POLYNOMIALS",
+      "coefficientIdentityAudit": {
+        "arithmetic": "EXACT_BIGINT_RATIONAL_DIFFERENTIAL_POLYNOMIALS",
+        "coefficientsSolved": false,
+        "maxOrder": 2,
+        "negativeControl": null,
+        "newLeanKernelExecution": false,
+        "orders": [
+          {
+            "axisData": {
+              "Pi": 0,
+              "U": 0,
+              "phi": 0
+            },
+            "equations": {
+              "angular": {
+                "difference": [],
+                "directTerms": 47,
+                "equal": true,
+                "sourceTerms": 47
+              },
+              "axial": {
+                "difference": [],
+                "directTerms": 46,
+                "equal": true,
+                "sourceTerms": 46
+              },
+              "divergence": {
+                "difference": [],
+                "directTerms": 6,
+                "equal": true,
+                "sourceTerms": 6
+              },
+              "radial": {
+                "difference": [],
+                "directTerms": 11,
+                "equal": true,
+                "sourceTerms": 11
+              }
+            },
+            "n": 1,
+            "orderedConvolutionPairs": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "pass": true,
+            "pressureRole": "Pi_0(X,eta) is the complete leading pressure; Pi_0(0,eta) is only its trace"
+          },
+          {
+            "axisData": {
+              "Pi": 0,
+              "U": 0,
+              "phi": 0
+            },
+            "equations": {
+              "angular": {
+                "difference": [],
+                "directTerms": 55,
+                "equal": true,
+                "sourceTerms": 55
+              },
+              "axial": {
+                "difference": [],
+                "directTerms": 55,
+                "equal": true,
+                "sourceTerms": 55
+              },
+              "divergence": {
+                "difference": [],
+                "directTerms": 6,
+                "equal": true,
+                "sourceTerms": 6
+              },
+              "radial": {
+                "difference": [],
+                "directTerms": 36,
+                "equal": true,
+                "sourceTerms": 36
+              }
+            },
+            "n": 2,
+            "orderedConvolutionPairs": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                0
+              ]
+            ],
+            "pass": true,
+            "pressureRole": "Pi_0(X,eta) is the complete leading pressure; Pi_0(0,eta) is only its trace"
+          }
+        ],
+        "pass": true,
+        "profileScope": "UNIVERSAL_IDENTITY_FOR_SMOOTH_PROFILE_JETS; applies to the pinned N3 profile without replacing its h or coefficients",
+        "relations": {
+          "A": "1/2+h",
+          "D": "1/2-h",
+          "L": "1-2*h*eta^2",
+          "d": "1-eta^2",
+          "lambda_n": "2*n*h",
+          "physicalAxialDerivative": "q_z=2*eta*q^(1-D)/L; eta_z=d*q^(-D)/L; X_z=-2*eta*X*q^(-D)/L",
+          "physicalTimeDerivative": "q_t=-1/L; eta_t=D*eta/(q*L); X_t=X/(q*L)",
+          "rSquared": "2*q*X"
+        },
+        "schema": "MathScope.SourceCoefficientIdentity/1",
+        "sourceEquations": [
+          "5.1",
+          "5.2",
+          "5.3",
+          "5.4",
+          "5.5",
+          "5.6"
+        ]
+      },
+      "components": {
+        "angular": [
+          {
+            "qExponent": {
+              "constant": -2,
+              "exact": "-2-1*h",
+              "hCoefficient": -1
+            },
+            "rPower": 1,
+            "termCount": 14,
+            "terms": [
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_0_0_0^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_0_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_0_0_0^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_0_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_0_1_0^1;U_0_0_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^2;L^-1;phi_0_0_1^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;h^1;L^-1;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_0_0_1^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_0_0_0^1;V_0_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;phi_0_1_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_0_1_0^1;V_0_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;phi_0_2_0^1;X^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -2,
+              "exact": "-2+1*h",
+              "hCoefficient": 1
+            },
+            "rPower": 1,
+            "termCount": 47,
+            "terms": [
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_0_0_0^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_1_0_0^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_1_0_1^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;eta^1;h^1;L^-2;phi_0_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^1;h^1;L^-3;phi_0_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_0_0_0^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_0_1_0^1;U_1_0_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_1_0_0^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_1_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_1_1_0^1;U_0_0_0^1;X^1"
+              },
+              {
+                "coefficient": "7",
+                "monomial": "Cinv^1;eta^1;L^-2;phi_0_0_1^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "Cinv^1;eta^1;L^-2;phi_0_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^2;h^1;L^-2;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^2;h^1;L^-2;phi_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^2;h^1;L^-3;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^2;h^1;L^-3;phi_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^2;h^2;L^-3;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^2;L^-1;phi_0_0_1^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^2;L^-1;phi_1_0_1^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_0_0_2^1"
+              },
+              {
+                "coefficient": "-16",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_0_2_0^1;X^2"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^3;h^1;L^-2;phi_0_0_1^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^3;h^1;L^-3;phi_0_0_1^1"
+              },
+              {
+                "coefficient": "-7",
+                "monomial": "Cinv^1;eta^3;L^-2;phi_0_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^3;L^-2;phi_0_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^4;h^1;L^-3;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^4;h^1;L^-3;phi_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^4;h^2;L^-3;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^4;L^-2;phi_0_0_2^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^5;h^1;L^-3;phi_0_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;h^1;L^-1;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;h^1;L^-2;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_0_0_1^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_1_0_1^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;L^-2;phi_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;L^-2;phi_0_0_2^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;L^-2;phi_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_0_0_0^1;V_1_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_0_1_0^1;V_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_1_0_0^1;V_0_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;phi_1_1_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_1_1_0^1;V_0_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;phi_1_2_0^1;X^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -2,
+              "exact": "-2+3*h",
+              "hCoefficient": 3
+            },
+            "rPower": 1,
+            "termCount": 55,
+            "terms": [
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_0_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_1_0_0^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "6",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_2_0_0^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_2_0_1^1"
+              },
+              {
+                "coefficient": "-6",
+                "monomial": "Cinv^1;eta^1;h^1;L^-2;phi_1_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^1;h^1;L^-3;phi_1_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_0_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_0_1_0^1;U_2_0_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_1_0_0^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_1_1_0^1;U_1_0_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_2_0_0^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_2_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_2_1_0^1;U_0_0_0^1;X^1"
+              },
+              {
+                "coefficient": "7",
+                "monomial": "Cinv^1;eta^1;L^-2;phi_1_0_1^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "Cinv^1;eta^1;L^-2;phi_1_1_1^1;X^1"
+              },
+              {
+                "coefficient": "16",
+                "monomial": "Cinv^1;eta^2;h^1;L^-2;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "12",
+                "monomial": "Cinv^1;eta^2;h^1;L^-2;phi_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^2;h^1;L^-3;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^2;h^1;L^-3;phi_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^2;h^2;L^-2;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^2;h^2;L^-3;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^2;L^-1;phi_0_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^2;L^-1;phi_1_0_1^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^2;L^-1;phi_2_0_1^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_1_0_2^1"
+              },
+              {
+                "coefficient": "-16",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_1_2_0^1;X^2"
+              },
+              {
+                "coefficient": "6",
+                "monomial": "Cinv^1;eta^3;h^1;L^-2;phi_1_0_1^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^3;h^1;L^-3;phi_1_0_1^1"
+              },
+              {
+                "coefficient": "-7",
+                "monomial": "Cinv^1;eta^3;L^-2;phi_1_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^3;L^-2;phi_1_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^4;h^1;L^-3;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^4;h^1;L^-3;phi_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^4;h^2;L^-3;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^4;L^-2;phi_1_0_2^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^5;h^1;L^-3;phi_1_0_1^1"
+              },
+              {
+                "coefficient": "-3",
+                "monomial": "Cinv^1;h^1;L^-1;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;h^1;L^-2;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_0_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_1_0_1^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_2_0_1^1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;L^-2;phi_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;L^-2;phi_1_0_2^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;L^-2;phi_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_0_0_0^1;V_2_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_0_1_0^1;V_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_1_0_0^1;V_1_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_1_1_0^1;V_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_2_0_0^1;V_0_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;phi_2_1_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_2_1_0^1;V_0_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;phi_2_2_0^1;X^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -2,
+              "exact": "-2+5*h",
+              "hCoefficient": 5
+            },
+            "rPower": 1,
+            "termCount": 41,
+            "terms": [
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_1_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "6",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_2_0_0^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-14",
+                "monomial": "Cinv^1;eta^1;h^1;L^-2;phi_2_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^1;h^1;L^-3;phi_2_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_1_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_1_1_0^1;U_2_0_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_2_0_0^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_2_1_0^1;U_1_0_0^1;X^1"
+              },
+              {
+                "coefficient": "7",
+                "monomial": "Cinv^1;eta^1;L^-2;phi_2_0_1^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "Cinv^1;eta^1;L^-2;phi_2_1_1^1;X^1"
+              },
+              {
+                "coefficient": "40",
+                "monomial": "Cinv^1;eta^2;h^1;L^-2;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "28",
+                "monomial": "Cinv^1;eta^2;h^1;L^-2;phi_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^2;h^1;L^-3;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^2;h^1;L^-3;phi_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-48",
+                "monomial": "Cinv^1;eta^2;h^2;L^-2;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "-24",
+                "monomial": "Cinv^1;eta^2;h^2;L^-3;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^2;L^-1;phi_1_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^2;L^-1;phi_2_0_1^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_2_0_2^1"
+              },
+              {
+                "coefficient": "-16",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^2;L^-2;phi_2_2_0^1;X^2"
+              },
+              {
+                "coefficient": "14",
+                "monomial": "Cinv^1;eta^3;h^1;L^-2;phi_2_0_1^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "Cinv^1;eta^3;h^1;L^-3;phi_2_0_1^1"
+              },
+              {
+                "coefficient": "-7",
+                "monomial": "Cinv^1;eta^3;L^-2;phi_2_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^3;L^-2;phi_2_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^4;h^1;L^-3;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "Cinv^1;eta^4;h^1;L^-3;phi_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "24",
+                "monomial": "Cinv^1;eta^4;h^2;L^-3;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^4;L^-2;phi_2_0_2^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^1;eta^5;h^1;L^-3;phi_2_0_1^1"
+              },
+              {
+                "coefficient": "-6",
+                "monomial": "Cinv^1;h^1;L^-2;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_1_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_2_0_1^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;L^-2;phi_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;L^-2;phi_2_0_2^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Cinv^1;L^-2;phi_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_1_0_0^1;V_2_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_1_1_0^1;V_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_2_0_0^1;V_1_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_2_1_0^1;V_1_0_0^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -2,
+              "exact": "-2+7*h",
+              "hCoefficient": 7
+            },
+            "rPower": 1,
+            "termCount": 7,
+            "terms": [
+              {
+                "coefficient": "6",
+                "monomial": "Cinv^1;eta^1;h^1;L^-1;phi_2_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_2_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^1;eta^1;L^-1;phi_2_1_0^1;U_2_0_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "Cinv^1;eta^2;L^-1;phi_2_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;L^-1;phi_2_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_2_0_0^1;V_2_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "Cinv^1;phi_2_1_0^1;V_2_0_0^1"
+              }
+            ]
+          }
+        ],
+        "axial": [
+          {
+            "qExponent": {
+              "constant": -1.5,
+              "exact": "-1.5-1*h",
+              "hCoefficient": -1
+            },
+            "rPower": 0,
+            "termCount": 18,
+            "terms": [
+              {
+                "coefficient": "-4",
+                "monomial": "eta^1;h^1;L^-1;Pi_0_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;h^1;L^-1;U_0_0_0^2"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;h^1;L^-1;U_0_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;Pi_0_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;Pi_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_0_0^1;U_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;L^-1;U_0_0_0^2"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "eta^1;L^-1;U_0_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;Pi_0_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_0_0_0^1;U_0_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "h^1;L^-1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;Pi_0_0_1^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "L^-1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_0_0^1;U_0_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "U_0_1_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "U_0_1_0^1;V_0_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "U_0_2_0^1;X^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1.5,
+              "exact": "-1.5+1*h",
+              "hCoefficient": 1
+            },
+            "rPower": 0,
+            "termCount": 46,
+            "terms": [
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;h^1;L^-1;U_1_0_1^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "eta^1;h^1;L^-2;U_0_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^1;h^1;L^-3;U_0_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;Pi_1_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;Pi_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_0_0^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_0_0^1;U_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_1_0^1;U_1_0_0^1;X^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "eta^1;L^-1;U_1_0_1^1"
+              },
+              {
+                "coefficient": "5",
+                "monomial": "eta^1;L^-2;U_0_0_1^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;L^-2;U_0_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-6",
+                "monomial": "eta^2;h^1;L^-2;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^2;h^1;L^-2;U_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^2;h^1;L^-3;U_0_0_0^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^2;h^1;L^-3;U_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^2;h^2;L^-3;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;Pi_1_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_0_0_0^1;U_1_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_0_0_1^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-3",
+                "monomial": "eta^2;L^-2;U_0_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "eta^2;L^-2;U_0_0_2^1"
+              },
+              {
+                "coefficient": "-12",
+                "monomial": "eta^2;L^-2;U_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^2;L^-2;U_0_2_0^1;X^2"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^3;h^1;L^-2;U_0_0_1^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^3;h^1;L^-3;U_0_0_1^1"
+              },
+              {
+                "coefficient": "-5",
+                "monomial": "eta^3;L^-2;U_0_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^3;L^-2;U_0_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^4;h^1;L^-3;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^4;h^1;L^-3;U_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^4;h^2;L^-3;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^4;L^-2;U_0_0_2^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^5;h^1;L^-3;U_0_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "h^1;L^-1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "h^1;L^-2;U_0_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;Pi_1_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_0_0^1;U_1_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_0_1^1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "L^-1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-2;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "L^-2;U_0_0_2^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "L^-2;U_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "U_0_1_0^1;V_1_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "U_1_1_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "U_1_1_0^1;V_0_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "U_1_2_0^1;X^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1.5,
+              "exact": "-1.5+3*h",
+              "hCoefficient": 3
+            },
+            "rPower": 0,
+            "termCount": 55,
+            "terms": [
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;h^1;L^-1;Pi_2_0_0^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;h^1;L^-1;U_0_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "eta^1;h^1;L^-1;U_1_0_0^2"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;h^1;L^-1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "-6",
+                "monomial": "eta^1;h^1;L^-2;U_1_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^1;h^1;L^-3;U_1_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;Pi_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;Pi_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_0_0^1;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_1_0^1;U_2_0_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_1_0_0^1;U_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;L^-1;U_1_0_0^2"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "eta^1;L^-1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "5",
+                "monomial": "eta^1;L^-2;U_1_0_1^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;L^-2;U_1_1_1^1;X^1"
+              },
+              {
+                "coefficient": "10",
+                "monomial": "eta^2;h^1;L^-2;U_1_0_0^1"
+              },
+              {
+                "coefficient": "12",
+                "monomial": "eta^2;h^1;L^-2;U_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^2;h^1;L^-3;U_1_0_0^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^2;h^1;L^-3;U_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^2;h^2;L^-2;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^2;h^2;L^-3;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;Pi_2_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_0_0_0^1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_0_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_1_0_0^1;U_1_0_1^1"
+              },
+              {
+                "coefficient": "-3",
+                "monomial": "eta^2;L^-2;U_1_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "eta^2;L^-2;U_1_0_2^1"
+              },
+              {
+                "coefficient": "-12",
+                "monomial": "eta^2;L^-2;U_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^2;L^-2;U_1_2_0^1;X^2"
+              },
+              {
+                "coefficient": "6",
+                "monomial": "eta^3;h^1;L^-2;U_1_0_1^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^3;h^1;L^-3;U_1_0_1^1"
+              },
+              {
+                "coefficient": "-5",
+                "monomial": "eta^3;L^-2;U_1_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^3;L^-2;U_1_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^4;h^1;L^-3;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^4;h^1;L^-3;U_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^4;h^2;L^-3;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^4;L^-2;U_1_0_2^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^5;h^1;L^-3;U_1_0_1^1"
+              },
+              {
+                "coefficient": "-3",
+                "monomial": "h^1;L^-1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "h^1;L^-2;U_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;Pi_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_0_0^1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_1_0_0^1;U_1_0_1^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "L^-1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-2;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "L^-2;U_1_0_2^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "L^-2;U_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "U_0_1_0^1;V_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "U_1_1_0^1;V_1_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "U_2_1_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "U_2_1_0^1;V_0_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "U_2_2_0^1;X^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1.5,
+              "exact": "-1.5+5*h",
+              "hCoefficient": 5
+            },
+            "rPower": 0,
+            "termCount": 37,
+            "terms": [
+              {
+                "coefficient": "8",
+                "monomial": "eta^1;h^1;L^-1;U_1_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-14",
+                "monomial": "eta^1;h^1;L^-2;U_2_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^1;h^1;L^-3;U_2_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_1_0_0^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_1_0_0^1;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_1_1_0^1;U_2_0_0^1;X^1"
+              },
+              {
+                "coefficient": "5",
+                "monomial": "eta^1;L^-2;U_2_0_1^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;L^-2;U_2_1_1^1;X^1"
+              },
+              {
+                "coefficient": "26",
+                "monomial": "eta^2;h^1;L^-2;U_2_0_0^1"
+              },
+              {
+                "coefficient": "28",
+                "monomial": "eta^2;h^1;L^-2;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^2;h^1;L^-3;U_2_0_0^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^2;h^1;L^-3;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-48",
+                "monomial": "eta^2;h^2;L^-2;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-24",
+                "monomial": "eta^2;h^2;L^-3;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_1_0_0^1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_1_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-3",
+                "monomial": "eta^2;L^-2;U_2_0_0^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "eta^2;L^-2;U_2_0_2^1"
+              },
+              {
+                "coefficient": "-12",
+                "monomial": "eta^2;L^-2;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^2;L^-2;U_2_2_0^1;X^2"
+              },
+              {
+                "coefficient": "14",
+                "monomial": "eta^3;h^1;L^-2;U_2_0_1^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^3;h^1;L^-3;U_2_0_1^1"
+              },
+              {
+                "coefficient": "-5",
+                "monomial": "eta^3;L^-2;U_2_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^3;L^-2;U_2_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^4;h^1;L^-3;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^4;h^1;L^-3;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "24",
+                "monomial": "eta^4;h^2;L^-3;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^4;L^-2;U_2_0_2^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^5;h^1;L^-3;U_2_0_1^1"
+              },
+              {
+                "coefficient": "-6",
+                "monomial": "h^1;L^-2;U_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_1_0_0^1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_1_0_1^1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-2;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "L^-2;U_2_0_2^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "L^-2;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "U_1_1_0^1;V_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "U_2_1_0^1;V_1_0_0^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1.5,
+              "exact": "-1.5+7*h",
+              "hCoefficient": 7
+            },
+            "rPower": 0,
+            "termCount": 6,
+            "terms": [
+              {
+                "coefficient": "6",
+                "monomial": "eta^1;h^1;L^-1;U_2_0_0^2"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_2_0_0^1;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;L^-1;U_2_0_0^2"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_2_0_0^1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_2_0_0^1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "U_2_1_0^1;V_2_0_0^1"
+              }
+            ]
+          }
+        ],
+        "divergence": [
+          {
+            "qExponent": {
+              "constant": -1,
+              "exact": "-1+0*h",
+              "hCoefficient": 0
+            },
+            "rPower": 0,
+            "termCount": 6,
+            "terms": [
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;h^1;L^-1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;L^-1;U_0_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_0_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_0_1_0^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1,
+              "exact": "-1+2*h",
+              "hCoefficient": 2
+            },
+            "rPower": 0,
+            "termCount": 6,
+            "terms": [
+              {
+                "coefficient": "2",
+                "monomial": "eta^1;h^1;L^-1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;L^-1;U_1_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_1_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_1_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_1_1_0^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1,
+              "exact": "-1+4*h",
+              "hCoefficient": 4
+            },
+            "rPower": 0,
+            "termCount": 6,
+            "terms": [
+              {
+                "coefficient": "6",
+                "monomial": "eta^1;h^1;L^-1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;L^-1;U_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_2_1_0^1"
+              }
+            ]
+          }
+        ],
+        "radial": [
+          {
+            "qExponent": {
+              "constant": -1,
+              "exact": "-1+0*h",
+              "hCoefficient": 0
+            },
+            "rPower": 0,
+            "termCount": 11,
+            "terms": [
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^2;phi_0_0_0^1;phi_1_0_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;h^1;L^-1;V_0_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_0_0^1;V_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "eta^1;L^-1;V_0_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_0_0_0^1;V_0_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_0_0^1;V_0_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;V_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Pi_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_0_0_0^1;V_0_1_0^1"
+              },
+              {
+                "coefficient": "-1/2",
+                "monomial": "V_0_0_0^2;X^-1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "V_0_2_0^1;X^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1,
+              "exact": "-1+2*h",
+              "hCoefficient": 2
+            },
+            "rPower": 0,
+            "termCount": 36,
+            "terms": [
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^2;phi_0_0_0^1;phi_2_0_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^2;phi_1_0_0^2;X^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;h^1;L^-1;U_0_0_0^1;V_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;h^1;L^-1;V_1_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;h^1;L^-2;V_0_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^1;h^1;L^-3;V_0_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_0_0^1;V_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_1_0_0^1;V_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "eta^1;L^-1;V_1_0_1^1"
+              },
+              {
+                "coefficient": "3",
+                "monomial": "eta^1;L^-2;V_0_0_1^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;L^-2;V_0_1_1^1;X^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^2;h^1;L^-2;V_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^2;h^1;L^-3;V_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_0_0_0^1;V_1_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_1_0_0^1;V_0_0_1^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "eta^2;L^-2;V_0_0_2^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^2;L^-2;V_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^2;L^-2;V_0_2_0^1;X^2"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "eta^3;h^1;L^-2;V_0_0_1^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^3;h^1;L^-3;V_0_0_1^1"
+              },
+              {
+                "coefficient": "-3",
+                "monomial": "eta^3;L^-2;V_0_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^3;L^-2;V_0_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^4;h^1;L^-3;V_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^4;L^-2;V_0_0_2^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^5;h^1;L^-3;V_0_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "h^1;L^-1;V_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_0_0^1;V_1_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_1_0_0^1;V_0_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;V_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "L^-2;V_0_0_2^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "L^-2;V_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Pi_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "V_0_0_0^1;V_1_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_0_0_0^1;V_1_1_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_0_1_0^1;V_1_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "V_1_2_0^1;X^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1,
+              "exact": "-1+4*h",
+              "hCoefficient": 4
+            },
+            "rPower": 0,
+            "termCount": 45,
+            "terms": [
+              {
+                "coefficient": "-4",
+                "monomial": "Cinv^2;phi_1_0_0^1;phi_2_0_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^1;h^1;L^-1;U_0_0_0^1;V_2_0_0^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;h^1;L^-1;U_1_0_0^1;V_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^1;h^1;L^-1;V_2_0_1^1"
+              },
+              {
+                "coefficient": "-10",
+                "monomial": "eta^1;h^1;L^-2;V_1_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^1;h^1;L^-3;V_1_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_0_0_0^1;V_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_1_0_0^1;V_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_2_0_0^1;V_0_1_0^1;X^1"
+              },
+              {
+                "coefficient": "1/2",
+                "monomial": "eta^1;L^-1;V_2_0_1^1"
+              },
+              {
+                "coefficient": "3",
+                "monomial": "eta^1;L^-2;V_1_0_1^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;L^-2;V_1_1_1^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^2;h^1;L^-2;V_1_0_0^1"
+              },
+              {
+                "coefficient": "20",
+                "monomial": "eta^2;h^1;L^-2;V_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^2;h^1;L^-3;V_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-24",
+                "monomial": "eta^2;h^2;L^-2;V_1_0_0^1"
+              },
+              {
+                "coefficient": "-16",
+                "monomial": "eta^2;h^2;L^-3;V_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_0_0_0^1;V_2_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_1_0_0^1;V_1_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_2_0_0^1;V_0_0_1^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "eta^2;L^-2;V_1_0_2^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^2;L^-2;V_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^2;L^-2;V_1_2_0^1;X^2"
+              },
+              {
+                "coefficient": "10",
+                "monomial": "eta^3;h^1;L^-2;V_1_0_1^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^3;h^1;L^-3;V_1_0_1^1"
+              },
+              {
+                "coefficient": "-3",
+                "monomial": "eta^3;L^-2;V_1_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^3;L^-2;V_1_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^4;h^1;L^-3;V_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "16",
+                "monomial": "eta^4;h^2;L^-3;V_1_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^4;L^-2;V_1_0_2^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^5;h^1;L^-3;V_1_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "h^1;L^-1;V_2_0_0^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "h^1;L^-2;V_1_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_0_0_0^1;V_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_1_0_0^1;V_1_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_2_0_0^1;V_0_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;V_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "L^-2;V_1_0_2^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "L^-2;V_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "V_0_0_0^1;V_2_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_0_0_0^1;V_2_1_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_0_1_0^1;V_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_1_0_0^1;V_1_1_0^1"
+              },
+              {
+                "coefficient": "-1/2",
+                "monomial": "V_1_0_0^2;X^-1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "V_2_2_0^1;X^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1,
+              "exact": "-1+6*h",
+              "hCoefficient": 6
+            },
+            "rPower": 0,
+            "termCount": 35,
+            "terms": [
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^2;phi_2_0_0^2;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^1;h^1;L^-1;U_1_0_0^1;V_2_0_0^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;h^1;L^-1;U_2_0_0^1;V_1_0_0^1"
+              },
+              {
+                "coefficient": "-18",
+                "monomial": "eta^1;h^1;L^-2;V_2_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^1;h^1;L^-3;V_2_0_1^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_1_0_0^1;V_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_2_0_0^1;V_1_1_0^1;X^1"
+              },
+              {
+                "coefficient": "3",
+                "monomial": "eta^1;L^-2;V_2_0_1^1"
+              },
+              {
+                "coefficient": "4",
+                "monomial": "eta^1;L^-2;V_2_1_1^1;X^1"
+              },
+              {
+                "coefficient": "16",
+                "monomial": "eta^2;h^1;L^-2;V_2_0_0^1"
+              },
+              {
+                "coefficient": "36",
+                "monomial": "eta^2;h^1;L^-2;V_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^2;h^1;L^-3;V_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-80",
+                "monomial": "eta^2;h^2;L^-2;V_2_0_0^1"
+              },
+              {
+                "coefficient": "-32",
+                "monomial": "eta^2;h^2;L^-3;V_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_1_0_0^1;V_2_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_2_0_0^1;V_1_0_1^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "eta^2;L^-2;V_2_0_2^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^2;L^-2;V_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^2;L^-2;V_2_2_0^1;X^2"
+              },
+              {
+                "coefficient": "18",
+                "monomial": "eta^3;h^1;L^-2;V_2_0_1^1"
+              },
+              {
+                "coefficient": "8",
+                "monomial": "eta^3;h^1;L^-3;V_2_0_1^1"
+              },
+              {
+                "coefficient": "-3",
+                "monomial": "eta^3;L^-2;V_2_0_1^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^3;L^-2;V_2_1_1^1;X^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "eta^4;h^1;L^-3;V_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "32",
+                "monomial": "eta^4;h^2;L^-3;V_2_0_0^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^4;L^-2;V_2_0_2^1"
+              },
+              {
+                "coefficient": "-4",
+                "monomial": "eta^5;h^1;L^-3;V_2_0_1^1"
+              },
+              {
+                "coefficient": "-8",
+                "monomial": "h^1;L^-2;V_2_0_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_1_0_0^1;V_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_2_0_0^1;V_1_0_1^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "L^-2;V_2_0_2^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "L^-2;V_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "V_1_0_0^1;V_2_0_0^1;X^-1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_1_0_0^1;V_2_1_0^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_1_1_0^1;V_2_0_0^1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1,
+              "exact": "-1+8*h",
+              "hCoefficient": 8
+            },
+            "rPower": 0,
+            "termCount": 6,
+            "terms": [
+              {
+                "coefficient": "8",
+                "monomial": "eta^1;h^1;L^-1;U_2_0_0^1;V_2_0_0^1"
+              },
+              {
+                "coefficient": "-2",
+                "monomial": "eta^1;L^-1;U_2_0_0^1;V_2_1_0^1;X^1"
+              },
+              {
+                "coefficient": "-1",
+                "monomial": "eta^2;L^-1;U_2_0_0^1;V_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "L^-1;U_2_0_0^1;V_2_0_1^1"
+              },
+              {
+                "coefficient": "1",
+                "monomial": "V_2_0_0^1;V_2_1_0^1"
+              },
+              {
+                "coefficient": "-1/2",
+                "monomial": "V_2_0_0^2;X^-1"
+              }
+            ]
+          },
+          {
+            "qExponent": {
+              "constant": -1,
+              "exact": "-1-2*h",
+              "hCoefficient": -2
+            },
+            "rPower": 0,
+            "termCount": 2,
+            "terms": [
+              {
+                "coefficient": "-2",
+                "monomial": "Cinv^2;phi_0_0_0^2;X^1"
+              },
+              {
+                "coefficient": "2",
+                "monomial": "Pi_0_1_0^1;X^1"
+              }
+            ]
+          }
+        ]
+      },
+      "maxOrder": 2,
+      "orderRefinementIsNumericalResidualDecay": false,
+      "radialConvention": "The radial equation is multiplied by r, exactly as in (5.5)-(5.6).",
+      "schema": "MathScope.FiniteOriginalNSResidual/1",
+      "scope": "This complete finite differential polynomial is executable symbolic progress. It is not an evaluated same-profile Fslow norm or a certified (5.25) estimate.",
+      "sourceEquations": [
+        "5.1",
+        "5.3",
+        "5.4",
+        "5.5",
+        "5.6",
+        "5.9",
+        "5.25"
+      ],
+      "tangentialStressReconstruction": {
+        "divergenceIdentity": "R^-2*d_R(R^2*T_n,theta)=-r_theta,n; R^-1*d_R(R*T_n,z)=-r_z,n",
+        "exteriorSupportRequires": "The total weighted residual integrals vanish only after the original five-moment repairs.",
+        "theta": "T_n,theta(R)=-R^-2*integral_0^R rho^2*r_theta,n(rho) d rho",
+        "z": "T_n,z(R)=-R^-1*integral_0^R rho*r_z,n(rho) d rho"
+      },
+      "unsubstitutedProfileJets": true,
+      "verifiedTailBound": false
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "q exponent coefficient of h",
+          "name": "q exponent coefficient of h",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "exact differential monomial count",
+          "name": "exact differential monomial count",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "equation index",
+          "name": "equation index",
+          "scale": "LINEAR",
+          "unit": "1"
+        }
+      ],
+      "description": "Complete finite original-PDE expansion. Counts describe exact symbolic terms, not a numerical residual norm.",
+      "lines": [],
+      "lostInformation": [
+        "Same-profile coefficients and stress are not yet substituted, so N refinement does not mean measured residual decay."
+      ],
+      "points": [
+        {
+          "label": "angular: r^1 q^(-2-1*h), 14 monomials",
+          "pos": [
+            -1,
+            14,
+            0
+          ],
+          "value": 14
+        },
+        {
+          "label": "angular: r^1 q^(-2+1*h), 47 monomials",
+          "pos": [
+            1,
+            47,
+            0
+          ],
+          "value": 47
+        },
+        {
+          "label": "angular: r^1 q^(-2+3*h), 55 monomials",
+          "pos": [
+            3,
+            55,
+            0
+          ],
+          "value": 55
+        },
+        {
+          "label": "angular: r^1 q^(-2+5*h), 41 monomials",
+          "pos": [
+            5,
+            41,
+            0
+          ],
+          "value": 41
+        },
+        {
+          "label": "angular: r^1 q^(-2+7*h), 7 monomials",
+          "pos": [
+            7,
+            7,
+            0
+          ],
+          "value": 7
+        },
+        {
+          "label": "axial: r^0 q^(-1.5-1*h), 18 monomials",
+          "pos": [
+            -1,
+            18,
+            1
+          ],
+          "value": 18
+        },
+        {
+          "label": "axial: r^0 q^(-1.5+1*h), 46 monomials",
+          "pos": [
+            1,
+            46,
+            1
+          ],
+          "value": 46
+        },
+        {
+          "label": "axial: r^0 q^(-1.5+3*h), 55 monomials",
+          "pos": [
+            3,
+            55,
+            1
+          ],
+          "value": 55
+        },
+        {
+          "label": "axial: r^0 q^(-1.5+5*h), 37 monomials",
+          "pos": [
+            5,
+            37,
+            1
+          ],
+          "value": 37
+        },
+        {
+          "label": "axial: r^0 q^(-1.5+7*h), 6 monomials",
+          "pos": [
+            7,
+            6,
+            1
+          ],
+          "value": 6
+        },
+        {
+          "label": "radial: r^0 q^(-1+0*h), 11 monomials",
+          "pos": [
+            0,
+            11,
+            2
+          ],
+          "value": 11
+        },
+        {
+          "label": "radial: r^0 q^(-1+2*h), 36 monomials",
+          "pos": [
+            2,
+            36,
+            2
+          ],
+          "value": 36
+        },
+        {
+          "label": "radial: r^0 q^(-1+4*h), 45 monomials",
+          "pos": [
+            4,
+            45,
+            2
+          ],
+          "value": 45
+        },
+        {
+          "label": "radial: r^0 q^(-1+6*h), 35 monomials",
+          "pos": [
+            6,
+            35,
+            2
+          ],
+          "value": 35
+        },
+        {
+          "label": "radial: r^0 q^(-1+8*h), 6 monomials",
+          "pos": [
+            8,
+            6,
+            2
+          ],
+          "value": 6
+        },
+        {
+          "label": "radial: r^0 q^(-1-2*h), 2 monomials",
+          "pos": [
+            -2,
+            2,
+            2
+          ],
+          "value": 2
+        },
+        {
+          "label": "divergence: r^0 q^(-1+0*h), 6 monomials",
+          "pos": [
+            0,
+            6,
+            3
+          ],
+          "value": 6
+        },
+        {
+          "label": "divergence: r^0 q^(-1+2*h), 6 monomials",
+          "pos": [
+            2,
+            6,
+            3
+          ],
+          "value": 6
+        },
+        {
+          "label": "divergence: r^0 q^(-1+4*h), 6 monomials",
+          "pos": [
+            4,
+            6,
+            3
+          ],
+          "value": 6
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "c1708f3df2d70e4a6be146fb31d6c37060e05ba67baac0c4955a3c28e030453a"
+}

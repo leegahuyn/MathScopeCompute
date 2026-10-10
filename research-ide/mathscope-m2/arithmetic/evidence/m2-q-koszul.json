@@ -1,6 +1,6 @@
 {
   "schema": "MathScope.M2.ArithmeticResult/1",
-  "version": "0.1.0-m2",
+  "version": "0.2.0-m2",
   "kind": "arithmetic.qDeRham",
   "status": "COMPLETED",
   "object": {
@@ -33,7 +33,7 @@
     "hDegree": 8,
     "fullPolynomialIdentities": true,
     "globalDerivedDescent": false,
-    "prismaticComparisonStatus": "MODEL_DEVELOPMENT",
+    "prismaticComparisonStatus": "APPLIED_EXTERNAL_THEOREM",
     "eInfinityCertified": false
   },
   "results": {
@@ -54,7 +54,7 @@
       "hDegree": 8,
       "fullPolynomialIdentities": true,
       "globalDerivedDescent": false,
-      "prismaticComparisonStatus": "MODEL_DEVELOPMENT",
+      "prismaticComparisonStatus": "APPLIED_EXTERNAL_THEOREM",
       "eInfinityCertified": false
     },
     "bases": {
@@ -124,6 +124,105 @@
       ],
       "coefficientOrder": "ascending in h",
       "meaning": "One explicitly invariant monomial-weight block of the two-variable framed q-Koszul complex."
+    },
+    "prismaticComparison": {
+      "schema": "MathScope.QPrismaticTheoremApplication/1",
+      "grade": "THEOREM_APPLICATION_WITH_EXPLICIT_BASE_MAPS",
+      "localKernelCheck": false,
+      "formalComplete": false,
+      "source": {
+        "id": "S01",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "locators": [
+          "Example 1.9(4)",
+          "Theorem 16.18",
+          "Theorem 16.22"
+        ]
+      },
+      "base": {
+        "D": "Z_p[[h]], q=1+h",
+        "qPDIdeal": "I=(h)",
+        "prismIdeal": "([p]_q)",
+        "DOverI": "Z_p",
+        "prismQuotient": "Z_p[zeta_p]",
+        "phi": "q -> q^p; integers fixed",
+        "boundedPrismReason": "[p]_(1+h) is Eisenstein in h; the quotient is p-torsionfree."
+      },
+      "R": {
+        "presentation": "p-completion of Z_p[T_1,...,T_2]",
+        "smoothness": "A polynomial algebra is smooth; its identity framing is etale, and integral translations are invertible coordinate changes.",
+        "framing": "p-completely etale polynomial framing"
+      },
+      "R1": {
+        "definition": "R completed-tensor_(D/I, induced phi_D) D/([p]_q)",
+        "presentation": "p-completion of Z_p[zeta_p][T_1,...,T_2]",
+        "isSameBaseAsR": false
+      },
+      "baseHomomorphisms": [
+        {
+          "source": "D",
+          "target": "D/I",
+          "qImage": "1",
+          "role": "q-PD quotient"
+        },
+        {
+          "source": "D",
+          "target": "D/([p]_q)",
+          "qImage": "zeta_p",
+          "role": "untwisted prism quotient"
+        },
+        {
+          "source": "D",
+          "target": "D/([p]_q)",
+          "qImage": "zeta_p^p=1",
+          "role": "quotient after phi_D"
+        },
+        {
+          "source": "D/I=Z_p",
+          "target": "D/([p]_q)=Z_p[zeta_p]",
+          "integerImage": "same integer",
+          "role": "map induced by phi_D; h maps to zero"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "framed q-de Rham module complex",
+          "to": "q-crystalline R/D",
+          "theorem": "S01 Theorem 16.22",
+          "assumptions": [
+            "A-flat D",
+            "framed q-PD datum",
+            "p-completely smooth R"
+          ]
+        },
+        {
+          "from": "q-crystalline R/D",
+          "to": "relative prismatic R1/D",
+          "theorem": "S01 Theorem 16.18",
+          "assumptions": [
+            "p-completely smooth R over D/I",
+            "R1 formed via phi-induced base map"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "name": "the two base ideals are distinguished",
+          "pass": true
+        },
+        {
+          "name": "phi_D(h)=q^p-1 vanishes modulo [p]_q",
+          "pass": true
+        },
+        {
+          "name": "R1 is the explicit Frobenius-induced base change",
+          "pass": true
+        },
+        {
+          "name": "singular algebras are outside the admitted theorem adapter",
+          "pass": true
+        }
+      ]
     },
     "qIntegers": [
       {
@@ -356,8 +455,9 @@
         ]
       },
       "difference": "h=q-1",
-      "comparisonStatus": "MODEL_DEVELOPMENT",
-      "reason": "The framed q-differentials differ. A chain comparison or common q-PD model is required; matching Betti numbers cannot certify coordinate independence."
+      "comparisonStatus": "EXPLICIT_CHAIN_ISOMORPHISM_AVAILABLE",
+      "comparisonOperation": "framingComparison",
+      "reason": "The raw framed differentials differ. The framingComparison operation computes an integral q-binomial chain isomorphism and its inverse, with an acyclic cone."
     },
     "comparisonMaps": [
       {
@@ -389,7 +489,7 @@
         "source": "q-crystalline R with declared framing",
         "target": "relative prismatic complex of X=Spf(R tensor Z_p[zeta_p])",
         "baseChange": "R^(1) and Frobenius base homomorphism are required",
-        "operation": "MODEL_DEVELOPMENT",
+        "operation": "APPLIED_EXTERNAL_THEOREM",
         "localKernelCheck": false
       }
     ],
@@ -1551,7 +1651,7 @@
       "hDegree": 8,
       "fullPolynomialIdentities": true,
       "globalDerivedDescent": false,
-      "prismaticComparisonStatus": "MODEL_DEVELOPMENT",
+      "prismaticComparisonStatus": "APPLIED_EXTERNAL_THEOREM",
       "eInfinityCertified": false
     },
     "roundingError": "0 for exact integer, polynomial, finite-field and finite Witt operations; explicitly tagged complex roots are Float64 display only.",
@@ -1559,7 +1659,7 @@
   },
   "evidence": {
     "calculation": "EXACT_FINITE_SCOPE",
-    "geometricComparison": "THEOREM_REFERENCE_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "geometricComparison": "EXPLICIT_MODEL_PLUS_APPLIED_EXTERNAL_THEOREM_OR_MODEL_DEVELOPMENT_AS_DECLARED",
     "lean": "NO_NEW_KERNEL_EXECUTION",
     "formalComplete": false,
     "universalConjectureSolved": false
@@ -1587,6 +1687,20 @@
         "id": "S01",
         "title": "Prisms and Prismatic Cohomology",
         "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S06",
+        "title": "Counting Points on Hyperelliptic Curves Using Monsky–Washnitzer Cohomology",
+        "url": "https://arxiv.org/abs/math/0105031",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "STACKS_PROJECTIVE",
+        "title": "Derived projective bundle formula",
+        "url": "https://stacks.math.columbia.edu/tag/0FUN",
         "grade": "THEOREM_REFERENCE",
         "localKernelCheck": false
       },
@@ -1619,9 +1733,9 @@
         "localKernelCheck": false
       }
     ],
-    "algorithmVersion": "0.1.0-m2",
+    "algorithmVersion": "0.2.0-m2",
     "inputHash": "f379f7f06f4c12134d35542190da3d67e1851e31b1c3087597235b63d0bd6313",
-    "sourceHash": "db2bbdc641d6a9fabef0a46044a927b084cb57f5ad2664c88579403b8aee4d9d",
+    "sourceHash": "6c8eda8ced58e8556f3f254707e735f3025a79f1c2754d3030499a84cd1a728d",
     "operations": 40
   },
   "visualization": {
@@ -2344,14 +2458,14 @@
       "qIntegers.coefficientsInH",
       "complex"
     ],
-    "sourceHash": "db2bbdc641d6a9fabef0a46044a927b084cb57f5ad2664c88579403b8aee4d9d",
-    "sourceRevision": "db2bbdc641d6a9fabef0a46044a927b084cb57f5ad2664c88579403b8aee4d9d",
+    "sourceHash": "6c8eda8ced58e8556f3f254707e735f3025a79f1c2754d3030499a84cd1a728d",
+    "sourceRevision": "6c8eda8ced58e8556f3f254707e735f3025a79f1c2754d3030499a84cd1a728d",
     "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
     "sampling": {
       "displayPoints": 36,
-      "originalSourceHash": "db2bbdc641d6a9fabef0a46044a927b084cb57f5ad2664c88579403b8aee4d9d"
+      "originalSourceHash": "6c8eda8ced58e8556f3f254707e735f3025a79f1c2754d3030499a84cd1a728d"
     },
     "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
   },
-  "resultHash": "c943b2f61cfdffaf4b83542c877d0480915adc4999f9fe517173f23a8e06e1d2"
+  "resultHash": "3818affc3c1a26e4cea943654841ad841a44ccefc48a3bdd0e18eeffeb657f91"
 }

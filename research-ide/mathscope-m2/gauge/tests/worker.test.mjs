@@ -18,7 +18,7 @@ function nativeWorkerFactory(source){
 function ownedEngine(t,options){const engine=createM2Engine(options);t.after(()=>engine.dispose());return engine;}
 async function run(engine,request){const queued=await engine.submit(request);return engine.wait(queued.id);}
 
-test('all eight gauge examples have identical mathematical results in actual isolated bundled Workers and local modules',async t=>{
+test('all registered gauge examples have identical mathematical results in actual isolated bundled Workers and local modules',async t=>{
   assert.ok(WORKER_SOURCE.length>10000);assert.equal(await sha256(WORKER_SOURCE),WORKER_SHA256);
   const local=ownedEngine(t,{local:true}),worker=ownedEngine(t,{workerFactory:nativeWorkerFactory}),examples=[];
   for(const e of getExamples()){

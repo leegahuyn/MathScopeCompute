@@ -8,14 +8,14 @@
         0
       ],
       "amplitude": 1,
-      "liftedArea": 1,
+      "liftedArea": 0.015625,
       "epsilon": 0.1
     }
   },
-  "inputHash": "0774b5ed1ace0e6692a0e20e70f803ee416bc44fb68e03b4fd02d8eba2bd10f1",
+  "inputHash": "46ab5710f44a7cffcd9ed5cc3be03e574a1cd10a0bb74297f07fa5b3a01e4f6a",
   "result": {
     "blockers": [
-      "N5-06/07 full original pulse covariance, interval positivity and curl-remainder contract are pending."
+      "N5-06 requires the actual two pulse covariances and source-stress assembly; the generic N5-07 curl operator is verified separately."
     ],
     "checks": [
       {
@@ -46,7 +46,7 @@
     ],
     "evidenceGrade": "FINITE_NUMERICAL_COMPONENT",
     "kind": "ns.pulse-covariance",
-    "moduleVersion": "m2-ns-0.1.1",
+    "moduleVersion": "m2-ns-0.2.0",
     "object": {
       "datumRole": "EXPLICIT_LOCAL_POLARIZATION_FIXTURE",
       "kind": "TWO_FAMILY_FINITE_COVARIANCE"
@@ -64,16 +64,16 @@
       "outputItemsEstimate": 4,
       "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
     },
-    "resultHash": "5d92ffd34d43e21302bdb431b4c0140623fd1091d612e7df39786a741626155a",
+    "resultHash": "7b23be73d62156af0af8c76a3de1c02d3b985ca26774e00125fba86ee150d214",
     "results": {
       "Hcov": [
         [
-          -0.03571428571428571,
-          -0.03571428571428571
+          -0.009152913087920388,
+          -0.009152913087920388
         ],
         [
-          0.03571428571428571,
-          -0.03571428571428571
+          0.009152913087920388,
+          -0.009152913087920388
         ]
       ],
       "angularAverage": {
@@ -81,16 +81,16 @@
         "exact": "1/2"
       },
       "cosineHalfFactor": 0.5,
-      "determinant": 0.002551020408163265,
+      "determinant": 0.00016755163599004868,
       "epsilonScaledStress": [
-        -0.1,
+        -0.09999999999999999,
         0
       ],
       "families": [
         {
           "covariance": [
-            -0.03571428571428571,
-            0.03571428571428571
+            -0.009152913087920388,
+            0.009152913087920388
           ],
           "family": "+",
           "polarization": [
@@ -98,12 +98,12 @@
             -1,
             1
           ],
-          "weight": 14
+          "weight": 54.627416997969526
         },
         {
           "covariance": [
-            -0.03571428571428571,
-            -0.03571428571428571
+            -0.009152913087920388,
+            -0.009152913087920388
           ],
           "family": "-",
           "polarization": [
@@ -111,7 +111,7 @@
             -1,
             -1
           ],
-          "weight": 14
+          "weight": 54.627416997969526
         }
       ],
       "globalProfileMatching": false,
@@ -126,9 +126,25 @@
             5
           ]
         ],
+        "cancellation": "14^Delta * 14^(-Delta)=1",
+        "covarianceFactor": "(4-2*sqrt(2))*c_i/2",
         "det": 14,
-        "jacobian": "1/14",
-        "liftedArea": 1
+        "jacobian": "4-2*sqrt(2)",
+        "liftedArea": 0.015625,
+        "liftedAreaMeaning": "integral chi(xi)^2*psi(eta)^2 dxi deta on one injective band rectangle; all covering lifts are included globally",
+        "normalizedCoveringFactor": "1",
+        "notGlobalOneFourteenth": true,
+        "perInverseLiftJacobian": "14^(-Delta)",
+        "preimageCount": "14^Delta",
+        "rectangleJacobianExact": "4-2*sqrt(2)",
+        "rectangleJacobianInterval": [
+          1.1715728752538086,
+          1.1715728752538113
+        ],
+        "sourceEquations": [
+          "6.19",
+          "7.27"
+        ]
       },
       "normal": [
         1,
@@ -136,7 +152,7 @@
         0
       ],
       "reconstructed": [
-        -1,
+        -0.9999999999999999,
         0
       ],
       "sameLabelHarmonicsRetained": true,
@@ -145,8 +161,8 @@
         0
       ],
       "weights": [
-        14,
-        14
+        54.627416997969526,
+        54.627416997969526
       ]
     },
     "scope": {
@@ -179,7 +195,6 @@
           "label": "stress r-theta",
           "name": "stress r-theta",
           "scale": "LINEAR",
-          "sourceField": "stress r-theta",
           "unit": "stress"
         },
         {
@@ -187,7 +202,6 @@
           "label": "stress r-z",
           "name": "stress r-z",
           "scale": "LINEAR",
-          "sourceField": "stress r-z",
           "unit": "stress"
         },
         {
@@ -195,7 +209,6 @@
           "label": "family index",
           "name": "family index",
           "scale": "LINEAR",
-          "sourceField": "family index",
           "unit": "1"
         }
       ],
@@ -209,8 +222,8 @@
               0
             ],
             [
-              -0.03571428571428571,
-              0.03571428571428571,
+              -0.009152913087920388,
+              0.009152913087920388,
               0
             ]
           ]
@@ -223,8 +236,8 @@
               1
             ],
             [
-              -0.03571428571428571,
-              -0.03571428571428571,
+              -0.009152913087920388,
+              -0.009152913087920388,
               1
             ]
           ]
@@ -236,22 +249,22 @@
       ],
       "points": [
         {
-          "label": "family +, weight 14",
+          "label": "family +, weight 54.627416997969526",
           "pos": [
-            -0.03571428571428571,
-            0.03571428571428571,
+            -0.009152913087920388,
+            0.009152913087920388,
             0
           ],
-          "value": 14
+          "value": 54.627416997969526
         },
         {
-          "label": "family -, weight 14",
+          "label": "family -, weight 54.627416997969526",
           "pos": [
-            -0.03571428571428571,
-            -0.03571428571428571,
+            -0.009152913087920388,
+            -0.009152913087920388,
             1
           ],
-          "value": 14
+          "value": 54.627416997969526
         },
         {
           "label": "target",
@@ -266,5 +279,5 @@
     }
   },
   "status": "PARTIAL",
-  "resultHash": "43de04a1ca87281603637763e8b5e61b066e263201ee686ad80db7ce0189fefc"
+  "resultHash": "7055343953b2638350f9d01ee04186f510af1f9cc95dd8b56e0b06e119f98516"
 }

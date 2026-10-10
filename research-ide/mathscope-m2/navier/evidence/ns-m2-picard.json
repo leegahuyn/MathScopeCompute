@@ -1,0 +1,2106 @@
+{
+  "id": "ns-m2-picard",
+  "request": {
+    "kind": "ns.background-picard",
+    "input": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "n": 1,
+      "Cn": 0.5,
+      "a": 0.25,
+      "rho": 0.5,
+      "rhoPrime": 0.25,
+      "terms": 16
+    }
+  },
+  "inputHash": "729e0c65363697480d0b962ff34d234860664f314e4d850eba004cd4c9eb4923",
+  "result": {
+    "blockers": [
+      "N4-03 requires same-profile coefficient/source bounds on the recorded common radial interval and full eta strip."
+    ],
+    "checks": [
+      {
+        "detail": "Exact sparse products certify A1*D*A1=0 including parameter derivatives.",
+        "id": "source-six-component-block",
+        "pass": true
+      },
+      {
+        "detail": "Outward tail for explicitly declared Cn and analytic strip; it does not certify those constants for the actual profile.",
+        "id": "two-parity-tail",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "common-interval-not-shrunk",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "EXACT_SOURCE_OPERATOR_WITH_CONDITIONAL_INTERVAL_TAIL",
+    "kind": "ns.background-picard",
+    "moduleVersion": "m2-ns-0.2.0",
+    "object": {
+      "kind": "SOURCE_PICARD_OPERATOR_AND_TAIL",
+      "sourceProfile": "same-profile-2026-10-10.3"
+    },
+    "precisionLedger": {
+      "arithmetic": "OUTWARD_FLOAT64_SCALAR_INTERVALS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 160000,
+      "outputItemsEstimate": 4,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "b18af62b97107e305ba296844da147631f8f43f51075a2df9cdd6f0a26d2fbd2",
+    "results": {
+      "nextOrderAllowed": false,
+      "solutionState": "SOURCE_OPERATOR_AND_CONDITIONAL_TAIL_IMPLEMENTED; ACTUAL_PROFILE_SOURCE_NORMS_NOT_COMPUTED",
+      "sourceProfile": {
+        "attachedAnalyticConclusions": {
+          "actualLoopDerivativeBoundAttached": true,
+          "actualSAndPreloopMarginsAttached": true,
+          "actualStressFlatLower": "min(C^-11,R^-8)*zeta",
+          "continuousB8InclusionAllEta": true,
+          "continuousC12DebtAndI1Restoration": true,
+          "heatCompensationSameDatum": true,
+          "oneFiniteNSelected": true,
+          "preservedReservedPatches": [
+            "Ipos",
+            "Imean"
+          ],
+          "sameInfiniteAxisAndActualContinuationDebt": true,
+          "samePressureDatumAndAllFiveMoments": true,
+          "wholeClosedAnnulusDirectionalMargin": "R^-10"
+        },
+        "finiteEvaluations": {
+          "core": {
+            "etaDomain": "eta=0 with specified parameter derivatives",
+            "intervalValues": 75,
+            "points": 5
+          },
+          "mixedPhi": {
+            "coefficients": 125,
+            "comparisonOnlyComplexXiDisk": "|xi|<=1/16",
+            "etaChart": "|eta|<=rho/4",
+            "mixedValues": 75
+          }
+        },
+        "globalNumericalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "inputs": {
+          "activationRectangle": {
+            "bytes": 6843,
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md",
+            "sha256": "2035fa202134d7ca0affcad7ad7aafbb05e3508fde3a5f34a3f2cea6fd003750"
+          },
+          "assembly": {
+            "bytes": 77149,
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+            "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+          },
+          "assessment": {
+            "bytes": 45550,
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/ORIGINAL_NINE_GATES_ASSESSMENT_2026_10_10_3.json",
+            "sha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c"
+          },
+          "formalConnectionReview": {
+            "bytes": 14174,
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/FINAL_FORMAL_CONNECTION_REVIEW_2026_10_10_EN.md",
+            "sha256": "c9dca8753f12531a1103a8416ca7bfbe8af4a56accd1168b2cf5844d7e8d57b4"
+          },
+          "sourceEnvelope": {
+            "bytes": 14446,
+            "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/global-source-envelope-certificate.json",
+            "sha256": "bf9ca2766ad0ec90aa055becccc07b7ad882c71928e51c71529543c9d94efb4f"
+          },
+          "specification": {
+            "bytes": 10331,
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/ONE_PROFILE_SPECIFICATION.md",
+            "sha256": "38d8a88220094cf2e6b2571f214f38361783669b646c0c08eb206eb2b9100bdd"
+          }
+        },
+        "largeIntegerEncoding": "Original integer tokens are preserved as decimal strings when outside the safe JSON integer range.",
+        "m2HigherCoefficientsInArchive": false,
+        "n3AcceptedGates": [
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-01",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-02",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "ACTUAL_ORIGINAL_KERNEL_INPUT_AND_FIXED_POINT_WITH_EXACT_RATIONAL_FINITE_ARRAY_CONSUMER_AND_INDEPENDENT_REVIEW",
+            "id": "N3-03",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-04",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-05",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-06",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-07",
+            "status": "PASS"
+          }
+        ],
+        "newLeanExecution": false,
+        "originalLeanCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "parametersExactExpressions": {
+          "BOuter": {
+            "product": [
+              {
+                "integer": 1000
+              },
+              {
+                "ref": "T"
+              }
+            ]
+          },
+          "BRefUpper": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              300
+            ]
+          },
+          "Bcmp0": {
+            "product": [
+              {
+                "integer": 1000000
+              },
+              {
+                "power": [
+                  {
+                    "sum": [
+                      {
+                        "integer": 1
+                      },
+                      {
+                        "power": [
+                          {
+                            "ref": "Q"
+                          },
+                          1000
+                        ]
+                      },
+                      {
+                        "ref": "BRefUpper"
+                      },
+                      {
+                        "ref": "VA"
+                      },
+                      {
+                        "ref": "L0"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              }
+            ]
+          },
+          "Bk": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              80
+            ]
+          },
+          "C12EnvelopeR": {
+            "exp": {
+              "power": [
+                {
+                  "ref": "sourceEnvelopeS"
+                },
+                256
+              ]
+            }
+          },
+          "CSelected": {
+            "exp": {
+              "ref": "logCSelected"
+            }
+          },
+          "Caxis": {
+            "exp": {
+              "ref": "logCaxis"
+            }
+          },
+          "DeltaEarly": {
+            "exp": {
+              "quotient": [
+                {
+                  "product": [
+                    {
+                      "integer": -1
+                    },
+                    {
+                      "power": [
+                        {
+                          "ref": "Q"
+                        },
+                        200
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "integer": 4
+                }
+              ]
+            }
+          },
+          "Gamma": {
+            "product": [
+              {
+                "ref": "Bcmp0"
+              },
+              {
+                "exp": {
+                  "ref": "Lmath"
+                }
+              }
+            ]
+          },
+          "I1Right": {
+            "product": [
+              {
+                "ref": "X0I1"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "I2Right": {
+            "product": [
+              {
+                "ref": "X0I2"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "ImeanRight": {
+            "product": [
+              {
+                "ref": "X0Imean"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "IposRight": {
+            "product": [
+              {
+                "ref": "X0Ipos"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "K": {
+            "power": [
+              {
+                "ref": "Pstar"
+              },
+              2
+            ]
+          },
+          "Kcmp": {
+            "product": [
+              {
+                "integer": 1000
+              },
+              {
+                "power": [
+                  {
+                    "ref": "Gamma"
+                  },
+                  16
+                ]
+              }
+            ]
+          },
+          "L0": {
+            "log": {
+              "product": [
+                {
+                  "rational": "55/2"
+                },
+                {
+                  "ref": "Lambda"
+                }
+              ]
+            }
+          },
+          "Lambda": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              64
+            ]
+          },
+          "Lmath": {
+            "sum": [
+              {
+                "ref": "logCSelected"
+              },
+              {
+                "quotient": [
+                  {
+                    "product": [
+                      {
+                        "integer": 34
+                      },
+                      {
+                        "ref": "Lambda"
+                      }
+                    ]
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "sigmaStar"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Md": {
+            "integer": 1048576
+          },
+          "Pstar": {
+            "exp": {
+              "ref": "logP"
+            }
+          },
+          "Q": {
+            "quotient": [
+              {
+                "product": [
+                  {
+                    "integer": "1852673427797059126777135760139006525652319754650249024631321344126610074238976"
+                  },
+                  {
+                    "ref": "K"
+                  }
+                ]
+              },
+              {
+                "power": [
+                  {
+                    "ref": "sigmaStar"
+                  },
+                  2
+                ]
+              }
+            ]
+          },
+          "T": {
+            "sum": [
+              {
+                "exp": {
+                  "ref": "Md"
+                }
+              },
+              {
+                "integer": 10
+              }
+            ]
+          },
+          "Tf": {
+            "integer": 128
+          },
+          "Tsh": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              90
+            ]
+          },
+          "VA": {
+            "sum": [
+              {
+                "integer": 1
+              },
+              {
+                "ref": "BRefUpper"
+              },
+              {
+                "product": [
+                  {
+                    "integer": 1048576
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "BRefUpper"
+                      },
+                      2
+                    ]
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "Lambda"
+                      },
+                      4
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Vmax": {
+            "product": [
+              {
+                "ref": "VA"
+              },
+              {
+                "exp": {
+                  "product": [
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "ref": "Lmath"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0I1": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -25
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0I2": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -20
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0Imean": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -8
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0Ipos": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -14
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "XR": {
+            "product": [
+              {
+                "integer": 110
+              },
+              {
+                "power": [
+                  {
+                    "product": [
+                      {
+                        "ref": "CSelected"
+                      },
+                      {
+                        "ref": "Pstar"
+                      }
+                    ]
+                  },
+                  10
+                ]
+              }
+            ]
+          },
+          "Xa": {
+            "quotient": [
+              {
+                "integer": 4
+              },
+              {
+                "ref": "Lambda"
+              }
+            ]
+          },
+          "Xsep": {
+            "product": [
+              {
+                "integer": 110
+              },
+              {
+                "exp": {
+                  "ref": "Tsh"
+                }
+              }
+            ]
+          },
+          "barT": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              -200
+            ]
+          },
+          "co": {
+            "rational": "1/256"
+          },
+          "deltaStar": {
+            "quotient": [
+              {
+                "ref": "j0"
+              },
+              {
+                "integer": 10
+              }
+            ]
+          },
+          "directionalMarginKappa": {
+            "power": [
+              {
+                "ref": "C12EnvelopeR"
+              },
+              -10
+            ]
+          },
+          "epsilonMoment": {
+            "power": [
+              {
+                "ref": "h"
+              },
+              3
+            ]
+          },
+          "h": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -8002
+                },
+                {
+                  "ref": "T"
+                }
+              ]
+            }
+          },
+          "j0": {
+            "power": [
+              {
+                "ref": "h"
+              },
+              4
+            ]
+          },
+          "kappa0": {
+            "ref": "t1"
+          },
+          "lambda": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -1000
+                },
+                {
+                  "ref": "T"
+                }
+              ]
+            }
+          },
+          "logCSelected": {
+            "sum": [
+              {
+                "product": [
+                  {
+                    "integer": 10
+                  },
+                  {
+                    "log": {
+                      "sum": [
+                        {
+                          "integer": 1
+                        },
+                        {
+                          "ref": "BRefUpper"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "power": [
+                  {
+                    "ref": "Q"
+                  },
+                  200
+                ]
+              }
+            ]
+          },
+          "logCaxis": {
+            "sum": [
+              {
+                "quotient": [
+                  {
+                    "product": [
+                      {
+                        "integer": 64
+                      },
+                      {
+                        "ref": "Lambda"
+                      }
+                    ]
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "sigmaStar"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              },
+              {
+                "integer": 1
+              }
+            ]
+          },
+          "logP": {
+            "product": [
+              {
+                "integer": 2
+              },
+              {
+                "ref": "T"
+              }
+            ]
+          },
+          "loopD0": {
+            "quotient": [
+              {
+                "integer": 1
+              },
+              {
+                "product": [
+                  {
+                    "integer": 8
+                  },
+                  {
+                    "ref": "sourceEnvelopeS"
+                  }
+                ]
+              }
+            ]
+          },
+          "loopDelta": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -1
+                },
+                {
+                  "power": [
+                    {
+                      "ref": "sourceEnvelopeS"
+                    },
+                    16
+                  ]
+                }
+              ]
+            }
+          },
+          "loopILeft": {
+            "product": [
+              {
+                "quotient": [
+                  {
+                    "integer": 4
+                  },
+                  {
+                    "ref": "Lambda"
+                  }
+                ]
+              },
+              {
+                "exp": {
+                  "quotient": [
+                    {
+                      "ref": "t1"
+                    },
+                    {
+                      "integer": 8
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "loopIRight": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 3
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "loopMuMax": {
+            "power": [
+              {
+                "ref": "sourceEnvelopeS"
+              },
+              12
+            ]
+          },
+          "muMoment": {
+            "power": [
+              {
+                "ref": "h"
+              },
+              2
+            ]
+          },
+          "omega1": {
+            "ref": "t1"
+          },
+          "omega2": {
+            "ref": "t1"
+          },
+          "outerComplexRadius": {
+            "quotient": [
+              {
+                "power": [
+                  {
+                    "ref": "sigmaStar"
+                  },
+                  2
+                ]
+              },
+              {
+                "integer": 2048
+              }
+            ]
+          },
+          "radialFrequencyN": {
+            "sum": [
+              {
+                "integer": 1
+              },
+              {
+                "ceil": {
+                  "power": [
+                    {
+                      "ref": "C12EnvelopeR"
+                    },
+                    50
+                  ]
+                }
+              }
+            ]
+          },
+          "rho": {
+            "quotient": [
+              {
+                "power": [
+                  {
+                    "ref": "sigmaStar"
+                  },
+                  2
+                ]
+              },
+              {
+                "integer": 65536
+              }
+            ]
+          },
+          "sigmaStar": {
+            "quotient": [
+              {
+                "ref": "j0"
+              },
+              {
+                "integer": 2000
+              }
+            ]
+          },
+          "sourceEnvelopeS": {
+            "power": [
+              {
+                "ref": "CSelected"
+              },
+              100000
+            ]
+          },
+          "sourceJLeft": {
+            "product": [
+              {
+                "quotient": [
+                  {
+                    "integer": 4
+                  },
+                  {
+                    "ref": "Lambda"
+                  }
+                ]
+              },
+              {
+                "exp": {
+                  "quotient": [
+                    {
+                      "ref": "t1"
+                    },
+                    {
+                      "integer": 16
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "sourceJRight": {
+            "product": [
+              {
+                "integer": 16
+              },
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60000
+                        },
+                        {
+                          "ref": "T"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -25
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "stressFlatLowerConstant": {
+            "min": [
+              {
+                "power": [
+                  {
+                    "ref": "CSelected"
+                  },
+                  -11
+                ]
+              },
+              {
+                "power": [
+                  {
+                    "ref": "C12EnvelopeR"
+                  },
+                  -8
+                ]
+              }
+            ]
+          },
+          "t1": {
+            "power": [
+              {
+                "ref": "CSelected"
+              },
+              -120
+            ]
+          },
+          "tauBase": {
+            "min": [
+              {
+                "quotient": [
+                  {
+                    "ref": "barT"
+                  },
+                  {
+                    "integer": 4
+                  }
+                ]
+              },
+              {
+                "rational": "1/1000"
+              },
+              {
+                "quotient": [
+                  {
+                    "integer": 1
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 100
+                      },
+                      {
+                        "ref": "Gamma"
+                      },
+                      {
+                        "ref": "Bcmp0"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "quotient": [
+                  {
+                    "ref": "j0"
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 100000000
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "BRefUpper"
+                          }
+                        ]
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "L0"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "quotient": [
+                  {
+                    "power": [
+                      {
+                        "ref": "Q"
+                      },
+                      -200
+                    ]
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 1000000
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "BRefUpper"
+                          }
+                        ]
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "L0"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "quotient": [
+                  {
+                    "integer": 1
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 100000000
+                      },
+                      {
+                        "ref": "Bcmp0"
+                      },
+                      {
+                        "power": [
+                          {
+                            "sum": [
+                              {
+                                "integer": 1
+                              },
+                              {
+                                "ref": "Kcmp"
+                              }
+                            ]
+                          },
+                          2
+                        ]
+                      },
+                      {
+                        "power": [
+                          {
+                            "sum": [
+                              {
+                                "integer": 1
+                              },
+                              {
+                                "ref": "Vmax"
+                              }
+                            ]
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "profileEvidenceSHA256": "ff3b1590aa49499417910962736fe2deb8e6088acd7d77e281fd8aba6807c206",
+        "schema": "MathScope.PinnedN3SourceProfile/1",
+        "sourcePaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"
+      },
+      "system": {
+        "A0": [
+          [
+            "0",
+            "0",
+            "0",
+            "0",
+            "1",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "1"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "-1"
+          ],
+          [
+            "4*xi*phi0/C^2",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "2*(beta*(-1+2*eta*U0)/L+V0/X)",
+            "4*eta*(A-lambda_n)*Hphi/L+2*Z_(-A-1/2)(phi0)",
+            "-4*eta*(D+lambda_n)*Hphi/L",
+            "0",
+            "xi/L+xi*(V0/X)-2*eta*xi*U0/L",
+            "0"
+          ],
+          [
+            "-8*eta*X*phi0/(L*C^2)",
+            "2*gamma*(-1+2*eta*U0)/L+4*eta*(A-lambda_n)*HU/L+2*Z_(-A)(U0)",
+            "-4*eta*(D+lambda_n)*HU/L",
+            "4*delta*eta/L",
+            "0",
+            "xi/L+xi*(V0/X)-2*eta*xi*U0/L"
+          ]
+        ],
+        "A1": [
+          [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "2*(D*eta+d*U0)/L",
+            "-2*d*Hphi/L",
+            "-2*d*Hphi/L",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "2*(D*eta+d*U0-d*HU)/L",
+            "-2*d*HU/L",
+            "2*d/L",
+            "0",
+            "0"
+          ]
+        ],
+        "axisDatum": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "blockCertificate": {
+          "A1Kills": "last two coordinates",
+          "A1Maps": "first four coordinates into last two",
+          "allDiagonalKernelProductsVanish": true,
+          "maximumEtaDerivatives": "ceil(k/2)",
+          "nilpotentProducts": [
+            {
+              "column": 1,
+              "possibleDiagonalKernelPaths": [],
+              "row": 1
+            },
+            {
+              "column": 2,
+              "possibleDiagonalKernelPaths": [],
+              "row": 1
+            },
+            {
+              "column": 3,
+              "possibleDiagonalKernelPaths": [],
+              "row": 1
+            },
+            {
+              "column": 4,
+              "possibleDiagonalKernelPaths": [],
+              "row": 1
+            },
+            {
+              "column": 5,
+              "possibleDiagonalKernelPaths": [],
+              "row": 1
+            },
+            {
+              "column": 6,
+              "possibleDiagonalKernelPaths": [],
+              "row": 1
+            },
+            {
+              "column": 1,
+              "possibleDiagonalKernelPaths": [],
+              "row": 2
+            },
+            {
+              "column": 2,
+              "possibleDiagonalKernelPaths": [],
+              "row": 2
+            },
+            {
+              "column": 3,
+              "possibleDiagonalKernelPaths": [],
+              "row": 2
+            },
+            {
+              "column": 4,
+              "possibleDiagonalKernelPaths": [],
+              "row": 2
+            },
+            {
+              "column": 5,
+              "possibleDiagonalKernelPaths": [],
+              "row": 2
+            },
+            {
+              "column": 6,
+              "possibleDiagonalKernelPaths": [],
+              "row": 2
+            },
+            {
+              "column": 1,
+              "possibleDiagonalKernelPaths": [],
+              "row": 3
+            },
+            {
+              "column": 2,
+              "possibleDiagonalKernelPaths": [],
+              "row": 3
+            },
+            {
+              "column": 3,
+              "possibleDiagonalKernelPaths": [],
+              "row": 3
+            },
+            {
+              "column": 4,
+              "possibleDiagonalKernelPaths": [],
+              "row": 3
+            },
+            {
+              "column": 5,
+              "possibleDiagonalKernelPaths": [],
+              "row": 3
+            },
+            {
+              "column": 6,
+              "possibleDiagonalKernelPaths": [],
+              "row": 3
+            },
+            {
+              "column": 1,
+              "possibleDiagonalKernelPaths": [],
+              "row": 4
+            },
+            {
+              "column": 2,
+              "possibleDiagonalKernelPaths": [],
+              "row": 4
+            },
+            {
+              "column": 3,
+              "possibleDiagonalKernelPaths": [],
+              "row": 4
+            },
+            {
+              "column": 4,
+              "possibleDiagonalKernelPaths": [],
+              "row": 4
+            },
+            {
+              "column": 5,
+              "possibleDiagonalKernelPaths": [],
+              "row": 4
+            },
+            {
+              "column": 6,
+              "possibleDiagonalKernelPaths": [],
+              "row": 4
+            },
+            {
+              "column": 1,
+              "possibleDiagonalKernelPaths": [],
+              "row": 5
+            },
+            {
+              "column": 2,
+              "possibleDiagonalKernelPaths": [],
+              "row": 5
+            },
+            {
+              "column": 3,
+              "possibleDiagonalKernelPaths": [],
+              "row": 5
+            },
+            {
+              "column": 4,
+              "possibleDiagonalKernelPaths": [],
+              "row": 5
+            },
+            {
+              "column": 5,
+              "possibleDiagonalKernelPaths": [],
+              "row": 5
+            },
+            {
+              "column": 6,
+              "possibleDiagonalKernelPaths": [],
+              "row": 5
+            },
+            {
+              "column": 1,
+              "possibleDiagonalKernelPaths": [],
+              "row": 6
+            },
+            {
+              "column": 2,
+              "possibleDiagonalKernelPaths": [],
+              "row": 6
+            },
+            {
+              "column": 3,
+              "possibleDiagonalKernelPaths": [],
+              "row": 6
+            },
+            {
+              "column": 4,
+              "possibleDiagonalKernelPaths": [],
+              "row": 6
+            },
+            {
+              "column": 5,
+              "possibleDiagonalKernelPaths": [],
+              "row": 6
+            },
+            {
+              "column": 6,
+              "possibleDiagonalKernelPaths": [],
+              "row": 6
+            }
+          ],
+          "parameterDerivativesPreserveMask": true
+        },
+        "commonDomain": {
+          "CnForActualProfile": null,
+          "aExact": "sqrt(Xa*exp(t1/16))",
+          "archivedOrdering": "X_an=Xa*exp(t1/16) < X_modulation_left=Xa*exp(t1/8) < Xa*exp(t1/4)",
+          "independentOfOrder": true,
+          "notationGuard": "The positive-order X_minus is a new point inside the analytic activation collar; it is not the archived modulation interval endpoint.",
+          "parameterStripNumericRadius": null,
+          "positiveOrderCutoffOrdering": "X_minus=Xa*exp(t1/128) < X_keep=Xa*exp(t1/64) < X_cut=Xa*exp(t1/32) < a^2=Xa*exp(t1/16)",
+          "sourceFile": "followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md",
+          "sourceSha256": "2035fa202134d7ca0affcad7ad7aafbb05e3508fde3a5f34a3f2cea6fd003750"
+        },
+        "coordinates": [
+          "phi_n",
+          "U_n",
+          "K_n",
+          "Pi_n",
+          "partial_xi phi_n",
+          "partial_xi U_n"
+        ],
+        "definitions": {
+          "HU": "X*partial_X U0",
+          "Hphi": "phi0+X*partial_X phi0",
+          "K_n": "A_X(U_n)-U_n",
+          "X": "xi^2",
+          "beta": "-A-1/2+lambda_n",
+          "delta": "-2*A+lambda_n",
+          "gamma": "-A+lambda_n",
+          "knownPressureSource": "pKnown=C^-2*sum_(1<=i,j<n;i+j=n)(phi_i*phi_j)-Omega_(n-1)/(2X)",
+          "lambda_n": "2*n*h"
+        },
+        "forcing": [
+          "0",
+          "0",
+          "0",
+          "2*xi*pKnown",
+          "2*(known angular transport - Z_(-A-1/2+lambda_(n-1)-D) Z_(-A-1/2+lambda_(n-1)) phi_(n-1))",
+          "2*(known axial transport - Z_(-A+lambda_(n-1)-D) Z_(-A+lambda_(n-1)) U_(n-1) - 2*eta*X*pKnown/L)"
+        ],
+        "n": 1,
+        "regularity": {
+          "V0OverXi": "xi*(V0/X); V0/X is smooth from (5.2)",
+          "axisParity": [
+            "even",
+            "even",
+            "even",
+            "even",
+            "odd",
+            "odd"
+          ],
+          "diagonalInverse": "(Gg)_i(xi)=xi*integral_0^1 t^c_i*g_i(t*xi) dt",
+          "pressureRowSubstitutedIntoAxial": true,
+          "zeroAxisData": true
+        },
+        "sameProfileCoefficientsSolved": false,
+        "schema": "MathScope.SourceSixComponentPicardSystem/1",
+        "singularDiagonal": [
+          0,
+          0,
+          2,
+          0,
+          3,
+          1
+        ],
+        "sourceEquations": [
+          "5.2",
+          "5.3",
+          "5.4",
+          "5.5",
+          "5.6",
+          "5.7",
+          "5.8"
+        ],
+        "sourceProfile": "same-profile-2026-10-10.3"
+      },
+      "tail": {
+        "actualProfileSolutionEnclosed": false,
+        "cauchyRadiusLoss": [
+          0.24999999999999997,
+          0.25000000000000006
+        ],
+        "commonIntervalUnchanged": true,
+        "constantProvenance": "EXPLICIT_OPERATOR_PROBE_BOUNDS; not derived from the pinned N3 coefficient functions",
+        "logTailBound": [
+          -40.62889285336139,
+          -40.62889285335964
+        ],
+        "parameters": {
+          "Cn": 0.5,
+          "a": 0.25,
+          "rho": 0.5,
+          "rhoPrime": 0.25,
+          "terms": 16
+        },
+        "parityRatioUpper": [
+          0.005208333333333327,
+          0.005208333333333341
+        ],
+        "pass": true,
+        "ratioDerivation": "(1+1/p)^p<e<3, p=ceil(k/2), bounds B_(k+2)/B_k for both parities.",
+        "rows": [
+          {
+            "k": 0,
+            "logTermBound": [
+              -2.0794415416798597,
+              -2.0794415416798193
+            ],
+            "maximumEtaDerivatives": 0
+          },
+          {
+            "k": 1,
+            "logTermBound": [
+              -3.4657359027997887,
+              -3.4657359027996786
+            ],
+            "maximumEtaDerivatives": 1
+          },
+          {
+            "k": 2,
+            "logTermBound": [
+              -6.6437897331477656,
+              -6.643789733147601
+            ],
+            "maximumEtaDerivatives": 1
+          },
+          {
+            "k": 3,
+            "logTermBound": [
+              -7.336936913707764,
+              -7.336936913707499
+            ],
+            "maximumEtaDerivatives": 2
+          },
+          {
+            "k": 4,
+            "logTermBound": [
+              -11.025816367821736,
+              -11.025816367821408
+            ],
+            "maximumEtaDerivatives": 2
+          },
+          {
+            "k": 5,
+            "logTermBound": [
+              -11.601180512725355,
+              -11.601180512724921
+            ],
+            "maximumEtaDerivatives": 3
+          },
+          {
+            "k": 6,
+            "logTermBound": [
+              -15.62653220346054,
+              -15.626532203460036
+            ],
+            "maximumEtaDerivatives": 3
+          },
+          {
+            "k": 7,
+            "logTermBound": [
+              -16.149780347225157,
+              -16.149780347224524
+            ],
+            "maximumEtaDerivatives": 4
+          },
+          {
+            "k": 8,
+            "logTermBound": [
+              -20.426446466241256,
+              -20.426446466240545
+            ],
+            "maximumEtaDerivatives": 4
+          },
+          {
+            "k": 9,
+            "logTermBound": [
+              -20.92016662210438,
+              -20.92016662210354
+            ],
+            "maximumEtaDerivatives": 5
+          },
+          {
+            "k": 10,
+            "logTermBound": [
+              -25.39750343658262,
+              -25.39750343658171
+            ],
+            "maximumEtaDerivatives": 5
+          },
+          {
+            "k": 11,
+            "logTermBound": [
+              -25.872190013732816,
+              -25.872190013731764
+            ],
+            "maximumEtaDerivatives": 6
+          },
+          {
+            "k": 12,
+            "logTermBound": [
+              -30.51658091287423,
+              -30.5165809128731
+            ],
+            "maximumEtaDerivatives": 6
+          },
+          {
+            "k": 13,
+            "logTermBound": [
+              -30.977971195030655,
+              -30.97797119502936
+            ],
+            "maximumEtaDerivatives": 7
+          },
+          {
+            "k": 14,
+            "logTermBound": [
+              -35.76546293781275,
+              -35.76546293781137
+            ],
+            "maximumEtaDerivatives": 7
+          },
+          {
+            "k": 15,
+            "logTermBound": [
+              -36.21703755056105,
+              -36.21703755055953
+            ],
+            "maximumEtaDerivatives": 8
+          },
+          {
+            "k": 16,
+            "logTermBound": [
+              -41.12969243629716,
+              -41.129692436295535
+            ],
+            "maximumEtaDerivatives": 8
+          },
+          {
+            "k": 17,
+            "logTermBound": [
+              -41.573722512166064,
+              -41.573722512164295
+            ],
+            "maximumEtaDerivatives": 9
+          }
+        ],
+        "schema": "MathScope.PicardScalarTail/1",
+        "sourceCnBoundProven": false,
+        "tailFormula": "sum_(k>=K) B_k <= (B_K+B_(K+1))/(1-r); r=3*(Cn*a)^2/(2*Delta*(K+2))",
+        "tailFrom": 16
+      }
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "Picard iteration k",
+          "name": "Picard iteration k",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "log coefficient bound",
+          "name": "log coefficient bound",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "0",
+          "name": "0",
+          "scale": "LINEAR",
+          "unit": "1"
+        }
+      ],
+      "description": "Original (5.8) tail operator with explicitly declared analytic bound inputs.",
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              -2.0794415416798193,
+              0
+            ],
+            [
+              1,
+              -3.4657359027996786,
+              0
+            ],
+            [
+              2,
+              -6.643789733147601,
+              0
+            ],
+            [
+              3,
+              -7.336936913707499,
+              0
+            ],
+            [
+              4,
+              -11.025816367821408,
+              0
+            ],
+            [
+              5,
+              -11.601180512724921,
+              0
+            ],
+            [
+              6,
+              -15.626532203460036,
+              0
+            ],
+            [
+              7,
+              -16.149780347224524,
+              0
+            ],
+            [
+              8,
+              -20.426446466240545,
+              0
+            ],
+            [
+              9,
+              -20.92016662210354,
+              0
+            ],
+            [
+              10,
+              -25.39750343658171,
+              0
+            ],
+            [
+              11,
+              -25.872190013731764,
+              0
+            ],
+            [
+              12,
+              -30.5165809128731,
+              0
+            ],
+            [
+              13,
+              -30.97797119502936,
+              0
+            ],
+            [
+              14,
+              -35.76546293781137,
+              0
+            ],
+            [
+              15,
+              -36.21703755055953,
+              0
+            ],
+            [
+              16,
+              -41.129692436295535,
+              0
+            ],
+            [
+              17,
+              -41.573722512164295,
+              0
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "No actual source Cn or positive-order coefficient function has been evaluated."
+      ],
+      "points": [
+        {
+          "label": "k=0; eta derivatives<=0",
+          "pos": [
+            0,
+            -2.0794415416798193,
+            0
+          ],
+          "value": -2.0794415416798193
+        },
+        {
+          "label": "k=1; eta derivatives<=1",
+          "pos": [
+            1,
+            -3.4657359027996786,
+            0
+          ],
+          "value": -3.4657359027996786
+        },
+        {
+          "label": "k=2; eta derivatives<=1",
+          "pos": [
+            2,
+            -6.643789733147601,
+            0
+          ],
+          "value": -6.643789733147601
+        },
+        {
+          "label": "k=3; eta derivatives<=2",
+          "pos": [
+            3,
+            -7.336936913707499,
+            0
+          ],
+          "value": -7.336936913707499
+        },
+        {
+          "label": "k=4; eta derivatives<=2",
+          "pos": [
+            4,
+            -11.025816367821408,
+            0
+          ],
+          "value": -11.025816367821408
+        },
+        {
+          "label": "k=5; eta derivatives<=3",
+          "pos": [
+            5,
+            -11.601180512724921,
+            0
+          ],
+          "value": -11.601180512724921
+        },
+        {
+          "label": "k=6; eta derivatives<=3",
+          "pos": [
+            6,
+            -15.626532203460036,
+            0
+          ],
+          "value": -15.626532203460036
+        },
+        {
+          "label": "k=7; eta derivatives<=4",
+          "pos": [
+            7,
+            -16.149780347224524,
+            0
+          ],
+          "value": -16.149780347224524
+        },
+        {
+          "label": "k=8; eta derivatives<=4",
+          "pos": [
+            8,
+            -20.426446466240545,
+            0
+          ],
+          "value": -20.426446466240545
+        },
+        {
+          "label": "k=9; eta derivatives<=5",
+          "pos": [
+            9,
+            -20.92016662210354,
+            0
+          ],
+          "value": -20.92016662210354
+        },
+        {
+          "label": "k=10; eta derivatives<=5",
+          "pos": [
+            10,
+            -25.39750343658171,
+            0
+          ],
+          "value": -25.39750343658171
+        },
+        {
+          "label": "k=11; eta derivatives<=6",
+          "pos": [
+            11,
+            -25.872190013731764,
+            0
+          ],
+          "value": -25.872190013731764
+        },
+        {
+          "label": "k=12; eta derivatives<=6",
+          "pos": [
+            12,
+            -30.5165809128731,
+            0
+          ],
+          "value": -30.5165809128731
+        },
+        {
+          "label": "k=13; eta derivatives<=7",
+          "pos": [
+            13,
+            -30.97797119502936,
+            0
+          ],
+          "value": -30.97797119502936
+        },
+        {
+          "label": "k=14; eta derivatives<=7",
+          "pos": [
+            14,
+            -35.76546293781137,
+            0
+          ],
+          "value": -35.76546293781137
+        },
+        {
+          "label": "k=15; eta derivatives<=8",
+          "pos": [
+            15,
+            -36.21703755055953,
+            0
+          ],
+          "value": -36.21703755055953
+        },
+        {
+          "label": "k=16; eta derivatives<=8",
+          "pos": [
+            16,
+            -41.129692436295535,
+            0
+          ],
+          "value": -41.129692436295535
+        },
+        {
+          "label": "k=17; eta derivatives<=9",
+          "pos": [
+            17,
+            -41.573722512164295,
+            0
+          ],
+          "value": -41.573722512164295
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "2d59e1a8ea318e22d4e4f53633a47c4a26c302715d03637796cbc2d12f00ccea"
+}

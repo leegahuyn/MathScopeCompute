@@ -1,0 +1,1022 @@
+{
+  "schema": "MathScope.M2.NavierAcceptance/1",
+  "generatedAt": "2026-10-10T04:01:38.231Z",
+  "source": {
+    "name": "MathScope_Research_IDE_Blueprint_v1_KO(1)(9).pdf",
+    "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+    "pages": [
+      58,
+      60
+    ]
+  },
+  "sourceHashes": {
+    "index.mjs": "068b138e9ec676ba21f2dbd7f9be0ed57ece3c866813567ca7c46554ae5bc1df",
+    "pulse-ode.mjs": "d47bfdf98581ace4d4df26a8b9086bc8642a6bca385b955468dd7eeb753453fa",
+    "checklist.mjs": "8b2d96f435d35b2b4d7760319cf9a7787aad56d4bd7e4f7fae69fe97e2974956",
+    "tests/navier.test.mjs": "847ebf999435918d716e36fb2fe67578ac392df9dcef5e89b65082d81bd4faeb",
+    "tests/fixtures/original-n4-n5.json": "f4b986ccc63dfd20cc58a5ca009310af7c50bcde9876a3304d42cd474107dba3"
+  },
+  "testEvidence": {
+    "runner": "node --test --test-reporter=tap",
+    "file": "tests.tap",
+    "total": 15,
+    "pass": 15,
+    "fail": 0,
+    "sha256": "34b87bfc17b3aafa03d6ba9f862b2317b567c02d181820891dfba83478534978",
+    "scope": "LOCAL_NODE_DOMAIN_AND_ENGINE_REPLAY; browser/worker integration is verified separately by the page build."
+  },
+  "archive": {
+    "id": "same-profile-2026-10-10.3",
+    "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+    "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+    "role": "ACCEPTED_N3_ARCHIVE_REFERENCE",
+    "globalEvaluator": false,
+    "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile."
+  },
+  "examples": [
+    {
+      "id": "ns-m2-recursion",
+      "kind": "ns.background-recursion",
+      "status": "PARTIAL",
+      "inputHash": "2d2d1ac09bd7b265f3bf1e2139250efbb8b19e91582d94bdda34ea3428042c5f",
+      "resultHash": "db933c1bfc0ba3bed690bf75614464c8c9fd2f6de384d23cb7e5f487be9ddead",
+      "checks": [
+        {
+          "detail": "background n, radial k, eta m are separate keys",
+          "id": "distinct-order-indices",
+          "pass": true
+        },
+        {
+          "detail": "1-2D=2A-1=2h for A=1/2+h,D=1/2-h",
+          "id": "physical-exponent-shift",
+          "pass": true
+        },
+        {
+          "detail": "All ordered i+j=n pairs, including both endpoints.",
+          "id": "all-convolution-pairs",
+          "pass": true
+        },
+        {
+          "detail": "Original (5.3)-(5.6) order shifts retained.",
+          "id": "n-minus-one-viscosity-and-pressure",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 6,
+        "points": 6,
+        "lines": 0,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "background order n",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "background order n",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "background order n",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "left order i",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "left order i",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "left order i",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "right order j",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "right order j",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "right order j",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-cutoffs",
+      "kind": "ns.background-cutoffs",
+      "status": "PARTIAL",
+      "inputHash": "a1b211b6a1a70e0f67558ec07a073118c49213b682fd887a32410a3638d0f067",
+      "resultHash": "0f8429db5bf0b3d990b2e3ca92de4242b558a1e3ff1341530a7b6f638579a7ba",
+      "checks": [
+        {
+          "detail": "Exact powers of two.",
+          "id": "cutoff-doubling",
+          "pass": true
+        },
+        {
+          "detail": "Outward interval log inequality on entire q<=1/a_j, not samples.",
+          "id": "all-q-all-supplied-m",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 4,
+        "points": 4,
+        "lines": 1,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "order j",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "order j",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "order j",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "log2(a_j)",
+            "type": "CATEGORICAL",
+            "unit": "log2",
+            "sourceField": "rows.log2a",
+            "scale": "LINEAR",
+            "transform": "log coordinates supplied by computation",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "log2(a_j)",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "0",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "0",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "0",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-curl",
+      "kind": "ns.potential-curl",
+      "status": "PARTIAL",
+      "inputHash": "b851ccb35ee96409356214cf75a468400ff949b306ebebfd6786ce96b7d884b2",
+      "resultHash": "ea6a6ddf778194a557093a3682ba3ac77a59e16d25510f8157db91354494e4cd",
+      "checks": [
+        {
+          "detail": "div(curl A)=d_x d_y A_z-d_y d_x A_z=0 on every smooth piece, with matching derivatives through the collar",
+          "id": "mixed-partial-identity",
+          "pass": true
+        },
+        {
+          "detail": "Centered Cartesian divergence; expected second-order cancellation.",
+          "id": "independent-divergence-refinement",
+          "pass": true
+        },
+        {
+          "detail": "Multiplying velocity by cutoff alone loses divergence cancellation.",
+          "id": "negative-control-detects-missing-curl-term",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "SPATIAL_3D",
+        "tableRows": 93,
+        "points": 93,
+        "lines": 0,
+        "arrows": 93,
+        "axisMetadata": [
+          {
+            "label": "x",
+            "type": "PHYSICAL_COORDINATE",
+            "unit": "fixture length",
+            "sourceField": "x",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 1,
+            "kind": "PHYSICAL",
+            "name": "x",
+            "coordinateRole": "PHYSICAL_COORDINATE"
+          },
+          {
+            "label": "y",
+            "type": "PHYSICAL_COORDINATE",
+            "unit": "fixture length",
+            "sourceField": "y",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 1,
+            "kind": "PHYSICAL",
+            "name": "y",
+            "coordinateRole": "PHYSICAL_COORDINATE"
+          },
+          {
+            "label": "z",
+            "type": "PHYSICAL_COORDINATE",
+            "unit": "fixture length",
+            "sourceField": "z",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 1,
+            "kind": "PHYSICAL",
+            "name": "z",
+            "coordinateRole": "PHYSICAL_COORDINATE"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-dyadic",
+      "kind": "ns.dyadic-charts",
+      "status": "PARTIAL",
+      "inputHash": "847247b942e66b07145014b364e3274762588d501c1c19b9e67bc37d96df7ab9",
+      "resultHash": "18b28f15f1742a20bc63b08df9013775808988ce6106eed84e22eb8ceaef5f08",
+      "checks": [
+        {
+          "detail": "Same physical point in adjacent bands.",
+          "id": "overlap-coordinate-identity",
+          "pass": true
+        },
+        {
+          "detail": "For 0<epsilon<=1, k=ceil(epsilon^-1/2) gives 1<=epsilon*k^2<=4.",
+          "id": "carrier-frequency-window",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 14,
+        "points": 14,
+        "lines": 1,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "r",
+            "type": "PHYSICAL_COORDINATE",
+            "unit": "length",
+            "sourceField": "r",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 1,
+            "kind": "PHYSICAL",
+            "name": "r",
+            "coordinateRole": "PHYSICAL_COORDINATE"
+          },
+          {
+            "label": "z",
+            "type": "PHYSICAL_COORDINATE",
+            "unit": "length",
+            "sourceField": "z",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 1,
+            "kind": "PHYSICAL",
+            "name": "z",
+            "coordinateRole": "PHYSICAL_COORDINATE"
+          },
+          {
+            "label": "tau=1-t",
+            "type": "PHYSICAL_TIME",
+            "unit": "time",
+            "sourceField": "tau=1-t",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 1,
+            "kind": "PHYSICAL",
+            "name": "tau=1-t",
+            "coordinateRole": "PHYSICAL_TIME"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-support",
+      "kind": "ns.pulse-support",
+      "status": "PARTIAL",
+      "inputHash": "491d662b4ef3a9b3f250281d9a49b5a02c2ac3616762307d16e1fed91f99d917",
+      "resultHash": "ece6452867d534e866b1ce6d5db56edccae44200cf9c99326c9ba9f3ffe1c253",
+      "checks": [
+        {
+          "detail": "Exact rational open gaps separate conflicting support intervals.",
+          "id": "every-active-conflict-pair",
+          "pass": true
+        },
+        {
+          "detail": "det Jg=14; this is a covering map globally, not a torus bijection.",
+          "id": "haar-jacobian",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 4,
+        "points": 4,
+        "lines": 4,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "auxiliary s",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "auxiliary s",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "auxiliary s",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "auxiliary v",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "auxiliary v",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "auxiliary v",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "label index",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "label index",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "label index",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-pulse-ode",
+      "kind": "ns.pulse-ode",
+      "status": "PARTIAL",
+      "inputHash": "a0f1b3561c91d41e15dcce3693089405c709f1aa47465e082e96700e20f05fc0",
+      "resultHash": "1f6ca580eac0344a6d159051133f8bfea372488537ed6d7ee35ef77b64148f10",
+      "checks": [
+        {
+          "detail": "k*p is the frozen nonzero integer kp.",
+          "id": "integer-angular-frequency",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "epsilon-frequency-window",
+          "pass": true
+        },
+        {
+          "detail": "Explicit orthonormal tangent-frame reconstruction preserves nPhi dot t=0 up to binary64 rounding.",
+          "id": "normal-constraint",
+          "pass": true
+        },
+        {
+          "detail": "1/2 d||t||^2=-t dot Kt-d||t||^2, checked against the original Cartesian right-hand side.",
+          "id": "energy-identity",
+          "pass": true
+        },
+        {
+          "detail": "Independent Cartesian RHS equals E*yPrime+EPrime*y-d*E*y.",
+          "id": "tangent-reconstruction-equation",
+          "pass": true
+        },
+        {
+          "detail": "Both log amplitude and normalized direction are compared at common samples; this is not a certified integration-error bound.",
+          "id": "step-refinement",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 200,
+        "points": 257,
+        "lines": 1,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "pulse coordinate v",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "pulse coordinate v",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "pulse coordinate v",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "log amplitude",
+            "type": "CATEGORICAL",
+            "unit": "log norm",
+            "sourceField": "log amplitude",
+            "scale": "LINEAR",
+            "transform": "log coordinates supplied by computation",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "log amplitude",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "0",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "0",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "0",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": {
+        "initialNormalError": 4.1542319472184016e-17,
+        "maxEnergyIdentityResidual": 2.4868995751603507e-14,
+        "maxReconstructedRhsRelativeResidual": 2.645703468227691e-16,
+        "maxRelativeOrthogonality": 3.9490144527619076e-16,
+        "maxStepRefinementDirectionDifference": 1.0060724615823736e-7,
+        "maxStepRefinementLogDifference": 4.335821746082047e-7,
+        "maxUnitNormResidual": 1.3322676295501878e-15,
+        "refinement": {
+          "coarseStepsPerHalf": 64,
+          "comparedSamples": 129,
+          "fineStepsPerHalf": 128,
+          "interpretation": "Empirical step comparison only; no rigorous integration-error bound."
+        },
+        "rigorousSolutionErrorBound": null
+      }
+    },
+    {
+      "id": "ns-m2-covariance",
+      "kind": "ns.pulse-covariance",
+      "status": "PARTIAL",
+      "inputHash": "0774b5ed1ace0e6692a0e20e70f803ee416bc44fb68e03b4fd02d8eba2bd10f1",
+      "resultHash": "43de04a1ca87281603637763e8b5e61b066e263201ee686ad80db7ce0189fefc",
+      "checks": [
+        {
+          "detail": "",
+          "id": "transverse-polarizations",
+          "pass": true
+        },
+        {
+          "detail": "Cone failure is retained if either weight is nonpositive.",
+          "id": "positive-two-family-weights",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "covariance-matching",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "angular-half-factor",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "negative-missing-half",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 3,
+        "points": 3,
+        "lines": 2,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "stress r-theta",
+            "type": "CATEGORICAL",
+            "unit": "stress",
+            "sourceField": "stress r-theta",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "stress r-theta",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "stress r-z",
+            "type": "CATEGORICAL",
+            "unit": "stress",
+            "sourceField": "stress r-z",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "stress r-z",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "family index",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "family index",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "family index",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    },
+    {
+      "id": "ns-m2-tail",
+      "kind": "ns.pulse-tail",
+      "status": "PARTIAL",
+      "inputHash": "9ae66ba7b5f01a65bf82d1238ab7fd71539ea2bb61d31da3c10618f396c0cb64",
+      "resultHash": "929974bfedb4d72b36c451b303fad25292d467b16e1dc654fc980aec4620ed32",
+      "checks": [
+        {
+          "detail": "No positive tail is converted to an exact zero.",
+          "id": "retains-nonzero-log-tail",
+          "pass": true
+        },
+        {
+          "detail": "The log expression decreases beyond the displayed threshold; no all-order shortcut.",
+          "id": "fixed-order-tail-threshold",
+          "pass": true
+        }
+      ],
+      "scope": {
+        "finite": true,
+        "formalPass": false,
+        "fullSameProfileN4": false,
+        "fullSameProfileN5": false,
+        "globalNavierStokesConstruction": false
+      },
+      "visualization": {
+        "state": "READY",
+        "kind": "RELATION_3D",
+        "tableRows": 80,
+        "points": 80,
+        "lines": 1,
+        "arrows": 0,
+        "axisMetadata": [
+          {
+            "label": "dyadic ell",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "dyadic ell",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "dyadic ell",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "log(tail / q^N)",
+            "type": "CATEGORICAL",
+            "unit": "log ratio",
+            "sourceField": "log(tail / q^N)",
+            "scale": "LINEAR",
+            "transform": "log coordinates supplied by computation",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "log(tail / q^N)",
+            "coordinateRole": "CATEGORICAL"
+          },
+          {
+            "label": "0",
+            "type": "CATEGORICAL",
+            "unit": "1",
+            "sourceField": "0",
+            "scale": "LINEAR",
+            "transform": "identity",
+            "dataDimension": 1,
+            "physicalDimension": 0,
+            "kind": "CATEGORICAL",
+            "name": "0",
+            "coordinateRole": "CATEGORICAL"
+          }
+        ]
+      },
+      "diagnostics": null
+    }
+  ],
+  "convergence": [
+    {
+      "stepsPerHalf": 32,
+      "initialNormalError": 4.1542319472184016e-17,
+      "maxEnergyIdentityResidual": 1.7763568394002505e-14,
+      "maxReconstructedRhsRelativeResidual": 1.8989434839467478e-16,
+      "maxRelativeOrthogonality": 2.1679033724185467e-16,
+      "maxStepRefinementDirectionDifference": 0.00002516267657724906,
+      "maxStepRefinementLogDifference": 0.00010371115281770926,
+      "maxUnitNormResidual": 8.881784197001252e-16,
+      "refinement": {
+        "coarseStepsPerHalf": 16,
+        "comparedSamples": 33,
+        "fineStepsPerHalf": 32,
+        "interpretation": "Empirical step comparison only; no rigorous integration-error bound."
+      },
+      "rigorousSolutionErrorBound": null
+    },
+    {
+      "stepsPerHalf": 64,
+      "initialNormalError": 4.1542319472184016e-17,
+      "maxEnergyIdentityResidual": 2.4868995751603507e-14,
+      "maxReconstructedRhsRelativeResidual": 2.641229229352144e-16,
+      "maxRelativeOrthogonality": 2.5624790810984017e-16,
+      "maxStepRefinementDirectionDifference": 0.0000016165067312911448,
+      "maxStepRefinementLogDifference": 0.000006806804735859373,
+      "maxUnitNormResidual": 8.881784197001252e-16,
+      "refinement": {
+        "coarseStepsPerHalf": 32,
+        "comparedSamples": 65,
+        "fineStepsPerHalf": 64,
+        "interpretation": "Empirical step comparison only; no rigorous integration-error bound."
+      },
+      "rigorousSolutionErrorBound": null
+    },
+    {
+      "stepsPerHalf": 128,
+      "initialNormalError": 4.1542319472184016e-17,
+      "maxEnergyIdentityResidual": 2.4868995751603507e-14,
+      "maxReconstructedRhsRelativeResidual": 2.645703468227691e-16,
+      "maxRelativeOrthogonality": 3.9490144527619076e-16,
+      "maxStepRefinementDirectionDifference": 1.0060724615823736e-7,
+      "maxStepRefinementLogDifference": 4.335821746082047e-7,
+      "maxUnitNormResidual": 1.3322676295501878e-15,
+      "refinement": {
+        "coarseStepsPerHalf": 64,
+        "comparedSamples": 129,
+        "fineStepsPerHalf": 128,
+        "interpretation": "Empirical step comparison only; no rigorous integration-error bound."
+      },
+      "rigorousSolutionErrorBound": null
+    },
+    {
+      "stepsPerHalf": 256,
+      "initialNormalError": 4.1542319472184016e-17,
+      "maxEnergyIdentityResidual": 1.4210854715202004e-14,
+      "maxReconstructedRhsRelativeResidual": 2.528921615926058e-16,
+      "maxRelativeOrthogonality": 4.591921284513693e-16,
+      "maxStepRefinementDirectionDifference": 6.251925350737042e-9,
+      "maxStepRefinementLogDifference": 2.733098014573443e-8,
+      "maxUnitNormResidual": 1.1102230246251565e-15,
+      "refinement": {
+        "coarseStepsPerHalf": 128,
+        "comparedSamples": 257,
+        "fineStepsPerHalf": 256,
+        "interpretation": "Empirical step comparison only; no rigorous integration-error bound."
+      },
+      "rigorousSolutionErrorBound": null
+    }
+  ],
+  "negativeControls": {
+    "outsideCone": {
+      "status": "PARTIAL",
+      "weights": [
+        -14,
+        -14
+      ],
+      "checks": [
+        {
+          "detail": "",
+          "id": "transverse-polarizations",
+          "pass": true
+        },
+        {
+          "detail": "Cone failure is retained if either weight is nonpositive.",
+          "id": "positive-two-family-weights",
+          "pass": false
+        },
+        {
+          "detail": "",
+          "id": "covariance-matching",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "angular-half-factor",
+          "pass": true
+        },
+        {
+          "detail": "",
+          "id": "negative-missing-half",
+          "pass": true
+        }
+      ]
+    }
+  },
+  "checklist": [
+    {
+      "id": "N4-01",
+      "title": "차수와 기호 충돌 분리",
+      "criteria": "λn=2nh, En,Un,Vn,Πn와 scalar φn을 구분한다. η의 Fourier 차수·radial analytic 차수·배경 차수를 서로 다른 인덱스로 둔\n다. 합격: (5.1)의 q 지수와 E_n=√(2X) φn/C를 자동 단위 검사한다. Π0의 axis trace와 전체 pressure profile을 혼동하면\n실패다.",
+      "sourcePage": 58,
+      "status": "PARTIAL",
+      "implementedScope": "Distinct background/radial/eta indices, source exponents and zero positive-order axis-data declarations are generated. Evaluated same-profile units and pressure reconstruction are not yet certified.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N4-02",
+      "title": "비선형 convolution 생성",
+      "criteria": "(5.3)-(5.6)의 모든 i+j=n 곱을 생성한다. i=0,n 및 n,0은 현재 미지수에 선형이고 나머지는 확정된 이전 차수다. 합격: n=1,2\n의 직접 PDE 대입 결과와 coefficient extractor가 일치한다. axial viscosity의 n −1 shift와 압력 Ωn−1/(2X)를 반드시 포함\n한다.",
+      "sourcePage": 58,
+      "status": "PARTIAL",
+      "implementedScope": "All ordered i+j=n source terms and the n-1 viscosity/pressure shift are generated. Independent direct-PDE substitution of solved same-profile coefficients remains open.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N4-03",
+      "title": "차수별 inner Picard 풀이",
+      "criteria": "(5.7)의 6성분 선형계와 (5.8)의 convergent Picard series를 사용하고 영 axis datum을 유지한다. 합격: 선택 analytic\nstrip·Cn·Cauchy radius loss를 기록하고 Picard tail를 상계한다. 반경 interval은 차수에 따라 임의 축소하지 않으며 lemma\n의 공통 interval 조건을 검사한다.",
+      "sourcePage": 58,
+      "status": "OPEN",
+      "implementedScope": "No same-profile six-component Picard solver with common analytic domain and certified tails is installed.",
+      "testStatus": "NOT_IMPLEMENTED",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N4-04",
+      "title": "차수별 radial cutoff와 모멘트 복구",
+      "criteria": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
+      "sourcePage": 58,
+      "status": "OPEN",
+      "implementedScope": "Positive-order coefficient extension and five exact total-moment corrections are not installed. The next-order reuse guard remains closed.",
+      "testStatus": "NOT_IMPLEMENTED",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N4-05",
+      "title": "유한 배경 잔차 검증",
+      "criteria": "Fslow=R+div T를 직접 계산하고 (5.25)의 q^[2h(N+1) −Km] bound와 비교한다. 합격: N 증가에 따른 실제 잔차 감소를\n정밀도·격자와 독립 추적한다. CN,m와 Km이 미계산이면 검증된 tail bound로 표시하지 않는다.",
+      "sourcePage": 58,
+      "status": "OPEN",
+      "implementedScope": "The actual same-profile finite-background R+div(T), support-localized norms and order-refinement residual have not been assembled.",
+      "testStatus": "NOT_IMPLEMENTED",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N4-06",
+      "title": "Shrinking cutoff 스케줄",
+      "criteria": "Lemma5.4에 따라 aj+1≥2aj와 (5.37)의 유한 조건을 차례로 만족시키는 cutoff를 선택한다. 합격: 0≤m≤j에서 Ĉj,m(1+|\nlogq|)^P q^(gj/2)≤2^−j를 전체 q≤1/aj에 대해 상계한다. constants 없는 경험적 aj는 미인증으로 표시한다.",
+      "sourcePage": 58,
+      "status": "PARTIAL",
+      "implementedScope": "A shrinking cutoff schedule satisfies outward interval inequalities for every q in the stated interval for supplied derivative constants. Original same-profile derivative constants remain uninstantiated.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N4-07",
+      "title": "Potential에 cutoff 후 curl",
+      "criteria": "χ(cnq)Sn 또는 potential을 먼저 합친다. (5.45)의 χ′ radial correction을 포함해 velocity를 복원한다. 합격: div curl=0 및\ndirect axisymmetric swirl의 div=0 항등식이 유지된다. χun만 사용하는 구현은 negative control에서 실패해야 한다.",
+      "sourcePage": 58,
+      "status": "PARTIAL",
+      "implementedScope": "An explicit compact C3 potential includes grad(chi) cross A in curl(chi A), with independent finite-difference refinement and a missing-term negative control. The original C-infinity background potential remains unconnected.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N4-08",
+      "title": "배경 합성과 tail 계약",
+      "criteria": "실 제 locally finite sum 과 유 한 formal truncation 을 구 별 하 고 (5.35), (5.39), (5.42), (5.43) 를 기 록 한 다. 합 격: q>0\ncompact domain의 active cutoff index를 정확히 계산하고 tail bound의 유효 영역 q<(2aJ)^ −1을 함께 export한다.\nuncut series 수렴은 주장하지 않는다.",
+      "sourcePage": 58,
+      "status": "PARTIAL",
+      "implementedScope": "Finite active-order queries and explicit tail-domain conditions are exposed. An all-order same-profile Borel-sum differentiability/tail certificate is not installed.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N5-01",
+      "title": "Dyadic chart 생성",
+      "criteria": "Q=2^−ℓ, ε=Q^h, S*=ℓ², (R,Z,T)=(r/√Q,z/Q^D, τ/Q)를 고정하고 band마다 discrete labels를 생성한다. 합격: 동일 샘\n플이 겹치는 chart에서 같은 physical quantity를 준다. 미분 중 ceil/round 주파수와 labels를 다시 선택하지 않는다.",
+      "sourcePage": 60,
+      "status": "PARTIAL",
+      "implementedScope": "Dyadic physical/scaled coordinates and adjacent-band overlap are computed. tau=0 and floating-point underflow are rejected. Original same-profile band/slow-data selection remains unconnected.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N5-02",
+      "title": "Auxiliary torus와 chain rule",
+      "criteria": "Jg=[[3,1],[1,5]], Y=vr r^dr+vt t mod Z² 및 (6.6)의 evaluated derivatives를 사용한다. 합격: Dr,Dz,t*의 chain-rule 항\n을 모두 포함한다. torus 평균 후 물리 phase 평가의 순서를 반대로 하여 pointwise 값을 평균으로 대체하지 않는다.",
+      "sourcePage": 60,
+      "status": "PARTIAL",
+      "implementedScope": "Auxiliary torus matrix, determinant 14, Haar factor and the required chain-rule formula are represented. Original Y_g slow derivatives and the complete evaluated chain rule have not been instantiated.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N5-03",
+      "title": "겹치는 pulse의 지지 분리",
+      "criteria": "Lemma6.1의 conflict graph에 따라 overlapping slow supports에 서로소 auxiliary rectangles를 할당한다. 합격: 모든\nactive label pair의 support intersection을 검사한다. 서로 다른 labels의 곱은 실제로 0이어야 하며 same-label harmonics\n는 유지한다.",
+      "sourcePage": 60,
+      "status": "PARTIAL",
+      "implementedScope": "A finite slow-overlap conflict graph allocates exact-rational separated auxiliary supports and checks every active pair. Same-label harmonics are retained. The full original collection of labels has not been supplied.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N5-04",
+      "title": "위상·편극·주파수",
+      "criteria": "k=ceil(ε^−1/2), kp는 0이 아닌 정수, (7.3)-(7.8)의 Φ,nΦ,K,AΦ,B를 생성한다. 합격: nΦ·tm=0과 nonzero denominators\n를 검사한다. 1≤ εk²≤4 및 frame determinant lower bound를 인증된 영역에서 만족한다.",
+      "sourcePage": 60,
+      "status": "PARTIAL",
+      "implementedScope": "The frozen local shear jet, integer angular frequency and tangent initial polarization are executable. Uniform same-profile phase/frame derivative bounds remain open.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N5-05",
+      "title": "성장·감쇠 ODE 풀이",
+      "criteria": "(7.13),(7.17)의 projected ODE를 풀고 P(v)=exp∫( λ−dref)를 log envelope로 저장한다. 합격: (7.22)의 amplitude\nenergy balance, n Φ·tm 제약, midpoint normalization과 양 끝 Gaussian bound를 검사한다. underflow를 pulse가 정\n확히 0인 것으로 처리하지 않는다.",
+      "sourcePage": 60,
+      "status": "PARTIAL",
+      "implementedScope": "The projected pulse ODE is integrated in a parallel tangent frame with analytic scalar-damping separation and empirical step refinement. Rigorous ODE solution error, slow derivatives and Gaussian constants remain open.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N5-06",
+      "title": "두 family의 positive covariance",
+      "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
+      "sourcePage": 60,
+      "status": "PARTIAL",
+      "implementedScope": "Two actual finite polarization covariance columns, positive weights, cosine factor 1/2 and the Haar Jacobian match a supplied admissible stress. Original nonconstant profile matching is not certified.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N5-07",
+      "title": "정확한 curl과 remainder",
+      "criteria": "Cm=i(nΦ×tm)/(km|n Φ|²), physical potential scale Q^(1/2 −A)를 사용한다. cutoff 후 curl의 rm도 유지한다. 합격:\ndiv curl 항등식, physical Cartesian divergence numerical convergence, conjugate symmetry를 확인한다. rm 누락 시\ncovariance/residual test가 실패한다.",
+      "sourcePage": 60,
+      "status": "PARTIAL",
+      "implementedScope": "Compact-potential curl and finite covariance components are checked. Original oscillatory pulse cutoff/curl remainder terms have not been assembled or bounded.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    },
+    {
+      "id": "N5-08",
+      "title": "Cutoff tail의 flatness 추적",
+      "criteria": "(7.40)의 (1 −ψ)fm+ψ′tm를 버리지 않고 별도 잔차로 기록한다. S*^C exp( −cS*)와 q의 관계를 상계한다. 합격: 각 고정\nm,N에 대해 −cℓ²+(M+N)ℓlog2+2Clogℓ를 써서 bound를 평가한다. machine-zero만으로 모든 차수 flatness를 인증하지\n않는다.",
+      "sourcePage": 60,
+      "status": "PARTIAL",
+      "implementedScope": "Outward log-tail values and an all-later-label scalar monotonicity threshold are computed for fixed declared derivative order and constants. Actual original ODE constants and the all-order construction remain open.",
+      "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+      "formalComplete": false,
+      "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+      "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+    }
+  ],
+  "criterionCounts": {
+    "PARTIAL": 13,
+    "OPEN": 3,
+    "PASS": 0
+  },
+  "acceptance": "BOUNDED_COMPONENT_IMPLEMENTATION_ONLY",
+  "fullN4": false,
+  "fullN5": false,
+  "formalComplete": false,
+  "globalNavierStokesConstruction": false,
+  "artifactHash": "d490199ceb7f43a3a18cef5269bfcc654a9e52b6a479874f207bbb2efafbe903"
+}

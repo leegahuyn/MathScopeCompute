@@ -5,6 +5,8 @@ import {createField,evaluateJet,curvatureFromJet} from '../../mathscope-m1/gauge
 import {linkTransport} from '../../mathscope-m1/gauge/holonomy.mjs';
 import {sha256} from '../../mathscope-m0/contracts.mjs';
 import {REVISION,check,rngFromSeed,latticeEstimate,assertBudget,yieldToRuntime} from './contracts.mjs';
+import {auditedTransport,storedMatrixDistanceUpper} from './transport-certificates.mjs';
+import {nextUp} from './enclosures.mjs';
 
 export function haarSU2(rng){
   const q=Array.from({length:4},()=>rng.normal()),norm=Math.hypot(...q);check(norm>0&&Number.isFinite(norm),'FAILED','Haar quaternion generation left the finite domain.');
@@ -59,6 +61,7 @@ export async function createConfiguration(input,context={}){
   assertBudget(latticeEstimate(input.lattice,group),{maxBytes:context.budget?.maxBytes});
   let frames=null;if(initial.kind==='PURE_GAUGE')frames=Array.from({length:geometry.V},()=>randomExponential(group,rng,1.2));
   const numericalError={method:field?'COMPOSITE_MIDPOINT_EXPONENTIAL_ORDERED_PRODUCT':'NO_CONTINUUM_DISCRETIZATION',checkedLinkCount:0,midpointRefinementDifference:0,trapezoidalDifference:0,exponentialSemigroupResidual:0,groupMembershipResidual:0,certifiedErrorBound:false,boundary:field?'The source is restricted to the explicit domain; no global window-tail error bound is asserted.':'The finite lattice boundary is part of the model, not a continuum approximation error.'};
+  if(field)numericalError.certificate={status:'SOURCE_SPECIFIC_FINITE_PATH_ERROR_ENCLOSURE',certifiedLinkCount:0,maximumLinkErrorUpper:0,pathIntegrationUpper:0,sourceEvaluationUpper:0,exponentialTruncationUpper:0,exponentialRoundoffUpper:0,productRoundoffUpper:0,legacyImplementationDifferenceUpper:0,boundaryRestrictionErrorUpper:0,groupExactDataHash:field.group.data.dataSha256,field:field.spec,method:'An independently audited fixed-28-term exponential midpoint product is enclosed using exact source coefficients and derivative majorants. The distance from the actual M1 stored link to this audited product is added outwardly; no protected M1 code is rewritten.',globalWindowIntegral:'Not the target of these finite link certificates; the dedicated refinement job reports the separate BPST extension tail when applicable.'};
   for(let k=0;k<geometry.active.length;k++){
     context.checkCancelled?.();const edge=geometry.active[k],{site,end,mu,id}=edge;let u;
     if(initial.kind==='IDENTITY')u=M.identity(group.matrixDimension);
@@ -70,6 +73,8 @@ export async function createConfiguration(input,context={}){
     }else if(initial.kind==='EXPLICIT_LINKS')u=decodeMatrix(initial.links[id],group.matrixDimension);
     else if(field){
       const x=geometry.physical(site),y=x.slice();y[mu]+=geometry.spacings[mu];u=linkTransport(field,x,y,initial.transportSteps);
+      const audited=auditedTransport(field,x,y,initial.transportSteps),c=audited.certificate,difference=storedMatrixDistanceUpper(u,audited.matrix),cert=numericalError.certificate;
+      cert.certifiedLinkCount++;cert.maximumLinkErrorUpper=Math.max(cert.maximumLinkErrorUpper,nextUp(c.errorUpper+difference));cert.legacyImplementationDifferenceUpper=Math.max(cert.legacyImplementationDifferenceUpper,difference);for(const [target,source] of [['pathIntegrationUpper','discretizationUpper'],['sourceEvaluationUpper','sourceEvaluation'],['exponentialTruncationUpper','exponentialTruncation'],['exponentialRoundoffUpper','exponentialRoundoff'],['productRoundoffUpper','productRoundoff']])cert[target]=Math.max(cert[target],c[source]);numericalError.certifiedErrorBound=true;numericalError.boundary='Every actual finite link path is checked inside the source restriction (or its explicit periodic extension); boundary restriction error for that local target is zero. This is not a global integration claim.';
       if(k<24){
         const fine=linkTransport(field,x,y,initial.transportSteps*2),trap=trapezoidalTransport(field,x,y,initial.transportSteps),A=evaluateJet(field,x,{order:0}).A[mu],h=M.scale(A,geometry.spacings[mu]/initial.transportSteps),e=M.exponential(h),half=M.exponential(M.scale(h,.5));
         numericalError.checkedLinkCount++;numericalError.midpointRefinementDifference=Math.max(numericalError.midpointRefinementDifference,M.distance(u,fine));numericalError.trapezoidalDifference=Math.max(numericalError.trapezoidalDifference,M.distance(u,trap));numericalError.exponentialSemigroupResidual=Math.max(numericalError.exponentialSemigroupResidual,M.distance(e,M.multiply(half,half)));

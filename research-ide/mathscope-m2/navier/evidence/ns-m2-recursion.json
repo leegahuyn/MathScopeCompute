@@ -9,7 +9,6 @@
   "inputHash": "2d2d1ac09bd7b265f3bf1e2139250efbb8b19e91582d94bdda34ea3428042c5f",
   "result": {
     "blockers": [
-      "N4-02 direct original-PDE substitution is not yet linked to evaluated same-profile coefficients.",
       "N4-03/04 require a common-interval Picard solve and complete five-moment repairs before the next order."
     ],
     "checks": [
@@ -19,8 +18,13 @@
         "pass": true
       },
       {
-        "detail": "1-2D=2A-1=2h for A=1/2+h,D=1/2-h",
+        "detail": "Exact powers in the indeterminate h; the accepted source h is never replaced.",
         "id": "physical-exponent-shift",
+        "pass": true
+      },
+      {
+        "detail": "Independent cylindrical physical differentiation equals the source extractor, in exact BigInt rational differential polynomials.",
+        "id": "direct-original-pde-coefficients",
         "pass": true
       },
       {
@@ -36,7 +40,7 @@
     ],
     "evidenceGrade": "SOURCE_EXPRESSION_MANIFEST",
     "kind": "ns.background-recursion",
-    "moduleVersion": "m2-ns-0.1.1",
+    "moduleVersion": "m2-ns-0.2.0",
     "object": {
       "kind": "SOURCE_COEFFICIENT_RECURSION",
       "sourceProfile": "same-profile-2026-10-10.3"
@@ -50,12 +54,201 @@
       "rigorousOdeSolutionErrorBound": null
     },
     "resourceEstimate": {
-      "algorithmicOperationsEstimate": 400,
+      "algorithmicOperationsEstimate": 800000,
       "outputItemsEstimate": 3,
       "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
     },
-    "resultHash": "adada045e3e5b036502b3c8c4f1e48706bc082d14dd0227135ab7039991271e1",
+    "resultHash": "2226ffd1f610782c2185c26ba7871b49d82c5014927b70ec8b9d6cdcec084793",
     "results": {
+      "dimensionAudit": {
+        "allH": "Identities in the indeterminate h, not a numerical h fixture",
+        "checks": [
+          {
+            "id": "axial-viscosity-order-shift",
+            "identity": "1-2D=2A-1=2h",
+            "left": [
+              0,
+              2
+            ],
+            "right": [
+              0,
+              2
+            ]
+          },
+          {
+            "id": "angular-physical-power",
+            "identity": "q^(-A+lambda_n)*sqrt(2X)*phi_n/C = r*q^(-A-1/2+lambda_n)*phi_n/C",
+            "left": [
+              -1,
+              3
+            ],
+            "right": [
+              -1,
+              3
+            ]
+          },
+          {
+            "id": "transport-power",
+            "identity": "A+D=1",
+            "left": [
+              1,
+              0
+            ],
+            "right": [
+              1,
+              0
+            ]
+          },
+          {
+            "id": "radial-pressure-shift",
+            "identity": "-1+lambda_(n-1) = -2A+lambda_n",
+            "left": [
+              -1,
+              2
+            ],
+            "right": [
+              -1,
+              2
+            ]
+          }
+        ],
+        "orderIndices": {
+          "background": "n",
+          "etaDerivative": "m",
+          "radial": "k"
+        },
+        "parameterBinding": "PINNED_N3_EXACT_EXPRESSIONS",
+        "pass": true,
+        "physicalAzimuthal": "E_n=sqrt(2X)*phi_n/C",
+        "pressureKind": "FULL_LEADING_PRESSURE",
+        "scalarAzimuthal": "phi_n"
+      },
+      "directPdeAudit": {
+        "arithmetic": "EXACT_BIGINT_RATIONAL_DIFFERENTIAL_POLYNOMIALS",
+        "coefficientsSolved": false,
+        "maxOrder": 2,
+        "negativeControl": null,
+        "newLeanKernelExecution": false,
+        "orders": [
+          {
+            "axisData": {
+              "Pi": 0,
+              "U": 0,
+              "phi": 0
+            },
+            "equations": {
+              "angular": {
+                "difference": [],
+                "directTerms": 47,
+                "equal": true,
+                "sourceTerms": 47
+              },
+              "axial": {
+                "difference": [],
+                "directTerms": 46,
+                "equal": true,
+                "sourceTerms": 46
+              },
+              "divergence": {
+                "difference": [],
+                "directTerms": 6,
+                "equal": true,
+                "sourceTerms": 6
+              },
+              "radial": {
+                "difference": [],
+                "directTerms": 11,
+                "equal": true,
+                "sourceTerms": 11
+              }
+            },
+            "n": 1,
+            "orderedConvolutionPairs": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "pass": true,
+            "pressureRole": "Pi_0(X,eta) is the complete leading pressure; Pi_0(0,eta) is only its trace"
+          },
+          {
+            "axisData": {
+              "Pi": 0,
+              "U": 0,
+              "phi": 0
+            },
+            "equations": {
+              "angular": {
+                "difference": [],
+                "directTerms": 55,
+                "equal": true,
+                "sourceTerms": 55
+              },
+              "axial": {
+                "difference": [],
+                "directTerms": 55,
+                "equal": true,
+                "sourceTerms": 55
+              },
+              "divergence": {
+                "difference": [],
+                "directTerms": 6,
+                "equal": true,
+                "sourceTerms": 6
+              },
+              "radial": {
+                "difference": [],
+                "directTerms": 36,
+                "equal": true,
+                "sourceTerms": 36
+              }
+            },
+            "n": 2,
+            "orderedConvolutionPairs": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                0
+              ]
+            ],
+            "pass": true,
+            "pressureRole": "Pi_0(X,eta) is the complete leading pressure; Pi_0(0,eta) is only its trace"
+          }
+        ],
+        "pass": true,
+        "profileScope": "UNIVERSAL_IDENTITY_FOR_SMOOTH_PROFILE_JETS; applies to the pinned N3 profile without replacing its h or coefficients",
+        "relations": {
+          "A": "1/2+h",
+          "D": "1/2-h",
+          "L": "1-2*h*eta^2",
+          "d": "1-eta^2",
+          "lambda_n": "2*n*h",
+          "physicalAxialDerivative": "q_z=2*eta*q^(1-D)/L; eta_z=d*q^(-D)/L; X_z=-2*eta*X*q^(-D)/L",
+          "physicalTimeDerivative": "q_t=-1/L; eta_t=D*eta/(q*L); X_t=X/(q*L)",
+          "rSquared": "2*q*X"
+        },
+        "schema": "MathScope.SourceCoefficientIdentity/1",
+        "sourceEquations": [
+          "5.1",
+          "5.2",
+          "5.3",
+          "5.4",
+          "5.5",
+          "5.6"
+        ]
+      },
       "nextOrderGuard": {
         "required": [
           "same N3 evaluator",
@@ -312,7 +505,1188 @@
         "5.4",
         "5.5",
         "5.6"
-      ]
+      ],
+      "sourceProfileBinding": {
+        "attachedAnalyticConclusions": {
+          "actualLoopDerivativeBoundAttached": true,
+          "actualSAndPreloopMarginsAttached": true,
+          "actualStressFlatLower": "min(C^-11,R^-8)*zeta",
+          "continuousB8InclusionAllEta": true,
+          "continuousC12DebtAndI1Restoration": true,
+          "heatCompensationSameDatum": true,
+          "oneFiniteNSelected": true,
+          "preservedReservedPatches": [
+            "Ipos",
+            "Imean"
+          ],
+          "sameInfiniteAxisAndActualContinuationDebt": true,
+          "samePressureDatumAndAllFiveMoments": true,
+          "wholeClosedAnnulusDirectionalMargin": "R^-10"
+        },
+        "finiteEvaluations": {
+          "core": {
+            "etaDomain": "eta=0 with specified parameter derivatives",
+            "intervalValues": 75,
+            "points": 5
+          },
+          "mixedPhi": {
+            "coefficients": 125,
+            "comparisonOnlyComplexXiDisk": "|xi|<=1/16",
+            "etaChart": "|eta|<=rho/4",
+            "mixedValues": 75
+          }
+        },
+        "globalNumericalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "inputs": {
+          "activationRectangle": {
+            "bytes": 6843,
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md",
+            "sha256": "2035fa202134d7ca0affcad7ad7aafbb05e3508fde3a5f34a3f2cea6fd003750"
+          },
+          "assembly": {
+            "bytes": 77149,
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+            "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+          },
+          "assessment": {
+            "bytes": 45550,
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/ORIGINAL_NINE_GATES_ASSESSMENT_2026_10_10_3.json",
+            "sha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c"
+          },
+          "formalConnectionReview": {
+            "bytes": 14174,
+            "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/FINAL_FORMAL_CONNECTION_REVIEW_2026_10_10_EN.md",
+            "sha256": "c9dca8753f12531a1103a8416ca7bfbe8af4a56accd1168b2cf5844d7e8d57b4"
+          },
+          "sourceEnvelope": {
+            "bytes": 14446,
+            "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/global-source-envelope-certificate.json",
+            "sha256": "bf9ca2766ad0ec90aa055becccc07b7ad882c71928e51c71529543c9d94efb4f"
+          },
+          "specification": {
+            "bytes": 10331,
+            "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/ONE_PROFILE_SPECIFICATION.md",
+            "sha256": "38d8a88220094cf2e6b2571f214f38361783669b646c0c08eb206eb2b9100bdd"
+          }
+        },
+        "largeIntegerEncoding": "Original integer tokens are preserved as decimal strings when outside the safe JSON integer range.",
+        "m2HigherCoefficientsInArchive": false,
+        "n3AcceptedGates": [
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-01",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-02",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "ACTUAL_ORIGINAL_KERNEL_INPUT_AND_FIXED_POINT_WITH_EXACT_RATIONAL_FINITE_ARRAY_CONSUMER_AND_INDEPENDENT_REVIEW",
+            "id": "N3-03",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-04",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-05",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-06",
+            "status": "PASS"
+          },
+          {
+            "evidenceLevel": "WRITTEN_ANALYTIC_PROOF_WITH_EXECUTED_CONTINUOUS_INTERVAL_AND_INDEPENDENT_EXACT_CHECKS",
+            "id": "N3-07",
+            "status": "PASS"
+          }
+        ],
+        "newLeanExecution": false,
+        "originalLeanCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "parametersExactExpressions": {
+          "BOuter": {
+            "product": [
+              {
+                "integer": 1000
+              },
+              {
+                "ref": "T"
+              }
+            ]
+          },
+          "BRefUpper": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              300
+            ]
+          },
+          "Bcmp0": {
+            "product": [
+              {
+                "integer": 1000000
+              },
+              {
+                "power": [
+                  {
+                    "sum": [
+                      {
+                        "integer": 1
+                      },
+                      {
+                        "power": [
+                          {
+                            "ref": "Q"
+                          },
+                          1000
+                        ]
+                      },
+                      {
+                        "ref": "BRefUpper"
+                      },
+                      {
+                        "ref": "VA"
+                      },
+                      {
+                        "ref": "L0"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              }
+            ]
+          },
+          "Bk": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              80
+            ]
+          },
+          "C12EnvelopeR": {
+            "exp": {
+              "power": [
+                {
+                  "ref": "sourceEnvelopeS"
+                },
+                256
+              ]
+            }
+          },
+          "CSelected": {
+            "exp": {
+              "ref": "logCSelected"
+            }
+          },
+          "Caxis": {
+            "exp": {
+              "ref": "logCaxis"
+            }
+          },
+          "DeltaEarly": {
+            "exp": {
+              "quotient": [
+                {
+                  "product": [
+                    {
+                      "integer": -1
+                    },
+                    {
+                      "power": [
+                        {
+                          "ref": "Q"
+                        },
+                        200
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "integer": 4
+                }
+              ]
+            }
+          },
+          "Gamma": {
+            "product": [
+              {
+                "ref": "Bcmp0"
+              },
+              {
+                "exp": {
+                  "ref": "Lmath"
+                }
+              }
+            ]
+          },
+          "I1Right": {
+            "product": [
+              {
+                "ref": "X0I1"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "I2Right": {
+            "product": [
+              {
+                "ref": "X0I2"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "ImeanRight": {
+            "product": [
+              {
+                "ref": "X0Imean"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "IposRight": {
+            "product": [
+              {
+                "ref": "X0Ipos"
+              },
+              {
+                "exp": {
+                  "integer": 5
+                }
+              }
+            ]
+          },
+          "K": {
+            "power": [
+              {
+                "ref": "Pstar"
+              },
+              2
+            ]
+          },
+          "Kcmp": {
+            "product": [
+              {
+                "integer": 1000
+              },
+              {
+                "power": [
+                  {
+                    "ref": "Gamma"
+                  },
+                  16
+                ]
+              }
+            ]
+          },
+          "L0": {
+            "log": {
+              "product": [
+                {
+                  "rational": "55/2"
+                },
+                {
+                  "ref": "Lambda"
+                }
+              ]
+            }
+          },
+          "Lambda": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              64
+            ]
+          },
+          "Lmath": {
+            "sum": [
+              {
+                "ref": "logCSelected"
+              },
+              {
+                "quotient": [
+                  {
+                    "product": [
+                      {
+                        "integer": 34
+                      },
+                      {
+                        "ref": "Lambda"
+                      }
+                    ]
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "sigmaStar"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Md": {
+            "integer": 1048576
+          },
+          "Pstar": {
+            "exp": {
+              "ref": "logP"
+            }
+          },
+          "Q": {
+            "quotient": [
+              {
+                "product": [
+                  {
+                    "integer": "1852673427797059126777135760139006525652319754650249024631321344126610074238976"
+                  },
+                  {
+                    "ref": "K"
+                  }
+                ]
+              },
+              {
+                "power": [
+                  {
+                    "ref": "sigmaStar"
+                  },
+                  2
+                ]
+              }
+            ]
+          },
+          "T": {
+            "sum": [
+              {
+                "exp": {
+                  "ref": "Md"
+                }
+              },
+              {
+                "integer": 10
+              }
+            ]
+          },
+          "Tf": {
+            "integer": 128
+          },
+          "Tsh": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              90
+            ]
+          },
+          "VA": {
+            "sum": [
+              {
+                "integer": 1
+              },
+              {
+                "ref": "BRefUpper"
+              },
+              {
+                "product": [
+                  {
+                    "integer": 1048576
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "BRefUpper"
+                      },
+                      2
+                    ]
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "Lambda"
+                      },
+                      4
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Vmax": {
+            "product": [
+              {
+                "ref": "VA"
+              },
+              {
+                "exp": {
+                  "product": [
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "ref": "Lmath"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0I1": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -25
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0I2": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -20
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0Imean": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -8
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "X0Ipos": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60
+                        },
+                        {
+                          "ref": "BOuter"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -14
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "XR": {
+            "product": [
+              {
+                "integer": 110
+              },
+              {
+                "power": [
+                  {
+                    "product": [
+                      {
+                        "ref": "CSelected"
+                      },
+                      {
+                        "ref": "Pstar"
+                      }
+                    ]
+                  },
+                  10
+                ]
+              }
+            ]
+          },
+          "Xa": {
+            "quotient": [
+              {
+                "integer": 4
+              },
+              {
+                "ref": "Lambda"
+              }
+            ]
+          },
+          "Xsep": {
+            "product": [
+              {
+                "integer": 110
+              },
+              {
+                "exp": {
+                  "ref": "Tsh"
+                }
+              }
+            ]
+          },
+          "barT": {
+            "power": [
+              {
+                "ref": "Q"
+              },
+              -200
+            ]
+          },
+          "co": {
+            "rational": "1/256"
+          },
+          "deltaStar": {
+            "quotient": [
+              {
+                "ref": "j0"
+              },
+              {
+                "integer": 10
+              }
+            ]
+          },
+          "directionalMarginKappa": {
+            "power": [
+              {
+                "ref": "C12EnvelopeR"
+              },
+              -10
+            ]
+          },
+          "epsilonMoment": {
+            "power": [
+              {
+                "ref": "h"
+              },
+              3
+            ]
+          },
+          "h": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -8002
+                },
+                {
+                  "ref": "T"
+                }
+              ]
+            }
+          },
+          "j0": {
+            "power": [
+              {
+                "ref": "h"
+              },
+              4
+            ]
+          },
+          "kappa0": {
+            "ref": "t1"
+          },
+          "lambda": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -1000
+                },
+                {
+                  "ref": "T"
+                }
+              ]
+            }
+          },
+          "logCSelected": {
+            "sum": [
+              {
+                "product": [
+                  {
+                    "integer": 10
+                  },
+                  {
+                    "log": {
+                      "sum": [
+                        {
+                          "integer": 1
+                        },
+                        {
+                          "ref": "BRefUpper"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "power": [
+                  {
+                    "ref": "Q"
+                  },
+                  200
+                ]
+              }
+            ]
+          },
+          "logCaxis": {
+            "sum": [
+              {
+                "quotient": [
+                  {
+                    "product": [
+                      {
+                        "integer": 64
+                      },
+                      {
+                        "ref": "Lambda"
+                      }
+                    ]
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "sigmaStar"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              },
+              {
+                "integer": 1
+              }
+            ]
+          },
+          "logP": {
+            "product": [
+              {
+                "integer": 2
+              },
+              {
+                "ref": "T"
+              }
+            ]
+          },
+          "loopD0": {
+            "quotient": [
+              {
+                "integer": 1
+              },
+              {
+                "product": [
+                  {
+                    "integer": 8
+                  },
+                  {
+                    "ref": "sourceEnvelopeS"
+                  }
+                ]
+              }
+            ]
+          },
+          "loopDelta": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -1
+                },
+                {
+                  "power": [
+                    {
+                      "ref": "sourceEnvelopeS"
+                    },
+                    16
+                  ]
+                }
+              ]
+            }
+          },
+          "loopILeft": {
+            "product": [
+              {
+                "quotient": [
+                  {
+                    "integer": 4
+                  },
+                  {
+                    "ref": "Lambda"
+                  }
+                ]
+              },
+              {
+                "exp": {
+                  "quotient": [
+                    {
+                      "ref": "t1"
+                    },
+                    {
+                      "integer": 8
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "loopIRight": {
+            "product": [
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 3
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "loopMuMax": {
+            "power": [
+              {
+                "ref": "sourceEnvelopeS"
+              },
+              12
+            ]
+          },
+          "muMoment": {
+            "power": [
+              {
+                "ref": "h"
+              },
+              2
+            ]
+          },
+          "omega1": {
+            "ref": "t1"
+          },
+          "omega2": {
+            "ref": "t1"
+          },
+          "outerComplexRadius": {
+            "quotient": [
+              {
+                "power": [
+                  {
+                    "ref": "sigmaStar"
+                  },
+                  2
+                ]
+              },
+              {
+                "integer": 2048
+              }
+            ]
+          },
+          "radialFrequencyN": {
+            "sum": [
+              {
+                "integer": 1
+              },
+              {
+                "ceil": {
+                  "power": [
+                    {
+                      "ref": "C12EnvelopeR"
+                    },
+                    50
+                  ]
+                }
+              }
+            ]
+          },
+          "rho": {
+            "quotient": [
+              {
+                "power": [
+                  {
+                    "ref": "sigmaStar"
+                  },
+                  2
+                ]
+              },
+              {
+                "integer": 65536
+              }
+            ]
+          },
+          "sigmaStar": {
+            "quotient": [
+              {
+                "ref": "j0"
+              },
+              {
+                "integer": 2000
+              }
+            ]
+          },
+          "sourceEnvelopeS": {
+            "power": [
+              {
+                "ref": "CSelected"
+              },
+              100000
+            ]
+          },
+          "sourceJLeft": {
+            "product": [
+              {
+                "quotient": [
+                  {
+                    "integer": 4
+                  },
+                  {
+                    "ref": "Lambda"
+                  }
+                ]
+              },
+              {
+                "exp": {
+                  "quotient": [
+                    {
+                      "ref": "t1"
+                    },
+                    {
+                      "integer": 16
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "sourceJRight": {
+            "product": [
+              {
+                "integer": 16
+              },
+              {
+                "ref": "XR"
+              },
+              {
+                "exp": {
+                  "sum": [
+                    {
+                      "ref": "T"
+                    },
+                    {
+                      "integer": 2
+                    },
+                    {
+                      "product": [
+                        {
+                          "integer": 60000
+                        },
+                        {
+                          "ref": "T"
+                        }
+                      ]
+                    },
+                    {
+                      "integer": -25
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "stressFlatLowerConstant": {
+            "min": [
+              {
+                "power": [
+                  {
+                    "ref": "CSelected"
+                  },
+                  -11
+                ]
+              },
+              {
+                "power": [
+                  {
+                    "ref": "C12EnvelopeR"
+                  },
+                  -8
+                ]
+              }
+            ]
+          },
+          "t1": {
+            "power": [
+              {
+                "ref": "CSelected"
+              },
+              -120
+            ]
+          },
+          "tauBase": {
+            "min": [
+              {
+                "quotient": [
+                  {
+                    "ref": "barT"
+                  },
+                  {
+                    "integer": 4
+                  }
+                ]
+              },
+              {
+                "rational": "1/1000"
+              },
+              {
+                "quotient": [
+                  {
+                    "integer": 1
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 100
+                      },
+                      {
+                        "ref": "Gamma"
+                      },
+                      {
+                        "ref": "Bcmp0"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "quotient": [
+                  {
+                    "ref": "j0"
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 100000000
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "BRefUpper"
+                          }
+                        ]
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "L0"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "quotient": [
+                  {
+                    "power": [
+                      {
+                        "ref": "Q"
+                      },
+                      -200
+                    ]
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 1000000
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "BRefUpper"
+                          }
+                        ]
+                      },
+                      {
+                        "sum": [
+                          {
+                            "integer": 1
+                          },
+                          {
+                            "ref": "L0"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "quotient": [
+                  {
+                    "integer": 1
+                  },
+                  {
+                    "product": [
+                      {
+                        "integer": 100000000
+                      },
+                      {
+                        "ref": "Bcmp0"
+                      },
+                      {
+                        "power": [
+                          {
+                            "sum": [
+                              {
+                                "integer": 1
+                              },
+                              {
+                                "ref": "Kcmp"
+                              }
+                            ]
+                          },
+                          2
+                        ]
+                      },
+                      {
+                        "power": [
+                          {
+                            "sum": [
+                              {
+                                "integer": 1
+                              },
+                              {
+                                "ref": "Vmax"
+                              }
+                            ]
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "profileEvidenceSHA256": "ff3b1590aa49499417910962736fe2deb8e6088acd7d77e281fd8aba6807c206",
+        "schema": "MathScope.PinnedN3SourceProfile/1",
+        "sourcePaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"
+      }
     },
     "scope": {
       "finite": true,
@@ -344,7 +1718,6 @@
           "label": "background order n",
           "name": "background order n",
           "scale": "LINEAR",
-          "sourceField": "background order n",
           "unit": "1"
         },
         {
@@ -352,7 +1725,6 @@
           "label": "left order i",
           "name": "left order i",
           "scale": "LINEAR",
-          "sourceField": "left order i",
           "unit": "1"
         },
         {
@@ -360,7 +1732,6 @@
           "label": "right order j",
           "name": "right order j",
           "scale": "LINEAR",
-          "sourceField": "right order j",
           "unit": "1"
         }
       ],
@@ -428,5 +1799,5 @@
     }
   },
   "status": "PARTIAL",
-  "resultHash": "db933c1bfc0ba3bed690bf75614464c8c9fd2f6de384d23cb7e5f487be9ddead"
+  "resultHash": "6545735c6864187c2f731120e1883f916144141fcc1e4ae7668f1da66d3a21a2"
 }

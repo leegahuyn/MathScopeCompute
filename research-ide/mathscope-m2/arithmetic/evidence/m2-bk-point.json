@@ -1,6 +1,6 @@
 {
   "schema": "MathScope.M2.ArithmeticResult/1",
-  "version": "0.1.0-m2",
+  "version": "0.2.0-m2",
   "kind": "arithmetic.breuilKisin",
   "status": "COMPLETED",
   "object": {
@@ -37,7 +37,7 @@
     "uDegree": 4,
     "residueCoefficientFrobenius": "identity on W(F_p)=Z_p",
     "arbitraryRamifiedGeometriesSupported": false,
-    "pointComparison": "THEOREM_REFERENCE"
+    "pointComparison": "COMPUTED_DERIVED_FREE_POINT_BASE_CHANGE"
   },
   "results": {
     "object": {
@@ -59,7 +59,7 @@
       "uDegree": 4,
       "residueCoefficientFrobenius": "identity on W(F_p)=Z_p",
       "arbitraryRamifiedGeometriesSupported": false,
-      "pointComparison": "THEOREM_REFERENCE"
+      "pointComparison": "COMPUTED_DERIVED_FREE_POINT_BASE_CHANGE"
     },
     "eisenstein": {
       "degree": 1,
@@ -105,6 +105,46 @@
       "finiteView": {
         "ring": "(Z/3^4)[u]/(u^5)",
         "rank": 1
+      }
+    },
+    "pointBaseChanges": {
+      "sourceComplex": "A[0], a K-flat one-term free complex",
+      "testPolynomial": [
+        "0",
+        "1"
+      ],
+      "crystalline": {
+        "coefficientImage": [
+          "0"
+        ],
+        "target": "Z_p[0]",
+        "map": "u -> 0"
+      },
+      "hodgeTate": {
+        "coefficientImage": [
+          "3"
+        ],
+        "target": "(A/(E))[0]",
+        "map": "u -> pi"
+      },
+      "deRham": {
+        "coefficientImage": [
+          "27"
+        ],
+        "target": "(A/(E))[0]",
+        "map": "u -> pi^p, via phi then quotient"
+      },
+      "derivedTensor": {
+        "higherTor": "0 because A[0] is free",
+        "generators": "1 maps to 1 in each target",
+        "differentials": [],
+        "completion": "derived p-completion of the free target"
+      },
+      "comparison": {
+        "source": "S01 Theorem 1.8(1),(4),(6) and the prismatic final object for X=Spf(A/I)",
+        "grade": "EXPLICIT_FREE_POINT_BASE_CHANGE_PLUS_EXTERNAL_GEOMETRIC_COMPARISON",
+        "localKernelCheck": false,
+        "formalComplete": false
       }
     },
     "baseChangeMaps": [
@@ -326,14 +366,14 @@
       "uDegree": 4,
       "residueCoefficientFrobenius": "identity on W(F_p)=Z_p",
       "arbitraryRamifiedGeometriesSupported": false,
-      "pointComparison": "THEOREM_REFERENCE"
+      "pointComparison": "COMPUTED_DERIVED_FREE_POINT_BASE_CHANGE"
     },
     "roundingError": "0 for exact integer, polynomial, finite-field and finite Witt operations; explicitly tagged complex roots are Float64 display only.",
     "precisionAxesIndependent": true
   },
   "evidence": {
     "calculation": "EXACT_FINITE_SCOPE",
-    "geometricComparison": "THEOREM_REFERENCE_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "geometricComparison": "EXPLICIT_MODEL_PLUS_APPLIED_EXTERNAL_THEOREM_OR_MODEL_DEVELOPMENT_AS_DECLARED",
     "lean": "NO_NEW_KERNEL_EXECUTION",
     "formalComplete": false,
     "universalConjectureSolved": false
@@ -361,6 +401,20 @@
         "id": "S01",
         "title": "Prisms and Prismatic Cohomology",
         "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S06",
+        "title": "Counting Points on Hyperelliptic Curves Using Monsky–Washnitzer Cohomology",
+        "url": "https://arxiv.org/abs/math/0105031",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "STACKS_PROJECTIVE",
+        "title": "Derived projective bundle formula",
+        "url": "https://stacks.math.columbia.edu/tag/0FUN",
         "grade": "THEOREM_REFERENCE",
         "localKernelCheck": false
       },
@@ -393,9 +447,9 @@
         "localKernelCheck": false
       }
     ],
-    "algorithmVersion": "0.1.0-m2",
+    "algorithmVersion": "0.2.0-m2",
     "inputHash": "b71834fe44c8d7387e1a3393666de43398e856cb5d1403e2670709b99310a382",
-    "sourceHash": "afc914ddca78447d490135b738e45344f8cd8b4ec06aaa9cc8f4396a56465722",
+    "sourceHash": "918350e6e9cbc58b381a3103419bfe64b602caba5034d8cb63b7464087b39696",
     "operations": 4
   },
   "visualization": {
@@ -488,14 +542,14 @@
       "delta.coefficients",
       "baseChangeMaps"
     ],
-    "sourceHash": "afc914ddca78447d490135b738e45344f8cd8b4ec06aaa9cc8f4396a56465722",
-    "sourceRevision": "afc914ddca78447d490135b738e45344f8cd8b4ec06aaa9cc8f4396a56465722",
+    "sourceHash": "918350e6e9cbc58b381a3103419bfe64b602caba5034d8cb63b7464087b39696",
+    "sourceRevision": "918350e6e9cbc58b381a3103419bfe64b602caba5034d8cb63b7464087b39696",
     "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
     "sampling": {
       "displayPoints": 3,
-      "originalSourceHash": "afc914ddca78447d490135b738e45344f8cd8b4ec06aaa9cc8f4396a56465722"
+      "originalSourceHash": "918350e6e9cbc58b381a3103419bfe64b602caba5034d8cb63b7464087b39696"
     },
     "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
   },
-  "resultHash": "c924a31031b405b32b5f41c4d84cfa3f9b3d87a16058967f147a4efefb94bd77"
+  "resultHash": "73d9ff9197eb95c5aead24f939cba2f90221f6dd1eeef19f7d5f4dbb30de457e"
 }
