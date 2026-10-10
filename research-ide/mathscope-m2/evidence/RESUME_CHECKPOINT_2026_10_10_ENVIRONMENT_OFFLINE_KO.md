@@ -170,3 +170,32 @@ m2_gauge의 additive actual-covariance-uniform.mjs와 tests/fixture는 offline �
 - blueprint_review는 pure V8 BigInt로 해당 bound의8개 대수 검사를 실행했지만, 파일·Node·Python 증거로 저장하지 못했다. 정식 테스트 집계에 추가하지 않는다.
 - m1_visualization은 pure V8 BigInt 유리수 다항식으로 source U*=4η+j의 Z 연산 관련8개 항등식을 대조했다. α=U1_X(0,η)=−(1/2)Z_-1 Z_-A U*, α(0)=Aj, α′(0)=12, α″(0)=2Aj(8h−3). 실제 N1 axial residual의 선형 X 계수는 (9/2−18h²)j>0, N1 radial Q1=(Ω1−2XF1²)/X의 axis값은0이다.
 - N0 radial axis coefficient Ω0/X=−2Π1_X=24−4AP(0)+P″(0)는 기존 actual A21 interval과 연결해 양의 하계를 확인해야 한다. 위 유도만으로 고정 X residual remainder나 N4-05의 PASS를 인정하지 않는다. Cauchy remainder·실제 norm·고정 좌표 및 N/격자/precision 분리 검증이 필요하다.
+
+## 실제 I1 다음 단계의 식 — 코드 구현 전 기록
+
+C12가 만드는 실제 함수 차이를 deltaU, deltaE라 하면 원래 incoming debt의 다섯 밀도는 다음이다. 적분 integrand 자체를 연결해야 하며 그 작은 상계를 RHS로 대체하지 않는다.
+
+- deltaM = integral deltaU.
+- deltaI = integral sqrt(2X)*deltaE.
+- deltaJ = integral sqrt(2X)*(E*deltaU+U*deltaE+deltaU*deltaE).
+- deltaS = integral (2U*deltaU+deltaU^2−E*deltaE−deltaE^2/2).
+- deltaCp = integral (2E*deltaE+deltaE^2)/(2X).
+
+원래 정규화 다섯 성분:
+(deltaM/(X0*K*lambda),
+ (deltaJ/(sqrt(2)*X0^(3/2)*K^2)−deltaM/(X0*K))/lambda^2,
+ deltaI/(X0^(3/2)*K*lambda),
+ deltaS/(X0*K^2*lambda),
+ deltaCp/(K^2*lambda)).
+
+I1의 실제 연속 행렬에는 U2×2 block determinant |det|≥1/200, E3×3 block |det|>3/64000000의 하계가 있고 그 실제 Cramer inverse의 infinity norm<2^30 경로를 검토했다. λ가 작은 실제 원본 범위를 유지한다. 이 constants를 unit-input finite probe만으로 실제 source norm으로 승격하지 않는다.
+
+실제 I1 root의 첫 번째 모멘트 방정식으로 deltaM=0을 얻은 이후에만 I1 뒤의 M이 기존 outer와 같다는 분기를 사용한다. deltaU의 support가 끝났다는 이유만으로 그 primitive deltaM이0이라고 가정하면 안 된다.
+
+원래 weighted Omega0의 regular integrals에는 축 경계
+V0_X(0,eta)=[2A*eta*(4eta+j0)−4(1−eta^2)]/L
+를 유지한다. eta=0에서 −4다.
+
+양의 n1 producer는 실제 inner Picard와 cutoff의 local 5integrals에 완성한 global Omega0 두 weighted integrals를 더한 total debt를 만들어 Ipos inverse에 입력해야 한다. V1/Pi1 forward reconstruction, axis regularity, five total moments0 및 원래 support를 검사하기 전에는 n+1 source gate를 열지 않는다. n1의 support는 [Xminus,Xb], n≥2는 [Xminus,Xplus]로 구별하며 Xplus는 실제 leading axial support Xv 이후에 있어야 한다.
+
+현재 구현한 정확 함수 program은 모든 실제 크기에서의 임의정밀도 interval interpreter와 같지 않다. 유한 root 반복값의 양의 tail, value inverse tail과 eta derivative tail의 차이, 자연급수의 거대한 required degree와 실제 materializer resource budget을 각각 보존한다. 이 노트는 blueprint_review의 원격 원문 및 독립 산술 검토를 보존하며 아직 로컬 code/test에 적용된 것으로 간주하지 않는다.
