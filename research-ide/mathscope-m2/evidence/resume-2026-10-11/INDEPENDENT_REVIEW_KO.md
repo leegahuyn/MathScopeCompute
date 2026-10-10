@@ -44,6 +44,14 @@
 
 집중 검사 [replay-import.test.mjs](../../core/tests/replay-import.test.mjs)는 **11/11 통과**했다. 정상 새 세션 재현, 잘못되거나 과도한 JSON, 해시·환경 위조, 다른 환경, 해시가 일관된 가짜 결과, 제출 전 취소, 비동기 중 상태 변경으로 작업 0개 유지, 제출 후 취소, callback 오류 정리, WebMCP 입력 경계, 근거 URL 경로 제한을 포함한다. import된 과거 기록을 다른 세션의 저장 권한으로 승격하지 않는다.
 
+### 추가 확인: 파일을 읽는 동안 이전 JSON을 재현하던 경로
+
+최종 소스 검토에서 별도의 경쟁 조건을 발견했다. textarea에 A가 남은 채 파일 B를 선택하면 ticket은 먼저 증가하지만 `file.text()`를 기다리는 동안 A를 재현할 수 있었다. 이 경우 A의 내용과 새 ticket이 함께 캡처되고, B를 textarea에 대입할 때 ticket이 다시 바뀌지 않아 A의 현재 상태 검사가 통과할 수 있었다.
+
+수정된 파일 `change` handler는 파일 존재를 확인한 직후, **크기 검사와 첫 `await` 전에** textarea를 비우고, 이전 report 패널을 숨기고, report 내용을 지우고, `파일을 읽는 중입니다.` 상태를 표시한다. 이 네 작업이 동기적으로 끝나므로 이후 UI 버튼은 이전 A를 읽을 수 없다. 크기 초과나 읽기 실패 때도 A가 남지 않으며, 읽기 중 붙여넣기·다른 파일 선택은 기존 ticket 검사로 보호된다. 해당 소스의 실행 순서를 확인해 **이 특정한 이전 JSON 재현 경로가 차단됨**을 검토했다.
+
+이 추가 확인은 소스 제어 흐름 검토이며 새 테스트 실행이나 파일 읽기를 강제로 지연한 실제 브라우저 재현 검사는 수행하지 않았다. 앞의 11/11 기록을 이 파일 선택 경쟁 조건의 추가 회귀 검사로 세지 않으며, 이 문단으로 새 배포나 전체 검사 완료를 주장하지 않는다.
+
 ## 4. 실제 pulse의 첫 slow 미분 검토
 
 [source adapter](../../navier/actual-pulse-sensitivity.mjs), [변분 kernel](../../navier/actual-pulse-sensitivity-kernel.mjs), [행렬 미분 상계](../../navier/actual-pulse-sensitivity-bounds.mjs)를 검토했다. 현재 구성에서 구체적인 수학적 결함을 찾지 못했다. 확인한 핵심은 다음과 같다.

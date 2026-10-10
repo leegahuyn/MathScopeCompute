@@ -1,6 +1,6 @@
 # MathScope M2 · 구현 범위, 사용법과 재현
 
-기존 MathScope v0.3.1에 M1 관측 개선과 M2 계산·비교 작업창을 추가한 디렉터리입니다. **원문 M2 기준 64개 중 64개 PASS, 0개 PARTIAL, 0개 OPEN**이며, 이전의 20 PASS / 39 PARTIAL / 5 OPEN에서 **44개 기준이 추가로 PASS**가 되었습니다. 기존 M0/M1 수학 소스와 M1 Worker, 원본 인수인계와 검증 기록은 보존합니다.
+MathScope v0.3.1의 M1 관측 개선과 M2 계산·비교 작업창 소스입니다. 현재 공개본은 **v73 / M2 0.3.7**이며, **원문 M2 기준 64 PASS / 0 PARTIAL / 0 OPEN**을 기존에 명시한 수용 범위에서 유지합니다. 등록된 실행 예제는 **76개**이고 기본 실행 상태는 **63 COMPLETED / 13 PARTIAL**입니다. 기준별 합격과 예제별 실행 상태는 다른 집계입니다. 기존 M0/M1 수학 소스와 M1 Worker, 원본 인수인계와 검증 기록을 보존합니다.
 
 v70에서는 마지막 N5-06의 실제 공분산·공통 source q*·양의 역원·전체 전역 합을 연결해, 요청한 여섯 항목을 모두 완료했습니다. 원문 체크리스트의 `fullM2Complete`는 **true**입니다. 각 항목의 명시된 acceptance 영역과 모든 차수의 전체 물리 residual·flat-error 패키지 또는 새로운 전역 정리는 구별하며 `formalPass:false`를 유지합니다.
 
@@ -9,9 +9,11 @@ v70에서는 마지막 N5-06의 실제 공분산·공통 source q*·양의 역�
 - [원문 64개 기준](evidence/original-m2-criteria.json) · [현재 상태](evidence/m2-criteria-status.json) · [이전 상태와의 원문 대조](evidence/original-status-delta.json)
 - [최종 라이브 릴리스 기록](evidence/live-release.json)
 
-재개 시 확인한 라이브 기준점은 **70 (`b0d649ae`)**, M2 작업창 버전은 **0.3.6**입니다. 실제 source family의 수렴 H 적분·공통 q*·양의 역원·전역 (7.30)을 연결하고 N5-06을 완료했습니다. 새 **10개 패널 모두** 공개 브라우저에서 `READY`이며 재계산은 전체 artifact bytes `MATCH`입니다. 같은 예제의 Node·정적 Worker·Chrome 수학 해시도 일치합니다. 전체 **75예제**의 원본 모듈·정적 Worker 대조가 통과했습니다. M1은 v70에서 P¹ 관계도·기존에 비었던 SU(3) 행렬·열 적분 구간을 다시 확인했고 원본 Worker 해시가 유지됩니다. 보존한 v62의 M1 전체 브라우저 검사는 59예제이며, 이번 시각화 회귀 검사에서도 59개 계산을 모두 실행했습니다. [v70 브라우저 기록](evidence/v70-browser-audit.json), [완료 현황 화면](evidence/mathscope-v70-criteria-complete.jpg), [라이브 릴리스 기록](evidence/live-release.json)에 각 검증 범위를 구별했습니다.
+재개 시 확인한 라이브 기준점은 **70 (`b0d649ae`)**, M2 작업창 버전은 **0.3.6**입니다. 실제 source family의 수렴 H 적분·공통 q*·양의 역원·전역 (7.30)을 연결하고 N5-06을 완료했습니다. 새 **10개 패널 모두** 공개 브라우저에서 `READY`이며 재계산은 전체 artifact bytes `MATCH`입니다. 같은 예제의 Node·정적 Worker·Chrome 수학 해시도 일치합니다. 전체 **75예제**의 원본 모듈·정적 Worker 대조가 통과했습니다. M1은 v70에서 P¹ 관계도·기존에 비었던 SU(3) 행렬·열 적분 구간을 다시 확인했고 원본 Worker 해시가 유지됩니다. 보존한 v62의 M1 전체 브라우저 검사는 59예제이며, 이번 시각화 회귀 검사에서도 59개 계산을 모두 실행했습니다. [v70 브라우저 기록](evidence/v70-browser-audit.json), [당시 완료 현황 화면](evidence/mathscope-v70-criteria-complete.jpg), [보존한 v70 릴리스 기록](evidence/live-release-v70.json)에 당시 검증 범위를 구별했습니다.
 
 ## 0. 2026-10-11 재개 · M2 0.3.7
+
+현재 공개본은 **v73 (`0c16f7d5`)**이며 구현 소스는 commit `0d846135e72672f99a468ec5caa4e0115236b2a6`입니다. 공개 HTML 전체와 최종 candidate가 바이트까지 일치하고, M2 bundle·기존 M1 Worker 해시도 대조했습니다. [공개 바이트 검증](evidence/resume-2026-10-11/public-byte-verification.json).
 
 인수인계의 v59/58 PASS·6 PARTIAL과 실제 공개본이 달랐습니다. 기존 공개본은 v70/M2 0.3.6이며, `mathscope-m2-visuals-20261010` 브랜치의 commit `a8e3361dd04155738f5c873f6af59f1e0a317771`과 M2·시각화 bundle 바이트가 일치합니다. 기존 manifest의 164개 source 파일도 같은 commit과 전부 일치했습니다. 업로드된 설계도와 **64개 ID·제목·합격 문구·페이지를 다시 대조**해 원문을 유지합니다. 이 복구를 과거 계산의 새 실행으로 표기하지 않습니다. [원본 연결 기록](evidence/resume-2026-10-11/source-recovery.json)을 확인하세요.
 
@@ -19,13 +21,17 @@ v70에서는 마지막 N5-06의 실제 공분산·공통 source q*·양의 역�
 
 - **새 세션에서 실행 JSON 가져오기**: 파일 선택 또는 붙여넣기 → 해시·source·실행 환경 검사 → 동일 환경 재계산 비교를 연결합니다. 버전·브라우저 환경이 다른 파일은 입력만 복원해 현재 환경에서 다시 실행합니다. 입력만 복원할 때 계산 결과나 근거 등급은 채택하지 않습니다.
 - **직렬화된 결과의 신뢰 경계**: 외부 JSON을 기존 engine의 소유 receipt로 만들지 않습니다. 모든 해시를 다시 붙인 변조 결과도 실제 재계산과 다르면 `MISMATCH`입니다. 자동 세션 저장은 없고, 새 계산의 실제 receipt만 별도 저장할 수 있습니다.
-- **취소·경합 처리**: 가져오기 중 입력·파일·세션이 달라지면 이전 내용의 자동 표시를 막습니다. 최종 비동기 dispatch 직전에 다시 확인하며, 취소 또는 UI callback 실패도 새 Worker를 정리합니다.
+- **취소·경합 처리**: 가져오기 중 입력·파일·세션이 달라지면 이전 내용의 자동 표시를 막습니다. 최종 비동기 dispatch 직전에 다시 확인하며, 취소 또는 UI callback 실패도 새 Worker를 정리합니다. 파일 선택 직후 첫 비동기 읽기 전에 이전 JSON·보고서를 비워 읽기 대기 중 이전 내용을 재현하는 경로도 막습니다.
 - **원문 64개 기준의 근거 링크**: 비어 있던 Y3/Y4 16개의 근거 경로를 채웠습니다. 각 기준에서 실제 소스·검사·역사적 receipt를 열 수 있으며, 과거 Lean 검사는 `newExecution:false`로 유지합니다. 화면 링크는 해당 브랜치의 소스 탐색 링크이고, 릴리스 재현은 별도 commit·Worker 해시로 고정합니다.
 - **실제 NS pulse의 1차 slow 미분**: `ns.actual-pulse-sensitivity`를 추가했습니다. 두 원본 부호 family의 실제 행렬을 미분해 `s_v=M s+(∂a M)w`를 구성하고 실제 초기 프레임·합성 끝점·원래 양의 P(v)를 포함한 tail를 남깁니다. 식·변분계·끝점·범위를 보여 주는 네 정확표가 같은 실행 결과 경로에 연결됩니다.
 
-새 예제를 포함한 등록 목록은 **76개: 산술 25, 게이지 14, NS 26, 관측·비교 11**입니다. 원문 기준 64개와 예제 76개는 다른 집계입니다. 새 NS 경로의 공개 자원 범위는 `ellExact:"1"`, `derivativeOrder:1`, `slowCoordinate:"R"|"Z"|"T"`, `terms:0`입니다. 다른 band·anchor·양의 표시항 수는 source 생성 전에 거절합니다. `terms:0`은 표시하는 **0항 근사**이며, 별도의 정확한 수렴 도함수 root와 비영 factorial tail를 해와 동일시하지 않습니다. 수치 도함수나 작은 수치 오차 구간을 계산했다는 뜻도 아닙니다.
+새 예제를 포함한 등록 목록은 **76개: 산술 25, 게이지 14, NS 26, 관측·비교 11**입니다. 전체 76개에서 원본 모듈과 정적 Worker의 수학 결과가 일치했고, 기본 실행 상태는 **63 COMPLETED / 13 PARTIAL**입니다. 이번 core·세션·가져오기·정확표·통합 검사 46/46, 새 sensitivity의 kernel 7/7·actual source 4/4·독립 유리수/Decimal 검사 43/43이 통과했습니다. 게시 과정의 문자 표기 보정 뒤와 마지막 파일 읽기 UI 수정 뒤에 가져오기 집중 11개를 각각 다시 실행했고 전부 통과했습니다. 마지막 파일 읽기 경합 자체는 소스 검토로 확인했으며 지연 파일을 이용한 브라우저 재현 검사는 수행하지 않았습니다. 이 11개는 앞선 46개에 포함된 검사의 재실행입니다. 원문 기준 64개와 예제 76개는 다른 집계입니다. 새 NS 경로의 공개 자원 범위는 `ellExact:"1"`, `derivativeOrder:1`, `slowCoordinate:"R"|"Z"|"T"`, `terms:0`입니다. 다른 band·anchor·양의 표시항 수는 source 생성 전에 거절합니다. `terms:0`은 표시하는 **0항 근사**이며, 별도의 정확한 수렴 도함수 root와 비영 factorial tail를 해와 동일시하지 않습니다. 수치 도함수나 작은 수치 오차 구간을 계산했다는 뜻도 아닙니다.
 
 원문 **64 PASS / 0 PARTIAL / 0 OPEN**은 기존에 명시한 합격 범위에서 유지합니다. `fullSameProfileN4`, `fullSameProfileN5`, 고차 공분산 가중치 미분·실제 전체 curl·전역 물리 residual/flat-error, 새 Lean kernel proof를 추가로 완료했다고 표시하지 않습니다. [독립 검토](evidence/resume-2026-10-11/INDEPENDENT_REVIEW_KO.md)와 [이번 실행 기록](evidence/resume-2026-10-11/release-validation.json)에 검증한 범위와 미검증 환경을 구별합니다.
+
+### 이번 브라우저 검증의 한계
+
+최종 v73 공개 HTML 전체와 검토한 빌드의 바이트 일치, 170개 source hash, 기존 M1 Worker 보존을 확인했습니다. 실제 브라우저에서는 재개 전 v70의 다섯 경로·CPU 비교 관측·카메라·입력 변경 무효화와 내보내기, v71/M2 0.3.7의 작은 산술 예제 계산·JSON 다운로드까지 확인했습니다. 그 후 브라우저 연결은 단순 URL/DOM 읽기에서도 응답을 멈췄고 초기화 재시도도 완료되지 않았습니다. 따라서 **최종 v73의 새 세션 가져오기 MATCH·파일 선택·새 NS 네 패널의 실제 화면은 미확인**입니다. Node의 가져오기 11개 회귀 검사와 네 패널/source binding 검사, 76예제 Worker 대조의 통과와 구별합니다. 모바일 360/390/412 및 GPU 경로도 이번 환경에서 검증하지 않았습니다. [브라우저 실제 기록](evidence/resume-2026-10-11/browser-audit.json)을 확인하세요.
 
 ### 가져오기 사용법
 
@@ -53,7 +59,7 @@ JSON 파일의 전송 한도는 32 MiB이며, 정규화된 result 예산은 기�
 
 이전 기준점은 원격 Git commit `2fc532b`의 `evidence/m2-criteria-status.json`입니다. 과거 로컬 commit `7cb1d59`로 표기한 파일과 SHA-256이 같은 원격 보존본입니다. 39개 `PARTIAL→PASS`, 5개 `OPEN→PASS`를 기록했습니다. 이전 PASS 20개도 유지합니다. 64개 ID·제목·합격 문구·페이지를 이전 파일 및 원문 추출본과 각각 대조했고 변경하지 않았습니다. [대조 스크립트](compare-original-criteria.py)는 원본 텍스트가 다르면 실패하고 [상태 변화 기록](evidence/original-status-delta.json)을 재생성합니다.
 
-v70 기준 등록 실행 예제는 **75개: 산술 25개, 게이지 14개, NS 25개, 관측·비교 I2 11개**입니다. 예제 수와 원문 기준 64개는 서로 다른 집계입니다. [정적 Worker 대조](evidence/static-worker-parity.json)에서는 예제 전부의 전체 수학 결과가 로컬 모듈과 일치했습니다. 기본 입력의 실행 상태는 **62 COMPLETED / 13 PARTIAL**입니다. 예제의 PARTIAL 13개는 짧은 게이지 앙상블 1개와 기존의 제한된 NS 구성·관측 12개입니다. 원문 체크리스트의 PARTIAL 0개와 다른 집계입니다. 별도 새 인증이 전체 조건을 충족해도 기존 예제가 수행한 유한 계산의 범위를 보존합니다.
+v70 기준 등록 실행 예제는 **75개: 산술 25개, 게이지 14개, NS 25개, 관측·비교 I2 11개**입니다. 예제 수와 원문 기준 64개는 서로 다른 집계입니다. [당시 정적 Worker 대조](evidence/resume-2026-10-11/inherited-v70-static-worker-parity.json)에서는 예제 전부의 전체 수학 결과가 로컬 모듈과 일치했습니다. 당시 기본 입력의 실행 상태는 **62 COMPLETED / 13 PARTIAL**입니다. 예제의 PARTIAL 13개는 짧은 게이지 앙상블 1개와 기존의 제한된 NS 구성·관측 12개입니다. 원문 체크리스트의 PARTIAL 0개와 다른 집계입니다. 별도 새 인증이 전체 조건을 충족해도 기존 예제가 수행한 유한 계산의 범위를 보존합니다.
 
 | 영역 | 이번에 보강한 핵심 기능 | 예제 수 |
 | --- | --- | ---: |
@@ -176,30 +182,32 @@ v66의 `ns.actual-covariance-matching`은 실제 angular 평균 1/2와 transvers
 
 원문 `fullM2Complete:true`는 64개 acceptance의 집계입니다. `formalPass`, `fullSameProfileN4/fullSameProfileN5`와 새로운 전역 NS 정리의 flag는 false를 유지합니다. 상세 상태는 [원문 상태 대조](evidence/original-status-delta.json)와 [추가 패키지 범위](navier/PROOF_OBLIGATIONS_KO.md)에 있습니다.
 
-## 6. 검증 결과와 렌더링 범위
+## 6. v70까지의 과거 검증 기록과 현재 빌드 식별
 
-| 검증 묶음 | 현재 결과 | 근거 |
+아래 표는 **v70까지 확보한 과거 실행 결과를 승계한 기록**입니다. 이번 v73에서 새로 실행한 전체 검사로 집계하지 않습니다. 현재 릴리스의 **46/46 회귀 검사, 76/76 source/Worker 대조, 63 COMPLETED / 13 PARTIAL**과 별도 sensitivity 검사는 위 **§0 · 2026-10-11 재개** 및 [이번 실행 기록](evidence/resume-2026-10-11/release-validation.json)을 확인하세요.
+
+| 검증 묶음 | 당시 결과 · 승계 | 과거 근거 |
 | --- | --- | --- |
 | 산술 | Node **42 / 42 PASS**, 독립·음성 대조 포함 | [acceptance](arithmetic/evidence/acceptance.json) |
 | 게이지 | Node **45 / 45 PASS**: 계산·관측 42 + Worker 3; 별도 독립 인증 **171개**와 원본 링크 대조 **5개** 통과 | [criterion completion](gauge/evidence/criterion-completion.json), [독립 인증](gauge/evidence/certification-independent-validation.json), [링크 대조](gauge/evidence/independent-validation.json) |
 | NS | Node **355 / 355 PASS**, 독립 Python **18,331개** 통과. 실제 source family·모멘트·일반 차수 source·완성 C²·수렴 H·공통 q*·전역 합, source bytes와 전체 함수 그래프 재현 포함 | [acceptance](navier/evidence/acceptance.json) |
-| 루트 통합 | **5 / 5 PASS**: 전체 Worker 대조·panel 원본 경로·WebMCP·요청 경계 | [v70 통합 검사](evidence/v70-integration-tests.tap), [75예제 parity](evidence/static-worker-parity.json) |
+| 루트 통합 | **5 / 5 PASS**: 전체 Worker 대조·panel 원본 경로·WebMCP·요청 경계 | [v70 통합 검사](evidence/v70-integration-tests.tap), [v70 75예제 parity](evidence/resume-2026-10-11/inherited-v70-static-worker-parity.json) |
 | 엔진·세션 결속 | **25 / 25 PASS**: 소스·입력·결과·runtime 재현, 위조 환경 거부, 세션 revision 경계 | [v70 core 기록](evidence/v70-core-tests.tap) |
 | 공통 시각화·I2·renderer | **23 / 23 PASS**: 시각화 10 + I2 12 + renderer 경로 1 | [시각화 테스트](visualization/visualization.test.mjs), [I2 테스트](observatory/tests/observatory.test.mjs), [renderer 테스트](observatory/tests/render-paths.test.mjs) |
 | 공통·실제 소스 관측·M1 host | **101 / 101 PASS**: 기존 88개와 새 실제 공분산 family 13개. source 경로·적분 tail·적용 영역·실패 상태·360/960px renderer fixture 포함 | [v70 시각화 검사](evidence/v70-visualization-tests.tap) |
 | M1 관측 | 등록 **59개 전체 브라우저 실행**, 기존 빈 관측 **26개** 보완, 첫 작업 재현 MATCH | [v62 전체 audit](evidence/v62-m1-catalog-audit.json), [v63 상태 검사](evidence/v63-m1-state-audit.json) |
-| 정적 산출물 | M2 **75예제 전부 source/Worker mathematical hash 일치** | [static Worker parity](evidence/static-worker-parity.json) |
-| 실제 브라우저·최종 게시 | 게시 버전별 실행·입력 변경·저장·재현·탐색·성능을 별도 기록 | [live release](evidence/live-release.json) |
+| 정적 산출물 | M2 **75예제 전부 source/Worker mathematical hash 일치** | [v70 static Worker parity](evidence/resume-2026-10-11/inherited-v70-static-worker-parity.json) |
+| 실제 브라우저·v70 게시 | 당시 게시 버전별 실행·입력 변경·저장·재현·탐색·성능을 별도 기록 | [보존한 v70 live release](evidence/live-release-v70.json) |
 
 검사 수, 예제 수, 기준 수는 별도로 집계합니다. Worker parity는 `executionMetrics`만 제외한 전체 수학 결과와 상태의 일치이며, PARTIAL 결과가 두 경로에서 정확히 같아야 하는 검사도 포함합니다. 오래된 Worker 바이트로 새 source를 실행했다면 이 검사는 실패해야 합니다.
 
-현재 저장소의 **M2 Worker 빌드 SHA-256**은 다음과 같습니다.
+현재 저장소와 v73 / M2 0.3.7의 **M2 Worker 빌드 SHA-256**은 다음과 같습니다.
 
 ```text
-825b9aeef78976bfeb5dbbed6a3c5055f042a96ccd9c49270cdea48345a77767
+64d87c5a014ef6bc5acf97148239451aa306b00f04760439f84b442e5693e326
 ```
 
-이 해시는 로컬 최종 Worker 바이트와 source/Worker parity 기록의 값입니다. 실제 게시된 Worker의 최종 확인은 라이브 릴리스 기록과 대조합니다.
+이 해시는 [현재 76예제 source/Worker parity](evidence/static-worker-parity.json), [최종 라이브 릴리스 기록](evidence/live-release.json), [이번 실행 기록](evidence/resume-2026-10-11/release-validation.json)에 기록된 값입니다. v70의 과거 Worker 해시 `825b9aeef78976bfeb5dbbed6a3c5055f042a96ccd9c49270cdea48345a77767`은 [승계한 v70 75예제 기록](evidence/resume-2026-10-11/inherited-v70-static-worker-parity.json)에 보존하며 현재 Worker 값과 구분합니다.
 
 ### 브라우저와 Node의 수치 재현 범위
 
@@ -257,7 +265,7 @@ N1-06의 실제 원본 Comparator 성공 terminal은 [상속된 검증 기록](e
 python3 research-ide/mathscope-m2/build_m2.py
 python3 research-ide/mathscope-m2/tests/check_assembly.py
 
-node --test \
+node --test --test-concurrency=1 \
   research-ide/mathscope-m2/arithmetic/tests/*.test.mjs \
   research-ide/mathscope-m2/gauge/tests/*.test.mjs \
   research-ide/mathscope-m2/navier/tests/*.test.mjs \
@@ -267,7 +275,7 @@ node --test \
   research-ide/mathscope-m2/tests/*.test.mjs
 ```
 
-위 명령에는 표의 현재 검증 묶음 외에 기존 core receipt/replay/세션 회귀 테스트도 포함됩니다. 단독으로 전체 73예제 source/Worker 대조와 공통 panel 경계를 다시 확인하려면 다음을 실행합니다.
+위 전체 재현 명령에는 기존 도메인 검사와 core receipt/replay/세션 회귀 검사도 포함됩니다. 실제 source graph의 메모리 사용량 때문에 suite를 직렬로 실행합니다. 이번 재개에서 이 전체 명령을 새로 실행한 것은 아니며, 실제 실행한 46개 회귀 검사 및 별도 sensitivity 검사는 위 재개 기록의 정확한 범위를 따릅니다. 단독으로 현재 등록된 전체 76예제 source/Worker 대조와 공통 panel 경계를 다시 확인하려면 다음을 실행합니다.
 
 ```sh
 node --test research-ide/mathscope-m2/tests/integration.test.mjs

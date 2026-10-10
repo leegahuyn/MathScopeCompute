@@ -1,7 +1,7 @@
 {
   "schema": "MathScope.M2ResumedReleaseValidation/1",
   "runtimeVersion": "0.3.7",
-  "publicationStatus": "CANDIDATE_VALIDATED_AWAITING_PUBLICATION",
+  "publicationStatus": "LIVE_SOURCE_AND_REGRESSION_VERIFIED_BROWSER_AUTOMATION_BLOCKED",
   "sourceBaselineCommit": "a8e3361dd04155738f5c873f6af59f1e0a317771",
   "target": "https://project29770.websitepublisher.ai/v0.3.1.html",
   "originalCriteria": {
@@ -30,17 +30,19 @@
   },
   "sourceFilesInBuild": 170,
   "workerSHA256": "64d87c5a014ef6bc5acf97148239451aa306b00f04760439f84b442e5693e326",
-  "bundleSHA256": "19fda7e256e50d57785d287df133cf277d61263780c2373f68f629a237dd52ac",
+  "bundleSHA256": "5e67eb6f0faa48037cde880bf422e6899f77ed75472b6c38ec9a665369096359",
   "m1": {
     "runtimeWorkerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca",
     "workerUnchanged": true,
     "newM1MathematicalProofRun": false
   },
   "browserBaseline": "baseline-browser.json",
-  "finalBrowserAudit": null,
+  "finalBrowserAudit": "browser-audit.json",
   "unverifiedEnvironments": {
     "mobileViewport360390412": "NOT_RUN: cloud browser has no supported resize API; local browser binary download failed",
-    "webglGPU": "UNAVAILABLE in current browser; CPU fallback was exercised at baseline"
+    "webglGPU": "UNAVAILABLE in current browser; CPU fallback was exercised at baseline",
+    "finalLiveTransferFlow": "UNVERIFIED: the final cloud browser connection stalled even on URL/DOM reads; reset/retry did not complete. The 11 matching-environment replay, tamper, cancellation and dispatch-guard Node tests passed, but do not substitute for final browser UI validation.",
+    "newSensitivityLivePanels": "UNVERIFIED_IN_FINAL_BROWSER: exact four-panel/source binding and all installed Worker calculations were tested in Node."
   },
   "remainingMathematics": {
     "fullSameProfileN4": false,
@@ -78,5 +80,30 @@
       "terms": 0
     },
     "measuredResourcesAndScope": "ns-sensitivity-validation.json"
+  },
+  "publishedVersion": 73,
+  "publishedVersionHash": "0c16f7d5",
+  "sourceCommit": "0d846135e72672f99a468ec5caa4e0115236b2a6",
+  "publicByteVerification": "public-byte-verification.json",
+  "publisherNormalizationFix": {
+    "changed": "Optional BOM parsing uses explicit 0xfeff character code instead of an escaped Unicode regex; published bundle bytes exactly match repository",
+    "focusedTestsPass": 11,
+    "focusedTestsFail": 0,
+    "sameTestsRerunNotAddedToUniqueTestCount": true,
+    "log": "replay-import-publisher-normalization.tap",
+    "mathematicalWorkerUnchanged": true
+  },
+  "finalUIImportGuard": {
+    "changed": "Clear previous JSON and report synchronously before file size validation or file.text(), retaining file/paste ticket checks.",
+    "sourceReview": "INDEPENDENT_REVIEW_KO.md",
+    "focusedImportRegressionPass": 11,
+    "focusedImportRegressionFail": 0,
+    "sameTestsRerunNotAddedToUniqueTestCount": true,
+    "directDelayedFileBrowserTest": false,
+    "mathematicalWorkerUnchanged": true
+  },
+  "finalSourceManifestVerification": {
+    "files": 170,
+    "allFileSHA256Match": true
   }
 }
