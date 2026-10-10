@@ -1,0 +1,197 @@
+// Original 16 N4/N5 criteria, preserved verbatim from the user-supplied blueprint.
+export const BLUEPRINT_SOURCE = {"name": "MathScope_Research_IDE_Blueprint_v1_KO(1)(9).pdf", "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac", "pages": [58, 60]};
+export const CHECKLIST = [
+  {
+    "id": "N4-01",
+    "title": "차수와 기호 충돌 분리",
+    "criteria": "λn=2nh, En,Un,Vn,Πn와 scalar φn을 구분한다. η의 Fourier 차수·radial analytic 차수·배경 차수를 서로 다른 인덱스로 둔\n다. 합격: (5.1)의 q 지수와 E_n=√(2X) φn/C를 자동 단위 검사한다. Π0의 axis trace와 전체 pressure profile을 혼동하면\n실패다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "Distinct background/radial/eta indices, source exponents and zero positive-order axis-data declarations are generated. Evaluated same-profile units and pressure reconstruction are not yet certified.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N4-02",
+    "title": "비선형 convolution 생성",
+    "criteria": "(5.3)-(5.6)의 모든 i+j=n 곱을 생성한다. i=0,n 및 n,0은 현재 미지수에 선형이고 나머지는 확정된 이전 차수다. 합격: n=1,2\n의 직접 PDE 대입 결과와 coefficient extractor가 일치한다. axial viscosity의 n −1 shift와 압력 Ωn−1/(2X)를 반드시 포함\n한다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "All ordered i+j=n source terms and the n-1 viscosity/pressure shift are generated. Independent direct-PDE substitution of solved same-profile coefficients remains open.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N4-03",
+    "title": "차수별 inner Picard 풀이",
+    "criteria": "(5.7)의 6성분 선형계와 (5.8)의 convergent Picard series를 사용하고 영 axis datum을 유지한다. 합격: 선택 analytic\nstrip·Cn·Cauchy radius loss를 기록하고 Picard tail를 상계한다. 반경 interval은 차수에 따라 임의 축소하지 않으며 lemma\n의 공통 interval 조건을 검사한다.",
+    "sourcePage": 58,
+    "status": "OPEN",
+    "implementedScope": "No same-profile six-component Picard solver with common analytic domain and certified tails is installed.",
+    "testStatus": "NOT_IMPLEMENTED",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N4-04",
+    "title": "차수별 radial cutoff와 모멘트 복구",
+    "criteria": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
+    "sourcePage": 58,
+    "status": "OPEN",
+    "implementedScope": "Positive-order coefficient extension and five exact total-moment corrections are not installed. The next-order reuse guard remains closed.",
+    "testStatus": "NOT_IMPLEMENTED",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N4-05",
+    "title": "유한 배경 잔차 검증",
+    "criteria": "Fslow=R+div T를 직접 계산하고 (5.25)의 q^[2h(N+1) −Km] bound와 비교한다. 합격: N 증가에 따른 실제 잔차 감소를\n정밀도·격자와 독립 추적한다. CN,m와 Km이 미계산이면 검증된 tail bound로 표시하지 않는다.",
+    "sourcePage": 58,
+    "status": "OPEN",
+    "implementedScope": "The actual same-profile finite-background R+div(T), support-localized norms and order-refinement residual have not been assembled.",
+    "testStatus": "NOT_IMPLEMENTED",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N4-06",
+    "title": "Shrinking cutoff 스케줄",
+    "criteria": "Lemma5.4에 따라 aj+1≥2aj와 (5.37)의 유한 조건을 차례로 만족시키는 cutoff를 선택한다. 합격: 0≤m≤j에서 Ĉj,m(1+|\nlogq|)^P q^(gj/2)≤2^−j를 전체 q≤1/aj에 대해 상계한다. constants 없는 경험적 aj는 미인증으로 표시한다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "A shrinking cutoff schedule satisfies outward interval inequalities for every q in the stated interval for supplied derivative constants. Original same-profile derivative constants remain uninstantiated.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N4-07",
+    "title": "Potential에 cutoff 후 curl",
+    "criteria": "χ(cnq)Sn 또는 potential을 먼저 합친다. (5.45)의 χ′ radial correction을 포함해 velocity를 복원한다. 합격: div curl=0 및\ndirect axisymmetric swirl의 div=0 항등식이 유지된다. χun만 사용하는 구현은 negative control에서 실패해야 한다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "An explicit compact C3 potential includes grad(chi) cross A in curl(chi A), with independent finite-difference refinement and a missing-term negative control. The original C-infinity background potential remains unconnected.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N4-08",
+    "title": "배경 합성과 tail 계약",
+    "criteria": "실 제 locally finite sum 과 유 한 formal truncation 을 구 별 하 고 (5.35), (5.39), (5.42), (5.43) 를 기 록 한 다. 합 격: q>0\ncompact domain의 active cutoff index를 정확히 계산하고 tail bound의 유효 영역 q<(2aJ)^ −1을 함께 export한다.\nuncut series 수렴은 주장하지 않는다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "Finite active-order queries and explicit tail-domain conditions are exposed. An all-order same-profile Borel-sum differentiability/tail certificate is not installed.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N5-01",
+    "title": "Dyadic chart 생성",
+    "criteria": "Q=2^−ℓ, ε=Q^h, S*=ℓ², (R,Z,T)=(r/√Q,z/Q^D, τ/Q)를 고정하고 band마다 discrete labels를 생성한다. 합격: 동일 샘\n플이 겹치는 chart에서 같은 physical quantity를 준다. 미분 중 ceil/round 주파수와 labels를 다시 선택하지 않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Dyadic physical/scaled coordinates and adjacent-band overlap are computed. tau=0 and floating-point underflow are rejected. Original same-profile band/slow-data selection remains unconnected.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N5-02",
+    "title": "Auxiliary torus와 chain rule",
+    "criteria": "Jg=[[3,1],[1,5]], Y=vr r^dr+vt t mod Z² 및 (6.6)의 evaluated derivatives를 사용한다. 합격: Dr,Dz,t*의 chain-rule 항\n을 모두 포함한다. torus 평균 후 물리 phase 평가의 순서를 반대로 하여 pointwise 값을 평균으로 대체하지 않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Auxiliary torus matrix, determinant 14, Haar factor and the required chain-rule formula are represented. Original Y_g slow derivatives and the complete evaluated chain rule have not been instantiated.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N5-03",
+    "title": "겹치는 pulse의 지지 분리",
+    "criteria": "Lemma6.1의 conflict graph에 따라 overlapping slow supports에 서로소 auxiliary rectangles를 할당한다. 합격: 모든\nactive label pair의 support intersection을 검사한다. 서로 다른 labels의 곱은 실제로 0이어야 하며 same-label harmonics\n는 유지한다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "A finite slow-overlap conflict graph allocates exact-rational separated auxiliary supports and checks every active pair. Same-label harmonics are retained. The full original collection of labels has not been supplied.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N5-04",
+    "title": "위상·편극·주파수",
+    "criteria": "k=ceil(ε^−1/2), kp는 0이 아닌 정수, (7.3)-(7.8)의 Φ,nΦ,K,AΦ,B를 생성한다. 합격: nΦ·tm=0과 nonzero denominators\n를 검사한다. 1≤ εk²≤4 및 frame determinant lower bound를 인증된 영역에서 만족한다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "The frozen local shear jet, integer angular frequency and tangent initial polarization are executable. Uniform same-profile phase/frame derivative bounds remain open.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N5-05",
+    "title": "성장·감쇠 ODE 풀이",
+    "criteria": "(7.13),(7.17)의 projected ODE를 풀고 P(v)=exp∫( λ−dref)를 log envelope로 저장한다. 합격: (7.22)의 amplitude\nenergy balance, n Φ·tm 제약, midpoint normalization과 양 끝 Gaussian bound를 검사한다. underflow를 pulse가 정\n확히 0인 것으로 처리하지 않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "The projected pulse ODE is integrated in a parallel tangent frame with analytic scalar-damping separation and empirical step refinement. Rigorous ODE solution error, slow derivatives and Gaussian constants remain open.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N5-06",
+    "title": "두 family의 positive covariance",
+    "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Two actual finite polarization covariance columns, positive weights, cosine factor 1/2 and the Haar Jacobian match a supplied admissible stress. Original nonconstant profile matching is not certified.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N5-07",
+    "title": "정확한 curl과 remainder",
+    "criteria": "Cm=i(nΦ×tm)/(km|n Φ|²), physical potential scale Q^(1/2 −A)를 사용한다. cutoff 후 curl의 rm도 유지한다. 합격:\ndiv curl 항등식, physical Cartesian divergence numerical convergence, conjugate symmetry를 확인한다. rm 누락 시\ncovariance/residual test가 실패한다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Compact-potential curl and finite covariance components are checked. Original oscillatory pulse cutoff/curl remainder terms have not been assembled or bounded.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  },
+  {
+    "id": "N5-08",
+    "title": "Cutoff tail의 flatness 추적",
+    "criteria": "(7.40)의 (1 −ψ)fm+ψ′tm를 버리지 않고 별도 잔차로 기록한다. S*^C exp( −cS*)와 q의 관계를 상계한다. 합격: 각 고정\nm,N에 대해 −cℓ²+(M+N)ℓlog2+2Clogℓ를 써서 bound를 평가한다. machine-zero만으로 모든 차수 flatness를 인증하지\n않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Outward log-tail values and an all-later-label scalar monotonicity threshold are computed for fixed declared derivative order and constants. Actual original ODE constants and the all-order construction remain open.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false,
+    "evidencePath": "mathscope-m2/navier/evidence/acceptance.json",
+    "acceptanceScope": "The original whole-criterion text is unchanged; finite component diagnostics do not close original same-profile construction gates."
+  }
+];
+export function getChecklist(){return JSON.parse(JSON.stringify(CHECKLIST));}

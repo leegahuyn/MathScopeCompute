@@ -1,0 +1,847 @@
+{
+  "schema": "MathScope.M2.ArithmeticResult/1",
+  "version": "0.1.0-m2",
+  "kind": "arithmetic.witt",
+  "status": "COMPLETED",
+  "object": {
+    "kind": "PRIME_FIELD_TRUNCATED_WITT_RING",
+    "coefficientRing": "F_3",
+    "length": 2
+  },
+  "request": {
+    "budget": {},
+    "input": {
+      "a": [
+        "1",
+        "0"
+      ],
+      "b": [
+        "1",
+        "0"
+      ],
+      "p": "3"
+    },
+    "kind": "arithmetic.witt",
+    "precision": {
+      "N": 2
+    }
+  },
+  "scope": {
+    "finite": true,
+    "p": "3",
+    "N": 2,
+    "ringIsomorphism": "W_2(F_3) ~= Z/3^2",
+    "generalTiltCoefficientRing": false
+  },
+  "results": {
+    "object": {
+      "kind": "PRIME_FIELD_TRUNCATED_WITT_RING",
+      "coefficientRing": "F_3",
+      "length": 2
+    },
+    "scope": {
+      "finite": true,
+      "p": "3",
+      "N": 2,
+      "ringIsomorphism": "W_2(F_3) ~= Z/3^2",
+      "generalTiltCoefficientRing": false
+    },
+    "arithmetic": {
+      "method": "Teichmuller expansion under the canonical W_N(F_p)=Z/p^N identification",
+      "teichmullerRule": "[a] = a^(p^(N-1)) modulo p^N for the canonical integer lift a in [0,p)",
+      "encoding": "sum_i p^i [a_i]",
+      "modulus": "9",
+      "componentwiseAddition": false
+    },
+    "rows": [
+      {
+        "operation": "a",
+        "coordinates": [
+          "1",
+          "0"
+        ],
+        "integerResidue": "1"
+      },
+      {
+        "operation": "b",
+        "coordinates": [
+          "1",
+          "0"
+        ],
+        "integerResidue": "1"
+      },
+      {
+        "operation": "a+b",
+        "coordinates": [
+          "2",
+          "1"
+        ],
+        "integerResidue": "2"
+      },
+      {
+        "operation": "a*b",
+        "coordinates": [
+          "1",
+          "0"
+        ],
+        "integerResidue": "1"
+      },
+      {
+        "operation": "p*1",
+        "coordinates": [
+          "0",
+          "1"
+        ],
+        "integerResidue": "3"
+      }
+    ],
+    "frobenius": {
+      "coordinates": [
+        "1",
+        "0"
+      ],
+      "integerResidue": "1",
+      "reason": "On the prime field a^p=a, so Witt Frobenius is identity; this does not generalize to every tilt coefficient ring."
+    },
+    "counterexample": {
+      "pTimesOne": [
+        "0",
+        "1"
+      ],
+      "naiveComponentwise": [
+        "0",
+        "0"
+      ],
+      "equal": false,
+      "one": [
+        "1",
+        "0"
+      ]
+    },
+    "checks": [
+      {
+        "name": "Teichmuller lifts are Frobenius fixed modulo p^N",
+        "pass": true
+      },
+      {
+        "name": "addition decodes to the exact sum modulo p^N",
+        "pass": true
+      },
+      {
+        "name": "multiplication decodes to the exact product modulo p^N",
+        "pass": true
+      },
+      {
+        "name": "p copies of 1 retain the Witt carry when N>1",
+        "pass": true
+      }
+    ],
+    "tables": [
+      {
+        "title": "Witt coordinates and canonical integer residues",
+        "columns": [
+          "operation",
+          "coordinates",
+          "integerResidue"
+        ],
+        "rows": [
+          {
+            "operation": "a",
+            "coordinates": [
+              "1",
+              "0"
+            ],
+            "integerResidue": "1"
+          },
+          {
+            "operation": "b",
+            "coordinates": [
+              "1",
+              "0"
+            ],
+            "integerResidue": "1"
+          },
+          {
+            "operation": "a+b",
+            "coordinates": [
+              "2",
+              "1"
+            ],
+            "integerResidue": "2"
+          },
+          {
+            "operation": "a*b",
+            "coordinates": [
+              "1",
+              "0"
+            ],
+            "integerResidue": "1"
+          },
+          {
+            "operation": "p*1",
+            "coordinates": [
+              "0",
+              "1"
+            ],
+            "integerResidue": "3"
+          }
+        ]
+      }
+    ],
+    "visualization": {
+      "points": [
+        {
+          "pos": [
+            0,
+            0,
+            1
+          ],
+          "label": "a, Witt coordinate 0: 1",
+          "value": {
+            "operation": "a",
+            "index": 0,
+            "coordinate": "1",
+            "integerResidue": "1"
+          }
+        },
+        {
+          "pos": [
+            0,
+            1,
+            0
+          ],
+          "label": "a, Witt coordinate 1: 0",
+          "value": {
+            "operation": "a",
+            "index": 1,
+            "coordinate": "0",
+            "integerResidue": "1"
+          }
+        },
+        {
+          "pos": [
+            1,
+            0,
+            1
+          ],
+          "label": "b, Witt coordinate 0: 1",
+          "value": {
+            "operation": "b",
+            "index": 0,
+            "coordinate": "1",
+            "integerResidue": "1"
+          }
+        },
+        {
+          "pos": [
+            1,
+            1,
+            0
+          ],
+          "label": "b, Witt coordinate 1: 0",
+          "value": {
+            "operation": "b",
+            "index": 1,
+            "coordinate": "0",
+            "integerResidue": "1"
+          }
+        },
+        {
+          "pos": [
+            2,
+            0,
+            2
+          ],
+          "label": "a+b, Witt coordinate 0: 2",
+          "value": {
+            "operation": "a+b",
+            "index": 0,
+            "coordinate": "2",
+            "integerResidue": "2"
+          }
+        },
+        {
+          "pos": [
+            2,
+            1,
+            1
+          ],
+          "label": "a+b, Witt coordinate 1: 1",
+          "value": {
+            "operation": "a+b",
+            "index": 1,
+            "coordinate": "1",
+            "integerResidue": "2"
+          }
+        },
+        {
+          "pos": [
+            3,
+            0,
+            1
+          ],
+          "label": "a*b, Witt coordinate 0: 1",
+          "value": {
+            "operation": "a*b",
+            "index": 0,
+            "coordinate": "1",
+            "integerResidue": "1"
+          }
+        },
+        {
+          "pos": [
+            3,
+            1,
+            0
+          ],
+          "label": "a*b, Witt coordinate 1: 0",
+          "value": {
+            "operation": "a*b",
+            "index": 1,
+            "coordinate": "0",
+            "integerResidue": "1"
+          }
+        },
+        {
+          "pos": [
+            4,
+            0,
+            0
+          ],
+          "label": "p*1, Witt coordinate 0: 0",
+          "value": {
+            "operation": "p*1",
+            "index": 0,
+            "coordinate": "0",
+            "integerResidue": "3"
+          }
+        },
+        {
+          "pos": [
+            4,
+            1,
+            1
+          ],
+          "label": "p*1, Witt coordinate 1: 1",
+          "value": {
+            "operation": "p*1",
+            "index": 1,
+            "coordinate": "1",
+            "integerResidue": "3"
+          }
+        }
+      ],
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "label": "a"
+        },
+        {
+          "points": [
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "label": "b"
+        },
+        {
+          "points": [
+            [
+              2,
+              0,
+              2
+            ],
+            [
+              2,
+              1,
+              1
+            ]
+          ],
+          "label": "a+b"
+        },
+        {
+          "points": [
+            [
+              3,
+              0,
+              1
+            ],
+            [
+              3,
+              1,
+              0
+            ]
+          ],
+          "label": "a*b"
+        },
+        {
+          "points": [
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              1
+            ]
+          ],
+          "label": "p*1"
+        }
+      ],
+      "axes": [
+        {
+          "label": "Operation",
+          "type": "CATEGORICAL",
+          "unit": "dimensionless"
+        },
+        {
+          "label": "Witt coordinate index",
+          "type": "WITT_LENGTH_INDEX",
+          "unit": "dimensionless"
+        },
+        {
+          "label": "Residue in F_p",
+          "type": "FINITE_FIELD_RESIDUE",
+          "unit": "dimensionless"
+        }
+      ],
+      "description": "W_2(F_3): exact carries, addition and multiplication",
+      "coordinateMeaning": "Coordinates are Witt components, not independent digits with componentwise ring operations. The exact integer residue accompanies every point.",
+      "lostInformation": [
+        "Only the stated Witt length and prime-field coefficient subring are computed."
+      ],
+      "sourceFields": [
+        "rows.coordinates",
+        "rows.integerResidue"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "Teichmuller lifts are Frobenius fixed modulo p^N",
+      "pass": true
+    },
+    {
+      "name": "addition decodes to the exact sum modulo p^N",
+      "pass": true
+    },
+    {
+      "name": "multiplication decodes to the exact product modulo p^N",
+      "pass": true
+    },
+    {
+      "name": "p copies of 1 retain the Witt carry when N>1",
+      "pass": true
+    }
+  ],
+  "blockers": [],
+  "tables": [
+    {
+      "title": "Witt coordinates and canonical integer residues",
+      "columns": [
+        "operation",
+        "coordinates",
+        "integerResidue"
+      ],
+      "rows": [
+        {
+          "operation": "a",
+          "coordinates": [
+            "1",
+            "0"
+          ],
+          "integerResidue": "1"
+        },
+        {
+          "operation": "b",
+          "coordinates": [
+            "1",
+            "0"
+          ],
+          "integerResidue": "1"
+        },
+        {
+          "operation": "a+b",
+          "coordinates": [
+            "2",
+            "1"
+          ],
+          "integerResidue": "2"
+        },
+        {
+          "operation": "a*b",
+          "coordinates": [
+            "1",
+            "0"
+          ],
+          "integerResidue": "1"
+        },
+        {
+          "operation": "p*1",
+          "coordinates": [
+            "0",
+            "1"
+          ],
+          "integerResidue": "3"
+        }
+      ]
+    }
+  ],
+  "precisionLedger": {
+    "requested": {
+      "N": 2
+    },
+    "finiteScope": {
+      "finite": true,
+      "p": "3",
+      "N": 2,
+      "ringIsomorphism": "W_2(F_3) ~= Z/3^2",
+      "generalTiltCoefficientRing": false
+    },
+    "roundingError": "0 for exact integer, polynomial, finite-field and finite Witt operations; explicitly tagged complex roots are Float64 display only.",
+    "precisionAxesIndependent": true
+  },
+  "evidence": {
+    "calculation": "EXACT_FINITE_SCOPE",
+    "geometricComparison": "THEOREM_REFERENCE_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "lean": "NO_NEW_KERNEL_EXECUTION",
+    "formalComplete": false,
+    "universalConjectureSolved": false
+  },
+  "provenance": {
+    "sources": [
+      {
+        "id": "BLUEPRINT_P4_P6",
+        "kind": "USER_SUPPLIED_SPECIFICATION",
+        "pages": [
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          69,
+          70,
+          71,
+          72
+        ],
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      {
+        "id": "S01",
+        "title": "Prisms and Prismatic Cohomology",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S03",
+        "title": "Integral p-adic Hodge Theory",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/integralpadicHodge.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S04",
+        "title": "Perfectoid Spaces",
+        "url": "https://www.math.uni-bonn.de/people/scholze/PerfectoidSpaces.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S07",
+        "title": "La conjecture de Weil I",
+        "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "C01",
+        "title": "Lectures on Etale Cohomology",
+        "url": "https://www.jmilne.org/math/CourseNotes/LEC.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      }
+    ],
+    "algorithmVersion": "0.1.0-m2",
+    "inputHash": "9bd6071ef23891a23d9e6f173591327466e1ffc5b5c7729a5630cb7aeffa6af2",
+    "sourceHash": "d669d1b8271abdc3194ba1ca1f28b3c4e3f6959c1a7ba149cdfcf69657dcb478",
+    "operations": 10
+  },
+  "visualization": {
+    "points": [
+      {
+        "pos": [
+          0,
+          0,
+          1
+        ],
+        "label": "a, Witt coordinate 0: 1",
+        "value": {
+          "operation": "a",
+          "index": 0,
+          "coordinate": "1",
+          "integerResidue": "1"
+        }
+      },
+      {
+        "pos": [
+          0,
+          1,
+          0
+        ],
+        "label": "a, Witt coordinate 1: 0",
+        "value": {
+          "operation": "a",
+          "index": 1,
+          "coordinate": "0",
+          "integerResidue": "1"
+        }
+      },
+      {
+        "pos": [
+          1,
+          0,
+          1
+        ],
+        "label": "b, Witt coordinate 0: 1",
+        "value": {
+          "operation": "b",
+          "index": 0,
+          "coordinate": "1",
+          "integerResidue": "1"
+        }
+      },
+      {
+        "pos": [
+          1,
+          1,
+          0
+        ],
+        "label": "b, Witt coordinate 1: 0",
+        "value": {
+          "operation": "b",
+          "index": 1,
+          "coordinate": "0",
+          "integerResidue": "1"
+        }
+      },
+      {
+        "pos": [
+          2,
+          0,
+          2
+        ],
+        "label": "a+b, Witt coordinate 0: 2",
+        "value": {
+          "operation": "a+b",
+          "index": 0,
+          "coordinate": "2",
+          "integerResidue": "2"
+        }
+      },
+      {
+        "pos": [
+          2,
+          1,
+          1
+        ],
+        "label": "a+b, Witt coordinate 1: 1",
+        "value": {
+          "operation": "a+b",
+          "index": 1,
+          "coordinate": "1",
+          "integerResidue": "2"
+        }
+      },
+      {
+        "pos": [
+          3,
+          0,
+          1
+        ],
+        "label": "a*b, Witt coordinate 0: 1",
+        "value": {
+          "operation": "a*b",
+          "index": 0,
+          "coordinate": "1",
+          "integerResidue": "1"
+        }
+      },
+      {
+        "pos": [
+          3,
+          1,
+          0
+        ],
+        "label": "a*b, Witt coordinate 1: 0",
+        "value": {
+          "operation": "a*b",
+          "index": 1,
+          "coordinate": "0",
+          "integerResidue": "1"
+        }
+      },
+      {
+        "pos": [
+          4,
+          0,
+          0
+        ],
+        "label": "p*1, Witt coordinate 0: 0",
+        "value": {
+          "operation": "p*1",
+          "index": 0,
+          "coordinate": "0",
+          "integerResidue": "3"
+        }
+      },
+      {
+        "pos": [
+          4,
+          1,
+          1
+        ],
+        "label": "p*1, Witt coordinate 1: 1",
+        "value": {
+          "operation": "p*1",
+          "index": 1,
+          "coordinate": "1",
+          "integerResidue": "3"
+        }
+      }
+    ],
+    "lines": [
+      {
+        "points": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "label": "a"
+      },
+      {
+        "points": [
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            0
+          ]
+        ],
+        "label": "b"
+      },
+      {
+        "points": [
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ],
+        "label": "a+b"
+      },
+      {
+        "points": [
+          [
+            3,
+            0,
+            1
+          ],
+          [
+            3,
+            1,
+            0
+          ]
+        ],
+        "label": "a*b"
+      },
+      {
+        "points": [
+          [
+            4,
+            0,
+            0
+          ],
+          [
+            4,
+            1,
+            1
+          ]
+        ],
+        "label": "p*1"
+      }
+    ],
+    "axes": [
+      {
+        "label": "Operation",
+        "type": "CATEGORICAL",
+        "unit": "dimensionless"
+      },
+      {
+        "label": "Witt coordinate index",
+        "type": "WITT_LENGTH_INDEX",
+        "unit": "dimensionless"
+      },
+      {
+        "label": "Residue in F_p",
+        "type": "FINITE_FIELD_RESIDUE",
+        "unit": "dimensionless"
+      }
+    ],
+    "description": "W_2(F_3): exact carries, addition and multiplication",
+    "coordinateMeaning": "Coordinates are Witt components, not independent digits with componentwise ring operations. The exact integer residue accompanies every point.",
+    "lostInformation": [
+      "Only the stated Witt length and prime-field coefficient subring are computed."
+    ],
+    "sourceFields": [
+      "rows.coordinates",
+      "rows.integerResidue"
+    ],
+    "sourceHash": "d669d1b8271abdc3194ba1ca1f28b3c4e3f6959c1a7ba149cdfcf69657dcb478",
+    "sourceRevision": "d669d1b8271abdc3194ba1ca1f28b3c4e3f6959c1a7ba149cdfcf69657dcb478",
+    "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
+    "sampling": {
+      "displayPoints": 10,
+      "originalSourceHash": "d669d1b8271abdc3194ba1ca1f28b3c4e3f6959c1a7ba149cdfcf69657dcb478"
+    },
+    "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
+  },
+  "resultHash": "0b92681b3ab7af8656749a692e8d6c3d52ce492d0b357874293741f56d6cd604"
+}

@@ -1,0 +1,432 @@
+{
+  "id": "ns-m2-recursion",
+  "request": {
+    "kind": "ns.background-recursion",
+    "input": {
+      "maxOrder": 2
+    }
+  },
+  "inputHash": "2d2d1ac09bd7b265f3bf1e2139250efbb8b19e91582d94bdda34ea3428042c5f",
+  "result": {
+    "blockers": [
+      "N4-02 direct original-PDE substitution is not yet linked to evaluated same-profile coefficients.",
+      "N4-03/04 require a common-interval Picard solve and complete five-moment repairs before the next order."
+    ],
+    "checks": [
+      {
+        "detail": "background n, radial k, eta m are separate keys",
+        "id": "distinct-order-indices",
+        "pass": true
+      },
+      {
+        "detail": "1-2D=2A-1=2h for A=1/2+h,D=1/2-h",
+        "id": "physical-exponent-shift",
+        "pass": true
+      },
+      {
+        "detail": "All ordered i+j=n pairs, including both endpoints.",
+        "id": "all-convolution-pairs",
+        "pass": true
+      },
+      {
+        "detail": "Original (5.3)-(5.6) order shifts retained.",
+        "id": "n-minus-one-viscosity-and-pressure",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "SOURCE_EXPRESSION_MANIFEST",
+    "kind": "ns.background-recursion",
+    "moduleVersion": "m2-ns-0.1.1",
+    "object": {
+      "kind": "SOURCE_COEFFICIENT_RECURSION",
+      "sourceProfile": "same-profile-2026-10-10.3"
+    },
+    "precisionLedger": {
+      "arithmetic": "FLOAT64_WITH_EXACT_INDEX_AND_SOURCE_EXPRESSIONS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 400,
+      "outputItemsEstimate": 3,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "adada045e3e5b036502b3c8c4f1e48706bc082d14dd0227135ab7039991271e1",
+    "results": {
+      "nextOrderGuard": {
+        "required": [
+          "same N3 evaluator",
+          "common-interval Picard tail",
+          "five repaired total moments",
+          "stress and pressure reconstruction"
+        ],
+        "satisfied": false
+      },
+      "operators": {
+        "E": "E_n=sqrt(2X)*phi_n/C",
+        "L": "1-2*h*eta^2",
+        "T": "T_a f=L^-1*(-a*f+D*eta*d_eta(f)+X*d_X(f))",
+        "Z": "Z_a f=L^-1*(2*a*eta*f+d*d_eta(f)-2*eta*X*d_X(f))",
+        "d": "1-eta^2"
+      },
+      "orders": [
+        {
+          "angular": {
+            "axialViscosity": "0",
+            "left": "2*(X*phi_0_XX+2*phi_0_X)",
+            "time": "T[-A-1/2+lambda_0] phi_0",
+            "transport": [
+              "V_0*(phi_0_X+phi_0/X)+U_0*Z[-A-1/2+lambda_0]phi_0"
+            ]
+          },
+          "axial": {
+            "axialViscosity": "0",
+            "left": "2*(X*U_0_XX+U_0_X)",
+            "pressure": "Z[-2A+lambda_0]Pi_0",
+            "time": "T[-A+lambda_0]U_0",
+            "transport": [
+              "V_0*U_0_X+U_0*Z[-A+lambda_0]U_0"
+            ]
+          },
+          "axis": {
+            "Pi": "Pi_0(0,eta), not Pi_0(X,eta)",
+            "U": "U_0(0,eta)",
+            "phi": "phi_0(0,eta)"
+          },
+          "constructionState": "ARCHIVED_N3_SOURCE_REFERENCED",
+          "indices": {
+            "backgroundOrder": 0,
+            "etaDerivativeOrder": "independent m",
+            "radialTaylorOrder": "independent k"
+          },
+          "lambda": "2*0*h",
+          "n": 0,
+          "omega": {
+            "formula": "T[lambda_0]V_0+sum_(i+j=0)[V_i*(V_j_X-V_j/(2X))+U_i*Z[lambda_j]V_j]-2X*V_0_XX",
+            "order": 0,
+            "pairs": [
+              {
+                "i": 0,
+                "j": 0,
+                "role": "LEADING"
+              }
+            ]
+          },
+          "pairs": [
+            {
+              "i": 0,
+              "j": 0,
+              "role": "LEADING"
+            }
+          ],
+          "physicalPowers": {
+            "pressure": "-2*A+2*0*h",
+            "rUr": "2*0*h",
+            "uTheta": "-A+2*0*h",
+            "uZ": "-A+2*0*h"
+          },
+          "pressure": {
+            "derivative": "Pi_0_X",
+            "quadratic": [
+              "C^-2*phi_0*phi_0"
+            ],
+            "radialCorrection": "0"
+          },
+          "reuseGuard": null
+        },
+        {
+          "angular": {
+            "axialViscosity": "-Z[-A-1/2+lambda_0-D] Z[-A-1/2+lambda_0] phi_0",
+            "left": "2*(X*phi_1_XX+2*phi_1_X)",
+            "time": "T[-A-1/2+lambda_1] phi_1",
+            "transport": [
+              "V_0*(phi_1_X+phi_1/X)+U_0*Z[-A-1/2+lambda_1]phi_1",
+              "V_1*(phi_0_X+phi_0/X)+U_1*Z[-A-1/2+lambda_0]phi_0"
+            ]
+          },
+          "axial": {
+            "axialViscosity": "-Z[-A+lambda_0-D] Z[-A+lambda_0] U_0",
+            "left": "2*(X*U_1_XX+U_1_X)",
+            "pressure": "Z[-2A+lambda_1]Pi_1",
+            "time": "T[-A+lambda_1]U_1",
+            "transport": [
+              "V_0*U_1_X+U_0*Z[-A+lambda_1]U_1",
+              "V_1*U_0_X+U_1*Z[-A+lambda_0]U_0"
+            ]
+          },
+          "axis": {
+            "Pi": 0,
+            "U": 0,
+            "phi": 0
+          },
+          "constructionState": "NOT_SOLVED",
+          "indices": {
+            "backgroundOrder": 1,
+            "etaDerivativeOrder": "independent m",
+            "radialTaylorOrder": "independent k"
+          },
+          "lambda": "2*1*h",
+          "n": 1,
+          "omega": {
+            "formula": "T[lambda_1]V_1+sum_(i+j=1)[V_i*(V_j_X-V_j/(2X))+U_i*Z[lambda_j]V_j]-2X*V_1_XX-Z[lambda_0-D]Z[lambda_0]V_0",
+            "order": 1,
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "role": "LINEAR_CURRENT_UNKNOWN"
+              },
+              {
+                "i": 1,
+                "j": 0,
+                "role": "LINEAR_CURRENT_UNKNOWN"
+              }
+            ]
+          },
+          "pairs": [
+            {
+              "i": 0,
+              "j": 1,
+              "role": "LINEAR_CURRENT_UNKNOWN"
+            },
+            {
+              "i": 1,
+              "j": 0,
+              "role": "LINEAR_CURRENT_UNKNOWN"
+            }
+          ],
+          "physicalPowers": {
+            "pressure": "-2*A+2*1*h",
+            "rUr": "2*1*h",
+            "uTheta": "-A+2*1*h",
+            "uZ": "-A+2*1*h"
+          },
+          "pressure": {
+            "derivative": "Pi_1_X",
+            "quadratic": [
+              "C^-2*phi_0*phi_1",
+              "C^-2*phi_1*phi_0"
+            ],
+            "radialCorrection": "-Omega_0/(2X)"
+          },
+          "reuseGuard": "DO_NOT_USE_FOR_NEXT_ORDER_UNTIL_ALL_FIVE_MOMENTS_ARE_REPAIRED"
+        },
+        {
+          "angular": {
+            "axialViscosity": "-Z[-A-1/2+lambda_1-D] Z[-A-1/2+lambda_1] phi_1",
+            "left": "2*(X*phi_2_XX+2*phi_2_X)",
+            "time": "T[-A-1/2+lambda_2] phi_2",
+            "transport": [
+              "V_0*(phi_2_X+phi_2/X)+U_0*Z[-A-1/2+lambda_2]phi_2",
+              "V_1*(phi_1_X+phi_1/X)+U_1*Z[-A-1/2+lambda_1]phi_1",
+              "V_2*(phi_0_X+phi_0/X)+U_2*Z[-A-1/2+lambda_0]phi_0"
+            ]
+          },
+          "axial": {
+            "axialViscosity": "-Z[-A+lambda_1-D] Z[-A+lambda_1] U_1",
+            "left": "2*(X*U_2_XX+U_2_X)",
+            "pressure": "Z[-2A+lambda_2]Pi_2",
+            "time": "T[-A+lambda_2]U_2",
+            "transport": [
+              "V_0*U_2_X+U_0*Z[-A+lambda_2]U_2",
+              "V_1*U_1_X+U_1*Z[-A+lambda_1]U_1",
+              "V_2*U_0_X+U_2*Z[-A+lambda_0]U_0"
+            ]
+          },
+          "axis": {
+            "Pi": 0,
+            "U": 0,
+            "phi": 0
+          },
+          "constructionState": "NOT_SOLVED",
+          "indices": {
+            "backgroundOrder": 2,
+            "etaDerivativeOrder": "independent m",
+            "radialTaylorOrder": "independent k"
+          },
+          "lambda": "2*2*h",
+          "n": 2,
+          "omega": {
+            "formula": "T[lambda_2]V_2+sum_(i+j=2)[V_i*(V_j_X-V_j/(2X))+U_i*Z[lambda_j]V_j]-2X*V_2_XX-Z[lambda_1-D]Z[lambda_1]V_1",
+            "order": 2,
+            "pairs": [
+              {
+                "i": 0,
+                "j": 2,
+                "role": "LINEAR_CURRENT_UNKNOWN"
+              },
+              {
+                "i": 1,
+                "j": 1,
+                "role": "KNOWN_REPAIRED_PREVIOUS_ORDER"
+              },
+              {
+                "i": 2,
+                "j": 0,
+                "role": "LINEAR_CURRENT_UNKNOWN"
+              }
+            ]
+          },
+          "pairs": [
+            {
+              "i": 0,
+              "j": 2,
+              "role": "LINEAR_CURRENT_UNKNOWN"
+            },
+            {
+              "i": 1,
+              "j": 1,
+              "role": "KNOWN_REPAIRED_PREVIOUS_ORDER"
+            },
+            {
+              "i": 2,
+              "j": 0,
+              "role": "LINEAR_CURRENT_UNKNOWN"
+            }
+          ],
+          "physicalPowers": {
+            "pressure": "-2*A+2*2*h",
+            "rUr": "2*2*h",
+            "uTheta": "-A+2*2*h",
+            "uZ": "-A+2*2*h"
+          },
+          "pressure": {
+            "derivative": "Pi_2_X",
+            "quadratic": [
+              "C^-2*phi_0*phi_2",
+              "C^-2*phi_1*phi_1",
+              "C^-2*phi_2*phi_0"
+            ],
+            "radialCorrection": "-Omega_1/(2X)"
+          },
+          "reuseGuard": "DO_NOT_USE_FOR_NEXT_ORDER_UNTIL_ALL_FIVE_MOMENTS_ARE_REPAIRED"
+        }
+      ],
+      "sourceEquations": [
+        "5.1",
+        "5.2",
+        "5.3",
+        "5.4",
+        "5.5",
+        "5.6"
+      ]
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "background order n",
+          "name": "background order n",
+          "scale": "LINEAR",
+          "sourceField": "background order n",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "left order i",
+          "name": "left order i",
+          "scale": "LINEAR",
+          "sourceField": "left order i",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "right order j",
+          "name": "right order j",
+          "scale": "LINEAR",
+          "sourceField": "right order j",
+          "unit": "1"
+        }
+      ],
+      "description": "Ordered coefficient-convolution graph. Categorical indices, not physical space.",
+      "lines": [],
+      "lostInformation": [
+        "This graph is an executable source expression manifest, not solved coefficient functions."
+      ],
+      "points": [
+        {
+          "label": "n=0: (0,0) LEADING",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "value": 0
+        },
+        {
+          "label": "n=1: (0,1) LINEAR_CURRENT_UNKNOWN",
+          "pos": [
+            1,
+            0,
+            1
+          ],
+          "value": 0
+        },
+        {
+          "label": "n=1: (1,0) LINEAR_CURRENT_UNKNOWN",
+          "pos": [
+            1,
+            1,
+            0
+          ],
+          "value": 0
+        },
+        {
+          "label": "n=2: (0,2) LINEAR_CURRENT_UNKNOWN",
+          "pos": [
+            2,
+            0,
+            2
+          ],
+          "value": 0
+        },
+        {
+          "label": "n=2: (1,1) KNOWN_REPAIRED_PREVIOUS_ORDER",
+          "pos": [
+            2,
+            1,
+            1
+          ],
+          "value": 1
+        },
+        {
+          "label": "n=2: (2,0) LINEAR_CURRENT_UNKNOWN",
+          "pos": [
+            2,
+            2,
+            0
+          ],
+          "value": 0
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "db933c1bfc0ba3bed690bf75614464c8c9fd2f6de384d23cb7e5f487be9ddead"
+}

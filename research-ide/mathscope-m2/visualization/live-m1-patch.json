@@ -1,0 +1,37 @@
+[
+  {
+    "operation": "replace",
+    "find": "new Scene3D($('m1-scene'))",
+    "replace": "new window.MathScopeM2Visualization.SourceBoundScene($('m1-scene'))"
+  },
+  {
+    "operation": "replace",
+    "find": "function loadExample(){const ex=examples.find(e=>e.id===$('m1-example').value);if(!ex)return;",
+    "replace": "function loadExample(){const ex=examples.find(e=>e.id===$('m1-example').value);if(!ex)return;selected=null;"
+  },
+  {
+    "operation": "replace",
+    "find": "b.addEventListener('click',()=>{selected=j.id;renderResult();renderJobs();});",
+    "replace": "b.addEventListener('click',()=>{setTab(j.request.kind.split('.')[0]);selected=j.id;$('m1-input').value=pretty(j.request);text('m1-kind',j.request.kind);syncGaugeControls();renderResult();renderJobs();});"
+  },
+  {
+    "operation": "replace",
+    "find": "if(!selected)return;const j=engine.getJob(selected),r=j.result;",
+    "replace": "if(!selected){\n      const view=window.MathScopeM2Visualization.makeVisualization(null);scene.setVisualization(view);\n      text('m1-result-status','NOT_RUN');text('m1-result-description','현재 입력의 계산을 실행하세요.');\n      text('m1-result-json',{});text('m1-observation',view.description);$('m1-color-legend').hidden=true;$('m1-metrics').replaceChildren();\n      const body=$('m1-observation-rows');window.MathScopeM2Visualization.renderObservationTable(body.closest('table').querySelector('thead'),body,view);\n      document.getElementById('m1-observation-details')?.replaceChildren();$('m1-blockers').hidden=true;$('m1-delta-comparison').hidden=true;\n      text('m1-diagnostics',{});root.dataset.resultStatus='NOT_RUN';root.dataset.resultKind='';return;\n    }const j=engine.getJob(selected),r=j.result;"
+  },
+  {
+    "operation": "replace",
+    "find": "    const raw=r.visualization||r.values?.visualization;\n    let viz={points:[],lines:[],arrows:[],axes:['x','y','z']};\n    if(raw){\n      const finite3=p=>Array.isArray(p)&&p.length===3&&p.every(Number.isFinite);\n      viz={...raw,axes:Array.isArray(raw.axes)?raw.axes.map(a=>typeof a==='string'?a:a.label||a.name):['x','y','z'],points:(raw.points||[]).filter(p=>finite3(p.pos)).slice(0,6000),lines:(raw.lines||[]).filter(l=>Array.isArray(l.points)&&l.points.every(finite3)).slice(0,100),arrows:(raw.arrows||[]).filter(a=>finite3(a.pos)&&finite3(a.vector)).slice(0,2000)};\n      const values=viz.points.map(p=>numericScalar(p.value)).filter(Number.isFinite),lo=Math.min(...values),hi=Math.max(...values);viz.points=viz.points.map(p=>({...p,color:p.color||(Number.isFinite(numericScalar(p.value))?heatColor((numericScalar(p.value)-lo)/(hi-lo||1)):undefined)}));if(values.length){$('m1-color-legend').hidden=false;const quantity=raw.valueMeaning||(j.request.kind==='ns.source-inner-gluing'?'U · similarity profile':j.request.input.observation?.quantity)||'관측값';text('m1-color-range',quantity+' · 청록 '+Number(lo.toPrecision(7))+' → 주황 '+Number(hi.toPrecision(7))+' · 이 실행의 표시 표본에 대한 선형 색상 범위입니다. 실행 간 비교에는 실제 수치와 단위를 사용하세요.');}\n      if(j.request.kind.startsWith('gauge.')||['ns.exterior','ns.benchmark','ns.leading-profile'].includes(j.request.kind))viz.equalScale=true;\n      if(viz.arrows.length){const coords=viz.points.map(p=>p.pos).concat(viz.arrows.map(a=>a.pos)),span=Math.max(...[0,1,2].map(i=>Math.max(...coords.map(p=>p[i]))-Math.min(...coords.map(p=>p[i])))),magnitude=Math.max(...viz.arrows.map(a=>Math.hypot(...a.vector))),scale=magnitude?0.18*(span||1)/magnitude:1;viz.arrows=viz.arrows.map(a=>({...a,vector:a.vector.map(v=>v*scale)}));viz.arrowDisplayNote='화살표는 원래 속도에 공통 배율 '+scale.toExponential(3)+'을 적용했습니다. 실제 속도는 전체 JSON에 보존됩니다.';}\n    }\n    scene.set(viz);text('m1-observation',raw?[raw.description,typeof raw.coordinateMeaning==='string'?raw.coordinateMeaning:pretty(raw.coordinateMeaning||{}),viz.arrowDisplayNote,'보존하지 않는 정보: '+(raw.lostInformation||[]).join(' · ')].filter(Boolean).join('\\n'):'이 결과는 수치·계약·검증 자료입니다. 적용 범위와 전체 JSON을 확인하세요.');\n    $('m1-observation-rows').replaceChildren();for(let a=0;a<3;a++)text('m1-axis-'+a,viz.axes[a]||'xyz'[a]);\n    for(const [i,p] of viz.points.slice(0,100).entries()){const tr=document.createElement('tr');for(const v of [i+1,...p.pos.map(x=>Number(x.toPrecision(7))),p.value==null?'—':scalar(p.value),p.label||'']){const td=document.createElement('td');td.textContent=String(v);tr.append(td);}$('m1-observation-rows').append(tr);}\n",
+    "replace": "    const visual=window.MathScopeM2Visualization;\n    const view=visual.makeVisualization(j,{currentEditorMatches:currentEditorMatches(j),maxPoints:4000,maxRows:200});\n    scene.setVisualization(view);\n    text('m1-observation',[view.title,view.description,\n      '원본 실행: '+view.binding.jobId+' · 입력 SHA-256 '+view.binding.inputHash,\n      view.axisMetadata.map(a=>a.label+' ['+a.type+'; unit='+a.unit+'; '+a.transform+']').join(' · '),\n      view.lod.originalPoints>view.lod.displayedPoints?'표시 표본 '+view.lod.displayedPoints+' / '+view.lod.originalPoints+' · 전 구간의 결정적 LOD; 계산 원본은 유지됩니다.':'',\n      ...view.lostInformation].filter(Boolean).join('\\n'));\n    const body=$('m1-observation-rows');visual.renderObservationTable(body.closest('table').querySelector('thead'),body,view);\n    let detail=document.getElementById('m1-observation-details');if(!detail){detail=document.createElement('div');detail.id='m1-observation-details';body.closest('details').after(detail);}visual.renderObservationDetails(detail,view);\n    const range=view.color?.range;$('m1-color-legend').hidden=!range;\n    if(range)text('m1-color-range',view.color.quantity+' · '+view.color.unit+' · '+range[0]+' → '+range[1]+' · '+view.color.mode+'; 실행 간 비교에는 동일 범위와 원본 수치를 사용하세요.');\n"
+  },
+  {
+    "operation": "replace",
+    "find": "setTab(j.request.kind.split('.')[0]);$('m1-input').value=pretty(j.request);",
+    "replace": "setTab(j.request.kind.split('.')[0]);selected=j.id;$('m1-input').value=pretty(j.request);"
+  },
+  {
+    "operation": "replace",
+    "find": "if(!r){text('m1-result-description'",
+    "replace": "if(!r){document.getElementById('m1-observation-details')?.replaceChildren();text('m1-result-description'"
+  }
+]

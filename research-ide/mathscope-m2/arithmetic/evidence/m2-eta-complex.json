@@ -1,0 +1,302 @@
+{
+  "schema": "MathScope.M2.ArithmeticResult/1",
+  "version": "0.1.0-m2",
+  "kind": "arithmetic.comparison",
+  "status": "COMPLETED",
+  "object": {
+    "kind": "EXACT_ETA_COMPLEX_DIAGNOSTIC",
+    "p": "3"
+  },
+  "request": {
+    "budget": {},
+    "input": {
+      "d": "3",
+      "p": "3"
+    },
+    "kind": "arithmetic.comparison",
+    "precision": {}
+  },
+  "scope": {
+    "finite": true,
+    "rawComplex": "[Z --d--> Z] in degrees 0,1",
+    "AomegaCertified": false
+  },
+  "results": {
+    "object": {
+      "kind": "EXACT_ETA_COMPLEX_DIAGNOSTIC",
+      "p": "3"
+    },
+    "scope": {
+      "finite": true,
+      "rawComplex": "[Z --d--> Z] in degrees 0,1",
+      "AomegaCertified": false
+    },
+    "raw": {
+      "d": "3",
+      "H0": "0",
+      "H1": "Z/3Z"
+    },
+    "eta": {
+      "f": "3",
+      "degreeZeroSubmodule": "Z",
+      "degreeOneSubmodule": "3Z",
+      "dInChosenBases": "1",
+      "H0": "0",
+      "H1": "Z/1Z"
+    },
+    "checks": [
+      {
+        "name": "d maps eta^0 into eta^1",
+        "pass": true
+      },
+      {
+        "name": "the eta operation is recorded rather than omitted",
+        "pass": true
+      }
+    ],
+    "tables": [
+      {
+        "title": "Raw and eta differential",
+        "columns": [
+          "model",
+          "d"
+        ],
+        "rows": [
+          {
+            "model": "raw",
+            "d": "3"
+          },
+          {
+            "model": "eta",
+            "d": "1"
+          }
+        ]
+      }
+    ],
+    "visualization": {
+      "points": [
+        {
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "label": "raw d=3",
+          "value": {
+            "d": "3"
+          }
+        },
+        {
+          "pos": [
+            1,
+            0,
+            0
+          ],
+          "label": "eta d=1",
+          "value": {
+            "d": "1"
+          }
+        }
+      ],
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "label": "Apply eta_p to a p-torsionfree representative"
+        }
+      ],
+      "axes": [
+        {
+          "label": "Complex construction",
+          "type": "CATEGORICAL",
+          "unit": "dimensionless"
+        }
+      ],
+      "description": "Why raw Koszul cohomology cannot automatically be labelled A-omega",
+      "coordinateMeaning": "Two exact finite complexes are compared. This diagnostic is not an A-omega construction for a perfectoid torus.",
+      "lostInformation": []
+    },
+    "remainingObligations": [
+      "The actual pro-etale/group model, completion, L eta, base extension to a complete algebraic closure and the comparison theorem are still required for A-omega."
+    ]
+  },
+  "checks": [
+    {
+      "name": "d maps eta^0 into eta^1",
+      "pass": true
+    },
+    {
+      "name": "the eta operation is recorded rather than omitted",
+      "pass": true
+    }
+  ],
+  "blockers": [],
+  "tables": [
+    {
+      "title": "Raw and eta differential",
+      "columns": [
+        "model",
+        "d"
+      ],
+      "rows": [
+        {
+          "model": "raw",
+          "d": "3"
+        },
+        {
+          "model": "eta",
+          "d": "1"
+        }
+      ]
+    }
+  ],
+  "precisionLedger": {
+    "requested": {},
+    "finiteScope": {
+      "finite": true,
+      "rawComplex": "[Z --d--> Z] in degrees 0,1",
+      "AomegaCertified": false
+    },
+    "roundingError": "0 for exact integer, polynomial, finite-field and finite Witt operations; explicitly tagged complex roots are Float64 display only.",
+    "precisionAxesIndependent": true
+  },
+  "evidence": {
+    "calculation": "EXACT_FINITE_SCOPE",
+    "geometricComparison": "THEOREM_REFERENCE_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "lean": "NO_NEW_KERNEL_EXECUTION",
+    "formalComplete": false,
+    "universalConjectureSolved": false
+  },
+  "provenance": {
+    "sources": [
+      {
+        "id": "BLUEPRINT_P4_P6",
+        "kind": "USER_SUPPLIED_SPECIFICATION",
+        "pages": [
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          69,
+          70,
+          71,
+          72
+        ],
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      {
+        "id": "S01",
+        "title": "Prisms and Prismatic Cohomology",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S03",
+        "title": "Integral p-adic Hodge Theory",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/integralpadicHodge.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S04",
+        "title": "Perfectoid Spaces",
+        "url": "https://www.math.uni-bonn.de/people/scholze/PerfectoidSpaces.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S07",
+        "title": "La conjecture de Weil I",
+        "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "C01",
+        "title": "Lectures on Etale Cohomology",
+        "url": "https://www.jmilne.org/math/CourseNotes/LEC.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      }
+    ],
+    "algorithmVersion": "0.1.0-m2",
+    "inputHash": "70ae03fe916ec0df0f7d3efae26fece2ed7210bc314a28b46287194ec60a755c",
+    "sourceHash": "1b3a20e36db9b5b684589cc575003a58cd364be4d39613c5d0b6228c7cc44c93",
+    "operations": 0
+  },
+  "visualization": {
+    "points": [
+      {
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "label": "raw d=3",
+        "value": {
+          "d": "3"
+        }
+      },
+      {
+        "pos": [
+          1,
+          0,
+          0
+        ],
+        "label": "eta d=1",
+        "value": {
+          "d": "1"
+        }
+      }
+    ],
+    "lines": [
+      {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "label": "Apply eta_p to a p-torsionfree representative"
+      }
+    ],
+    "axes": [
+      {
+        "label": "Complex construction",
+        "type": "CATEGORICAL",
+        "unit": "dimensionless"
+      }
+    ],
+    "description": "Why raw Koszul cohomology cannot automatically be labelled A-omega",
+    "coordinateMeaning": "Two exact finite complexes are compared. This diagnostic is not an A-omega construction for a perfectoid torus.",
+    "lostInformation": [],
+    "sourceHash": "1b3a20e36db9b5b684589cc575003a58cd364be4d39613c5d0b6228c7cc44c93",
+    "sourceRevision": "1b3a20e36db9b5b684589cc575003a58cd364be4d39613c5d0b6228c7cc44c93",
+    "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
+    "sampling": {
+      "displayPoints": 2,
+      "originalSourceHash": "1b3a20e36db9b5b684589cc575003a58cd364be4d39613c5d0b6228c7cc44c93"
+    },
+    "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
+  },
+  "resultHash": "a9eef1e44976a609674864e544eabc1f2df5dfeb0d445efc87a787baa1431279"
+}

@@ -1,0 +1,495 @@
+{
+  "id": "ns-m2-cutoffs",
+  "request": {
+    "kind": "ns.background-cutoffs",
+    "input": {
+      "orders": 4,
+      "logPower": 2,
+      "growth": 0.4
+    }
+  },
+  "inputHash": "a1b211b6a1a70e0f67558ec07a073118c49213b682fd887a32410a3638d0f067",
+  "result": {
+    "blockers": [
+      "N4-06/08 same-profile derivative constants and all-order tail link remain to be supplied."
+    ],
+    "checks": [
+      {
+        "detail": "Exact powers of two.",
+        "id": "cutoff-doubling",
+        "pass": true
+      },
+      {
+        "detail": "Outward interval log inequality on entire q<=1/a_j, not samples.",
+        "id": "all-q-all-supplied-m",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "OUTWARD_INTERVAL_SCALAR_BOUND",
+    "kind": "ns.background-cutoffs",
+    "moduleVersion": "m2-ns-0.1.1",
+    "object": {
+      "kind": "FINITE_SHRINKING_CUTOFF_SCHEDULE"
+    },
+    "precisionLedger": {
+      "arithmetic": "OUTWARD_FLOAT64_SCALAR_INTERVALS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 80000,
+      "outputItemsEstimate": 4,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "362cfa0ca9f251a730358bbb84618cc12b72b6f02042f6c2ba0a92716f38d4e7",
+    "results": {
+      "cutoff": {
+        "definition": "chi(s)=1 for s<=1/2, chi(s)=0 for s>=1; smooth transition inside",
+        "potentialBeforeCurl": true
+      },
+      "parameters": {
+        "growth": 0.4,
+        "logPower": 2,
+        "orders": 4
+      },
+      "query": {
+        "activePositiveOrders": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "inactivePositiveOrders": [],
+        "log2q": -105,
+        "scope": "Only the supplied finite schedule. No claim about omitted infinite orders."
+      },
+      "rows": [
+        {
+          "aExact": "2^100",
+          "allQBoundPassed": true,
+          "constantScope": "USER_DECLARED_BOUND_CONSTANTS",
+          "constants": [
+            10,
+            100
+          ],
+          "inequalities": [
+            {
+              "logBound": [
+                -3.0543962430321696,
+                -3.054396243031787
+              ],
+              "m": 0,
+              "pass": true,
+              "targetLog": [
+                -0.6931471805599498,
+                -0.6931471805599403
+              ]
+            },
+            {
+              "logBound": [
+                -0.7518111500381403,
+                -0.7518111500377261
+              ],
+              "m": 1,
+              "pass": true,
+              "targetLog": [
+                -0.6931471805599498,
+                -0.6931471805599403
+              ]
+            }
+          ],
+          "j": 1,
+          "log2a": 100,
+          "logA": [
+            69.31471805599402,
+            69.31471805599499
+          ],
+          "monotonicDerivative": "P/(1+t)-g*j/2 <= 0 for t>=log(a_j)",
+          "monotonicity": {
+            "boundaryPassed": true,
+            "derivativeDecreasesBecause": "d/dt[P/(1+t)-g*j/2]=-P/(1+t)^2<=0 for P>=0",
+            "logDerivativeAtBoundary": [
+              -0.1715564528267425,
+              -0.17155645282674198
+            ],
+            "logVariable": "t=-log(q)",
+            "proofMethod": "OUTWARD_BOUNDARY_INTERVAL_PLUS_MONOTONICITY; NOT_FINITE_Q_SAMPLING",
+            "validFor": "t>=log(a_j)"
+          },
+          "validFor": "0<q<=2^(-100)"
+        },
+        {
+          "aExact": "2^101",
+          "allQBoundPassed": true,
+          "constantScope": "USER_DECLARED_BOUND_CONSTANTS",
+          "constants": [
+            100,
+            1000,
+            10000
+          ],
+          "inequalities": [
+            {
+              "logBound": [
+                -14.872394610862946,
+                -14.87239461086233
+              ],
+              "m": 0,
+              "pass": true,
+              "targetLog": [
+                -1.3862943611198997,
+                -1.3862943611198806
+              ]
+            },
+            {
+              "logBound": [
+                -12.569809517868917,
+                -12.569809517868269
+              ],
+              "m": 1,
+              "pass": true,
+              "targetLog": [
+                -1.3862943611198997,
+                -1.3862943611198806
+              ]
+            },
+            {
+              "logBound": [
+                -10.267224424874888,
+                -10.267224424874206
+              ],
+              "m": 2,
+              "pass": true,
+              "targetLog": [
+                -1.3862943611198997,
+                -1.3862943611198806
+              ]
+            }
+          ],
+          "j": 2,
+          "log2a": 101,
+          "logA": [
+            70.00786523655397,
+            70.00786523655493
+          ],
+          "monotonicDerivative": "P/(1+t)-g*j/2 <= 0 for t>=log(a_j)",
+          "monotonicity": {
+            "boundaryPassed": true,
+            "derivativeDecreasesBecause": "d/dt[P/(1+t)-g*j/2]=-P/(1+t)^2<=0 for P>=0",
+            "logDerivativeAtBoundary": [
+              -0.3718341060763169,
+              -0.3718341060763163
+            ],
+            "logVariable": "t=-log(q)",
+            "proofMethod": "OUTWARD_BOUNDARY_INTERVAL_PLUS_MONOTONICITY; NOT_FINITE_Q_SAMPLING",
+            "validFor": "t>=log(a_j)"
+          },
+          "validFor": "0<q<=2^(-101)"
+        },
+        {
+          "aExact": "2^102",
+          "allQBoundPassed": true,
+          "constantScope": "USER_DECLARED_BOUND_CONSTANTS",
+          "constants": [
+            1000,
+            10000,
+            100000,
+            1000000
+          ],
+          "inequalities": [
+            {
+              "logBound": [
+                -26.96784243590936,
+                -26.96784243590849
+              ],
+              "m": 0,
+              "pass": true,
+              "targetLog": [
+                -2.0794415416798495,
+                -2.0794415416798206
+              ]
+            },
+            {
+              "logBound": [
+                -24.665257342915332,
+                -24.66525734291443
+              ],
+              "m": 1,
+              "pass": true,
+              "targetLog": [
+                -2.0794415416798495,
+                -2.0794415416798206
+              ]
+            },
+            {
+              "logBound": [
+                -22.362672249921303,
+                -22.362672249920372
+              ],
+              "m": 2,
+              "pass": true,
+              "targetLog": [
+                -2.0794415416798495,
+                -2.0794415416798206
+              ]
+            },
+            {
+              "logBound": [
+                -20.060087156927274,
+                -20.060087156926308
+              ],
+              "m": 3,
+              "pass": true,
+              "targetLog": [
+                -2.0794415416798495,
+                -2.0794415416798206
+              ]
+            }
+          ],
+          "j": 3,
+          "log2a": 102,
+          "logA": [
+            70.7010124171139,
+            70.70101241711488
+          ],
+          "monotonicDerivative": "P/(1+t)-g*j/2 <= 0 for t>=log(a_j)",
+          "monotonicity": {
+            "boundaryPassed": true,
+            "derivativeDecreasesBecause": "d/dt[P/(1+t)-g*j/2]=-P/(1+t)^2<=0 for P>=0",
+            "logDerivativeAtBoundary": [
+              -0.5721063910734602,
+              -0.5721063910734594
+            ],
+            "logVariable": "t=-log(q)",
+            "proofMethod": "OUTWARD_BOUNDARY_INTERVAL_PLUS_MONOTONICITY; NOT_FINITE_Q_SAMPLING",
+            "validFor": "t>=log(a_j)"
+          },
+          "validFor": "0<q<=2^(-102)"
+        },
+        {
+          "aExact": "2^103",
+          "allQBoundPassed": true,
+          "constantScope": "USER_DECLARED_BOUND_CONSTANTS",
+          "constants": [
+            10000,
+            100000,
+            1000000,
+            10000000,
+            100000000
+          ],
+          "inequalities": [
+            {
+              "logBound": [
+                -39.340736050969106,
+                -39.34073605096798
+              ],
+              "m": 0,
+              "pass": true,
+              "targetLog": [
+                -2.7725887222397994,
+                -2.772588722239761
+              ]
+            },
+            {
+              "logBound": [
+                -37.03815095797507,
+                -37.03815095797392
+              ],
+              "m": 1,
+              "pass": true,
+              "targetLog": [
+                -2.7725887222397994,
+                -2.772588722239761
+              ]
+            },
+            {
+              "logBound": [
+                -34.73556586498105,
+                -34.73556586497987
+              ],
+              "m": 2,
+              "pass": true,
+              "targetLog": [
+                -2.7725887222397994,
+                -2.772588722239761
+              ]
+            },
+            {
+              "logBound": [
+                -32.43298077198701,
+                -32.432980771985804
+              ],
+              "m": 3,
+              "pass": true,
+              "targetLog": [
+                -2.7725887222397994,
+                -2.772588722239761
+              ]
+            },
+            {
+              "logBound": [
+                -30.130395678992983,
+                -30.130395678991746
+              ],
+              "m": 4,
+              "pass": true,
+              "targetLog": [
+                -2.7725887222397994,
+                -2.772588722239761
+              ]
+            }
+          ],
+          "j": 4,
+          "log2a": 103,
+          "logA": [
+            71.39415959767385,
+            71.39415959767484
+          ],
+          "monotonicDerivative": "P/(1+t)-g*j/2 <= 0 for t>=log(a_j)",
+          "monotonicity": {
+            "boundaryPassed": true,
+            "derivativeDecreasesBecause": "d/dt[P/(1+t)-g*j/2]=-P/(1+t)^2<=0 for P>=0",
+            "logDerivativeAtBoundary": [
+              -0.7723734620152395,
+              -0.7723734620152386
+            ],
+            "logVariable": "t=-log(q)",
+            "proofMethod": "OUTWARD_BOUNDARY_INTERVAL_PLUS_MONOTONICITY; NOT_FINITE_Q_SAMPLING",
+            "validFor": "t>=log(a_j)"
+          },
+          "validFor": "0<q<=2^(-103)"
+        }
+      ],
+      "tailContract": {
+        "J": 2,
+        "uncomputedHigherConstants": true,
+        "valid": true,
+        "validDomain": "q<2^(-102)"
+      }
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "order j",
+          "name": "order j",
+          "scale": "LINEAR",
+          "sourceField": "order j",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "log2(a_j)",
+          "name": "log2(a_j)",
+          "scale": "LINEAR",
+          "sourceField": "rows.log2a",
+          "unit": "log2"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "0",
+          "name": "0",
+          "scale": "LINEAR",
+          "sourceField": "0",
+          "unit": "1"
+        }
+      ],
+      "description": "Certified scalar cutoff inequality for the supplied constants.",
+      "lines": [
+        {
+          "points": [
+            [
+              1,
+              100,
+              0
+            ],
+            [
+              2,
+              101,
+              0
+            ],
+            [
+              3,
+              102,
+              0
+            ],
+            [
+              4,
+              103,
+              0
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "The supplied constants have not been derived from the archived N3 profile.",
+        "Only a finite schedule is instantiated."
+      ],
+      "points": [
+        {
+          "label": "a_1=2^100",
+          "pos": [
+            1,
+            100,
+            0
+          ],
+          "value": 100
+        },
+        {
+          "label": "a_2=2^101",
+          "pos": [
+            2,
+            101,
+            0
+          ],
+          "value": 101
+        },
+        {
+          "label": "a_3=2^102",
+          "pos": [
+            3,
+            102,
+            0
+          ],
+          "value": 102
+        },
+        {
+          "label": "a_4=2^103",
+          "pos": [
+            4,
+            103,
+            0
+          ],
+          "value": 103
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "0f8429db5bf0b3d990b2e3ca92de4242b558a1e3ff1341530a7b6f638579a7ba"
+}

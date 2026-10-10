@@ -1,0 +1,671 @@
+// Generated from the unmodified original 64 criteria and scoped domain evidence.
+export const CHECKLIST = [
+  {
+    "id": "P4-01",
+    "title": "ℙⁿ의 고차원 모델을 일반화한다",
+    "criteria": "n=0..8 화면 범위를 제공하고, 수학 명세는 모든 n∈ ℕ를 대상으로 둔다. H^{2i}= ℤ_p의 생성자·F=p^i와 odd vanishing을\nfinite-perfect 비교 모델에 연결한다. 합격: n=0,1,2,4,8에서 degree 0..2n이 정확하다. 화면 n 범위를 전체 정리의 증명 범\n위와 혼동하지 않는다. 고차원 cup/E∞ 정보는 별도 certificate가 필요하다.",
+    "sourcePage": 28,
+    "status": "PARTIAL",
+    "implementedScope": "Exact even-degree Tate/cohomology observations and external references are implemented; no full high-dimensional prismatic chain-comparison certificate is generated.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P4-02",
+    "title": "타원곡선의 smoothness와 bad-prime 경계를 검사한다",
+    "criteria": "E:y²=x³−x의 판별식 64와 infinity chart를 포함한다. p=2에서는 현재 smooth-crystalline 경로를 중지한다. 다른 모형은 최\n소모형 변환과 Jacobian 조건을 검사한다. 합격: p=5,7은 smooth proper lift 허용. a= −81인 스케일 모형의 p=3 판별식\n만 보고 곡선 자체가 bad라고 확정하지 않고 최소화 필요 상태로 남긴다.",
+    "sourcePage": 28,
+    "status": "PASS",
+    "implementedScope": "Good reduction and bad/nonminimal boundaries are checked for the supported short Weierstrass models, with infinity included in counts.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P4-03",
+    "title": "점계수 oracle을 독립적으로 만든다",
+    "criteria": "작은 p에서는 모든 (x,y)를 열거하고 projective infinity를 더한다. p^m 확장은 명시한 irreducible polynomial의 유한체\n를 이용하여 별도 열거한다. 합격: (p,#E,a_p)=(3,4,0),(5,8,−2),(7,8,0),(11,12,0),(13,8,6),(17,16,2). p=3,m=2에서\n#E(𝔽₉)=16.",
+    "sourcePage": 28,
+    "status": "PASS",
+    "implementedScope": "Explicit finite fields with irreducibility checks support exact extension counts and an independent all-pairs oracle.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P4-04",
+    "title": "Frobenius 수치 backend를 제한된 범위부터 연다",
+    "criteria": "우선 p≥5인 good elliptic curve에 대해 Kedlaya/Monsky-Washnitzer 방식을 선택한다. 역원·분모 감소와 working\nprecision→output precision의 손실을 certificate에 남긴다. 합격: S06의 reduction bound를 충족한 출력만 사용한다.\nMW의 rational Frobenius matrix를 integral prismatic complex 전체로 승격하지 않는다. p=2·미지원 확장체는 명시적으\n로 미지원 처리한다.",
+    "sourcePage": 28,
+    "status": "PARTIAL",
+    "implementedScope": "A Kedlaya/Monsky-Washnitzer numerical Frobenius backend is not installed; it is explicitly UNSUPPORTED.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P4-05",
+    "title": "p-adic 값에서 정수 특성다항식을 복원한다",
+    "criteria": "q=p^a 에 서 semilinear p-Frob 의 행 렬 M 으 로 q-Frob=M σ(M)…σ^{a−1} (M) 을 만 든 다. coefficient bound B_j 와\np^N>2B_j를 이용해 각 정수 계수를 유일 복원한다. 합격: 복원 상계가 부족하면 ambiguous로 남는다. E,p=5에서는\nX²+2X+5, p=7에서는 X²+7이 point-count oracle과 일치해야 한다.",
+    "sourcePage": 28,
+    "status": "PARTIAL",
+    "implementedScope": "Exact bounded residue reconstruction is implemented; semilinear matrix iteration over extension coefficient rings remains unsupported.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P4-06",
+    "title": "Newton slope와 Hodge degree를 함께 표시한다",
+    "criteria": "복원된 다항식의 계수 valuation으로 Newton polygon을 계산한다. 복소 절댓값, p-adic slope, Hodge degree는 별도\n축·패널로 둔다. 합격: p=5의 H¹ slopes=(0,1), p=7의 slopes=(1/2,1/2). 두 H¹ 차원이 모두 2임을 유지한다. 복소\neigenvalue의 각도로 p-adic valuation을 계산하는 요청은 거부한다.",
+    "sourcePage": 28,
+    "status": "PASS",
+    "implementedScope": "Exact Newton polygons, rational root valuations, separate complex-eigenvalue display and Hodge metadata are implemented.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P4-07",
+    "title": "국소 zeta와 extension-degree trace를 검증한다",
+    "criteria": "Z(X,T)=∏det(1−TF_i)^{(−1)^{i+1}}를 산출하고 점계수와 대조한다. E에는 S ₀=2,S₁=a_p,S_m=a_pS_{m−1}−pS_{m−2},\nN_m=p^m+1−S_m을 사용한다. 합격: p∈{3,5,7}, m=1..4의 직접 계산/독립 정밀도 oracle과 일치. m은 체 확장 차수이\n고 기하 차원 n이 아님을 내보낸다.",
+    "sourcePage": 28,
+    "status": "PASS",
+    "implementedScope": "Local determinant factors and extension trace recurrence are cross-checked against independent finite-field enumeration.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P4-08",
+    "title": "실제 global ζ 연결을 첫 정리로 만든다",
+    "criteria": "모 든 p 의 ℙⁿ 국 소 인 자 를 조 립 해 ζ(ℙⁿ_ℤ,s)=∏_{i=0}ⁿζ(s−i) 를 얻 는 과 정 을 기 록 한 다. good E/ ℤ[1/ S] 에 는\nζ(ℰ,s)=ζ^S(s)ζ^S(s−1)/ L^S(E,s) 를 별 도 정 리 로 둔 다. 합 격: 유 한 Euler-product 항 등 식 을 정 확 히 확 인 한 뒤 무 한\n곱에는 각각 Re(s)>n+1, Re(s)>2의 수렴 증거를 요구한다. 이 항등식에서 classical RH 또는 BSD의 일반 증명을 자동 출력하\n지 않는다.",
+    "sourcePage": 28,
+    "status": "PARTIAL",
+    "implementedScope": "Finite polynomial regrouping and explicit infinite-product domains/references are provided; no new complete infinite-product theorem is kernel checked.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P5-01",
+    "title": "q-prism과 q-PD base를 별도 객체로 만든다",
+    "criteria": "h=q−1의 형식 멱급수, [p]_q=1+q+…+q^{p−1}, δ(q)=0를 지원한다. (q −1)과 ([p]_q)를 혼동하지 않고 (p,h) 정밀도를 따\n로 기록한다. 합격: p=3에서 [3]_{1+h}=3+3h+h²를 정확히 얻는다. 실수 q 슬라이더 값을 근거 없이 p-adic specialization\n으로 받아들이지 않는다.",
+    "sourcePage": 30,
+    "status": "PASS",
+    "implementedScope": "Formal q-prism and q-PD ideal metadata are distinct; exact [p]_(1+h) is computed and real q substitution is rejected.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P5-02",
+    "title": "framed q-미분과 Koszul complex를 구성한다",
+    "criteria": "p-completely étale coordinates를 가진 algebra에서 ∇_{q,i}의 가환성을 검사한다. ∇_q(T^m)=[m]_qT^{m −1}와 q-\nLeibniz 규칙을 사용한다. 합격: m=1..8, 두 변수 monomial에 대해 d²=0. ordinary Leibniz를 가정한 commutative DGA\ncertificate는 거부한다.",
+    "sourcePage": 30,
+    "status": "PASS",
+    "implementedScope": "Two-variable framed monomial q-Koszul blocks, d-squared-zero and twisted q-Leibniz are exact over Z[h].",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P5-03",
+    "title": "R과 Frobenius-base-changed R^(1)을 구분한다",
+    "criteria": "첫 범 위 는 p-completely smooth R/ ℤ_p 와 고 정 framing 으 로 제 한 한 다. S01 §16 의 q-crystalline 비 교 를 통 해\nX=Spf(R⊗ℤ_pℤ_p[ζ_p])의 상대 prismatic complex와 연결한다. 합격: A/I, R, R^(1), 비교 map의 base homomor-\nphism이 명세에 있어야 한다. framing만 가진 임의 singular algebra는 이 경로로 승인하지 않는다.",
+    "sourcePage": 30,
+    "status": "PARTIAL",
+    "implementedScope": "Typed R/R^(1)/base-map obligations are exposed; a local comparison certificate has not been constructed.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P5-04",
+    "title": "좌표 변경을 실제 chain comparison으로 검사한다",
+    "criteria": "T와 T+1의 두 framing을 첫 사례로 택하고 공통 q-PD Čech 모델 또는 명시적 quasi-isomorphism을 구성한다. cone의\nacyclicity 또는 homotopy equivalence를 인증한다. 합격: 특정 precision에서 Betti 수가 같다는 결과만으로 coordinate\nindependence를 승인하지 않는다. 표시상 동일 모델 여부는 비교 certificate 유무에 따른다.",
+    "sourcePage": 30,
+    "status": "PARTIAL",
+    "implementedScope": "The T versus T+1 differential discrepancy is computed; a chain homotopy/common q-PD comparison remains to be built.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P5-05",
+    "title": "q=1과 q= ζ_p를 다른 비교로 제공한다",
+    "criteria": "q=1 specialization은 q-de Rham에서 ordinary de Rham으로 가는 경로로 구현한다. untwisted A/I reduction과 φ-\ntwisted de Rham comparison을 서로 다른 map으로 표시한다. 합격: ∇_q(T^m)|_{q=1}=mT^{m−1}. q= ζ_p를 곧바로\nordinary de Rham specialization이라고 부르는 assertion은 실패한다.",
+    "sourcePage": 30,
+    "status": "PASS",
+    "implementedScope": "q=1 and cyclotomic specializations are distinct and computed on exact polynomials; false ordinary-de-Rham identification is blocked.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P5-06",
+    "title": "BK prism의 가장 작은 fixture를 만든다",
+    "criteria": "먼저 k=𝔽₃,K=ℚ₃,π=3,E(u)=u−3를 입력하고 point X=Spf ℤ₃의 상대 complex A[0]을 만든다. 일반 E에는 Eisenstein 조건\n과 δ(E)의 단위성을 검사한다. 합격: δ(u−3)=3u²−9u+8, mod3 값이 2다. φ(u)=u³, φ(coefficients)=Witt Frobenius가\n기록되어야 한다.",
+    "sourcePage": 30,
+    "status": "PASS",
+    "implementedScope": "Eisenstein BK point inputs and exact delta(E) are implemented, including E=u-3 and its unit residue.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P5-07",
+    "title": "BK base-change와 twist를 검증한다",
+    "criteria": "u→0의 crystalline 경로와 A→A/I의 Hodge-Tate 경로, φ-twisted de Rham 경로를 구별한다. uniformizer 변경은 그 자\n체의 비교 certificate를 요구한다. 합격: u→π와 φ 이후 u→ π^p를 같은 map으로 저장할 수 없다. ℙ¹의 BK Tate twist\nFrobenius 계수를 임의로 p라 정하는 fixture는 거부한다.",
+    "sourcePage": 30,
+    "status": "PARTIAL",
+    "implementedScope": "Three base-map images are distinguished and unsupported Tate multipliers/changes are rejected; full BK comparison certificates remain.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P5-08",
+    "title": "한 affine에서 실제 derived descent까지 진행한다",
+    "criteria": "q-PD envelope와 작은 Čech-Alexander complex를 만들고 overlap·triple overlap의 coherent comparison을 저장한다.\n모듈 complex와 multiplicative/E∞ structure의 완료 범위를 분리한다. 합격: 최소 2개 affine cover의 gluing cocycle와 d²\n를 검증한다. global/ramified 일반ization이 정리 적용 범위를 넘으면 RESEARCH OPEN 또는 MODEL DEVELOPMENT로\n남긴다.",
+    "sourcePage": 30,
+    "status": "PARTIAL",
+    "implementedScope": "Coherent multi-affine q-PD derived descent is not implemented.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P6-01",
+    "title": "첫 perfectoid 예제를 고정한다",
+    "criteria": "K=완비화(∪_m ℚ_p(p^{1/p^m}))에서 compatible roots를 고정하고 p=3을 첫 fixture로 삼는다. torus p-power tower\n의 완비화, valuation, theorem-backed perfectoid 증명 경로를 저장한다. 합격: 일반 ℙⁿ_K 또는 유한 root level을 바로\nperfectoid라고 부를 수 없다. base의 valuation·pseudo-uniformizer·완비화가 빠지면 거부한다.",
+    "sourcePage": 32,
+    "status": "PARTIAL",
+    "implementedScope": "The symbolic standard completed base, valuation and pseudo-uniformizer are recorded with external references; effective torus arithmetic is incomplete.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P6-02",
+    "title": "무한 계와 유한 관측을 분리한다",
+    "criteria": "root-depth M, valuation precision V, Witt length N을 갖는 finite view를 만들고 refinement/reduction maps를 저장\n한다. 단순한 배열 끝을 무한 역극한의 끝으로 표시하지 않는다. 합격: M=2,3,4의 compatible roots를 축소하면 일치한다.\nroot를 한 단계 누락하면 Frobenius inverse의 인증이 끊겨야 한다.",
+    "sourcePage": 32,
+    "status": "PASS",
+    "implementedScope": "Independent root depth, valuation cutoff and Witt length plus exact compatible-prefix/refinement bookkeeping are implemented.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P6-03",
+    "title": "tilt의 연산과 sharp map을 구현 계약에 둔다",
+    "criteria": "R/p에서 Frobenius-compatible sequence를 다루고 sharp의 lift 독립성과 수렴 정밀도를 요구한다. tilt와 untilt의 덧셈을\n임의로 같은 좌표 덧셈이라 구현하지 않는다. 합격: x_{m+1}^p=x_m 관계 및 refinement 합치성을 확인한다. 실수/복소 그\n림의 근접성을 p-adic 수렴 인증서로 사용할 수 없다.",
+    "sourcePage": 32,
+    "status": "PARTIAL",
+    "implementedScope": "Sharp is explicit only on the selected compatible uniformizer; general tilt operations and sharp error certification remain.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P6-04",
+    "title": "Witt 연산과 Frobenius를 인증한다",
+    "criteria": "Teichmüller representatives, Witt addition/multiplication, φ([x])=[x^p]를 정확한 universal polynomial 또는 검증된 라\n이브러리 경로로 다룬다. 합격: W₂(𝔽₃)≅ℤ/9에서 1+1+1=3≠0. Witt 좌표의 componentwise 덧셈으로 0을 내는 구현은\n실패한다.",
+    "sourcePage": 32,
+    "status": "PARTIAL",
+    "implementedScope": "Exact W_N(F_p) arithmetic is implemented; Witt arithmetic over the full tilt coefficient ring remains unsupported.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P6-05",
+    "title": "θ와 kernel generator를 실제 base에 묶는다",
+    "criteria": "선택한 untilt에 대한 θ, ξ 및 ξ의 distinguished/nonzerodivisor 근거를 저장한다. ξ는 선택에 의존할 수 있으므로 ring 해시\n와 함께 관리한다. 합격: θ(ξ)=0과 A_inf/( ξ)≅R의 인증 범위를 제시한다. θ와 φ가 무조건 같은 base endomorphism으로\ncommute한다고 요구하지 않는다.",
+    "sourcePage": 32,
+    "status": "PARTIAL",
+    "implementedScope": "The selected theta/xi witness is bound to a base hash and an external theorem; a general computational theta/kernel certificate is incomplete.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P6-06",
+    "title": "A Ω와 단순 de Rham·group complex를 구별한다",
+    "criteria": "pro-étale/group-cohomology 모델의 L η, 거의 동형, torsion-free replacement를 명세한다. S03의 A Ω 정리를 사용할 때\n는 C=K의 완비 대수폐포로 base extension하고 그 map을 기록하여 완비 대수폐쇄 base 조건을 충족한다. 합격: Lη를 생략\n한 raw Koszul complex는 A Ω_CERTIFIED가 될 수 없다. S03의 해당 comparison과 입력 가정이 certificate에 포함되어야\n한다.",
+    "sourcePage": 32,
+    "status": "PARTIAL",
+    "implementedScope": "An exact eta-complex diagnostic is implemented; the actual pro-etale/group model, complete algebraic closure base change and A-omega certificate remain.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P6-07",
+    "title": "perfect-prism 비교사상의 방향과 조건을 검사한다",
+    "criteria": "perfect-prism 대응 및 étale·de Rham·crystalline 경로를 base change, completion, inversion, Frobenius fixed-points\n의 순서로 기록한다. 합격: étale 경로는 perfect base 등 적용 가정과 I inversion/derived fixed points를 누락하면 실패한\n다. modp 그림만으로 ℤ_p étale cohomology 전체를 결정하지 않는다.",
+    "sourcePage": 32,
+    "status": "PARTIAL",
+    "implementedScope": "Perfect-prism comparison requirements are exposed through theta metadata; a composable derived comparison-map backend remains.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "P6-08",
+    "title": "실계산 가능 범위와 후속 관문을 공개한다",
+    "criteria": "지원하는 standard tower 및 finite observations를 먼저 출시 기준으로 삼는다. arbitrary perfectoid algebra, 효과\n적 인 descent, 일 반 A_inf module 의 유 한 presentation 산 출 은 각 기 별 도 작 업 으 로 남 긴 다. 합 격: 지 원 밖 입 력 은\nUNSUPPORTED, 정리상 존재하지만 algorithm 미완료면 MODEL DEVELOPMENT, 새 수학명제가 필요하면 RESEARCH\nOPEN으로 서로 다른 상태를 반환한다.",
+    "sourcePage": 32,
+    "status": "PASS",
+    "implementedScope": "Unsupported adapters, model-development obligations and open research claims are reported separately without fake certification.",
+    "testStatus": "BOUNDED_IMPLEMENTATION_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "Y3-01",
+    "title": "격자와 단위를 명세",
+    "criteria": "Ns,Nt,as,at,공간·시간 경계, anisotropy, 저장 표현을 지정한다. 사이트 수와 연속 G link 자유도 수를 구별한다. 합격: 물리\n길이 L=Ns as, T=Nt at와 V=Ns³Nt를 계산한다. 격자 간격·부피·표현 차원이 없는 데이터의 continuum 비교를 거부한다.",
+    "sourcePage": 42,
+    "status": "PASS",
+    "implementedScope": "Ns, Nt, spatial/Euclidean-time spacing and boundaries, anisotropy, representation, physical extents, site count and continuous group degrees of freedom are distinct.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y3-02",
+    "title": "링크 방향과 parallel transport를 통일",
+    "criteria": "Uxy는 y fibre에서 x fibre로의 사상으로 정하고 Uyx=Uxy⁻¹로 둔다. A로부터 만들 때 transport의 부호·path ordering을 고\n정한다. 합격: 역방향 경로 곱이 원래 곱의 역원이며 빈 경로는 1이다. midpoint exp 근사를 정확한 continuum holonomy\n로 표기하지 않는다.",
+    "sourcePage": 42,
+    "status": "PASS",
+    "implementedScope": "Oriented group products, inverse and empty paths use U_xy:y→x. Classical links retain ordered-midpoint approximation and refinement diagnostics.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y3-03",
+    "title": "Plaquette와 Wilson loop 계산",
+    "criteria": "Up=Ux,x+μ Ux+μ,x+μ+ν Ux+ν,x+μ+ν⁻¹ Ux,x+ ν⁻¹을 고정된 orientation으로 만든다. 합격: 평탄 configuration에서\ncontractible plaquette가 1이다. identity links와 중심 holonomy fixture를 구분하고 비가환 곱 순서 오류를 잡는다.",
+    "sourcePage": 42,
+    "status": "PASS",
+    "implementedScope": "Actual ordered plaquettes, arbitrary signed paths, identity, pure gauge and nontrivial central temporal holonomy fixtures.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y3-04",
+    "title": "게이지 공변성과 불변성을 확인",
+    "criteria": "Uxy′=Ωx Uxy Ωy⁻¹를 적용한다. 닫힌 경로 holonomy는 기준점에서 conjugation되고 character는 불변이다. 합격: 일반\nGroup의 경로 telescoping을 정확히 증명한다. 임의 사이트 gauge transformation의 loop trace·총 작용 변화가 float64\n작은 fixture에서 정규화 잔차 10⁻¹ ⁰ 이하이다.",
+    "sourcePage": 42,
+    "status": "PASS",
+    "implementedScope": "Site-wise transformation recomputes every plaquette and the total action. M1 lawful-group adjacent telescoping theorem is reused with its historical audit; no new browser kernel execution.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y3-05",
+    "title": "일반 G의 Wilson 작용 구성",
+    "criteria": "Sβ,R=βΣp[1−Re χR(Up)/dim R], β≥0를 사용한다. β↔g₀ 및 anisotropic 계수는 B_G와 trace index에서 유도한다. 합격:\nunitary R에 대해 각 항은 [0,2 β], 따라서 0≤S≤2 βNp이다. 작용 표현 변경 시 coupling 의미를 재산정하고 기존 scale 설정\n을 무효화한다.",
+    "sourcePage": 42,
+    "status": "PASS",
+    "implementedScope": "Wilson real character for every shipped faithful group representation; basic invariant form determines bare coupling and anisotropic coefficients.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y3-06",
+    "title": "곡률·에너지·위상량의 이산화를 표시",
+    "criteria": "plaquette/clover 등 측정법과 a의 차수를 명시한다. 위상 전하 추정값과 정수 위상 인증을 분리한다. 합격: 매끄러운 장에서\nas,at를 줄이면 지정한 연속량에 수렴한다. 거친 격자의 실수 Q 값을 반올림만 하여 정확한 정수 불변량으로 선언하지 않는다.",
+    "sourcePage": 42,
+    "status": "PARTIAL",
+    "implementedScope": "Actual Lie-projected plaquette/clover curvature, energy and unrounded charge are measured. A local BPST refinement oracle is available; general continuum/topological convergence is not certified.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y3-07",
+    "title": "고전장→링크 변환의 오차 예산",
+    "criteria": "Y2 해를 path integration으로 격자화하고 미분 방식과 비교한다. 경계·사다리꼴 적분·행렬 exponential 오차를 따로 기록\n한다. 합격: ρ/a를 늘리는 refinement fixture에서 오차 감소를 확인한다. 다른 G·representation에 오차 기준을 근거 없이\n재사용하지 않는다.",
+    "sourcePage": 42,
+    "status": "PARTIAL",
+    "implementedScope": "Actual M1 field→link midpoint transport, trapezoidal comparison and exponential/group residuals. No general certified boundary or integration-error bound is claimed.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y3-08",
+    "title": "계산 크기와 데이터 전송 제어",
+    "criteria": "대략 4VdR² 복소수 저장량을 사전에 산정하고 sparse·chunk·LOD를 설계한다. 원본 링크와 화면용 축약본을 분리한다. 합\n격: 메모리 한도를 넘으면 크기를 제안하고 원본을 몰래 축소하지 않는다. 화면 LOD 변경은 ensemble·작용 값·proof source\nhash를 바꾸지 않는다.",
+    "sourcePage": 42,
+    "status": "PASS",
+    "implementedScope": "Source allocation and JSON budgets checked before constructing arrays; raw links remain complete while x4 slice/stride changes only the observation hash.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y4-01",
+    "title": "유한 격자 확률측도를 정의",
+    "criteria": "정규화된 Haar 곱측도와 연속 Wilson 작용으로 Z와 기대값을 정의한다. 수치 샘플이 이 측도의 근사임을 기록한다. 합격:\nβ≥0에서 e^(−2βNp)≤Z≤1이라는 유한 모델 경계를 도출한다. 이 유한 Z 존재를 R ⁴ 양자장 존재로 표기하지 않는다.",
+    "sourcePage": 44,
+    "status": "PASS",
+    "implementedScope": "The finite normalized Haar-product Gibbs measure has an explicit positive partition-function bound; underflow is recorded in log scale.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y4-02",
+    "title": "군별 갱신 알고리즘 지정",
+    "criteria": "SU(N)은 검증된 SU(2) 부분군 update를 검토하고, 일반 G는 대칭 Lie algebra exponential proposal 및 Metropolis를 설\n계한다. 합격: 수락비가 목표 작용 차이와 일치하고 proposal symmetry 또는 Hastings 비율을 확인한다. 모든 방향을 탐색\n한다는 근거가 없으면 ergodic 판정을 보류한다.",
+    "sourcePage": 44,
+    "status": "PASS",
+    "implementedScope": "Full SU(2) Haar or symmetric full-basis Lie exponential random-scan Metropolis; target action difference and proposal symmetry are explicit.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y4-03",
+    "title": "샘플러의 작은 사례 검사",
+    "criteria": "단일 링크·작은 격자의 독립 quadrature/긴 reference chain과 비교하고 pure gauge fixture를 재사용한다. 합격: 관측 평\n균이 사전 정의한 오차 구간에서 reference와 맞는다. 고정 seed 재현성만으로 올바른 분포 sampling을 승인하지 않는다.",
+    "sourcePage": 44,
+    "status": "PARTIAL",
+    "implementedScope": "Independent SU(2) one-link angular quadrature and product-Haar beta=0 lattice tests. Nonzero-beta multi-link and other-group quantitative reference validation remain open.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y4-04",
+    "title": "열평형과 독립 반복 확인",
+    "criteria": "hot/cold starts, burn-in, acceptance, action·loop·topology history를 기록한다. topology freezing을 별도 검사한다.\n합격: 초기 상태별 결과와 구간별 평균이 진단 기준을 통과한다. 표본 수가 커도 chain이 정체되면 연구용 정량 결과를 미완료\n로 표시한다.",
+    "sourcePage": 44,
+    "status": "PARTIAL",
+    "implementedScope": "Independent starts, warmup, acceptance, action/loop/topology history and segment/replica diagnostics are implemented; finite short chains do not certify equilibration or topological-sector mixing.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y4-05",
+    "title": "상관을 반영한 통계 오차",
+    "criteria": "관측량별 integrated autocorrelation time과 effective sample size를 계산하고 Γ-method 또는 적절한 binning/bootstrap\n을 사용한다. 합격: 오차 계산의 window·bin·replica 설정을 저장한다. raw sample 수를 독립 표본 수로 사용하거나 작은\nESS의 신뢰구간을 확정값으로 표시하지 않는다.",
+    "sourcePage": 44,
+    "status": "PASS",
+    "implementedScope": "Per-observable autocorrelation window, tau_int, ESS and batch-mean cross-check; insufficient ESS and constant/stalled series do not receive a confidence interval.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y4-06",
+    "title": "Reflection positivity 적용 가능성 조사",
+    "criteria": "선택한 작용·시간 반사·경계·observable algebra를 알려진 정리의 가정에 매핑한다. 새로운 개선·비국소 항은 별도 검토한\n다. 합격: 출처 정리와 대응표가 있어야 외부 정리 적용 상태를 준다. 숫자로 만든 양의 상관행렬 몇 개는 전체 reflection\npositivity 증명이 아니다.",
+    "sourcePage": 44,
+    "status": "OPEN",
+    "implementedScope": "Model-specific reflection-positivity theorem/observable-algebra/boundary mapping is not complete. No numerical matrix is promoted to a proof.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y4-07",
+    "title": "전달 연산자와 유한 절단 구별",
+    "criteria": "유한 공간 격자도 연속 compact G이면 보통 gauge-invariant L²(G^edges) 공간이 무한차원이다. Peter-Weyl/표현 cutoff\n또는 cubature를 별도 선언한다. 합격: finite-matrix 표시는 cutoff·기저·Gauss 제약·오차가 있을 때만 허용한다. 절단이\npositivity·unitarity·게이지 대칭을 보존하는지 별도 확인한다.",
+    "sourcePage": 44,
+    "status": "OPEN",
+    "implementedScope": "Infinite-dimensional gauge-invariant L² group Hilbert space is explicitly identified. No finite transfer matrix is fabricated without cutoff, basis, Gauss constraints and error controls.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "Y4-08",
+    "title": "앙상블과 관측 revision 봉인",
+    "criteria": "G·작용·β·a·부피·경계·seed·algorithm revision·flow 설정·샘플 목록을 manifest로 내보낸다. 합격: 설정 변경 시 재시뮬레\n이션 또는 명시된 재가중 오차 검증이 필요하다. 다른 Δ 표제 아래 같은 샘플을 새 양자 상태라고 조용히 재사용하지 않는다.",
+    "sourcePage": 44,
+    "status": "PASS",
+    "implementedScope": "Group/action/beta/spacing/volume/boundary, algorithm, seed, starts, flow=null, retained sample hashes and final raw configurations are sealed; source versus observation revisions are distinct.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "N4-01",
+    "title": "차수와 기호 충돌 분리",
+    "criteria": "λn=2nh, En,Un,Vn,Πn와 scalar φn을 구분한다. η의 Fourier 차수·radial analytic 차수·배경 차수를 서로 다른 인덱스로 둔\n다. 합격: (5.1)의 q 지수와 E_n=√(2X) φn/C를 자동 단위 검사한다. Π0의 axis trace와 전체 pressure profile을 혼동하면\n실패다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "Distinct background/radial/eta indices, source exponents and zero positive-order axis-data declarations are generated. Evaluated same-profile units and pressure reconstruction are not yet certified.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N4-02",
+    "title": "비선형 convolution 생성",
+    "criteria": "(5.3)-(5.6)의 모든 i+j=n 곱을 생성한다. i=0,n 및 n,0은 현재 미지수에 선형이고 나머지는 확정된 이전 차수다. 합격: n=1,2\n의 직접 PDE 대입 결과와 coefficient extractor가 일치한다. axial viscosity의 n −1 shift와 압력 Ωn−1/(2X)를 반드시 포함\n한다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "All ordered i+j=n source terms and the n-1 viscosity/pressure shift are generated. Independent direct-PDE substitution of solved same-profile coefficients remains open.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N4-03",
+    "title": "차수별 inner Picard 풀이",
+    "criteria": "(5.7)의 6성분 선형계와 (5.8)의 convergent Picard series를 사용하고 영 axis datum을 유지한다. 합격: 선택 analytic\nstrip·Cn·Cauchy radius loss를 기록하고 Picard tail를 상계한다. 반경 interval은 차수에 따라 임의 축소하지 않으며 lemma\n의 공통 interval 조건을 검사한다.",
+    "sourcePage": 58,
+    "status": "OPEN",
+    "implementedScope": "No same-profile six-component Picard solver with common analytic domain and certified tails is installed.",
+    "testStatus": "NOT_IMPLEMENTED",
+    "formalComplete": false
+  },
+  {
+    "id": "N4-04",
+    "title": "차수별 radial cutoff와 모멘트 복구",
+    "criteria": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
+    "sourcePage": 58,
+    "status": "OPEN",
+    "implementedScope": "Positive-order coefficient extension and five exact total-moment corrections are not installed. The next-order reuse guard remains closed.",
+    "testStatus": "NOT_IMPLEMENTED",
+    "formalComplete": false
+  },
+  {
+    "id": "N4-05",
+    "title": "유한 배경 잔차 검증",
+    "criteria": "Fslow=R+div T를 직접 계산하고 (5.25)의 q^[2h(N+1) −Km] bound와 비교한다. 합격: N 증가에 따른 실제 잔차 감소를\n정밀도·격자와 독립 추적한다. CN,m와 Km이 미계산이면 검증된 tail bound로 표시하지 않는다.",
+    "sourcePage": 58,
+    "status": "OPEN",
+    "implementedScope": "The actual same-profile finite-background R+div(T), support-localized norms and order-refinement residual have not been assembled.",
+    "testStatus": "NOT_IMPLEMENTED",
+    "formalComplete": false
+  },
+  {
+    "id": "N4-06",
+    "title": "Shrinking cutoff 스케줄",
+    "criteria": "Lemma5.4에 따라 aj+1≥2aj와 (5.37)의 유한 조건을 차례로 만족시키는 cutoff를 선택한다. 합격: 0≤m≤j에서 Ĉj,m(1+|\nlogq|)^P q^(gj/2)≤2^−j를 전체 q≤1/aj에 대해 상계한다. constants 없는 경험적 aj는 미인증으로 표시한다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "A shrinking cutoff schedule satisfies outward interval inequalities for every q in the stated interval for supplied derivative constants. Original same-profile derivative constants remain uninstantiated.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N4-07",
+    "title": "Potential에 cutoff 후 curl",
+    "criteria": "χ(cnq)Sn 또는 potential을 먼저 합친다. (5.45)의 χ′ radial correction을 포함해 velocity를 복원한다. 합격: div curl=0 및\ndirect axisymmetric swirl의 div=0 항등식이 유지된다. χun만 사용하는 구현은 negative control에서 실패해야 한다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "An explicit compact C3 potential includes grad(chi) cross A in curl(chi A), with independent finite-difference refinement and a missing-term negative control. The original C-infinity background potential remains unconnected.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N4-08",
+    "title": "배경 합성과 tail 계약",
+    "criteria": "실 제 locally finite sum 과 유 한 formal truncation 을 구 별 하 고 (5.35), (5.39), (5.42), (5.43) 를 기 록 한 다. 합 격: q>0\ncompact domain의 active cutoff index를 정확히 계산하고 tail bound의 유효 영역 q<(2aJ)^ −1을 함께 export한다.\nuncut series 수렴은 주장하지 않는다.",
+    "sourcePage": 58,
+    "status": "PARTIAL",
+    "implementedScope": "Finite active-order queries and explicit tail-domain conditions are exposed. An all-order same-profile Borel-sum differentiability/tail certificate is not installed.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N5-01",
+    "title": "Dyadic chart 생성",
+    "criteria": "Q=2^−ℓ, ε=Q^h, S*=ℓ², (R,Z,T)=(r/√Q,z/Q^D, τ/Q)를 고정하고 band마다 discrete labels를 생성한다. 합격: 동일 샘\n플이 겹치는 chart에서 같은 physical quantity를 준다. 미분 중 ceil/round 주파수와 labels를 다시 선택하지 않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Dyadic physical/scaled coordinates and adjacent-band overlap are computed. tau=0 and floating-point underflow are rejected. Original same-profile band/slow-data selection remains unconnected.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N5-02",
+    "title": "Auxiliary torus와 chain rule",
+    "criteria": "Jg=[[3,1],[1,5]], Y=vr r^dr+vt t mod Z² 및 (6.6)의 evaluated derivatives를 사용한다. 합격: Dr,Dz,t*의 chain-rule 항\n을 모두 포함한다. torus 평균 후 물리 phase 평가의 순서를 반대로 하여 pointwise 값을 평균으로 대체하지 않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Auxiliary torus matrix, determinant 14, Haar factor and the required chain-rule formula are represented. Original Y_g slow derivatives and the complete evaluated chain rule have not been instantiated.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N5-03",
+    "title": "겹치는 pulse의 지지 분리",
+    "criteria": "Lemma6.1의 conflict graph에 따라 overlapping slow supports에 서로소 auxiliary rectangles를 할당한다. 합격: 모든\nactive label pair의 support intersection을 검사한다. 서로 다른 labels의 곱은 실제로 0이어야 하며 same-label harmonics\n는 유지한다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "A finite slow-overlap conflict graph allocates exact-rational separated auxiliary supports and checks every active pair. Same-label harmonics are retained. The full original collection of labels has not been supplied.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N5-04",
+    "title": "위상·편극·주파수",
+    "criteria": "k=ceil(ε^−1/2), kp는 0이 아닌 정수, (7.3)-(7.8)의 Φ,nΦ,K,AΦ,B를 생성한다. 합격: nΦ·tm=0과 nonzero denominators\n를 검사한다. 1≤ εk²≤4 및 frame determinant lower bound를 인증된 영역에서 만족한다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "The frozen local shear jet, integer angular frequency and tangent initial polarization are executable. Uniform same-profile phase/frame derivative bounds remain open.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N5-05",
+    "title": "성장·감쇠 ODE 풀이",
+    "criteria": "(7.13),(7.17)의 projected ODE를 풀고 P(v)=exp∫( λ−dref)를 log envelope로 저장한다. 합격: (7.22)의 amplitude\nenergy balance, n Φ·tm 제약, midpoint normalization과 양 끝 Gaussian bound를 검사한다. underflow를 pulse가 정\n확히 0인 것으로 처리하지 않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "The projected pulse ODE is integrated in a parallel tangent frame with analytic scalar-damping separation and empirical step refinement. Rigorous ODE solution error, slow derivatives and Gaussian constants remain open.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N5-06",
+    "title": "두 family의 positive covariance",
+    "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Two actual finite polarization covariance columns, positive weights, cosine factor 1/2 and the Haar Jacobian match a supplied admissible stress. Original nonconstant profile matching is not certified.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N5-07",
+    "title": "정확한 curl과 remainder",
+    "criteria": "Cm=i(nΦ×tm)/(km|n Φ|²), physical potential scale Q^(1/2 −A)를 사용한다. cutoff 후 curl의 rm도 유지한다. 합격:\ndiv curl 항등식, physical Cartesian divergence numerical convergence, conjugate symmetry를 확인한다. rm 누락 시\ncovariance/residual test가 실패한다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Compact-potential curl and finite covariance components are checked. Original oscillatory pulse cutoff/curl remainder terms have not been assembled or bounded.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "N5-08",
+    "title": "Cutoff tail의 flatness 추적",
+    "criteria": "(7.40)의 (1 −ψ)fm+ψ′tm를 버리지 않고 별도 잔차로 기록한다. S*^C exp( −cS*)와 q의 관계를 상계한다. 합격: 각 고정\nm,N에 대해 −cℓ²+(M+N)ℓlog2+2Clogℓ를 써서 bound를 평가한다. machine-zero만으로 모든 차수 flatness를 인증하지\n않는다.",
+    "sourcePage": 60,
+    "status": "PARTIAL",
+    "implementedScope": "Outward log-tail values and an all-later-label scalar monotonicity threshold are computed for fixed declared derivative order and constants. Actual original ODE constants and the all-order construction remain open.",
+    "testStatus": "BOUNDED_COMPONENT_TESTS_PASS",
+    "formalComplete": false
+  },
+  {
+    "id": "I2-01",
+    "title": "축·색의 수학적 타입",
+    "criteria": "좌표별 unit, source field, scale, log transform, data dimension/physical dimension을 표시한다. 데이터 배치용 축은\ncategorical로 구분한다. 합격: cohomological degree와 실제 공간 좌표, Euclidean x4와 물리 시간, p-adic valuation과\n실수 거리가 섞이지 않는다.",
+    "sourcePage": 18,
+    "status": "PARTIAL",
+    "implementedScope": "Typed axes, source fields, units and stored log transforms are displayed; categorical, spectral, Euclidean x4 and physical coordinates are kept distinct. Cross-domain contract coverage is being verified.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "I2-02",
+    "title": "정확한 4D 관측 선택",
+    "criteria": "x4=c 단면, scalar marginal, Wilson line/loop, 조건부 평균 등 관측 연산을 분리하고 각각 잃는 정보를 표시한다. 열린\nWilson line은 endpoint와 gauge convention을 표시하고 불변 endpoint 결합/closed-loop character와 구별한다. 합격:\nscalar marginal이 gauge connection을 반환하지 않는다. 비단사 사영의 역변환 버튼은 reconstruction certificate 없이는\n활성화되지 않는다.",
+    "sourcePage": 18,
+    "status": "PARTIAL",
+    "implementedScope": "Existing scalar slices, scalar marginals and Wilson observations retain their own contracts and loss notes. New lattice output is explicitly a scalar x4 slice; no uncertified reconstruction is enabled.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "I2-03",
+    "title": "Δ 상태족 비교",
+    "criteria": "가정/단위 재척도화/유효 모델/앙상블 추정 모드를 명확히 선택하고, 같은 카메라·색 범위에서 두 상태를 나란히 비교한다. 합\n격: 가정 모드에서 장이 변하지 않는 이유를 표시한다. 생성 규칙에 따라 원본과 관측을 재계산하고 모형 hash와 표본 hash를\n구별한다. correlator 변화는 명시된 spectral/ensemble 의존 관계에 따라 검사한다.",
+    "sourcePage": 18,
+    "status": "PARTIAL",
+    "implementedScope": "Two completed M1 runs can be compared with a shared camera, bounds, colors and separate model/sample/observation hashes. A unified Delta-dependent ensemble family and correlator comparison remain to be integrated.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "I2-04",
+    "title": "고차원 복합체 상세 보기",
+    "criteria": "chain group, differential, kernel/image, Frobenius, filtration과 각 비교 map을 연결해 선택한 basis component의 변\n화를 추적한다. 합격: basis 교체 시 표시가 달라도 계산된 불변량이 일치한다. 화면상의 가까움이 p-adic/위상적 가까움이라\n는 주장을 만들지 않는다.",
+    "sourcePage": 18,
+    "status": "PARTIAL",
+    "implementedScope": "Exact complex tables and selectable basis differential/Frobenius/filtration traces are connected. General higher-dimensional kernel/image and coherent comparison certificates remain incomplete.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "I2-05",
+    "title": "소수의 범위 탐색",
+    "criteria": "prime atlas는 segmented tiles로 확대·이동하며 각 tile의 계산 완료·추정·미계산 상태를 표시한다. 전체 소수집합의 정의를\n상단에 유지한다. 합격: 타일 경계에서 소수 누락·중복이 없고 미계산 영역이 빈 소수집합으로 렌더되지 않는다.",
+    "sourcePage": 18,
+    "status": "PARTIAL",
+    "implementedScope": "Deterministic full-range LOD, disjoint prime tiles, explicit uncomputed intervals, viewport navigation and exact bounded interval recomputation are implemented; browser acceptance is recorded separately.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "I2-06",
+    "title": "blowup의 물리·유사 좌표 동기화",
+    "criteria": "같은 τ에서 두 좌표를 동기화하고 고정 색과 자동 색을 선택하게 한다. τ=0과 불충분한 정밀도 영역은 데이터 대신 상태를 표\n시한다. 합격: 고정 물리 시야에서 core 수축이 보이고, similarity 확대율이 저장된다. 샘플 overflow가 무한대의 수학적 증\n거가 되지 않는다.",
+    "sourcePage": 18,
+    "status": "PARTIAL",
+    "implementedScope": "Physical/similarity coordinate contracts and out-of-domain states remain explicit. Full same-tau dual field views with fixed physical viewport and common color controls are not yet constructed.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "I2-07",
+    "title": "수학 작업과 카메라 작업 구분",
+    "criteria": "camera 변경은 representation revision만, 모델·가정 변경은 관련 계산과 claim revision을 갱신한다. 실행 중 값 변경 시 결\n과를 분리한다. 합격: 오래 걸린 job이 새 입력 화면을 덮어쓰지 않는다. 과거 결과는 자신의 입력과 연결된 탭에서만 보인다.",
+    "sourcePage": 18,
+    "status": "PARTIAL",
+    "implementedScope": "Camera revisions do not alter computation; changed input closes the old observation, historical jobs restore their own requests, and saves check owned receipts and live session revisions. Browser acceptance is recorded separately.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  },
+  {
+    "id": "I2-08",
+    "title": "접근성과 표시 예산",
+    "criteria": "키보드·수치표·색 이외의 표식·카메라 초기화·샘플 축소를 제공한다. WebGL 가속과 CPU fallback이 같은 observation을 읽\n는다. 합격: 기준 데스크톱에서 조작 지연 p95 100ms 이내를 목표로 측정한다. CPU/GPU 경로의 수치표와 선택 점 값이 허\n용오차 안에서 같다.",
+    "sourcePage": 18,
+    "status": "PARTIAL",
+    "implementedScope": "Keyboard controls, exact HTML tables, non-color markers, reset and deterministic LOD use CPU Canvas2D with measured draw timing. WebGL path and CPU/GPU parity remain unimplemented.",
+    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "formalComplete": false
+  }
+];
+export const ARCHIVE = {
+  "schema": "MathScope.InheritedM1ComparatorEvidence/1",
+  "scope": "Inherited M1 64/64 + remaining M0 6/6 = 70/70; NOT all 224 blueprint criteria and NOT M2 complete. Prior 69 PASS / 1 PARTIAL assessment is retained unchanged.",
+  "criterion": "N1-06",
+  "status": "PASS",
+  "source": "Downloaded original GitHub Actions terminal archive, not a browser-generated certificate.",
+  "runId": 38014602021,
+  "jobId": 114101981614,
+  "artifactId": 11657065866,
+  "runURL": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38014602021",
+  "completedUTC": "2026-10-10T02:44:12Z",
+  "archiveSHA256": "1bc9b8134308ee9d8205c3273b96558ccb4efc456d0054da3ea033879c70d9b8",
+  "archiveBytes": 313326,
+  "archiveMembers": 49,
+  "protectedComparatorLogSHA256": "ff91c14b7515af7e13558ec5381ea48c1a40da414ba1b75ca9533de7cbad9b62",
+  "sourceHashesBeforeAndAfterIdentical": true,
+  "sourceHashManifestSHA256": "1511e4398e2825776b1f1f6de35925b02cba19237b42d26bd13a9a65cd8b0f28",
+  "terminalMarkers": [
+    "nanoda kernel accepts the solution",
+    "Lean default kernel accepts the solution",
+    "Your solution is okay!",
+    "Finished with result: success",
+    "code=exited/status=0"
+  ],
+  "comparatorRerunThisSession": false,
+  "oldNSBrowserFixturesRelabelled": false,
+  "fullM2Complete": false
+};

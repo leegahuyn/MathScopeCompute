@@ -1,0 +1,2137 @@
+{
+  "id": "ns-m2-tail",
+  "request": {
+    "kind": "ns.pulse-tail",
+    "input": {
+      "c": 0.2,
+      "C": 2,
+      "derivativeLoss": 2,
+      "targetPower": 4,
+      "ellStart": 8,
+      "count": 80
+    }
+  },
+  "inputHash": "9ae66ba7b5f01a65bf82d1238ab7fd71539ea2bb61d31da3c10618f396c0cb64",
+  "result": {
+    "blockers": [
+      "N5-08 needs the actual original pulse ODE constants and cutoff source to close the whole-profile criterion."
+    ],
+    "checks": [
+      {
+        "detail": "No positive tail is converted to an exact zero.",
+        "id": "retains-nonzero-log-tail",
+        "pass": true
+      },
+      {
+        "detail": "The log expression decreases beyond the displayed threshold; no all-order shortcut.",
+        "id": "fixed-order-tail-threshold",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "OUTWARD_INTERVAL_FIXED_ORDER_BOUND",
+    "kind": "ns.pulse-tail",
+    "moduleVersion": "m2-ns-0.1.1",
+    "object": {
+      "kind": "FIXED_ORDER_LOG_FLAT_TAIL"
+    },
+    "precisionLedger": {
+      "arithmetic": "OUTWARD_FLOAT64_SCALAR_INTERVALS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 40000,
+      "outputItemsEstimate": 80,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "3635f5011c547fc16b8bc7e9f43e9c46f89ddcdb3173e09fe78c58303b12563e",
+    "results": {
+      "allDerivativeOrdersInstantiated": false,
+      "constantScope": "Declared positive Gaussian constant and polynomial loss; not derived from the original ODE.",
+      "formula": "-c*ell^2+(M+N)*ell*log(2)+2*C*log(ell)",
+      "parameters": {
+        "C": 2,
+        "M": 2,
+        "N": 4,
+        "c": 0.2
+      },
+      "retainedRemainder": "(1-psi)*f_m + psi_prime*t_m",
+      "rows": [
+        {
+          "Sstar": 64,
+          "dominationPassed": false,
+          "ell": 8,
+          "logBound": [
+            28.788830833596396,
+            28.788830833597014
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 81,
+          "dominationPassed": false,
+          "ell": 9,
+          "logBound": [
+            30.018846059581566,
+            30.018846059582252
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 100,
+          "dominationPassed": false,
+          "ell": 10,
+          "logBound": [
+            30.79917120557251,
+            30.799171205573256
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 121,
+          "dominationPassed": false,
+          "ell": 11,
+          "logBound": [
+            31.139295008149443,
+            31.13929500815026
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 144,
+          "dominationPassed": false,
+          "ell": 12,
+          "logBound": [
+            31.0462235994676,
+            31.04622359946848
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 169,
+          "dominationPassed": false,
+          "ell": 13,
+          "logBound": [
+            30.525277513521377,
+            30.52527751352233
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 196,
+          "dominationPassed": false,
+          "ell": 14,
+          "logBound": [
+            29.58059248549591,
+            29.580592485496926
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 225,
+          "dominationPassed": false,
+          "ell": 15,
+          "logBound": [
+            28.215447054803363,
+            28.21544705480444
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 256,
+          "dominationPassed": false,
+          "ell": 16,
+          "logBound": [
+            26.432484222713274,
+            26.432484222714418
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 289,
+          "dominationPassed": false,
+          "ell": 17,
+          "logBound": [
+            24.233865793338655,
+            24.23386579333984
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 324,
+          "dominationPassed": false,
+          "ell": 18,
+          "logBound": [
+            21.62138253205809,
+            21.62138253205936
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 361,
+          "dominationPassed": false,
+          "ell": 19,
+          "logBound": [
+            18.596534500498823,
+            18.59653450050016
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 400,
+          "dominationPassed": false,
+          "ell": 20,
+          "logBound": [
+            15.160590761408672,
+            15.16059076141006
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 441,
+          "dominationPassed": false,
+          "ell": 21,
+          "logBound": [
+            11.314634501446033,
+            11.314634501447486
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 484,
+          "dominationPassed": false,
+          "ell": 22,
+          "logBound": [
+            7.059597647345237,
+            7.059597647346759
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 529,
+          "dominationPassed": false,
+          "ell": 23,
+          "logBound": [
+            2.3962877809882115,
+            2.396287780989779
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 576,
+          "dominationPassed": true,
+          "ell": 24,
+          "logBound": [
+            -2.6745906779769713,
+            -2.6745906779753166
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 625,
+          "dominationPassed": true,
+          "ell": 25,
+          "logBound": [
+            -8.15241961653631,
+            -8.15241961653458
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 676,
+          "dominationPassed": true,
+          "ell": 26,
+          "logBound": [
+            -14.036653680563576,
+            -14.03665368056176
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 729,
+          "dominationPassed": true,
+          "ell": 27,
+          "logBound": [
+            -20.326809285272525,
+            -20.32680928527067
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 784,
+          "dominationPassed": true,
+          "ell": 28,
+          "logBound": [
+            -27.022455625229387,
+            -27.022455625227458
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 841,
+          "dominationPassed": true,
+          "ell": 29,
+          "logBound": [
+            -34.123207262624675,
+            -34.123207262622685
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 900,
+          "dominationPassed": true,
+          "ell": 30,
+          "logBound": [
+            -41.62871797256229,
+            -41.62871797256023
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 961,
+          "dominationPassed": true,
+          "ell": 31,
+          "logBound": [
+            -49.53867559791073,
+            -49.538675597908586
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1024,
+          "dominationPassed": true,
+          "ell": 32,
+          "logBound": [
+            -57.85279772129276,
+            -57.85279772129054
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1089,
+          "dominationPassed": true,
+          "ell": 33,
+          "logBound": [
+            -66.57082800326613,
+            -66.57082800326384
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1156,
+          "dominationPassed": true,
+          "ell": 34,
+          "logBound": [
+            -75.69253306730775,
+            -75.69253306730543
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1225,
+          "dominationPassed": true,
+          "ell": 35,
+          "logBound": [
+            -85.21769983645511,
+            -85.2176998364527
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1296,
+          "dominationPassed": true,
+          "ell": 36,
+          "logBound": [
+            -95.14613324522868,
+            -95.14613324522615
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1369,
+          "dominationPassed": true,
+          "ell": 37,
+          "logBound": [
+            -105.47765426511663,
+            -105.47765426511401
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1444,
+          "dominationPassed": true,
+          "ell": 38,
+          "logBound": [
+            -116.21209819342833,
+            -116.21209819342566
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1521,
+          "dominationPassed": true,
+          "ell": 39,
+          "logBound": [
+            -127.34931316445561,
+            -127.3493131644529
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1600,
+          "dominationPassed": true,
+          "ell": 40,
+          "logBound": [
+            -138.88915884915886,
+            -138.88915884915605
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1681,
+          "dominationPassed": true,
+          "ell": 41,
+          "logBound": [
+            -150.83150531543777,
+            -150.83150531543492
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1764,
+          "dominationPassed": true,
+          "ell": 42,
+          "logBound": [
+            -163.17623202576186,
+            -163.17623202575894
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1849,
+          "dominationPassed": true,
+          "ell": 43,
+          "logBound": [
+            -175.92322695276144,
+            -175.92322695275843
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 1936,
+          "dominationPassed": true,
+          "ell": 44,
+          "logBound": [
+            -189.07238579650306,
+            -189.07238579649996
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2025,
+          "dominationPassed": true,
+          "ell": 45,
+          "logBound": [
+            -202.62361128973512,
+            -202.623611289732
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2116,
+          "dominationPassed": true,
+          "ell": 46,
+          "logBound": [
+            -216.57681257950043,
+            -216.57681257949727
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2209,
+          "dominationPassed": true,
+          "ell": 47,
+          "logBound": [
+            -230.9319046752569,
+            -230.93190467525363
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2304,
+          "dominationPassed": true,
+          "ell": 48,
+          "logBound": [
+            -245.68880795510594,
+            -245.68880795510262
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2401,
+          "dominationPassed": true,
+          "ell": 49,
+          "logBound": [
+            -260.84744772293544,
+            -260.847447722932
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2500,
+          "dominationPassed": true,
+          "ell": 50,
+          "logBound": [
+            -276.4077538103057,
+            -276.40775381030215
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2601,
+          "dominationPassed": true,
+          "ell": 51,
+          "logBound": [
+            -292.3696602177614,
+            -292.36966021775766
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2704,
+          "dominationPassed": true,
+          "ell": 52,
+          "logBound": [
+            -308.73310479097347,
+            -308.7331047909696
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2809,
+          "dominationPassed": true,
+          "ell": 53,
+          "logBound": [
+            -325.498028927731,
+            -325.49802892772715
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 2916,
+          "dominationPassed": true,
+          "ell": 54,
+          "logBound": [
+            -342.6643773123227,
+            -342.66437731231883
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 3025,
+          "dominationPassed": true,
+          "ell": 55,
+          "logBound": [
+            -360.23209767429023,
+            -360.23209767428625
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 3136,
+          "dominationPassed": true,
+          "ell": 56,
+          "logBound": [
+            -378.2011405689199,
+            -378.2011405689159
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 3249,
+          "dominationPassed": true,
+          "ell": 57,
+          "logBound": [
+            -396.5714591771627,
+            -396.5714591771586
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 3364,
+          "dominationPassed": true,
+          "ell": 58,
+          "logBound": [
+            -415.34300912295555,
+            -415.3430091229514
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 3481,
+          "dominationPassed": true,
+          "ell": 59,
+          "logBound": [
+            -434.51574830615874,
+            -434.51574830615453
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 3600,
+          "dominationPassed": true,
+          "ell": 60,
+          "logBound": [
+            -454.08963674953344,
+            -454.08963674952923
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 3721,
+          "dominationPassed": true,
+          "ell": 61,
+          "logBound": [
+            -474.0646364583691,
+            -474.06463645836476
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 3844,
+          "dominationPassed": true,
+          "ell": 62,
+          "logBound": [
+            -494.44071129152235,
+            -494.4407112915179
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 3969,
+          "dominationPassed": true,
+          "ell": 63,
+          "logBound": [
+            -515.217826842777,
+            -515.2178268427723
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 4096,
+          "dominationPassed": true,
+          "ell": 64,
+          "logBound": [
+            -536.3959503315448,
+            -536.39595033154
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 4225,
+          "dominationPassed": true,
+          "ell": 65,
+          "logBound": [
+            -557.9750505020412,
+            -557.9750505020364
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 4356,
+          "dominationPassed": true,
+          "ell": 66,
+          "logBound": [
+            -579.9550975301586,
+            -579.9550975301537
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 4489,
+          "dominationPassed": true,
+          "ell": 67,
+          "logBound": [
+            -602.3360629373408,
+            -602.3360629373359
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 4624,
+          "dominationPassed": true,
+          "ell": 68,
+          "logBound": [
+            -625.1179195108406,
+            -625.1179195108356
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 4761,
+          "dominationPassed": true,
+          "ell": 69,
+          "logBound": [
+            -648.3006412297963,
+            -648.3006412297913
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 4900,
+          "dominationPassed": true,
+          "ell": 70,
+          "logBound": [
+            -671.8842031966283,
+            -671.884203196623
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 5041,
+          "dominationPassed": true,
+          "ell": 71,
+          "logBound": [
+            -695.8685815733008,
+            -695.8685815732956
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 5184,
+          "dominationPassed": true,
+          "ell": 72,
+          "logBound": [
+            -720.2537535220422,
+            -720.2537535220367
+          ],
+          "machineUnderflow": false,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 5329,
+          "dominationPassed": true,
+          "ell": 73,
+          "logBound": [
+            -745.0396971501532,
+            -745.0396971501477
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 5476,
+          "dominationPassed": true,
+          "ell": 74,
+          "logBound": [
+            -770.2263914585706,
+            -770.2263914585649
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 5625,
+          "dominationPassed": true,
+          "ell": 75,
+          "logBound": [
+            -795.8138162938823,
+            -795.8138162938767
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 5776,
+          "dominationPassed": true,
+          "ell": 76,
+          "logBound": [
+            -821.8019523035226,
+            -821.8019523035168
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 5929,
+          "dominationPassed": true,
+          "ell": 77,
+          "logBound": [
+            -848.1907808938935,
+            -848.1907808938877
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 6084,
+          "dominationPassed": true,
+          "ell": 78,
+          "logBound": [
+            -874.9802841911902,
+            -874.9802841911844
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 6241,
+          "dominationPassed": true,
+          "ell": 79,
+          "logBound": [
+            -902.1704450047209,
+            -902.170445004715
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 6400,
+          "dominationPassed": true,
+          "ell": 80,
+          "logBound": [
+            -929.7612467925338,
+            -929.7612467925279
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 6561,
+          "dominationPassed": true,
+          "ell": 81,
+          "logBound": [
+            -957.75267362918,
+            -957.7526736291741
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 6724,
+          "dominationPassed": true,
+          "ell": 82,
+          "logBound": [
+            -986.1447101754532,
+            -986.1447101754472
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 6889,
+          "dominationPassed": true,
+          "ell": 83,
+          "logBound": [
+            -1014.9373416499643,
+            -1014.937341649958
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 7056,
+          "dominationPassed": true,
+          "ell": 84,
+          "logBound": [
+            -1044.1305538024178,
+            -1044.1305538024112
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 7225,
+          "dominationPassed": true,
+          "ell": 85,
+          "logBound": [
+            -1073.72433288847,
+            -1073.7243328884633
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 7396,
+          "dominationPassed": true,
+          "ell": 86,
+          "logBound": [
+            -1103.7186656460576,
+            -1103.7186656460508
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        },
+        {
+          "Sstar": 7569,
+          "dominationPassed": true,
+          "ell": 87,
+          "logBound": [
+            -1134.113539273094,
+            -1134.113539273087
+          ],
+          "machineUnderflow": true,
+          "relativeToQPower": 4
+        }
+      ],
+      "uniformAfterThreshold": {
+        "derivativeDecreases": true,
+        "ellAtLeast": 24,
+        "logDerivativeUpper": -5.274450249973631
+      }
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "dyadic ell",
+          "name": "dyadic ell",
+          "scale": "LINEAR",
+          "sourceField": "dyadic ell",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "log(tail / q^N)",
+          "name": "log(tail / q^N)",
+          "scale": "LINEAR",
+          "sourceField": "log(tail / q^N)",
+          "unit": "log ratio"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "0",
+          "name": "0",
+          "scale": "LINEAR",
+          "sourceField": "0",
+          "unit": "1"
+        }
+      ],
+      "description": "Outward interval values of the fixed-order flat-tail exponent.",
+      "lines": [
+        {
+          "points": [
+            [
+              8,
+              28.788830833597014,
+              0
+            ],
+            [
+              9,
+              30.018846059582252,
+              0
+            ],
+            [
+              10,
+              30.799171205573256,
+              0
+            ],
+            [
+              11,
+              31.13929500815026,
+              0
+            ],
+            [
+              12,
+              31.04622359946848,
+              0
+            ],
+            [
+              13,
+              30.52527751352233,
+              0
+            ],
+            [
+              14,
+              29.580592485496926,
+              0
+            ],
+            [
+              15,
+              28.21544705480444,
+              0
+            ],
+            [
+              16,
+              26.432484222714418,
+              0
+            ],
+            [
+              17,
+              24.23386579333984,
+              0
+            ],
+            [
+              18,
+              21.62138253205936,
+              0
+            ],
+            [
+              19,
+              18.59653450050016,
+              0
+            ],
+            [
+              20,
+              15.16059076141006,
+              0
+            ],
+            [
+              21,
+              11.314634501447486,
+              0
+            ],
+            [
+              22,
+              7.059597647346759,
+              0
+            ],
+            [
+              23,
+              2.396287780989779,
+              0
+            ],
+            [
+              24,
+              -2.6745906779753166,
+              0
+            ],
+            [
+              25,
+              -8.15241961653458,
+              0
+            ],
+            [
+              26,
+              -14.03665368056176,
+              0
+            ],
+            [
+              27,
+              -20.32680928527067,
+              0
+            ],
+            [
+              28,
+              -27.022455625227458,
+              0
+            ],
+            [
+              29,
+              -34.123207262622685,
+              0
+            ],
+            [
+              30,
+              -41.62871797256023,
+              0
+            ],
+            [
+              31,
+              -49.538675597908586,
+              0
+            ],
+            [
+              32,
+              -57.85279772129054,
+              0
+            ],
+            [
+              33,
+              -66.57082800326384,
+              0
+            ],
+            [
+              34,
+              -75.69253306730543,
+              0
+            ],
+            [
+              35,
+              -85.2176998364527,
+              0
+            ],
+            [
+              36,
+              -95.14613324522615,
+              0
+            ],
+            [
+              37,
+              -105.47765426511401,
+              0
+            ],
+            [
+              38,
+              -116.21209819342566,
+              0
+            ],
+            [
+              39,
+              -127.3493131644529,
+              0
+            ],
+            [
+              40,
+              -138.88915884915605,
+              0
+            ],
+            [
+              41,
+              -150.83150531543492,
+              0
+            ],
+            [
+              42,
+              -163.17623202575894,
+              0
+            ],
+            [
+              43,
+              -175.92322695275843,
+              0
+            ],
+            [
+              44,
+              -189.07238579649996,
+              0
+            ],
+            [
+              45,
+              -202.623611289732,
+              0
+            ],
+            [
+              46,
+              -216.57681257949727,
+              0
+            ],
+            [
+              47,
+              -230.93190467525363,
+              0
+            ],
+            [
+              48,
+              -245.68880795510262,
+              0
+            ],
+            [
+              49,
+              -260.847447722932,
+              0
+            ],
+            [
+              50,
+              -276.40775381030215,
+              0
+            ],
+            [
+              51,
+              -292.36966021775766,
+              0
+            ],
+            [
+              52,
+              -308.7331047909696,
+              0
+            ],
+            [
+              53,
+              -325.49802892772715,
+              0
+            ],
+            [
+              54,
+              -342.66437731231883,
+              0
+            ],
+            [
+              55,
+              -360.23209767428625,
+              0
+            ],
+            [
+              56,
+              -378.2011405689159,
+              0
+            ],
+            [
+              57,
+              -396.5714591771586,
+              0
+            ],
+            [
+              58,
+              -415.3430091229514,
+              0
+            ],
+            [
+              59,
+              -434.51574830615453,
+              0
+            ],
+            [
+              60,
+              -454.08963674952923,
+              0
+            ],
+            [
+              61,
+              -474.06463645836476,
+              0
+            ],
+            [
+              62,
+              -494.4407112915179,
+              0
+            ],
+            [
+              63,
+              -515.2178268427723,
+              0
+            ],
+            [
+              64,
+              -536.39595033154,
+              0
+            ],
+            [
+              65,
+              -557.9750505020364,
+              0
+            ],
+            [
+              66,
+              -579.9550975301537,
+              0
+            ],
+            [
+              67,
+              -602.3360629373359,
+              0
+            ],
+            [
+              68,
+              -625.1179195108356,
+              0
+            ],
+            [
+              69,
+              -648.3006412297913,
+              0
+            ],
+            [
+              70,
+              -671.884203196623,
+              0
+            ],
+            [
+              71,
+              -695.8685815732956,
+              0
+            ],
+            [
+              72,
+              -720.2537535220367,
+              0
+            ],
+            [
+              73,
+              -745.0396971501477,
+              0
+            ],
+            [
+              74,
+              -770.2263914585649,
+              0
+            ],
+            [
+              75,
+              -795.8138162938767,
+              0
+            ],
+            [
+              76,
+              -821.8019523035168,
+              0
+            ],
+            [
+              77,
+              -848.1907808938877,
+              0
+            ],
+            [
+              78,
+              -874.9802841911844,
+              0
+            ],
+            [
+              79,
+              -902.170445004715,
+              0
+            ],
+            [
+              80,
+              -929.7612467925279,
+              0
+            ],
+            [
+              81,
+              -957.7526736291741,
+              0
+            ],
+            [
+              82,
+              -986.1447101754472,
+              0
+            ],
+            [
+              83,
+              -1014.937341649958,
+              0
+            ],
+            [
+              84,
+              -1044.1305538024112,
+              0
+            ],
+            [
+              85,
+              -1073.7243328884633,
+              0
+            ],
+            [
+              86,
+              -1103.7186656460508,
+              0
+            ],
+            [
+              87,
+              -1134.113539273087,
+              0
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "The supplied Gaussian constant is a premise.",
+        "Fixed m,N are checked; an all-order proof is not issued."
+      ],
+      "points": [
+        {
+          "label": "ell=8: log upper 28.788830833597014",
+          "pos": [
+            8,
+            28.788830833597014,
+            0
+          ],
+          "value": 28.788830833597014
+        },
+        {
+          "label": "ell=9: log upper 30.018846059582252",
+          "pos": [
+            9,
+            30.018846059582252,
+            0
+          ],
+          "value": 30.018846059582252
+        },
+        {
+          "label": "ell=10: log upper 30.799171205573256",
+          "pos": [
+            10,
+            30.799171205573256,
+            0
+          ],
+          "value": 30.799171205573256
+        },
+        {
+          "label": "ell=11: log upper 31.13929500815026",
+          "pos": [
+            11,
+            31.13929500815026,
+            0
+          ],
+          "value": 31.13929500815026
+        },
+        {
+          "label": "ell=12: log upper 31.04622359946848",
+          "pos": [
+            12,
+            31.04622359946848,
+            0
+          ],
+          "value": 31.04622359946848
+        },
+        {
+          "label": "ell=13: log upper 30.52527751352233",
+          "pos": [
+            13,
+            30.52527751352233,
+            0
+          ],
+          "value": 30.52527751352233
+        },
+        {
+          "label": "ell=14: log upper 29.580592485496926",
+          "pos": [
+            14,
+            29.580592485496926,
+            0
+          ],
+          "value": 29.580592485496926
+        },
+        {
+          "label": "ell=15: log upper 28.21544705480444",
+          "pos": [
+            15,
+            28.21544705480444,
+            0
+          ],
+          "value": 28.21544705480444
+        },
+        {
+          "label": "ell=16: log upper 26.432484222714418",
+          "pos": [
+            16,
+            26.432484222714418,
+            0
+          ],
+          "value": 26.432484222714418
+        },
+        {
+          "label": "ell=17: log upper 24.23386579333984",
+          "pos": [
+            17,
+            24.23386579333984,
+            0
+          ],
+          "value": 24.23386579333984
+        },
+        {
+          "label": "ell=18: log upper 21.62138253205936",
+          "pos": [
+            18,
+            21.62138253205936,
+            0
+          ],
+          "value": 21.62138253205936
+        },
+        {
+          "label": "ell=19: log upper 18.59653450050016",
+          "pos": [
+            19,
+            18.59653450050016,
+            0
+          ],
+          "value": 18.59653450050016
+        },
+        {
+          "label": "ell=20: log upper 15.16059076141006",
+          "pos": [
+            20,
+            15.16059076141006,
+            0
+          ],
+          "value": 15.16059076141006
+        },
+        {
+          "label": "ell=21: log upper 11.314634501447486",
+          "pos": [
+            21,
+            11.314634501447486,
+            0
+          ],
+          "value": 11.314634501447486
+        },
+        {
+          "label": "ell=22: log upper 7.059597647346759",
+          "pos": [
+            22,
+            7.059597647346759,
+            0
+          ],
+          "value": 7.059597647346759
+        },
+        {
+          "label": "ell=23: log upper 2.396287780989779",
+          "pos": [
+            23,
+            2.396287780989779,
+            0
+          ],
+          "value": 2.396287780989779
+        },
+        {
+          "label": "ell=24: log upper -2.6745906779753166",
+          "pos": [
+            24,
+            -2.6745906779753166,
+            0
+          ],
+          "value": -2.6745906779753166
+        },
+        {
+          "label": "ell=25: log upper -8.15241961653458",
+          "pos": [
+            25,
+            -8.15241961653458,
+            0
+          ],
+          "value": -8.15241961653458
+        },
+        {
+          "label": "ell=26: log upper -14.03665368056176",
+          "pos": [
+            26,
+            -14.03665368056176,
+            0
+          ],
+          "value": -14.03665368056176
+        },
+        {
+          "label": "ell=27: log upper -20.32680928527067",
+          "pos": [
+            27,
+            -20.32680928527067,
+            0
+          ],
+          "value": -20.32680928527067
+        },
+        {
+          "label": "ell=28: log upper -27.022455625227458",
+          "pos": [
+            28,
+            -27.022455625227458,
+            0
+          ],
+          "value": -27.022455625227458
+        },
+        {
+          "label": "ell=29: log upper -34.123207262622685",
+          "pos": [
+            29,
+            -34.123207262622685,
+            0
+          ],
+          "value": -34.123207262622685
+        },
+        {
+          "label": "ell=30: log upper -41.62871797256023",
+          "pos": [
+            30,
+            -41.62871797256023,
+            0
+          ],
+          "value": -41.62871797256023
+        },
+        {
+          "label": "ell=31: log upper -49.538675597908586",
+          "pos": [
+            31,
+            -49.538675597908586,
+            0
+          ],
+          "value": -49.538675597908586
+        },
+        {
+          "label": "ell=32: log upper -57.85279772129054",
+          "pos": [
+            32,
+            -57.85279772129054,
+            0
+          ],
+          "value": -57.85279772129054
+        },
+        {
+          "label": "ell=33: log upper -66.57082800326384",
+          "pos": [
+            33,
+            -66.57082800326384,
+            0
+          ],
+          "value": -66.57082800326384
+        },
+        {
+          "label": "ell=34: log upper -75.69253306730543",
+          "pos": [
+            34,
+            -75.69253306730543,
+            0
+          ],
+          "value": -75.69253306730543
+        },
+        {
+          "label": "ell=35: log upper -85.2176998364527",
+          "pos": [
+            35,
+            -85.2176998364527,
+            0
+          ],
+          "value": -85.2176998364527
+        },
+        {
+          "label": "ell=36: log upper -95.14613324522615",
+          "pos": [
+            36,
+            -95.14613324522615,
+            0
+          ],
+          "value": -95.14613324522615
+        },
+        {
+          "label": "ell=37: log upper -105.47765426511401",
+          "pos": [
+            37,
+            -105.47765426511401,
+            0
+          ],
+          "value": -105.47765426511401
+        },
+        {
+          "label": "ell=38: log upper -116.21209819342566",
+          "pos": [
+            38,
+            -116.21209819342566,
+            0
+          ],
+          "value": -116.21209819342566
+        },
+        {
+          "label": "ell=39: log upper -127.3493131644529",
+          "pos": [
+            39,
+            -127.3493131644529,
+            0
+          ],
+          "value": -127.3493131644529
+        },
+        {
+          "label": "ell=40: log upper -138.88915884915605",
+          "pos": [
+            40,
+            -138.88915884915605,
+            0
+          ],
+          "value": -138.88915884915605
+        },
+        {
+          "label": "ell=41: log upper -150.83150531543492",
+          "pos": [
+            41,
+            -150.83150531543492,
+            0
+          ],
+          "value": -150.83150531543492
+        },
+        {
+          "label": "ell=42: log upper -163.17623202575894",
+          "pos": [
+            42,
+            -163.17623202575894,
+            0
+          ],
+          "value": -163.17623202575894
+        },
+        {
+          "label": "ell=43: log upper -175.92322695275843",
+          "pos": [
+            43,
+            -175.92322695275843,
+            0
+          ],
+          "value": -175.92322695275843
+        },
+        {
+          "label": "ell=44: log upper -189.07238579649996",
+          "pos": [
+            44,
+            -189.07238579649996,
+            0
+          ],
+          "value": -189.07238579649996
+        },
+        {
+          "label": "ell=45: log upper -202.623611289732",
+          "pos": [
+            45,
+            -202.623611289732,
+            0
+          ],
+          "value": -202.623611289732
+        },
+        {
+          "label": "ell=46: log upper -216.57681257949727",
+          "pos": [
+            46,
+            -216.57681257949727,
+            0
+          ],
+          "value": -216.57681257949727
+        },
+        {
+          "label": "ell=47: log upper -230.93190467525363",
+          "pos": [
+            47,
+            -230.93190467525363,
+            0
+          ],
+          "value": -230.93190467525363
+        },
+        {
+          "label": "ell=48: log upper -245.68880795510262",
+          "pos": [
+            48,
+            -245.68880795510262,
+            0
+          ],
+          "value": -245.68880795510262
+        },
+        {
+          "label": "ell=49: log upper -260.847447722932",
+          "pos": [
+            49,
+            -260.847447722932,
+            0
+          ],
+          "value": -260.847447722932
+        },
+        {
+          "label": "ell=50: log upper -276.40775381030215",
+          "pos": [
+            50,
+            -276.40775381030215,
+            0
+          ],
+          "value": -276.40775381030215
+        },
+        {
+          "label": "ell=51: log upper -292.36966021775766",
+          "pos": [
+            51,
+            -292.36966021775766,
+            0
+          ],
+          "value": -292.36966021775766
+        },
+        {
+          "label": "ell=52: log upper -308.7331047909696",
+          "pos": [
+            52,
+            -308.7331047909696,
+            0
+          ],
+          "value": -308.7331047909696
+        },
+        {
+          "label": "ell=53: log upper -325.49802892772715",
+          "pos": [
+            53,
+            -325.49802892772715,
+            0
+          ],
+          "value": -325.49802892772715
+        },
+        {
+          "label": "ell=54: log upper -342.66437731231883",
+          "pos": [
+            54,
+            -342.66437731231883,
+            0
+          ],
+          "value": -342.66437731231883
+        },
+        {
+          "label": "ell=55: log upper -360.23209767428625",
+          "pos": [
+            55,
+            -360.23209767428625,
+            0
+          ],
+          "value": -360.23209767428625
+        },
+        {
+          "label": "ell=56: log upper -378.2011405689159",
+          "pos": [
+            56,
+            -378.2011405689159,
+            0
+          ],
+          "value": -378.2011405689159
+        },
+        {
+          "label": "ell=57: log upper -396.5714591771586",
+          "pos": [
+            57,
+            -396.5714591771586,
+            0
+          ],
+          "value": -396.5714591771586
+        },
+        {
+          "label": "ell=58: log upper -415.3430091229514",
+          "pos": [
+            58,
+            -415.3430091229514,
+            0
+          ],
+          "value": -415.3430091229514
+        },
+        {
+          "label": "ell=59: log upper -434.51574830615453",
+          "pos": [
+            59,
+            -434.51574830615453,
+            0
+          ],
+          "value": -434.51574830615453
+        },
+        {
+          "label": "ell=60: log upper -454.08963674952923",
+          "pos": [
+            60,
+            -454.08963674952923,
+            0
+          ],
+          "value": -454.08963674952923
+        },
+        {
+          "label": "ell=61: log upper -474.06463645836476",
+          "pos": [
+            61,
+            -474.06463645836476,
+            0
+          ],
+          "value": -474.06463645836476
+        },
+        {
+          "label": "ell=62: log upper -494.4407112915179",
+          "pos": [
+            62,
+            -494.4407112915179,
+            0
+          ],
+          "value": -494.4407112915179
+        },
+        {
+          "label": "ell=63: log upper -515.2178268427723",
+          "pos": [
+            63,
+            -515.2178268427723,
+            0
+          ],
+          "value": -515.2178268427723
+        },
+        {
+          "label": "ell=64: log upper -536.39595033154",
+          "pos": [
+            64,
+            -536.39595033154,
+            0
+          ],
+          "value": -536.39595033154
+        },
+        {
+          "label": "ell=65: log upper -557.9750505020364",
+          "pos": [
+            65,
+            -557.9750505020364,
+            0
+          ],
+          "value": -557.9750505020364
+        },
+        {
+          "label": "ell=66: log upper -579.9550975301537",
+          "pos": [
+            66,
+            -579.9550975301537,
+            0
+          ],
+          "value": -579.9550975301537
+        },
+        {
+          "label": "ell=67: log upper -602.3360629373359",
+          "pos": [
+            67,
+            -602.3360629373359,
+            0
+          ],
+          "value": -602.3360629373359
+        },
+        {
+          "label": "ell=68: log upper -625.1179195108356",
+          "pos": [
+            68,
+            -625.1179195108356,
+            0
+          ],
+          "value": -625.1179195108356
+        },
+        {
+          "label": "ell=69: log upper -648.3006412297913",
+          "pos": [
+            69,
+            -648.3006412297913,
+            0
+          ],
+          "value": -648.3006412297913
+        },
+        {
+          "label": "ell=70: log upper -671.884203196623",
+          "pos": [
+            70,
+            -671.884203196623,
+            0
+          ],
+          "value": -671.884203196623
+        },
+        {
+          "label": "ell=71: log upper -695.8685815732956",
+          "pos": [
+            71,
+            -695.8685815732956,
+            0
+          ],
+          "value": -695.8685815732956
+        },
+        {
+          "label": "ell=72: log upper -720.2537535220367",
+          "pos": [
+            72,
+            -720.2537535220367,
+            0
+          ],
+          "value": -720.2537535220367
+        },
+        {
+          "label": "ell=73: log upper -745.0396971501477",
+          "pos": [
+            73,
+            -745.0396971501477,
+            0
+          ],
+          "value": -745.0396971501477
+        },
+        {
+          "label": "ell=74: log upper -770.2263914585649",
+          "pos": [
+            74,
+            -770.2263914585649,
+            0
+          ],
+          "value": -770.2263914585649
+        },
+        {
+          "label": "ell=75: log upper -795.8138162938767",
+          "pos": [
+            75,
+            -795.8138162938767,
+            0
+          ],
+          "value": -795.8138162938767
+        },
+        {
+          "label": "ell=76: log upper -821.8019523035168",
+          "pos": [
+            76,
+            -821.8019523035168,
+            0
+          ],
+          "value": -821.8019523035168
+        },
+        {
+          "label": "ell=77: log upper -848.1907808938877",
+          "pos": [
+            77,
+            -848.1907808938877,
+            0
+          ],
+          "value": -848.1907808938877
+        },
+        {
+          "label": "ell=78: log upper -874.9802841911844",
+          "pos": [
+            78,
+            -874.9802841911844,
+            0
+          ],
+          "value": -874.9802841911844
+        },
+        {
+          "label": "ell=79: log upper -902.170445004715",
+          "pos": [
+            79,
+            -902.170445004715,
+            0
+          ],
+          "value": -902.170445004715
+        },
+        {
+          "label": "ell=80: log upper -929.7612467925279",
+          "pos": [
+            80,
+            -929.7612467925279,
+            0
+          ],
+          "value": -929.7612467925279
+        },
+        {
+          "label": "ell=81: log upper -957.7526736291741",
+          "pos": [
+            81,
+            -957.7526736291741,
+            0
+          ],
+          "value": -957.7526736291741
+        },
+        {
+          "label": "ell=82: log upper -986.1447101754472",
+          "pos": [
+            82,
+            -986.1447101754472,
+            0
+          ],
+          "value": -986.1447101754472
+        },
+        {
+          "label": "ell=83: log upper -1014.937341649958",
+          "pos": [
+            83,
+            -1014.937341649958,
+            0
+          ],
+          "value": -1014.937341649958
+        },
+        {
+          "label": "ell=84: log upper -1044.1305538024112",
+          "pos": [
+            84,
+            -1044.1305538024112,
+            0
+          ],
+          "value": -1044.1305538024112
+        },
+        {
+          "label": "ell=85: log upper -1073.7243328884633",
+          "pos": [
+            85,
+            -1073.7243328884633,
+            0
+          ],
+          "value": -1073.7243328884633
+        },
+        {
+          "label": "ell=86: log upper -1103.7186656460508",
+          "pos": [
+            86,
+            -1103.7186656460508,
+            0
+          ],
+          "value": -1103.7186656460508
+        },
+        {
+          "label": "ell=87: log upper -1134.113539273087",
+          "pos": [
+            87,
+            -1134.113539273087,
+            0
+          ],
+          "value": -1134.113539273087
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "929974bfedb4d72b36c451b303fad25292d467b16e1dc654fc980aec4620ed32"
+}
