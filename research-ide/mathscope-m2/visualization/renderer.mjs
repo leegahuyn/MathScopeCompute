@@ -21,12 +21,16 @@ export class SourceBoundScene extends Scene3D {
   }
   set(data){
     this.presentation=null;this.lastPicked=null;this.selected=null;
+    if(this.canvas.style)this.canvas.style.minHeight='';
     for(const key of ['visualizationState','observationKind','inputHash','resultHash','sourceHash','modelHash','sampleHash','observationHash','ensembleHash','historyHash','configurationHash','sourceJobId','gpuPath','selectedSourcePath','representationRevision'])delete this.canvas.dataset[key];
     this.canvas.setAttribute('aria-label',data?.description||'현재 계산의 표시 자료입니다. 원본 실행 결속은 아직 설정되지 않았습니다.');
     return super.set(data);
   }
   setVisualization(view){
     this.presentation=view;this.lastPicked=null;
+    // Keep every interval row readable even in the narrow/mobile canvas. The
+    // exact table and all retained source marks stay unchanged.
+    if(this.canvas.style)this.canvas.style.minHeight=view.chart?.kind==='INTERVALS'?Math.max(240,126+32*(view.chart.items?.length||0))+'px':'';
     this.canvas.dataset.selectedSourcePath='';
     const color=view.color?.range,scene={...view.scene};
     if(color)scene.points=(scene.points||[]).map(p=>{const n=numericValue(p.value);return {...p,color:p.color||(Number.isFinite(n)?heatColor((n-color[0])/(color[1]-color[0]||1)):palette[0])};});
@@ -140,17 +144,18 @@ export class SourceBoundScene extends Scene3D {
     c.fillStyle='#adc6d5';c.font='10px sans-serif';c.fillText(short('row / column are categorical indices · exact entries shown',Math.floor((width+left-12)/6)),left,top+rows*cell+23);
   }
   drawIntervals(chart,w,h){
-    const c=this.ctx,top=62,row=Math.min(86,(h-94)/Math.max(1,chart.items.length)),left=80,right=w-30;
+    const c=this.ctx,top=62,bottom=h-64,row=Math.min(86,(bottom-top)/Math.max(1,chart.items.length)),left=Math.min(190,Math.max(112,w*.29)),right=w-26;
+    const endpointOffset=Math.min(22,Math.max(12,row-10));
     chart.items.forEach((p,i)=>{
-      const y=top+i*row+20;let lo=p.lower,hi=p.upper;
+      const y=top+i*row+6;let lo=p.lower,hi=p.upper;
       if(![lo,hi,p.midpoint].every(Number.isFinite)||lo>hi)return;
       const d=hi-lo||Math.abs(lo)*.001||1,pad=.1*d,X=x=>left+(x-lo+pad)/(d+2*pad)*(right-left);
-      c.fillStyle='#d5e6ef';c.font='12px sans-serif';c.fillText(p.label,12,y+4);c.strokeStyle=palette[i%palette.length];c.lineWidth=3;c.beginPath();c.moveTo(X(lo),y);c.lineTo(X(hi),y);c.stroke();
+      c.fillStyle='#d5e6ef';c.font='11px sans-serif';c.fillText(short(p.label,Math.floor((left-20)/6.5)),12,y+4);c.strokeStyle=palette[i%palette.length];c.lineWidth=3;c.beginPath();c.moveTo(X(lo),y);c.lineTo(X(hi),y);c.stroke();
       for(const v of[lo,hi]){c.beginPath();c.moveTo(X(v),y-7);c.lineTo(X(v),y+7);c.stroke();}
-      c.fillStyle='#fff1cb';c.beginPath();c.arc(X(p.midpoint),y,4,0,Math.PI*2);c.fill();c.font='10px monospace';c.fillStyle='#adc6d5';c.fillText(tick(lo),left,y+24);c.textAlign='right';c.fillText(tick(hi),right,y+24);c.textAlign='left';
+      c.fillStyle='#fff1cb';c.beginPath();c.arc(X(p.midpoint),y,4,0,Math.PI*2);c.fill();c.font='10px monospace';c.fillStyle='#adc6d5';c.fillText(tick(lo),left,y+endpointOffset);c.textAlign='right';c.fillText(tick(hi),right,y+endpointOffset);c.textAlign='left';
       this.projected.push({pos:[i,p.midpoint,0],xy:[X(p.midpoint),y,0],label:p.label+': ['+p.lower+', '+p.upper+']',sourcePath:p.sourcePath});
     });
-    c.fillStyle='#adc6d5';c.font='10px sans-serif';c.fillText('Each row uses its own interval scale. Exact endpoints are below.',16,h-34);
+    c.fillStyle='#adc6d5';c.font='10px sans-serif';c.fillText(short('Independent row scales · exact endpoints in table',Math.floor((w-32)/5.7)),16,h-34);
   }
   drawNetwork(chart,w,h){
     if(w<520){

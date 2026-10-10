@@ -141,12 +141,91 @@ function pulsePanels(d,options){
   return panels;
 }
 
+function picardAcceptancePanels(d,options){
+  const [main,points,,majorant]=backgroundPanels(d,options);
+  main.title='실제 n=1 Picard · 유한 합격과 축 관측';
+  main.description='원래 N3 소스의 고정 차수 n=1을 검증한 실행입니다. 공통 collar·strip·C1·tail은 별도 패널에서 확인할 수 있으며, 이 화면의 세 행은 실제 축 도함수 구간입니다.';
+  const checks=array(d.verification?.checks),vp=ROOT+'.verification.checks';
+  const table=sourceTable('원래 N4-03 · 실행한 합격 검사',['원본 항목','검사 결과'],checks.map((c,i)=>{const p=vp+'['+i+']';return row(p,cell(c.id,p+'.id'),cell(c.pass,p+'.pass'));}),options);
+  const certificate=tablePanel('actual-picard-certificate','N4-03 · 원문 기준과 15개 검사','원래 6성분 계, source binding, nilpotent 미분 block, 양의 strip, 공통 collar, finite K와 tail, 실제 관측을 검사합니다. 거대한 K항 수치 합산은 실행하지 않았다는 판정도 검사에 포함합니다.',table,ROOT+'.verification','ACTUAL_FIXED_ORDER_PICARD_ACCEPTANCE',d);
+  certificate.relatedTables.push(propertyTable('원래 기준과 정확한 인증 범위',d,ROOT,[['criterion','원래 N4-03 기준'],['acceptance','개별 유한 합격'],['scope','실행한 범위'],['tailProof','finite K와 tail 증명']],options));
+  const np=ROOT+'.normalizedSystem';
+  const matrixRows=['A0','A1'].flatMap(k=>array(d.normalizedSystem?.[k]).map((r,i)=>{const p=np+'.'+k+'['+i+']';return row(p,cell(k+' row '+(i+1)),cell(r,p));}));
+  certificate.relatedTables.push(sourceTable('정확한 6성분 정규화 연산자',['행','저장된 여섯 계수'],matrixRows,options));
+  certificate.details.push({title:'실행한 원래 소스의 유한 recurrence',value:d.sourceJetWitness,sourcePath:ROOT+'.sourceJetWitness'},{title:'원본 입력 바이트 결속',value:d.sourceBindings,sourcePath:ROOT+'.sourceBindings'});
+  const panels=[main,points,majorant,certificate];
+  for(const panel of panels)panel.observation={...panel.observation,finiteCriterion:'N4-03',finiteCriterionComplete:d.acceptance?.status==='PASS',supportedBackgroundOrder:1,numericalKTermSumExecuted:false,globalOriginalCriteriaComplete:false};
+  return panels;
+}
+
+function amplitudeSeries(d,options,id,title,description,fields,yLabel,kind){
+  const rows=array(d.rows),rp=ROOT+'.rows';
+  const groups=fields.map(([key,label],k)=>({label,color:COLORS[k%COLORS.length],dash:k?[5,3]:[],connect:true,points:rows.map((r,i)=>{const b=r[key];return validInterval(b)&&finite(r.pulseFraction)?{x:r.pulseFraction,y:midpoint(b),label:label+' · v/Ls='+r.pulseFraction,sourceIndex:i,sourceValue:b,sourcePath:rp+'['+i+'].'+key,xSourcePath:rp+'['+i+'].pulseFraction',interval:[...b],displayTransform:'MIDPOINT_OF_STORED_OUTWARD_INTERVAL'}:null;})}));
+  const table=sourceTable(title+' · 보존된 전체 구간',['v/Ls',...fields.map(x=>x[1]+' [하한, 상한]')],rows.map((r,i)=>{const p=rp+'['+i+']';return row(p,cell(r.pulseFractionExact,p+'.pulseFractionExact'),...fields.map(([key])=>cell(r[key],p+'.'+key)));}),options);
+  const panel=seriesPanel(id,title,description,groups,[axis('v/Ls · 원래 전체 pulse 구간','NORMALIZED_PULSE_COORDINATE',rp+'[*].pulseFraction'),axis(yLabel,'NORMALIZED_ACTUAL_PULSE_INTERVAL',rp+'[*]','Midpoint of stored source-bound interval; positive exact scales retained')],kind,d,table,options);
+  panel.observation={...panel.observation,actualHomogeneousSolution:true,representative:d.request,originalLeftGrowingDatum:true,sourceReferenceUsedAsActualAmplitude:false,finiteCriteria:['N5-04','N5-05'],finiteCriteriaComplete:true,globalOriginalCriteriaComplete:false};
+  panel.details.push({title:'원문 초기조건과 homogeneous 문제',value:d.initial,sourcePath:ROOT+'.initial'},{title:'실제 양의 원본 배율',value:d.sourceScales?.exact,sourcePath:ROOT+'.sourceScales.exact'},{title:'실행한 유한 영역',value:d.scope,sourcePath:ROOT+'.scope'});
+  return panel;
+}
+
+function pulseAmplitudePanels(d,options){
+  const main=amplitudeSeries(d,options,'main','실제 성장 펄스 · radial 진폭 / P','원래 왼쪽 성장 초기조건으로 구한 실제 homogeneous 진폭입니다. 양의 비교 전달로 전체 v 구간을 감싸며, 표시 점은 저장된 구간의 중심입니다. P는 기준 envelope이고 실제 진폭과 같지 않습니다. 중점 x/P는 약 0.353553입니다.',[['radialOverP','실제 x/P']],'actual x/P','ACTUAL_HOMOGENEOUS_RADIAL_AMPLITUDE');
+  const components=amplitudeSeries(d,options,'actual-amplitude-components','실제 펄스 · 세 성분의 정규화 구간','각 성분은 표에 명시한 서로 다른 양의 원본 배율로 나눴습니다. 실제 tiny scale은 정확식으로 보존되므로 화면상의 성분 크기를 물리 벡터의 비로 읽으면 안 됩니다.',[['radialOverP','radial / P'],['thetaOverSqrtLambdaUStarP','theta / (sqrt(lambda) u* P)'],['zOverUStarP','axial / (u* P)']],'성분별 정규화 진폭','ACTUAL_HOMOGENEOUS_AMPLITUDE_COMPONENTS');
+  const log=amplitudeSeries(d,options,'actual-amplitude-log','실제 로그 진폭 · 원문 reference와 양 끝 감소','자연로그를 원래 양의 Gscale로 나눈 값을 표시합니다. 기준 P만 중점에서 1로 정규화됩니다. 실제 진폭의 로그와 reference가 화면에서 겹쳐도 정확 구간은 별도로 보존합니다. underflow는 정확한 영 펄스가 아닙니다.',[['actualNormalizedLogRadial','log(actual radial)/Gscale'],['actualNormalizedLogNorm','log(actual norm)/Gscale'],['referenceNormalizedLogP','log(P)/Gscale']],'log amplitude / Gscale','ACTUAL_HOMOGENEOUS_LOG_AMPLITUDE');
+  log.relatedTables.push(propertyTable('연속 구간 Gaussian 상계',d,ROOT,[['gaussian','샘플 사이를 포함한 전체 구간 상계'],['arithmetic','실제 진폭 interval 산술']],options));
+  const energy=amplitudeSeries(d,options,'actual-amplitude-energy','실제 펄스 · 에너지와 원래 energy identity','저장된 |t|²/(P²u*²) 구간입니다. 원래 shear 교환·점성 소산·pressure 직교 항을 모두 유지한 (7.22)를 검증합니다. 곡선의 수치 미분으로 항등식을 대신하지 않습니다.',[['energyOverP2UStar2','|t|²/(P²u*²)']],'정규화 실제 에너지','ACTUAL_HOMOGENEOUS_ENERGY');
+  energy.relatedTables.push(propertyTable('원래 에너지 항등식',d,ROOT,[['energy','shear·damping energy balance'],['reduction','실제 projected ODE의 환원']],options));
+  const erp=ROOT+'.rows';
+  energy.relatedTables.push(sourceTable('원래 energy derivative 구간',['v/Ls','(d_a |t|²)/(Gscale P²u*²)'],array(d.rows).map((r,i)=>{const p=erp+'['+i+']';return row(p,cell(r.pulseFractionExact,p+'.pulseFractionExact'),cell(r.energyDerivativeOverGScaleP2UStar2,p+'.energyDerivativeOverGScaleP2UStar2'));}),options));
+  const normal=amplitudeSeries(d,options,'actual-amplitude-normal','실제 펄스 · 직교 제약의 수치 enclosure','0을 포함하는 정규화된 n·t의 검증 구간을 보존합니다. 중심선만으로 오차 폭을 판단하지 말고 아래 정확표의 양 끝점을 확인하세요. n·B=0의 원래 대수 항등식은 위상 패널에서 별도로 검사합니다.',[['orthogonalityResidualInterval','정규화 n·t enclosure']],'normal constraint enclosure','ACTUAL_HOMOGENEOUS_NORMAL_CONSTRAINT');
+  const originalNormal=normal.chart.series[0];
+  normal.chart.series=[originalNormal,...[0,1].map((end,j)=>({...originalNormal,label:end?'직교 구간 상한':'직교 구간 하한',color:COLORS[j+1],dash:[5,3],points:originalNormal.points.map(p=>({...p,y:p.interval[end],sourceValue:p.interval[end],value:p.interval[end],sourcePath:p.sourcePath+'['+end+']',displayTransform:'STORED_OUTWARD_INTERVAL_ENDPOINT'}))}))];
+  normal.scene.points=normal.chart.series.flatMap(s=>s.points.map(p=>({...p,pos:[p.x,p.y,0],color:s.color,label:s.label})));
+  normal.lod={...normal.lod,originalPoints:normal.scene.points.length,displayedPoints:normal.scene.points.length};
+  const pp=ROOT+'.phaseProgram',sp=ROOT+'.sourceScales';
+  const sourceRows=[...Object.entries(d.phaseProgram?.operatorCertificates||{}).map(([k,v])=>row(pp+'.operatorCertificates.'+k,cell(k),cell(v,pp+'.operatorCertificates.'+k))),...Object.entries(d.sourceScales?.exact||{}).map(([k,v])=>row(sp+'.exact.'+k,cell(k),cell(v,sp+'.exact.'+k)))];
+  const phase=tablePanel('actual-amplitude-phase','실제 위상·편극 · 주파수·frame 하계','원래 Φ,n,K,AΦ,B,B′와 left inverse를 생성한 실행입니다. 인증된 대표점 이웃과 전체 pulse 구간의 denominator·frame·frequency 조건을 확인합니다. 양의 극소 배율 및 이산 carrier는 정확식으로 보존합니다.',sourceTable('실제 위상 조건과 고정 source scale',['원본 항목','정확식 또는 판정'],sourceRows,options),pp,'ACTUAL_SOURCE_PHASE_AND_FRAME_CERTIFICATE',d);
+  phase.relatedTables.push(propertyTable('생성식과 인증 영역',d.phaseProgram,pp,[['domain','실제 식의 domain와 인증된 이웃'],['scope','위상 생성의 범위'],['fullPhysicalResidual','원래 pressure·phase defect와 남은 slow residual']],options),propertyTable('완성 배경의 실제 제한',d.sourceScales,sp,[['completedBackgroundRestriction','원전의 정확한 Imean restriction'],['bounds','실제 source-derived 비교 상계'],['checks','실행한 배율 검사']],options));
+  phase.details.push({title:'명시적 source expression program',value:d.phaseProgram,sourcePath:pp},{title:'모든 comparison cell의 실제 기록',value:d.cells,sourcePath:ROOT+'.cells'},{title:'실행한 homogeneous 검사',value:d.checks,sourcePath:ROOT+'.checks'});
+  return [main,components,log,energy,normal,phase];
+}
+
+function continuationIntervals(d,options,id,title,description,rows,path,kind){
+  const records=rows.map((r,i)=>{
+    const p=r.sourcePath||path+'['+i+']',ip=r.intervalPath||p+'.actualInterval',v=r.actualInterval,b=v?.displayEnclosure;
+    return {r,p,ip,mark:validInterval(b)?{x:i,y:midpoint(b),lower:b[0],upper:b[1],midpoint:midpoint(b),label:r.label||r.id+' · eta '+r.etaDerivativeOrder,sourceIndex:i,sourcePath:ip,value:v,sourceValue:v,displayEnclosure:[...b],displaySourcePath:ip+'.displayEnclosure',displayTransform:'MIDPOINT_OF_STORED_DIRECTED_DISPLAY_ENCLOSURE'}:null};
+  });
+  const table=sourceTable(title+' · 정확한 구간',['항목','정확 하한','정확 상한','표시 enclosure'],records.map(({r,p,ip,mark})=>row(p,cell(r.label||r.quantity||r.id),cell(r.actualInterval?.lower,ip+'.lower'),cell(r.actualInterval?.upper,ip+'.upper'),cell(mark?.displayEnclosure,ip+'.displayEnclosure'))),options);
+  return intervalPanel(id,title,description,records.map(x=>x.mark),[axis('독립 적분·성분 행','CATEGORICAL_SOURCE_QUANTITY',path),axis('원본 구간의 유한 enclosure','SOURCE_INTERVAL',path,'Stored directed enclosure; independent row scales')],kind,d,table,options);
+}
+
+function continuationPanels(d,options){
+  const main=continuationIntervals(d,options,'main','실제 연장 구간 · U, M, V의 10개 구간','요청한 물리 X 구간 전체를 감싸는 실제 장의 enclosure입니다. η는 요청한 한 점에 고정됩니다. B.26/B.34/B.8과 C.12의 양의 오차를 유지하며, U=4η를 정확한 실제 장으로 대신하지 않습니다.',array(d.actualAxialCell?.rows),ROOT+'.actualAxialCell.rows','ACTUAL_AXIAL_CONTINUATION_CELL');
+  main.relatedTables.push(propertyTable('실제 물리 구간과 오차',d.actualAxialCell,ROOT+'.actualAxialCell',[['request','정확 입력'],['domain','구간의 인증 범위'],['error','실제 양의 연장·modulation 오차'],['scope','실행한 범위']],options));
+  const core=continuationIntervals(d,options,'actual-core-integrals','실제 core · 7개 전체 적분과 η 0–2차','0≤Y≤4의 실제 nonlinear core를 적분한 21개 구간입니다. 각 행의 양은 아래 표에 표시하며 j0 등 서로 다른 배율을 사용합니다. 유한 다항식 적분에 실제 Banach·비교 tail 오차를 더한 결과입니다.',array(d.coreMoments?.rows),ROOT+'.coreMoments.rows','ACTUAL_WHOLE_CORE_INTEGRALS');
+  core.relatedTables.push(propertyTable('core 적분의 원래 배율과 실제 tail',d.coreMoments,ROOT+'.coreMoments',[['request','정확한 core 입력'],['restoration','실제 양의 배율과 복원식'],['errors','적분에 남긴 실제 source 오차'],['scope','core 적분의 범위']],options));
+  const rp=ROOT+'.reference.regularIntegrals.values';
+  const referenceRows=Object.entries(d.reference?.regularIntegrals?.values||{}).map(([id,actualInterval])=>({id,label:id,actualInterval,sourcePath:rp+'.'+id,intervalPath:rp+'.'+id}));
+  const reference=continuationIntervals(d,options,'actual-reference-integrals','B.22 reference · 정규 적분 10개','실제 core의 primitive offset과 양의 t1 폭을 유지한 B.22 reference 적분입니다. 이 reference와 실제 shear-reduced 연장 장은 서로 다른 관측이며, 이 10개 값을 전체 실제 Ω debt로 사용하지 않습니다.',referenceRows,rp,'SOURCE_BOUND_B22_REFERENCE_INTEGRALS');
+  reference.relatedTables.push(propertyTable('B.22 reference와 실제 장의 구분',d.reference,ROOT+'.reference',[['collar','양의 원래 cutoff 폭'],['domain','reference의 수학 영역과 실행한 구간'],['restoration','primitive 복원식'],['scope','reference 적분의 인증 범위']],options));
+  const gp=ROOT+'.globalComparison';
+  const comparison=tablePanel('actual-continuation-remainder','실제 전체 Ω · 남은 양의 적분 오차','완전히 전개한 A.2 함수와 실제 최종 소스의 차이를 양의 나머지로 감쌉니다. 정확한 전역 debt의 중심값과 source displacement를 아직 평가하지 않았으므로 이 오차를 0 또는 보정 계수로 사용하지 않습니다.',propertyTable('전체 weighted Ω remainder',d.globalComparison,gp,[['actualInnerBound','실제 inner 비교 상계'],['supportAndMass','원래 support와 mass 복원'],['weightedRemainder','전역 정규화 적분의 양의 remainder'],['scope','전역 적분과 남은 단계']],options),gp,'ACTUAL_GLOBAL_OMEGA_DISPLACEMENT_BOUND',d);
+  comparison.relatedTables.push(propertyTable('차수 간 재사용 gate',d,ROOT,[['nextOrderGate','n+1 source 재사용 판정'],['remaining','남은 실제 producer와 복구']],options));
+  const ap=ROOT+'.a2Program';
+  const program=tablePanel('actual-continuation-program','A.2 원래 함수 · 적분과 근의 명시적 그래프','실제 원본 매개변수·적분 integrand·끝점·도함수·선택된 근으로 전개한 함수 정의입니다. 표의 root 번호는 저장된 expression graph의 시작점입니다. 거대한 지수의 수치 적분을 실행했다는 뜻은 아닙니다.',propertyTable('전개된 A.2 function program',d.a2Program,ap,[['construction','전개한 소스 단계'],['integration','적분 정의'],['roots','원본 field·moment root node'],['operations','사용한 명시적 연산'],['scope','함수 정의와 실제 평가 범위'],['numericalBarrier','남은 scaled 적분']],options),ap,'EXPLICIT_A2_AXIAL_FUNCTION_PROGRAM',d);
+  program.details.push({title:'보존된 실제 소스의 모든 expression node',value:d.a2Program?.nodes,sourcePath:ap+'.nodes'});
+  return [main,core,reference,comparison,program];
+}
+
 /** Parent makeM2Visualization supplies current editor/job/hash state before merging one panel. */
 export function actualSourcePanels(job,options={}){
   if(!job?.result||options.currentEditorMatches===false)return [];
   if([job.status,job.result.status].some(s=>['FAILED','UNSUPPORTED','CANCELLED','BUDGET_EXCEEDED','PRECISION_REQUIRED'].includes(s)))return [];
   const d=job.result.results,kind=job.request?.kind;
   if(kind==='ns.actual-background'&&d?.schema==='MathScope.ActualBackgroundConstruction/1')return backgroundPanels(d,options);
+  if(kind==='ns.actual-picard-acceptance'&&d?.schema==='MathScope.ActualFixedOrderPicardAcceptance/1')return picardAcceptancePanels(d,options);
+  if(kind==='ns.actual-pulse-amplitude'&&d?.schema==='MathScope.ActualMeanPulseAmplitude/1')return pulseAmplitudePanels(d,options);
+  if(kind==='ns.actual-continuation'&&d?.schema==='MathScope.ActualContinuationConstruction/1')return continuationPanels(d,options);
   if(kind==='ns.actual-mean-pulse'&&d?.schema==='MathScope.ActualMeanPatchPulseConstruction/1')return pulsePanels(d,options);
   return [];
 }

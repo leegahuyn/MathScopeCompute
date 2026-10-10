@@ -18,7 +18,7 @@ import {evaluatePulseCutoffRemainder,defaultTailJet} from '../source-tail.mjs';
 
 const base=new URL('../',import.meta.url),out=new URL('../evidence/',import.meta.url);
 await mkdir(out,{recursive:true});
-const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs'];
+const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs','actual-picard-acceptance.test.mjs','actual-pulse-amplitude.test.mjs','actual-continuation.test.mjs'];
 const testResult=spawnSync(process.execPath,['--test','--test-reporter=tap',...testSuites.map(name=>fileURLToPath(new URL(name,import.meta.url)))],{encoding:'utf8'});
 await writeFile(new URL('tests.tap',out),testResult.stdout+testResult.stderr);
 if(testResult.status!==0)throw Error('N4/N5 regression tests failed; evidence is not sealed.');
@@ -27,6 +27,29 @@ const independentInput={residual:finiteBackgroundResidual(2),support:uniformSupp
 const independent=spawnSync('python',[fileURLToPath(new URL('./source-independent-checks.py',import.meta.url))],{encoding:'utf8',input:JSON.stringify(independentInput)});if(independent.status!==0)throw Error('Independent source checks failed: '+independent.stderr);
 const independentEvidence=JSON.parse(independent.stdout);if(!independentEvidence.pass)throw Error('Independent checker did not accept.');await writeFile(new URL('source-independent-checks.json',out),JSON.stringify(independentEvidence,null,2)+'\n');
 const additionalIndependent=[];
+const newSourcePaths=[];
+// New finite certificates have different manifest formats. Each bound byte
+// is checked before its independently executed receipt is included.
+const picardText=await readFile(new URL('actual-picard-acceptance.json',out),'utf8'),picardReceipt=JSON.parse(picardText);
+for(const f of picardReceipt.artifacts){const p=f.path.replace(/^navier\//,'');if(await sha256(await readFile(new URL(p,base),'utf8'))!==f.sha256)throw Error('Stale actual Picard source: '+f.path);newSourcePaths.push(p);}
+if(picardReceipt.independentValidation.checks!==picardReceipt.independentValidation.passed||!picardReceipt.independentValidation.results.every(c=>c.pass===true)||!picardReceipt.runtimeVerification.pass)throw Error('Incomplete actual Picard independent acceptance.');
+additionalIndependent.push({file:'actual-picard-acceptance.json',checks:picardReceipt.independentValidation.passed,sha256:await sha256(picardText),verification:'INDEPENDENT_LAURENT_FRACTION_RECEIPT_WITH_CURRENT_PRODUCER_HASHES'});
+for(const [manifestName,listKey,prefix] of [['actual-pulse-amplitude-manifest.json','artifacts',''],['tests/actual-continuation-manifest.json','files','research-ide/mathscope-m2/navier/']]){
+  const serialized=await readFile(new URL(manifestName,base),'utf8'),manifest=JSON.parse(serialized);newSourcePaths.push(manifestName);
+  for(const f of manifest[listKey]){const p=prefix?f.path.replace(prefix,''):f.path;const bytes=await readFile(new URL(p,base),'utf8');if(await sha256(bytes)!==f.sha256)throw Error('Stale actual finite source manifest: '+f.path);newSourcePaths.push(p);}
+}
+{
+  const processResult=spawnSync('python',[fileURLToPath(new URL('./actual-pulse-amplitude-independent.py',import.meta.url))],{encoding:'utf8'});
+  if(processResult.status!==0)throw Error('Independent actual amplitude failed: '+processResult.stderr);
+  const audit=JSON.parse(processResult.stdout);if(!audit.pass||audit.checks!==618)throw Error('Incomplete actual amplitude audit.');
+  const body={schema:'MathScope.ActualPulseAmplitudeIndependentAudit/1',...audit,inputSHA256:await sha256(await readFile(new URL('./actual-pulse-amplitude-independent.json',import.meta.url),'utf8')),checkerSHA256:await sha256(await readFile(new URL('./actual-pulse-amplitude-independent.py',import.meta.url),'utf8')),sourceManifest:'navier/actual-pulse-amplitude-manifest.json',sourceManifestSHA256:await sha256(await readFile(new URL('actual-pulse-amplitude-manifest.json',base),'utf8'))};
+  const serialized=JSON.stringify(body,null,2)+'\n',file='actual-pulse-amplitude-independent.json';await writeFile(new URL(file,out),serialized);additionalIndependent.push({file,checks:body.checks,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_FRACTION_DECIMAL_AUDIT_WITH_SOURCE_BINDINGS'});
+}
+{
+  const file='actual-continuation-independent.json',serialized=await readFile(new URL(file,import.meta.url),'utf8'),audit=JSON.parse(serialized);
+  if(!audit.pass||audit.checksPassed!==audit.checksTotal||audit.checks.length!==audit.checksTotal||!audit.checks.every(c=>c.pass===true))throw Error('Incomplete actual continuation audit.');
+  await writeFile(new URL(file,out),serialized);additionalIndependent.push({file,checks:audit.checksPassed,sha256:await sha256(serialized),verification:'FROZEN_INDEPENDENT_FRACTION_DECIMAL_RECEIPT_WITH_CURRENT_PRODUCER_HASHES'});
+}
 // Reuse independently executed, frozen receipts only after checking every
 // producer/source byte they bind. Regenerate those receipts with their own
 // --output commands whenever one of the bound files changes.
@@ -76,12 +99,13 @@ for(const example of getExamples()){
 const sourceFiles=['index.mjs','pulse-ode.mjs','checklist.mjs','source-algebra.mjs','source-background.mjs','source-envelope.mjs','source-geometry.mjs','source-profile.mjs','source-profile-data.mjs','source-support.mjs','source-core-data.mjs','source-core-observations.mjs','source-pulse-curl.mjs','source-gluing.mjs','source-tail.mjs','README_KO.md','PROOF_OBLIGATIONS_KO.md','research/SOURCE_PULSE_CURL_OPERATOR.md',...testSuites.map(name=>'tests/'+name),'tests/source-independent-checks.py','tests/source-core-independent.py','tests/source-contract-independent.py','tests/build-source-binding.py','tests/build-source-core-binding.py','tests/generate-evidence.mjs','tests/fixtures/original-n4-n5.json'],sourceHashes={};
 sourceFiles.push(...[...new Set([...actualManifest.files.map(f=>f.path.replace(/^navier\//,'')),...pulseReceipt.files.map(f=>f.path.replace(/^research-ide\/mathscope-m2\/navier\//,'')),'tests/actual-background-manifest.json','research/RESUMED_SOURCE_AUDIT_KO.md'])].filter(p=>!sourceFiles.includes(p)));
 sourceFiles.push(...[...new Set([...extendedManifests.flatMap(m=>m.files.map(f=>f.path.replace(/^research-ide\/mathscope-m2\/navier\//,''))),'actual-core-evaluator-manifest.json','tests/actual-global-source-manifest.json','research/ACTUAL_CORE_INDEPENDENT_REVIEW_KO.md'])].filter(p=>!sourceFiles.includes(p)));
+sourceFiles.push(...[...new Set([...newSourcePaths,'research/FINITE_CRITERIA_REAUDIT_KO.md'])].filter(p=>!sourceFiles.includes(p)));
 for(const name of sourceFiles)sourceHashes[name]=await sha256(await readFile(new URL(name,base),'utf8'));
 const convergence=[];
 for(const steps of[32,64,128,256]){const r=await executeDomain({kind:'ns.pulse-ode',input:{steps}});convergence.push({stepsPerHalf:steps,...r.results.diagnostics});}
 const negativeCovariance=await executeDomain({kind:'ns.pulse-covariance',input:{target:[1,0]}});
 const checklist=getChecklist(),criterionCounts=Object.fromEntries(['PASS','PARTIAL','OPEN'].map(status=>[status,checklist.filter(x=>x.status===status).length]));
 const independentTotal=independentEvidence.total+additionalIndependent.reduce((n,x)=>n+x.checks,0);
-const body={schema:'MathScope.M2.NavierAcceptance/3',generatedAt:new Date().toISOString(),source:BLUEPRINT_SOURCE,sourceHashes,testEvidence:{runner:'node --test --test-reporter=tap',suites:testSuites,file:'tests.tap',total:totalTests,pass:passedTests,fail:0,sha256:await sha256(testResult.stdout+testResult.stderr),scope:'LOCAL_NODE_DOMAIN_AND_ENGINE_REPLAY; browser/worker integration is verified separately by the page build.'},independentEvidence:{file:'source-independent-checks.json',sha256:await sha256(JSON.stringify(independentEvidence,null,2)+'\n'),checks:independentEvidence.total,exactPhysicalPdeComparisons:independentEvidence.pdeExactMatches,additional:additionalIndependent,totalChecks:independentTotal},exactSourceEvidence:{file:'source-exact-identities.json',sha256:await sha256(JSON.stringify(exactEvidence,null,2)+'\n')},archive:getCapabilities().n3Profile,examples:records,convergence,negativeControls:{outsideCone:{status:negativeCovariance.status,weights:negativeCovariance.results.weights,checks:negativeCovariance.checks}},checklist,criterionCounts,acceptance:'TEN_ORIGINAL_FINITE_OPERATOR_OR_OBSERVATION_CRITERIA_PASS; SIX_ACTUAL_SOURCE_CONSTRUCTION_CRITERIA_PARTIAL',packageCompletionGate:false,sourceInstanceCertified:false,allOrderSourceCertificate:false,fullN4:false,fullN5:false,formalComplete:false,globalNavierStokesConstruction:false};
+const body={schema:'MathScope.M2.NavierAcceptance/3',generatedAt:new Date().toISOString(),source:BLUEPRINT_SOURCE,sourceHashes,testEvidence:{runner:'node --test --test-reporter=tap',suites:testSuites,file:'tests.tap',total:totalTests,pass:passedTests,fail:0,sha256:await sha256(testResult.stdout+testResult.stderr),scope:'LOCAL_NODE_DOMAIN_AND_ENGINE_REPLAY; browser/worker integration is verified separately by the page build.'},independentEvidence:{file:'source-independent-checks.json',sha256:await sha256(JSON.stringify(independentEvidence,null,2)+'\n'),checks:independentEvidence.total,exactPhysicalPdeComparisons:independentEvidence.pdeExactMatches,additional:additionalIndependent,totalChecks:independentTotal},exactSourceEvidence:{file:'source-exact-identities.json',sha256:await sha256(JSON.stringify(exactEvidence,null,2)+'\n')},archive:getCapabilities().n3Profile,examples:records,convergence,negativeControls:{outsideCone:{status:negativeCovariance.status,weights:negativeCovariance.results.weights,checks:negativeCovariance.checks}},checklist,criterionCounts,acceptance:'ORIGINAL_FINITE_CRITERIA_WITH_SOURCE_BOUND_PICARD_PHASE_AND_HOMOGENEOUS_PULSE_CERTIFICATES; REMAINING_ACTUAL_SOURCE_OBLIGATIONS_ARE_SEPARATE',packageCompletionGate:false,sourceInstanceCertified:false,allOrderSourceCertificate:false,fullN4:false,fullN5:false,formalComplete:false,globalNavierStokesConstruction:false};
 await writeFile(new URL('acceptance.json',out),JSON.stringify({...body,artifactHash:await sha256(canonicalStringify(body))},null,2)+'\n');
 process.stdout.write(JSON.stringify({tests:totalTests,passed:passedTests,independentChecks:independentTotal,examples:records.length,criterionCounts:body.criterionCounts,sourceFiles:sourceFiles.length,output:fileURLToPath(out)},null,2)+'\n');

@@ -16,10 +16,13 @@ import {actualBackgroundConstruction} from './actual-background.mjs';
 import {actualMeanPatchPulseConstruction} from './actual-pulse-construction.mjs';
 import {actualGlobalSourceConstruction} from './actual-global-source.mjs';
 import {evaluateActualCorePoint} from './actual-core-evaluator.mjs';
+import {buildActualPicardAcceptance,verifyActualPicardAcceptance} from './actual-picard-acceptance.mjs';
+import {actualMeanPulseAmplitude} from './actual-pulse-amplitude-integrator.mjs';
+import {actualContinuationConstruction} from './actual-continuation-construction.mjs';
 
 const PAPER={title:'Finite Time Blowup for Navier–Stokes',url:'https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf',sha256:'0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f'};
 const PROFILE={id:'same-profile-2026-10-10.3',commit:'55dacb898f8c204bf0c5925ea901d75d6c2d0f46',assessmentSha256:'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c',role:'ACCEPTED_N3_ARCHIVE_REFERENCE',globalEvaluator:false,description:'Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.'};
-const KINDS=['ns.actual-core-evaluation','ns.actual-global-source','ns.actual-background','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
+const KINDS=['ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-pulse-amplitude','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
 const fail=(code,message)=>{throw Object.assign(Error(message),{code});};
 const finite=(v,name,lo=-1e6,hi=1e6)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)fail('INVALID_INPUT',name+' is outside the finite supported interval.');return v;};
 const int=(v,name,lo,hi)=>{finite(v,name,lo,hi);if(!Number.isSafeInteger(v))fail('INVALID_INPUT',name+' must be an integer.');return v;};
@@ -54,6 +57,14 @@ function actualGlobalSource(input,ctx){
   return {...output,sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; actual outer integral receipt and reduction sources remain in results'};
 }
 
+function actualContinuation(input,ctx){
+  const data=actualContinuationConstruction({...input,bits:input.bits??ctx.precision?.bits??192},ctx),rows=data.actualAxialCell.rows;
+  const checks=[check('whole-actual-core-moments',data.coreMoments.rows.length===21&&data.coreMoments.rows.every(r=>r.positiveNonlinearErrorRetained===true)),check('positive-reference-width-retained',data.reference.scope.actualPositiveCutoffWidthKept),check('whole-actual-axial-cell',data.actualAxialCell.scope.actualWholeAxialContinuationCellEnclosed&&!data.actualAxialCell.scope.actualUEquals4Eta),check('actual-comparison-checks',data.globalComparison.arithmeticChecks.every(r=>r.verified)),check('exact-debt-not-replaced-by-a-bound',data.nextOrderGate.allowed===false&&data.nextOrderGate.midpointOrA2SubstitutionAllowed===false)];
+  const output=result({kind:'ACTUAL_CORE_MOMENTS_AND_SOURCE_CONTINUATION',sourceProfile:data.profileId},data,checks,
+    {axes:[axis('independent actual field row'),axis('actual source cell interval','ACTUAL_FIELD_INTERVAL'),axis('0')],points:rows.map((r,i)=>({pos:[i,r.actualInterval.displayEnclosure[0]/2+r.actualInterval.displayEnclosure[1]/2,0],value:r.actualInterval,label:r.id+' · eta order '+r.etaDerivativeOrder,sourceField:`result.results.actualAxialCell.rows[${i}].actualInterval`})),lines:[],description:'Actual whole-core integrals, positive-width B.22 reference, actual U/M/V cell intervals and retained global weighted-moment displacement.',lostInformation:['B.22 reference integrals and actual continuation cell enclosures are separate observations.','A bounded nonzero global displacement does not choose an exact total moment debt or enable the next background order.']},data.remaining.map(x=>x.required),'ACTUAL_SOURCE_DIRECTED_INTERVAL_CONTINUATION_AND_GLOBAL_REMAINDER');
+  return {...output,sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; source continuation and analytic remainder bindings remain in results'};
+}
+
 function actualBackground(input,ctx){
   ctx.checkCancelled?.();
   const data=actualBackgroundConstruction({profileId:input.sourceProfile??SOURCE_PROFILE_ID,order:1,radialDegree:input.radialDegree??3,bits:input.tailBits??128}),samples=data.axisObservations.samples;
@@ -61,11 +72,26 @@ function actualBackground(input,ctx){
     {axes:[axis('component index'),axis('normalized first radial derivative','NORMALIZED_FIELD_INTERVAL'),axis('0')],points:samples.map((s,i)=>({pos:[i,s.value,0],value:s.value,label:s.quantity,sourceField:`results.axisObservations.samples[${i}].normalizedInterval`})),lines:samples.map((s,i)=>({points:[[i,s.displayEnclosure[0],0],[i,s.displayEnclosure[1],0]]})),description:'Actual source order-one derivatives, same common-collar bounds, and positive-core function enclosures. Components retain separate exact normalizations.',lostInformation:['The point enclosures cover selected positive radii and not the entire collar. Changing tailBits also changes those radii.','The full global moment debts and later corrected orders have not been constructed.']},data.remaining,'ACTUAL_SOURCE_INTERVAL_OBSERVATIONS_AND_WRITTEN_ANALYTIC_DERIVATION');
   return {...output,sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; per-field producer and parameter hashes remain in results.axisObservations.sourceInputs'};
 }
+function actualPicardAcceptance(input,ctx){
+  ctx.checkCancelled?.();
+  const certificate=buildActualPicardAcceptance({profileId:input.sourceProfile??SOURCE_PROFILE_ID,order:1,bits:input.tailBits??128});
+  const data={...certificate,verification:verifyActualPicardAcceptance(certificate),remaining:['Actual global moment repair, higher orders and full residual refinement are separate package obligations.']},samples=data.axisObservations.samples;
+  const output=result({kind:'ACTUAL_FIXED_ORDER_PICARD_FINITE_ACCEPTANCE',sourceProfile:data.profileId,order:1},data,data.verification.checks,
+    {axes:[axis('component index'),axis('normalized actual first derivative','NORMALIZED_FIELD_INTERVAL'),axis('0')],points:samples.map((s,i)=>({pos:[i,s.value,0],value:s.normalizedInterval,label:s.quantity,sourceField:`result.results.axisObservations.samples[${i}].normalizedInterval`})),lines:[],description:'Actual fixed-source n=1 equation, common collar, analytic strip, source-derived majorant, exact finite K expression and certified Picard tail.',lostInformation:['The exact finite K expression is retained; the enormous K-term sum has not been numerically evaluated.','The finite N4-03 acceptance does not certify later moment repairs, residual decay or the full N4 package.']},[],'CERTIFIED_FINITE_FIXED_ORDER_ANALYTIC_COMPUTATION');
+  return {...output,scope:{...output.scope,finiteCriterion:'N4-03',finiteCriterionPass:true,supportedBackgroundOrders:[1],numericalKTermSumExecuted:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; source-byte bindings and exact finite acceptance remain in results'};
+}
 function actualMeanPulse(input,ctx){
   const data=actualMeanPatchPulseConstruction(input,ctx),rows=data.meanPatch.jets;
   const output=result({kind:'ACTUAL_SAME_SOURCE_MEAN_PATCH_PULSE_INPUTS',sourceProfile:data.profileId},data,data.checks,
     {axes:[axis('slow derivative index'),axis('normalized F derivative','NORMALIZED_FIELD_INTERVAL'),axis('0')],points:rows.map((s,i)=>({pos:[i,(s.normalizedFInterval[0]+s.normalizedFInterval[1])/2,0],value:(s.normalizedFInterval[0]+s.normalizedFInterval[1])/2,label:'d^('+s.multiIndex.join(',')+') F/Fscale',sourceField:`results.meanPatch.jets[${i}].normalizedFInterval`})),lines:rows.map((s,i)=>({points:[[i,s.normalizedFInterval[0],0],[i,s.normalizedFInterval[1],0]]})),description:'Actual preserved Imean velocity and normalized slow-coordinate derivatives, with the source growing datum and explicit local comparison bounds.',lostInformation:['The displayed reference log envelope is not a numerical integration of the actual homogeneous amplitude.','These source bounds cover Imean; full annular pulses, every slow derivative, and source covariance remain unfinished.']},[data.remaining],'ACTUAL_SOURCE_LOCAL_JETS_AND_LOCAL_ANALYTIC_PULSE_BOUNDS');
   return {...output,sourceHash:data.sourceHash,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; full local source bindings remain in results.sourceBindings'};
+}
+
+function actualPulseAmplitude(input,ctx){
+  const data=actualMeanPulseAmplitude(input,ctx),rows=data.rows;
+  const output=result({kind:'ACTUAL_HOMOGENEOUS_PULSE_AND_PHASE_FINITE_ACCEPTANCE',sourceProfile:data.profileId},data,[...data.checks,...data.sourceScales.checks],
+    {axes:[axis('v/Ls','NORMALIZED_PULSE_COORDINATE'),axis('actual radial amplitude / P','NORMALIZED_ACTUAL_AMPLITUDE_INTERVAL'),axis('0')],points:rows.map((r,i)=>({pos:[r.pulseFraction,r.radialOverP[0]/2+r.radialOverP[1]/2,0],value:r.radialOverP,label:'actual x/P',sourceField:`result.results.rows[${i}].radialOverP`})),lines:[],description:'Actual source homogeneous growing pulse, original left datum and complete interval comparison, with its phase, moving frame, energy and continuous Gaussian bounds.',lostInformation:['The carrier and positive physical scales remain exact expressions. Normalized interval coordinates do not substitute finite values for them.','This finite representative test leaves general forcing, all slow derivatives and the full annular package outside its accepted scope.']},[],'CERTIFIED_ACTUAL_HOMOGENEOUS_PULSE_INTERVAL_COMPUTATION');
+  return {...output,scope:{...output.scope,finiteCriteria:['N5-04','N5-05'],finiteCriteriaPass:true,certifiedRepresentativeEta:0,certifiedRepresentativeS:1,actualFullPulseInterval:true,generalForcingInverseComplete:false},sourceHash:data.sourceHash,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; actual completed-background restriction, phase program and source comparisons remain in results'};
 }
 
 function backgroundRecursion(input,ctx){
@@ -177,7 +203,10 @@ function pulseTail(input,ctx){
 const INPUT_FIELDS={
   'ns.actual-core-evaluation':['sourceProfile','Y','eta','radialOrder','etaOrder','bits','degree'],
   'ns.actual-global-source':['sourceProfile','eta','xi'],
+  'ns.actual-continuation':['sourceProfile','eta','XInterval','bits','degree'],
   'ns.actual-background':['sourceProfile','radialDegree','tailBits'],
+  'ns.actual-picard-acceptance':['sourceProfile','tailBits'],
+  'ns.actual-pulse-amplitude':['sourceProfile','y','sign','steps'],
   'ns.actual-mean-pulse':['sourceProfile','y','eta','s','order','samples'],
   'ns.background-recursion':['maxOrder'],
   'ns.background-picard':['sourceProfile','n','Cn','a','rho','rhoPrime','terms'],
@@ -198,7 +227,10 @@ const INPUT_FIELDS={
 const NUMERIC_FIELDS={
   'ns.actual-core-evaluation':{radialOrder:[0,2,true],etaOrder:[0,2,true],bits:[96,512,true],degree:[32,64,true]},
   'ns.actual-global-source':{eta:[-1,1]},
+  'ns.actual-continuation':{bits:[96,512,true],degree:[32,64,true]},
   'ns.actual-background':{radialDegree:[1,6,true],tailBits:[16,4096,true]},
+  'ns.actual-picard-acceptance':{tailBits:[16,4096,true]},
+  'ns.actual-pulse-amplitude':{y:[.25,4.75],sign:[-1,1,true],steps:[8,256,true]},
   'ns.actual-mean-pulse':{y:[.25,4.75],eta:[-1,1],s:[.5,2],order:[1,3,true],samples:[4,256,true]},
   'ns.background-recursion':{maxOrder:[1,8,true]},
   'ns.background-picard':{n:[1,8,true],Cn:[1e-8,1e4],a:[1e-8,4],rho:[.0002,4],rhoPrime:[.0001,4],terms:[2,512,true]},
@@ -234,6 +266,7 @@ export function validate(kind,input={}){
     if(!input||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Input must be an object.');
     const unknown=Object.keys(input).filter(k=>!INPUT_FIELDS[kind].includes(k));if(unknown.length)fail('INVALID_INPUT','Unknown '+kind+' input fields: '+unknown.join(', ')+'.');
     finiteTree(input);
+    if(kind==='ns.actual-pulse-amplitude'&&((input.sign!==undefined&&![1,-1].includes(input.sign))||(input.steps!==undefined&&(input.steps&(input.steps-1))!==0)))fail('INVALID_INPUT','Actual pulse sign must be +1 or -1 and steps must be 8,16,32,64,128 or 256.');
     if(input.sourceProfile!==undefined)assertSourceProfile(input.sourceProfile);
     for(const[k,[lo,hi,integer]]of Object.entries(NUMERIC_FIELDS[kind]))if(input[k]!==undefined)(integer?int:finite)(input[k],k,lo,hi);
     if(kind==='ns.actual-core-evaluation'){
@@ -245,6 +278,14 @@ export function validate(kind,input={}){
     if(kind==='ns.actual-global-source'&&input.xi!==undefined){
       if(!Array.isArray(input.xi)||input.xi.length<1||input.xi.length>16)fail('INVALID_INPUT','xi requires one to sixteen actual outer coordinates.');
       input.xi.forEach((v,i)=>finite(v,'xi['+i+']',1/50,10));
+    }
+    if(kind==='ns.actual-continuation'){
+      exactPointRange(input.eta??'1/4','eta',[-1n,1n],[1n,1n]);
+      const ends=input.XInterval??['1','100'];
+      if(!Array.isArray(ends)||ends.length!==2)fail('INVALID_INPUT','XInterval requires two exact radial endpoints.');
+      ends.forEach((v,i)=>exactPointRange(v,'XInterval['+i+']',[1n,1024n],[110n,1n]));
+      const [[a,b=1n],[c,d=1n]]=ends.map(x=>String(x).split('/').map(BigInt));
+      if(a*d>c*b)fail('INVALID_INPUT','The exact radial interval endpoints must be ordered.');
     }
     if(kind==='ns.background-cutoffs'){
       const J=input.orders??4;if(input.tailIndex!==undefined&&input.tailIndex>J)fail('INVALID_INPUT','tailIndex must not exceed the supplied positive orders.');
@@ -272,26 +313,29 @@ export function validate(kind,input={}){
 function precisionContract(kind,value={},input={}){
   if(!value||typeof value!=='object'||Array.isArray(value))fail('INVALID_INPUT','precision must be an object.');
   const unknown=Object.keys(value).filter(k=>!['mode','bits'].includes(k));if(unknown.length)fail('UNSUPPORTED','This finite NS adapter does not implement requested tolerance/precision fields: '+unknown.join(', ')+'.');
-  if(kind==='ns.actual-core-evaluation'){
+  if(['ns.actual-core-evaluation','ns.actual-continuation'].includes(kind)){
     const mode=value.mode??'AUTO',bits=input.bits??value.bits??192;
-    if(!['AUTO','DIRECTED_BIGINT'].includes(mode))fail('PRECISION_REQUIRED','The actual nonlinear core uses directed BigInt intervals; select AUTO or DIRECTED_BIGINT.');
+    if(!['AUTO','DIRECTED_BIGINT'].includes(mode))fail('PRECISION_REQUIRED','The actual source calculation uses directed BigInt intervals; select AUTO or DIRECTED_BIGINT.');
     int(bits,'precision.bits',96,512);
-    if(value.bits!==undefined&&value.bits!==bits)fail('INVALID_INPUT','precision.bits and input.bits must agree for the actual-core calculation.');
+    if(value.bits!==undefined&&value.bits!==bits)fail('INVALID_INPUT','precision.bits and input.bits must agree for the actual source calculation.');
     return {requested:value,arithmeticBits:bits,arithmetic:'DIRECTED_BIGINT_DYADIC_INTERVAL',coordinateInputMaximumBits:4096,displayArithmetic:'OUTWARD_BINARY64_FOR_DISPLAY_ONLY',fullResultExact:false,analyticErrorsRetained:true,rigorousOdeSolutionErrorBound:null,formalPass:false};
   }
   const mode=value.mode??'FLOAT64',bits=value.bits??53;
   if(!['AUTO','FLOAT64','OUTWARD_FLOAT64'].includes(mode))fail('PRECISION_REQUIRED','Exact, arbitrary precision and FORMAL labels cannot replace the installed binary64 numerical/finite-expression backend.');
   if(!Number.isSafeInteger(bits)||bits<1)fail('INVALID_INPUT','precision.bits must be a positive safe integer.');
   if(bits>53)fail('PRECISION_REQUIRED','This NS backend has 53-bit binary64 arithmetic; no higher-precision solver is installed.');
-  const outward=['ns.actual-global-source','ns.actual-background','ns.actual-mean-pulse','ns.background-cutoffs','ns.pulse-tail','ns.background-picard','ns.background-moments','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives'].includes(kind);
+  const outward=['ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-pulse-amplitude','ns.actual-mean-pulse','ns.background-cutoffs','ns.pulse-tail','ns.background-picard','ns.background-moments','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives'].includes(kind);
   if(mode==='OUTWARD_FLOAT64'&&!outward)fail('PRECISION_REQUIRED','Outward scalar interval evaluation is available for scalar bounds/source operator and coordinate enclosures; this job does not provide a certified solution enclosure.');
-  return {requested:value,arithmeticBits:53,arithmetic:outward?'OUTWARD_FLOAT64_SCALAR_INTERVALS':'FLOAT64_WITH_EXACT_INDEX_AND_SOURCE_EXPRESSIONS',fullResultExact:false,rigorousOdeSolutionErrorBound:null,formalPass:false};
+  return {requested:value,arithmeticBits:53,arithmetic:outward?'OUTWARD_FLOAT64_SCALAR_INTERVALS':'FLOAT64_WITH_EXACT_INDEX_AND_SOURCE_EXPRESSIONS',fullResultExact:false,rigorousOdeSolutionErrorBound:kind==='ns.actual-pulse-amplitude'?'ACTUAL_SOURCE_CELLWISE_POSITIVE_VOLTERRA_COMPARISON':null,formalPass:false};
 }
 function resourceEstimate(kind,input){
   const operations={
     'ns.actual-core-evaluation':()=>2000*(input.degree??48)*((input.radialOrder??2)+1)*((input.etaOrder??2)+1),
     'ns.actual-global-source':()=>3000000+10000*(input.xi?.length??5),
+    'ns.actual-continuation':()=>4000000+5000*(input.degree??48),
     'ns.actual-background':()=>500000*((input.radialDegree??3)+1)**2,
+    'ns.actual-picard-acceptance':()=>4000000,
+    'ns.actual-pulse-amplitude':()=>5000000+8000*(input.steps??64),
     'ns.actual-mean-pulse':()=>5000000+1000*(input.samples??32),
     'ns.background-recursion':()=>200000*(input.maxOrder??2)**2,
     'ns.background-picard':()=>10000*(input.terms??16),
@@ -308,7 +352,7 @@ function resourceEstimate(kind,input){
     'ns.pulse-curl':()=>1800000,
     'ns.pulse-tail':()=>500*(input.count??80)
   }[kind]();
-  const items=kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
+  const items=kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
   return {algorithmicOperationsEstimate:operations,outputItemsEstimate:items,policy:'STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE'};
 }
 export function validateRequest(r){
@@ -330,15 +374,18 @@ function finiteJson(value){
   return value;
 }
 export async function run(kind,input={},context={}){
-  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-background':actualBackground,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
-  try{const r=map[kind](input,context),body=finiteJson({kind,moduleVersion:'m2-ns-0.3.1',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
+  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
+  try{const r=map[kind](input,context),body=finiteJson({kind,moduleVersion:'m2-ns-0.3.2',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
   catch(error){if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
 }
 export async function runJob(r,context={}){return run(r.kind,r.input,{...context,precision:r.precision??context.precision??{},budget:r.budget??context.budget??{}});}
 export function getExamples(){return [
   ['ns-m2-actual-core-evaluation','N4 · 실제 비선형 core 점·혼합 도함수·정확 구간','ns.actual-core-evaluation',{sourceProfile:SOURCE_PROFILE_ID,Y:'4',eta:{kind:'RHO_SCALED',value:'1/8'},radialOrder:2,etaOrder:2,bits:192,degree:48}],
   ['ns-m2-actual-global-source','N4 · 실제 외곽 장·전체 모멘트 적분의 정확 축소','ns.actual-global-source',{sourceProfile:SOURCE_PROFILE_ID,eta:.25,xi:[.5,1,2,5,9]}],
+  ['ns-m2-actual-continuation','N4 · 실제 core 전체 적분·물리 구간·모멘트 오차','ns.actual-continuation',{sourceProfile:SOURCE_PROFILE_ID,eta:'1/4',XInterval:['1','100'],bits:192,degree:48}],
   ['ns-m2-actual-background','N4 · 실제 원본 1차 보정·양의 반경 구간·모멘트 기여','ns.actual-background',{sourceProfile:SOURCE_PROFILE_ID,radialDegree:3,tailBits:128}],
+  ['ns-m2-actual-picard-acceptance','N4 · 실제 n=1 Picard 유한 합격·공통 구간·tail','ns.actual-picard-acceptance',{sourceProfile:SOURCE_PROFILE_ID,tailBits:128}],
+  ['ns-m2-actual-pulse-amplitude','N5 · 실제 성장 펄스·위상·에너지·Gaussian 구간','ns.actual-pulse-amplitude',{sourceProfile:SOURCE_PROFILE_ID,y:2.5,sign:1,steps:64}],
   ['ns-m2-actual-mean-pulse','N5 · 실제 Imean 장·국소 위상 상계·원문 성장 초기조건','ns.actual-mean-pulse',{sourceProfile:SOURCE_PROFILE_ID,y:2.5,eta:.25,s:1,order:3,samples:32}],
   ['ns-m2-recursion','N4 · 원래 PDE 직접 대입·exact coefficient 항등식','ns.background-recursion',{maxOrder:2}],
   ['ns-m2-picard','N4 · 원문 6성분 Picard operator·조건부 엄밀 tail','ns.background-picard',{sourceProfile:SOURCE_PROFILE_ID,n:1,Cn:.5,a:.25,rho:.5,rhoPrime:.25,terms:16}],
@@ -355,4 +402,4 @@ export function getExamples(){return [
   ['ns-m2-pulse-curl','N5 · 원문 C_m·전체 r_m·Cartesian curl 대조','ns.pulse-curl',{ell:8}],
   ['ns-m2-tail','N5 · 전체 cutoff 잔차 jet·조건부 고정차수 flatness','ns.pulse-tail',{c:.2,C:2,derivativeLoss:2,targetPower:4,ellStart:8,count:80}]
 ].map(([id,label,kind,input])=>({id,label,request:{kind,input}}));}
-export function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.27','7.40'],implemented:'Actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; affine-normal parallel tangent-frame RK4 with analytic damping and empirical convergence, not a certified ODE solver',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation only'],checklist:getChecklist(),requiredNext:['complete actual global moment functionals and corrected order-one fields','higher-order source recursion after finalized moments','actual finite Fslow and CNm/Km refinement','whole-annulus background/pulse jets, all slow Gaussian derivatives, and actual covariance']};}
+export function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.40'],implemented:'Actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation and ns.actual-continuation'],checklist:getChecklist(),requiredNext:['complete actual global moment functionals and corrected order-one fields','higher-order source recursion after finalized moments','actual finite Fslow and CNm/Km refinement','whole-annulus background/pulse jets, all slow Gaussian derivatives, and actual covariance']};}

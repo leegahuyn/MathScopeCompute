@@ -1,7 +1,7 @@
 {
   "schema": "MathScope.M2OriginalCriterionStatusDelta/1",
   "dateUTC": "2026-10-10",
-  "scope": "Exact comparison of the preserved original criterion IDs, titles, acceptance text, pages and declared implementation states. This change log is not an independent mathematical certificate or a live-browser acceptance report.",
+  "scope": "Verbatim ID/title/acceptance/page comparison and declared status transitions; not an independent mathematical certificate or a browser test. Extraction's literal newline escapes are decoded, without other text normalization.",
   "blueprint": {
     "name": "MathScope_Research_IDE_Blueprint_v1_KO(1)(9).pdf",
     "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
@@ -9,7 +9,7 @@
     "extractionSha256": "ae8d51410367ed147fda1e1e4c28bcc8df3e398378482e39102cef900ff15ed3"
   },
   "previous": {
-    "gitCommit": "7cb1d59a138d2603f8f20c87044439b7957e3cfa",
+    "gitCommit": "2fc532bd8f5adf28e061282e34064cefbd50e8e6",
     "path": "research-ide/mathscope-m2/evidence/m2-criteria-status.json",
     "sha256": "0f54ea2e368bfb636aca85f73c9603abb9b47961b598e6ddda7572932a1ab920",
     "counts": {
@@ -20,10 +20,10 @@
   },
   "current": {
     "path": "evidence/m2-criteria-status.json",
-    "sha256": "0ae1514fed7fb478556d4d3e1e3938283fb3b29ba50173dc167217810fc260d6",
+    "sha256": "668ca88f59e23adb6068d93ebdda649e864926218cbdaec252262b99755871af",
     "counts": {
-      "PASS": 58,
-      "PARTIAL": 6,
+      "PASS": 61,
+      "PARTIAL": 3,
       "OPEN": 0
     },
     "fullM2Complete": false
@@ -39,11 +39,11 @@
     "pass": true
   },
   "transitionCounts": {
-    "PARTIAL->PASS": 36,
+    "PARTIAL->PASS": 38,
     "PASS->PASS": 20,
-    "OPEN->PASS": 2,
-    "OPEN->PARTIAL": 3,
-    "PARTIAL->PARTIAL": 3
+    "OPEN->PASS": 3,
+    "OPEN->PARTIAL": 2,
+    "PARTIAL->PARTIAL": 1
   },
   "transitionIDs": {
     "PARTIAL->PASS": [
@@ -73,6 +73,8 @@
       "N5-01",
       "N5-02",
       "N5-03",
+      "N5-04",
+      "N5-05",
       "N5-07",
       "N5-08",
       "I2-01",
@@ -108,20 +110,18 @@
     ],
     "OPEN->PASS": [
       "Y4-06",
-      "Y4-07"
+      "Y4-07",
+      "N4-03"
     ],
     "OPEN->PARTIAL": [
-      "N4-03",
       "N4-04",
       "N4-05"
     ],
     "PARTIAL->PARTIAL": [
-      "N5-04",
-      "N5-05",
       "N5-06"
     ]
   },
-  "newlyPassedCount": 38,
+  "newlyPassedCount": 41,
   "newlyPassedIDs": [
     "P4-01",
     "P4-04",
@@ -145,12 +145,15 @@
     "Y4-07",
     "N4-01",
     "N4-02",
+    "N4-03",
     "N4-06",
     "N4-07",
     "N4-08",
     "N5-01",
     "N5-02",
     "N5-03",
+    "N5-04",
+    "N5-05",
     "N5-07",
     "N5-08",
     "I2-01",
@@ -163,11 +166,8 @@
     "I2-08"
   ],
   "remainingPartialIDs": [
-    "N4-03",
     "N4-04",
     "N4-05",
-    "N5-04",
-    "N5-05",
     "N5-06"
   ],
   "packages": [
@@ -280,13 +280,14 @@
         "OPEN": 3
       },
       "currentCounts": {
-        "PASS": 5,
-        "PARTIAL": 3,
+        "PASS": 6,
+        "PARTIAL": 2,
         "OPEN": 0
       },
       "newlyPassedIDs": [
         "N4-01",
         "N4-02",
+        "N4-03",
         "N4-06",
         "N4-07",
         "N4-08"
@@ -301,14 +302,16 @@
         "OPEN": 0
       },
       "currentCounts": {
-        "PASS": 5,
-        "PARTIAL": 3,
+        "PASS": 7,
+        "PARTIAL": 1,
         "OPEN": 0
       },
       "newlyPassedIDs": [
         "N5-01",
         "N5-02",
         "N5-03",
+        "N5-04",
+        "N5-05",
         "N5-07",
         "N5-08"
       ]
@@ -1029,19 +1032,16 @@
       "criteria": "(5.7)의 6성분 선형계와 (5.8)의 convergent Picard series를 사용하고 영 axis datum을 유지한다. 합격: 선택 analytic\nstrip·Cn·Cauchy radius loss를 기록하고 Picard tail를 상계한다. 반경 interval은 차수에 따라 임의 축소하지 않으며 lemma\n의 공통 interval 조건을 검사한다.",
       "sourcePage": 58,
       "previousStatus": "OPEN",
-      "currentStatus": "PARTIAL",
-      "transition": "OPEN->PARTIAL",
-      "newlyPassed": false,
+      "currentStatus": "PASS",
+      "transition": "OPEN->PASS",
+      "newlyPassed": true,
       "originalTextPreserved": true,
-      "currentImplementedScope": "같은 accepted N3의 실제 n=1 exact Taylor DAG와 원래 공통 collar의 C1, analytic strip, Cauchy loss, 무한 Picard tail 식을 도출했습니다. 축 첫 미분 3개와 양의 Xi에서 정규화 차분몫 15개를 구간으로 계산합니다. 별도 n=0 core evaluator는 요청 실수 η에서 0–2차 mixed jet·압력·축방향 구간을 반환합니다. 전체 공통 구간의 Picard partial sum 및 필요한 고차 계수열은 아직 완료되지 않았습니다.",
+      "currentImplementedScope": "원래 N3의 고정 차수 n=1에서 (5.7)의 6성분 계를 정확한 C 대각변환으로 연결합니다. 원래 공통 collar, 실제 source-derived C1, 양의 analytic strip과 Cauchy loss, 유한 K의 정확식 및 Picard tail을 인증합니다. 실제 축·양의 반경 관측과 독립 Laurent/Fraction 검사를 실행했습니다. 거대한 K항 수치 합산, 고차 모멘트 복구와 전체 N4 패키지는 별도 범위입니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-      "remainingObligations": [
-        "Evaluate the actual six-component Picard partial sums throughout the unchanged common collar and full eta strip.",
-        "Construct each required higher-order source and C_n only after the previous global five moments are repaired."
-      ],
+      "remainingObligations": [],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-actual-background.json",
-        "mathscope-m2/navier/evidence/actual-background-independent.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-picard-acceptance.json",
+        "mathscope-m2/navier/evidence/actual-picard-acceptance.json"
       ]
     },
     {
@@ -1200,19 +1200,16 @@
       "criteria": "k=ceil(ε^−1/2), kp는 0이 아닌 정수, (7.3)-(7.8)의 Φ,nΦ,K,AΦ,B를 생성한다. 합격: nΦ·tm=0과 nonzero denominators\n를 검사한다. 1≤ εk²≤4 및 frame determinant lower bound를 인증된 영역에서 만족한다.",
       "sourcePage": 60,
       "previousStatus": "PARTIAL",
-      "currentStatus": "PARTIAL",
-      "transition": "PARTIAL->PARTIAL",
-      "newlyPassed": false,
+      "currentStatus": "PASS",
+      "transition": "PARTIAL->PASS",
+      "newlyPassed": true,
       "originalTextPreserved": true,
-      "currentImplementedScope": "같은 N3의 보존된 Imean에서 실제 F/V/b/G, 3차 slow jet와 whole-box 상계, 실제 방향 여유와 국소 normal/projector/frame 비교상수를 구성했습니다. 원래 h와 양의 극소 배율을 유지합니다. 원래 annulus 전체의 완료된 N4 배경과 uniform frame bounds는 아직 필요합니다.",
+      "currentImplementedScope": "완성 배경과 정확히 일치하는 실제 Imean 장으로 Φ,nΦ,K,AΦ,U,J,B,B′,left inverse를 생성합니다. 실제 η=0,s=1 대표점 주변의 원래 4/Sstar³ slow 영역과 전체 v 구간에서 nonzero kp, 1≤εk²≤4, normal·frame determinant 하계를 검증합니다. 생성식의 전체 Imean 영역과 인증된 작은 이웃을 구분합니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-      "remainingObligations": [
-        "Complete the actual N4 background and required coefficient/derivative bounds throughout the original annulus.",
-        "Certify one global q_star satisfying all phase, frame, normal-denominator and determinant conditions."
-      ],
+      "remainingObligations": [],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-actual-mean-pulse.json",
-        "mathscope-m2/navier/evidence/actual-pulse-independent.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-pulse-amplitude.json",
+        "mathscope-m2/navier/evidence/actual-pulse-amplitude-independent.json"
       ]
     },
     {
@@ -1221,19 +1218,16 @@
       "criteria": "(7.13),(7.17)의 projected ODE를 풀고 P(v)=exp∫( λ−dref)를 log envelope로 저장한다. 합격: (7.22)의 amplitude\nenergy balance, n Φ·tm 제약, midpoint normalization과 양 끝 Gaussian bound를 검사한다. underflow를 pulse가 정\n확히 0인 것으로 처리하지 않는다.",
       "sourcePage": 60,
       "previousStatus": "PARTIAL",
-      "currentStatus": "PARTIAL",
-      "transition": "PARTIAL->PARTIAL",
-      "newlyPassed": false,
+      "currentStatus": "PASS",
+      "transition": "PARTIAL->PASS",
+      "newlyPassed": true,
       "originalTextPreserved": true,
-      "currentImplementedScope": "실제 Imean의 원문 왼쪽 growing datum z_plus(0)=P(0)>0, z_minus(0)=0, 국소 Riccati/log 비교와 Gaussian 값 상계를 도출했습니다. 표시 곡선은 normalized reference log envelope입니다. 전역 실제 진폭 적분과 모든 slow derivative의 Gaussian bound는 아직 완료되지 않았습니다.",
+      "currentImplementedScope": "원문 homogeneous m=1의 왼쪽 성장 초기조건으로 (7.13),(7.17)의 실제 projected ODE를 풉니다. 원래 moving normal·B′·damping을 보존한 Liouville 환원과 양의 Volterra 비교로 전체 펄스 진폭을 구간화하고 (7.22) energy, 직교 제약, P 중점 정규화와 양 끝 Gaussian을 검사합니다. 실제 중점 x/P는 약0.353553이며 unit seed로 교체하지 않습니다. 양의 극소 배율과 미계산 general forcing 범위를 보존합니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-      "remainingObligations": [
-        "Construct validated actual projected-amplitude and required slow-derivative enclosures with the original left growing datum.",
-        "Extend the Gaussian/comparison bounds from the actual Imean patch to all required original annular labels."
-      ],
+      "remainingObligations": [],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-actual-mean-pulse.json",
-        "mathscope-m2/navier/evidence/actual-pulse-independent.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-pulse-amplitude.json",
+        "mathscope-m2/navier/evidence/actual-pulse-amplitude-independent.json"
       ]
     },
     {

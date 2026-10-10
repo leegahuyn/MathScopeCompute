@@ -1,0 +1,351 @@
+{
+  "schema": "MathScope.ActualPulseAmplitudeManifest/1",
+  "sourceProfile": "same-profile-2026-10-10.3",
+  "sourceBindings": {
+    "schema": "MathScope.ActualPulseSourceBindings/1",
+    "profileId": "same-profile-2026-10-10.3",
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "equations": [
+        "4.7",
+        "4.26",
+        "4.30",
+        "5.44",
+        "6.1",
+        "6.11",
+        "7.2",
+        "7.4",
+        "7.6",
+        "7.8",
+        "7.12",
+        "7.17",
+        "7.21",
+        "7.27"
+      ]
+    },
+    "assembly": {
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+      "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+      "bytes": 77149
+    },
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "profileEvidenceSHA256": "ff3b1590aa49499417910962736fe2deb8e6088acd7d77e281fd8aba6807c206",
+    "sourceFiles": [
+      {
+        "path": "mathscope-m1/navier/followup-construction/outer.mjs",
+        "sha256": "4c0213f892a32611c79655fbe065cebbaca0fc9acdd0cf2dd057d2506a10c087",
+        "use": "Literal A.2 stage definitions only; the old finite parameter defaults are never used."
+      },
+      {
+        "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/ONE_PROFILE_SPECIFICATION.md",
+        "sha256": "38d8a88220094cf2e6b2571f214f38361783669b646c0c08eb206eb2b9100bdd",
+        "use": "Selected parameters and unchanged Imean interval."
+      },
+      {
+        "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/GLOBAL_STRESS_ASSEMBLY_EN.md",
+        "sha256": "3c89af370fb2728bc407f5192493eb7474666051289626c57b73f19da7e59516",
+        "use": "Same-profile closed annulus margin and preserved fields; cumulative stress is not inferred from local fields."
+      },
+      {
+        "path": "mathscope-m1/navier/followup-20261010-outer-reselection/OUTER_DERIVATION.md",
+        "sha256": "ffb859d1f6b79aad9aa45e7c5173e8b727cd7a554f6ea28697dc9a108b3dbd81",
+        "use": "Actual continuous outer datum and ordering of the pre-pulse reserved patches."
+      },
+      {
+        "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/GLOBAL_SOURCE_DERIVATIVE_BOUNDS.md",
+        "sha256": "f27e8d640e9b8e49805c0128c987f043d5667c298b2029dd061b820ae9e3117b",
+        "use": "Premodulation real mixed derivative order four. Not a bound for the completed background."
+      },
+      {
+        "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/LOOP_DERIVATIVE_ENVELOPE.md",
+        "sha256": "531e5addbe900564c22e0b44406c9c024e7d279c03a7188ea17431a567fe1250",
+        "use": "Fixed N3 loop derivative bounds, before constructing M2 coefficients."
+      },
+      {
+        "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/C12_FREQUENCY_CONTRACT.md",
+        "sha256": "1740353222f1a5ca727c2c8a2c7063bba8a990f9a4393754256d5c82f49f7a16",
+        "use": "Same finite N3 modulation frequency and final direction margin."
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "actual-pulse-amplitude-phase.mjs",
+      "sha256": "0ed21e490d93a59caa578d91a4dd3df3791a0e9a07a845740a15cd7578c98224",
+      "bytes": 11467
+    },
+    {
+      "path": "actual-pulse-amplitude-integrator.mjs",
+      "sha256": "096eea803e7c17481c4926b4a8b811ddf54ddc4df615253477092780c3d1b60d",
+      "bytes": 12329
+    },
+    {
+      "path": "research/ACTUAL_PULSE_AMPLITUDE.md",
+      "sha256": "5cca51ec0a86fca53ede24756f50487a41419d1ae4ad2eb06206bf5de1510042",
+      "bytes": 15518
+    },
+    {
+      "path": "tests/actual-pulse-amplitude.test.mjs",
+      "sha256": "d39afcb62cf58c96de7c9612837873a85d7788a40fbc9eb784857d7093a5bb44",
+      "bytes": 14744
+    },
+    {
+      "path": "tests/actual-pulse-amplitude-fixture.mjs",
+      "sha256": "dac8f5c2c10a1ac0b96f09f190ac8d7a20ce9ddf745876848b7cac758f3cf3f7",
+      "bytes": 2354
+    },
+    {
+      "path": "tests/actual-pulse-amplitude-independent.py",
+      "sha256": "cf8a2bef6d6c7a474ff67d6ef87b63b13a77c8b2064ecfb7e2b099206900fa18",
+      "bytes": 6864
+    },
+    {
+      "path": "tests/actual-pulse-amplitude-independent.json",
+      "sha256": "d75998c9a3b2bad0e5632e1ea3d9f2f93aaaf7f6a7f73f0a96d078c18408c5a3",
+      "bytes": 34191
+    }
+  ],
+  "api": {
+    "module": "actual-pulse-amplitude-integrator.mjs",
+    "export": "actualMeanPulseAmplitude",
+    "request": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "y": {
+        "default": 2.5,
+        "minimum": 0.25,
+        "maximum": 4.75,
+        "type": "finite binary64 retained as an exact binary rational"
+      },
+      "sign": {
+        "default": 1,
+        "values": [
+          -1,
+          1
+        ]
+      },
+      "steps": {
+        "default": 64,
+        "values": [
+          8,
+          16,
+          32,
+          64,
+          128,
+          256
+        ]
+      }
+    },
+    "coordinateFrame": "BAND_CHART_Q_FIXED",
+    "physicalCartesianRestored": false,
+    "returnedSourcePaths": [
+      "result.results.rows[index]",
+      "result.results.cells[index]",
+      "result.results.phaseProgram.roots",
+      "result.results.sourceScales.checks"
+    ]
+  },
+  "finiteAcceptance": {
+    "N5-04": {
+      "accepted": true,
+      "scope": "Actual completed-background Imean restriction: explicit Phi/n/K/Aphi/B/Bprime/Bleft and nonzero carrier/frame/denominator certificates on the original slow neighborhood about fixed eta=0,s=1 representatives, for the entire pulse interval.",
+      "originalEquations": [
+        "5.18",
+        "5.44",
+        "5.45",
+        "7.2",
+        "7.3",
+        "7.4",
+        "7.6",
+        "7.7",
+        "7.8"
+      ]
+    },
+    "N5-05": {
+      "accepted": true,
+      "scope": "Actual homogeneous m=1 growing solution, original left datum; full-v enclosure, (7.17) frame reconstruction, pressure cancellation, (7.22) energy, transversality, reference midpoint normalization, and both Gaussian tails.",
+      "originalEquations": [
+        "7.12",
+        "7.13",
+        "7.17",
+        "7.21",
+        "7.22"
+      ],
+      "zeroDatumSourcedInverseClaimed": false
+    }
+  },
+  "independentReview": {
+    "reviewer": "m2_gauge",
+    "acceptedScope": "Finite N5-04/N5-05 acceptance only; complete Section 7 package is not asserted.",
+    "reviewedRuntimeSHA256": {
+      "phase": "0ed21e490d93a59caa578d91a4dd3df3791a0e9a07a845740a15cd7578c98224",
+      "integrator": "096eea803e7c17481c4926b4a8b811ddf54ddc4df615253477092780c3d1b60d"
+    }
+  },
+  "verification": {
+    "nodeTests": {
+      "passed": 13,
+      "failed": 0
+    },
+    "pythonFractionDecimal": {
+      "checks": 618,
+      "failed": 0,
+      "rationalCases": 30,
+      "decimalPrecision": 80,
+      "finiteGrowthCases": 3
+    },
+    "runtimeSourceChecks": {
+      "passed": 13,
+      "failed": 0
+    },
+    "defaultRuntimeChecks": {
+      "passed": 8,
+      "failed": 0
+    },
+    "defaultRows": 65,
+    "defaultCells": 64
+  },
+  "defaultObservation": {
+    "midpoint": {
+      "index": 32,
+      "pulseFraction": 0.5,
+      "pulseFractionExact": "32/64",
+      "a": 1,
+      "liouvilleCoordinateInterval": [
+        0.6931471805599152,
+        0.6931471805599744
+      ],
+      "radialOverP": [
+        0.3535533905931337,
+        0.3535533905934179
+      ],
+      "minusMovingNOverSqrtLambdaUStarP": [
+        0.3535533905931382,
+        0.35355339059341534
+      ],
+      "thetaOverSqrtLambdaUStarP": [
+        0.35355339059313645,
+        0.3535533905934187
+      ],
+      "zOverUStarP": [
+        0.35355339059313323,
+        0.35355339059341856
+      ],
+      "vectorOverUStarP": [
+        [
+          -5e-324,
+          3.2995851663929514e-302
+        ],
+        [
+          -5e-324,
+          3.299585166392959e-302
+        ],
+        [
+          0.35355339059313323,
+          0.35355339059341856
+        ]
+      ],
+      "normalOverBsUStar": [
+        [
+          0.9999999999999996,
+          1.0000000000000009
+        ],
+        [
+          -5e-324,
+          5e-324
+        ],
+        [
+          -9.33263618503219e-302,
+          5e-324
+        ]
+      ],
+      "orthogonalityResidualInterval": [
+        -3.2995851663929587e-302,
+        3.2995851663929566e-302
+      ],
+      "energyOverP2UStar2": [
+        0.12499999999990061,
+        0.12500000000010245
+      ],
+      "energyDerivativeOverGScaleP2UStar2": [
+        -4.0628611586157614e-13,
+        4.0487058150517906e-13
+      ],
+      "logRadialOverP": [
+        -1.039720770840325,
+        -1.0397207708394982
+      ],
+      "referenceNormalizedLogP": [
+        0,
+        0
+      ],
+      "actualNormalizedLogRadial": [
+        -9.703335688273982e-302,
+        1e-323
+      ],
+      "actualNormalizedLogNorm": [
+        -9.703335688274001e-302,
+        9.332636185032193e-302
+      ],
+      "actualAmplitude": {
+        "strictlyPositiveRadial": true,
+        "P": {
+          "expression": "exp(Gscale*f(a,1/u_star))",
+          "positive": true,
+          "underflowIsNotZero": true
+        },
+        "radialMultiplierInterval": [
+          0.3535533905931337,
+          0.3535533905934179
+        ],
+        "unitMidpointAmplitudeImposed": false
+      },
+      "scaledLiouvilleState": [
+        [
+          0.9999999999996881,
+          1.0000000000003342
+        ],
+        [
+          0.9999999999996858,
+          1.0000000000003315
+        ]
+      ],
+      "sourcePath": "result.results.rows[32]"
+    },
+    "leftNormalizedLogNorm": [
+      -0.4014805138933169,
+      -0.4014805138932449
+    ],
+    "rightNormalizedLogNorm": [
+      -0.38620155855853217,
+      -0.38620155855848054
+    ]
+  },
+  "packageScope": {
+    "actualHomogeneousAmplitudeEnclosed": true,
+    "actualFullPulseInterval": true,
+    "certifiedRepresentativeEta": 0,
+    "certifiedRepresentativeY": [
+      0.25,
+      4.75
+    ],
+    "otherProfileOrToyHUsed": false,
+    "generalForcingInverseComplete": false,
+    "allSlowDerivativeGaussianBoundsCertified": false,
+    "wholeAnnulusPulseCertified": false,
+    "actualT0CovarianceMatched": false,
+    "fullPhysicalResidualEvaluated": false,
+    "allOriginalN5PackageComplete": false,
+    "newLeanKernelProof": false
+  },
+  "sourceGlobalConstructionClaimed": false,
+  "remaining": [
+    "Actual stress T0,* and Haar covariance/positive weights/global partition matching are not provided here.",
+    "All slow derivative Gaussian estimates, a general sourced inverse, the full slow physical residual and the entire source annulus are not provided here."
+  ],
+  "notes": [
+    "Uniform pulse observations do not resolve the covariance Gaussian width; use w=sqrt(Gscale)*(a-1).",
+    "Every source scale stays an exact positive expression; zero is only an outward enclosure endpoint.",
+    "No existing frozen source, registry, checklist or build file was edited by this addition."
+  ]
+}

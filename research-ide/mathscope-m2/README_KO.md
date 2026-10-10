@@ -1,15 +1,15 @@
 # MathScope M2 · 구현 범위, 사용법과 재현
 
-기존 MathScope v0.3.1에 M1 관측 개선과 M2 계산·비교 작업창을 추가한 디렉터리입니다. **원문 M2 기준 64개 중 58개 PASS, 6개 PARTIAL, 0개 OPEN**이며, 이전의 20 PASS / 39 PARTIAL / 5 OPEN에서 **38개 기준이 추가로 PASS**가 되었습니다. 기존 M0/M1 수학 소스와 M1 Worker, 원본 인수인계와 검증 기록은 보존합니다.
+기존 MathScope v0.3.1에 M1 관측 개선과 M2 계산·비교 작업창을 추가한 디렉터리입니다. **원문 M2 기준 64개 중 61개 PASS, 3개 PARTIAL, 0개 OPEN**이며, 이전의 20 PASS / 39 PARTIAL / 5 OPEN에서 **41개 기준이 추가로 PASS**가 되었습니다. 기존 M0/M1 수학 소스와 M1 Worker, 원본 인수인계와 검증 기록은 보존합니다.
 
-남은 6개는 동일한 N3 프로파일의 실제 고차 배경·모멘트·잔차 및 pulse 구성에 필요한 조건입니다. 따라서 현재 `fullM2Complete`는 **false**입니다. 유한 계산·조건부 연산자·관측 인터페이스의 완료를 원문 M2 패키지 전체나 새로운 전역 정리의 완료로 해석하지 않습니다.
+남은 3개는 N4-04의 실제 모멘트 복구, N4-05의 같은 배경 잔차, N5-06의 실제 공분산·전역 조립입니다. 따라서 현재 `fullM2Complete`는 **false**입니다. 개별 기준에 명시된 유한 합격과 N4/N5 전체 패키지·새로운 전역 정리의 완료를 구별합니다.
 
 - [M2 작업창](https://project29770.websitepublisher.ai/v0.3.1.html#research-m2)
 - [M1 수학 대상과 관측](https://project29770.websitepublisher.ai/v0.3.1.html#research-objects)
 - [원문 64개 기준](evidence/original-m2-criteria.json) · [현재 상태](evidence/m2-criteria-status.json) · [이전 상태와의 원문 대조](evidence/original-status-delta.json)
 - [최종 라이브 릴리스 기록](evidence/live-release.json)
 
-현재 라이브 게시 버전은 **64 (`0cf40305`)**, M2 작업창 버전은 **0.3.1**입니다. v64에서 M2 **68개 예제·129개 관측 패널**을 실제 브라우저로 실행해 모두 렌더링했고, 모든 표시 좌표와 입력·원본 경로 결속을 확인했습니다. 실제 비선형 core 계산의 새 실행 재현도 `MATCH`입니다. v62에서는 M1 **59개 전체**를 한 세션에서 실행하고 첫 작업을 다시 재현했으며, v63에서는 실행 대기·취소 화면을 추가 확인했습니다. 버전별 검증을 [라이브 릴리스 기록](evidence/live-release.json)에 구별해 보관합니다.
+현재 라이브 게시 버전은 **65 (`20ff2fd3`)**, M2 작업창 버전은 **0.3.2**입니다. v65의 새 3개 예제·15개 패널과 레이아웃을 수정한 기존 core 5개 패널을 실제 브라우저에서 확인했으며, 실제 pulse의 재현 결과는 `MATCH`입니다. 전체 71예제의 원본 모듈·정적 Worker 수학 결과도 일치합니다. 보존한 v64 전체 브라우저 검사는 68예제·129패널, v62의 M1 전체 검사는 59예제입니다. v65에서는 M1 열 적분 구간도 다시 확인했습니다. 버전별 검증을 [라이브 릴리스 기록](evidence/live-release.json)에 구별해 보관합니다.
 
 ## 1. 현재 상태와 이번 변경
 
@@ -20,20 +20,20 @@
 | P6 · perfectoid와 비교 | 2 / 6 / 0 | 8 / 0 / 0 | 6 |
 | Y3 · 유한 격자 | 6 / 2 / 0 | 8 / 0 / 0 | 2 |
 | Y4 · 앙상블·전달 연산자 | 4 / 2 / 2 | 8 / 0 / 0 | 4 |
-| N4 · 배경 구성 | 0 / 5 / 3 | 5 / 3 / 0 | 5 |
-| N5 · pulse 구성 | 0 / 8 / 0 | 5 / 3 / 0 | 5 |
+| N4 · 배경 구성 | 0 / 5 / 3 | 6 / 2 / 0 | 6 |
+| N5 · pulse 구성 | 0 / 8 / 0 | 7 / 1 / 0 | 7 |
 | I2 · 관측 인터페이스 | 0 / 8 / 0 | 8 / 0 / 0 | 8 |
-| **합계** | **20 / 39 / 5** | **58 / 6 / 0** | **38** |
+| **합계** | **20 / 39 / 5** | **61 / 3 / 0** | **41** |
 
-이전 기준점은 Git commit `7cb1d59`의 `evidence/m2-criteria-status.json`입니다. 36개 `PARTIAL→PASS`, 2개 `OPEN→PASS`, 3개 `OPEN→PARTIAL`을 기록했습니다. 이전 PASS 20개는 유지되며 기존 PARTIAL 3개도 계속 PARTIAL입니다. 64개 ID·제목·합격 문구·페이지를 이전 파일 및 원문 추출본과 각각 대조했고 변경하지 않았습니다. 상세한 전후 상태와 현재 근거 경로는 [원문 상태 변화 기록](evidence/original-status-delta.json)에 있습니다.
+이전 기준점은 원격 Git commit `2fc532b`의 `evidence/m2-criteria-status.json`입니다. 과거 로컬 commit `7cb1d59`로 표기한 파일과 SHA-256이 같은 원격 보존본입니다. 38개 `PARTIAL→PASS`, 3개 `OPEN→PASS`, 2개 `OPEN→PARTIAL`을 기록했습니다. 이전 PASS 20개는 유지되며 기존 PARTIAL 1개도 계속 PARTIAL입니다. 64개 ID·제목·합격 문구·페이지를 이전 파일 및 원문 추출본과 각각 대조했고 변경하지 않았습니다. [대조 스크립트](compare-original-criteria.py)는 원본 텍스트가 다르면 실패하고 [상태 변화 기록](evidence/original-status-delta.json)을 재생성합니다.
 
-현재 등록 실행 예제는 **68개: 산술 25개, 게이지 14개, NS 18개, 관측·비교 I2 11개**입니다. 예제 수와 원문 기준 64개는 서로 다른 집계입니다. [정적 Worker 대조](evidence/static-worker-parity.json)에서는 예제 전부의 전체 수학 결과가 로컬 모듈과 일치했습니다. 기본 입력의 실행 상태는 **57 COMPLETED / 11 PARTIAL**입니다. PARTIAL은 짧은 게이지 앙상블 1개와 실제 구성 조건이 남은 NS 10개이며, 결과를 숨기거나 성공으로 바꾸지 않습니다.
+현재 등록 실행 예제는 **71개: 산술 25개, 게이지 14개, NS 21개, 관측·비교 I2 11개**입니다. 예제 수와 원문 기준 64개는 서로 다른 집계입니다. [정적 Worker 대조](evidence/static-worker-parity.json)에서는 예제 전부의 전체 수학 결과가 로컬 모듈과 일치했습니다. 기본 입력의 실행 상태는 **59 COMPLETED / 12 PARTIAL**입니다. PARTIAL은 짧은 게이지 앙상블 1개와 실제 구성 조건이 남은 NS 11개이며, 결과를 숨기거나 성공으로 바꾸지 않습니다.
 
 | 영역 | 이번에 보강한 핵심 기능 | 예제 수 |
 | --- | --- | ---: |
 | 산술 P4–P6 | 실제 MW Frobenius, semilinear coefficient map, global Euler 연결, q-framing 및 실제 q-PD diagonal nerve, 비상수 tilt/Witt/sharp/θ, 표준 완비 torus AΩ와 순서 있는 비교 | 25 |
 | 게이지 Y3–Y4 | 출처별 링크·곡률 오차, 고정 물리 부피의 모든 셀 적분, 비영 β 작은 격자의 독립 reference, reflection positivity 가정 대응, Gauss 절단·전달 연산자 오차 | 14 |
-| NS N4–N5 | 실제 비선형 core 점·혼합 미분의 방향성 구간, 실제 외곽 장과 전체 모멘트 축소, 실제 n=1 배경, Imean 장·위상·성장 초기조건, 기존 exact PDE·curl·support 연산자 | 18 |
+| NS N4–N5 | 실제 Picard 유한 인증, 실제 성장 pulse 방향성 적분·에너지·Gaussian, core 전체 적분과 continuation, 비선형 core·외곽 장, exact PDE·curl·support 연산자 | 21 |
 | I2 | 네 Δ 모드의 나란한 비교, 4D 관측 5종, 동일 τ의 물리·유사 좌표, 정수 기저 교체와 실제 i/r/h 추적, WebGL 점 경로와 CPU fallback | 11 |
 
 ## 2. M1의 빈 관측 보완
@@ -102,7 +102,7 @@ Reflection positivity는 선택한 작용·측도·군·경계·관측 대수의
 
 `IMPLEMENTED_FINITE_SCOPE`를 원문 유한 acceptance의 PASS로 연결하되, 불충분한 해상도·ESS·허용오차·미지원 절단은 개별 실행에서 PARTIAL/UNSUPPORTED로 남깁니다. 상세 모델·원전·독립 oracle은 [게이지 README](gauge/README_KO.md)와 [원문 대응표](gauge/evidence/criterion-completion.json)에 있습니다.
 
-### NS N4–N5: 연산자·관측 10 PASS, 실제 구성 6 PARTIAL
+### NS N4–N5: 원문 유한 기준 13 PASS, 실제 구성 3 PARTIAL
 
 원래 cylindrical PDE를 exact differential polynomial로 미분해 n=1,2의 모든 ordered convolution과 pressure/viscosity shift를 검사합니다. 실제 N3 parameter graph, 공통 radial interval, 모멘트 보정용 실제 λ와 Ipos를 보존합니다. 원문 support mesh 전체에 대한 유리수 지지 분리와 2,250색 palette, fast/slow auxiliary chain rule도 계산합니다.
 
@@ -119,20 +119,20 @@ v64의 실제 core 계산은 원본 receipt와 양의 비선형 오차를 유지
 | N5-07 | harmonic potential Cₘ의 전체 mixed jet 미분·rₘ·물리 Q 배율·원통 1/R·conjugate pair | generic smooth tangent coefficient 연산자이며 수치 probe를 실제 N3 growing pulse로 부르지 않음 |
 | N5-08 | supplied complex interval jet의 전체 `(1−ψ)f+ψ′t` Leibniz 계산, 별도의 조건부 log envelope | local jet은 특정 ℓ/source family와 미결속; 실제 residual 대 envelope 비교 인증은 수행하지 않음 |
 
-원본의 양수 `h=exp[-8002(exp(1048576)+10)]`를 0이나 수치 probe의 h로 대체하지 않습니다. `sourceInstanceCertified`, `allOrderSourceCertificate`, `fullSameProfileN4/fullSameProfileN5`, `formalComplete`의 false 상태를 해당 결과와 ledger에 유지합니다. ODE의 수치 refinement와 reference P의 Gaussian 상계만으로 실제 pulse의 엄밀한 전체 오차·Gaussian bound를 인증하지 않습니다. 자세한 설명은 [NS README](navier/README_KO.md)와 [curl 연산자 수학 명세](navier/research/SOURCE_PULSE_CURL_OPERATOR.md)에 있습니다.
+원본의 양수 `h=exp[-8002(exp(1048576)+10)]`를 0이나 수치 probe의 h로 대체하지 않습니다. v65의 실제 원본 유한 인증은 범위에 맞게 `sourceInstanceCertified:true`를 허용하지만, `allOrderSourceCertificate`, `fullSameProfileN4/fullSameProfileN5`, `formalComplete`는 false입니다. 실제 성장 pulse의 원래 초기조건·양의 Volterra 비교와 에너지 항등식·양 끝 Gaussian을 연결한 유한 영역 인증은 일반 ODE probe의 수치 refinement와 구분합니다. 자세한 설명은 [NS README](navier/README_KO.md)와 [유한 기준 재심사](navier/research/FINITE_CRITERIA_REAUDIT_KO.md)에 있습니다.
 
-## 5. 현재 6개 PARTIAL의 해석
+## 5. 완료한 3개 유한 기준과 남은 3개 PARTIAL
 
-v64의 원문 상태는 N4-03·04·05, N5-04·05·06을 PARTIAL로 유지합니다. 이번 재개에서는 실제 n=1 배경·비선형 core·외곽 모멘트·Imean pulse의 근거를 추가했습니다. 개별 원문 항목의 유한 합격 조건과 N4/N5 전체 패키지의 전역 조건을 구분하는 재심사는 다음 체크포인트에서 반영합니다. 기준 ID·제목·합격 문구·페이지는 바꾸지 않습니다.
+v65는 실제 원본의 인증된 유한 영역에서 N4-03, N5-04, N5-05를 PASS로 완료했습니다. 원문 기준 ID·제목·합격 문구·페이지는 유지했습니다. Picard certificate의 15개 조건, pulse의 21개 조건, 독립 계산과 실패 대조군을 공개합니다. 새 pulse 패널은 실제 x/P의 중점 약 0.353553을 표시하며 reference P의 중점 1과 구별합니다.
 
-| 원문 기준 | v64에 추가한 실제 근거 | 아직 연결하지 않은 범위 |
+| 원문 기준 | v65의 실제 근거 | 기준 상태·남은 범위 |
 | --- | --- | --- |
-| N4-03 · 차수별 inner Picard | 같은 원본 n=1의 6성분 식, C1·공통 collar·strip loss·기호적 K tail, 양의 Xi 관측 | 원문 finite acceptance의 최종 certificate와 검증 연결; 전체 K항의 수치 실행은 미실행 |
-| N4-04 · 모멘트 복구 | 실제 비선형 core point, 외곽 U/M/V, weighted Ω의 6개 regular integral 축소 | 전체 continuation의 실제 debt·도함수와 다음 차수 복구 연결 |
-| N4-05 · 유한 배경 잔차 | 원문 PDE·stress의 전체 exact residual polynomial 및 실제 n=1 입력 성분 | 복구한 같은 배경에서 residual 상계와 N 증가 비교 |
-| N5-04 · 위상·편극·주파수 | 실제 Imean 장·slow jet·local phase bound·원래 h·주파수 조건 | 인증한 영역의 normal·K·frame·determinant를 원문 finite gate에 연결 |
-| N5-05 · 성장·감쇠 ODE | 원래 growing-mode left datum, 실제 local coefficient, reference log/Gaussian | 실제 projected amplitude의 방향성 적분·energy·양 끝 Gaussian |
-| N5-06 · 두 family covariance | 실제 Jacobian과 두 family의 Haar covariance 연산자 | 실제 pulse Hcov와 같은 원본 T0,*·양의 weight 연결 |
+| N4-03 · 차수별 inner Picard | 같은 원본 n=1의 6성분 식, C1·공통 collar·strip loss·기호적 K tail, 양의 반경 관측과 15조건 certificate | **PASS** · 개별 유한 기준. 전체 K항 수치 materialization 및 모든 차수는 주장하지 않음 |
+| N4-04 · 모멘트 복구 | 실제 core 전체 적분 21개, continuation U/M/V 구간 10개, reference 적분, 4,070-node A2 program과 양의 global remainder | **PARTIAL** · 실제 continuation debt를 수렴 계산하여 복구하고 다음 차수 입력에 연결 |
+| N4-05 · 유한 배경 잔차 | 원문 PDE·stress의 전체 exact residual polynomial 및 실제 n=1 입력 성분 | **PARTIAL** · 복구한 같은 배경에서 실제 잔차의 N 증가 비교·CN,m·Km |
+| N5-04 · 위상·편극·주파수 | 실제 Imean source의 normal·K·frame·양의 determinant·원문 frequency 조건 | **PASS** · 인증한 source 영역의 유한 기준 |
+| N5-05 · 성장·감쇠 ODE | 원래 left datum으로 구한 실제 homogeneous amplitude, 모든 적분 cell의 양의 비교, 정확 에너지·직교 identity와 양 끝 Gaussian | **PASS** · 실제 전체 pulse 경로의 유한 기준; 모든 slow box·forcing inverse는 별도 |
+| N5-06 · 두 family covariance | 실제 Jacobian과 두 family의 Haar covariance 연산자 | **PARTIAL** · 실제 pulse Hcov·같은 원본 T0,*·양의 weight와 global (7.30) 연결 |
 
 현재 `fullM2Complete:false`는 유지합니다. 원문 세부 진행 기록은 [원문 상태 대조](evidence/original-status-delta.json)와 [PROOF_OBLIGATIONS_KO.md](navier/PROOF_OBLIGATIONS_KO.md)에 있습니다.
 
@@ -142,13 +142,13 @@ v64의 원문 상태는 N4-03·04·05, N5-04·05·06을 PARTIAL로 유지합니�
 | --- | --- | --- |
 | 산술 | Node **42 / 42 PASS**, 독립·음성 대조 포함 | [acceptance](arithmetic/evidence/acceptance.json) |
 | 게이지 | Node **45 / 45 PASS**: 계산·관측 42 + Worker 3; 별도 독립 인증 **171개**와 원본 링크 대조 **5개** 통과 | [criterion completion](gauge/evidence/criterion-completion.json), [독립 인증](gauge/evidence/certification-independent-validation.json), [링크 대조](gauge/evidence/independent-validation.json) |
-| NS | Node **105 / 105 PASS**, 독립 Python **1,152개** 통과: 기존 286 + 배경 193 + pulse 421 + 전체 소스 184 + core 68 | [acceptance](navier/evidence/acceptance.json) |
-| 루트 통합 | **5 / 5 PASS**: 전체 Worker 대조·panel 원본 경로·WebMCP·요청 경계 | [통합 테스트](tests/integration.test.mjs), [68예제 parity](evidence/static-worker-parity.json) |
-| 엔진·세션 결속 | **25 / 25 PASS**: 소스·입력·결과·runtime 재현, 위조 환경 거부, 세션 revision 경계 | [통합·core 30/30 기록](evidence/resumed-integration-tests.tap) |
+| NS | Node **141 / 141 PASS**, 독립 Python **2,778개** 통과: 기존 1,152 + Picard 782 + amplitude 618 + continuation 226 | [acceptance](navier/evidence/acceptance.json) |
+| 루트 통합 | **5 / 5 PASS**: 전체 Worker 대조·panel 원본 경로·WebMCP·요청 경계 | [v65 통합 검사](evidence/v65-integration-tests.tap), [71예제 parity](evidence/static-worker-parity.json) |
+| 엔진·세션 결속 | **25 / 25 PASS**: 소스·입력·결과·runtime 재현, 위조 환경 거부, 세션 revision 경계 | [v65 core 기록](evidence/v65-core-tests.tap) |
 | 공통 시각화·I2·renderer | **23 / 23 PASS**: 시각화 10 + I2 12 + renderer 경로 1 | [시각화 테스트](visualization/visualization.test.mjs), [I2 테스트](observatory/tests/observatory.test.mjs), [renderer 테스트](observatory/tests/render-paths.test.mjs) |
-| 이번 실제 소스 관측·M1 host | **38 / 38 PASS**: 배경·pulse 14 + core 6 + global 14 + M1 retention 4 | [재개 시각화 검사](evidence/resumed-visualization-tests.tap) |
+| 실제 소스 관측·M1 host | **45 / 45 PASS**: 기존 38 + 새 유한 인증 패널 6 + 구간 레이아웃 1 | [v65 시각화 검사](evidence/v65-visualization-tests.tap) |
 | M1 관측 | 등록 **59개 전체 브라우저 실행**, 기존 빈 관측 **26개** 보완, 첫 작업 재현 MATCH | [v62 전체 audit](evidence/v62-m1-catalog-audit.json), [v63 상태 검사](evidence/v63-m1-state-audit.json) |
-| 정적 산출물 | M2 **68예제 전부 source/Worker mathematical hash 일치** | [static Worker parity](evidence/static-worker-parity.json) |
+| 정적 산출물 | M2 **71예제 전부 source/Worker mathematical hash 일치** | [static Worker parity](evidence/static-worker-parity.json) |
 | 실제 브라우저·최종 게시 | 게시 버전별 실행·입력 변경·저장·재현·탐색·성능을 별도 기록 | [live release](evidence/live-release.json) |
 
 검사 수, 예제 수, 기준 수는 별도로 집계합니다. Worker parity는 `executionMetrics`만 제외한 전체 수학 결과와 상태의 일치이며, PARTIAL 결과가 두 경로에서 정확히 같아야 하는 검사도 포함합니다. 오래된 Worker 바이트로 새 source를 실행했다면 이 검사는 실패해야 합니다.
@@ -156,14 +156,14 @@ v64의 원문 상태는 N4-03·04·05, N5-04·05·06을 PARTIAL로 유지합니�
 현재 저장소의 **M2 Worker 빌드 SHA-256**은 다음과 같습니다.
 
 ```text
-f9ee815febd9450989778dffbd3416eceaeeace701c5fbe78f1739359129c7a5
+601be23fedcd6a152f7551c54f6c4f107517160c0902014a07f628ce2b205d5f
 ```
 
 이 해시는 로컬 최종 Worker 바이트와 source/Worker parity 기록의 값입니다. 실제 게시된 Worker의 최종 확인은 라이브 릴리스 기록과 대조합니다.
 
 ### 브라우저와 Node의 수치 재현 범위
 
-v64 로컬 모듈과 별도 Node Worker는 같은 Node 런타임에서 68/68 수학 해시가 정확히 일치합니다. 다음은 보존한 **v61의 64예제 교차 런타임 검사**이며 v64 신규 예제의 집계가 아닙니다. 당시 Chrome과 Node를 비교하면 **52/64는 동일하고 12/64는 다릅니다**. 그 12개 전체 결과를 재수집해 대조한 결과, 정규화 입력·판정·boolean·키·타입·배열 길이는 같고 차이는 수치 및 그 수치가 들어간 해시·표시 문자열에 있었습니다. 이번 비교의 최대 절대 차이는 약 **3.0653×10⁻¹¹**입니다. 일부 경로에서는 동일 입력의 `Math.exp(-0.375)` 값이 1 ULP 다름을 확인했고, 잔여 경로의 첫 primitive까지 모두 격리했다고 주장하지 않습니다. [교차 런타임 수치 대조](evidence/cross-runtime-comparison.json)와 압축 원본·leaf 차이를 보존합니다.
+v65 로컬 모듈과 별도 Node Worker는 같은 Node 런타임에서 71/71 수학 해시가 정확히 일치합니다. 다음은 보존한 **v61의 64예제 교차 런타임 검사**이며 v65 신규 예제의 집계가 아닙니다. 당시 Chrome과 Node를 비교하면 **52/64는 동일하고 12/64는 다릅니다**. 그 12개 전체 결과를 재수집해 대조한 결과, 정규화 입력·판정·boolean·키·타입·배열 길이는 같고 차이는 수치 및 그 수치가 들어간 해시·표시 문자열에 있었습니다. 이번 비교의 최대 절대 차이는 약 **3.0653×10⁻¹¹**입니다. 일부 경로에서는 동일 입력의 `Math.exp(-0.375)` 값이 1 ULP 다름을 확인했고, 잔여 경로의 첫 primitive까지 모두 격리했다고 주장하지 않습니다. [교차 런타임 수치 대조](evidence/cross-runtime-comparison.json)와 압축 원본·leaf 차이를 보존합니다.
 
 v61은 환경 schema를 `MathScope.M2Environment/2`로 올리고, 호출 런타임의 Node/V8 또는 브라우저 식별 정보와 고정 **18개 Math 함수의 IEEE754 결과**를 환경 해시에 포함합니다. 수학 결과는 반올림하거나 차이 항목을 빼지 않고 계속 정확하게 해시합니다. 유한 fingerprint는 모든 런타임에서의 동등성 증명이 아니며, 외부 workerFactory의 실제 프로세스도 원격 인증하지 않습니다. 다른 환경의 번들은 재현 실행 전에 거부하고, 같은 환경도 실제 재계산의 전체 수학 해시가 일치해야 `MATCH`입니다. 과거 v1 환경의 JSON은 보존되지만 v2 환경으로 조용히 승격하여 재현하지 않습니다.
 
@@ -187,7 +187,7 @@ WebGL 경로는 실제 `packMarks` 버퍼의 표시 좌표·반경·색을 raste
 | `core/` | domain registry, 취소·시간 제한·receipt/replay engine, static Worker entry, Foundation 세션 결속 |
 | `workspace.mjs`, `webmcp.mjs` | 작업창·비동기 입력/선택 보호·탐색 및 브라우저 도구 계약 |
 | `evidence/original-m2-criteria.json` | 사용자 원문 64개 ID·제목·합격 문구·페이지 |
-| `evidence/m2-criteria-status.json`, `evidence/original-status-delta.json` | 현재 58/6/0 및 Git 기준점과의 원문 불변·상태 변화 |
+| `evidence/m2-criteria-status.json`, `evidence/original-status-delta.json` | 현재 61/3/0 및 Git 기준점과의 원문 불변·상태 변화 |
 | 도메인별 `evidence/` | 실제 실행 결과, 독립 oracle·음성 대조, 테스트 출력과 source SHA |
 | `build-manifest.json`, `page-patches.json`, `evidence/assembly-audit.json` | 정적 모듈 그래프·번들·순서 있는 정확한 anchor 패치와 조립 검사 |
 | `evidence/baseline-v54-read-projection.html.gz` | 재현 가능한 v54 provider read projection, deterministic gzip mtime=0 |
@@ -227,7 +227,7 @@ node --test \
   research-ide/mathscope-m2/tests/*.test.mjs
 ```
 
-위 명령에는 표의 현재 검증 묶음 외에 기존 core receipt/replay/세션 회귀 테스트도 포함됩니다. 단독으로 전체 68예제 source/Worker 대조와 공통 panel 경계를 다시 확인하려면 다음을 실행합니다.
+위 명령에는 표의 현재 검증 묶음 외에 기존 core receipt/replay/세션 회귀 테스트도 포함됩니다. 단독으로 전체 71예제 source/Worker 대조와 공통 panel 경계를 다시 확인하려면 다음을 실행합니다.
 
 ```sh
 node --test research-ide/mathscope-m2/tests/integration.test.mjs
