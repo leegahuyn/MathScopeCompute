@@ -2,16 +2,42 @@
 
 기존 MathScope v0.3.1에 M1 관측 개선과 M2 계산·비교 작업창을 추가한 디렉터리입니다. **원문 M2 기준 64개 중 64개 PASS, 0개 PARTIAL, 0개 OPEN**이며, 이전의 20 PASS / 39 PARTIAL / 5 OPEN에서 **44개 기준이 추가로 PASS**가 되었습니다. 기존 M0/M1 수학 소스와 M1 Worker, 원본 인수인계와 검증 기록은 보존합니다.
 
-마지막 N5-06의 실제 공분산·공통 source q*·양의 역원·전체 전역 합을 연결해, 요청한 여섯 항목을 모두 완료했습니다. 원문 체크리스트의 `fullM2Complete`는 **true**입니다. 각 항목의 명시된 acceptance 영역과 모든 차수의 전체 물리 residual·flat-error 패키지 또는 새로운 전역 정리는 구별하며 `formalPass:false`를 유지합니다.
+v70에서는 마지막 N5-06의 실제 공분산·공통 source q*·양의 역원·전체 전역 합을 연결해, 요청한 여섯 항목을 모두 완료했습니다. 원문 체크리스트의 `fullM2Complete`는 **true**입니다. 각 항목의 명시된 acceptance 영역과 모든 차수의 전체 물리 residual·flat-error 패키지 또는 새로운 전역 정리는 구별하며 `formalPass:false`를 유지합니다.
 
 - [M2 작업창](https://project29770.websitepublisher.ai/v0.3.1.html#research-m2)
 - [M1 수학 대상과 관측](https://project29770.websitepublisher.ai/v0.3.1.html#research-objects)
 - [원문 64개 기준](evidence/original-m2-criteria.json) · [현재 상태](evidence/m2-criteria-status.json) · [이전 상태와의 원문 대조](evidence/original-status-delta.json)
 - [최종 라이브 릴리스 기록](evidence/live-release.json)
 
-현재 라이브 게시 버전은 **70 (`b0d649ae`)**, M2 작업창 버전은 **0.3.6**입니다. 실제 source family의 수렴 H 적분·공통 q*·양의 역원·전역 (7.30)을 연결하고 N5-06을 완료했습니다. 새 **10개 패널 모두** 공개 브라우저에서 `READY`이며 재계산은 전체 artifact bytes `MATCH`입니다. 같은 예제의 Node·정적 Worker·Chrome 수학 해시도 일치합니다. 전체 **75예제**의 원본 모듈·정적 Worker 대조가 통과했습니다. M1은 v70에서 P¹ 관계도·기존에 비었던 SU(3) 행렬·열 적분 구간을 다시 확인했고 원본 Worker 해시가 유지됩니다. 보존한 v62의 M1 전체 브라우저 검사는 59예제이며, 이번 시각화 회귀 검사에서도 59개 계산을 모두 실행했습니다. [v70 브라우저 기록](evidence/v70-browser-audit.json), [완료 현황 화면](evidence/mathscope-v70-criteria-complete.jpg), [라이브 릴리스 기록](evidence/live-release.json)에 각 검증 범위를 구별했습니다.
+재개 시 확인한 라이브 기준점은 **70 (`b0d649ae`)**, M2 작업창 버전은 **0.3.6**입니다. 실제 source family의 수렴 H 적분·공통 q*·양의 역원·전역 (7.30)을 연결하고 N5-06을 완료했습니다. 새 **10개 패널 모두** 공개 브라우저에서 `READY`이며 재계산은 전체 artifact bytes `MATCH`입니다. 같은 예제의 Node·정적 Worker·Chrome 수학 해시도 일치합니다. 전체 **75예제**의 원본 모듈·정적 Worker 대조가 통과했습니다. M1은 v70에서 P¹ 관계도·기존에 비었던 SU(3) 행렬·열 적분 구간을 다시 확인했고 원본 Worker 해시가 유지됩니다. 보존한 v62의 M1 전체 브라우저 검사는 59예제이며, 이번 시각화 회귀 검사에서도 59개 계산을 모두 실행했습니다. [v70 브라우저 기록](evidence/v70-browser-audit.json), [완료 현황 화면](evidence/mathscope-v70-criteria-complete.jpg), [라이브 릴리스 기록](evidence/live-release.json)에 각 검증 범위를 구별했습니다.
 
-## 1. 현재 상태와 이번 변경
+## 0. 2026-10-11 재개 · M2 0.3.7
+
+인수인계의 v59/58 PASS·6 PARTIAL과 실제 공개본이 달랐습니다. 기존 공개본은 v70/M2 0.3.6이며, `mathscope-m2-visuals-20261010` 브랜치의 commit `a8e3361dd04155738f5c873f6af59f1e0a317771`과 M2·시각화 bundle 바이트가 일치합니다. 기존 manifest의 164개 source 파일도 같은 commit과 전부 일치했습니다. 업로드된 설계도와 **64개 ID·제목·합격 문구·페이지를 다시 대조**해 원문을 유지합니다. 이 복구를 과거 계산의 새 실행으로 표기하지 않습니다. [원본 연결 기록](evidence/resume-2026-10-11/source-recovery.json)을 확인하세요.
+
+이번 추가 구현은 다음과 같습니다.
+
+- **새 세션에서 실행 JSON 가져오기**: 파일 선택 또는 붙여넣기 → 해시·source·실행 환경 검사 → 동일 환경 재계산 비교를 연결합니다. 버전·브라우저 환경이 다른 파일은 입력만 복원해 현재 환경에서 다시 실행합니다. 입력만 복원할 때 계산 결과나 근거 등급은 채택하지 않습니다.
+- **직렬화된 결과의 신뢰 경계**: 외부 JSON을 기존 engine의 소유 receipt로 만들지 않습니다. 모든 해시를 다시 붙인 변조 결과도 실제 재계산과 다르면 `MISMATCH`입니다. 자동 세션 저장은 없고, 새 계산의 실제 receipt만 별도 저장할 수 있습니다.
+- **취소·경합 처리**: 가져오기 중 입력·파일·세션이 달라지면 이전 내용의 자동 표시를 막습니다. 최종 비동기 dispatch 직전에 다시 확인하며, 취소 또는 UI callback 실패도 새 Worker를 정리합니다.
+- **원문 64개 기준의 근거 링크**: 비어 있던 Y3/Y4 16개의 근거 경로를 채웠습니다. 각 기준에서 실제 소스·검사·역사적 receipt를 열 수 있으며, 과거 Lean 검사는 `newExecution:false`로 유지합니다. 화면 링크는 해당 브랜치의 소스 탐색 링크이고, 릴리스 재현은 별도 commit·Worker 해시로 고정합니다.
+- **실제 NS pulse의 1차 slow 미분**: `ns.actual-pulse-sensitivity`를 추가했습니다. 두 원본 부호 family의 실제 행렬을 미분해 `s_v=M s+(∂a M)w`를 구성하고 실제 초기 프레임·합성 끝점·원래 양의 P(v)를 포함한 tail를 남깁니다. 식·변분계·끝점·범위를 보여 주는 네 정확표가 같은 실행 결과 경로에 연결됩니다.
+
+새 예제를 포함한 등록 목록은 **76개: 산술 25, 게이지 14, NS 26, 관측·비교 11**입니다. 원문 기준 64개와 예제 76개는 다른 집계입니다. 새 NS 경로의 공개 자원 범위는 `ellExact:"1"`, `derivativeOrder:1`, `slowCoordinate:"R"|"Z"|"T"`, `terms:0`입니다. 다른 band·anchor·양의 표시항 수는 source 생성 전에 거절합니다. `terms:0`은 표시하는 **0항 근사**이며, 별도의 정확한 수렴 도함수 root와 비영 factorial tail를 해와 동일시하지 않습니다. 수치 도함수나 작은 수치 오차 구간을 계산했다는 뜻도 아닙니다.
+
+원문 **64 PASS / 0 PARTIAL / 0 OPEN**은 기존에 명시한 합격 범위에서 유지합니다. `fullSameProfileN4`, `fullSameProfileN5`, 고차 공분산 가중치 미분·실제 전체 curl·전역 물리 residual/flat-error, 새 Lean kernel proof를 추가로 완료했다고 표시하지 않습니다. [독립 검토](evidence/resume-2026-10-11/INDEPENDENT_REVIEW_KO.md)와 [이번 실행 기록](evidence/resume-2026-10-11/release-validation.json)에 검증한 범위와 미검증 환경을 구별합니다.
+
+### 가져오기 사용법
+
+1. 완료된 M2 실행에서 **내보내기**를 눌러 JSON을 내려받습니다.
+2. 새로 연 M2 화면 상단의 **저장한 M2 실행 기록 가져오기**를 펼칩니다.
+3. 파일을 선택하거나 JSON을 붙여넣고 **파일 검사**로 입력·결과·환경 해시를 확인합니다.
+4. 같은 source와 실행 환경이면 **검증하고 재계산·비교**를 누릅니다. 새 실행을 실제로 계산한 뒤 `MATCH`/`MISMATCH`를 표시합니다.
+5. 다른 버전·실행 환경이면 **입력만 불러오기**를 누르고 현재 환경에서 계산합니다. 가져온 결과는 자동으로 현재 결과나 세션 근거가 되지 않습니다.
+
+JSON 파일의 전송 한도는 32 MiB이며, 정규화된 result 예산은 기존 8 MiB입니다. 이는 계산 중 메모리 사용 한도와 다릅니다. 새 NS의 기본 source 구성은 Node 측정에서 약 18초·최대 RSS 약 1.2 GiB였고, 한 번에 하나의 Worker에서 실행하도록 유지합니다. 브라우저 watchdog은 60초입니다. 정확한 실시간 성능은 기기·실행 환경에 따라 달라집니다.
+
+## 1. v70까지의 기준별 완성 기록
 
 | 원문 묶음 | 이전 PASS / PARTIAL / OPEN | 현재 PASS / PARTIAL / OPEN | 추가 PASS |
 | --- | ---: | ---: | ---: |
@@ -27,7 +53,7 @@
 
 이전 기준점은 원격 Git commit `2fc532b`의 `evidence/m2-criteria-status.json`입니다. 과거 로컬 commit `7cb1d59`로 표기한 파일과 SHA-256이 같은 원격 보존본입니다. 39개 `PARTIAL→PASS`, 5개 `OPEN→PASS`를 기록했습니다. 이전 PASS 20개도 유지합니다. 64개 ID·제목·합격 문구·페이지를 이전 파일 및 원문 추출본과 각각 대조했고 변경하지 않았습니다. [대조 스크립트](compare-original-criteria.py)는 원본 텍스트가 다르면 실패하고 [상태 변화 기록](evidence/original-status-delta.json)을 재생성합니다.
 
-현재 등록 실행 예제는 **75개: 산술 25개, 게이지 14개, NS 25개, 관측·비교 I2 11개**입니다. 예제 수와 원문 기준 64개는 서로 다른 집계입니다. [정적 Worker 대조](evidence/static-worker-parity.json)에서는 예제 전부의 전체 수학 결과가 로컬 모듈과 일치했습니다. 기본 입력의 실행 상태는 **62 COMPLETED / 13 PARTIAL**입니다. 예제의 PARTIAL 13개는 짧은 게이지 앙상블 1개와 기존의 제한된 NS 구성·관측 12개입니다. 원문 체크리스트의 PARTIAL 0개와 다른 집계입니다. 별도 새 인증이 전체 조건을 충족해도 기존 예제가 수행한 유한 계산의 범위를 보존합니다.
+v70 기준 등록 실행 예제는 **75개: 산술 25개, 게이지 14개, NS 25개, 관측·비교 I2 11개**입니다. 예제 수와 원문 기준 64개는 서로 다른 집계입니다. [정적 Worker 대조](evidence/static-worker-parity.json)에서는 예제 전부의 전체 수학 결과가 로컬 모듈과 일치했습니다. 기본 입력의 실행 상태는 **62 COMPLETED / 13 PARTIAL**입니다. 예제의 PARTIAL 13개는 짧은 게이지 앙상블 1개와 기존의 제한된 NS 구성·관측 12개입니다. 원문 체크리스트의 PARTIAL 0개와 다른 집계입니다. 별도 새 인증이 전체 조건을 충족해도 기존 예제가 수행한 유한 계산의 범위를 보존합니다.
 
 | 영역 | 이번에 보강한 핵심 기능 | 예제 수 |
 | --- | --- | ---: |

@@ -1,0 +1,901 @@
+{
+  "schema": "MathScope.ActualPulseSensitivityCertificate/1",
+  "status": "COMPLETED",
+  "pass": true,
+  "request": {
+    "sourceProfile": "same-profile-2026-10-10.3",
+    "ellExact": "1",
+    "slowCoordinate": "T",
+    "derivativeOrder": 1,
+    "terms": 0
+  },
+  "sourceProfile": "same-profile-2026-10-10.3",
+  "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "completedScope": "Actual source first slow-parameter variation and its convergent functional tail; additive prerequisite for the N5 package full-curl path.",
+  "domain": {
+    "sourceProfile": "same-profile-2026-10-10.3",
+    "band": {
+      "anchorOrder": null,
+      "ellExact": "1",
+      "selectionKind": "ARBITRARY_ORIGINAL_DYADIC_INTEGER",
+      "dyadicBand": true,
+      "exactInactiveTail": {
+        "from": "2",
+        "proof": "q>=2^(-ell-1) and c_n>=2^n imply c_n*q>=1 for every integer n>=ell+1. The complete smooth cutoff and all its derivatives vanish."
+      },
+      "completeBackgroundOnDeclaredBand": true,
+      "equalsEveryBand": false,
+      "allBandImplementation": "actualBackgroundDyadicPrefix constructs actual n=1..ell and proves every n>=ell+1 inactive. The same operator code then constructs both source phases, constrained Volterra solutions and H integrals.",
+      "efficientAnchorImplementation": "actualBackgroundSymbolicPrefix uses the same canonical coefficients but proves a much larger exact dyadic band from one cutoff scale.",
+      "resourceLimitIsExplicitFailure": true
+    },
+    "slowPoint": {
+      "system": 2,
+      "s": 216981,
+      "X": 216985,
+      "eta": 216990,
+      "qActual": 216994,
+      "domain": "Image of [s=1/2..2, X=Xa/2..2Xb, eta=-1..1]; tau>=0. Comparisons use profile-coordinate paths, not unproved convexity of this slow image.",
+      "representativeDomain": {
+        "X": [
+          "Xa",
+          "Xb"
+        ],
+        "eta": [
+          "-1",
+          "1"
+        ],
+        "s": [
+          "1/2",
+          "2"
+        ]
+      },
+      "certifiedNearbySlowPoint": "For perturbation conclusions the slow point is in the same selected box, at slow Euclidean distance<=4/S^3 from its frozen representative. The two points are not arbitrary independent choices.",
+      "enlargedDomainDoesNotExtendFrozenRayleighLowerBounds": true
+    },
+    "pulseTime": "0<=v<=Ls",
+    "derivative": "partial_T at fixed pulse time, source representative, dyadic Q, integer carrier and auxiliary label",
+    "sourceNormDomain": "Actual completed background on the enlarged source chart [Xa/2,2Xb] x eta[-1,1] x s[1/2,2]; boundary derivatives are one-sided.",
+    "doesNotRequireExercisedBandBelowQStar": true,
+    "doesNotInferPulseOrCovariancePositivityOfExercisedBand": true
+  },
+  "scope": {
+    "actualSourceFirstSlowDerivativeConstructed": true,
+    "actualMatrixDerivativeIncluded": true,
+    "sourceDerivedUniformMatrixDerivativeBound": true,
+    "firstVariationConvergentLimit": true,
+    "initialAndEndpointDependenceIncluded": true,
+    "actualAmplitudeDerivativeConstructed": true,
+    "derivativeOrder": 1,
+    "secondSlowDerivativeSupported": false,
+    "fixedLabelDerivative": true,
+    "representativeDerivativeSupported": false,
+    "actualCovarianceWeightDerivativeConstructed": false,
+    "numericalSensitivityQuadrature": false,
+    "displayedPartialSumIsExactLimit": false,
+    "actualSourceFullCurlComplete": false,
+    "allSlowGaussianDerivativesComplete": false,
+    "fullSameProfileN5": false,
+    "fullPhysicalResidualAndFlatErrorPackageComplete": false,
+    "newLeanKernelProof": false
+  },
+  "checks": [
+    {
+      "id": "same-genuine-source-matrix-and-initial",
+      "pass": true,
+      "meaning": "Both signs retain the exact original covariance coefficient matrix and normalized growing datum."
+    },
+    {
+      "id": "nonconstant-matrix-derivative-retained",
+      "pass": true,
+      "meaning": "The actual first slow derivative of M is constructed from its body and contributes to the augmented ODE."
+    },
+    {
+      "id": "source-derived-continuous-derivative-bound",
+      "pass": true,
+      "meaning": "Every moving-frame term is bounded by ordinary first-jet calculus using the actual completed C2 source; no sampled maximum is used."
+    },
+    {
+      "id": "source-initial-and-endpoints-computed",
+      "pass": true,
+      "meaning": "Only normalized w has constant initial data. Actual t=B P w keeps the differentiated B(0) factor and every endpoint chain rule."
+    },
+    {
+      "id": "actual-amplitude-initial-dependence",
+      "pass": true,
+      "meaning": "The actual initial frame depends on R. Its Z/T derivatives vanish by the retained initial frame expression; no common zero datum is imposed on t."
+    },
+    {
+      "id": "nonzero-vanishing-factorial-tail",
+      "pass": true,
+      "meaning": "A source-derived augmented-system norm bounds every displayed finite sum, with a factorial tail tending to zero."
+    },
+    {
+      "id": "limited-source-step",
+      "pass": true,
+      "meaning": "The sensitivity closes a necessary derivative input; weights, full curl and flat errors keep their existing separate scope."
+    }
+  ],
+  "graph": {
+    "sha256": "bf7eec670cc697c03e5adcf6ac0e725757ffe73991784a758c512176264adc89",
+    "nodeCount": 219654,
+    "serializedProgramBytes": 8757834,
+    "roots": {
+      "w_1_dT_0": 218745,
+      "w_1_dT_1": 218746,
+      "t_1_dT_0": 218749,
+      "t_1_dT_1": 218756,
+      "t_1_dT_2": 218763,
+      "matrixDerivativeNorm_1": 218265,
+      "variationTail_1": 218767,
+      "amplitudeDerivativeTail_1": 218772,
+      "finite_t_1_dT_0": 0,
+      "finite_t_1_dT_1": 218768,
+      "finite_t_1_dT_2": 218769,
+      "w_-1_dT_0": 219435,
+      "w_-1_dT_1": 219436,
+      "t_-1_dT_0": 219439,
+      "t_-1_dT_1": 219446,
+      "t_-1_dT_2": 219453,
+      "matrixDerivativeNorm_-1": 218265,
+      "variationTail_-1": 218767,
+      "amplitudeDerivativeTail_-1": 219457,
+      "finite_t_-1_dT_0": 0,
+      "finite_t_-1_dT_1": 219454,
+      "finite_t_-1_dT_2": 219455
+    },
+    "compiler": "actual-pulse-sensitivity.mjs:prepareActualPulseSensitivityProgram",
+    "compilerInput": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "ellExact": "1",
+      "slowCoordinate": "T",
+      "derivativeOrder": 1,
+      "terms": 0
+    },
+    "graphIncluded": false
+  },
+  "equationRows": [
+    {
+      "sign": 1,
+      "coordinate": "T",
+      "originalSystem": 0,
+      "variationSystem": 0,
+      "matrixRoots": [
+        [
+          217497,
+          217474
+        ],
+        [
+          217478,
+          217498
+        ]
+      ],
+      "matrixDerivativeRoots": [
+        [
+          218503,
+          218552
+        ],
+        [
+          218562,
+          218571
+        ]
+      ],
+      "matrixNorm": {
+        "rootId": 218264,
+        "operation": "maximum",
+        "arguments": [
+          217180,
+          218262,
+          218262
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "matrixDerivativeNorm": {
+        "rootId": 218265,
+        "operation": "maximum",
+        "arguments": [
+          218263,
+          218263
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "sourceJetAuditRowCount": 249,
+      "originalInitial": [
+        {
+          "rootId": 1,
+          "operation": "rational",
+          "arguments": [
+            "1",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ],
+      "variationInitial": [
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ],
+      "leftDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "lengthDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "originalODE": "w_v=M w",
+      "variationODE": "s_v=M s+(partial_a M)w",
+      "variationInitialFormula": "g_a-M(left)g*left_a",
+      "endpointFormula": "d_a t(b(a),a)=partial_a t(b(a),a)+t_v(b(a),a)*b_a"
+    },
+    {
+      "sign": -1,
+      "coordinate": "T",
+      "originalSystem": 1,
+      "variationSystem": 1,
+      "matrixRoots": [
+        [
+          217855,
+          217833
+        ],
+        [
+          217837,
+          217856
+        ]
+      ],
+      "matrixDerivativeRoots": [
+        [
+          219195,
+          219244
+        ],
+        [
+          219254,
+          219263
+        ]
+      ],
+      "matrixNorm": {
+        "rootId": 218264,
+        "operation": "maximum",
+        "arguments": [
+          217180,
+          218262,
+          218262
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "matrixDerivativeNorm": {
+        "rootId": 218265,
+        "operation": "maximum",
+        "arguments": [
+          218263,
+          218263
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "sourceJetAuditRowCount": 250,
+      "originalInitial": [
+        {
+          "rootId": 1,
+          "operation": "rational",
+          "arguments": [
+            "1",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ],
+      "variationInitial": [
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ],
+      "leftDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "lengthDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "originalODE": "w_v=M w",
+      "variationODE": "s_v=M s+(partial_a M)w",
+      "variationInitialFormula": "g_a-M(left)g*left_a",
+      "endpointFormula": "d_a t(b(a),a)=partial_a t(b(a),a)+t_v(b(a),a)*b_a"
+    }
+  ],
+  "derivativeRows": [
+    {
+      "sign": 1,
+      "component": "r",
+      "coordinate": "T",
+      "derivative": {
+        "rootId": 218749,
+        "operation": "add",
+        "arguments": [
+          218747,
+          218748
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "finiteApproximation": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "absoluteTail": {
+        "rootId": 218772,
+        "operation": "multiply",
+        "arguments": [
+          218767,
+          218771
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "tailFormula": "P(v)*(||B||+||partial_a B||)*I*exp((K+Ka)L)*((K+Ka)L)^(N+1)/(N+1)!",
+      "finiteApproximationIsExact": false
+    },
+    {
+      "sign": 1,
+      "component": "theta",
+      "coordinate": "T",
+      "derivative": {
+        "rootId": 218756,
+        "operation": "add",
+        "arguments": [
+          218752,
+          218755
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "finiteApproximation": {
+        "rootId": 218768,
+        "operation": "multiply",
+        "arguments": [
+          217535,
+          218364
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "absoluteTail": {
+        "rootId": 218772,
+        "operation": "multiply",
+        "arguments": [
+          218767,
+          218771
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "tailFormula": "P(v)*(||B||+||partial_a B||)*I*exp((K+Ka)L)*((K+Ka)L)^(N+1)/(N+1)!",
+      "finiteApproximationIsExact": false
+    },
+    {
+      "sign": 1,
+      "component": "z",
+      "coordinate": "T",
+      "derivative": {
+        "rootId": 218763,
+        "operation": "add",
+        "arguments": [
+          218759,
+          218762
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "finiteApproximation": {
+        "rootId": 218769,
+        "operation": "multiply",
+        "arguments": [
+          217535,
+          218326
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "absoluteTail": {
+        "rootId": 218772,
+        "operation": "multiply",
+        "arguments": [
+          218767,
+          218771
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "tailFormula": "P(v)*(||B||+||partial_a B||)*I*exp((K+Ka)L)*((K+Ka)L)^(N+1)/(N+1)!",
+      "finiteApproximationIsExact": false
+    },
+    {
+      "sign": -1,
+      "component": "r",
+      "coordinate": "T",
+      "derivative": {
+        "rootId": 219439,
+        "operation": "add",
+        "arguments": [
+          219437,
+          219438
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "finiteApproximation": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "absoluteTail": {
+        "rootId": 219457,
+        "operation": "multiply",
+        "arguments": [
+          218767,
+          219456
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "tailFormula": "P(v)*(||B||+||partial_a B||)*I*exp((K+Ka)L)*((K+Ka)L)^(N+1)/(N+1)!",
+      "finiteApproximationIsExact": false
+    },
+    {
+      "sign": -1,
+      "component": "theta",
+      "coordinate": "T",
+      "derivative": {
+        "rootId": 219446,
+        "operation": "add",
+        "arguments": [
+          219442,
+          219445
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "finiteApproximation": {
+        "rootId": 219454,
+        "operation": "multiply",
+        "arguments": [
+          217892,
+          219058
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "absoluteTail": {
+        "rootId": 219457,
+        "operation": "multiply",
+        "arguments": [
+          218767,
+          219456
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "tailFormula": "P(v)*(||B||+||partial_a B||)*I*exp((K+Ka)L)*((K+Ka)L)^(N+1)/(N+1)!",
+      "finiteApproximationIsExact": false
+    },
+    {
+      "sign": -1,
+      "component": "z",
+      "coordinate": "T",
+      "derivative": {
+        "rootId": 219453,
+        "operation": "add",
+        "arguments": [
+          219449,
+          219452
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "finiteApproximation": {
+        "rootId": 219455,
+        "operation": "multiply",
+        "arguments": [
+          217892,
+          219025
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "absoluteTail": {
+        "rootId": 219457,
+        "operation": "multiply",
+        "arguments": [
+          218767,
+          219456
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "tailFormula": "P(v)*(||B||+||partial_a B||)*I*exp((K+Ka)L)*((K+Ka)L)^(N+1)/(N+1)!",
+      "finiteApproximationIsExact": false
+    }
+  ],
+  "endpointRows": [
+    {
+      "sign": 1,
+      "name": "left",
+      "time": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "timeDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "amplitudeDerivative": [
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ]
+    },
+    {
+      "sign": 1,
+      "name": "midpoint",
+      "time": {
+        "rootId": 217518,
+        "operation": "multiply",
+        "arguments": [
+          19,
+          217127
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "timeDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "amplitudeDerivative": [
+        {
+          "rootId": 218821,
+          "operation": "add",
+          "arguments": [
+            218819,
+            218820
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 218855,
+          "operation": "add",
+          "arguments": [
+            218849,
+            218854
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 218871,
+          "operation": "add",
+          "arguments": [
+            218865,
+            218870
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ]
+    },
+    {
+      "sign": 1,
+      "name": "right",
+      "time": {
+        "rootId": 217127,
+        "operation": "multiply",
+        "arguments": [
+          217125,
+          217126
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "timeDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "amplitudeDerivative": [
+        {
+          "rootId": 218924,
+          "operation": "add",
+          "arguments": [
+            218921,
+            218923
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 218958,
+          "operation": "add",
+          "arguments": [
+            218952,
+            218957
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 218974,
+          "operation": "add",
+          "arguments": [
+            218968,
+            218973
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ]
+    },
+    {
+      "sign": -1,
+      "name": "left",
+      "time": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "timeDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "amplitudeDerivative": [
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 0,
+          "operation": "rational",
+          "arguments": [
+            "0",
+            "1"
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ]
+    },
+    {
+      "sign": -1,
+      "name": "midpoint",
+      "time": {
+        "rootId": 217518,
+        "operation": "multiply",
+        "arguments": [
+          19,
+          217127
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "timeDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "amplitudeDerivative": [
+        {
+          "rootId": 219503,
+          "operation": "add",
+          "arguments": [
+            219501,
+            219502
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 219537,
+          "operation": "add",
+          "arguments": [
+            219531,
+            219536
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 219553,
+          "operation": "add",
+          "arguments": [
+            219547,
+            219552
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ]
+    },
+    {
+      "sign": -1,
+      "name": "right",
+      "time": {
+        "rootId": 217127,
+        "operation": "multiply",
+        "arguments": [
+          217125,
+          217126
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "timeDerivative": {
+        "rootId": 0,
+        "operation": "rational",
+        "arguments": [
+          "0",
+          "1"
+        ],
+        "valueKind": "exact convergent source expression; not a binary64 sample"
+      },
+      "amplitudeDerivative": [
+        {
+          "rootId": 219603,
+          "operation": "add",
+          "arguments": [
+            219600,
+            219602
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 219637,
+          "operation": "add",
+          "arguments": [
+            219631,
+            219636
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        },
+        {
+          "rootId": 219653,
+          "operation": "add",
+          "arguments": [
+            219647,
+            219652
+          ],
+          "valueKind": "exact convergent source expression; not a binary64 sample"
+        }
+      ]
+    }
+  ],
+  "convergence": {
+    "method": "Explicit four-component block Volterra series",
+    "blockMatrix": "[[M,0],[partial_a M,M]]",
+    "sourceOfDerivative": "Ordinary chain/product rules on the retained source matrix body",
+    "sourceOfNorm": "Actual completed enlarged C2 and frozen source denominator bounds; every sum, product, inverse and square-root term is retained.",
+    "allFiniteOrdersInTailSeries": true,
+    "slowDerivativeOrder": 1,
+    "terms": 0,
+    "partialSumIsExactSolution": false,
+    "numericalWholeSourceEvaluation": false
+  },
+  "nextDependency": "Differentiate the actual covariance integral/weights and assemble the full cutoff potential curl; second slow derivatives and global flat-error bounds remain separate."
+}

@@ -1,6 +1,7 @@
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 import {LIMITS,M2_VERSION,clone,bytes,normalizeRequest,executeDomain,listCapabilities} from './registry.mjs';
 import {WORKER_SOURCE,WORKER_SHA256} from './worker-data.mjs';
+import {inspectReplayBundle} from './replay-import.mjs';
 
 const TERMINAL=new Set(['COMPLETED','PARTIAL','FAILED','CANCELLED','PRECISION_REQUIRED','UNSUPPORTED','BUDGET_EXCEEDED']);
 const resultStatus=result=>TERMINAL.has(result.status)?result.status:result.message||/ERROR|FAILED|INVALID|REJECTED/.test(result.status||'')?'FAILED':result.blockers?.length?'PARTIAL':'FAILED';
@@ -73,13 +74,14 @@ export function createM2Engine(options={}) {
     }
   }
   async function pump(){if(active||disposed)return;while(queue.length&&!disposed){const j=jobs.get(queue.shift());if(!j||j.status!=='QUEUED')continue;active=j;await run(j);active=null;}}
-  async function submit(input,{id,attempt=1}={}){
+  async function submit(input,{id,attempt=1,shouldDispatch}={}){
     if(disposed)throw Error('M2 engine disposed.');
     const request=normalizeRequest(input);id=id||'m2-job:'+Date.now().toString(36)+':'+(++sequence);
     if(!/^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,149}$/.test(id))throw Error('Invalid job ID.');
     if(jobs.has(id)||jobs.size>=LIMITS.maxJobs)throw Error('Duplicate ID or retained job limit. Export completed results before starting a new runtime.');
     const environment=await environmentPromise,inputHash=await sha256(request);
     if(jobs.has(id)||jobs.size>=LIMITS.maxJobs)throw Error('Concurrent job limit.');
+    if(shouldDispatch&&shouldDispatch()!==true)throw Object.assign(Error('Input or session changed before dispatch.'),{code:'INPUT_CHANGED'});
     const j={id,request,inputHash,environmentHash:environment.hash,status:'QUEUED',submittedAt:new Date().toISOString(),finishedAt:null,checkpoint:null,result:null,resultHash:null,mathematicalHash:null,attempt};
     jobs.set(id,j);queue.push(id);notify(j);void pump();return publicJob(j);
   }
@@ -87,18 +89,19 @@ export function createM2Engine(options={}) {
   function cancel(id){const j=lookup(id);if(TERMINAL.has(j.status)||j.settling)return false;j.cancelRequested=true;if(j.status==='QUEUED')void finish(j,{status:'CANCELLED',evidenceGrade:'UNKNOWN',message:'Cancelled before start.'});else j.cancel?.();return true;}
   async function wait(id){const j=lookup(id);if(TERMINAL.has(j.status))return publicJob(j);return new Promise(resolve=>{const list=waiters.get(id)||[];list.push(resolve);waiters.set(id,list);});}
   async function exportBundle(id){const j=lookup(id);if(!TERMINAL.has(j.status))throw Error('Wait for a terminal state.');const body={schema:'MathScope.M2ReplayBundle/1',request:clone(j.request),inputHash:j.inputHash,environment:await environmentPromise,result:clone(j.result),resultHash:j.resultHash,mathematicalHash:j.mathematicalHash,semanticHashPolicy:'EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY',checkpoint:j.checkpoint,resumePolicy:'RECOMPUTE_FROM_ORIGINAL_INPUT',trust:'UNTRUSTED_WHEN_SERIALIZED'};return {...body,bundleHash:await sha256(body)};}
-  async function replay(bundle){
-    if(bytes(bundle)>LIMITS.maxBytes+1048576)throw Error('Replay bundle exceeds the import byte limit.');
-    bundle=clone(bundle);const {bundleHash,...body}=bundle;
-    if(body.schema!=='MathScope.M2ReplayBundle/1'||await sha256(body)!==bundleHash)throw Error('Replay bundle digest mismatch.');
-    if(await sha256(normalizeRequest(body.request))!==body.inputHash||await sha256(body.result)!==body.resultHash)throw Error('Replay input/result digest mismatch.');
-    if(body.semanticHashPolicy!=='EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY'||await sha256(mathematicalBody(body.result))!==body.mathematicalHash)throw Error('Replay mathematical result digest mismatch.');
-    const env=await environmentPromise,{hash:importedEnvironmentHash,...importedEnvironment}=body.environment||{};if(importedEnvironmentHash!==env.hash||body.environment?.workerSha256!==env.workerSha256||await sha256(importedEnvironment)!==importedEnvironmentHash)throw Error('Replay requires the same installed source and environment.');
-    const j=await submit(body.request),fresh=await wait(j.id);return {status:fresh.mathematicalHash===body.mathematicalHash?'MATCH':'MISMATCH',originalHash:body.mathematicalHash,freshHash:fresh.mathematicalHash,artifactBytesMatch:fresh.resultHash===body.resultHash,semanticHashPolicy:body.semanticHashPolicy,freshJobId:fresh.id,sourceVerified:true,importedEvidenceTrusted:false};
+  async function inspectBundle(bundle){return inspectReplayBundle(bundle,await environmentPromise);}
+  async function replay(bundle,options={}){
+    const {bundle:body,summary}=await inspectBundle(bundle);
+    if(!summary.sameEnvironment)throw Object.assign(Error('Replay requires the same installed source and environment. 입력만 불러온 뒤 현재 환경에서 새로 실행할 수 있습니다.'),{code:'IMPORT_ENVIRONMENT_MISMATCH'});
+    if(options.signal?.aborted)throw Object.assign(Error('Replay cancelled before dispatch.'),{code:'CANCELLED'});
+    const j=await submit(body.request,{shouldDispatch:()=>{if(options.signal?.aborted)throw Object.assign(Error('Replay cancelled before dispatch.'),{code:'CANCELLED'});return !options.shouldDispatch||options.shouldDispatch()===true;}}),abort=()=>cancel(j.id);
+    if(options.signal?.aborted)abort();else options.signal?.addEventListener('abort',abort,{once:true});
+    let fresh;try{options.onSubmitted?.(j);fresh=await wait(j.id);}catch(e){cancel(j.id);await wait(j.id);throw e;}finally{options.signal?.removeEventListener('abort',abort);}
+    return {status:fresh.status==='CANCELLED'?'CANCELLED':fresh.mathematicalHash===body.mathematicalHash?'MATCH':'MISMATCH',originalHash:body.mathematicalHash,freshHash:fresh.mathematicalHash,artifactBytesMatch:fresh.resultHash===body.resultHash,semanticHashPolicy:body.semanticHashPolicy,freshJobId:fresh.id,sourceVerified:true,importedEvidenceTrusted:false};
   }
   async function receipt(id){const j=lookup(id);if(!TERMINAL.has(j.status))throw Error('Job still running.');const record=publicJob(j);ownedResults.add(record);return Object.freeze(record);}
   async function verifyReceipt(record){if(!ownedResults.has(record))return false;const j=lookup(record.id);return canonicalStringify(record)===canonicalStringify(publicJob(j));}
-  return Object.freeze({submit,wait,cancel,getJob:id=>publicJob(lookup(id)),listJobs:()=>[...jobs.values()].map(publicJob),listSummaries:()=>[...jobs.values()].map(j=>({id:j.id,kind:j.request.kind,status:j.status,inputHash:j.inputHash,resultHash:j.resultHash,submittedAt:j.submittedAt})),environment:()=>environmentPromise,exportBundle,replay,receipt,verifyReceipt,
+  return Object.freeze({submit,wait,cancel,getJob:id=>publicJob(lookup(id)),listJobs:()=>[...jobs.values()].map(publicJob),listSummaries:()=>[...jobs.values()].map(j=>({id:j.id,kind:j.request.kind,status:j.status,inputHash:j.inputHash,resultHash:j.resultHash,submittedAt:j.submittedAt})),environment:()=>environmentPromise,exportBundle,inspectBundle,replay,receipt,verifyReceipt,
     resume:async id=>{const j=lookup(id);if(!['CANCELLED','BUDGET_EXCEEDED','FAILED'].includes(j.status))throw Error('Only interrupted jobs can restart.');return submit(j.request,{attempt:j.attempt+1});},
     subscribe:f=>{listeners.add(f);return()=>listeners.delete(f);},
     dispose:()=>{disposed=true;for(const j of jobs.values())if(!TERMINAL.has(j.status))cancel(j.id);if(workerURL)URL.revokeObjectURL(workerURL);listeners.clear();}

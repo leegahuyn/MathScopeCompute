@@ -2,6 +2,8 @@ import {canonicalStringify} from '../mathscope-m0/contracts.mjs';
 import {createM2Engine} from './core/engine.mjs';
 import {M2_VERSION,LIMITS,normalizeRequest,validateDomainRequest,listExamples} from './core/registry.mjs';
 import {commitM2SessionBundle} from './core/session-binding.mjs';
+import {parseReplayText,IMPORT_TEXT_MAX_BYTES} from './core/replay-import.mjs';
+import {evidenceURL,M2_SOURCE_BRANCH} from './core/evidence-links.mjs';
 import {SourceBoundScene,renderObservationTable,renderObservationDetails} from './visualization/renderer.mjs';
 import {numericValue,traceBasis} from './visualization/observations.mjs';
 import {makeM2Visualization,listM2Panels,makeObservationPair} from './visualization/m2-views.mjs';
@@ -16,7 +18,7 @@ const BOUNDARIES={observation:'각 화면은 실제 계산 기록과 모형·표
 export async function bootM2(){
   const root=document.getElementById('mathscopeResearchM2');if(!root||root.dataset.mounted==='true')return;
   const $=id=>document.getElementById(id),engine=createM2Engine(),examples=await listExamples(),environment=await engine.environment(),scene=new SourceBoundScene($('m2-scene')),pairScene=new SourceBoundScene($('m2-pair-scene')),origins=new Map(),saved=new Set();
-  let selected=null,domain='arithmetic',lastComputeDomain='arithmetic',registration=null,exportURL=null,panelsFor=null,currentView=null,currentPair=null,basisFor=null,synchronizing=false,submissionSequence=0,presentationRevision=0;
+  let selected=null,domain='arithmetic',lastComputeDomain='arithmetic',registration=null,exportURL=null,panelsFor=null,currentView=null,currentPair=null,basisFor=null,synchronizing=false,submissionSequence=0,presentationRevision=0,importReadSequence=0,importBusy=false;
   const sync=(target,camera)=>{if(synchronizing)return;synchronizing=true;target.setCamera(camera);synchronizing=false;};
   scene.onCameraChange(camera=>{if(currentPair)sync(pairScene,camera);requestAnimationFrame(renderRendererMetrics);});pairScene.onCameraChange(camera=>{if(currentPair)sync(scene,camera);requestAnimationFrame(renderRendererMetrics);});
   const foundation=()=>{const f=window.MathScopeV031Foundation;if(!f?.getSession||!f?.commitTypedBundle)throw Error('Research Session 연결이 준비되지 않았습니다.');return f;};
@@ -81,6 +83,50 @@ export async function bootM2(){
   }
   async function saveResult(id){const j=engine.getJob(id),captured=origins.get(id);if(!captured)throw Error('이 실행의 세션 출처를 확인할 수 없습니다. 다시 실행하세요.');if(saved.has(id))return {ok:true,alreadySaved:true,jobId:id};if(id===selected&&!matches(j))throw Error('현재 입력이 달라졌습니다. 실행 기록을 선택해 원래 입력을 복원하세요.');const report=await commitM2SessionBundle(j,engine,foundation(),captured);saved.add(id);renderSession();renderJobs();status('현재 세션에 유한 계산 기록을 저장했습니다 · '+id);const {session,...summary}=report;return {ok:true,jobId:id,report:summary,formalPass:false};}
   async function replayJob(id){const captured=origin(),initialPresentation=presentationRevision,report=await engine.replay(await engine.exportBundle(id));origins.set(report.freshJobId,captured);const present=initialPresentation===presentationRevision;if(present){selectJob(report.freshJobId);text('m2-validation',report);$('m2-validation-panel').open=true;}else renderJobs();status('동일 소스 재현 검사 · '+report.status+(present?'':' · 새 결과는 실행 목록에 보관했습니다.'),report.status!=='MATCH');return {ok:true,...report,selected:present};}
+  function importReport(report,message,error=false){text('m2-import-report',report);$('m2-import-report-panel').hidden=false;$('m2-import-report-panel').open=true;text('m2-import-status',message);$('m2-import-status').dataset.error=String(error);}
+  async function inspectImport(raw){const inspected=await engine.inspectBundle(parseReplayText(raw));return {ok:true,...inspected.summary};}
+  async function importBundle(raw,options={}){
+    const mode=options.mode||'REPLAY';
+    if(!['REPLAY','INPUT_ONLY'].includes(mode))throw Error('가져오기 방식은 REPLAY 또는 INPUT_ONLY여야 합니다.');
+    if(importBusy)throw Object.assign(Error('진행 중인 가져오기가 끝난 뒤 다시 시도하세요.'),{code:'IMPORT_BUSY'});
+    if(options.signal?.aborted)return {ok:false,code:'CANCELLED',state:'NOT_STARTED'};
+    importBusy=true;
+    const callSequence=++submissionSequence,initialPresentation=presentationRevision,contentTicket=importReadSequence;
+    let submittedPresentation=null,freshId=null,captured;
+    const sourceCurrent=()=>{try{const current=origin();return callSequence===submissionSequence&&contentTicket===importReadSequence&&captured?.id===current.id&&captured?.revision===current.revision;}catch{return false;}};
+    const initialCurrent=()=>sourceCurrent()&&initialPresentation===presentationRevision;
+    try{
+      captured=origin();
+      const inspected=await engine.inspectBundle(parseReplayText(raw));
+      if(options.signal?.aborted)return {ok:false,code:'CANCELLED',state:'NOT_STARTED'};
+      if(!initialCurrent())return {ok:false,code:'INPUT_CHANGED',state:'NOT_STARTED'};
+      const valid=await validateDomainRequest(inspected.request);if(!valid.ok)throw Error('가져온 입력 계약: '+pretty(valid.errors));
+      if(options.signal?.aborted)return {ok:false,code:'CANCELLED',state:'NOT_STARTED'};
+      if(!initialCurrent())return {ok:false,code:'INPUT_CHANGED',state:'NOT_STARTED'};
+      if(mode==='INPUT_ONLY'){
+        if(!root.classList.contains('active'))document.querySelector('[data-view-target="research-m2"]')?.click();
+        setDomain(inspected.request.kind.split('.')[0]);selected=null;panelsFor=null;presentationRevision++;
+        $('m2-input').value=pretty(inspected.request);text('m2-kind',inspected.request.kind);syncExample(inspected.request);clearValidation();renderResult();renderJobs();
+        const report={ok:true,status:'INPUT_LOADED',inspection:inspected.summary,newJobSubmitted:false,importedResultAdopted:false,automaticEvidenceSave:false};
+        importReport(report,'원래 입력을 불러왔습니다. 계산 실행을 누르면 현재 환경에서 새 결과를 만듭니다.');status('가져온 입력 준비 · 새 계산을 실행하세요.');return report;
+      }
+      if(!inspected.summary.sameEnvironment)throw Object.assign(Error('파일의 버전 또는 실행 환경이 현재와 다릅니다. 입력만 불러온 뒤 새로 실행하세요.'),{code:'IMPORT_ENVIRONMENT_MISMATCH',inspection:inspected.summary});
+      importReport(inspected.summary,'기록의 해시가 일치합니다. 원래 입력을 새로 계산해 비교하고 있습니다.');
+      const report=await engine.replay(inspected.bundle,{signal:options.signal,shouldDispatch:initialCurrent,onSubmitted:j=>{
+        freshId=j.id;origins.set(j.id,captured);
+        if(initialCurrent()){selectJob(j.id);submittedPresentation=presentationRevision;}
+        renderJobs();
+      }});
+      const present=sourceCurrent()&&submittedPresentation===presentationRevision&&selected===freshId;
+      if(present){renderResult();text('m2-validation',report);$('m2-validation-panel').open=true;}
+      renderJobs();
+      const result={ok:true,...report,selected:present,inspection:inspected.summary,automaticEvidenceSave:false};
+      if(sourceCurrent())importReport(result,'가져오기 재계산 · '+report.status+(present?' · 새 실행의 원본 입력과 관측을 복원했습니다.':' · 새 결과는 실행 기록에 보관했습니다.'),report.status!=='MATCH');
+      if(present)status('가져온 실행 기록 재현 · '+report.status,report.status!=='MATCH');
+      return result;
+    }catch(e){if(sourceCurrent())importReport({ok:false,code:e.code||'IMPORT_FAILED',message:e.message,inspection:e.inspection||null},e.message,true);throw e;}
+    finally{importBusy=false;}
+  }
   async function runExampleSuite(ids,options={}){
     if(!Array.isArray(ids)||ids.length<1||ids.length>12||new Set(ids).size!==ids.length||ids.some(id=>typeof id!=='string'||!examples.some(e=>e.id===id)))throw Error('서로 다른 설치 예제 ID 1–12개가 필요합니다.');
     if(engine.listSummaries().length+ids.length>LIMITS.maxJobs)throw Error('예제 묶음을 보관할 실행 공간이 부족합니다. 현재 기록을 내보낸 뒤 새 런타임에서 실행하세요.');
@@ -108,7 +154,15 @@ export async function bootM2(){
   function exportData(name,data){if(exportURL)URL.revokeObjectURL(exportURL);const content=pretty(data);exportURL=URL.createObjectURL(new Blob([content],{type:'application/json;charset=utf-8'}));$('m2-download').href=exportURL;$('m2-download').download=name;$('m2-download').textContent=name;$('m2-export-content').value=content;$('m2-export-panel').hidden=false;$('m2-export-panel').open=true;}
   function renderChecklist(){
     const p=$('m2-checklist-package').value,filter=$('m2-checklist-filter').value;$('m2-checklist').replaceChildren();
-    for(const c of CHECKLIST.filter(c=>(p==='all'||c.id.startsWith(p+'-'))&&(filter==='all'||c.status===filter))){const d=document.createElement('details'),s=document.createElement('summary'),badge=document.createElement('span'),title=document.createElement('strong'),original=document.createElement('p'),scope=document.createElement('p'),test=document.createElement('p');d.className='m2-check-item';d.dataset.state=c.status;badge.className='m1-tag';badge.textContent=c.status;title.textContent=c.id+' · '+c.title;s.append(badge,title);original.className='m2-criterion';original.textContent=c.criteria;scope.className='m1-muted';scope.textContent='현재 구현: '+c.implementedScope;test.className='m1-muted';test.textContent='설계도 p.'+c.sourcePage+' · '+(c.testStatus||'원문 조건별 추가 검증 진행');d.append(s,original,scope,test);if(c.acceptanceScope){const acceptance=document.createElement('p');acceptance.className='m1-muted';acceptance.textContent='통과 범위: '+c.acceptanceScope;d.append(acceptance);}for(const obligation of c.remainingObligations||[]){const p=document.createElement('p');p.className='m1-muted';p.textContent='남은 조건: '+obligation;d.append(p);}$('m2-checklist').append(d);}
+    for(const c of CHECKLIST.filter(c=>(p==='all'||c.id.startsWith(p+'-'))&&(filter==='all'||c.status===filter))){
+      const d=document.createElement('details'),s=document.createElement('summary'),badge=document.createElement('span'),title=document.createElement('strong'),original=document.createElement('p'),scope=document.createElement('p'),test=document.createElement('p');d.className='m2-check-item';d.dataset.state=c.status;d.dataset.criterionId=c.id;badge.className='m1-tag';badge.textContent=c.status;title.textContent=c.id+' · '+c.title;s.append(badge,title);original.className='m2-criterion';original.textContent=c.criteria;scope.className='m1-muted';scope.textContent='현재 구현: '+c.implementedScope;test.className='m1-muted';test.textContent='설계도 p.'+c.sourcePage+' · '+(c.testStatus||'원문 조건별 추가 검증 진행');d.append(s,original,scope,test);
+      if(c.acceptanceScope){const acceptance=document.createElement('p');acceptance.className='m1-muted';acceptance.textContent='통과 범위: '+c.acceptanceScope;d.append(acceptance);}
+      for(const obligation of c.remainingObligations||[]){const p=document.createElement('p');p.className='m1-muted';p.textContent='남은 조건: '+obligation;d.append(p);}
+      const links=document.createElement('div');links.className='m2-evidence-links';
+      for(const path of c.evidencePaths||[]){const href=evidenceURL(path);if(!href)continue;const a=document.createElement('a');a.href=href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=path.split('/').pop();a.title=path;links.append(a);}
+      if(links.childElementCount){const label=document.createElement('p');label.className='m1-muted';label.textContent='검증 근거 · 원본 소스';d.append(label,links);}
+      $('m2-checklist').append(d);
+    }
   }
   const counts=CHECKLIST.reduce((a,c)=>(a[c.status]++,a),{PASS:0,PARTIAL:0,OPEN:0});for(const [key,label] of [['PASS','명시한 구현·검증 범위 통과'],['PARTIAL','부분 구현 · 추가 검증'],['OPEN','미구현 · 연구 진행']]){const d=document.createElement('div');d.className='m1-metric';const a=document.createElement('strong'),b=document.createElement('small');a.textContent=String(counts[key]||0);b.textContent=label;d.append(a,b);$('m2-checklist-summary').append(d);}
   for(const b of root.querySelectorAll('[data-m2-tab]')){b.addEventListener('click',()=>setDomain(b.dataset.m2Tab));b.addEventListener('keydown',e=>{const names=['arithmetic','gauge','ns','observation','checklist'],i=names.indexOf(domain);let j;if(e.key==='ArrowRight')j=(i+1)%5;else if(e.key==='ArrowLeft')j=(i+4)%5;else if(e.key==='Home')j=0;else if(e.key==='End')j=4;else return;e.preventDefault();setDomain(names[j],true,true);});}
@@ -116,9 +170,14 @@ export async function bootM2(){
   on('m2-basis-run',()=>{const q=request();if(q.kind!=='observation.complex-basis')throw Error('관측·비교의 정수 기저 교체 예제를 선택하세요.');q.input.basis=$('m2-basis-mode').value;return runRequest(q);});
   on('m2-validate',async()=>{const initialPresentation=presentationRevision,v=await validateDomainRequest(request());if(presentationRevision!==initialPresentation)return;text('m2-validation',v);$('m2-validation-panel').open=true;status(v.ok?'입력 계약 통과 · 개별 수학적 검사는 실행 결과에서 확인하세요.':'입력 계약을 확인하세요.',!v.ok);});on('m2-run',()=>runRequest(request()));on('m2-cancel',()=>{if(selected)engine.cancel(selected);});on('m2-save',()=>saveResult(selected));on('m2-replay',()=>replayJob(selected));on('m2-export',async()=>{exportData('MathScope-M2-'+selected.replaceAll(':','-')+'.json',await engine.exportBundle(selected));status('입력·전체 결과·소스 해시를 포함한 JSON을 준비했습니다.');});
   on('m2-copy',async()=>{$('m2-export-content').focus();$('m2-export-content').select();try{await navigator.clipboard.writeText($('m2-export-content').value);status('전체 실행 JSON을 복사했습니다.');}catch{status('전체 JSON을 선택했습니다. Ctrl/Cmd+C로 복사하세요.');}});
+  $('m2-import-content').addEventListener('input',()=>{importReadSequence++;$('m2-import-report-panel').hidden=true;text('m2-import-status','내용이 변경되었습니다. 파일 검사를 실행하세요.');});
+  $('m2-import-file').addEventListener('change',async()=>{const ticket=++importReadSequence,file=$('m2-import-file').files?.[0];if(!file)return;try{if(file.size>IMPORT_TEXT_MAX_BYTES)throw Error('가져오기 파일은 32 MiB 이하여야 합니다.');const raw=await file.text();if(ticket!==importReadSequence)return;$('m2-import-content').value=raw;const report=await inspectImport(raw);if(ticket!==importReadSequence)return;importReport(report,file.name+' · '+(report.sameEnvironment?'같은 환경 · 재계산 비교 가능':'다른 환경 · 입력만 불러오기 가능'));}catch(e){if(ticket===importReadSequence)importReport({ok:false,code:e.code||'IMPORT_FAILED',message:e.message},e.message,true);}});
+  on('m2-import-inspect',async()=>{const ticket=importReadSequence,report=await inspectImport($('m2-import-content').value);if(ticket===importReadSequence)importReport(report,report.sameEnvironment?'파일 해시와 실행 환경을 확인했습니다. 재계산 비교를 시작할 수 있습니다.':'파일 해시는 일치하고 실행 환경은 다릅니다. 입력만 불러와 새로 실행할 수 있습니다.');});
+  on('m2-import-replay',()=>importBundle($('m2-import-content').value));
+  on('m2-import-input',()=>importBundle($('m2-import-content').value,{mode:'INPUT_ONLY'}));
   for(const b of root.querySelectorAll('[data-m2-camera]'))b.addEventListener('click',()=>scene.camera(b.dataset.m2Camera));$('m2-checklist-package').addEventListener('change',renderChecklist);$('m2-checklist-filter').addEventListener('change',renderChecklist);
   engine.subscribe(j=>{if(j.id===selected){renderResult();if(TERMINAL.has(j.status))status(j.request.kind+' · '+j.status+' · 유한 검사와 남은 조건을 결과에서 확인하세요.',['FAILED','BUDGET_EXCEEDED'].includes(j.status));}renderJobs();});
-  const api=Object.freeze({version:M2_VERSION,getStatus:()=>({ok:true,version:M2_VERSION,examples:examples.map(e=>({id:e.id,label:e.label,kind:e.request.kind,domain:e.domain})),jobs:engine.listSummaries(),checklist:{total:CHECKLIST.length,counts,fullM2Complete:counts.PASS===64},environment:{hash:environment.hash,workerSha256:environment.workerSha256,execution:environment.execution},visualization:visualStatus(),session:origin(),formalPass:false}),validateRequest:validateDomainRequest,runRequest,runExampleSuite,runExample:async(id,options)=>{const e=examples.find(e=>e.id===id);if(!e)throw Error('설치된 예제 ID가 아닙니다.');setDomain(e.domain);$('m2-example').value=e.id;return runRequest(e.request,options);},getJob:id=>({ok:true,job:engine.getJob(id)}),selectJob,cancelJob:id=>({ok:true,cancelRequested:engine.cancel(id)}),saveResult,replayJob,renderingAudit:()=>({ok:true,left:scene.renderingAudit(),right:currentPair?pairScene.renderingAudit():null,visualization:visualStatus()})});
+  const api=Object.freeze({version:M2_VERSION,getStatus:()=>({ok:true,version:M2_VERSION,examples:examples.map(e=>({id:e.id,label:e.label,kind:e.request.kind,domain:e.domain})),jobs:engine.listSummaries(),checklist:{total:CHECKLIST.length,counts,fullM2Complete:counts.PASS===64,completionScope:'ORIGINAL_64_ACCEPTANCE_CRITERIA_WITH_RECORDED_SCOPES'},source:{repository:'leegahuyn/MathScopeCompute',branch:M2_SOURCE_BRANCH},transfer:{importBusy,maxTextBytes:IMPORT_TEXT_MAX_BYTES,modes:['REPLAY','INPUT_ONLY'],automaticEvidenceSave:false},environment:{hash:environment.hash,workerSha256:environment.workerSha256,execution:environment.execution},visualization:visualStatus(),session:origin(),formalPass:false}),validateRequest:validateDomainRequest,runRequest,runExampleSuite,runExample:async(id,options)=>{const e=examples.find(e=>e.id===id);if(!e)throw Error('설치된 예제 ID가 아닙니다.');setDomain(e.domain);$('m2-example').value=e.id;return runRequest(e.request,options);},getJob:id=>({ok:true,job:engine.getJob(id)}),selectJob,cancelJob:id=>({ok:true,cancelRequested:engine.cancel(id)}),saveResult,replayJob,exportBundle:id=>engine.exportBundle(id),inspectImport,importBundle,renderingAudit:()=>({ok:true,left:scene.renderingAudit(),right:currentPair?pairScene.renderingAudit():null,visualization:visualStatus()})});
   window.MathScopeResearchM2=api;
   async function register(){registration=await registerM2Tools(api);const {dispose,...state}=registration;text('m2-webmcp',state);}
   const nav=document.querySelector('[data-view-target="research-m2"]');nav?.addEventListener('click',e=>{setDomain(domain,e.isTrusted);renderSession();requestAnimationFrame(()=>scene.draw());});

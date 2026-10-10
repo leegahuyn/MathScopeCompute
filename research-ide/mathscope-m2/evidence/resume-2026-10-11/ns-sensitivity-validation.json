@@ -1,0 +1,90 @@
+{
+  "schema": "MathScope.ActualPulseSensitivityReleaseVerification/1",
+  "recordedUTC": "2026-10-10T15:44:58.160242+00:00",
+  "pass": true,
+  "publicContract": {
+    "ellExact": "1",
+    "slowCoordinate": [
+      "R",
+      "Z",
+      "T"
+    ],
+    "derivativeOrder": 1,
+    "terms": 0,
+    "otherBandsAndPositiveTerms": "RESOURCE_LIMIT before graph construction",
+    "higherOrMixedDerivatives": "UNSUPPORTED"
+  },
+  "tests": {
+    "kernel": {
+      "passed": 7,
+      "failed": 0,
+      "log": "ns-sensitivity-kernel.tap"
+    },
+    "independentPython": {
+      "passed": 43,
+      "failed": 0,
+      "log": "ns-sensitivity-independent.json"
+    },
+    "actualSource": {
+      "passed": 4,
+      "failed": 0,
+      "wallSeconds": 20.606,
+      "peakRSSKiB": 1349548,
+      "log": "ns-sensitivity-source.tap"
+    }
+  },
+  "axisExecutions": [
+    {
+      "coordinate": "R",
+      "exitCode": 0,
+      "wallSeconds": 17.999301537001884,
+      "peakRSSKiB": 1257408,
+      "receiptBytes": 17397,
+      "nodeCount": 219794,
+      "graphBytes": 8763308,
+      "sha256": "46a224816aacab9fe526efe9070cfcd50e08398c87c5f173dd3662a020ace267",
+      "checks": 7,
+      "pass": true
+    },
+    {
+      "coordinate": "Z",
+      "exitCode": 0,
+      "wallSeconds": 19.736119574998156,
+      "peakRSSKiB": 1259612,
+      "elapsedMs": 19601.220133,
+      "receiptBytes": 17352,
+      "nodeCount": 219652,
+      "graphBytes": 8757752,
+      "sha256": "ddde4b3255f972888f2826e53a6155b77b9b0425ad82bc883249960c369f007c",
+      "checks": 7,
+      "pass": true
+    },
+    {
+      "coordinate": "T",
+      "exitCode": 0,
+      "wallSeconds": 18.699076177999814,
+      "peakRSSKiB": 1269160,
+      "elapsedMs": 18551.222982,
+      "receiptBytes": 17352,
+      "nodeCount": 219654,
+      "graphBytes": 8757834,
+      "sha256": "bf7eec670cc697c03e5adcf6ac0e725757ffe73991784a758c512176264adc89",
+      "checks": 7,
+      "pass": true
+    }
+  ],
+  "executionModel": "Separate fresh Node process for each actual source axis; measurements are construction/provenance generation, not numerical sensitivity quadrature.",
+  "scope": {
+    "firstActualSourceSlowDerivative": true,
+    "fullSameProfileN5": false,
+    "actualFullCurl": false,
+    "original64CriteriaModified": false,
+    "newLeanProof": false
+  },
+  "resourceHistory": "Draft runs for positive source display terms and multi-graph test retention exhausted a 2 GiB Node heap. They are not pass evidence. The release rejects positive terms/other bands/anchors before construction and verifies one actual graph per process.",
+  "runtimeSourceSHA256": {
+    "actual-pulse-sensitivity-bounds.mjs": "3afdf6bb13505883ee4e0d2f8eb3c93878012d734b5f7b1734f160a8813c7976",
+    "actual-pulse-sensitivity-kernel.mjs": "4752ca6470761ab921237bbad273fd39e891e665260af0ddeafdf3673e63069a",
+    "actual-pulse-sensitivity.mjs": "cfe98cc6dd43b4fc4615a9dcbd74a66df5c3ca4ca5878ca08b68a13b7bbd6939"
+  }
+}

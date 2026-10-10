@@ -3,6 +3,7 @@ import {observationPanels,makeObservationPair} from './observation-panels.mjs';
 import {actualSourcePanels} from './actual-source-panels.mjs';
 import {actualCorePanels} from './actual-core-panels.mjs';
 import {actualGlobalPanels} from './actual-global-panels.mjs';
+import {actualSensitivityPanels} from './actual-sensitivity-panels.mjs';
 export {makeObservationPair};
 
 const axis=(label,type,sourceField,unit='1')=>({label,type,sourceField,unit,scale:'linear',transform:'identity',dataDimension:1,physicalDimension:0});
@@ -149,7 +150,7 @@ function pulseCurlPanel(job,options={}){
 
 export function listM2Panels(job,options={}){
   const r=job?.result;if(!r)return [];
-  const actual=[...actualCorePanels(job,options),...actualGlobalPanels(job,options),...actualSourcePanels(job,options)];if(actual.length)return actual;
+  const actual=[...actualSensitivityPanels(job,options),...actualCorePanels(job,options),...actualGlobalPanels(job,options),...actualSourcePanels(job,options)];if(actual.length)return actual;
   const extra=observationPanels(job),out=r.pairs?.length?extra:[{id:'main',title:'원본 관측'},...extra];
   if(job.request.kind==='gauge.volume-refinement')out.push(gaugeVolumePanel(job,true,options));
   const corePanel=sourceCorePanel(job,options);if(corePanel)out.push(corePanel);

@@ -3424,7 +3424,43 @@ const CHECKLIST=[
   {id:'Y4-07',status:'IMPLEMENTED_FINITE_SCOPE',detail:'The infinite-dimensional gauge-invariant L² space is retained explicitly. The full SU(2) open spatial cube has an exhaustively enumerated total-spin-weight≤5 Gauss basis of seven states. Its positive Gram companion has separate deterministic omitted-spin, independent-Haar cubature and arithmetic errors; symmetry and finite real-time unitarity are checked. Unsupported graphs/cutoffs are rejected, and Euclidean transfer is not called unitary.'},
   {id:'Y4-08',status:'IMPLEMENTED_FINITE_SCOPE',detail:'Group/action/beta/spacing/volume/boundary, algorithm, seed, starts, flow=null, retained sample hashes and final raw configurations are sealed; source versus observation revisions are distinct.'}
 ];
-function getChecklist(){return structuredClone(CHECKLIST);}
+// Paths are relative to research-ide, as in the central arithmetic checklist.
+// These are the per-criterion paths in the preserved domain receipt. Keep the
+// receipt itself in every row so the source/test links are not mistaken for a
+// fresh execution or an automatically issued mathematical certificate.
+const CRITERION_SOURCE_EVIDENCE={
+  'Y3-01':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/contracts.mjs'],
+  'Y3-02':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/independent.py','mathscope-m2/gauge/lattice.mjs'],
+  'Y3-03':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/independent.py','mathscope-m2/gauge/quaternion-oracle.mjs'],
+  'Y3-04':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/README_KO.md','mathscope-m1/gauge/lean/MathScope/M1/Gauge/Transport.lean'],
+  'Y3-05':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/independent.py','mathscope-m2/gauge/lattice.mjs'],
+  'Y3-06':['mathscope-m2/gauge/refinement.mjs','mathscope-m2/gauge/volume.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/tests/independent-certification.py'],
+  'Y3-07':['mathscope-m2/gauge/transport-certificates.mjs','mathscope-m2/gauge/enclosures.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/tests/independent-certification.py'],
+  'Y3-08':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/visualization.test.mjs','mathscope-m2/gauge/tests/worker.test.mjs'],
+  'Y4-01':['mathscope-m2/gauge/lattice.mjs','mathscope-m2/gauge/tests/gauge.test.mjs'],
+  'Y4-02':['mathscope-m2/gauge/ensemble.mjs','mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/certification.test.mjs'],
+  'Y4-03':['mathscope-m2/gauge/reference.mjs','mathscope-m2/gauge/quaternion-oracle.mjs','mathscope-m2/gauge/enclosures.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/tests/independent-certification.py'],
+  'Y4-04':['mathscope-m2/gauge/statistics.mjs','mathscope-m2/gauge/ensemble.mjs','mathscope-m2/gauge/tests/certification.test.mjs'],
+  'Y4-05':['mathscope-m2/gauge/statistics.mjs','mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/certification.test.mjs'],
+  'Y4-06':['mathscope-m2/gauge/reflection.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/README_KO.md'],
+  'Y4-07':['mathscope-m2/gauge/transfer.mjs','mathscope-m2/gauge/enclosures.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/tests/independent-certification.py'],
+  'Y4-08':['mathscope-m2/gauge/ensemble.mjs','mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/visualization.test.mjs','mathscope-m2/gauge/tests/worker.test.mjs']
+};
+const CRITERION_RECEIPT_PATH='mathscope-m2/gauge/evidence/criterion-completion.json';
+const HISTORICAL_GAUGE_TEST_EVIDENCE=[
+  'mathscope-m2/gauge/evidence/tests.tap',
+  'mathscope-m2/gauge/evidence/independent-validation.json',
+  'mathscope-m2/gauge/evidence/certification-independent-validation.json'
+];
+function getChecklist(){return CHECKLIST.map(row=>({
+  ...structuredClone(row),
+  implementedScope:row.detail,
+  testStatus:'기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.',
+  acceptanceScope:'원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.',
+  evidencePathBase:'research-ide',
+  inheritedFrom:{path:CRITERION_RECEIPT_PATH,criterionId:row.id,status:row.status,newExecution:false},
+  evidencePaths:[CRITERION_RECEIPT_PATH,...CRITERION_SOURCE_EVIDENCE[row.id],...HISTORICAL_GAUGE_TEST_EVIDENCE,...(row.id==='Y3-04'?['mathscope-m1/gauge/lean/transport-audit.log']:[])]
+}));}
 function workEstimate(kind,input){
   const group=createGroup(input.group),d=group.matrixDimension;
   if(kind==='gauge.volume-refinement')return {algorithmicOperationsEstimate:input.cellCounts.reduce((s,n)=>s+4*n*(n+1)**3*input.transportSteps*3*28*12*d**3+(n+1)**4*6*500*d**3,0)+input.referencePanels**4*128,items:input.cellCounts.reduce((s,n)=>s+4*n*(n+1)**3+n**4,0)};
@@ -13395,6 +13431,320 @@ async function actualCovarianceFamilyCertificate(input={},context={}){
 return {ACTUAL_COVARIANCE_CRITERION,covariancePositiveRootProgram,prepareActualCovarianceFamilyProgram,actualCovarianceFamilyCertificate};
 })();
 const __m2_134 = (()=>{
+/** First slow-parameter variations of an explicitly retained Volterra ODE.
+ * This additive kernel leaves the sealed covariance kernel untouched.
+ * Bounds supplied to this generic algebra kernel are explicit premises;
+ * only the actual-source adapter may authenticate them as source bounds.
+ */
+const {ActualCovarianceExpressions} = __m2_124;
+const {factorial,fail} = __m2_74;
+const seals=new WeakMap();
+const keys=['name','variable','parameters','parameter','matrix','initial','left','length','matrixNorm','matrixDerivativeNorm','initialNorm','initialDerivativeNorm','leftDerivativeNorm'];
+const snapshot=s=>JSON.stringify(s);
+
+class ActualPulseSensitivityExpressions extends ActualCovarianceExpressions {
+  constructor(base,options={}){
+    super(base,options);
+    this.pulseSensitivitySystems=structuredClone(base.pulseSensitivitySystems??[]);
+    this.pulseSensitivityPartials=new Map();
+    this.pulseSensitivityAliases=new Map();
+    seals.set(this,new Map());
+  }
+  definePulseFirstVariation(input){
+    if(!input||Object.keys(input).some(k=>!keys.includes(k)))fail('INVALID_INPUT','A first variation needs its explicit coefficient, initial condition, endpoints and norm premises.');
+    const {name,variable,parameters,parameter,matrix,initial,left,length,matrixNorm,initialNorm,initialDerivativeNorm,leftDerivativeNorm,matrixDerivativeNorm}=input;
+    if(this.nodes[variable]?.op!=='coordinate'||!Array.isArray(parameters)||new Set(parameters).size!==parameters.length||parameters.includes(variable)||parameters.some(x=>this.nodes[x]?.op!=='coordinate')||!parameters.includes(parameter)||matrix?.length!==2||matrix.some(r=>r.length!==2||r.some(x=>!this.nodes[x]))||!Array.isArray(initial)||initial.length!==2||initial.some(x=>!this.nodes[x]))fail('INVALID_INPUT','Use a two-component explicit ODE and one declared independent parameter.');
+    const normRoots=[matrixNorm,matrixDerivativeNorm,initialNorm,initialDerivativeNorm,leftDerivativeNorm];
+    if([left,length,...normRoots].some(x=>!this.nodes[x]))fail('INVALID_INPUT','A first variation cannot omit a length or a norm premise.');
+    for(const root of normRoots)if(this.isq(root)&&this.fraction(root)[0]<0n)fail('INVALID_INPUT','Norm bounds must be nonnegative.');
+    if(this.isq(length)&&this.fraction(length)[0]<0n)fail('INVALID_INPUT','The declared interval length is nonnegative.');
+    const all=new Set([variable,...parameters]),constants=new Set(parameters);
+    if(matrix.flat().some(x=>[...this.freeCoordinates(x)].some(c=>!all.has(c))))fail('INVALID_INPUT','A matrix coefficient has an undeclared free coordinate.');
+    if([...initial,left,length,...normRoots].some(x=>[...this.freeCoordinates(x)].some(c=>!constants.has(c))))fail('INVALID_INPUT','Initial data, endpoints and uniform bounds may only depend on the declared parameters.');
+    // These are differentiated from the actual bodies; no derivative matrix,
+    // zero-datum claim or endpoint derivative is accepted from the caller.
+    const matrixDerivative=matrix.map(r=>r.map(x=>this.derivative(x,parameter)));
+    const initialDerivative=initial.map(x=>this.derivative(x,parameter));
+    const leftDerivative=this.derivative(left,parameter),lengthDerivative=this.derivative(length,parameter);
+    const initialRhs=matrix.map(row=>this.add(...row.map((x,j)=>this.mul(this.substitute(x,variable,left),initial[j]))));
+    const variationInitial=initialDerivative.map((x,j)=>this.sub(x,this.mul(initialRhs[j],leftDerivative)));
+    const augmentedMatrix=[...matrix.map(row=>[...row,this.zero,this.zero]),...matrixDerivative.map((row,j)=>[...row,...matrix[j]])];
+    const augmentedInitial=[...initial,...variationInitial],augmentedMatrixNorm=this.add(matrixNorm,matrixDerivativeNorm);
+    const augmentedInitialNorm=this.maximum(initialNorm,this.add(initialDerivativeNorm,this.mul(matrixNorm,initialNorm,leftDerivativeNorm)));
+    const s={name,variable,parameters:[...parameters],parameter,parameterIndex:parameters.indexOf(parameter),matrix:structuredClone(matrix),matrixDerivative,initial:[...initial],initialDerivative,left,length,leftDerivative,lengthDerivative,
+      initialRhs,variationInitial,augmentedMatrix,augmentedInitial,
+      bounds:{matrixNorm,matrixDerivativeNorm,initialNorm,initialDerivativeNorm,leftDerivativeNorm,augmentedMatrixNorm,augmentedInitialNorm},
+      equations:{original:'w_v=M w, w(left(a),a)=g(a)',variation:'s_v=M s+(partial_a M) w',initial:'s(left(a),a)=g_a-M(left(a),a)g(a)*left_a',endpoint:'d_a w(b(a),a)=s(b(a),a)+M(b(a),a)w(b(a),a)*b_a'},
+      derivativeOrder:1,independentParameterHeldFixedDuringTimeDerivative:true,sourceNormAuthenticated:false,secondSlowDerivativeSupported:false};
+    const id=this.pulseSensitivitySystems.length;this.pulseSensitivitySystems.push(s);seals.get(this).set(id,snapshot(s));return id;
+  }
+  assertPulseFirstVariation(system){
+    if(!seals.get(this)?.has(system)||snapshot(this.pulseSensitivitySystems[system])!==seals.get(this).get(system))fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged internally differentiated first-variation system.');
+    return true;
+  }
+  bindOriginalCovarianceVariation(covarianceSystem,variationSystem){
+    this.assertPulseFirstVariation(variationSystem);const c=this.covarianceSystems[covarianceSystem],s=this.pulseSensitivitySystems[variationSystem];
+    if(!c||c.variable!==s.variable||snapshot(c.parameters)!==snapshot(s.parameters)||snapshot(c.matrix)!==snapshot(s.matrix)||snapshot(c.initial)!==snapshot(s.initial)||s.left!==this.zero||c.length!==s.length)fail('INVALID_SOURCE_CONSTRUCTION','The variation must preserve the genuine source covariance ODE, datum and interval.');
+    const key=covarianceSystem+':'+s.parameterIndex;
+    if(this.pulseSensitivityAliases.has(key))fail('INVALID_INPUT','This covariance parameter already has a first-variation system.');
+    this.pulseSensitivityAliases.set(key,variationSystem);return true;
+  }
+  pulseSensitivityValue(system,component,time,values){
+    const s=this.pulseSensitivitySystems[system];
+    if(!s||!Number.isInteger(component)||component<0||component>3||!this.nodes[time]||!Array.isArray(values)||values.length!==s.parameters.length||values.some(x=>!this.nodes[x]))fail('INVALID_INPUT','Unknown first-variation component or incomplete explicit arguments.');
+    const at=x=>this.simultaneousSubstitute(x,s.parameters,values);
+    if(time===at(s.left))return at(s.augmentedInitial[component]);
+    return this.node('actual_pulse_sensitivity_volterra',[system,component,time,[...values]]);
+  }
+  pulseSensitivityRhs(system,component,time,values){
+    const s=this.pulseSensitivitySystems[system];if(!s)fail('INVALID_INPUT','Unknown first-variation system.');
+    return this.add(...s.augmentedMatrix[component].map((x,j)=>this.mul(this.simultaneousSubstitute(x,[s.variable,...s.parameters],[time,...values]),this.pulseSensitivityValue(system,j,time,values))));
+  }
+  pulseSensitivityPartialSum(system,{terms=1,time,values}={}){
+    this.assertPulseFirstVariation(system);const s=this.pulseSensitivitySystems[system];
+    if(!Number.isSafeInteger(terms)||terms<0||terms>32)fail('RESOURCE_LIMIT','Display zero through 32 finite ordered-integral terms; the nonzero factorial tail remains separate.');
+    time??=s.variable;values??=s.parameters;
+    if(!this.nodes[time]||!Array.isArray(values)||values.length!==s.parameters.length||values.some(x=>!this.nodes[x]))fail('INVALID_INPUT','Supply the time and all declared parameters.');
+    const key=snapshot([system,terms,time,values]);if(this.pulseSensitivityPartials.has(key))return this.pulseSensitivityPartials.get(key);
+    let term=[...s.augmentedInitial],sum=[...term];const rows=[];
+    for(let n=1;n<=terms;n++){
+      this.checkCancelled?.();const t=this.fresh('pulse_sensitivity_ordered_time'),at=x=>this.substitute(x,s.variable,t);
+      term=s.augmentedMatrix.map(row=>this.integral(this.add(...row.map((x,j)=>this.mul(at(x),at(term[j])))),t,s.left,s.variable));
+      sum=sum.map((x,j)=>this.add(x,term[j]));rows.push({order:n,term:[...term]});
+    }
+    const replace=x=>this.simultaneousSubstitute(x,[s.variable,...s.parameters],[time,...values]),K=replace(s.bounds.augmentedMatrixNorm),L=replace(s.length),I=replace(s.bounds.augmentedInitialNorm),z=this.mul(K,L);
+    const tail=this.mul(I,this.exp(z),this.pow(z,terms+1),this.q(1,factorial(terms+1)));
+    const result={system,terms,values:sum.map(replace),rows:rows.map(r=>({...r,term:r.term.map(replace)})),tail,
+      tailFormula:'I*exp((K+Ka)*L)*((K+Ka)*L)^(N+1)/(N+1)!',tailTendsToZero:true,validInterval:'left<=time<=left+L',
+      boundPremises:structuredClone(s.bounds),finiteSumIsExactSolution:false,derivativeOrder:1};
+    this.pulseSensitivityPartials.set(key,result);return result;
+  }
+  freeCoordinates(id){const n=this.nodes[id];if(n?.op==='actual_pulse_sensitivity_volterra'){const out=new Set();for(const x of [n.args[2],...n.args[3]])for(const c of this.freeCoordinates(x))out.add(c);return out;}return super.freeCoordinates(id);}
+  dependsOn(id,variable){if(this.nodes[id]?.op==='actual_pulse_sensitivity_volterra')return this.freeCoordinates(id).has(variable);return super.dependsOn(id,variable);}
+  substitute(id,variable,value){const n=this.nodes[id];if(n?.op==='actual_pulse_sensitivity_volterra')return this.pulseSensitivityValue(n.args[0],n.args[1],this.substitute(n.args[2],variable,value),n.args[3].map(x=>this.substitute(x,variable,value)));return super.substitute(id,variable,value);}
+  derivative(id,variable){
+    const n=this.nodes[id];
+    if(!this.dependsOn(id,variable))return this.zero;
+    if(n?.op==='actual_covariance_volterra'){
+      const [system,component,time,values]=n.args,dp=values.map(x=>this.derivative(x,variable)),dt=this.derivative(time,variable),terms=[];
+      if(dt!==this.zero)terms.push(this.mul(dt,this.covarianceRhs(system,component,time,values)));
+      for(let j=0;j<dp.length;j++)if(dp[j]!==this.zero){
+        const variation=this.pulseSensitivityAliases.get(system+':'+j);
+        if(variation===undefined)fail('UNSUPPORTED','Only the explicitly constructed first slow parameter variation is supported; no missing parameter derivative is zero.');
+        this.assertPulseFirstVariation(variation);terms.push(this.mul(dp[j],this.pulseSensitivityValue(variation,component+2,time,values)));
+      }
+      return this.add(...terms);
+    }
+    if(n?.op!=='actual_pulse_sensitivity_volterra')return super.derivative(id,variable);
+    const [system,component,time,values]=n.args,s=this.pulseSensitivitySystems[system],dp=values.map(x=>this.derivative(x,variable)),dt=this.derivative(time,variable),terms=[];
+    if(dt!==this.zero)terms.push(this.mul(dt,this.pulseSensitivityRhs(system,component,time,values)));
+    for(let j=0;j<dp.length;j++)if(dp[j]!==this.zero){
+      if(component>=2||j!==s.parameterIndex)fail('UNSUPPORTED','Second or unconstructed mixed slow derivatives need another variational system.');
+      terms.push(this.mul(dp[j],this.pulseSensitivityValue(system,component+2,time,values)));
+    }
+    return this.add(...terms);
+  }
+  pack(roots,extra={}){return super.pack(roots,{pulseSensitivitySystems:structuredClone(this.pulseSensitivitySystems),pulseSensitivityKernel:{schema:'MathScope.ActualPulseSensitivityKernel/1',firstSlowDerivativeSupported:true,secondSlowDerivativeSupported:false,
+    originalCovarianceKernelUnchanged:true,initialDerivativeAndMovingLeftEndpointRetained:true,movingEvaluationEndpointChainRuleRetained:true,sourceNormAuthenticationInAdapter:true,finitePartialSumIsExactSolution:false},...extra});}
+}
+
+return {ActualPulseSensitivityExpressions};
+})();
+const __m2_135 = (()=>{
+/** Absolute first slow-jet bounds for the genuine source moving matrix.
+ * This computes an ordinary Leibniz/chain-rule bound over its actual AST.
+ * Only identified source C2 primitives and proved nonzero denominators are
+ * leaves; an unrecognized function or denominator is an explicit failure.
+ */
+const {assertActualCovarianceOperator} = __m2_126;
+const {fail} = __m2_74;
+function actualPulseSensitivityMatrixBounds(G,operator,family,coordinate){
+  assertActualCovarianceOperator(operator);
+  if(!['R','Z','T'].includes(coordinate)||!operator.families.includes(family))fail('INVALID_INPUT','Use one genuine source family and a fixed-label slow coordinate R, Z or T.');
+  const q=(n,d=1)=>G.q(n,d),B=operator.constants.Bnorm,k=operator.geometry.k,Ls=operator.geometry.Ls,variable=operator.coordinates[coordinate],frame=family.frame;
+  const primitive=new Map(),lower=new Map(),cache=new Map(),rows=[];
+  const put=(root,value,derivative,reason)=>{const entry={root,value,derivative,reason,rule:'authenticated source primitive'};primitive.set(root,entry);return entry;};
+  const Bpower=n=>G.pow(B,n),invB=G.inv(B),normalFloor=G.div(invB,k);
+  put(operator.coordinates.R,B,coordinate==='R'?G.one:G.zero,'Actual enlarged source chart has R and R^-1 <= B.');
+  put(operator.coordinates.v,Ls,G.zero,'Hold pulse time v fixed in a slow partial derivative, 0<=v<=Ls.');
+  for(const field of [operator.fields.F,operator.fields.G])for(const root of [field,...['R','Z','T'].map(c=>G.derivative(field,operator.coordinates[c]))])put(root,B,B,'Actual completed enlarged C2 norm, including mixed R/Z/T second derivatives, is a summand of B.');
+  for(const root of [family.phaseDerivatives.R,family.phaseDerivatives.Z])put(root,Bpower(8),Bpower(8),'p and pz are fixed labels with magnitude <=B^5; all first and second slow F/G derivatives are <=B, so two products are <=B^8.');
+  for(const root of [family.carrier.p,family.carrier.pz])put(root,Bpower(5),G.zero,'Original frozen carrier bound; nearest nonzero integer and representative stay fixed during differentiation.');
+  put(family.carrier.x0,Bpower(8),G.zero,'x0=sign*Bs*u/2 is fixed; Bs,u<=B and B>=2^128.');
+  for(const root of [operator.constants.u,operator.frozen.c0,operator.frozen.lambda0])put(root,B,G.zero,'Original frozen source upper bound; frozen representatives are not differentiated.');
+  put(operator.geometry.epsilon,G.one,G.zero,'Q and the positive original h are fixed within a band; 0<epsilon<=1.');
+  put(k,k,G.zero,'The original exact ceiling carrier is frozen.');
+  put(Ls,Ls,G.zero,'The selected band length is fixed in slow derivatives.');
+  lower.set(operator.coordinates.R,invB);lower.set(Ls,invB);lower.set(k,G.one);lower.set(operator.frozen.c0,invB);
+  lower.set(frame.nt,normalFloor);lower.set(frame.nSquared,G.pow(normalFloor,2));
+  lower.set(G.nodes[frame.nt].args[0],G.pow(normalFloor,2));
+  lower.set(frame.J[1][0],invB);
+  const rootReference=G.sqrt(G.add(G.one,G.pow(frame.s,2))),rootU=G.sqrt(G.add(G.one,G.pow(operator.constants.u,2)));
+  lower.set(rootReference,G.one);lower.set(G.nodes[rootReference].args[0],G.one);lower.set(rootU,G.one);lower.set(G.nodes[rootU].args[0],G.one);
+  const absRational=id=>{const [n,d]=G.fraction(id);return q(n<0n?-n:n,d);};
+  const floor=id=>{
+    if(lower.has(id))return lower.get(id);const n=G.nodes[id];let result;
+    if(n.op==='rational'){if(G.fraction(id)[0]===0n)fail('INVALID_SOURCE_CONSTRUCTION','Zero cannot have a positive denominator bound.');result=absRational(id);}
+    else if(n.op==='multiply')result=G.mul(...n.args.map(floor));
+    else if(n.op==='integer_power'&&n.args[1]>0)result=G.pow(floor(n.args[0]),n.args[1]);
+    else if(n.op==='sqrt_positive')result=G.sqrt(floor(n.args[0]));
+    else fail('UNSUPPORTED','No proved source denominator lower bound for '+n.op+' root '+id+'.');
+    lower.set(id,result);return result;
+  };
+  const visit=id=>{
+    if(cache.has(id))return cache.get(id);
+    if(primitive.has(id)){const row=primitive.get(id);cache.set(id,row);rows.push(row);return row;}
+    const n=G.nodes[id],at=n.args;let value,derivative,inputs=[],rule;
+    if(n.op==='rational'){value=absRational(id);derivative=G.zero;rule='absolute rational constant';}
+    else if(n.op==='add'){
+      const a=visit(at[0]),b=visit(at[1]);value=G.add(a.value,b.value);derivative=G.add(a.derivative,b.derivative);inputs=[a.root,b.root];rule='triangle inequality, both derivative summands';
+    }else if(n.op==='multiply'){
+      const a=visit(at[0]),b=visit(at[1]);value=G.mul(a.value,b.value);derivative=G.add(G.mul(a.derivative,b.value),G.mul(a.value,b.derivative));inputs=[a.root,b.root];rule='ordinary two-term Leibniz rule';
+    }else if(n.op==='inverse'){
+      const a=visit(at[0]),l=floor(at[0]);value=G.inv(l);derivative=G.div(a.derivative,G.pow(l,2));inputs=[a.root];rule='inverse derivative with proved absolute denominator lower bound';
+    }else if(n.op==='integer_power'&&at[1]>=0){
+      const a=visit(at[0]);value=G.pow(a.value,at[1]);derivative=at[1]===0?G.zero:G.mul(q(at[1]),G.pow(a.value,at[1]-1),a.derivative);inputs=[a.root];rule='ordinary integer power derivative';
+    }else if(n.op==='sqrt_positive'){
+      const a=visit(at[0]);value=G.sqrt(a.value);derivative=a.derivative===G.zero?G.zero:G.div(a.derivative,G.mul(q(2),floor(id)));inputs=[a.root];rule='positive square-root derivative with proved lower bound';
+    }else if(n.op==='smooth_piecewise'){
+      // Differentiating a fixed integer-carrier branch in the old graph
+      // retains choose(selector,0,0,0). Its exact zero is not a field
+      // approximation. A moving branch with unequal jets is not accepted.
+      const branches=at.slice(3).map(visit);
+      if(at.slice(0,3).some(x=>G.dependsOn(x,variable))&&!branches.every(x=>x.value===G.zero&&x.derivative===G.zero))fail('UNSUPPORTED','A moving piecewise boundary needs its own matched-jet source bound.');
+      value=G.maximum(...branches.map(x=>x.value));derivative=G.maximum(...branches.map(x=>x.derivative));inputs=branches.map(x=>x.root);rule='uniform bound over fixed-label branches; exact zero branches preserved';
+    }else fail('UNSUPPORTED','No authenticated first slow-jet primitive for '+n.op+' root '+id+'.');
+    const row={root:id,value,derivative,inputs,rule};cache.set(id,row);rows.push(row);return row;
+  };
+  const entries=frame.wMatrix.map(r=>r.map(visit)),basisEntries=frame.B.map(r=>r.map(visit));
+  const rowNorms=entries.map(row=>({value:G.add(...row.map(x=>x.value)),derivative:G.add(...row.map(x=>x.derivative))}));
+  const matrixNorm=G.maximum(operator.constants.matrixNorm,...rowNorms.map(x=>x.value)),matrixDerivativeNorm=G.maximum(...rowNorms.map(x=>x.derivative));
+  if([matrixNorm,matrixDerivativeNorm].some(id=>G.freeCoordinates(id).size))fail('INVALID_SOURCE_CONSTRUCTION','The uniform first-jet bound must depend only on the fixed source and band, not on a sample or pulse time.');
+  const basisNorm=G.maximum(...basisEntries.map(r=>G.add(...r.map(x=>x.value)))),basisDerivativeNorm=G.maximum(...basisEntries.map(r=>G.add(...r.map(x=>x.derivative))));
+  return {schema:'MathScope.ActualPulseSensitivityMatrixBounds/1',coordinate,variable,matrixNorm,matrixDerivativeNorm,basisNorm,basisDerivativeNorm,rows,rowNorms,entryBounds:entries,basisEntryBounds:basisEntries,
+    sourcePremises:{B,sourceParameterExpressionSHA256:operator.parameterExpressionSHA256,actualCompletedC2Roots:structuredClone(operator.background.roots),BLower:'2^128',
+      normalFloor,normalFloorProof:'|n_tan|>=|p|/R>=1/(k B): k*p is a nonzero integer and R<=B. This does not require the displayed band to satisfy q<qStar.',
+      scalarLowerProof:'|c0|>=Renv^-6>=1/B; sqrt(1+sref^2)>=1; Ls>=2*r0*S>=2^-33>=1/B.',
+      frozenParameters:'Q, ell, ceiling/rounding carrier, representative X/eta/s, u,c0,lambda0,Ls are held fixed.'},
+    domain:{sourceProfile:operator.sourceProfile,slowPoint:structuredClone(operator.chart.domain),v:'0<=v<=Ls',chart:'BAND_CHART_Q_FIXED',derivative:'ordinary first slow '+coordinate+' derivative at fixed v and fixed labels',bound:'continuous entire declared enlarged source chart; endpoint derivatives are one-sided'},
+    sourceDerived:true,finiteSampleInference:false,suppliedConstant:false,secondSlowDerivativeBound:false};
+}
+
+return {actualPulseSensitivityMatrixBounds};
+})();
+const __m2_136 = (()=>{
+/** Actual first slow sensitivity of the two original source pulses.
+ * This advances the source-to-curl dependency without relabeling the generic
+ * curl tests or claiming the full physical residual/flat-error package.
+ */
+const {prepareActualCovarianceOperator,assertActualCovarianceOperator} = __m2_126;
+const {ActualPulseSensitivityExpressions} = __m2_134;
+const {actualPulseSensitivityMatrixBounds} = __m2_135;
+const {SOURCE_PROFILE_ID,assertSourceProfile} = __m2_45;
+const {canonicalStringify,sha256} = __m2_24;
+const {fail} = __m2_74;
+const seals=new WeakMap();
+function requestOf(input){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['sourceProfile','anchorOrder','ellExact','slowCoordinate','derivativeOrder','terms'].includes(k)))fail('INVALID_INPUT','Use only a source identity, band selector, first slow coordinate and finite display term count. Matrices, derivatives, bounds and completion flags are not caller inputs.');
+  const sourceProfile=input.sourceProfile??SOURCE_PROFILE_ID;assertSourceProfile(sourceProfile);
+  const slowCoordinate=input.slowCoordinate??'R',derivativeOrder=input.derivativeOrder??1,terms=input.terms??0;
+  if(!['R','Z','T'].includes(slowCoordinate))fail('UNSUPPORTED','First ordinary slow R, Z and T partial derivatives are supported with frozen labels. Representative and label derivatives require separate contracts.');
+  if(derivativeOrder!==1)fail('UNSUPPORTED','This additive source step certifies exactly one slow derivative, not higher or mixed orders.');
+  if(!Number.isSafeInteger(terms)||terms<0)fail('INVALID_INPUT','The displayed term count is a nonnegative integer.');
+  if(terms!==0)fail('RESOURCE_LIMIT','This bounded source release displays the zero-term approximant and its nonzero convergent tail. Positive-term source materialization exceeds the verified worker budget; it is not returned as a completed calculation.');
+  if(input.ellExact!==undefined&&input.anchorOrder!==undefined)fail('INVALID_INPUT','Use one original integer band or one canonical anchor.');
+  if(input.anchorOrder!==undefined)fail('RESOURCE_LIMIT','Canonical-anchor sensitivities are outside the verified worker budget of this release. Use the actual original band ellExact:1.');
+  const ellExact=input.ellExact??'1';if(typeof ellExact!=='string'||!/^[0-9]+$/.test(ellExact)||ellExact.length>2048||BigInt(ellExact)<1n)fail('INVALID_INPUT','ellExact is a positive exact integer string.');
+  if(BigInt(ellExact)!==1n)fail('RESOURCE_LIMIT','Only the actual original band ellExact:1 has a bounded source sensitivity runtime in this release. Other source bands are not replaced by band one.');
+  return {sourceProfile,ellExact:'1',slowCoordinate,derivativeOrder,terms};
+}
+const liveData=r=>canonicalStringify({request:r.request,rows:r.rows,roots:r.roots,scope:r.scope,domain:r.domain,checks:r.checks});
+
+function prepareActualPulseSensitivityProgram(input={},context={}){
+  const request=requestOf(input),{sourceProfile,slowCoordinate,terms}=request;
+  const operator=prepareActualCovarianceOperator({sourceProfile,...(request.ellExact!==undefined?{ellExact:request.ellExact}:{anchorOrder:request.anchorOrder})},context);
+  assertActualCovarianceOperator(operator);context.checkCancelled?.();
+  const G=new ActualPulseSensitivityExpressions(operator.G,{maxNodes:3000000,checkCancelled:context.checkCancelled}),variable=operator.coordinates[slowCoordinate],v=operator.coordinates.v,rows=[];
+  for(const family of operator.families){
+    const bounds=actualPulseSensitivityMatrixBounds(G,operator,family,slowCoordinate),original=G.covarianceSystems[family.system];
+    const system=G.definePulseFirstVariation({name:'ActualSourcePulseFirst_'+slowCoordinate+'_'+family.sign,variable:v,parameters:original.parameters,parameter:variable,matrix:original.matrix,initial:original.initial,left:G.zero,length:original.length,
+      matrixNorm:bounds.matrixNorm,matrixDerivativeNorm:bounds.matrixDerivativeNorm,initialNorm:G.one,initialDerivativeNorm:G.zero,leftDerivativeNorm:G.zero});
+    G.bindOriginalCovarianceVariation(family.system,system);
+    const variation=G.pulseSensitivitySystems[system],wDerivative=family.w.map(x=>G.derivative(x,variable)),amplitudeDerivative=family.t.map(x=>G.derivative(x,variable)),basisDerivative=family.frame.B.map(r=>r.map(x=>G.derivative(x,variable)));
+    const PDerivative=G.derivative(family.P,variable);if(PDerivative!==G.zero)fail('INVALID_SOURCE_CONSTRUCTION','The frozen-reference envelope unexpectedly depends on the requested local slow coordinate.');
+    const finite=G.pulseSensitivityPartialSum(system,{terms}),finiteAmplitudeDerivative=family.frame.B.map((row,i)=>G.mul(family.P,G.add(...row.map((x,j)=>G.add(G.mul(basisDerivative[i][j],finite.values[j]),G.mul(x,finite.values[j+2]))))));
+    const amplitudeDerivativeTail=G.mul(family.P,G.add(bounds.basisNorm,bounds.basisDerivativeNorm),finite.tail);
+    const endpoints=[['left',G.zero],['midpoint',G.div(operator.geometry.Ls,G.q(2))],['right',operator.geometry.Ls]].map(([name,time])=>({name,time,timeDerivative:G.derivative(time,variable),
+      originalAmplitude:family.t.map(x=>G.substitute(x,v,time)),amplitudeDerivative:family.t.map(x=>G.derivative(G.substitute(x,v,time),variable)),
+      derivativeOfComposedEndpoint:true,expression:'partial_a t(v,a) at v=b(a), plus t_v*b_a; b_a is actually computed, never assumed.'}));
+    rows.push({sign:family.sign,originalCovarianceSystem:family.system,system,parameter:variable,coordinate:slowCoordinate,
+      matrix:structuredClone(original.matrix),matrixDerivative:variation.matrixDerivative,originalInitial:variation.initial,initialDerivative:variation.initialDerivative,variationInitial:variation.variationInitial,
+      left:variation.left,leftDerivative:variation.leftDerivative,length:variation.length,lengthDerivative:variation.lengthDerivative,
+      w:family.w,wDerivative,amplitude:family.t,amplitudeDerivative,basisDerivative,referenceEnvelopeDerivative:PDerivative,
+      finite,finiteAmplitudeDerivative,amplitudeDerivativeTail,bounds,endpoints,
+      exactInitialAmplitudeDerivativeRetained:true,actualInitialAmplitudeNotForcedConstant:true,sourceCoefficientsReplaced:false});
+  }
+  const scope={actualSourceFirstSlowDerivativeConstructed:true,actualMatrixDerivativeIncluded:true,sourceDerivedUniformMatrixDerivativeBound:true,firstVariationConvergentLimit:true,
+    initialAndEndpointDependenceIncluded:true,actualAmplitudeDerivativeConstructed:true,derivativeOrder:1,secondSlowDerivativeSupported:false,
+    fixedLabelDerivative:true,representativeDerivativeSupported:false,actualCovarianceWeightDerivativeConstructed:false,
+    numericalSensitivityQuadrature:false,displayedPartialSumIsExactLimit:false,actualSourceFullCurlComplete:false,allSlowGaussianDerivativesComplete:false,
+    fullSameProfileN5:false,fullPhysicalResidualAndFlatErrorPackageComplete:false,newLeanKernelProof:false};
+  const domain={sourceProfile,band:structuredClone(operator.program.band),slowPoint:structuredClone(operator.chart),pulseTime:'0<=v<=Ls',
+    derivative:'partial_'+slowCoordinate+' at fixed pulse time, source representative, dyadic Q, integer carrier and auxiliary label',
+    sourceNormDomain:'Actual completed background on the enlarged source chart [Xa/2,2Xb] x eta[-1,1] x s[1/2,2]; boundary derivatives are one-sided.',
+    doesNotRequireExercisedBandBelowQStar:true,doesNotInferPulseOrCovariancePositivityOfExercisedBand:true};
+  const checks=[
+    {id:'same-genuine-source-matrix-and-initial',pass:rows.every(r=>canonicalStringify(r.matrix)===canonicalStringify(operator.families.find(f=>f.sign===r.sign).frame.wMatrix)&&canonicalStringify(r.originalInitial)===canonicalStringify([G.one,G.zero])),meaning:'Both signs retain the exact original covariance coefficient matrix and normalized growing datum.'},
+    {id:'nonconstant-matrix-derivative-retained',pass:rows.every(r=>r.matrixDerivative.flat().some(x=>x!==G.zero)),meaning:'The actual first slow derivative of M is constructed from its body and contributes to the augmented ODE.'},
+    {id:'source-derived-continuous-derivative-bound',pass:rows.every(r=>r.bounds.sourceDerived&&G.freeCoordinates(r.bounds.matrixDerivativeNorm).size===0),meaning:'Every moving-frame term is bounded by ordinary first-jet calculus using the actual completed C2 source; no sampled maximum is used.'},
+    {id:'source-initial-and-endpoints-computed',pass:rows.every(r=>r.initialDerivative.every(x=>x===G.zero)&&r.leftDerivative===G.zero&&r.lengthDerivative===G.zero&&r.endpoints.length===3),meaning:'Only normalized w has constant initial data. Actual t=B P w keeps the differentiated B(0) factor and every endpoint chain rule.'},
+    {id:'actual-amplitude-initial-dependence',pass:rows.every(r=>slowCoordinate==='R'?r.endpoints[0].amplitudeDerivative.some(x=>x!==G.zero):r.endpoints[0].amplitudeDerivative.every(x=>x===G.zero)),meaning:'The actual initial frame depends on R. Its Z/T derivatives vanish by the retained initial frame expression; no common zero datum is imposed on t.'},
+    {id:'nonzero-vanishing-factorial-tail',pass:rows.every(r=>r.finite.tail!==G.zero&&r.amplitudeDerivativeTail!==G.zero&&r.finite.tailTendsToZero&&!r.finite.finiteSumIsExactSolution),meaning:'A source-derived augmented-system norm bounds every displayed finite sum, with a factorial tail tending to zero.'},
+    {id:'limited-source-step',pass:!scope.actualSourceFullCurlComplete&&!scope.fullSameProfileN5&&!scope.fullPhysicalResidualAndFlatErrorPackageComplete,meaning:'The sensitivity closes a necessary derivative input; weights, full curl and flat errors keep their existing separate scope.'},
+  ];
+  if(!checks.every(c=>c.pass))fail('INTERNAL_VALIDATION','The actual first pulse-sensitivity source contract failed.');
+  const roots=Object.fromEntries(rows.flatMap(r=>[
+    ...r.wDerivative.map((x,j)=>['w_'+r.sign+'_d'+slowCoordinate+'_'+j,x]),...r.amplitudeDerivative.map((x,j)=>['t_'+r.sign+'_d'+slowCoordinate+'_'+j,x]),
+    ['matrixDerivativeNorm_'+r.sign,r.bounds.matrixDerivativeNorm],['variationTail_'+r.sign,r.finite.tail],['amplitudeDerivativeTail_'+r.sign,r.amplitudeDerivativeTail],
+    ...r.finiteAmplitudeDerivative.map((x,j)=>['finite_t_'+r.sign+'_d'+slowCoordinate+'_'+j,x])
+  ]));
+  const result={G,operator,request,rows,roots,checks,scope,domain};
+  result.program=G.pack(roots,{schema:'MathScope.ActualPulseSensitivityProgram/1',compiler:'actual-pulse-sensitivity.mjs:prepareActualPulseSensitivityProgram',compilerInput:request,
+    sourceProfile,parameterExpressionSHA256:operator.parameterExpressionSHA256,domain,scope,checks,rows});
+  seals.set(result,{G,operator,nodeCount:G.nodes.length,nodes:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),covariance:JSON.stringify(G.covarianceSystems),variations:JSON.stringify(G.pulseSensitivitySystems),aliases:JSON.stringify([...G.pulseSensitivityAliases]),data:liveData(result)});
+  return result;
+}
+
+function assertActualPulseSensitivityProgram(result){
+  const s=seals.get(result);
+  if(!s||result.G!==s.G||result.operator!==s.operator||JSON.stringify(s.G.nodes.slice(0,s.nodeCount))!==s.nodes||!s.G.functionDefinitionsUnchanged(s.definitions)||JSON.stringify(s.G.covarianceSystems)!==s.covariance||JSON.stringify(s.G.pulseSensitivitySystems)!==s.variations||JSON.stringify([...s.G.pulseSensitivityAliases])!==s.aliases||liveData(result)!==s.data)fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged internally generated actual source pulse sensitivity. Copied receipts and caller fields are not source certificates.');
+  assertActualCovarianceOperator(s.operator);for(const row of result.rows)s.G.assertPulseFirstVariation(row.system);return true;
+}
+
+async function actualPulseSensitivityCertificate(input={},context={}){
+  const prepared=prepareActualPulseSensitivityProgram(input,context);assertActualPulseSensitivityProgram(prepared);context.checkCancelled?.();
+  const {G,program,request,rows,checks,scope,domain}=prepared,serialized=canonicalStringify(program),digest=await sha256(serialized);context.checkCancelled?.();
+  const expression=id=>({rootId:id,operation:G.nodes[id].op,arguments:structuredClone(G.nodes[id].args),valueKind:'exact convergent source expression; not a binary64 sample'});
+  return {schema:'MathScope.ActualPulseSensitivityCertificate/1',status:'COMPLETED',pass:true,request,sourceProfile:request.sourceProfile,parameterExpressionSHA256:prepared.operator.parameterExpressionSHA256,
+    completedScope:'Actual source first slow-parameter variation and its convergent functional tail; additive prerequisite for the N5 package full-curl path.',domain,scope,checks,
+    graph:{sha256:digest,nodeCount:G.nodes.length,serializedProgramBytes:new TextEncoder().encode(serialized).length,roots:program.roots,compiler:program.compiler,compilerInput:request,graphIncluded:false},
+    equationRows:rows.map(r=>({sign:r.sign,coordinate:r.coordinate,originalSystem:r.originalCovarianceSystem,variationSystem:r.system,matrixRoots:r.matrix,matrixDerivativeRoots:r.matrixDerivative,
+      matrixNorm:expression(r.bounds.matrixNorm),matrixDerivativeNorm:expression(r.bounds.matrixDerivativeNorm),sourceJetAuditRowCount:r.bounds.rows.length,
+      originalInitial:r.originalInitial.map(expression),variationInitial:r.variationInitial.map(expression),leftDerivative:expression(r.leftDerivative),lengthDerivative:expression(r.lengthDerivative),
+      originalODE:'w_v=M w',variationODE:'s_v=M s+(partial_a M)w',variationInitialFormula:'g_a-M(left)g*left_a',
+      endpointFormula:'d_a t(b(a),a)=partial_a t(b(a),a)+t_v(b(a),a)*b_a'})),
+    derivativeRows:rows.flatMap(r=>r.amplitudeDerivative.map((id,j)=>({sign:r.sign,component:['r','theta','z'][j],coordinate:r.coordinate,derivative:expression(id),finiteApproximation:expression(r.finiteAmplitudeDerivative[j]),
+      absoluteTail:expression(r.amplitudeDerivativeTail),tailFormula:'P(v)*(||B||+||partial_a B||)*I*exp((K+Ka)L)*((K+Ka)L)^(N+1)/(N+1)!',finiteApproximationIsExact:false}))),
+    endpointRows:rows.flatMap(r=>r.endpoints.map(e=>({sign:r.sign,name:e.name,time:expression(e.time),timeDerivative:expression(e.timeDerivative),amplitudeDerivative:e.amplitudeDerivative.map(expression)}))),
+    convergence:{method:'Explicit four-component block Volterra series',blockMatrix:'[[M,0],[partial_a M,M]]',sourceOfDerivative:'Ordinary chain/product rules on the retained source matrix body',
+      sourceOfNorm:'Actual completed enlarged C2 and frozen source denominator bounds; every sum, product, inverse and square-root term is retained.',allFiniteOrdersInTailSeries:true,
+      slowDerivativeOrder:1,terms:request.terms,partialSumIsExactSolution:false,numericalWholeSourceEvaluation:false},
+    nextDependency:'Differentiate the actual covariance integral/weights and assemble the full cutoff potential curl; second slow derivatives and global flat-error bounds remain separate.'};
+}
+
+return {prepareActualPulseSensitivityProgram,assertActualPulseSensitivityProgram,actualPulseSensitivityCertificate};
+})();
+const __m2_137 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
 const {iadd,isub,imul,idiv,iscale,ilog,point,nextUp,nextDown} = __m2_40;
 const {integrateAffineTangentPulse} = __m2_41;
@@ -13420,9 +13770,10 @@ const {actualMeanPulsePointwiseAssembly} = __m2_83;
 const {actualResidualOrderCertificate,verifyActualResidualOrderCertificate} = __m2_87;
 const {actualBackgroundMomentCertificate} = __m2_109;
 const {actualCovarianceFamilyCertificate} = __m2_133;
+const {actualPulseSensitivityCertificate} = __m2_136;
 const PAPER={title:'Finite Time Blowup for Navier–Stokes',url:'https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf',sha256:'0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f'};
 const PROFILE={id:'same-profile-2026-10-10.3',commit:'55dacb898f8c204bf0c5925ea901d75d6c2d0f46',assessmentSha256:'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c',role:'ACCEPTED_N3_ARCHIVE_REFERENCE',globalEvaluator:false,description:'Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.'};
-const KINDS=['ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-uniform-covariance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
+const KINDS=['ns.actual-pulse-sensitivity','ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-uniform-covariance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
 const fail=(code,message)=>{throw Object.assign(Error(message),{code});};
 const finite=(v,name,lo=-1e6,hi=1e6)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)fail('INVALID_INPUT',name+' is outside the finite supported interval.');return v;};
 const int=(v,name,lo,hi)=>{finite(v,name,lo,hi);if(!Number.isSafeInteger(v))fail('INVALID_INPUT',name+' must be an integer.');return v;};
@@ -13431,6 +13782,13 @@ const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1]
 const check=(id,pass,detail='')=>({id,pass:Boolean(pass),detail});
 const axis=(label,kind='CATEGORICAL',unit='1',sourceField)=>({label,name:label,kind,unit,scale:'LINEAR',...(sourceField?{sourceField}:{})});
 const result=(object,results,checks,visualization,blockers=[],grade='FINITE_NUMERICAL_COMPONENT')=>({status:blockers.length?'PARTIAL':'COMPLETED',evidenceGrade:grade,object,results,checks,visualization,blockers,sourceLedger:{paper:PAPER,n3Profile:PROFILE},scope:{finite:true,fullSameProfileN4:false,fullSameProfileN5:false,globalNavierStokesConstruction:false,formalPass:false}});
+
+async function actualPulseSensitivity(input,ctx){
+  const data=await actualPulseSensitivityCertificate({ellExact:'1',terms:0,...input},ctx);
+  const output=result({kind:'ACTUAL_SOURCE_FIRST_SLOW_PULSE_SENSITIVITY',sourceProfile:data.sourceProfile},data,data.checks,
+    {axes:[axis('source component'),axis('exact derivative expression'),axis('0')],points:[],lines:[],description:'Actual first slow R/Z/T derivative of the two source pulses, retaining the source matrix, initial frame and endpoint dependence.',lostInformation:['Expression identifiers are retained source program references, not evaluated numerical amplitudes.','Finite Volterra prefixes retain a nonzero tail. Covariance-weight derivatives, second slow derivatives, full curl and flat errors remain separate.']},[],'EXACT_SOURCE_FIRST_VARIATION_WITH_CONVERGENT_FUNCTIONAL_TAIL');
+  return {...output,scope:{...output.scope,finite:false,...data.scope,formalPass:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; derivative program hash and reconstructible source inputs are retained in results.graph'};
+}
 
 function actualCore(input,ctx){
   const data=evaluateActualCorePoint({...input,bits:input.bits??ctx.precision?.bits??192},ctx),rows=data.phi.rows;
@@ -13639,6 +13997,7 @@ function pulseTail(input,ctx){
 }
 
 const INPUT_FIELDS={
+  'ns.actual-pulse-sensitivity':['sourceProfile','anchorOrder','ellExact','slowCoordinate','derivativeOrder','terms'],
   'ns.actual-core-evaluation':['sourceProfile','Y','eta','radialOrder','etaOrder','bits','degree'],
   'ns.actual-global-source':['sourceProfile','eta','xi'],
   'ns.actual-continuation':['sourceProfile','eta','XInterval','bits','degree'],
@@ -13667,6 +14026,7 @@ const INPUT_FIELDS={
 };
 // These are installed finite-component domains, not uniform domains for the paper's profile.
 const NUMERIC_FIELDS={
+  'ns.actual-pulse-sensitivity':{anchorOrder:[1,2,true],terms:[0,2,true]},
   'ns.actual-core-evaluation':{radialOrder:[0,2,true],etaOrder:[0,2,true],bits:[96,512,true],degree:[32,64,true]},
   'ns.actual-global-source':{eta:[-1,1]},
   'ns.actual-continuation':{bits:[96,512,true],degree:[32,64,true]},
@@ -13712,12 +14072,18 @@ function validate(kind,input={}){
     if(!input||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Input must be an object.');
     const unknown=Object.keys(input).filter(k=>!INPUT_FIELDS[kind].includes(k));if(unknown.length)fail('INVALID_INPUT','Unknown '+kind+' input fields: '+unknown.join(', ')+'.');
     finiteTree(input);
-    if(kind==='ns.actual-uniform-covariance'){
+    if(['ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)){
       if(input.anchorOrder!==undefined&&input.ellExact!==undefined)fail('INVALID_INPUT','Choose anchorOrder or ellExact, not both.');
       if(input.ellExact!==undefined){
         if(typeof input.ellExact!=='string'||input.ellExact.length>2048||!/^[0-9]+$/.test(input.ellExact)||BigInt(input.ellExact)<1n)fail('INVALID_INPUT','ellExact requires a positive exact integer string.');
         if(BigInt(input.ellExact)>128n)fail('BUDGET_EXCEEDED','The installed finite graph budget supports ellExact up to128. The all-band construction and its domain are recorded separately; missing coefficients are never set to zero.');
       }
+    }
+    if(kind==='ns.actual-pulse-sensitivity'){
+      if(!['R','Z','T'].includes(input.slowCoordinate??'R'))fail('UNSUPPORTED','Choose a first slow R, Z or T derivative at fixed labels.');
+      if((input.derivativeOrder??1)!==1)fail('UNSUPPORTED','Only first slow derivatives are installed; higher and mixed derivatives require a separate source contract.');
+      if(input.anchorOrder!==undefined||(input.ellExact??'1')!=='1')fail('BUDGET_EXCEEDED','This browser release materializes the measured original ell=1 source graph. Other bands and anchors need a separately measured memory budget. No source coefficient is omitted.');
+      if((input.terms??0)!==0)fail('BUDGET_EXCEEDED','This browser release retains the complete convergent derivative expression with a zero-term display prefix and its nonzero tail. Materializing positive terms exceeds the measured memory budget.');
     }
     if(kind==='ns.actual-covariance-matching')for(const field of ['cells','cutoffCells'])if(input[field]!==undefined&&![64,128,256,512].includes(input[field]))fail('INVALID_INPUT','Actual covariance cells must be 64,128,256 or 512.');
     if(kind==='ns.actual-pulse-amplitude'&&((input.sign!==undefined&&![1,-1].includes(input.sign))||(input.steps!==undefined&&(input.steps&(input.steps-1))!==0)))fail('INVALID_INPUT','Actual pulse sign must be +1 or -1 and steps must be 8,16,32,64,128 or 256.');
@@ -13771,6 +14137,10 @@ function validate(kind,input={}){
 function precisionContract(kind,value={},input={}){
   if(!value||typeof value!=='object'||Array.isArray(value))fail('INVALID_INPUT','precision must be an object.');
   const unknown=Object.keys(value).filter(k=>!['mode','bits'].includes(k));if(unknown.length)fail('UNSUPPORTED','This finite NS adapter does not implement requested tolerance/precision fields: '+unknown.join(', ')+'.');
+  if(kind==='ns.actual-pulse-sensitivity'){
+    if(!['AUTO','EXACT_CONSTRUCTIVE'].includes(value.mode??'AUTO')||value.bits!==undefined)fail('PRECISION_REQUIRED','Use AUTO or EXACT_CONSTRUCTIVE without bits: the result is an exact source first-variation program and nonzero convergent tail, not numerical derivative quadrature.');
+    return {requested:value,arithmetic:'EXACT_SOURCE_CHAIN_RULE_AND_CONVERGENT_BLOCK_VOLTERRA_EXPRESSIONS',arithmeticBits:null,fullResultExact:false,exactAlgebra:true,slowDerivativeOrder:1,numericalSensitivityQuadrature:false,finiteTermsAreNotTheSolution:true,formalPass:false};
+  }
   if(kind==='ns.actual-uniform-covariance'){
     if(!['AUTO','EXACT_CONSTRUCTIVE'].includes(value.mode??'AUTO'))fail('PRECISION_REQUIRED','Use AUTO or EXACT_CONSTRUCTIVE for the exact source family and convergent integral expressions. Numerical whole-H quadrature is not installed.');
     if(value.bits!==undefined)fail('UNSUPPORTED','This certificate has no requested bit precision. terms changes the displayed finite Volterra prefix while its nonzero factorial tail remains.');
@@ -13801,6 +14171,7 @@ function precisionContract(kind,value={},input={}){
 }
 function resourceEstimate(kind,input){
   const operations={
+    'ns.actual-pulse-sensitivity':()=>40000000,
     'ns.actual-core-evaluation':()=>2000*(input.degree??48)*((input.radialOrder??2)+1)*((input.etaOrder??2)+1),
     'ns.actual-global-source':()=>3000000+10000*(input.xi?.length??5),
     'ns.actual-continuation':()=>4000000+5000*(input.degree??48),
@@ -13827,7 +14198,7 @@ function resourceEstimate(kind,input){
     'ns.pulse-curl':()=>1800000,
     'ns.pulse-tail':()=>500*(input.count??80)
   }[kind]();
-  const items=kind==='ns.actual-uniform-covariance'?100000:kind==='ns.actual-moment-restoration'?30000:kind==='ns.actual-residual-order'?12000+24*(input.mesh??8):kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
+  const items=kind==='ns.actual-pulse-sensitivity'?2000:kind==='ns.actual-uniform-covariance'?100000:kind==='ns.actual-moment-restoration'?30000:kind==='ns.actual-residual-order'?12000+24*(input.mesh??8):kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
   return {algorithmicOperationsEstimate:operations,outputItemsEstimate:items,policy:'STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE'};
 }
 function validateRequest(r){
@@ -13849,12 +14220,13 @@ function finiteJson(value){
   return value;
 }
 async function run(kind,input={},context={}){
-  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-uniform-covariance':actualUniformCovariance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
-  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:'m2-ns-0.3.6',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
-  catch(error){if(kind==='ns.actual-uniform-covariance'&&error.code==='RESOURCE_LIMIT')return {kind,status:'BUDGET_EXCEEDED',checks:[],blockers:[error.message],message:error.message};if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
+  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-pulse-sensitivity':actualPulseSensitivity,'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-uniform-covariance':actualUniformCovariance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
+  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:'m2-ns-0.3.7',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
+  catch(error){if(['ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)&&error.code==='RESOURCE_LIMIT')return {kind,status:'BUDGET_EXCEEDED',checks:[],blockers:[error.message],message:error.message};if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
 }
 async function runJob(r,context={}){return run(r.kind,r.input,{...context,precision:r.precision??context.precision??{},budget:r.budget??context.budget??{}});}
 function getExamples(){return [
+  ['ns-m2-actual-pulse-sensitivity','N5 · 실제 pulse의 1차 R/Z/T 미분·초기조건·수렴 tail','ns.actual-pulse-sensitivity',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',slowCoordinate:'R',derivativeOrder:1,terms:0}],
   ['ns-m2-actual-core-evaluation','N4 · 실제 비선형 core 점·혼합 도함수·정확 구간','ns.actual-core-evaluation',{sourceProfile:SOURCE_PROFILE_ID,Y:'4',eta:{kind:'RHO_SCALED',value:'1/8'},radialOrder:2,etaOrder:2,bits:192,degree:48}],
   ['ns-m2-actual-global-source','N4 · 실제 외곽 장·전체 모멘트 적분의 정확 축소','ns.actual-global-source',{sourceProfile:SOURCE_PROFILE_ID,eta:.25,xi:[.5,1,2,5,9]}],
   ['ns-m2-actual-continuation','N4 · 실제 core 전체 적분·물리 구간·모멘트 오차','ns.actual-continuation',{sourceProfile:SOURCE_PROFILE_ID,eta:'1/4',XInterval:['1','100'],bits:192,degree:48}],
@@ -13880,12 +14252,12 @@ function getExamples(){return [
   ['ns-m2-covariance','N5 · 두 family 공분산·정규화 Haar·실제 Jacobian','ns.pulse-covariance',{target:[-1,0],amplitude:1,liftedArea:1/64,epsilon:.1}],
   ['ns-m2-pulse-curl','N5 · 원문 C_m·전체 r_m·Cartesian curl 대조','ns.pulse-curl',{ell:8}],
   ['ns-m2-tail','N5 · 전체 cutoff 잔차 jet·조건부 고정차수 flatness','ns.pulse-tail',{c:.2,C:2,derivativeLoss:2,targetPower:4,ellStart:8,count:80}]
-].map(([id,label,kind,input])=>({id,label,request:{kind,input,...(kind==='ns.actual-uniform-covariance'?{precision:{mode:'EXACT_CONSTRUCTIVE'},budget:{maxMillis:60000}}:{})}}));}
-function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],implemented:'Actual uniform source covariance family with internally generated common qStar, all-band completed C2 background, actual moving operators, convergent H integrals, positive inverse on the open annulus, flat endpoint extension and complete global (7.30); actual first/second-order convergent functions, ten restored continuous moments, twelve inner PDE identities, preheat/heat invariant, four stress supports and private prior-order gates; actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order','EXACT_CONSTRUCTIVE with 16..4096 analytic tail target bits for ns.actual-moment-restoration; signed numerical quadrature is not implied','EXACT_CONSTRUCTIVE without requested bits for ns.actual-uniform-covariance; finite Volterra terms retain a nonzero factorial tail'],checklist:getChecklist(),requiredNext:['extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N','materialize all slow Gaussian derivative bounds and the complete physical flat-error assembly beyond the accepted original criteria']};}
+].map(([id,label,kind,input])=>({id,label,request:{kind,input,...(['ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)?{precision:{mode:'EXACT_CONSTRUCTIVE'},budget:{maxMillis:60000}}:{})}}));}
+function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],implemented:'Actual fixed-label first slow R/Z/T pulse sensitivity, source-derived matrix derivative bounds, original initial frame and endpoint chain rules, with convergent nonzero functional tails; actual uniform source covariance family with internally generated common qStar, all-band completed C2 background, actual moving operators, convergent H integrals, positive inverse on the open annulus, flat endpoint extension and complete global (7.30); actual first/second-order convergent functions, ten restored continuous moments, twelve inner PDE identities, preheat/heat invariant, four stress supports and private prior-order gates; actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order','EXACT_CONSTRUCTIVE with 16..4096 analytic tail target bits for ns.actual-moment-restoration; signed numerical quadrature is not implied','EXACT_CONSTRUCTIVE without requested bits for ns.actual-uniform-covariance; finite Volterra terms retain a nonzero factorial tail'],checklist:getChecklist(),requiredNext:['extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N','materialize all slow Gaussian derivative bounds and the complete physical flat-error assembly beyond the accepted original criteria']};}
 
 return {validate,validateRequest,run,runJob,getExamples,getCapabilities};
 })();
-const __m2_135 = (()=>{
+const __m2_138 = (()=>{
 const {requireCondition,groupDescriptor} = __m2_23;
 const {createField,normalizeFieldSpec} = __m2_25;
 function positive(x,name){requireCondition(Number.isFinite(x)&&x>0&&x>=1e-4&&x<=1e4,'DELTA_OR_SCALE_BOUNDS',`${name} must lie in [1e-4,1e4].`,name);}
@@ -13934,7 +14306,7 @@ function finiteSpectralModel(s){requireCondition(s&&Number.isFinite(s.delta)&&s.
 
 return {canonical,sha256,normalizeFamily,createStateFamily,stateFamilyDescriptor,finiteSpectralModel};
 })();
-const __m2_136 = (()=>{
+const __m2_139 = (()=>{
 const {requireCondition} = __m2_23;
 const {evaluateField,bpstMarginal,simpson} = __m2_25;
 function intervals(x,n,name){requireCondition(Array.isArray(x)&&x.length===n&&x.every(v=>Array.isArray(v)&&v.length===2&&v.every(w=>Number.isFinite(w)&&Math.abs(w)<=1e4)&&v[0]<v[1]),'OBSERVATION_BOUNDS',`${name} needs ${n} finite ordered intervals.`);return x.map(v=>v.slice());}
@@ -13978,13 +14350,13 @@ function sampleObservation(state,observation){
 
 return {normalizeObservation,observationCost,sampleObservation};
 })();
-const __m2_137 = (()=>{
+const __m2_140 = (()=>{
 /** MathScope M1 gauge facade. Pure bounded worker API; JSON-safe output. */
 const M = __m2_21;
 const {GaugeInputError,requireCondition,normalizeGroupSpec,createGroup,availableGroups,groupDescriptor,detailedDescriptor,verifyGroup} = __m2_23;
 const {createField,normalizeFieldSpec,verifyFieldAt,verifyDensityQuadrature,evaluateField,normalizeGauge,bpstBallMass,verifyCoordinateCurvature,verifyPeriodicSeam,normalizeFieldGauge} = __m2_25;
-const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_135;
-const {normalizeObservation,observationCost,sampleObservation} = __m2_136;
+const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_138;
+const {normalizeObservation,observationCost,sampleObservation} = __m2_139;
 const {normalizePath,wilsonLoop,plaquettePath} = __m2_27;
 const KINDS=['gauge.group','gauge.field','gauge.family','gauge.holonomy','gauge.spectral'];
 const SOURCES=[{"id":"YM-R01","title":"Quantum Yang–Mills Theory / Yang–Mills & the Mass Gap","authors":"Arthur Jaffe; Edward Witten; Clay Mathematics Institute","url":"https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf","locator":"인쇄 p. 6 §4: 존재·스펙트럼 간극 정의; p. 7 §5: 부피에 균일한 간극과 무한 부피 문제","status":"THEOREM_REFERENCE","role":"compact simple G, nontrivial R⁴ quantum theory, QFT axioms, positive spectral gap의 동시 요구. 현재 공식 상태 Unsolved.","leanImport":null,"kernelReceipt":null},{"id":"YM-R02","title":"Math 210C. Compact Lie Groups","authors":"Brian Conrad; Aaron Landesman","url":"https://math.stanford.edu/~conrad/210CPage/handouts/lie_groups_notes.pdf","locator":"§§17–18 pp.75–83; §26 p.114 이하; Appendices K,V,Y","status":"THEOREM_REFERENCE","role":"rank-one subgroup, character/cocharacter lattice, normal subgroup, global group center/fundamental group를 분리하는 구조 설계","leanImport":null,"kernelReceipt":null},{"id":"YM-R05","title":"Matter representations from geometry: under the spell of Dynkin","authors":"Mboyo Esole; Monica Jinwoo Kang","url":"https://arxiv.org/pdf/2012.13401","locator":"§2.5 pp.15–16(현재 PDF 페이지 16), Dynkin index of an embedding","status":"THEOREM_REFERENCE","role":"기본 불변형의 정규화에 대한 Lie algebra embedding index. 본 설계의 B_G(ιX,ιY)=IιB_SU2(X,Y) convention을 독립 명시.","leanImport":null,"kernelReceipt":null},{"id":"YM-R06","title":"Lectures on instantons","authors":"Stefan Vandoren; Peter van Nieuwenhuizen","url":"https://arxiv.org/pdf/0802.1862","locator":"§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding","status":"THEOREM_REFERENCE","role":"anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.","leanImport":null,"kernelReceipt":null},{"id":"YM-R07","title":"Gauge Theory — Chapter 4: Lattice Gauge Theory","authors":"David Tong","url":"https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf","locator":"§4.1; 인쇄 p.202 이하; link gauge transform eq.(4.8)","status":"THEOREM_REFERENCE","role":"4D Euclidean lattice, group links, Wilson loops와 작용 및 격자 cutoff의 의미","leanImport":null,"kernelReceipt":null},{"id":"YM-R08","title":"Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories","authors":"Martin Lüscher","url":"https://link.springer.com/article/10.1007/BF01614090","locator":"출판사 초록과 서지사항; 실제 선택한 모델의 가정 대응은 Y4-06/Y7-06의 후속 작업","status":"THEOREM_REFERENCE","role":"Wilson lattice gauge theory의 physical positivity와 transfer matrix 구성 근거","leanImport":null,"kernelReceipt":null},{"id":"YM-R09","title":"Gauge field theories on a lattice","authors":"Konrad Osterwalder; Erhard Seiler","url":"https://www.sciencedirect.com/science/article/abs/pii/0003491678900398","locator":"출판사 초록·서지사항; Euclidean lattice construction 및 positivity","status":"THEOREM_REFERENCE","role":"유클리드 격자 gauge theory의 positivity/constructive framework. continuum 존재 증명으로 확장하지 않음.","leanImport":null,"kernelReceipt":null},{"id":"YM-R13","title":"The Lean Language Reference — Axioms","authors":"Lean FRO contributors","url":"https://lean-lang.org/doc/reference/latest/Axioms/","locator":"axiom declaration, consistency 및 #print axioms","status":"THEOREM_REFERENCE","role":"사용자 axiom의 논리적 지위·의존성 감사. 기존 Lean 4.34.1 결과는 로컬 source/hash/log로 별도 증빙.","leanImport":null,"kernelReceipt":null},{"id":"YM-R14","title":"The Octonions","authors":"John C. Baez","url":"https://math.ucr.edu/home/baez/octonions/node14.html","locator":"§4.1 G2; Theorem 4, compact Der(O) subset so(Im O); 7-dimensional faithful representation and invariant cross product","status":"THEOREM_REFERENCE","role":"Compact G2 as octonion automorphisms/positive 3-form stabilizer, not split G2. The generator uses its explicitly documented equivalent Cayley–Dickson convention.","leanImport":null,"kernelReceipt":null},{"id":"YM-R15","title":"Math 249B. Root systems for split classical groups","authors":"Brian Conrad","url":"https://virtualmath1.stanford.edu/~conrad/249BW16Page/handouts/classicalgps.pdf","locator":"§§2–5 (8-page PDF), roots/coroots/character lattices for A/B/C/D; use complexification to connect with the separately constructed compact real form","status":"THEOREM_REFERENCE","role":"Classical root and coroot integer data. This split-algebra reference alone is not a proof of the compact form, which is constructed and checked separately.","leanImport":null,"kernelReceipt":null}];
@@ -14080,7 +14452,7 @@ function getExamples(){
 
 return {validateRequest,runJob,getCapabilities,getExamples,createGroup,createField,createStateFamily,evaluateField,verifyGroup,verifyFieldAt,verifyDensityQuadrature,sampleObservation,wilsonLoop,canonical,sha256};
 })();
-const __m2_138 = (()=>{
+const __m2_141 = (()=>{
 const {ComputeError,positive,finiteNumber} = __m2_40;
 function parameters(input={}){
   const tau=positive(input.tau??.1,'tau'),h=finiteNumber(input.h??.005,'h'),viscosity=positive(input.viscosity??1,'viscosity');
@@ -14120,7 +14492,7 @@ function coordinateFieldSample(input={},budget){
 
 return {parameters,fromSimilarity,toSimilarity,transformedDerivative,monomialJet,coordinateFieldSample};
 })();
-const __m2_139 = (()=>{
+const __m2_142 = (()=>{
 const {ComputeError,integrate,makeBudget,finiteNumber,positive,boundedInteger,point,iadd,isub,idiv,imul,iscale,nextUp,nextDown,ball} = __m2_40;
 // Real Taylor coefficients in eta. These are formal finite jets, not a tail proof.
 const jetC=(x,n)=>[x,...Array(n).fill(0)];
@@ -14191,7 +14563,7 @@ function evaluateAxis(solution,X){
 
 return {jetC,jetVar,jetAdd,jetScale,jetSub,jetMul,jetInv,jetDiv,jetDeriv,jetExp,jetLog,jetPow,jetEval,comparisonSeries,axisData,solveAxisCoefficients,evaluateAxis};
 })();
-const __m2_140 = (()=>{
+const __m2_143 = (()=>{
 const {ComputeError,point,interval,iadd,isub,imul,idiv,iscale,ipow,iexp,ilog,ipower,ball,midpoint,maxabs,nextUp,nextDown,jvar,jconst,jadd,jsub,jmul,jscale,jexp,jlog,certifiedSimpson,integrate,makeBudget,positive,finiteNumber} = __m2_40;
 const validateH=h=>{h=finiteNumber(h,'h');if(!(h>0&&h<.01))throw new ComputeError('INVALID_INPUT','0 < h < .01 required');return h;};
 const rising=(h,m)=>{let v=1;for(let i=0;i<m;i++)v*=h+i;return v;};
@@ -14263,10 +14635,10 @@ function heatTaylorFinite(Z,h=.005,N=8){
 
 return {heatIntegralCertificate,heatFast,exteriorJet,exteriorPoint,taylorGreenPoint,heatTaylorFinite};
 })();
-const __m2_141 = (()=>{
+const __m2_144 = (()=>{
 const {ComputeError,integrate,makeBudget,solveLinear,positive,boundedInteger,point,interval,iadd,isub,imul,idiv,ipow,ipower,ball} = __m2_40;
-const {heatFast} = __m2_140;
-const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_139;
+const {heatFast} = __m2_143;
+const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_142;
 function smoothStep(y){if(y<=0)return 0;if(y>=1)return 1;const z=-1/(y*y)+1/((1-y)**2);return z>0?1/(1+Math.exp(-z)):Math.exp(z)/(1+Math.exp(z));}
 function smoothStepDerivative(y){if(y<=0||y>=1)return 0;const s=smoothStep(y);return s*(1-s)*(2/y**3+2/(1-y)**3);}
 function compactBump(x,a,b){if(!(a<b))throw new ComputeError('INVALID_SUPPORT','Bump support must have positive width');if(x<=a||x>=b)return 0;return smoothStepDerivative((x-a)/(b-a))/(b-a);}
@@ -14388,11 +14760,11 @@ function coneModulationFixture({N=32,amplitude=.12,Xa=1,Xb=4}={}){
 
 return {smoothStep,smoothStepDerivative,compactBump,parameterOrder,buildOuterSchedule,fiveMoments,solveFiveMomentRepair,coneMargins,certifiedConeBox,coneModulationFixture};
 })();
-const __m2_142 = (()=>{
+const __m2_145 = (()=>{
 const {ComputeError,integrate,makeBudget,boundedInteger,positive} = __m2_40;
-const {parameters,fromSimilarity,toSimilarity} = __m2_138;
-const {solveAxisCoefficients,evaluateAxis} = __m2_139;
-const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_141;
+const {parameters,fromSimilarity,toSimilarity} = __m2_141;
+const {solveAxisCoefficients,evaluateAxis} = __m2_142;
+const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_144;
 /** Executable candidate, not Theorem 4.6 certification.
  * The nonlinear axis coefficients and outer unedited schedule are source formulae.
  * The intervening C-infinity diagnostic continuation is identified as such; the
@@ -14447,7 +14819,7 @@ function constructLeadingCandidate(input={},budget=makeBudget()){
 
 return {constructLeadingCandidate};
 })();
-const __m2_143 = (()=>{
+const __m2_146 = (()=>{
 const {matrix,identity,zero,multiply,equalMatrix} = __m2_0;
 const {p1Model,p1Retraction,checkComplex,checkRetraction,checkChainMap} = __m2_3;
 /** Integral unimodular coordinate changes, including a non-permutation shear. */
@@ -14483,15 +14855,15 @@ function transportRetraction(C,a){const R=p1Retraction(C);return {...R,i:R.i.map
 
 return {basisChange,transportComplex,complexBasis};
 })();
-const __m2_144 = (()=>{
+const __m2_147 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
-const LegacyGauge = __m2_137;
-const {finiteSpectralModel} = __m2_135;
-const {fromSimilarity} = __m2_138;
-const {constructLeadingCandidate} = __m2_142;
+const LegacyGauge = __m2_140;
+const {finiteSpectralModel} = __m2_138;
+const {fromSimilarity} = __m2_141;
+const {constructLeadingCandidate} = __m2_145;
 const {makeBudget} = __m2_40;
 const Gauge = __m2_39;
-const {complexBasis} = __m2_143;
+const {complexBasis} = __m2_146;
 const clone=x=>JSON.parse(JSON.stringify(x));
 const KINDS=['observation.delta-family','observation.gauge-4d','observation.blowup-pair','observation.complex-basis'];
 const MODES=['ASSUMED_BOUND','UNITS','EFFECTIVE_MODEL','ENSEMBLE_ESTIMATE'];
@@ -14636,13 +15008,13 @@ function getExamples(){
 
 return {validateRequest,verifyCorrelatorFamily,runJob,getCapabilities,getExamples};
 })();
-const __m2_145 = (()=>{
+const __m2_148 = (()=>{
 const Arithmetic = __m2_19;
 const Gauge = __m2_39;
-const Navier = __m2_134;
-const Observatory = __m2_144;
+const Navier = __m2_137;
+const Observatory = __m2_147;
 const {canonicalStringify,sha256} = __m2_24;
-const M2_VERSION='0.3.6';
+const M2_VERSION='0.3.7';
 const LIMITS=Object.freeze({maxMillis:60000,maxBytes:8*1024*1024,maxItems:250000,maxOperations:50000000,maxJobs:128,maxConcurrent:1,maxInputBytes:262144});
 const DOMAINS=Object.freeze({arithmetic:Arithmetic,gauge:Gauge,ns:Navier,observation:Observatory});
 const clone=x=>JSON.parse(canonicalStringify(x));
@@ -14676,8 +15048,8 @@ async function requestHash(request){return sha256(normalizeRequest(request));}
 
 return {M2_VERSION,LIMITS,clone,bytes,normalizeRequest,validateDomainRequest,listExamples,listCapabilities,executeDomain,requestHash};
 })();
-const __m2_146 = (()=>{
-const {executeDomain} = __m2_145;
+const __m2_149 = (()=>{
+const {executeDomain} = __m2_148;
 let cancelled=false;
 self.onmessage=async event=>{
   if(event.data?.type==='cancel'){cancelled=true;return;}

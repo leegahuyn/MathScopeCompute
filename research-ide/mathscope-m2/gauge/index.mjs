@@ -37,7 +37,43 @@ export const CHECKLIST=[
   {id:'Y4-07',status:'IMPLEMENTED_FINITE_SCOPE',detail:'The infinite-dimensional gauge-invariant L² space is retained explicitly. The full SU(2) open spatial cube has an exhaustively enumerated total-spin-weight≤5 Gauss basis of seven states. Its positive Gram companion has separate deterministic omitted-spin, independent-Haar cubature and arithmetic errors; symmetry and finite real-time unitarity are checked. Unsupported graphs/cutoffs are rejected, and Euclidean transfer is not called unitary.'},
   {id:'Y4-08',status:'IMPLEMENTED_FINITE_SCOPE',detail:'Group/action/beta/spacing/volume/boundary, algorithm, seed, starts, flow=null, retained sample hashes and final raw configurations are sealed; source versus observation revisions are distinct.'}
 ];
-export function getChecklist(){return structuredClone(CHECKLIST);}
+// Paths are relative to research-ide, as in the central arithmetic checklist.
+// These are the per-criterion paths in the preserved domain receipt. Keep the
+// receipt itself in every row so the source/test links are not mistaken for a
+// fresh execution or an automatically issued mathematical certificate.
+const CRITERION_SOURCE_EVIDENCE={
+  'Y3-01':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/contracts.mjs'],
+  'Y3-02':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/independent.py','mathscope-m2/gauge/lattice.mjs'],
+  'Y3-03':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/independent.py','mathscope-m2/gauge/quaternion-oracle.mjs'],
+  'Y3-04':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/README_KO.md','mathscope-m1/gauge/lean/MathScope/M1/Gauge/Transport.lean'],
+  'Y3-05':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/independent.py','mathscope-m2/gauge/lattice.mjs'],
+  'Y3-06':['mathscope-m2/gauge/refinement.mjs','mathscope-m2/gauge/volume.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/tests/independent-certification.py'],
+  'Y3-07':['mathscope-m2/gauge/transport-certificates.mjs','mathscope-m2/gauge/enclosures.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/tests/independent-certification.py'],
+  'Y3-08':['mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/visualization.test.mjs','mathscope-m2/gauge/tests/worker.test.mjs'],
+  'Y4-01':['mathscope-m2/gauge/lattice.mjs','mathscope-m2/gauge/tests/gauge.test.mjs'],
+  'Y4-02':['mathscope-m2/gauge/ensemble.mjs','mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/certification.test.mjs'],
+  'Y4-03':['mathscope-m2/gauge/reference.mjs','mathscope-m2/gauge/quaternion-oracle.mjs','mathscope-m2/gauge/enclosures.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/tests/independent-certification.py'],
+  'Y4-04':['mathscope-m2/gauge/statistics.mjs','mathscope-m2/gauge/ensemble.mjs','mathscope-m2/gauge/tests/certification.test.mjs'],
+  'Y4-05':['mathscope-m2/gauge/statistics.mjs','mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/certification.test.mjs'],
+  'Y4-06':['mathscope-m2/gauge/reflection.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/README_KO.md'],
+  'Y4-07':['mathscope-m2/gauge/transfer.mjs','mathscope-m2/gauge/enclosures.mjs','mathscope-m2/gauge/tests/certification.test.mjs','mathscope-m2/gauge/tests/independent-certification.py'],
+  'Y4-08':['mathscope-m2/gauge/ensemble.mjs','mathscope-m2/gauge/tests/gauge.test.mjs','mathscope-m2/gauge/tests/visualization.test.mjs','mathscope-m2/gauge/tests/worker.test.mjs']
+};
+const CRITERION_RECEIPT_PATH='mathscope-m2/gauge/evidence/criterion-completion.json';
+const HISTORICAL_GAUGE_TEST_EVIDENCE=[
+  'mathscope-m2/gauge/evidence/tests.tap',
+  'mathscope-m2/gauge/evidence/independent-validation.json',
+  'mathscope-m2/gauge/evidence/certification-independent-validation.json'
+];
+export function getChecklist(){return CHECKLIST.map(row=>({
+  ...structuredClone(row),
+  implementedScope:row.detail,
+  testStatus:'기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.',
+  acceptanceScope:'원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.',
+  evidencePathBase:'research-ide',
+  inheritedFrom:{path:CRITERION_RECEIPT_PATH,criterionId:row.id,status:row.status,newExecution:false},
+  evidencePaths:[CRITERION_RECEIPT_PATH,...CRITERION_SOURCE_EVIDENCE[row.id],...HISTORICAL_GAUGE_TEST_EVIDENCE,...(row.id==='Y3-04'?['mathscope-m1/gauge/lean/transport-audit.log']:[])]
+}));}
 function workEstimate(kind,input){
   const group=createGroup(input.group),d=group.matrixDimension;
   if(kind==='gauge.volume-refinement')return {algorithmicOperationsEstimate:input.cellCounts.reduce((s,n)=>s+4*n*(n+1)**3*input.transportSteps*3*28*12*d**3+(n+1)**4*6*500*d**3,0)+input.referencePanels**4*128,items:input.cellCounts.reduce((s,n)=>s+4*n*(n+1)**3+n**4,0)};

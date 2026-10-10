@@ -13,7 +13,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P4-02",
@@ -28,7 +30,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P4-03",
@@ -43,7 +47,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P4-04",
@@ -58,7 +64,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P4-05",
@@ -73,7 +81,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P4-06",
@@ -88,7 +98,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P4-07",
@@ -103,7 +115,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P4-08",
@@ -118,7 +132,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P5-01",
@@ -133,7 +149,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P5-02",
@@ -148,7 +166,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P5-03",
@@ -163,7 +183,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P5-04",
@@ -178,7 +200,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P5-05",
@@ -193,7 +217,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P5-06",
@@ -208,7 +234,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P5-07",
@@ -223,7 +251,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P5-08",
@@ -238,7 +268,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P6-01",
@@ -253,7 +285,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P6-02",
@@ -268,7 +302,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P6-03",
@@ -283,7 +319,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P6-04",
@@ -298,7 +336,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P6-05",
@@ -313,7 +353,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P6-06",
@@ -328,7 +370,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P6-07",
@@ -343,7 +387,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "P6-08",
@@ -358,7 +404,9 @@ export const CHECKLIST = [
     "remainingObligations": [],
     "evidencePaths": [
       "mathscope-m2/arithmetic/evidence/acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "Y3-01",
@@ -367,11 +415,25 @@ export const CHECKLIST = [
     "sourcePage": 42,
     "status": "PASS",
     "implementedScope": "Ns, Nt, spatial/Euclidean-time spacing and boundaries, anisotropy, representation, physical extents, site count and continuous group degrees of freedom are distinct.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/contracts.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y3-01",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y3-02",
@@ -380,11 +442,26 @@ export const CHECKLIST = [
     "sourcePage": 42,
     "status": "PASS",
     "implementedScope": "Oriented group products, inverse and empty paths use U_xy:y→x. Classical links retain ordered-midpoint approximation and refinement diagnostics.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/tests/independent.py",
+      "mathscope-m2/gauge/lattice.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y3-02",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y3-03",
@@ -393,11 +470,26 @@ export const CHECKLIST = [
     "sourcePage": 42,
     "status": "PASS",
     "implementedScope": "Actual ordered plaquettes, arbitrary signed paths, identity, pure gauge and nontrivial central temporal holonomy fixtures.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/tests/independent.py",
+      "mathscope-m2/gauge/quaternion-oracle.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y3-03",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y3-04",
@@ -406,11 +498,27 @@ export const CHECKLIST = [
     "sourcePage": 42,
     "status": "PASS",
     "implementedScope": "Site-wise transformation recomputes every plaquette and the total action. M1 lawful-group adjacent telescoping theorem is reused with its historical audit; no new browser kernel execution.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/README_KO.md",
+      "mathscope-m1/gauge/lean/MathScope/M1/Gauge/Transport.lean",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json",
+      "mathscope-m1/gauge/lean/transport-audit.log"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y3-04",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y3-05",
@@ -419,11 +527,26 @@ export const CHECKLIST = [
     "sourcePage": 42,
     "status": "PASS",
     "implementedScope": "Wilson real character for every shipped faithful group representation; basic invariant form determines bare coupling and anisotropic coefficients.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/tests/independent.py",
+      "mathscope-m2/gauge/lattice.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y3-05",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y3-06",
@@ -432,11 +555,27 @@ export const CHECKLIST = [
     "sourcePage": 42,
     "status": "PASS",
     "implementedScope": "Actual full-Lie plaquette/clover curvature, energy and real charge converge as both spacings shrink. Independent analytic-derivative local fixtures and a fixed physical 4D box integral retain every source link/cell and directed error budgets. Observed clover order two is distinguished from the conservative order-one bound; real Q is never rounded into an integer certificate.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/refinement.mjs",
+      "mathscope-m2/gauge/volume.mjs",
+      "mathscope-m2/gauge/tests/certification.test.mjs",
+      "mathscope-m2/gauge/tests/independent-certification.py",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y3-06",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y3-07",
@@ -445,11 +584,27 @@ export const CHECKLIST = [
     "sourcePage": 42,
     "status": "PASS",
     "implementedScope": "Every classical M1 link has separate source-specific midpoint/trapezoidal integration, source evaluation, matrix exponential truncation/roundoff, product and boundary errors. Exact rational group data determine each of the fourteen representation bounds. Local rho/a and fixed-volume refinements are checked against independent BPST primitives/densities; finite-path/window bounds are not exported as arbitrary continuum theorems.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/transport-certificates.mjs",
+      "mathscope-m2/gauge/enclosures.mjs",
+      "mathscope-m2/gauge/tests/certification.test.mjs",
+      "mathscope-m2/gauge/tests/independent-certification.py",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y3-07",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y3-08",
@@ -458,11 +613,26 @@ export const CHECKLIST = [
     "sourcePage": 42,
     "status": "PASS",
     "implementedScope": "Source allocation and JSON budgets checked before constructing arrays; raw links remain complete while x4 slice/stride changes only the observation hash.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/tests/visualization.test.mjs",
+      "mathscope-m2/gauge/tests/worker.test.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y3-08",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y4-01",
@@ -471,11 +641,25 @@ export const CHECKLIST = [
     "sourcePage": 44,
     "status": "PASS",
     "implementedScope": "The finite normalized Haar-product Gibbs measure has an explicit positive partition-function bound; underflow is recorded in log scale.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/lattice.mjs",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y4-01",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y4-02",
@@ -484,11 +668,26 @@ export const CHECKLIST = [
     "sourcePage": 44,
     "status": "PASS",
     "implementedScope": "Full SU(2) Haar or symmetric full-basis Lie exponential random-scan Metropolis; target action difference and proposal symmetry are explicit.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/ensemble.mjs",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/tests/certification.test.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y4-02",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y4-03",
@@ -497,11 +696,28 @@ export const CHECKLIST = [
     "sourcePage": 44,
     "status": "PASS",
     "implementedScope": "Both real SU(2) proposal algorithms meet independent Bessel/Haar one-link references. A nonzero-beta full 2×2×2×2 open lattice is compared with separate quaternion product-Haar importance sampling, predeclared Bernstein/Hoeffding intervals and pure-gauge controls. Wrong distribution/action controls fail; other-group quantitative validation is not inferred from these fixtures.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/reference.mjs",
+      "mathscope-m2/gauge/quaternion-oracle.mjs",
+      "mathscope-m2/gauge/enclosures.mjs",
+      "mathscope-m2/gauge/tests/certification.test.mjs",
+      "mathscope-m2/gauge/tests/independent-certification.py",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y4-03",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y4-04",
@@ -510,11 +726,26 @@ export const CHECKLIST = [
     "sourcePage": 44,
     "status": "PASS",
     "implementedScope": "Two starts pass recorded burn-in, acceptance, action/loop/real-topology, split-Rhat, segment/replica mean and ESS gates on the declared small reference fixture. Separate real-charge mobility diagnostics reject long stagnant histories. Inadequate short production examples remain PARTIAL; these finite diagnostic passes do not prove general thermal equilibrium or integer topological-sector mixing.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/statistics.mjs",
+      "mathscope-m2/gauge/ensemble.mjs",
+      "mathscope-m2/gauge/tests/certification.test.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y4-04",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y4-05",
@@ -523,11 +754,26 @@ export const CHECKLIST = [
     "sourcePage": 44,
     "status": "PASS",
     "implementedScope": "Per-observable autocorrelation window, tau_int, ESS and batch-mean cross-check; insufficient ESS and constant/stalled series do not receive a confidence interval.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/statistics.mjs",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/tests/certification.test.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y4-05",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y4-06",
@@ -536,11 +782,26 @@ export const CHECKLIST = [
     "sourcePage": 44,
     "status": "PASS",
     "implementedScope": "Six explicit model/action/Haar/boundary/algebra hypotheses map to Lüscher 1977, §II, Propositions 1–2. Direct SU(N) periodic isotropic application is distinguished from the displayed compact-group/anisotropic/open-boundary derivation. Negative beta, arbitrary measure, gauge-variant algebra and extra action terms cannot receive an application status. Finite numeric PSD matrices are not the proof.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/reflection.mjs",
+      "mathscope-m2/gauge/tests/certification.test.mjs",
+      "mathscope-m2/gauge/README_KO.md",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y4-06",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y4-07",
@@ -549,11 +810,27 @@ export const CHECKLIST = [
     "sourcePage": 44,
     "status": "PASS",
     "implementedScope": "The infinite-dimensional gauge-invariant L² space is retained explicitly. The full SU(2) open spatial cube has an exhaustively enumerated total-spin-weight≤5 Gauss basis of seven states. Its positive Gram companion has separate deterministic omitted-spin, independent-Haar cubature and arithmetic errors; symmetry and finite real-time unitarity are checked. Unsupported graphs/cutoffs are rejected, and Euclidean transfer is not called unitary.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/transfer.mjs",
+      "mathscope-m2/gauge/enclosures.mjs",
+      "mathscope-m2/gauge/tests/certification.test.mjs",
+      "mathscope-m2/gauge/tests/independent-certification.py",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y4-07",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "Y4-08",
@@ -562,11 +839,27 @@ export const CHECKLIST = [
     "sourcePage": 44,
     "status": "PASS",
     "implementedScope": "Group/action/beta/spacing/volume/boundary, algorithm, seed, starts, flow=null, retained sample hashes and final raw configurations are sealed; source versus observation revisions are distinct.",
-    "testStatus": "유한 독립 검사와 원문 전체 기준을 구분합니다.",
+    "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다.",
     "formalComplete": false,
-    "acceptanceScope": null,
+    "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
     "remainingObligations": [],
-    "evidencePaths": []
+    "evidencePaths": [
+      "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "mathscope-m2/gauge/ensemble.mjs",
+      "mathscope-m2/gauge/tests/gauge.test.mjs",
+      "mathscope-m2/gauge/tests/visualization.test.mjs",
+      "mathscope-m2/gauge/tests/worker.test.mjs",
+      "mathscope-m2/gauge/evidence/tests.tap",
+      "mathscope-m2/gauge/evidence/independent-validation.json",
+      "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": {
+      "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+      "criterionId": "Y4-08",
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "newExecution": false
+    }
   },
   {
     "id": "N4-01",
@@ -582,7 +875,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-recursion.json",
       "mathscope-m2/navier/evidence/source-independent-checks.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N4-02",
@@ -598,7 +893,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-recursion.json",
       "mathscope-m2/navier/evidence/source-independent-checks.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N4-03",
@@ -614,7 +911,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-actual-picard-acceptance.json",
       "mathscope-m2/navier/evidence/actual-picard-acceptance.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N4-04",
@@ -630,7 +929,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-actual-moment-restoration.json",
       "mathscope-m2/navier/evidence/actual-moment-restoration-executed.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N4-05",
@@ -646,7 +947,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-actual-residual-order.json",
       "mathscope-m2/navier/evidence/actual-residual-order-independent.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N4-06",
@@ -662,7 +965,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-cutoffs.json",
       "mathscope-m2/navier/evidence/source-contract-independent.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N4-07",
@@ -678,7 +983,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-curl.json",
       "mathscope-m2/navier/evidence/source-independent-checks.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N4-08",
@@ -694,7 +1001,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-cutoffs.json",
       "mathscope-m2/navier/evidence/source-contract-independent.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N5-01",
@@ -710,7 +1019,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-core-charts.json",
       "mathscope-m2/navier/evidence/source-core-independent.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N5-02",
@@ -726,7 +1037,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-torus.json",
       "mathscope-m2/navier/evidence/source-independent-checks.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N5-03",
@@ -742,7 +1055,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-support.json",
       "mathscope-m2/navier/evidence/source-independent-checks.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N5-04",
@@ -758,7 +1073,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-actual-pulse-amplitude.json",
       "mathscope-m2/navier/evidence/actual-pulse-amplitude-independent.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N5-05",
@@ -774,7 +1091,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-actual-pulse-amplitude.json",
       "mathscope-m2/navier/evidence/actual-pulse-amplitude-independent.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N5-06",
@@ -799,7 +1118,9 @@ export const CHECKLIST = [
       "mathscope-m2/navier/evidence/actual-pulse-covariance-independent.json",
       "mathscope-m2/navier/evidence/actual-mean-stress-executed.json",
       "mathscope-m2/navier/research/ACTUAL_PULSE_COVARIANCE_MATCHING.md"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N5-07",
@@ -815,7 +1136,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-pulse-curl.json",
       "mathscope-m2/navier/evidence/tests.tap"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "N5-08",
@@ -831,7 +1154,9 @@ export const CHECKLIST = [
     "evidencePaths": [
       "mathscope-m2/navier/evidence/ns-m2-tail.json",
       "mathscope-m2/navier/evidence/source-contract-independent.json"
-    ]
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "I2-01",
@@ -845,11 +1170,13 @@ export const CHECKLIST = [
     "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
     "remainingObligations": [],
     "evidencePaths": [
-      "evidence/observatory-audit.json",
-      "evidence/browser-i2-v58-audit.json",
-      "evidence/gpu-shader-raster-audit.json",
-      "visualization/evidence/adapted-inventory.json"
-    ]
+      "mathscope-m2/evidence/observatory-audit.json",
+      "mathscope-m2/evidence/browser-i2-v58-audit.json",
+      "mathscope-m2/evidence/gpu-shader-raster-audit.json",
+      "mathscope-m2/visualization/evidence/adapted-inventory.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "I2-02",
@@ -863,11 +1190,13 @@ export const CHECKLIST = [
     "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
     "remainingObligations": [],
     "evidencePaths": [
-      "evidence/observatory-audit.json",
-      "evidence/browser-i2-v58-audit.json",
-      "evidence/gpu-shader-raster-audit.json",
-      "visualization/evidence/adapted-inventory.json"
-    ]
+      "mathscope-m2/evidence/observatory-audit.json",
+      "mathscope-m2/evidence/browser-i2-v58-audit.json",
+      "mathscope-m2/evidence/gpu-shader-raster-audit.json",
+      "mathscope-m2/visualization/evidence/adapted-inventory.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "I2-03",
@@ -881,11 +1210,13 @@ export const CHECKLIST = [
     "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
     "remainingObligations": [],
     "evidencePaths": [
-      "evidence/observatory-audit.json",
-      "evidence/browser-i2-v58-audit.json",
-      "evidence/gpu-shader-raster-audit.json",
-      "visualization/evidence/adapted-inventory.json"
-    ]
+      "mathscope-m2/evidence/observatory-audit.json",
+      "mathscope-m2/evidence/browser-i2-v58-audit.json",
+      "mathscope-m2/evidence/gpu-shader-raster-audit.json",
+      "mathscope-m2/visualization/evidence/adapted-inventory.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "I2-04",
@@ -899,11 +1230,13 @@ export const CHECKLIST = [
     "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
     "remainingObligations": [],
     "evidencePaths": [
-      "evidence/observatory-audit.json",
-      "evidence/browser-i2-v58-audit.json",
-      "evidence/gpu-shader-raster-audit.json",
-      "visualization/evidence/adapted-inventory.json"
-    ]
+      "mathscope-m2/evidence/observatory-audit.json",
+      "mathscope-m2/evidence/browser-i2-v58-audit.json",
+      "mathscope-m2/evidence/gpu-shader-raster-audit.json",
+      "mathscope-m2/visualization/evidence/adapted-inventory.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "I2-05",
@@ -917,11 +1250,13 @@ export const CHECKLIST = [
     "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
     "remainingObligations": [],
     "evidencePaths": [
-      "evidence/observatory-audit.json",
-      "evidence/browser-i2-v58-audit.json",
-      "evidence/gpu-shader-raster-audit.json",
-      "visualization/evidence/adapted-inventory.json"
-    ]
+      "mathscope-m2/evidence/observatory-audit.json",
+      "mathscope-m2/evidence/browser-i2-v58-audit.json",
+      "mathscope-m2/evidence/gpu-shader-raster-audit.json",
+      "mathscope-m2/visualization/evidence/adapted-inventory.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "I2-06",
@@ -935,11 +1270,13 @@ export const CHECKLIST = [
     "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
     "remainingObligations": [],
     "evidencePaths": [
-      "evidence/observatory-audit.json",
-      "evidence/browser-i2-v58-audit.json",
-      "evidence/gpu-shader-raster-audit.json",
-      "visualization/evidence/adapted-inventory.json"
-    ]
+      "mathscope-m2/evidence/observatory-audit.json",
+      "mathscope-m2/evidence/browser-i2-v58-audit.json",
+      "mathscope-m2/evidence/gpu-shader-raster-audit.json",
+      "mathscope-m2/visualization/evidence/adapted-inventory.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "I2-07",
@@ -953,11 +1290,13 @@ export const CHECKLIST = [
     "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
     "remainingObligations": [],
     "evidencePaths": [
-      "evidence/observatory-audit.json",
-      "evidence/browser-i2-v58-audit.json",
-      "evidence/gpu-shader-raster-audit.json",
-      "visualization/evidence/adapted-inventory.json"
-    ]
+      "mathscope-m2/evidence/observatory-audit.json",
+      "mathscope-m2/evidence/browser-i2-v58-audit.json",
+      "mathscope-m2/evidence/gpu-shader-raster-audit.json",
+      "mathscope-m2/visualization/evidence/adapted-inventory.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   },
   {
     "id": "I2-08",
@@ -971,11 +1310,13 @@ export const CHECKLIST = [
     "acceptanceScope": "원문 I2의 관측·표시 계약 범위. 관측한 수학적 대상의 기존 증거 등급과 미완료 조건은 변경하지 않습니다.",
     "remainingObligations": [],
     "evidencePaths": [
-      "evidence/observatory-audit.json",
-      "evidence/browser-i2-v58-audit.json",
-      "evidence/gpu-shader-raster-audit.json",
-      "visualization/evidence/adapted-inventory.json"
-    ]
+      "mathscope-m2/evidence/observatory-audit.json",
+      "mathscope-m2/evidence/browser-i2-v58-audit.json",
+      "mathscope-m2/evidence/gpu-shader-raster-audit.json",
+      "mathscope-m2/visualization/evidence/adapted-inventory.json"
+    ],
+    "evidencePathBase": "research-ide",
+    "inheritedFrom": null
   }
 ];
 export const ARCHIVE = {
