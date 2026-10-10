@@ -16,10 +16,11 @@ import {sourcePulseCurlAudit} from '../source-pulse-curl.mjs';
 import {evaluateLocalPotentialSum} from '../source-gluing.mjs';
 import {evaluatePulseCutoffRemainder,defaultTailJet} from '../source-tail.mjs';
 import {evaluateActualMeanStress,verifyActualMeanStress} from '../actual-mean-stress.mjs';
+import {actualResidualOrderCertificate,verifyActualResidualOrderCertificate} from '../actual-residual-order.mjs';
 
 const base=new URL('../',import.meta.url),out=new URL('../evidence/',import.meta.url);
 await mkdir(out,{recursive:true});
-const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs','actual-picard-acceptance.test.mjs','actual-pulse-amplitude.test.mjs','actual-continuation.test.mjs','actual-mean-stress.test.mjs','actual-pulse-covariance.test.mjs','actual-pulse-covariance-matching.test.mjs'];
+const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs','actual-picard-acceptance.test.mjs','actual-pulse-amplitude.test.mjs','actual-continuation.test.mjs','actual-mean-stress.test.mjs','actual-pulse-covariance.test.mjs','actual-pulse-covariance-matching.test.mjs','actual-residual-order.test.mjs','actual-covariance-uniform.test.mjs'];
 const testResult=spawnSync(process.execPath,['--test','--test-reporter=tap',...testSuites.map(name=>fileURLToPath(new URL(name,import.meta.url)))],{encoding:'utf8'});
 await writeFile(new URL('tests.tap',out),testResult.stdout+testResult.stderr);
 if(testResult.status!==0)throw Error('N4/N5 regression tests failed; evidence is not sealed.');
@@ -93,6 +94,40 @@ for(const [stem,countKey,count,manifestName] of [
   const file='actual-mean-stress-executed.json',body={...audit,schema:'MathScope.ActualMeanStressExecutedAudit/1',frozenEvidence:{path:'navier/evidence/'+frozenFile,sha256:frozenSHA256},sourceByteVerification:{checkedFiles:frozen.files,match:true},independentExecution:{command:'python navier/tests/actual-mean-stress-independent.py',scriptSHA256:await sha256(await readFile(new URL('actual-mean-stress-independent.py',import.meta.url),'utf8')),stdoutKeys:Object.keys(audit).sort(),pass:audit.pass,checks:audit.checks},receiptReplay:{input:frozen.receipt.input,storedHash,currentHash,match:true,verification:replay.reason}};
   const serialized=JSON.stringify(body,null,2)+'\n';await writeFile(new URL(file,out),serialized);
   additionalIndependent.push({file,checks:audit.checks,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_FRACTION_DECIMAL_HEAT_STRESS_WITH_CURRENT_SOURCE_HASHES'});
+}
+{
+  const manifestName='actual-residual-order-manifest.json',manifestText=await readFile(new URL(manifestName,base),'utf8'),manifest=JSON.parse(manifestText);
+  if(await sha256(manifestText)!=='c1df40d366fc44b7fa0514c32e659691125c4cd8c699a739a5ee4e87adebe2d3')throw Error('The independently reviewed residual manifest changed.');
+  newSourcePaths.push(manifestName);
+  const boundFiles=[...manifest.artifacts,...manifest.dependencyFiles,...Object.values(manifest.sourceInputs).map(f=>({...f,path:'../../'+f.path}))];
+  for(const f of boundFiles){if(await sha256(await readFile(new URL(f.path,base),'utf8'))!==f.sha256)throw Error('Stale fixed-domain residual source: '+f.path);newSourcePaths.push(f.path);}
+  const executed=spawnSync('python',[fileURLToPath(new URL('actual-residual-order-independent.py',import.meta.url))],{encoding:'utf8'});
+  if(executed.status!==0)throw Error('Independent actual residual failed: '+executed.stderr);
+  const audit=JSON.parse(executed.stdout),details=JSON.parse(await readFile(new URL('actual-residual-order-independent.json',import.meta.url),'utf8'));
+  if(!audit.pass||audit.checks!==1544||details.details.length!==1544||!details.details.every(c=>c.pass===true))throw Error('Incomplete independent fixed-domain residual acceptance.');
+  for(const f of manifest.artifacts)if(await sha256(await readFile(new URL(f.path,base),'utf8'))!==f.sha256)throw Error('Residual replay changed its bound artifact: '+f.path);
+  const receipt=actualResidualOrderCertificate(),replay=verifyActualResidualOrderCertificate(receipt);
+  if(!receipt.pass||!replay.pass||!manifest.finiteAcceptance.accepted||receipt.scope.wholeProfileResidualComplete!==false||receipt.scope.allNResidualComplete!==false)throw Error('Residual finite scope or current producer replay failed.');
+  const file='actual-residual-order-independent.json',body={...details,sourceManifest:'navier/'+manifestName,sourceManifestSHA256:await sha256(manifestText),sourceByteVerification:{checkedFiles:boundFiles.length,match:true},currentReceiptReplay:{pass:true,sha256:await sha256(canonicalStringify(receipt)),sourceChecks:receipt.checks.length,finiteCriterion:'N4-05',wholeProfileResidualComplete:false,allNResidualComplete:false}};
+  const serialized=JSON.stringify(body,null,2)+'\n';await writeFile(new URL(file,out),serialized);
+  additionalIndependent.push({file,checks:audit.checks,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_FRACTION_ACTUAL_RESIDUAL_WITH_FIXED_COORDINATES_SOURCE_BOUNDS_AND_CURRENT_BYTE_BINDINGS'});
+}
+{
+  const frozenFile='actual-covariance-uniform.json',frozenText=await readFile(new URL(frozenFile,out),'utf8'),frozen=JSON.parse(frozenText),frozenSHA256=await sha256(frozenText);
+  if(frozenSHA256!=='e1779d4e80dfd9fde606707dbcce04367525d9b1a83cb7c5765a19aeda5269bf')throw Error('The frozen uniform covariance subclaim changed.');
+  newSourcePaths.push('evidence/'+frozenFile);
+  for(const f of frozen.files){const p=f.path.replace(/^research-ide\/mathscope-m2\/navier\//,'');if(await sha256(await readFile(new URL(p,base),'utf8'))!==f.sha256)throw Error('Stale covariance subclaim source: '+f.path);newSourcePaths.push(p);}
+  const executed=spawnSync('python',[fileURLToPath(new URL('actual-covariance-uniform-independent.py',import.meta.url))],{encoding:'utf8'});
+  if(executed.status!==0)throw Error('Independent covariance subclaim failed: '+executed.stderr);
+  const audit=JSON.parse(executed.stdout),expected=Object.fromEntries(Object.entries(frozen).filter(([k])=>!['files','receipt'].includes(k)));
+  if(!audit.pass||audit.checks!==1814||canonicalStringify(audit)!==canonicalStringify(expected)||audit.originalN506Complete!==false)throw Error('Incomplete or overstated uniform covariance subclaim.');
+  const rerun=spawnSync(process.execPath,[fileURLToPath(new URL('actual-covariance-uniform-fixture.mjs',import.meta.url))],{encoding:'utf8'});
+  if(rerun.status!==0)throw Error('Current covariance subclaim fixture failed: '+rerun.stderr);
+  const current=JSON.parse(rerun.stdout),storedHash=await sha256(canonicalStringify(frozen.receipt)),currentHash=await sha256(canonicalStringify(current));
+  if(storedHash!==currentHash||current.source.scope.sourceUniformQStarCertified!==false||current.source.scope.originalN506Complete!==false)throw Error('Current covariance subclaim differs from its preserved receipt or claims missing source bounds.');
+  const file='actual-covariance-uniform-executed.json',body={...audit,frozenEvidence:{path:'navier/evidence/'+frozenFile,sha256:frozenSHA256},sourceByteVerification:{checkedFiles:frozen.files,match:true},receiptReplay:{storedHash,currentHash,match:true},scope:'Exact robust inverse budgets and frozen operator algebra; no whole-annulus covariance or original N5-06 completion is claimed.'};
+  const serialized=JSON.stringify(body,null,2)+'\n';await writeFile(new URL(file,out),serialized);
+  additionalIndependent.push({file,checks:audit.checks,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_BERNSTEIN_FRACTION_GAUSS_JORDAN_SUBCLAIM_WITH_CURRENT_SOURCE_HASHES'});
 }
 // Reuse independently executed, frozen receipts only after checking every
 // producer/source byte they bind. Regenerate those receipts with their own

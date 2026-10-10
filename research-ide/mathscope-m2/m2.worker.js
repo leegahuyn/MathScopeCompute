@@ -3815,19 +3815,28 @@ const CHECKLIST = [
     "title": "유한 배경 잔차 검증",
     "criteria": "Fslow=R+div T를 직접 계산하고 (5.25)의 q^[2h(N+1) −Km] bound와 비교한다. 합격: N 증가에 따른 실제 잔차 감소를\n정밀도·격자와 독립 추적한다. CN,m와 Km이 미계산이면 검증된 tail bound로 표시하지 않는다.",
     "sourcePage": 58,
-    "status": "PARTIAL",
-    "implementedScope": "원래 finite physical PDE residual polynomial과 stress 재구성식을 보존합니다. 새 원본 n=1 국소 관측을 연결했지만 전체 repaired coefficient/stress, CNm/Km과 실제 residual refinement는 미계산입니다. tailBits에 따라 Xi가 달라지는 새 관측을 고정 점 정련으로 표시하지 않습니다.",
-    "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "같은 실제 N3 source에서 보존된 고정 core compact 전체에 N=0,1의 원래 PDE 잔차 R+div(T)를 계산합니다. 실제 leading 압력과 n=1 Picard 해, T0/T1의 정확한 내부 restriction을 연결하며 CNm의 양의 source 식과 공통 Km=2+m을 m≤6까지 도출합니다. 동일 q·물리 배율에서 실제 N0 norm의 양의 하한과 N1 전체 영역 상한을 비교해 감소를 인증하고, 고정 좌표의 격자·산술 정밀도 정련을 따로 실행합니다. 전체 profile·모든 N은 별도 범위입니다.",
+    "testStatus": "ACTUAL_FIXED_DOMAIN_RESIDUAL_AND_INDEPENDENT_FRACTION_CERTIFICATE_PASS",
     "formalComplete": false,
-    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-residual.json",
+    "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-residual-order.json",
     "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-    "remainingObligations": [
-      "Substitute the complete repaired actual coefficient/stress sequence into R+div(T).",
-      "Compute C_N,m and K_m; compare actual residual order, grid and precision refinement independently."
-    ],
-    "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
-    "sourceInstanceCertified": false,
-    "allOrderSourceCertificate": false
+    "remainingObligations": [],
+    "independentEvidencePath": "mathscope-m2/navier/evidence/actual-residual-order-independent.json",
+    "sourceInstanceCertified": true,
+    "allOrderSourceCertificate": false,
+    "certifiedScope": {
+      "backgroundOrders": [0, 1],
+      "derivativeOrders": [0, 1, 2, 3, 4, 5, 6],
+      "fixedSimilarityCompact": "X in [0,4*Xunit], eta in [-1,1], all theta; Xunit is a fixed positive source expression",
+      "supremumDomain": "Original space-time set at fixed q; tau=q*(1-eta^2), z=q^D*eta",
+      "finiteCriterionComplete": true,
+      "actualCNmAndKmComputed": true,
+      "wholeProfileResidualComplete": false,
+      "allNResidualComplete": false,
+      "packageCompletionGate": false
+    },
+    "reviewPath": "mathscope-m2/navier/research/ACTUAL_RESIDUAL_ORDER_KO.md"
   },
   {
     "id": "N4-06",
@@ -7326,6 +7335,319 @@ function verifyActualPulsePointwiseAssembly(receipt){
 return {sourcePulseSquaredPartitionAtOffset,actualMeanPulsePointwiseAssembly,verifyActualPulsePointwiseAssembly};
 })();
 const __m2_84 = (()=>{
+/** Source-derived analytic norms for the actual order-zero/one core residual.
+ * No declared C, substituted profile, or adjustable observation radius enters
+ * this API.  Positive expressions remain exact when their decimals cannot be
+ * materialized.  The norm graph executes every sum/product/Cauchy loss.
+ */
+const {assertSourceProfile,SOURCE_PROFILE_ID} = __m2_45;
+const {actualBackgroundMajorant} = __m2_57;
+const gcd=(a,b)=>{while(b)[a,b]=[b,a%b];return a<0n?-a:a;};
+class PositiveExpressions{
+  constructor(){this.nodes=[];this.ids=new Map();this.zero=this.rat(0);this.one=this.rat(1);}
+  node(op,...args){const key=JSON.stringify([op,...args]);if(this.ids.has(key))return this.ids.get(key);const id=this.nodes.length;this.nodes.push({op,args});this.ids.set(key,id);return id;}
+  rat(a,b=1){a=BigInt(a);b=BigInt(b);if(a<0n||b<=0n)throw Error('A positive norm expression cannot have negative input.');const g=gcd(a,b);return this.node('rational',String(a/g),String(b/g));}
+  ref(name){return this.node('source_expression',name);}
+  add(a,b){if(a===this.zero)return b;if(b===this.zero)return a;const x=this.nodes[a],y=this.nodes[b];if(x.op==='rational'&&y.op==='rational')return this.rat(BigInt(x.args[0])*BigInt(y.args[1])+BigInt(y.args[0])*BigInt(x.args[1]),BigInt(x.args[1])*BigInt(y.args[1]));return this.node('add',...([a,b].sort((x,y)=>x-y)));}
+  mul(a,b){if(a===this.zero||b===this.zero)return this.zero;if(a===this.one)return b;if(b===this.one)return a;const x=this.nodes[a],y=this.nodes[b];if(x.op==='rational'&&y.op==='rational')return this.rat(BigInt(x.args[0])*BigInt(y.args[0]),BigInt(x.args[1])*BigInt(y.args[1]));return this.node('multiply',...([a,b].sort((x,y)=>x-y)));}
+  div(a,b){if(b===this.zero)throw Error('Zero norm denominator.');return this.mul(a,this.node('inverse_positive',b));}
+  power(a,n){let out=this.one;for(let i=0;i<n;i++)out=this.mul(out,a);return out;}
+  sum(xs){return xs.reduce((s,x)=>this.add(s,x),this.zero);}
+}
+const pairs=n=>{const out=[];for(let i=0;i<=n;i++)for(let j=0;j+i<=n;j++)out.push([i,j]);return out;};
+
+/** Taylor-coefficient norm jets. Derivatives reduce the available degree;
+ * no missing high derivative is silently set to zero. */
+function normJets(G){
+  const at=(a,i,j)=>{if(i+j>a.degree)throw Error('Missing analytic derivative in residual norm.');return a.values[i+','+j];};
+  const make=(degree,f)=>({degree,values:Object.fromEntries(pairs(degree).map(([i,j])=>[i+','+j,f(i,j)]))});
+  const constant=(value,degree=3)=>make(degree,(i,j)=>i+j?G.zero:value);
+  const add=(...as)=>make(Math.min(...as.map(a=>a.degree)),(i,j)=>G.sum(as.map(a=>at(a,i,j))));
+  const scale=(a,n,d=1)=>make(a.degree,(i,j)=>G.mul(G.rat(n,d),at(a,i,j)));
+  const mul=(a,b)=>make(Math.min(a.degree,b.degree),(i,j)=>G.sum(Array.from({length:i+1},(_,r)=>Array.from({length:j+1},(_,s)=>G.mul(at(a,r,s),at(b,i-r,j-s)))).flat()));
+  const derivative=(a,coordinate)=>{if(a.degree<1)throw Error('Analytic derivative degree exhausted.');return make(a.degree-1,(i,j)=>G.mul(G.rat(coordinate==='X'?i+1:j+1),at(a,i+(coordinate==='X'?1:0),j+(coordinate==='eta'?1:0))));};
+  return {at,make,constant,add,scale,mul,derivative};
+}
+
+function actualResidualOrderBounds({profileId=SOURCE_PROFILE_ID,maxDerivativeOrder=2}={}){
+  const source=assertSourceProfile(profileId);
+  if(!Number.isSafeInteger(maxDerivativeOrder)||maxDerivativeOrder<0||maxDerivativeOrder>6)throw Error('maxDerivativeOrder must be an integer from 0 to 6.');
+  const majorant=actualBackgroundMajorant({profileId,bits:160}),G=new PositiveExpressions(),J=normJets(G);
+  const I=n=>({integer:String(n)}),R=name=>({ref:name}),mul=(...a)=>({product:a}),div=(a,b)=>({quotient:[a,b]}),pow=(a,n)=>({power:[a,n]});
+  const exactExpressions={...majorant.exactExpressions,
+    residualRadialRadius:div(I(3),R('Lambda')),
+    residualEtaRadius:div(R('delta'),I(8)),
+    residualLogPicardNorm:div(mul(I(9),pow(R('C1'),2),R('residualRadialRadius')),mul(I(2),R('cauchyRadiusLoss'))),
+    residualPicardNorm:{exp:R('residualLogPicardNorm')},
+    residualFieldNorm:{sum:[I(1),R('radialBaseBound'),mul(I(6),R('Q')),R('residualPicardNorm')]},
+  };
+  const radius=G.ref('residualRadialRadius'),etaRadius=G.ref('residualEtaRadius'),field=G.ref('residualFieldNorm');
+  const invX=G.div(G.rat(2),radius),invEta=G.div(G.rat(2),etaRadius);
+  // The underlying scalar fields and their radial averages are bounded on
+  // |X|<R, dist(eta,[-1,1])<rho0. Cauchy centers use R/2,rho0/2.
+  const atom=norm=>J.make(3,(i,j)=>G.mul(norm,G.mul(G.power(invX,i),G.power(invEta,j))));
+  const X=J.make(3,(i,j)=>i+j===0?G.div(radius,G.rat(2)):i===1&&j===0?G.one:G.zero);
+  const eta=J.make(3,(i,j)=>i+j===0?G.rat(2):i===0&&j===1?G.one:G.zero);
+  const invL=J.make(3,(i,j)=>i?G.zero:G.mul(G.rat(2),G.power(invEta,j)));
+  const d=J.add(J.constant(G.one),J.mul(eta,eta));
+  const dx=a=>J.derivative(a,'X'),de=a=>J.derivative(a,'eta');
+  const fields={f0:atom(field),U0:atom(field),f1:atom(field),U1:atom(field)};
+  const average=atom(field);
+  // |D+nu_n|<=1 for n=0,1 and the actual h<2^-2048.
+  const v=U=>J.mul(invL,J.add(J.scale(J.mul(eta,U),2),J.scale(J.mul(eta,average),2),J.mul(d,de(average))));
+  const v0=v(fields.U0),v1=v(fields.U1);
+  // Every a in these actual operators has |a|<=4. Using that inequality is
+  // a norm estimate, not substitution of a different a in the PDE.
+  const Z=p=>J.mul(invL,J.add(J.scale(J.mul(eta,J.add(J.scale(p,4),J.mul(X,dx(p)))),2),J.mul(d,de(p))));
+  const T=p=>J.mul(invL,J.add(J.scale(p,4),J.mul(X,dx(p)),J.mul(eta,de(p))));
+  const Z2=p=>Z(Z(p));
+  const radialDiff=v=>J.scale(J.add(J.scale(dx(v),2),J.mul(X,dx(dx(v)))),2);
+  const adv=(vi,vj)=>J.mul(vi,J.add(J.scale(vj,1,2),J.mul(X,dx(vj))));
+  const axadv=(U,vj)=>J.mul(U,Z(vj));
+  const omega0=J.add(T(v0),adv(v0,v0),axadv(fields.U0,v0),radialDiff(v0));
+  const omega1=J.add(T(v1),adv(v0,v1),adv(v1,v0),axadv(fields.U0,v1),axadv(fields.U1,v0),radialDiff(v1),Z2(v0));
+  const omega2=J.add(adv(v1,v1),axadv(fields.U1,v1),Z2(v1));
+  const f1OverX=atom(G.div(field,radius)); // Schwarz: f1(0,eta)=0.
+  const hTheta1=J.add(J.mul(J.mul(X,v1),J.add(dx(fields.f1),f1OverX)),J.mul(fields.U1,Z(fields.f1)),Z2(fields.f1));
+  const hZ1=J.add(J.mul(J.mul(X,v1),dx(fields.U1)),J.mul(fields.U1,Z(fields.U1)),Z2(fields.U1));
+  const coefficientNorms={theta0:J.at(Z2(fields.f0),0,0),z0:J.at(Z2(fields.U0),0,0),radial0:J.at(omega0,0,0),radial0AxialViscosity:J.at(Z2(v0),0,0),theta1:J.at(hTheta1,0,0),z1:J.at(hZ1,0,0),radial1:J.at(J.add(omega1,J.scale(J.mul(fields.f1,fields.f1),2)),0,0),radial2:J.at(omega2,0,0)};
+  const residualNorm=G.add(G.one,G.sum(Object.values(coefficientNorms)));
+  const sharpC0=G.mul(G.rat(8),residualNorm);
+  const derivativeScale=G.add(G.one,G.add(G.div(G.rat(32),G.node('sqrt_positive',radius)),G.div(G.rat(8),etaRadius)));
+  const derivativeConstants=Array.from({length:maxDerivativeOrder+1},(_,m)=>({m,Km:2+m,N:[0,1],CNmNode:G.mul(sharpC0,G.power(G.mul(G.rat(32*(m+2)),derivativeScale),m)),formula:`8*Bres*(32*(${m}+2)*Dspace)^${m}`,qExponent:{hCoefficient:2,orderShift:1,constant:-(2+m)},actualConstantDerived:true}));
+  return {schema:'MathScope.ActualResidualOrderBounds/1',profileId,parameterExpressionSHA256:source.parameterExpressionSHA256,sourceInputs:majorant.sourceInputs,exactExpressions,positiveNormGraph:{nodes:G.nodes,coefficientNorms,residualNormNode:residualNorm,sharpConstantNode:sharpC0,derivativeScaleNode:derivativeScale},derivativeConstants,
+    analyticDomain:{input:'|X|<R=3/Lambda; dist(eta,[-1,1])<rho0=delta/8',residual:'|X|<=R/2; dist(eta,[-1,1])<=rho0/2',physicalDerivativeCompact:'0<=X<=R/8; eta in [-1,1]',fieldNorm:'M=1+B+6Q+exp(9*C1^2*R/(2*Delta))',sourceSolution:'Unique actual order-one Picard solution of (5.7), not a finite polynomial substituted for that solution.'},
+    budgetRules:{derivativeJetConvention:'Taylor coefficient of the local displacement; a derivative multiplies by its order and reduces available degree.',atom:'M*(2/R)^i*(2/rho0)^j',inverseL:'2*(2/rho0)^j, independent of X',radialAverage:'Same M bound, using integral_0^1 U(tX,eta) dt.',f1OverX:'M/R by Schwarz and the exact zero axis datum.',operatorParameterAbsUpper:'4 (all exact source a retained by the residual producer)',scalarResidualMajorant:'Bres=1+sum of eight executed coefficient bounds',cartesianConversion:'sqrt(2X)e_theta and sqrt(X/2)e_r are Cartesian linear coordinates; no singular 1/r estimate is used.',derivativeBudget:'Each Cartesian spacetime derivative costs at most 32*(m+2)*Dspace on nested polydiscs, Dspace=1+32/sqrt(R)+8/rho0.',physicalLoss:'3/2+2h+m <= 2+m since actual 0<h<1/4.'},
+    physicalDerivativeProof:{cartesianSimilarityCoordinates:'s_i=x_i/sqrt(q), X=(s_1^2+s_2^2)/2',sourceCoordinateEquations:'tau=q*(1-eta^2), z=q^D*eta, L=1-2*h*eta^2',timeOperator:'partial_t(q^a*f)=q^(a-1)*L^-1*(-a*f+(s dot grad_s f)/2+D*eta*f_eta)',axialOperator:'partial_z(q^a*f)=q^(a-D)*L^-1*(2*eta*(a*f-(s dot grad_s f)/2)+(1-eta^2)*f_eta)',transverseOperator:'partial_x_i(q^a*f)=q^(a-1/2)*partial_s_i f',complexPolydisc:{center:'real X<=R/8, eta in [-1,1]',cartesianRadius:'sqrt(R)/32 per s_i',etaRadius:'rho0/4',radialImageUpper:'1225*R/8192 < R/2, using sqrt(2)<3/2',linearCartesianFactorUpper:'17*sqrt(R)/32 < 1',inverseLUpper:'2, because |eta|<=2 and actual 8*h<1/2'},nestedLoss:'Use m+1 equal radius steps. Cartesian derivative <=(m+1)*Dspace; eta derivative <=(m+1)*Dspace/2.',operatorNormUpper:{time:'8*(m+2)*Dspace',axial:'26*(m+2)*Dspace',transverse:'(m+1)*Dspace',common:'32*(m+2)*Dspace'},qExponentAbsUpperBeforeEachDerivative:'m+2',eachDerivativeQLossUpper:'1 (exact losses are 1, D, 1/2)',baseCartesianScalarSummandsUpper:8},
+    scope:{actualSourceNormConstantsComputed:true,finiteN:[0,1],fullSourceEtaIntervalCovered:true,etaDomain:['-1','1'],entireRealEtaLineCovered:false,userSuppliedNormsAccepted:false,decimalConstantsMaterialized:false,allOrdersComplete:false,wholeProfileResidualComplete:false,formalKernelProof:false}};
+}
+
+/** Only an arithmetic audit of the positive expression DAG. The supplied
+ * ordinary-size values cannot create or replace an actual source receipt. */
+function evaluateResidualNormAudit(graph,values){
+  if(graph?.schema!=='MathScope.ActualResidualOrderBounds/1')throw Error('Expected a source-bound residual norm graph.');
+  const out=[];
+  for(const n of graph.positiveNormGraph.nodes){let v;const a=n.args;
+    if(n.op==='rational')v=Number(a[0])/Number(a[1]);
+    else if(n.op==='source_expression'){v=values[a[0]];if(!(v>0&&Number.isFinite(v)))throw Error('Missing finite positive audit value '+a[0]);}
+    else if(n.op==='add')v=out[a[0]]+out[a[1]];
+    else if(n.op==='multiply')v=out[a[0]]*out[a[1]];
+    else if(n.op==='inverse_positive')v=1/out[a[0]];
+    else if(n.op==='sqrt_positive')v=Math.sqrt(out[a[0]]);
+    else throw Error('Unknown norm node.');
+    if(!Number.isFinite(v)||v<0)throw Error('Audit norm overflow.');out.push(v);
+  }
+  return {scope:'UNIVERSAL_POSITIVE_EXPRESSION_ARITHMETIC_ONLY',actualSourceCertificate:false,values:out};
+}
+
+return {actualResidualOrderBounds,evaluateResidualNormAudit};
+})();
+const __m2_85 = (()=>{
+/** Direct substitution of the actual coefficient generator in (5.2)--(5.6).
+ * The returned graph distinguishes retained orders from the actual nonzero
+ * remainder. A finite radial jet is used to verify coefficient identities;
+ * function-value enclosures use the infinite source Picard norm separately.
+ */
+const {buildActualBackgroundJets} = __m2_56;
+const {SOURCE_PROFILE_ID} = __m2_45;
+const gcd=(a,b)=>{a=a<0n?-a:a;b=b<0n?-b:b;while(b)[a,b]=[b,a%b];return a;};
+class ExtendedExpressions{
+  constructor(nodes){this.nodes=structuredClone(nodes);this.ids=new Map(this.nodes.map((n,i)=>[JSON.stringify([n.op,...n.args]),i]));this.zero=this.rat(0);this.one=this.rat(1);}
+  node(op,...args){const key=JSON.stringify([op,...args]);if(this.ids.has(key))return this.ids.get(key);const id=this.nodes.length;this.nodes.push({op,args});this.ids.set(key,id);return id;}
+  rat(a,b=1){a=BigInt(a);b=BigInt(b);if(!b)throw Error('Zero denominator.');if(b<0n){a=-a;b=-b;}const g=gcd(a,b);return this.node('rational',String(a/g),String(b/g));}
+  add(a,b){if(a===this.zero)return b;if(b===this.zero)return a;const x=this.nodes[a],y=this.nodes[b];if(x.op==='rational'&&y.op==='rational')return this.rat(BigInt(x.args[0])*BigInt(y.args[1])+BigInt(y.args[0])*BigInt(x.args[1]),BigInt(x.args[1])*BigInt(y.args[1]));return this.node('add',...([a,b].sort((x,y)=>x-y)));}
+  mul(a,b){if(a===this.zero||b===this.zero)return this.zero;if(a===this.one)return b;if(b===this.one)return a;const x=this.nodes[a],y=this.nodes[b];if(x.op==='rational'&&y.op==='rational')return this.rat(BigInt(x.args[0])*BigInt(y.args[0]),BigInt(x.args[1])*BigInt(y.args[1]));return this.node('multiply',...([a,b].sort((x,y)=>x-y)));}
+  scale(a,n,d=1){return this.mul(this.rat(n,d),a);}
+  sub(a,b){return this.add(a,this.scale(b,-1));}
+  sum(a){return a.reduce((s,x)=>this.add(s,x),this.zero);}
+  de(a){const n=this.nodes[a];if(n.op==='rational'||n.op==='source_parameter')return this.zero;if(n.op==='eta')return this.one;if(n.op==='eta_derivative')return this.node('eta_derivative',n.args[0],n.args[1]+1);return this.node('eta_derivative',a,1);}
+}
+
+function buildActualResidualOrderProgram({profileId=SOURCE_PROFILE_ID,radialDegree=3}={}){
+  if(!Number.isSafeInteger(radialDegree)||radialDegree<2||radialDegree>4)throw Error('radialDegree must be an integer from 2 to 4.');
+  const source=buildActualBackgroundJets({profileId,order:1,radialDegree}),G=new ExtendedExpressions(source.nodes),f=source.fixed,z=G.zero,N=radialDegree;
+  const at=(a,k)=>a[k]??z,add=(...as)=>Array.from({length:Math.max(...as.map(a=>a.length))},(_,k)=>G.sum(as.map(a=>at(a,k))));
+  const sc=(a,n,d=1)=>a.map(x=>G.scale(x,n,d));
+  const cv=(a,b,k)=>G.sum(Array.from({length:k+1},(_,i)=>G.mul(at(a,i),at(b,k-i))));
+  const mul=(a,b,n=N+2)=>Array.from({length:n+1},(_,k)=>cv(a,b,k));
+  const DX=a=>a.map((x,k)=>G.scale(x,k));
+  const dx=a=>a.slice(1).map((x,k)=>G.scale(x,k+1));
+  const X=a=>[z,...a];
+  const T=(a,p)=>p.map((x,k)=>G.mul(f.iL,G.sum([G.scale(G.mul(a,x),-1),G.scale(x,k),G.mul(G.mul(f.D,f.eta),G.de(x))])));
+  const Z=(a,p)=>p.map((x,k)=>G.mul(f.iL,G.add(G.scale(G.mul(f.eta,G.mul(G.sub(a,G.rat(k)),x)),2),G.mul(f.d,G.de(x)))));
+  const Z2=(a,p)=>Z(G.sub(a,f.D),Z(a,p));
+  const b=G.scale(G.add(f.A,G.rat(1,2)),-1),c=G.scale(f.A,-1),nu=G.scale(f.h,2),b1=G.add(b,nu),c1=G.add(c,nu);
+  const ff=[source.leading.F,source.positive.F],uu=[source.leading.U,source.positive.U],pp=[source.leading.Pi,source.positive.Pi],VV=[source.leading.V,source.positive.V],vv=VV.map(a=>a.slice(1));
+  const lapF=a=>a.slice(1).map((x,k)=>G.scale(x,2*(k+1)*(k+2)));
+  const lapU=a=>a.slice(1).map((x,k)=>G.scale(x,2*(k+1)**2));
+  function omega(k){
+    const v=k<=1?VV[k]:[z],a=G.scale(nu,k),terms=[T(a,v),sc(X(dx(dx(v))),-2)];
+    for(let i=0;i<=k;i++){const j=k-i;if(i>1||j>1)continue;terms.push(mul(VV[i],add(dx(VV[j]),sc(vv[j],-1,2))),mul(uu[i],Z(G.scale(nu,j),VV[j])));}
+    if(k>=1&&k<=2)terms.push(sc(Z2(G.scale(nu,k-1),VV[k-1]),-1));
+    return add(...terms);
+  }
+  const omegaRows=[omega(0),omega(1),omega(2)];
+  const hTheta=add(mul(vv[1],add(DX(ff[1]),ff[1])),mul(uu[1],Z(b1,ff[1])),sc(Z2(b1,ff[1]),-1));
+  const hZ=add(mul(vv[1],DX(uu[1])),mul(uu[1],Z(c1,uu[1])),sc(Z2(c1,uu[1]),-1));
+  const Q1=add(omegaRows[1].slice(1),sc(mul(ff[1],ff[1]),-2));
+  const Q2=omegaRows[2].slice(1);
+  function retainedTangential(n,kind){
+    const field=kind==='theta'?ff:uu,a=kind==='theta'?(n?b1:b):(n?c1:c),terms=[T(a,field[n]),sc(kind==='theta'?lapF(field[n]):lapU(field[n]),-1)];
+    for(let i=0;i<=n;i++){const j=n-i;terms.push(mul(vv[i],kind==='theta'?add(DX(field[j]),field[j]):DX(field[j])),mul(uu[i],Z(kind==='theta'?(j?b1:b):(j?c1:c),field[j])));}
+    if(kind==='z')terms.push(Z(G.add(G.scale(f.A,-2),G.scale(nu,n)),pp[n]));
+    if(n)terms.push(sc(Z2(kind==='theta'?b:c,field[0]),-1));
+    return add(...terms).slice(0,N);
+  }
+  const pressure0=add(dx(pp[0]),sc(mul(ff[0],ff[0]),-1)).slice(0,N);
+  const pressure1=add(dx(pp[1]),sc(mul(ff[0],ff[1]),-2),sc(omegaRows[0].slice(1),1,2)).slice(0,N);
+  const retained={theta0:retainedTangential(0,'theta'),z0:retainedTangential(0,'z'),pressure0,theta1:retainedTangential(1,'theta'),z1:retainedTangential(1,'z'),pressure1};
+  const n0={theta:sc(Z2(b,ff[0]),-1),z:sc(Z2(c,uu[0]),-1),radial:omegaRows[0].slice(1),radialNext:sc(Z2(z,VV[0]).slice(1),-1)};
+  const n1={theta:hTheta,z:hZ,radial:Q1,radialNext:Q2};
+  return {schema:'MathScope.ActualResidualOrderProgram/1',profileId,sourcePaperSHA256:source.sourcePaperSHA256,sourceInputs:source.sourceInputs,radialDegree:N,nodes:G.nodes,fixed:f,leading:source.leading,positive:source.positive,retainedResidualCoefficients:retained,remainderCoefficients:{N0:n0,N1:n1},omega:omegaRows,
+    axisRoots:{alpha:uu[1][1],alphaEta:G.de(uu[1][1]),alphaEtaEta:G.de(G.de(uu[1][1])),z1Axis:hZ[0],z1FirstX:hZ[1],radial0Axis:omegaRows[0][1],radial1Axis:Q1[0],radial2Axis:Q2[0]},
+    functions:{N0:{theta:'-sqrt(2X)*q^(-A-1)*w*Z_b^[2]f0',z:'-q^(-A-1)*w*Z_c^[2]U0',radial:'q^(-3/2)*sqrt(X/2)*(Omega0/X-w*Z_0^[2]V0/X)'},N1:{theta:'sqrt(2X)*q^(-A-1)*w^2*Htheta1',z:'q^(-A-1)*w^2*Hz1',radial:'q^(-3/2)*sqrt(X/2)*(w*Q1+w^2*Q2)'},w:'q^(2h)',f:'f_n=phi_n/CSelected, not the stream function F_n'},
+    sourceEquations:['5.2','5.3','5.4','5.5','5.6','5.14','5.15','5.24','5.25','5.26'],
+    scope:{actualSameSourceCoefficientGraph:true,directResidualSubstitution:true,finiteRadialJetIsFullSolution:false,allOrdersGenerated:false,globalMomentRepairComplete:false}};
+}
+
+return {buildActualResidualOrderProgram};
+})();
+const __m2_86 = (()=>{
+/** Exact rational interval operations used only by the residual certificate. */
+const {nextDown,nextUp} = __m2_40;
+const gcd=(a,b)=>{a=a<0n?-a:a;b=b<0n?-b:b;while(b)[a,b]=[b,a%b];return a;};
+function rational(a,b=1){a=BigInt(a);b=BigInt(b);if(!b)throw Error('Zero denominator.');if(b<0n){a=-a;b=-b;}const g=gcd(a,b);return [a/g,b/g];}
+function readRational(s){if(typeof s!=='string'||!/^[-+]?\d+(\/\d+)?$/.test(s))throw Error('Expected an exact rational string.');const [a,b='1']=s.split('/');return rational(a,b);}
+const rationalText=a=>a[1]===1n?String(a[0]):a[0]+'/'+a[1];
+const addR=(a,b)=>rational(a[0]*b[1]+b[0]*a[1],a[1]*b[1]);
+const mulR=(a,b)=>rational(a[0]*b[0],a[1]*b[1]);
+const divR=(a,b)=>rational(a[0]*b[1],a[1]*b[0]);
+const negR=a=>[-a[0],a[1]];
+const cmpR=(a,b)=>{const z=a[0]*b[1]-b[0]*a[1];return z<0n?-1:z>0n?1:0;};
+const pointR=(a,b=1)=>{const x=rational(a,b);return [x,x];};
+const addI=(a,b)=>[addR(a[0],b[0]),addR(a[1],b[1])];
+const scaleI=(a,n,d=1)=>{const s=rational(n,d),v=a.map(x=>mulR(x,s));return n<0?v.reverse():v;};
+const widenI=(a,e)=>[addR(a[0],negR(e)),addR(a[1],e)];
+const packI=a=>({lower:rationalText(a[0]),upper:rationalText(a[1]),width:rationalText(addR(a[1],negR(a[0])))});
+const unpackI=a=>[readRational(a.lower),readRational(a.upper)];
+function roundI(a,bits){const d=1n<<BigInt(bits),floor=x=>{const n=x[0]*d;let k=n/x[1];if(n<0n&&n%x[1])k--;return k;};return [rational(floor(a[0]),d),rational(-floor(negR(a[1])),d)];}
+function floatR(x){if(!Number.isFinite(x))throw Error('A displayed interval endpoint must be finite.');if(x===0)return rational(0);const d=new DataView(new ArrayBuffer(8));d.setFloat64(0,x);const b=d.getBigUint64(0),sg=b>>63n?-1n:1n,e=Number((b>>52n)&2047n),m=(b&((1n<<52n)-1n))+(e?1n<<52n:0n),p=(e?e-1023:-1022)-52;return p>=0?rational(sg*m*(1n<<BigInt(p))):rational(sg*m,1n<<BigInt(-p));}
+function directed(x,side){const sign=x[0]<0n?-1:1,numerator=x[0]<0n?-x[0]:x[0],ns=Math.max(0,numerator.toString(2).length-60),ds=Math.max(0,x[1].toString(2).length-60);let n=sign*(Number(numerator>>BigInt(ns))/Number(x[1]>>BigInt(ds)))*2**(ns-ds);for(let k=0;k<8;k++){if(side<0?cmpR(floatR(n),x)<=0:cmpR(floatR(n),x)>=0)return n;n=side<0?nextDown(n):nextUp(n);}throw Error('Unable to direct a displayed endpoint.');}
+function displayI(a){const out=[directed(a[0],-1),directed(a[1],1)];return {displayEnclosure:out,value:(out[0]+out[1])/2,displayCenterIsIntervalMidpoint:true};}
+
+return {rational,readRational,rationalText,addR,mulR,divR,negR,cmpR,pointR,addI,scaleI,widenI,packI,unpackI,roundI,displayI};
+})();
+const __m2_87 = (()=>{
+/** Actual Fslow enclosures on one fixed, source-defined unmodified core.
+ * N, mesh, and arithmetic bits are independent variables. Positive physical
+ * scales and the fixed Cauchy error floor are never replaced by binary64 zero.
+ */
+const {assertSourceProfile,SOURCE_PROFILE_ID} = __m2_45;
+const {actualBackgroundAxisObservations} = __m2_58;
+const {actualResidualOrderBounds} = __m2_84;
+const {buildActualResidualOrderProgram} = __m2_85;
+const {rational: q,addR,mulR,divR,negR,cmpR,rationalText,pointR,addI,scaleI,widenI,packI,unpackI,roundI,displayI} = __m2_86;
+const ACTUAL_RESIDUAL_DOMAIN_ID='same-N3-natural-core-fixed-residual-domain.1';
+const ACTUAL_RESIDUAL_LOCATION_BUDGET_BITS=160;
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const I=n=>({integer:String(n)}),R=name=>({ref:name}),mul=(...a)=>({product:a}),div=(a,b)=>({quotient:[a,b]}),pow=(a,n)=>({power:[a,n]});
+
+function normalize(input){
+  if(!input||typeof input!=='object'||Array.isArray(input))throw Error('Expected a residual request object.');
+  for(const k of Object.keys(input))if(!['sourceProfile','bits','mesh','maxDerivativeOrder','timeIndices'].includes(k))throw Error('Unsupported actual residual input: '+k);
+  const sourceProfile=input.sourceProfile??SOURCE_PROFILE_ID,bits=input.bits??128,mesh=input.mesh??8,maxDerivativeOrder=input.maxDerivativeOrder??2,timeIndices=input.timeIndices??[4,8,12,16];
+  assertSourceProfile(sourceProfile);
+  if(!Number.isSafeInteger(bits)||bits<96||bits>512)throw Error('bits must be an integer from 96 to 512.');
+  if(![4,8,16,32].includes(mesh))throw Error('mesh must be 4, 8, 16, or 32 on the same fixed domain.');
+  if(!Number.isSafeInteger(maxDerivativeOrder)||maxDerivativeOrder<0||maxDerivativeOrder>6)throw Error('maxDerivativeOrder must be an integer from 0 to 6.');
+  if(!Array.isArray(timeIndices)||!timeIndices.length||timeIndices.length>8||timeIndices.some((k,i)=>!Number.isSafeInteger(k)||k<1||k>256||(i&&k<=timeIndices[i-1])))throw Error('timeIndices must be strictly increasing integers from 1 to 256, at most eight.');
+  return {sourceProfile,bits,mesh,maxDerivativeOrder,timeIndices:[...timeIndices]};
+}
+
+function baseIntervals(axis){
+  const tiny=q(1,1n<<2048n),tinySquared=mulR(tiny,tiny),angular=unpackI(axis.samples[0].normalizedInterval),AA=unpackI(axis.samples[1].normalizedInterval),pressure=unpackI(axis.samples[2].normalizedInterval);
+  return {
+    N0:{theta:scaleI(angular,-1),z:scaleI(AA,2),radial:addI(scaleI(pressure,-2),[mulR(q(-24),tiny),q(0)])},
+    N1:{theta:pointR(0),z:[addR(q(9,2),mulR(q(-18),tinySquared)),q(9,2)],radial:pointR(0)},
+    exactSourceParameters:{hUpper:'1/2^2048',inverseKUpper:'1/2^2048',actualHPositive:true,actualKPositive:true,actualJPositive:true,lowerZeroIsIntervalEndpointOnly:true},
+  };
+}
+
+const quantities={
+  N0:{theta:{coefficient:'-(CSelected*j0^2/Lambda^2)*Z_b^[2]f0(X,0)',factor:'sqrt(2X)*Lambda^2/(CSelected*j0^2)',hPower:1,axis:'(-4*j0^2/Lambda^2)*phi1_X(0,0) with opposite sign'},z:{coefficient:'-Z_c^[2]U0(X,0)/j0',factor:'j0',hPower:1,axis:'2A=1+2h'},radial:{coefficient:'(Omega0/X-w*Z_0^[2]V0/X)/K',factor:'sqrt(X/2)*K',hPower:0,axis:'-2*Pi1_X(0,0)/K-24*w/K'}},
+  N1:{theta:{coefficient:'(CSelected*j0^2/Lambda^2)*Htheta1(X,0)',factor:'sqrt(2X)*Lambda^2/(CSelected*j0^2)',hPower:3,axis:'0'},z:{coefficient:'Hz1(X,0)/(j0*X)',factor:'j0*X',hPower:3,axis:'9/2-18*h^2'},radial:{coefficient:'(Q1(X,0)+w*Q2(X,0))/K',factor:'sqrt(X/2)*K',hPower:2,axis:'0'}},
+};
+
+function pointRows(base,bits,mesh){
+  const rows=[],eps=q(1,1n<<160n);
+  for(let i=1;i<=mesh;i++){
+    const xRatio=q(4*i,mesh),tail=divR(mulR(xRatio,eps),q(16));
+    for(const N of [0,1])for(const component of ['theta','z','radial']){
+      const key='N'+N,raw=widenI(base[key][component],tail),rounded=roundI(raw,bits),spec=quantities[key][component],idx=rows.length;
+      rows.push({id:`actual-residual-N${N}-${component}-X${rationalText(xRatio)}`,sourceIndex:idx,N,component,XMultiplierExact:rationalText(xRatio),XExactExpression:mul({rational:rationalText(xRatio)},R('residualXUnit')),XStrictlyPositive:true,XBinary64:null,etaExact:'0',fixedDomainId:ACTUAL_RESIDUAL_DOMAIN_ID,
+        quantity:spec.coefficient,normalizedInterval:packI(rounded),analyticRemainderUpperExact:rationalText(tail),arithmeticBits:bits,...displayI(rounded),
+        physicalScale:{positive:true,factor:spec.factor,qExponent:{constant:'-3/2',hCoefficient:spec.hPower},w:'q^(2h)',qDomain:'0<q<=1',parameterUnderflowNotSubstituted:true},
+        observationKind:'ACTUAL_SOURCE_RESIDUAL_COMPONENT_ENCLOSURE',intervalZeroCenterIsNotAnExactZero:N===1&&component!=='z',sourcePath:`result.results.pointRows[${idx}].normalizedInterval`,sourceEquation:'5.24',axisCoefficient:spec.axis});
+    }
+  }
+  return rows;
+}
+
+function actualResidualOrderCertificate(input={},context={}){
+  const request=normalize(input),{sourceProfile,bits,mesh,maxDerivativeOrder,timeIndices}=request,source=assertSourceProfile(sourceProfile);
+  const bounds=actualResidualOrderBounds({profileId:sourceProfile,maxDerivativeOrder}),program=buildActualResidualOrderProgram({profileId:sourceProfile,radialDegree:3}),axis=actualBackgroundAxisObservations({profileId:sourceProfile}),base=baseIntervals(axis);
+  const rows=pointRows(base,bits,mesh),witness=rows.find(r=>r.N===0&&r.component==='radial'&&r.XMultiplierExact==='1');
+  if(!witness)throw Error('The fixed witness must belong to every allowed mesh.');
+  const lower=unpackI(witness.normalizedInterval)[0],eps=q(1,1n<<160n);
+  const exactExpressions={...bounds.exactExpressions,
+    residualNorm:{positiveNormGraphNode:bounds.positiveNormGraph.residualNormNode},residualSharpConstant:{positiveNormGraphNode:bounds.positiveNormGraph.sharpConstantNode},
+    residualNormalizationBudget:{sum:[I(1),div(I(1),R('j0')),div(I(1),R('K')),div(mul(R('CSelected'),pow(R('j0'),2)),pow(R('Lambda'),2))]},
+    residualXUnit:div(mul(pow(R('residualRadialRadius'),2),pow(I(2),-160)),mul(I(256),R('residualNorm'),R('residualNormalizationBudget'))),
+    residualXMax:mul(I(4),R('residualXUnit')),
+    residualWitnessScale:mul({sqrt:div(R('residualXUnit'),I(2))},R('K')),
+  };
+  const timeRows=timeIndices.map((k,index)=>{
+    const name='residualW'+k,qname='residualQ'+k,upper=q(1,1n<<BigInt(k)),ratio=divR(upper,lower);
+    exactExpressions[name]=div(mul(pow(I(2),-k),R('residualWitnessScale')),{sum:[I(1),R('residualSharpConstant'),R('residualWitnessScale')]});
+    exactExpressions[qname]={exp:div({log:R(name)},mul(I(2),R('h')))};
+    return {sourceIndex:index,k,wExactExpression:R(name),qExactExpression:R(qname),qStrictlyPositive:true,qBinary64:null,qLogExpression:`log(${name})/(2*h)`,actualHUnchanged:true,domainId:ACTUAL_RESIDUAL_DOMAIN_ID,
+      commonPositivePhysicalScale:'q^(-3/2)*residualWitnessScale',N0NormLowerExact:rationalText(lower),N1NormUpperExact:rationalText(upper),actualNormRatioUpperExact:rationalText(ratio),...displayI([q(0),upper]),
+      comparison:'sup_fixed_domain |Fslow[N=1]| < 2^(-k) * sup_fixed_domain |Fslow[N=0]|',strict:cmpR(lower,q(1))>0,sourcePath:`result.results.timeRows[${index}]`,
+      lowerIsEvaluatedSourceWitness:true,upperIsSourceDerivedUniformNorm:true,intervalCentersAreNotComputedNormValues:true};
+  });
+  const precisionBits=[...new Set([96,128,192,bits])].sort((a,b)=>a-b);
+  const precision=precisionBits.map(b=>{const r=pointRows(base,b,mesh).filter(x=>x.XMultiplierExact==='1');return {bits:b,domainId:ACTUAL_RESIDUAL_DOMAIN_ID,XExact:'residualXUnit',analyticBudgetBits:160,values:r.map(x=>({N:x.N,component:x.component,normalizedInterval:x.normalizedInterval})),arithmeticOnly:true};});
+  const meshes=[4,8,16,32].map(g=>{const r=pointRows(base,bits,g);return {mesh:g,positivePointCount:g,domainId:ACTUAL_RESIDUAL_DOMAIN_ID,XMaxExact:'4*residualXUnit',witness:r.filter(x=>x.XMultiplierExact==='1').map(x=>({N:x.N,component:x.component,normalizedInterval:x.normalizedInterval})),sourceNormBoundUsesWholeDomain:true,finiteSamplingIsNotTheNormProof:true};});
+  const checks=[
+    {id:'same-accepted-source',pass:program.profileId===bounds.profileId&&axis.parameterExpressionSHA256===source.parameterExpressionSHA256},
+    {id:'source-residual-norms-executed',pass:Object.keys(bounds.positiveNormGraph.coefficientNorms).length===8&&bounds.positiveNormGraph.nodes.length>0},
+    {id:'actual-positive-N0-residual-witness',pass:cmpR(lower,q(1))>0},
+    {id:'actual-positive-N1-axial-residual',pass:rows.filter(r=>r.N===1&&r.component==='z').every(r=>cmpR(unpackI(r.normalizedInterval)[0],q(0))>0)},
+    {id:'actual-order-improvement',pass:timeRows.every(r=>r.strict&&cmpR(unpackI({lower:r.actualNormRatioUpperExact,upper:r.actualNormRatioUpperExact})[0],q(1))<0)},
+    {id:'same-fixed-domain-under-precision-and-mesh',pass:precision.every(r=>r.XExact==='residualXUnit')&&meshes.every(r=>same(r.witness,meshes[0].witness))},
+    {id:'strictly-positive-error-floor-retained',pass:cmpR(eps,q(0))>0&&rows.every(r=>cmpR(unpackI(r.normalizedInterval)[1],unpackI(r.normalizedInterval)[0])>0)},
+    {id:'Km-independent-of-N',pass:bounds.derivativeConstants.every(r=>r.Km===2+r.m&&same(r.N,[0,1]))},
+  ];
+  return {schema:'MathScope.ActualFixedCoreResidualCertificate/1',request,sourceProfile,sourceHash:context.sourceHash??null,parameterExpressionSHA256:source.parameterExpressionSHA256,sourceInputs:axis.sourceInputs,
+    domain:{id:ACTUAL_RESIDUAL_DOMAIN_ID,XExact:['0','4*residualXUnit'],etaExact:['-1','1'],angularDomain:'all theta',normWitnessTheta:'0',positivePointEta:'0',sourceNaturalCoreEnd:'4/Lambda',CauchyRadius:'3/Lambda',fixedForAllNMeshPrecisionAndQ:true,chosenFromActualSourceBounds:true,observationDomainIsVerySmall:true,physicalSpaceChangesWithQByOriginalSimilarityMap:true,fullCollar:false,wholeProfile:false},
+    restrictionProof:{sourcePaperSHA256:program.sourcePaperSHA256,originalStatements:['Theorem 4.6(ii), pp.32-33: T0=0 for 0<=X<=Xa','Lemma 5.2, pp.49-51: Xa<Xminus<Xkeep<Xcut<a^2<inf Ipos','Equations (5.14)-(5.15): cutoff=1 and all five bumps=0 before Xminus; forward integrals preserve V1 and Pi1','Equation (5.13): T1=0 on [0,Xminus]','Proposition 5.3, pp.54-55: every fixed compact 0<=X<=Xmax, -1<=eta<=1'],executedRadiusInequality:'0<Xmax/R=R*2^-160/(64*Bres*normalizationBudget)<1/64<1/8, since 0<R<1 and Bres,normalizationBudget>=1',sameFinalizedInnerCoefficientRestriction:true,pressureReconstructedFromSameZeroAxisDatum:true,stressAndAllDerivativesExactlyZeroOnObservationNeighborhood:true,qCutoffNotApplied:true},
+    exactExpressions,sourceNorms:bounds,residualProgram:program,
+    axisIdentities:{Ustar:'4*eta+j0',alpha:'-1/2*Z_(-1) Z_(-A) Ustar',alphaAtZero:'A*j0',alphaEtaAtZero:'12',alphaEtaEtaAtZero:'2*A*j0*(8*h-3)',N0Radial:'24-4*A*P(0)+P_second(0)',N1AxialSlope:'(9/2-18*h^2)*j0',N1RadialAxis:'0',actualPressureIntervalUsed:true},
+    pointRows:rows,timeRows,witnessId:witness.id,refinement:{precision,meshes,analyticBudgetBits:160,locationDependsOnArithmeticBits:false,locationDependsOnMesh:false,locationDependsOnQ:false,precisionBeyondAnalyticFloorDoesNotImproveTheSourceError:true,meshSamplesAreObservationsNotAReplacementForTheAnalyticSupremumBound:true},
+    sourceErrorLedger:{actualA21Intervals:axis.samples[2].normalizedInterval,normalizedAngularAxisInterval:axis.samples[0].normalizedInterval,smallParameters:base.exactSourceParameters,cauchyBudgetUpperExact:'1/2^160',atPointRemainder:'(X/XUnit)*2^-160/16',pressureCorrection:'-24*w/K is enclosed in [-24*2^-2048,0], not deleted',arithmetic:'Outward exact rational-to-dyadic rounding at requested bits; binary64 is display only.'},
+    checks,pass:checks.every(c=>c.pass),
+    scope:{actualFiniteFixedDomainResidualEnclosures:true,actualResidualNormOrderImprovement:true,actualCNmAndKmComputed:true,finiteOrders:[0,1],derivativeOrdersThrough:maxDerivativeOrder,uniformEtaDomainCertified:true,sourceCoefficientPointsAtEtaZeroOnly:true,sourceN1InfiniteSolutionEnclosedByCauchy:true,finitePolynomialTreatedAsFullSolution:false,unchangedInnerRestrictionOfOriginalRepair:true,globalN1MomentRepairComplete:false,wholeProfileResidualComplete:false,allNResidualComplete:false,sourceProfileReplaced:false,formalKernelProof:false},
+    acceptanceBoundary:'Finite original (5.25) acceptance on one explicitly fixed compact in the unchanged source core. It does not construct the unfinished global repaired tuple or certify every N.',
+  };
+}
+
+function verifyActualResidualOrderCertificate(value){
+  try{const expected=actualResidualOrderCertificate(value?.request??{},{sourceHash:value?.sourceHash??null});return {pass:expected.pass&&same(value,expected),reason:same(value,expected)?'Actual source, direct residual program, norm constants, fixed coordinates, outward intervals, and scope replay exactly.':'Source, coordinate, coefficient, bound, or claim differs from internal reconstruction.'};}catch(e){return {pass:false,reason:e.message};}
+}
+
+return {ACTUAL_RESIDUAL_DOMAIN_ID,ACTUAL_RESIDUAL_LOCATION_BUDGET_BITS,actualResidualOrderCertificate,verifyActualResidualOrderCertificate};
+})();
+const __m2_88 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
 const {iadd,isub,imul,idiv,iscale,ilog,point,nextUp,nextDown} = __m2_40;
 const {integrateAffineTangentPulse} = __m2_41;
@@ -7348,9 +7670,10 @@ const {buildActualPicardAcceptance,verifyActualPicardAcceptance} = __m2_71;
 const {actualMeanPulseAmplitude} = __m2_73;
 const {actualContinuationConstruction} = __m2_79;
 const {actualMeanPulsePointwiseAssembly} = __m2_83;
+const {actualResidualOrderCertificate,verifyActualResidualOrderCertificate} = __m2_87;
 const PAPER={title:'Finite Time Blowup for Navier–Stokes',url:'https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf',sha256:'0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f'};
 const PROFILE={id:'same-profile-2026-10-10.3',commit:'55dacb898f8c204bf0c5925ea901d75d6c2d0f46',assessmentSha256:'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c',role:'ACCEPTED_N3_ARCHIVE_REFERENCE',globalEvaluator:false,description:'Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.'};
-const KINDS=['ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
+const KINDS=['ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
 const fail=(code,message)=>{throw Object.assign(Error(message),{code});};
 const finite=(v,name,lo=-1e6,hi=1e6)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)fail('INVALID_INPUT',name+' is outside the finite supported interval.');return v;};
 const int=(v,name,lo,hi)=>{finite(v,name,lo,hi);if(!Number.isSafeInteger(v))fail('INVALID_INPUT',name+' must be an integer.');return v;};
@@ -7428,6 +7751,16 @@ function actualPulseAmplitude(input,ctx){
   const output=result({kind:'ACTUAL_HOMOGENEOUS_PULSE_AND_PHASE_FINITE_ACCEPTANCE',sourceProfile:data.profileId},data,[...data.checks,...data.sourceScales.checks],
     {axes:[axis('v/Ls','NORMALIZED_PULSE_COORDINATE'),axis('actual radial amplitude / P','NORMALIZED_ACTUAL_AMPLITUDE_INTERVAL'),axis('0')],points:rows.map((r,i)=>({pos:[r.pulseFraction,r.radialOverP[0]/2+r.radialOverP[1]/2,0],value:r.radialOverP,label:'actual x/P',sourceField:`result.results.rows[${i}].radialOverP`})),lines:[],description:'Actual source homogeneous growing pulse, original left datum and complete interval comparison, with its phase, moving frame, energy and continuous Gaussian bounds.',lostInformation:['The carrier and positive physical scales remain exact expressions. Normalized interval coordinates do not substitute finite values for them.','This finite representative test leaves general forcing, all slow derivatives and the full annular package outside its accepted scope.']},[],'CERTIFIED_ACTUAL_HOMOGENEOUS_PULSE_INTERVAL_COMPUTATION');
   return {...output,scope:{...output.scope,finiteCriteria:['N5-04','N5-05'],finiteCriteriaPass:true,certifiedRepresentativeEta:0,certifiedRepresentativeS:1,actualFullPulseInterval:true,generalForcingInverseComplete:false},sourceHash:data.sourceHash,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; actual completed-background restriction, phase program and source comparisons remain in results'};
+}
+
+function actualResidualOrder(input,ctx){
+  ctx.checkCancelled?.();
+  const data=actualResidualOrderCertificate({...input,bits:input.bits??ctx.precision?.bits??128},{...ctx,sourceHash:getPinnedSourceProfile().inputs.assembly.sha256});
+  const verification=verifyActualResidualOrderCertificate(data);
+  if(!data.pass||!verification.pass)fail('FAILED','The actual fixed-domain residual certificate failed its source-bound replay.');
+  const output=result({kind:'ACTUAL_FIXED_SOURCE_RESIDUAL_ORDER_CERTIFICATE',sourceProfile:data.sourceProfile,orders:[0,1]},data,data.checks,
+    {axes:[axis('fixed source q selection index k'),axis('normalized residual upper bound','SOURCE_RESIDUAL_NORM_BOUND'),axis('0')],points:data.timeRows.map((r,i)=>({pos:[r.k,r.displayEnclosure[1],0],value:r.N1NormUpperExact,label:'N=1 upper bound at q_'+r.k,sourceField:`result.results.timeRows[${i}].N1NormUpperExact`})),lines:[],description:'Direct actual-source PDE residual with fixed-domain N=0 and N=1 enclosures, source-derived norm expressions, and independent arithmetic/mesh parameters.',lostInformation:['The displayed bounds enclose the actual norms; they are not exact norm values.','The source-defined core compact is fixed across order, arithmetic precision, grid and q. At fixed q, eta varies over a space-time set through tau=q*(1-eta^2). The global repaired profile and all N are separate obligations.']},[],'ACTUAL_SOURCE_DIRECTED_RESIDUAL_INTERVALS_AND_ANALYTIC_NORM_CONSTANTS');
+  return {...output,scope:{...output.scope,finiteCriterion:'N4-05',finiteCriterionPass:true,supportedBackgroundOrders:[0,1],sameFixedSourceDomain:true,actualCNmAndKmComputed:true,wholeProfileResidualComplete:false,allOrdersComplete:false},sourceHash:data.sourceHash,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; actual coefficient program, fixed coordinates and source-derived norm expressions are retained in results'};
 }
 
 function backgroundRecursion(input,ctx){
@@ -7544,6 +7877,7 @@ const INPUT_FIELDS={
   'ns.actual-picard-acceptance':['sourceProfile','tailBits'],
   'ns.actual-pulse-amplitude':['sourceProfile','y','sign','steps'],
   'ns.actual-covariance-matching':['sourceProfile','y','cells','cutoffCells','bits'],
+  'ns.actual-residual-order':['sourceProfile','bits','mesh','maxDerivativeOrder','timeIndices'],
   'ns.actual-mean-pulse':['sourceProfile','y','eta','s','order','samples'],
   'ns.background-recursion':['maxOrder'],
   'ns.background-picard':['sourceProfile','n','Cn','a','rho','rhoPrime','terms'],
@@ -7569,6 +7903,7 @@ const NUMERIC_FIELDS={
   'ns.actual-picard-acceptance':{tailBits:[16,4096,true]},
   'ns.actual-pulse-amplitude':{y:[.25,4.75],sign:[-1,1,true],steps:[8,256,true]},
   'ns.actual-covariance-matching':{y:[.25,4.75],cells:[64,512,true],cutoffCells:[64,512,true],bits:[16,4096,true]},
+  'ns.actual-residual-order':{bits:[96,512,true],mesh:[4,32,true],maxDerivativeOrder:[0,6,true]},
   'ns.actual-mean-pulse':{y:[.25,4.75],eta:[-1,1],s:[.5,2],order:[1,3,true],samples:[4,256,true]},
   'ns.background-recursion':{maxOrder:[1,8,true]},
   'ns.background-picard':{n:[1,8,true],Cn:[1e-8,1e4],a:[1e-8,4],rho:[.0002,4],rhoPrime:[.0001,4],terms:[2,512,true]},
@@ -7606,6 +7941,10 @@ function validate(kind,input={}){
     finiteTree(input);
     if(kind==='ns.actual-covariance-matching')for(const field of ['cells','cutoffCells'])if(input[field]!==undefined&&![64,128,256,512].includes(input[field]))fail('INVALID_INPUT','Actual covariance cells must be 64,128,256 or 512.');
     if(kind==='ns.actual-pulse-amplitude'&&((input.sign!==undefined&&![1,-1].includes(input.sign))||(input.steps!==undefined&&(input.steps&(input.steps-1))!==0)))fail('INVALID_INPUT','Actual pulse sign must be +1 or -1 and steps must be 8,16,32,64,128 or 256.');
+    if(kind==='ns.actual-residual-order'){
+      if(input.mesh!==undefined&&![4,8,16,32].includes(input.mesh))fail('INVALID_INPUT','Use mesh 4,8,16 or 32 on the unchanged fixed source domain.');
+      if(input.timeIndices!==undefined&&(!Array.isArray(input.timeIndices)||!input.timeIndices.length||input.timeIndices.length>8||input.timeIndices.some((v,i)=>!Number.isSafeInteger(v)||v<1||v>256||(i&&v<=input.timeIndices[i-1]))))fail('INVALID_INPUT','timeIndices must be one to eight strictly increasing integers from 1 to 256.');
+    }
     if(input.sourceProfile!==undefined)assertSourceProfile(input.sourceProfile);
     for(const[k,[lo,hi,integer]]of Object.entries(NUMERIC_FIELDS[kind]))if(input[k]!==undefined)(integer?int:finite)(input[k],k,lo,hi);
     if(kind==='ns.actual-core-evaluation'){
@@ -7652,8 +7991,8 @@ function validate(kind,input={}){
 function precisionContract(kind,value={},input={}){
   if(!value||typeof value!=='object'||Array.isArray(value))fail('INVALID_INPUT','precision must be an object.');
   const unknown=Object.keys(value).filter(k=>!['mode','bits'].includes(k));if(unknown.length)fail('UNSUPPORTED','This finite NS adapter does not implement requested tolerance/precision fields: '+unknown.join(', ')+'.');
-  if(['ns.actual-core-evaluation','ns.actual-continuation'].includes(kind)){
-    const mode=value.mode??'AUTO',bits=input.bits??value.bits??192;
+  if(['ns.actual-core-evaluation','ns.actual-continuation','ns.actual-residual-order'].includes(kind)){
+    const mode=value.mode??'AUTO',bits=input.bits??value.bits??(kind==='ns.actual-residual-order'?128:192);
     if(!['AUTO','DIRECTED_BIGINT'].includes(mode))fail('PRECISION_REQUIRED','The actual source calculation uses directed BigInt intervals; select AUTO or DIRECTED_BIGINT.');
     int(bits,'precision.bits',96,512);
     if(value.bits!==undefined&&value.bits!==bits)fail('INVALID_INPUT','precision.bits and input.bits must agree for the actual source calculation.');
@@ -7677,6 +8016,7 @@ function resourceEstimate(kind,input){
     'ns.actual-picard-acceptance':()=>4000000,
     'ns.actual-pulse-amplitude':()=>5000000+8000*(input.steps??64),
     'ns.actual-covariance-matching':()=>8000000+8000*((input.cells??256)+(input.cutoffCells??input.cells??256)),
+    'ns.actual-residual-order':()=>2000000+10000*(input.mesh??8)+2000*(input.bits??128),
     'ns.actual-mean-pulse':()=>5000000+1000*(input.samples??32),
     'ns.background-recursion':()=>200000*(input.maxOrder??2)**2,
     'ns.background-picard':()=>10000*(input.terms??16),
@@ -7693,7 +8033,7 @@ function resourceEstimate(kind,input){
     'ns.pulse-curl':()=>1800000,
     'ns.pulse-tail':()=>500*(input.count??80)
   }[kind]();
-  const items=kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
+  const items=kind==='ns.actual-residual-order'?12000+24*(input.mesh??8):kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
   return {algorithmicOperationsEstimate:operations,outputItemsEstimate:items,policy:'STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE'};
 }
 function validateRequest(r){
@@ -7715,8 +8055,8 @@ function finiteJson(value){
   return value;
 }
 async function run(kind,input={},context={}){
-  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
-  try{const r=map[kind](input,context),body=finiteJson({kind,moduleVersion:'m2-ns-0.3.3',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
+  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
+  try{const r=map[kind](input,context),body=finiteJson({kind,moduleVersion:'m2-ns-0.3.4',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
   catch(error){if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
 }
 async function runJob(r,context={}){return run(r.kind,r.input,{...context,precision:r.precision??context.precision??{},budget:r.budget??context.budget??{}});}
@@ -7728,6 +8068,7 @@ function getExamples(){return [
   ['ns-m2-actual-picard-acceptance','N4 · 실제 n=1 Picard 유한 합격·공통 구간·tail','ns.actual-picard-acceptance',{sourceProfile:SOURCE_PROFILE_ID,tailBits:128}],
   ['ns-m2-actual-pulse-amplitude','N5 · 실제 성장 펄스·위상·에너지·Gaussian 구간','ns.actual-pulse-amplitude',{sourceProfile:SOURCE_PROFILE_ID,y:2.5,sign:1,steps:64}],
   ['ns-m2-actual-covariance-matching','N5 · 실제 공분산·응력·양의 역행렬·전체 활성 합','ns.actual-covariance-matching',{sourceProfile:SOURCE_PROFILE_ID,y:2.5,cells:256,cutoffCells:256,bits:512}],
+  ['ns-m2-actual-residual-order','N4 · 같은 배경의 N=0/1 잔차·고정 영역·독립 정련','ns.actual-residual-order',{sourceProfile:SOURCE_PROFILE_ID,bits:128,mesh:8,maxDerivativeOrder:2,timeIndices:[4,8,12,16]}],
   ['ns-m2-actual-mean-pulse','N5 · 실제 Imean 장·국소 위상 상계·원문 성장 초기조건','ns.actual-mean-pulse',{sourceProfile:SOURCE_PROFILE_ID,y:2.5,eta:.25,s:1,order:3,samples:32}],
   ['ns-m2-recursion','N4 · 원래 PDE 직접 대입·exact coefficient 항등식','ns.background-recursion',{maxOrder:2}],
   ['ns-m2-picard','N4 · 원문 6성분 Picard operator·조건부 엄밀 tail','ns.background-picard',{sourceProfile:SOURCE_PROFILE_ID,n:1,Cn:.5,a:.25,rho:.5,rhoPrime:.25,terms:16}],
@@ -7744,11 +8085,11 @@ function getExamples(){return [
   ['ns-m2-pulse-curl','N5 · 원문 C_m·전체 r_m·Cartesian curl 대조','ns.pulse-curl',{ell:8}],
   ['ns-m2-tail','N5 · 전체 cutoff 잔차 jet·조건부 고정차수 flatness','ns.pulse-tail',{c:.2,C:2,derivativeLoss:2,targetPower:4,ellStart:8,count:80}]
 ].map(([id,label,kind,input])=>({id,label,request:{kind,input}}));}
-function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],implemented:'Actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation and ns.actual-continuation'],checklist:getChecklist(),requiredNext:['complete actual global moment functionals and corrected order-one fields','higher-order source recursion after finalized moments','actual finite Fslow and CNm/Km refinement','whole-annulus background/pulse jets, all slow Gaussian derivatives, and actual covariance']};}
+function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],implemented:'Actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order'],checklist:getChecklist(),requiredNext:['complete actual global moment functionals and corrected order-one fields','higher-order source recursion after finalized moments','extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N','whole-annulus background/pulse jets, all slow Gaussian derivatives, and actual covariance']};}
 
 return {validate,validateRequest,run,runJob,getExamples,getCapabilities};
 })();
-const __m2_85 = (()=>{
+const __m2_89 = (()=>{
 const {requireCondition,groupDescriptor} = __m2_23;
 const {createField,normalizeFieldSpec} = __m2_25;
 function positive(x,name){requireCondition(Number.isFinite(x)&&x>0&&x>=1e-4&&x<=1e4,'DELTA_OR_SCALE_BOUNDS',`${name} must lie in [1e-4,1e4].`,name);}
@@ -7797,7 +8138,7 @@ function finiteSpectralModel(s){requireCondition(s&&Number.isFinite(s.delta)&&s.
 
 return {canonical,sha256,normalizeFamily,createStateFamily,stateFamilyDescriptor,finiteSpectralModel};
 })();
-const __m2_86 = (()=>{
+const __m2_90 = (()=>{
 const {requireCondition} = __m2_23;
 const {evaluateField,bpstMarginal,simpson} = __m2_25;
 function intervals(x,n,name){requireCondition(Array.isArray(x)&&x.length===n&&x.every(v=>Array.isArray(v)&&v.length===2&&v.every(w=>Number.isFinite(w)&&Math.abs(w)<=1e4)&&v[0]<v[1]),'OBSERVATION_BOUNDS',`${name} needs ${n} finite ordered intervals.`);return x.map(v=>v.slice());}
@@ -7841,13 +8182,13 @@ function sampleObservation(state,observation){
 
 return {normalizeObservation,observationCost,sampleObservation};
 })();
-const __m2_87 = (()=>{
+const __m2_91 = (()=>{
 /** MathScope M1 gauge facade. Pure bounded worker API; JSON-safe output. */
 const M = __m2_21;
 const {GaugeInputError,requireCondition,normalizeGroupSpec,createGroup,availableGroups,groupDescriptor,detailedDescriptor,verifyGroup} = __m2_23;
 const {createField,normalizeFieldSpec,verifyFieldAt,verifyDensityQuadrature,evaluateField,normalizeGauge,bpstBallMass,verifyCoordinateCurvature,verifyPeriodicSeam,normalizeFieldGauge} = __m2_25;
-const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_85;
-const {normalizeObservation,observationCost,sampleObservation} = __m2_86;
+const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_89;
+const {normalizeObservation,observationCost,sampleObservation} = __m2_90;
 const {normalizePath,wilsonLoop,plaquettePath} = __m2_27;
 const KINDS=['gauge.group','gauge.field','gauge.family','gauge.holonomy','gauge.spectral'];
 const SOURCES=[{"id":"YM-R01","title":"Quantum Yang–Mills Theory / Yang–Mills & the Mass Gap","authors":"Arthur Jaffe; Edward Witten; Clay Mathematics Institute","url":"https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf","locator":"인쇄 p. 6 §4: 존재·스펙트럼 간극 정의; p. 7 §5: 부피에 균일한 간극과 무한 부피 문제","status":"THEOREM_REFERENCE","role":"compact simple G, nontrivial R⁴ quantum theory, QFT axioms, positive spectral gap의 동시 요구. 현재 공식 상태 Unsolved.","leanImport":null,"kernelReceipt":null},{"id":"YM-R02","title":"Math 210C. Compact Lie Groups","authors":"Brian Conrad; Aaron Landesman","url":"https://math.stanford.edu/~conrad/210CPage/handouts/lie_groups_notes.pdf","locator":"§§17–18 pp.75–83; §26 p.114 이하; Appendices K,V,Y","status":"THEOREM_REFERENCE","role":"rank-one subgroup, character/cocharacter lattice, normal subgroup, global group center/fundamental group를 분리하는 구조 설계","leanImport":null,"kernelReceipt":null},{"id":"YM-R05","title":"Matter representations from geometry: under the spell of Dynkin","authors":"Mboyo Esole; Monica Jinwoo Kang","url":"https://arxiv.org/pdf/2012.13401","locator":"§2.5 pp.15–16(현재 PDF 페이지 16), Dynkin index of an embedding","status":"THEOREM_REFERENCE","role":"기본 불변형의 정규화에 대한 Lie algebra embedding index. 본 설계의 B_G(ιX,ιY)=IιB_SU2(X,Y) convention을 독립 명시.","leanImport":null,"kernelReceipt":null},{"id":"YM-R06","title":"Lectures on instantons","authors":"Stefan Vandoren; Peter van Nieuwenhuizen","url":"https://arxiv.org/pdf/0802.1862","locator":"§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding","status":"THEOREM_REFERENCE","role":"anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.","leanImport":null,"kernelReceipt":null},{"id":"YM-R07","title":"Gauge Theory — Chapter 4: Lattice Gauge Theory","authors":"David Tong","url":"https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf","locator":"§4.1; 인쇄 p.202 이하; link gauge transform eq.(4.8)","status":"THEOREM_REFERENCE","role":"4D Euclidean lattice, group links, Wilson loops와 작용 및 격자 cutoff의 의미","leanImport":null,"kernelReceipt":null},{"id":"YM-R08","title":"Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories","authors":"Martin Lüscher","url":"https://link.springer.com/article/10.1007/BF01614090","locator":"출판사 초록과 서지사항; 실제 선택한 모델의 가정 대응은 Y4-06/Y7-06의 후속 작업","status":"THEOREM_REFERENCE","role":"Wilson lattice gauge theory의 physical positivity와 transfer matrix 구성 근거","leanImport":null,"kernelReceipt":null},{"id":"YM-R09","title":"Gauge field theories on a lattice","authors":"Konrad Osterwalder; Erhard Seiler","url":"https://www.sciencedirect.com/science/article/abs/pii/0003491678900398","locator":"출판사 초록·서지사항; Euclidean lattice construction 및 positivity","status":"THEOREM_REFERENCE","role":"유클리드 격자 gauge theory의 positivity/constructive framework. continuum 존재 증명으로 확장하지 않음.","leanImport":null,"kernelReceipt":null},{"id":"YM-R13","title":"The Lean Language Reference — Axioms","authors":"Lean FRO contributors","url":"https://lean-lang.org/doc/reference/latest/Axioms/","locator":"axiom declaration, consistency 및 #print axioms","status":"THEOREM_REFERENCE","role":"사용자 axiom의 논리적 지위·의존성 감사. 기존 Lean 4.34.1 결과는 로컬 source/hash/log로 별도 증빙.","leanImport":null,"kernelReceipt":null},{"id":"YM-R14","title":"The Octonions","authors":"John C. Baez","url":"https://math.ucr.edu/home/baez/octonions/node14.html","locator":"§4.1 G2; Theorem 4, compact Der(O) subset so(Im O); 7-dimensional faithful representation and invariant cross product","status":"THEOREM_REFERENCE","role":"Compact G2 as octonion automorphisms/positive 3-form stabilizer, not split G2. The generator uses its explicitly documented equivalent Cayley–Dickson convention.","leanImport":null,"kernelReceipt":null},{"id":"YM-R15","title":"Math 249B. Root systems for split classical groups","authors":"Brian Conrad","url":"https://virtualmath1.stanford.edu/~conrad/249BW16Page/handouts/classicalgps.pdf","locator":"§§2–5 (8-page PDF), roots/coroots/character lattices for A/B/C/D; use complexification to connect with the separately constructed compact real form","status":"THEOREM_REFERENCE","role":"Classical root and coroot integer data. This split-algebra reference alone is not a proof of the compact form, which is constructed and checked separately.","leanImport":null,"kernelReceipt":null}];
@@ -7943,7 +8284,7 @@ function getExamples(){
 
 return {validateRequest,runJob,getCapabilities,getExamples,createGroup,createField,createStateFamily,evaluateField,verifyGroup,verifyFieldAt,verifyDensityQuadrature,sampleObservation,wilsonLoop,canonical,sha256};
 })();
-const __m2_88 = (()=>{
+const __m2_92 = (()=>{
 const {ComputeError,positive,finiteNumber} = __m2_40;
 function parameters(input={}){
   const tau=positive(input.tau??.1,'tau'),h=finiteNumber(input.h??.005,'h'),viscosity=positive(input.viscosity??1,'viscosity');
@@ -7983,7 +8324,7 @@ function coordinateFieldSample(input={},budget){
 
 return {parameters,fromSimilarity,toSimilarity,transformedDerivative,monomialJet,coordinateFieldSample};
 })();
-const __m2_89 = (()=>{
+const __m2_93 = (()=>{
 const {ComputeError,integrate,makeBudget,finiteNumber,positive,boundedInteger,point,iadd,isub,idiv,imul,iscale,nextUp,nextDown,ball} = __m2_40;
 // Real Taylor coefficients in eta. These are formal finite jets, not a tail proof.
 const jetC=(x,n)=>[x,...Array(n).fill(0)];
@@ -8054,7 +8395,7 @@ function evaluateAxis(solution,X){
 
 return {jetC,jetVar,jetAdd,jetScale,jetSub,jetMul,jetInv,jetDiv,jetDeriv,jetExp,jetLog,jetPow,jetEval,comparisonSeries,axisData,solveAxisCoefficients,evaluateAxis};
 })();
-const __m2_90 = (()=>{
+const __m2_94 = (()=>{
 const {ComputeError,point,interval,iadd,isub,imul,idiv,iscale,ipow,iexp,ilog,ipower,ball,midpoint,maxabs,nextUp,nextDown,jvar,jconst,jadd,jsub,jmul,jscale,jexp,jlog,certifiedSimpson,integrate,makeBudget,positive,finiteNumber} = __m2_40;
 const validateH=h=>{h=finiteNumber(h,'h');if(!(h>0&&h<.01))throw new ComputeError('INVALID_INPUT','0 < h < .01 required');return h;};
 const rising=(h,m)=>{let v=1;for(let i=0;i<m;i++)v*=h+i;return v;};
@@ -8126,10 +8467,10 @@ function heatTaylorFinite(Z,h=.005,N=8){
 
 return {heatIntegralCertificate,heatFast,exteriorJet,exteriorPoint,taylorGreenPoint,heatTaylorFinite};
 })();
-const __m2_91 = (()=>{
+const __m2_95 = (()=>{
 const {ComputeError,integrate,makeBudget,solveLinear,positive,boundedInteger,point,interval,iadd,isub,imul,idiv,ipow,ipower,ball} = __m2_40;
-const {heatFast} = __m2_90;
-const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_89;
+const {heatFast} = __m2_94;
+const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_93;
 function smoothStep(y){if(y<=0)return 0;if(y>=1)return 1;const z=-1/(y*y)+1/((1-y)**2);return z>0?1/(1+Math.exp(-z)):Math.exp(z)/(1+Math.exp(z));}
 function smoothStepDerivative(y){if(y<=0||y>=1)return 0;const s=smoothStep(y);return s*(1-s)*(2/y**3+2/(1-y)**3);}
 function compactBump(x,a,b){if(!(a<b))throw new ComputeError('INVALID_SUPPORT','Bump support must have positive width');if(x<=a||x>=b)return 0;return smoothStepDerivative((x-a)/(b-a))/(b-a);}
@@ -8251,11 +8592,11 @@ function coneModulationFixture({N=32,amplitude=.12,Xa=1,Xb=4}={}){
 
 return {smoothStep,smoothStepDerivative,compactBump,parameterOrder,buildOuterSchedule,fiveMoments,solveFiveMomentRepair,coneMargins,certifiedConeBox,coneModulationFixture};
 })();
-const __m2_92 = (()=>{
+const __m2_96 = (()=>{
 const {ComputeError,integrate,makeBudget,boundedInteger,positive} = __m2_40;
-const {parameters,fromSimilarity,toSimilarity} = __m2_88;
-const {solveAxisCoefficients,evaluateAxis} = __m2_89;
-const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_91;
+const {parameters,fromSimilarity,toSimilarity} = __m2_92;
+const {solveAxisCoefficients,evaluateAxis} = __m2_93;
+const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_95;
 /** Executable candidate, not Theorem 4.6 certification.
  * The nonlinear axis coefficients and outer unedited schedule are source formulae.
  * The intervening C-infinity diagnostic continuation is identified as such; the
@@ -8310,7 +8651,7 @@ function constructLeadingCandidate(input={},budget=makeBudget()){
 
 return {constructLeadingCandidate};
 })();
-const __m2_93 = (()=>{
+const __m2_97 = (()=>{
 const {matrix,identity,zero,multiply,equalMatrix} = __m2_0;
 const {p1Model,p1Retraction,checkComplex,checkRetraction,checkChainMap} = __m2_3;
 /** Integral unimodular coordinate changes, including a non-permutation shear. */
@@ -8346,15 +8687,15 @@ function transportRetraction(C,a){const R=p1Retraction(C);return {...R,i:R.i.map
 
 return {basisChange,transportComplex,complexBasis};
 })();
-const __m2_94 = (()=>{
+const __m2_98 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
-const LegacyGauge = __m2_87;
-const {finiteSpectralModel} = __m2_85;
-const {fromSimilarity} = __m2_88;
-const {constructLeadingCandidate} = __m2_92;
+const LegacyGauge = __m2_91;
+const {finiteSpectralModel} = __m2_89;
+const {fromSimilarity} = __m2_92;
+const {constructLeadingCandidate} = __m2_96;
 const {makeBudget} = __m2_40;
 const Gauge = __m2_39;
-const {complexBasis} = __m2_93;
+const {complexBasis} = __m2_97;
 const clone=x=>JSON.parse(JSON.stringify(x));
 const KINDS=['observation.delta-family','observation.gauge-4d','observation.blowup-pair','observation.complex-basis'];
 const MODES=['ASSUMED_BOUND','UNITS','EFFECTIVE_MODEL','ENSEMBLE_ESTIMATE'];
@@ -8499,13 +8840,13 @@ function getExamples(){
 
 return {validateRequest,verifyCorrelatorFamily,runJob,getCapabilities,getExamples};
 })();
-const __m2_95 = (()=>{
+const __m2_99 = (()=>{
 const Arithmetic = __m2_19;
 const Gauge = __m2_39;
-const Navier = __m2_84;
-const Observatory = __m2_94;
+const Navier = __m2_88;
+const Observatory = __m2_98;
 const {canonicalStringify,sha256} = __m2_24;
-const M2_VERSION='0.3.3';
+const M2_VERSION='0.3.4';
 const LIMITS=Object.freeze({maxMillis:60000,maxBytes:8*1024*1024,maxItems:250000,maxOperations:50000000,maxJobs:128,maxConcurrent:1,maxInputBytes:262144});
 const DOMAINS=Object.freeze({arithmetic:Arithmetic,gauge:Gauge,ns:Navier,observation:Observatory});
 const clone=x=>JSON.parse(canonicalStringify(x));
@@ -8539,8 +8880,8 @@ async function requestHash(request){return sha256(normalizeRequest(request));}
 
 return {M2_VERSION,LIMITS,clone,bytes,normalizeRequest,validateDomainRequest,listExamples,listCapabilities,executeDomain,requestHash};
 })();
-const __m2_96 = (()=>{
-const {executeDomain} = __m2_95;
+const __m2_100 = (()=>{
+const {executeDomain} = __m2_99;
 let cancelled=false;
 self.onmessage=async event=>{
   if(event.data?.type==='cancel'){cancelled=true;return;}

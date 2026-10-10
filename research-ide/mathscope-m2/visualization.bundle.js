@@ -1012,7 +1012,7 @@ class SourceBoundScene extends Scene3D {
     this.canvas.dataset.renderReady='true';
   }
   axes(chart,w,h,all){
-    const c=this.ctx,left=w<420?54:68,right=w-24,top=62,bottom=h-58,xb=chart.xBounds||range(all.map(p=>p.x)),yb=chart.yBounds||range(all.map(p=>p.y));
+    const c=this.ctx,left=w<420?54:68,right=w-24,top=78,bottom=h-58,xb=chart.xBounds||range(all.map(p=>p.x)),yb=chart.yBounds||range(all.map(p=>p.y));
     const X=x=>left+(x-xb[0])/(xb[1]-xb[0])*(right-left),Y=y=>bottom-(y-yb[0])/(yb[1]-yb[0])*(bottom-top);
     c.strokeStyle='#66879b';c.lineWidth=1;c.beginPath();c.moveTo(left,top);c.lineTo(left,bottom);c.lineTo(right,bottom);c.stroke();
     c.font='10px monospace';

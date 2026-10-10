@@ -23,7 +23,7 @@ function propertyTable(title,object,sourcePath,fields,options){
 }
 
 function common(id,title,description,axes,observationKind,d){
-  return {id,title,description,sourceRoot:ROOT,axisMetadata:axes,color:null,relatedTables:[],details:[],lostInformation:[],observation:{kind:observationKind,sourceProfileId:d.profileId,sourceDimension:axes.length,sourceDimensionMeaning:'TYPED_STORED_SOURCE_ATTRIBUTES',displayDimension:2,physicalDimension:0,coordinateTypes:axes.map(a=>a.type),nonInjective:true,reconstructionAllowed:false,sourceScope:'ACTUAL_SAME_N3_RESTRICTED_CONSTRUCTION',globalOriginalCriteriaComplete:false}};
+  return {id,title,description,sourceRoot:ROOT,axisMetadata:axes,color:null,relatedTables:[],details:[],lostInformation:[],observation:{kind:observationKind,sourceProfileId:d.profileId??d.sourceProfile,sourceDimension:axes.length,sourceDimensionMeaning:'TYPED_STORED_SOURCE_ATTRIBUTES',displayDimension:2,physicalDimension:0,coordinateTypes:axes.map(a=>a.type),nonInjective:true,reconstructionAllowed:false,sourceScope:'ACTUAL_SAME_N3_RESTRICTED_CONSTRUCTION',globalOriginalCriteriaComplete:false}};
 }
 
 function intervalMark(record,prefix,index,label){
@@ -260,6 +260,53 @@ function actualCovariancePanels(d,options){
   return panels;
 }
 
+const rationalDisplay=value=>{
+  if(typeof value!=='string'||!/^[-+]?\d+(\/\d+)?$/.test(value))return NaN;
+  const [n,den='1']=value.split('/');return Number(n)/Number(den);
+};
+
+function actualResidualPanels(d,options){
+  const tp=ROOT+'.timeRows',times=array(d.timeRows);
+  const timeTable=sourceTable('같은 q와 배경에서 비교한 실제 잔차의 하한·상한',['k','q의 정확식','N=0 norm 하한 ≥','N=1 norm 상한 ≤','norm 비율 상한 ≤','공통 양의 물리 배율'],times.map((r,i)=>{const p=tp+'['+i+']';return row(p,cell(r.k,p+'.k'),cell(r.qExactExpression,p+'.qExactExpression'),cell(r.N0NormLowerExact,p+'.N0NormLowerExact'),cell(r.N1NormUpperExact,p+'.N1NormUpperExact'),cell(r.actualNormRatioUpperExact,p+'.actualNormRatioUpperExact'),cell(r.commonPositivePhysicalScale,p+'.commonPositivePhysicalScale'));}),options);
+  const groups=[['N0NormLowerExact','N=0 norm의 하한 ≥',COLORS[0],[]],['N1NormUpperExact','N=1 norm의 상한 ≤',COLORS[1],[6,3]]].map(([key,label,color,dash])=>({label,color,dash,connect:true,points:times.map((r,i)=>{const y=rationalDisplay(r[key]);return y>0&&finite(y)?{x:r.k,y:Math.log2(y),sourceValue:r[key],sourcePath:tp+'['+i+'].'+key,xSourcePath:tp+'['+i+'].k',sourceIndex:i,label:label+' '+r[key]+' · k='+r.k,displayTransform:'LOG2_OF_RETAINED_EXACT_ONE_SIDED_BOUND'}:null;})}));
+  const main=seriesPanel('main','같은 배경 · N을 늘렸을 때의 잔차 감소','각 k에서 같은 q_k와 같은 고정 영역의 두 차수를 비교합니다. 녹색은 N=0 실제 norm의 하한, 노란색은 N=1 실제 norm의 상한입니다. 세로축은 공통 양의 배율 q_k^(−3/2)·S를 제거한 bound의 log₂이며 norm의 정확값이 아닙니다. k는 q 선택 지수입니다.',groups,[axis('고정 source q_k의 index k','SOURCE_Q_SELECTION_INDEX',tp+'[*].k'),axis('정규화 norm bound · log₂','LOG2_NORMALIZED_ACTUAL_RESIDUAL_BOUND',tp+'[*]','log2 of the stored exact one-sided bound; physical common scale retained per row')],'ACTUAL_FIXED_DOMAIN_ORDER_RESIDUAL_BOUNDS',d,timeTable,options);
+  main.lostInformation.push('N=0은 평가한 실제 witness로 얻은 하한이고 N=1은 고정 영역 전체의 해석적 상한입니다. 선을 실제 norm의 수치 이력으로 읽지 않습니다.','다른 k 사이에는 물리 정규화 배율도 달라집니다. 같은 행 안에서의 N=0/1 비율과 표의 정확 부등식이 감소 판정의 근거입니다.');
+
+  const rp=ROOT+'.pointRows',points=array(d.pointRows),atWitness=points.map((r,i)=>({r,i})).filter(({r})=>r.XMultiplierExact==='1');
+  const pointTable=sourceTable('같은 양의 X에서의 실제 PDE 잔차 성분',['N','성분','X/Xunit','실제 X의 정확식','정규화된 원본 양','정확 하한','정확 상한','물리 복원 배율','해석 나머지 상계'],points.map((r,i)=>{const p=rp+'['+i+']';return row(p,cell(r.N,p+'.N'),cell(r.component,p+'.component'),cell(r.XMultiplierExact,p+'.XMultiplierExact'),cell(r.XExactExpression,p+'.XExactExpression'),cell(r.quantity,p+'.quantity'),cell(r.normalizedInterval?.lower,p+'.normalizedInterval.lower'),cell(r.normalizedInterval?.upper,p+'.normalizedInterval.upper'),cell(r.physicalScale,p+'.physicalScale'),cell(r.analyticRemainderUpperExact,p+'.analyticRemainderUpperExact'));}),options);
+  const components=intervalPanel('actual-residual-components','실제 잔차 · 고정 양의 X에서의 여섯 성분','X=Xunit, η=0에서 N=0과 N=1의 θ·z·r 잔차를 표시합니다. 정확한 PDE 계수와 무한 Picard 해의 해석적 오차를 함께 보존합니다. 각 행의 물리 배율은 다르며, 이 그림의 행 길이가 N 증가의 잔차 감소를 판정하지 않습니다.',atWitness.map(({r,i},j)=>intervalMark(r,rp+'['+i+']',j,'N='+r.N+' '+r.component)),[axis('차수와 성분의 독립 행','RESIDUAL_ORDER_COMPONENT',rp+'[*].component'),axis('실제 정규화 잔차 enclosure','NORMALIZED_ACTUAL_RESIDUAL_INTERVAL',rp+'[*].normalizedInterval','Stored directed enclosure at one unchanged positive X')],'ACTUAL_FIXED_POSITIVE_POINT_RESIDUAL_COMPONENTS',d,pointTable,options);
+  components.details.push({title:'양의 source 좌표·극소 파라미터·해석 오차',value:d.sourceErrorLedger,sourcePath:ROOT+'.sourceErrorLedger'});
+
+  const mp=ROOT+'.refinement.meshes',meshes=array(d.refinement?.meshes);
+  const meshTable=sourceTable('같은 영역에서 독립적으로 바꾼 격자',['격자','동일 영역과 witness'],meshes.map((r,i)=>{const p=mp+'['+i+']';return row(p,cell('mesh '+r.mesh),cell(r,p));}),options);
+  const mesh=tablePanel('actual-residual-mesh','격자 정련 · 영역과 witness 유지','4·8·16·32개 양의 반경을 같은 영역에 놓습니다. Xunit의 정의와 η 영역, 실제 norm의 해석적 상계는 격자 수와 무관합니다. 유한 표본을 전체 영역 norm의 증명으로 사용하지 않습니다.',meshTable,mp,'ACTUAL_RESIDUAL_FIXED_DOMAIN_MESH_REFINEMENT',d);
+
+  const pp=ROOT+'.refinement.precision',precisions=array(d.refinement?.precision);
+  const precisionTable=sourceTable('동일 X와 고정 source 오차에서의 방향성 구간',['산술 bits','N','성분','정확 하한','정확 상한','고정 source 오차 bits'],precisions.flatMap((r,i)=>array(r.values).map((v,j)=>{const p=pp+'['+i+'].values['+j+']';return row(p,cell(r.bits,pp+'['+i+'].bits'),cell(v.N,p+'.N'),cell(v.component,p+'.component'),cell(v.normalizedInterval?.lower,p+'.normalizedInterval.lower'),cell(v.normalizedInterval?.upper,p+'.normalizedInterval.upper'),cell(r.analyticBudgetBits,pp+'['+i+'].analyticBudgetBits'));})),options);
+  const precision=tablePanel('actual-residual-precision','산술 정밀도 · 같은 source 오차 바닥','96·128·192 bits와 요청한 bits에서 같은 양의 X의 유리수 구간을 방향성 반올림합니다. source에서 유도한 해석 오차는 160-bit 예산으로 고정됩니다. 산술 정밀도를 올려도 이 오차가 사라지거나 관측 위치가 바뀌지 않습니다.',precisionTable,pp,'ACTUAL_RESIDUAL_FIXED_POINT_ARITHMETIC_REFINEMENT',d);
+  precision.chart.rows=precisions.map(r=>['bits '+r.bits,'같은 Xunit · source 오차 bits '+r.analyticBudgetBits+' · '+r.values.length+'개 성분 구간']);
+  precision.chart.sourcePaths=precisions.map((_,i)=>pp+'['+i+']');
+
+  const np=ROOT+'.sourceNorms',constants=array(d.sourceNorms?.derivativeConstants),cp=np+'.derivativeConstants';
+  const constantsTable=sourceTable('실제 source에서 계산한 C_N,m와 K_m',['도함수 차수','정확 상수·지수 기록'],constants.map((r,i)=>{const p=cp+'['+i+']';return row(p,cell('m='+r.m),cell(r,p));}),options);
+  const norms=tablePanel('actual-residual-constants','실제 C_N,m · 차수와 정련에 공통인 K_m','원래 여덟 잔차 계수의 해석적 norm을 합하고 공통 Cauchy 반경·원래 좌표의 chain rule을 적용한 양의 상수식입니다. 표시한 m에서 N=0,1에 공통인 K_m=2+m을 사용합니다. 거대한 상수는 0이나 유한 근삿값으로 대체하지 않습니다.',constantsTable,cp,'ACTUAL_RESIDUAL_COMPUTED_CN_M_AND_K_M',d);
+  norms.chart.rows=constants.map(r=>['m='+r.m,'K_m='+r.Km+'; C_N,m='+r.formula]);
+  norms.relatedTables.push(propertyTable('실제 Cauchy domain과 상수 도출',d.sourceNorms,np,[['analyticDomain','복소 domain과 고정 실수 compact'],['budgetRules','실행한 연산·미분 예산'],['scope','유한 차수와 실제 source 범위']],options));
+  norms.details.push({title:'실제 상수의 정확한 양의 식과 계수별 norm',value:d.sourceNorms?.positiveNormGraph,sourcePath:np+'.positiveNormGraph'});
+
+  const domainTable=propertyTable('정련과 q에 독립인 원래 source 영역',d.domain,ROOT+'.domain',[['id','같은 관측 영역'],['XExact','고정 radial 구간'],['etaExact','원래 η 구간'],['sourceNaturalCoreEnd','원래 수정 전 core 끝'],['CauchyRadius','공통 Cauchy 반경'],['fixedForAllNMeshPrecisionAndQ','N·mesh·bits·q 사이의 영역 고정'],['physicalSpaceChangesWithQByOriginalSimilarityMap','원래 similarity map의 물리 좌표'],['wholeProfile','전체 profile 검증']],options);
+  const domain=tablePanel('actual-residual-domain','고정된 core · 원래 배경과의 관계','실제 source의 상수만으로 한 번 정한 매우 작은 양의 core compact입니다. 같은 source에서 차수·정밀도·격자·q를 바꿔도 Xunit과 η 영역을 유지합니다. 원래 좌표식 τ=q(1−η²), z=q^Dη에 따라 각 q의 supremum은 시공간 집합 전체에서 취합니다. 전체 profile 검증 범위는 별도로 남습니다.',domainTable,ROOT+'.domain','ACTUAL_UNCHANGED_CORE_FIXED_RESIDUAL_DOMAIN',d);
+  domain.relatedTables.push(propertyTable('고정 양의 반경과 물리 배율의 정확식',d.exactExpressions,ROOT+'.exactExpressions',[['residualXUnit','고정 양의 Xunit'],['residualXMax','고정 radial 끝'],['residualWitnessScale','공통 양의 witness 배율']],options));
+
+  const ap=ROOT+'.axisIdentities',identities=Object.keys(d.axisIdentities||{});
+  const algebra=tablePanel('actual-residual-pde','직접 PDE 잔차 · 압력과 비영 항 보존','원문 (5.24)의 잔차에 같은 leading 해와 실제 n=1 계수를 대입했습니다. N=0 radial witness에는 실제 압력이 남고 N=1 axial 잔차의 첫 계수도 양수입니다. 유한 radial 계수 검사와 무한 source 해의 구간 인증을 구별합니다.',propertyTable('실제 source에서 얻은 축 계수 항등식',d.axisIdentities,ap,identities.map(k=>[k,k]),options),ap,'ACTUAL_PDE_RESIDUAL_AND_NONZERO_AXIS_IDENTITIES',d);
+  algebra.details.push({title:'직접 잔차의 원문 식·source 결속·유한 계수 경계',value:d.residualProgram,sourcePath:ROOT+'.residualProgram'});
+
+  const panels=[main,components,mesh,precision,norms,domain,algebra];
+  for(const p of panels){p.observation={...p.observation,actualSourceResidual:true,actualNormBoundsNotExactNormValues:true,domainFixedAcrossOrderMeshAndPrecision:true,positivePhysicalCoordinatesRetained:true,actualCNmAndKmComputed:true,wholeProfileResidualComplete:false,allOrdersComplete:false};p.details.push({title:'실제 잔차의 요청과 적용 범위',value:{request:d.request,scope:d.scope,acceptanceBoundary:d.acceptanceBoundary},sourcePath:ROOT});}
+  return panels;
+}
+
 /** Parent makeM2Visualization supplies current editor/job/hash state before merging one panel. */
 export function actualSourcePanels(job,options={}){
   if(!job?.result||options.currentEditorMatches===false)return [];
@@ -269,6 +316,7 @@ export function actualSourcePanels(job,options={}){
   if(kind==='ns.actual-picard-acceptance'&&d?.schema==='MathScope.ActualFixedOrderPicardAcceptance/1')return picardAcceptancePanels(d,options);
   if(kind==='ns.actual-pulse-amplitude'&&d?.schema==='MathScope.ActualMeanPulseAmplitude/1')return pulseAmplitudePanels(d,options);
   if(kind==='ns.actual-covariance-matching'&&d?.schema==='MathScope.ActualPulsePointwiseAssembly/1')return actualCovariancePanels(d,options);
+  if(kind==='ns.actual-residual-order'&&d?.schema==='MathScope.ActualFixedCoreResidualCertificate/1')return actualResidualPanels(d,options);
   if(kind==='ns.actual-continuation'&&d?.schema==='MathScope.ActualContinuationConstruction/1')return continuationPanels(d,options);
   if(kind==='ns.actual-mean-pulse'&&d?.schema==='MathScope.ActualMeanPatchPulseConstruction/1')return pulsePanels(d,options);
   return [];

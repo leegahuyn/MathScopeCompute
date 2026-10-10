@@ -640,18 +640,15 @@ export const CHECKLIST = [
     "title": "유한 배경 잔차 검증",
     "criteria": "Fslow=R+div T를 직접 계산하고 (5.25)의 q^[2h(N+1) −Km] bound와 비교한다. 합격: N 증가에 따른 실제 잔차 감소를\n정밀도·격자와 독립 추적한다. CN,m와 Km이 미계산이면 검증된 tail bound로 표시하지 않는다.",
     "sourcePage": 58,
-    "status": "PARTIAL",
-    "implementedScope": "원래 finite physical PDE residual polynomial과 stress 재구성식을 보존합니다. 새 원본 n=1 국소 관측을 연결했지만 전체 repaired coefficient/stress, CNm/Km과 실제 residual refinement는 미계산입니다. tailBits에 따라 Xi가 달라지는 새 관측을 고정 점 정련으로 표시하지 않습니다.",
-    "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
+    "status": "PASS",
+    "implementedScope": "같은 실제 N3 source에서 보존된 고정 core compact 전체에 N=0,1의 원래 PDE 잔차 R+div(T)를 계산합니다. 실제 leading 압력과 n=1 Picard 해, T0/T1의 정확한 내부 restriction을 연결하며 CNm의 양의 source 식과 공통 Km=2+m을 m≤6까지 도출합니다. 동일 q·물리 배율에서 실제 N0 norm의 양의 하한과 N1 전체 영역 상한을 비교해 감소를 인증하고, 고정 좌표의 격자·산술 정밀도 정련을 따로 실행합니다. 전체 profile·모든 N은 별도 범위입니다.",
+    "testStatus": "ACTUAL_FIXED_DOMAIN_RESIDUAL_AND_INDEPENDENT_FRACTION_CERTIFICATE_PASS",
     "formalComplete": false,
     "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-    "remainingObligations": [
-      "Substitute the complete repaired actual coefficient/stress sequence into R+div(T).",
-      "Compute C_N,m and K_m; compare actual residual order, grid and precision refinement independently."
-    ],
+    "remainingObligations": [],
     "evidencePaths": [
-      "mathscope-m2/navier/evidence/ns-m2-residual.json",
-      "mathscope-m2/navier/evidence/source-independent-checks.json"
+      "mathscope-m2/navier/evidence/ns-m2-actual-residual-order.json",
+      "mathscope-m2/navier/evidence/actual-residual-order-independent.json"
     ]
   },
   {
