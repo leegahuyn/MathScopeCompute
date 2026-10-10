@@ -1,24 +1,24 @@
 {
   "schema": "MathScope.LiveRelease/2",
   "dateUTC": "2026-10-10",
-  "checkpoint": "v68-actual-fixed-core-residual-and-visible-axis-labels",
+  "checkpoint": "v69-actual-first-second-moment-restoration-and-eight-panels",
   "publication": {
     "status": "live",
     "url": "https://project29770.websitepublisher.ai/v0.3.1.html",
     "slug": "v0.3.1.html",
-    "version": 68,
-    "version_hash": "0a3ad25e",
+    "version": 69,
+    "version_hash": "1bb7722e",
     "patches_applied": 2,
     "content_preview": "<!doctype html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1,viewport-fit=cover\">\n  <title>MathScope v0.3.1 — M1 / M2 Research IDE</title>\n  <meta name=\"description\" content=\"MathScope v0.3.1 DEV integrated web prototype: typed mathematical objects, 3D observations, identifiability and fidelity diagnostics, functional analysis, dynamics, arithmetic geometry, certificates, Claim Ledger, Lean bridge boundary, revision and repr",
     "size_change": "normal",
     "message": "Page patched successfully (2 patches applied)"
   },
-  "runtimeVersion": "0.3.4",
-  "workerSha256": "d08ad2f103e6e225ef2a3768854ff32be74246e4fc5b75dada921a8587f77191",
-  "bundleSha256": "fa1b6e91c55b74205395dfefe19abd0f593e36f9314e4531f7fd55874cc4354a",
+  "runtimeVersion": "0.3.5",
+  "workerSha256": "9d6113e4e2c847a0e3f0fdc52f8815c2abc1dc0304082068047704e8e3409ee9",
+  "bundleSha256": "029419a1235c71c0ad0629dfd6ee072d0d19f557bee35e2ba5df6e4122bb614f",
   "git": {
     "branch": "mathscope-m2-visuals-20261010",
-    "previousRemoteCheckpoint": "85cff2eea99f245e5ff94d4e59a95fc08f93f3e8",
+    "previousRemoteCheckpoint": "645539d477d7d04941902b6a92820fa5e02a1855",
     "scope": "Only research-ide/mathscope-m2; this record belongs to its containing commit."
   },
   "m1": {
@@ -40,10 +40,12 @@
       "evidence/v66-m1-audit.json",
       "evidence/v66-m1-interval.jpg",
       "evidence/v68-live-audit.json",
-      "evidence/v68-m1-interval.jpg"
+      "evidence/v68-m1-interval.jpg",
+      "evidence/v69-live-audit.json",
+      "evidence/v69-m1-interval.jpg"
     ],
     "focusedRevalidation": {
-      "pageVersion": 68,
+      "pageVersion": 69,
       "example": "ns-heat-interval",
       "status": "COMPLETED",
       "renderer": "CPU_CANVAS2D_INTERVALS",
@@ -51,18 +53,18 @@
     }
   },
   "m2": {
-    "version": "0.3.4",
-    "examples": 73,
+    "version": "0.3.5",
+    "examples": 74,
     "byDomain": {
       "arithmetic": 25,
       "gauge": 14,
-      "navier": 23,
+      "navier": 24,
       "observationI2": 11
     },
     "originalCriteria": {
       "total": 64,
-      "PASS": 62,
-      "PARTIAL": 2,
+      "PASS": 63,
+      "PARTIAL": 1,
       "OPEN": 0
     },
     "previousOriginalCriteria": {
@@ -70,50 +72,51 @@
       "PARTIAL": 39,
       "OPEN": 5
     },
-    "newlyPassedCriteria": 42,
+    "newlyPassedCriteria": 43,
     "originalPartialCompleted": 38,
-    "originalOpenCompleted": 4,
-    "originalOpenNowPartial": 1,
+    "originalOpenCompleted": 5,
+    "originalOpenNowPartial": 0,
     "fullM2Complete": false,
     "formalPass": false,
     "installedDefaultExecutionStatuses": {
-      "COMPLETED": 60,
+      "COMPLETED": 61,
       "PARTIAL": 13
     },
-    "executionStatusSource": "All 73 local source/static-worker runs; browser scope is recorded separately."
+    "executionStatusSource": "All 74 local source/static-worker runs; browser scope is recorded separately."
   },
   "verification": {
     "navier": {
-      "nodeTests": 195,
-      "passed": 195,
-      "independentPythonChecks": 8325,
-      "evidence": "navier/evidence/acceptance.json"
+      "nodeTests": 267,
+      "passed": 267,
+      "independentPythonChecks": 10409,
+      "evidence": "navier/evidence/acceptance.json",
+      "sourceFilesBound": 183
     },
     "integrationAndCore": {
       "tests": 30,
       "passed": 30,
       "failed": 0,
       "skipped": 0,
-      "sourceVsStaticWorkerExamples": 73,
+      "sourceVsStaticWorkerExamples": 74,
       "evidence": [
-        "evidence/v68-integration-tests.tap",
-        "evidence/v67-core-tests.tap"
+        "evidence/v69-integration-tests.tap",
+        "evidence/v69-core-tests.tap"
       ]
     },
     "newVisualizationsAndM1Host": {
-      "tests": 68,
-      "passed": 68,
-      "scope": "Full 68-test set includes 10 common visualization cases, 51 previous actual/host cases, and 7 residual cases; totals overlap the historical common-visualization row.",
-      "evidence": "evidence/v68-visualization-tests.tap"
+      "tests": 88,
+      "passed": 88,
+      "scope": "Previous 68 plus actual moment views 8, ordered support renderer 3 and actual gauge visualization 9. Full suite overlaps historical common visualization and gauge test counts; counts must not be added as disjoint totals.",
+      "evidence": "evidence/v69-visualization-tests.tap"
     },
     "replay": {
       "ok": true,
       "status": "MATCH",
-      "originalHash": "85b1d4b94e55c0d18dcd4a11e473e4bea61de6f41c4b5ff2d49c2780cdb64254",
-      "freshHash": "85b1d4b94e55c0d18dcd4a11e473e4bea61de6f41c4b5ff2d49c2780cdb64254",
+      "originalHash": "bc80962349665f712445724c694f8db47443accf6bb6acc0a2938d0e2fe5ed68",
+      "freshHash": "bc80962349665f712445724c694f8db47443accf6bb6acc0a2938d0e2fe5ed68",
       "artifactBytesMatch": true,
       "semanticHashPolicy": "EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY",
-      "freshJobId": "m2-job:mv2bojt2:3",
+      "freshJobId": "m2-job:mv2e7bdb:5",
       "sourceVerified": true,
       "importedEvidenceTrusted": false,
       "selected": true
@@ -134,6 +137,83 @@
       "evidence": "evidence/v64-m2-catalog-audit.json"
     },
     "currentBrowserFocusedSweep": {
+      "pageVersion": 69,
+      "versionHash": "1bb7722e",
+      "examples": 4,
+      "panels": 24,
+      "newExamples": 1,
+      "newPanels": 8,
+      "allRendered": true,
+      "allPanelsFiniteAndBound": true,
+      "environment": {
+        "hash": "56a5c5e00e1a3eb1818c26767e3bf5882199b18e901d0aeb7c4c183adf25dc52",
+        "workerSha256": "9d6113e4e2c847a0e3f0fdc52f8815c2abc1dc0304082068047704e8e3409ee9",
+        "execution": "BROWSER_WEB_WORKER"
+      },
+      "evidence": "evidence/v69-live-audit.json"
+    },
+    "replayEvidence": "evidence/v69-live-audit.json",
+    "historicalBrowserArtifact": {
+      "path": "evidence/v64-actual-core-replay.json",
+      "source": "DOM-visible export textarea; exact complete prepared JSON saved after browser download transport failed",
+      "downloadEventSucceeded": false
+    },
+    "screenshots": [
+      "evidence/v69-moment-supports.jpg",
+      "evidence/v69-moment-matrix.jpg",
+      "evidence/v69-m1-interval.jpg"
+    ],
+    "originalStatusDelta": "evidence/original-status-delta.json",
+    "historicalBrowserFocusedSweepV65": {
+      "pageVersion": 65,
+      "versionHash": "20ff2fd3",
+      "examples": 4,
+      "newExamples": 3,
+      "panels": 20,
+      "newPanels": 15,
+      "allRendered": true,
+      "allPanelsFiniteAndBound": true,
+      "environment": {
+        "hash": "ebffefbba4ea681c87a6e5b3f4efc296a5540434f7f33da59a65931ddea43cc5",
+        "workerSha256": "601be23fedcd6a152f7551c54f6c4f107517160c0902014a07f628ce2b205d5f",
+        "execution": "BROWSER_WEB_WORKER"
+      },
+      "evidence": "evidence/v65-new-catalog-audit.json"
+    },
+    "historicalBrowserFocusedSweepV66": {
+      "pageVersion": 66,
+      "versionHash": "4cf1cb64",
+      "examples": 4,
+      "newExamples": 1,
+      "panels": 23,
+      "newPanels": 8,
+      "allRendered": true,
+      "allPanelsFiniteAndBound": true,
+      "environment": {
+        "hash": "92e1b09e39645bf0bcbb6bf3b4f02dbb27363ee6f2ca0ea60cec10cca116293f",
+        "workerSha256": "aefa26fcf4470c7cd91c71b337f49173f77134f404d58f57818e16a65b030b10",
+        "execution": "BROWSER_WEB_WORKER"
+      },
+      "evidence": "evidence/v66-new-catalog-audit.json"
+    },
+    "historicalBrowserFocusedSweepV67": {
+      "pageVersion": 67,
+      "versionHash": "26d0edb3",
+      "examples": 3,
+      "panels": 21,
+      "allRendered": true,
+      "allPanelsFiniteAndBound": true,
+      "evidence": "evidence/v67-live-audit.json"
+    },
+    "additionalFrozenSubclaim": {
+      "name": "actual-leading-high-jets",
+      "nodeTests": 12,
+      "independentPythonChecks": 573,
+      "includedInNavierReleaseTotals": true,
+      "completesN506": false,
+      "evidence": "navier/evidence/actual-leading-high-jets.json"
+    },
+    "historicalBrowserFocusedSweepV68": {
       "pageVersion": 68,
       "versionHash": "0a3ad25e",
       "examples": 2,
@@ -147,18 +227,15 @@
       },
       "evidence": "evidence/v68-live-audit.json"
     },
-    "replayEvidence": "evidence/v68-live-audit.json",
-    "historicalBrowserArtifact": {
-      "path": "evidence/v64-actual-core-replay.json",
-      "source": "DOM-visible export textarea; exact complete prepared JSON saved after browser download transport failed",
-      "downloadEventSucceeded": false
+    "historicalDisplayOnlyPatchV68": {
+      "axisTopMarginBefore": 62,
+      "axisTopMarginAfter": 78,
+      "mathWorkerUnchangedFromV67": true,
+      "labelSeparationVerifiedInRendererTests": true,
+      "browserBeforeScreenshot": "evidence/v67-residual-before-label-spacing.jpg",
+      "browserAfterScreenshot": "evidence/v68-residual-plot.jpg"
     },
-    "screenshots": [
-      "evidence/v68-residual-plot.jpg",
-      "evidence/v68-m1-interval.jpg"
-    ],
-    "originalStatusDelta": "evidence/original-status-delta.json",
-    "rendering": {
+    "historicalRenderingAuditV68": {
       "ok": true,
       "left": {
         "status": "UNAVAILABLE",
@@ -232,75 +309,52 @@
         "pair": null
       }
     },
-    "historicalBrowserFocusedSweepV65": {
-      "pageVersion": 65,
-      "versionHash": "20ff2fd3",
-      "examples": 4,
-      "newExamples": 3,
-      "panels": 20,
-      "newPanels": 15,
-      "allRendered": true,
-      "allPanelsFiniteAndBound": true,
-      "environment": {
-        "hash": "ebffefbba4ea681c87a6e5b3f4efc296a5540434f7f33da59a65931ddea43cc5",
-        "workerSha256": "601be23fedcd6a152f7551c54f6c4f107517160c0902014a07f628ce2b205d5f",
-        "execution": "BROWSER_WEB_WORKER"
-      },
-      "evidence": "evidence/v65-new-catalog-audit.json"
-    },
-    "historicalBrowserFocusedSweepV66": {
-      "pageVersion": 66,
-      "versionHash": "4cf1cb64",
-      "examples": 4,
-      "newExamples": 1,
-      "panels": 23,
-      "newPanels": 8,
-      "allRendered": true,
-      "allPanelsFiniteAndBound": true,
-      "environment": {
-        "hash": "92e1b09e39645bf0bcbb6bf3b4f02dbb27363ee6f2ca0ea60cec10cca116293f",
-        "workerSha256": "aefa26fcf4470c7cd91c71b337f49173f77134f404d58f57818e16a65b030b10",
-        "execution": "BROWSER_WEB_WORKER"
-      },
-      "evidence": "evidence/v66-new-catalog-audit.json"
-    },
-    "historicalBrowserFocusedSweepV67": {
-      "pageVersion": 67,
-      "versionHash": "26d0edb3",
-      "examples": 3,
-      "panels": 21,
-      "allRendered": true,
-      "allPanelsFiniteAndBound": true,
-      "evidence": "evidence/v67-live-audit.json"
-    },
-    "displayOnlyPatch": {
-      "axisTopMarginBefore": 62,
-      "axisTopMarginAfter": 78,
-      "mathWorkerUnchangedFromV67": true,
-      "labelSeparationVerifiedInRendererTests": true,
-      "browserBeforeScreenshot": "evidence/v67-residual-before-label-spacing.jpg",
-      "browserAfterScreenshot": "evidence/v68-residual-plot.jpg"
-    },
-    "additionalFrozenSubclaim": {
-      "name": "actual-leading-high-jets",
-      "nodeTests": 12,
-      "independentPythonChecks": 573,
-      "includedInNavierReleaseTotals": false,
+    "closedAnnulusDirectionSubclaim": {
+      "nodeTests": 11,
+      "independentPythonChecks": 1487,
+      "includedInNavierReleaseTotals": true,
       "completesN506": false,
-      "evidence": "navier/evidence/actual-leading-high-jets.json"
+      "evidence": "navier/evidence/actual-stress-direction.json"
+    },
+    "actualMomentRestoration": {
+      "originalCriterion": "N4-04",
+      "complete": true,
+      "orders": [
+        1,
+        2
+      ],
+      "moments": 10,
+      "innerPDE": 12,
+      "stressSupports": 4,
+      "preHeatAndHeatConservation": true,
+      "priorCorrectionGate": true,
+      "sourceBoundFiles": 43,
+      "fullProgramNodes": 138172,
+      "fullProgramBytes": 5476911,
+      "fullProgramSHA256": "8b79ba8db0b08acb8af742f91be9fa12d666832c38a6fdaeb58ed90a4f0f7776",
+      "nodeTests": 49,
+      "independentConservativeIdentities": 12,
+      "negativeControls": 12,
+      "exactConvergentFunctionConstruction": true,
+      "signedGlobalNumericQuadratureExecuted": false,
+      "allOrdersConstructed": false,
+      "manifest": "navier/tests/actual-continuation-exact-manifest.json",
+      "evidence": "navier/evidence/actual-moment-restoration-executed.json",
+      "browserMatchesNodeMathematicalHash": true
     }
   },
   "limitations": [
-    "N4-04 and N5-06 remain PARTIAL; their missing actual-source dependencies are documented.",
+    "N5-06 remains PARTIAL; actual completed-background, whole-annulus amplitude/H and source-uniform q* integration is still in progress.",
+    "N4-04 completes the original finite n=1,2 functional criterion through actual convergent functions and exact rational identities; it does not claim signed global numeric quadrature or an all-order theorem.",
     "N4-05 is completed for the fixed actual core, N=0/1 and m<=6; it does not certify the entire radial profile or all orders.",
     "PASS of each finite criterion does not assert the full N4/N5 package or a new Lean kernel theorem.",
-    "v68 browser verification covers two M2 examples/all 15 panels and one M1 interval example; v67 3/21, v66 4/23, v64 68/129 and v62 M1 59-example audits are separately preserved.",
-    "Browser verification uses CPU Canvas2D. WebGL is unavailable, with existing THREE context errors and browser-extension metadata errors in captured console logs. Historical software GLES evidence is not physical GPU testing.",
+    "v69 browser verification covers four M2 examples/all 24 panels and one M1 interval example; older whole-catalog audits retain their original versions.",
+    "Browser verification uses CPU Canvas2D. Existing THREE WebGL context and browser-extension metadata errors are retained in console logs; no physical GPU test is claimed.",
     "360/960 pixel geometry checks simulate layout and are not real mobile hardware tests.",
-    "v61 cross-runtime 52/64 agreement is historical; current same-runtime static-worker parity is 73/73.",
-    "N5-06 computes actual two-family integrals, heat-prepared mean target, positive inverse and the representative-point active sum; whole-annulus source bounds and common q* remain open."
+    "Current same-Node-runtime static-worker parity is 74/74. The exact moment construction also matches the recorded Chrome mathematical hash; no broader cross-runtime equality is inferred.",
+    "N5-06 existing representative-point example computes actual two-family integrals, heat-prepared mean target, positive inverse and its active sum; it does not itself establish the missing uniform statement."
   ],
-  "previousRelease": "evidence/live-release-v66.json",
-  "visualizationSha256": "c3546cbaaabb82a2fb977ef0737308bddd4a741efa48f88b185d77757d8f45af",
-  "verifiedAtUTC": "2026-10-10T11:44:04.021037+00:00"
+  "previousRelease": "evidence/live-release-v68.json",
+  "visualizationSha256": "8c0f8759583f7650a8bcab9fc2927dd0505b61c34711c04ce94e1bedd5f2291b",
+  "verifiedAtUTC": "2026-10-10T12:53:05.186Z"
 }

@@ -30,7 +30,7 @@ export class SourceBoundScene extends Scene3D {
     this.presentation=view;this.lastPicked=null;
     // Keep every interval row readable even in the narrow/mobile canvas. The
     // exact table and all retained source marks stay unchanged.
-    if(this.canvas.style)this.canvas.style.minHeight=view.chart?.kind==='INTERVALS'?Math.max(240,126+32*(view.chart.items?.length||0))+'px':'';
+    if(this.canvas.style)this.canvas.style.minHeight=view.chart?.kind==='INTERVALS'?Math.max(240,126+32*(view.chart.items?.length||0))+'px':view.chart?.kind==='ORDERED_SUPPORTS'?Math.max(300,150+50*(view.chart.rows?.length||0))+'px':'';
     this.canvas.dataset.selectedSourcePath='';
     const color=view.color?.range,scene={...view.scene};
     if(color)scene.points=(scene.points||[]).map(p=>{const n=numericValue(p.value);return {...p,color:p.color||(Number.isFinite(n)?heatColor((n-color[0])/(color[1]-color[0]||1)):palette[0])};});
@@ -95,6 +95,7 @@ export class SourceBoundScene extends Scene3D {
     }else if(chart.kind==='SERIES')this.drawSeries(chart,w,h);
     else if(chart.kind==='MATRIX')this.drawMatrix(chart,w,h);
     else if(chart.kind==='INTERVALS')this.drawIntervals(chart,w,h);
+    else if(chart.kind==='ORDERED_SUPPORTS')this.drawOrderedSupports(chart,w,h);
     else if(chart.kind==='NETWORK')this.drawNetwork(chart,w,h);
     else if(chart.kind==='CHECKS')this.drawChecks(chart,w,h);
     else this.drawComparisonTable(chart,w,h);
@@ -156,6 +157,33 @@ export class SourceBoundScene extends Scene3D {
       this.projected.push({pos:[i,p.midpoint,0],xy:[X(p.midpoint),y,0],label:p.label+': ['+p.lower+', '+p.upper+']',sourcePath:p.sourcePath});
     });
     c.fillStyle='#adc6d5';c.font='10px sans-serif';c.fillText(short('Independent row scales · exact endpoints in table',Math.floor((w-32)/5.7)),16,h-34);
+  }
+  /** Equal-spaced source endpoints express order only, never physical distance. */
+  drawOrderedSupports(chart,w,h){
+    const c=this.ctx,endpoints=chart.endpoints||[],rows=chart.rows||[];
+    if(endpoints.length<2||!rows.length){c.fillStyle='#adc6d5';c.font='12px sans-serif';c.fillText('확인된 지지구간은 아래 정확표를 확인하세요.',16,66);return;}
+    const left=w<480?100:154,right=w-30,top=96,bottom=h-82,
+      X=i=>left+(right-left)*i/(endpoints.length-1),rowHeight=(bottom-top)/rows.length;
+    c.fillStyle='#adc6d5';c.font='11px sans-serif';
+    c.fillText(short(chart.subtitle||'원본 끝점의 순서 · 등간격 배치',Math.floor((w-30)/7)),16,49);
+    endpoints.forEach((endpoint,i)=>{
+      const x=X(i);c.strokeStyle='#294457';c.lineWidth=1;c.setLineDash([3,4]);c.beginPath();c.moveTo(x,top-7);c.lineTo(x,bottom);c.stroke();c.setLineDash([]);
+      c.fillStyle='#d5e6ef';c.font='12px monospace';c.textAlign=i===0?'left':i===endpoints.length-1?'right':'center';
+      c.fillText(short(endpoint.label,Math.max(4,Math.floor((right-left)/(endpoints.length-1)/7))),x,top-18);c.textAlign='left';
+    });
+    rows.forEach((row,i)=>{
+      const from=row.fromIndex,to=row.toIndex,y=top+(i+.5)*rowHeight;
+      if(!Number.isSafeInteger(from)||!Number.isSafeInteger(to)||from<0||to>=endpoints.length||from>to)return;
+      const color=row.verified===false?'#ffa6a0':row.color||palette[i%palette.length];
+      c.fillStyle='#e5f0f4';c.font='12px monospace';c.fillText(short(row.label,Math.floor((left-18)/7)),12,y+4);
+      c.strokeStyle=color;c.lineWidth=4;c.setLineDash(row.dash||[]);c.beginPath();c.moveTo(X(from),y);c.lineTo(X(to),y);c.stroke();c.setLineDash([]);
+      for(const index of new Set([from,to])){
+        c.fillStyle='#081522';c.beginPath();c.arc(X(index),y,5,0,2*Math.PI);c.fill();c.strokeStyle=color;c.lineWidth=2;c.stroke();
+        this.projected.push({pos:[index,i,0],xy:[X(index),y,0],value:row.value,label:row.label+' · '+endpoints[from].label+' ≤ X ≤ '+endpoints[to].label,sourcePath:row.sourcePath});
+      }
+    });
+    c.fillStyle='#adc6d5';c.font='10px sans-serif';
+    c.fillText(short('길이는 물리 거리나 응력 크기를 뜻하지 않습니다.',Math.floor((w-28)/6)),14,h-42);
   }
   drawNetwork(chart,w,h){
     if(w<520){

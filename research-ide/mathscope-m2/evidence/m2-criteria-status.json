@@ -4,8 +4,8 @@
   "originalCount": 64,
   "fullM2Complete": false,
   "counts": {
-    "PASS": 62,
-    "PARTIAL": 2,
+    "PASS": 63,
+    "PARTIAL": 1,
     "OPEN": 0
   },
   "criteria": [
@@ -630,18 +630,15 @@
       "title": "차수별 radial cutoff와 모멘트 복구",
       "criteria": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
       "sourcePage": 58,
-      "status": "PARTIAL",
-      "implementedScope": "실제 lambda·Ipos inverse, Imean의 두 적분 기여, 실제 외곽 15관측과 전체 outer 식 그래프, Omega의 6개 정규 적분 축소·축 경계·C12/I1 값 오차를 구성했습니다. 새 core 점별 nonlinear 구간도 입력으로 사용할 수 있습니다. B.22/B.26/B.34/B.8을 통과한 전체 debt와 다섯 correction은 아직 미완료입니다.",
-      "testStatus": "ACTUAL_SOURCE_LOCAL_AND_OPERATOR_TESTS_PASS",
+      "status": "PASS",
+      "implementedScope": "같은 실제 N3의 B.22/B.26/B.34/B.8, C.12/I1, 전체 outer와 I2/heat를 수렴 함수 연산으로 구성합니다. 실제 n=1,2의 cutoff·다섯 incoming moment와 연속 Ipos inverse를 연결해 총 10개 모멘트를 정확히 복구하고 Vn/Πn을 재구성했습니다. 12개 내부 PDE 항등식, 원래 preheat (5.19)와 열 보상·네 보존형 total, T1θ의 Xb 끝점과 나머지 Xplus 끝점을 검증합니다. 실제 복구 객체만 다음 source를 허용하며 복사·변조·보정 전 입력을 차단합니다. 전역 signed 적분값의 수치 근사와 모든 차수의 구성은 별도 범위입니다.",
+      "testStatus": "ACTUAL_CONVERGENT_FUNCTION_MOMENT_REPAIR_PDE_SUPPORT_AND_INDEPENDENT_CONSERVATION_PASS",
       "formalComplete": false,
       "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-      "remainingObligations": [
-        "Propagate the actual core point enclosures through B.22 reference moments, B.26/B.34 and the E-dependent B.8 debts/roots; enclose all six regular global integrals with the retained axis boundary and C.12/I1 value remainder.",
-        "Evaluate all five actual moment-debt functions, apply the exact repairs and reconstruct derivatives before n+1 source reuse."
-      ],
+      "remainingObligations": [],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-actual-background.json",
-        "mathscope-m2/navier/evidence/actual-background-independent.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-moment-restoration.json",
+        "mathscope-m2/navier/evidence/actual-moment-restoration-executed.json"
       ]
     },
     {

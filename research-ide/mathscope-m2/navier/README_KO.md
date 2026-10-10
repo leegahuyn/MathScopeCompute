@@ -35,6 +35,7 @@ h=\exp[-8002(\exp(1048576)+10)]>0
 | `ns.actual-global-source` | 실제 외곽 U/E·M/(XE)·V/(XE) 15관측, 전체 outer AST, Ω의 정규 6적분 축소와 축 경계 및 C12/I1 오차 | 원본 외곽 값과 적분식; 전체 적분·correction은 PARTIAL |
 | `ns.actual-continuation` | actual core 전체 적분 21개, 양의 폭 B.22 reference 적분 10개, 실제 U/M/V 물리 구간 10개와 전체 Ω remainder | 실제 구간과 reference를 구분; 정확한 전체 debt·복구는 PARTIAL |
 | `ns.actual-picard-acceptance` | 실제 n=1의 6성분 계, 원래 공통 collar, C1·strip·loss·finite K와 tail, 실제 관측 18개 | 원래 N4-03 유한 합격; K항 수치 합산과 전체 N4는 별도 |
+| `ns.actual-moment-restoration` | 실제 n=1,2의 수렴 함수·연속 5모멘트 복구, 12 PDE·4 응력 support·다음 차수 gate, 8개 패널 | N4-04 유한 합격; 전역 signed 수치 적분·모든 차수는 별도 |
 | `ns.actual-pulse-amplitude` | 실제 완성 배경의 Imean restriction, 원래 left datum의 전체 pulse 진폭 enclosure, phase·frame·energy·Gaussian | N5-04/05 명시된 대표점 및 이웃의 유한 합격; 전체 annulus는 별도 |
 | `ns.actual-covariance-matching` | 실제 Gaussian 적분·열 보상 응력·양의 H inverse와 완전한 대표점 활성 합, 8개 원본 패널 | 실제 local/point (7.30) 검증; 전체 slow 이웃·공통 q*·annulus는 PARTIAL |
 | `ns.actual-residual-order` | 같은 source의 고정 compact에서 N=0/1 실제 잔차·CNm/Km·양의 norm 감소, 독립 격자·정밀도, 7개 패널 | N4-05 유한 합격; 전체 profile·모든 N은 별도 |
@@ -42,7 +43,7 @@ h=\exp[-8002(\exp(1048576)+10)]>0
 | `ns.actual-mean-pulse` | 같은 N3의 Imean F/V/b/G와 3차 slow jet, whole-box 상계, 국소 phase/frame·원문 왼쪽 datum·Gaussian 값 비교 | 실제 Imean 국소 구성; 전역 phase/ODE/covariance는 PARTIAL |
 | `ns.background-recursion` | 원래 cylindrical PDE의 exact coefficient 추출, n=1,2 직접 대입 대조, 모든 i+j=n 항 | N4-01/02 PASS; 실제 계수 해는 미구성 |
 | `ns.background-picard` | 원문 6×6 선형계·공통 반경 계약·두 parity의 무한 tail 상계 | 선언한 Cn에 조건부인 별도 연산자; 실제 N4-03 인증은 새 예제 |
-| `ns.background-moments` | 실제 λ와 Ipos에 대한 2×2/3×3 모멘트 행렬과 interval inverse | 실제 moment debts 미입력; N4-04 PARTIAL |
+| `ns.background-moments` | 실제 λ와 Ipos에 대한 2×2/3×3 모멘트 행렬과 interval inverse | 이 예제는 입력 probe; 실제 N4-04 인증은 ns.actual-moment-restoration |
 | `ns.background-residual` | 유한 차수 원래 PDE 잔차의 모든 differential polynomial | 이 예제는 기호 연산자; 실제 N4-05 인증은 ns.actual-residual-order |
 | `ns.background-cutoffs` | 모든 q·m에 대한 cutoff 부등식, C∞ cutoff를 곱한 supplied potential의 실제 합, 완전한 active prefix 증명 | N4-06/08 조건부 operator PASS |
 | `ns.potential-curl` | 원문 (5.45)의 χ′ radial 보정 exact 항등식과 Cartesian curl probe | N4-07 PASS |
@@ -69,7 +70,7 @@ h=\exp[-8002(\exp(1048576)+10)]>0
 
 전체 두 Ω functional은 `v=V/X`를 사용한 6개 regular integral로 정확히 축소했습니다. 축 경계 `V_X(0,0)=-4`와 고정 부분구간의 양쪽 경계 부호를 보존합니다. C.12 및 I1의 차이는 두 functional의 **값**에 대한 별도 상계이며 고차 η 도함수나 pulse shear의 오차를 대신하지 않습니다. 전체 outer source의 scalar root·적분·보정 정의는 3,785개 노드의 실행 가능한 식 그래프로 반환합니다. 그 식 그래프를 모두 평가하거나 전역 debt가 닫혔다고 표시하지 않습니다.
 
-새 core 점 평가를 B.22의 reference moments, B.26/B.34 접합, B.8의 실제 다섯 debt와 선택 root, 전역 셀 적분으로 연결하는 작업이 남습니다. [외곽 구성 설명](research/ACTUAL_GLOBAL_SOURCE_KO.md)과 [정규 적분 유도](research/WEIGHTED_OMEGA_REDUCTION_KO.md)에 정확한 다음 입력과 184개 독립 검사를 기록했습니다.
+이 구간 예제는 전역 signed 적분값을 수치 계산하지 않습니다. 별도 `ns.actual-moment-restoration`은 같은 source의 B.22/B.26/B.34, B.8 root와 전체 연속 적분을 완전한 수렴 함수 연산으로 연결합니다. [외곽 구성 설명](research/ACTUAL_GLOBAL_SOURCE_KO.md)과 [정규 적분 유도](research/WEIGHTED_OMEGA_REDUCTION_KO.md)에 정확한 다음 입력과 184개 독립 검사를 기록했습니다.
 
 ### 실제 core 전체 적분과 연장 구간
 
@@ -80,6 +81,18 @@ h=\exp[-8002(\exp(1048576)+10)]>0
 ### 실제 고정 차수 Picard의 유한 합격
 
 `ns.actual-picard-acceptance`는 같은 원본의 n=1에서 (5.7) 계를 정확한 대각변환으로 연결하고, 미분 block의 nilpotence와 전체 forcing을 검증합니다. 원래 공통 collar와 실제 source-derived C1·strip·Cauchy loss를 유지하며 정확한 유한 K식 및 tail 상계를 인증합니다. 15개 실행 규칙, Node 8개 및 독립 Laurent/Fraction 782개 검사가 근거입니다. 거대한 K항을 모두 수치 합산하지 않았다는 범위도 검증합니다. 개별 원문 N4-03은 이 유한 조건으로 PASS이며, 모든 차수·모멘트·잔차 및 전체 N4 패키지는 별도입니다.
+
+### 실제 1·2차의 다섯 모멘트 복구
+
+`ns.actual-moment-restoration`은 실제 같은 N3를 유지한 수렴 함수 구성입니다. 무한 radial/Picard 해와 유일한 B.8·I1·I2 implicit root를 실제 연산으로 보존하고, 전체 연속 적분으로 n=1,2의 다섯 incoming moments를 각각 만듭니다. 원래 Ipos의 연속 2×2·3×3 inverse를 적용해 열 개의 보정 후 모멘트가 정확한 0 함수임을 BigInt rational 식으로 확인합니다.
+
+원래 여섯 성분 시스템에서 두 차수의 내부 PDE 항등식 12개를 직접 검증합니다. 원래 preheat (5.19)의 B.8/I1·angular reset·Qp density·terminal wait를 열 보상과 함께 연결해 네 보존형 total을 0으로 환원합니다. `T1θ`는 `[Xminus,Xb]`, `T1z,T2θ,T2z`는 `[Xminus,Xplus]`에 지지되며 내부·외부의 원래 식과 양의 끝점 순서로 검사합니다. 실제 완료 객체가 있어야 다음 source를 허용하고 복사·변조·미보정 객체는 차단합니다. 2차 source는 생성되었으며 3차는 이 예시에서 생성하지 않았습니다.
+
+8개 관측 패널은 네 지지구간, 2×5 모멘트 영행렬, 실제 inverse, 차수 gate, 내부 PDE, 보존 total과 heat, 재현 그래프, 실행 범위입니다. 구간도는 물리 거리가 아닌 끝점 순서를 표시합니다. 보정 전 debt의 수치 크기를 만들어 그리지 않으며, 정확한 원문 식과 전체 수식 graph의 root·해시를 보존합니다. 기본 전체 graph는 138,172개 노드, canonical JSON 5,476,911 bytes이고 compact receipt는 88,150 bytes입니다.
+
+`precision.mode`는 `AUTO` 또는 `EXACT_CONSTRUCTIVE`입니다. `bits` 16–4096은 analytic tail의 목표이며 임의의 전역 수치 적분 정밀도를 뜻하지 않습니다. `terms` 0–2, `etaOrder` 0–2, `heatIterations` 0–2의 모든 공개 상한도 실행했습니다. 유한 표시 반복을 무한 수렴해 대신 사용하지 않습니다.
+
+49개 Node 검사와 독립 Fraction 보존식 12개·누락 대조 12개를 통과했습니다. 독립 다항식은 보편적인 적분부분적분 식을 검증하는 자료이고 실제 N3의 수치 적분값은 아닙니다. 실제 source 검증은 별도의 전체 program 재현과 43개 파일의 바이트 결속으로 확인합니다. [구성과 독립 검토](research/ACTUAL_MOMENT_RESTORATION_KO.md), [동결 manifest](tests/actual-continuation-exact-manifest.json), [실행 증거](evidence/actual-moment-restoration.json)에 상세를 보존합니다.
 
 ### 실제 고정 영역의 N=0/1 잔차 감소
 
@@ -163,7 +176,7 @@ Xunit은 실제 source의 양의 상수식으로 한 번 정하며 N·mesh·bits
 node research-ide/mathscope-m2/navier/tests/generate-evidence.mjs
 ```
 
-v66의 172개 Node 검사에 실제 잔차 12개와 균일 공분산의 부분 명제 11개를 더해 **195개** 검사를 수행합니다. 독립 검사는 v66의 4,967개에 실제 잔차 1,544개와 Bernstein·Gauss–Jordan 공분산 부분 명제 1,814개를 더해 **8,325개**입니다. 균일 공분산 부분 명제는 수치 오차 예산과 positive inverse의 조건부 함의를 인증하며, 실제 모든 slow 이웃의 H 적분이나 N5-06 완료를 대신하지 않습니다. 각 manifest의 실제 소스 바이트를 대조한 후 독립 receipt를 포함합니다. 최종 개수·입력 hash·코드 hash·23개 example receipt는 `evidence/acceptance.json`에서 확인합니다.
+기존 195개 Node에 실제 모멘트 복구 49개, leading 고차 jet 12개, 닫힌 annulus 방향 11개를 더한 **267개**가 릴리스 검사 대상입니다. 독립 검사는 기존 8,325개에 모멘트 보존식·누락 대조 24개, leading 고차 jet 573개, 방향 상계 1,487개를 더한 **10,409개**입니다. 매 실행에서 원본 manifest의 모든 바이트, 독립 checker의 현재 출력과 실제 producer 재현을 대조합니다. 균일 inverse와 leading 방향의 부분 명제는 완성 배경의 모든 slow 이웃에 대한 actual H나 N5-06 완료를 대신하지 않습니다. 최종 실행 결과·소스 hash·24개 example receipt는 `evidence/acceptance.json`에서 확인합니다.
 
 음성 대조는 axial viscosity의 n−1 항, pressure shift, cylindrical connection, χ′ 또는 rm 누락, 빠른 auxiliary chain rule 누락, Q/T 배율 누락, 잘못된 Haar factor, source receipt·Y·interval 변조, 부족한 cutoff prefix, ψ의 최고차 도함수 누락, covariance cone 밖의 target 등을 실제로 실패시킵니다. `EXACT`, `FORMAL`과 설치 범위를 벗어나는 정밀도 요청은 거절합니다. 실제 core와 continuation에 96–512비트 `DIRECTED_BIGINT`를 허용하며, 구간 포함과 정확한 함수값·형식 증명을 구분합니다.
 
@@ -171,4 +184,4 @@ v66의 172개 Node 검사에 실제 잔차 12개와 균일 공분산의 부분 �
 
 ## 남은 실제 구성
 
-남은 기준은 **N4-04, N5-06**입니다. 필요한 정확한 함수·부등식·정리 입력과 실제 다음 단계는 [PROOF_OBLIGATIONS_KO.md](PROOF_OBLIGATIONS_KO.md)에 정리했습니다. 기존 N3를 다른 h나 다른 profile로 교체하는 것은 이 의무를 해결하지 않습니다.
+남은 원문 기준은 **N5-06**입니다. N4-04는 실제 1·2차의 명시된 유한 기준으로 완료했습니다. 필요한 정확한 함수·부등식·정리 입력과 실제 다음 단계는 [PROOF_OBLIGATIONS_KO.md](PROOF_OBLIGATIONS_KO.md)에 정리했습니다. 기존 N3를 다른 h나 다른 profile로 교체하는 것은 이 의무를 해결하지 않습니다.

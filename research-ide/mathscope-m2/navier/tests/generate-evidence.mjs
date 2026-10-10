@@ -17,11 +17,13 @@ import {evaluateLocalPotentialSum} from '../source-gluing.mjs';
 import {evaluatePulseCutoffRemainder,defaultTailJet} from '../source-tail.mjs';
 import {evaluateActualMeanStress,verifyActualMeanStress} from '../actual-mean-stress.mjs';
 import {actualResidualOrderCertificate,verifyActualResidualOrderCertificate} from '../actual-residual-order.mjs';
+import {actualBackgroundMomentCertificate} from '../actual-continuation-exact-certificate.mjs';
 
 const base=new URL('../',import.meta.url),out=new URL('../evidence/',import.meta.url);
 await mkdir(out,{recursive:true});
-const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs','actual-picard-acceptance.test.mjs','actual-pulse-amplitude.test.mjs','actual-continuation.test.mjs','actual-mean-stress.test.mjs','actual-pulse-covariance.test.mjs','actual-pulse-covariance-matching.test.mjs','actual-residual-order.test.mjs','actual-covariance-uniform.test.mjs'];
-const testResult=spawnSync(process.execPath,['--test','--test-reporter=tap',...testSuites.map(name=>fileURLToPath(new URL(name,import.meta.url)))],{encoding:'utf8'});
+const testSuites=['navier.test.mjs','source.test.mjs','source-core.test.mjs','source-pulse-curl.test.mjs','source-contract.test.mjs','actual-background.test.mjs','actual-pulse.test.mjs','actual-core-evaluator.test.mjs','actual-global-source.test.mjs','actual-picard-acceptance.test.mjs','actual-pulse-amplitude.test.mjs','actual-continuation.test.mjs','actual-mean-stress.test.mjs','actual-pulse-covariance.test.mjs','actual-pulse-covariance-matching.test.mjs','actual-residual-order.test.mjs','actual-covariance-uniform.test.mjs','actual-leading-high-jets.test.mjs','actual-stress-direction.test.mjs'];
+testSuites.push('actual-continuation-exact.test.mjs','actual-continuation-global.test.mjs','actual-continuation-stress.test.mjs','actual-continuation-functions.test.mjs','actual-continuation-certificate.test.mjs');
+const testResult=spawnSync(process.execPath,['--test','--test-reporter=tap',...testSuites.map(name=>fileURLToPath(new URL(name,import.meta.url)))],{encoding:'utf8',maxBuffer:16*1024*1024});
 await writeFile(new URL('tests.tap',out),testResult.stdout+testResult.stderr);
 if(testResult.status!==0)throw Error('N4/N5 regression tests failed; evidence is not sealed.');
 const totalTests=Number(/^# tests (\d+)$/m.exec(testResult.stdout)?.[1]),passedTests=Number(/^# pass (\d+)$/m.exec(testResult.stdout)?.[1]);if(!totalTests||totalTests!==passedTests)throw Error('The test count is not a complete passing run.');
@@ -30,6 +32,33 @@ const independent=spawnSync('python',[fileURLToPath(new URL('./source-independen
 const independentEvidence=JSON.parse(independent.stdout);if(!independentEvidence.pass)throw Error('Independent checker did not accept.');await writeFile(new URL('source-independent-checks.json',out),JSON.stringify(independentEvidence,null,2)+'\n');
 const additionalIndependent=[];
 const newSourcePaths=[];
+{
+  const manifestPath='tests/actual-continuation-exact-manifest.json',manifestText=await readFile(new URL(manifestPath,base),'utf8'),manifest=JSON.parse(manifestText),manifestHash=await sha256(manifestText);
+  if(manifestHash!=='40f8c7494543caf8e7c7c5d23fbb94b8b779a06b473676d2e26ad0a7c5bff431'||!manifest.pass)throw Error('The frozen actual moment construction manifest changed.');
+  newSourcePaths.push(manifestPath);
+  const files=[...manifest.runtimeDependencies,...manifest.artifacts];
+  for(const f of files){
+    const path=f.path.startsWith('research-ide/mathscope-m2/navier/')?f.path.slice('research-ide/mathscope-m2/navier/'.length):'../../'+f.path.replace(/^research-ide\//,'');
+    const source=await readFile(new URL(path,base),'utf8');
+    if(new TextEncoder().encode(source).length!==f.bytes||await sha256(source)!==f.sha256)throw Error('Stale actual moment construction source: '+f.path);
+    newSourcePaths.push(path);
+  }
+  const independentPath='actual-continuation-conservation-independent.py',run=spawnSync('python',[fileURLToPath(new URL(independentPath,import.meta.url))],{encoding:'utf8'});
+  if(run.status!==0)throw Error('Independent actual conservative identity check failed: '+run.stderr);
+  const audit=JSON.parse(run.stdout),details=JSON.parse(await readFile(new URL('actual-continuation-conservation-independent.json',import.meta.url),'utf8'));
+  if(!audit.pass||audit.identityChecks!==12||audit.negativeControls!==12||details.manufacturedFieldsAreActualSource!==false||details.actualGlobalNumericMomentClaimed!==false||!details.checks.every(r=>r.exactResidual==='0')||!details.negative.every(r=>r.nonzeroError!=='0'))throw Error('Incomplete or overstated independent moment conservation audit.');
+  const evidenceText=await readFile(new URL('actual-moment-restoration.json',out),'utf8'),evidence=JSON.parse(evidenceText),current=await actualBackgroundMomentCertificate(manifest.program.request),stored=evidence.certificate;
+  if(canonicalStringify(current)!==canonicalStringify(stored)||current.graph.sha256!==manifest.program.sha256||current.graph.nodeCount!==manifest.program.nodeCount||current.graph.serializedProgramBytes!==manifest.program.bytes)throw Error('The actual complete moment function program did not reproduce the frozen receipt.');
+  if(!current.pass||!current.scope.originalN404Complete||current.scope.allOrdersConstructed!==false||current.scope.globalSignedMomentValuesNumericallyEnclosed!==false)throw Error('Actual moment construction scope differs from its executed finite criterion.');
+  const file='actual-moment-restoration-executed.json',body={schema:'MathScope.ActualMomentRestorationExecutedAudit/1',pass:true,checks:24,
+    independentConservativeIdentity:{...details,scope:'Independent polynomial fields check the universal radial integration-by-parts identities, not numerical values of the actual N3 moments.'},
+    sourceManifest:{path:'navier/'+manifestPath,sha256:manifestHash},sourceByteVerification:{checkedFiles:files.length,match:true},
+    actualSourceReplay:{fullProgramSHA256:current.graph.sha256,fullProgramNodes:current.graph.nodeCount,fullProgramBytes:current.graph.serializedProgramBytes,compactReceiptSHA256:await sha256(canonicalStringify(current)),match:true},
+    actualChecks:{moments:current.momentIdentities.length,innerPDE:current.scope.actualInnerPDEIdentitiesChecked,stressSupports:current.supportRows.length,sourceGates:current.sourceGates,preHeatAndHeatInvariant:current.conservation.pass},
+    scope:current.scope};
+  const serialized=JSON.stringify(body,null,2)+'\n';await writeFile(new URL(file,out),serialized);
+  additionalIndependent.push({file,checks:24,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_FRACTION_CONSERVATIVE_IDENTITIES_PLUS_ACTUAL_SOURCE_FUNCTION_PROGRAM_REPLAY_AND_ALL_BOUND_BYTE_HASHES'});
+}
 // New finite certificates have different manifest formats. Each bound byte
 // is checked before its independently executed receipt is included.
 const picardText=await readFile(new URL('actual-picard-acceptance.json',out),'utf8'),picardReceipt=JSON.parse(picardText);
@@ -128,6 +157,56 @@ for(const [stem,countKey,count,manifestName] of [
   const file='actual-covariance-uniform-executed.json',body={...audit,frozenEvidence:{path:'navier/evidence/'+frozenFile,sha256:frozenSHA256},sourceByteVerification:{checkedFiles:frozen.files,match:true},receiptReplay:{storedHash,currentHash,match:true},scope:'Exact robust inverse budgets and frozen operator algebra; no whole-annulus covariance or original N5-06 completion is claimed.'};
   const serialized=JSON.stringify(body,null,2)+'\n';await writeFile(new URL(file,out),serialized);
   additionalIndependent.push({file,checks:audit.checks,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_BERNSTEIN_FRACTION_GAUSS_JORDAN_SUBCLAIM_WITH_CURRENT_SOURCE_HASHES'});
+}
+// These two frozen analytic subclaims use different oracle stdout shapes.
+// Execute each oracle, compare its complete available record and replay the
+// retained source program. Also bind transitive local producer imports so a
+// later source-compiler change cannot silently keep the old evidence seal.
+for(const spec of [
+  {stem:'actual-leading-high-jets',sha256:'f5c8b57da4e5644b6acf36ce0fe99091970d71a58eeaf4ebbd362bb4315e7800',checks:573,stdoutOmitsReceipt:true,fixtureReceipt:false},
+  {stem:'actual-stress-direction',sha256:'c5b8c2c6f78474f2a03b2b56befaf7bacf7986eb219a8e858dcf0161c33087e2',checks:1487,stdoutOmitsReceipt:false,fixtureReceipt:true},
+]){
+  const frozenFile=spec.stem+'.json',frozenText=await readFile(new URL(frozenFile,out),'utf8'),frozen=JSON.parse(frozenText),frozenHash=await sha256(frozenText);
+  if(frozenHash!==spec.sha256)throw Error('The frozen analytic subclaim changed: '+spec.stem);
+  newSourcePaths.push('evidence/'+frozenFile);
+  const dependencyPaths=new Set();
+  async function bindLocalDependency(path){
+    if(dependencyPaths.has(path))return;
+    dependencyPaths.add(path);newSourcePaths.push(path);
+    if(!path.endsWith('.mjs'))return;
+    const source=await readFile(new URL(path,base),'utf8');
+    for(const match of source.matchAll(/(?:from\s*|import\s*)['"]([^'"]+)['"]/g)){
+      if(!match[1].startsWith('.'))continue;
+      const dep=new URL(match[1],new URL(path,base));
+      if(dep.href.startsWith(base.href))await bindLocalDependency(dep.href.slice(base.href.length));
+      else{
+        const allowed=['../../mathscope-m1/navier/numerics.mjs'];
+        const outside=allowed.find(path=>new URL(path,base).href===dep.href);
+        if(!outside)throw Error('Subclaim import requires an explicit external source binding: '+dep.href);
+        await bindLocalDependency(outside);
+      }
+    }
+  }
+  for(const f of frozen.files){
+    const path=f.path.replace(/^(?:research-ide\/)?mathscope-m2\/navier\//,'');
+    const bytes=await readFile(new URL(path,base),'utf8');
+    if(await sha256(bytes)!==f.sha256)throw Error('Stale analytic subclaim source: '+f.path);
+    await bindLocalDependency(path);
+  }
+  const script=spec.stem+'-independent.py',executed=spawnSync('python',[fileURLToPath(new URL(script,import.meta.url))],{encoding:'utf8',maxBuffer:16*1024*1024});
+  if(executed.status!==0)throw Error('Independent analytic subclaim failed: '+spec.stem+' '+executed.stderr);
+  const audit=JSON.parse(executed.stdout),expected=spec.stdoutOmitsReceipt?Object.fromEntries(Object.entries(frozen).filter(([key])=>key!=='receipt')):frozen;
+  if(!audit.pass||audit.checks!==spec.checks||canonicalStringify(audit)!==canonicalStringify(expected)||audit.scope.originalN506Complete!==false)throw Error('Analytic subclaim oracle differs from its frozen scope or source: '+spec.stem);
+  const rerun=spawnSync(process.execPath,[fileURLToPath(new URL(spec.stem+'-fixture.mjs',import.meta.url))],{encoding:'utf8',maxBuffer:16*1024*1024});
+  if(rerun.status!==0)throw Error('Analytic subclaim fixture failed: '+spec.stem+' '+rerun.stderr);
+  const replay=JSON.parse(rerun.stdout),current=spec.fixtureReceipt?replay.receipt:replay,storedHash=await sha256(canonicalStringify(frozen.receipt)),currentHash=await sha256(canonicalStringify(current));
+  if(storedHash!==currentHash||storedHash!==frozen.receiptCanonicalSHA256||current.scope.originalN506Complete!==false)throw Error('Analytic subclaim source receipt or scope changed: '+spec.stem);
+  const file=spec.stem+'-executed.json',body={schema:'MathScope.ExecutedActualAnalyticSubclaim/1',pass:true,checks:spec.checks,categories:audit.categories,scope:audit.scope,
+    frozenEvidence:{path:'navier/evidence/'+frozenFile,sha256:frozenHash},sourceByteVerification:{checkedFiles:frozen.files,transitiveImports:[...dependencyPaths].sort(),match:true},
+    independentExecution:{script,stdoutOmitsReceipt:spec.stdoutOmitsReceipt,completeAvailableRecordMatches:true},receiptReplay:{storedHash,currentHash,match:true},
+    meaning:'Actual source derivative or closed-support direction bound only. The full background frame, uniform H columns, q-star and original N5-06 completion require separate executed certificates.'};
+  const serialized=JSON.stringify(body,null,2)+'\n';await writeFile(new URL(file,out),serialized);
+  additionalIndependent.push({file,checks:spec.checks,sha256:await sha256(serialized),verification:'EXECUTED_INDEPENDENT_FRACTION_SOURCE_SUBCLAIM_WITH_TRANSITIVE_IMPORT_HASHES_AND_CURRENT_PROGRAM_REPLAY'});
 }
 // Reuse independently executed, frozen receipts only after checking every
 // producer/source byte they bind. Regenerate those receipts with their own

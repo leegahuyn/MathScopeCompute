@@ -20,10 +20,10 @@
   },
   "current": {
     "path": "evidence/m2-criteria-status.json",
-    "sha256": "6b20190ba0cbef52210f79748682fc83bb947a6fd3fd089ba6a1c19c17a9391b",
+    "sha256": "68d6908c3453631e1547a687b657d25df17eb021241e9ada8f10b3b8584c7125",
     "counts": {
-      "PASS": 62,
-      "PARTIAL": 2,
+      "PASS": 63,
+      "PARTIAL": 1,
       "OPEN": 0
     },
     "fullM2Complete": false
@@ -41,8 +41,7 @@
   "transitionCounts": {
     "PARTIAL->PASS": 38,
     "PASS->PASS": 20,
-    "OPEN->PASS": 4,
-    "OPEN->PARTIAL": 1,
+    "OPEN->PASS": 5,
     "PARTIAL->PARTIAL": 1
   },
   "transitionIDs": {
@@ -112,16 +111,14 @@
       "Y4-06",
       "Y4-07",
       "N4-03",
+      "N4-04",
       "N4-05"
-    ],
-    "OPEN->PARTIAL": [
-      "N4-04"
     ],
     "PARTIAL->PARTIAL": [
       "N5-06"
     ]
   },
-  "newlyPassedCount": 42,
+  "newlyPassedCount": 43,
   "newlyPassedIDs": [
     "P4-01",
     "P4-04",
@@ -146,6 +143,7 @@
     "N4-01",
     "N4-02",
     "N4-03",
+    "N4-04",
     "N4-05",
     "N4-06",
     "N4-07",
@@ -167,7 +165,6 @@
     "I2-08"
   ],
   "remainingPartialIDs": [
-    "N4-04",
     "N5-06"
   ],
   "packages": [
@@ -280,14 +277,15 @@
         "OPEN": 3
       },
       "currentCounts": {
-        "PASS": 7,
-        "PARTIAL": 1,
+        "PASS": 8,
+        "PARTIAL": 0,
         "OPEN": 0
       },
       "newlyPassedIDs": [
         "N4-01",
         "N4-02",
         "N4-03",
+        "N4-04",
         "N4-05",
         "N4-06",
         "N4-07",
@@ -1051,19 +1049,16 @@
       "criteria": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
       "sourcePage": 58,
       "previousStatus": "OPEN",
-      "currentStatus": "PARTIAL",
-      "transition": "OPEN->PARTIAL",
-      "newlyPassed": false,
+      "currentStatus": "PASS",
+      "transition": "OPEN->PASS",
+      "newlyPassed": true,
       "originalTextPreserved": true,
-      "currentImplementedScope": "실제 lambda·Ipos inverse, Imean의 두 적분 기여, 실제 외곽 15관측과 전체 outer 식 그래프, Omega의 6개 정규 적분 축소·축 경계·C12/I1 값 오차를 구성했습니다. 새 core 점별 nonlinear 구간도 입력으로 사용할 수 있습니다. B.22/B.26/B.34/B.8을 통과한 전체 debt와 다섯 correction은 아직 미완료입니다.",
+      "currentImplementedScope": "같은 실제 N3의 B.22/B.26/B.34/B.8, C.12/I1, 전체 outer와 I2/heat를 수렴 함수 연산으로 구성합니다. 실제 n=1,2의 cutoff·다섯 incoming moment와 연속 Ipos inverse를 연결해 총 10개 모멘트를 정확히 복구하고 Vn/Πn을 재구성했습니다. 12개 내부 PDE 항등식, 원래 preheat (5.19)와 열 보상·네 보존형 total, T1θ의 Xb 끝점과 나머지 Xplus 끝점을 검증합니다. 실제 복구 객체만 다음 source를 허용하며 복사·변조·보정 전 입력을 차단합니다. 전역 signed 적분값의 수치 근사와 모든 차수의 구성은 별도 범위입니다.",
       "currentAcceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
-      "remainingObligations": [
-        "Propagate the actual core point enclosures through B.22 reference moments, B.26/B.34 and the E-dependent B.8 debts/roots; enclose all six regular global integrals with the retained axis boundary and C.12/I1 value remainder.",
-        "Evaluate all five actual moment-debt functions, apply the exact repairs and reconstruct derivatives before n+1 source reuse."
-      ],
+      "remainingObligations": [],
       "evidencePaths": [
-        "mathscope-m2/navier/evidence/ns-m2-actual-background.json",
-        "mathscope-m2/navier/evidence/actual-background-independent.json"
+        "mathscope-m2/navier/evidence/ns-m2-actual-moment-restoration.json",
+        "mathscope-m2/navier/evidence/actual-moment-restoration-executed.json"
       ]
     },
     {
