@@ -1,0 +1,148 @@
+--- tools/ns-original-ci/run.py
++++ tools/ns-guard-ci/run_protected.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Reproduce pinned original validation; never convert a failed stage to PASS."""
++"""Pinned original validation with the independently diagnosed outer-PTY transport."""
+ from __future__ import annotations
+ 
+ import argparse
+@@ -12,6 +12,16 @@
+ import subprocess
+ import sys
+ import urllib.request
++
++import protected_transport
++
++
++ORIGINAL_CONTROLLER_SHA256 = "47b0126a22ada5c2254377a458daac076948526f5e8eaa13b5c4e47f933bc220"
++DIAGNOSTIC_TRANSPORT_SHA256 = "307168863bcc5923339d698de00ed66b72a0425361d060337900bc533a1fe147"
++PROBE_SHA256 = "ed35362b4f1b4ede2271357d5cdc5258eb6d5c5cdef11ad5957827261043fb0e"
++METADATA_SHA256 = "8afa01a2ad14e2a306a4a64f4638c0c5739ed5bfbd1a9dd5663c7916685005be"
++PREFLIGHT_SECONDS = 25
++COMPARATOR_SECONDS = 330 * 60
+ 
+ 
+ def digest(path):
+@@ -94,6 +104,16 @@
+         "sourceChanges": False, "guardChanges": False,
+         "uid": os.getuid(), "euid": os.geteuid(),
+         "kernel": os.uname().release, "exitCode": None,
++        "transportOnlyAdaptation": {
++            "diagnosticRunId": 38013278865,
++            "copiedOriginalControllerSHA256": ORIGINAL_CONTROLLER_SHA256,
++            "validatedDiagnosticTransportSHA256": DIAGNOSTIC_TRANSPORT_SHA256,
++            "runProtectedSHA256": digest(__file__),
++            "protectedTransportSHA256": digest(protected_transport.__file__),
++            "guardSecurityOptionsUnchanged": True, "addedUniqueUnitOption": True,
++            "preflightTimeoutSeconds": PREFLIGHT_SECONDS,
++            "comparatorTimeoutSeconds": COMPARATOR_SECONDS,
++        },
+     }
+ 
+     def save():
+@@ -122,6 +142,45 @@
+             raise RuntimeError(f"{label} exited with {code}")
+         return log_path.read_text()
+ 
++    def run_guard(label, command, cwd, timeout_seconds):
++        record = {"label": label, "command": list(map(str, command)),
++                  "cwd": str(cwd), "startedUTC": utc(), "status": "RUNNING", "exitCode": None}
++        result["steps"].append(record)
++        save()
++        log_path = evidence / (label + ".log")
++        print(f"::group::{label}", flush=True)
++
++        def stream(chunk):
++            sys.stdout.buffer.write(chunk)
++            sys.stdout.buffer.flush()
++
++        try:
++            observed = protected_transport.run_guarded(label, command, cwd=cwd, env=env,
++                timeout_seconds=timeout_seconds, log_path=log_path, on_chunk=stream)
++            record["command"] = observed["command"]
++            record["transportRecord"] = observed
++            record["completedUTC"] = observed["completedUTC"]
++            if "logSHA256" in observed:
++                record["logSHA256"] = observed["logSHA256"]
++            # This is the observed command exit, never the cleanup exit.
++            record["exitCode"] = observed.get("exitCodeBeforeCleanup")
++            record["status"] = "PASS" if observed["passed"] else "FAILED"
++            if not observed["passed"]:
++                raise RuntimeError(f"{label} failed transport/exit/EOF checks: "
++                    f"timedOut={observed.get('timedOut')}, actualExit={record['exitCode']}, "
++                    f"cleanupExit={observed.get('finalClientExitCode')}, "
++                    f"error={observed.get('transportException') or observed.get('captureError')}")
++        except BaseException as exc:
++            record.update(status="FAILED", error=f"{type(exc).__name__}: {exc}", completedUTC=utc())
++            if log_path.exists():
++                record["logSHA256"] = digest(log_path)
++            result.update(status="FAILED", exitCode=1)
++            raise RuntimeError(record["error"]) from exc
++        finally:
++            save()
++            print("::endgroup::", flush=True)
++        return log_path.read_text()
++
+     def clone(label, url, commit):
+         target = base / label
+         run(label + "-init", ["git", "init", target])
+@@ -140,6 +199,12 @@
+     try:
+         if os.geteuid() == 0:
+             raise RuntimeError("Validation must use an unprivileged user")
++        if os.getuid() != 1002 or os.geteuid() != 1002:
++            raise RuntimeError("Protected validation requires the original UID 1002")
++        status = dict(line.split(":", 1) for line in Path("/proc/self/status").read_text().splitlines() if ":" in line)
++        result["parentEffectiveCapabilities"] = int(status["CapEff"].strip(), 16)
++        if result["parentEffectiveCapabilities"] != 0:
++            raise RuntimeError("Protected validation must have no effective capabilities")
+         run("identity", ["id"])
+         run("system", ["uname", "-a"])
+         archive = base / "lean.tar.zst"
+@@ -223,12 +288,41 @@
+                      "--working-directory=" + str(repo), "--"]
+             # Exercise the original guard and Landlock, without relying on a flag alone.
+             probe = Path(__file__).with_name("probe.py")
+-            run("guard-preflight", guard + ["/usr/bin/python3", probe, "unix-socket"], repo)
+-            run("landlock-preflight", guard + [str(tool_bin / "landrun"), "--best-effort",
++            if digest(probe) != PROBE_SHA256:
++                raise RuntimeError("Original negative-probe source bytes changed")
++            run_guard("guard-preflight", guard + ["/usr/bin/python3", probe, "unix-socket"], repo, PREFLIGHT_SECONDS)
++            metadata_probe = Path("/opt/mathscope-guard-ci/metadata_probe.py")
++            if digest(metadata_probe) != METADATA_SHA256:
++                raise RuntimeError("Validated metadata sidecar source bytes changed")
++            metadata_log = run_guard("guard-metadata-preflight", guard + ["/usr/bin/python3", metadata_probe], repo, PREFLIGHT_SECONDS)
++            metadata_events = [json.loads(line.strip()) for line in metadata_log.splitlines() if line.strip().startswith("{")]
++            before_meta = [item for item in metadata_events if item.get("event") == "guard-process-before-original-probe"]
++            after_meta = [item for item in metadata_events if item.get("event") == "guard-process-after-original-probe"]
++            if not (len(before_meta) == len(after_meta) == 1 and before_meta[0]["uid"] == before_meta[0]["euid"] == after_meta[0]["uid"] == 1002
++                    and before_meta[0]["effectiveCapabilities"] == 0
++                    and before_meta[0]["pid"] == after_meta[0]["pid"]
++                    and before_meta[0]["probeSHA256"] == after_meta[0]["probeSHA256"] == PROBE_SHA256
++                    and all(before_meta[0]["fd"][str(fd)]["isatty"] is True for fd in (0, 1, 2))):
++                raise RuntimeError("Actual guarded process metadata did not establish UID, empty capabilities, and TTY")
++            result["guardProcessMetadata"] = before_meta[0]
++            forbidden = base / "forbidden-write"
++            control = b"Original Landlock preflight write control.\n"
++            with forbidden.open("xb") as stream:
++                stream.write(control)
++            result["landlockWriteControl"] = {"uid": os.getuid(), "path": str(forbidden),
++                "sha256": digest(forbidden), "bytes": forbidden.stat().st_size,
++                "succeededWithoutLandlock": forbidden.read_bytes() == control}
++            forbidden.unlink()
++            if not result["landlockWriteControl"]["succeededWithoutLandlock"]:
++                raise RuntimeError("Landlock unrestricted write control failed")
++            run_guard("landlock-preflight", guard + [str(tool_bin / "landrun"), "--best-effort",
+                 "--ro", "/", "--rw", "/dev", "-ldd", "-add-exec", "--",
+-                "/usr/bin/python3", probe, "write-outside", str(base / "forbidden-write")], repo)
++                "/usr/bin/python3", probe, "write-outside", str(base / "forbidden-write")], repo, PREFLIGHT_SECONDS)
++            result["landlockForbiddenWriteAbsent"] = not forbidden.exists()
++            if forbidden.exists():
++                raise RuntimeError("Landlock probe left a forbidden write")
+             comparator = repo / ".lake/packages/Comparator/.lake/build/bin/comparator"
+-            run("protected-comparator", guard + [lake, "env", str(comparator), pins["configuration"]], repo)
++            run_guard("protected-comparator", guard + [lake, "env", str(comparator), pins["configuration"]], repo, COMPARATOR_SECONDS)
+             audit = base / "SubmittedAxioms.lean"
+             audit.write_text("import NavierStokes.ComparatorSolution\n" + "".join(
+                 f"#check {name}\n#print axioms {name}\n" for name in pins["theorems"]))

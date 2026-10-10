@@ -1,0 +1,336 @@
+﻿2026-10-10T01:28:04.1287152Z Current runner version: '2.337.0'
+2026-10-10T01:28:04.1323736Z ##[group]Runner Image Provisioner
+2026-10-10T01:28:04.1325450Z Hosted Compute Agent
+2026-10-10T01:28:04.1326430Z Version: 20261002.596
+2026-10-10T01:28:04.1327422Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-10T01:28:04.1328803Z Build Date: 2026-10-02T22:28:27Z
+2026-10-10T01:28:04.1329957Z Worker ID: {cc6f2569-900c-4d30-8e0f-8d62c8ca9bbc}
+2026-10-10T01:28:04.1331088Z Region: eastus
+2026-10-10T01:28:04.1332170Z Cloud: Azure
+2026-10-10T01:28:04.1333098Z ##[endgroup]
+2026-10-10T01:28:04.1335765Z ##[group]Operating System
+2026-10-10T01:28:04.1336869Z Ubuntu
+2026-10-10T01:28:04.1338254Z 24.04.5
+2026-10-10T01:28:04.1339125Z LTS
+2026-10-10T01:28:04.1340028Z ##[endgroup]
+2026-10-10T01:28:04.1341035Z ##[group]Runner Image
+2026-10-10T01:28:04.1342017Z Image: ubuntu-24.04
+2026-10-10T01:28:04.1342956Z Version: 20261004.327.1
+2026-10-10T01:28:04.1345327Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-10T01:28:04.1348158Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-10T01:28:04.1349832Z ##[endgroup]
+2026-10-10T01:28:04.1351682Z ##[group]GITHUB_TOKEN Permissions
+2026-10-10T01:28:04.1354812Z Contents: read
+2026-10-10T01:28:04.1355947Z Metadata: read
+2026-10-10T01:28:04.1356819Z ##[endgroup]
+2026-10-10T01:28:04.1359944Z Secret source: Actions
+2026-10-10T01:28:04.1361490Z Cache mode: write
+2026-10-10T01:28:04.1363050Z Prepare workflow directory
+2026-10-10T01:28:04.1838544Z Prepare all required actions
+2026-10-10T01:28:04.1909221Z Getting action download info
+2026-10-10T01:28:04.4071557Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-10T01:28:04.5138981Z Download action repository 'actions/setup-go@v5' (SHA:40f1582b2485089dde7abd97c1529aa768e1baff)
+2026-10-10T01:28:04.7034934Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-10T01:28:04.9143421Z Complete job name: diagnostic
+2026-10-10T01:28:04.9948009Z ##[group]Run actions/checkout@v4
+2026-10-10T01:28:04.9948890Z with:
+2026-10-10T01:28:04.9949334Z   persist-credentials: false
+2026-10-10T01:28:04.9949889Z   repository: leegahuyn/MathScopeCompute
+2026-10-10T01:28:04.9954137Z   token: ***
+2026-10-10T01:28:04.9954579Z   ssh-strict: true
+2026-10-10T01:28:04.9955013Z   ssh-user: git
+2026-10-10T01:28:04.9955420Z   clean: true
+2026-10-10T01:28:04.9955856Z   sparse-checkout-cone-mode: true
+2026-10-10T01:28:04.9956369Z   fetch-depth: 1
+2026-10-10T01:28:04.9956785Z   fetch-tags: false
+2026-10-10T01:28:04.9957217Z   show-progress: true
+2026-10-10T01:28:04.9957642Z   lfs: false
+2026-10-10T01:28:04.9958046Z   submodules: false
+2026-10-10T01:28:04.9958481Z   set-safe-directory: true
+2026-10-10T01:28:04.9958979Z   allow-unsafe-pr-checkout: false
+2026-10-10T01:28:04.9959747Z ##[endgroup]
+2026-10-10T01:28:05.0982239Z Syncing repository: leegahuyn/MathScopeCompute
+2026-10-10T01:28:05.0984545Z ##[group]Getting Git version info
+2026-10-10T01:28:05.0985998Z Working directory is '/home/runner/work/MathScopeCompute/MathScopeCompute'
+2026-10-10T01:28:05.0989109Z [command]/usr/bin/git version
+2026-10-10T01:28:05.1128216Z git version 2.55.0
+2026-10-10T01:28:05.1155175Z ##[endgroup]
+2026-10-10T01:28:05.1171689Z Temporarily overriding HOME='/home/runner/work/_temp/a01d3270-21b6-4daa-9ab6-779b7dc7596a' before making global git config changes
+2026-10-10T01:28:05.1173413Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-10T01:28:05.1177309Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-10T01:28:05.1233025Z Deleting the contents of '/home/runner/work/MathScopeCompute/MathScopeCompute'
+2026-10-10T01:28:05.1268279Z ##[group]Initializing the repository
+2026-10-10T01:28:05.1273306Z [command]/usr/bin/git init /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-10T01:28:05.1418126Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-10T01:28:05.1419679Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-10T01:28:05.1425949Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-10T01:28:05.1439235Z hint: call:
+2026-10-10T01:28:05.1448943Z hint:
+2026-10-10T01:28:05.1450353Z hint: 	git config --global init.defaultBranch <name>
+2026-10-10T01:28:05.1451729Z hint:
+2026-10-10T01:28:05.1452944Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-10T01:28:05.1455222Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-10T01:28:05.1456887Z hint:
+2026-10-10T01:28:05.1457913Z hint: 	git branch -m <name>
+2026-10-10T01:28:05.1458923Z hint:
+2026-10-10T01:28:05.1460484Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-10T01:28:05.1462763Z Initialized empty Git repository in /home/runner/work/MathScopeCompute/MathScopeCompute/.git/
+2026-10-10T01:28:05.1467380Z [command]/usr/bin/git remote add origin https://github.com/leegahuyn/MathScopeCompute
+2026-10-10T01:28:05.1497215Z ##[endgroup]
+2026-10-10T01:28:05.1498433Z ##[group]Disabling automatic garbage collection
+2026-10-10T01:28:05.1505409Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-10T01:28:05.1544390Z ##[endgroup]
+2026-10-10T01:28:05.1546609Z ##[group]Setting up auth
+2026-10-10T01:28:05.1552980Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-10T01:28:05.1602313Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-10T01:28:05.2036215Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-10T01:28:05.2087828Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-10T01:28:05.2351390Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-10T01:28:05.2391980Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-10T01:28:05.2620396Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-10T01:28:05.2662989Z ##[endgroup]
+2026-10-10T01:28:05.2664168Z ##[group]Fetching the repository
+2026-10-10T01:28:05.2673181Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d0543504ab3d923490f2e3cf94c968f3739558d8:refs/remotes/origin/handoff-resume-20261010
+2026-10-10T01:28:17.4231623Z From https://github.com/leegahuyn/MathScopeCompute
+2026-10-10T01:28:17.4234470Z  * [new ref]         d0543504ab3d923490f2e3cf94c968f3739558d8 -> origin/handoff-resume-20261010
+2026-10-10T01:28:17.4239538Z ##[endgroup]
+2026-10-10T01:28:17.4241695Z ##[group]Determining the checkout info
+2026-10-10T01:28:17.4244250Z ##[endgroup]
+2026-10-10T01:28:17.4248838Z [command]/usr/bin/git sparse-checkout disable
+2026-10-10T01:28:17.4304308Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-10T01:28:17.4339461Z ##[group]Checking out the ref
+2026-10-10T01:28:17.4345174Z [command]/usr/bin/git checkout --progress --force -B handoff-resume-20261010 refs/remotes/origin/handoff-resume-20261010
+2026-10-10T01:28:18.2888225Z Switched to a new branch 'handoff-resume-20261010'
+2026-10-10T01:28:18.2893534Z branch 'handoff-resume-20261010' set up to track 'origin/handoff-resume-20261010'.
+2026-10-10T01:28:18.2924818Z ##[endgroup]
+2026-10-10T01:28:18.2970268Z [command]/usr/bin/git log -1 --format=%H
+2026-10-10T01:28:18.2996982Z d0543504ab3d923490f2e3cf94c968f3739558d8
+2026-10-10T01:28:18.3006627Z ##[group]Removing auth
+2026-10-10T01:28:18.3010559Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-10T01:28:18.3045485Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-10T01:28:18.3273602Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-10T01:28:18.3302458Z http.https://github.com/.extraheader
+2026-10-10T01:28:18.3309574Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-10T01:28:18.3344268Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-10T01:28:18.3573284Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-10T01:28:18.3606307Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-10T01:28:18.3832115Z ##[endgroup]
+2026-10-10T01:28:18.4041131Z ##[group]Run python3 -B -m unittest discover -s tools/ns-guard-ci -p test_transport.py -v
+2026-10-10T01:28:18.4041939Z [36;1mpython3 -B -m unittest discover -s tools/ns-guard-ci -p test_transport.py -v[0m
+2026-10-10T01:28:18.4320696Z shell: /usr/bin/bash -e {0}
+2026-10-10T01:28:18.4321077Z ##[endgroup]
+2026-10-10T01:28:19.2164607Z test_exit_before_eof_is_preserved_when_descendant_holds_pipe (test_transport.TransportTests.test_exit_before_eof_is_preserved_when_descendant_holds_pipe) ... ok
+2026-10-10T01:28:19.2352157Z test_outer_pty_eof_does_not_turn_nonzero_exit_into_success (test_transport.TransportTests.test_outer_pty_eof_does_not_turn_nonzero_exit_into_success) ... ok
+2026-10-10T01:28:19.2589320Z test_outer_pty_has_three_tty_fds_and_controlling_terminal (test_transport.TransportTests.test_outer_pty_has_three_tty_fds_and_controlling_terminal) ... ok
+2026-10-10T01:28:19.2760147Z test_pipe_captures_both_streams_and_no_final_newline (test_transport.TransportTests.test_pipe_captures_both_streams_and_no_final_newline) ... ok
+2026-10-10T01:28:19.2764933Z test_refuses_unbounded_diagnostic_timeout (test_transport.TransportTests.test_refuses_unbounded_diagnostic_timeout) ... ok
+2026-10-10T01:28:19.5849786Z test_timeout_remains_failure_when_sigterm_handler_exits_zero (test_transport.TransportTests.test_timeout_remains_failure_when_sigterm_handler_exits_zero) ... ok
+2026-10-10T01:28:19.8872292Z test_timeout_retains_partial_output_and_real_cleanup_exit (test_transport.TransportTests.test_timeout_retains_partial_output_and_real_cleanup_exit) ... ok
+2026-10-10T01:28:19.8874180Z 
+2026-10-10T01:28:19.8874665Z ----------------------------------------------------------------------
+2026-10-10T01:28:19.8875482Z Ran 7 tests in 1.374s
+2026-10-10T01:28:19.8875739Z 
+2026-10-10T01:28:19.8968667Z OK
+2026-10-10T01:28:19.9063613Z ##[group]Run actions/setup-go@v5
+2026-10-10T01:28:19.9064226Z with:
+2026-10-10T01:28:19.9064450Z   go-version: 1.27.2
+2026-10-10T01:28:19.9064696Z   cache: false
+2026-10-10T01:28:19.9064910Z   check-latest: false
+2026-10-10T01:28:19.9067654Z   token: ***
+2026-10-10T01:28:19.9067866Z ##[endgroup]
+2026-10-10T01:28:20.0331874Z Setup go version spec 1.27.2
+2026-10-10T01:28:20.0342280Z Attempting to download 1.27.2...
+2026-10-10T01:28:20.0452165Z (node:2404) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-10T01:28:20.0453234Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-10T01:28:20.5052905Z matching 1.27.2...
+2026-10-10T01:28:20.5078520Z Acquiring 1.27.2 from https://github.com/actions/go-versions/releases/download/1.27.2-37875086547/go-1.27.2-linux-x64.tar.gz
+2026-10-10T01:28:21.1872779Z Extracting Go...
+2026-10-10T01:28:21.2025240Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/d3d8a24f-f6b8-4460-a75b-675721fcbc0f -f /home/runner/work/_temp/096a7a79-07d4-46af-9e58-18380a411bde
+2026-10-10T01:28:22.8913254Z Successfully extracted go to /home/runner/work/_temp/d3d8a24f-f6b8-4460-a75b-675721fcbc0f
+2026-10-10T01:28:22.8914463Z Adding to the cache ...
+2026-10-10T01:28:28.9437269Z Successfully cached go to /opt/hostedtoolcache/go/1.27.2/x64
+2026-10-10T01:28:28.9451626Z Added go to the path
+2026-10-10T01:28:28.9452378Z Successfully set up Go version 1.27.2
+2026-10-10T01:28:28.9699755Z go version go1.27.2 linux/amd64
+2026-10-10T01:28:28.9700090Z 
+2026-10-10T01:28:28.9700629Z ##[group]go env
+2026-10-10T01:28:29.1049516Z AR='ar'
+2026-10-10T01:28:29.1049934Z CC='gcc'
+2026-10-10T01:28:29.1050281Z CGO_CFLAGS='-O2 -g'
+2026-10-10T01:28:29.1050724Z CGO_CPPFLAGS=''
+2026-10-10T01:28:29.1051097Z CGO_CXXFLAGS='-O2 -g'
+2026-10-10T01:28:29.1051481Z CGO_ENABLED='1'
+2026-10-10T01:28:29.1051831Z CGO_FFLAGS='-O2 -g'
+2026-10-10T01:28:29.1052226Z CGO_LDFLAGS='-O2 -g'
+2026-10-10T01:28:29.1052588Z CXX='g++'
+2026-10-10T01:28:29.1052929Z GCCGO='gccgo'
+2026-10-10T01:28:29.1053289Z GO111MODULE=''
+2026-10-10T01:28:29.1053623Z GOAMD64='v1'
+2026-10-10T01:28:29.1054231Z GOARCH='amd64'
+2026-10-10T01:28:29.1054611Z GOAUTH='netrc'
+2026-10-10T01:28:29.1054988Z GOBIN='/home/runner/go/bin'
+2026-10-10T01:28:29.1055442Z GOCACHE='/home/runner/.cache/go-build'
+2026-10-10T01:28:29.1055941Z GOCACHEPROG=''
+2026-10-10T01:28:29.1056291Z GODEBUG=''
+2026-10-10T01:28:29.1056650Z GOENV='/home/runner/.config/go/env'
+2026-10-10T01:28:29.1057094Z GOEXE=''
+2026-10-10T01:28:29.1057418Z GOEXPERIMENT=''
+2026-10-10T01:28:29.1057765Z GOFIPS140='off'
+2026-10-10T01:28:29.1058099Z GOFLAGS=''
+2026-10-10T01:28:29.1059243Z GOGCCFLAGS='-fPIC -m64 -pthread -Wl,--no-gc-sections -fmessage-length=0 -ffile-prefix-map=/tmp/go-build2212749856=/tmp/go-build -gno-record-gcc-switches'
+2026-10-10T01:28:29.1060449Z GOHOSTARCH='amd64'
+2026-10-10T01:28:29.1060810Z GOHOSTOS='linux'
+2026-10-10T01:28:29.1061158Z GOINSECURE=''
+2026-10-10T01:28:29.1061511Z GOMOD='/dev/null'
+2026-10-10T01:28:29.1061916Z GOMODCACHE='/home/runner/go/pkg/mod'
+2026-10-10T01:28:29.1062374Z GONOPROXY=''
+2026-10-10T01:28:29.1062717Z GONOSUMDB=''
+2026-10-10T01:28:29.1063044Z GOOS='linux'
+2026-10-10T01:28:29.1063386Z GOPACKAGESDRIVER=''
+2026-10-10T01:28:29.1063958Z GOPATH='/home/runner/go'
+2026-10-10T01:28:29.1064355Z GOPRIVATE=''
+2026-10-10T01:28:29.1064787Z GOPROXY='https://proxy.golang.org,direct'
+2026-10-10T01:28:29.1065354Z GOROOT='/opt/hostedtoolcache/go/1.27.2/x64'
+2026-10-10T01:28:29.1065864Z GOSUMDB='sum.golang.org'
+2026-10-10T01:28:29.1066260Z GOTELEMETRY='local'
+2026-10-10T01:28:29.1066713Z GOTELEMETRYDIR='/home/runner/.config/go/telemetry'
+2026-10-10T01:28:29.1067244Z GOTMPDIR=''
+2026-10-10T01:28:29.1067584Z GOTOOLCHAIN='auto'
+2026-10-10T01:28:29.1068130Z GOTOOLDIR='/opt/hostedtoolcache/go/1.27.2/x64/pkg/tool/linux_amd64'
+2026-10-10T01:28:29.1068749Z GOVCS=''
+2026-10-10T01:28:29.1069076Z GOVERSION='go1.27.2'
+2026-10-10T01:28:29.1069432Z GOWORK=''
+2026-10-10T01:28:29.1070103Z PKG_CONFIG='pkg-config'
+2026-10-10T01:28:29.1070381Z 
+2026-10-10T01:28:29.1070938Z ##[endgroup]
+2026-10-10T01:28:29.1287139Z ##[group]Run set -euo pipefail
+2026-10-10T01:28:29.1287487Z [36;1mset -euo pipefail[0m
+2026-10-10T01:28:29.1287850Z [36;1msudo useradd --create-home --shell /bin/bash mathscopeverify[0m
+2026-10-10T01:28:29.1288406Z [36;1msudo install -d -m 755 /opt/mathscope-ci /opt/mathscope-guard-ci[0m
+2026-10-10T01:28:29.1288953Z [36;1msudo install -m 644 tools/ns-original-ci/pins.json /opt/mathscope-ci/pins.json[0m
+2026-10-10T01:28:29.1289553Z [36;1msudo install -m 755 tools/ns-original-ci/probe.py /opt/mathscope-ci/probe.py[0m
+2026-10-10T01:28:29.1290155Z [36;1msudo install -m 755 tools/ns-guard-ci/diagnose.py tools/ns-guard-ci/transport.py \[0m
+2026-10-10T01:28:29.1290710Z [36;1m  tools/ns-guard-ci/metadata_probe.py /opt/mathscope-guard-ci/[0m
+2026-10-10T01:28:29.1291109Z [36;1mmathscope_go_root=$(go env GOROOT)[0m
+2026-10-10T01:28:29.1291470Z [36;1msudo cp -a "$mathscope_go_root" /opt/mathscope-ci/go[0m
+2026-10-10T01:28:29.1292034Z [36;1mmathscope_uid=$(id -u mathscopeverify)[0m
+2026-10-10T01:28:29.1292383Z [36;1msudo loginctl enable-linger mathscopeverify[0m
+2026-10-10T01:28:29.1292774Z [36;1msudo systemctl start "user@${mathscope_uid}.service"[0m
+2026-10-10T01:28:29.1293289Z [36;1msudo -u mathscopeverify -H env XDG_RUNTIME_DIR="/run/user/${mathscope_uid}" \[0m
+2026-10-10T01:28:29.1294614Z [36;1m  DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/${mathscope_uid}/bus" \[0m
+2026-10-10T01:28:29.1295099Z [36;1m  systemctl --user is-active default.target[0m
+2026-10-10T01:28:29.1368176Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-10T01:28:29.1368557Z ##[endgroup]
+2026-10-10T01:30:35.1426535Z active
+2026-10-10T01:30:35.1481677Z ##[group]Run set -euo pipefail
+2026-10-10T01:30:35.1482036Z [36;1mset -euo pipefail[0m
+2026-10-10T01:30:35.1482729Z [36;1mmathscope_landrun_repository=$(python3 -c 'import json; print(json.load(open("tools/ns-original-ci/pins.json"))["landrun"]["repository"])')[0m
+2026-10-10T01:30:35.1484025Z [36;1mmathscope_landrun_commit=$(python3 -c 'import json; print(json.load(open("tools/ns-original-ci/pins.json"))["landrun"]["commit"])')[0m
+2026-10-10T01:30:35.1484777Z [36;1mmathscope_tool_dir=/home/mathscopeverify/guard-diagnostic-tools[0m
+2026-10-10T01:30:35.1485273Z [36;1msudo -u mathscopeverify -H mkdir -p "$mathscope_tool_dir/source"[0m
+2026-10-10T01:30:35.1485782Z [36;1msudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" init[0m
+2026-10-10T01:30:35.1486457Z [36;1msudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" remote add origin "$mathscope_landrun_repository"[0m
+2026-10-10T01:30:35.1487280Z [36;1msudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" fetch --depth=1 origin "$mathscope_landrun_commit"[0m
+2026-10-10T01:30:35.1488013Z [36;1msudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" checkout --detach FETCH_HEAD[0m
+2026-10-10T01:30:35.1488752Z [36;1mtest "$(sudo -u mathscopeverify -H git -C "$mathscope_tool_dir/source" rev-parse HEAD)" = "$mathscope_landrun_commit"[0m
+2026-10-10T01:30:35.1489485Z [36;1msudo -u mathscopeverify -H /opt/mathscope-ci/go/bin/go -C "$mathscope_tool_dir/source" \[0m
+2026-10-10T01:30:35.1490075Z [36;1m  build -mod=readonly -o "$mathscope_tool_dir/landrun" cmd/landrun/main.go[0m
+2026-10-10T01:30:35.1554494Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-10T01:30:35.1554865Z ##[endgroup]
+2026-10-10T01:30:35.2272371Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-10T01:30:35.2273004Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-10T01:30:35.2273635Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-10T01:30:35.2275032Z hint: call:
+2026-10-10T01:30:35.2275236Z hint:
+2026-10-10T01:30:35.2275529Z hint: 	git config --global init.defaultBranch <name>
+2026-10-10T01:30:35.2275853Z hint:
+2026-10-10T01:30:35.2276186Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-10T01:30:35.2276740Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-10T01:30:35.2277126Z hint:
+2026-10-10T01:30:35.2277334Z hint: 	git branch -m <name>
+2026-10-10T01:30:35.2277566Z hint:
+2026-10-10T01:30:35.2278063Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-10T01:30:35.2279034Z Initialized empty Git repository in /home/mathscopeverify/guard-diagnostic-tools/source/.git/
+2026-10-10T01:30:35.4067666Z From https://github.com/Zouuup/landrun
+2026-10-10T01:30:35.4068442Z  * branch            811cfff51ceaf3d9843708aa6d22e9b84ccac8b4 -> FETCH_HEAD
+2026-10-10T01:30:35.4183931Z warning: unable to access '/home/runner/.config/git/ignore': Permission denied
+2026-10-10T01:30:35.4187185Z warning: unable to access '/home/runner/.config/git/attributes': Permission denied
+2026-10-10T01:30:35.4211235Z warning: unable to access '/home/runner/.config/git/ignore': Permission denied
+2026-10-10T01:30:35.4216030Z HEAD is now at 811cfff Update README.md
+2026-10-10T01:30:35.4412815Z go: downloading github.com/urfave/cli/v3 v3.6.2
+2026-10-10T01:30:35.4695163Z go: downloading github.com/landlock-lsm/go-landlock v0.9.0
+2026-10-10T01:30:35.6418292Z go: downloading golang.org/x/sys v0.40.0
+2026-10-10T01:30:35.6419362Z go: downloading kernel.org/pub/linux/libs/security/libcap/psx v1.2.77
+2026-10-10T01:30:44.7521881Z ##[group]Run set -euo pipefail
+2026-10-10T01:30:44.7522211Z [36;1mset -euo pipefail[0m
+2026-10-10T01:30:44.7522497Z [36;1mmathscope_uid=$(id -u mathscopeverify)[0m
+2026-10-10T01:30:44.7522822Z [36;1msudo -u mathscopeverify -H env \[0m
+2026-10-10T01:30:44.7523165Z [36;1m  XDG_RUNTIME_DIR="/run/user/${mathscope_uid}" \[0m
+2026-10-10T01:30:44.7523613Z [36;1m  DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/${mathscope_uid}/bus" \[0m
+2026-10-10T01:30:44.7524815Z [36;1m  PATH="/opt/mathscope-ci/go/bin:/usr/local/bin:/usr/bin:/bin" \[0m
+2026-10-10T01:30:44.7525292Z [36;1m  /usr/bin/python3 -B /opt/mathscope-guard-ci/diagnose.py \[0m
+2026-10-10T01:30:44.7525785Z [36;1m  --output /home/mathscopeverify/guard-diagnostic-evidence \[0m
+2026-10-10T01:30:44.7526267Z [36;1m  --landrun /home/mathscopeverify/guard-diagnostic-tools/landrun[0m
+2026-10-10T01:30:44.7590394Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-10T01:30:44.7590746Z ##[endgroup]
+2026-10-10T01:31:35.1445023Z {"status": "DIAGNOSTIC_PASS", "exitCode": 0, "N106Completed": false, "afTransportObservation": "PIPE_TIMED_OUT_OUTER_PTY_PASSED", "landlockTransportObservation": "PIPE_TIMED_OUT_OUTER_PTY_PASSED", "actualGuardProcessMetadataPassed": true}
+2026-10-10T01:31:35.1579108Z ##[group]Run set -euo pipefail
+2026-10-10T01:31:35.1579445Z [36;1mset -euo pipefail[0m
+2026-10-10T01:31:35.1579733Z [36;1mmkdir -p guard-diagnostic-evidence[0m
+2026-10-10T01:31:35.1580179Z [36;1mif sudo test -d /home/mathscopeverify/guard-diagnostic-evidence; then[0m
+2026-10-10T01:31:35.1580797Z [36;1m  sudo cp -a /home/mathscopeverify/guard-diagnostic-evidence/. guard-diagnostic-evidence/[0m
+2026-10-10T01:31:35.1581375Z [36;1m  sudo chown -R "$(id -u):$(id -g)" guard-diagnostic-evidence[0m
+2026-10-10T01:31:35.1581722Z [36;1mfi[0m
+2026-10-10T01:31:35.1582129Z [36;1mcp tools/ns-original-ci/pins.json tools/ns-original-ci/probe.py guard-diagnostic-evidence/[0m
+2026-10-10T01:31:35.1582716Z [36;1mcp tools/ns-guard-ci/transport.py tools/ns-guard-ci/diagnose.py \[0m
+2026-10-10T01:31:35.1583210Z [36;1m  tools/ns-guard-ci/metadata_probe.py guard-diagnostic-evidence/[0m
+2026-10-10T01:31:35.1584168Z [36;1mif sudo test -x /home/mathscopeverify/guard-diagnostic-tools/landrun; then[0m
+2026-10-10T01:31:35.1585044Z [36;1m  sudo sha256sum /home/mathscopeverify/guard-diagnostic-tools/landrun > guard-diagnostic-evidence/landrun-binary.sha256[0m
+2026-10-10T01:31:35.1585845Z [36;1m  sudo -u mathscopeverify -H git -C /home/mathscopeverify/guard-diagnostic-tools/source \[0m
+2026-10-10T01:31:35.1586436Z [36;1m    rev-parse HEAD > guard-diagnostic-evidence/landrun-source-head.txt[0m
+2026-10-10T01:31:35.1586832Z [36;1mfi[0m
+2026-10-10T01:31:35.1587149Z [36;1mgit rev-parse HEAD > guard-diagnostic-evidence/mathscope-commit.txt[0m
+2026-10-10T01:31:35.1649081Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-10T01:31:35.1649443Z ##[endgroup]
+2026-10-10T01:31:35.2445143Z ##[group]Run actions/upload-artifact@v4
+2026-10-10T01:31:35.2445462Z with:
+2026-10-10T01:31:35.2445703Z   name: original-guard-diagnostic-38013278865-1
+2026-10-10T01:31:35.2446029Z   path: guard-diagnostic-evidence/
+2026-10-10T01:31:35.2446302Z   retention-days: 30
+2026-10-10T01:31:35.2446522Z   if-no-files-found: error
+2026-10-10T01:31:35.2446753Z   compression-level: 6
+2026-10-10T01:31:35.2446964Z   overwrite: false
+2026-10-10T01:31:35.2447175Z   include-hidden-files: false
+2026-10-10T01:31:35.2447421Z ##[endgroup]
+2026-10-10T01:31:35.4243335Z (node:3755) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-10T01:31:35.4245429Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-10T01:31:35.4398170Z With the provided path, there will be 25 files uploaded
+2026-10-10T01:31:35.4399225Z Artifact name is valid!
+2026-10-10T01:31:35.4399991Z Root directory input is valid!
+2026-10-10T01:31:35.6338271Z Beginning upload of artifact content to blob storage
+2026-10-10T01:31:35.6825988Z (node:3755) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-10T01:31:35.7091344Z Uploaded bytes 44015
+2026-10-10T01:31:35.7248497Z Finished uploading artifact content to blob storage!
+2026-10-10T01:31:35.7249717Z SHA256 digest of uploaded artifact zip is b99bc876ebfdb71cd641247bca1b6cad38c757d9431ba81f7c70ca28a122f2ba
+2026-10-10T01:31:35.7251448Z Finalizing artifact upload
+2026-10-10T01:31:35.9754635Z Artifact original-guard-diagnostic-38013278865-1.zip successfully finalized. Artifact ID 11655127117
+2026-10-10T01:31:35.9755984Z Artifact original-guard-diagnostic-38013278865-1 has been successfully uploaded! Final size is 44015 bytes. Artifact ID is 11655127117
+2026-10-10T01:31:35.9762173Z Artifact download URL: https://github.com/leegahuyn/MathScopeCompute/actions/runs/38013278865/artifacts/11655127117
+2026-10-10T01:31:35.9930652Z Post job cleanup.
+2026-10-10T01:31:36.1172182Z (node:3768) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-10T01:31:36.1173535Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-10T01:31:36.1397051Z Post job cleanup.
+2026-10-10T01:31:36.2314364Z [command]/usr/bin/git version
+2026-10-10T01:31:36.2356354Z git version 2.55.0
+2026-10-10T01:31:36.2397782Z Temporarily overriding HOME='/home/runner/work/_temp/844dfc80-e2c7-4e39-b177-a20a2cedf8c4' before making global git config changes
+2026-10-10T01:31:36.2399387Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-10T01:31:36.2405245Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-10T01:31:36.2444586Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-10T01:31:36.2487716Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-10T01:31:36.2746512Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-10T01:31:36.2783205Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-10T01:31:36.3057590Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-10T01:31:36.3096065Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-10T01:31:36.3490519Z Cleaning up orphan processes
+2026-10-10T01:31:36.3829350Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-go@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

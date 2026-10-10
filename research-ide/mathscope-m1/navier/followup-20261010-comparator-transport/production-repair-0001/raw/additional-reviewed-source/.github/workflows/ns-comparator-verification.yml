@@ -1,0 +1,95 @@
+name: Pinned original Comparator with verified terminal transport
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ns-comparator-verification.yml'
+      - 'tools/ns-guard-ci/run_protected.py'
+      - 'tools/ns-guard-ci/protected_transport.py'
+      - 'tools/ns-guard-ci/test_protected_transport.py'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pinned-original-comparator-terminal-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  comparator:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check terminal exit handling and the source-status recorder
+        run: |
+          python3 -B -m unittest discover -s tools/ns-guard-ci -p test_protected_transport.py -v
+          python3 -B -m unittest discover -s tools/ns-original-ci -p test_git_status.py -v
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.2'
+          cache: false
+      - name: Prepare a separate unprivileged verification user
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo useradd --create-home --shell /bin/bash mathscopeverify
+          sudo install -d -m 755 /opt/mathscope-ci /opt/mathscope-guard-ci
+          sudo install -m 644 tools/ns-original-ci/pins.json /opt/mathscope-ci/pins.json
+          sudo install -m 755 tools/ns-original-ci/probe.py /opt/mathscope-ci/probe.py
+          sudo install -m 755 tools/ns-guard-ci/run_protected.py \
+            tools/ns-guard-ci/protected_transport.py /opt/mathscope-ci/
+          sudo install -m 755 tools/ns-guard-ci/metadata_probe.py /opt/mathscope-guard-ci/
+          rustup toolchain install 1.99.0 --profile minimal --no-self-update
+          mathscope_rust_bin=$(rustup which --toolchain 1.99.0 rustc)
+          mathscope_rust_root=$(dirname "$(dirname "$mathscope_rust_bin")")
+          sudo cp -a "$mathscope_rust_root" /opt/mathscope-ci/rust
+          mathscope_go_root=$(go env GOROOT)
+          sudo cp -a "$mathscope_go_root" /opt/mathscope-ci/go
+          mathscope_uid=$(id -u mathscopeverify)
+          test "$mathscope_uid" -eq 1002
+          sudo loginctl enable-linger mathscopeverify
+          sudo systemctl start "user@${mathscope_uid}.service"
+          sudo -u mathscopeverify -H env XDG_RUNTIME_DIR="/run/user/${mathscope_uid}" \
+            DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/${mathscope_uid}/bus" \
+            systemctl --user is-active default.target
+      - name: Run the original protected Comparator and preserve its actual exit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mathscope_uid=$(id -u mathscopeverify)
+          test "$mathscope_uid" -eq 1002
+          sudo -u mathscopeverify -H env \
+            XDG_RUNTIME_DIR="/run/user/${mathscope_uid}" \
+            DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/${mathscope_uid}/bus" \
+            PATH="/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin" \
+            /usr/bin/python3 -B /opt/mathscope-ci/run_protected.py \
+            --mode comparator --work /home/mathscopeverify/audit
+      - name: Preserve actual results even when verification fails
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p original-validation-evidence
+          if sudo test -d /home/mathscopeverify/audit/evidence; then
+            sudo cp -a /home/mathscopeverify/audit/evidence/. original-validation-evidence/
+            sudo chown -R "$(id -u):$(id -g)" original-validation-evidence
+          fi
+          cp tools/ns-original-ci/pins.json tools/ns-original-ci/probe.py original-validation-evidence/
+          cp tools/ns-original-ci/run.py original-validation-evidence/source-original-run.py
+          cp tools/ns-guard-ci/run_protected.py tools/ns-guard-ci/protected_transport.py \
+            tools/ns-guard-ci/metadata_probe.py tools/ns-guard-ci/test_protected_transport.py \
+            original-validation-evidence/
+          cp .github/workflows/ns-comparator-verification.yml original-validation-evidence/
+          git rev-parse HEAD > original-validation-evidence/mathscope-commit.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: original-comparator-terminal-${{ github.run_id }}-${{ github.run_attempt }}
+          path: original-validation-evidence/
+          retention-days: 30
+          if-no-files-found: error

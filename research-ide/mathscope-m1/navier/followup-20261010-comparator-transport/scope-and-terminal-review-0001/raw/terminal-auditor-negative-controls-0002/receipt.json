@@ -1,0 +1,89 @@
+{
+  "schema": "MathScope.TerminalAuditorActualNegativeControls/1",
+  "completedUTC": "2026-10-10T01:57:21.913137+00:00",
+  "status": "PASS",
+  "reasonForRerun": "Independent review identified exact stage-presence/order and unit-position consistency requirements; the strengthened final auditor must still reject both actual non-acceptance artifacts without parser errors.",
+  "sourceSHA256": "81c7991b62e2c9d7a88be179b5ae6d94ca7b9cf2726a8655d3ee512e795d00ef",
+  "priorControlReceiptSHA256": "a0a38cba823316d73a0997bf85a166d30a5192e623123d3efdfcb69a441af7ab",
+  "scope": "Actual negative inputs only. No artificial passing packet or new theorem validation.",
+  "cases": [
+    {
+      "name": "cancelled-original",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-comparator-transport/verify_n106_terminal_artifact.py",
+        "--zip",
+        "/workspace/scratch/9a6c38c54c2e/tmp/n106-live-after-freeze/final-artifact-0001/original-comparator-37979127351-1.zip",
+        "--artifact-id",
+        "11654200401",
+        "--observation",
+        "/workspace/scratch/9a6c38c54c2e/tmp/n106-live-after-freeze/github-observation-025.json",
+        "--output",
+        "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/terminal-auditor-negative-controls-0002/cancelled-original.audit.json"
+      ],
+      "exitCode": 1,
+      "expectedRejection": true,
+      "status": "FAIL_OR_INCOMPLETE",
+      "N106Completed": false,
+      "checksPassed": 109,
+      "checksTotal": 175,
+      "stdoutSHA256": "04eb23d83e24d308e437bb4a2b1dda6287504ea0292c7ab2e4890286362bb300",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "auditSHA256": "87a84a186cb6fb32d5489a9e66d1fae0fd281ad544679257ccdc5fff372e585b",
+      "inputs": [
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-comparator-transport/verify_n106_terminal_artifact.py",
+          "sha256": "81c7991b62e2c9d7a88be179b5ae6d94ca7b9cf2726a8655d3ee512e795d00ef"
+        },
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/tmp/n106-live-after-freeze/final-artifact-0001/original-comparator-37979127351-1.zip",
+          "sha256": "1af31713f8f021605af509bab4634fed7ab041636f6f1670be2bd3e3c61788d2"
+        },
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/tmp/n106-live-after-freeze/github-observation-025.json",
+          "sha256": "e93a2f3205c12b2aa4a200724f7ca1d2d6119d1ed34354270b062303f1442fa3"
+        }
+      ]
+    },
+    {
+      "name": "successful-diagnostic-only",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-comparator-transport/verify_n106_terminal_artifact.py",
+        "--zip",
+        "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/remote-diagnostic-0001/original-guard-diagnostic-38013278865-1.zip",
+        "--artifact-id",
+        "11655127117",
+        "--observation",
+        "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/remote-diagnostic-0001/observation-004.json",
+        "--output",
+        "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/terminal-auditor-negative-controls-0002/successful-diagnostic-only.audit.json"
+      ],
+      "exitCode": 1,
+      "expectedRejection": true,
+      "status": "FAIL_OR_INCOMPLETE",
+      "N106Completed": false,
+      "checksPassed": 32,
+      "checksTotal": 115,
+      "stdoutSHA256": "f6a0fe1310bd19d8e78555ac0af6ec69281bc8f5963f4b01cce38b646ec9247b",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "auditSHA256": "f7b83b4f669283b902725c08941d7b4f6203f18e7cfac081591496f9e22cbbb0",
+      "inputs": [
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-comparator-transport/verify_n106_terminal_artifact.py",
+          "sha256": "81c7991b62e2c9d7a88be179b5ae6d94ca7b9cf2726a8655d3ee512e795d00ef"
+        },
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/remote-diagnostic-0001/original-guard-diagnostic-38013278865-1.zip",
+          "sha256": "b99bc876ebfdb71cd641247bca1b6cad38c757d9431ba81f7c70ca28a122f2ba"
+        },
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/remote-diagnostic-0001/observation-004.json",
+          "sha256": "372377df45892005b64a84f6eb3113c355af115cdac7764f15838390394d3bbe"
+        }
+      ]
+    }
+  ]
+}

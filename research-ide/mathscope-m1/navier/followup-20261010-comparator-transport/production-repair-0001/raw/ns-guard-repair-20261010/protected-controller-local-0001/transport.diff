@@ -1,0 +1,180 @@
+--- tools/ns-guard-ci/transport.py
++++ tools/ns-guard-ci/protected_transport.py
+@@ -1,7 +1,8 @@
+-"""Bounded subprocess transport; EOF and process exit are separate evidence.
+-
+-This module grants no validation PASS. It never changes a command's arguments,
+-permissions, or environment. The caller owns cleanup of named systemd units.
++"""Protected long-command transport derived from the validated PTY diagnostic.
++
++The low-level transport preserves argv and environment. The guarded wrapper
++retains every original guard/security argument, adds a unique owned unit, and
++owns bounded cleanup of that unit. Transport success alone is no theorem PASS.
+ """
+ from __future__ import annotations
+ 
+@@ -11,11 +12,15 @@
+ import os
+ from pathlib import Path
+ import pty
++import hashlib
++import re
+ import selectors
+ import signal
+ import subprocess
+ import termios
+ import time
++import traceback
++import uuid
+ 
+ 
+ def utc():
+@@ -50,7 +55,7 @@
+ 
+ 
+ def run_transport(command, *, cwd, env, transport, timeout_seconds, log_path,
+-                  on_spawn=None, on_timeout=None):
++                  on_spawn=None, on_timeout=None, on_chunk=None):
+     """Run one literal argv through PIPE or a real controlling outer PTY.
+ 
+     timeout_seconds bounds the normal observation loop. Caller callbacks must
+@@ -60,8 +65,8 @@
+     """
+     if transport not in ("pipe", "outer-pty"):
+         raise ValueError("Unknown transport")
+-    if not 0 < timeout_seconds <= 30:
+-        raise ValueError("Diagnostic timeout must be positive and at most 30 seconds")
++    if not 0 < timeout_seconds <= 330 * 60:
++        raise ValueError("Protected timeout must be positive and at most 330 minutes")
+     log_path = Path(log_path)
+     started = time.monotonic()
+     record = {"command": list(map(str, command)), "cwd": str(cwd),
+@@ -69,7 +74,7 @@
+               "timeoutSeconds": timeout_seconds, "timedOut": False,
+               "parentStdinIsTTY": os.isatty(0), "parentStdoutIsTTY": os.isatty(1),
+               "eofObservedBeforeCleanup": False, "exitCodeBeforeCleanup": None,
+-              "captureError": None, "cleanup": []}
++              "captureError": None, "cleanup": [], "streamedBytes": 0}
+     master = slave = None
+     process = None
+     stream = None
+@@ -117,6 +122,9 @@
+                     if chunk:
+                         output.write(chunk)
+                         output.flush()
++                        if on_chunk:
++                            on_chunk(chunk)
++                            record["streamedBytes"] += len(chunk)
+                     else:
+                         eof = True
+                         selector.unregister(key.fd)
+@@ -182,3 +190,109 @@
+     record["completedUTC"] = utc()
+     record["elapsedSeconds"] = time.monotonic() - started
+     return record
++
++
++UNIT_PROPERTIES = ("LoadState", "ActiveState", "SubState", "Result", "ExecMainPID",
++    "ExecMainCode", "ExecMainStatus", "RestrictAddressFamilies", "NoNewPrivileges",
++    "StandardInput", "StandardOutput", "StandardError", "TTYPath", "ControlGroup",
++    "InvocationID")
++
++
++def bounded_query(command, env):
++    record = {"command": list(command), "startedUTC": utc(), "timeoutSeconds": 3,
++              "exitCode": None, "timedOut": False}
++    try:
++        result = subprocess.run(command, env=env, stdin=subprocess.DEVNULL,
++            stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3, check=False)
++        record.update(exitCode=result.returncode,
++            stdout=result.stdout.decode("utf-8", errors="replace"),
++            stderr=result.stderr.decode("utf-8", errors="replace"))
++    except subprocess.TimeoutExpired as exc:
++        record.update(timedOut=True,
++            stdout=(exc.stdout or b"").decode("utf-8", errors="replace"),
++            stderr=(exc.stderr or b"").decode("utf-8", errors="replace"))
++    except OSError as exc:
++        record["launchError"] = repr(exc)
++    record["completedUTC"] = utc()
++    return record
++
++
++def unit_snapshot(unit, env, full=False):
++    show = bounded_query(["systemctl", "--user", "show", unit, "--no-pager"] +
++        ["--property=" + key for key in UNIT_PROPERTIES], env)
++    properties = dict(line.split("=", 1) for line in show.get("stdout", "").splitlines() if "=" in line)
++    record = {"unit": unit, "observedUTC": utc(), "show": show, "properties": properties}
++    pid = properties.get("ExecMainPID", "0")
++    if pid.isdecimal() and int(pid) > 0:
++        record["serviceProcess"] = process_state(int(pid))
++    if full:
++        record["status"] = bounded_query(["systemctl", "--user", "status", unit, "--no-pager", "--full"], env)
++        record["journal"] = bounded_query(["journalctl", "--user", "--unit", unit,
++            "--no-pager", "--output=short-precise", "--lines=80"], env)
++    return record
++
++
++def cleanup_unit(unit, env):
++    return {"unit": unit, "beforeCleanup": unit_snapshot(unit, env),
++        "stop": bounded_query(["systemctl", "--user", "stop", "--no-block", unit], env),
++        "kill": bounded_query(["systemctl", "--user", "kill", "--kill-whom=all", "--signal=SIGKILL", unit], env)}
++
++
++def run_guarded(label, command, *, cwd, env, timeout_seconds, log_path, on_chunk):
++    """Retain the original guard, add an owned unit, and record every failure.
++
++    Call on the main thread. The temporary signal handlers turn an interruption
++    of this guard stage into failure evidence and exact-unit cleanup. The
++    caller must require ``passed`` and must never use a cleanup exit as success.
++    """
++    command = list(map(str, command))
++    if not re.fullmatch(r"[a-z0-9-]+", label):
++        raise ValueError("Invalid guard stage label")
++    expected = ["systemd-run", "--user", "--pty", "--wait", "--collect",
++                "--property=RestrictAddressFamilies=~AF_UNIX", "-E", "PATH=" + env["PATH"],
++                "--working-directory=" + str(cwd), "--"]
++    if command[:10] != expected:
++        raise ValueError("The original guard prefix must be retained exactly")
++    if not 0 < timeout_seconds <= 330 * 60:
++        raise ValueError("Protected observation exceeds its 330-minute bound")
++    unit = "mathscope-protected-" + label + "-" + uuid.uuid4().hex[:12] + ".service"
++    command.insert(9, "--unit=" + unit)
++    record = {"label": label, "unit": unit, "command": command, "cwd": str(cwd),
++              "startedUTC": utc(), "timeoutSeconds": timeout_seconds,
++              "passed": False, "exitCodeBeforeCleanup": None, "captureError": None}
++    complete = False
++    handlers = {}
++
++    def interrupted(signum, frame):
++        raise InterruptedError("Protected stage interrupted by signal " + str(signum))
++
++    try:
++        for signum in (signal.SIGTERM, signal.SIGINT):
++            handlers[signum] = signal.getsignal(signum)
++            signal.signal(signum, interrupted)
++        record.update(run_transport(command, cwd=cwd, env=env, transport="outer-pty",
++            timeout_seconds=timeout_seconds, log_path=log_path, on_chunk=on_chunk,
++            on_spawn=lambda pid: unit_snapshot(unit, env),
++            on_timeout=lambda pid: cleanup_unit(unit, env)))
++        complete = True
++    except BaseException as exc:
++        record["transportException"] = repr(exc)
++        record["traceback"] = traceback.format_exc()
++    finally:
++        for signum, previous in handlers.items():
++            signal.signal(signum, previous)
++        if not complete or record.get("timedOut") or record.get("finalClientExitCode") is None:
++            record["exceptionOrTimeoutCleanup"] = cleanup_unit(unit, env)
++        record["afterObservation"] = unit_snapshot(unit, env, full=True)
++        log_path = Path(log_path)
++        if log_path.exists():
++            record["logBytes"] = log_path.stat().st_size
++            record["logSHA256"] = hashlib.sha256(log_path.read_bytes()).hexdigest()
++        record["completedUTC"] = utc()
++    record["passed"] = (complete and record.get("timedOut") is False
++        and record.get("captureError") is None and not record.get("cleanupIncomplete", False)
++        and record.get("exitCodeBeforeCleanup") == 0 and record.get("finalClientExitCode") == 0
++        and record.get("eofObservedBeforeCleanup") is True
++        and "transportException" not in record
++        and record.get("streamedBytes") == record.get("logBytes"))
++    return record

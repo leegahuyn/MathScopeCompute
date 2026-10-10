@@ -1,0 +1,86 @@
+{
+  "schema": "MathScope.TerminalAuditorActualNegativeControls/1",
+  "completedUTC": "2026-10-10T01:53:13.900905+00:00",
+  "status": "PASS",
+  "scope": "Actual cancelled run and successful diagnostic artifact must not satisfy the newly bound protected Comparator gate. No input bytes altered. No new theorem validation occurs.",
+  "cases": [
+    {
+      "name": "cancelled-original",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-comparator-transport/verify_n106_terminal_artifact.py",
+        "--zip",
+        "/workspace/scratch/9a6c38c54c2e/tmp/n106-live-after-freeze/final-artifact-0001/original-comparator-37979127351-1.zip",
+        "--artifact-id",
+        "11654200401",
+        "--observation",
+        "/workspace/scratch/9a6c38c54c2e/tmp/n106-live-after-freeze/github-observation-025.json",
+        "--output",
+        "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/terminal-auditor-negative-controls-0001/cancelled-original.audit.json"
+      ],
+      "exitCode": 1,
+      "expectedRejection": true,
+      "status": "FAIL_OR_INCOMPLETE",
+      "N106Completed": false,
+      "checksPassed": 109,
+      "checksTotal": 174,
+      "stdoutSHA256": "a0f3045a65e4aa6b43e6a58260bfa5375d6927f941792ea5c41843aaff607e68",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "auditSHA256": "f73f30ff28e4cd9e02319d96e376aed52ee5c2f5f81e2f033a6cf2aaeb5b8ddc",
+      "inputs": [
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-comparator-transport/verify_n106_terminal_artifact.py",
+          "sha256": "83dcdd2824792cb8cc4eb73045ff3aa22bf25589a0eeb84049e78bff195860b7"
+        },
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/tmp/n106-live-after-freeze/final-artifact-0001/original-comparator-37979127351-1.zip",
+          "sha256": "1af31713f8f021605af509bab4634fed7ab041636f6f1670be2bd3e3c61788d2"
+        },
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/tmp/n106-live-after-freeze/github-observation-025.json",
+          "sha256": "e93a2f3205c12b2aa4a200724f7ca1d2d6119d1ed34354270b062303f1442fa3"
+        }
+      ]
+    },
+    {
+      "name": "successful-diagnostic-only",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-comparator-transport/verify_n106_terminal_artifact.py",
+        "--zip",
+        "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/remote-diagnostic-0001/original-guard-diagnostic-38013278865-1.zip",
+        "--artifact-id",
+        "11655127117",
+        "--observation",
+        "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/remote-diagnostic-0001/observation-004.json",
+        "--output",
+        "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/terminal-auditor-negative-controls-0001/successful-diagnostic-only.audit.json"
+      ],
+      "exitCode": 1,
+      "expectedRejection": true,
+      "status": "FAIL_OR_INCOMPLETE",
+      "N106Completed": false,
+      "checksPassed": 32,
+      "checksTotal": 114,
+      "stdoutSHA256": "4d6bb11f4ff6c1fcfb97f2a15e32dc04fb9ea70f847b4b45a2661ac79e6ebb94",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "auditSHA256": "48c4d8cebf6d2ec65f22edcb5d963dc5b43ff90b6b9b43fbc37db9ff8f976d29",
+      "inputs": [
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/MathScopeCompute/research-ide/mathscope-m1/navier/followup-20261010-comparator-transport/verify_n106_terminal_artifact.py",
+          "sha256": "83dcdd2824792cb8cc4eb73045ff3aa22bf25589a0eeb84049e78bff195860b7"
+        },
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/remote-diagnostic-0001/original-guard-diagnostic-38013278865-1.zip",
+          "sha256": "b99bc876ebfdb71cd641247bca1b6cad38c757d9431ba81f7c70ca28a122f2ba"
+        },
+        {
+          "path": "/workspace/scratch/9a6c38c54c2e/tmp/ns-guard-repair-20261010/remote-diagnostic-0001/observation-004.json",
+          "sha256": "372377df45892005b64a84f6eb3113c355af115cdac7764f15838390394d3bbe"
+        }
+      ]
+    }
+  ]
+}

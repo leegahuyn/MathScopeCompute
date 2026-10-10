@@ -1,0 +1,481 @@
+{
+  "schema": "MathScope.ProtectedOriginalCI/1",
+  "status": "RUNNING",
+  "mode": "comparator",
+  "startedUTC": "2026-10-09T19:17:54.435277+00:00",
+  "pins": {
+    "schema": "MathScope.OriginalVerificationPins/1",
+    "repository": "https://github.com/openai/NavierStokesAndEuler.git",
+    "commit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+    "toolchain": "leanprover/lean4:v4.34.0-rc2",
+    "sourceFileSHA256": {
+      "lean-toolchain": "8190e75a201741065fe508b28955dd64dd72d090babe5f70ce6848879d68ae88",
+      "lake-manifest.json": "5ec1dc8e009008d0efb9601cd38f6ba54e753fd538b0e5f8c3e6c5ec72ee1e09",
+      "lakefile.toml": "97b2804da5b9a2cd0aaf44ce42b7c39e9947beff9d2ac01a11e0d3d867af1c09"
+    },
+    "leanArchive": "https://github.com/leanprover/lean4/releases/download/v4.34.0-rc2/lean-4.34.0-rc2-linux.tar.zst",
+    "leanArchiveSHA256": "3d011041203acacf300d343a39673f7d233743397993797c941346ae9e5df1a8",
+    "leanKernelSHA256": "cddf08bd2b9239f8ce2e2aba8630c47e37b6b341b47705d9d0ba910ad6db13b5",
+    "comparatorCommit": "19e111e2141cf333c7daff0f64c5f24acc91dd2e",
+    "mathlibCommit": "85e3a25e006c35636f0e53b0e9296caca2685bc0",
+    "lean4exportCommit": "cacf989bd75f608700820f6afc595f32e7a99a4d",
+    "landrun": {
+      "repository": "https://github.com/Zouuup/landrun.git",
+      "commit": "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4"
+    },
+    "nanoda": {
+      "repository": "https://github.com/ammkrn/nanoda_lib.git",
+      "commit": "3a2407216ee84a75f9e1aead6803d0578be06ae7"
+    },
+    "goVersion": "1.27.2",
+    "rustVersion": "1.99.0",
+    "configuration": "ComparatorChallenges/NavierStokes.json",
+    "configurationSHA256": "7610ecead7b390d80ff7f4229a3ff8f18d630e046f7ad1de4f92c7e8e76845b8",
+    "theorems": [
+      "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+      "NavierStokes.Comparator.navier_stokes_breakdown_periodic"
+    ],
+    "permittedAxioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  "pinsSHA256": "e702d85ac8590d14c5ab131b6afaaab3ff56466b96da626739df4b0c364d4ae8",
+  "steps": [
+    {
+      "label": "identity",
+      "command": [
+        "id"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:17:54.435402+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:17:54.437314+00:00",
+      "logSHA256": "06e309bd695b54873d65dbcbba25d76fe334e6835a08094563789fcea87b1973"
+    },
+    {
+      "label": "system",
+      "command": [
+        "uname",
+        "-a"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:17:54.494096+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:17:54.580425+00:00",
+      "logSHA256": "13f109c96ec64fefcb66a09f876d5aab3f3352e13e8dc2a576692891bc902aa1"
+    },
+    {
+      "label": "extract-official-lean",
+      "command": [
+        "tar",
+        "--zstd",
+        "-xf",
+        "/home/mathscopeverify/audit/lean.tar.zst"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:17:58.106153+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:18:03.754925+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "lean-version",
+      "command": [
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lean",
+        "--version"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:18:04.459293+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:18:04.571896+00:00",
+      "logSHA256": "544b4920040fb4a18fbbf04c48a65f06739ab3268fc7d3c756bc1b64e823a094"
+    },
+    {
+      "label": "lean-prefix",
+      "command": [
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lean",
+        "--print-prefix"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:18:04.578620+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:18:04.617665+00:00",
+      "logSHA256": "d6728ecbf20256a3b29bd60aec386dc0ad31b5a34b3b3cac0b9906ae78f5b45a"
+    },
+    {
+      "label": "original-source-init",
+      "command": [
+        "git",
+        "init",
+        "/home/mathscopeverify/audit/original-source"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:18:04.623895+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:18:04.672829+00:00",
+      "logSHA256": "811663257542428b10182a376d635b291e2d13c99e20f378e9fb6511c2133278"
+    },
+    {
+      "label": "original-source-remote",
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/openai/NavierStokesAndEuler.git"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-09T19:18:04.673442+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:18:04.829417+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "original-source-fetch",
+      "command": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "origin",
+        "f9e8bc5b38b6e212696e8a30e3e91517af887bbd"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-09T19:18:04.831059+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:18:05.930730+00:00",
+      "logSHA256": "ccd4a46ac902f252d91daac334d48ba7b98e69da3674e4bfb15cad67d0aa91ac"
+    },
+    {
+      "label": "original-source-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-09T19:18:05.977459+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:18:06.324510+00:00",
+      "logSHA256": "6e166001747e1f16b9de6cc8f819fddcb166a8c4e73054a3b7e246c3e131afb7"
+    },
+    {
+      "label": "original-source-head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-09T19:18:06.371568+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:18:06.438524+00:00",
+      "logSHA256": "4cb8b85c992dd3fa1dfbd9e69f017bbea7939f5d6052778d545625550cd53468"
+    },
+    {
+      "label": "cache-get",
+      "command": [
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lake",
+        "exe",
+        "cache",
+        "get"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-09T19:18:06.557216+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:40.740368+00:00",
+      "logSHA256": "62045447dab9731afa19d81d788960bb3dbc743a6d0116a29c5439b3228641b7"
+    },
+    {
+      "label": "pin-Comparator",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source/.lake/packages/Comparator",
+      "startedUTC": "2026-10-09T19:19:40.741151+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:40.743534+00:00",
+      "logSHA256": "c7462dd28ef5f3d33af04327db4f213bfb3c86e008e221bf839a8e6258238a83"
+    },
+    {
+      "label": "pin-mathlib",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source/.lake/packages/mathlib",
+      "startedUTC": "2026-10-09T19:19:40.744166+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:40.746175+00:00",
+      "logSHA256": "41f09bc99f3e50964aeb698f2d3ed1c9799aa3ded14f2291f1de701569c2fc4e"
+    },
+    {
+      "label": "pin-lean4export",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source/.lake/packages/lean4export",
+      "startedUTC": "2026-10-09T19:19:40.746722+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:40.748669+00:00",
+      "logSHA256": "e1d3cac4cdff475728f321fb479572f2fce96eba2686d2195a2fe0f34bd12a9e"
+    },
+    {
+      "label": "landrun-source-init",
+      "command": [
+        "git",
+        "init",
+        "/home/mathscopeverify/audit/landrun-source"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:19:40.749202+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:40.753117+00:00",
+      "logSHA256": "56f43c019ae7e1ce023d3a2a8b94b2400cbeb5cd4abd60293bdaa7854e769279"
+    },
+    {
+      "label": "landrun-source-remote",
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/Zouuup/landrun.git"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-09T19:19:40.753736+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:40.756106+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "landrun-source-fetch",
+      "command": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "origin",
+        "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-09T19:19:40.756681+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.035554+00:00",
+      "logSHA256": "5236b9fb8cd4e085ff194e356bb8f7235b824d3598b30e372ba59a226fc326e8"
+    },
+    {
+      "label": "landrun-source-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-09T19:19:41.036253+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.041995+00:00",
+      "logSHA256": "1db07416293e9a68ebdfca26f4061ac5cfaaaefb3cb335d4dff3ee4124cfbc1c"
+    },
+    {
+      "label": "landrun-source-head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-09T19:19:41.042477+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.044408+00:00",
+      "logSHA256": "035068f52c1c430cc1733d04b44f82b74c0ea42811807e8e9a2acdf6328bbb16"
+    },
+    {
+      "label": "nanoda-source-init",
+      "command": [
+        "git",
+        "init",
+        "/home/mathscopeverify/audit/nanoda-source"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:19:41.045100+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.049038+00:00",
+      "logSHA256": "25c7bbd3ff44e8e3f3e20a237eeaccfb3050ea01dc7f9c6f03078533fad2d4c5"
+    },
+    {
+      "label": "nanoda-source-remote",
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/ammkrn/nanoda_lib.git"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-09T19:19:41.049678+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.052041+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "nanoda-source-fetch",
+      "command": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "origin",
+        "3a2407216ee84a75f9e1aead6803d0578be06ae7"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-09T19:19:41.052580+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.276573+00:00",
+      "logSHA256": "552cb6d19400093c52a70dcbedcf542affd7d15ca22ade89b76553f1de38bd86"
+    },
+    {
+      "label": "nanoda-source-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-09T19:19:41.277286+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.284705+00:00",
+      "logSHA256": "faebc357195e8916e9cf05c93739281d7e42262986bcbd96e618014b0de0eb99"
+    },
+    {
+      "label": "nanoda-source-head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-09T19:19:41.285295+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.287216+00:00",
+      "logSHA256": "7b5158cc60286df13d19d5f3c49eda88784307a726144c5a7a8142bab2efa599"
+    },
+    {
+      "label": "go-version",
+      "command": [
+        "go",
+        "version"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:19:41.287792+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.291905+00:00",
+      "logSHA256": "ed4307d760c597256afdc696a61d47d13e832615d7741ead11c64966a440b376"
+    },
+    {
+      "label": "rust-version",
+      "command": [
+        "rustc",
+        "--version"
+      ],
+      "cwd": "/home/mathscopeverify/audit",
+      "startedUTC": "2026-10-09T19:19:41.292489+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:41.301576+00:00",
+      "logSHA256": "8dc912acd5bfeafc70b01b1d2a2afb0844afa02f5dba2f1ae8d5c212d005afb6"
+    },
+    {
+      "label": "build-landrun",
+      "command": [
+        "go",
+        "build",
+        "-mod=readonly",
+        "-o",
+        "/home/mathscopeverify/audit/tool-bin/landrun",
+        "cmd/landrun/main.go"
+      ],
+      "cwd": "/home/mathscopeverify/audit/landrun-source",
+      "startedUTC": "2026-10-09T19:19:41.302302+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:19:50.584496+00:00",
+      "logSHA256": "5e09e7add5ffb69e6ec818cd8417bef048ede8025e5a71a6dc067b62b9776191"
+    },
+    {
+      "label": "build-nanoda",
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--locked",
+        "--jobs",
+        "2"
+      ],
+      "cwd": "/home/mathscopeverify/audit/nanoda-source",
+      "startedUTC": "2026-10-09T19:19:50.585293+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:20:08.457081+00:00",
+      "logSHA256": "e7bd863d5237091ae390915ad2084fb98eb972bedcc927b3195365ad799d4884"
+    },
+    {
+      "label": "build-comparator-tools",
+      "command": [
+        "/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin/lake",
+        "build",
+        "comparator",
+        "lean4export"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-09T19:20:08.459150+00:00",
+      "exitCode": 0,
+      "completedUTC": "2026-10-09T19:20:19.852378+00:00",
+      "logSHA256": "6d7c9f8df8d44028a4f01848dafd365589eb7defb9994c7f57dd69e04ff971af"
+    },
+    {
+      "label": "guard-preflight",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--pty",
+        "--wait",
+        "--collect",
+        "--property=RestrictAddressFamilies=~AF_UNIX",
+        "-E",
+        "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+        "--working-directory=/home/mathscopeverify/audit/original-source",
+        "--",
+        "/usr/bin/python3",
+        "/opt/mathscope-ci/probe.py",
+        "unix-socket"
+      ],
+      "cwd": "/home/mathscopeverify/audit/original-source",
+      "startedUTC": "2026-10-09T19:20:20.282990+00:00"
+    }
+  ],
+  "sourceChanges": false,
+  "guardChanges": false,
+  "uid": 1002,
+  "euid": 1002,
+  "kernel": "6.17.0-1022-azure",
+  "exitCode": null,
+  "downloadedArchiveSHA256": "3d011041203acacf300d343a39673f7d233743397993797c941346ae9e5df1a8",
+  "leanKernelSHA256": "cddf08bd2b9239f8ce2e2aba8630c47e37b6b341b47705d9d0ba910ad6db13b5",
+  "dependencyHeads": {
+    "Comparator": "19e111e2141cf333c7daff0f64c5f24acc91dd2e",
+    "mathlib": "85e3a25e006c35636f0e53b0e9296caca2685bc0",
+    "lean4export": "cacf989bd75f608700820f6afc595f32e7a99a4d"
+  },
+  "originalProjectOleansBeforeComparator": [],
+  "verificationToolSHA256": {
+    "landrun": "72e391e6a814507e177cc1ef86bb961b953cb287e3868a998035668369d88b38",
+    "nanoda_bin": "256e2bb37994ff342b44331d78f2a9e855526f9be6eaf6b880e31b1d49e53aa0",
+    "lean4export": "4fa9e14cada304109e85da5048bcd411cf781a03539b3e50953e5c537074bd9e"
+  },
+  "comparatorBinarySHA256": "514de8d2acbd6e0102575cd2c575e336b7c4a40daf3ae66abe97cef5e1e6b02a"
+}

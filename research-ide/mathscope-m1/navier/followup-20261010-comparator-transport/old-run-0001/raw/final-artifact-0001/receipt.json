@@ -1,0 +1,298 @@
+{
+  "schema": "MathScope.ActualComparatorArtifactReceipt/1",
+  "receivedUTC": "2026-10-10T01:11:47.418916+00:00",
+  "status": "ACTUAL_JOB_CANCELLED_BEFORE_COMPARATOR",
+  "N106Completed": false,
+  "runId": 37979127351,
+  "jobId": 113984853927,
+  "artifactId": 11654200401,
+  "observation": {
+    "path": "/workspace/scratch/9a6c38c54c2e/tmp/n106-live-after-freeze/github-observation-025.json",
+    "sha256": "e93a2f3205c12b2aa4a200724f7ca1d2d6119d1ed34354270b062303f1442fa3",
+    "receivedUTC": "2026-10-10T01:09:15.456Z"
+  },
+  "githubArtifact": {
+    "id": 11654200401,
+    "name": "original-comparator-37979127351-1",
+    "size_in_bytes": 135397,
+    "url": "https://api.github.com/repos/leegahuyn/MathScopeCompute/actions/artifacts/11654200401",
+    "archive_download_url": "https://api.github.com/repos/leegahuyn/MathScopeCompute/actions/artifacts/11654200401/zip",
+    "expired": false,
+    "created_at": "2026-10-10T01:07:04Z",
+    "expires_at": "2026-11-09T01:07:03Z",
+    "updated_at": "2026-10-10T01:07:04Z",
+    "digest": "sha256:1af31713f8f021605af509bab4634fed7ab041636f6f1670be2bd3e3c61788d2",
+    "workflow_run": {
+      "id": 37979127351,
+      "repository_id": 1408619234,
+      "head_repository_id": 1408619234,
+      "head_branch": "main",
+      "head_sha": "8c4271aa5a35b1d34c30279fb306a099944e4823"
+    }
+  },
+  "githubJob": {
+    "id": 113984853927,
+    "name": "Original comparator",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "run_id": 37979127351,
+    "logs_url": null,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Run actions/setup-go@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Prepare a separate unprivileged verification user",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Run the original pinned validation with all guards intact",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "number": 5
+      },
+      {
+        "name": "Collect results even when validation fails",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "Post Run actions/setup-go@v5",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 13
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15
+      }
+    ]
+  },
+  "actualResultStatus": "RUNNING",
+  "actualControllerExitCode": null,
+  "actualComparatorStagePresent": false,
+  "actualComparatorExitCode": null,
+  "lastStage": {
+    "label": "guard-preflight",
+    "command": [
+      "systemd-run",
+      "--user",
+      "--pty",
+      "--wait",
+      "--collect",
+      "--property=RestrictAddressFamilies=~AF_UNIX",
+      "-E",
+      "PATH=/home/mathscopeverify/audit/tool-bin:/home/mathscopeverify/audit/lean-4.34.0-rc2-linux/bin:/opt/mathscope-ci/go/bin:/opt/mathscope-ci/rust/bin:/usr/local/bin:/usr/bin:/bin",
+      "--working-directory=/home/mathscopeverify/audit/original-source",
+      "--",
+      "/usr/bin/python3",
+      "/opt/mathscope-ci/probe.py",
+      "unix-socket"
+    ],
+    "cwd": "/home/mathscopeverify/audit/original-source",
+    "startedUTC": "2026-10-09T19:20:20.282990+00:00"
+  },
+  "lastStageLog": "Running as unit: run-u0.service; invocation ID: 04e83c81001c4a53a07ed478245d4347\nPress ^] three times within 1s to disconnect TTY.\n",
+  "actualOriginalOleansBeforeComparator": [],
+  "kernelAndSourcePinsRecorded": true,
+  "afterSourceHashesPresent": false,
+  "portableAudit": {
+    "status": "FAIL_OR_INCOMPLETE",
+    "passed": 138,
+    "total": 163,
+    "N106Completed": false
+  },
+  "fileHashes": {
+    "job-113984853927.log": {
+      "bytes": 48152,
+      "sha256": "cc65f10cfc010a77109d0d8bc27f6c6bd2cad18aaa0f930ed3f0892c64d3d969"
+    },
+    "original-comparator-37979127351-1.zip": {
+      "bytes": 135397,
+      "sha256": "1af31713f8f021605af509bab4634fed7ab041636f6f1670be2bd3e3c61788d2"
+    },
+    "comparator-portable-audit.json": {
+      "bytes": 23201,
+      "sha256": "d63ee66217a2b4dea4a81c7b91cb7e762ac7c2b52c48828960c4fca3cbfbbbbe"
+    },
+    "job-log-response.json": {
+      "bytes": 49745,
+      "sha256": "1234895937b12359fafee55411a56e594d534f28e9902bb3e90e293a05da46a6"
+    },
+    "original-comparator-37979127351-1.base64": {
+      "bytes": 180533,
+      "sha256": "bda60a0a82ad333c236ab70786f6ecbcd663b8e9997b4d76cbd28f3bdd446273"
+    },
+    "extracted/original-source-checkout.log": {
+      "bytes": 266,
+      "sha256": "6e166001747e1f16b9de6cc8f819fddcb166a8c4e73054a3b7e246c3e131afb7"
+    },
+    "extracted/landrun-source-fetch.log": {
+      "bytes": 115,
+      "sha256": "5236b9fb8cd4e085ff194e356bb8f7235b824d3598b30e372ba59a226fc326e8"
+    },
+    "extracted/extract-official-lean.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "extracted/result.json": {
+      "bytes": 16436,
+      "sha256": "455c23dfdeee011ba59f37d76dc5ecbb3332acc178f01fdf9a388fff0d65a6e0"
+    },
+    "extracted/build-comparator-tools.log": {
+      "bytes": 746,
+      "sha256": "6d7c9f8df8d44028a4f01848dafd365589eb7defb9994c7f57dd69e04ff971af"
+    },
+    "extracted/identity.log": {
+      "bytes": 81,
+      "sha256": "06e309bd695b54873d65dbcbba25d76fe334e6835a08094563789fcea87b1973"
+    },
+    "extracted/go-version.log": {
+      "bytes": 32,
+      "sha256": "ed4307d760c597256afdc696a61d47d13e832615d7741ead11c64966a440b376"
+    },
+    "extracted/pin-lean4export.log": {
+      "bytes": 41,
+      "sha256": "e1d3cac4cdff475728f321fb479572f2fce96eba2686d2195a2fe0f34bd12a9e"
+    },
+    "extracted/landrun-source-checkout.log": {
+      "bytes": 281,
+      "sha256": "1db07416293e9a68ebdfca26f4061ac5cfaaaefb3cb335d4dff3ee4124cfbc1c"
+    },
+    "extracted/pin-mathlib.log": {
+      "bytes": 41,
+      "sha256": "41f09bc99f3e50964aeb698f2d3ed1c9799aa3ded14f2291f1de701569c2fc4e"
+    },
+    "extracted/guard-preflight.log": {
+      "bytes": 131,
+      "sha256": "79f0a1379aef4b4ed52053eab6e9fc0e68b25c42fa871abe61eeafd62774ad47"
+    },
+    "extracted/pin-Comparator.log": {
+      "bytes": 41,
+      "sha256": "c7462dd28ef5f3d33af04327db4f213bfb3c86e008e221bf839a8e6258238a83"
+    },
+    "extracted/mathscope-commit.txt": {
+      "bytes": 41,
+      "sha256": "090977e84b384086ebe0c065566b2e0a027f0bd884db5432ff38fe0c1bd2e8f3"
+    },
+    "extracted/landrun-source-remote.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "extracted/original-source-head.log": {
+      "bytes": 41,
+      "sha256": "4cb8b85c992dd3fa1dfbd9e69f017bbea7939f5d6052778d545625550cd53468"
+    },
+    "extracted/build-landrun.log": {
+      "bytes": 218,
+      "sha256": "5e09e7add5ffb69e6ec818cd8417bef048ede8025e5a71a6dc067b62b9776191"
+    },
+    "extracted/original-source-init.log": {
+      "bytes": 672,
+      "sha256": "811663257542428b10182a376d635b291e2d13c99e20f378e9fb6511c2133278"
+    },
+    "extracted/original-source-remote.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "extracted/nanoda-source-head.log": {
+      "bytes": 41,
+      "sha256": "7b5158cc60286df13d19d5f3c49eda88784307a726144c5a7a8142bab2efa599"
+    },
+    "extracted/nanoda-source-fetch.log": {
+      "bytes": 118,
+      "sha256": "552cb6d19400093c52a70dcbedcf542affd7d15ca22ade89b76553f1de38bd86"
+    },
+    "extracted/cache-get.log": {
+      "bytes": 8919,
+      "sha256": "62045447dab9731afa19d81d788960bb3dbc743a6d0116a29c5439b3228641b7"
+    },
+    "extracted/lean-prefix.log": {
+      "bytes": 50,
+      "sha256": "d6728ecbf20256a3b29bd60aec386dc0ad31b5a34b3b3cac0b9906ae78f5b45a"
+    },
+    "extracted/landrun-source-init.log": {
+      "bytes": 671,
+      "sha256": "56f43c019ae7e1ce023d3a2a8b94b2400cbeb5cd4abd60293bdaa7854e769279"
+    },
+    "extracted/rust-version.log": {
+      "bytes": 36,
+      "sha256": "8dc912acd5bfeafc70b01b1d2a2afb0844afa02f5dba2f1ae8d5c212d005afb6"
+    },
+    "extracted/original-source-fetch.log": {
+      "bytes": 128,
+      "sha256": "ccd4a46ac902f252d91daac334d48ba7b98e69da3674e4bfb15cad67d0aa91ac"
+    },
+    "extracted/lean-version.log": {
+      "bytes": 110,
+      "sha256": "544b4920040fb4a18fbbf04c48a65f06739ab3268fc7d3c756bc1b64e823a094"
+    },
+    "extracted/build-nanoda.log": {
+      "bytes": 1603,
+      "sha256": "e7bd863d5237091ae390915ad2084fb98eb972bedcc927b3195365ad799d4884"
+    },
+    "extracted/system.log": {
+      "bytes": 113,
+      "sha256": "13f109c96ec64fefcb66a09f876d5aab3f3352e13e8dc2a576692891bc902aa1"
+    },
+    "extracted/landrun-source-head.log": {
+      "bytes": 41,
+      "sha256": "035068f52c1c430cc1733d04b44f82b74c0ea42811807e8e9a2acdf6328bbb16"
+    },
+    "extracted/source-hashes-before.json": {
+      "bytes": 291101,
+      "sha256": "1511e4398e2825776b1f1f6de35925b02cba19237b42d26bd13a9a65cd8b0f28"
+    },
+    "extracted/nanoda-source-init.log": {
+      "bytes": 670,
+      "sha256": "25c7bbd3ff44e8e3f3e20a237eeaccfb3050ea01dc7f9c6f03078533fad2d4c5"
+    },
+    "extracted/nanoda-source-remote.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "extracted/pins.json": {
+      "bytes": 1712,
+      "sha256": "e702d85ac8590d14c5ab131b6afaaab3ff56466b96da626739df4b0c364d4ae8"
+    },
+    "extracted/nanoda-source-checkout.log": {
+      "bytes": 338,
+      "sha256": "faebc357195e8916e9cf05c93739281d7e42262986bcbd96e618014b0de0eb99"
+    }
+  },
+  "newRunOrCancellationRequestedByThisAudit": false,
+  "repositoryFilesModified": false,
+  "interpretation": "The first systemd AF_UNIX negative probe did not return; no Landlock preflight or protected Comparator stage was recorded. This is not the historical Git-status wrapper failure. The trace does not identify the internal cause of the stalled systemd/probe transport."
+}

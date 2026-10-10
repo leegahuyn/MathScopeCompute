@@ -76,20 +76,7 @@ def validate_addon_root(directory: str):
 def addon_files():
     """Only explicitly allowed new source roots; existing v54 bytes are never replaced."""
     allowlist=read_json('provenance/addon-allowlist.json')
-    archive_policy=read_json('provenance/addon-archive-allowlist.json')
-    require(archive_policy.get('schema') == 'MathScope.PostV54EvidenceArchiveAllowlist/1',
-            'Unexpected evidence-archive allowlist schema.')
-    archives=archive_policy.get('files')
-    require(isinstance(archives,dict), 'Evidence-archive allowlist must be a file map.')
-    for name,item in archives.items():
-        pure=PurePosixPath(name)
-        require(not pure.is_absolute() and '..' not in pure.parts and str(pure)==name
-                and name.endswith('.zip') and isinstance(item,dict)
-                and type(item.get('bytes')) is int and item['bytes'] > 0
-                and re.fullmatch('[0-9a-f]{64}',item.get('sha256','')) is not None,
-                f'Invalid evidence-archive identity: {name}')
     result={}
-    included_archives=set()
     for directory in allowlist['allowedRoots']:
         validate_addon_root(directory)
         base=ROOT/directory
@@ -104,18 +91,9 @@ def addon_files():
             for name in sorted(files):
                 path=current_path/name
                 relative=path.relative_to(ROOT).as_posix()
-                if name.endswith(('.pyc','.tmp','.zip.sha256')):continue
-                if name.endswith('.zip') and relative not in archives:continue
+                if name.endswith(('.pyc','.tmp','.zip','.zip.sha256')):continue
                 require(not path.is_symlink(),f'Symlink in addon: {relative}')
-                if name.endswith('.zip'):
-                    item=archives[relative]
-                    data=path.read_bytes()
-                    require(len(data)==item['bytes'] and sha(data)==item['sha256'],
-                            f'Original evidence archive bytes differ: {relative}')
-                    included_archives.add(relative)
                 result[relative]=path
-    require(included_archives==set(archives),
-            'A pinned evidence archive is missing or outside the allowed addon roots.')
     return dict(sorted(result.items()))
 
 
