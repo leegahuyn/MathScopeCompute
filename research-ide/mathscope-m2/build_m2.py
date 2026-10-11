@@ -58,6 +58,7 @@ def bundle(entry):
     out.append('})();')
     return '\n'.join(out),order
 
+subprocess.run(['node',str(ROOT/'navier/tests/verify-physical-center-installed-evidence.mjs')],check=True)
 subprocess.run(['node',str(ROOT/'prepare-evidence.mjs')],check=True)
 subprocess.run(['node',str(ROOT/'compat/build-m1-retention.mjs')],check=True)
 worker,workerfiles=bundle(ROOT/'core/worker-entry.mjs')

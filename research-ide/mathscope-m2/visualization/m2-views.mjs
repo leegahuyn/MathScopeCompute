@@ -8,6 +8,7 @@ import {actualDifferentialPanels} from './actual-differential-panels.mjs';
 import {actualContinuationPanels} from './actual-continuation-panels.mjs';
 import {actualHeatPanels} from './actual-heat-panels.mjs';
 import {actualTerminalFieldPanels} from './actual-terminal-field-panels.mjs';
+import {actualPhysicalCenterPanels} from './actual-physical-center-panels.mjs';
 export {makeObservationPair};
 
 const axis=(label,type,sourceField,unit='1')=>({label,type,sourceField,unit,scale:'linear',transform:'identity',dataDimension:1,physicalDimension:0});
@@ -154,7 +155,7 @@ function pulseCurlPanel(job,options={}){
 
 export function listM2Panels(job,options={}){
   const r=job?.result;if(!r)return [];
-  const actual=[...actualTerminalFieldPanels(job,options),...actualHeatPanels(job,options),...actualContinuationPanels(job,options),...actualDifferentialPanels(job,options),...actualSensitivityPanels(job,options),...actualCorePanels(job,options),...actualGlobalPanels(job,options),...actualSourcePanels(job,options)];if(actual.length)return actual;
+  const actual=[...actualPhysicalCenterPanels(job,options),...actualTerminalFieldPanels(job,options),...actualHeatPanels(job,options),...actualContinuationPanels(job,options),...actualDifferentialPanels(job,options),...actualSensitivityPanels(job,options),...actualCorePanels(job,options),...actualGlobalPanels(job,options),...actualSourcePanels(job,options)];if(actual.length)return actual;
   const extra=observationPanels(job),out=r.pairs?.length?extra:[{id:'main',title:'원본 관측'},...extra];
   if(job.request.kind==='gauge.volume-refinement')out.push(gaugeVolumePanel(job,true,options));
   const corePanel=sourceCorePanel(job,options);if(corePanel)out.push(corePanel);

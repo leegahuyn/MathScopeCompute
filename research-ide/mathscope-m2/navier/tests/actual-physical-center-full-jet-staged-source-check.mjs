@@ -44,17 +44,32 @@ const input={sourceProfile:SOURCE_PROFILE_ID,precisionBits:192,tolerance:'1/1000
     command:[process.execPath,...process.execArgv,relative(fileURLToPath(import.meta.url)),...process.argv.slice(2)],
     input,slopeControls,targetControls,numericControls,inputSHA256:digest(canonicalStringify({input,slopeControls,targetControls,numericControls})),
     initialManifest,lateImportManifest:null,stagedImportMeaning:'Only the new numerical attachment is imported later, after it has been frozen and hash-checked. The original private p and finite body constructors execute once in this same process. Initial files must remain byte-identical throughout.',
-    runtime:{node:process.version,v8:process.versions.v8,platform:process.platform,architecture:process.arch},checks:[],progress:[],certificates:{},complete:false};
+    runtime:{node:process.version,v8:process.versions.v8,platform:process.platform,architecture:process.arch},checks:[],progress:[],certificates:{},partialAttachments:{},complete:false};
 const write=(name,data)=>{const filename=path.join(directory,stem+'-'+name+'.json');fs.writeFileSync(filename,JSON.stringify(data,null,2)+'\n',{flag:'wx'});return {path:relative(filename),sha256:digest(fs.readFileSync(filename))};},
   log=value=>{const line=JSON.stringify(value);fs.appendFileSync(logPath,line+'\n');console.log(line);},
   check=async(id,fn)=>{await fn();record.checks.push({id,pass:true});log({event:'CHECK',id,pass:true});},
   context={checkCancelled:()=>{if(performance.now()>deadline)throw Object.assign(Error('The actual staged source exceeded its forty-minute total resource budget.'),{code:'RESOURCE_LIMIT'});},
+    captureEvidence:(name,data)=>{assert.match(name,/^[a-z0-9-]+$/);assert.ok(!record.partialAttachments[name]);
+      record.partialAttachments[name]=write(name,{schema:'MathScope.ObservedPartialPhysicalSourceAttachment/1',
+        originalSameProcess:true,finalSourcePassRequired:true,standaloneCompletionClaim:false,data});},
     onProgress:step=>{global.gc?.();const row={...step,elapsedMs:performance.now()-started,rssBytes:process.memoryUsage().rss,heapUsedBytes:process.memoryUsage().heapUsed};record.progress.push(row);log({event:'PROGRESS',...row});}};
 write('preflight',{...record,controlPath:relative(controlPath)});
 log({event:'START',inputSHA256:record.inputSHA256,sourceManifestSHA256:initialManifest.sha256,sourceFiles:initialManifest.fileCount});
 try{
   const p=prepareActualCommonPhysicalCenterEnclosure(input,context);
   await check('one-original-private-physical-point-and-positive-full-H-weights',()=>{assert.equal(assertActualCommonPhysicalCenterEnclosure(p),true);assert.ok(p.checks.every(x=>x.pass));assert.equal(p.sourceBounds.contract.positive,true);});
+  const shapeSeen=new Map(),sourceShape=value=>{
+    if(value===undefined)return ['undefined'];if(value===null)return ['null'];
+    if(['string','number','boolean'].includes(typeof value))return [typeof value,value];
+    if(typeof value==='bigint')return ['bigint',String(value)];
+    if(typeof value!=='object')return [typeof value];
+    if(shapeSeen.has(value))return ['same-object-reference',shapeSeen.get(value)];shapeSeen.set(value,shapeSeen.size);
+    return [Array.isArray(value)?'array':'object',Object.entries(value).map(([key,item])=>[key,sourceShape(item)])];
+  };
+  record.preparedSourceSchema=write('prepared-source-schema',{schema:'MathScope.ObservedOriginalPreparedRecordSchema/1',
+    recordCount:p.family.prepared.records.length,typedRecords:sourceShape(p.family.prepared.records),
+    purpose:'Read-only record shapes and literal source IDs, including optional undefined fields. This cannot recreate private source authority.',
+    finalSourcePassRequired:true});
   record.selectionTrace=write('selection-trace',await actualCommonSelectionArithmeticTrace(p.family));
   record.certificates.physicalCenter=write('physical-value-certificate',await actualCommonPhysicalCenterEnclosureCertificate(p));
   const slopes=attachActualPhysicalCenterSlowSlopeEnclosure(p,slopeControls,context);
