@@ -2,9 +2,9 @@
 
 ## 현재 판정
 
-**M2의 이번 추가 구현과 검증은 진행됐지만, 사용자가 요청한 모든 수학 범위는 아직 완료되지 않았다. M3는 시작하지 않았다.** 연결이 끊기기 전의 최신 저장점 `8a0046c5`에서 이어서 작업했으며, 현재 source·생성된 Worker·공개 v77 브라우저에서 확인한 실행 코드의 버전은 `0.3.10`이다. 공개 페이지 v75/v76의 기존 검증은 runtime `0.3.9`에 해당한다. 새 runtime의 실제 공개 검증은 [heat runtime 기록](evidence/heat-runtime-20261011/HEAT_RUNTIME_RELEASE_KO.md)에 구분했다.
+**M2의 추가 구현과 검증을 계속 진행 중이며, 사용자가 요청한 모든 수학 범위의 완료 판정과 M3 시작은 아직 하지 않았다.** 최초 복구점 `8a0046c5` 이후의 저장 기록을 이어가고 있다. 현재 실제 source·생성된 Worker·공개 v79 브라우저에서 확인한 실행 코드의 버전은 **`0.3.11`**이다. 원래 terminal F와 아홉 도함수의 새 실행을 [terminal F runtime 기록](ACTUAL_TERMINAL_FIELD_RUNTIME_KO.md)에, 이전 `0.3.10/v77` 실행은 [heat runtime 기록](evidence/heat-runtime-20261011/HEAT_RUNTIME_RELEASE_KO.md)에 각각 보존한다. 아래 각 절의 이전 공개 버전은 해당 저장 시점의 기록이다.
 
-원래 cutoff 적분의 엄밀한 수치 구간, 실제 고정 label의 물리 curl, 배경 1·2차 계수의 물리 미분 상수와 강화 cutoff 선택식에서 이어서 작업했다. 표시용 `ell=1` 확장의 지정점에는 비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명이 있으므로, 별도의 실제 작은 q 영역에서 양성을 구성한다. 최신 source 결과는 **전체 terminal F의 지정점 수치 도함수, 전체 annulus의 선택 band 공분산 양성, 실제 물리 velocity의 공간 2차·시간 1차 미분, 원래 pulse의 Gaussian 꼬리, 다섯 전역 보존 모멘트와 leading 압력·응력 소거**까지 확장되었다. 10–13절에 정확한 실행·독립 검토 범위를 기록한다. 안쪽 flat 경계, 양의 차수 stress와 모든 label의 전역 물리 잔차 연결은 진행 중이다. 새 source 결과를 공개 v77에서 이미 실행했다고 기록하지 않는다.
+표시용 `ell=1` 확장의 지정점에는 비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명이 있으므로, 원래 양의 h를 유지한 실제 작은 q 영역에서 양성을 구성한다. 공통 family·모든 유한 차수 구성과 실제 유한 물리 잔차에 더해, 두 부호의 가중 radial pulse의 **R/Z/T 1차·2차·혼합 미분 18개**를 원래 중심에서 수치 구간으로 감쌌다. 전체 물리 curl·전역 잔차 통합 및 fast·물리 수치 구간은 계속 검증한다. 원래 terminal F의 공개 실행과 다른 pulse·공분산 source 결과의 공개 실행을 혼동하지 않는다.
 
 기계 판독 판단은 [M2_COMPLETION_GATE.json](M2_COMPLETION_GATE.json), 이번 실행·배포 기록은 [continuation evidence](evidence/m2-continuation-20261011/)에 있다. 이 문서와 JSON은 **범위가 명시된 감사 판단**이다. 상태값·파일명·테스트 개수·hash만으로 모든 해석학적 명제가 자동 증명되는 것은 아니다.
 
@@ -299,3 +299,13 @@ Gaussian 꼬리에서는 stable matrix의 음의 대각 성분을 유지하여 e
 전체 curl/잔차 통합의 첫 시도는 **2/8, exit1**이었다. 큰 그래프의 표현-변수 의존성 캐시가 Map 한도를 넘었고, 같은 leading stress를 두 source 표현으로 결속하는 비교에서 차이가 발견되었다. 실제 실패 snapshot과 로그를 그대로 보존했으며, 통과로 바꾸지 않았다. 입력 역공분산의 auxiliary 좌표 제한 및 후속 W_(1/2) 가정도 별도 보완 중이다.
 
 이 저장점에서는 공통 family를 실제 물리 전체 curl·전역 Gaussian 합·E_B에 연결하는 최종 통합과 수치 도함수 관문을 계속 검증한다. 공개 runtime은 **0.3.10/v77**이며, 전체 M2 완료와 M3 시작은 여전히 false다.
+
+## 17. 중심 slow 수치 미분과 공개 terminal F 실행
+
+[중심 slow-jet 패킷](evidence/centered-slow-jets-20261011/centered-slow-jet-enclosure-packet.json)은 두 원래 부호의 radial 가중 pulse에 대해 R/Z/T 1차와 대칭 2차 미분 18개를 계산했다. 실제 source 실행은 **12/12**, 내부 source 검사 **11/11**, 관측 exit **0**, **82.389초**였다. 68개 실제 import 바이트와 구현·시험·실행·독립 검토 26개 파일을 최종 패킷과 대조했다. 공분산 역원·양의 제곱근·움직이는 중심의 미분 및 양의 Gaussian 오차를 유지한다. 자세한 정규화와 도함수의 의미는 [설명](ACTUAL_CENTERED_SLOW_JET_ENCLOSURE_KO.md)에 있다.
+
+독립 검토 파일명이 겹쳐 한 검토의 옛 바이트를 복구할 수 없었던 사실도 패킷에 남겼다. 두 검토는 서로 다른 파일명으로 보존했고, 재발행 검토는 현재 68개 import를 새로 확인했다. 원래 수학 코드와 성공한 source 실행 기록은 이 재발행에서 변경하지 않았다.
+
+terminal F의 runtime `0.3.11`은 실제 source와 Worker를 각각 실행해 같은 원본 certificate와 수학 결과 해시를 얻었다. 두 프로세스의 관측 exit은 **0/0**이었다. 공개 **v79 / `596b9751`**에서도 새 실행이 `COMPLETED`와 **10/10**을 반환했다. 네 표의 값 셀 **129개**, 10·10·17·12행은 원본과 일치했고, 긴 유리수의 줄바꿈 및 가로 폭을 실제 화면에서 확인했다. 29개 항목명은 표시용이다. [공개 검증](evidence/terminal-field-runtime-20261011/browser-v79-verification.json)과 [실행·범위 설명](ACTUAL_TERMINAL_FIELD_RUNTIME_KO.md)을 함께 보관한다.
+
+중심 slow 결과의 나머지 fast·절대 a/H/y 미분, 실제 물리 curl의 수치 구간과 원래 양의 geometry/target 인자는 별도 후속 검증이다. G-POS·G-NUM·G-CURL·G-N4·G-N5 전체 관문은 최종 통합 결과를 확인하기 전까지 false이며, 원문 64개 PASS와 이 추가 완료 판정을 합치지 않는다.

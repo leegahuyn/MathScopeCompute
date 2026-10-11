@@ -15661,6 +15661,203 @@ async function actualHeatScaledEnclosureCertificateFromProgram(p,context={}){
 return {encloseNormalizedHeatMoments,heatSlowDerivativeIdentityAudit,attachActualHeatScaledEnclosure,assertActualHeatScaledEnclosure,prepareActualHeatScaledEnclosure,actualHeatScaledEnclosureCertificateFromProgram};
 })();
 const __m2_145 = (()=>{
+/** Complete terminal F, including its outer step and implicit-chart jets.
+ * The exact positive amplitude is retained. Directed intervals enclose the
+ * coefficients after that scaling; they do not numerically evaluate B, H's
+ * covariance matrix, the pulse solution, or the global physical residual.
+ */
+const {directedArithmetic,readRational,rational: Q,qadd,qsub,qmul,qdiv,qcompare,qtext,factorial,fail} = __m2_74;
+const {prepareActualHeatScaledEnclosure,assertActualHeatScaledEnclosure} = __m2_144;
+const {sourceGraphRationalIdentity} = __m2_102;
+const {SOURCE_PROFILE_ID} = __m2_45;
+const {canonicalStringify,sha256} = __m2_24;
+const seals=new WeakMap(),zero=Q(0),one=Q(1),interval=(a,b)=>({lower:qtext(a),upper:qtext(b)});
+const floor=(a,b)=>{let n=a/b;if(a<0n&&a%b)n--;return n;},ceil=(a,b)=>-floor(-a,b);
+const metadata=p=>{const{nodes,...rest}=p;return canonicalStringify(rest);};
+const data=p=>canonicalStringify({request:p.request,sourceBinding:p.sourceBinding,checks:p.checks,roots:p.roots,numerics:p.numerics,proof:p.proof,scope:p.scope});
+
+function controlsOf(input={}){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['precisionBits','tolerance','maxTerms'].includes(k)))fail('INVALID_INPUT','Use directed precision, exact rational coefficient-width tolerance and maxTerms only.');
+  const precisionBits=input.precisionBits??192,tolerance=input.tolerance??'1/10000000000000000000000000000000000000000',maxTerms=input.maxTerms??128;
+  if(!Number.isSafeInteger(precisionBits)||precisionBits<96||precisionBits>512||typeof tolerance!=='string'||!Number.isSafeInteger(maxTerms)||maxTerms<1||maxTerms>256)fail('INVALID_INPUT','Use 96..512 bits, an exact rational string and 1..256 finite heat terms.');
+  const tol=readRational(tolerance);
+  if(qcompare(tol,zero)<=0||qcompare(tol,one)>0)fail('INVALID_INPUT','The coefficient-width tolerance must lie in (0,1].');
+  if(qcompare(tol,Q(1,1n<<BigInt(precisionBits-48)))<0)fail('PRECISION_REQUIRED','The complete field coefficients need more directed bits.');
+  return {precisionBits,tolerance:qtext(tol),maxTerms};
+}
+
+/** Only exp(-3072/49) is needed. Positive Taylor terms, an explicit tail,
+ * outward squaring, then an outward reciprocal avoid cancellation. */
+function encloseTerminalStepJet({precisionBits=192}={}){
+  if(!Number.isSafeInteger(precisionBits)||precisionBits<96||precisionBits>512)fail('INVALID_INPUT','Use 96..512 directed bits.');
+  const A=directedArithmetic(precisionBits),x=Q(3072,49);let shifts=0;
+  while(qcompare(qdiv(x,Q(1n<<BigInt(shifts))),Q(1,8))>0)shifts++;
+  const reduced=qdiv(x,Q(1n<<BigInt(shifts))),a=A.point(reduced);let degree=0,tail;
+  do{degree++;tail=Q(8n,7n*8n**BigInt(degree+1)*factorial(degree+1));}while(qcompare(tail,Q(1,1n<<BigInt(precisionBits+24)))>0);
+  let term=A.one(),sum=A.one();
+  for(let k=1;k<=degree;k++){const product=A.mul(term,a);term=[floor(product[0],BigInt(k)),ceil(product[1],BigInt(k))];sum=A.add(sum,term);}
+  sum=[sum[0],sum[1]+ceil(tail[0]*A.S,tail[1])];
+  for(let j=0;j<shifts;j++)sum=A.mul(sum,sum);
+  const exp=A.div(A.one(),sum),sigma=A.div(exp,A.add(A.one(),exp)),om=A.sub(A.one(),sigma),pair=A.mul(sigma,om);
+  const g1=A.point(qadd(Q(1024),Q(1024,343))),g2=A.point(qadd(Q(-24576),Q(24576,2401)));
+  const first=A.mul(pair,g1),second=A.mul(pair,A.add(g2,A.mul(A.sub(A.one(),A.mul(A.point(2),sigma)),A.mul(g1,g1))));
+  const pack=b=>interval(Q(b[0],A.S),Q(b[1],A.S));
+  if(exp[0]<=0n||sigma[0]<=0n||first[0]<=0n||second[0]<=0n)fail('PRECISION_REQUIRED','The actual nonzero terminal step derivatives are not sign separated at these bits.');
+  return {schema:'MathScope.TerminalStepDirectedJet/1',point:'1/8',exponent:'-3072/49',exp:pack(exp),sigma:pack(sigma),first:pack(first),second:pack(second),
+    normalized:{a:pack(A.div(sigma,A.point(256))),b:pack(A.div(first,A.point(512))),c:pack(A.neg(A.div(second,A.point(1024))))},
+    proof:{definition:'sigma(x)=exp(g)/(1+exp(g)), g=(1-x)^(-2)-x^(-2)',gFirst:'1024+1024/343',gSecond:'-24576+24576/2401',
+      first:'sigma*(1-sigma)*g_prime',second:'sigma*(1-sigma)*(g_second+(1-2*sigma)*g_prime^2)',
+      rangeReductionShifts:shifts,reducedArgument:qtext(reduced),taylorDegree:degree,positiveTaylorRemainderUpper:qtext(tail),
+      tailProof:'On 0<=a<=1/8, the exponential tail after degree n is <=(8/7)*(1/8)^(n+1)/(n+1)!. Every subsequent arithmetic operation is outward rounded.'},
+    arithmetic:{kind:'DIRECTED_BIGINT_DYADIC_INTERVAL',bits:A.bits,operations:A.operations(),binary64UsedForDecisions:false},sourceAuthenticated:false};
+}
+
+function formulas(G,{b,h,f,fy,fyy,H,D1,D2,z}){
+  const q=(n,d=1)=>G.q(n,d),hp=G.add(G.one,h),Hp=G.neg(G.mul(h,D1)),Hpp=G.mul(h,hp,D2);
+  const U=G.sub(G.mul(G.add(G.mul(b,f),fy),H),G.mul(f,z,Hp));
+  const V=G.add(G.mul(G.add(G.mul(G.pow(b,2),f),G.mul(q(2),b,fy),fyy),H),
+    G.mul(G.sub(G.mul(G.sub(G.one,G.mul(q(2),b)),f),G.mul(q(2),fy)),z,Hp),G.mul(f,G.pow(z,2),Hpp));
+  return {U,V,Hp,Hpp};
+}
+
+function normalizedTimeCoefficients(G,{h,f,bb,c,H,D1,D2,z}){
+  const q=(n,d=1)=>G.q(n,d),hp=G.add(G.one,h);
+  return {T:G.neg(G.add(G.mul(bb,H),G.mul(f,z,D1))),
+    RT:G.mul(q(2),G.add(G.mul(G.sub(G.mul(hp,bb),c),H),G.mul(G.sub(G.mul(G.add(q(2),h),f),G.mul(q(2),h,bb)),z,D1),G.neg(G.mul(f,hp,G.pow(z,2),D2)))),
+    ZZ:G.neg(G.mul(q(2),bb,H)),
+    TT:G.add(G.mul(G.add(bb,c),H),G.mul(q(2),h,bb,z,D1),G.mul(f,hp,G.pow(z,2),D2))};
+}
+
+/** Differentiate the literal step and positive heat integrand. The source
+ * implicit equation supplies the separately checked Z curvature at Z=0. */
+function terminalFieldSlowJetIdentityAudit(G){
+  const q=(n,d=1)=>G.q(n,d),R=G.fresh('field_audit_R'),T=G.fresh('field_audit_T'),Xtail=G.fresh('field_audit_Xtail'),h=G.fresh('field_audit_h'),v=G.fresh('field_audit_v');
+  const X=G.div(G.pow(R,2),G.mul(q(2),T)),y=G.log(G.div(X,Xtail)),z=G.div(G.mul(q(4),T),G.pow(R,2)),b=G.neg(G.add(G.one,h)),B=G.exp(G.mul(b,G.log(G.div(G.pow(R,2),q(2))))),arg=G.div(G.sub(q(3),y),q(2));
+  const f=G.sub(G.one,G.mul(G.div(h,q(256)),G.step(arg))),fy=G.mul(G.div(h,q(512)),G.step(arg,1)),fyy=G.neg(G.mul(G.div(h,q(1024)),G.step(arg,2)));
+  const den=G.add(G.one,G.mul(z,v)),H=G.exp(G.neg(G.mul(h,G.log(den)))),D1=G.div(G.mul(v,H),den),D2=G.div(G.mul(G.pow(v,2),H),G.pow(den,2)),F=G.mul(B,f,H),{U,V}=formulas(G,{b,h,f,fy,fyy,H,D1,D2,z});
+  const roots={R:G.derivative(F,R),T:G.derivative(F,T),RR:G.derivative(G.derivative(F,R),R),RT:G.derivative(G.derivative(F,R),T),TT:G.derivative(G.derivative(F,T),T)};
+  const expected={R:G.mul(G.div(B,R),q(2),U),T:G.mul(G.div(B,T),G.sub(G.mul(b,f,H),U)),RR:G.mul(G.div(B,G.pow(R,2)),G.sub(G.mul(q(4),V),G.mul(q(2),U))),
+    RT:G.mul(G.div(B,G.mul(R,T)),q(2),G.sub(G.mul(b,U),V)),TT:G.mul(G.div(B,G.pow(T,2)),G.add(V,G.mul(G.sub(G.one,G.mul(q(2),b)),U),G.mul(b,G.sub(b,G.one),f,H)))};
+  const atoms=[B,H,G.step(arg),G.step(arg,1),G.step(arg,2)],audit=x=>sourceGraphRationalIdentity(G,x,{atomicNodes:atoms,maxTerms:20000});
+  const checks=Object.keys(roots).map(id=>({id:'complete-terminal-integrand-'+id,...audit(G.sub(roots[id],expected[id]))}));
+  const a=G.fresh('field_audit_a'),bb=G.fresh('field_audit_step_b'),c=G.fresh('field_audit_c'),HH=G.fresh('field_audit_heat'),d1=G.fresh('field_audit_D1'),d2=G.fresh('field_audit_D2'),zz=G.fresh('field_audit_z');
+  const ff=G.sub(G.one,G.mul(h,a)),f1=G.mul(h,bb),f2=G.mul(h,c),j=formulas(G,{b,h,f:ff,fy:f1,fyy:f2,H:HH,D1:d1,D2:d2,z:zz});
+  const normalized=normalizedTimeCoefficients(G,{h,f:ff,bb,c,H:HH,D1:d1,D2:d2,z:zz});
+  const unscaled={T:G.sub(G.mul(b,ff,HH),j.U),RT:G.mul(q(2),G.sub(G.mul(b,j.U),j.V)),
+    TT:G.add(j.V,G.mul(G.sub(G.one,G.mul(q(2),b)),j.U),G.mul(b,G.sub(b,G.one),ff,HH)),ZZ:G.neg(G.mul(q(2),f1,HH))};
+  for(const id of ['T','RT','TT','ZZ'])checks.push({id:id+'-retains-exact-positive-h-factor',...sourceGraphRationalIdentity(G,G.sub(unscaled[id],G.mul(h,normalized[id])))});
+  const s=G.fresh('field_audit_s'),Z=G.fresh('field_audit_Z'),tau=G.fresh('field_audit_tau'),implicit=G.sub(G.sub(s,G.mul(G.pow(Z,2),G.exp(G.mul(q(2),h,G.log(s))))),tau);
+  const at=x=>G.substitute(G.substitute(G.substitute(x,Z,G.zero),s,G.one),tau,G.one),ps=G.derivative(implicit,s),pz=G.derivative(implicit,Z),pzz=G.derivative(pz,Z);
+  checks.push({id:'actual-implicit-witness-equation',...sourceGraphRationalIdentity(G,at(implicit))});
+  checks.push({id:'actual-implicit-positive-s-derivative',...sourceGraphRationalIdentity(G,G.sub(at(ps),G.one))});
+  checks.push({id:'actual-implicit-first-Z-zero',...sourceGraphRationalIdentity(G,at(pz))});
+  checks.push({id:'actual-implicit-second-Z-two',...sourceGraphRationalIdentity(G,G.add(G.mul(q(2),at(ps)),at(pzz)))});
+  const omittedRR=audit(G.sub(roots.RR,G.mul(G.div(B,G.pow(R,2)),q(4),V))),omittedZ=sourceGraphRationalIdentity(G,G.neg(G.mul(q(2),f1,HH))),
+    omittedSlowScale=audit(G.sub(roots.T,G.neg(G.mul(G.div(B,T),U))));
+  if(checks.some(c=>!c.pass)||omittedRR.pass||omittedZ.pass||omittedSlowScale.pass)fail('INTERNAL_VALIDATION','The complete terminal chain rule or a missing-scale/curvature control failed.');
+  return {schema:'MathScope.TerminalFieldSlowJetIdentityAudit/1',checks,pass:true,sourceAuthenticated:false,
+    negativeControls:[{omitted:'-2U radial curvature in F_RR',correctlyRejected:!omittedRR.pass,check:omittedRR},{omitted:'Implicit-chart contribution to F_ZZ',correctlyRejected:!omittedZ.pass,check:omittedZ},
+      {omitted:'Original slow scale s^(-A-1/2) before differentiating T',correctlyRejected:!omittedSlowScale.pass,check:omittedSlowScale}],
+    ZDerivation:'The original slow field is s^b*B(X)*f(y)*H(z), hence its amplitude is B_r=exteriorAmplitude*(R^2/2)^b, independent of Z and T. The chart gives s_Z=0,s_ZZ=2 at Z=0,T=1, while z=4T/R^2 is Z-independent. Thus F_Z=F_RZ=F_ZT=0 and F_ZZ=-2*B_r*f_y*H. The Z-even chart supplies both mixed zeros.'};
+}
+
+function scaledNumerics(request,heatNumerics,context){
+  context.checkCancelled?.();const A=directedArithmetic(request.precisionBits),step=encloseTerminalStepJet(request),C=Object.fromEntries(Object.entries(heatNumerics.moments.coefficients).map(([id,row])=>[id,A.unpack(row.interval)]));
+  const h=A.unpack(heatNumerics.bounds.h),z=A.unpack(heatNumerics.bounds.argument),a=A.unpack(step.normalized.a),bb=A.unpack(step.normalized.b),c=A.unpack(step.normalized.c),hp=A.add(A.one(),h),b=A.neg(hp);
+  const f=A.sub(A.one(),A.mul(h,a)),fy=A.mul(h,bb),fyy=A.mul(h,c),H=A.sub(A.one(),A.mul(A.mul(h,z),C.D0)),Hp=A.neg(A.mul(h,C.D1)),Hpp=A.mul(A.mul(h,hp),C.D2);
+  const U=A.sub(A.mul(A.add(A.mul(b,f),fy),H),A.mul(A.mul(f,z),Hp));
+  const V=A.add(A.add(A.mul(A.add(A.add(A.mul(A.mul(b,b),f),A.mul(A.mul(A.point(2),b),fy)),fyy),H),
+    A.mul(A.mul(A.sub(A.mul(A.sub(A.one(),A.mul(A.point(2),b)),f),A.mul(A.point(2),fy)),z),Hp)),A.mul(A.mul(f,A.mul(z,z)),Hpp));
+  const time=A.neg(A.add(A.mul(bb,H),A.mul(A.mul(f,z),C.D1))),
+    mixed=A.mul(A.point(2),A.sub(A.add(A.mul(A.sub(A.mul(hp,bb),c),H),A.mul(A.mul(A.sub(A.mul(A.add(A.point(2),h),f),A.mul(A.mul(A.point(2),h),bb)),z),C.D1)),A.mul(A.mul(A.mul(f,hp),A.mul(z,z)),C.D2))),
+    TT=A.add(A.add(A.mul(A.add(bb,c),H),A.mul(A.mul(A.mul(A.mul(A.point(2),h),bb),z),C.D1)),A.mul(A.mul(A.mul(f,hp),A.mul(z,z)),C.D2));
+  const boxes={F:A.mul(f,H),R:A.mul(A.point(2),U),Z:A.zero(),T:time,RR:A.sub(A.mul(A.point(4),V),A.mul(A.point(2),U)),RZ:A.zero(),RT:mixed,ZZ:A.neg(A.mul(A.mul(A.point(2),bb),H)),ZT:A.zero(),TT};
+  const info={F:['B',0,'POSITIVE'],R:['B/R',1280,'NEGATIVE'],Z:['0',null,'ZERO'],T:['B*h/T',4096,'NEGATIVE'],RR:['B/R^2',2561,'POSITIVE'],RZ:['0',null,'ZERO'],RT:['B*h/(R*T)',5376,'POSITIVE'],ZZ:['B*h',4096,'NEGATIVE'],ZT:['0',null,'ZERO'],TT:['B*h/T^2',4096,'NEGATIVE']};
+  const rows=Object.entries(boxes).map(([id,box])=>{
+    const coefficient=interval(Q(box[0],A.S),Q(box[1],A.S)),coefficientWidth=qtext(qsub(readRational(coefficient.upper),readRational(coefficient.lower))),[factor,exponent,sign]=info[id];
+    if(qcompare(readRational(coefficientWidth),readRational(request.tolerance))>0)fail('PRECISION_REQUIRED','The complete field coefficient '+id+' exceeds its requested width.');
+    if(sign==='POSITIVE'&&box[0]<=0n||sign==='NEGATIVE'&&box[1]>=0n||sign==='ZERO'&&(box[0]!==0n||box[1]!==0n))fail('PRECISION_REQUIRED','The complete field jet '+id+' is not sign separated.');
+    const scale=exponent===null?zero:Q(1,1n<<BigInt(exponent)),raw=sign==='NEGATIVE'?interval(qmul(readRational(coefficient.lower),scale),zero):interval(zero,qmul(readRational(coefficient.upper),scale));
+    return {id,coefficient,coefficientWidth,exactPositiveFactor:factor,factorStrictUpperPowerOfTwo:exponent===null?null:-exponent,sign,rawAbsoluteEnclosure:raw,sourceFactorSetToZero:false};
+  });
+  return {schema:'MathScope.ActualTerminalFieldScaledJetNumerics/1',step,heatMoments:heatNumerics.moments,rows,
+    errorBudget:{tolerance:request.tolerance,heatCoefficientTolerance:heatNumerics.errorBudget.tolerance,eachCompleteCoefficientWidthChecked:true,allArithmeticAndElementaryTailsIncluded:true,originalPositiveFactorsRetained:true,rawRelativePrecisionClaimed:false},
+    arithmetic:{kind:'DIRECTED_BIGINT_DYADIC_INTERVAL',bits:A.bits,additionalOperations:A.operations(),binary64UsedForDecisions:false},
+    bounds:'0<B<1; 0<h<2^-4096; 0<z<2^-2559; R>2^1280; R^2>2^2561; T=1. Closed zero interval endpoints are bounds, never source substitutions.'};
+}
+
+function attachActualTerminalFieldScaledEnclosure(heatEnclosure,controls={},context={}){
+  assertActualHeatScaledEnclosure(heatEnclosure);const request=controlsOf(controls);
+  if(request.precisionBits!==heatEnclosure.request.precisionBits||qcompare(readRational(heatEnclosure.request.tolerance),qdiv(readRational(request.tolerance),Q(1n<<20n)))>0)fail('PRECISION_REQUIRED','Supply a private heat enclosure with the same bits and tolerance at most the complete-field tolerance divided by 2^20.');
+  const numerics=scaledNumerics(request,heatEnclosure.numerics,context),source=heatEnclosure.source,{G,operator}=source,{X,eta}=operator.background.prepared.bootstrap.constants,heat=operator.background.prepared.bootstrap.actualHeat.heat,q=(n,d=1)=>G.q(n,d),h=G.parameter('h'),b=G.neg(G.add(G.one,h));
+  const R=source.roots.witnessR,z=heatEnclosure.roots.witnessArgument,H=heatEnclosure.roots.witnessHeatFactor,{D1,D2}=heatEnclosure.roots.normalizedMomentRoots;
+  const a=G.div(G.step(q(1,8)),q(256)),bb=G.div(G.step(q(1,8),1),q(512)),c=G.neg(G.div(G.step(q(1,8),2),q(1024))),f=G.sub(G.one,G.mul(h,a)),fy=G.mul(h,bb),fyy=G.mul(h,c);
+  const B=G.mul(heat.exteriorAmplitude,G.exp(G.mul(b,G.log(source.roots.witnessX)))),{U,V}=formulas(G,{b,h,f,fy,fyy,H,D1,D2,z});
+  const timeCoefficients=normalizedTimeCoefficients(G,{h,f,bb,c,H,D1,D2,z});
+  const coefficients={F:G.mul(f,H),R:G.mul(q(2),U),Z:G.zero,T:timeCoefficients.T,RR:G.sub(G.mul(q(4),V),G.mul(q(2),U)),RZ:G.zero,RT:timeCoefficients.RT,ZZ:timeCoefficients.ZZ,ZT:G.zero,TT:timeCoefficients.TT};
+  const factors={F:B,R:G.div(B,R),Z:G.zero,T:G.mul(B,h),RR:G.div(B,G.pow(R,2)),RZ:G.zero,RT:G.div(G.mul(B,h),R),ZZ:G.mul(B,h),ZT:G.zero,TT:G.mul(B,h)};
+  const witnessJets=Object.fromEntries(Object.keys(coefficients).map(id=>[id,G.mul(factors[id],coefficients[id])])),audit=terminalFieldSlowJetIdentityAudit(G),tailY=G.log(G.div(X,heat.Xtail));
+  const originalFo=G.sub(G.one,G.mul(G.parameter('co'),h,G.sub(G.one,G.step(G.div(G.sub(tailY,G.one),q(2))))));
+  const originalExponent=G.neg(G.add(operator.constants.A,q(1,2))),originalSlowScale=G.exp(G.mul(originalExponent,G.log(operator.chart.s))),
+    originalLeadingFBody=G.expressionSystems[G.nodes[operator.leadingFields.F].args[0]].body,originalCompletedFBody=G.expressionSystems[G.nodes[operator.fields.F].args[0]].body,
+    atLeading=G.simultaneousSubstitute(operator.background.prepared.records[0].global.F,[operator.band.coordinates.X,operator.band.coordinates.eta],[operator.chart.X,operator.chart.eta]),
+    atCompleted=G.simultaneousSubstitute(operator.band.roots.profileAngularVelocity,[operator.band.coordinates.q,operator.band.coordinates.X,operator.band.coordinates.eta],[G.mul(operator.geometry.Q,operator.chart.s),operator.chart.X,operator.chart.eta]);
+  const checks=[{id:'private-original-heat-and-terminal-source',pass:true},
+    {id:'same-literal-source-terminal-step',pass:source.roots.terminalFo===originalFo&&G.source.parametersExactExpressions.co.rational==='1/256'},
+    {id:'same-original-terminal-amplitude-and-exponent',pass:sourceGraphRationalIdentity(G,G.sub(heat.exteriorExponent,b)).pass&&[heat.exteriorAmplitude,heat.Xb,heat.Xtail].every(root=>G.derivative(root,eta)===G.zero)},
+    {id:'same-original-X-R-and-positive-h',pass:source.roots.witnessX===G.mul(heat.Xb,G.exp(q(-1,4)))&&R===G.sqrt(G.mul(q(2),source.roots.witnessX))&&heatEnclosure.roots.h===h},
+    {id:'original-leading-slow-field-includes-exact-s-power',pass:originalLeadingFBody===G.mul(originalSlowScale,atLeading)&&sourceGraphRationalIdentity(G,G.sub(originalExponent,b)).pass},
+    {id:'original-completed-slow-field-includes-exact-s-power',pass:originalCompletedFBody===G.mul(originalSlowScale,atCompleted)},
+    {id:'completed-field-neighborhood-reduces-to-original-leading-field',pass:source.band.decision.positiveOrderBackgroundCutoffsAllInactive===true&&source.band.decision.completedFGExactlyLeadingOnFiniteBands===true},
+    {id:'complete-step-heat-and-chart-chain-identities',pass:audit.pass},
+    {id:'all-ten-value-and-jet-rows-keep-positive-scales',pass:numerics.rows.length===10&&numerics.rows.every(r=>r.sourceFactorSetToZero===false)},
+    {id:'whole-F-ZZ-kept-despite-heat-ZZ-zero',pass:coefficients.ZZ!==G.zero&&heatEnclosure.roots.witnessSlowJets.ZZ===G.zero}];
+  // The band producer's serialized proof is checked below against its actual
+  // finite-band source decisions, never accepted as a caller supplied flag.
+  if(!checks.every(c=>c.pass))fail('INVALID_SOURCE_CONSTRUCTION','The complete terminal F source binding changed: '+checks.filter(c=>!c.pass).map(c=>c.id).join(', '));
+  const roots={h,B,R,z,originalSlowScale,originalLeadingFBody,originalCompletedFBody,originalCompletedFAtWitness:source.roots.actualCompletedFAtWitness,originalLeadingFAtWitness:source.roots.actualLeadingFAtWitness,originalTerminalFo:originalFo,originalHeatFactor:heatEnclosure.roots.originalHeatFactor,
+    stepPoint:q(1,8),normalizedStep:{a,b:bb,c},terminalStep:{f,fy,fyy},coefficientRoots:coefficients,exactPositiveFactors:factors,witnessJets};
+  if([B,R,z,...Object.values(witnessJets)].some(root=>G.freeCoordinates(root).size))fail('INVALID_SOURCE_CONSTRUCTION','The complete terminal witness retains an unintended free coordinate.');
+  const proof={kind:'SOURCE_BOUND_TERMINAL_REDUCTION_AND_DIRECTED_SCALED_FULL_FIELD_JETS',
+    exactField:'The ORIGINAL SLOW field is s^b*F0(X,eta)=s^b*exteriorAmplitude*X^b*f_o(log(X/Xtail))*H(2*(1-eta^2)/X), b=-1-h. Since X=R^2/(2s), s^b*X^b=(R^2/2)^b on s,X>0. Thus F=B_r(R)*f_o(y)*H(4T/R^2), B_r=exteriorAmplitude*(R^2/2)^b. The slow scale is included before all derivatives. At the witness s=1, B_r equals the retained B root. All preterminal corrections have ended; positive-order cutoffs vanish on this ell=1 neighborhood.',
+    witness:'X=Xb*exp(-1/4), Xtail=Xb*exp(-3), eta=0,s=1,R=sqrt(2X),Z=0,T=1, hence y=11/4 and delta/2=1/8.',
+    stepReflection:'The literal source definition gives sigma(1-x)=1-sigma(x). Thus f_o=1-h*sigma((3-y)/2)/256, f_y=h*sigma_prime/512, f_yy=-h*sigma_second/1024. This identity is valid on a neighborhood, not only at the displayed point.',
+    chart:heatEnclosure.proof.chartIdentity,implicitZ:audit.ZDerivation,
+    derivativeFormulas:{U:'(b*f+f_y)*H-f*z*H_prime',V:'(b^2*f+2*b*f_y+f_yy)*H+((1-2*b)*f-2*f_y)*z*H_prime+f*z^2*H_second',
+      R:'2*B*U/R',T:'B*(b*f*H-U)/T',RR:'B*(4*V-2*U)/R^2',RT:'2*B*(b*U-V)/(R*T)',TT:'B*(V+(1-2*b)*U+b*(b-1)*f*H)/T^2',ZZ:'-2*B*f_y*H at the fixed witness',Z:'0',RZ:'0',ZT:'0',
+      hFactor:'Factor the strictly positive h from T, RT, TT and ZZ analytically before interval arithmetic. Omitting the original s^b scale gives different and incorrect slow jets.'},
+    amplitudeBound:'At y=11/4, Etail<=Pstar, exp(-A*y)<=1, 1-rho>1/2 and X>XR. Therefore B<=2*Pstar/sqrt(2*XR)=2/(sqrt(220)*C^5*Pstar^4)<1. B stays its exact positive source expression.',
+    integrandDifferentiation:'The literal cutoff is smooth in this interior collar. Every displayed heat derivative is dominated by the complete gamma density times a fixed polynomial. The integrated generic integrand identities therefore give the same complete heat factor derivatives.',
+    identityAudit:audit,heatNotReplacedByOne:true,hNotReplacedByZero:true,amplitudeNotReplacedByOne:true};
+  const sourceBinding={...heatEnclosure.sourceBinding,completeFieldProducer:'The same private original completed F and terminal heat source. No caller coefficients or coordinates are accepted.',
+    exactSourceScalesNumericallyEvaluated:false,originalGammaMembershipForEllOne:false};
+  const scope={actualCompleteTerminalFAndNineSlowJetsBound:true,exactOriginalPositiveAmplitudeRetained:true,directedScaledCoefficientIntervals:true,rawAbsoluteRationalEnclosures:true,
+    unscaledHighRelativePrecision:false,wholeDomainFNumericallyEnclosed:false,actualPulseVolterraJetsEnclosed:false,wholeCovarianceHEnclosed:false,determinantOrWeightsEnclosed:false,wholeGNUMComplete:false,newLeanKernelProof:false,m3MayStart:false};
+  const packed=G.pack(roots,{schema:'MathScope.ActualTerminalFieldScaledEnclosureProgram/1',compiler:'actual-terminal-field-scaled-enclosure.mjs:attachActualTerminalFieldScaledEnclosure',compilerInput:{sourceProfile:operator.sourceProfile,...request},sourceBinding,checks,numerics,proof,scope}),{nodes,...rest}=packed,program={...structuredClone(rest),nodes:nodes.slice()},result={G,heatEnclosure,source,request,roots,checks,numerics,proof,sourceBinding,scope,program};
+  seals.set(result,{G,heatEnclosure,source,count:G.nodes.length,nodes:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),program,programNodes:program.nodes,metadata:metadata(program),data:data(result),serialized:canonicalStringify(program)});return result;
+}
+
+function assertActualTerminalFieldScaledEnclosure(p){
+  const s=seals.get(p);if(!s||p.G!==s.G||p.heatEnclosure!==s.heatEnclosure||p.source!==s.source||p.program!==s.program||p.program.nodes!==s.programNodes||metadata(p.program)!==s.metadata||data(p)!==s.data||JSON.stringify(p.program.nodes)!==s.nodes||JSON.stringify(s.G.nodes.slice(0,s.count))!==s.nodes||!s.G.functionDefinitionsUnchanged(s.definitions))fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged private complete terminal F enclosure.');
+  assertActualHeatScaledEnclosure(s.heatEnclosure);return true;
+}
+
+function prepareActualTerminalFieldScaledEnclosure(input={},context={}){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['sourceProfile','precisionBits','tolerance','maxTerms'].includes(k)))fail('INVALID_INPUT','Only the source profile and numerical controls are accepted.');
+  const{sourceProfile=SOURCE_PROFILE_ID,...rest}=input,request=controlsOf(rest),heat=prepareActualHeatScaledEnclosure({sourceProfile,...request,tolerance:qtext(qdiv(readRational(request.tolerance),Q(1n<<20n)))},context);
+  return attachActualTerminalFieldScaledEnclosure(heat,request,context);
+}
+
+async function actualTerminalFieldScaledEnclosureCertificateFromProgram(p,context={}){
+  assertActualTerminalFieldScaledEnclosure(p);const s=seals.get(p),hash=await sha256(s.serialized);context.checkCancelled?.();
+  return {schema:'MathScope.ActualTerminalFieldScaledEnclosureCertificate/1',status:'COMPLETED',pass:true,request:p.request,sourceBinding:p.sourceBinding,
+    graph:{sha256:hash,nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.serialized).length,compiler:p.program.compiler,compilerInput:p.program.compilerInput,roots:p.roots,graphIncluded:false,fixedCompilerPrefix:true,laterSourceAppendsExcluded:true},
+    checks:p.checks,numerics:p.numerics,proof:p.proof,scope:p.scope};
+}
+
+return {encloseTerminalStepJet,terminalFieldSlowJetIdentityAudit,attachActualTerminalFieldScaledEnclosure,assertActualTerminalFieldScaledEnclosure,prepareActualTerminalFieldScaledEnclosure,actualTerminalFieldScaledEnclosureCertificateFromProgram};
+})();
+const __m2_146 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
 const {iadd,isub,imul,idiv,iscale,ilog,point,nextUp,nextDown} = __m2_40;
 const {integrateAffineTangentPulse} = __m2_41;
@@ -15693,12 +15890,15 @@ const {actualFullCurlCertificate} = __m2_140;
 const {actualCutoffMassEnclosure} = __m2_141;
 const {actualCovarianceBandAdmissibilityCertificate} = __m2_142;
 const {prepareActualHeatScaledEnclosure,actualHeatScaledEnclosureCertificateFromProgram} = __m2_144;
-const {readRational: readExactRational,qcompare: compareExactRational,rational: exactRational} = __m2_74;
+const {prepareActualTerminalFieldScaledEnclosure,actualTerminalFieldScaledEnclosureCertificateFromProgram} = __m2_145;
+const {readRational: readExactRational,qcompare: compareExactRational,rational: exactRational,qdiv: divideExactRational,qtext: exactRationalText} = __m2_74;
 const PAPER={title:'Finite Time Blowup for Navier–Stokes',url:'https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf',sha256:'0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f'};
 const PROFILE={id:'same-profile-2026-10-10.3',commit:'55dacb898f8c204bf0c5925ea901d75d6c2d0f46',assessmentSha256:'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c',role:'ACCEPTED_N3_ARCHIVE_REFERENCE',globalEvaluator:false,description:'Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.'};
 const DIFFERENTIAL_KINDS=['ns.actual-covariance-sensitivity','ns.actual-pulse-jet','ns.actual-full-curl'];
 const HEAT_KIND='ns.actual-heat-scaled-enclosure',HEAT_TOLERANCE='1/10000000000000000000000000000000000000000';
-const CONTINUATION_KINDS=['ns.actual-cutoff-masses','ns.actual-band-admissibility',HEAT_KIND];
+const TERMINAL_FIELD_KIND='ns.actual-terminal-field-scaled-enclosure';
+const SCALED_ENCLOSURE_KINDS=[HEAT_KIND,TERMINAL_FIELD_KIND];
+const CONTINUATION_KINDS=['ns.actual-cutoff-masses','ns.actual-band-admissibility',...SCALED_ENCLOSURE_KINDS];
 const KINDS=[...CONTINUATION_KINDS,...DIFFERENTIAL_KINDS,'ns.actual-pulse-sensitivity','ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-uniform-covariance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
 const fail=(code,message)=>{throw Object.assign(Error(message),{code});};
 const finite=(v,name,lo=-1e6,hi=1e6)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)fail('INVALID_INPUT',name+' is outside the finite supported interval.');return v;};
@@ -15749,6 +15949,18 @@ async function actualHeatScaled(input,ctx){
     'ACTUAL_SOURCE_HEAT_AND_SLOW_JETS_WITH_DIRECTED_BIGINT_ENCLOSURES');
   return {...output,scope:{...output.scope,...data.scope,formalPass:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,
     sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; original positive source factors, exact witness and heat graph hash retained in results.graph'};
+}
+
+async function actualTerminalFieldScaled(input,ctx){
+  const prepared=prepareActualTerminalFieldScaledEnclosure({...input,precisionBits:input.precisionBits??ctx.precision?.bits??192},ctx);
+  const data=await actualTerminalFieldScaledEnclosureCertificateFromProgram(prepared,ctx);
+  const output=result({kind:'ACTUAL_SOURCE_SCALED_TERMINAL_FIELD_JET_ENCLOSURE',sourceProfile:data.sourceBinding.sourceProfile},data,data.checks,
+    {axes:[axis('terminal F derivative'),axis('directed rational coefficient'),axis('0')],points:[],lines:[],
+      description:'원래 terminal F와 R/Z/T 1차·2차 도함수의 계수 구간, 양의 인자, 절대 구간 및 분리 오차입니다.',
+      lostInformation:['X=Xb·exp(-1/4), η=0, s=1의 원래 완성된 F에 적용됩니다. 전역 F와 pulse·공분산·가중치·curl의 수치 구간은 별도입니다.']},[],
+    'ACTUAL_SOURCE_COMPLETE_TERMINAL_FIELD_AND_SLOW_JETS_WITH_DIRECTED_BIGINT_ENCLOSURES');
+  return {...output,scope:{...output.scope,...data.scope,formalPass:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,
+    sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; original complete terminal field, step/heat/slow-scale identities, positive factors and graph hash retained in results.graph'};
 }
 
 async function actualBandAdmissibility(input,ctx){
@@ -15822,7 +16034,7 @@ function actualCovarianceMatching(input,ctx){
   const data=actualMeanPulsePointwiseAssembly(input,ctx),rows=data.localMatch.rows;
   const checks=[...data.checks,...data.localMatch.checks,...data.localMatch.pulseCovariance.checks,...data.localMatch.meanStress.bounds.checks];
   const output=result({kind:'ACTUAL_SOURCE_COVARIANCE_STRESS_AND_POINTWISE_ASSEMBLY',sourceProfile:data.profileId},data,checks,
-    {axes:[axis('source sign family'),axis('normalized positive squared amplitude','NORMALIZED_ACTUAL_COVARIANCE_WEIGHT'),axis('0')],points:rows.map((r,i)=>({pos:[i,r.normalizedSquaredAmplitude[0]/2+r.normalizedSquaredAmplitude[1]/2,0],value:r.normalizedSquaredAmplitude,label:r.sign,sourceField:`result.results.localMatch.rows[${i}].normalizedSquaredAmplitude`})),lines:[],description:'Actual source pulse covariance, complete heat-prepared stress, positive inverse weights and the complete active squared-partition sum at the certified representative.',lostInformation:['All enormous positive physical scales remain exact source expressions; plotted intervals are their normalized coefficients.','The pointwise identity does not certify every slow neighborhood, the full annulus, or a uniform background q threshold.']},['This local fixture computes the actual inverse and complete representative-point sum. The separate ns.actual-uniform-covariance certificate supplies the all-band source threshold, full-annulus inverse and global family; those conclusions are not added to this local result.'],'ACTUAL_SOURCE_COVARIANCE_WITH_POSITIVE_INVERSE_AND_COMPLETE_POINT_SUM');
+    {axes:[axis('source sign family'),axis('normalized positive squared amplitude','NORMALIZED_ACTUAL_COVARIANCE_WEIGHT'),axis('0')],points:rows.map((r,i)=>({pos:[i,r.normalizedSquaredAmplitude[0]/2+r.normalizedSquaredAmplitude[1]/2,0],value:r.normalizedSquaredAmplitude,label:r.sign,sourceField:`result.results.localMatch.rows[${i}].normalizedSquaredAmplitude`})),lines:[],description:'Actual source pulse covariance, complete heat-prepared stress, positive inverse weights and the complete active squared-partition sum at the certified representative.',lostInformation:['All enormous positive physical scales remain exact source expressions; plotted intervals are their normalized coefficients.','The pointwise identity does not certify every slow neighborhood, the full annulus, or a uniform background q threshold.']},['This local fixture computes the actual inverse and complete representative-point sum. The separate ns.actual-uniform-covariance certificate retains the conditional all-band construction and its threshold obligations. Current source-bound admissible bands, endpoint smoothness and all-label physical assembly are tracked in the M2 completion assessment.'],'ACTUAL_SOURCE_COVARIANCE_WITH_POSITIVE_INVERSE_AND_COMPLETE_POINT_SUM');
   return {...output,scope:{...output.scope,actualLocalCovarianceMatched:true,actualPointwiseEquation730Verified:true,wholeAnnulusCovarianceMatched:false,sourceUniformQStarCertified:false},sourceHash:data.sourceHash,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; exact F-expression matching, pulse integral, heat debt and active-set proofs are retained in results'};
 }
 
@@ -15970,6 +16182,7 @@ function pulseTail(input,ctx){
 }
 
 const INPUT_FIELDS={
+  'ns.actual-terminal-field-scaled-enclosure':['sourceProfile','precisionBits','tolerance','maxTerms'],
   'ns.actual-heat-scaled-enclosure':['sourceProfile','precisionBits','tolerance','maxTerms'],
   'ns.actual-cutoff-masses':['sourceProfile','ellExact','precisionBits','tolerance','maxCells'],
   'ns.actual-band-admissibility':['sourceProfile','ellExact'],
@@ -16005,6 +16218,7 @@ const INPUT_FIELDS={
 };
 // These are installed finite-component domains, not uniform domains for the paper's profile.
 const NUMERIC_FIELDS={
+  'ns.actual-terminal-field-scaled-enclosure':{precisionBits:[96,512,true],maxTerms:[1,256,true]},
   'ns.actual-heat-scaled-enclosure':{precisionBits:[96,512,true],maxTerms:[1,256,true]},
   'ns.actual-cutoff-masses':{precisionBits:[96,512,true],maxCells:[4,4096,true]},
   'ns.actual-band-admissibility':{},
@@ -16058,11 +16272,11 @@ function validate(kind,input={}){
     const unknown=Object.keys(input).filter(k=>!INPUT_FIELDS[kind].includes(k));if(unknown.length)fail('INVALID_INPUT','Unknown '+kind+' input fields: '+unknown.join(', ')+'.');
     finiteTree(input);
     if(CONTINUATION_KINDS.includes(kind)){
-      if(kind!==HEAT_KIND){
+      if(!SCALED_ENCLOSURE_KINDS.includes(kind)){
         if(input.ellExact!==undefined&&(typeof input.ellExact!=='string'||!/^[0-9]+$/.test(input.ellExact)))fail('INVALID_INPUT','ellExact requires a positive exact integer string; omit it to use the measured ell=1 source.');
         if((input.ellExact??'1')!=='1')fail('BUDGET_EXCEEDED','This browser entry executes the measured ell=1 source. The band theorem exclusion itself covers 1..128 without claiming those other graphs were run.');
       }
-      if(kind===HEAT_KIND){
+      if(SCALED_ENCLOSURE_KINDS.includes(kind)){
         if(input.tolerance!==undefined&&typeof input.tolerance!=='string')fail('INVALID_INPUT','Use an exact rational coefficient-width tolerance string.');
         const tolerance=readExactRational(input.tolerance??HEAT_TOLERANCE);
         if(compareExactRational(tolerance,exactRational(0))<=0||compareExactRational(tolerance,exactRational(1))>0)fail('INVALID_INPUT','The coefficient-width tolerance must lie in (0,1].');
@@ -16145,6 +16359,31 @@ function validate(kind,input={}){
 function precisionContract(kind,value={},input={}){
   if(!value||typeof value!=='object'||Array.isArray(value))fail('INVALID_INPUT','precision must be an object.');
   const unknown=Object.keys(value).filter(k=>!['mode','bits'].includes(k));if(unknown.length)fail('UNSUPPORTED','This finite NS adapter does not implement requested tolerance/precision fields: '+unknown.join(', ')+'.');
+  if(kind===TERMINAL_FIELD_KIND){
+    const bits=input.precisionBits??value.bits??192;
+    if(!['AUTO','DIRECTED_BIGINT'].includes(value.mode??'AUTO'))fail('PRECISION_REQUIRED','Complete terminal field coefficients use outward BigInt intervals; choose AUTO or DIRECTED_BIGINT.');
+    int(bits,'precision.bits',96,512);
+    if(value.bits!==undefined&&value.bits!==bits)fail('INVALID_INPUT','precision.bits and input.precisionBits must agree.');
+    const tolerance=readExactRational(input.tolerance??HEAT_TOLERANCE),minimum=exactRational(1,1n<<BigInt(bits-48)),
+      heatTolerance=divideExactRational(tolerance,exactRational(1n<<20n)),
+      momentTolerance=divideExactRational(heatTolerance,exactRational(64)),
+      heatArithmeticMinimum=exactRational(1,1n<<BigInt(bits-16));
+    // Match both nested source constructors exactly. The field requirement
+    // is stronger, but the retained heat tolerance is still divided by2^20
+    // and its complete moment tolerance by64 before the source allocation.
+    if(compareExactRational(tolerance,minimum)<0||compareExactRational(heatTolerance,heatArithmeticMinimum)<0||compareExactRational(momentTolerance,heatArithmeticMinimum)<0)
+      fail('PRECISION_REQUIRED','The complete terminal field coefficient width must be at least 2^(-(bits-48)); its heat and moment tolerances also need sufficient directed precision.');
+    return {requested:value,arithmeticBits:bits,arithmetic:'DIRECTED_BIGINT_DYADIC_INTERVAL',fullResultExact:false,
+      absoluteWidthTolerance:exactRationalText(tolerance),minimumWidthTolerance:exactRationalText(minimum),
+      toleranceScope:'EACH_COMPLETE_PARAMETER_SCALED_TERMINAL_FIELD_JET_COEFFICIENT',
+      heatCoefficientTolerance:exactRationalText(heatTolerance),heatCoefficientToleranceDivisor:'1048576',
+      heatMomentTolerance:exactRationalText(momentTolerance),heatMomentToleranceDivisor:'64',
+      finiteMomentRemainderAndArithmeticErrorsSeparated:true,includesCompleteImproperIntegralTail:true,includesTerminalStepElementaryTail:true,
+      actualCompleteTerminalFAndNineSlowJetsEnclosed:true,actualWholeDomainFNumericallyEnclosed:false,
+      actualWholeCovarianceNumericallyEnclosed:false,actualSlowPulseDerivativeNumericallyEnclosed:false,
+      originalPositiveHRetained:true,originalPositiveAmplitudeRetained:true,rawAbsoluteRationalEnclosures:true,
+      rawRelativePrecisionClaimed:false,wholeM2Complete:false,m3MayStart:false,formalPass:false};
+  }
   if(kind===HEAT_KIND){
     const bits=input.precisionBits??value.bits??192;
     if(!['AUTO','DIRECTED_BIGINT'].includes(value.mode??'AUTO'))fail('PRECISION_REQUIRED','The heat coefficients use outward BigInt intervals; choose AUTO or DIRECTED_BIGINT.');
@@ -16211,6 +16450,7 @@ function precisionContract(kind,value={},input={}){
 }
 function resourceEstimate(kind,input){
   const operations={
+    'ns.actual-terminal-field-scaled-enclosure':()=>50000000,
     'ns.actual-heat-scaled-enclosure':()=>50000000,
     'ns.actual-cutoff-masses':()=>45000000,
     'ns.actual-band-admissibility':()=>45000000,
@@ -16266,12 +16506,13 @@ function finiteJson(value){
   return value;
 }
 async function run(kind,input={},context={}){
-  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-heat-scaled-enclosure':actualHeatScaled,'ns.actual-cutoff-masses':actualCutoffMasses,'ns.actual-band-admissibility':actualBandAdmissibility,'ns.actual-covariance-sensitivity':(a,c)=>actualDifferential(a,c,'ns.actual-covariance-sensitivity'),'ns.actual-pulse-jet':(a,c)=>actualDifferential(a,c,'ns.actual-pulse-jet'),'ns.actual-full-curl':(a,c)=>actualDifferential(a,c,'ns.actual-full-curl'),'ns.actual-pulse-sensitivity':actualPulseSensitivity,'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-uniform-covariance':actualUniformCovariance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
-  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:kind===HEAT_KIND?'m2-ns-0.3.10':CONTINUATION_KINDS.includes(kind)?'m2-ns-0.3.9':DIFFERENTIAL_KINDS.includes(kind)?'m2-ns-0.3.8':'m2-ns-0.3.7',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
+  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-terminal-field-scaled-enclosure':actualTerminalFieldScaled,'ns.actual-heat-scaled-enclosure':actualHeatScaled,'ns.actual-cutoff-masses':actualCutoffMasses,'ns.actual-band-admissibility':actualBandAdmissibility,'ns.actual-covariance-sensitivity':(a,c)=>actualDifferential(a,c,'ns.actual-covariance-sensitivity'),'ns.actual-pulse-jet':(a,c)=>actualDifferential(a,c,'ns.actual-pulse-jet'),'ns.actual-full-curl':(a,c)=>actualDifferential(a,c,'ns.actual-full-curl'),'ns.actual-pulse-sensitivity':actualPulseSensitivity,'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-uniform-covariance':actualUniformCovariance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
+  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:kind===TERMINAL_FIELD_KIND?'m2-ns-0.3.11':kind===HEAT_KIND?'m2-ns-0.3.10':CONTINUATION_KINDS.includes(kind)?'m2-ns-0.3.9':DIFFERENTIAL_KINDS.includes(kind)?'m2-ns-0.3.8':'m2-ns-0.3.7',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
   catch(error){if([...CONTINUATION_KINDS,...DIFFERENTIAL_KINDS,'ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)&&error.code==='RESOURCE_LIMIT')return {kind,status:'BUDGET_EXCEEDED',checks:[],blockers:[error.message],message:error.message};if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
 }
 async function runJob(r,context={}){return run(r.kind,r.input,{...context,precision:r.precision??context.precision??{},budget:r.budget??context.budget??{}});}
 function getExamples(){return [
+  ['ns-m2-actual-terminal-field-scaled-enclosure','N5 · 원래 terminal F와 1차·2차 도함수의 엄밀한 수치 구간',TERMINAL_FIELD_KIND,{sourceProfile:SOURCE_PROFILE_ID,precisionBits:192,tolerance:HEAT_TOLERANCE,maxTerms:128}],
   ['ns-m2-actual-heat-scaled-enclosure','N5 · 원래 heat와 1차·2차 도함수의 엄밀한 수치 구간',HEAT_KIND,{sourceProfile:SOURCE_PROFILE_ID,precisionBits:192,tolerance:HEAT_TOLERANCE,maxTerms:128}],
   ['ns-m2-actual-cutoff-masses','N5 · 원래 cutoff 적분 · 엄밀한 수치 구간과 분리 오차','ns.actual-cutoff-masses',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',precisionBits:192,tolerance:'1/10000000000',maxCells:1024}],
   ['ns-m2-actual-band-admissibility','N5 · 표시 band의 양성 정리 적용 범위 검사','ns.actual-band-admissibility',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1'}],
@@ -16305,17 +16546,17 @@ function getExamples(){return [
   ['ns-m2-pulse-curl','N5 · 원문 C_m·전체 r_m·Cartesian curl 대조','ns.pulse-curl',{ell:8}],
   ['ns-m2-tail','N5 · 전체 cutoff 잔차 jet·조건부 고정차수 flatness','ns.pulse-tail',{c:.2,C:2,derivativeLoss:2,targetPower:4,ellStart:8,count:80}]
 ].map(([id,label,kind,input])=>{
-  const settings=[HEAT_KIND,'ns.actual-cutoff-masses'].includes(kind)?{precision:{mode:'DIRECTED_BIGINT',bits:192},budget:{maxMillis:60000}}:
+  const settings=[...SCALED_ENCLOSURE_KINDS,'ns.actual-cutoff-masses'].includes(kind)?{precision:{mode:'DIRECTED_BIGINT',bits:192},budget:{maxMillis:60000}}:
     [...DIFFERENTIAL_KINDS,'ns.actual-band-admissibility','ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)?
       {precision:{mode:'EXACT_CONSTRUCTIVE'},budget:{maxMillis:60000}}:{};
   return {id,label,request:{kind,input,...settings}};
 });}
 
-function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,heatNumericalExtension:{version:'0.3.10',kind:HEAT_KIND,sourceWitness:'X=Xb*exp(-1/4), eta=0, s=1',maximumSlowOrder:2,actualPositiveParametersRetained:true,coefficientIntervals:'DIRECTED_BIGINT_96_TO_512_BITS',rawRelativePrecision:false,wholePulseAndCovarianceNumerics:false,wholeM2Complete:false},sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],differentialExtension:{version:'0.3.8',slowDirections:['R','Z','T'],maximumSlowOrder:2,covarianceDerivativeOrder:1,sourceDisplayBands:['1'],fullCurl:'CONDITIONAL_LOCAL_FIXED_BOX',numericalDerivativeEnclosures:false,globalPhysicalResidualAndFlatErrors:false,newLeanResults:'14 universal differential algebra declarations; no actual-source analytic theorem'},implemented:'Actual fixed-label R/Z/T second and mixed pulse jets with exact time-uniform FTC functional bounds; actual covariance/target/inverse first derivatives; conditional actual local full potential curl retaining sqrt(epsilon), weight derivatives, transverse cutoff and cylindrical connection; actual fixed-label first slow R/Z/T pulse sensitivity, source-derived matrix derivative bounds, original initial frame and endpoint chain rules, with convergent nonzero functional tails; actual uniform source covariance family with internally generated common qStar, all-band completed C2 background, actual moving operators, convergent H integrals, positive inverse on the open annulus, flat endpoint extension and complete global (7.30); actual first/second-order convergent functions, ten restored continuous moments, twelve inner PDE identities, preheat/heat invariant, four stress supports and private prior-order gates; actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order','EXACT_CONSTRUCTIVE with 16..4096 analytic tail target bits for ns.actual-moment-restoration; signed numerical quadrature is not implied','EXACT_CONSTRUCTIVE without requested bits for ns.actual-uniform-covariance; finite Volterra terms retain a nonzero factorial tail'],checklist:getChecklist(),requiredNext:['extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N','materialize all slow Gaussian derivative bounds and the complete physical flat-error assembly beyond the accepted original criteria']};}
+function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,terminalFieldNumericalExtension:{version:'0.3.11',kind:TERMINAL_FIELD_KIND,sourceWitness:'X=Xb*exp(-1/4), eta=0, s=1',maximumSlowOrder:2,actualCompleteTerminalField:true,actualPositiveParametersRetained:true,coefficientIntervals:'DIRECTED_BIGINT_96_TO_512_BITS',minimumWidth:'2^(-(bits-48))',heatToleranceDivisor:'1048576',rawAbsoluteRationalEnclosures:true,rawRelativePrecision:false,wholeDomainFNumerics:false,wholePulseAndCovarianceNumerics:false,wholeM2Complete:false,m3MayStart:false},heatNumericalExtension:{version:'0.3.10',kind:HEAT_KIND,sourceWitness:'X=Xb*exp(-1/4), eta=0, s=1',maximumSlowOrder:2,actualPositiveParametersRetained:true,coefficientIntervals:'DIRECTED_BIGINT_96_TO_512_BITS',rawRelativePrecision:false,wholePulseAndCovarianceNumerics:false,wholeM2Complete:false},sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],differentialExtension:{version:'0.3.8',slowDirections:['R','Z','T'],maximumSlowOrder:2,covarianceDerivativeOrder:1,sourceDisplayBands:['1'],fullCurl:'CONDITIONAL_LOCAL_FIXED_BOX',numericalDerivativeEnclosures:false,globalPhysicalResidualAndFlatErrors:false,newLeanResults:'14 universal differential algebra declarations; no actual-source analytic theorem'},implemented:'Actual fixed-label R/Z/T second and mixed pulse jets with exact time-uniform FTC functional bounds; actual covariance/target/inverse first derivatives; conditional actual local full potential curl retaining sqrt(epsilon), weight derivatives, transverse cutoff and cylindrical connection; actual fixed-label first slow R/Z/T pulse sensitivity, source-derived matrix derivative bounds, original initial frame and endpoint chain rules, with convergent nonzero functional tails; actual source moving operators, exact Volterra H integrals and conditional covariance assembly, with separately tracked admissible-band positivity, endpoint smoothness and all-label physical proofs; actual first/second-order convergent functions, ten restored continuous moments, twelve inner PDE identities, preheat/heat invariant, four stress supports and private prior-order gates; actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','DIRECTED_BIGINT with 96..512 bits for source terminal F and heat scaled coefficient intervals; original positive factors and explicit complete-width tolerances retained','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order','EXACT_CONSTRUCTIVE with 16..4096 analytic tail target bits for ns.actual-moment-restoration; signed numerical quadrature is not implied','EXACT_CONSTRUCTIVE without requested bits for ns.actual-uniform-covariance; finite Volterra terms retain a nonzero factorial tail'],checklist:getChecklist(),requiredNext:['extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N','materialize all slow Gaussian derivative bounds and the complete physical flat-error assembly beyond the accepted original criteria']};}
 
 return {validate,validateRequest,run,runJob,getExamples,getCapabilities};
 })();
-const __m2_146 = (()=>{
+const __m2_147 = (()=>{
 const {requireCondition,groupDescriptor} = __m2_23;
 const {createField,normalizeFieldSpec} = __m2_25;
 function positive(x,name){requireCondition(Number.isFinite(x)&&x>0&&x>=1e-4&&x<=1e4,'DELTA_OR_SCALE_BOUNDS',`${name} must lie in [1e-4,1e4].`,name);}
@@ -16364,7 +16605,7 @@ function finiteSpectralModel(s){requireCondition(s&&Number.isFinite(s.delta)&&s.
 
 return {canonical,sha256,normalizeFamily,createStateFamily,stateFamilyDescriptor,finiteSpectralModel};
 })();
-const __m2_147 = (()=>{
+const __m2_148 = (()=>{
 const {requireCondition} = __m2_23;
 const {evaluateField,bpstMarginal,simpson} = __m2_25;
 function intervals(x,n,name){requireCondition(Array.isArray(x)&&x.length===n&&x.every(v=>Array.isArray(v)&&v.length===2&&v.every(w=>Number.isFinite(w)&&Math.abs(w)<=1e4)&&v[0]<v[1]),'OBSERVATION_BOUNDS',`${name} needs ${n} finite ordered intervals.`);return x.map(v=>v.slice());}
@@ -16408,13 +16649,13 @@ function sampleObservation(state,observation){
 
 return {normalizeObservation,observationCost,sampleObservation};
 })();
-const __m2_148 = (()=>{
+const __m2_149 = (()=>{
 /** MathScope M1 gauge facade. Pure bounded worker API; JSON-safe output. */
 const M = __m2_21;
 const {GaugeInputError,requireCondition,normalizeGroupSpec,createGroup,availableGroups,groupDescriptor,detailedDescriptor,verifyGroup} = __m2_23;
 const {createField,normalizeFieldSpec,verifyFieldAt,verifyDensityQuadrature,evaluateField,normalizeGauge,bpstBallMass,verifyCoordinateCurvature,verifyPeriodicSeam,normalizeFieldGauge} = __m2_25;
-const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_146;
-const {normalizeObservation,observationCost,sampleObservation} = __m2_147;
+const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_147;
+const {normalizeObservation,observationCost,sampleObservation} = __m2_148;
 const {normalizePath,wilsonLoop,plaquettePath} = __m2_27;
 const KINDS=['gauge.group','gauge.field','gauge.family','gauge.holonomy','gauge.spectral'];
 const SOURCES=[{"id":"YM-R01","title":"Quantum Yang–Mills Theory / Yang–Mills & the Mass Gap","authors":"Arthur Jaffe; Edward Witten; Clay Mathematics Institute","url":"https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf","locator":"인쇄 p. 6 §4: 존재·스펙트럼 간극 정의; p. 7 §5: 부피에 균일한 간극과 무한 부피 문제","status":"THEOREM_REFERENCE","role":"compact simple G, nontrivial R⁴ quantum theory, QFT axioms, positive spectral gap의 동시 요구. 현재 공식 상태 Unsolved.","leanImport":null,"kernelReceipt":null},{"id":"YM-R02","title":"Math 210C. Compact Lie Groups","authors":"Brian Conrad; Aaron Landesman","url":"https://math.stanford.edu/~conrad/210CPage/handouts/lie_groups_notes.pdf","locator":"§§17–18 pp.75–83; §26 p.114 이하; Appendices K,V,Y","status":"THEOREM_REFERENCE","role":"rank-one subgroup, character/cocharacter lattice, normal subgroup, global group center/fundamental group를 분리하는 구조 설계","leanImport":null,"kernelReceipt":null},{"id":"YM-R05","title":"Matter representations from geometry: under the spell of Dynkin","authors":"Mboyo Esole; Monica Jinwoo Kang","url":"https://arxiv.org/pdf/2012.13401","locator":"§2.5 pp.15–16(현재 PDF 페이지 16), Dynkin index of an embedding","status":"THEOREM_REFERENCE","role":"기본 불변형의 정규화에 대한 Lie algebra embedding index. 본 설계의 B_G(ιX,ιY)=IιB_SU2(X,Y) convention을 독립 명시.","leanImport":null,"kernelReceipt":null},{"id":"YM-R06","title":"Lectures on instantons","authors":"Stefan Vandoren; Peter van Nieuwenhuizen","url":"https://arxiv.org/pdf/0802.1862","locator":"§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding","status":"THEOREM_REFERENCE","role":"anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.","leanImport":null,"kernelReceipt":null},{"id":"YM-R07","title":"Gauge Theory — Chapter 4: Lattice Gauge Theory","authors":"David Tong","url":"https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf","locator":"§4.1; 인쇄 p.202 이하; link gauge transform eq.(4.8)","status":"THEOREM_REFERENCE","role":"4D Euclidean lattice, group links, Wilson loops와 작용 및 격자 cutoff의 의미","leanImport":null,"kernelReceipt":null},{"id":"YM-R08","title":"Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories","authors":"Martin Lüscher","url":"https://link.springer.com/article/10.1007/BF01614090","locator":"출판사 초록과 서지사항; 실제 선택한 모델의 가정 대응은 Y4-06/Y7-06의 후속 작업","status":"THEOREM_REFERENCE","role":"Wilson lattice gauge theory의 physical positivity와 transfer matrix 구성 근거","leanImport":null,"kernelReceipt":null},{"id":"YM-R09","title":"Gauge field theories on a lattice","authors":"Konrad Osterwalder; Erhard Seiler","url":"https://www.sciencedirect.com/science/article/abs/pii/0003491678900398","locator":"출판사 초록·서지사항; Euclidean lattice construction 및 positivity","status":"THEOREM_REFERENCE","role":"유클리드 격자 gauge theory의 positivity/constructive framework. continuum 존재 증명으로 확장하지 않음.","leanImport":null,"kernelReceipt":null},{"id":"YM-R13","title":"The Lean Language Reference — Axioms","authors":"Lean FRO contributors","url":"https://lean-lang.org/doc/reference/latest/Axioms/","locator":"axiom declaration, consistency 및 #print axioms","status":"THEOREM_REFERENCE","role":"사용자 axiom의 논리적 지위·의존성 감사. 기존 Lean 4.34.1 결과는 로컬 source/hash/log로 별도 증빙.","leanImport":null,"kernelReceipt":null},{"id":"YM-R14","title":"The Octonions","authors":"John C. Baez","url":"https://math.ucr.edu/home/baez/octonions/node14.html","locator":"§4.1 G2; Theorem 4, compact Der(O) subset so(Im O); 7-dimensional faithful representation and invariant cross product","status":"THEOREM_REFERENCE","role":"Compact G2 as octonion automorphisms/positive 3-form stabilizer, not split G2. The generator uses its explicitly documented equivalent Cayley–Dickson convention.","leanImport":null,"kernelReceipt":null},{"id":"YM-R15","title":"Math 249B. Root systems for split classical groups","authors":"Brian Conrad","url":"https://virtualmath1.stanford.edu/~conrad/249BW16Page/handouts/classicalgps.pdf","locator":"§§2–5 (8-page PDF), roots/coroots/character lattices for A/B/C/D; use complexification to connect with the separately constructed compact real form","status":"THEOREM_REFERENCE","role":"Classical root and coroot integer data. This split-algebra reference alone is not a proof of the compact form, which is constructed and checked separately.","leanImport":null,"kernelReceipt":null}];
@@ -16510,7 +16751,7 @@ function getExamples(){
 
 return {validateRequest,runJob,getCapabilities,getExamples,createGroup,createField,createStateFamily,evaluateField,verifyGroup,verifyFieldAt,verifyDensityQuadrature,sampleObservation,wilsonLoop,canonical,sha256};
 })();
-const __m2_149 = (()=>{
+const __m2_150 = (()=>{
 const {ComputeError,positive,finiteNumber} = __m2_40;
 function parameters(input={}){
   const tau=positive(input.tau??.1,'tau'),h=finiteNumber(input.h??.005,'h'),viscosity=positive(input.viscosity??1,'viscosity');
@@ -16550,7 +16791,7 @@ function coordinateFieldSample(input={},budget){
 
 return {parameters,fromSimilarity,toSimilarity,transformedDerivative,monomialJet,coordinateFieldSample};
 })();
-const __m2_150 = (()=>{
+const __m2_151 = (()=>{
 const {ComputeError,integrate,makeBudget,finiteNumber,positive,boundedInteger,point,iadd,isub,idiv,imul,iscale,nextUp,nextDown,ball} = __m2_40;
 // Real Taylor coefficients in eta. These are formal finite jets, not a tail proof.
 const jetC=(x,n)=>[x,...Array(n).fill(0)];
@@ -16621,7 +16862,7 @@ function evaluateAxis(solution,X){
 
 return {jetC,jetVar,jetAdd,jetScale,jetSub,jetMul,jetInv,jetDiv,jetDeriv,jetExp,jetLog,jetPow,jetEval,comparisonSeries,axisData,solveAxisCoefficients,evaluateAxis};
 })();
-const __m2_151 = (()=>{
+const __m2_152 = (()=>{
 const {ComputeError,point,interval,iadd,isub,imul,idiv,iscale,ipow,iexp,ilog,ipower,ball,midpoint,maxabs,nextUp,nextDown,jvar,jconst,jadd,jsub,jmul,jscale,jexp,jlog,certifiedSimpson,integrate,makeBudget,positive,finiteNumber} = __m2_40;
 const validateH=h=>{h=finiteNumber(h,'h');if(!(h>0&&h<.01))throw new ComputeError('INVALID_INPUT','0 < h < .01 required');return h;};
 const rising=(h,m)=>{let v=1;for(let i=0;i<m;i++)v*=h+i;return v;};
@@ -16693,10 +16934,10 @@ function heatTaylorFinite(Z,h=.005,N=8){
 
 return {heatIntegralCertificate,heatFast,exteriorJet,exteriorPoint,taylorGreenPoint,heatTaylorFinite};
 })();
-const __m2_152 = (()=>{
+const __m2_153 = (()=>{
 const {ComputeError,integrate,makeBudget,solveLinear,positive,boundedInteger,point,interval,iadd,isub,imul,idiv,ipow,ipower,ball} = __m2_40;
-const {heatFast} = __m2_151;
-const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_150;
+const {heatFast} = __m2_152;
+const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_151;
 function smoothStep(y){if(y<=0)return 0;if(y>=1)return 1;const z=-1/(y*y)+1/((1-y)**2);return z>0?1/(1+Math.exp(-z)):Math.exp(z)/(1+Math.exp(z));}
 function smoothStepDerivative(y){if(y<=0||y>=1)return 0;const s=smoothStep(y);return s*(1-s)*(2/y**3+2/(1-y)**3);}
 function compactBump(x,a,b){if(!(a<b))throw new ComputeError('INVALID_SUPPORT','Bump support must have positive width');if(x<=a||x>=b)return 0;return smoothStepDerivative((x-a)/(b-a))/(b-a);}
@@ -16818,11 +17059,11 @@ function coneModulationFixture({N=32,amplitude=.12,Xa=1,Xb=4}={}){
 
 return {smoothStep,smoothStepDerivative,compactBump,parameterOrder,buildOuterSchedule,fiveMoments,solveFiveMomentRepair,coneMargins,certifiedConeBox,coneModulationFixture};
 })();
-const __m2_153 = (()=>{
+const __m2_154 = (()=>{
 const {ComputeError,integrate,makeBudget,boundedInteger,positive} = __m2_40;
-const {parameters,fromSimilarity,toSimilarity} = __m2_149;
-const {solveAxisCoefficients,evaluateAxis} = __m2_150;
-const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_152;
+const {parameters,fromSimilarity,toSimilarity} = __m2_150;
+const {solveAxisCoefficients,evaluateAxis} = __m2_151;
+const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_153;
 /** Executable candidate, not Theorem 4.6 certification.
  * The nonlinear axis coefficients and outer unedited schedule are source formulae.
  * The intervening C-infinity diagnostic continuation is identified as such; the
@@ -16877,7 +17118,7 @@ function constructLeadingCandidate(input={},budget=makeBudget()){
 
 return {constructLeadingCandidate};
 })();
-const __m2_154 = (()=>{
+const __m2_155 = (()=>{
 const {matrix,identity,zero,multiply,equalMatrix} = __m2_0;
 const {p1Model,p1Retraction,checkComplex,checkRetraction,checkChainMap} = __m2_3;
 /** Integral unimodular coordinate changes, including a non-permutation shear. */
@@ -16913,15 +17154,15 @@ function transportRetraction(C,a){const R=p1Retraction(C);return {...R,i:R.i.map
 
 return {basisChange,transportComplex,complexBasis};
 })();
-const __m2_155 = (()=>{
+const __m2_156 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
-const LegacyGauge = __m2_148;
-const {finiteSpectralModel} = __m2_146;
-const {fromSimilarity} = __m2_149;
-const {constructLeadingCandidate} = __m2_153;
+const LegacyGauge = __m2_149;
+const {finiteSpectralModel} = __m2_147;
+const {fromSimilarity} = __m2_150;
+const {constructLeadingCandidate} = __m2_154;
 const {makeBudget} = __m2_40;
 const Gauge = __m2_39;
-const {complexBasis} = __m2_154;
+const {complexBasis} = __m2_155;
 const clone=x=>JSON.parse(JSON.stringify(x));
 const KINDS=['observation.delta-family','observation.gauge-4d','observation.blowup-pair','observation.complex-basis'];
 const MODES=['ASSUMED_BOUND','UNITS','EFFECTIVE_MODEL','ENSEMBLE_ESTIMATE'];
@@ -17066,13 +17307,13 @@ function getExamples(){
 
 return {validateRequest,verifyCorrelatorFamily,runJob,getCapabilities,getExamples};
 })();
-const __m2_156 = (()=>{
+const __m2_157 = (()=>{
 const Arithmetic = __m2_19;
 const Gauge = __m2_39;
-const Navier = __m2_145;
-const Observatory = __m2_155;
+const Navier = __m2_146;
+const Observatory = __m2_156;
 const {canonicalStringify,sha256} = __m2_24;
-const M2_VERSION='0.3.10';
+const M2_VERSION='0.3.11';
 const LIMITS=Object.freeze({maxMillis:60000,maxBytes:8*1024*1024,maxItems:250000,maxOperations:50000000,maxJobs:128,maxConcurrent:1,maxInputBytes:262144});
 const DOMAINS=Object.freeze({arithmetic:Arithmetic,gauge:Gauge,ns:Navier,observation:Observatory});
 const clone=x=>JSON.parse(canonicalStringify(x));
@@ -17106,8 +17347,8 @@ async function requestHash(request){return sha256(normalizeRequest(request));}
 
 return {M2_VERSION,LIMITS,clone,bytes,normalizeRequest,validateDomainRequest,listExamples,listCapabilities,executeDomain,requestHash};
 })();
-const __m2_157 = (()=>{
-const {executeDomain} = __m2_156;
+const __m2_158 = (()=>{
+const {executeDomain} = __m2_157;
 let cancelled=false;
 self.onmessage=async event=>{
   if(event.data?.type==='cancel'){cancelled=true;return;}
