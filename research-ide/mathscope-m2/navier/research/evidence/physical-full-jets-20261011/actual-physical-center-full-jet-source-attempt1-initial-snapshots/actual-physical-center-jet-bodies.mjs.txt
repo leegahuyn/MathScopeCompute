@@ -1,0 +1,181 @@
+/** Actual finite derivative bodies at the newly inverted physical point.
+ * Two ORIGINAL covariance systems are independently differentiated here.
+ * No private variational alias is inherited by copying a descriptor, and
+ * no old point-specific coefficient is moved to this new point.
+ * Numerical enclosures and their error proof are a separate attachment.
+ */
+import {assertActualCommonPhysicalCenterEnclosure} from './actual-common-physical-center-enclosure.mjs';
+import {ActualCenteredSlowJetExpressions,defineCenteredFullSecondVariation,centeredSecondScalarJet,centeredSecondInverseSqrtAudit,centeredSecondProductAudit} from './actual-centered-slow-jet-enclosure-kernel.mjs';
+import {centeredFastWeightedProductAudit} from './actual-centered-fast-jet-enclosure-kernel.mjs';
+import {phaseZeroCompleteCurlJet,phaseZeroCylindricalAngularCurlJet,phaseZeroCompleteCurlJetAlgebraAudit} from './actual-physical-center-full-curl-jet-kernel.mjs';
+import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
+import {instantiateRetainedThirdBodies} from './actual-third-jet-algebra.mjs';
+import {clearDisposableThirdJetCaches,disposableThirdJetCacheCopy} from './actual-third-jet-ftc.mjs';
+import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+import {fail} from './actual-continuation-arithmetic.mjs';
+
+const seals=new WeakMap(),same=(a,b)=>canonicalStringify(a)===canonicalStringify(b),degree=x=>x.reduce((a,b)=>a+b,0),
+  labels=['value','R','Z','T','RR','RZ','RT','ZZ','ZT','TT'],
+  cross=(G,a,b)=>[G.sub(G.mul(a[1],b[2]),G.mul(a[2],b[1])),G.sub(G.mul(a[2],b[0]),G.mul(a[0],b[2])),G.sub(G.mul(a[0],b[1]),G.mul(a[1],b[0]))],
+  data=p=>canonicalStringify({sourceBinding:p.sourceBinding,request:p.request,variations:p.variations,inverse:p.inverse,families:p.families,rows:p.rows,
+    physical:p.physical,roots:p.roots,checks:p.checks,scope:p.scope});
+const requireAll=(checks,message)=>{if(checks.some(x=>!x.pass))fail('INVALID_SOURCE_CONSTRUCTION',message+': '+checks.filter(x=>!x.pass).map(x=>x.id).join(', '));};
+const progress=(context,stage,G,extra={})=>{context.checkCancelled?.();context.onProgress?.({stage,nodeCount:G.nodes.length,...extra});};
+
+function ownExpression(G,body,name){
+  const parameters=[...G.freeCoordinates(body)].sort((a,b)=>a-b),system=G.defineExpressionFunction({name,parameters,body}),value=G.expressionValue(system,parameters);
+  return {body,parameters,system,value,originalBodyBound:G.expressionSystems[system].body===body};
+}
+
+function bindPhysicalBodies(G,p,atCenter,context){
+  const b=p.band,g=b.geometry,c=b.constants,{R,Z,T,theta,v}=b.coordinates,xi=b.cutoffs.xi,q=(n,d=1)=>G.q(n,d),
+    phase=ownExpression(G,p.physical.originalPhase,'NewPhysicalFullCurlOriginalPhase'),phaseValue=G.materializeExpressionFunction(phase.system,phase.parameters),
+    shared=p.physical.shared,Cbindings=shared.map(value=>({system:G.nodes[value].args[0]})),
+    Dr=x=>G.add(G.derivative(x,R),G.mul(p.physical.radialFast,G.derivative(x,xi))),
+    Dz=x=>G.mul(g.epsilon,G.derivative(x,Z)),Dt=x=>G.add(G.neg(G.mul(g.epsilon,G.derivative(x,T))),G.derivative(x,v)),Dtheta=x=>G.div(G.derivative(x,theta),R),
+    operators=[{name:'r',apply:Dr},{name:'z',apply:Dz},{name:'t',apply:Dt}],
+    phaseGradient=[Dr(phase.value),Dtheta(phase.value),Dz(phase.value)],
+    leading=cross(G,phaseGradient,shared).map(x=>G.neg(G.mul(g.k,x))),
+    coefficientCurl=[G.neg(Dz(shared[1])),G.sub(Dz(shared[0]),Dr(shared[2])),G.add(Dr(shared[1]),G.div(shared[1],R))],
+    sine=G.sine(G.mul(g.k,phase.value)),potential=shared.map(x=>G.neg(G.mul(x,sine))),
+    directCurl=[G.sub(Dtheta(potential[2]),Dz(potential[1])),G.sub(Dz(potential[0]),Dr(potential[2])),
+      G.sub(G.add(Dr(potential[1]),G.div(potential[1],R)),Dtheta(potential[0]))],
+    full=leading.map((L,j)=>phaseZeroCompleteCurlJet(G,{leading:L,coefficientCurl:coefficientCurl[j],phase:phase.value,frequency:g.k,operators})),
+    angular=phaseZeroCylindricalAngularCurlJet(G,{leading,coefficientCurl,phase:phase.value,frequency:g.k,radius:R,operators,angular:Dtheta}),
+    directCurlChecks=directCurl.map((x,j)=>sourceGraphRationalIdentity(G,G.sub(x,full[j].original),{maxTerms:35000})),
+    divergence=G.add(Dr(directCurl[0]),G.div(directCurl[0],R),Dtheta(directCurl[1]),Dz(directCurl[2])),
+    divergenceCheck=sourceGraphRationalIdentity(G,divergence,{maxTerms:40000}),
+    ownBindings=[phase,...Cbindings],materialize=body=>{
+      // A phase partial materializes to original full background derivatives.
+      // A potential partial materializes to original H/y/t derivatives using
+      // the two privately registered second-variation systems in THIS G.
+      // At a zero phase no second curl(C) term remains to request a third
+      // pulse variation merely for the numerical value of a second curl jet.
+      let result=instantiateRetainedThirdBodies(G,body,ownBindings);
+      result=instantiateRetainedThirdBodies(G,result,ownBindings);return result;
+    },physicalQScale=G.exp(G.mul(G.neg(c.A),G.log(g.Q))),
+    coordinateScales={r:G.inv(G.sqrt(g.Q)),z:G.inv(G.sqrt(g.Q)),t:G.exp(G.mul(G.neg(G.add(G.one,c.h)),G.log(g.Q))),theta:G.inv(G.sqrt(g.Q))},
+    Bs=p.rows[0].originalCarrier.Bs,Rsharp=p.point.inverse.slow.R,Ls=g.Ls,F=p.midplane.roots.F,gabs=p.midplane.roots.gabs,
+    pTilde=G.div(G.mul(Rsharp,Bs,c.u),G.mul(Ls,gabs)),Omega={r:G.mul(Bs,c.u),z:Bs,t:G.mul(pTilde,F),theta:G.div(pTilde,Rsharp)},
+    rows=[];
+  for(let component=0;component<3;component++){
+    const f=full[component],V=p.physical.componentScales[component];
+    for(const row of [...f.first,...f.second,angular.first[component],...angular.second.filter(r=>r.component===component)]){
+      const directions=row.directions??[row.direction],order=directions.length,materialized=materialize(row.zeroPhaseDerivative),atPoint=atCenter(materialized),
+        physicalValue=G.mul(physicalQScale,...directions.map(d=>coordinateScales[d]),atPoint),
+        scale=G.mul(V,G.pow(g.k,order),...directions.map(d=>Omega[d]),...directions.map(d=>coordinateScales[d]));
+      rows.push({quantity:'physicalCurl',component,derivative:directions.join(''),...(order===2?{directions}:{}),order,originalDerivative:row.originalDerivative,
+        phaseZeroDerivative:row.zeroPhaseDerivative,materializedDerivative:materialized,atPoint,physicalValue,positiveExactScale:scale,coefficient:G.div(physicalValue,scale),
+        bodyDerivativeBinding:row.check.pass,includesCylindricalFrameConnection:row.includesCylindricalFrameConnection===true,
+        includesAngularDirectionConnection:row.includesAngularDirectionConnection===true});
+    }
+    progress(context,'new-physical-complete-curl-finite-jets-component-'+component,G,{rows:rows.length});clearDisposableThirdJetCaches(G);
+  }
+  const phaseRow=(original,details)=>{const materialized=materialize(original);return {...details,original,materialized,atPoint:atCenter(materialized)};},
+    phaseJets={first:[...operators.map(D=>phaseRow(D.apply(phase.value),{direction:D.name})),phaseRow(angular.phaseAngularFirst,{direction:'theta'})],
+      second:[...full[0].second.map(r=>phaseRow(r.phaseSecond,{directions:r.directions})),...angular.phaseMixed.map(r=>phaseRow(r.original,{directions:r.directions})),
+        phaseRow(angular.phaseAngularSecond,{directions:['theta','theta'],includesAngularDirectionConnection:true})]},
+    checks=[{id:'original-private-phase-body-and-actual-zero-value',pass:phase.originalBodyBound&&phaseValue===p.physical.originalPhase&&atCenter(phaseValue)===p.physical.phaseAt&&p.physical.phaseCheck.pass},
+      {id:'original-complete-potential-coefficients-unchanged',pass:p.physical.bodyChecks.every(x=>x.pass)&&shared.every((x,j)=>G.expressionSystems[G.nodes[x].args[0]].body===p.physical.originalPotentialCoefficient[j])},
+      {id:'direct-cylindrical-curl-equals-full-leading-and-remainder',pass:directCurlChecks.every(x=>x.pass)},
+      {id:'direct-complete-curl-has-zero-divergence-before-phase-evaluation',pass:divergenceCheck.pass},
+      {id:'complete-first-and-second-product-identities',pass:full.every(x=>x.pass)&&angular.pass},
+      {id:'angular-mixed-and-direction-hessian-connections-retained',pass:angular.first.length===3&&angular.second.length===12&&
+        angular.second.filter(r=>r.includesAngularDirectionConnection).length===3&&phaseJets.first.length===4&&phaseJets.second.length===10},
+      {id:'all-forty-two-physical-derivative-bodies-are-fixed-source-values',pass:rows.length===42&&rows.every(x=>G.freeCoordinates(x.coefficient).size===0&&x.bodyDerivativeBinding)},
+      {id:'positive-natural-scales-retain-original-rounded-frequency',pass:g.k===b.geometry.k&&p.rows[0].originalCarrier.p!==pTilde&&[...Object.values(Omega),pTilde,...Object.values(coordinateScales)].every(x=>G.freeCoordinates(x).size===0)}];
+  requireAll(checks,'The actual physical finite-jet body binding failed');
+  return {phase,shared,potential,phaseGradient,leading,coefficientCurl,directCurl,directCurlChecks,divergence,divergenceCheck,full,angular,phaseJets,rows,
+    scales:{physicalQScale,coordinateScales,Omega,pTilde,Bs,Rsharp,F,gabs,Ls,positiveVelocityScales:p.physical.componentScales},checks,pass:true,
+    originalCarrierRetained:true,actualPotentialSecondVariationsGenerated:true,actualCoefficientDerivativeOrder:2,actualPhaseDerivativeOrder:3,
+    completeSpatialHessianWithDirectionBasisConnections:true,originalSineTermDifferentiatedBeforePhaseEvaluation:true,
+    numericalCoefficientsAttached:false};
+}
+
+export function constructActualPhysicalCenterFiniteJetBodies(physicalCenter,input={},context={}){
+  assertActualCommonPhysicalCenterEnclosure(physicalCenter);
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>k!=='maxNodes'))fail('INVALID_INPUT','Only a finite graph budget may accompany the unchanged private physical-center source.');
+  const {maxNodes=5000000}=input;if(!Number.isSafeInteger(maxNodes)||maxNodes<1)fail('INVALID_INPUT','maxNodes must be a positive finite integer.');
+  const p=physicalCenter,sourceCount=p.G.nodes.length,G=new ActualCenteredSlowJetExpressions(disposableThirdJetCacheCopy(p.G),{maxNodes,maxDerivativeOrder:128,checkCancelled:context.checkCancelled}),
+    band=p.band,c=band.constants,g=band.geometry,coordinates=band.coordinates,directions=['R','Z','T'].map(n=>coordinates[n]),
+    parameters=['R','Z','T','Xrep','etaRep','sRep'].map(n=>coordinates[n]),v=coordinates.v,xi=band.cutoffs.xi,
+    values=[p.point.inverse.slow.R,G.zero,p.point.inverse.slow.T,p.point.inverse.profile.X,G.zero,p.point.inverse.slow.T],v0=p.rows[0].center.v0,
+    at=body=>G.simultaneousSubstitute(body,parameters,values),atCenter=body=>G.simultaneousSubstitute(body,[...parameters,xi,v,coordinates.theta],[...values,G.zero,v0,p.physical.angle]),
+    variations=band.families.map((f,i)=>{const row=defineCenteredFullSecondVariation(G,{name:'NewPhysicalCenterOriginalSecondVariation_'+i,originalSystem:f.system,directions});
+      progress(context,'new-physical-original-second-variation-'+f.sign,G,{dimension:row.dimension});clearDisposableThirdJetCaches(G);return row;}),
+    inverse=centeredSecondInverseSqrtAudit(G,{matrix:band.target.H,target:band.target.components,directions}),
+    scales=p.roots.scales,Rsharp=p.point.inverse.slow.R,gL=G.mul(scales.g,g.Ls),D=[G.one,scales.Ac,scales.u],families=[],rows=[];
+  if(!same(inverse.weights,band.target.weights)||!same(inverse.squareRoots.map(r=>r.sigma),band.target.squareRootWeights)||inverse.determinant!==band.target.determinant)
+    fail('INVALID_SOURCE_CONSTRUCTION','The new physical finite jets must use the actual original covariance inverse and its positive square root.');
+  const addSlow=(quantity,sign,component,jet,baseScale,normalization,bindings)=>{
+    for(let i=1;i<jet.roots.length;i++){
+      const orders=jet.indices[i],order=degree(orders),originalDerivative=jet.roots[i],atPoint=atCenter(originalDerivative),normalizedDirectionDerivative=G.mul(G.pow(Rsharp,orders[0]),atPoint),
+        scale=G.mul(baseScale,normalization(order));
+      rows.push({quantity,sign,component,derivative:labels[i],orders,order,originalDerivative,atPoint,normalizedDirectionDerivative,
+        positiveExactScale:scale,coefficient:G.div(normalizedDirectionDerivative,scale),bodyDerivativeBinding:bindings?.[i]?.bodyDerivativeBinding??true});
+    }
+  };
+  for(let i=0;i<2;i++){
+    const f=band.families[i],sign=f.sign,sigma=band.target.squareRootWeights[i],weighted=f.t.map(t=>centeredSecondProductAudit(G,{factors:[sigma,t],directions})),
+      fast=f.t.map(t=>centeredFastWeightedProductAudit(G,{weight:sigma,radial:t,directions,variable:v})),
+      rawPulse=f.t.map(t=>centeredSecondScalarJet(G,t,directions)),rawModes=[0,1].map(j=>centeredSecondScalarJet(G,G.covarianceValue(f.system,j,v0,parameters),directions));
+    for(let component=0;component<3;component++){
+      const base=G.mul(D[component],scales.A0),w=weighted[component];
+      addSlow('weightedPulse',sign,component,{roots:w.roots,indices:w.indices},base,n=>n===1?G.sqrt(gL):gL,w.checks);
+      addSlow('pulse',sign,component,rawPulse[component],D[component],n=>G.pow(gL,n));
+      for(const r of fast[component].rows){
+        const atPoint=atCenter(r.actual),normalized=G.mul(r.id==='Rv'?Rsharp:G.one,atPoint),scale=G.mul(base,
+          r.id==='v'?G.sqrt(G.div(scales.g,g.Ls)):r.id==='vv'?G.div(scales.g,g.Ls):scales.g);
+        rows.push({quantity:'weightedPulse',sign,component,derivative:r.id,order:r.id==='v'?1:2,originalDerivative:r.actual,atPoint,normalizedDirectionDerivative:normalized,
+          positiveExactScale:scale,coefficient:G.div(normalized,scale),bodyDerivativeBinding:r.bodyDerivativeBinding});
+      }
+    }
+    addSlow('a',sign,0,rawModes[0],G.one,n=>G.pow(gL,n));addSlow('wMinus',sign,1,rawModes[1],G.one,n=>G.pow(gL,n));
+    for(let component=0;component<2;component++)addSlow('H',sign,component,{indices:inverse.indices,roots:inverse.matrixJets.map(M=>M[component][i])},
+      G.mul(D[component+1],scales.massScale),n=>G.pow(gL,n));
+    addSlow('y',sign,0,{indices:inverse.indices,roots:inverse.weightJets.map(y=>y[i])},G.div(scales.tau,scales.massScale),n=>G.pow(gL,n));
+    const checks=[{id:'same-two-component-original-coupled-variational-system',pass:variations[i].dimension===20&&variations[i].originalMatrixUnchanged&&variations[i].exactOriginalValueAlias},
+      {id:'all-weighted-products-retain-complete-inverse-square-root-derivatives',pass:weighted.every(p=>p.pass&&p.checks.every(c=>c.bodyDerivativeBinding))&&fast.every(p=>p.pass&&p.rows.every(r=>r.bodyDerivativeBinding))},
+      {id:'new-covariance-center-equals-the-private-physical-value',pass:at(rawModes[0].roots[0])===p.rows[i].center.a&&at(rawModes[1].roots[0])===p.rows[i].center.other},
+      {id:'original-frozen-representative-is-held-fixed-during-slow-AD',pass:same(G.pulseJetSystems[variations[i].system].directions,directions)&&parameters.slice(3).every(x=>!directions.includes(x))}];
+    requireAll(checks,'A new physical pulse finite-jet family failed');families.push({sign,weighted,fast,rawPulse,rawModes,checks,pass:true});
+    progress(context,'new-physical-all-pulse-weight-and-covariance-jets-'+sign,G,{rows:rows.length});clearDisposableThirdJetCaches(G);
+  }
+  const algebra=phaseZeroCompleteCurlJetAlgebraAudit(G),physical=bindPhysicalBodies(G,p,atCenter,context),
+    checks=[{id:'original-private-physical-point-and-common-band',pass:p.band===band&&p.sourceBounds.pass&&p.midplane.pass&&p.support.pass},
+      {id:'two-new-original-coupled-variation-systems-in-this-graph',pass:variations.length===2&&variations.every(r=>r.dimension===20&&r.allRequiredMatrixAndTimeDerivativeBodiesGenerated)},
+      {id:'all-228-original-pulse-and-weight-derivative-values-are-bound',pass:rows.length===228&&rows.every(r=>r.bodyDerivativeBinding&&G.freeCoordinates(r.coefficient).size===0)},
+      {id:'actual-covariance-inverse-and-positive-root-derivative-identities',pass:inverse.pass&&inverse.inverseChecks.every(c=>c.pass)&&inverse.squareRoots.every(r=>r.pass)},
+      {id:'full-physical-curl-and-finite-derivative-bodies',pass:algebra.pass&&physical.pass},
+      {id:'entire-copied-original-prefix-remains-identical',pass:same(G.nodes.slice(0,sourceCount),p.G.nodes.slice(0,sourceCount))}];
+  requireAll(checks,'The full new physical derivative body package failed');
+  const roots={parameters,values,centerTime:v0,Rsharp,gL,scales,sourcePulseDerivativeValues:rows.map(r=>r.atPoint),sourcePulseNormalizedCoefficients:rows.map(r=>r.coefficient),
+    actualPhysicalDerivativeValues:physical.rows.map(r=>r.physicalValue),actualPhysicalNormalizedCoefficients:physical.rows.map(r=>r.coefficient),
+    originalH:band.target.H,originalWeights:band.target.weights,originalSquareRoots:band.target.squareRootWeights,actualPhysicalDivergence:physical.divergence},
+    scope={actualNewPhysicalPoint:true,originalCoupledFirstAndSecondVariations:true,allMixedSlowAndRequiredFastProducts:true,originalCovarianceWeightDerivatives:true,
+      actualFullPhysicalCurlFirstAndSecondDerivativeBodies:true,completeSpatialHessianAndTimeMixedDerivativeBodies:true,
+      physicalAngularFrameConnectionRetained:true,physicalAngularDirectionHessianConnectionRetained:true,actualNumericalEnclosuresAttached:false,wholeGNUMComplete:false,
+      originalHReplacedByZero:false,oldPointSpecificDerivativeValuesTransplanted:false,newLeanKernelProof:false,M3Started:false},
+    sourceBinding={sourceProfile:p.sourceBinding.sourceProfile,parameterExpressionSHA256:p.sourceBinding.parameterExpressionSHA256,originalCopiedPrefixNodeCount:sourceCount,
+      sameOriginalPhysicalPointAndBand:true,independentNewVariationalAliases:true,rawSourceMatrixAndUnitDatumPreserved:true},
+    result={G,physicalCenter:p,request:{maxNodes},sourceBinding,variations,inverse,families,rows,physical,roots,checks,scope};
+  result.program=G.pack(roots,{schema:'MathScope.ActualPhysicalCenterFiniteJetBodiesProgram/1',request:result.request,sourceBinding,variations,inverse,families,rows,physical,checks,scope});
+  const program=canonicalStringify(result.program);seals.set(result,{G,physicalCenter:p,count:G.nodes.length,nodes:canonicalStringify(G.nodes),definitions:G.captureFunctionDefinitions(),
+    covariance:canonicalStringify(G.covarianceSystems),covarianceCount:G.covarianceSystems.length,data:data(result),program});
+  progress(context,'actual-new-physical-center-finite-jet-bodies-sealed',G,{pulseRows:rows.length,physicalRows:physical.rows.length});return result;
+}
+
+export function assertActualPhysicalCenterFiniteJetBodies(p){
+  const s=seals.get(p);
+  if(!s||p.G!==s.G||p.physicalCenter!==s.physicalCenter||data(p)!==s.data||canonicalStringify(p.program)!==s.program||
+    canonicalStringify(p.G.nodes.slice(0,s.count))!==s.nodes||!p.G.functionDefinitionsUnchanged(s.definitions)||
+    canonicalStringify(p.G.covarianceSystems.slice(0,s.covarianceCount))!==s.covariance)
+    fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged private newly differentiated physical-center source.');
+  assertActualCommonPhysicalCenterEnclosure(p.physicalCenter);return true;
+}
+export async function actualPhysicalCenterFiniteJetBodiesCertificate(p){
+  assertActualPhysicalCenterFiniteJetBodies(p);const s=seals.get(p);
+  return {schema:'MathScope.ActualPhysicalCenterFiniteJetBodiesCertificate/1',sourceBinding:p.sourceBinding,scope:p.scope,roots:p.roots,checks:p.checks,
+    variations:p.variations,families:p.families,rows:p.rows,inverse:p.inverse,physical:p.physical,
+    graph:{sha256:await sha256(s.program),nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.program).length,fixedCompilerPrefix:true},pass:true};
+}
