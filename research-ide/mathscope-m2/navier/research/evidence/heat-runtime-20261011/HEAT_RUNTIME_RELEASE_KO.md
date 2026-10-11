@@ -40,3 +40,19 @@ node --max-old-space-size=2048 research-ide/mathscope-m2/tests/heat-runtime-case
 ```
 
 source와 Worker는 한 번에 하나씩 실행한다. runner는 기존 stem의 receipt를 덮어쓰지 않는다. `seal-heat-runtime.py`는 이 저장점의 `attempt1` 관측과 코드 바이트를 대조하는 감사 생성기이며 source 계산이나 해석학 증명을 재실행하지 않는다.
+
+## 후속 공개 v77 검증
+
+구현 커밋 [2304e3b6](https://github.com/leegahuyn/MathScopeCompute/commit/2304e3b688045eb41200100220a20d8d90cb3e8f)을 먼저 저장한 뒤 동일한 runtime을 공개 v77로 게시했다. 제공자의 version hash는 `7d4d3fb4`이다. 실제 HTTP 200 응답 8,823,478 bytes의 SHA-256은 `0ccf41c63330a1add5fa685b00ff8f7b2efe63a0cdd1b2cec3af7b2f23f75635`이며 준비한 페이지와 바이트 단위로 일치한다.
+
+공개 브라우저에서 새 예제를 실제 실행한 job은 `m2-job:mv3j2v8y:1`이다. 실행 상태는 COMPLETED이며 source·Node Worker·browser Worker의 mathematical hash와 certificate hash가 모두 같다. 세 환경의 수학 결과 일치를 확인했지만 브라우저와 Node의 runtime identity 및 Math probe는 다르다. 환경 hash를 서로 같은 것으로 기록하거나 이 결과를 임의의 다른 환경까지 보장하지 않는다.
+
+네 패널을 각각 선택하여 DOM의 117개 표시 셀을 확인했다. 그중 106개 원본 경로 값을 실제 browser job의 필드와 대조했고, 11개는 표시 항목명이다. 네 표 모두 관측한 586px 컨테이너에서 가로 overflow 없이 정확한 모든 자릿수를 줄바꿈한다. 데스크톱 화면만 확인했으며 모바일 브라우저 검증을 기록하지 않는다.
+
+[실행 화면](m2-v77-heat-desktop-20261011-0757.jpg)과 [정확한 구간 표](m2-v77-heat-table-20261011-0758.jpg)는 실제 JPEG 바이트를 저장했다. screenshot digest는 Uint8Array의 JSON 표현이 아닌 원본 파일의 SHA-256이다.
+
+새 페이지 관측 구간의 console error/warn 8개 중 5개는 브라우저 확장 metadata 전달 오류, 3개는 기존 THREE의 WebGL 비활성 오류다. 새 M2 Worker·heat 패널 오류는 관측되지 않았다. 기존 WebGL 실패를 숨기지 않고 `strictConsoleClean=false`로 남겼으며 heat 수치표는 정상 사용된다. 과거 페이지 로그 25개는 새 페이지 오류 개수에 합산하지 않았다.
+
+기존 NS capability 설명 문자열에 남은 전역 (7.30)·전체 양성 등의 요약은 이번 heat 수치 실행이 검증한 내용이 아니다. 실제 완료 판단에는 각 결과의 scope, 이 문서와 M2 완료 관문의 명시된 의무를 사용한다. 해당 기존 설명을 정리하는 후속 변경은 별도 runtime 검증으로 기록해야 한다.
+
+전체 판정은 계속 `userRequestedM2Complete=false`, `m3MayStart=false`다. 게시 성공·수학 hash 일치·DOM 대조가 아직 열린 전역 수학 의무를 대신하지 않는다. 재검토 명령은 `node research-ide/mathscope-m2/tests/verify-heat-browser.mjs`이며 저장한 브라우저 관측만 대조한다.
