@@ -125,6 +125,17 @@ export function actualPhysicalCenterPanels(job,options={}){
       description:'이번 계수 구간과 검증된 양의 배율 구간을 외향 곱셈합니다. Pulse의 R 포함 행은 원래 규칙의 R# 거듭제곱을 유지한 정규화 미분이며, 전체 curl 행은 실제 물리 미분입니다. 각 행의 의미와 R# 지수를 표시하고 0을 가로지르는 부호 불확실성도 보존합니다.',
       columns:['원본 도함수','원본 미분의 의미','남아 있는 R# 지수','도함수 하한','도함수 상한','양의 배율 하한','양의 배율 상한'],rows,details:['unscaledDerivatives.checks']},options));
   }
+  if(data.coupledModeValues?.pass===true&&Array.isArray(data.coupledModeValues.rows)&&data.coupledModeValues.rows.length===4){
+    const rows=data.coupledModeValues.rows.map((row,i)=>{
+      const path='coupledModeValues.rows.'+i;
+      return {path:ROOT+'.'+path,cells:['rowKey','sourceRoot','directedInterval.lower','directedInterval.upper','width','normalization']
+        .map(key=>at(path+'.'+key,read(row,key)))};
+    });
+    if(rows.every(row=>row.cells.every(c=>c.value!==undefined)))panels.push(makePanel(data,{
+      id:'physical-center-coupled-mode-values',title:'두 진폭의 원래 값 · 양·음 부호 가족',sourcePath:'coupledModeValues.rows',
+      description:'새 물리점의 slow 좌표·대표점에서 각 원래 결합계를 v=Ls/2로 평가한 wPlus와 wMinus 값입니다. 선택한 물리점에서는 양의 가족 rectangle이 활성화되며, 음의 가족의 합성 fast 좌표가 그 중앙이라고 주장하지 않습니다. wMinus는 원본의 양의 경계 2^(-97793)를 외향 반올림합니다. Ac·u·R# 인자가 없는 원래 값이며 정확한 0이라고 표시하지 않습니다.',
+      columns:['원래 진폭 값','원본 식 ID','값 하한','값 상한','절대 구간 폭','정규화'],rows,details:['negativeModeValues.proof','sourceEvidence.negativeModeValuePremises']},options));
+  }
   const scopeRows=Object.entries(data.scope).map(([key,value])=>({path:ROOT+'.scope.'+key,cells:[cell(key,null),at('scope.'+key,value)]}));
   panels.push(makePanel(data,{id:'physical-center-evidence',title:'원본 검증과 이번 수치 실행',sourcePath:'scope',
     numericalValueOrigin:'SOURCE_AND_CURRENT_RUN_EVIDENCE',

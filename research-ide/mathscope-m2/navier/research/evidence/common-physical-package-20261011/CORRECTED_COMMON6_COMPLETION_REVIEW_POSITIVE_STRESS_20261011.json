@@ -1,0 +1,608 @@
+{
+  "schema": "MathScope.CorrectedCommonPhysicalCompletionReview.PositiveStress/1",
+  "reviewedAt": "2026-10-11T15:22:47.927799+00:00",
+  "reviewer": "positive_stress",
+  "verdict": "SUPPORTS_CORRECTED_ORIGINAL_RADIAL_MAP_AND_G_POS_G_CURL_G_N4_G_N5_SOURCE_SCOPE",
+  "reviewMethod": "Read original mathematical producers, exact five-file correction diff, original radial arithmetic and retained proof scopes; independently compare observed final source/process/TAP and every executed current/snapshot byte. Test counts alone are not a mathematical proof.",
+  "observed": {
+    "startedAt": "2026-10-11T14:56:31.226920+00:00",
+    "finishedAt": "2026-10-11T15:19:38.221310+00:00",
+    "sourceCommitAtExecution": "5ca41e7da8f1338e81ac66dde9026bbdab313d69",
+    "command": [
+      "node",
+      "--max-old-space-size=4608",
+      "--test",
+      "--test-reporter=tap",
+      "research-ide/mathscope-m2/navier/tests/actual-common-physical-package-source.test.mjs"
+    ],
+    "exitCode": 0,
+    "timeout": false,
+    "complete": true,
+    "elapsedSeconds": 1386.959551576998,
+    "peakRSSBytes": 4942114816,
+    "tap": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "sourceArtifacts": [
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json",
+      "sha256": "ac98143158c9e7abc6bd656e687269f183bb803ecdc036edb8a3937edc24bc01",
+      "bytes": 4495330
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6-process.json",
+      "sha256": "586afe71fa150a1525836903caabc9ff95fa80adadf12ad90d2e735b965eda82",
+      "bytes": 71645
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.log",
+      "sha256": "5428a6e1a0570d81e202b020da88b77b56e8fc6f08978f92a23f09bd80878fe0",
+      "bytes": 26703
+    }
+  ],
+  "sourceVerification": {
+    "currentImportsVerified": 118,
+    "snapshotsVerified": 118,
+    "mismatches": [],
+    "unchangedAfterExecution": true,
+    "sourceConstructions": {
+      "commonFamily": 1,
+      "ownBand": 1,
+      "actualPhysicalCurl": 1,
+      "actualTargetN1": 1,
+      "globalWave": 1,
+      "globalCovariance": 1,
+      "sameBackgroundFlatness": 1,
+      "sameActualEB": 1
+    },
+    "validatorsConstructedNoReplacementSources": true
+  },
+  "radialEquation": {
+    "binding": {
+      "schema": "MathScope.OriginalPhysicalTorusRadialEquationBinding/1",
+      "specification": {
+        "schema": "MathScope.OriginalRadialPhaseSpecification/1",
+        "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "printedPage": 63,
+        "equations": [
+          "6.2",
+          "6.6"
+        ],
+        "kappa": "1/100000",
+        "formula": "2*((1+h)*rho_g-h*kappa_s)",
+        "rho": "log(4-sqrt(2))/log(4+sqrt(2))",
+        "coveringIdentity": "M_i=r_c^(-rho_g)*epsilon^(-kappa_s)*S^(-rho_g), 1<=r_c<T_g",
+        "omittedFactorFormula": "2*(1+h)*rho_g-h*kappa_s"
+      },
+      "roots": {
+        "h": 9,
+        "Lambda": 627581,
+        "Tg": 300172,
+        "rho": 627583,
+        "kappa": 627584,
+        "dr": 627589,
+        "actualDr": 627589
+      },
+      "nodes": [
+        {
+          "id": 1,
+          "op": "rational",
+          "args": [
+            "1",
+            "1"
+          ]
+        },
+        {
+          "id": 9,
+          "op": "source_parameter",
+          "args": [
+            "h"
+          ]
+        },
+        {
+          "id": 20,
+          "op": "rational",
+          "args": [
+            "-1",
+            "1"
+          ]
+        },
+        {
+          "id": 24,
+          "op": "rational",
+          "args": [
+            "2",
+            "1"
+          ]
+        },
+        {
+          "id": 474,
+          "op": "rational",
+          "args": [
+            "4",
+            "1"
+          ]
+        },
+        {
+          "id": 3622,
+          "op": "sqrt_positive",
+          "args": [
+            24
+          ]
+        },
+        {
+          "id": 135988,
+          "op": "add",
+          "args": [
+            1,
+            9
+          ]
+        },
+        {
+          "id": 300172,
+          "op": "add",
+          "args": [
+            474,
+            3622
+          ]
+        },
+        {
+          "id": 623002,
+          "op": "log_positive",
+          "args": [
+            300172
+          ]
+        },
+        {
+          "id": 623003,
+          "op": "inverse",
+          "args": [
+            623002
+          ]
+        },
+        {
+          "id": 623052,
+          "op": "multiply",
+          "args": [
+            20,
+            3622
+          ]
+        },
+        {
+          "id": 627581,
+          "op": "add",
+          "args": [
+            474,
+            623052
+          ]
+        },
+        {
+          "id": 627582,
+          "op": "log_positive",
+          "args": [
+            627581
+          ]
+        },
+        {
+          "id": 627583,
+          "op": "multiply",
+          "args": [
+            623003,
+            627582
+          ]
+        },
+        {
+          "id": 627584,
+          "op": "rational",
+          "args": [
+            "1",
+            "100000"
+          ]
+        },
+        {
+          "id": 627585,
+          "op": "multiply",
+          "args": [
+            135988,
+            627583
+          ]
+        },
+        {
+          "id": 627586,
+          "op": "multiply",
+          "args": [
+            9,
+            627584
+          ]
+        },
+        {
+          "id": 627587,
+          "op": "multiply",
+          "args": [
+            20,
+            627586
+          ]
+        },
+        {
+          "id": 627588,
+          "op": "add",
+          "args": [
+            627585,
+            627587
+          ]
+        },
+        {
+          "id": 627589,
+          "op": "multiply",
+          "args": [
+            24,
+            627588
+          ]
+        }
+      ],
+      "parameterBindings": {
+        "profileId": "same-profile-2026-10-10.3",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "definitions": {
+          "h": {
+            "exp": {
+              "product": [
+                {
+                  "integer": -8002
+                },
+                {
+                  "ref": "T"
+                }
+              ]
+            }
+          },
+          "T": {
+            "sum": [
+              {
+                "exp": {
+                  "ref": "Md"
+                }
+              },
+              {
+                "integer": 10
+              }
+            ]
+          },
+          "Md": {
+            "integer": 1048576
+          }
+        },
+        "expandedH": "exp(-8002*(exp(1048576)+10))",
+        "strictPositiveSourceRetained": true
+      },
+      "comparison": {
+        "method": "Literal typed arithmetic trees, preserving original binary parentheses and only commuting binary add/multiply.",
+        "sameDrRoot": true,
+        "allSixExpectedBodiesMatched": true,
+        "oldMissingFactorAccepted": false
+      },
+      "scope": {
+        "radialExponentEquationOnly": true,
+        "privateParentAuthenticationRequired": true,
+        "sourceNumericValueEvaluated": false,
+        "fullPhysicalGraphExecutionProved": false,
+        "newM2CompletionClaim": false
+      }
+    },
+    "independentRecordedTypedTreeReplay": {
+      "h": true,
+      "Lambda": true,
+      "Tg": true,
+      "rho": true,
+      "kappa": true,
+      "dr": true,
+      "oldMissingFactorRejected": true,
+      "sameRetainedPhysicalRoot": true,
+      "allNodesInExecutedPhysicalPrefix": true,
+      "originalPositiveHDefinition": true
+    },
+    "nodesReplayed": 20,
+    "fullSourceExecutionAuthorityComesFromObservedProcessAndPrivateAssertions": true,
+    "oldDefinitionNotReclassifiedAsOriginal": true
+  },
+  "graphCertificates": {
+    "family": {
+      "sha256": "bff6b64458f52426e996a7b5a1dee44b4ae1f7fb226d54654889c79679e4e219",
+      "nodeCount": 622781,
+      "canonicalBytes": 28446215,
+      "fixedCompilerPrefix": true,
+      "internalChecks": 9,
+      "allInternalChecksPass": true,
+      "sameGraphAsPrior5": true,
+      "sameRequestAsPrior5": true,
+      "sameScopeAsPrior5": true
+    },
+    "band": {
+      "sha256": "5912d073e58d1f587395d4478b5ad704f63530f8bd5219cca54da1d95c39f3ff",
+      "nodeCount": 627497,
+      "canonicalBytes": 28187395,
+      "fixedCompilerPrefix": true,
+      "internalChecks": 16,
+      "allInternalChecksPass": true,
+      "sameGraphAsPrior5": true,
+      "sameRequestAsPrior5": true,
+      "sameScopeAsPrior5": true
+    },
+    "physical": {
+      "sha256": "458943ba604fac2a89abf0263147526a00adc6393445796ba7cfcbd7e4ae4843",
+      "nodeCount": 719973,
+      "canonicalBytes": 32141969,
+      "fixedCompilerPrefix": true,
+      "internalChecks": 11,
+      "allInternalChecksPass": true,
+      "sameGraphAsPrior5": false,
+      "sameRequestAsPrior5": true,
+      "sameScopeAsPrior5": true
+    },
+    "target": {
+      "sha256": "ac6f39969928e481c32690336686e360e3f23efa51ce39332b73f53e5deecdd6",
+      "nodeCount": 627405,
+      "canonicalBytes": 27826368,
+      "fixedCompilerPrefix": true,
+      "internalChecks": 9,
+      "allInternalChecksPass": true,
+      "sameGraphAsPrior5": true,
+      "sameRequestAsPrior5": true,
+      "sameScopeAsPrior5": true
+    },
+    "globalWave": {
+      "namespace": "norm",
+      "sha256": "68f6ffacafac722fbe45174ab84c3e0e1a59171ed9f7cc4b59d8633f4be17f8c",
+      "nodeCount": 628525,
+      "canonicalBytes": 27873458,
+      "fixedCompilerPrefix": true,
+      "internalChecks": 12,
+      "allInternalChecksPass": true,
+      "sameGraphAsPrior5": false,
+      "sameRequestAsPrior5": true,
+      "sameScopeAsPrior5": true
+    },
+    "covariance": {
+      "namespace": "physical",
+      "sha256": "79d2ffc302ab2db900b8432dcc5d23d7c85f12d996da244ed421b904dfbdb3cf",
+      "nodeCount": 720452,
+      "canonicalBytes": 31814841,
+      "fixedCompilerPrefix": true,
+      "internalChecks": 11,
+      "allInternalChecksPass": true,
+      "sameGraphAsPrior5": false,
+      "sameRequestAsPrior5": true,
+      "sameScopeAsPrior5": true
+    },
+    "backgroundFlatness": {
+      "sha256": "1301fe662653d92f24acf8df74567f51dc3efa0a0142d059da854fa41160ebce",
+      "nodeCount": 884353,
+      "canonicalBytes": 38855624,
+      "fixedCompilerPrefix": true,
+      "internalChecks": 8,
+      "allInternalChecksPass": true,
+      "sameGraphAsPrior5": true,
+      "sameRequestAsPrior5": true,
+      "sameScopeAsPrior5": true
+    },
+    "actualEB": {
+      "sha256": "94f70753a08e381e39e3656a78ec35d8a4a1497484b1852fb8da3cca5ba7bc07",
+      "nodeCount": 728256,
+      "canonicalBytes": 32267509,
+      "fixedCompilerPrefix": true,
+      "internalChecks": 6,
+      "allInternalChecksPass": true,
+      "sameGraphAsPrior5": false,
+      "sameRequestAsPrior5": true,
+      "sameScopeAsPrior5": true
+    }
+  },
+  "actualAssertions": {
+    "backgroundFlatness": {
+      "schema": "MathScope.ActualBackgroundResidualFlatnessSourceAssertions/1",
+      "checks": [
+        {
+          "id": "private-original-family-and-finite-source",
+          "pass": true
+        },
+        {
+          "id": "one-recursive-scale-for-every-actual-physical-clause",
+          "pass": true
+        },
+        {
+          "id": "actual-leading-primitives-axis-pressure-and-both-shears",
+          "pass": true
+        },
+        {
+          "id": "actual-continuity-and-mass-before-cutoff-commutator-cancellation",
+          "pass": true
+        },
+        {
+          "id": "every-high-order-pair-and-fixed-derivative-source-constant",
+          "pass": true
+        },
+        {
+          "id": "positive-h-universal-comparison-without-fabricated-large-J-data",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "sourceConstructionsPerformedByValidator": 0,
+      "executedFiniteOrder": 2,
+      "executedDerivativeOrder": 0,
+      "requestedDecayOrder": 1
+    },
+    "actualEB": {
+      "schema": "MathScope.ActualCommonBandBackgroundResidualSourceAssertions/1",
+      "checks": [
+        {
+          "id": "same-private-physical-graph-family-and-band",
+          "pass": true
+        },
+        {
+          "id": "complete-original-band-tuple-and-actual-cutoff-derivative",
+          "pass": true
+        },
+        {
+          "id": "original-stress-and-its-complete-physical-derivatives-retained",
+          "pass": true
+        },
+        {
+          "id": "E-B-is-the-original-physical-NS-plus-original-stress-divergence",
+          "pass": true
+        },
+        {
+          "id": "same-sequence-all-fixed-order-flatness-and-precise-NS-scope",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "sourceConstructionsPerformedByValidator": 0,
+      "physicalGraphOwnedBySameActualPhysicalCurl": true
+    }
+  },
+  "prior5Comparison": {
+    "sourceSHA256": "44137485e789ef29c6f5ee51dfdcc294102bda3d51f15d442601c859876d04eb",
+    "processSHA256": "7616a3134599d15fc6e0e98bc761f129199ce62c83eafc145058b86848c80b0e",
+    "unchangedSharedFiles": 111,
+    "changedExistingFiles": [
+      {
+        "path": "research-ide/mathscope-m2/navier/actual-common-global-wave-bounds.mjs",
+        "previousSHA256": "63262e2bc53e2032fab12cfc8e1eac61021cc4728b8e5f49a5623fc9aa9089ad",
+        "correctedSHA256": "e5d4e567e60a262833d442435c4a1f7ac753c7530d7f1ade03e7b7f2c6ca5f2a"
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/actual-covariance-source-certificate.mjs",
+        "previousSHA256": "5813b40c9be76b89944cf3b255cad67ac9f46dfeec28c42d1b95c3fb1da67769",
+        "correctedSHA256": "c5b619ac5b4377c93daefefc65f6ddc4336a7ffac3a9118981a32969890a0681"
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/actual-full-curl.mjs",
+        "previousSHA256": "4b90059d6aa43a262902ae9796431b26f7b041c84bbeab61782d8654b3f790e5",
+        "correctedSHA256": "4276a850dbff4b5c357c47e1827eb7785b19c7e7c395c94ee4f22ef0c96d58d2"
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/source-geometry.mjs",
+        "previousSHA256": "cb870c627ac561ad47261453487b20bcf9083b3d41abe7d2a5cf3b9e55cfc310",
+        "correctedSHA256": "89de4b4b52ee666462f64a6139383abac077cec16acea01b3945d0d505a4836a"
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/tests/actual-common-physical-package-source.test.mjs",
+        "previousSHA256": "1fca9dc9e631eadd6c4688ff5f6615eea71cf183c3a5f4b9d305f21a6b142127",
+        "correctedSHA256": "7ac8f71b7a65db98845a0c2908904ffe5730506853a6e39f8f45e41d9dcb3c38"
+      }
+    ],
+    "newFiles": [
+      {
+        "path": "research-ide/mathscope-m2/navier/source-radial-phase-exponent.mjs",
+        "sha256": "09ffa7aca344391d39de50f38a9a4c67f175d6d500e4514ac6a86e591768ab7c",
+        "bytes": 7275
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/tests/run-common-physical-package-radial-correction-validation.py",
+        "sha256": "4bc03aedce53863cec32c7f42fe4c785a0038eef0f3d29a8539469ecc2727900",
+        "bytes": 6252
+      }
+    ],
+    "removedDiagnosticRunnerFiles": [
+      {
+        "path": "research-ide/mathscope-m2/navier/tests/node-inspector-diagnostics-positive-stress.mjs",
+        "sha256": "4a29c0201afa58713332bc88dd387d45edfbae14290133c711ada1314fa1b589",
+        "bytes": 5831
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/tests/node_process_observer_positive_stress.py",
+        "sha256": "5f5637ee21872334e8003a4d86ba24ae56fcfd171d3b20fcbf2e93dc03e7dd26",
+        "bytes": 4485
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/tests/run-common-physical-package-diagnostic-positive-stress.py",
+        "sha256": "8ce431c65b0dc8bbb3c77339b740ac05eb0e20c766b498d719b736de4d010bc9",
+        "bytes": 20446
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/tests/run-common-physical-package-validation.py",
+        "sha256": "6549ed52b14601fce1251b66fae01b53feb534acf4d2f4810d2e3458f159aa4f",
+        "bytes": 5803
+      }
+    ],
+    "fiveDiffsReadAgainstHashVerifiedPriorSnapshotsOrExecutionCommit": true,
+    "historicalEvidencePreserved": true
+  },
+  "memoryInterpretation": {
+    "completedReapedChildPeakRSSBytes": 4942114816,
+    "maximumDirectSourceLoggedRSSBytes": 4788162560,
+    "procSamplerRepresentsActualNodeTree": false,
+    "reason": "The 3,670,016-byte VmHWM and 462,848-byte sampled tree are inconsistent with the source process direct RSS in this PID namespace. They are not used as the actual Node memory observation. The completed reaped-child high-water value supplies the reported peak; execution and source hashes are unaffected.",
+    "processReceiptUnmodified": true
+  },
+  "scope": {
+    "sameOriginalPositiveHAndRecursiveSequence": true,
+    "correctOriginalRadialTorusFormula": true,
+    "openShellPositiveWeightsAndSmoothWeightedZeroExtension": true,
+    "oneSidedOriginalTimeEndpoints": true,
+    "sameSourceAllFixedFiniteDerivativeConstructionAndInduction": true,
+    "allLabelsUseTheirOwnOriginalConstructor": true,
+    "allInfiniteGraphsLiterallyExecuted": false,
+    "actualCompleteFullPhysicalCurlAndDivergence": true,
+    "actualBackgroundEBAllFixedOrderFlatness": true,
+    "actualFullTemporalCutoffForceAllFixedOrderFlatness": true,
+    "totalUncorrectedNSResidualDeclaredFlat": false,
+    "primaryCovarianceUsesBothOriginalAverages": true,
+    "fullResidualCurlRemainderAndNonlinearTermsRetainedForN6": true,
+    "arbitrarySignedInputClassMembershipGranted": false,
+    "N6CorrectionPerformed": false,
+    "numericalGNUMReviewedByThisRecord": false,
+    "newAnalyticLeanProofClaimed": false,
+    "wholeM2CompletionClaimByThisRecord": false,
+    "M3ImplementationStartedByReviewer": false,
+    "gateOrRuntimeFilesModified": false,
+    "additionalHeavySourceExecutedByReviewer": false
+  },
+  "independence": {
+    "reviewerAuthoredSomeGN4Modules": true,
+    "ownGN4AuthorshipNotCountedAsSecondIndependentReview": true,
+    "originalIndependentResidualAndRootReviewsRetained": true
+  },
+  "readReferences": [
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/CORRECTED_COMMON6_REVIEW_PLAN_POSITIVE_STRESS_KO.md",
+      "sha256": "c9bcf56a3000dc519596beb0982a2947d6eed8790c703b777cb8c562d1fb4db2"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/COMMON_GATE_COMPLETION_ADDENDUM_POSITIVE_STRESS_20261011.md",
+      "sha256": "f60fc381f61bf7184c016a9710e1d7608308d44e543c302357025d038085e19e"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/COMMON_GATE_COMPLETION_ADDENDUM_POSITIVE_STRESS_20261011.json",
+      "sha256": "2fd3874bec39813c288ec032d27fcd3fade691e94bfb28daa0671c64ce753eac"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/COMMON_GATE_SCOPE_POSITIVE_STRESS_REVIEW_KO.md",
+      "sha256": "63bf26ec55551c12b6cb837c5faa2ba137bc9c57b8a533d30b8923d7e6870abd"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/INDEPENDENT_GLOBAL_WAVE_COVARIANCE_REVIEW_KO.md",
+      "sha256": "ebeccc417dde9d046a6c35713bb420c20a9ac4e97719f35f7ebcc0ab16e5f8a0"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/INDEPENDENT_SOURCE5_CROSS_PREMISES_NS_REVIEW_KO.md",
+      "sha256": "2d43c9994a1365d1962dd076ece752c080151198c7b26519920758b5fec1f5a2"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/background-residual-flatness-20261011/INDEPENDENT_FINITE_AND_COMMON_RESIDUAL_REVIEW_KO.md",
+      "sha256": "1a1fb0da220f2e5b746496a80ccbbe6b5a417d7c60c5e989223fa9110b0a061a"
+    }
+  ],
+  "reviewDocument": {
+    "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/CORRECTED_COMMON6_COMPLETION_REVIEW_POSITIVE_STRESS_20261011_KO.md",
+    "sha256": "7acedf9493c1da25af57e616460fa779968023d662a5f389c4e7edf24158dae1",
+    "bytes": 11269
+  }
+}

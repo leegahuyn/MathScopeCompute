@@ -1,0 +1,231 @@
+{
+  "schema": "MathScope.OriginalPhysicalTorusRadialEquationBinding/1",
+  "specification": {
+    "schema": "MathScope.OriginalRadialPhaseSpecification/1",
+    "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "printedPage": 63,
+    "equations": [
+      "6.2",
+      "6.6"
+    ],
+    "kappa": "1/100000",
+    "formula": "2*((1+h)*rho_g-h*kappa_s)",
+    "rho": "log(4-sqrt(2))/log(4+sqrt(2))",
+    "coveringIdentity": "M_i=r_c^(-rho_g)*epsilon^(-kappa_s)*S^(-rho_g), 1<=r_c<T_g",
+    "omittedFactorFormula": "2*(1+h)*rho_g-h*kappa_s"
+  },
+  "roots": {
+    "h": 9,
+    "Lambda": 628153,
+    "Tg": 300172,
+    "rho": 628155,
+    "kappa": 628156,
+    "dr": 628161,
+    "actualDr": 628161
+  },
+  "nodes": [
+    {
+      "id": 1,
+      "op": "rational",
+      "args": [
+        "1",
+        "1"
+      ]
+    },
+    {
+      "id": 9,
+      "op": "source_parameter",
+      "args": [
+        "h"
+      ]
+    },
+    {
+      "id": 20,
+      "op": "rational",
+      "args": [
+        "-1",
+        "1"
+      ]
+    },
+    {
+      "id": 24,
+      "op": "rational",
+      "args": [
+        "2",
+        "1"
+      ]
+    },
+    {
+      "id": 474,
+      "op": "rational",
+      "args": [
+        "4",
+        "1"
+      ]
+    },
+    {
+      "id": 3622,
+      "op": "sqrt_positive",
+      "args": [
+        24
+      ]
+    },
+    {
+      "id": 135988,
+      "op": "add",
+      "args": [
+        1,
+        9
+      ]
+    },
+    {
+      "id": 300172,
+      "op": "add",
+      "args": [
+        474,
+        3622
+      ]
+    },
+    {
+      "id": 623002,
+      "op": "log_positive",
+      "args": [
+        300172
+      ]
+    },
+    {
+      "id": 623003,
+      "op": "inverse",
+      "args": [
+        623002
+      ]
+    },
+    {
+      "id": 623052,
+      "op": "multiply",
+      "args": [
+        20,
+        3622
+      ]
+    },
+    {
+      "id": 628153,
+      "op": "add",
+      "args": [
+        474,
+        623052
+      ]
+    },
+    {
+      "id": 628154,
+      "op": "log_positive",
+      "args": [
+        628153
+      ]
+    },
+    {
+      "id": 628155,
+      "op": "multiply",
+      "args": [
+        623003,
+        628154
+      ]
+    },
+    {
+      "id": 628156,
+      "op": "rational",
+      "args": [
+        "1",
+        "100000"
+      ]
+    },
+    {
+      "id": 628157,
+      "op": "multiply",
+      "args": [
+        135988,
+        628155
+      ]
+    },
+    {
+      "id": 628158,
+      "op": "multiply",
+      "args": [
+        9,
+        628156
+      ]
+    },
+    {
+      "id": 628159,
+      "op": "multiply",
+      "args": [
+        20,
+        628158
+      ]
+    },
+    {
+      "id": 628160,
+      "op": "add",
+      "args": [
+        628157,
+        628159
+      ]
+    },
+    {
+      "id": 628161,
+      "op": "multiply",
+      "args": [
+        24,
+        628160
+      ]
+    }
+  ],
+  "parameterBindings": {
+    "profileId": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "definitions": {
+      "h": {
+        "exp": {
+          "product": [
+            {
+              "integer": -8002
+            },
+            {
+              "ref": "T"
+            }
+          ]
+        }
+      },
+      "T": {
+        "sum": [
+          {
+            "exp": {
+              "ref": "Md"
+            }
+          },
+          {
+            "integer": 10
+          }
+        ]
+      },
+      "Md": {
+        "integer": 1048576
+      }
+    },
+    "expandedH": "exp(-8002*(exp(1048576)+10))",
+    "strictPositiveSourceRetained": true
+  },
+  "comparison": {
+    "method": "Literal typed arithmetic trees, preserving original binary parentheses and only commuting binary add/multiply.",
+    "sameDrRoot": true,
+    "allSixExpectedBodiesMatched": true,
+    "oldMissingFactorAccepted": false
+  },
+  "scope": {
+    "radialExponentEquationOnly": true,
+    "privateParentAuthenticationRequired": true,
+    "sourceNumericValueEvaluated": false,
+    "fullPhysicalGraphExecutionProved": false,
+    "newM2CompletionClaim": false
+  }
+}

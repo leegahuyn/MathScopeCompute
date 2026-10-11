@@ -9,6 +9,7 @@ import {INSTALLED_PHYSICAL_CENTER_EVIDENCE as evidence,INSTALLED_PHYSICAL_CENTER
 import {sha256} from '../../../mathscope-m0/contracts.mjs';
 import {ORIGINAL_RADIAL_PHASE_SPECIFICATION} from '../source-radial-phase-exponent.mjs';
 import {readExecutedArtifact} from './executed-source-artifact-files.mjs';
+import {projectPhysicalCenterNegativeModePremises,assertPhysicalCenterNegativeModeJetAliases} from './physical-center-negative-mode-source-premises.mjs';
 
 const root=fileURLToPath(new URL('../../../../',import.meta.url)),
   fileDigest=async name=>sha256(readExecutedArtifact(root,name).toString('utf8')),
@@ -47,8 +48,14 @@ assert.equal(originalTorusMap.comparison.allSixExpectedBodiesMatched,true);
 assert.equal(originalTorusMap.comparison.oldMissingFactorAccepted,false);
 assert.equal(evidence.policy.originalPhysicalRadialEquationRequired,true);
 assert.equal(evidence.policy.legacyMissingRadialFactorExecutionAccepted,false);
+assert.deepEqual(evidence.negativeModeValuePremises,
+  projectPhysicalCenterNegativeModePremises(physicalCenter,source.certificates.physicalCenter,originalTorusMap));
+assert.equal(evidence.policy.originalRawNegativeModeValuePremisesPinned,true);
+assert.equal(evidence.policy.everyJobRecomputesBothCoupledModeValueEnclosures,true);
 const certificate=read(evidence.numericalCertificate.path),
   actualScales=certificate.sourceBounds.diagnostics.selectorScaleEnclosure;
+assert.equal(await fileDigest(source.certificates.bodies.path),source.certificates.bodies.sha256);
+assertPhysicalCenterNegativeModeJetAliases(physicalCenter,certificate,read(source.certificates.bodies.path));
 for(const [key,value]of Object.entries(evidence.positiveSelectorScaleEvidence))assert.deepEqual(value,actualScales[key],key);
 assert.equal(actualScales.pass,true);assert.ok(actualScales.checks.every(check=>check.pass));
 console.log(JSON.stringify({pass:true,evidenceSHA256:expected,numericalFiles:manifest.fileCount,

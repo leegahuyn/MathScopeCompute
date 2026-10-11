@@ -31,6 +31,7 @@ const files=['core/registry.mjs','navier/index.mjs','navier/actual-physical-cent
   'navier/actual-physical-center-installed-evidence.mjs','navier/actual-physical-center-runtime-numerics.mjs',
   'navier/actual-physical-center-positive-scale-kernel.mjs','navier/actual-physical-center-jet-conditioning.mjs',
   'navier/actual-physical-center-unscaled-numerics.mjs','navier/actual-numerical-exponential-arithmetic.mjs',
+  'navier/actual-physical-center-negative-mode-value-kernel.mjs',
   'visualization/actual-physical-center-panels.mjs','visualization/m2-views.mjs','m2.worker.js','workspace.bundle.js',
   'tests/physical-center-runtime-case.mjs'];
 const snapshot=async()=>Object.fromEntries(await Promise.all(files.map(async name=>[name,await sha256(fs.readFileSync(new URL('../'+name,import.meta.url),'utf8'))])));
@@ -56,6 +57,30 @@ try{
     assert.equal(data.sourceEvidence.originalTorusMapBinding.specification.formula,'2*((1+h)*rho_g-h*kappa_s)');
     assert.equal(data.sourceEvidence.originalTorusMapBinding.comparison.oldMissingFactorAccepted,false);
     assert.equal(data.scope.originalPhysicalRadialEquationVerified,true);
+  });
+  checked('both-coupled-mode-values-are-fresh-and-bound-to-original-component-roots',()=>{
+    const values=data.coupledModeValues,negative=data.negativeModeValues,premises=sourceEvidence.negativeModeValuePremises;
+    assert.equal(values.pass,true);assert.equal(values.rows.length,4);assert.equal(values.sourceAuthenticated,false);
+    assert.equal(negative.pass,true);assert.equal(negative.rows.length,2);assert.equal(negative.sourceAuthenticated,false);
+    assert.ok(negative.checks.every(check=>check.pass));
+    assert.deepEqual(data.sourceEvidence.negativeModeValuePremises,premises);
+    assert.equal(data.scope.actualBothCoupledModeValuesEnclosed,true);assert.equal(data.scope.negativeModeReplacedByExactZero,false);
+    for(const [i,binding]of premises.originalBindings.entries()){
+      const plus=values.rows[2*i],minus=values.rows[2*i+1];
+      assert.equal(plus.sign,binding.sign);assert.equal(minus.sign,binding.sign);
+      assert.equal(plus.sourceRoot,binding.centerRoot);assert.equal(minus.sourceRoot,binding.negativeModeRoot);
+      assert.equal(plus.directedInterval.lower,data.numerics.values.centers[i].lower);
+      assert.equal(plus.directedInterval.upper,data.numerics.values.centers[i].upper);
+      assert.deepEqual(minus.exactAbsoluteBound,{kind:'EXACT_POSITIVE_DYADIC',numerator:'1',denominatorPowerOfTwo:97793});
+      assert.ok(qcompare(readRational(minus.directedInterval.lower),Q(0))<0);
+      assert.ok(qcompare(readRational(minus.directedInterval.upper),Q(0))>0);
+      assert.equal(minus.identicallyZeroClaimed,false);assert.equal(minus.sourceAuthenticated,false);
+      for(const row of [plus,minus]){
+        const width=qsub(readRational(row.directedInterval.upper),readRational(row.directedInterval.lower));
+        assert.ok(qcompare(width,Q(0))>0&&qcompare(width,readRational(data.request.tolerance))<=0);
+        assert.equal(qcompare(width,readRational(row.width)),0);assert.equal(row.normalization,'RAW_ORIGINAL_COUPLED_VALUE');
+      }
+    }
   });
   const originalMap=new Map(source.rows.map(row=>[row.rowKey,row]));
   checked('all270-fresh-rows-match-original-bodies-and-positive-normalizers',()=>{
@@ -108,8 +133,8 @@ try{
   });
   let checkedSourcePathCells=0,displayLabels=0;
   const panels=listM2Panels(job),panelRows=[];
-  checked('ten-tables-retain-every-exact-source-cell-and-angular-row',()=>{
-    assert.equal(panels.length,10);
+  checked('eleven-tables-retain-every-exact-source-cell-and-angular-row',()=>{
+    assert.equal(panels.length,11);
     for(const panel of panels){
       const view=makeM2Visualization(job,{panel:panel.id}),table=view.table;
       assert.equal(view.state,'READY');assert.equal(view.scene.points.length,0);assert.equal(table.truncated,false);
@@ -130,6 +155,7 @@ try{
     assert.equal(panelRows.find(panel=>panel.id==='physical-center-coarse-point-factors').rows.length,2);
     assert.equal(panelRows.find(panel=>panel.id==='physical-center-absolute-values').rows.length,data.positiveSelectorScaleEvidence.absoluteValues.length);
     assert.equal(panelRows.find(panel=>panel.id==='physical-center-unscaled-derivatives').rows.length,270);
+    assert.equal(panelRows.find(panel=>panel.id==='physical-center-coupled-mode-values').rows.length,4);
     const sampled=makeM2Visualization(job,{panel:'physical-center-unscaled-derivatives',maxRows:13}).table;
     assert.equal(sampled.rows.length,13);assert.equal(sampled.totalRows,270);assert.equal(sampled.truncated,true);
     assert.equal(sampled.cellSourcePaths.length,13);

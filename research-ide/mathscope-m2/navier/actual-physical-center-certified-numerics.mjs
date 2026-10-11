@@ -7,9 +7,10 @@ import {recomputePhysicalCenterRuntimeNumerics,physicalCenterRuntimeNumericalReq
 import {physicalCenterNumericalJetConditioning} from './actual-physical-center-jet-conditioning.mjs';
 import {recomputePhysicalCenterPositiveScales} from './actual-physical-center-positive-scale-kernel.mjs';
 import {recomputePhysicalCenterUnscaledDerivativeBounds} from './actual-physical-center-unscaled-numerics.mjs';
+import {enclosePhysicalCenterNegativeModeValues} from './actual-physical-center-negative-mode-value-kernel.mjs';
 import {SOURCE_PROFILE_ID,sourceExponentContract} from './source-profile.mjs';
 import {ORIGINAL_RADIAL_PHASE_SPECIFICATION} from './source-radial-phase-exponent.mjs';
-import {readRational,qcompare,fail} from './actual-continuation-arithmetic.mjs';
+import {readRational,qcompare,qsub,qtext,rational as Q,fail} from './actual-continuation-arithmetic.mjs';
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 
 const AUTHENTICATION='PINNED_EXECUTED_EXTERNAL_SOURCE_CERTIFICATE';
@@ -30,6 +31,19 @@ async function installedSourceEvidence(){
     evidence.originalTorusMapBinding.roots.dr!==evidence.originalTorusMapBinding.roots.actualDr||
     !evidence.originalTorusMap?.sha256||evidence.policy.originalPhysicalRadialEquationRequired!==true||
     evidence.policy.legacyMissingRadialFactorExecutionAccepted!==false||
+    evidence.negativeModeValuePremises?.schema!=='MathScope.PinnedPhysicalCenterNegativeModePremises/1'||
+    evidence.negativeModeValuePremises.profileId!==SOURCE_PROFILE_ID||
+    evidence.negativeModeValuePremises.parameterExpressionSHA256!==contract.parameterExpressionSHA256||
+    evidence.negativeModeValuePremises.originalDrRoot!==evidence.originalTorusMapBinding.roots.dr||
+    evidence.negativeModeValuePremises.sameOriginalTorusMap!==true||
+    !evidence.negativeModeValuePremises.certificate?.sha256||
+    canonicalStringify(evidence.negativeModeValuePremises.exactPowers)!==canonicalStringify({base:128,scale:1024,cone:260,centerHalf:1,radius:97793})||
+    canonicalStringify(evidence.negativeModeValuePremises.originalBindings?.map(row=>row.sign))!==canonicalStringify([1,-1])||
+    !allPassed(evidence.negativeModeValuePremises.sourceBoundsChecks)||
+    evidence.negativeModeValuePremises.familyChecks.some(row=>!allPassed(row.checks))||
+    evidence.negativeModeValuePremises.sourceAuthorityCreatedByProjection!==false||
+    evidence.policy.originalRawNegativeModeValuePremisesPinned!==true||
+    evidence.policy.everyJobRecomputesBothCoupledModeValueEnclosures!==true||
     evidence.sourceBinding.parameterExpressionSHA256!==contract.parameterExpressionSHA256||
     !contract.positive||!contract.notNumericallyReplaced||evidence.sourceProcess.exitCode!==0||
     evidence.sourceProcess.timeout!==false||evidence.sourceProcess.complete!==true||
@@ -55,7 +69,21 @@ export async function encloseInstalledPhysicalCenterNumerics(input={},context={}
   const numerics=await recomputePhysicalCenterRuntimeNumerics(request,context),
     conditioning=physicalCenterNumericalJetConditioning(numerics.values,request.precisionBits),
     positiveScaleNumerics=recomputePhysicalCenterPositiveScales(numerics.positiveProfile,numerics.targetCoefficient,evidence.targetPositiveScalePremises,request),
+    negativeModeValues=enclosePhysicalCenterNegativeModeValues(numerics.values.centers,evidence.negativeModeValuePremises.originalBindings,request,context),
     originalRows=new Map(evidence.rows.map(row=>[row.rowKey,row])),rowBindings=[];
+  const coupledModeValues={schema:'MathScope.FreshOriginalCoupledModeValues/1',sourceAuthenticated:false,
+    originalPhysicalCertificate:structuredClone(evidence.negativeModeValuePremises.certificate),
+    evaluation:structuredClone(evidence.negativeModeValuePremises.evaluation),
+    rows:evidence.negativeModeValuePremises.originalBindings.flatMap((binding,i)=>{
+      const interval=numerics.values.centers[i],width=qsub(readRational(interval.upper),readRational(interval.lower)),negative=negativeModeValues.rows[i];
+      if(qcompare(width,Q(0))<=0||qcompare(width,readRational(request.tolerance))>0)
+        fail('PRECISION_REQUIRED','A fresh original positive-mode value interval does not meet the requested absolute width.');
+      return [{rowKey:['wPlus',binding.sign,0,'VALUE'].join(':'),quantity:'wPlus',sign:binding.sign,component:0,derivative:'VALUE',order:0,
+        sourceRoot:binding.centerRoot,directedInterval:{lower:interval.lower,upper:interval.upper},width:qtext(width),
+        tolerance:request.tolerance,toleranceMet:true,normalization:'RAW_ORIGINAL_COUPLED_VALUE',
+        identicallyZeroClaimed:false,sourceAuthenticated:false},
+      {...structuredClone(negative),normalization:'RAW_ORIGINAL_COUPLED_VALUE'}];
+    }),pass:true};
   for(const row of numerics.rows){
     const original=originalRows.get(row.rowKey);
     if(!original||original.quantity!==row.quantity||original.component!==row.component||original.derivative!==row.derivative||
@@ -73,7 +101,8 @@ export async function encloseInstalledPhysicalCenterNumerics(input={},context={}
     {id:'all270-current-coefficients-match-original-derivative-and-positive-scale-identities',pass:rowBindings.length===270&&numerics.rows.length===270},
     {id:'every-numerical-prerequisite-and-requested-width-is-recomputed',pass:numerics.pass&&allPassed(numerics.checks)&&
       numerics.arithmetic.everyNumericalPrerequisiteRecomputed&&numerics.precisionAllocation.everyFinalEndpointWidthChecked},
-    {id:'new-value-intervals-recheck-original-inverse-conditioning',pass:conditioning.pass&&allPassed(conditioning.checks)},
+    {id:'new-value-intervals-recheck-original-inverse-conditioning-and-both-coupled-modes',pass:conditioning.pass&&allPassed(conditioning.checks)&&
+      negativeModeValues.pass&&allPassed(negativeModeValues.checks)&&coupledModeValues.rows.length===4&&coupledModeValues.rows.every(row=>row.toleranceMet)},
     {id:'all-twenty-two-positive-profile-and-target-scale-endpoints-are-recomputed',pass:positiveScaleNumerics.pass&&allPassed(positiveScaleNumerics.checks)},
     {id:'all270-original-scale-intervals-and-fresh-unscaled-products-are-checked',pass:unscaledDerivatives.pass&&
       unscaledDerivatives.rows.length===270&&allPassed(unscaledDerivatives.checks)},
@@ -81,12 +110,14 @@ export async function encloseInstalledPhysicalCenterNumerics(input={},context={}
       numerics.scope.positiveAnalyticRemaindersRetained&&rowBindings.every(row=>row.bodyDerivativeBinding)},
     {id:'external-source-evidence-and-current-numerical-execution-are-explicit',pass:numerics.sourceAuthenticated===false&&
       numerics.scope.runtimeReconstructedFullSourceGraph===false&&conditioning.sourceAuthenticated===false&&
+      negativeModeValues.sourceAuthenticated===false&&coupledModeValues.sourceAuthenticated===false&&
       unscaledDerivatives.sourceAuthenticated===false&&unscaledDerivatives.arithmetic.productsRecomputed===true}
   ];
   if(!allPassed(checks))fail('INVALID_SOURCE_CONSTRUCTION','The installed original-source proof and fresh numerical calculation did not satisfy all obligations.');
   const sourceEvidence={authentication:AUTHENTICATION,installedEvidenceSHA256:INSTALLED_PHYSICAL_CENTER_EVIDENCE_SHA256,
       originalNumericalCertificate:evidence.numericalCertificate,sourceProcess:evidence.sourceProcess,sourceDiagnostics:evidence.sourceDiagnostics,
       originalTorusMap:evidence.originalTorusMap,originalTorusMapBinding:evidence.originalTorusMapBinding,
+      negativeModeValuePremises:structuredClone(evidence.negativeModeValuePremises),
       sourceRun:evidence.sourceRun,initialImportManifest:evidence.initialImportManifest,lateImportManifest:evidence.lateImportManifest,
       sourceChecks:evidence.sourceChecks,boundChecks:evidence.boundChecks,
       numericalAlgorithmManifest:evidence.numericalAlgorithmManifest,
@@ -97,10 +128,12 @@ export async function encloseInstalledPhysicalCenterNumerics(input={},context={}
       originalPointAndBandPinned:true,originalPositiveNormalizersPinned:true,callerPointMatrixOrDerivativeAccepted:false},
     graph={...evidence.graph,role:'SEPARATELY_EXECUTED_ORIGINAL_PHYSICAL_SOURCE_GRAPH',
       installedEvidenceSHA256:INSTALLED_PHYSICAL_CENTER_EVIDENCE_SHA256,
-      freshNumericalSHA256:await sha256({request,numerics,conditioning,positiveScaleNumerics,unscaledDerivatives,rowBindings})},
+      freshNumericalSHA256:await sha256({request,numerics,conditioning,positiveScaleNumerics,negativeModeValues,coupledModeValues,unscaledDerivatives,rowBindings})},
     scope={sameOriginalPhysicalPoint:true,originalSourceEvidenceExternallyExecuted:true,
       sourceAuthentication:AUTHENTICATION,runtimeReconstructedFullSourceGraph:false,privateSourceTokenCreated:false,
       freshNumericalRecomputation:true,freshInverseConditioningChecked:true,
+      actualBothCoupledModeValuesEnclosed:true,coupledModeValueRows:4,negativeModeReplacedByExactZero:false,
+      coupledModeValuesUseEachOriginalFastCenter:true,negativeFamilyCompositeFastCenterClaimed:false,
       actualSlowFastMixedCovarianceWeightDerivativeNumerics:true,
       actualFullPhysicalCurlFirstAndSecondDerivativeNumerics:true,actualSpatialCovariantHessianNumerics:true,
       angularMixedAndFrameConnectionsIncluded:true,physicalDirections:['r','z','t','theta'],
@@ -112,7 +145,7 @@ export async function encloseInstalledPhysicalCenterNumerics(input={},context={}
       individualEtaBetaPrecisionMet:false,individualTPrecisionMet:false,globalResidualNumericallyEnclosed:false,
       wholeGNUMComplete:false,userRequestedM2Complete:false,newLeanKernelProof:false,M3Started:false},
     result={schema:'MathScope.InstalledPhysicalCenterNumericalCertificate/1',status:'COMPLETED',pass:true,request,
-      sourceBinding,sourceEvidence,graph,numerics,conditioning,positiveScaleNumerics,unscaledDerivatives,
+      sourceBinding,sourceEvidence,graph,numerics,conditioning,positiveScaleNumerics,negativeModeValues,coupledModeValues,unscaledDerivatives,
       positiveSelectorScaleEvidence:structuredClone(evidence.positiveSelectorScaleEvidence),rowBindings,roots:structuredClone(evidence.roots),checks,scope,
       replayPolicy:'RECOMPUTE_FROM_ORIGINAL_INPUT_WITH_SAME_INSTALLED_SOURCE_EVIDENCE_AND_ARITHMETIC_BUILD'};
   context.checkCancelled?.();return result;
