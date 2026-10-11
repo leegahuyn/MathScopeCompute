@@ -1,0 +1,288 @@
+{
+  "schema": "MathScope.M3.P7Execution/1",
+  "request": {
+    "kind": "p7.special_function",
+    "input": {
+      "operation": "zeta",
+      "s": {
+        "real": "2",
+        "imag": "0"
+      },
+      "precisionBits": 192,
+      "tolerance": "1e-40"
+    }
+  },
+  "inputSHA256": "f1360b11c824065391568673caa814fff521344743a58af7a7671541bcc71ce1",
+  "sourceBinding": {
+    "version": "0.1.0",
+    "files": [
+      {
+        "path": "cli.py",
+        "sha256": "cd75e242324940297fd99eb6d597cd4fb4341f85a55fe4f40b9a39f5b4c3d3f0"
+      },
+      {
+        "path": "p7/__init__.py",
+        "sha256": "1b6337c04bbc7110e52727b3d2f6139626f0befdfda67a13fd14113203fcd551"
+      },
+      {
+        "path": "p7/ball_backend.py",
+        "sha256": "ff0d3c467d02ee5de99c85215ea129468a35308aec25c664e0e3783ac9102ea5"
+      },
+      {
+        "path": "p7/elliptic_local.py",
+        "sha256": "85b2a163a76dbb7cd8bee367f66bea0824ab385e164161b4a1f0d2d3da8e03da"
+      },
+      {
+        "path": "p7/zero_certificate.py",
+        "sha256": "3d0355994605d7203b5f9b35d22ffe3ae97aadd26e65c8b6eb6c20c0a929a1ba"
+      }
+    ]
+  },
+  "environment": {
+    "python": "3.12.14",
+    "implementation": "CPython",
+    "system": "Linux",
+    "machine": "x86_64",
+    "numericBackend": {
+      "pythonFlint": "0.9.0",
+      "FLINT": "3.6.0",
+      "FLINTRelease": 30600,
+      "runtimeFilesSHA256": "7382dd508b4558e9df1fef642975b248ba2cdf03bae9f7e4cef1ba2a69bc7d74",
+      "runtimeFileCount": 66,
+      "licenseExpression": "MIT AND LGPL-3.0-or-later",
+      "importedPackageMatchesDistribution": true,
+      "observedModuleOriginsChecked": true,
+      "fingerprintScope": "Python modules and dynamic binaries; excludes installer bookkeeping and local paths"
+    }
+  },
+  "environmentSHA256": "cb0db3226c0e17c1e9097b3921577dd68e84014c7d342e2792e075df86f8d93d",
+  "predecessor": {
+    "entrySHA256": "95061e777ed55cb0b59b496990b10c081f09bcc533c363da80cffb2b75e99576",
+    "M2Commit": "90e977ba9225bfaa20fd3dcc97db7f794c5ed4c9",
+    "M2AssessmentSHA256": "37d7c5228e6e96ea7a03037d184c8e67492f6e33b3568c200e20969fe8677178"
+  },
+  "execution": {
+    "status": "COMPLETED",
+    "startedAt": "2026-10-11T16:34:11.441410+00:00",
+    "finishedAt": "2026-10-11T16:34:11.561753+00:00",
+    "elapsedSeconds": 0.12034165599470725,
+    "observedExitCode": 0,
+    "timedOut": false,
+    "maxSeconds": 90,
+    "memoryLimitMiB": 1536,
+    "observedChildResourceLimits": {
+      "addressSpaceBytes": [
+        1610612736,
+        1610612736
+      ],
+      "cpuSeconds": [
+        90,
+        91
+      ]
+    },
+    "observedChildEnvironmentSHA256": "cb0db3226c0e17c1e9097b3921577dd68e84014c7d342e2792e075df86f8d93d",
+    "failure": null,
+    "stderr": ""
+  },
+  "result": {
+    "backend": {
+      "FLINT": "3.6.0",
+      "FLINTRelease": 30600,
+      "arithmetic": "Arb/ACB balls",
+      "pythonFlint": "0.9.0"
+    },
+    "computationSha256": "c57269c6602a5a6832da41a59ca59d29676c76d5dba6126207c4c263feada948",
+    "derivatives": [
+      {
+        "ball": {
+          "imag": {
+            "containsZero": true,
+            "exact": true,
+            "kind": "finite",
+            "lower": {
+              "exponent": "0",
+              "mantissa": "0"
+            },
+            "toleranceMet": true,
+            "upper": {
+              "exponent": "0",
+              "mantissa": "0"
+            },
+            "width": {
+              "exponent": "0",
+              "mantissa": "0"
+            }
+          },
+          "kind": "finite",
+          "maxComponentWidth": {
+            "exponent": "-189",
+            "mantissa": "1"
+          },
+          "real": {
+            "containsZero": false,
+            "exact": false,
+            "kind": "finite",
+            "lower": {
+              "exponent": "-191",
+              "mantissa": "5162709242804836253741124110395861767745550237960083221897"
+            },
+            "toleranceMet": true,
+            "upper": {
+              "exponent": "-191",
+              "mantissa": "5162709242804836253741124110395861767745550237960083221901"
+            },
+            "width": {
+              "exponent": "-189",
+              "mantissa": "1"
+            }
+          },
+          "toleranceMet": true,
+          "widthCriterion": "max(real full width, imaginary full width) <= tolerance"
+        },
+        "order": 0,
+        "taylorCoefficientMultiplier": "1"
+      }
+    ],
+    "errorAccounting": {
+      "finiteDisplacementTaylorRemainder": null,
+      "finiteDisplacementTaylorRemainderStatus": "not requested or certified by this operation",
+      "inputConversionAndPropagationIncluded": true,
+      "internalRoundingBound": null,
+      "internalSplitStatus": "not exposed separately by the pinned python-flint API",
+      "internalTruncationBound": null,
+      "taylorCoefficientMeaning": "coefficient of x^k in f(s+x) multiplied by exact k!",
+      "totalEnclosure": "certified real/imaginary dyadic endpoints of the FLINT output ball",
+      "widthCriterion": "each full component width <= exact requested tolerance"
+    },
+    "formula": {
+      "evaluation": "acb_series.zeta()"
+    },
+    "inputBall": {
+      "imag": {
+        "containsZero": true,
+        "exact": true,
+        "kind": "finite",
+        "lower": {
+          "exponent": "0",
+          "mantissa": "0"
+        },
+        "toleranceMet": null,
+        "upper": {
+          "exponent": "0",
+          "mantissa": "0"
+        },
+        "width": {
+          "exponent": "0",
+          "mantissa": "0"
+        }
+      },
+      "kind": "finite",
+      "maxComponentWidth": {
+        "exponent": "0",
+        "mantissa": "0"
+      },
+      "real": {
+        "containsZero": false,
+        "exact": true,
+        "kind": "finite",
+        "lower": {
+          "exponent": "1",
+          "mantissa": "1"
+        },
+        "toleranceMet": null,
+        "upper": {
+          "exponent": "1",
+          "mantissa": "1"
+        },
+        "width": {
+          "exponent": "0",
+          "mantissa": "0"
+        }
+      },
+      "toleranceMet": null,
+      "widthCriterion": "max(real full width, imaginary full width) <= tolerance"
+    },
+    "precisionBits": 192,
+    "reason": null,
+    "request": {
+      "derivativeOrder": 0,
+      "operation": "zeta",
+      "precisionBits": 192,
+      "s": {
+        "imag": {
+          "lower": "0",
+          "upper": "0"
+        },
+        "real": {
+          "lower": "2",
+          "upper": "2"
+        }
+      },
+      "tolerance": "1/10000000000000000000000000000000000000000"
+    },
+    "schema": "MathScope.M3.P7.BallEvaluation/1",
+    "scope": {
+      "BSDProof": false,
+      "RiemannHypothesisProof": false,
+      "actualBackendExecution": true,
+      "allP7Complete": false,
+      "normalizedRiemannXi": false,
+      "rigorousEnclosure": true,
+      "zeroCounting": false
+    },
+    "status": "finite",
+    "tolerance": "1/10000000000000000000000000000000000000000",
+    "toleranceMet": true,
+    "value": {
+      "imag": {
+        "containsZero": true,
+        "exact": true,
+        "kind": "finite",
+        "lower": {
+          "exponent": "0",
+          "mantissa": "0"
+        },
+        "toleranceMet": true,
+        "upper": {
+          "exponent": "0",
+          "mantissa": "0"
+        },
+        "width": {
+          "exponent": "0",
+          "mantissa": "0"
+        }
+      },
+      "kind": "finite",
+      "maxComponentWidth": {
+        "exponent": "-189",
+        "mantissa": "1"
+      },
+      "real": {
+        "containsZero": false,
+        "exact": false,
+        "kind": "finite",
+        "lower": {
+          "exponent": "-191",
+          "mantissa": "5162709242804836253741124110395861767745550237960083221897"
+        },
+        "toleranceMet": true,
+        "upper": {
+          "exponent": "-191",
+          "mantissa": "5162709242804836253741124110395861767745550237960083221901"
+        },
+        "width": {
+          "exponent": "-189",
+          "mantissa": "1"
+        }
+      },
+      "toleranceMet": true,
+      "widthCriterion": "max(real full width, imaginary full width) <= tolerance"
+    }
+  },
+  "mathematicalSHA256": "e532c8bf8432114806199adfaab9b3c91e2a926d2e4920c361f57c68a658fa79",
+  "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+  "formalLeanProofIssued": false,
+  "wholeP7Complete": false,
+  "wholeM3Complete": false,
+  "recordSHA256": "3363909e7b06f1fb8deef12619fd02f19ae72e22e51210c008d7b3d70423fff8"
+}

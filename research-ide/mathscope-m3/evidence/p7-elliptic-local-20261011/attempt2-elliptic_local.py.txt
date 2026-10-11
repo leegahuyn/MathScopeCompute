@@ -1,0 +1,824 @@
+"""Exact, bounded local arithmetic for general Weierstrass equations over Q.
+
+This module computes finite arithmetic.  It does not run general Tate reduction,
+descent, analytic continuation, a height/regulator algorithm, or a BSD proof.
+The two named inputs are coefficient aliases, never tables of computed answers.
+
+Public coefficient convention: coefficients(E, K)[n - 1] is a_n, for 1 <= n <= K.
+All complete bad factors must be certified before the complete L-series mode is
+returned.  good_only=True instead means the explicitly incomplete L^S.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from fractions import Fraction
+from hashlib import sha256
+from itertools import islice
+from math import isqrt, prod
+import json
+import re
+from typing import Iterable, Sequence
+
+
+SCHEMA = "mathscope.p7.elliptic-local.v1"
+_EQUATION = "y^2+a1*x*y+a3*y=x^3+a2*x^2+a4*x+a6"
+_MODEL_ALIASES = {
+    "11a1": (0, -1, 1, -10, -20),
+    "37a1": (0, 0, 1, -1, 0),
+}
+_EXAMPLE_POINTS = {"11a1": (5, 5), "37a1": (0, 0)}
+_RATIONAL_TEXT = re.compile(r"^[+-]?[0-9]+(?:/[+-]?[0-9]+)?$")
+_MAX_SAFE_JSON_INTEGER = 2**53 - 1
+
+THEOREM_REFERENCES = {
+    "weierstrass-invariants": {
+        "source": "J. S. Milne, Elliptic Curves, 2nd ed., II.2",
+        "url": "https://www.jmilne.org/math/Books/EC2.pdf",
+    },
+    "minimal-discriminant-scaling": {
+        "source": "J. S. Milne, Elliptic Curves, II.7-II.8; c4=u^4*c4_min, Delta=u^12*Delta_min",
+        "url": "https://www.jmilne.org/math/Books/EC2.pdf",
+    },
+    "multiplicative-local-data": {
+        "source": "Tate algorithm, multiplicative (unit c4) branch; Kodaira I_n and its split component group",
+        "url": "https://www.numdam.org/item/10.5802/aif.2664.pdf",
+    },
+    "good-reduction-prime-to-p-torsion": {
+        "source": "J. S. Milne, Elliptic Curves, II.4, Corollary 4.2",
+        "url": "https://www.jmilne.org/math/Books/EC2.pdf",
+    },
+    "euler-factors-and-hasse": {
+        "source": "J. S. Milne, Elliptic Curves, IV.9-IV.10",
+        "url": "https://www.jmilne.org/math/Books/EC2.pdf",
+    },
+    "semistable-root-numbers": {
+        "source": "w_infinity=-1; good local sign +1; split/non-split multiplicative local signs -1/+1",
+        "url": "https://www.degruyterbrill.com/document/doi/10.1515/crelle-2020-0036/html",
+    },
+}
+
+
+class EllipticLocalError(ValueError):
+    """A closed failure: no unsupported mathematical datum is synthesized."""
+
+    def __init__(self, code: str, message: str, **details):
+        super().__init__(message)
+        self.code = code
+        self.details = details
+
+    def as_dict(self) -> dict:
+        return _json_safe({"code": self.code, "message": str(self), "details": self.details})
+
+
+@dataclass(frozen=True)
+class ComputationLimits:
+    """Resource limits, not restrictions on a claimed infinite theorem."""
+
+    max_prime: int = 100_003
+    max_coefficient_limit: int = 10_000
+    max_trial_divisions: int = 1_000_000
+    max_point_count_steps: int = 10_000_000
+    max_input_bits: int = 4096
+    max_coordinate_bits: int = 100_000
+    max_scalar_bits: int = 64
+    max_requested_primes: int = 4096
+
+    def __post_init__(self):
+        for name, value in vars(self).items():
+            if type(value) is not int or value < 1:
+                raise EllipticLocalError("INVALID_LIMIT", f"{name} must be a positive integer")
+
+
+DEFAULT_LIMITS = ComputationLimits()
+
+
+def _parse_integer_text(value: str) -> int:
+    negative = value.startswith("-")
+    digits = value[1:] if value[0] in "+-" else value
+    result = 0
+    for start in range(0, len(digits), 9):
+        chunk = digits[start:start + 9]
+        result = result * 10**len(chunk) + int(chunk)
+    return -result if negative else result
+
+
+def _exact(value, *, max_bits: int = DEFAULT_LIMITS.max_input_bits) -> Fraction:
+    if type(value) is int:
+        result = Fraction(value)
+    elif isinstance(value, Fraction):
+        result = value
+    elif isinstance(value, str) and _RATIONAL_TEXT.fullmatch(value):
+        # Guard the input before asking int() to allocate an arbitrarily long value.
+        if len(value) > 2 * max_bits + 8:
+            raise EllipticLocalError("RESOURCE_LIMIT", "Exact rational input is too long")
+        try:
+            if "/" in value:
+                numerator, denominator = value.split("/")
+                result = Fraction(_parse_integer_text(numerator), _parse_integer_text(denominator))
+            else:
+                result = Fraction(_parse_integer_text(value))
+        except (ValueError, ZeroDivisionError) as exc:
+            raise EllipticLocalError("INVALID_EXACT_RATIONAL", "Invalid exact rational input") from exc
+    else:
+        raise EllipticLocalError(
+            "INVALID_EXACT_RATIONAL", "Use an integer, Fraction, or integer/rational string; floats and bools are rejected"
+        )
+    if max(abs(result.numerator).bit_length(), result.denominator.bit_length()) > max_bits:
+        raise EllipticLocalError("RESOURCE_LIMIT", "Exact rational input exceeds the bit budget")
+    return result
+
+
+def _integer_text(value: int) -> str:
+    # Respect Python's global int<->str guard without changing it for other modules.
+    # Intermediate exact invariants may exceed its default 4300 decimal digits.
+    if abs(value).bit_length() <= 1000:
+        return str(value)
+    sign = "-" if value < 0 else ""
+    remaining, chunks = abs(value), []
+    while remaining:
+        remaining, chunk = divmod(remaining, 10**9)
+        chunks.append(chunk)
+    return sign + str(chunks[-1]) + "".join(f"{chunk:09d}" for chunk in reversed(chunks[:-1]))
+
+
+def _rational_text(value: Fraction) -> str:
+    numerator = _integer_text(value.numerator)
+    return numerator if value.denominator == 1 else numerator + "/" + _integer_text(value.denominator)
+
+
+def _json_safe(value):
+    if isinstance(value, Fraction):
+        return _rational_text(value)
+    if value is None or type(value) in (str, bool):
+        return value
+    if type(value) is int:
+        return value if abs(value) <= _MAX_SAFE_JSON_INTEGER else _integer_text(value)
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    raise TypeError(f"Unexpected non-JSON value {type(value).__name__}")
+
+
+def _canonical(value) -> str:
+    return json.dumps(_json_safe(value), sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
+
+
+def _invariants(a: tuple[Fraction, ...]) -> dict[str, Fraction]:
+    a1, a2, a3, a4, a6 = a
+    b2 = a1 * a1 + 4 * a2
+    b4 = a1 * a3 + 2 * a4
+    b6 = a3 * a3 + 4 * a6
+    b8 = a1 * a1 * a6 + 4 * a2 * a6 - a1 * a3 * a4 + a2 * a3 * a3 - a4 * a4
+    c4 = b2 * b2 - 24 * b4
+    c6 = -b2**3 + 36 * b2 * b4 - 216 * b6
+    discriminant = -b2 * b2 * b8 - 8 * b4**3 - 27 * b6**2 + 9 * b2 * b4 * b6
+    if c4**3 - c6**2 != 1728 * discriminant or b2 * b6 - b4 * b4 != 4 * b8:
+        raise ArithmeticError("Independent Weierstrass invariant identities failed")
+    return {"b2": b2, "b4": b4, "b6": b6, "b8": b8, "c4": c4, "c6": c6, "Delta": discriminant}
+
+
+@dataclass(frozen=True)
+class WeierstrassCurve:
+    ainvs: tuple[Fraction, ...]
+
+    def __post_init__(self):
+        if not isinstance(self.ainvs, (tuple, list)) or len(self.ainvs) != 5:
+            raise EllipticLocalError("INVALID_MODEL", "A Weierstrass model needs exactly [a1,a2,a3,a4,a6]")
+        normalized = tuple(_exact(value) for value in self.ainvs)
+        object.__setattr__(self, "ainvs", normalized)
+        if _invariants(normalized)["Delta"] == 0:
+            raise EllipticLocalError("SINGULAR_MODEL", "The discriminant is zero")
+
+    @property
+    def label(self) -> str | None:
+        for label, coefficients_ in _MODEL_ALIASES.items():
+            if self.ainvs == coefficients_:
+                return label
+        return None
+
+    @property
+    def integral(self) -> bool:
+        return all(value.denominator == 1 for value in self.ainvs)
+
+    @property
+    def model_hash(self) -> str:
+        return sha256(_canonical({"equation": _EQUATION, "ainvs": self.ainvs}).encode()).hexdigest()
+
+
+def as_curve(model) -> WeierstrassCurve:
+    if isinstance(model, WeierstrassCurve):
+        return model
+    if isinstance(model, str):
+        if model not in _MODEL_ALIASES:
+            raise EllipticLocalError("UNKNOWN_MODEL_ALIAS", "The only named coefficient aliases are 11a1 and 37a1", model=model)
+        return WeierstrassCurve(_MODEL_ALIASES[model])
+    if not isinstance(model, (list, tuple)):
+        raise EllipticLocalError("INVALID_MODEL", "Supply a supported alias or five exact coefficients")
+    return WeierstrassCurve(tuple(model))
+
+
+def weierstrass_invariants(model) -> dict[str, Fraction]:
+    """Return exact Fractions, including j, for a nonsingular rational model."""
+    invariants = _invariants(as_curve(model).ainvs)
+    return {**invariants, "j": invariants["c4"]**3 / invariants["Delta"]}
+
+
+def _bounded_curve(model, limits: ComputationLimits) -> WeierstrassCurve:
+    curve = as_curve(model)
+    for coefficient in curve.ainvs:
+        _exact(coefficient, max_bits=limits.max_input_bits)
+    return curve
+
+
+Point = tuple[Fraction, Fraction] | None
+
+
+def _point(curve: WeierstrassCurve, point, limits: ComputationLimits = DEFAULT_LIMITS) -> Point:
+    if point is None:
+        return None
+    if not isinstance(point, (list, tuple)) or len(point) != 2:
+        raise EllipticLocalError("INVALID_POINT", "A point is [x,y] or None for infinity")
+    x, y = (_exact(value, max_bits=limits.max_coordinate_bits) for value in point)
+    a1, a2, a3, a4, a6 = curve.ainvs
+    if y*y + a1*x*y + a3*y != x**3 + a2*x*x + a4*x + a6:
+        raise EllipticLocalError("POINT_NOT_ON_CURVE", "The rational point does not satisfy this exact model")
+    return x, y
+
+
+def point_negate(model, point, *, limits: ComputationLimits = DEFAULT_LIMITS) -> Point:
+    curve = _bounded_curve(model, limits)
+    point = _point(curve, point, limits)
+    if point is None:
+        return None
+    x, y = point
+    a1, _, a3, _, _ = curve.ainvs
+    return _point(curve, (x, -y - a1*x - a3), limits)
+
+
+def _add(curve: WeierstrassCurve, left: Point, right: Point, limits: ComputationLimits) -> Point:
+    if left is None:
+        return right
+    if right is None:
+        return left
+    x1, y1 = left
+    x2, y2 = right
+    a1, a2, a3, a4, _ = curve.ainvs
+    if x1 == x2 and y1 + y2 + a1*x1 + a3 == 0:
+        return None
+    if x1 == x2:
+        # On the quadratic in y, equal x and a non-inverse pair must be a tangent.
+        if y1 != y2:
+            raise ArithmeticError("Unexpected points over the same x coordinate")
+        slope = (3*x1*x1 + 2*a2*x1 + a4 - a1*y1) / (2*y1 + a1*x1 + a3)
+    else:
+        slope = (y2 - y1) / (x2 - x1)
+    intercept = y1 - slope*x1
+    x3 = slope*slope + a1*slope - a2 - x1 - x2
+    y3 = -(slope + a1)*x3 - intercept - a3
+    return _point(curve, (x3, y3), limits)
+
+
+def point_add(model, left, right, *, limits: ComputationLimits = DEFAULT_LIMITS) -> Point:
+    curve = _bounded_curve(model, limits)
+    return _add(curve, _point(curve, left, limits), _point(curve, right, limits), limits)
+
+
+def point_multiply(model, scalar: int, point, *, limits: ComputationLimits = DEFAULT_LIMITS) -> Point:
+    curve = _bounded_curve(model, limits)
+    point = _point(curve, point, limits)
+    if type(scalar) is not int:
+        raise EllipticLocalError("INVALID_SCALAR", "The scalar must be an integer, not a bool or float")
+    if abs(scalar).bit_length() > limits.max_scalar_bits:
+        raise EllipticLocalError("RESOURCE_LIMIT", "Scalar exceeds the finite multiplication budget")
+    if scalar < 0:
+        point = point_negate(curve, point, limits=limits)
+        scalar = -scalar
+    result = None
+    while scalar:
+        if scalar & 1:
+            result = _add(curve, result, point, limits)
+        scalar >>= 1
+        if scalar:
+            point = _add(curve, point, point, limits)
+    return result
+
+
+def _valuation(value: Fraction | int, prime: int) -> int | None:
+    value = Fraction(value)
+    if value == 0:
+        return None  # explicitly means positive infinity, never valuation zero
+    numerator, denominator = abs(value.numerator), value.denominator
+    result = 0
+    while numerator % prime == 0:
+        numerator //= prime
+        result += 1
+    while denominator % prime == 0:
+        denominator //= prime
+        result -= 1
+    return result
+
+
+class _Budget:
+    def __init__(self, limits: ComputationLimits):
+        self.limits = limits
+        self.trial_divisions = 0
+        self.point_count_steps = 0
+
+    def trial(self):
+        self.trial_divisions += 1
+        if self.trial_divisions > self.limits.max_trial_divisions:
+            raise EllipticLocalError("RESOURCE_LIMIT", "Exact trial-division budget exhausted; factorization was not certified")
+
+    def count(self, amount: int = 1):
+        self.point_count_steps += amount
+        if self.point_count_steps > self.limits.max_point_count_steps:
+            raise EllipticLocalError("RESOURCE_LIMIT", "Finite-field point-count budget exhausted")
+
+    def receipt(self):
+        return {"trialDivisions": self.trial_divisions, "pointCountSteps": self.point_count_steps, "limits": vars(self.limits)}
+
+
+def _factor_positive(value: int, budget: _Budget) -> dict[int, int]:
+    if type(value) is not int or value < 1:
+        raise EllipticLocalError("INVALID_FACTOR_INPUT", "Factorization requires a positive integer")
+    remaining, divisor = value, 2
+    result = {}
+    while divisor*divisor <= remaining:
+        budget.trial()
+        exponent = 0
+        while remaining % divisor == 0:
+            exponent += 1
+            remaining //= divisor
+        if exponent:
+            result[divisor] = exponent
+        divisor = 3 if divisor == 2 else divisor + 2
+    if remaining > 1:
+        result[remaining] = result.get(remaining, 0) + 1
+    if prod(prime**exponent for prime, exponent in result.items()) != value:
+        raise ArithmeticError("Complete integer factorization identity failed")
+    return result
+
+
+def _validate_prime(prime, budget: _Budget) -> int:
+    if type(prime) is not int or prime < 2:
+        raise EllipticLocalError("INVALID_PRIME", "A prime must be an integer at least two")
+    if prime > budget.limits.max_prime:
+        raise EllipticLocalError("RESOURCE_LIMIT", "Prime exceeds the explicit point-count domain", prime=prime)
+    factors = _factor_positive(prime, budget)
+    if factors != {prime: 1}:
+        raise EllipticLocalError("COMPOSITE_PRIME_INPUT", "The requested prime is composite", prime=prime)
+    return prime
+
+
+def _mod(value: Fraction, prime: int) -> int:
+    if value.denominator % prime == 0:
+        raise EllipticLocalError("NONINTEGRAL_MODEL_AT_PRIME", "The displayed model is not p-integral", prime=prime)
+    return (value.numerator % prime) * pow(value.denominator % prime, -1, prime) % prime
+
+
+def _legendre(value: int, prime: int) -> int:
+    residue = value % prime
+    if residue == 0:
+        return 0
+    symbol = pow(residue, (prime - 1)//2, prime)
+    if symbol not in (1, prime - 1):
+        raise ArithmeticError("Euler's criterion failed at a certified odd prime")
+    return 1 if symbol == 1 else -1
+
+
+def _projective_count(a: tuple[int, ...], prime: int, budget: _Budget) -> tuple[int, dict]:
+    a1, a2, a3, a4, a6 = a
+    count, histogram = 1, {0: 0, 1: 0, 2: 0}
+    for x in range(prime):
+        budget.count()
+        linear = (a1*x + a3) % prime
+        cubic = (x**3 + a2*x*x + a4*x + a6) % prime
+        if prime == 2:
+            number = sum((y*y + linear*y - cubic) % prime == 0 for y in range(prime))
+        else:
+            number = 1 + _legendre(linear*linear + 4*cubic, prime)
+        count += number
+        histogram[number] += 1
+    if sum(histogram.values()) != prime or count != 1 + histogram[1] + 2*histogram[2]:
+        raise ArithmeticError("Finite point count bookkeeping failed")
+    return count, {
+        "method": "direct-character-count" if prime != 2 else "direct-general-Weierstrass-enumeration",
+        "xCoordinatesExhausted": prime,
+        "infinityCount": 1,
+        "numberOfXWithZeroOneTwoY": [histogram[0], histogram[1], histogram[2]],
+        "quadraticDiscriminant": "(a1*x+a3)^2+4*(x^3+a2*x^2+a4*x+a6)",
+    }
+
+
+def _multiplicative_node(a: tuple[int, ...], prime: int, c6_mod: int, budget: _Budget) -> dict:
+    a1, a2, a3, a4, a6 = a
+    singular = []
+    for x in range(prime):
+        budget.count()
+        ys = range(2) if prime == 2 else [(-(a1*x + a3)*pow(2, -1, prime)) % prime]
+        for y in ys:
+            f = y*y + a1*x*y + a3*y - x**3 - a2*x*x - a4*x - a6
+            fx = a1*y - 3*x*x - 2*a2*x - a4
+            fy = 2*y + a1*x + a3
+            if f % prime == fx % prime == fy % prime == 0:
+                singular.append((x, y))
+    if len(singular) != 1:
+        raise ArithmeticError("Unit-c4 multiplicative branch did not have exactly one rational node")
+    x0, y0 = singular[0]
+    directions = []
+    for slope in range(prime):
+        budget.count()
+        if (slope*slope + a1*slope - (3*x0 + a2)) % prime == 0:
+            directions.append([1, slope])
+    # Q(0,1)=1, so there is no omitted vertical projective tangent.
+    if len(directions) not in (0, 2):
+        raise ArithmeticError("The tangent cone must have zero or two distinct rational branches")
+    split = len(directions) == 2
+    legendre = None if prime < 5 else _legendre(-c6_mod, prime)
+    if legendre is not None and legendre != (1 if split else -1):
+        raise ArithmeticError("Nodal tangent splitting and Legendre(-c6,p) disagree")
+    return {
+        "singularPoint": [x0, y0],
+        "tangentConeCoefficients": {"X2": -(3*x0 + a2) % prime, "XY": a1, "Y2": 1},
+        "rationalProjectiveTangentDirections": directions,
+        "verticalDirectionValue": 1,
+        "split": split,
+        "minusC6Residue": -c6_mod % prime,
+        "legendreMinusC6": legendre,
+        "splittingMethod": "node-and-Legendre-minus-c6" if prime >= 5 else "explicit-node-tangent-cone-in-small-characteristic",
+    }
+
+
+class _Engine:
+    def __init__(self, model, limits: ComputationLimits = DEFAULT_LIMITS):
+        self.curve = _bounded_curve(model, limits)
+        self.invariants = weierstrass_invariants(self.curve)
+        self.budget = _Budget(limits)
+        self.local_rows: dict[int, dict] = {}
+        self._global = None
+        self._discriminant_factors = None
+
+    def discriminant_factors(self) -> dict[int, int]:
+        if not self.curve.integral:
+            raise EllipticLocalError("INTEGRAL_MODEL_REQUIRED", "This complete factorization/minimal-model branch requires an integral displayed model")
+        if self._discriminant_factors is None:
+            self._discriminant_factors = _factor_positive(abs(self.invariants["Delta"].numerator), self.budget)
+        return self._discriminant_factors
+
+    def local(self, prime: int) -> dict:
+        # Validate type before the cache: True and 1 must not alias integer keys.
+        if type(prime) is not int:
+            raise EllipticLocalError("INVALID_PRIME", "Prime inputs must be integers")
+        if prime in self.local_rows:
+            return self.local_rows[prime]
+        _validate_prime(prime, self.budget)
+        a = tuple(_mod(value, prime) for value in self.curve.ainvs)
+        delta_valuation = _valuation(self.invariants["Delta"], prime)
+        c4_valuation = _valuation(self.invariants["c4"], prime)
+        if delta_valuation is None or delta_valuation < 0:
+            raise ArithmeticError("A p-integral nonsingular model has nonnegative finite discriminant valuation")
+        row = {
+            "prime": prime,
+            "primeCertificate": {"method": "exact-trial-division", "through": isqrt(prime), "probablePrimeOnly": False},
+            "modelHash": self.curve.model_hash,
+            "reducedAinvs": a,
+            "valuationDelta": delta_valuation,
+            "valuationC4": "infinity" if c4_valuation is None else c4_valuation,
+        }
+        if delta_valuation == 0:
+            count, count_proof = _projective_count(a, prime, self.budget)
+            ap = prime + 1 - count
+            if ap*ap > 4*prime:
+                raise ArithmeticError("The exact good-prime count violates Hasse's bound")
+            row.update({
+                "status": "certified", "reduction": "good", "kodaira": "I0",
+                "minimality": {"certified": True, "reason": "unit-discriminant"},
+                "projectivePointCount": count, "pointCountProof": count_proof,
+                "a_p": ap, "eulerPolynomial": [1, -ap, prime], "eulerDegree": 2,
+                "conductorExponent": 0, "localRootNumber": 1, "tamagawaNumber": 1,
+                "hasseCheck": {"a_p_squared": ap*ap, "four_p": 4*prime, "holds": True},
+            })
+        elif c4_valuation == 0:
+            node = _multiplicative_node(a, prime, _mod(self.invariants["c6"], prime), self.budget)
+            ap = 1 if node["split"] else -1
+            count, count_proof = _projective_count(a, prime, self.budget)
+            if prime + 1 - count != ap:
+                raise ArithmeticError("Direct singular cubic count disagrees with the multiplicative factor")
+            tamagawa = delta_valuation if node["split"] else (1 if delta_valuation % 2 else 2)
+            row.update({
+                "status": "certified", "reduction": "multiplicative", "kodaira": f"I{delta_valuation}",
+                "minimality": {
+                    "certified": True, "reason": "unit-c4",
+                    "proof": "A lower integral discriminant would require v_p(u)>0 and c4_min=c4/u^4 of negative valuation.",
+                    "scalingWeights": {"c4": 4, "Delta": 12},
+                },
+                "node": node, "split": node["split"],
+                "singularProjectivePointCount": count, "pointCountProof": count_proof,
+                "a_p": ap, "eulerPolynomial": [1, -ap], "eulerDegree": 1,
+                "conductorExponent": 1, "localRootNumber": -ap, "tamagawaNumber": tamagawa,
+                "tamagawaRule": "n for split I_n; 1 for non-split odd n; 2 for non-split even n",
+                "theorem": "multiplicative-local-data",
+            })
+        else:
+            row.update({
+                "status": "unsupported", "reduction": "additive-or-nonminimal-not-resolved", "kodaira": None,
+                "minimality": {"certified": delta_valuation < 12, "reason": "valuation-Delta-below-12" if delta_valuation < 12 else "not-computed"},
+                "a_p": None, "eulerPolynomial": None, "eulerDegree": None,
+                "conductorExponent": None, "localRootNumber": None, "tamagawaNumber": None,
+                "unsupportedCode": "ADDITIVE_OR_NONMINIMAL_REQUIRES_TATE",
+                "scope": "No additive factor, conductor, root number, or Tamagawa value is supplied by an unimplemented Tate algorithm.",
+            })
+        self.local_rows[prime] = row
+        return row
+
+    def global_semistable(self) -> dict:
+        if self._global is not None:
+            return self._global
+        if not self.curve.integral:
+            self._global = {
+                "status": "unsupported", "integralDisplayedModel": False, "minimalAtEveryPrime": False,
+                "semistableAtEveryPrime": False, "allBadFactorsCertified": False,
+                "discriminantFactorization": None, "badPrimeRows": [], "conductor": None,
+                "globalRootNumber": None, "unsupportedCode": "INTEGRAL_MODEL_REQUIRED",
+            }
+            return self._global
+        factors = self.discriminant_factors()
+        bad_rows = [self.local(prime) for prime in factors]
+        supported = all(row["status"] == "certified" and row["reduction"] == "multiplicative" for row in bad_rows)
+        self._global = {
+            "status": "certified-semistable-minimal" if supported else "unsupported-local-branches",
+            "integralDisplayedModel": True,
+            "minimalAtEveryPrime": supported,
+            "semistableAtEveryPrime": supported,
+            "allBadFactorsCertified": supported,
+            "discriminantFactorization": {
+                "sign": 1 if self.invariants["Delta"] > 0 else -1,
+                "absoluteValue": abs(self.invariants["Delta"].numerator),
+                "factors": [{"prime": prime, "exponent": exponent} for prime, exponent in factors.items()],
+                "complete": True, "method": "bounded-exact-trial-division-and-product-identity",
+            },
+            "badPrimeRows": bad_rows,
+            "outsideDisplayedDiscriminantPrimes": "The displayed integral model has unit discriminant and good minimal reduction.",
+            "conductor": prod(factors) if supported else None,
+            "archimedeanRootNumber": -1,
+            "globalRootNumber": -prod(row["localRootNumber"] for row in bad_rows) if supported else None,
+            "rootNumberConvention": "Lambda(E,s)=w(E)*Lambda(E,2-s)",
+            "globalMinimalModelTransformation": "identity" if supported else None,
+            "generalTateAlgorithmImplemented": False,
+        }
+        return self._global
+
+    def coefficient_data(self, limit: int, good_only: bool) -> tuple[tuple[int, ...], dict]:
+        if type(limit) is not int or limit < 1:
+            raise EllipticLocalError("INVALID_COEFFICIENT_LIMIT", "Coefficient limit must be a positive integer")
+        if type(good_only) is not bool:
+            raise EllipticLocalError("INVALID_GOOD_ONLY_FLAG", "good_only must be a bool")
+        if limit > self.budget.limits.max_coefficient_limit:
+            raise EllipticLocalError("RESOURCE_LIMIT", "Coefficient limit exceeds the explicit finite budget")
+        factors = self.discriminant_factors()
+        if not good_only and not self.global_semistable()["allBadFactorsCertified"]:
+            raise EllipticLocalError("UNSUPPORTED_COMPLETE_L_FACTORS", "The complete L-series requires all bad local branches; use explicit good_only=True for L^S")
+        omitted = set(factors) if good_only else set()
+        smallest_prime = list(range(limit + 1))
+        for prime in range(2, isqrt(limit) + 1):
+            if smallest_prime[prime] == prime:
+                for multiple in range(prime*prime, limit + 1, prime):
+                    if smallest_prime[multiple] == multiple:
+                        smallest_prime[multiple] = prime
+        local_coefficients, prime_rows = {}, []
+        for prime in range(2, limit + 1):
+            if smallest_prime[prime] != prime:
+                continue
+            if prime in omitted:
+                local_coefficients[prime] = (0, 0)
+                prime_rows.append({"prime": prime, "factorStatus": "omitted-in-L^S", "eulerPolynomial": [1], "recurrence": "a_(p^r)=0 for every r>=1 because this Euler factor is omitted"})
+            else:
+                row = self.local(prime)
+                if row["status"] != "certified":
+                    raise EllipticLocalError("UNSUPPORTED_COMPLETE_L_FACTORS", "An unresolved local factor cannot be replaced by zero", prime=prime)
+                determinant = prime if row["reduction"] == "good" else 0
+                local_coefficients[prime] = (row["a_p"], determinant)
+                prime_rows.append({
+                    "prime": prime, "factorStatus": row["reduction"], "a_p": row["a_p"],
+                    "eulerPolynomial": row["eulerPolynomial"], "primeSquareTerm": determinant,
+                    "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1",
+                })
+        coefficients_ = [0] * (limit + 1)
+        coefficients_[1] = 1
+        for n in range(2, limit + 1):
+            prime = smallest_prime[n]
+            rest, exponent = n, 0
+            while rest % prime == 0:
+                rest //= prime
+                exponent += 1
+            ap, determinant = local_coefficients[prime]
+            previous, current = 1, ap
+            for _ in range(2, exponent + 1):
+                previous, current = current, ap*current - determinant*previous
+            coefficients_[n] = current*coefficients_[rest]
+        result = tuple(coefficients_[1:])
+        metadata = {
+            "schema": "mathscope.p7.dirichlet-coefficients.v1", "modelHash": self.curve.model_hash,
+            "firstIndex": 1, "limit": limit, "coefficients": [str(value) for value in result],
+            "function": "L^S(E,s)" if good_only else "L(E,s)",
+            "omittedPrimes": sorted(omitted),
+            "omittedPrimeDefinition": "All primes dividing the displayed integral discriminant; for an unminimized input these can include extra good primes." if good_only else None,
+            "completeBadFactorsIncluded": not good_only,
+            "localPrimeRecurrences": prime_rows,
+            "coprimeMultiplicativity": "a_(mn)=a_m*a_n when gcd(m,n)=1",
+            "normalization": "Arithmetic a_n; L(E,s)=sum_(n>=1) a_n*n^(-s), center s=1; no n^(-1/2) renormalization.",
+            "scope": {
+                "exactFiniteCoefficients": True, "infiniteTailComputed": False,
+                "analyticContinuationComputed": False, "schemeZetaFunction": False,
+                "eulerAbsoluteConvergenceHalfPlane": "Re(s)>3/2, with an independent infinite-tail bound required for numerical certification",
+            },
+        }
+        return result, metadata
+
+
+def local_reduction(model, prime: int, *, limits: ComputationLimits = DEFAULT_LIMITS) -> dict:
+    return _json_safe(_Engine(model, limits).local(prime))
+
+
+def count_good_prime(model, prime: int, *, limits: ComputationLimits = DEFAULT_LIMITS) -> dict:
+    row = _Engine(model, limits).local(prime)
+    if row["reduction"] != "good":
+        raise EllipticLocalError("NOT_GOOD_REDUCTION", "A good-prime count was requested at a displayed bad prime", prime=prime)
+    return _json_safe(row)
+
+
+def semistable_minimal_certificate(model, *, limits: ComputationLimits = DEFAULT_LIMITS) -> dict:
+    engine = _Engine(model, limits)
+    return _json_safe({"modelHash": engine.curve.model_hash, **engine.global_semistable(), "arithmetic": engine.budget.receipt()})
+
+
+def _torsion_bound(engine: _Engine, primes: Iterable[int]) -> dict:
+    try:
+        primes = tuple(islice(iter(primes), engine.budget.limits.max_requested_primes + 1))
+    except TypeError as exc:
+        raise EllipticLocalError("INVALID_TORSION_PRIMES", "Torsion reduction primes must be a bounded iterable") from exc
+    if len(primes) < 2 or len(primes) > engine.budget.limits.max_requested_primes:
+        raise EllipticLocalError("INVALID_TORSION_PRIMES", "Use at least two distinct good primes within the finite budget")
+    if any(type(prime) is not int for prime in primes) or len(set(primes)) != len(primes):
+        raise EllipticLocalError("INVALID_TORSION_PRIMES", "Torsion reduction primes must be distinct integers")
+    reductions = []
+    for prime in primes:
+        row = engine.local(prime)
+        if row["reduction"] != "good":
+            raise EllipticLocalError("NOT_GOOD_REDUCTION", "Torsion injection requires good reduction", prime=prime)
+        reductions.append({"prime": prime, "cardinality": row["projectivePointCount"], "modelHash": row["modelHash"]})
+    candidates = set(primes)
+    for row in reductions:
+        candidates.update(_factor_positive(row["cardinality"], engine.budget))
+    valuations, bound = [], 1
+    for torsion_prime in sorted(candidates):
+        applicable = [
+            {"reductionPrime": row["prime"], "cardinality": row["cardinality"], "valuation": _valuation(row["cardinality"], torsion_prime)}
+            for row in reductions if row["prime"] != torsion_prime
+        ]
+        exponent = min(row["valuation"] for row in applicable)
+        bound *= torsion_prime**exponent
+        valuations.append({"torsionPrime": torsion_prime, "applicablePrimeToPReductions": applicable, "upperExponent": exponent})
+    return {
+        "status": "proved-finite-divisibility-bound", "orderDivides": bound, "reductions": reductions,
+        "primePowerConstraints": valuations,
+        "theorem": "good-reduction-prime-to-p-torsion",
+        "proofRule": "For each torsion prime ell use only reductions at p!=ell, so the ell-primary subgroup injects; take the minimum ell-valuation of those cardinalities.",
+        "otherTorsionPrimesExcluded": "Any prime outside the displayed union divides none of the reduction cardinalities; at least one reduction is away from it.",
+        "allTorsionInjectiveAtP2Assumed": False,
+    }
+
+
+def torsion_reduction_bound(model, primes: Iterable[int] = (2, 3), *, limits: ComputationLimits = DEFAULT_LIMITS) -> dict:
+    return _json_safe(_torsion_bound(_Engine(model, limits), primes))
+
+
+def point_order_certificate(model, point, claimed_order: int, *, limits: ComputationLimits = DEFAULT_LIMITS) -> dict:
+    curve = _bounded_curve(model, limits)
+    point = _point(curve, point, limits)
+    if type(claimed_order) is not int or claimed_order < 1:
+        raise EllipticLocalError("INVALID_POINT_ORDER", "Claimed order must be a positive integer")
+    budget = _Budget(limits)
+    factors = _factor_positive(claimed_order, budget)
+    annihilated = point_multiply(curve, claimed_order, point, limits=limits)
+    proper = [{"primeDivisor": prime, "scalar": claimed_order//prime, "point": point_multiply(curve, claimed_order//prime, point, limits=limits)} for prime in factors]
+    if annihilated is not None or any(row["point"] is None for row in proper):
+        raise EllipticLocalError("POINT_ORDER_MISMATCH", "Exact group arithmetic does not establish the claimed order")
+    return _json_safe({
+        "modelHash": curve.model_hash, "point": point, "exactOrder": claimed_order,
+        "orderMultiple": annihilated, "properPrimeDivisorMultiples": proper,
+        "proof": "n*P=O and (n/ell)*P!=O for every prime divisor ell of n.",
+    })
+
+
+def point_nontorsion_certificate(model, point, primes: Iterable[int] = (2, 3), *, limits: ComputationLimits = DEFAULT_LIMITS) -> dict:
+    engine = _Engine(model, limits)
+    point = _point(engine.curve, point, limits)
+    bound = _torsion_bound(engine, primes)
+    multiple = point_multiply(engine.curve, bound["orderDivides"], point, limits=limits)
+    proved = multiple is not None
+    return _json_safe({
+        "modelHash": engine.curve.model_hash, "point": point, "torsionBound": bound,
+        "boundMultiple": multiple, "nonTorsionProved": proved,
+        "status": "proved-non-torsion" if proved else "not-decided-by-this-bound",
+        "arithmeticRankLowerBound": 1 if proved else 0,
+        "proof": "If P were torsion then its order would divide the proved bound, so bound*P would equal O.",
+        "arithmeticRankUpperBound": None, "descentPerformed": False, "saturationProved": False,
+    })
+
+
+def coefficients(model, limit: int, *, good_only: bool = False, limits: ComputationLimits = DEFAULT_LIMITS) -> tuple[int, ...]:
+    """Compute a_1,...,a_limit.  Unsupported complete bad factors cause failure."""
+    return _Engine(model, limits).coefficient_data(limit, good_only)[0]
+
+
+def dirichlet_coefficients(model, limit: int, *, good_only: bool = False, limits: ComputationLimits = DEFAULT_LIMITS) -> dict:
+    engine = _Engine(model, limits)
+    _, metadata = engine.coefficient_data(limit, good_only)
+    return _json_safe({**metadata, "arithmetic": engine.budget.receipt()})
+
+
+def curve_certificate(
+    model, primes: Sequence[int] = (2, 3, 5, 7, 11, 13), *,
+    coefficient_limit: int | None = None, limits: ComputationLimits = DEFAULT_LIMITS,
+) -> dict:
+    """Deterministic JSON certificate for the finite arithmetic actually computed.
+
+    No timestamp, database result, floating-point input, or unimplemented rank
+    upper bound is introduced.  The caller can hash this exact JSON for replay.
+    """
+    if not isinstance(primes, (list, tuple)) or len(primes) > limits.max_requested_primes:
+        raise EllipticLocalError("INVALID_PRIME_LIST", "primes must be a bounded list or tuple")
+    if any(type(prime) is not int for prime in primes) or len(set(primes)) != len(primes):
+        raise EllipticLocalError("INVALID_PRIME_LIST", "Requested primes must be distinct integers")
+    engine = _Engine(model, limits)
+    curve = engine.curve
+    global_data = engine.global_semistable()
+    rows = [engine.local(prime) for prime in primes]
+    coefficient_data = None
+    if coefficient_limit is not None:
+        _, coefficient_data = engine.coefficient_data(coefficient_limit, False)
+    arithmetic_rank = {
+        "lowerBound": 0, "upperBound": None, "exactRank": None,
+        "descentPerformed": False, "selmerBoundComputed": False,
+        "saturation": "open", "canonicalHeight": "not-computed", "regulator": "not-computed",
+        "realPeriod": "not-computed", "sha": "open", "bsdEquality": "open",
+    }
+    point_data = None
+    torsion = {"status": "not-computed", "order": None, "structure": None}
+    if curve.label in _EXAMPLE_POINTS:
+        point = _point(curve, _EXAMPLE_POINTS[curve.label], limits)
+        torsion_bound = _torsion_bound(engine, (2, 3))
+        bound = torsion_bound["orderDivides"]
+        bound_multiple = point_multiply(curve, bound, point, limits=limits)
+        point_data = {
+            "point": point, "onCurve": True, "torsionBoundMultiple": bound_multiple,
+            "firstFiveMultiples": [{"scalar": n, "point": point_multiply(curve, n, point, limits=limits)} for n in range(1, 6)],
+        }
+        torsion = {"status": "proved-order-divides", "order": None, "structure": None, "reductionBound": torsion_bound}
+        if bound_multiple is not None:
+            point_data.update({"nonTorsionProved": True, "exactOrder": "infinite", "proof": "A torsion point is killed by the independently proved torsion bound; this multiple is nonzero."})
+            arithmetic_rank["lowerBound"] = 1
+        else:
+            order = bound
+            for prime in _factor_positive(bound, engine.budget):
+                while order % prime == 0 and point_multiply(curve, order//prime, point, limits=limits) is None:
+                    order //= prime
+            order_proof = point_order_certificate(curve, point, order, limits=limits)
+            point_data.update({"nonTorsionProved": False, "exactOrder": order, "orderCertificate": order_proof})
+            if order == bound:
+                torsion.update({"status": "proved-entire-cyclic-torsion", "order": order, "structure": f"Z/{order}Z"})
+        if bound == 1:
+            torsion.update({"status": "proved-trivial-torsion", "order": 1, "structure": "0"})
+    result = {
+        "schema": SCHEMA,
+        "model": {"label": curve.label, "ainvs": curve.ainvs, "equation": _EQUATION, "integral": curve.integral, "hash": curve.model_hash},
+        "invariants": engine.invariants,
+        "invariantChecks": {"c4^3-c6^2=1728*Delta": True, "b2*b6-b4^2=4*b8": True, "DeltaNonzero": True},
+        "requestedPrimes": list(primes), "localRows": rows, "global": global_data,
+        "dirichletCoefficients": coefficient_data,
+        "pointEvidence": point_data, "rationalTorsion": torsion, "arithmeticRank": arithmetic_rank,
+        "completedFunctionConvention": {
+            "formula": "Lambda(E,s)=N_E^(s/2)*(2*pi)^(-s)*Gamma(s)*L(E,s)",
+            "center": 1, "functionalEquation": "Lambda(E,s)=w(E)*Lambda(E,2-s)",
+            "normalizationAvailable": global_data["allBadFactorsCertified"],
+            "analyticFunctionEvaluated": False, "analyticRank": None,
+            "modularityProofExecuted": False,
+        },
+        "theoremDependencies": THEOREM_REFERENCES,
+        "arithmetic": engine.budget.receipt(),
+        "scope": {
+            "generalFiveCoefficientExactArithmetic": True,
+            "finiteGoodPrimePointCounts": True,
+            "allLocalDataSupportedForThisModel": global_data["allBadFactorsCertified"],
+            "generalTateAlgorithm": False, "generalMinimalModelAlgorithm": False,
+            "p7CriteriaTouched": ["P7-01", "P7-07"], "allP7CriteriaComplete": False,
+            "analyticContinuationComputed": False, "infiniteTailComputed": False,
+            "arithmeticRankUpperBoundComputed": False, "shaComputed": False, "saturationProved": False,
+            "universalRHProved": False, "universalBSDProved": False, "leanProofExecuted": False,
+            "evidenceKind": "exact-finite-arithmetic-with-explicit-standard-theorem-dependencies",
+        },
+    }
+    return _json_safe(result)
