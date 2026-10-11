@@ -4,7 +4,7 @@
 
 **M2의 이번 추가 구현과 검증은 진행됐지만, 사용자가 요청한 모든 수학 범위는 아직 완료되지 않았다. M3는 시작하지 않았다.** 연결이 끊기기 전의 최신 저장점 `8a0046c5`에서 이어서 작업했으며, 현재 source·생성된 Worker·공개 v77 브라우저에서 확인한 실행 코드의 버전은 `0.3.10`이다. 공개 페이지 v75/v76의 기존 검증은 runtime `0.3.9`에 해당한다. 새 runtime의 실제 공개 검증은 [heat runtime 기록](evidence/heat-runtime-20261011/HEAT_RUNTIME_RELEASE_KO.md)에 구분했다.
 
-이번에 원래 cutoff 적분의 엄밀한 수치 구간, 실제 고정 label의 물리 curl, 배경 1·2차 계수의 물리 미분 상수와 강화 cutoff 선택식을 추가했다. 또한 표시용 `ell=1` 확장의 지정된 점에서는 **비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명**을 얻었다. 따라서 이 표시 확장을 그대로 전체 양성 구성으로 승격할 수 없다. 이후 별도로 선택한 작은 q의 실제 pulse에서는 공통 보정 지지집합 바깥 열린 영역의 양의 가중치를 구성했다. 원래 heat의 수치 도함수 구간과 n=1 응력의 말단 경계 추정도 추가했으며, 상세한 새 실행 범위는 9절에 기록한다. 내부 활성 보정·모든 label·전역 잔차는 여전히 남는다.
+원래 cutoff 적분의 엄밀한 수치 구간, 실제 고정 label의 물리 curl, 배경 1·2차 계수의 물리 미분 상수와 강화 cutoff 선택식에서 이어서 작업했다. 표시용 `ell=1` 확장의 지정점에는 비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명이 있으므로, 별도의 실제 작은 q 영역에서 양성을 구성한다. 최신 source 결과는 **전체 terminal F의 지정점 수치 도함수, 실제 potential·harmonic 3차 미분, 외측 sqrt의 flat 연장, 원래 전역 M0 적분 항등식 및 양의 order 속도 tail**까지 확장되었다. 10–11절에 정확한 실행·독립 검토 범위를 기록한다. 내부 양성·전체 pressure 및 모든 label의 물리 잔차 연결은 아직 진행 중이다. 새 source 결과를 공개 v77에서 이미 실행했다고 기록하지 않는다.
 
 기계 판독 판단은 [M2_COMPLETION_GATE.json](M2_COMPLETION_GATE.json), 이번 실행·배포 기록은 [continuation evidence](evidence/m2-continuation-20261011/)에 있다. 이 문서와 JSON은 **범위가 명시된 감사 판단**이다. 상태값·파일명·테스트 개수·hash만으로 모든 해석학적 명제가 자동 증명되는 것은 아니다.
 
@@ -145,12 +145,12 @@ source 실행은 별도 process에서 수행하고 실제 코드 SHA, 원본 gra
 
 | 관문 | 현재 확보한 부분 | 남아 있는 의무 |
 |---|---|---|
-| G-POS | 표시 영역의 비멤버십·ell=1 장애와 새 작은 q 외측 영역의 실제 양성 weight·비영 determinant | 내부 활성 보정, 모든 box와 label, 최종 Γ 선택과 필요한 sqrt 경계 연장 |
-| G-NUM | 원래 cutoff 질량·Ls, 지정점의 heat와 아홉 slow jet의 엄밀 구간 | 전체 leading F·pulse·도함수·공분산 H·weight·curl의 합산 truncation/heat/quadrature/rounding 오차 |
+| G-POS | 표시 영역의 비멤버십·ell=1 장애, 새 작은 q 외측 양성 weight·flat sqrt 연장, 실제 n1이 남는 한 band 전체 annulus 배경 | 새 전체 annulus H, 안쪽 경계, 모든 box와 label, 최종 Γ 선택 |
+| G-NUM | 원래 cutoff 질량·Ls, 지정점 heat 및 전체 terminal F와 아홉 slow jet의 엄밀 구간 | 전체 영역 F·pulse·도함수·공분산 H·weight·curl의 합산 truncation/heat/quadrature/rounding 오차 |
 | G-CURL | 원래 cutoff·physical map을 포함한 실제 fixed label의 조건부 curl | 원래 허용 bands의 모든 label, support·경계 연장·전역 divergence |
-| G-N4 | 실제 1·2차 물리 미분 상수, n=2 weighted stress, n=1 말단 경계의 차수 2 이하 상수, 강화 selector 후보 | selector 실제 적용, 모든 차수의 실제 배경·압력·응력 항등식과 잔차·점근·flat tail 연결 |
-| G-N5 | 기존 2차 변분계와 실제 fixed-label 물리 curl | 공간 2차 velocity에 필요한 potential 3차 또는 동등한 정리, 공통 Gaussian·모든 label의 summable tail, 직접 PDE 잔차와 N6 interface |
-| 실제 해석학 Lean | 이전 조건부 대수 kernel 보조정리 | 실제 함수 공간·적분·극한·양성·smoothness 가정을 해소한 source 인스턴스 |
+| G-N4 | 실제 유한 physical·weighted 상수, 강화 selector 실제 유한 적용, 전역 M0/M1/M2 primitive, 모든 유한 차수의 양의 order 속도 tail 구성법 | 전체 pressure convolution·응력 취소, 모든 조건을 합친 selector와 전역 물리 잔차·flat tail |
+| G-N5 | 실제 fixed-label 물리 curl, 원래 potential 계수와 전체 harmonic의 3차 slow 미분 | 공간 2차 velocity의 전체 물리 연쇄법칙, 공통 Gaussian·모든 label의 summable tail, 직접 PDE 잔차와 N6 interface |
+| 실제 해석학 Lean | 이전에 실행한 조건부 대수 kernel 보조정리 14개 및 보조 선언 2개 | 실제 함수 공간·적분·극한·양성·smoothness의 전체 Lean 인스턴스. 이 추가 전체 형식화는 사용자가 요청한 M2 진입 gate와 별도이며 전체 해석학 Lean 증명 완료 주장을 막는다. |
 
 N5의 `div(δu tensor δu)`, 교차 mode, `(1-ψ)f + ψ' t`, nonzero eikonal remainder를 생략하지 않는다. 불완전한 양성 정의역에서 sqrt나 inverse를 계산한 뒤 전체 결과라고 표시하지 않는다.
 
@@ -192,3 +192,34 @@ n=1 응력에서는 δ=log(Xb/X)에 대해 원래 flat factor E=exp(−4/δ²)�
 새 공분산은 **ell*=ellMinimum+8**의 실제 band다. 원래 작은 q 조건을 만족하는 새 carrier·길이·moving-frame pressure·두 Volterra 계를 다시 만들었다. 모든 양의 차수 보정이 공통 Xplus 뒤에서 정확히 사라지는 원래 support 귀납을 사용한다. 그 외측 열린 영역에서만 completed source와 leading source를 동일시한다. 실제 정규화 행렬의 determinant는 양수이고, 원래 좌표로 되돌린 **det H는 음수**다. 두 inverse weight는 실제 양의 target scale과 mass로 양쪽에서 감싼다. [작은 q 실제 구성과 남은 영역](ACTUAL_ADMISSIBLE_TERMINAL_COVARIANCE_KO.md)을 참고한다.
 
 [독립 종합 검토](evidence/m2-math-progress-20261011/INDEPENDENT_COMPONENT_REVIEW_KO.md)와 [원본·실행 SHA 대조](evidence/m2-math-progress-20261011/review-validation.json)는 이 세 결과의 구체적인 근거와 경계를 기록한다. generic kernel, source 내부 항등 검사와 원문 64개 기준의 개수는 합산하지 않는다. 전체 M2와 M3 gate는 false를 유지한다.
+
+## 10. 저장 커밋 92a5cdd5의 다섯 source 확장
+
+[구현과 검증 저장점](https://github.com/leegahuyn/MathScopeCompute/commit/92a5cdd54d892df7ef0830e463de2e0f5722d038)에 다음 다섯 작업의 원본, 테스트, 실패 기록, 서면 증명과 독립 검토를 저장했다. 공개 runtime은 여전히 0.3.10/v77이다.
+
+| 결과 | 실제 source 실행 | 정확한 완료 범위 |
+|---|---:|---|
+| [terminal potential 계수의 3차 jet](evidence/terminal-third-jets-20261011/terminal-third-jets-packet.json) | 11/11, exit 0 | 같은 원래 작은 q terminal source의 20개 R/Z/T multi-index, 실제 inverse·sqrt·cutoff와 변분 적분; 이 단계의 계수만으로 물리 velocity 2차를 주장하지 않음 |
+| [외측 covariance flat 연장](evidence/outer-covariance-flat-20261011/actual-outer-covariance-flat-extension-validation.json) | 14/14, exit 0 | 원래 외측 target의 flat factor, inverse 양성, 모든 고정 유한 미분의 sqrt zero extension; 안쪽 경계는 별도 |
+| [강화 배경과 잔차 조립](evidence/strengthened-background-20261011/validation.json) | 7/7, exit 0 | 실제 강화 selector의 유한 적용과 모든 ordered-pair 잔차 항; 낮은 차수의 pressure·stress 취소를 아직 0으로 두지 않음 |
+| [양의 order 전역 primitive](evidence/global-positive-primitives-20261011/validation.json) | 5/5, exit 0 | 실제 M1/M2의 전체 prefix·mass join, n2 pressure derivative prefix; M0 및 전체 pressure convolution은 다음 작업 |
+| [전체 terminal F의 엄밀 구간](evidence/terminal-field-20261011/validation.json) | 8/8, exit 0 | 원래 slow 정규화까지 유지한 지정점 F 및 아홉 1차·2차 도함수. 192-bit 정규화 계수 폭은 요청한 10^-40 이내 |
+
+마지막 F 계산의 첫 시도는 소프트웨어 검사 8/8을 통과했지만 독립 검토에서 미분 전 원래 $s^{-A-1/2}$ 인자 누락이 발견되었다. 첫 시도는 **수학적 완료 증거로 거절**하고 원본 byte와 기록을 보존했다. 수정한 두 번째 source 실행 및 최종 독립 검토만 현재 결과에 사용한다. 특히 T, RT, TT, ZZ의 정규화 계수·부호는 원래 전체 slow F로부터 다시 유도했다. 원래 양수 h를 0으로 바꾸지 않았다.
+
+## 11. 이어서 확정한 harmonic·annulus·속도 tail·M0
+
+아래 네 결과는 독립 검토까지 완료한 별도 source packet이다. 단일 point나 유한 test count를 전체 band·무한 차수 실행으로 확대하지 않는다.
+
+| 결과 | 실제 source 실행 | 얻은 연결과 남은 범위 |
+|---|---:|---|
+| [전체 harmonic 3차 미분](evidence/terminal-harmonic-third-jets-20261011/terminal-harmonic-third-jets-packet.json) | 11/11, exit 0 | 원래 $iC e^{ik\Phi}$의 실제 sine/cosine 본문을 직접 AD하여 phase와 coefficient의 모든 3차 slow 항을 결속. 물리 fast-chain 적용은 후속 |
+| [한 band 전체 annulus 배경](evidence/admissible-annulus-background-20261011/actual-admissible-annulus-background-validation.json) | 12/12, exit 0 | distinct $b_1,b_2$와 16배 간격으로 원래 n1 보정을 유지하고 n≥2는 cutoff support로 정확히 소멸. 원래 C2 상수를 이전하고 R/Z/T 2차까지 구성. 새 H는 별도 |
+| [모든 유한 차수의 양의 order 속도 tail](evidence/velocity-all-order-tail-20261011/validation.json) | 7/7, exit 0 | 원래 Cartesian potential·velocity·extra stream cutoff를 포함하는 미분/대각 선택/기하급수 tail 구성법. 실제 실행은 n1/m1과 n2/m2이며 17차 generic 검사와 구분 |
+| [원래 전역 M0 primitive](evidence/leading-stream-primitive-20261011/validation.json) | 6/6, exit 0 | 자연 평균 급수부터 B26·B8·decay·outer의 두 실제 모멘트·C12 전체 위상·I1 보정을 거쳐 $M_{0,X}=U_0$, 원래 v 및 continuity를 결속. 전체 pressure·Ω prefix는 후속 |
+
+M0 검증은 기존 원문 smoothness·contraction·support 계약을 사용한 source-bound 서면 증명이다. 각 접합의 원래 accumulated mass와 root 방정식을 남기며, compact integrand라는 이유만으로 primitive 상수를 지우지 않는다. 앞선 두 실제 실패는 본문/atom 비교와 strict JSON metadata 문제였고, 원래 계수·적분식을 변경하지 않은 수정 및 최종 source 6/6과 함께 보존한다.
+
+새 cutoff 조건을 합칠 때는 단순한 pointwise max로 끝내지 않는다. 새로운 $b_1$을 먼저 선택하고 $b_2\ge16b_1$, 이후 $b_n\ge2b_{n-1}$를 각 단계의 max에 포함한다. 원래 normalized 조건과 새 physical·velocity·weighted 조건을 모두 한 수열에 결속해야 한다.
+
+현재 다음 작업은 전체 pressure convolution과 stress 취소, 실제 전체 물리 velocity jet, 안쪽 양성·flat 경계, 모든 label의 Gaussian tail/물리 residual 연결이다. **M2 전체 완료와 M3 시작은 아직 false**이다. 새 source packet은 v77 Worker·브라우저의 실행 기록을 대체하지 않는다.
