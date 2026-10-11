@@ -4,7 +4,7 @@
 
 **M2의 추가 구현과 검증을 계속 진행 중이며, 사용자가 요청한 모든 수학 범위의 완료 판정과 M3 시작은 아직 하지 않았다.** 최초 복구점 `8a0046c5` 이후의 저장 기록을 이어가고 있다. 현재 실제 source·생성된 Worker·공개 v79 브라우저에서 확인한 실행 코드의 버전은 **`0.3.11`**이다. 원래 terminal F와 아홉 도함수의 새 실행을 [terminal F runtime 기록](ACTUAL_TERMINAL_FIELD_RUNTIME_KO.md)에, 이전 `0.3.10/v77` 실행은 [heat runtime 기록](evidence/heat-runtime-20261011/HEAT_RUNTIME_RELEASE_KO.md)에 각각 보존한다. 아래 각 절의 이전 공개 버전은 해당 저장 시점의 기록이다.
 
-표시용 `ell=1` 확장의 지정점에는 비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명이 있으므로, 원래 양의 h를 유지한 실제 작은 q 영역에서 양성을 구성한다. 공통 family·모든 유한 차수 구성과 실제 유한 물리 잔차에 더해, 두 부호의 가중 radial pulse의 **R/Z/T 1차·2차·혼합 미분 18개**를 원래 중심에서 수치 구간으로 감쌌다. 전체 물리 curl·전역 잔차 통합 및 fast·물리 수치 구간은 계속 검증한다. 원래 terminal F의 공개 실행과 다른 pulse·공분산 source 결과의 공개 실행을 혼동하지 않는다.
+표시용 `ell=1` 확장의 지정점에는 비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명이 있으므로, 원래 양의 h를 유지한 실제 작은 q 영역에서 양성을 구성한다. 공통 family의 전체 물리 curl·전역 공분산·같은 배경장의 잔차 및 실제 E_B까지 한 source에서 **8/8, 관측 exit 0**으로 검증했다. 원본 수학 논증과 별도 교차 검토에 따라 **G-POS·G-CURL·G-N4·G-N5를 완료**로 판정했다. 원래 보조 중심의 fast·slow·혼합 및 가중치 도함수 138개도 실제 source 검사를 마쳤다. 새 물리점의 정밀 수치 도함수와 남은 양의 배율은 **G-NUM**에서 계속 검증한다. 원래 terminal F의 공개 실행과 다른 pulse·공분산 source 결과의 공개 실행을 혼동하지 않는다.
 
 기계 판독 판단은 [M2_COMPLETION_GATE.json](M2_COMPLETION_GATE.json), 이번 실행·배포 기록은 [continuation evidence](evidence/m2-continuation-20261011/)에 있다. 이 문서와 JSON은 **범위가 명시된 감사 판단**이다. 상태값·파일명·테스트 개수·hash만으로 모든 해석학적 명제가 자동 증명되는 것은 아니다.
 
@@ -143,16 +143,20 @@ source 실행은 별도 process에서 수행하고 실제 코드 SHA, 원본 gra
 
 ## 7. M2 전체 완료에 남은 관문
 
-| 관문 | 현재 확보한 부분 | 남아 있는 의무 |
-|---|---|---|
-| G-POS | 표시 영역의 비멤버십·ell=1 장애, 새 작은 q 외측 양성 weight·flat sqrt 연장, 실제 n1이 남는 한 band 전체 annulus 배경 | 새 전체 annulus H, 안쪽 경계, 모든 box와 label, 최종 Γ 선택 |
-| G-NUM | 원래 cutoff 질량·Ls, 지정점 heat 및 전체 terminal F와 아홉 slow jet의 엄밀 구간 | 전체 영역 F·pulse·도함수·공분산 H·weight·curl의 합산 truncation/heat/quadrature/rounding 오차 |
-| G-CURL | 원래 cutoff·physical map을 포함한 실제 fixed label의 조건부 curl | 원래 허용 bands의 모든 label, support·경계 연장·전역 divergence |
-| G-N4 | 실제 유한 physical·weighted 상수, 강화 selector 실제 유한 적용, 전역 M0/M1/M2 primitive, 모든 유한 차수의 양의 order 속도 tail 구성법 | 전체 pressure convolution·응력 취소, 모든 조건을 합친 selector와 전역 물리 잔차·flat tail |
-| G-N5 | 실제 fixed-label 물리 curl, 원래 potential 계수와 전체 harmonic의 3차 slow 미분 | 공간 2차 velocity의 전체 물리 연쇄법칙, 공통 Gaussian·모든 label의 summable tail, 직접 PDE 잔차와 N6 interface |
-| 실제 해석학 Lean | 이전에 실행한 조건부 대수 kernel 보조정리 14개 및 보조 선언 2개 | 실제 함수 공간·적분·극한·양성·smoothness의 전체 Lean 인스턴스. 이 추가 전체 형식화는 사용자가 요청한 M2 진입 gate와 별도이며 전체 해석학 Lean 증명 완료 주장을 막는다. |
+다음은 제18절의 최신 통합 결과와 수학 검토를 반영한 판정이다. 뒤의 제9–17절은 각 저장 시점의 기록을 그대로 남긴다.
 
-N5의 `div(δu tensor δu)`, 교차 mode, `(1-ψ)f + ψ' t`, nonzero eikonal remainder를 생략하지 않는다. 불완전한 양성 정의역에서 sqrt나 inverse를 계산한 뒤 전체 결과라고 표시하지 않는다.
+| 관문 | 현재 판정 | 완료 범위 또는 남은 의무 |
+|---|---|---|
+| G-POS | 완료 | 같은 원래 family의 허용 band와 모든 label, 열린 shell의 양의 H 역가중치, 안쪽·바깥쪽 smooth weighted zero 연장. η 끝점은 원래 한쪽 미분 의미 |
+| G-CURL | 완료 | 원래 potential의 실제 전체 curl, 모든 label의 전역 조립, 원래 Haar·cosine 공분산과 support·divergence 연결 |
+| G-N4 | 완료 | 동일한 재귀 cutoff 수열의 전체 pressure·stress·비선형 배경 잔차, 실제 E_B와 모든 고정 유한 차수의 flat 경계 |
+| G-N5 | 완료 | 원래 물리 velocity의 2차 공간 미분, 전역 Gaussian 합과 전체 temporal-cutoff force의 flat 경계. 전체 미보정 NS 잔차는 N6 입력으로 보존 |
+| G-NUM | 진행 중 | 보조 중심의 138개 도함수와 새 물리점의 값은 검증. 새 물리점의 전체 도함수 및 원래 양의 geometry·target·선택 인자의 닫힌 수치 경계 연결은 남아 있음 |
+| 실제 해석학 Lean | 별도 확장 | 이전 공식 Lean 실행의 대수 보조정리 14개 및 보조 선언 2개를 보존. 전체 함수 공간·적분·극한·양성·smoothness에 대한 새 Lean kernel 증명이 완료됐다는 주장은 하지 않음 |
+
+네 관문의 완료는 원래 source 식, 정량적 상계, 같은 수열의 모든 고정 유한 차수 논증 및 교차 검토를 근거로 한다. 검사 개수나 hash만으로 해석학적 명제를 증명했다고 해석하지 않는다. 모든 무한 graph를 문자 그대로 실행했다는 뜻도 아니다.
+
+N5의 `div(δu tensor δu)`, 교차 mode, `(1-ψ)f + ψ′ t`, nonzero eikonal remainder와 전체 미보정 NS 잔차를 그대로 N6에 넘긴다. 전체 미보정 잔차를 flat이라고 선언하지 않는다.
 
 ## 8. M3 진행 순서와 실행 화면
 
@@ -309,3 +313,15 @@ Gaussian 꼬리에서는 stable matrix의 음의 대각 성분을 유지하여 e
 terminal F의 runtime `0.3.11`은 실제 source와 Worker를 각각 실행해 같은 원본 certificate와 수학 결과 해시를 얻었다. 두 프로세스의 관측 exit은 **0/0**이었다. 공개 **v79 / `596b9751`**에서도 새 실행이 `COMPLETED`와 **10/10**을 반환했다. 네 표의 값 셀 **129개**, 10·10·17·12행은 원본과 일치했고, 긴 유리수의 줄바꿈 및 가로 폭을 실제 화면에서 확인했다. 29개 항목명은 표시용이다. [공개 검증](evidence/terminal-field-runtime-20261011/browser-v79-verification.json)과 [실행·범위 설명](ACTUAL_TERMINAL_FIELD_RUNTIME_KO.md)을 함께 보관한다.
 
 중심 slow 결과의 나머지 fast·절대 a/H/y 미분, 실제 물리 curl의 수치 구간과 원래 양의 geometry/target 인자는 별도 후속 검증이다. G-POS·G-NUM·G-CURL·G-N4·G-N5 전체 관문은 최종 통합 결과를 확인하기 전까지 false이며, 원문 64개 PASS와 이 추가 완료 판정을 합치지 않는다.
+
+## 18. 공통 전역 물리 패키지 완료와 새 중심 수치 패킷
+
+[6a3e71a8 저장점](https://github.com/leegahuyn/MathScopeCompute/commit/6a3e71a884e6faebe808fd67fd0274304a7f45e4) 뒤의 실제 다섯 번째 통합 시도는 **8/8, 관측 exit 0**, **1,344.409초**로 완료됐다. family, 자체 band, 전체 물리 curl, 전체 target, 전역 wave, 공분산, 같은 배경의 flat 경계, 실제 E_B를 각각 한 번 구성했다. 앞선 1–4번째 실패·시간 제한·중단 기록과 당시 바이트는 그대로 보존한다.
+
+[완료 패킷](evidence/common-physical-package-20261011/common-physical-package-completed-packet.json)에는 실행 시점의 120개 import, 실제 원본·프로세스·로그, 네 관문의 정확한 수학 범위와 별도 검토를 결속했다. [교차 전제 검토](evidence/common-physical-package-20261011/INDEPENDENT_SOURCE5_CROSS_PREMISES_NS_REVIEW_KO.md)와 [완료 검토 부록](evidence/common-physical-package-20261011/COMMON_GATE_COMPLETION_ADDENDUM_POSITIVE_STRESS_20261011.md)은 각 작성자의 구현 기여 및 독립 검토 범위를 명시한다.
+
+추가로 [새 물리점 값 패킷](evidence/physical-center-20261011/physical-center-packet.json)은 실제 두 pulse·공분산·역가중치와 전체 curl 값을, [양의 profile 수치 패킷](evidence/positive-profile-log-20261011/positive-profile-log-packet.json)은 원래 양의 h를 포함한 15개 지수 척도의 닫힌 로그 좌표 구간을 제공한다. 지수 척도의 로그 구간 폭과 원래 값의 상대오차는 구별한다.
+
+[확장 중심 도함수 패킷](evidence/centered-full-jets-20261011/centered-full-jet-enclosure-packet.json)은 **14/14 일반 검사·12/12 실제 source 검사**를 마쳤다. 실제 원본 검사의 외부 관측 시간은 **162.952초**, exit은 **0**이며, 원래 보조 중심의 138개 수치 도함수를 결속한다. 이것을 새 물리점의 도함수 결과로 옮겨 쓰지 않는다.
+
+최신 기계 판정은 **네 해석학적 관문 완료, G-NUM 진행 중, M2 전체 완료 false, M3 시작 false**이다. 공개 runtime은 여전히 **0.3.11/v79**이며, 이번 원본 수치 패킷을 이미 그 화면에서 실행한 결과로 기록하지 않는다.
