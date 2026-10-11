@@ -1,0 +1,2614 @@
+{
+  "schema": "MathScope.M2ReplayBundle/1",
+  "request": {
+    "budget": {
+      "maxBytes": 8388608,
+      "maxItems": 250000,
+      "maxMillis": 60000,
+      "maxOperations": 50000000
+    },
+    "input": {
+      "maxTerms": 128,
+      "precisionBits": 192,
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "tolerance": "1/10000000000000000000000000000000000000000"
+    },
+    "kind": "ns.actual-heat-scaled-enclosure",
+    "precision": {
+      "bits": 192,
+      "mode": "DIRECTED_BIGINT"
+    }
+  },
+  "inputHash": "de0de3a922544e0d1ddbf1a6a2423d4b0276522c44ccb139027e29f9b3519485",
+  "environment": {
+    "schema": "MathScope.M2Environment/2",
+    "version": "0.3.10",
+    "workerSha256": "8f915fef5ced828dccdbc2bad8809b02472d687d3864e96bb8dbc172b601b020",
+    "execution": "APPLICATION_WORKER_FACTORY",
+    "runtime": {
+      "schema": "MathScope.RuntimeBinding/1",
+      "identity": {
+        "kind": "NODE",
+        "version": "24.19.0",
+        "engine": "V8",
+        "engineVersion": "13.6.233.17-node.51",
+        "platform": "linux",
+        "architecture": "x64"
+      },
+      "mathProbe": {
+        "schema": "MathScope.MathProbe/1",
+        "encoding": "IEEE754_BINARY64_BIG_ENDIAN_HEX",
+        "samples": [
+          {
+            "name": "sin(1)",
+            "float64": "3feaed548f090cee"
+          },
+          {
+            "name": "sin(1e6)",
+            "float64": "bfd6664b2568d867"
+          },
+          {
+            "name": "cos(0.7)",
+            "float64": "3fe87996529f9d93"
+          },
+          {
+            "name": "cos(1e6)",
+            "float64": "3fedf9df9906d32c"
+          },
+          {
+            "name": "exp(0.1)",
+            "float64": "3ff1aec7b35a00d4"
+          },
+          {
+            "name": "exp(-17.3)",
+            "float64": "3e60772c096d61b7"
+          },
+          {
+            "name": "expm1(1e-8)",
+            "float64": "3e45798ee3fdb764"
+          },
+          {
+            "name": "exp(-0.375)",
+            "float64": "3fe5fe4615e98e8e"
+          },
+          {
+            "name": "asinh(2.6875)",
+            "float64": "3ffb6f6ae7b3f864"
+          },
+          {
+            "name": "log(0.7)",
+            "float64": "bfd6d3c324e13f50"
+          },
+          {
+            "name": "log(17.3)",
+            "float64": "4006ce3f35d39ff8"
+          },
+          {
+            "name": "log1p(1e-8)",
+            "float64": "3e45798ee0636111"
+          },
+          {
+            "name": "sqrt(2)",
+            "float64": "3ff6a09e667f3bcd"
+          },
+          {
+            "name": "pow(1.1,3.7)",
+            "float64": "3ff6c3e91ed0825a"
+          },
+          {
+            "name": "atan2(0.3,0.7)",
+            "float64": "3fd9e9bf3d20dc71"
+          },
+          {
+            "name": "acos(0.3)",
+            "float64": "3ff441f5ecbeef59"
+          },
+          {
+            "name": "hypot(0.3,0.7,1.1)",
+            "float64": "3ff56813131dc91e"
+          },
+          {
+            "name": "tanh(0.7)",
+            "float64": "3fe356fb17af2e92"
+          }
+        ],
+        "sha256": "51de427b6eb6f3559f69ba1dde66fd3738ca58e20dd0144095d84cbcbe5317b2"
+      },
+      "scope": "CALLING_RUNTIME_IDENTITY_AND_FINITE_MATH_PROBE",
+      "portabilityGuarantee": false
+    },
+    "replayScope": "IDENTICAL_SOURCE_ENVIRONMENT_AND_EXACT_RECOMPUTED_RESULT",
+    "server": false,
+    "capabilities": {
+      "domains": {
+        "arithmetic": {
+          "checklist": [
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "n=0..8 화면 범위를 제공하고, 수학 명세는 모든 n∈ ℕ를 대상으로 둔다. H^{2i}= ℤ_p의 생성자·F=p^i와 odd vanishing을\nfinite-perfect 비교 모델에 연결한다. 합격: n=0,1,2,4,8에서 degree 0..2n이 정확하다. 화면 n 범위를 전체 정리의 증명 범\n위와 혼동하지 않는다. 고차원 cup/E∞ 정보는 별도 certificate가 필요하다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P4-01",
+              "implementedScope": "All-n projective-bundle derived quasi-isomorphism is applied with its explicit hyperplane generator map; the bounded finite-free model, crystalline/prismatic arrows, Frobenius and derived p-power reductions are computed. No cup/E-infinity or Lean certificate is claimed.",
+              "sourcePage": 28,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "ℙⁿ의 고차원 모델을 일반화한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "E:y²=x³−x의 판별식 64와 infinity chart를 포함한다. p=2에서는 현재 smooth-crystalline 경로를 중지한다. 다른 모형은 최\n소모형 변환과 Jacobian 조건을 검사한다. 합격: p=5,7은 smooth proper lift 허용. a= −81인 스케일 모형의 p=3 판별식\n만 보고 곡선 자체가 bad라고 확정하지 않고 최소화 필요 상태로 남긴다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P4-02",
+              "implementedScope": "Good reduction and bad/nonminimal boundaries are checked for the supported short Weierstrass models, with infinity included in counts.",
+              "sourcePage": 28,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "타원곡선의 smoothness와 bad-prime 경계를 검사한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "작은 p에서는 모든 (x,y)를 열거하고 projective infinity를 더한다. p^m 확장은 명시한 irreducible polynomial의 유한체\n를 이용하여 별도 열거한다. 합격: (p,#E,a_p)=(3,4,0),(5,8,−2),(7,8,0),(11,12,0),(13,8,6),(17,16,2). p=3,m=2에서\n#E(𝔽₉)=16.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P4-03",
+              "implementedScope": "Explicit finite fields with irreducibility checks support exact extension counts and an independent all-pairs oracle.",
+              "sourcePage": 28,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "점계수 oracle을 독립적으로 만든다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "우선 p≥5인 good elliptic curve에 대해 Kedlaya/Monsky-Washnitzer 방식을 선택한다. 역원·분모 감소와 working\nprecision→output precision의 손실을 certificate에 남긴다. 합격: S06의 reduction bound를 충족한 출력만 사용한다.\nMW의 rational Frobenius matrix를 integral prismatic complex 전체로 승격하지 않는다. p=2·미지원 확장체는 명시적으\n로 미지원 처리한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P4-04",
+              "implementedScope": "Direct rational Monsky–Washnitzer Frobenius for good short Weierstrass curves at 5<=p<=43; exact Bezout/vertical/horizontal reductions and proven conservative p-adic tail/loss gate. Matrices are independently checked against counts at two precisions. Unsupported small primes and extension MW are rejected.",
+              "sourcePage": 28,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "Frobenius 수치 backend를 제한된 범위부터 연다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "q=p^a 에 서 semilinear p-Frob 의 행 렬 M 으 로 q-Frob=M σ(M)…σ^{a−1} (M) 을 만 든 다. coefficient bound B_j 와\np^N>2B_j를 이용해 각 정수 계수를 유일 복원한다. 합격: 복원 상계가 부족하면 ambiguous로 남는다. E,p=5에서는\nX²+2X+5, p=7에서는 X²+7이 point-count oracle과 일치해야 한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P4-05",
+              "implementedScope": "Unramified coefficient rings use Hensel-lifted sigma, then M sigma(M)..., exact division-free characteristic polynomial and unique bounded integer reconstruction. Actual MW p=5/7 polynomials match independent point counts. Missing matrices, bounds and insufficient precision are rejected or ambiguous.",
+              "sourcePage": 28,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "p-adic 값에서 정수 특성다항식을 복원한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "복원된 다항식의 계수 valuation으로 Newton polygon을 계산한다. 복소 절댓값, p-adic slope, Hodge degree는 별도\n축·패널로 둔다. 합격: p=5의 H¹ slopes=(0,1), p=7의 slopes=(1/2,1/2). 두 H¹ 차원이 모두 2임을 유지한다. 복소\neigenvalue의 각도로 p-adic valuation을 계산하는 요청은 거부한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P4-06",
+              "implementedScope": "Exact Newton polygons, rational root valuations, separate complex-eigenvalue display and Hodge metadata are implemented.",
+              "sourcePage": 28,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "Newton slope와 Hodge degree를 함께 표시한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "Z(X,T)=∏det(1−TF_i)^{(−1)^{i+1}}를 산출하고 점계수와 대조한다. E에는 S ₀=2,S₁=a_p,S_m=a_pS_{m−1}−pS_{m−2},\nN_m=p^m+1−S_m을 사용한다. 합격: p∈{3,5,7}, m=1..4의 직접 계산/독립 정밀도 oracle과 일치. m은 체 확장 차수이\n고 기하 차원 n이 아님을 내보낸다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P4-07",
+              "implementedScope": "Local determinant factors and extension trace recurrence are cross-checked against independent finite-field enumeration.",
+              "sourcePage": 28,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "국소 zeta와 extension-degree trace를 검증한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "모 든 p 의 ℙⁿ 국 소 인 자 를 조 립 해 ζ(ℙⁿ_ℤ,s)=∏_{i=0}ⁿζ(s−i) 를 얻 는 과 정 을 기 록 한 다. good E/ ℤ[1/ S] 에 는\nζ(ℰ,s)=ζ^S(s)ζ^S(s−1)/ L^S(E,s) 를 별 도 정 리 로 둔 다. 합 격: 유 한 Euler-product 항 등 식 을 정 확 히 확 인 한 뒤 무 한\n곱에는 각각 Re(s)>n+1, Re(s)>2의 수렴 증거를 요구한다. 이 항등식에서 classical RH 또는 BSD의 일반 증명을 자동 출력하\n지 않는다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P4-08",
+              "implementedScope": "Exact place-indexed finite projective and good-elliptic Euler identities are connected to the full convergent products using explicit rational logarithmic tail bounds on Re(s)>n+1 or >2. All bad model primes must be excluded. No RH/BSD or full numerical infinite product is claimed.",
+              "sourcePage": 28,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "실제 global ζ 연결을 첫 정리로 만든다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "h=q−1의 형식 멱급수, [p]_q=1+q+…+q^{p−1}, δ(q)=0를 지원한다. (q −1)과 ([p]_q)를 혼동하지 않고 (p,h) 정밀도를 따\n로 기록한다. 합격: p=3에서 [3]_{1+h}=3+3h+h²를 정확히 얻는다. 실수 q 슬라이더 값을 근거 없이 p-adic specialization\n으로 받아들이지 않는다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P5-01",
+              "implementedScope": "Formal q-prism and q-PD ideal metadata are distinct; exact [p]_(1+h) is computed and real q substitution is rejected.",
+              "sourcePage": 30,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "q-prism과 q-PD base를 별도 객체로 만든다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "p-completely étale coordinates를 가진 algebra에서 ∇_{q,i}의 가환성을 검사한다. ∇_q(T^m)=[m]_qT^{m −1}와 q-\nLeibniz 규칙을 사용한다. 합격: m=1..8, 두 변수 monomial에 대해 d²=0. ordinary Leibniz를 가정한 commutative DGA\ncertificate는 거부한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P5-02",
+              "implementedScope": "Two-variable framed monomial q-Koszul blocks, d-squared-zero and twisted q-Leibniz are exact over Z[h].",
+              "sourcePage": 30,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "framed q-미분과 Koszul complex를 구성한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "첫 범 위 는 p-completely smooth R/ ℤ_p 와 고 정 framing 으 로 제 한 한 다. S01 §16 의 q-crystalline 비 교 를 통 해\nX=Spf(R⊗ℤ_pℤ_p[ζ_p])의 상대 prismatic complex와 연결한다. 합격: A/I, R, R^(1), 비교 map의 base homomor-\nphism이 명세에 있어야 한다. framing만 가진 임의 singular algebra는 이 경로로 승인하지 않는다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P5-03",
+              "implementedScope": "The smooth polynomial adapter supplies D/I, R, the actual phi-induced R^(1), every base homomorphism and the S01 Theorems 16.18/16.22 application with checked smooth standard framing. Singular/untyped algebras are rejected.",
+              "sourcePage": 30,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "R과 Frobenius-base-changed R^(1)을 구분한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "T와 T+1의 두 framing을 첫 사례로 택하고 공통 q-PD Čech 모델 또는 명시적 quasi-isomorphism을 구성한다. cone의\nacyclicity 또는 homotopy equivalence를 인증한다. 합격: 특정 precision에서 Betti 수가 같다는 결과만으로 coordinate\nindependence를 승인하지 않는다. 표시상 동일 모델 여부는 비교 certificate 유무에 따른다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P5-04",
+              "implementedScope": "An explicit all-degree integral q-binomial chain isomorphism for T and S=T+1, its unit-triangular inverse and zero composition homotopies are computed; its cone is contractible. At q=1 it is the identity on the same elements, and bounded integral operators extend to completion.",
+              "sourcePage": 30,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "좌표 변경을 실제 chain comparison으로 검사한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "q=1 specialization은 q-de Rham에서 ordinary de Rham으로 가는 경로로 구현한다. untwisted A/I reduction과 φ-\ntwisted de Rham comparison을 서로 다른 map으로 표시한다. 합격: ∇_q(T^m)|_{q=1}=mT^{m−1}. q= ζ_p를 곧바로\nordinary de Rham specialization이라고 부르는 assertion은 실패한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P5-05",
+              "implementedScope": "q=1 and cyclotomic specializations are distinct and computed on exact polynomials; false ordinary-de-Rham identification is blocked.",
+              "sourcePage": 30,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "q=1과 q= ζ_p를 다른 비교로 제공한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "먼저 k=𝔽₃,K=ℚ₃,π=3,E(u)=u−3를 입력하고 point X=Spf ℤ₃의 상대 complex A[0]을 만든다. 일반 E에는 Eisenstein 조건\n과 δ(E)의 단위성을 검사한다. 합격: δ(u−3)=3u²−9u+8, mod3 값이 2다. φ(u)=u³, φ(coefficients)=Witt Frobenius가\n기록되어야 한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P5-06",
+              "implementedScope": "Eisenstein BK point inputs and exact delta(E) are implemented, including E=u-3 and its unit residue.",
+              "sourcePage": 30,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "BK prism의 가장 작은 fixture를 만든다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "u→0의 crystalline 경로와 A→A/I의 Hodge-Tate 경로, φ-twisted de Rham 경로를 구별한다. uniformizer 변경은 그 자\n체의 비교 certificate를 요구한다. 합격: u→π와 φ 이후 u→ π^p를 같은 map으로 저장할 수 없다. ℙ¹의 BK Tate twist\nFrobenius 계수를 임의로 p라 정하는 fixture는 거부한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P5-07",
+              "implementedScope": "The three BK point coefficient homomorphisms are actually evaluated on an input polynomial. K-flat A[0] derived tensors and target generators/completions are recorded; u=pi and phi-twisted u=pi^p differ, and unsupported uniformizer/Tate assertions remain rejected.",
+              "sourcePage": 30,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "BK base-change와 twist를 검증한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "q-PD envelope와 작은 Čech-Alexander complex를 만들고 overlap·triple overlap의 coherent comparison을 저장한다.\n모듈 complex와 multiplicative/E∞ structure의 완료 범위를 분리한다. 합격: 최소 2개 affine cover의 gluing cocycle와 d²\n를 검증한다. global/ramified 일반ization이 정리 적용 범위를 넘으면 RESEARCH OPEN 또는 MODEL DEVELOPMENT로\n남긴다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P5-08",
+              "implementedScope": "Actual standard diagonal q-PD envelopes are constructed as full completed free delta presentations with all delta relations. Explicit face/degeneracy generator maps, two-affine inversion restrictions, triple cocycles and d^2 are checked; mixed naturality is proved modulo the defining relations using the source-proved [p]_q torsionfreeness. S01 Lemma 16.10, Remarks 16.15–16.16 and Theorem 16.22 apply to these same smooth lifts, diagonal ideals and canonical totalization. Finite delta-depth is an observation, not a quotient killing the infinite generators. E-infinity is separate.",
+              "sourcePage": 30,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "한 affine에서 실제 derived descent까지 진행한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "K=완비화(∪_m ℚ_p(p^{1/p^m}))에서 compatible roots를 고정하고 p=3을 첫 fixture로 삼는다. torus p-power tower\n의 완비화, valuation, theorem-backed perfectoid 증명 경로를 저장한다. 합격: 일반 ℙⁿ_K 또는 유한 root level을 바로\nperfectoid라고 부를 수 없다. base의 valuation·pseudo-uniformizer·완비화가 빠지면 거부한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P6-01",
+              "implementedScope": "The selected completed standard field and torus carry valuation, pseudo-uniformizer, complete Gauss-norm and Frobenius-surjectivity witnesses for the S04 perfectoid theorem application; actual dense torus arithmetic is provided and missing base conditions or finite-level perfectoid claims fail.",
+              "sourcePage": 32,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "첫 perfectoid 예제를 고정한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "root-depth M, valuation precision V, Witt length N을 갖는 finite view를 만들고 refinement/reduction maps를 저장\n한다. 단순한 배열 끝을 무한 역극한의 끝으로 표시하지 않는다. 합격: M=2,3,4의 compatible roots를 축소하면 일치한다.\nroot를 한 단계 누락하면 Frobenius inverse의 인증이 끊겨야 한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P6-02",
+              "implementedScope": "Independent root depth, valuation cutoff and Witt length plus exact compatible-prefix/refinement bookkeeping are implemented.",
+              "sourcePage": 32,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "무한 계와 유한 관측을 분리한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "R/p에서 Frobenius-compatible sequence를 다루고 sharp의 lift 독립성과 수렴 정밀도를 요구한다. tilt와 untilt의 덧셈을\n임의로 같은 좌표 덧셈이라 구현하지 않는다. 합격: x_{m+1}^p=x_m 관계 및 refinement 합치성을 확인한다. 실수/복소 그\n림의 근접성을 p-adic 수렴 인증서로 사용할 수 없다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P6-03",
+              "implementedScope": "Dense standard-tilt Laurent operations, actual Frobenius-compatible untilt-mod-p components and root refinement are computed. Sharp has a proved lift-independent p-adic error bound from successive inverse Frobenius approximants, with insufficient-depth gating and a non-additivity counterexample.",
+              "sourcePage": 32,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "tilt의 연산과 sharp map을 구현 계약에 둔다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "Teichmüller representatives, Witt addition/multiplication, φ([x])=[x^p]를 정확한 universal polynomial 또는 검증된 라\n이브러리 경로로 다룬다. 합격: W₂(𝔽₃)≅ℤ/9에서 1+1+1=3≠0. Witt 좌표의 componentwise 덧셈으로 0을 내는 구현은\n실패한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P6-04",
+              "implementedScope": "Universal p-typical Witt polynomial addition/multiplication over actual dense tilt coefficients are evaluated through exact ghost numerator divisions; Teichmuller multiplication/Frobenius and noncomponentwise carries are independently checked against the prime-field integer oracle.",
+              "sourcePage": 32,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "Witt 연산과 Frobenius를 인증한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "선택한 untilt에 대한 θ, ξ 및 ξ의 distinguished/nonzerodivisor 근거를 저장한다. ξ는 선택에 의존할 수 있으므로 ring 해시\n와 함께 관리한다. 합격: θ(ξ)=0과 A_inf/( ξ)≅R의 인증 범위를 제시한다. θ와 φ가 무조건 같은 base endomorphism으로\ncommute한다고 요구하지 않는다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P6-05",
+              "implementedScope": "Theta evaluates actual dense Witt coordinates via inverse-Frobenius sharp terms. The computed xi=[p^flat]-p has theta(xi)=0 and unit Witt carry xi_1=-1; regularity and kernel quotient use the S03/S01 theorem on the fixed completed base hash. Theta(phi(xi))=p^p-p is retained.",
+              "sourcePage": 32,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "θ와 kernel generator를 실제 base에 묶는다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "pro-étale/group-cohomology 모델의 L η, 거의 동형, torsion-free replacement를 명세한다. S03의 A Ω 정리를 사용할 때\n는 C=K의 완비 대수폐포로 base extension하고 그 map을 기록하여 완비 대수폐쇄 base 조건을 충족한다. 합격: Lη를 생략\n한 raw Koszul complex는 A Ω_CERTIFIED가 될 수 없다. S03의 해당 comparison과 입력 가정이 certificate에 포함되어야\n한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P6-06",
+              "implementedScope": "The complete standard torus over C=completed algebraic closure of K has its actual mu-torsionfree continuous-group Koszul representative, L eta, integral and fractional-character formulas, explicit contraction and BMS Lemma 9.6/Theorem 9.4(iii) comparison through the almost step. Omission of base extension, eta or completion fails.",
+              "sourcePage": 32,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "A Ω와 단순 de Rham·group complex를 구별한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "perfect-prism 대응 및 étale·de Rham·crystalline 경로를 base change, completion, inversion, Frobenius fixed-points\n의 순서로 기록한다. 합격: étale 경로는 perfect base 등 적용 가정과 I inversion/derived fixed points를 누락하면 실패한\n다. modp 그림만으로 ℤ_p étale cohomology 전체를 결정하지 않는다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P6-07",
+              "implementedScope": "The perfect-prism correspondence and etale, integral etale, de Rham and crystalline paths carry their actual base rings, coefficient maps and ordered derived operations. Missing perfectness, I inversion, derived fixed points, completion/order or false mod-p-to-Zp promotion fails.",
+              "sourcePage": 32,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "perfect-prism 비교사상의 방향과 조건을 검사한다"
+            },
+            {
+              "acceptanceScope": "Original criterion text and page preserved. PASS concerns the specified standard objects, executable finite observations, explicit algebraic identities and checked hypotheses of cited external theorems; it is not a new Lean kernel proof.",
+              "criteria": "지원하는 standard tower 및 finite observations를 먼저 출시 기준으로 삼는다. arbitrary perfectoid algebra, 효과\n적 인 descent, 일 반 A_inf module 의 유 한 presentation 산 출 은 각 기 별 도 작 업 으 로 남 긴 다. 합 격: 지 원 밖 입 력 은\nUNSUPPORTED, 정리상 존재하지만 algorithm 미완료면 MODEL DEVELOPMENT, 새 수학명제가 필요하면 RESEARCH\nOPEN으로 서로 다른 상태를 반환한다.",
+              "evidencePath": "mathscope-m2/arithmetic/evidence/acceptance.json",
+              "formalComplete": false,
+              "id": "P6-08",
+              "implementedScope": "Unsupported adapters, model-development obligations and open research claims are reported separately without fake certification.",
+              "sourcePage": 32,
+              "status": "PASS",
+              "testStatus": "INDEPENDENT_AND_NEGATIVE_TESTS_PASS",
+              "title": "실계산 가능 범위와 후속 관문을 공개한다"
+            }
+          ],
+          "execution": "BOUNDED_EXACT_BROWSER_OR_NODE",
+          "formalComplete": false,
+          "kinds": [
+            "arithmetic.projective",
+            "arithmetic.elliptic",
+            "arithmetic.frobeniusReconstruct",
+            "arithmetic.qDeRham",
+            "arithmetic.breuilKisin",
+            "arithmetic.perfectoidTower",
+            "arithmetic.witt",
+            "arithmetic.comparison"
+          ],
+          "limits": {
+            "BKPolynomialDegree": 6,
+            "MWOutputDigits": 12,
+            "MWPrime": 43,
+            "MWTerms": 32,
+            "WittLength": 32,
+            "WittPrime": 97,
+            "displayPoints": 4096,
+            "extensionDegree": 4,
+            "fieldOrder": 4096,
+            "formalQPrime": 17,
+            "framingDisplayDegree": 32,
+            "padicDigits": 64,
+            "perfectoidRootDepth": 8,
+            "prime": 257,
+            "projectiveDimension": 8,
+            "qPDDeltaDepth": 1,
+            "qPDDiagonalPrime": 5,
+            "qPDNerveDegree": 3,
+            "semilinearBaseDegree": 4,
+            "semilinearRank": 4,
+            "sharpValuationDigits": 8,
+            "tiltPrime": 7,
+            "universalTiltWittLength": 4
+          },
+          "schema": "MathScope.M2.ArithmeticCapabilities/2",
+          "statusPolicy": {
+            "MODEL_DEVELOPMENT": "The comparison or effective algorithm is not complete.",
+            "PARTIAL": "A usable exact construction remains short of an explicit original criterion; blockers name the missing comparison.",
+            "RESEARCH_OPEN": "A genuinely new mathematical statement is required.",
+            "UNSUPPORTED": "No implemented adapter for the requested input."
+          },
+          "supported": [
+            "P^n finite-perfect derived comparison via the projective bundle theorem, exact Frobenius and all-n formula",
+            "Direct rational Monsky–Washnitzer elliptic Frobenius with reduction identities, conservative tail/loss bounds and independent point-count cross-checks",
+            "Hensel-lifted unramified coefficient Frobenius, true semilinear matrix products and bounded integer reconstruction",
+            "Exact place-indexed Euler identities with rational absolute-convergence tail bounds for projective space and a smooth good elliptic model",
+            "Smooth q-crystalline/prismatic theorem application with R/R^(1) and all base homomorphisms; explicit integral T versus T+1 chain isomorphism",
+            "Actual completed q-PD diagonal envelopes, free delta relations, small Cech–Alexander nerve, face/degeneracy and two-affine inversion maps with canonical descent theorem application",
+            "Eisenstein BK point, exact delta(E), distinct evaluated coefficient maps and computed derived free-point base changes",
+            "Standard completed perfectoid base, exact dense tilt Laurent arithmetic, compatible roots and lift-independent sharp error bounds",
+            "Universal Witt polynomial addition, multiplication and Frobenius over dense standard-tilt coefficients, plus the larger prime-field subring backend",
+            "Actual theta on dense Witt coordinates, a computed distinguished xi and its kernel theorem application tied to the untilt base hash",
+            "Completed standard torus A-omega via its actual torsionfree group model, L eta, fractional-character contraction and the BMS comparison theorem",
+            "Perfect-prism correspondence and typed etale/de Rham/crystalline routes with derived operations and rejection of missing steps"
+          ],
+          "unsupported": [
+            "MW at p=2 or p=3, a ramified coefficient backend, and extension-field MW Frobenius",
+            "Arbitrary ramified/global q-PD inputs beyond the admitted smooth P1 cover, and normal forms for arbitrary completed envelope elements",
+            "Arbitrary perfectoid presentations, arbitrary completed coefficient oracles, finite presentations of general A_inf modules and general effective descent",
+            "Uniformizer-change certificate, arbitrary BK Tate multiplier, cup-product or E-infinity certification",
+            "Complete numerical global L-function, RH/BSD proof, or new Lean kernel certification"
+          ],
+          "version": "0.2.0-m2"
+        },
+        "gauge": {
+          "certifiedScopes": [
+            "Fourteen source-specific faithful group representation link error bounds",
+            "Local classical plaquette/clover curvature and density refinement",
+            "Fixed-volume embedded-BPST energy and real-charge integrals",
+            "Model-specific Wilson reflection factorization",
+            "SU2 open spatial cube total-spin-weight-five transfer operator",
+            "Independent SU2 one-link and nonzero-beta 4D reference intervals"
+          ],
+          "checklist": [
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Ns, Nt, spatial/Euclidean-time spacing and boundaries, anisotropy, representation, physical extents, site count and continuous group degrees of freedom are distinct.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/contracts.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y3-01",
+              "implementedScope": "Ns, Nt, spatial/Euclidean-time spacing and boundaries, anisotropy, representation, physical extents, site count and continuous group degrees of freedom are distinct.",
+              "inheritedFrom": {
+                "criterionId": "Y3-01",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Oriented group products, inverse and empty paths use U_xy:y→x. Classical links retain ordered-midpoint approximation and refinement diagnostics.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/tests/independent.py",
+                "mathscope-m2/gauge/lattice.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y3-02",
+              "implementedScope": "Oriented group products, inverse and empty paths use U_xy:y→x. Classical links retain ordered-midpoint approximation and refinement diagnostics.",
+              "inheritedFrom": {
+                "criterionId": "Y3-02",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Actual ordered plaquettes, arbitrary signed paths, identity, pure gauge and nontrivial central temporal holonomy fixtures.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/tests/independent.py",
+                "mathscope-m2/gauge/quaternion-oracle.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y3-03",
+              "implementedScope": "Actual ordered plaquettes, arbitrary signed paths, identity, pure gauge and nontrivial central temporal holonomy fixtures.",
+              "inheritedFrom": {
+                "criterionId": "Y3-03",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Site-wise transformation recomputes every plaquette and the total action. M1 lawful-group adjacent telescoping theorem is reused with its historical audit; no new browser kernel execution.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/README_KO.md",
+                "mathscope-m1/gauge/lean/MathScope/M1/Gauge/Transport.lean",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json",
+                "mathscope-m1/gauge/lean/transport-audit.log"
+              ],
+              "id": "Y3-04",
+              "implementedScope": "Site-wise transformation recomputes every plaquette and the total action. M1 lawful-group adjacent telescoping theorem is reused with its historical audit; no new browser kernel execution.",
+              "inheritedFrom": {
+                "criterionId": "Y3-04",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Wilson real character for every shipped faithful group representation; basic invariant form determines bare coupling and anisotropic coefficients.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/tests/independent.py",
+                "mathscope-m2/gauge/lattice.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y3-05",
+              "implementedScope": "Wilson real character for every shipped faithful group representation; basic invariant form determines bare coupling and anisotropic coefficients.",
+              "inheritedFrom": {
+                "criterionId": "Y3-05",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Actual full-Lie plaquette/clover curvature, energy and real charge converge as both spacings shrink. Independent analytic-derivative local fixtures and a fixed physical 4D box integral retain every source link/cell and directed error budgets. Observed clover order two is distinguished from the conservative order-one bound; real Q is never rounded into an integer certificate.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/refinement.mjs",
+                "mathscope-m2/gauge/volume.mjs",
+                "mathscope-m2/gauge/tests/certification.test.mjs",
+                "mathscope-m2/gauge/tests/independent-certification.py",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y3-06",
+              "implementedScope": "Actual full-Lie plaquette/clover curvature, energy and real charge converge as both spacings shrink. Independent analytic-derivative local fixtures and a fixed physical 4D box integral retain every source link/cell and directed error budgets. Observed clover order two is distinguished from the conservative order-one bound; real Q is never rounded into an integer certificate.",
+              "inheritedFrom": {
+                "criterionId": "Y3-06",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Every classical M1 link has separate source-specific midpoint/trapezoidal integration, source evaluation, matrix exponential truncation/roundoff, product and boundary errors. Exact rational group data determine each of the fourteen representation bounds. Local rho/a and fixed-volume refinements are checked against independent BPST primitives/densities; finite-path/window bounds are not exported as arbitrary continuum theorems.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/transport-certificates.mjs",
+                "mathscope-m2/gauge/enclosures.mjs",
+                "mathscope-m2/gauge/tests/certification.test.mjs",
+                "mathscope-m2/gauge/tests/independent-certification.py",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y3-07",
+              "implementedScope": "Every classical M1 link has separate source-specific midpoint/trapezoidal integration, source evaluation, matrix exponential truncation/roundoff, product and boundary errors. Exact rational group data determine each of the fourteen representation bounds. Local rho/a and fixed-volume refinements are checked against independent BPST primitives/densities; finite-path/window bounds are not exported as arbitrary continuum theorems.",
+              "inheritedFrom": {
+                "criterionId": "Y3-07",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Source allocation and JSON budgets checked before constructing arrays; raw links remain complete while x4 slice/stride changes only the observation hash.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/tests/visualization.test.mjs",
+                "mathscope-m2/gauge/tests/worker.test.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y3-08",
+              "implementedScope": "Source allocation and JSON budgets checked before constructing arrays; raw links remain complete while x4 slice/stride changes only the observation hash.",
+              "inheritedFrom": {
+                "criterionId": "Y3-08",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "The finite normalized Haar-product Gibbs measure has an explicit positive partition-function bound; underflow is recorded in log scale.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/lattice.mjs",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y4-01",
+              "implementedScope": "The finite normalized Haar-product Gibbs measure has an explicit positive partition-function bound; underflow is recorded in log scale.",
+              "inheritedFrom": {
+                "criterionId": "Y4-01",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Full SU(2) Haar or symmetric full-basis Lie exponential random-scan Metropolis; target action difference and proposal symmetry are explicit.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/ensemble.mjs",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/tests/certification.test.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y4-02",
+              "implementedScope": "Full SU(2) Haar or symmetric full-basis Lie exponential random-scan Metropolis; target action difference and proposal symmetry are explicit.",
+              "inheritedFrom": {
+                "criterionId": "Y4-02",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Both real SU(2) proposal algorithms meet independent Bessel/Haar one-link references. A nonzero-beta full 2×2×2×2 open lattice is compared with separate quaternion product-Haar importance sampling, predeclared Bernstein/Hoeffding intervals and pure-gauge controls. Wrong distribution/action controls fail; other-group quantitative validation is not inferred from these fixtures.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/reference.mjs",
+                "mathscope-m2/gauge/quaternion-oracle.mjs",
+                "mathscope-m2/gauge/enclosures.mjs",
+                "mathscope-m2/gauge/tests/certification.test.mjs",
+                "mathscope-m2/gauge/tests/independent-certification.py",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y4-03",
+              "implementedScope": "Both real SU(2) proposal algorithms meet independent Bessel/Haar one-link references. A nonzero-beta full 2×2×2×2 open lattice is compared with separate quaternion product-Haar importance sampling, predeclared Bernstein/Hoeffding intervals and pure-gauge controls. Wrong distribution/action controls fail; other-group quantitative validation is not inferred from these fixtures.",
+              "inheritedFrom": {
+                "criterionId": "Y4-03",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Two starts pass recorded burn-in, acceptance, action/loop/real-topology, split-Rhat, segment/replica mean and ESS gates on the declared small reference fixture. Separate real-charge mobility diagnostics reject long stagnant histories. Inadequate short production examples remain PARTIAL; these finite diagnostic passes do not prove general thermal equilibrium or integer topological-sector mixing.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/statistics.mjs",
+                "mathscope-m2/gauge/ensemble.mjs",
+                "mathscope-m2/gauge/tests/certification.test.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y4-04",
+              "implementedScope": "Two starts pass recorded burn-in, acceptance, action/loop/real-topology, split-Rhat, segment/replica mean and ESS gates on the declared small reference fixture. Separate real-charge mobility diagnostics reject long stagnant histories. Inadequate short production examples remain PARTIAL; these finite diagnostic passes do not prove general thermal equilibrium or integer topological-sector mixing.",
+              "inheritedFrom": {
+                "criterionId": "Y4-04",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Per-observable autocorrelation window, tau_int, ESS and batch-mean cross-check; insufficient ESS and constant/stalled series do not receive a confidence interval.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/statistics.mjs",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/tests/certification.test.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y4-05",
+              "implementedScope": "Per-observable autocorrelation window, tau_int, ESS and batch-mean cross-check; insufficient ESS and constant/stalled series do not receive a confidence interval.",
+              "inheritedFrom": {
+                "criterionId": "Y4-05",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Six explicit model/action/Haar/boundary/algebra hypotheses map to Lüscher 1977, §II, Propositions 1–2. Direct SU(N) periodic isotropic application is distinguished from the displayed compact-group/anisotropic/open-boundary derivation. Negative beta, arbitrary measure, gauge-variant algebra and extra action terms cannot receive an application status. Finite numeric PSD matrices are not the proof.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/reflection.mjs",
+                "mathscope-m2/gauge/tests/certification.test.mjs",
+                "mathscope-m2/gauge/README_KO.md",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y4-06",
+              "implementedScope": "Six explicit model/action/Haar/boundary/algebra hypotheses map to Lüscher 1977, §II, Propositions 1–2. Direct SU(N) periodic isotropic application is distinguished from the displayed compact-group/anisotropic/open-boundary derivation. Negative beta, arbitrary measure, gauge-variant algebra and extra action terms cannot receive an application status. Finite numeric PSD matrices are not the proof.",
+              "inheritedFrom": {
+                "criterionId": "Y4-06",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "The infinite-dimensional gauge-invariant L² space is retained explicitly. The full SU(2) open spatial cube has an exhaustively enumerated total-spin-weight≤5 Gauss basis of seven states. Its positive Gram companion has separate deterministic omitted-spin, independent-Haar cubature and arithmetic errors; symmetry and finite real-time unitarity are checked. Unsupported graphs/cutoffs are rejected, and Euclidean transfer is not called unitary.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/transfer.mjs",
+                "mathscope-m2/gauge/enclosures.mjs",
+                "mathscope-m2/gauge/tests/certification.test.mjs",
+                "mathscope-m2/gauge/tests/independent-certification.py",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y4-07",
+              "implementedScope": "The infinite-dimensional gauge-invariant L² space is retained explicitly. The full SU(2) open spatial cube has an exhaustively enumerated total-spin-weight≤5 Gauss basis of seven states. Its positive Gram companion has separate deterministic omitted-spin, independent-Haar cubature and arithmetic errors; symmetry and finite real-time unitarity are checked. Unsupported graphs/cutoffs are rejected, and Euclidean transfer is not called unitary.",
+              "inheritedFrom": {
+                "criterionId": "Y4-07",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            },
+            {
+              "acceptanceScope": "원문 유한 기준의 명시된 알고리즘·검증 사례 범위입니다. 개별 실행의 PARTIAL/UNSUPPORTED 상태와 이론·극한의 미해결 범위는 보존합니다.",
+              "detail": "Group/action/beta/spacing/volume/boundary, algorithm, seed, starts, flow=null, retained sample hashes and final raw configurations are sealed; source versus observation revisions are distinct.",
+              "evidencePathBase": "research-ide",
+              "evidencePaths": [
+                "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "mathscope-m2/gauge/ensemble.mjs",
+                "mathscope-m2/gauge/tests/gauge.test.mjs",
+                "mathscope-m2/gauge/tests/visualization.test.mjs",
+                "mathscope-m2/gauge/tests/worker.test.mjs",
+                "mathscope-m2/gauge/evidence/tests.tap",
+                "mathscope-m2/gauge/evidence/independent-validation.json",
+                "mathscope-m2/gauge/evidence/certification-independent-validation.json"
+              ],
+              "id": "Y4-08",
+              "implementedScope": "Group/action/beta/spacing/volume/boundary, algorithm, seed, starts, flow=null, retained sample hashes and final raw configurations are sealed; source versus observation revisions are distinct.",
+              "inheritedFrom": {
+                "criterionId": "Y4-08",
+                "newExecution": false,
+                "path": "mathscope-m2/gauge/evidence/criterion-completion.json",
+                "status": "IMPLEMENTED_FINITE_SCOPE"
+              },
+              "status": "IMPLEMENTED_FINITE_SCOPE",
+              "testStatus": "기존 도메인 인수 receipt와 보존된 수치·독립 검사 로그를 승계합니다. 이 메타데이터 조회는 새 수치 검사 또는 Lean 실행이 아닙니다."
+            }
+          ],
+          "domain": "gauge",
+          "initializers": [
+            "IDENTITY",
+            "PURE_GAUGE",
+            "CENTER_HOLONOMY (SU(N), periodic temporal boundary)",
+            "SEEDED_EXPONENTIAL",
+            "HOT_HAAR (full SU2 only)",
+            "CLASSICAL_FIELD",
+            "EXPLICIT_LINKS"
+          ],
+          "kinds": [
+            "gauge.lattice",
+            "gauge.ensemble",
+            "gauge.sampler-reference",
+            "gauge.lattice-refinement",
+            "gauge.reflection-positivity",
+            "gauge.transfer-cutoff",
+            "gauge.small-lattice-reference",
+            "gauge.volume-refinement"
+          ],
+          "latticeBoundaries": [
+            "PERIODIC",
+            "OPEN"
+          ],
+          "limits": {
+            "maxEnsembleSites": 256,
+            "maxLinkIntegrations": 131072,
+            "maxMilliseconds": 60000,
+            "maxRawBytes": 8388608,
+            "maxRetainedSamples": 4096,
+            "maxSites": 4096,
+            "maxUpdates": 1500000
+          },
+          "measurements": [
+            "PLAQUETTE",
+            "CLOVER"
+          ],
+          "precision": "FLOAT64_WITH_DIRECTED_SOURCE_ENCLOSURES_AND_ACTUAL_RESIDUALS",
+          "references": [
+            {
+              "id": "BLUEPRINT_Y3_Y4",
+              "kind": "USER_SUPPLIED_SPECIFICATION",
+              "pages": [
+                41,
+                42,
+                43,
+                44
+              ],
+              "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+              "title": "MathScope Research IDE Blueprint v1"
+            },
+            {
+              "author": "David Tong",
+              "evidenceGrade": "THEOREM_REFERENCE",
+              "id": "YM-R07",
+              "locator": "§4.2.1–4.2.2, printed pp.206–212, Wilson links/action and normalized Haar measure",
+              "title": "Gauge Theory, Chapter 4: Lattice Gauge Theory",
+              "url": "https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf"
+            },
+            {
+              "author": "M. Lüscher",
+              "doi": "10.1007/BF01614090",
+              "evidenceGrade": "MODEL_SPECIFIC_HYPOTHESIS_MAPPING_AVAILABLE",
+              "id": "YM-R08",
+              "locator": "DESY 76/54, §II A–C, Proposition 1 and Proposition 2; equations (17), (20)–(23), (28)–(30)",
+              "retrieved": "2026-10-10",
+              "sourceScope": "SU(N), Wilson action, normalized Haar links; periodic spatial and temporal gauge boundaries. Pure-gauge factor obtained by omitting the fermion factor.",
+              "title": "Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories",
+              "url": "https://bib-pubdb1.desy.de/record/396349/files/7611148.pdf"
+            },
+            {
+              "evidenceGrade": "FORMULA_REFERENCE_WITH_EXPLICIT_SERIES_REMAINDERS",
+              "id": "DLMF-I-SERIES",
+              "locator": "Equation 10.25.2; Haar radial integral from https://dlmf.nist.gov/10.32.E2",
+              "title": "NIST Digital Library of Mathematical Functions, modified Bessel definitions and integrals",
+              "url": "https://dlmf.nist.gov/10.25.E2"
+            },
+            {
+              "author": "Ulli Wolff",
+              "evidenceGrade": "METHOD_REFERENCE",
+              "id": "YM-MC01",
+              "locator": "Autocorrelation and error-analysis background. This implementation uses the explicitly documented paired-correlation and batch-mean estimator, not a claim to reproduce the full paper implementation.",
+              "title": "Monte Carlo errors with less errors",
+              "url": "https://arxiv.org/abs/hep-lat/0306017"
+            },
+            {
+              "id": "M1_GROUP_SOURCE",
+              "kind": "LOCAL_CODE_DEPENDENCY",
+              "path": "../../mathscope-m1/gauge/groups.mjs",
+              "role": "Actual full compact group and faithful representation; exact M1 matrix data hashes are embedded in each model."
+            },
+            {
+              "audit": "../../mathscope-m1/gauge/lean/transport-audit.log",
+              "id": "M1_TRANSPORT_LAWS",
+              "kind": "HISTORICAL_FORMAL_AUDIT",
+              "newKernelExecution": false,
+              "path": "../../mathscope-m1/gauge/lean/MathScope/M1/Gauge/Transport.lean"
+            }
+          ],
+          "samplers": [
+            "SU2_HAAR_METROPOLIS",
+            "FULL_BASIS_LIE_METROPOLIS"
+          ],
+          "supportedGroups": [
+            {
+              "dimension": 3,
+              "id": "SU2",
+              "label": "SU(2)",
+              "matrixDimension": 2,
+              "rank": 1,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 2,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 8,
+              "id": "SU3",
+              "label": "SU(3)",
+              "matrixDimension": 3,
+              "rank": 2,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 3,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 15,
+              "id": "SU4",
+              "label": "SU(4)",
+              "matrixDimension": 4,
+              "rank": 3,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 4,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 24,
+              "id": "SU5",
+              "label": "SU(5)",
+              "matrixDimension": 5,
+              "rank": 4,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 5,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 35,
+              "id": "SU6",
+              "label": "SU(6)",
+              "matrixDimension": 6,
+              "rank": 5,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 6,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 3,
+              "id": "SO3",
+              "label": "SO(3)",
+              "matrixDimension": 3,
+              "rank": 1,
+              "spec": {
+                "family": "SO",
+                "globalForm": "ADJOINT",
+                "parameter": 3,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 10,
+              "id": "SO5",
+              "label": "SO(5)",
+              "matrixDimension": 5,
+              "rank": 2,
+              "spec": {
+                "family": "SO",
+                "globalForm": "ADJOINT",
+                "parameter": 5,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 15,
+              "id": "SO6",
+              "label": "SO(6)",
+              "matrixDimension": 6,
+              "rank": 3,
+              "spec": {
+                "family": "SO",
+                "globalForm": "QUOTIENT",
+                "parameter": 6,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 21,
+              "id": "SO7",
+              "label": "SO(7)",
+              "matrixDimension": 7,
+              "rank": 3,
+              "spec": {
+                "family": "SO",
+                "globalForm": "ADJOINT",
+                "parameter": 7,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 28,
+              "id": "SO8",
+              "label": "SO(8)",
+              "matrixDimension": 8,
+              "rank": 4,
+              "spec": {
+                "family": "SO",
+                "globalForm": "QUOTIENT",
+                "parameter": 8,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 3,
+              "id": "Sp1",
+              "label": "Sp(1)",
+              "matrixDimension": 2,
+              "rank": 1,
+              "spec": {
+                "family": "Sp",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 1,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 10,
+              "id": "Sp2",
+              "label": "Sp(2)",
+              "matrixDimension": 4,
+              "rank": 2,
+              "spec": {
+                "family": "Sp",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 2,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 21,
+              "id": "Sp3",
+              "label": "Sp(3)",
+              "matrixDimension": 6,
+              "rank": 3,
+              "spec": {
+                "family": "Sp",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 3,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 14,
+              "id": "G2",
+              "label": "G2",
+              "matrixDimension": 7,
+              "rank": 2,
+              "spec": {
+                "family": "G2",
+                "globalForm": "ADJOINT",
+                "parameter": 2,
+                "representation": "REAL_7"
+              }
+            }
+          ],
+          "unsupported": [
+            "Unimplemented M1 group/representation adapters",
+            "HMC, heatbath or subgroup sampling labels",
+            "Naive periodic copying of BPST",
+            "Certified equilibrium/topological-sector mixing from a short chain",
+            "Source rules without a declared derivative/integration certificate or quantum continuum limits",
+            "Reflection-positivity theorem application without its model-specific hypothesis mapping",
+            "Transfer graphs, groups or cutoff weights outside the explicitly enumerated SU2 open cube sector",
+            "Continuum quantum Yang–Mills theory or mass gap"
+          ],
+          "version": "m2-gauge-1.1.0"
+        },
+        "ns": {
+          "checklist": [
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "criteria": "λn=2nh, En,Un,Vn,Πn와 scalar φn을 구분한다. η의 Fourier 차수·radial analytic 차수·배경 차수를 서로 다른 인덱스로 둔\n다. 합격: (5.1)의 q 지수와 E_n=√(2X) φn/C를 자동 단위 검사한다. Π0의 axis trace와 전체 pressure profile을 혼동하면\n실패다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-recursion.json",
+              "formalComplete": false,
+              "id": "N4-01",
+              "implementedScope": "Exact q-power arithmetic checks (5.1), 1-2D=2h, A+D=1 and the radial pressure shift. An axis-trace pressure substitution or replacement of the pinned N3 h is rejected. Background, radial and eta indices are distinct.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 58,
+              "status": "PASS",
+              "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+              "title": "차수와 기호 충돌 분리"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "criteria": "(5.3)-(5.6)의 모든 i+j=n 곱을 생성한다. i=0,n 및 n,0은 현재 미지수에 선형이고 나머지는 확정된 이전 차수다. 합격: n=1,2\n의 직접 PDE 대입 결과와 coefficient extractor가 일치한다. axial viscosity의 n −1 shift와 압력 Ωn−1/(2X)를 반드시 포함\n한다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-recursion.json",
+              "formalComplete": false,
+              "id": "N4-02",
+              "implementedScope": "The original cylindrical PDE is physically differentiated as an exact BigInt rational differential polynomial. Its n=1,2 coefficients equal independently generated (5.2)-(5.6), including all ordered pairs, vector connection terms and both n-1 shifts.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 58,
+              "status": "PASS",
+              "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+              "title": "비선형 convolution 생성"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "certifiedScope": {
+                "backgroundOrders": [
+                  1
+                ],
+                "commonCollar": "original Xa*exp(t1/16)",
+                "finiteCriterionComplete": true,
+                "numericalKTermSumExecuted": false,
+                "packageCompletionGate": false,
+                "parameterDomain": "all real eta in [-1,1] and the stated complex tube"
+              },
+              "criteria": "(5.7)의 6성분 선형계와 (5.8)의 convergent Picard series를 사용하고 영 axis datum을 유지한다. 합격: 선택 analytic\nstrip·Cn·Cauchy radius loss를 기록하고 Picard tail를 상계한다. 반경 interval은 차수에 따라 임의 축소하지 않으며 lemma\n의 공통 interval 조건을 검사한다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-picard-acceptance.json",
+              "formalComplete": false,
+              "id": "N4-03",
+              "implementedScope": "원래 N3의 고정 차수 n=1에서 (5.7)의 6성분 계를 정확한 C 대각변환으로 연결합니다. 원래 공통 collar, 실제 source-derived C1, 양의 analytic strip과 Cauchy loss, 유한 K의 정확식 및 Picard tail을 인증합니다. 실제 축·양의 반경 관측과 독립 Laurent/Fraction 검사를 실행했습니다. 거대한 K항 수치 합산, 고차 모멘트 복구와 전체 N4 패키지는 별도 범위입니다.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/actual-picard-acceptance.json",
+              "remainingObligations": [],
+              "reviewPath": "mathscope-m2/navier/research/FINITE_CRITERIA_REAUDIT_KO.md",
+              "sourceInstanceCertified": true,
+              "sourcePage": 58,
+              "status": "PASS",
+              "testStatus": "ACTUAL_FIXED_ORDER_CERTIFICATE_AND_INDEPENDENT_ALGEBRA_PASS",
+              "title": "차수별 inner Picard 풀이"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "certifiedScope": {
+                "actualInnerPDEIdentities": 12,
+                "actualMomentIdentities": 10,
+                "actualPriorMomentGate": true,
+                "actualStressSupports": 4,
+                "allOrdersConstructed": false,
+                "backgroundOrders": [
+                  1,
+                  2
+                ],
+                "finiteCriterionComplete": true,
+                "packageCompletionGate": false,
+                "preHeatAndHeatAngularInvariantVerified": true,
+                "signedGlobalMomentValuesNumericallyEnclosed": false
+              },
+              "criteria": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-moment-restoration.json",
+              "formalComplete": false,
+              "id": "N4-04",
+              "implementedScope": "같은 실제 N3의 B.22/B.26/B.34/B.8, C.12/I1, 전체 outer와 I2/heat를 수렴 함수 연산으로 구성합니다. 실제 n=1,2의 cutoff·다섯 incoming moment와 연속 Ipos inverse를 연결해 총 10개 모멘트를 정확히 복구하고 Vn/Πn을 재구성했습니다. 12개 내부 PDE 항등식, 원래 preheat (5.19)와 열 보상·네 보존형 total, T1θ의 Xb 끝점과 나머지 Xplus 끝점을 검증합니다. 실제 복구 객체만 다음 source를 허용하며 복사·변조·보정 전 입력을 차단합니다. 전역 signed 적분값의 수치 근사와 모든 차수의 구성은 별도 범위입니다.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/actual-moment-restoration-executed.json",
+              "remainingObligations": [],
+              "reviewPath": "mathscope-m2/navier/research/ACTUAL_MOMENT_RESTORATION_KO.md",
+              "sourceInstanceCertified": true,
+              "sourcePage": 58,
+              "status": "PASS",
+              "testStatus": "ACTUAL_CONVERGENT_FUNCTION_MOMENT_REPAIR_PDE_SUPPORT_AND_INDEPENDENT_CONSERVATION_PASS",
+              "title": "차수별 radial cutoff와 모멘트 복구"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "certifiedScope": {
+                "actualCNmAndKmComputed": true,
+                "allNResidualComplete": false,
+                "backgroundOrders": [
+                  0,
+                  1
+                ],
+                "derivativeOrders": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ],
+                "finiteCriterionComplete": true,
+                "fixedSimilarityCompact": "X in [0,4*Xunit], eta in [-1,1], all theta; Xunit is a fixed positive source expression",
+                "packageCompletionGate": false,
+                "supremumDomain": "Original space-time set at fixed q; tau=q*(1-eta^2), z=q^D*eta",
+                "wholeProfileResidualComplete": false
+              },
+              "criteria": "Fslow=R+div T를 직접 계산하고 (5.25)의 q^[2h(N+1) −Km] bound와 비교한다. 합격: N 증가에 따른 실제 잔차 감소를\n정밀도·격자와 독립 추적한다. CN,m와 Km이 미계산이면 검증된 tail bound로 표시하지 않는다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-residual-order.json",
+              "formalComplete": false,
+              "id": "N4-05",
+              "implementedScope": "같은 실제 N3 source에서 보존된 고정 core compact 전체에 N=0,1의 원래 PDE 잔차 R+div(T)를 계산합니다. 실제 leading 압력과 n=1 Picard 해, T0/T1의 정확한 내부 restriction을 연결하며 CNm의 양의 source 식과 공통 Km=2+m을 m≤6까지 도출합니다. 동일 q·물리 배율에서 실제 N0 norm의 양의 하한과 N1 전체 영역 상한을 비교해 감소를 인증하고, 고정 좌표의 격자·산술 정밀도 정련을 따로 실행합니다. 전체 profile·모든 N은 별도 범위입니다.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/actual-residual-order-independent.json",
+              "remainingObligations": [],
+              "reviewPath": "mathscope-m2/navier/research/ACTUAL_RESIDUAL_ORDER_KO.md",
+              "sourceInstanceCertified": true,
+              "sourcePage": 58,
+              "status": "PASS",
+              "testStatus": "ACTUAL_FIXED_DOMAIN_RESIDUAL_AND_INDEPENDENT_FRACTION_CERTIFICATE_PASS",
+              "title": "유한 배경 잔차 검증"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "conditionalSourceInstantiation": "The executable conditional operator is complete. Its supplied constants, potentials or local jets are not claimed to be the full actual N3/N4 source instance; those package obligations remain with the dependent construction criteria.",
+              "criteria": "Lemma5.4에 따라 aj+1≥2aj와 (5.37)의 유한 조건을 차례로 만족시키는 cutoff를 선택한다. 합격: 0≤m≤j에서 Ĉj,m(1+|\nlogq|)^P q^(gj/2)≤2^−j를 전체 q≤1/aj에 대해 상계한다. constants 없는 경험적 aj는 미인증으로 표시한다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-cutoffs.json",
+              "formalComplete": false,
+              "id": "N4-06",
+              "implementedScope": "The scalar schedule satisfies exact doubling and the outward (5.37) inequality for every supplied m<=j on the entire q interval. A separate ledger certifies only the conditional scalar implication and explicitly leaves actual source derivative-constant provenance unverified.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/source-contract-independent.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 58,
+              "status": "PASS",
+              "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+              "title": "Shrinking cutoff 스케줄"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "criteria": "χ(cnq)Sn 또는 potential을 먼저 합친다. (5.45)의 χ′ radial correction을 포함해 velocity를 복원한다. 합격: div curl=0 및\ndirect axisymmetric swirl의 div=0 항등식이 유지된다. χun만 사용하는 구현은 negative control에서 실패해야 한다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-curl.json",
+              "formalComplete": false,
+              "id": "N4-07",
+              "implementedScope": "Exact differentiation of chi(c_n*q)*q^(1-A+lambda_n)*F_n yields the original (5.45) chi-prime radial correction. Full cylindrical divergence and direct axisymmetric swirl divergence vanish identically; omitting the correction gives a nonzero exact negative control.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 58,
+              "status": "PASS",
+              "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+              "title": "Potential에 cutoff 후 curl"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "conditionalSourceInstantiation": "The executable conditional operator is complete. Its supplied constants, potentials or local jets are not claimed to be the full actual N3/N4 source instance; those package obligations remain with the dependent construction criteria.",
+              "criteria": "실 제 locally finite sum 과 유 한 formal truncation 을 구 별 하 고 (5.35), (5.39), (5.42), (5.43) 를 기 록 한 다. 합 격: q>0\ncompact domain의 active cutoff index를 정확히 계산하고 tail bound의 유효 영역 q<(2aJ)^ −1을 함께 export한다.\nuncut series 수렴은 주장하지 않는다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-cutoffs.json",
+              "formalComplete": false,
+              "id": "N4-08",
+              "implementedScope": "Actual supplied three-component potentials are multiplied by a genuine C-infinity cutoff and summed. Exact compact-domain a_J*q_min>=1 plus the doubling continuation proves every unseen higher summand vanishes; exhausted prefixes export localSum=null. The strict q<(2*a_J)^-1 tail domain and the distinction from an uncut finite formal truncation are retained.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/source-contract-independent.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 58,
+              "status": "PASS",
+              "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+              "title": "배경 합성과 tail 계약"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "criteria": "Q=2^−ℓ, ε=Q^h, S*=ℓ², (R,Z,T)=(r/√Q,z/Q^D, τ/Q)를 고정하고 band마다 discrete labels를 생성한다. 합격: 동일 샘\n플이 겹치는 chart에서 같은 physical quantity를 준다. 미분 중 ceil/round 주파수와 labels를 다시 선택하지 않는다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-core-charts.json",
+              "formalComplete": false,
+              "id": "N5-01",
+              "implementedScope": "The accepted assembly-to-core SHA chain binds actual eta-zero Phi intervals at the five recorded source Y values. Each chart independently reconstructs q=Q*T and Y=Lambda*R^2/(2*T). Exact affine-h exponent algebra proves physical swirl scaling; transformed and independently restored outward intervals agree. Axis extension and positive symbolic underflow factors are preserved.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/source-core-independent.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 60,
+              "status": "PASS",
+              "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+              "title": "Dyadic chart 생성"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "criteria": "Jg=[[3,1],[1,5]], Y=vr r^dr+vt t mod Z² 및 (6.6)의 evaluated derivatives를 사용한다. 합격: Dr,Dz,t*의 chain-rule 항\n을 모두 포함한다. torus 평균 후 물리 phase 평가의 순서를 반대로 하여 pointwise 값을 평균으로 대체하지 않는다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-torus.json",
+              "formalComplete": false,
+              "id": "N5-02",
+              "implementedScope": "Exact Q(sqrt(2)) identities verify the source eigenvectors, dual coordinates and Jacobian. All slow and fast (6.6) chain-rule terms are applied with the actual source exponent and covering. Physical pointwise evaluation is explicitly distinct from normalized Haar averaging.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 60,
+              "status": "PASS",
+              "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+              "title": "Auxiliary torus와 chain rule"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "criteria": "Lemma6.1의 conflict graph에 따라 overlapping slow supports에 서로소 auxiliary rectangles를 할당한다. 합격: 모든\nactive label pair의 support intersection을 검사한다. 서로 다른 labels의 곱은 실제로 0이어야 하며 same-label harmonics\n는 유지한다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-support.json",
+              "formalComplete": false,
+              "id": "N5-03",
+              "implementedScope": "A deterministic 2,250-color palette covers the complete countable source mesh. Exact rational centers and one r0 certify every ordered covering constraint through Delta=4 and all enlarged support intersections; actual active labels are a subset. Same-label harmonics and once-per-slow-box counting are retained.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/source-independent-checks.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 60,
+              "status": "PASS",
+              "testStatus": "EXACT_SOURCE_CRITERION_TESTS_PASS",
+              "title": "겹치는 pulse의 지지 분리"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "certifiedScope": {
+                "actualCompletedBackgroundRestriction": "Imean; equations (5.18),(5.44),(5.45)",
+                "finiteCriterionComplete": true,
+                "generalForcingInverseComplete": false,
+                "packageCompletionGate": false,
+                "pulseInterval": "0<=v<=Ls",
+                "representative": {
+                  "eta": 0,
+                  "s": 1,
+                  "y": [
+                    0.25,
+                    4.75
+                  ]
+                },
+                "slowNeighborhood": "Source distance <=4/Sstar^3 from the fixed representative, within the original Imean.",
+                "wholeAnnulusPulseCertified": false
+              },
+              "criteria": "k=ceil(ε^−1/2), kp는 0이 아닌 정수, (7.3)-(7.8)의 Φ,nΦ,K,AΦ,B를 생성한다. 합격: nΦ·tm=0과 nonzero denominators\n를 검사한다. 1≤ εk²≤4 및 frame determinant lower bound를 인증된 영역에서 만족한다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-pulse-amplitude.json",
+              "formalComplete": false,
+              "id": "N5-04",
+              "implementedScope": "완성 배경과 정확히 일치하는 실제 Imean 장으로 Φ,nΦ,K,AΦ,U,J,B,B′,left inverse를 생성합니다. 실제 η=0,s=1 대표점 주변의 원래 4/Sstar³ slow 영역과 전체 v 구간에서 nonzero kp, 1≤εk²≤4, normal·frame determinant 하계를 검증합니다. 생성식의 전체 Imean 영역과 인증된 작은 이웃을 구분합니다.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/actual-pulse-amplitude-independent.json",
+              "remainingObligations": [],
+              "reviewPath": "mathscope-m2/navier/research/FINITE_CRITERIA_REAUDIT_KO.md",
+              "sourceInstanceCertified": true,
+              "sourcePage": 60,
+              "status": "PASS",
+              "testStatus": "ACTUAL_SOURCE_PULSE_AND_INDEPENDENT_FRACTION_DECIMAL_PASS",
+              "title": "위상·편극·주파수"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "certifiedScope": {
+                "actualCompletedBackgroundRestriction": "Imean; equations (5.18),(5.44),(5.45)",
+                "finiteCriterionComplete": true,
+                "generalForcingInverseComplete": false,
+                "packageCompletionGate": false,
+                "pulseInterval": "0<=v<=Ls",
+                "representative": {
+                  "eta": 0,
+                  "s": 1,
+                  "y": [
+                    0.25,
+                    4.75
+                  ]
+                },
+                "wholeAnnulusPulseCertified": false
+              },
+              "criteria": "(7.13),(7.17)의 projected ODE를 풀고 P(v)=exp∫( λ−dref)를 log envelope로 저장한다. 합격: (7.22)의 amplitude\nenergy balance, n Φ·tm 제약, midpoint normalization과 양 끝 Gaussian bound를 검사한다. underflow를 pulse가 정\n확히 0인 것으로 처리하지 않는다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-pulse-amplitude.json",
+              "formalComplete": false,
+              "id": "N5-05",
+              "implementedScope": "원문 homogeneous m=1의 왼쪽 성장 초기조건으로 (7.13),(7.17)의 실제 projected ODE를 풉니다. 원래 moving normal·B′·damping을 보존한 Liouville 환원과 양의 Volterra 비교로 전체 펄스 진폭을 구간화하고 (7.22) energy, 직교 제약, P 중점 정규화와 양 끝 Gaussian을 검사합니다. 실제 중점 x/P는 약0.353553이며 unit seed로 교체하지 않습니다. 양의 극소 배율과 미계산 general forcing 범위를 보존합니다.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/actual-pulse-amplitude-independent.json",
+              "remainingObligations": [],
+              "reviewPath": "mathscope-m2/navier/research/FINITE_CRITERIA_REAUDIT_KO.md",
+              "sourceInstanceCertified": true,
+              "sourcePage": 60,
+              "status": "PASS",
+              "testStatus": "ACTUAL_SOURCE_PULSE_AND_INDEPENDENT_FRACTION_DECIMAL_PASS",
+              "title": "성장·감쇠 ODE 풀이"
+            },
+            {
+              "acceptanceScope": "The original N5-06 covariance-family criterion is met by exact convergent-function construction and source-derived uniform analytic bounds on ell>=ellMinimum and0<q<qStar. Strict y±>0 holds onXa<X<Xb; the two endpoints have exact zero weights and smooth zero extension. This does not assert signed numerical whole-H quadrature, admissibility of the exercised finite anchor, every slow derivative norm, the full physical PDE residual/flat-error package or a new formal/global Navier-Stokes theorem.",
+              "actualFiniteScope": {
+                "actualCompletePointwiseActiveSumExecuted": true,
+                "actualLocalCovarianceMatched": true,
+                "domain": {
+                  "eta": 0,
+                  "qOverQ": 1,
+                  "y": [
+                    0.25,
+                    4.75
+                  ]
+                },
+                "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json",
+                "originalWholeCriterionComplete": false,
+                "retainedEarlierExampleScope": true,
+                "sourceProfile": "same-profile-2026-10-10.3",
+                "sourceUniformQStarCertified": false,
+                "wholeAnnulusCovarianceMatched": false
+              },
+              "actualUniformScope": {
+                "actualCompleteGlobalPartitionInstantiated": true,
+                "actualNumericalWholeHQuadrature": false,
+                "actualUniformHColumnsCertified": true,
+                "allSlowDerivativeBoundsComputed": false,
+                "domain": {
+                  "band": "ell>=ellMinimum",
+                  "closedStressShell": "Xa<=X<=Xb",
+                  "flatEndpoints": "y+=y-=0, smooth zero extension",
+                  "physicalScale": "0<q<qStar",
+                  "strictPositiveWeights": "Xa<X<Xb"
+                },
+                "exercisedFiniteMemberProvedInCertifiedDomain": false,
+                "fullPhysicalResidualAndFlatErrorPackageComplete": false,
+                "originalWholeCriterionComplete": true,
+                "sameSlowBoxCountedOnce": true,
+                "sourceProfile": "same-profile-2026-10-10.3",
+                "sourceUniformQStarCertified": true,
+                "wholeAnnulusCovarianceMatched": true
+              },
+              "additionalEvidencePaths": [
+                "mathscope-m2/navier/evidence/actual-covariance-source.json",
+                "mathscope-m2/navier/evidence/actual-covariance-source-certificate.json",
+                "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_KO.md",
+                "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_REVIEW_KO.md",
+                "mathscope-m2/navier/evidence/actual-pulse-covariance-independent.json",
+                "mathscope-m2/navier/evidence/actual-mean-stress-executed.json",
+                "mathscope-m2/navier/research/ACTUAL_PULSE_COVARIANCE_MATCHING.md"
+              ],
+              "allOrderSourceCertificate": false,
+              "criteria": "(7.27)의 angular 1/2 및 Haar Jacobian을 포함해 Hcov를 적분하고 y=Hcov^ −1T0,*를 푼다. 합격: y±>0, det lower\nbound, C(W0)=εT0,* 및 global (7.30)을 확인한다. 같은 slow box를 ±로 두 번 합산하지 않는다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-actual-uniform-covariance.json",
+              "evidencePaths": [
+                "mathscope-m2/navier/evidence/ns-m2-actual-uniform-covariance.json",
+                "mathscope-m2/navier/evidence/actual-covariance-source-executed.json",
+                "mathscope-m2/navier/evidence/actual-covariance-source.json",
+                "mathscope-m2/navier/evidence/actual-covariance-source-certificate.json",
+                "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_KO.md",
+                "mathscope-m2/navier/research/ACTUAL_COVARIANCE_SOURCE_REVIEW_KO.md",
+                "mathscope-m2/navier/evidence/ns-m2-actual-covariance-matching.json",
+                "mathscope-m2/navier/evidence/actual-pulse-covariance-matching-independent.json",
+                "mathscope-m2/navier/evidence/actual-pulse-covariance-independent.json",
+                "mathscope-m2/navier/evidence/actual-mean-stress-executed.json",
+                "mathscope-m2/navier/research/ACTUAL_PULSE_COVARIANCE_MATCHING.md"
+              ],
+              "formalComplete": false,
+              "id": "N5-06",
+              "implementedScope": "동일한 실제 N3의 일반 차수 source·다섯 모멘트 복구·canonical cutoff·전체 tail에서 완성 배경 C²를 도출하고, 실제 phase·moving frame·B′·pressure·damping ODE와 두 H 적분을 수렴 함수로 구성했습니다. angular 1/2·normalized Haar·rectangle Jacobian·c_i·실제 χ² 질량을 유지합니다. source만으로 생성한 공통 q*>0 아래 모든 허용 band와 원래 annulus에서 H 열 오차·|det H| 하계·양의 inverse를 인증하고, 실제 q·band별 chart·mesh·물리 torus에 결속한 전체 squared partition으로 (7.30)을 확인했습니다. 같은 box의 두 signs는 한 번만 합산합니다.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/actual-covariance-source-executed.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": true,
+              "sourcePage": 60,
+              "status": "PASS",
+              "testStatus": "ACTUAL_SOURCE_UNIFORM_H_QSTAR_POSITIVE_INVERSE_AND_GLOBAL_730_PASS",
+              "title": "두 family의 positive covariance"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "criteria": "Cm=i(nΦ×tm)/(km|n Φ|²), physical potential scale Q^(1/2 −A)를 사용한다. cutoff 후 curl의 rm도 유지한다. 합격:\ndiv curl 항등식, physical Cartesian divergence numerical convergence, conjugate symmetry를 확인한다. rm 누락 시\ncovariance/residual test가 실패한다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-pulse-curl.json",
+              "formalComplete": false,
+              "id": "N5-07",
+              "implementedScope": "The original Cm=i*(n cross t)/(km|n|^2) is differentiated by third-order mixed source jets, including every fast/slow and cylindrical-frame derivative in rm. Exact div-curl and physical Q exponent identities, independent Cartesian curl/divergence refinement, conjugate harmonics and omitted-rm covariance/residual negative controls pass. The numerical coefficients are explicitly an operator probe.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/tests.tap",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 60,
+              "status": "PASS",
+              "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+              "title": "정확한 curl과 remainder"
+            },
+            {
+              "acceptanceScope": "PASS means this original finite operator/observation acceptance criterion is met on the stated inputs. It does not certify the blueprint M2 package completion gate, actual all-order background/stress/flat-error assembly, or a new global Navier-Stokes theorem.",
+              "allOrderSourceCertificate": false,
+              "conditionalSourceInstantiation": "The executable conditional operator is complete. Its supplied constants, potentials or local jets are not claimed to be the full actual N3/N4 source instance; those package obligations remain with the dependent construction criteria.",
+              "criteria": "(7.40)의 (1 −ψ)fm+ψ′tm를 버리지 않고 별도 잔차로 기록한다. S*^C exp( −cS*)와 q의 관계를 상계한다. 합격: 각 고정\nm,N에 대해 −cℓ²+(M+N)ℓlog2+2Clogℓ를 써서 bound를 평가한다. machine-zero만으로 모든 차수 flatness를 인증하지\n않는다.",
+              "evidencePath": "mathscope-m2/navier/evidence/ns-m2-tail.json",
+              "formalComplete": false,
+              "id": "N5-08",
+              "implementedScope": "The full (1-psi)*f_m+psi_prime*t_m is actually evaluated from supplied complex interval derivative jets, with all Leibniz terms and resolvable input paths. Outward fixed-order log bounds and a monotone all-later-label threshold are certified conditionally on the declared Gaussian/derivative-loss envelope. Actual source envelope provenance is not inferred from finite jets.",
+              "independentEvidencePath": "mathscope-m2/navier/evidence/source-contract-independent.json",
+              "remainingObligations": [],
+              "sourceInstanceCertified": false,
+              "sourcePage": 60,
+              "status": "PASS",
+              "testStatus": "SOURCE_OPERATOR_AND_NEGATIVE_CONTROLS_PASS",
+              "title": "Cutoff tail의 flatness 추적"
+            }
+          ],
+          "differentialExtension": {
+            "covarianceDerivativeOrder": 1,
+            "fullCurl": "CONDITIONAL_LOCAL_FIXED_BOX",
+            "globalPhysicalResidualAndFlatErrors": false,
+            "maximumSlowOrder": 2,
+            "newLeanResults": "14 universal differential algebra declarations; no actual-source analytic theorem",
+            "numericalDerivativeEnclosures": false,
+            "slowDirections": [
+              "R",
+              "Z",
+              "T"
+            ],
+            "sourceDisplayBands": [
+              "1"
+            ],
+            "version": "0.3.8"
+          },
+          "fullN4": false,
+          "fullN5": false,
+          "heatNumericalExtension": {
+            "actualPositiveParametersRetained": true,
+            "coefficientIntervals": "DIRECTED_BIGINT_96_TO_512_BITS",
+            "kind": "ns.actual-heat-scaled-enclosure",
+            "maximumSlowOrder": 2,
+            "rawRelativePrecision": false,
+            "sourceWitness": "X=Xb*exp(-1/4), eta=0, s=1",
+            "version": "0.3.10",
+            "wholeM2Complete": false,
+            "wholePulseAndCovarianceNumerics": false
+          },
+          "implemented": "Actual fixed-label R/Z/T second and mixed pulse jets with exact time-uniform FTC functional bounds; actual covariance/target/inverse first derivatives; conditional actual local full potential curl retaining sqrt(epsilon), weight derivatives, transverse cutoff and cylindrical connection; actual fixed-label first slow R/Z/T pulse sensitivity, source-derived matrix derivative bounds, original initial frame and endpoint chain rules, with convergent nonzero functional tails; actual uniform source covariance family with internally generated common qStar, all-band completed C2 background, actual moving operators, convergent H integrals, positive inverse on the open annulus, flat endpoint extension and complete global (7.30); actual first/second-order convergent functions, ten restored continuous moments, twelve inner PDE identities, preheat/heat invariant, four stress supports and private prior-order gates; actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities",
+          "kinds": [
+            "ns.actual-cutoff-masses",
+            "ns.actual-band-admissibility",
+            "ns.actual-heat-scaled-enclosure",
+            "ns.actual-covariance-sensitivity",
+            "ns.actual-pulse-jet",
+            "ns.actual-full-curl",
+            "ns.actual-pulse-sensitivity",
+            "ns.actual-core-evaluation",
+            "ns.actual-global-source",
+            "ns.actual-continuation",
+            "ns.actual-background",
+            "ns.actual-picard-acceptance",
+            "ns.actual-moment-restoration",
+            "ns.actual-uniform-covariance",
+            "ns.actual-pulse-amplitude",
+            "ns.actual-covariance-matching",
+            "ns.actual-residual-order",
+            "ns.actual-mean-pulse",
+            "ns.background-recursion",
+            "ns.background-picard",
+            "ns.background-moments",
+            "ns.background-residual",
+            "ns.background-cutoffs",
+            "ns.potential-curl",
+            "ns.dyadic-charts",
+            "ns.source-core-charts",
+            "ns.torus-derivatives",
+            "ns.pulse-support",
+            "ns.pulse-ode",
+            "ns.pulse-covariance",
+            "ns.pulse-curl",
+            "ns.pulse-tail"
+          ],
+          "n3Profile": {
+            "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+            "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+            "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+            "globalEvaluator": false,
+            "id": "same-profile-2026-10-10.3",
+            "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+          },
+          "paper": {
+            "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+            "title": "Finite Time Blowup for Navier–Stokes",
+            "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+          },
+          "precision": "Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence",
+          "precisionModes": [
+            "FLOAT64",
+            "AUTO",
+            "OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures",
+            "DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order",
+            "EXACT_CONSTRUCTIVE with 16..4096 analytic tail target bits for ns.actual-moment-restoration; signed numerical quadrature is not implied",
+            "EXACT_CONSTRUCTIVE without requested bits for ns.actual-uniform-covariance; finite Volterra terms retain a nonzero factorial tail"
+          ],
+          "requiredNext": [
+            "extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N",
+            "materialize all slow Gaussian derivative bounds and the complete physical flat-error assembly beyond the accepted original criteria"
+          ],
+          "sourceEquations": [
+            "5.1–5.8",
+            "5.10–5.16",
+            "5.25",
+            "5.37",
+            "5.45",
+            "6.1–6.19",
+            "7.2–7.8",
+            "7.13",
+            "7.17",
+            "7.22",
+            "7.27",
+            "7.30",
+            "7.40"
+          ]
+        },
+        "observation": {
+          "deltaModes": [
+            "ASSUMED_BOUND",
+            "UNITS",
+            "EFFECTIVE_MODEL",
+            "ENSEMBLE_ESTIMATE"
+          ],
+          "domain": "observation",
+          "evidencePolicy": "Observation criteria only; never grants a source mathematical theorem or formal pass",
+          "kinds": [
+            "observation.delta-family",
+            "observation.gauge-4d",
+            "observation.blowup-pair",
+            "observation.complex-basis"
+          ],
+          "operations": [
+            "SLICE",
+            "FINITE_MARGINAL",
+            "CONDITIONAL_MEAN",
+            "WILSON_OPEN",
+            "WILSON_CLOSED"
+          ],
+          "sourcePolicy": "Read unchanged M1 formulas and actual M2 sampler; preserve source status and declared model rules"
+        }
+      },
+      "evidencePolicy": "SCOPED_FINITE_RESULTS; NO AUTOMATIC THEOREM OR FORMAL PASS",
+      "execution": "STATIC_BOUNDED_WORKER",
+      "limits": {
+        "maxBytes": 8388608,
+        "maxConcurrent": 1,
+        "maxInputBytes": 262144,
+        "maxItems": 250000,
+        "maxJobs": 128,
+        "maxMillis": 60000,
+        "maxOperations": 50000000
+      },
+      "server": false,
+      "version": "0.3.10"
+    },
+    "hash": "3197d44bb2d34f783d8b809228872a38504deb7f7906c10b693620ee3f837ba0"
+  },
+  "result": {
+    "blockers": [],
+    "checks": [
+      {
+        "id": "private-actual-terminal-source-and-derivative-domain",
+        "pass": true
+      },
+      {
+        "id": "positive-h-unchanged",
+        "pass": true
+      },
+      {
+        "id": "original-complete-loss-body-and-boundaries",
+        "pass": true
+      },
+      {
+        "id": "original-gamma-equals-complete-density-integral",
+        "pass": true
+      },
+      {
+        "id": "exact-integrand-partition-one-minus-loss",
+        "pass": true
+      },
+      {
+        "id": "actual-profile-heat-argument",
+        "pass": true
+      },
+      {
+        "id": "literal-source-chart-and-positive-root-bracket",
+        "pass": true
+      },
+      {
+        "id": "original-density-and-gamma-slow-constant",
+        "pass": true
+      },
+      {
+        "id": "actual-witness-X-and-R",
+        "pass": true
+      },
+      {
+        "id": "slow-integrand-derivatives-all-nine",
+        "pass": true
+      },
+      {
+        "id": "exact-Z-and-mixed-Z-zeros",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "ACTUAL_SOURCE_HEAT_AND_SLOW_JETS_WITH_DIRECTED_BIGINT_ENCLOSURES",
+    "kind": "ns.actual-heat-scaled-enclosure",
+    "moduleVersion": "m2-ns-0.3.10",
+    "object": {
+      "kind": "ACTUAL_SOURCE_SCALED_HEAT_JET_ENCLOSURE",
+      "sourceProfile": "same-profile-2026-10-10.3"
+    },
+    "precisionLedger": {
+      "absoluteWidthTolerance": "1/10000000000000000000000000000000000000000",
+      "actualHeatFactorAndNineSlowJetsEnclosed": true,
+      "actualSlowPulseDerivativeNumericallyEnclosed": false,
+      "actualWholeCovarianceNumericallyEnclosed": false,
+      "arithmetic": "DIRECTED_BIGINT_DYADIC_INTERVAL",
+      "arithmeticBits": 192,
+      "finiteMomentRemainderAndArithmeticErrorsSeparated": true,
+      "formalPass": false,
+      "fullResultExact": false,
+      "includesCompleteImproperIntegralTail": true,
+      "originalPositiveHRetained": true,
+      "rawRelativePrecisionClaimed": false,
+      "requested": {
+        "bits": 192,
+        "mode": "DIRECTED_BIGINT"
+      },
+      "toleranceScope": "EACH_COMPLETE_PARAMETER_SCALED_HEAT_JET_COEFFICIENT"
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 50000000,
+      "outputItemsEstimate": 10000,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "e67a8aa592e792edea3aa8fa76dc507102914d7ff930f1699ae7e922314e644d",
+    "results": {
+      "checks": [
+        {
+          "id": "private-actual-terminal-source-and-derivative-domain",
+          "pass": true
+        },
+        {
+          "id": "positive-h-unchanged",
+          "pass": true
+        },
+        {
+          "id": "original-complete-loss-body-and-boundaries",
+          "pass": true
+        },
+        {
+          "id": "original-gamma-equals-complete-density-integral",
+          "pass": true
+        },
+        {
+          "id": "exact-integrand-partition-one-minus-loss",
+          "pass": true
+        },
+        {
+          "id": "actual-profile-heat-argument",
+          "pass": true
+        },
+        {
+          "id": "literal-source-chart-and-positive-root-bracket",
+          "pass": true
+        },
+        {
+          "id": "original-density-and-gamma-slow-constant",
+          "pass": true
+        },
+        {
+          "id": "actual-witness-X-and-R",
+          "pass": true
+        },
+        {
+          "id": "slow-integrand-derivatives-all-nine",
+          "pass": true
+        },
+        {
+          "id": "exact-Z-and-mixed-Z-zeros",
+          "pass": true
+        }
+      ],
+      "graph": {
+        "canonicalBytes": 9297420,
+        "compiler": "actual-heat-scaled-enclosure.mjs:attachActualHeatScaledEnclosure",
+        "compilerInput": {
+          "maxTerms": 128,
+          "precisionBits": 192,
+          "sourceProfile": "same-profile-2026-10-10.3",
+          "tolerance": "1/10000000000000000000000000000000000000000"
+        },
+        "fixedCompilerPrefix": true,
+        "graphIncluded": false,
+        "laterSourceAppendsExcluded": true,
+        "nodeCount": 233243,
+        "roots": {
+          "equivalentProfileIntegral": 232126,
+          "equivalentReducedSlowHeatFactor": 232138,
+          "h": 9,
+          "normalizedMomentRoots": {
+            "D0": 232546,
+            "D1": 232593,
+            "D2": 232644
+          },
+          "originalArgument": 71925,
+          "originalChartComposition": 232434,
+          "originalGamma": 71517,
+          "originalHeatFactor": 71977,
+          "originalLoss": 71948,
+          "reducedArgument": 232129,
+          "slowJets": {
+            "R": 232170,
+            "RR": 232201,
+            "RT": 232216,
+            "RZ": 0,
+            "T": 232179,
+            "TT": 232225,
+            "Z": 0,
+            "ZT": 0,
+            "ZZ": 0
+          },
+          "witnessArgument": 232472,
+          "witnessHeatFactor": 232481,
+          "witnessPositiveFactors": {
+            "R": 233156,
+            "RR": 233191,
+            "RT": 233156,
+            "T": 232544,
+            "TT": 233242,
+            "loss": 232544
+          },
+          "witnessR": 218085,
+          "witnessSlowJets": {
+            "R": 232718,
+            "RR": 232909,
+            "RT": 233031,
+            "RZ": 0,
+            "T": 232781,
+            "TT": 233126,
+            "Z": 0,
+            "ZT": 0,
+            "ZZ": 0
+          },
+          "witnessX": 218083
+        },
+        "sha256": "6569333c2f43189b4cf9474048194f7c690df6233d27fa7667937f7c7645b353"
+      },
+      "numerics": {
+        "arithmetic": {
+          "additionalOperations": 13,
+          "binary64UsedForDecisions": false,
+          "bits": 192,
+          "kind": "DIRECTED_BIGINT_DYADIC_INTERVAL"
+        },
+        "bounds": {
+          "argument": {
+            "lower": "0",
+            "upper": "1/216650105137463389650617861497565264563425962156126783138415683273548827976634139436795999684226879687676229560321054584637120055310421758985051155612229213782023308113580557900831076179697725979446917740452505123351619721850962726871841863469394883970288762277862181198519679293724124370496977854191158541765925566879265766422347152368591546709285595026646498858206907857208870217127157835133667776604803272694950479326770851109383831436474554999730298499562859577884233389221614859959589867945489268513288025053750434670157094443550547631669932950540393572885957861184360422260925520187791145637412287222231209920958093437529187202164501625349287416117927935584199570041141450359215058287808548529345867633458852670693085809226336531763392019626315521018494466274623488"
+          },
+          "closedZeroEndpointsAreEnclosuresOnly": true,
+          "h": {
+            "lower": "0",
+            "upper": "1/1044388881413152506691752710716624382579964249047383780384233483283953907971557456848826811934997558340890106714439262837987573438185793607263236087851365277945956976543709998340361590134383718314428070011855946226376318839397712745672334684344586617496807908705803704071284048740118609114467977783598029006686938976881787785946905630190260940599579453432823469303026696443059025015972399867714215541693835559885291486318237914434496734087811872639496475100189041349008417061675093668333850551032972088269550769983616369411933015213796825837188091833656751221318492846368125550225998300412344784862595674492194617023806505913245610825731835380087608622102834270197698202313169017678006675195485079921636419370285375124784014907159135459982790513399611551794271106831134090584272884279791554849782954323534517065223269061394905987693002122963395687782878948440616007412945674919823050571642377154816321380631045902916136926708342856440730447899971901781465763473223850267253059899795996090799469201774624817718449867455659250178329070473119433165550807568221846571746373296884912819520317457002440926616910874148385078411929804522981857338977648103126085903001302413467189726673216491511131602920781738033436090243804708340403154190336"
+          },
+          "strictSourceRanges": "0<h<2^-4096; 0<z<2^-2559; R>2^1280; R^2>2^2561; slow T=1."
+        },
+        "errorBudget": {
+          "allRawIntervalBoundsExactRational": true,
+          "eachCompleteCoefficientWidthChecked": true,
+          "normalizedMomentTolerance": "1/640000000000000000000000000000000000000000",
+          "originalPositiveFactorsRetained": true,
+          "rawRelativePrecisionClaimed": false,
+          "tolerance": "1/10000000000000000000000000000000000000000"
+        },
+        "heatFactorEnclosure": {
+          "lower": "1420300733318738620403835482374186219201011856671886657033970581385528104605055895459772907061918455361641583294699632334581417386920968650897040818165008766636547200392870710436726766999435119226678216101839313346483069928116012716148526587598319157735474946973588072310804371788400137614858252331287447429635649855065204661346302191537812978926663207732496637509316601178227248780762456574815615865659694610947657772271851627900877903915999710718010391143986214555676785211946867261948836779554816288180266775319574418263001868084042202986109634341518548759908842615812211104737830881140653073422576353383141653494903041707077911786195675244508656581480041819140619802937133341846531123735615718374252931926499197444173160165948097230002269320144038876131061730522887706148455383891793064253711997958694280827964336443066798385007793840064218918136495937279648906373232194074978381227748911633035690649645218120218656774631350202320243625400027957598926761424223634919855021581216235334628899732504593056355252038255998793372417473976008092962715523934571573117357681787717788931046832721472986698224813246334305853482574205588335517262188405026810798000828500944801818921000009086538584867878610396438849099703494708179166450449830032100929302011549060867825421641772350557005229183427764012522627951162567989870456604444275654716172309671855002361850810277551297955790651249745274396709122117456263166771679944498003879517614823027400423250478253745504018414133850300202505557019843255498933795987251665967333619880387215347973843989518447804509054301673582263362585083427283848514127417096417964286789404819578026690084740811123468101836348769819773007020991389927794477938000891553183887532394725982340046423310675166775366836661642969905370392758476120925440845987565815155205478105131992511759675137824984747586488000028627272973952288383977090958149328485395368434437174225675594390127137856292052791986702281878155172354308077976731202488959204528831302223434984228422357372232736110317619245259380542977854858749606025040519259030412727811647243026431/1420300733318738620403835482374186219201011856671886657033970581385528104605055895459772907061918455361641583294699632334581417386920968650897040818165008766636547200392870710436726766999435119226678216101839313346483069928116012716148526587598319157735474946973588072310804371788400137614858252331287447429635649855065204661346302191537812978926663207732496637509316601178227248780762456574815615865659694610947657772271851627900877903915999710718010391143986214555676785211946867261948836779554816288180266775319574418263001868084042202986109634341518548759908842615812211104737830881140653073422576353383141653494903041707077911786195675244508656581480041819140619802937133341846531123735615718374252931926499197444173160165948097230002269320144038876131061730522887706148455383891793064253711997958694280827964336443066798385007793840064218918136495937279648906373232194074978381227748911633035690649645218120218656774631350202320243625400027957598926761424223634919855021581216235334628899732504593056355252038255998793372417473976008092962715523934571573117357681787717788931046832721472986698224813246334305853482574205588335517262188405026810798000828500944801818921000009086538584867878610396438849099703494708179166450449830032100929302011549060867825421641772350557005229183427764012522627951162567989870456604444275654716172309671855002361850810277551297955790651249745274396709122117456263166771679944498003879517614823027400423250478253745504018414133850300202505557019843255498933795987251665967333619880387215347973843989518447804509054301673582263362585083427283848514127417096417964286789404819578026690084740811123468101836348769819773007020991389927794477938000891553183887532394725982340046423310675166775366836661642969905370392758476120925440845987565815155205478105131992511759675137824984747586488000028627272973952288383977090958149328485395368434437174225675594390127137856292052791986702281878155172354308077976731202488959204528831302223434984228422357372232736110317619245265657644713241539513441814463726925446515083256111277539328",
+          "upper": "1"
+        },
+        "moments": {
+          "arithmetic": {
+            "binary64UsedForDecisions": false,
+            "bits": 192,
+            "kind": "DIRECTED_BIGINT_DYADIC_INTERVAL",
+            "operations": 26
+          },
+          "coefficients": {
+            "D0": {
+              "arithmeticAndParameterWidth": "1/6277101735386680763835789423207666416102355444464034512896",
+              "id": "D0",
+              "interval": {
+                "lower": "3138550867693340381917894711603833208051177722232017256447/3138550867693340381917894711603833208051177722232017256448",
+                "upper": "6277101735386680763835789423207666416102355444464034512897/6277101735386680763835789423207666416102355444464034512896"
+              },
+              "pass": true,
+              "remainderAbsoluteUpper": "1/3138550867693340381917894711603833208051177722232017256448",
+              "signedRemainder": "NONPOSITIVE",
+              "totalWidth": "3/6277101735386680763835789423207666416102355444464034512896"
+            },
+            "D1": {
+              "arithmeticAndParameterWidth": "1/6277101735386680763835789423207666416102355444464034512896",
+              "id": "D1",
+              "interval": {
+                "lower": "6277101735386680763835789423207666416102355444464034512893/6277101735386680763835789423207666416102355444464034512896",
+                "upper": "6277101735386680763835789423207666416102355444464034512897/6277101735386680763835789423207666416102355444464034512896"
+              },
+              "pass": true,
+              "remainderAbsoluteUpper": "3/6277101735386680763835789423207666416102355444464034512896",
+              "signedRemainder": "NONPOSITIVE",
+              "totalWidth": "1/1569275433846670190958947355801916604025588861116008628224"
+            },
+            "D2": {
+              "arithmeticAndParameterWidth": "1/1569275433846670190958947355801916604025588861116008628224",
+              "id": "D2",
+              "interval": {
+                "lower": "12554203470773361527671578846415332832204710888928069025779/6277101735386680763835789423207666416102355444464034512896",
+                "upper": "3138550867693340381917894711603833208051177722232017256449/1569275433846670190958947355801916604025588861116008628224"
+              },
+              "pass": true,
+              "remainderAbsoluteUpper": "13/6277101735386680763835789423207666416102355444464034512896",
+              "signedRemainder": "NONPOSITIVE",
+              "totalWidth": "17/6277101735386680763835789423207666416102355444464034512896"
+            }
+          },
+          "definitions": {
+            "D0": "(1-H)/(h*z), with continuous extension at h*z=0",
+            "D1": "-H_prime/h, with continuous extension at h=0",
+            "D2": "H_second/(h*(1+h)), with continuous extension at h=0"
+          },
+          "errorBudget": {
+            "arithmeticAndParameterAllocation": "1/1280000000000000000000000000000000000000000",
+            "includesAllImproperTail": true,
+            "includesParameterBoxVariation": true,
+            "refinementDifferenceUsedAsError": false,
+            "remainderAllocation": "1/1280000000000000000000000000000000000000000",
+            "tolerance": "1/640000000000000000000000000000000000000000"
+          },
+          "history": [
+            {
+              "allBudgetsMet": true,
+              "terms": 1,
+              "widths": [
+                "3/6277101735386680763835789423207666416102355444464034512896",
+                "1/1569275433846670190958947355801916604025588861116008628224",
+                "17/6277101735386680763835789423207666416102355444464034512896"
+              ]
+            }
+          ],
+          "originalParametersSubstitutedByGenericValues": false,
+          "pass": true,
+          "proof": {
+            "D0Term": "(-1)^n*(h+1)_n*(1+h)_(n+1)*z^n/(n+1)!",
+            "DmTerm": "(-1)^n*(h+m)_n*(1+h)_(m+n)*z^n/n!, m=1,2",
+            "convergenceClaim": "Finite asymptotic enclosure only. The infinite moment series is not claimed to converge.",
+            "gammaMoment": "Gamma(1+h+m+n)/Gamma(1+h)=(1+h)_(m+n)",
+            "remainder": "After N terms, the sign is (-1)^N and the absolute remainder is at most the positive N-th term. Taylor remainder for (1+t)^(-a) has this sign and is bounded by (a)_N*t^N/N! for all t>=0; integrate against the complete positive gamma density.",
+            "zeroParameterPolicy": "Generic h=0 or z=0 means the analytic continuous extension of normalized coefficients. Actual-source h and z below are strictly positive and are never replaced."
+          },
+          "request": {
+            "argument": {
+              "lower": "0",
+              "upper": "1/216650105137463389650617861497565264563425962156126783138415683273548827976634139436795999684226879687676229560321054584637120055310421758985051155612229213782023308113580557900831076179697725979446917740452505123351619721850962726871841863469394883970288762277862181198519679293724124370496977854191158541765925566879265766422347152368591546709285595026646498858206907857208870217127157835133667776604803272694950479326770851109383831436474554999730298499562859577884233389221614859959589867945489268513288025053750434670157094443550547631669932950540393572885957861184360422260925520187791145637412287222231209920958093437529187202164501625349287416117927935584199570041141450359215058287808548529345867633458852670693085809226336531763392019626315521018494466274623488"
+            },
+            "h": {
+              "lower": "0",
+              "upper": "1/1044388881413152506691752710716624382579964249047383780384233483283953907971557456848826811934997558340890106714439262837987573438185793607263236087851365277945956976543709998340361590134383718314428070011855946226376318839397712745672334684344586617496807908705803704071284048740118609114467977783598029006686938976881787785946905630190260940599579453432823469303026696443059025015972399867714215541693835559885291486318237914434496734087811872639496475100189041349008417061675093668333850551032972088269550769983616369411933015213796825837188091833656751221318492846368125550225998300412344784862595674492194617023806505913245610825731835380087608622102834270197698202313169017678006675195485079921636419370285375124784014907159135459982790513399611551794271106831134090584272884279791554849782954323534517065223269061394905987693002122963395687782878948440616007412945674919823050571642377154816321380631045902916136926708342856440730447899971901781465763473223850267253059899795996090799469201774624817718449867455659250178329070473119433165550807568221846571746373296884912819520317457002440926616910874148385078411929804522981857338977648103126085903001302413467189726673216491511131602920781738033436090243804708340403154190336"
+            },
+            "maxTerms": 128,
+            "precisionBits": 192,
+            "tolerance": "1/640000000000000000000000000000000000000000"
+          },
+          "schema": "MathScope.NormalizedHeatMomentEnclosure/1",
+          "sourceAuthenticated": false,
+          "status": "COMPLETED",
+          "terms": 1,
+          "wholeGNUMComplete": false
+        },
+        "rows": [
+          {
+            "coefficient": {
+              "lower": "3138550867693340381917894711603833208051177722232017256447/3138550867693340381917894711603833208051177722232017256448",
+              "upper": "6277101735386680763835789423207666416102355444464034512897/6277101735386680763835789423207666416102355444464034512896"
+            },
+            "coefficientWidth": "3/6277101735386680763835789423207666416102355444464034512896",
+            "exactPositiveFactor": "h*z",
+            "factorStrictUpperPowerOfTwo": -6655,
+            "id": "loss",
+            "rawAbsoluteEnclosure": {
+              "lower": "0",
+              "upper": "6277101735386680763835789423207666416102355444464034512897/1420300733318738620403835482374186219201011856671886657033970581385528104605055895459772907061918455361641583294699632334581417386920968650897040818165008766636547200392870710436726766999435119226678216101839313346483069928116012716148526587598319157735474946973588072310804371788400137614858252331287447429635649855065204661346302191537812978926663207732496637509316601178227248780762456574815615865659694610947657772271851627900877903915999710718010391143986214555676785211946867261948836779554816288180266775319574418263001868084042202986109634341518548759908842615812211104737830881140653073422576353383141653494903041707077911786195675244508656581480041819140619802937133341846531123735615718374252931926499197444173160165948097230002269320144038876131061730522887706148455383891793064253711997958694280827964336443066798385007793840064218918136495937279648906373232194074978381227748911633035690649645218120218656774631350202320243625400027957598926761424223634919855021581216235334628899732504593056355252038255998793372417473976008092962715523934571573117357681787717788931046832721472986698224813246334305853482574205588335517262188405026810798000828500944801818921000009086538584867878610396438849099703494708179166450449830032100929302011549060867825421641772350557005229183427764012522627951162567989870456604444275654716172309671855002361850810277551297955790651249745274396709122117456263166771679944498003879517614823027400423250478253745504018414133850300202505557019843255498933795987251665967333619880387215347973843989518447804509054301673582263362585083427283848514127417096417964286789404819578026690084740811123468101836348769819773007020991389927794477938000891553183887532394725982340046423310675166775366836661642969905370392758476120925440845987565815155205478105131992511759675137824984747586488000028627272973952288383977090958149328485395368434437174225675594390127137856292052791986702281878155172354308077976731202488959204528831302223434984228422357372232736110317619245265657644713241539513441814463726925446515083256111277539328"
+            },
+            "sign": "POSITIVE",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": true
+          },
+          {
+            "coefficient": {
+              "lower": "6277101735386680763835789423207666416102355444464034512893/3138550867693340381917894711603833208051177722232017256448",
+              "upper": "6277101735386680763835789423207666416102355444464034512897/3138550867693340381917894711603833208051177722232017256448"
+            },
+            "coefficientWidth": "1/784637716923335095479473677900958302012794430558004314112",
+            "exactPositiveFactor": "h*z/R",
+            "factorStrictUpperPowerOfTwo": -7935,
+            "id": "R",
+            "rawAbsoluteEnclosure": {
+              "lower": "0",
+              "upper": "6277101735386680763835789423207666416102355444464034512897/14782393728413554654046940133008608922593931793424498598351647733242782674827142132748428759010905298559798614755963971818410993314525399446314432955661832942366374250329750952102895420598807981627887629032220897736458273982281232335803775137306343435108963104793079837992947946903611793111414430822011462328815872117018365057179248375163411181868459814849873203416478133480359002387096736705534851950333532516601764612532868044480174197056009485292382058986376326475457302034433497931573271395997880305714319903145499247320698408471822050602825696760386558262717662777918102040049069792399586608785745346331177858959775497581866022025573806439215022171836651070707357758211910270073014211133122478020372910156108194602893481315133399353218885668019800097320640762858542902544892660049208104934540726824534094446591271309924810315940522608771068098877411747845582117233399872704252798974042517715489711214819561584209885869126111242668398830345770741285623569077557292237293712609158008324829343402542719920195027358425333449553844878897405502473448812581399967874861730157190444611896892308817235567519746552792173522390243199258655902119301445388570113545658762131967786301782682985557426963765793487244170217219806328530676329810644610117361971539484852757459569277825459670468668593128780969120697716870377286879823371150110552446345567409152054089165067788422045875370198012198730457331299806180165246413571253785441117333990048094270285953383919653769917086851325358570405929264919764676891299316156535664857794095864478486243806450182421809076454765276756433509052098565586483788797942684885653586670070443880860738020571835355013626405386201983816069260607303681980157356617713641466865652399074540705051923240720335046303620306094563666386478816761669957754290883269657548659593203853255103706670908950715806434716658811030941312257882678281009883839984924209933991856671651290886353959446018611455741821041979038057056311602978109751428299450031658467935570413828832536835516306149302491949541840706593830189329445270856801309117666862816600947118523861986928514744719890150464205755070502907321368105523550804691204619306997505822734259584251773815759418998580845112191200574028655427275169789613704376357933438374085362018198018513440505162551434588818809445383528233097743719508403338916506012868405115815492558538108423240915474797290652016212801980627641774422668058089458965474195274918037466054524455470269142393043473309697572864"
+            },
+            "sign": "POSITIVE",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": true
+          },
+          {
+            "coefficient": {
+              "lower": "0",
+              "upper": "0"
+            },
+            "coefficientWidth": "0",
+            "exactPositiveFactor": "0",
+            "factorStrictUpperPowerOfTwo": null,
+            "id": "Z",
+            "rawAbsoluteEnclosure": {
+              "lower": "0",
+              "upper": "0"
+            },
+            "sign": "ZERO",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": false
+          },
+          {
+            "coefficient": {
+              "lower": "-6277101735386680763835789423207666416102355444464034512897/6277101735386680763835789423207666416102355444464034512896",
+              "upper": "-6277101735386680763835789423207666416102355444464034512893/6277101735386680763835789423207666416102355444464034512896"
+            },
+            "coefficientWidth": "1/1569275433846670190958947355801916604025588861116008628224",
+            "exactPositiveFactor": "h*z/T",
+            "factorStrictUpperPowerOfTwo": -6655,
+            "id": "T",
+            "rawAbsoluteEnclosure": {
+              "lower": "-6277101735386680763835789423207666416102355444464034512897/1420300733318738620403835482374186219201011856671886657033970581385528104605055895459772907061918455361641583294699632334581417386920968650897040818165008766636547200392870710436726766999435119226678216101839313346483069928116012716148526587598319157735474946973588072310804371788400137614858252331287447429635649855065204661346302191537812978926663207732496637509316601178227248780762456574815615865659694610947657772271851627900877903915999710718010391143986214555676785211946867261948836779554816288180266775319574418263001868084042202986109634341518548759908842615812211104737830881140653073422576353383141653494903041707077911786195675244508656581480041819140619802937133341846531123735615718374252931926499197444173160165948097230002269320144038876131061730522887706148455383891793064253711997958694280827964336443066798385007793840064218918136495937279648906373232194074978381227748911633035690649645218120218656774631350202320243625400027957598926761424223634919855021581216235334628899732504593056355252038255998793372417473976008092962715523934571573117357681787717788931046832721472986698224813246334305853482574205588335517262188405026810798000828500944801818921000009086538584867878610396438849099703494708179166450449830032100929302011549060867825421641772350557005229183427764012522627951162567989870456604444275654716172309671855002361850810277551297955790651249745274396709122117456263166771679944498003879517614823027400423250478253745504018414133850300202505557019843255498933795987251665967333619880387215347973843989518447804509054301673582263362585083427283848514127417096417964286789404819578026690084740811123468101836348769819773007020991389927794477938000891553183887532394725982340046423310675166775366836661642969905370392758476120925440845987565815155205478105131992511759675137824984747586488000028627272973952288383977090958149328485395368434437174225675594390127137856292052791986702281878155172354308077976731202488959204528831302223434984228422357372232736110317619245265657644713241539513441814463726925446515083256111277539328",
+              "upper": "0"
+            },
+            "sign": "NEGATIVE",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": true
+          },
+          {
+            "coefficient": {
+              "lower": "-18831305206160042291507368269622999248307066333392103538691/3138550867693340381917894711603833208051177722232017256448",
+              "upper": "-37662610412320084583014736539245998496614132666784207077347/6277101735386680763835789423207666416102355444464034512896"
+            },
+            "coefficientWidth": "35/6277101735386680763835789423207666416102355444464034512896",
+            "exactPositiveFactor": "h*z/R^2",
+            "factorStrictUpperPowerOfTwo": -9216,
+            "id": "RR",
+            "rawAbsoluteEnclosure": {
+              "lower": "-18831305206160042291507368269622999248307066333392103538691/615416606400642147406596306840500660487316242860532658407797196226850751625657581228844435152694803528033459807848353180852016260922511277863907194035956826868694681441538722501667700245050176536774735090609867410230209227207964908721933893531844472483743131375988682193726314647366318301145272768227104527977291709470690632090542351306800713231515808872699766801167398874331973924297891427686454867832591612348551491350379277396150232005578019820308783123186140909125050633729142790462220686341902205472664024629594947572486910876305820390079160265841106677353871158266327149866763877413514767230413567164519788367105817329936324739142949924001903098055589372713335321646985049431330783179472237087611514406895986050639102551950941117027926359207004810285841343165306311690022842370103597567157419174322723686727681289008153466638301082957116310948240834237087980744556959345273030609083265008532850484089444028482540393037800125647510202123251337096707900376710954810078697427175448337794693459674917788574104786071141386044505796986836474869966233147191119870728116753104651794643866166500653234877211777059607257961238740635915352507318551101197972973867688386497472493727627871524745731204891458401325156165834378316315452022774402684168563714166385475197653375289186515198625232331441718950584019288224082864554244219839821317337372407406013023196650864556158123527314411766730012828604827359484013053209177569285760073922132508809042262316257021992675560308023005379766496796977488316607652997425733878649754655913146302802766608313030997414062682580122362595677607277381010650120637158767800256134283806830496142861036948267053544321688201877734960545668209899629810018209307209789367328520334069884453968185974466141828593031488914751607706940471062481895253690339137400898357154267296355274680967478709387392622807712964336980917394423122825402723747525829544650003026774802639471424764900897903550760527026586798019621877986134165685689656866083170401518238811114544609953484386390589611329115659495808076465010245793855144470913671641837974077534072684314782937543510718576817187352390775408687780365801393961542079285738896572976197296716702030571236939060235184942160667721336756972611932200207490879490093624339927455527934987162089773489087491284620093491849383742663005033426022950423013769323918741230285627600918506202167190912812377144017244316993386827706594366508520774477960436379113374424074441726450121557198272487492533215304115341141889523431424567983150692650440815852618168933455955107785508192063511798098533326981196960228918392707748344129050777898404488313984998523760531767448722367474851195835652042268383034811354996731186066534666199404174412580269274736460730572659220766010939261167382092274060894948821874391997861497521419406085165188278671372857539347054621641314126465918683425668625072128",
+              "upper": "0"
+            },
+            "sign": "NEGATIVE",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": true
+          },
+          {
+            "coefficient": {
+              "lower": "0",
+              "upper": "0"
+            },
+            "coefficientWidth": "0",
+            "exactPositiveFactor": "0",
+            "factorStrictUpperPowerOfTwo": null,
+            "id": "RZ",
+            "rawAbsoluteEnclosure": {
+              "lower": "0",
+              "upper": "0"
+            },
+            "sign": "ZERO",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": false
+          },
+          {
+            "coefficient": {
+              "lower": "12554203470773361527671578846415332832204710888928069025779/6277101735386680763835789423207666416102355444464034512896",
+              "upper": "6277101735386680763835789423207666416102355444464034512897/3138550867693340381917894711603833208051177722232017256448"
+            },
+            "coefficientWidth": "15/6277101735386680763835789423207666416102355444464034512896",
+            "exactPositiveFactor": "h*z/(R*T)",
+            "factorStrictUpperPowerOfTwo": -7935,
+            "id": "RT",
+            "rawAbsoluteEnclosure": {
+              "lower": "0",
+              "upper": "6277101735386680763835789423207666416102355444464034512897/14782393728413554654046940133008608922593931793424498598351647733242782674827142132748428759010905298559798614755963971818410993314525399446314432955661832942366374250329750952102895420598807981627887629032220897736458273982281232335803775137306343435108963104793079837992947946903611793111414430822011462328815872117018365057179248375163411181868459814849873203416478133480359002387096736705534851950333532516601764612532868044480174197056009485292382058986376326475457302034433497931573271395997880305714319903145499247320698408471822050602825696760386558262717662777918102040049069792399586608785745346331177858959775497581866022025573806439215022171836651070707357758211910270073014211133122478020372910156108194602893481315133399353218885668019800097320640762858542902544892660049208104934540726824534094446591271309924810315940522608771068098877411747845582117233399872704252798974042517715489711214819561584209885869126111242668398830345770741285623569077557292237293712609158008324829343402542719920195027358425333449553844878897405502473448812581399967874861730157190444611896892308817235567519746552792173522390243199258655902119301445388570113545658762131967786301782682985557426963765793487244170217219806328530676329810644610117361971539484852757459569277825459670468668593128780969120697716870377286879823371150110552446345567409152054089165067788422045875370198012198730457331299806180165246413571253785441117333990048094270285953383919653769917086851325358570405929264919764676891299316156535664857794095864478486243806450182421809076454765276756433509052098565586483788797942684885653586670070443880860738020571835355013626405386201983816069260607303681980157356617713641466865652399074540705051923240720335046303620306094563666386478816761669957754290883269657548659593203853255103706670908950715806434716658811030941312257882678281009883839984924209933991856671651290886353959446018611455741821041979038057056311602978109751428299450031658467935570413828832536835516306149302491949541840706593830189329445270856801309117666862816600947118523861986928514744719890150464205755070502907321368105523550804691204619306997505822734259584251773815759418998580845112191200574028655427275169789613704376357933438374085362018198018513440505162551434588818809445383528233097743719508403338916506012868405115815492558538108423240915474797290652016212801980627641774422668058089458965474195274918037466054524455470269142393043473309697572864"
+            },
+            "sign": "POSITIVE",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": true
+          },
+          {
+            "coefficient": {
+              "lower": "0",
+              "upper": "0"
+            },
+            "coefficientWidth": "0",
+            "exactPositiveFactor": "0",
+            "factorStrictUpperPowerOfTwo": null,
+            "id": "ZZ",
+            "rawAbsoluteEnclosure": {
+              "lower": "0",
+              "upper": "0"
+            },
+            "sign": "ZERO",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": false
+          },
+          {
+            "coefficient": {
+              "lower": "0",
+              "upper": "0"
+            },
+            "coefficientWidth": "0",
+            "exactPositiveFactor": "0",
+            "factorStrictUpperPowerOfTwo": null,
+            "id": "ZT",
+            "rawAbsoluteEnclosure": {
+              "lower": "0",
+              "upper": "0"
+            },
+            "sign": "ZERO",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": false
+          },
+          {
+            "coefficient": {
+              "lower": "12554203470773361527671578846415332832204710888928069025779/6277101735386680763835789423207666416102355444464034512896",
+              "upper": "12554203470773361527671578846415332832204710888928069025799/6277101735386680763835789423207666416102355444464034512896"
+            },
+            "coefficientWidth": "5/1569275433846670190958947355801916604025588861116008628224",
+            "exactPositiveFactor": "h*z^2/T^2",
+            "factorStrictUpperPowerOfTwo": -9214,
+            "id": "TT",
+            "rawAbsoluteEnclosure": {
+              "lower": "0",
+              "upper": "12554203470773361527671578846415332832204710888928069025799/307708303200321073703298153420250330243658121430266329203898598113425375812828790614422217576347401764016729903924176590426008130461255638931953597017978413434347340720769361250833850122525088268387367545304933705115104613603982454360966946765922236241871565687994341096863157323683159150572636384113552263988645854735345316045271175653400356615757904436349883400583699437165986962148945713843227433916295806174275745675189638698075116002789009910154391561593070454562525316864571395231110343170951102736332012314797473786243455438152910195039580132920553338676935579133163574933381938706757383615206783582259894183552908664968162369571474962000951549027794686356667660823492524715665391589736118543805757203447993025319551275975470558513963179603502405142920671582653155845011421185051798783578709587161361843363840644504076733319150541478558155474120417118543990372278479672636515304541632504266425242044722014241270196518900062823755101061625668548353950188355477405039348713587724168897346729837458894287052393035570693022252898493418237434983116573595559935364058376552325897321933083250326617438605888529803628980619370317957676253659275550598986486933844193248736246863813935762372865602445729200662578082917189158157726011387201342084281857083192737598826687644593257599312616165720859475292009644112041432277122109919910658668686203703006511598325432278079061763657205883365006414302413679742006526604588784642880036961066254404521131158128510996337780154011502689883248398488744158303826498712866939324877327956573151401383304156515498707031341290061181297838803638690505325060318579383900128067141903415248071430518474133526772160844100938867480272834104949814905009104653604894683664260167034942226984092987233070914296515744457375803853470235531240947626845169568700449178577133648177637340483739354693696311403856482168490458697211561412701361873762914772325001513387401319735712382450448951775380263513293399009810938993067082842844828433041585200759119405557272304976742193195294805664557829747904038232505122896927572235456835820918987038767036342157391468771755359288408593676195387704343890182900696980771039642869448286488098648358351015285618469530117592471080333860668378486305966100103745439745046812169963727763967493581044886744543745642310046745924691871331502516713011475211506884661959370615142813800459253101083595456406188572008622158496693413853297183254260387238980218189556687212037220863225060778599136243746266607652057670570944761715712283991575346325220407926309084466727977553892754096031755899049266663490598480114459196353874172064525388949202244156992499261880265883724361183737425597917826021134191517405677498365593033267333099702087206290134637368230365286329610383005469630583691046137030447474410937195998930748760709703042582594139335686428769673527310820657063232959341712834312536064"
+            },
+            "sign": "POSITIVE",
+            "sourceFactorSetToZero": false,
+            "zeroEndpointOnlyForNonzeroRows": true
+          }
+        ],
+        "schema": "MathScope.ActualHeatScaledJetNumerics/1"
+      },
+      "pass": true,
+      "proof": {
+        "chartIdentity": "X=R^2/(2s), eta=Z/s^(1/2-h), s-Z^2*s^(2h)=T. Since s>0, ordinary real exponential power rules give 2*(1-eta^2)/X=4*(s-Z^2*s^(2h))/R^2=4T/R^2 throughout the smooth source chart. Equality on a neighborhood identifies all displayed slow derivatives; this is an analytic chart identity, not an evaluated inverse-root approximation.",
+        "everyFiniteOrderBound": "For every fixed integer j>=0 and z>=0, |H^(j)(z)| <= (h)_j*(1+h)_j <= j!*(j+1)! when 0<h<1. At z=0 use the same right derivatives and continuous extension. Only j<=2 source slow-jet roots and numerical enclosures are executed here.",
+        "finiteSeriesNotIdentifiedWithHeat": true,
+        "gammaAndDerivatives": "Gamma density exp(-v)*v^h/Gamma(1+h) has moment (1+h)_j. Every fixed heat argument derivative is dominated by (h)_j*exp(-v)*v^(h+j)/Gamma(1+h); this dominates the complete improper interval and all compact nonnegative argument ranges.",
+        "hNotReplacedByZero": true,
+        "identityAudit": {
+          "checks": [
+            {
+              "actualAtomicOperandCount": 6,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 3,
+              "denominatorOperands": [
+                232233,
+                232237,
+                232227
+              ],
+              "expression": 232347,
+              "id": "actual-heat-integrand-R",
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "pass": true,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            },
+            {
+              "actualAtomicOperandCount": 0,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 1,
+              "denominatorOperands": [],
+              "expression": 0,
+              "id": "actual-heat-integrand-Z",
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "pass": true,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            },
+            {
+              "actualAtomicOperandCount": 6,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 3,
+              "denominatorOperands": [
+                232233,
+                232237,
+                232229
+              ],
+              "expression": 232349,
+              "id": "actual-heat-integrand-T",
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "pass": true,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            },
+            {
+              "actualAtomicOperandCount": 6,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 9,
+              "denominatorOperands": [
+                232233,
+                232237,
+                232250
+              ],
+              "expression": 232351,
+              "id": "actual-heat-integrand-RR",
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "pass": true,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            },
+            {
+              "actualAtomicOperandCount": 0,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 1,
+              "denominatorOperands": [],
+              "expression": 0,
+              "id": "actual-heat-integrand-RZ",
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "pass": true,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            },
+            {
+              "actualAtomicOperandCount": 6,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 9,
+              "denominatorOperands": [
+                232233,
+                232237,
+                232329,
+                232250
+              ],
+              "expression": 232353,
+              "id": "actual-heat-integrand-RT",
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "pass": true,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            },
+            {
+              "actualAtomicOperandCount": 0,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 1,
+              "denominatorOperands": [],
+              "expression": 0,
+              "id": "actual-heat-integrand-ZZ",
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "pass": true,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            },
+            {
+              "actualAtomicOperandCount": 0,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 1,
+              "denominatorOperands": [],
+              "expression": 0,
+              "id": "actual-heat-integrand-ZT",
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "pass": true,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            },
+            {
+              "actualAtomicOperandCount": 6,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 5,
+              "denominatorOperands": [
+                232233,
+                232237,
+                232250,
+                232341
+              ],
+              "expression": 232355,
+              "id": "actual-heat-integrand-TT",
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "pass": true,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            }
+          ],
+          "negativeControl": {
+            "check": {
+              "actualAtomicOperandCount": 6,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "denominatorMonomials": 8,
+              "denominatorOperands": [
+                232233,
+                232237,
+                232250
+              ],
+              "expression": 232358,
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 7,
+              "pass": false,
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "sourceAtomicNodes": [
+                232226,
+                232227,
+                232228,
+                232229,
+                232230,
+                232231,
+                232241
+              ]
+            },
+            "correctlyRejected": true,
+            "omitted": "H_prime*z_RR term"
+          },
+          "pass": true,
+          "schema": "MathScope.HeatSlowDerivativeIdentityAudit/1",
+          "sourceAuthenticated": false
+        },
+        "kind": "SOURCE_BOUND_ANALYTIC_REDUCTION_WITH_EXECUTED_DIRECTED_COEFFICIENT_ENCLOSURES",
+        "normalizedSlowJets": {
+          "R": "2D1",
+          "RR": "-6D1+4*(1+h)*z*D2",
+          "RT": "2D1-2*(1+h)*z*D2",
+          "RZ": "0",
+          "T": "-D1",
+          "TT": "(1+h)*D2",
+          "Z": "0",
+          "ZT": "0",
+          "ZZ": "0"
+        },
+        "positiveFactors": "The original h,z,R and slow T are strictly positive. They remain exact source roots. Zero endpoints in absolute rational enclosures are outward bounds and do not state that any nonzero heat jet is zero.",
+        "sourceBounds": "The authenticated terminal point has X=Xb*exp(-1/4)>XR because all original preterminal stage lengths and wait are positive. The pinned profile has Tprof=exp(1048576)+10>128, Pstar=exp(2*Tprof)>2^256 (e>2), CSelected>1, XR=110*(CSelected*Pstar)^10>2^2560. Thus z=2/X<2^-2559 and R^2=2X>2^2561, R>2^1280. Slow T=1 is distinct from Tprof.",
+        "sourceHeatNotReplacedByOne": true
+      },
+      "request": {
+        "maxTerms": 128,
+        "precisionBits": 192,
+        "tolerance": "1/10000000000000000000000000000000000000000"
+      },
+      "schema": "MathScope.ActualHeatScaledEnclosureCertificate/1",
+      "scope": {
+        "actualHeatFactorAndNineSlowJetsBound": true,
+        "actualPositiveParametersPreserved": true,
+        "actualPulseVolterraJetsEnclosed": false,
+        "determinantOrWeightsEnclosed": false,
+        "m3MayStart": false,
+        "newLeanKernelProof": false,
+        "parameterScaledCoefficientIntervals": true,
+        "rawAbsoluteRationalEnclosures": true,
+        "wholeCovarianceHEnclosed": false,
+        "wholeGNUMComplete": false,
+        "wholeLeadingFJetsEnclosed": false
+      },
+      "sourceBinding": {
+        "exactSourceProducer": "Private prepareActualEllOneCovarianceObstruction and its original complete heat producer.",
+        "originalH": "1 minus the original complete heatLoss, with the original gamma denominator and positive h.",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "referencePluginRole": "Independent representable reference comparisons only. No plugin decimal, user parameter, generic h=0 box or external interval can supply actual source authority.",
+        "sourceProfile": "same-profile-2026-10-10.3",
+        "witness": "ACTUAL_ELL1_TERMINAL_S1_ETA0_DELTA1_OVER4"
+      },
+      "status": "COMPLETED"
+    },
+    "scope": {
+      "actualHeatFactorAndNineSlowJetsBound": true,
+      "actualPositiveParametersPreserved": true,
+      "actualPulseVolterraJetsEnclosed": false,
+      "determinantOrWeightsEnclosed": false,
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false,
+      "m3MayStart": false,
+      "newLeanKernelProof": false,
+      "parameterScaledCoefficientIntervals": true,
+      "rawAbsoluteRationalEnclosures": true,
+      "wholeCovarianceHEnclosed": false,
+      "wholeGNUMComplete": false,
+      "wholeLeadingFJetsEnclosed": false
+    },
+    "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+    "sourceHashScope": "PINNED_N3_ACCEPTED_ASSEMBLY; original positive source factors, exact witness and heat graph hash retained in results.graph",
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "COMPLETED",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "heat derivative",
+          "name": "heat derivative",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "directed rational coefficient",
+          "name": "directed rational coefficient",
+          "scale": "LINEAR",
+          "unit": "1"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "0",
+          "name": "0",
+          "scale": "LINEAR",
+          "unit": "1"
+        }
+      ],
+      "description": "원래 양의 h와 heat 입력을 유지한 함수값 및 R/Z/T 1차·2차 도함수의 엄밀한 구간입니다.",
+      "lines": [],
+      "lostInformation": [
+        "지정된 원래 terminal 점의 heat 인자에 적용됩니다. 전체 pulse·공분산·가중치·curl의 수치 구간은 별도입니다."
+      ],
+      "points": []
+    }
+  },
+  "resultHash": "5be59064eb210bc05b655b2bb131ea839666988debc6943d826f6d26a758996d",
+  "mathematicalHash": "5be59064eb210bc05b655b2bb131ea839666988debc6943d826f6d26a758996d",
+  "semanticHashPolicy": "EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY",
+  "checkpoint": null,
+  "resumePolicy": "RECOMPUTE_FROM_ORIGINAL_INPUT",
+  "trust": "UNTRUSTED_WHEN_SERIALIZED",
+  "bundleHash": "27f206b87e995401f096bd533104a5721b4d160e3d40a82a7bc621fc5505b1be"
+}

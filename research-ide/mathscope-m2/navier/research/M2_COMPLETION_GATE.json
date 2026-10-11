@@ -1,8 +1,8 @@
 {
   "schema": "MathScope.M2.Navier.ExtendedCompletionAssessment/2",
-  "generatedAt": "2026-10-11T07:43:33.951824+00:00",
+  "generatedAt": "2026-10-11T07:52:45.765193+00:00",
   "assessmentKind": "SOURCE_BOUND_REVIEW_MANIFEST_NOT_PROOF_CERTIFICATE",
-  "assessmentRevision": "ACTUAL_HEAT_N1_WEIGHTED_STRESS_AND_ADMISSIBLE_TERMINAL_COVARIANCE",
+  "assessmentRevision": "ACTUAL_HEAT_RUNTIME_0_3_10_SOURCE_AND_WORKER_VERIFIED",
   "resumedCommit": "8a0046c547af4cccdbecae81fe647d414dd75d3f",
   "implementationCommit": "6c9ee58a1e82cd0bf4c0c813f1f9e7346b9dbfa6",
   "implementationBranch": "mathscope-m2-completion-20261011",
@@ -298,6 +298,30 @@
       "path": "research-ide/mathscope-m2/navier/research/evidence/admissible-covariance-20261011/actual-admissible-terminal-covariance-validation.json",
       "sha256": "30c075ae5baef1030c3a45cf9e131a9fde9ca3164814a314bffe1646ff71fb37",
       "state": "PRESENT_AND_HASH_CHECKED_AT_THIS_ASSESSMENT"
+    },
+    "heatRuntimeReview": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/heat-runtime-20261011/runtime-release-review.json",
+      "sha256": "1cc46dbc6c9c1e95a24a32d47414dbf6ea1e59ad02290cc51bb42252603d8abf"
+    },
+    "heatRuntimeSealGenerator": {
+      "path": "research-ide/mathscope-m2/tests/seal-heat-runtime.py",
+      "sha256": "c216912d35964b4ea6779393b49f863013ba5f32c051fd3f111e1c24d578cebc"
+    },
+    "heatRuntimeDocumentation": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/heat-runtime-20261011/HEAT_RUNTIME_RELEASE_KO.md",
+      "sha256": "508963d3dd0076f95f6cbd230a92717306c07625471ced3baff62b0410cfde9f"
+    },
+    "heatPanelRenderer": {
+      "path": "research-ide/mathscope-m2/visualization/actual-heat-panels.mjs",
+      "sha256": "63957ac87e3565f8848741e0d9eff14ee634f82a3201d2578c5c9203a7e48797"
+    },
+    "heatRuntimeRunner": {
+      "path": "research-ide/mathscope-m2/tests/heat-runtime-case.mjs",
+      "sha256": "c8070e1879ee11b314894006f97569f87935012f2c6a332418cbaa0e7eeb0a80"
+    },
+    "heatRuntimeViewTests": {
+      "path": "research-ide/mathscope-m2/tests/actual-heat-views.test.mjs",
+      "sha256": "852f18a9a7470a084800566826ddf506eebbfef0d96064d1cb6d5f5508bf1cad"
     }
   },
   "additionalClaims": [
@@ -419,12 +443,17 @@
     },
     {
       "id": "M2X-ACTUAL-HEAT-ENCLOSURE",
-      "status": "DIRECT_NODE_SOURCE_VERIFIED_SCOPED",
+      "status": "SOURCE_AND_GENERATED_WORKER_VERIFIED_SCOPED",
       "sourceRefs": [
         "heatPacket",
         "independentComponentReview"
       ],
-      "statement": "Actual original heat factor and nine first/second slow jets have directed rational enclosures at the specified original terminal point; positive original factors are retained and whole pulse/covariance numerics are unclosed."
+      "statement": "Actual original heat factor and nine first/second slow jets have directed rational enclosures at the specified original terminal point; positive original factors are retained and whole pulse/covariance numerics are unclosed.",
+      "runtimeReview": {
+        "path": "research-ide/mathscope-m2/navier/research/evidence/heat-runtime-20261011/runtime-release-review.json",
+        "sha256": "1cc46dbc6c9c1e95a24a32d47414dbf6ea1e59ad02290cc51bb42252603d8abf"
+      },
+      "browserExecutionVerified": false
     },
     {
       "id": "M2X-ACTUAL-N1-WEIGHTED-STRESS",
@@ -635,70 +664,25 @@
     "independentResearchOpenClaimsNotDeclaredSolved": true
   },
   "currentRuntimeVerification": {
-    "version": "0.3.9",
-    "workerSha256": "a8bf90d95dc83a4fdac8e6d6250c1e925476b5892b12c5223d4474c2a3244de9",
+    "version": "0.3.10",
+    "workerSha256": "8f915fef5ced828dccdbc2bad8809b02472d687d3864e96bb8dbc172b601b020",
+    "bundleSha256": "a66baa0037c875bfb5e21956d11444b3bf2cc55a47eac594da5ba66280cdd22e",
     "executions": [
       {
-        "path": "research-ide/mathscope-m2/navier/research/evidence/m2-continuation-20261011/actual-cutoff-masses-source-runtime.json",
-        "sha256": "1612871b70cc60e51fa9ab5aa97b43ccdd58ac061e9f0543d42ed55b4efbbfeb",
-        "kind": "ns.actual-cutoff-masses",
-        "mode": "source",
-        "exitCode": 0,
-        "elapsedMs": 15429.959368,
-        "peakRSSBytes": 1310777344,
-        "mathematicalHash": "27a33f113f1632170109c47cd4b5be4e490d06db511c566e54050c264ab69517",
-        "certificateSHA256": "2ce688cdbd285ef1b8bd44ad669be46a29ee1640f948a3b0d9ff1f580355c07d",
-        "panelCount": 3,
-        "checkedSourcePathCells": 38,
-        "unboundDisplayLabels": 33
+        "path": "research-ide/mathscope-m2/navier/research/evidence/heat-runtime-20261011/attempt1-source-runtime.json",
+        "sha256": "de2397ca8c64ff873141e8fda36a0b763260ce28acc91b633cd611eacab4fe4a"
       },
       {
-        "path": "research-ide/mathscope-m2/navier/research/evidence/m2-continuation-20261011/actual-cutoff-masses-worker-runtime.json",
-        "sha256": "b1117b314383372a1d4c50332a034deadaef27b49b5059edd27f1c0059cd1149",
-        "kind": "ns.actual-cutoff-masses",
-        "mode": "worker",
-        "exitCode": 0,
-        "elapsedMs": 15310.576107,
-        "peakRSSBytes": 1482125312,
-        "mathematicalHash": "27a33f113f1632170109c47cd4b5be4e490d06db511c566e54050c264ab69517",
-        "certificateSHA256": "2ce688cdbd285ef1b8bd44ad669be46a29ee1640f948a3b0d9ff1f580355c07d",
-        "panelCount": 3,
-        "checkedSourcePathCells": 38,
-        "unboundDisplayLabels": 33
-      },
-      {
-        "path": "research-ide/mathscope-m2/navier/research/evidence/m2-continuation-20261011/actual-band-admissibility-source-runtime.json",
-        "sha256": "0970cdbf8204ccf1528547b2dc6ae746e2a1c4aa23b6ee3db4ebd627945dd123",
-        "kind": "ns.actual-band-admissibility",
-        "mode": "source",
-        "exitCode": 0,
-        "elapsedMs": 14269.648557,
-        "peakRSSBytes": 1329496064,
-        "mathematicalHash": "8281a6c33bf89c738d562162535ca6cb8e3dab112e7123808e24fcfbe516d4c1",
-        "certificateSHA256": "b9d6d16262f7b9e574802aaf23239eb70391c22596f3765452cfbdc2fccaaa2c",
-        "panelCount": 2,
-        "checkedSourcePathCells": 22,
-        "unboundDisplayLabels": 22
-      },
-      {
-        "path": "research-ide/mathscope-m2/navier/research/evidence/m2-continuation-20261011/actual-band-admissibility-worker-runtime.json",
-        "sha256": "7c98a329d447f9c795b834b6831e0f296d37358b58653b8e2b5ed8effe214cce",
-        "kind": "ns.actual-band-admissibility",
-        "mode": "worker",
-        "exitCode": 0,
-        "elapsedMs": 14541.449596999999,
-        "peakRSSBytes": 1449725952,
-        "mathematicalHash": "8281a6c33bf89c738d562162535ca6cb8e3dab112e7123808e24fcfbe516d4c1",
-        "certificateSHA256": "b9d6d16262f7b9e574802aaf23239eb70391c22596f3765452cfbdc2fccaaa2c",
-        "panelCount": 2,
-        "checkedSourcePathCells": 22,
-        "unboundDisplayLabels": 22
+        "path": "research-ide/mathscope-m2/navier/research/evidence/heat-runtime-20261011/attempt1-worker-runtime.json",
+        "sha256": "dd9fd0389fa5ecb0ac28ba297dde0fefb3cc3c521569a053765dcb56ede2d46d"
       }
     ],
     "sourceWorkerPairsAgree": true,
-    "sourcePathValueCellsChecked": 60,
-    "unboundDisplayLabels": 55,
-    "allCellsSourceBound": false
+    "sourcePathValueCellsCheckedPerExecution": 106,
+    "unboundDisplayLabelsPerExecution": 11,
+    "allCellsSourceBound": false,
+    "browserExecutionOfThisRuntimeVerified": false,
+    "historicalPublicationRemainsVersion": 76
   },
   "publication": {
     "status": "PUBLISHED_AND_EXACT_PUBLIC_BYTES_VERIFIED",
@@ -926,7 +910,8 @@
     ],
     "currentComponentFilesMatchObservedRuns": true,
     "earlierRuntimeReferencesPreservedAtCommit": "5acd0dc8e06d0009409bbafdd7eb30dcde5e1124",
-    "mathematicalGatePromotedByHashing": false
+    "mathematicalGatePromotedByHashing": false,
+    "heatRuntimeCurrentFilesMatchObservedRuns": true
   },
   "promotionPolicy": {
     "allTestsPassImpliesMathematicalCompletion": false,
@@ -937,12 +922,87 @@
     "trustLimit": "Editing or rehashing this review never proves an analytic claim or authorizes M3."
   },
   "assessmentHashAlgorithm": "SHA-256 over UTF-8 json.dumps(record_without_assessmentSHA256, ensure_ascii=False, sort_keys=True, separators=(comma,colon)); no trailing newline.",
-  "previousCheckpointCommit": "5acd0dc8e06d0009409bbafdd7eb30dcde5e1124",
+  "previousCheckpointCommit": "3bb5b122322e80b8a8fbb86526047813a9bb00ce",
   "threeComponentSourceReview": {
     "path": "research-ide/mathscope-m2/navier/research/evidence/m2-math-progress-20261011/review-validation.json",
     "sha256": "14847054372f32d77d1922f78c48a746389d7d5f781fb62dbe043d1ca8568684",
-    "nodeSourceOnly": true,
-    "workerBrowserEvidenceInheritedOnly": true
+    "workerBrowserEvidenceInheritedOnly": true,
+    "initialNodeSourceOnly": true,
+    "subsequentHeatRuntimeReview": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/heat-runtime-20261011/runtime-release-review.json",
+      "sha256": "1cc46dbc6c9c1e95a24a32d47414dbf6ea1e59ad02290cc51bb42252603d8abf"
+    }
   },
-  "assessmentSHA256": "af6c09539853977f9b4d8814a5b3acc2f5ac5f1b03e93d8ff56c76c655fd0a47"
+  "priorRuntimeVerification": {
+    "verifiedAtCommit": "3bb5b122322e80b8a8fbb86526047813a9bb00ce",
+    "record": {
+      "version": "0.3.9",
+      "workerSha256": "a8bf90d95dc83a4fdac8e6d6250c1e925476b5892b12c5223d4474c2a3244de9",
+      "executions": [
+        {
+          "path": "research-ide/mathscope-m2/navier/research/evidence/m2-continuation-20261011/actual-cutoff-masses-source-runtime.json",
+          "sha256": "1612871b70cc60e51fa9ab5aa97b43ccdd58ac061e9f0543d42ed55b4efbbfeb",
+          "kind": "ns.actual-cutoff-masses",
+          "mode": "source",
+          "exitCode": 0,
+          "elapsedMs": 15429.959368,
+          "peakRSSBytes": 1310777344,
+          "mathematicalHash": "27a33f113f1632170109c47cd4b5be4e490d06db511c566e54050c264ab69517",
+          "certificateSHA256": "2ce688cdbd285ef1b8bd44ad669be46a29ee1640f948a3b0d9ff1f580355c07d",
+          "panelCount": 3,
+          "checkedSourcePathCells": 38,
+          "unboundDisplayLabels": 33
+        },
+        {
+          "path": "research-ide/mathscope-m2/navier/research/evidence/m2-continuation-20261011/actual-cutoff-masses-worker-runtime.json",
+          "sha256": "b1117b314383372a1d4c50332a034deadaef27b49b5059edd27f1c0059cd1149",
+          "kind": "ns.actual-cutoff-masses",
+          "mode": "worker",
+          "exitCode": 0,
+          "elapsedMs": 15310.576107,
+          "peakRSSBytes": 1482125312,
+          "mathematicalHash": "27a33f113f1632170109c47cd4b5be4e490d06db511c566e54050c264ab69517",
+          "certificateSHA256": "2ce688cdbd285ef1b8bd44ad669be46a29ee1640f948a3b0d9ff1f580355c07d",
+          "panelCount": 3,
+          "checkedSourcePathCells": 38,
+          "unboundDisplayLabels": 33
+        },
+        {
+          "path": "research-ide/mathscope-m2/navier/research/evidence/m2-continuation-20261011/actual-band-admissibility-source-runtime.json",
+          "sha256": "0970cdbf8204ccf1528547b2dc6ae746e2a1c4aa23b6ee3db4ebd627945dd123",
+          "kind": "ns.actual-band-admissibility",
+          "mode": "source",
+          "exitCode": 0,
+          "elapsedMs": 14269.648557,
+          "peakRSSBytes": 1329496064,
+          "mathematicalHash": "8281a6c33bf89c738d562162535ca6cb8e3dab112e7123808e24fcfbe516d4c1",
+          "certificateSHA256": "b9d6d16262f7b9e574802aaf23239eb70391c22596f3765452cfbdc2fccaaa2c",
+          "panelCount": 2,
+          "checkedSourcePathCells": 22,
+          "unboundDisplayLabels": 22
+        },
+        {
+          "path": "research-ide/mathscope-m2/navier/research/evidence/m2-continuation-20261011/actual-band-admissibility-worker-runtime.json",
+          "sha256": "7c98a329d447f9c795b834b6831e0f296d37358b58653b8e2b5ed8effe214cce",
+          "kind": "ns.actual-band-admissibility",
+          "mode": "worker",
+          "exitCode": 0,
+          "elapsedMs": 14541.449596999999,
+          "peakRSSBytes": 1449725952,
+          "mathematicalHash": "8281a6c33bf89c738d562162535ca6cb8e3dab112e7123808e24fcfbe516d4c1",
+          "certificateSHA256": "b9d6d16262f7b9e574802aaf23239eb70391c22596f3765452cfbdc2fccaaa2c",
+          "panelCount": 2,
+          "checkedSourcePathCells": 22,
+          "unboundDisplayLabels": 22
+        }
+      ],
+      "sourceWorkerPairsAgree": true,
+      "sourcePathValueCellsChecked": 60,
+      "unboundDisplayLabels": 55,
+      "allCellsSourceBound": false
+    },
+    "isCurrentRuntimeExecution": false
+  },
+  "publicationEvidenceScope": "The stored v76 publication/browser record is historical runtime 0.3.9. It is not evidence of a public 0.3.10 run.",
+  "assessmentSHA256": "d9dc7e66da1fe714d536b51d117224c8d7bb10c3dfa69ee70eff8dc0a2094f98"
 }
