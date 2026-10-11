@@ -1,0 +1,251 @@
+/** Inner radial flat extension for the privately constructed actual
+ * completed-background annulus covariance. The original n1 Picard field
+ * remains in both pulses. Only the leading target has its e_a factor
+ * removed analytically. Neither a zero stress nor its norm is divided at
+ * the edge; the regular endpoint coefficient is constructed separately.
+ */
+import {prepareActualAdmissibleAnnulusCovariance,assertActualAdmissibleAnnulusCovariance,
+  ActualAnnulusCovarianceExpressions} from './actual-admissible-annulus-covariance.mjs';
+import {innerFlatSquareRootJets,innerEndpointStressAlgebra,copyInnerFactorProgram} from './actual-inner-flat-kernel.mjs';
+import {outerCovarianceJetDegreeAudit,positiveCoefficientSquareRootJetBounds,logarithmicPulseNormAudit} from './actual-outer-covariance-flat-extension.mjs';
+import {covarianceMatrixAlgebra} from './actual-covariance-matrix.mjs';
+import {clearDisposableThirdJetCaches,disposableThirdJetCacheCopy} from './actual-third-jet-ftc.mjs';
+import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
+import {directionCPowerAbsorption} from './actual-stress-direction-bounds.mjs';
+import {SOURCE_PROFILE_ID,assertSourceProfile} from './source-profile.mjs';
+import {readRational,fail} from './actual-continuation-arithmetic.mjs';
+import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+
+const seals=new WeakMap(),same=(a,b)=>canonicalStringify(a)===canonicalStringify(b);
+const metadata=program=>{const {nodes,...rest}=program;return canonicalStringify(rest);};
+const binding=p=>canonicalStringify({request:p.request,coordinates:p.coordinates,sourceBinding:p.sourceBinding,sourceFactor:p.sourceFactor,
+  actualInnerBackground:p.actualInnerBackground,coefficient:p.coefficient,endpoint:p.endpoint,quantitative:p.quantitative,flatJets:p.flatJets,
+  logarithmicNorm:p.logarithmicNorm,degreeAudit:p.degreeAudit,algebra:p.algebra,checks:p.checks,proof:p.proof,decision:p.decision,roots:p.roots});
+function requestOf(input={}){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['sourceProfile','jetOrder','vanishingOrder'].includes(k)))
+    fail('INVALID_INPUT','Use only the pinned source profile and finite scalar derivative orders. Fields, endpoints, H entries and positive lower premises cannot be supplied.');
+  const sourceProfile=input.sourceProfile??SOURCE_PROFILE_ID,jetOrder=input.jetOrder??3,vanishingOrder=input.vanishingOrder??4;assertSourceProfile(sourceProfile);
+  if(!Number.isSafeInteger(jetOrder)||jetOrder<0||!Number.isSafeInteger(vanishingOrder)||vanishingOrder<0)
+    fail('INVALID_INPUT','Derivative and flat orders must be nonnegative finite integers.');
+  if(jetOrder>12||vanishingOrder>256)fail('RESOURCE_LIMIT','This actual-source packet materializes scalar jets through12 and flat orders through256. No omitted derivative is zero.');
+  return {sourceProfile,jetOrder,vanishingOrder};
+}
+
+export function prepareActualInnerCovarianceFlatExtension(input={},context={}){
+  const request=requestOf(input),selected=prepareActualAdmissibleAnnulusCovariance({sourceProfile:request.sourceProfile},context);
+  return attachActualInnerCovarianceFlatExtension(selected,request,context);
+}
+
+export function attachActualInnerCovarianceFlatExtension(selected,input={},context={}){
+  assertActualAdmissibleAnnulusCovariance(selected);const request=requestOf(input);
+  if(selected.request.sourceProfile!==request.sourceProfile||!selected.decision.actualCompletedN1BackgroundRetained)
+    fail('INVALID_SOURCE_CONSTRUCTION','The same actual completed-background annulus H, including n1, is required.');
+  context.checkCancelled?.();const cleared=clearDisposableThirdJetCaches(selected.G);assertActualAdmissibleAnnulusCovariance(selected);
+  context.onProgress?.({stage:'inner-flat-source-caches-cleared',nodeCount:selected.G.nodes.length,memoizedEntriesDiscarded:cleared.rows.reduce((n,r)=>n+r.entries,0)});
+  const sourceCount=selected.G.nodes.length,G=new ActualAnnulusCovarianceExpressions(disposableThirdJetCacheCopy(selected.G),
+    {maxNodes:3000000,maxDerivativeOrder:128,checkCancelled:context.checkCancelled}),q=(n,d=1)=>G.q(n,d),{dot}=covarianceMatrixAlgebra(G),
+    c=selected.constants,f=selected.frozen,g=selected.geometry,recipe=selected.bounds.recipe,{R,Z,T,Xrep,etaRep,sRep}=selected.coordinates,
+    prepared=selected.source.background.prepared,bootstrap=prepared.bootstrap,originalFactor=selected.source.sourceThreshold.direction.program,
+    y=G.fresh('actual_covariance_inner_y'),eta=G.fresh('actual_covariance_inner_eta'),s=G.fresh('actual_covariance_inner_s'),
+    coordinates={y,eta,s,Xrep,etaRep,sRep},imported=copyInnerFactorProgram(G,originalFactor,y,eta),sourceRoots=imported.roots,
+    Xa=G.parameter('Xa'),t1=G.parameter('t1'),kappa0=G.parameter('kappa0'),Lambda=G.parameter('Lambda'),radius=G.div(y,t1),
+    X=G.mul(Xa,G.exp(y)),radial=G.sqrt(G.mul(q(2),s,X)),axial=G.mul(G.exp(G.mul(c.D,G.log(s))),eta),time=G.mul(s,G.sub(G.one,G.pow(eta,2))),
+    at=body=>G.simultaneousSubstitute(body,[R,Z,T],[radial,axial,time]),
+    chartFactor=G.exp(G.mul(G.neg(G.add(c.A,q(1,2))),G.log(s))),bProfile=[sourceRoots.innerTheta,sourceRoots.innerZ],bbar=bProfile.map(x=>G.mul(chartFactor,x)),
+    flatSeed=r=>G.choose(r,G.zero,G.one,G.zero,G.exp(G.neg(G.pow(r,-2))),G.exp(G.neg(G.pow(r,-2)))) ,
+    ga=G.div(G.sub(G.one,kappa0),G.add(flatSeed(radius),flatSeed(G.sub(G.one,radius)))),
+    flat=G.exp(G.neg(G.pow(radius,-2))),sqrtFlat=G.exp(G.neg(G.mul(q(1,2),G.pow(radius,-2)))),
+    H=selected.target.H.map(row=>row.map(at)),det=G.sub(G.mul(H[0][0],H[1][1]),G.mul(H[0][1],H[1][0])),
+    adj=[[H[1][1],G.neg(H[0][1])],[G.neg(H[1][0]),H[0][0]]],W=adj.map(row=>G.div(dot(row,bbar),det)),
+    HW=H.map(row=>dot(row,W)),inverseChecks=HW.map((x,j)=>sourceGraphRationalIdentity(G,G.sub(x,bbar[j]),{atomicNodes:[...H.flat(),...bbar]})),
+    V=W.map(w=>G.mul(ga,w)),factoredTarget=bbar.map(b=>G.mul(sourceRoots.innerFactor,b)),positiveWeights=W.map(w=>G.mul(sourceRoots.innerFactor,w)),
+    positiveSquareRoots=V.map(v=>G.mul(sqrtFlat,G.sqrt(v))),zeroExtend=x=>G.choose(y,G.zero,G.zero,G.zero,G.zero,x),
+    weightExtensions=positiveWeights.map(zeroExtend),squareRootExtensions=positiveSquareRoots.map(zeroExtend),
+    Ac=selected.quantitative.Ac,E=selected.constants.E,
+    massUpper=G.mul(g.Dgeom,g.r0,selected.cutoffs.transverseMass,G.pow(recipe.cone.amplitudeUpper,2)),
+    massUpperCancellation=sourceGraphRationalIdentity(G,G.sub(selected.quantitative.massUpper,massUpper),{atomicNodes:[g.ci,selected.cutoffs.transverseMass,recipe.cone.amplitudeUpper]}),
+    tauLower=G.pow(c.Renv,-56),tauUpper=G.pow(c.Renv,8),WLower=G.div(G.mul(c.kappa,tauLower),G.mul(q(64),massUpper)),
+    WUpper=G.div(G.mul(q(2),tauUpper),selected.quantitative.massLower),VLower=G.div(WLower,q(4)),VUpper=G.mul(q(9),WUpper),
+    determinantCoefficient=G.mul(q(15,16),Ac,c.u,G.pow(g.Dgeom,2),g.r0,G.pow(selected.cutoffs.transverseMass,2),G.pow(recipe.mass.massLowerCoefficient,2)),
+    lengthRoot=G.sqrt(g.Ls),lengthRootSquare=G.pow(lengthRoot,2),determinantExpanded=G.mul(q(15,8),Ac,c.u,G.pow(g.haarFactor,2),G.pow(recipe.mass.massLowerCoefficient,2),lengthRootSquare),
+    determinantSquareAlgebra=sourceGraphRationalIdentity(G,G.sub(selected.quantitative.uniformAbsoluteDeterminantLower,determinantExpanded),
+      {atomicNodes:[Ac,g.ci,selected.cutoffs.transverseMass,recipe.mass.massLowerCoefficient,lengthRoot]}),
+    determinantNormalization=sourceGraphRationalIdentity(G,G.sub(G.substitute(determinantExpanded,lengthRootSquare,g.Ls),G.mul(determinantCoefficient,g.ci)),
+      {atomicNodes:[Ac,g.ci,selected.cutoffs.transverseMass,recipe.mass.massLowerCoefficient]}),
+    determinantScaleIdentity={sourceSquareExpansion:determinantSquareAlgebra,positiveSquareRootRule:{square:lengthRootSquare,argument:g.Ls,
+      sourceLengthLower:G.mul(g.lengthRatioBounds[0],g.S),rule:'The actual positive Ls gives (sqrt(Ls))^2=Ls.'},normalization:determinantNormalization,
+      pass:determinantSquareAlgebra.pass&&determinantNormalization.pass},
+    determinantScaledLower=G.div(G.mul(q(15,16),G.pow(c.Renv,-6),c.u,G.pow(g.Dgeom,2),g.r0,G.pow(selected.cutoffs.transverseMass,2),G.pow(recipe.mass.massLowerCoefficient,2)),g.Tg),
+    covarianceEntryUpper=G.mul(q(8),c.u,G.pow(c.Renv,10),massUpper),inverseScaleUpper=G.div(G.mul(q(2),covarianceEntryUpper),determinantScaledLower);
+
+  // There is no substitution y=0 into the interior exp(-t1^2/y^2)
+  // or into the interior ga syntax. Construct the regular natural endpoint.
+  const coreEta=G.core.eta,naturalG=G.substitute(G.core.g,coreEta,eta),Phi=G.natural('Phi',q(4),eta),PhiY=G.natural('Phi',q(4),eta,1,0),
+    naturalF=G.mul(naturalG,Phi),naturalU=G.add(G.core.Ustar,G.div(G.natural('u',q(4),eta),Lambda)),
+    naturalUy=G.div(G.mul(q(4),G.natural('u',q(4),eta,1,0)),Lambda),p1=G.neg(G.div(G.mul(q(8),PhiY),Phi)),rEdge=G.sqrt(G.mul(q(2),Xa)),
+    endpointB=[G.mul(p1,naturalF),G.neg(G.div(G.mul(q(2),naturalUy),rEdge))],endpointBbar=endpointB.map(b=>G.mul(chartFactor,b)),
+    gaAtZero=G.mul(G.sub(G.one,kappa0),G.exp(G.one)),endpointR=G.sqrt(G.mul(q(2),s,Xa)),
+    atEndpoint=body=>G.simultaneousSubstitute(body,[R,Z,T],[endpointR,axial,time]),
+    endpointH=selected.target.H.map(row=>row.map(atEndpoint)),endpointDet=G.sub(G.mul(endpointH[0][0],endpointH[1][1]),G.mul(endpointH[0][1],endpointH[1][0])),
+    endpointAdj=[[endpointH[1][1],G.neg(endpointH[0][1])],[G.neg(endpointH[1][0]),endpointH[0][0]]],
+    endpointW=endpointAdj.map(row=>G.div(dot(row,endpointBbar),endpointDet)),endpointV=endpointW.map(w=>G.mul(gaAtZero,w)),
+    endpointInverseChecks=endpointH.map((row,j)=>sourceGraphRationalIdentity(G,G.sub(dot(row,endpointW),endpointBbar[j]),{atomicNodes:[...endpointH.flat(),...endpointBbar]})),
+    endpointAlgebra=innerEndpointStressAlgebra(G),
+    endpoint={X:Xa,R:endpointR,Z:axial,T:time,natural:{Y:q(4),g:naturalG,Phi,PhiY,F:naturalF,U:naturalU,Uy:naturalUy,p1},
+      ga:gaAtZero,bProfile:endpointB,bbar:endpointBbar,H:endpointH,determinant:endpointDet,normalizedWeights:endpointW,regularSquareCoefficient:endpointV,
+      regularSquareRoots:endpointV.map(v=>G.sqrt(v)),inverseChecks:endpointInverseChecks,algebra:endpointAlgebra,
+      KaValuesAreZero:true,actualForwardTargetAtEndpoint:selected.target.components.map(atEndpoint),
+      provenTargetValue:[G.zero,G.zero],provenWeightValue:[G.zero,G.zero],provenSquareRootValue:[G.zero,G.zero],
+      singularInteriorSampleEvaluated:false,originalActualForwardTargetReplacedInGraph:false,
+      justification:'Ka has a y^3 prefactor multiplying a uniformly dominated regular integral. Each Ka and its eta derivatives has endpoint0; the exact inner difference algebra then yields the displayed natural Y=4 coefficient.'};
+  const atWitness=body=>G.simultaneousSubstitute(body,[eta,s,Xrep,etaRep,sRep],[G.zero,G.one,Xa,G.zero,G.one]);
+  endpoint.witness={X:Xa,Xrep:Xa,eta:G.zero,etaRep:G.zero,s:G.one,sRep:G.one,R:G.sqrt(G.mul(q(2),Xa)),Z:G.zero,T:G.one,q:g.Q,
+    H:endpointH.map(row=>row.map(atWitness)),determinant:atWitness(endpointDet),normalizedWeights:endpointW.map(atWitness),regularSquareCoefficient:endpointV.map(atWitness),
+    coefficient:endpointBbar.map(atWitness),ga:gaAtZero,WLower,VLower,determinantAbsoluteLower:G.div(determinantScaledLower,g.S),
+    actualCompletedF:atWitness(atEndpoint(selected.fields.F)),actualCompletedG:atWitness(atEndpoint(selected.fields.G)),
+    actualLeadingF:atWitness(atEndpoint(selected.leadingFields.F)),actualLeadingG:atWitness(atEndpoint(selected.leadingFields.G)),
+    actualForwardTarget:endpoint.actualForwardTargetAtEndpoint.map(atWitness),
+    actualFirstOrderBodyRetained:true,coefficientNonzeroNumericallyAsserted:false,
+    representativeRule:'The original representative domain is closed at Xa. Choose a source box containing this edge point and freeze the point itself as its representative; do not differentiate the rounded label.',
+    singularInteriorFormulaEvaluated:false};
+  context.onProgress?.({stage:'inner-flat-regular-endpoint-and-H',nodeCount:G.nodes.length});
+
+  const n1=prepared.records[1],inner=bootstrap.inner,r1=bootstrap.orderOne,sourceX=bootstrap.constants.X,sourceEta=bootstrap.constants.eta,
+    sourceFraw=G.picardEven(inner.system,0,sourceX,sourceEta),sourceUraw=G.picardEven(inner.system,1,sourceX,sourceEta),
+    branchData=(completed,local)=>{const node=G.nodes[completed],other=node.op==='add'?node.args.find(x=>x!==local):null,inside=G.nodes[local],correction=other===null?null:G.nodes[other];
+      return {completed,local,raw:inside?.args?.[3]??null,correction:other,pass:node.op==='add'&&node.args.includes(local)&&inside.op==='smooth_piecewise'&&inside.args[0]===sourceX&&inside.args[1]===r1.Xkeep&&inside.args[2]===r1.Xcut&&
+        correction?.op==='smooth_piecewise'&&correction.args[0]===sourceX&&correction.args[1]===r1.X0&&correction.args[2]===r1.IposRight&&correction.args[3]===G.zero&&correction.args[5]===G.zero};},
+    localBranches={F:branchData(r1.F1,n1.actual.F),U:branchData(r1.U1,n1.actual.U)},
+    actualInnerBackground={actualCompletedSlowFields:structuredClone(selected.fields),actualLeadingSlowFields:structuredClone(selected.leadingFields),
+      sourceCoordinates:{X:sourceX,eta:sourceEta},commonPicardSystem:inner.system,commonPicardMatrices:{A0:structuredClone(G.picardSystems[inner.system].A0),A1:structuredClone(G.picardSystems[inner.system].A1),forcing:[...G.picardSystems[inner.system].forcing]},
+      commonPicardNorm:{C:inner.C1,solutionNorm:inner.solutionNorm,strip:inner.loss,radialDomain:inner.aSquared,tail:structuredClone(G.picardSystems[inner.system].tail)},
+      commonRadialEnd:inner.aSquared,chosenCollarEnd:G.mul(Xa,G.exp(G.div(t1,q(256)))),Xminus:r1.Xminus,Xkeep:r1.Xkeep,Xcut:r1.Xcut,
+      localBranches,sourceRawF:sourceFraw,sourceRawU:sourceUraw,actualGlobalF:n1.global.F,actualGlobalU:n1.global.U,
+      actualOrderOneStress:[n1.stress.Ttheta,n1.stress.Tz],cutoffReduction:'On 0<=log(X/Xa)<=t1/256, the original n1 local cutoff is exactly1 and the positive Ipos correction is0. The actual n1 Picard solution remains in F and U.',
+      radialAnalyticityAssumed:false,etaAnalyticityUsesActualRetainedPicardStrip:true,leadingReplacesCompletedField:false};
+  const sourceFactor={coordinates,X,Xa,t1,kappa0,normalizedDistance:radius,chartFactor,bProfile,bbar,ga,flat,sqrtFlat,sourceActivation:sourceRoots.innerFactor,
+    positiveFactor: G.mul(ga,flat),actualFullTarget:selected.target.components.map(at),factoredTarget,targetExtensions:factoredTarget.map(zeroExtend),
+    importedRoots:sourceRoots,importedInnerKernels:imported.kernels,copyTrace:imported.pairs,originalOperations:imported.operations,
+    factorization:'Tchart=s^(-A-1/2)*e_a(y)*(innerTheta,innerZ), e_a=g_a*exp(-t1^2/y^2).',
+    commonZeroStressFactorDividedNumerically:false,rawActualForwardMomentTargetRetained:true,
+    squareSeedIdentity:{sourceStepArgument:radius,sourceStepDerivativeOrder:0,interiorDefinition:'sigma(r)=exp(-1/r^2)/(exp(-1/r^2)+exp(-1/(1-r)^2))',
+      sourceFactorIsLiteralOriginalStep:sourceRoots.innerFactor===G.mul(G.sub(G.one,kappa0),G.step(radius)),
+      positiveRootRule:'For r>0, exp(-1/r^2)=[exp(-1/(2r^2))]^2; ga,W>0 gives the displayed unique positive square root.'}},
+    coefficient={H,determinant:det,adjugate:adj,target:bbar,W,V,HW,inverseChecks,positiveWeights,positiveSquareRoots,weightExtensions,squareRootExtensions,
+      normalizedTargetScale:G.neg(G.div(dot(f.N,bbar),Ac))};
+
+  const flatJets=innerFlatSquareRootJets({jetOrder:request.jetOrder,vanishingOrder:request.vanishingOrder}),jetRoots=[],jetChecks=[];
+  let differentiated=sqrtFlat;
+  for(const row of flatJets.rows){
+    if(row.order)differentiated=G.derivative(differentiated,y);
+    const polynomial=G.add(...row.polynomial.map((x,j)=>G.mul(G.q(...readRational(x)),G.pow(radius,2*j)))),
+      formula=G.mul(G.pow(t1,-row.order),sqrtFlat,G.pow(radius,-3*row.order),polynomial),
+      check=sourceGraphRationalIdentity(G,G.sub(differentiated,formula),{atomicNodes:[sqrtFlat],maxTerms:100000});
+    jetRoots.push({order:row.order,actualDerivative:differentiated,recurrence:formula,zeroExtension:zeroExtend(formula),
+      flatBound:G.mul(G.pow(t1,-row.order),G.q(...readRational(row.coefficient)),G.pow(radius,request.vanishingOrder),G.exp(G.neg(G.mul(q(1,4),G.pow(radius,-2)))))});
+    jetChecks.push({...check,order:row.order});
+  }
+  flatJets.actualSourceJetRoots=jetRoots;flatJets.actualDerivativeIdentityChecks=jetChecks;
+  const logIdentities=selected.families.flatMap(family=>family.frame.wMatrix.flatMap((row,i)=>row.map((x,j)=>{
+    const reference=i===1&&j===1?G.mul(q(-2),family.frame.reference.lambda):G.zero,
+      expected=G.sub(G.add(reference,family.frame.projectedError[i][j]),i===j?G.sub(family.frame.actualDamping,family.frame.reference.dref):G.zero);
+    return {sign:family.sign,row:i,column:j,...sourceGraphRationalIdentity(G,G.sub(x,expected),{atomicNodes:[family.frame.reference.lambda,family.frame.actualDamping,family.frame.reference.dref,...family.frame.projected.flat()]})};
+  }))),logarithmicNorm={sourceOperatorError:E,sourceDampingError:E,muInfinityUpper:G.div(G.mul(q(3),E),g.S),
+    forwardPropagatorUpper:G.exp(G.mul(q(3),E,g.lengthRatioBounds[1])),sourceLengthRatioUpper:g.lengthRatioBounds[1],identities:logIdentities,
+    matrixIdentity:'M=diag(0,-2*lambda)+E_actual-(d-dref)*I',negativeReferenceEigenvalueRetained:true,absoluteNormGronwallUsed:false,
+    allSlowPointDerivativesOfPZero:selected.families.every(a=>[R,Z,T].every(x=>!G.freeCoordinates(a.P).has(x)))},
+    degreeAudit=outerCovarianceJetDegreeAudit({order:Math.max(8,request.jetOrder)}),innerBound=selected.source.sourceThreshold.direction.inner,
+    absorption=directionCPowerAbsorption(Math.max(12,innerBound.factorCoefficientCPower+14)),
+    scalarRows=[{id:'strict-inner-common-collar-order',pass:256>128&&128>64&&64>32&&32>16},
+      {id:'positive-inner-ga-range',pass:16<18&&2*2===4,proof:'kappa0<1/2 and denominator<=2 give ga>1/4. For r<=1/4, exp[-1/(1-r)^2]>=exp[-16/9]>1/9, giving ga<9.'},
+      {id:'inner-tau-lower-power',pass:1+33+20+1<56,proof:'C^12<Renv, chart factor>1/4, -N dot direction>Renv^-33, Ac<4Renv^20 and Renv>16 give tauTilde>Renv^-55>Renv^-56.'},
+      {id:'inner-tau-upper-power',pass:7+1<=8,proof:'Both b components have magnitude<Renv; chart factor<4 and Ac>Renv^-6 give tauTilde<8Renv^7<Renv^8.'}],
+    quantitative={Ac,gaLower:q(1,4),gaUpper:q(9),normalizedTargetScaleLower:tauLower,normalizedTargetScaleUpper:tauUpper,WLower,WUpper,VLower,VUpper,
+      squareRootCoefficientLower:G.sqrt(VLower),squareRootCoefficientUpper:G.sqrt(VUpper),massUpperIndependentOfBand:massUpper,massUpperCancellation,
+      determinantScaleIdentity,determinantScaledLower,determinantAbsoluteLower:G.div(determinantScaledLower,g.S),covarianceEntryUpper,inverseScaleUpper,inverseInfinityNormUpper:G.mul(inverseScaleUpper,g.S),
+      sourceInnerCoefficientLower:G.pow(G.parameter('CSelected'),-12),sourceInnerCoefficientUpper:G.pow(G.parameter('CSelected'),innerBound.factorCoefficientCPower),
+      sourcePowerAbsorption:absorption,scalarRows,allDerivativeNumericConstantsEvaluated:false},
+    algebra={endpoint:endpointAlgebra,conditionalSqrtRule:positiveCoefficientSquareRootJetBounds({lower:'1',upper:'3',derivativeBounds:['3','2','0','0']}),
+      logarithmicNormRule:logarithmicPulseNormAudit(),genericReceiptsSupplyNoSourcePremises:true};
+  const params=G.source.parametersExactExpressions,picard=G.picardSystems[inner.system],sourceDirection=selected.source.sourceThreshold.direction,
+    stressZero=n1.stress.Ttheta!==G.zero&&n1.stress.Tz!==G.zero&&[n1.stress.Ttheta,n1.stress.Tz].every(root=>{const node=G.nodes[root];return node.op==='smooth_piecewise'&&node.args[0]===sourceX&&node.args[1]===r1.Xminus&&node.args[3]===G.zero;}),
+    checks=[
+      {id:'authentic-completed-background-annulus-H-preserved',pass:selected.decision.actualNewWholeAnnulusTwoSignHConstructed&&selected.decision.actualCompletedN1BackgroundRetained},
+      {id:'copied-entire-source-node-prefix-unchanged',pass:same(G.nodes.slice(0,sourceCount),selected.G.nodes.slice(0,sourceCount))},
+      {id:'same-original-inner-width-and-positive-activation',pass:same(params.kappa0,{ref:'t1'})&&same(params.t1,{power:[{ref:'CSelected'},-120]})&&same(params.Xa,{quotient:[{integer:4},{ref:'Lambda'}]})&&sourceRoots.Xa===Xa&&sourceRoots.t1===t1},
+      {id:'original-factor-program-and-nonlinear-moments',pass:originalFactor.exactFactorization.inner==='T0=e_a*(innerTheta,innerZ)'&&originalFactor.preservedTerms.innerNonlinearMomentDifferences&&originalFactor.preservedTerms.innerAxialStockMinusXWU&&sourceFactor.squareSeedIdentity.sourceFactorIsLiteralOriginalStep},
+      {id:'actual-inner-factor-natural-and-full-integral-bodies',pass:imported.operations.includes('actual_natural_series')&&imported.kernels.length===originalFactor.innerKernels.length&&[...G.freeCoordinates(sourceRoots.innerTheta),...G.freeCoordinates(sourceRoots.innerZ)].every(x=>x===y||x===eta)},
+      {id:'actual-first-Picard-equation-and-norm-remain',pass:n1.raw.system===inner.system&&n1.raw.F===sourceFraw&&n1.raw.U===sourceUraw&&same(picard.zeroAxisDatum,[0,0,0,0,0,0])&&
+        same(picard.diagonal,[0,0,2,0,3,1])&&picard.leadingReferenceSubstitution===false&&picard.solutionNorm.commonCollar===inner.solutionNorm&&n1.norm.actual.originalActualSourceMajorant},
+      {id:'strict-collar-before-original-cutoffs',pass:r1.Xminus===G.mul(Xa,G.exp(G.div(t1,q(128))))&&r1.Xkeep===G.mul(Xa,G.exp(G.div(t1,q(64))))&&r1.Xcut===G.mul(Xa,G.exp(G.div(t1,q(32))))&&inner.aSquared===G.mul(Xa,G.exp(G.div(t1,q(16))))&&scalarRows[0].pass},
+      {id:'actual-F1-U1-restriction-is-Picard-not-zero',pass:localBranches.F.pass&&localBranches.U.pass&&localBranches.F.raw===sourceFraw&&localBranches.U.raw===sourceUraw&&sourceFraw!==G.zero&&sourceUraw!==G.zero&&selected.fields.F!==selected.leadingFields.F&&selected.fields.G!==selected.leadingFields.G},
+      {id:'only-positive-order-stress-zero-on-inner-collar',pass:stressZero&&actualInnerBackground.leadingReplacesCompletedField===false},
+      {id:'closed-inner-direction-and-positive-projection',pass:innerBound.pass&&innerBound.factorCoefficientLower==='C^-12'&&sourceDirection.ratio.pass&&sourceDirection.ratio.checks.some(r=>r.id==='same-cover-box-retains-negative-projection'&&r.pass)&&absorption.pass},
+      {id:'actual-normalized-inverse-and-regular-endpoint-algebra',pass:inverseChecks.every(x=>x.pass)&&endpointInverseChecks.every(x=>x.pass)&&endpointAlgebra.pass},
+      {id:'mass-cancellation-and-source-only-weight-lower',pass:massUpperCancellation.pass&&[massUpper,WLower,VLower].every(x=>G.freeCoordinates(x).size===0)},
+      {id:'actual-one-over-S-determinant-and-inverse-control',pass:determinantScaleIdentity.pass&&G.freeCoordinates(determinantScaledLower).size===0&&G.freeCoordinates(inverseScaleUpper).size===0},
+      {id:'actual-stable-pulse-matrix-and-frozen-P',pass:logIdentities.every(x=>x.pass)&&logarithmicNorm.allSlowPointDerivativesOfPZero},
+      {id:'source-width-scalar-jet-recurrence',pass:flatJets.pass&&jetChecks.every(x=>x.pass)},
+      {id:'finite-degree-induction-and-positive-regular-prefactor',pass:degreeAudit.pass&&scalarRows.every(x=>x.pass)},
+      {id:'singular-inner-expression-never-evaluated-at-zero',pass:endpoint.singularInteriorSampleEvaluated===false&&endpoint.provenSquareRootValue.every(x=>x===G.zero)&&endpoint.originalActualForwardTargetReplacedInGraph===false},
+      {id:'actual-closed-edge-witness-substitutes-all-coordinates',pass:[...endpoint.witness.H.flat(),endpoint.witness.determinant,...endpoint.witness.normalizedWeights,...endpoint.witness.regularSquareCoefficient,
+        ...endpoint.witness.coefficient,endpoint.witness.ga,endpoint.witness.WLower,endpoint.witness.VLower,endpoint.witness.determinantAbsoluteLower,
+        endpoint.witness.actualCompletedF,endpoint.witness.actualCompletedG,endpoint.witness.actualLeadingF,endpoint.witness.actualLeadingG,...endpoint.witness.actualForwardTarget].every(x=>G.freeCoordinates(x).size===0)}
+    ];
+  if(!checks.every(x=>x.pass))fail('INVALID_SOURCE_CONSTRUCTION','Actual inner covariance flat-extension binding failed: '+checks.filter(x=>!x.pass).map(x=>x.id).join(', '));
+  const sourceBinding={sourceProfile:request.sourceProfile,parameterExpressionSHA256:selected.sourceBinding.parameterExpressionSHA256,
+    originalPDFSHA256:'0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f',equations:['B.26','B.27','B.30','4.11','4.15','4.16','5.2','5.8','6.8','7.1','7.2','7.27','7.29'],
+    covarianceProducer:'Private actual-admissible-annulus-covariance with the real n1 completed field in both pulses; the original display ell1 and terminal-only covariance are not reused.',
+    factorProducer:'Private original actual stress-direction program with the exact Ka change of variables and the nonlinear natural/reference differences.',
+    n1Producer:'Original common-collar six-component Picard system, retained leading B26 body, zero axis datum, actual matrices, forcing and eta strip.',
+    originalSourceModulesChanged:false,sourcePrefixNodeCount:sourceCount,originalFactorCopyOperationCount:imported.pairs.length};
+  const proof={
+    domain:'The selected complete annulus band and its actual fixed-label H. Let X=Xa*exp(y), 0<=y<=t1/256, eta in[-1,1], s in[1/2,2], with the actual point and frozen closed-annulus representative in the same original box of distance<=4/S^3. The radial zero extension is local at y=0.',
+    profileBoundary:'Smoothness is on the open positive-time eta chart. At eta=+/-1 use the original inward boundary jets. No real heat continuation to negative time is assumed.',
+    actualCompletedBackground:'The source n1 F/U local cutoff is identically1 before Xkeep, and the positive bump starts farther right. Hence the n1 Picard field is still present on this collar; it is not replaced by zero or by the leading field. The selected b_n band removes n>=2 only by its already proved exact time-cutoff reduction. The first-order stress, in contrast, has an explicit zero branch below Xminus.',
+    actualInnerSmoothness:'The retained common-collar Picard system has the actual smooth B26 coefficients and forcing, an eta-analytic source strip and its convergent norm. Cauchy gives every fixed finite eta derivative on a smaller strip. Away from the radial axis on a compact neighborhood of Xa, the original differential equation recursively gives every radial and mixed derivative. The activation is C-infinity in the real radial variable; radial complex analyticity is not used. These observations apply to the actual source bodies on both sides of Xa.',
+    exactTargetFactor:'The original natural solution has zero stress. Subtract it from the actual B26 field and all five full leading moments. The original difference algebra retains its nonlinear product terms, both viscosity shears and the axial stock term. The substitution r=y/sqrt(1+(y/t1)^2*u) in each normalized primitive gives the displayed Ka operator, so Tbar=s^(-A-1/2)*e_a*(b_theta,b_z). This is an analytic exact-integral identity, not a numerical division by a small stress.',
+    regularKa:'Ka f(y)=y^3/(2*t1^2*g_a(y))*Integral_0^infinity exp(-u)*g_a(r)*f(r)*(1+(y/t1)^2*u)^(-3/2)du. All finite y/eta derivatives of its integrand are dominated by exp(-u) times a polynomial on the closed collar: g_a and the actual natural/source factors have finite jets and protected positive denominators. The retained compactified integral has the original improper endpoint meaning. Thus Ka and each eta derivative tend to0 as y tends to0.',
+    regularEndpoint:'The exact difference algebra after these zero Ka limits gives b(0)=(p1*F_natural,-2*(U_natural)_y/sqrt(2Xa)) at natural Y=4. The source coefficient lower |b|>=C^-12 is preserved at this endpoint. Construct g_a(0)=(1-kappa0)*exp(1) separately; never substitute y=0 into an inverse power of y.',
+    coefficientPositivity:'Normalize the nonzero b direction, not the vanishing Tbar. The original closed same-box direction bound and Ac give tauTilde=-(N dot s^(-A-1/2)b)/Ac between Renv^-56 and Renv^8. The actual H cone therefore gives W=H^-1*bbar with W_i>=kappa*tauTilde/(64*massUpper)>0, through the endpoint. As 1/4<g_a<9, V_i=g_a*W_i>=WLower/4>0. This uses the retained actual H and fixed labels directly at the edge.',
+    determinantScale:'The executed positive-root identity and Haar cancellation give |det H|>d_star/S with the displayed positive source-only d_star. Original frame cone control bounds every H entry by the displayed CH, hence ||H^-1||_infinity<=2*CH*S/d_star. There is no supplied determinant or inverse lower premise.',
+    stablePulse:'Keep the actual identity M=diag(0,-2lambda)+E_actual-(d-dref)I. Its infinity logarithmic norm is <=3E/S. Thus the forward propagator is bounded by exp(3E*Lmax), independent of S. The full moving-pressure and basis derivative remain, and P has zero derivatives in the slow point for frozen labels.',
+    finiteSourceJetConstants:'For every fixed finite order j the actual n1 Picard and leading jets are bounded on this fixed compact collar by finite source-only constants. q^(2h)<=1 and its slow derivatives bring only bounded normalized s factors. The original nonzero normal/tangent/c0 denominators, epsilon*k^2<=4, bounded frozen carriers and v<=Lmax*S imply M_j,B_j=O(S^j) for j>=1. No finite C2 estimate is relabeled a C3 bound, and no list of observed finite jets is promoted to an all-order proof.',
+    variationInduction:'Differentiate the actual Volterra equation at fixed lower endpoint0 and initial vector(1,0). Each jth parameter variation has lower variations as forcing; variation of constants and Ls=O(S) give w_j=O(S^(2j)). Since P is slow independent, t_j/P has the same degree. Exact haar*Ls cancellation yields H_j=O(S^(2j)). Differentiating H*W=bbar gives W_j=O(S^(3j+1)); multiplying by the source-only g_a preserves this degree. The positive lower VLower and the sqrt identity give (sqrt V)_j=O(S^(4j)) for j>=1, while its value is O(S).',
+    flatZeroExtension:'For y>0 the unique positive square root is exp(-t1^2/(2y^2))*sqrt(V_i). The scalar polynomial recurrence retains the factor t1^-j in every ordinary y derivative. Trading one half exponential against arbitrarily many powers of y/t1 gives |D^I sqrt(weight_i)|<=C_(I,N)*S^(4|I|+1)*(y/t1)^N. Extend the whole expression by0 for y<=0 before evaluating its interior factors. Every finite jet then matches0 at Xa.',
+    quantitativeMeaning:'The derivative powers follow the written induction for every finite order. Scalar rows through the requested order are exact executed regressions of that recurrence. The finite actual Picard/source norm constants exist by the displayed source-bound argument; their all-order numerical values and full H numerical enclosures are not evaluated here.',
+    remaining:'The coherent final all-order cutoff/velocity selector, the parameterized all-band H family and the outer extension for that same final family remain separate. This selected-band inner result does not by itself complete whole G-POS or start M3.'};
+  const decision={actualCompletedBackgroundInnerH:true,actualN1PicardRetained:true,actualInnerTargetFactorConstructed:true,
+    actualNormalizedWeightsPositiveThroughInnerEdge:true,actualInnerSquareRootZeroExtension:true,allFiniteInnerFlatJetsByWrittenInduction:true,
+    sourceBoundStablePulsePropagator:true,sourceBoundPolynomialSlowJetDegrees:true,requestedScalarJetOrder:request.jetOrder,
+    singularZeroDivisionUsed:false,actualGlobalLeadingReplacesCompletedField:false,allNumericDerivativeConstantsEvaluated:false,
+    outerExtensionForThisNewHCertified:false,allBandFinalFamilyCertified:false,originalAllOrderPhysicalSelectorComplete:false,
+    unknownOriginalGammaMembership:'NOT_EVALUATED',wholeGPOSComplete:false,wholePhysicalResidualAndFlatErrorComplete:false,newAnalyticLeanKernelProof:false,m3MayStart:false};
+  const roots={coordinates,X,Xa,t1,H,determinant:det,normalizedInverseCoefficient:W,regularSquareCoefficient:V,positiveWeights,positiveSquareRoots,weightExtensions,squareRootExtensions,
+    normalizedCoefficientLower:WLower,regularSquareCoefficientLower:VLower,regularSquareCoefficientUpper:VUpper,endpoint,
+    determinantScaledLower,inverseScaleUpper,massUpperIndependentOfBand:massUpper,flatScalarJets:jetRoots,propagatorUpper:logarithmicNorm.forwardPropagatorUpper};
+  const result={G,selected,request,coordinates,sourceBinding,sourceFactor,actualInnerBackground,coefficient,endpoint,quantitative,flatJets,logarithmicNorm,degreeAudit,algebra,checks,proof,decision,roots},
+    packed=G.pack(roots,{schema:'MathScope.ActualInnerCovarianceFlatExtensionProgram/1',compiler:'actual-inner-covariance-flat-extension.mjs:prepareActualInnerCovarianceFlatExtension',compilerInput:request,
+      coordinates,sourceBinding,sourceFactor,actualInnerBackground,coefficient,endpoint,quantitative,flatJets,logarithmicNorm,degreeAudit,algebra,checks,proof,decision}),{nodes,...rest}=packed;
+  result.program={...structuredClone(rest),nodes:nodes.slice()};
+  seals.set(result,{G,selected,program:result.program,programNodes:result.program.nodes,metadata:metadata(result.program),serialized:canonicalStringify(result.program),
+    count:G.nodes.length,nodes:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),covarianceCount:G.covarianceSystems.length,covariance:JSON.stringify(G.covarianceSystems),binding:binding(result)});
+  context.onProgress?.({stage:'inner-flat-source-program-sealed',nodeCount:G.nodes.length,sourceChecks:checks.length});return result;
+}
+
+export function assertActualInnerCovarianceFlatExtension(p){
+  const s=seals.get(p);if(!s||p.G!==s.G||p.selected!==s.selected||p.program!==s.program||p.program.nodes!==s.programNodes||metadata(p.program)!==s.metadata||
+    JSON.stringify(p.program.nodes)!==s.nodes||JSON.stringify(p.G.nodes.slice(0,s.count))!==s.nodes||!p.G.functionDefinitionsUnchanged(s.definitions)||
+    JSON.stringify(p.G.covarianceSystems.slice(0,s.covarianceCount))!==s.covariance||binding(p)!==s.binding)
+    fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged privately constructed inner source. Replayed flags, edited functions or mutated compiler metadata are not source certificates.');
+  assertActualAdmissibleAnnulusCovariance(s.selected);return true;
+}
+
+export async function actualInnerCovarianceFlatExtensionCertificateFromProgram(p,context={}){
+  assertActualInnerCovarianceFlatExtension(p);context.checkCancelled?.();const s=seals.get(p);
+  return {schema:'MathScope.ActualInnerCovarianceFlatExtensionCertificate/1',status:'ACTUAL_SOURCE_BOUND_SELECTED_BAND_INNER_FLAT_EXTENSION',request:p.request,sourceBinding:p.sourceBinding,
+    graph:{sha256:await sha256(s.serialized),nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.serialized).length,compiler:p.program.compiler,fixedCompilerPrefix:true,laterAppendsExcluded:true,graphIncluded:false},
+    decision:p.decision,quantitative:p.quantitative,flatJets:p.flatJets,logarithmicNorm:p.logarithmicNorm,degreeAudit:p.degreeAudit,algebra:p.algebra,
+    actualInnerBackground:p.actualInnerBackground,sourceFactor:p.sourceFactor,endpoint:p.endpoint,checks:p.checks,proof:p.proof,roots:p.roots,pass:true,
+    scope:'Written source-bound all-finite inner radial square-root zero extension for the selected actual completed-background annulus H and fixed labels. Actual n1 remains. No all-band final family, full numerical H, new analytic Lean or whole M2/M3 conclusion is supplied.'};
+}

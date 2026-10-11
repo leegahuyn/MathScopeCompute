@@ -255,3 +255,18 @@ pressure에서는 compact integrand 뒤에서도 남는 원래 적분 질량을 
 Gaussian 꼬리에서는 stable matrix의 음의 대각 성분을 유지하여 ell에 독립인 propagator 상계를 얻는다. 원래 cutoff의 미분항 psi′t를 빠뜨리지 않으며 무한 tail을 수치0으로 대체하지 않는다. leading stress의 두 shear 중 하나를 빼면 실제 residual 검사에서 실패한다.
 
 이 저장점의 공개 runtime은 0.3.10/v77이다. **전체 M2, 정밀 pulse/H/weight/curl 도함수의 수치 예산, 모든 label의 물리 flat-error와 M3 시작은 아직 false**다. 이 표의 source 결과를 전체 연구 증명 완료로 확대하지 않는다.
+
+## 14. 안쪽 flat 경계·양의 전역 응력·모든 유한 norm·중심 수치
+
+앞선 [edb69fd4 저장점](https://github.com/leegahuyn/MathScopeCompute/commit/edb69fd4f7e5330333e8e4bb819d0e6780466e88)의 원래 소스를 유지하면서 아래 결과를 추가했다.
+
+| 결과 | 실제 source 실행 | 완료 범위 |
+|---|---:|---|
+| [안쪽 공분산 제곱근 연장](ACTUAL_INNER_COVARIANCE_FLAT_EXTENSION_KO.md) | 13/13, 내부18; exit0,84.854초 | 실제 n1 배경을 포함한 선택된 annulus H의 inner factor, regular Ka endpoint, 양의 정규화 계수와 모든 고정 차수 flat jet. attempt1–5의 실패 기록은 보존 |
+| [양의 차수 전역 응력](../ACTUAL_POSITIVE_GLOBAL_STRESS_KO.md) | 8/8; exit0,33.317초 | 실제 n1/n2의 radial/angular/axial 계수 소거, 원래 부호의 forward/backward 응력과 양끝 접합. n1의 완전한 수렴 차감 모멘트를 사용 |
+| [압력·응력의 모든 유한 차수 경계](../ACTUAL_PRESSURE_STRESS_ALL_ORDER_TAIL_KO.md) | 6/6; exit0,41.513초 | 실제 n1/n2,m1 실행, 모든 유한 m에 대한 같은 Gaussian/Leibniz/Stirling·FTC 알고리즘. n1의 원래 heat를 유지하고 quotient 미분과 직접 weighted 미분을 구분 |
+| [중심 pulse/H/weight 수치](evidence/centered-pulse-20261011/ACTUAL_CENTERED_PULSE_ENCLOSURE_KO.md) | 11/11, 내부7; exit0,57.967초 | 지정된 실제 중심의 정규화 mass와 H·역가중치 계수에 192bit 외향 구간과 양의 Gaussian/cutoff 오차. 실제 a± 절대 척도는 별도 인자로 유지 |
+
+각 packet의 현재 source/import 바이트와 실제 관측 exit code를 대조했다. 독립 읽기 검토는 source 실행 수에 포함하지 않는다. 유한 프로그램의 표현 예산은 유한 차수 정리의 수학적 제한과 구분한다.
+
+이 단계에서는 하나의 최종 cutoff 수열로 모든 band/label을 구성하고, 그 같은 배경장의 물리 잔차 및 전체 curl에 위 경계를 연결해야 한다. 중심 정규화 수치만으로 절대 진폭·slow/mixed 도함수·전체 curl의 수치 완료를 선언하지 않는다. 공개 runtime은 **0.3.10/v77**이며, 전체 M2와 M3 시작은 아직 false이다.

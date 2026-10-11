@@ -1,0 +1,126 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+import {prepareActualInnerCovarianceFlatExtension,assertActualInnerCovarianceFlatExtension,actualInnerCovarianceFlatExtensionCertificateFromProgram} from '../actual-inner-covariance-flat-extension.mjs';
+import {assertActualAdmissibleAnnulusCovariance,actualAdmissibleAnnulusCovarianceCertificateFromProgram} from '../actual-admissible-annulus-covariance.mjs';
+import {sourceGraphRationalIdentity} from '../actual-continuation-exact-identities.mjs';
+import {canonicalStringify} from '../../../mathscope-m0/contracts.mjs';
+
+const repository=fileURLToPath(new URL('../../../../',import.meta.url)),relative=f=>path.relative(repository,f).split(path.sep).join('/'),digest=b=>createHash('sha256').update(b).digest('hex');
+function manifest(){
+  const seen=new Map(),pending=[fileURLToPath(import.meta.url)];while(pending.length){
+    const file=pending.pop();if(seen.has(file))continue;const bytes=fs.readFileSync(file),body=bytes.toString('utf8');seen.set(file,digest(bytes));
+    for(const m of [...body.matchAll(/(?:^|\n)\s*(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]+)['"]/g),...body.matchAll(/\bimport\s*\(\s*['"]([^'"]+)['"]\s*\)/g)])
+      if(m[1].startsWith('.'))pending.push(path.resolve(path.dirname(file),m[1]));
+  }
+  const files=Object.fromEntries([...seen].map(([file,sha])=>[relative(file),sha]).sort(([a],[b])=>a.localeCompare(b)));
+  return{scope:'Literal local import closure of this actual inner covariance flat-extension runner.',fileCount:seen.size,files,sha256:digest(canonicalStringify(files))};
+}
+const evidence=process.env.MATHSCOPE_INNER_COVARIANCE_EVIDENCE_DIR,stem=process.env.MATHSCOPE_INNER_COVARIANCE_RECEIPT_STEM??'actual-inner-covariance-flat-extension-source';assert.match(stem,/^[a-z0-9-]+$/);
+const target=evidence?path.join(path.resolve(evidence),stem+'.json'):null;if(target){fs.mkdirSync(path.dirname(target),{recursive:true});assert.ok(!fs.existsSync(target),'Preserve previous actual-source attempts.');}
+const before=manifest(),started=performance.now(),sourceCommit=execFileSync('git',['rev-parse','HEAD'],{cwd:repository,encoding:'utf8'}).trim(),executed=[],progress=[];
+const sourceTest=(name,fn)=>test(name,async()=>{try{await fn();executed.push({id:name,pass:true});}catch(e){executed.push({id:name,pass:false,message:e.message});throw e;}});let p,selectedGraph;
+try{p=prepareActualInnerCovarianceFlatExtension({}, {onProgress:row=>{const event={...row,elapsedMs:performance.now()-started,rssBytes:process.memoryUsage().rss};progress.push(event);console.log('# inner-flat-source '+JSON.stringify(event));}});}
+catch(e){const record={schema:'MathScope.ActualInnerCovarianceFlatSourceFailure/1',generatedAt:new Date().toISOString(),sourceCommit,sourceManifest:before,sourceManifestUnchangedAfterRun:canonicalStringify(manifest())===canonicalStringify(before),
+  progress,error:{code:e.code??null,message:e.message,stack:e.stack},elapsedMs:performance.now()-started,peakRSSBytes:process.resourceUsage().maxRSS*1024,actualCertificateIssued:false,pass:false,designedNegativeControl:false};
+  if(target)fs.writeFileSync(target,JSON.stringify(record,null,2)+'\n',{flag:'wx'});throw e;}
+
+sourceTest('the exact selected completed-background annulus H is reproduced unchanged',async()=>{
+  assert.equal(assertActualInnerCovarianceFlatExtension(p),true);assert.equal(assertActualAdmissibleAnnulusCovariance(p.selected),true);
+  const c=await actualAdmissibleAnnulusCovarianceCertificateFromProgram(p.selected);selectedGraph=c.graph;
+  assert.equal(c.graph.sha256,'e042e57c7d59bed083da9a7b786fbcc5ae538d936484132310e684d2482a0b4b');
+  assert.ok(p.checks.every(r=>r.pass));assert.equal(p.checks.length,18);assert.equal(p.sourceBinding.originalSourceModulesChanged,false);
+});
+sourceTest('the exact narrow inner collar lies before the source cutoff and Picard endpoint',()=>{
+  const G=p.G,q=(n,d=1)=>G.q(n,d),a=p.actualInnerBackground,{Xa,t1}=p.roots;
+  assert.equal(a.chosenCollarEnd,G.mul(Xa,G.exp(G.div(t1,q(256)))));assert.equal(a.Xminus,G.mul(Xa,G.exp(G.div(t1,q(128)))));
+  assert.equal(a.Xkeep,G.mul(Xa,G.exp(G.div(t1,q(64)))));assert.equal(a.Xcut,G.mul(Xa,G.exp(G.div(t1,q(32)))));assert.equal(a.commonRadialEnd,G.mul(Xa,G.exp(G.div(t1,q(16)))));
+});
+sourceTest('the actual inner Picard n1 field remains while its source stress has a zero branch',()=>{
+  const G=p.G,a=p.actualInnerBackground,n1=p.selected.source.background.prepared.records[1];
+  assert.equal(a.commonPicardSystem,n1.raw.system);assert.equal(a.sourceRawF,n1.raw.F);assert.equal(a.sourceRawU,n1.raw.U);
+  assert.notEqual(a.sourceRawF,G.zero);assert.notEqual(a.sourceRawU,G.zero);assert.ok(a.localBranches.F.pass&&a.localBranches.U.pass);
+  assert.deepEqual(a.actualCompletedSlowFields,p.selected.fields);assert.notEqual(a.actualCompletedSlowFields.F,a.actualLeadingSlowFields.F);assert.notEqual(a.actualCompletedSlowFields.G,a.actualLeadingSlowFields.G);
+  for(const root of a.actualOrderOneStress){const node=G.nodes[root];assert.equal(node.op,'smooth_piecewise');assert.equal(node.args[1],a.Xminus);assert.equal(node.args[3],G.zero);}
+  assert.equal(a.leadingReplacesCompletedField,false);assert.equal(a.radialAnalyticityAssumed,false);assert.equal(a.etaAnalyticityUsesActualRetainedPicardStrip,true);
+});
+sourceTest('the source square seed and all regularized Ka moments are retained exactly',()=>{
+  const G=p.G,f=p.sourceFactor,q=(n,d=1)=>G.q(n,d),{y}=p.coordinates;
+  const activation=f.squareSeedIdentity.sourceFactorExactOriginalStepIdentity;
+  assert.equal(activation.sourceActivation,f.sourceActivation);
+  assert.equal(activation.expected,G.mul(G.sub(G.one,G.parameter('kappa0')),G.step(G.div(y,G.parameter('t1')))));
+  assert.equal(sourceGraphRationalIdentity(G,G.sub(activation.argument,f.normalizedDistance)).pass,true);
+  assert.equal(activation.sameOriginalStepAndDerivativeOrder,true);assert.equal(activation.congruenceProved,true);
+  assert.equal(activation.coefficientIdentity.pass,true);assert.equal(activation.normalizedIdentity.pass,true);
+  assert.equal(f.sqrtFlat,G.exp(G.neg(G.mul(q(1,2),G.pow(f.normalizedDistance,-2)))));
+  assert.ok(f.importedInnerKernels.length>=7);assert.ok(f.originalOperations.includes('actual_natural_series'));assert.ok(f.originalOperations.includes('definite_integral'));
+  assert.equal(f.squareSeedIdentity.sourceFactorExactOriginalStepIdentity.pass,true);
+  assert.equal(sourceGraphRationalIdentity(G,G.sub(f.sourceActivation,f.squareSeedIdentity.actualOriginalStep),{atomicNodes:[f.squareSeedIdentity.actualOriginalStep]}).pass,false);
+  assert.equal(f.commonZeroStressFactorDividedNumerically,false);
+  assert.equal(f.rawActualForwardMomentTargetRetained,true);assert.equal(p.selected.source.sourceThreshold.direction.program.preservedTerms.innerNonlinearMomentDifferences,true);
+});
+sourceTest('the full slow factor precedes the exact inverse and positive regular coefficient',()=>{
+  const G=p.G,q=(n,d=1)=>G.q(n,d),c=p.coefficient,f=p.sourceFactor;
+  assert.equal(f.chartFactor,G.exp(G.mul(G.neg(G.add(p.selected.constants.A,q(1,2))),G.log(p.coordinates.s))));
+  assert.deepEqual(f.bbar,f.bProfile.map(x=>G.mul(f.chartFactor,x)));assert.deepEqual(c.V,c.W.map(w=>G.mul(f.ga,w)));
+  assert.deepEqual(c.positiveSquareRoots,c.V.map(v=>G.mul(f.sqrtFlat,G.sqrt(v))));assert.ok(c.inverseChecks.every(x=>x.pass));
+  assert.equal(p.quantitative.VLower,G.div(p.quantitative.WLower,q(4)));assert.equal(p.quantitative.VUpper,G.mul(q(9),p.quantitative.WUpper));
+});
+sourceTest('the endpoint uses natural Y4 and zero Ka values without singular evaluation',()=>{
+  const G=p.G,q=(n,d=1)=>G.q(n,d),e=p.endpoint,n=e.natural;
+  assert.equal(n.Y,q(4));assert.equal(n.Phi,G.natural('Phi',q(4),p.coordinates.eta));assert.equal(n.PhiY,G.natural('Phi',q(4),p.coordinates.eta,1,0));
+  assert.deepEqual(e.bProfile,[G.mul(n.p1,n.F),G.neg(G.div(G.mul(q(2),n.Uy),G.sqrt(G.mul(q(2),p.roots.Xa))))]);
+  assert.equal(e.ga,G.mul(G.sub(G.one,G.parameter('kappa0')),G.exp(G.one)));assert.ok(e.inverseChecks.every(x=>x.pass));assert.equal(e.algebra.pass,true);
+  assert.equal(e.algebra.negativeControl.correctlyRejected,true);assert.equal(e.singularInteriorSampleEvaluated,false);assert.equal(e.originalActualForwardTargetReplacedInGraph,false);
+  assert.deepEqual(e.provenSquareRootValue,[G.zero,G.zero]);assert.notEqual(e.normalizedWeights[0],G.zero);
+});
+sourceTest('the Haar mass cancellation and actual determinant provide source-only positive denominator bounds',()=>{
+  const G=p.G,t=p.quantitative;assert.equal(t.massUpperCancellation.pass,true);assert.equal(t.determinantScaleIdentity.pass,true);
+  for(const root of [t.massUpperIndependentOfBand,t.WLower,t.VLower,t.determinantScaledLower,t.inverseScaleUpper])assert.equal(G.freeCoordinates(root).size,0);
+  assert.equal(t.inverseInfinityNormUpper,G.mul(t.inverseScaleUpper,p.selected.geometry.S));assert.equal(t.allDerivativeNumericConstantsEvaluated,false);
+  assert.equal(t.sourcePowerAbsorption.pass,true);assert.ok(t.scalarRows.every(r=>r.pass));
+});
+sourceTest('actual stable moving pulse matrices and every requested scalar derivative are checked',()=>{
+  assert.equal(p.logarithmicNorm.identities.length,8);assert.ok(p.logarithmicNorm.identities.every(c=>c.pass));assert.equal(p.logarithmicNorm.allSlowPointDerivativesOfPZero,true);
+  assert.equal(p.logarithmicNorm.negativeReferenceEigenvalueRetained,true);assert.equal(p.logarithmicNorm.absoluteNormGronwallUsed,false);
+  assert.equal(p.flatJets.actualDerivativeIdentityChecks.length,4);assert.ok(p.flatJets.actualDerivativeIdentityChecks.every(c=>c.pass));
+  assert.deepEqual(p.flatJets.rows.map(r=>r.sourceWidthExponent),[0,-1,-2,-3]);assert.equal(p.degreeAudit.pass,true);
+});
+sourceTest('the boundary representative witness has no free coordinate and keeps the actual n1 body',()=>{
+  const G=p.G,w=p.endpoint.witness;assert.equal(w.X,w.Xrep);assert.equal(w.X,p.roots.Xa);assert.notEqual(w.actualCompletedF,w.actualLeadingF);assert.notEqual(w.actualCompletedG,w.actualLeadingG);
+  for(const x of [...w.H.flat(),w.determinant,...w.normalizedWeights,...w.regularSquareCoefficient,...w.coefficient,w.ga,w.WLower,w.VLower,w.determinantAbsoluteLower,
+    w.actualCompletedF,w.actualCompletedG,w.actualLeadingF,w.actualLeadingG,...w.actualForwardTarget])assert.equal(G.freeCoordinates(x).size,0);
+  assert.equal(w.actualFirstOrderBodyRetained,true);assert.equal(w.coefficientNonzeroNumericallyAsserted,false);assert.equal(w.singularInteriorFormulaEvaluated,false);
+});
+sourceTest('the scoped inner theorem leaves the all-band final selector and whole M2 gates open',()=>{
+  for(const k of ['actualN1PicardRetained','actualNormalizedWeightsPositiveThroughInnerEdge','actualInnerSquareRootZeroExtension','allFiniteInnerFlatJetsByWrittenInduction'])assert.equal(p.decision[k],true);
+  for(const k of ['singularZeroDivisionUsed','actualGlobalLeadingReplacesCompletedField','allNumericDerivativeConstantsEvaluated','outerExtensionForThisNewHCertified','allBandFinalFamilyCertified',
+    'originalAllOrderPhysicalSelectorComplete','wholeGPOSComplete','wholePhysicalResidualAndFlatErrorComplete','newAnalyticLeanKernelProof','m3MayStart'])assert.equal(p.decision[k],false);
+  assert.equal(p.decision.unknownOriginalGammaMembership,'NOT_EVALUATED');assert.match(p.proof.domain,/t1\/256/);
+});
+sourceTest('forged results, changed Picard fields and changed endpoint coefficients lose authority',()=>{
+  assert.throws(()=>assertActualInnerCovarianceFlatExtension({...p}),{code:'INVALID_SOURCE_CONSTRUCTION'});
+  const old=p.actualInnerBackground.actualCompletedSlowFields.F;p.actualInnerBackground.actualCompletedSlowFields.F=p.selected.leadingFields.F;
+  assert.throws(()=>assertActualInnerCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});p.actualInnerBackground.actualCompletedSlowFields.F=old;
+  const edge=p.endpoint.bProfile[0];p.endpoint.bProfile[0]=p.G.zero;assert.throws(()=>assertActualInnerCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});p.endpoint.bProfile[0]=edge;
+  assert.equal(assertActualInnerCovarianceFlatExtension(p),true);
+});
+sourceTest('the exact issued graph prefix survives unrelated appends but rejects metadata replacement',async()=>{
+  const first=await actualInnerCovarianceFlatExtensionCertificateFromProgram(p),nodes=p.program.nodes;p.program.nodes=nodes.slice();
+  assert.throws(()=>assertActualInnerCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});p.program.nodes=nodes;
+  p.program.wholeGPOSComplete=true;assert.throws(()=>assertActualInnerCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});delete p.program.wholeGPOSComplete;
+  p.G.fresh('independent_after_inner_flat_certificate');const next=await actualInnerCovarianceFlatExtensionCertificateFromProgram(p);assert.equal(first.graph.sha256,next.graph.sha256);
+});
+sourceTest('the final actual result records every check and the unchanged import closure',async()=>{
+  const after=manifest(),certificate=await actualInnerCovarianceFlatExtensionCertificateFromProgram(p),priorPass=executed.every(x=>x.pass),sameFiles=canonicalStringify(after)===canonicalStringify(before),
+    record={schema:'MathScope.ActualInnerCovarianceFlatExtensionSourceTest/1',generatedAt:new Date().toISOString(),sourceCommit,
+      command:['node','--max-old-space-size=3072','--test','--test-reporter=tap',relative(fileURLToPath(import.meta.url))],mode:'DIRECT_ACTUAL_SELECTED_BAND_INNER_FLAT_SOURCE',
+      runtime:{node:process.version,v8:process.versions.v8,platform:process.platform,architecture:process.arch},sourceManifest:before,sourceManifestUnchangedAfterRun:sameFiles,
+      progress,selectedCovarianceGraph:selectedGraph,certificate,executedChecks:[...executed,{id:'the final actual result records every check and the unchanged import closure',pass:priorPass&&sameFiles}],executedTestGroupCount:executed.length+1,
+      elapsedMs:performance.now()-started,peakRSSBytes:process.resourceUsage().maxRSS*1024,decision:p.decision,pass:priorPass&&sameFiles};
+  if(target)fs.writeFileSync(target,JSON.stringify(record,null,2)+'\n',{flag:'wx'});assert.equal(record.pass,true);assert.equal(certificate.pass,true);
+});
