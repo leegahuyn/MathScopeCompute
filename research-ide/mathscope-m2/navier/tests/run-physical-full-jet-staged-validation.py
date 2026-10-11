@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import resource
+import re
 import signal
 import subprocess
 import sys
@@ -35,11 +36,26 @@ files = ['actual-program-array-snapshot.mjs', 'actual-physical-center-jet-bodies
          'actual-common-selection-arithmetic-trace.mjs', 'tests/actual-physical-center-full-jet-staged-source-check.mjs',
          'tests/run-physical-full-jet-staged-validation.py']
 snapshots = []
+seen = set()
+def closure(original):
+    original = original.resolve()
+    if original in seen:
+        return
+    seen.add(original)
+    if original.suffix == '.mjs':
+        for spec in re.findall(r'''(?:from\s*|import\s*)['"](\.[^'"]+)['"]''', original.read_text()):
+            closure(original.parent / spec)
 for name in files:
-    original = BASE / name
-    target = snapshot / (original.name + '.txt')
-    target.write_bytes(original.read_bytes())
+    closure(BASE / name)
+for original in sorted(seen):
+    target = snapshot / original.relative_to(ROOT)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with target.open('xb') as stream:
+        stream.write(original.read_bytes())
     snapshots.append({'source': str(original.relative_to(ROOT)), 'path': str(target.relative_to(ROOT)), 'sha256': sha(target)})
+with (snapshot / 'manifest.json').open('x') as stream:
+    stream.write(json.dumps({'schema': 'MathScope.PhysicalFullJetInitialSourceSnapshot/1', 'files': snapshots,
+                            'includesCompleteInitialImportClosure': True}, ensure_ascii=False, indent=2) + '\n')
 command = ['node', '--expose-gc', '--max-old-space-size=4608',
            str((BASE / 'tests/actual-physical-center-full-jet-staged-source-check.mjs').relative_to(ROOT)), str(EVIDENCE), stem]
 started_at = datetime.datetime.now(datetime.timezone.utc).isoformat()

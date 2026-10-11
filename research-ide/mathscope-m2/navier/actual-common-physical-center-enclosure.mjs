@@ -7,6 +7,7 @@ import {prepareActualCommonAdmissibleFamily,assertActualCommonAdmissibleFamily} 
 import {actualCommonAdmissibleBand,assertActualCommonAdmissibleBand,actualCommonAdmissibleBandCertificate} from './actual-common-admissible-band.mjs';
 import {ActualInnerCovarianceExpressions} from './actual-inner-covariance-flat-extension.mjs';
 import {attachSourcePalette} from './actual-covariance-source-certificate.mjs';
+import {assertOriginalSourceTorusMap} from './source-radial-phase-exponent.mjs';
 import {fixedLabelSourcePartitionFactor} from './actual-physical-full-curl.mjs';
 import {commonExteriorZeroAudit,commonCompletionSupportKernel} from './actual-admissible-terminal-covariance.mjs';
 import {actualSupportOrderProof} from './actual-continuation-exact-support.mjs';
@@ -101,7 +102,9 @@ function bindSupport(band,G){
 function buildPhysicalPoint(band,G,sourceBounds,support){
   const c=band.constants,g=band.geometry,q=(n,d=1)=>G.q(n,d),power=(x,a)=>G.exp(G.mul(a,G.log(x))),floor=x=>G.neg(G.ceiling(G.neg(x))),
     anchorX=G.mul(support.endpoints.Xb,G.exp(q(-1,4))),anchorR=G.sqrt(G.mul(q(2),anchorX)),anchor=[anchorR,G.zero,G.one],ell6=G.pow(g.ell,6),meshLabels=anchor.map(x=>floor(G.add(G.mul(ell6,x),q(1,2)))),
-    template=attachSourcePalette({G,constants:c,geometry:g,coordinates:band.coordinates,families:band.families}),label=x=>G.simultaneousSubstitute(x,template.grid,meshLabels),
+    template=attachSourcePalette({G,constants:c,geometry:g,coordinates:band.coordinates,families:band.families}),
+    originalTorusMapBinding=assertOriginalSourceTorusMap(G,{h:c.h,Tg:g.Tg,physicalMap:template.physicalMap}),
+    label=x=>G.simultaneousSubstitute(x,template.grid,meshLabels),
     rectangles=template.rectangleRows.map(row=>({...row,color:label(row.color),center:row.center.map(label),copy:row.copy.map(label),xi:label(row.xi),eta:label(row.eta),v:label(row.v)})),
     anchorYi=template.physicalMap.Yi.map(x=>G.simultaneousSubstitute(x,[band.coordinates.R,band.coordinates.Z,band.coordinates.T],anchor)),
     inverse=exactInversePhysicalTorusCenter(G,{Q:g.Q,Lambda:template.physicalMap.Lambda,Tg:g.Tg,paletteIndex:g.paletteIndex,dr:template.physicalMap.dr,Dgeom:g.Dgeom,
@@ -116,6 +119,7 @@ function buildPhysicalPoint(band,G,sourceBounds,support){
     otherCenterDifference=rectangles[0].center.map((x,j)=>G.sub(x,rectangles[1].center[j])),otherXi=G.div(G.add(...g.rectangleBasis[0].map((x,j)=>G.mul(x,otherCenterDifference[j]))),g.Dgeom),
     centerDifferenceCheck=sourceGraphRationalIdentity(G,G.sub(otherCenterDifference[0],q(-1,1048576)),{maxTerms:10000}),
     checks=[{id:'same-original-band-map-and-universal-palette',pass:template.palette.pass&&template.torus.pass&&template.palette.commonToAllBandsAndLabels&&rectangles[0].sign===1&&rectangles[1].sign===-1},
+      {id:'original-equation-6.2-radial-exponent',pass:originalTorusMapBinding.comparison.sameDrRoot&&originalTorusMapBinding.comparison.allSixExpectedBodiesMatched&&originalTorusMapBinding.parameterBindings.strictPositiveSourceRetained},
       {id:'exact-new-physical-point-inverts-the-original-map',pass:inverse.pass&&inverse.reconstructionChecks.every(r=>r.pass)&&inverse.timeIdentity.pass&&inverse.radiusSquareIdentity.pass},
       {id:'same-terminal-anchor-with-new-permitted-representative',pass:anchorX===G.mul(support.endpoints.Xb,G.exp(q(-1,4)))&&parameters.length===6&&values.length===6&&meshLabels.every(x=>G.freeCoordinates(x).size===0)},
       {id:'other-sign-is-outside-its-original-transverse-support',pass:centerDifferenceCheck.pass&&otherCenterDifference[1]===G.zero&&g.r0===q(1,1n<<34n)&&21n<34n},
@@ -123,10 +127,10 @@ function buildPhysicalPoint(band,G,sourceBounds,support){
       {id:'point-and-cutoff-have-no-free-slow-or-auxiliary-coordinate',pass:[...values,...Object.values(inverse.physical),cutoffAt].every(x=>G.freeCoordinates(x).size===0)}];
   requireAll(checks,'The new actual physical center did not bind');
   return {at,parameters,values,public:{anchor:{X:anchorX,slow:anchor,usedOnlyToChooseNearestLift:true},meshLabels,templateGrid:template.grid,Yi:template.Yi,
-    originalPhysicalMap:template.physicalMap,rectangles,inverse,displacement,slowCutoff:{body:cutoffBody,value:cutoffAt,meshAxes,bandAxis,meshOffsets},
+    originalPhysicalMap:template.physicalMap,originalTorusMapBinding,rectangles,inverse,displacement,slowCutoff:{body:cutoffBody,value:cutoffAt,meshAxes,bandAxis,meshOffsets},
     otherSign:{centerDifference:otherCenterDifference,centerDifferenceCheck,xi:otherXi,lowerAbsoluteXi:'2^-21',supportRadius:'2^-34',excluded:true},checks,
     domainProof:{projection:'Each nearest lift coordinate differs from the original anchor Yi by at most1/2. The original vr/vt have l1 norm sqrt2 and Dgeom>1, hence both projected changes have absolute value<1.',
-      positiveInverse:'The original radial coefficient is >epsilon^(-1/200000)/(3S); Rstar and its reciprocal are<B. The radial anchor exceeds2, so its shifted coordinate is positive. The mean-value estimate in the frequency audit proves the displayed radial bound and the exact inverse exists on r>0.',
+      positiveInverse:'The actual map passes the independent literal original (6.2) binding. Its radial coefficient is >epsilon^(-kappa_s)/(3S)>=epsilon^(-1/200000)/(3S), with original kappa_s=1/100000; Rstar and its reciprocal are<B. The radial anchor exceeds2, so its shifted coordinate is positive. The mean-value estimate in the frequency audit proves the displayed weaker radial bound and the exact inverse exists on r>0.',
       neighborhood:'All displayed positive displacement bounds are <2^-16384. Thus15/16<Tsharp<17/16, 3/16<log(Xb/Xsharp)<5/16, Xplus<Xsharp<Xb, and the exact implicit chart gives s=Tsharp,eta=0.',
       box:'The label is nearest to ell^6*(Rstar,0,1). The new mesh coordinate differs by<1/16, so its offset is in(-9/16,9/16), strictly inside the original support(-3/4,3/4). The selected point may be chosen as the box representative under original(6.8); no lattice-center requirement is introduced.',
       slowCutoff:'The band offset is -log2(Tsharp) with absolute value<1/4 and each mesh bump is positive. Its original complete three-translate denominator stays positive; eta_beta at the actual point is an exact positive source expression.',

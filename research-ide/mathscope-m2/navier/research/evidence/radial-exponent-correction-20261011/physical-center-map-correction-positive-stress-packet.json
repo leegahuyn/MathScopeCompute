@@ -1,0 +1,90 @@
+{
+  "schema": "MathScope.PhysicalCenterOriginalMapCorrectionPacket/1",
+  "createdUTC": "2026-10-11T14:28:31.802791+00:00",
+  "owner": "positive_stress",
+  "files": [
+    {
+      "path": "actual-physical-center-kernel.mjs",
+      "bytes": 16433,
+      "sha256": "8f65b781a5b68eb993db4789943e2c09bd05957543749a9582adbab4274b7e08",
+      "snapshot": "research/evidence/radial-exponent-correction-20261011/physical-center-after-correction/actual-physical-center-kernel.mjs.txt"
+    },
+    {
+      "path": "actual-common-physical-center-enclosure.mjs",
+      "bytes": 46922,
+      "sha256": "f60441131a2650b15b5f3f2aa8894a0462eb0383735a256d895e0c10c70fe6eb",
+      "snapshot": "research/evidence/radial-exponent-correction-20261011/physical-center-after-correction/actual-common-physical-center-enclosure.mjs.txt"
+    },
+    {
+      "path": "research/ACTUAL_COMMON_PHYSICAL_CENTER_ENCLOSURE_KO.md",
+      "bytes": 12591,
+      "sha256": "3ed52a18d96ca486f69505859db5c790ae4f8f1739623699da89b7fc28ead43e",
+      "snapshot": "research/evidence/radial-exponent-correction-20261011/physical-center-after-correction/ACTUAL_COMMON_PHYSICAL_CENTER_ENCLOSURE_KO.md.txt"
+    },
+    {
+      "path": "tests/actual-physical-center-radial-gain.test.mjs",
+      "bytes": 2474,
+      "sha256": "d68ed8fb1ea4294af04eb1bab5d0ca77ca8d81f509c2ba552f1224e7f3c3d96e",
+      "snapshot": "research/evidence/radial-exponent-correction-20261011/physical-center-after-correction/actual-physical-center-radial-gain.test.mjs.txt"
+    }
+  ],
+  "sharedHelper": {
+    "path": "source-radial-phase-exponent.mjs",
+    "sha256": "09ffa7aca344391d39de50f38a9a4c67f175d6d500e4514ac6a86e591768ab7c",
+    "owner": "ns_proof_audit"
+  },
+  "evidence": {
+    "beforeManifest": "research/evidence/radial-exponent-correction-20261011/physical-center-before-correction/manifest.json",
+    "execution": {
+      "path": "research/evidence/radial-exponent-correction-20261011/physical-center-map-correction-light-attempt1.json",
+      "sha256": "3dd0196512cd8dfafadfee998c01ca0c9a18cf3fa9e7addbf88da0c40c46a76d",
+      "logPath": "research/evidence/radial-exponent-correction-20261011/physical-center-map-correction-light-attempt1.log",
+      "logSHA256": "ad7463eb40d87798d05d7825614f27fe6648933858160ef2cc8a6e8f577bddbd",
+      "countsAddendum": "research/evidence/radial-exponent-correction-20261011/physical-center-map-correction-light-attempt1-counts.json",
+      "countsAddendumSHA256": "f982945c3162ad13282c7bc199f5ba103a47fe3f6d8c91a37858ded818dfe9f9",
+      "counts": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "observedExitCode": 0,
+      "elapsedSeconds": 2.1281341549984063
+    },
+    "syntaxCheck": {
+      "command": [
+        "node",
+        "--check",
+        "research-ide/mathscope-m2/navier/actual-common-physical-center-enclosure.mjs"
+      ],
+      "observedExitCode": 0,
+      "externalToolChunk": "bae860"
+    }
+  },
+  "bindings": {
+    "pointField": "point.originalTorusMapBinding",
+    "producer": "assertOriginalSourceTorusMap(G,{h:band.constants.h,Tg:band.geometry.Tg,physicalMap:template.physicalMap})",
+    "inverseRoot": "inverse.input.dr === point.originalPhysicalMap.dr === point.originalTorusMapBinding.roots.actualDr",
+    "originalFormula": "d_r=2*((1+h)*rho_g-h*kappa_s), kappa_s=1/100000",
+    "gain": "M_i=Lambda^(-theta)*epsilon^(-kappa_s)*S^(-rho), 0<=theta<1",
+    "retainedConservativeGain": "M_i>epsilon^(-kappa_s)/(3*S)>=epsilon^(-1/200000)/(3*S)",
+    "unchangedNumericalReserves": {
+      "radialWeakDenominator": 200000,
+      "displacementAndFrequencyBits": 16384,
+      "slowSlopeBits": 15000,
+      "pulseCoefficientErrorBits": 560,
+      "physicalCurlCoefficientErrorBits": 512
+    }
+  },
+  "scope": {
+    "sameGraphEquationGuardInstalled": true,
+    "genericInverseAndPlateauRegressionPassed": true,
+    "originalCommonPhysicalConstructorExecutedHere": false,
+    "corrected270SourceExecutionObservedHere": false,
+    "historicalWrongMapReceiptsPreserved": true,
+    "m2CompletionClaim": false,
+    "m3Started": false
+  }
+}

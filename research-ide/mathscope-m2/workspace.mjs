@@ -12,7 +12,7 @@ import {CHECKLIST,ARCHIVE} from './evidence/checklist-data.mjs';
 import {registerM2Tools} from './webmcp.mjs';
 
 const pretty=v=>JSON.stringify(v,null,2),TERMINAL=new Set(['COMPLETED','PARTIAL','FAILED','CANCELLED','BUDGET_EXCEEDED','UNSUPPORTED','PRECISION_REQUIRED']);
-const DESCRIPTIONS={observation:'네 가지 Δ 모드, 4D 단면·적분·조건부 평균·Wilson 경로, 동일 τ의 물리/유사 좌표 및 정확한 복합체 기저 변환을 비교합니다.',arithmetic:'Pⁿ의 cohomology와 국소 zeta, 타원곡선의 유한체 점계수·Newton slope, 형식 q와 BK 비교, 유한 Witt 연산·perfectoid tower를 계산합니다.',gauge:'실제 군 행렬로 4차원 격자 링크·Wilson 작용을 만들고, 고전 장의 이산화와 유한 앙상블의 통계 진단을 계산합니다.',ns:'원래 terminal F와 1차·2차 도함수의 엄밀한 구간, 양의 인자와 오차를 표시합니다. 차수별 convolution, cutoff, potential의 curl, dyadic chart와 pulse 계산도 실행할 수 있습니다.'};
+const DESCRIPTIONS={observation:'네 가지 Δ 모드, 4D 단면·적분·조건부 평균·Wilson 경로, 동일 τ의 물리/유사 좌표 및 정확한 복합체 기저 변환을 비교합니다.',arithmetic:'Pⁿ의 cohomology와 국소 zeta, 타원곡선의 유한체 점계수·Newton slope, 형식 q와 BK 비교, 유한 Witt 연산·perfectoid tower를 계산합니다.',gauge:'실제 군 행렬로 4차원 격자 링크·Wilson 작용을 만들고, 고전 장의 이산화와 유한 앙상블의 통계 진단을 계산합니다.',ns:'공분산·가중치·pulse와 전체 curl의 270개 도함수 구간을 계산합니다. 원래 양의 배율, 1차·2차·혼합 미분, 오차 경계를 함께 확인할 수 있습니다. terminal F와 기존 배경 계산도 실행할 수 있습니다.'};
 const BOUNDARIES={observation:'각 화면은 실제 계산 기록과 모형·표본·관측 해시에 연결됩니다. 모형 가정과 원본 계산의 검증 상태를 유지합니다. τ=0이나 정밀도 부족은 그림 대신 상태로 표시합니다.',arithmetic:'유한환·다항식·MW Frobenius·q-PD nerve·tilt/Witt와 표준 AΩ 비교를 계산합니다. 각 외부 정리의 가정과 실제 입력을 연결하며, 임의 perfectoid·일반 E∞·새 Lean 증명의 인증 범위는 별도로 유지합니다.',gauge:'유한 격자와 명시한 확률 모형의 계산입니다. 짧은 chain의 통계 진단은 평형·위상 혼합을 보증하지 않으며, 연속체 이론·질량 간극은 별도 과제입니다.',ns:'N3의 원래 양의 매개변수와 완성된 F를 유지합니다. terminal F의 수치 구간은 지정점에 적용되며, 전역 F·pulse·공분산의 수치 범위와 전역 잔차의 검증 상태를 각 실행에 따로 표시합니다.'};
 
 export async function bootM2(){
@@ -54,14 +54,18 @@ export async function bootM2(){
   function renderResult(){
     const j=selected?engine.getJob(selected):null,r=j?.result,editorMatches=j?matches(j):true;
     if(panelsFor!==j?.id+(r?'result':'pending')){const options=listM2Panels(j);$('m2-observation-select').replaceChildren();for(const p of options.length?options:[{id:'main',title:'원본 관측'}])option($('m2-observation-select'),p.id,p.title);panelsFor=j?.id+(r?'result':'pending');}
-    const viewOptions={currentEditorMatches:editorMatches,maxPoints:Number($('m2-lod').value),maxRows:200,panel:$('m2-observation-select').value,colorMode:$('m2-color-mode').value};currentPair=makeObservationPair(j,viewOptions);const v=currentPair?.left||makeM2Visualization(j,viewOptions);currentView=v;
+    const viewOptions={currentEditorMatches:editorMatches,maxPoints:Number($('m2-lod').value),
+      maxRows:j?.request.kind==='ns.actual-physical-center-certified-numerics'?300:200,
+      panel:$('m2-observation-select').value,colorMode:$('m2-color-mode').value};currentPair=makeObservationPair(j,viewOptions);const v=currentPair?.left||makeM2Visualization(j,viewOptions);currentView=v;
     $('m2-pair-scenes').dataset.paired=String(!!currentPair);$('m2-right-surface').hidden=!currentPair;$('m2-left-label').hidden=!currentPair;$('m2-pair-table').hidden=!currentPair;scene.setVisualization(v);
     if(currentPair){const isBlowup=j.request.kind==='observation.blowup-pair';text('m2-left-label',currentPair.label+' · '+(isBlowup?'물리 좌표 · 고정 시야':'왼쪽 Δ='+r.states?.[0]?.delta));text('m2-right-label',isBlowup?'같은 τ · 유사 좌표':'오른쪽 Δ='+r.states?.[1]?.delta);pairScene.setVisualization(currentPair.right);pairScene.setCamera(scene.getCamera());renderObservationTable($('m2-pair-table-head'),$('m2-pair-table-body'),currentPair.right);}else pairScene.set({points:[],lines:[],arrows:[],axes:[]});
     root.dataset.resultStatus=j?.status||'NOT_RUN';root.dataset.resultKind=j?.request.kind||'';root.dataset.visualizationState=v.state;
     text('m2-result-status',v.state==='READY'?(j?.status||'NOT_RUN'):v.state);text('m2-result-description',j?j.request.kind+' · '+(editorMatches?'현재 입력의 실행':'이전 입력의 실행 기록')+' · '+j.id:'현재 입력의 계산을 실행하세요.');
     $('m2-metrics').replaceChildren();
     if(j){metric('실행 상태',j.status);metric('입력 SHA-256',j.inputHash.slice(0,12));if(r){const checks=r.checks||[];metric('유한 독립 검사',checks.filter(c=>c.pass===true||c.ok===true||c.status==='PASS').length+' / '+checks.length);if(r.results?.extensionField)metric('유한체 점계수',r.results.extensionField.count);if(r.results?.aP!==undefined)metric('aₚ',r.results.aP);if(r.measurements?.action!==undefined){const action=numericValue(r.measurements.action);metric('Wilson 작용 S',Number.isFinite(action)?Number(action.toPrecision(7)):'미확정');}if(r.statistics?.effectiveSampleSize!==undefined)metric('유효 표본 수',r.statistics.effectiveSampleSize===null?'미확정':Math.floor(r.statistics.effectiveSampleSize));if(r.replicas)metric('독립 replica',r.replicas.length);}}
-    renderObservationTable($('m2-table-head'),$('m2-table-body'),v);renderObservationDetails($('m2-observation-details'),v);$('m2-observation-details').classList.add('m2-source-details');
+    renderObservationTable($('m2-table-head'),$('m2-table-body'),v);
+    text('m2-table-note',(v.table.truncated?'전체 '+v.table.totalRows+'행에서 '+v.table.rows.length+'행을 선택해 표시합니다. ':v.table.rows.length+'행을 모두 표시합니다. ')+'전체 값과 모형은 내보내기 JSON에도 보관합니다.');
+    renderObservationDetails($('m2-observation-details'),v);$('m2-observation-details').classList.add('m2-source-details');
     text('m2-observation',[v.title,v.description,v.axisMetadata.map(a=>a.label+' ['+a.type+'; '+a.unit+']').join(' · '),v.lod.originalPoints>v.lod.displayedPoints?'화면 '+v.lod.displayedPoints+' / 원본 '+v.lod.originalPoints+'개 · 전체 구간 LOD':null,...v.lostInformation].filter(Boolean).join('\n'));
     renderRendererMetrics();
     text('m2-color-range',v.color?.range?v.color.quantity+' · '+v.color.unit+' · '+v.color.range[0]+' → '+v.color.range[1]+' · '+v.color.mode:'값은 표·레이블·서로 다른 점과 선 모양으로 함께 제공합니다.');

@@ -8,6 +8,7 @@ import {physicalCenterNumericalJetConditioning} from './actual-physical-center-j
 import {recomputePhysicalCenterPositiveScales} from './actual-physical-center-positive-scale-kernel.mjs';
 import {recomputePhysicalCenterUnscaledDerivativeBounds} from './actual-physical-center-unscaled-numerics.mjs';
 import {SOURCE_PROFILE_ID,sourceExponentContract} from './source-profile.mjs';
+import {ORIGINAL_RADIAL_PHASE_SPECIFICATION} from './source-radial-phase-exponent.mjs';
 import {readRational,qcompare,fail} from './actual-continuation-arithmetic.mjs';
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 
@@ -19,6 +20,16 @@ async function installedSourceEvidence(){
   if(await sha256(evidence)!==INSTALLED_PHYSICAL_CENTER_EVIDENCE_SHA256||
     evidence.schema!=='MathScope.InstalledPhysicalCenterSourceEvidence/1'||
     evidence.authentication!==AUTHENTICATION||evidence.sourceBinding.sourceProfile!==SOURCE_PROFILE_ID||
+    evidence.originalTorusMapBinding?.schema!=='MathScope.OriginalPhysicalTorusRadialEquationBinding/1'||
+    canonicalStringify(evidence.originalTorusMapBinding?.specification??null)!==canonicalStringify(ORIGINAL_RADIAL_PHASE_SPECIFICATION)||
+    evidence.originalTorusMapBinding.parameterBindings?.strictPositiveSourceRetained!==true||
+    evidence.originalTorusMapBinding.parameterBindings?.parameterExpressionSHA256!==contract.parameterExpressionSHA256||
+    evidence.originalTorusMapBinding.comparison?.sameDrRoot!==true||
+    evidence.originalTorusMapBinding.comparison?.allSixExpectedBodiesMatched!==true||
+    evidence.originalTorusMapBinding.comparison?.oldMissingFactorAccepted!==false||
+    evidence.originalTorusMapBinding.roots.dr!==evidence.originalTorusMapBinding.roots.actualDr||
+    !evidence.originalTorusMap?.sha256||evidence.policy.originalPhysicalRadialEquationRequired!==true||
+    evidence.policy.legacyMissingRadialFactorExecutionAccepted!==false||
     evidence.sourceBinding.parameterExpressionSHA256!==contract.parameterExpressionSHA256||
     !contract.positive||!contract.notNumericallyReplaced||evidence.sourceProcess.exitCode!==0||
     evidence.sourceProcess.timeout!==false||evidence.sourceProcess.complete!==true||
@@ -75,6 +86,7 @@ export async function encloseInstalledPhysicalCenterNumerics(input={},context={}
   if(!allPassed(checks))fail('INVALID_SOURCE_CONSTRUCTION','The installed original-source proof and fresh numerical calculation did not satisfy all obligations.');
   const sourceEvidence={authentication:AUTHENTICATION,installedEvidenceSHA256:INSTALLED_PHYSICAL_CENTER_EVIDENCE_SHA256,
       originalNumericalCertificate:evidence.numericalCertificate,sourceProcess:evidence.sourceProcess,sourceDiagnostics:evidence.sourceDiagnostics,
+      originalTorusMap:evidence.originalTorusMap,originalTorusMapBinding:evidence.originalTorusMapBinding,
       sourceRun:evidence.sourceRun,initialImportManifest:evidence.initialImportManifest,lateImportManifest:evidence.lateImportManifest,
       sourceChecks:evidence.sourceChecks,boundChecks:evidence.boundChecks,
       numericalAlgorithmManifest:evidence.numericalAlgorithmManifest,
@@ -93,7 +105,7 @@ export async function encloseInstalledPhysicalCenterNumerics(input={},context={}
       actualFullPhysicalCurlFirstAndSecondDerivativeNumerics:true,actualSpatialCovariantHessianNumerics:true,
       angularMixedAndFrameConnectionsIncluded:true,physicalDirections:['r','z','t','theta'],
       pulseDerivativeRows:228,physicalDerivativeRows:42,positiveAnalyticRemaindersRetained:true,
-      originalPositiveHRetained:true,originalPositiveScalesRetained:true,
+      originalPositiveHRetained:true,originalPositiveScalesRetained:true,originalPhysicalRadialEquationVerified:true,
       rawUnscaledRelativeAccuracyClaimed:false,allSourceLabelsNumericallyCovered:false,
       remainingSelectorAndPaletteScalesNumericallyClosed:true,originalSelectorScaleEndpointsExternallyExecuted:true,
       freshUnscaledDerivativeIntervalProducts:true,all270PositiveScaleWidthsChecked:true,

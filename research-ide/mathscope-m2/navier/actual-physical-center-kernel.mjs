@@ -6,6 +6,7 @@ import {sourceGraphRationalIdentity} from './actual-continuation-exact-identitie
 import {centeredPulseNumericalRequest,encloseCenteredPulseCoefficients} from './actual-centered-pulse-enclosure-kernel.mjs';
 import {adiabaticPulseCenterControls,encloseAdiabaticPulseCenters} from './actual-adiabatic-pulse-center-kernel.mjs';
 import {directedArithmetic,rational as Q,readRational,qcompare,qtext,fail} from './actual-continuation-arithmetic.mjs';
+import {ORIGINAL_RADIAL_PHASE_SPECIFICATION} from './source-radial-phase-exponent.mjs';
 
 const root=(G,x)=>Number.isSafeInteger(x)&&x>=0&&!!G.nodes[x];
 const dot=(G,a,b)=>G.add(...a.map((x,j)=>G.mul(x,b[j])));
@@ -19,6 +20,7 @@ export function physicalCenterFrequencyAudit({power=16384,bits=16384}={}){
     fail('INVALID_INPUT','Use finite positive power and dyadic remainder orders through one million.');
   const left=512n*(1n<<2048n),right=200000n*(16n*BigInt(power)+BigInt(bits)),rows=[
     {id:'positive-radial-exponent-lower',left:'196',relation:'>',right:'162',pass:196n>162n},
+    {id:'original-radial-margin-below-half',left:'2',relation:'<',right:'100000',pass:2n<100000n},
     {id:'radial-exponent-upper',left:'17/8',relation:'<',right:'3',pass:17n<24n},
     {id:'strong-band-beats-polynomial-and-positive-dyadic-remainder',left:String(left),relation:'>',right:String(right),pass:left>right},
     {id:'source-norm-absorbs-displacement-constants',left:'64',relation:'<',right:String(1n<<128n),pass:64n<(1n<<128n)},
@@ -27,13 +29,14 @@ export function physicalCenterFrequencyAudit({power=16384,bits=16384}={}){
   ];
   return {schema:'MathScope.PhysicalCenterFrequencyAudit/1',power,bits,rows,pass:rows.every(r=>r.pass),
     hypotheses:{h:'0<h<2^-4096',ell:'ell >= (64/h)^2',S:'S=ell^2',epsilon:'epsilon=2^(-h*ell)',
-      radialExponent:'dr=2*(1+h)*log(4-sqrt(2))/log(4+sqrt(2))-h/100000',sourceNorm:'B>=2^128, S>=B^1024'},
+      radialExponent:'dr='+ORIGINAL_RADIAL_PHASE_SPECIFICATION.formula,radialRatio:ORIGINAL_RADIAL_PHASE_SPECIFICATION.rho,
+      radialMargin:'kappa_s='+ORIGINAL_RADIAL_PHASE_SPECIFICATION.kappa,sourceNorm:'B>=2^128, S>=B^1024'},
     conclusion:'epsilon^(1/200000)*S^'+power+' < 2^-'+bits,
     proof:{logarithm:'Set t=ell^(1/4)>1. log(ell)=4log(t)<4t and log2>1/2 give log2(ell)<8t.',
       strongBand:'h*ell/t=h*ell^(3/4)>=512/sqrt(h)>512*2^2048. The displayed exact integer inequality therefore gives h*ell/200000>16*power*t+bits*t.',
       dyadic:'2*power*log2(ell)<16*power*t and t>1. Subtract these exponents without rounding epsilon or h to zero.',
-      radial:'Lambda^2>Tg follows from 14>9sqrt(2), checked by196>162. Thus1/2<rho<1 and1<dr<17/8<3.',
-      inverseMap:'The original palette gives Lambda^i*Q^(dr/2)>epsilon^(-1/200000)/(3*S). At B^-1<Rstar<B, a nearest torus-center lift changes each projected coordinate by <1. Its positive radial inverse remains in (Rstar/2,2Rstar), where the radial derivative exceeds epsilon^(-1/200000)/(12*B^2*S).',
+      radial:'Lambda^2>Tg follows from 14>9sqrt(2), checked by196>162. Thus1/2<rho<1. With original kappa_s=1/100000<1/2, dr-1=(2*rho-1)+2*h*(rho-kappa_s)>0; dr<2*(1+h)<17/8<3.',
+      inverseMap:'For the original palette floor write i=(-(1+h)*log(Q)-log(S))/log(Tg)-theta, 0<=theta<1. Original (6.2) gives M_i=Lambda^i*Q^(dr/2)=Lambda^(-theta)*epsilon^(-kappa_s)*S^(-rho)>epsilon^(-kappa_s)/(3*S)>=epsilon^(-1/200000)/(3*S). At B^-1<Rstar<B, a nearest torus-center lift changes each projected coordinate by <1. Its positive radial inverse remains in (Rstar/2,2Rstar), where the radial derivative exceeds epsilon^(-1/200000)/(12*B^2*S). The weaker exponent retained in this bound does not redefine the original dr.',
       displacement:'|Rsharp-Rstar|<12*B^2*S*epsilon^(1/200000); |Tsharp-1|<6*S*epsilon. Hence |log(Xsharp/Xstar)|<64*B^3*S*epsilon^(1/200000), and every mesh offset changes by <S^5*epsilon^(1/200000).',
       neighborhood:'These positive bounds are <2^-bits when power>=5. The source adapter must separately bind B, ell, source radius, palette, original supports and representative choice.'},
     positiveErrorUpper:'1/'+String(1n<<BigInt(bits)),sourceAuthenticated:false,hReplacedByZero:false};

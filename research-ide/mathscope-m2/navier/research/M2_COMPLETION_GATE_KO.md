@@ -4,7 +4,11 @@
 
 **M2의 추가 구현과 검증을 계속 진행 중이며, 사용자가 요청한 모든 수학 범위의 완료 판정과 M3 시작은 아직 하지 않았다.** 최초 복구점 `8a0046c5` 이후의 저장 기록을 이어가고 있다. 현재 실제 source·생성된 Worker·공개 v79 브라우저에서 확인한 실행 코드의 버전은 **`0.3.11`**이다. 원래 terminal F와 아홉 도함수의 새 실행을 [terminal F runtime 기록](ACTUAL_TERMINAL_FIELD_RUNTIME_KO.md)에, 이전 `0.3.10/v77` 실행은 [heat runtime 기록](evidence/heat-runtime-20261011/HEAT_RUNTIME_RELEASE_KO.md)에 각각 보존한다. 아래 각 절의 이전 공개 버전은 해당 저장 시점의 기록이다.
 
-표시용 `ell=1` 확장의 지정점에는 비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명이 있으므로, 원래 양의 h를 유지한 실제 작은 q 영역에서 양성을 구성한다. 공통 family의 전체 물리 curl·전역 공분산·같은 배경장의 잔차 및 실제 E_B까지 한 source에서 **8/8, 관측 exit 0**으로 검증했다. 원본 수학 논증과 별도 교차 검토에 따라 **G-POS·G-CURL·G-N4·G-N5를 완료**로 판정했다. 원래 보조 중심의 fast·slow·혼합 및 가중치 도함수 138개도 실제 source 검사를 마쳤다. 새 물리점의 정밀 수치 도함수와 남은 양의 배율은 **G-NUM**에서 계속 검증한다. 원래 terminal F의 공개 실행과 다른 pulse·공분산 source 결과의 공개 실행을 혼동하지 않는다.
+2026-10-11의 후속 원문 감사에서 물리 위상 지수의 괄호 불일치를 확인했다. 원문 (6.2)는 `d_r=2*((1+h)*rho_g-h*kappa_s)`, `kappa_s=1/100000`인데, 기존 live 코드 다섯 곳은 마지막 항을 한 번만 뺐다. 원래 `M_i`와 기존 값의 비는 `epsilon^(-kappa_s/2)`이므로 작은 h만으로 무시할 수 없다. [발견·영향 기록](evidence/original-radial-exponent-20261011/original-radial-exponent-mismatch.json)에 원문과 실행 파일 해시를 보존했다. **G-CURL·G-N5의 원문 물리 지도 결속을 다시 검증하며, G-NUM과 M3는 아직 완료·시작하지 않는다.**
+
+이전 공통 family의 **8/8, 관측 exit 0**과 당시 네 gate 완료 판단은 [교정 전 판단 기록](evidence/original-radial-exponent-20261011/before-radial-exponent-audit-M2_COMPLETION_GATE.json)에 그대로 보존한다. 원래 보조 변수에서의 양의 공분산 정의와 같은 배경 E_B/N4 수학은 이 지수 교정으로 직접 바뀌지 않는다. 실제 물리 inverse·새 대표점·270개 도함수와 양의 배율 결속은 올바른 지도에서 다시 생성해야 한다. 발견 당시 진행 중인 source attempt3는 고정된 기존 코드를 끝까지 검사하는 기록이며, 성공하더라도 교정한 원문점의 인증으로 사용하지 않는다.
+
+후속 실행 attempt3는 **8/8, 관측 exit 0, 시간 제한 없음, 1595.337초**로 종료했다. 이 결과의 [구 지도 범위 제한](evidence/physical-full-jets-20261011/physical-full-jet-attempt3-original-map-limitation.json)을 별도로 보존했고, 원문 식 결속이 없는 이 실행을 새 설치물로 가져오려는 실제 음성 대조는 거부됐다. 이후 다섯 live 정의를 공통 원문 식으로 교정하여 관련 경량 **31/31 및 geometry 2/2**, 실제 물리점 연결의 경량 **11/11**을 확인했다. **교정된 원본 attempt4는 2026-10-11 14:28 UTC에 시작했으며 현재 완료 근거가 아니다.** 원문 식·같은 실제 역지도·270개 원본 도함수와 배율·외부 종료 상태를 새로 검증한 뒤에만 다음 판정을 내린다.
 
 기계 판독 판단은 [M2_COMPLETION_GATE.json](M2_COMPLETION_GATE.json), 이번 실행·배포 기록은 [continuation evidence](evidence/m2-continuation-20261011/)에 있다. 이 문서와 JSON은 **범위가 명시된 감사 판단**이다. 상태값·파일명·테스트 개수·hash만으로 모든 해석학적 명제가 자동 증명되는 것은 아니다.
 

@@ -16,6 +16,7 @@ import {attachActualPhysicalCenterTargetEnclosure,assertActualPhysicalCenterTarg
 import {constructActualPhysicalCenterFiniteJetBodies,assertActualPhysicalCenterFiniteJetBodies,actualPhysicalCenterFiniteJetBodiesCertificate} from '../actual-physical-center-jet-bodies.mjs';
 import {actualCommonSelectionArithmeticTrace} from '../actual-common-selection-arithmetic-trace.mjs';
 import {SOURCE_PROFILE_ID} from '../source-profile.mjs';
+import {assertOriginalSourceTorusMap} from '../source-radial-phase-exponent.mjs';
 import {rational as Q,readRational,qcompare,qsub} from '../actual-continuation-arithmetic.mjs';
 import {canonicalStringify} from '../../../mathscope-m0/contracts.mjs';
 
@@ -57,7 +58,13 @@ write('preflight',{...record,controlPath:relative(controlPath)});
 log({event:'START',inputSHA256:record.inputSHA256,sourceManifestSHA256:initialManifest.sha256,sourceFiles:initialManifest.fileCount});
 try{
   const p=prepareActualCommonPhysicalCenterEnclosure(input,context);
-  await check('one-original-private-physical-point-and-positive-full-H-weights',()=>{assert.equal(assertActualCommonPhysicalCenterEnclosure(p),true);assert.ok(p.checks.every(x=>x.pass));assert.equal(p.sourceBounds.contract.positive,true);});
+  await check('one-original-private-physical-point-and-positive-full-H-weights',()=>{
+    assert.equal(assertActualCommonPhysicalCenterEnclosure(p),true);assert.ok(p.checks.every(x=>x.pass));assert.equal(p.sourceBounds.contract.positive,true);
+    const originalTorusMap=assertOriginalSourceTorusMap(p.G,{h:p.G.parameter('h'),Tg:p.band.geometry.Tg,physicalMap:p.point.originalPhysicalMap});
+    assert.deepEqual(originalTorusMap,p.point.originalTorusMapBinding);
+    assert.equal(originalTorusMap.roots.dr,p.point.inverse.input.dr);
+    record.originalTorusMap=write('original-torus-map-equation',originalTorusMap);
+  });
   const shapeSeen=new Map(),sourceShape=value=>{
     if(value===undefined)return ['undefined'];if(value===null)return ['null'];
     if(['string','number','boolean'].includes(typeof value))return [typeof value,value];

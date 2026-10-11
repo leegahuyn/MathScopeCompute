@@ -16,6 +16,7 @@ import {sourceGraphRationalIdentity} from './actual-continuation-exact-identitie
 import {sourceExponentContract} from './source-profile.mjs';
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 import {factorial,fail} from './actual-continuation-arithmetic.mjs';
+import {originalSourceRadialPhase} from './source-radial-phase-exponent.mjs';
 
 const seals=new WeakMap(),same=(a,b)=>canonicalStringify(a)===canonicalStringify(b),
   data=p=>canonicalStringify({request:p.request,sourceBinding:p.sourceBinding,coefficientConstants:p.coefficientConstants,
@@ -57,8 +58,7 @@ function sourceCutoffAndMapConstants(G,family,order){
     // The number of set partitions is <=j!, and each mixed chain term
     // has at most j factors. Four factors give the multinomial sum4^j.
     slowCutoff=G.mul(q(4n**BigInt(n)*factorial(n)),G.pow(partitionMax,n+4),G.pow(logChartMax,n+4)),
-    Lambda=G.sub(q(4),G.sqrt(q(2))),rho=G.div(G.log(Lambda),G.log(c.Tg)),kappa=q(1,100000),
-    dr=G.sub(G.mul(q(2),G.add(G.one,c.h),rho),G.mul(c.h,kappa)),drAbs=G.sqrt(G.add(G.one,G.pow(dr,2))),
+    {Lambda,rho,kappa,dr}=originalSourceRadialPhase(G,{h:c.h,Tg:c.Tg}),drAbs=G.sqrt(G.add(G.one,G.pow(dr,2))),
     Rlower=G.sqrt(G.div(c.Xa,q(2))),Rupper=G.sqrt(G.mul(q(8),c.Xb)),Rbase=G.add(q(2),Rlower,G.inv(Rlower),Rupper),
     radiusRows=Array.from({length:n+1},(_,j)=>({order:j,
       inverseRadius:G.mul(q(factorial(j)),G.pow(Rbase,j+1)),
@@ -72,7 +72,7 @@ function sourceCutoffAndMapConstants(G,family,order){
     partition:'The exact fixed-label denominator is >=1/4 on its numerator support. Its guarded smooth function is defined on [-1,1] and has all fixed derivatives zero at the outer endpoints.',
     slow:'Each fixed jth slow cutoff derivative is <=slowCutoff*S^(3j). The band-factor argument uses the displayed log(s) derivatives; every mesh factor has affine argument ell^6 times its own coordinate.',
     transverseProof:'On either transition of the original chi(xi), |xi| is linear and its slope has magnitude1. The transition inner slope has magnitude2/r0; on the central plateau every positive derivative is zero.',
-    fastRadialProof:'The actual palette i=floor(((1+h)*ell*log2-log S)/log Tg) gives Lambda^i*Q^(dr/2)<=epsilon^(-kappa_s/2)*S^(-rho)<=epsilon^(-kappa_s). Differentiate R^dr exactly; the displayed falling-product/radius bound controls every fixed derivative of a(R) after this single epsilon factor.',
+    fastRadialProof:'The actual palette i=floor(((1+h)*ell*log2-log S)/log Tg) gives Lambda^i*Q^(dr/2)<=epsilon^(-kappa_s)*S^(-rho)<=epsilon^(-kappa_s). Differentiate R^dr exactly; the displayed falling-product/radius bound controls every fixed derivative of a(R) after this single epsilon factor.',
     materializedCoefficientBodies:true,sourceOnly:true};
 }
 

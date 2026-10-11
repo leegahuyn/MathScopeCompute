@@ -10,6 +10,7 @@ import {attachActualCommonGlobalCovariance,assertActualCommonGlobalCovariance,ac
 import {attachActualBackgroundResidualFlatness,actualBackgroundResidualFlatnessCertificate} from '../actual-background-residual-flatness.mjs';
 import {attachActualCommonBandBackgroundResidual,actualCommonBandBackgroundResidualCertificate} from '../actual-common-band-background-residual.mjs';
 import {validateActualBackgroundResidualFlatness,validateActualCommonBandBackgroundResidual} from './assert-common-background-residual-source.mjs';
+import {assertOriginalSourceTorusMap} from '../source-radial-phase-exponent.mjs';
 
 const objects=new Map(),failures=new Map(),counts={},certificates={},assertions={};
 const progress=e=>console.log('# SOURCE_PROGRESS '+JSON.stringify({...e,at:new Date().toISOString(),rssBytes:process.memoryUsage().rss}));
@@ -49,6 +50,8 @@ test('the own physical member starts from one unchanged common C3 / all-tuple di
 
 test('each sign has actual weighted third jets, complete Cartesian curl and guarded physical compositions',async()=>{
   const p=physical(),G=p.G;assert.equal(p.family,family());assert.equal(p.band,band());assert.equal(p.rows.length,2);
+  assertions.originalTorusMap=assertOriginalSourceTorusMap(G,{h:G.parameter('h'),Tg:p.band.geometry.Tg,physicalMap:p.geometry.physicalMap});
+  assert.equal(assertions.originalTorusMap.roots.actualDr,p.geometry.physicalMap.dr);
   assert.equal(p.checks.every(c=>c.pass),true);assert.equal(p.geometry.checks.every(c=>c.pass),true);
   for(const row of p.rows){
     assert.equal(row.jets.checks.length,19);assert.equal(row.jets.checks.every(c=>c.pass),true);

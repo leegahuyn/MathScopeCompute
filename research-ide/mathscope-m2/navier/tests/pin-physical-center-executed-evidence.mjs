@@ -8,18 +8,21 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {canonicalStringify,sha256} from '../../../mathscope-m0/contracts.mjs';
 import {SOURCE_PROFILE_ID,sourceExponentContract} from '../source-profile.mjs';
+import {ORIGINAL_RADIAL_PHASE_SPECIFICATION} from '../source-radial-phase-exponent.mjs';
+import {readExecutedArtifact} from './executed-source-artifact-files.mjs';
 
 assert.equal(process.argv.length,3,'Supply one completed immutable source attempt number.');
 const attempt=Number(process.argv[2]);assert.ok(Number.isSafeInteger(attempt)&&attempt>0);
 const root=fileURLToPath(new URL('../../../../',import.meta.url)),base=fileURLToPath(new URL('../',import.meta.url)),
   stem='research-ide/mathscope-m2/navier/research/evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt'+attempt,
-  read=name=>JSON.parse(fs.readFileSync(path.join(root,name),'utf8')),
-  digestFile=async name=>sha256(fs.readFileSync(path.join(root,name),'utf8')),
+  read=name=>JSON.parse(readExecutedArtifact(root,name).toString('utf8')),
+  digestFile=async name=>sha256(readExecutedArtifact(root,name).toString('utf8')),
   processFile=stem+'-process.json',sourceFile=stem+'.json',processRecord=read(processFile),source=read(sourceFile),
   allPassed=rows=>Array.isArray(rows)&&rows.length>0&&rows.every(row=>row.pass===true);
 assert.equal(source.schema,'MathScope.ActualPhysicalCenterFullJetStagedSourceCheck/1');
 assert.equal(source.pass,true);assert.equal(source.complete,true);assert.equal(source.exitCode,0);
 assert.equal(source.checks.length,8);assert.ok(allPassed(source.checks));
+assert.ok(source.originalTorusMap,'An observed original (6.2) equation binding is required; legacy radial-map executions cannot be installed.');
 assert.equal(processRecord.schema,'MathScope.ObservedPhysicalFullJetStagedProcess/1');
 assert.equal(processRecord.pass,true);assert.equal(processRecord.complete,true);assert.equal(processRecord.exitCode,0);
 assert.equal(processRecord.timeout,false);assert.equal(processRecord.source.path,sourceFile);
@@ -32,6 +35,22 @@ for(const manifest of [source.initialManifest,source.lateImportManifest]){
   for(const [file,hash]of Object.entries(manifest.files))assert.equal(await digestFile(file),hash,file);
 }
 for(const value of Object.values(source.certificates))assert.equal(await digestFile(value.path),value.sha256,value.path);
+assert.equal(await digestFile(source.originalTorusMap.path),source.originalTorusMap.sha256);
+const originalTorusMap=read(source.originalTorusMap.path),physicalCenter=read(source.certificates.physicalCenter.path);
+assert.equal(originalTorusMap.schema,'MathScope.OriginalPhysicalTorusRadialEquationBinding/1');
+assert.deepEqual(originalTorusMap.specification,ORIGINAL_RADIAL_PHASE_SPECIFICATION);
+assert.equal(originalTorusMap.parameterBindings.strictPositiveSourceRetained,true);
+assert.equal(originalTorusMap.parameterBindings.profileId,SOURCE_PROFILE_ID);
+assert.equal(originalTorusMap.parameterBindings.parameterExpressionSHA256,sourceExponentContract().parameterExpressionSHA256);
+assert.equal(originalTorusMap.comparison.sameDrRoot,true);
+assert.equal(originalTorusMap.comparison.allSixExpectedBodiesMatched,true);
+assert.equal(originalTorusMap.comparison.oldMissingFactorAccepted,false);
+assert.equal(originalTorusMap.roots.dr,originalTorusMap.roots.actualDr);
+assert.equal(originalTorusMap.roots.actualDr,physicalCenter.point.originalPhysicalMap.dr);
+assert.equal(originalTorusMap.roots.h,physicalCenter.sourceBounds.roots.h);
+assert.equal(originalTorusMap.roots.dr,physicalCenter.point.inverse.input.dr);
+assert.deepEqual(originalTorusMap,physicalCenter.point.originalTorusMapBinding);
+assert.ok(source.initialManifest.files['research-ide/mathscope-m2/navier/source-radial-phase-exponent.mjs']);
 assert.equal(await digestFile(source.selectionTrace.path),source.selectionTrace.sha256);
 assert.equal(await digestFile(source.sourceDiagnostics.path),source.sourceDiagnostics.sha256);
 assert.equal(await digestFile(source.preparedSourceSchema.path),source.preparedSourceSchema.sha256);
@@ -111,6 +130,7 @@ const sortedFiles=Object.fromEntries(Object.entries(files).sort(([a],[b])=>a.loc
     numericalCertificate:source.certificates.numerical,
     sourceDiagnostics:source.sourceDiagnostics,
     preparedSourceSchema:source.preparedSourceSchema,partialAttachments:source.partialAttachments,
+    originalTorusMap:source.originalTorusMap,originalTorusMapBinding:originalTorusMap,
     positiveSelectorScaleEvidence:Object.fromEntries(['schema','request','sourceBinding','rows','rowScales','absoluteValues','roots','checks','scope','proof','pass']
       .map(key=>[key,structuredClone(selectorScales[key])])),
     targetPositiveScalePremises:{roots:target.source.roots,scaleBounds:target.source.scaleBounds,
@@ -127,6 +147,7 @@ const sortedFiles=Object.fromEntries(Object.entries(files).sort(([a],[b])=>a.loc
     policy:{userSerializedRecordsCannotAuthenticateSource:true,privateOriginalGraphTokenRecreated:false,
       everyJobRecomputesCoefficientNumericalPremises:true,allRowKeysAndNormalizersBound:true,
       originalSelectorScaleEndpointsPinnedFromObservedSource:true,everyJobRecomputesUnscaledDerivativeIntervalProducts:true,
+      originalPhysicalRadialEquationRequired:true,legacyMissingRadialFactorExecutionAccepted:false,
       artifactRole:'Build-pinned executed external source evidence; not a new Lean proof or a runtime reconstruction of the original graph.'}};
 const hash=await sha256(evidence),targetFile=path.join(base,'actual-physical-center-installed-evidence.mjs'),
   text='/** Generated only from the completed observed original source. Rebuild using tests/pin-physical-center-executed-evidence.mjs. */\n'+

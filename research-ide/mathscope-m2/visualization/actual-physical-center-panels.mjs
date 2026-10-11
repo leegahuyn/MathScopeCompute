@@ -9,7 +9,7 @@ const KIND='ns.actual-physical-center-certified-numerics',ROOT='result.results',
   read=(object,path)=>path.split('.').reduce((value,key)=>value?.[key],object);
 const titles={weighted:'가중 pulse · slow·fast·혼합 도함수',raw:'원래 pulse와 두 진폭 · slow 도함수',
   covariance:'공분산 H와 역가중치 y · 도함수',physical:'전체 curl · 물리 도함수와 Hessian'};
-function makePanel(data,{id,title,description,columns,rows,sourcePath,details=[]},options){
+function makePanel(data,{id,title,description,columns,rows,sourcePath,details=[],numericalValueOrigin='FRESH_NUMERICAL_RECOMPUTATION'},options){
   const max=Number.isSafeInteger(options.maxRows)&&options.maxRows>0?Math.min(options.maxRows,1000):300,
     selected=sampleIndices(rows.length,max),table={title,columns,rows:selected.map(i=>rows[i].cells.map(c=>c.value)),
       sourcePaths:selected.map(i=>rows[i].path),cellSourcePaths:selected.map(i=>rows[i].cells.map(c=>c.source)),totalRows:rows.length,
@@ -27,7 +27,8 @@ function makePanel(data,{id,title,description,columns,rows,sourcePath,details=[]
     observation:{kind:'ACTUAL_PHYSICAL_CENTER_FRESH_CERTIFIED_COEFFICIENT_TABLES',sourceProfileId:data.sourceBinding.sourceProfile,
       parameterExpressionSHA256:data.sourceBinding.parameterExpressionSHA256,sourceDimension:4,displayDimension:2,physicalDimension:0,
       coordinateTypes:axisMetadata.map(a=>a.type),nonInjective:true,reconstructionAllowed:false,
-      originalSourceEvidence:'PINNED_EXECUTED_EXTERNAL_SOURCE_CERTIFICATE',freshNumericalRecomputation:true,
+      originalSourceEvidence:'PINNED_EXECUTED_EXTERNAL_SOURCE_CERTIFICATE',numericalValueOrigin,
+      freshNumericalRecomputation:['FRESH_NUMERICAL_RECOMPUTATION','FRESH_INTERVAL_PRODUCTS_WITH_PINNED_SCALES'].includes(numericalValueOrigin),
       runtimeReconstructedFullSourceGraph:false,originalPositiveHRetained:true,originalPositiveScalesRetained:true,
       sourceDerivativeRows:270,angularVectorAndDirectionConnectionsRetained:true,
       rawUnscaledRelativeAccuracyClaimed:false,allLabelsNumericallyCovered:false,kernelProofVerifiedByThisView:false},
@@ -87,6 +88,7 @@ export function actualPhysicalCenterPanels(job,options={}){
     });
     if(precise.length&&precise.every(row=>row.cells.every(c=>c.value!==undefined)))panels.push(makePanel(data,{
       id:'physical-center-selector-scales',title:'원래 band·palette·물리 배율',sourcePath:'positiveSelectorScaleEvidence.rows',
+      numericalValueOrigin:'PINNED_EXECUTED_SOURCE_VALUES',
       description:'같은 원본 실행에서 검증해 고정한 선택식과 기하 배율의 구간입니다. 반복 로그 좌표와 그 폭을 함께 표시하며, 원래 cutoff 선택식을 변경하지 않습니다.',
       columns:['원래 인자','하한','상한','폭을 재는 좌표','좌표 하한','좌표 상한','좌표 폭'],rows:precise},options));
     const coarse=storedScales.rows.flatMap((row,i)=>{
@@ -97,6 +99,7 @@ export function actualPhysicalCenterPanels(job,options={}){
     });
     if(coarse.length&&coarse.every(row=>row.cells.every(c=>c.value!==undefined)))panels.push(makePanel(data,{
       id:'physical-center-coarse-point-factors',title:'물리점의 보조 인자 · 보장 범위',sourcePath:'positiveSelectorScaleEvidence.rows',
+      numericalValueOrigin:'PINNED_EXECUTED_SOURCE_VALUES',
       description:'T와 slow cutoff는 아래 양의 구간으로 보장됩니다. 각 인자 자체가 요청한 정밀도를 만족한다는 표시는 하지 않으며, 최종 물리 배율의 별도 좌표 폭을 검사합니다.',
       columns:['보조 인자','하한','상한','이 구간의 의미','개별 요청 정밀도 충족'],rows:coarse},options));
     const absolute=storedScales.absoluteValues.map((row,i)=>{
@@ -106,7 +109,8 @@ export function actualPhysicalCenterPanels(job,options={}){
     });
     if(absolute.length&&absolute.every(row=>row.cells.every(c=>c.value!==undefined)))panels.push(makePanel(data,{
       id:'physical-center-absolute-values',title:'공분산·가중치·pulse의 실제 값 구간',sourcePath:'positiveSelectorScaleEvidence.absoluteValues',
-      description:'동일한 원래 물리점에서 얻은 전체 H, 역가중치, 제곱근 가중치와 pulse 값입니다. 음수 값은 원래 부호를 보존하고, 폭을 재는 절댓값 좌표를 명시합니다.',
+      numericalValueOrigin:'PINNED_EXECUTED_SOURCE_VALUES',
+      description:'동일한 원래 물리점의 원본 실행에서 검증해 고정한 전체 H, 역가중치, 제곱근 가중치와 pulse 값입니다. 음수 값은 원래 부호를 보존하고, 폭을 재는 절댓값 좌표를 명시합니다.',
       columns:['실제 계산량','하한','상한','좌표의 대상','폭을 재는 좌표','좌표 폭'],rows:absolute},options));
   }
   if(data.unscaledDerivatives?.pass===true&&Array.isArray(data.unscaledDerivatives.rows)&&data.unscaledDerivatives.rows.length===270){
@@ -117,11 +121,13 @@ export function actualPhysicalCenterPanels(job,options={}){
     });
     if(rows.every(row=>row.cells.every(c=>c.value!==undefined)))panels.push(makePanel(data,{
       id:'physical-center-unscaled-derivatives',title:'270개 원본 도함수 · 배율을 적용한 구간',sourcePath:'unscaledDerivatives.rows',
+      numericalValueOrigin:'FRESH_INTERVAL_PRODUCTS_WITH_PINNED_SCALES',
       description:'이번 계수 구간과 검증된 양의 배율 구간을 외향 곱셈합니다. Pulse의 R 포함 행은 원래 규칙의 R# 거듭제곱을 유지한 정규화 미분이며, 전체 curl 행은 실제 물리 미분입니다. 각 행의 의미와 R# 지수를 표시하고 0을 가로지르는 부호 불확실성도 보존합니다.',
       columns:['원본 도함수','원본 미분의 의미','남아 있는 R# 지수','도함수 하한','도함수 상한','양의 배율 하한','양의 배율 상한'],rows,details:['unscaledDerivatives.checks']},options));
   }
   const scopeRows=Object.entries(data.scope).map(([key,value])=>({path:ROOT+'.scope.'+key,cells:[cell(key,null),at('scope.'+key,value)]}));
   panels.push(makePanel(data,{id:'physical-center-evidence',title:'원본 검증과 이번 수치 실행',sourcePath:'scope',
+    numericalValueOrigin:'SOURCE_AND_CURRENT_RUN_EVIDENCE',
     description:'별도로 실행해 고정한 원본 증거와 이번에 다시 계산한 수치 구간의 범위를 함께 표시합니다. 저장한 파일의 결과를 현재의 새 원본 실행으로 세지 않습니다.',
     columns:['검증 항목','원본 상태'],rows:scopeRows,details:['sourceEvidence','numerics.checks']},options));
   return panels;

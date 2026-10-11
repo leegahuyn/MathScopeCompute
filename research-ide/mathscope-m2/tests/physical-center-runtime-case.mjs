@@ -5,6 +5,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {Worker} from 'node:worker_threads';
+import {fileURLToPath} from 'node:url';
 import {createM2Engine} from '../core/engine.mjs';
 import {listExamples,validateDomainRequest} from '../core/registry.mjs';
 import {WORKER_SOURCE,WORKER_SHA256} from '../core/worker-data.mjs';
@@ -13,6 +14,7 @@ import {INSTALLED_PHYSICAL_CENTER_EVIDENCE as sourceEvidence,INSTALLED_PHYSICAL_
 import {readRational,qcompare,qsub,rational as Q} from '../navier/actual-continuation-arithmetic.mjs';
 import {numericalEndpointIsClosed} from '../navier/actual-positive-profile-log-enclosure.mjs';
 import {sha256} from '../../mathscope-m0/contracts.mjs';
+import {readExecutedArtifact} from '../navier/tests/executed-source-artifact-files.mjs';
 
 const mode=process.argv[2],stem=process.argv[3];
 assert.equal(process.argv.length,4);assert.ok(['module','worker'].includes(mode));assert.match(stem,/^[a-z0-9-]+$/);
@@ -20,7 +22,7 @@ const directory=new URL('../navier/research/evidence/physical-center-runtime-202
 fs.mkdirSync(directory,{recursive:true});
 const target=new URL(stem+'-'+mode+'-runtime.json',directory),replayTarget=new URL(stem+'-'+mode+'-replay.json',directory);
 assert.equal(fs.existsSync(target),false);assert.equal(fs.existsSync(replayTarget),false);
-const source=JSON.parse(fs.readFileSync(new URL('../../../'+sourceEvidence.numericalCertificate.path,import.meta.url),'utf8')),
+const source=JSON.parse(readExecutedArtifact(fileURLToPath(new URL('../../../',import.meta.url)),sourceEvidence.numericalCertificate.path).toString('utf8')),
   example=(await listExamples()).find(row=>row.request.kind==='ns.actual-physical-center-certified-numerics');
 assert.ok(example);assert.equal((await validateDomainRequest(example.request)).ok,true);
 assert.equal(await sha256(WORKER_SOURCE),WORKER_SHA256);
@@ -50,6 +52,10 @@ try{
     assert.equal(data.sourceEvidence.sourceProcess.exitCode,0);assert.equal(data.sourceEvidence.sourceProcess.complete,true);
     assert.equal(data.sourceEvidence.installedEvidenceSHA256,INSTALLED_PHYSICAL_CENTER_EVIDENCE_SHA256);
     assert.equal(data.sourceEvidence.sourceChecks.length,8);assert.ok(data.checks.every(row=>row.pass));
+    assert.deepEqual(data.sourceEvidence.originalTorusMapBinding,sourceEvidence.originalTorusMapBinding);
+    assert.equal(data.sourceEvidence.originalTorusMapBinding.specification.formula,'2*((1+h)*rho_g-h*kappa_s)');
+    assert.equal(data.sourceEvidence.originalTorusMapBinding.comparison.oldMissingFactorAccepted,false);
+    assert.equal(data.scope.originalPhysicalRadialEquationVerified,true);
   });
   const originalMap=new Map(source.rows.map(row=>[row.rowKey,row]));
   checked('all270-fresh-rows-match-original-bodies-and-positive-normalizers',()=>{
@@ -107,6 +113,12 @@ try{
     for(const panel of panels){
       const view=makeM2Visualization(job,{panel:panel.id}),table=view.table;
       assert.equal(view.state,'READY');assert.equal(view.scene.points.length,0);assert.equal(table.truncated,false);
+      const storedPanel=['physical-center-selector-scales','physical-center-coarse-point-factors','physical-center-absolute-values'].includes(panel.id);
+      if(storedPanel){assert.equal(view.observation.freshNumericalRecomputation,false);
+        assert.equal(view.observation.numericalValueOrigin,'PINNED_EXECUTED_SOURCE_VALUES');}
+      if(panel.id==='physical-center-unscaled-derivatives'){
+        assert.equal(view.observation.freshNumericalRecomputation,true);
+        assert.equal(view.observation.numericalValueOrigin,'FRESH_INTERVAL_PRODUCTS_WITH_PINNED_SCALES');}
       for(let i=0;i<table.rows.length;i++)for(let j=0;j<table.rows[i].length;j++){
         const sourcePath=table.cellSourcePaths[i][j];
         if(sourcePath){assert.deepEqual(table.rows[i][j],sourcePath.split('.').reduce((value,key)=>value?.[key],job),sourcePath);checkedSourcePathCells++;}
@@ -118,6 +130,13 @@ try{
     assert.equal(panelRows.find(panel=>panel.id==='physical-center-coarse-point-factors').rows.length,2);
     assert.equal(panelRows.find(panel=>panel.id==='physical-center-absolute-values').rows.length,data.positiveSelectorScaleEvidence.absoluteValues.length);
     assert.equal(panelRows.find(panel=>panel.id==='physical-center-unscaled-derivatives').rows.length,270);
+    const sampled=makeM2Visualization(job,{panel:'physical-center-unscaled-derivatives',maxRows:13}).table;
+    assert.equal(sampled.rows.length,13);assert.equal(sampled.totalRows,270);assert.equal(sampled.truncated,true);
+    assert.equal(sampled.cellSourcePaths.length,13);
+    for(let i=0;i<sampled.rows.length;i++)for(let j=0;j<sampled.rows[i].length;j++){
+      const sourcePath=sampled.cellSourcePaths[i][j];
+      if(sourcePath)assert.deepEqual(sampled.rows[i][j],sourcePath.split('.').reduce((value,key)=>value?.[key],job),sourcePath);
+    }
     assert.equal(listM2Panels(job,{currentEditorMatches:false}).some(panel=>panel.id.startsWith('physical-center-')),false);
   });
   const precisionRejection=await validateDomainRequest({...example.request,input:{...example.request.input,tolerance:'1/'+String(1n<<121n),precisionBits:512},precision:{mode:'DIRECTED_BIGINT',bits:512}}),

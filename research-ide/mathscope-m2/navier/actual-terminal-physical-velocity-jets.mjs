@@ -11,6 +11,7 @@ import {actualPhysicalWaveExponentAudit} from './actual-physical-full-curl.mjs';
 import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 import {fail} from './actual-continuation-arithmetic.mjs';
+import {originalSourceRadialPhase} from './source-radial-phase-exponent.mjs';
 
 const seals=new WeakMap(),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),names=['R','Z','T','theta','xi','v'];
 const metadata=p=>{const{nodes,...rest}=p;return canonicalStringify(rest);};
@@ -37,8 +38,7 @@ function originalPhysicalMap(G,harmonic){
   const template=attachSourcePalette({G,geometry:{...g,rectangleBasis:basis},constants:c,coordinates:source.coordinates,families:source.families}),
     grid=p.slowCutoff.meshLabels,label=root=>G.simultaneousSubstitute(root,template.grid,grid),
     rectangles=template.rectangleRows.map(row=>({...row,color:label(row.color),center:row.center.map(label),copy:row.copy.map(label),xi:label(row.xi),eta:label(row.eta),v:label(row.v)})),
-    physicalR=G.mul(G.sqrt(g.Q),coordinates.R),Lambda=G.sub(q(4),sqrt2),rho=G.div(G.log(Lambda),G.log(g.Tg)),
-    dr=G.sub(G.mul(q(2),G.add(G.one,c.h),rho),G.div(c.h,q(100000))),
+    physicalR=G.mul(G.sqrt(g.Q),coordinates.R),{Lambda,rho,dr}=originalSourceRadialPhase(G,{h:c.h,Tg:g.Tg}),
     radialPrimitive=G.mul(power(Lambda,g.paletteIndex),power(physicalR,dr)),timePrimitive=G.mul(power(g.Tg,g.paletteIndex),G.sub(G.one,G.mul(g.Q,coordinates.T))),
     expectedYi=[0,1].map(j=>G.add(G.mul(basis[0][j],radialPrimitive),G.mul(basis[1][j],timePrimitive))),radialFast=G.derivative(radialPrimitive,coordinates.R),
     radialFastFirst=G.derivative(radialFast,coordinates.R),radialFastSecond=G.derivative(radialFastFirst,coordinates.R),exponents=actualPhysicalWaveExponentAudit();

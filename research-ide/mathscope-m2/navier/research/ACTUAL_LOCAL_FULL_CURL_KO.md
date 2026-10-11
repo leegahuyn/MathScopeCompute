@@ -51,7 +51,9 @@ D_r=\partial_R+M_i d_r R^{d_r-1}\partial_\xi,
 \qquad D_z=\varepsilon\partial_Z
 \]
 
-를 사용한다. `d_r=2(1+h)rho_g-h/100000`와 원래 palette의 `M_i`를 보존한다. 원래 auxiliary basis의 직교성으로 `D_r v=D_z v=0`이지만 transverse cutoff의 `chi_xi` 항은 남는다. 원통 기저의 `C_theta/R`도 남는다. 물리적 potential과 velocity 배율은 각각 `Q^(1/2-A)`와 `Q^(-A)`이다.
+를 사용한다. `d_r=2*((1+h)*rho_g-h/100000)`와 원래 palette의 `M_i`를 보존한다. 원래 auxiliary basis의 직교성으로 `D_r v=D_z v=0`이지만 transverse cutoff의 `chi_xi` 항은 남는다. 원통 기저의 `C_theta/R`도 남는다. 물리적 potential과 velocity 배율은 각각 `Q^(1/2-A)`와 `Q^(-A)`이다.
+
+원문 (6.2)의 바깥 계수 `2`는 괄호 안의 두 항 전체에 곱해진다. 2026-10-11 원문 페이지 63의 이미지 대조에서 이전 구현의 두 번째 항에 계수 `2`가 누락된 사실을 확인했다. 이전 실행 기록은 당시 식의 결과로 보존하며, 교정된 실제 물리 좌표의 실행 증거와 구분한다. 자세한 항등식과 영향 범위는 [radial exponent 교정 기록](ACTUAL_RADIAL_PHASE_EXPONENT_CORRECTION_KO.md)을 참조한다.
 
 ## 발산 검사와 Lean의 역할
 

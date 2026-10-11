@@ -2,6 +2,8 @@
 
 ## 1. 대상과 실행 상태
 
+**원문 (6.2) 교정 상태:** 2026-10-11에 원문 p.63의 바깥 계수 2가 두 항 모두에 곱해짐을 재확인했다. 이전 실제 source 실행은 \(2(1+h)\rho-h\kappa_s\)로 구성된 지도를 검사했으므로, 아래의 실행 성공 기록은 그 당시 바이트에 대한 이력이다. 현재 구현은 \(d_r=2((1+h)\rho-h\kappa_s)\)를 같은 그래프의 실제 지도에 직접 대조하고, 새 역상과 모든 후속 값을 다시 생성한다. 교정된 실제 source 실행은 별도 결과로 기록해야 하며, 이전 성공 기록을 원래 물리 지도 또는 M2 완료의 인증으로 사용하지 않는다.
+
 새 `actual-common-physical-center-enclosure.mjs`는 현재 공통 admissible family의 **원래 first-admissible band**를 사용한다. 옛 terminal witness의 양의 수치 계수를 다른 점에 그대로 붙이지 않고, 원래 torus 지도의 실제 역상에서 새 점을 만든 뒤 그 점에서 fields, Rayleigh root, frame, Volterra 해, H와 y를 다시 평가한다.
 
 두 번째 actual-source 실행은 **12/12 PASS, 실제 관측 exit0**으로 완료했다. 원래 import102개의 실행 전후 SHA가 동일하며, 695628개 노드의 원래 common family와 새 실제 물리점 연결을 검증했다. 실행 시간은329.902474249초, peak RSS는4041027584bytes다. 전체 curl의 **값**과 명시한 양의 척도로 나눈 수치 구간에 한정된 결과다.
@@ -18,7 +20,16 @@
 v_r=(1,1-\sqrt2),\qquad v_t=(\sqrt2-1,1),\qquad D_g=4-2\sqrt2,
 \]
 
-\(\Lambda=4-\sqrt2\), \(T_g=4+\sqrt2\)라 놓는다. 원래 palette index \(i\)와 radial exponent \(d_r\)를 사용하면 물리 torus 지도는
+\(\Lambda=4-\sqrt2\), \(T_g=4+\sqrt2\)라 놓는다. 원문 (6.2)의 정확한 지수는
+
+\[
+\rho=\frac{\log\Lambda}{\log T_g},\qquad \kappa_s=\frac1{100000},\qquad
+d_r=2\bigl((1+h)\rho-h\kappa_s\bigr).
+\]
+
+`buildPhysicalPoint`는 실제 `template.physicalMap`을 `assertOriginalSourceTorusMap`에 넘긴다. 이 검사는 같은 G의 h, Tg, rho, dr와 원래 양의 h 정의를 독립적인 typed 산술 본문으로 대조한다. 결과는 `point.originalTorusMapBinding`에 보존하고, 그 dr를 아래 역지도와 전체 curl에 그대로 쓴다. 문서나 호출자가 제공한 완료 플래그로 대체하지 않는다. 일반 역지도 kernel 자체는 별도 조건부 수학으로 남는다.
+
+원래 palette index \(i\)와 이 \(d_r\)를 사용하면 물리 torus 지도는
 
 \[
 Y_i=\Lambda^i r^{d_r}v_r+T_g^i t v_t\pmod{\mathbb Z^2}
@@ -60,7 +71,27 @@ T_\#=(1-t_\#)/Q,\quad R_\#=r_\#/\sqrt Q,\quad X_\#=R_\#^2/(2T_\#)
 
 를 얻는다. 원래 h나 epsilon을0으로 둔 결과가 아니다.
 
-\(\rho=\log\Lambda/\log T_g\)는 \(1/2<\rho<1\)이며 \(1<d_r<17/8<3\)이다. palette floor의 원래 부등식은
+\(\rho=\log\Lambda/\log T_g\)는 \(1/2<\rho<1\)이다. \(\kappa_s<1/2\)와
+
+\[
+d_r-1=(2\rho-1)+2h(\rho-\kappa_s)>0,\qquad d_r<2(1+h)<17/8<3
+\]
+
+를 사용한다. 원래 palette floor를
+
+\[
+i=\frac{-(1+h)\log Q-\log S}{\log T_g}-\vartheta,\qquad0\le\vartheta<1
+\]
+
+로 쓰면, \(\epsilon=Q^h\)와 교정된 지수에서
+
+\[
+M_i=\Lambda^iQ^{d_r/2}=\Lambda^{-\vartheta}\epsilon^{-\kappa_s}S^{-\rho}
+>\frac{\epsilon^{-\kappa_s}}{3S}
+\ge\frac{\epsilon^{-1/200000}}{3S}
+\]
+
+를 얻는다. 이후 수치 오차에는 이 마지막의 보수적인 상계만 사용한다. 원래 지수 \(d_r\)를 다시 약하게 정의한 것이 아니며, 200000 및 기존 오차 상수는 그대로다. 따라서
 
 \[
 \Lambda^iQ^{d_r/2}>\frac{\epsilon^{-1/200000}}{3S}
@@ -161,4 +192,4 @@ C=\eta_\beta\sqrt\epsilon\sqrt y\,\chi\psi\,
 
 원래 positive scale의 절대 구간을 위해 source-only 숫자 중첩exp/log 평가를 추가하고 있다. common selector의 실제 FTC norm에 대한 명시적 유한 수치 power bound와 새점의 원래 terminal target 적분을 결속해야 한다. finite coefficient 구간이나 저장된 원래 symbolic scale을 그 완료의 대체물로 쓰지 않는다.
 
-독립 검토는 [물리 중심 검토 기록](evidence/physical-center-20261011/INDEPENDENT_PHYSICAL_CENTER_REVIEW_KO.md)에 있다. 검토자는 위 실행의102개 import SHA와12/12 검사를 다시 대조했고, 명시한 값·척도 범위의 수학적 오류를 찾지 못했다. 해당 검토가 읽은 본문 SHA는 `91fa480ff8b669794a72676cf1db42703b34346794f581be8475596e68cc3b68`이며, 그 뒤 변경은 이 검토 링크 문단 추가뿐이다. 실행 코드와 원래 실행 기록은 불변이다.
+이전 실행의 독립 검토는 [물리 중심 검토 기록](evidence/physical-center-20261011/INDEPENDENT_PHYSICAL_CENTER_REVIEW_KO.md)에 있다. 검토자는 당시102개 import SHA와12/12 검사를 대조했고, 당시 명시한 값·척도 범위의 결속을 확인했다. 해당 검토가 읽은 본문 SHA는 `91fa480ff8b669794a72676cf1db42703b34346794f581be8475596e68cc3b68`이다. 이 기록과 당시 source 바이트는 보존한다. 이번 원문 지수 교정과 새 실제 실행은 별도의 증거이며, 이전 검토의 범위를 소급하여 넓히지 않는다.

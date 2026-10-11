@@ -1,5 +1,6 @@
 import {iadd,isub,imul,idiv,iscale,ilog,iexp,point,nextDown,nextUp} from '../../mathscope-m1/navier/numerics.mjs';
 import {sourceExponentContract,assertSourceProfile,SOURCE_PROFILE_ID} from './source-profile.mjs';
+import {originalRadialPhaseExponentRecipe,ORIGINAL_RADIAL_PHASE_SPECIFICATION} from './source-radial-phase-exponent.mjs';
 
 const invalid=(code,message)=>{throw Object.assign(Error(message),{code});};
 const midpoint=a=>a[0]+(a[1]-a[0])/2;
@@ -22,13 +23,13 @@ export function sourceTorusGeometry(){
 
 export function sourceBandParameters(ell){
   integer(ell,'ell',8,900);const g=sourceTorusGeometry(),h=sourceExponentContract(),hi=h.binary64Enclosure,ln2=ilog(point(2)),logQ=iscale(ln2,-ell),logS=iscale(ilog(point(ell)),2);
-  const D=isub(point(.5),hi),dr=isub(iscale(imul(iadd(point(1),hi),g.rho.interval),2),iscale(hi,1e-5));
+  const D=isub(point(.5),hi),dr=originalRadialPhaseExponentRecipe({one:point(1),q:point,add:iadd,sub:isub,mul:imul},{h:hi,rho:g.rho.interval,kappa:idiv(point(1),point(100000))});
   const indexBox=idiv(isub(iscale(imul(iadd(point(1),hi),ln2),ell),logS),ilog(g.Tg.interval)),i0=Math.floor(indexBox[0]),i1=Math.floor(indexBox[1]);
   if(i0!==i1||i0<0)invalid('PRECISION_REQUIRED','The interval covering index is not one nonnegative integer; the label is not guessed.');
   const logCi=iadd(iscale(ilog(g.Tg.interval),i0),imul(iadd(point(1),hi),logQ)),logMi=iadd(iscale(ilog(g.Lambda.interval),i0),imul(iscale(dr,.5),logQ)),ci=iexp(logCi),Mi=iexp(logMi),eps=iexp(imul(hi,logQ));
   // Strict h>0 makes epsilon<1, even when both round to one at display precision.
   eps[0]=Math.max(eps[0],.5);eps[1]=Math.min(eps[1],1);
-  return {ell,Q:2**(-ell),QExact:`2^(-${ell})`,epsilon:{exact:`exp(-${ell}*h*log(2))`,interval:eps,strictlyLessThanOne:true,strictlyPositive:true,notRoundedToAnExactOne:true},Sstar:ell*ell,h,D,dr:{exact:'2*(1+h)*rho_g-h*10^-5',interval:dr},covering:{index:i0,indexInterval:indexBox,frozen:true,formula:'floor(((1+h)*ell*log(2)-2*log(ell))/log(T_g))'},ci:{exact:`(4+sqrt(2))^${i0}*2^(-${ell}*(1+h))`,interval:ci,logInterval:logCi},Mi:{exact:`(4-sqrt(2))^${i0}*2^(-${ell}*d_r/2)`,interval:Mi,logInterval:logMi},carrier:{k:2,reason:'The pinned strictly positive h gives 1/2<epsilon<1 on ell=8..900, hence 1<epsilon^(-1/2)<sqrt(2)<2 and ceil=2.',epsilonK2:[nextDown(4*eps[0]),4]},sourceGeometry:g};
+  return {ell,Q:2**(-ell),QExact:`2^(-${ell})`,epsilon:{exact:`exp(-${ell}*h*log(2))`,interval:eps,strictlyLessThanOne:true,strictlyPositive:true,notRoundedToAnExactOne:true},Sstar:ell*ell,h,D,dr:{exact:ORIGINAL_RADIAL_PHASE_SPECIFICATION.formula,kappaExact:ORIGINAL_RADIAL_PHASE_SPECIFICATION.kappa,interval:dr},covering:{index:i0,indexInterval:indexBox,frozen:true,formula:'floor(((1+h)*ell*log(2)-2*log(ell))/log(T_g))'},ci:{exact:`(4+sqrt(2))^${i0}*2^(-${ell}*(1+h))`,interval:ci,logInterval:logCi},Mi:{exact:`(4-sqrt(2))^${i0}*2^(-${ell}*d_r/2)`,interval:Mi,logInterval:logMi},carrier:{k:2,reason:'The pinned strictly positive h gives 1/2<epsilon<1 on ell=8..900, hence 1<epsilon^(-1/2)<sqrt(2)<2 and ceil=2.',epsilonK2:[nextDown(4*eps[0]),4]},sourceGeometry:g};
 }
 
 export function sourceDyadicObservation(input={},context={}){

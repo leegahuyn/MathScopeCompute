@@ -9,6 +9,7 @@ import {actualCovarianceFiniteIntegrals} from './actual-covariance-source-integr
 import {sourceSquaredProductPartition,assertSourceSquaredProductPartition,covarianceGlobalAssemblyRecipe} from './actual-covariance-global-assembly.mjs';
 import {uniformSupportPalette} from './source-support.mjs';
 import {torusExactIdentityAudit} from './source-geometry.mjs';
+import {originalSourceRadialPhase} from './source-radial-phase-exponent.mjs';
 import {SOURCE_PROFILE_ID,assertSourceProfile} from './source-profile.mjs';
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 import {fail} from './actual-continuation-arithmetic.mjs';
@@ -64,7 +65,7 @@ export function attachSourcePalette(operator){
     return {sign:family.sign,color:G.add(G.mul(q(2),color),q(i)),center:centers[i],copy,xi,eta,v,
       chartJacobian:G.mul(g.Dgeom,g.ci),amplitudeDependsOnXi:false,translationChangesH:false};
   });
-  const power=(x,a)=>G.exp(G.mul(a,G.log(x))),Lambda=G.sub(q(4),G.sqrt(q(2))),rho=G.div(G.log(Lambda),G.log(g.Tg)),dr=G.sub(G.mul(q(2),G.add(G.one,c.h),rho),G.div(c.h,q(100000)));
+  const power=(x,a)=>G.exp(G.mul(a,G.log(x))),{Lambda,rho,dr}=originalSourceRadialPhase(G,{h:c.h,Tg:g.Tg});
   const physicalR=G.mul(G.sqrt(g.Q),operator.coordinates.R),physicalZ=G.mul(power(g.Q,c.D),operator.coordinates.Z),physicalTau=G.mul(g.Q,operator.coordinates.T),physicalTime=G.sub(G.one,physicalTau);
   const radialFast=G.mul(power(Lambda,g.paletteIndex),power(physicalR,dr)),timeFast=G.mul(power(g.Tg,g.paletteIndex),physicalTime);
   const physicalYi=[0,1].map(j=>G.add(G.mul(g.rectangleBasis[0][j],radialFast),G.mul(g.rectangleBasis[1][j],timeFast)));

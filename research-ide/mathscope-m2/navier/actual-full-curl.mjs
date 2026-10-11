@@ -8,6 +8,7 @@ import {actualLeadingTargetOnSensitivityGraph,covarianceInverseFirstDerivative} 
 import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 import {fail} from './actual-continuation-arithmetic.mjs';
+import {originalSourceRadialPhase} from './source-radial-phase-exponent.mjs';
 
 const seals=new WeakMap();
 const cross=(G,a,b)=>[G.sub(G.mul(a[1],b[2]),G.mul(a[2],b[1])),G.sub(G.mul(a[2],b[0]),G.mul(a[0],b[2])),G.sub(G.mul(a[0],b[1]),G.mul(a[1],b[0]))];
@@ -95,10 +96,9 @@ export function attachActualFullCurl(jet,context={}){
   const inverseR=covarianceInverseFirstDerivative(G,{matrix:H,target:target.components,parameter:R});
   const inverseZ=covarianceInverseFirstDerivative(G,{matrix:H,target:target.components,parameter:Z});
   if(inverseR.weights.some((x,j)=>x!==inverseZ.weights[j]))fail('INVALID_SOURCE_CONSTRUCTION','Both actual weight derivatives must use the same original H and full target.');
-  const q=(n,d=1)=>G.q(n,d),power=(x,a)=>G.exp(G.mul(a,G.log(x))),sqrt2=G.sqrt(q(2));
-  const rho=G.div(G.log(G.sub(q(4),sqrt2)),G.log(o.geometry.Tg));
-  const dr=G.sub(G.mul(q(2),G.add(G.one,o.constants.h),rho),G.div(o.constants.h,q(100000)));
-  const Mi=G.mul(power(G.sub(q(4),sqrt2),o.geometry.paletteIndex),power(o.geometry.Q,G.div(dr,q(2))));
+  const q=(n,d=1)=>G.q(n,d),power=(x,a)=>G.exp(G.mul(a,G.log(x)));
+  const {Lambda,rho,dr}=originalSourceRadialPhase(G,{h:o.constants.h,Tg:o.geometry.Tg});
+  const Mi=G.mul(power(Lambda,o.geometry.paletteIndex),power(o.geometry.Q,G.div(dr,q(2))));
   const radialFast=G.mul(Mi,dr,power(R,G.sub(dr,G.one))),epsilon=o.geometry.epsilon,k=o.geometry.k;
   const physicalPotentialScale=power(o.geometry.Q,G.sub(q(1,2),o.constants.A)),physicalVelocityScale=power(o.geometry.Q,G.neg(o.constants.A));
   const rows=[];
