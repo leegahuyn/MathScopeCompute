@@ -1,8 +1,8 @@
 {
   "schema": "MathScope.M2.Navier.ExtendedCompletionAssessment/2",
-  "generatedAt": "2026-10-11T09:08:56.798767+00:00",
+  "generatedAt": "2026-10-11T09:36:27.987073+00:00",
   "assessmentKind": "SOURCE_BOUND_REVIEW_MANIFEST_NOT_PROOF_CERTIFICATE",
-  "assessmentRevision": "SOURCE_HARMONIC_THIRD_JETS_ANNULUS_VELOCITY_TAIL_GLOBAL_M0_REVIEWED",
+  "assessmentRevision": "SOURCE_WHOLE_ANNULUS_H_PHYSICAL_SECOND_JETS_GLOBAL_PRESSURE_REVIEWED",
   "resumedCommit": "8a0046c547af4cccdbecae81fe647d414dd75d3f",
   "implementationCommit": "6c9ee58a1e82cd0bf4c0c813f1f9e7346b9dbfa6",
   "implementationBranch": "mathscope-m2-completion-20261011",
@@ -402,6 +402,34 @@
       "path": "research-ide/mathscope-m2/navier/research/evidence/m2-global-source-progress-20261011/at-v77-before-global-source-M2_COMPLETION_GATE.json",
       "sha256": "3277d2ce4044fdb69dbaa9553c15936416cb0e5abdf795b0fdde01e06cba80fc",
       "state": "IMMUTABLE_PRIOR_ASSESSMENT_BYTES"
+    },
+    "wholeAnnulusCovariancePacket": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/admissible-annulus-covariance-20261011/actual-admissible-annulus-covariance-validation.json",
+      "sha256": "48cf4d2c834e356fdda41793c535f5f053962988f6c0c5df168e5d99c61a97ae",
+      "state": "PRESENT_AND_HASH_CHECKED_AT_THIS_ASSESSMENT",
+      "execution": "DIRECT_NODE_SOURCE_ONLY; public runtime stays 0.3.10/v77"
+    },
+    "physicalVelocitySecondJetPacket": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/terminal-physical-jets-20261011/terminal-physical-velocity-jets-packet.json",
+      "sha256": "6ee1bdf86fc3267172091fa486378e428f3c82c563a288c6a89e8c26b89dca49",
+      "state": "PRESENT_AND_HASH_CHECKED_AT_THIS_ASSESSMENT",
+      "execution": "DIRECT_NODE_SOURCE_ONLY; public runtime stays 0.3.10/v77"
+    },
+    "globalPressureConvolutionPacket": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/global-pressure-convolution-20261011/validation.json",
+      "sha256": "067949013e917129b266c9c4d7cea2284cc998c70ecb0a233486cb3d160af154",
+      "state": "PRESENT_AND_HASH_CHECKED_AT_THIS_ASSESSMENT",
+      "execution": "DIRECT_NODE_SOURCE_ONLY; public runtime stays 0.3.10/v77"
+    },
+    "globalPressureIndependentReview": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/global-pressure-convolution-20261011/INDEPENDENT_GLOBAL_PRESSURE_CONVOLUTION_REVIEW_KO.md",
+      "sha256": "ee013db5dbec7de9b48b413616f3ad00e69cf8e4538d8f45fb8d8ba937306259",
+      "state": "READ_ONLY_INDEPENDENT_REVIEW_NO_EXTRA_SOURCE_EXECUTION"
+    },
+    "beforePhysicalPressureAssessment": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/m2-physical-pressure-progress-20261011/at-fdf2ea19-M2_COMPLETION_GATE.json",
+      "sha256": "4b7f43ead44e3c7dca84cf005320e64537ba9153018b844954eaa66cd6ccf8c4",
+      "state": "IMMUTABLE_PRIOR_ASSESSMENT_BYTES"
     }
   },
   "additionalClaims": [
@@ -481,16 +509,16 @@
     },
     {
       "id": "G-POS",
-      "status": "PARTIAL_OUTER_FLAT_AND_WHOLE_ANNULUS_BACKGROUND",
+      "status": "PARTIAL_WHOLE_ANNULUS_SELECTED_BAND_H_AND_OUTER_FLAT",
       "blockingForUserRequestedM2": true,
-      "remaining": "New whole-annulus H with active n1; inner flat sqrt extension; every box/label and one final recursive Gamma selector.",
+      "remaining": "Inner flat square-root extension, every box/label and one final recursive Gamma selector. The selected actual whole-annulus band retains n1 and now has det H<0 and positive weights.",
       "wholeGateComplete": false
     },
     {
       "id": "G-NUM",
       "status": "PARTIAL_CUTOFF_HEAT_AND_COMPLETE_TERMINAL_F_JET_ENCLOSURES",
       "blockingForUserRequestedM2": true,
-      "remaining": "Whole-domain F, actual Volterra pulse jets, H, inverse/sqrt weights and physical curl with complete numerical error budgets. The full terminal F is enclosed only at its original specified witness.",
+      "remaining": "Actual Volterra pulse jets, H, inverse/sqrt weights and physical curl with complete numerical error budgets. The full terminal F is enclosed at its specified original witness.",
       "wholeGateComplete": false
     },
     {
@@ -502,16 +530,16 @@
     },
     {
       "id": "G-N4",
-      "status": "PARTIAL_GLOBAL_M0_M1_M2_AND_ALL_FINITE_ORDER_VELOCITY_TAIL",
+      "status": "PARTIAL_GLOBAL_M0_M1_M2_POSITIVE_PRESSURE_AND_VELOCITY_TAIL",
       "blockingForUserRequestedM2": true,
-      "remaining": "Bind the complete original pressure convolution, all stress cancellations and common recursive cutoff choices; connect the full physical residual and flat tail.",
+      "remaining": "Leading pressure/stress bridge, the five conservative stress cancellations and common recursive cutoff choices; connect the full physical residual and flat tail. Positive pressure convolution and n1 Omega prefixes are now source-bound on the generated prefix.",
       "wholeGateComplete": false
     },
     {
       "id": "G-N5",
-      "status": "PARTIAL_ACTUAL_POTENTIAL_AND_HARMONIC_THIRD_SLOW_JETS",
+      "status": "PARTIAL_ACTUAL_CANONICAL_PHYSICAL_VELOCITY_SECOND_JETS",
       "blockingForUserRequestedM2": true,
-      "remaining": "Apply all physical fast and basis derivatives through velocity space order2/time order1; bind uniform actual Gaussian amplitudes, all-label tails, retained nonlinear/cutoff/eikonal residuals and the actual N6 interface.",
+      "remaining": "Uniform actual Gaussian amplitudes, all-label tails, retained nonlinear/cutoff/eikonal residuals and the actual N6 interface. Original basis/fast/slow derivatives through space order2 and time order1 are now bound for the canonical terminal member.",
       "wholeGateComplete": false
     },
     {
@@ -616,6 +644,37 @@
       "statement": "Every original leading accumulated mass and join is retained to prove M0_X=U0, original stream velocity and continuity, with independent review. Pressure convolution remains separate.",
       "publicWorkerOrBrowserExecuted": false,
       "wholeM2Complete": false
+    },
+    {
+      "id": "M2X-WHOLE-ANNULUS-H",
+      "status": "DIRECT_NODE_SOURCE_AND_INDEPENDENT_REVIEW_SCOPED",
+      "sourceRefs": [
+        "wholeAnnulusCovariancePacket"
+      ],
+      "statement": "The selected original whole-annulus band retains n1 and both actual Volterra systems, pressure, target and integrals. Its normalized determinant and cone estimates give det H<0 and two positive inverse weights on the open annulus. Universal all-band and inner flat assembly remain separate.",
+      "publicWorkerOrBrowserExecuted": false,
+      "wholeM2Complete": false
+    },
+    {
+      "id": "M2X-PHYSICAL-VELOCITY-SECOND",
+      "status": "DIRECT_NODE_SOURCE_AND_INDEPENDENT_REVIEW_SCOPED",
+      "sourceRefs": [
+        "physicalVelocitySecondJetPacket"
+      ],
+      "statement": "The original terminal Cartesian potential produces the complete curl, its nine spatial first derivatives, eighteen second derivatives, three time derivatives and actual pressure gradient through fixed original slow/fast coordinates. This is one canonical member and is not a numerical enclosure.",
+      "publicWorkerOrBrowserExecuted": false,
+      "wholeM2Complete": false
+    },
+    {
+      "id": "M2X-GLOBAL-POSITIVE-PRESSURE",
+      "status": "DIRECT_NODE_SOURCE_AND_INDEPENDENT_REVIEW_SCOPED",
+      "sourceRefs": [
+        "globalPressureConvolutionPacket",
+        "globalPressureIndependentReview"
+      ],
+      "statement": "Original positive pressure convolution on the generated n1/n2 prefix retains full F0, lambda, all ordered pairs and original O=Omega/X normalization. The four n1 global Omega prefixes are tied by literal FTC and the same M0 continuity; leading stress and five final stress moments remain separate.",
+      "publicWorkerOrBrowserExecuted": false,
+      "wholeM2Complete": false
     }
   ],
   "gate": {
@@ -655,7 +714,10 @@
     "actualLeadingGlobalPrimitiveM0AndContinuitySourceBound": true,
     "actualAllFiniteOrderPositiveVelocityTailConstructor": true,
     "actualGlobalPressureConvolutionComplete": false,
-    "actualWholePhysicalVelocitySecondJetsComplete": false
+    "actualWholePhysicalVelocitySecondJetsComplete": false,
+    "actualWholeAnnulusSelectedBandCovariancePositive": true,
+    "actualCanonicalTerminalPhysicalVelocitySecondJets": true,
+    "actualGlobalPressureConvolutionOnGeneratedPrefix": true
   },
   "m3Plan": {
     "status": "NOT_STARTED_BLOCKED_BY_USER_REQUESTED_M2_GATE",
@@ -1081,55 +1143,35 @@
     }
   },
   "finalProvenanceReview": {
-    "checkedAt": "2026-10-11T09:08:56.798767+00:00",
+    "checkedAt": "2026-10-11T09:36:27.987073+00:00",
     "checkedGroups": [
       {
-        "group": "harmonic-packet-files",
-        "files": 7,
+        "group": "annulus-H-source-refs",
+        "files": 69,
         "allCurrentBytesMatch": true
       },
       {
-        "group": "harmonic-imports",
-        "files": 70,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "velocity-files",
-        "files": 5,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "velocity-evidence",
-        "files": 5,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "velocity-imports",
-        "files": 38,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "M0-files",
-        "files": 6,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "M0-evidence",
-        "files": 32,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "M0-imports",
+        "group": "physical-files",
         "files": 20,
         "allCurrentBytesMatch": true
       },
       {
-        "group": "annulus-sourceRefs",
-        "files": 65,
+        "group": "physical-imports",
+        "files": 72,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "pressure-files",
+        "files": 69,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "pressure-imports",
+        "files": 35,
         "allCurrentBytesMatch": true
       }
     ],
-    "newSourcePacketsReferenced": 9,
+    "newSourcePacketsReferenced": 3,
     "runtimeUnchanged": true,
     "mathematicalGatePromotedByHashing": false,
     "runtimeVerificationRetainedFromPriorAssessment": true
@@ -1143,7 +1185,7 @@
     "trustLimit": "Editing or rehashing this review never proves an analytic claim or authorizes M3."
   },
   "assessmentHashAlgorithm": "SHA-256 over UTF-8 json.dumps(record_without_assessmentSHA256, ensure_ascii=False, sort_keys=True, separators=(comma,colon)); no trailing newline.",
-  "previousCheckpointCommit": "92a5cdd54d892df7ef0830e463de2e0f5722d038",
+  "previousCheckpointCommit": "fdf2ea19d373e7bb280913db6403c4103af145c0",
   "threeComponentSourceReview": {
     "path": "research-ide/mathscope-m2/navier/research/evidence/m2-math-progress-20261011/review-validation.json",
     "sha256": "14847054372f32d77d1922f78c48a746389d7d5f781fb62dbe043d1ca8568684",
@@ -1418,7 +1460,6 @@
       }
     }
   },
-  "assessmentSHA256": "2e81ae21a6dc9063ec7b4e0b9fcd9edc40c6bb25d693a76e70f9f71fd12a750d",
   "priorSourceProvenanceReview": {
     "checkedGroups": [
       {
@@ -1463,10 +1504,10 @@
     "heatRuntimeCurrentFilesMatchObservedRuns": true
   },
   "newSourceProgress": {
-    "generatedAt": "2026-10-11T09:08:56.798767+00:00",
+    "generatedAt": "2026-10-11T09:36:27.987073+00:00",
     "lastPublishedRuntime": "0.3.10",
     "lastPublishedVersion": "v77",
-    "savedSourceCheckpoint": "92a5cdd54d892df7ef0830e463de2e0f5722d038",
+    "savedSourceCheckpoint": "fdf2ea19d373e7bb280913db6403c4103af145c0",
     "packetRefs": [
       "terminalThirdJetPacket",
       "outerFlatPacket",
@@ -1476,16 +1517,73 @@
       "harmonicThirdJetPacket",
       "wholeAnnulusBackgroundPacket",
       "allOrderVelocityTailPacket",
-      "leadingStreamPrimitivePacket"
+      "leadingStreamPrimitivePacket",
+      "wholeAnnulusCovariancePacket",
+      "physicalVelocitySecondJetPacket",
+      "globalPressureConvolutionPacket"
     ],
     "failedMathematicalFirstFAttemptCountedAsCompletion": false,
     "newAnalyticLeanRun": false,
     "nextDependencies": [
-      "full original pressure and stress identities",
-      "whole-annulus H and inner flat sqrt",
-      "physical velocity jets",
-      "all-label Gaussian amplitude and residual tails",
+      "inner flat sqrt and all-band common recursive selector",
+      "five conservative stress moments and leading n0 bridge",
+      "uniform all-label Gaussian amplitude and physical residual tails",
       "complete numerical pulse/H/weight/curl enclosures"
     ]
-  }
+  },
+  "priorPhysicalPressureProvenanceReview": {
+    "checkedAt": "2026-10-11T09:08:56.798767+00:00",
+    "checkedGroups": [
+      {
+        "group": "harmonic-packet-files",
+        "files": 7,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "harmonic-imports",
+        "files": 70,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "velocity-files",
+        "files": 5,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "velocity-evidence",
+        "files": 5,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "velocity-imports",
+        "files": 38,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "M0-files",
+        "files": 6,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "M0-evidence",
+        "files": 32,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "M0-imports",
+        "files": 20,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "annulus-sourceRefs",
+        "files": 65,
+        "allCurrentBytesMatch": true
+      }
+    ],
+    "newSourcePacketsReferenced": 9,
+    "runtimeUnchanged": true,
+    "mathematicalGatePromotedByHashing": false,
+    "runtimeVerificationRetainedFromPriorAssessment": true
+  },
+  "assessmentSHA256": "581ddf0b6098f9f9ac437b008a3b65b9c4b970b2a7c7c0f94c868b8a12aa96f8"
 }

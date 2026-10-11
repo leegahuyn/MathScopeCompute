@@ -1,0 +1,3367 @@
+{
+  "schema": "MathScope.ActualAdmissibleAnnulusCovarianceSourceTest/1",
+  "generatedAt": "2026-10-11T09:14:33.397Z",
+  "sourceCommit": "fdf2ea19d373e7bb280913db6403c4103af145c0",
+  "command": [
+    "node",
+    "--max-old-space-size=3072",
+    "--test",
+    "--test-reporter=tap",
+    "research-ide/mathscope-m2/navier/tests/actual-admissible-annulus-covariance-source.test.mjs"
+  ],
+  "mode": "DIRECT_ACTUAL_WHOLE_ANNULUS_COVARIANCE_SOURCE",
+  "runtime": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "sourceManifest": {
+    "scope": "Literal local import closure of this actual whole-annulus H runner.",
+    "fileCount": 60,
+    "files": {
+      "research-ide/mathscope-m0/contracts.mjs": "cd32d97bdbfbbcf33375cd01f3fe98cd5a202ec63a01f145c9626d0995b3a111",
+      "research-ide/mathscope-m1/navier/numerics.mjs": "a406401c5a0e024e94d58cce0d7e6bdaa6b35488f22fd0ead4bf87222416c62c",
+      "research-ide/mathscope-m2/navier/actual-admissible-annulus-background.mjs": "76bbca4c7b271cbae95da8700bafd53ead3c7f89a7e161b847d19a8e5298fea9",
+      "research-ide/mathscope-m2/navier/actual-admissible-annulus-covariance.mjs": "80cfc4533e0eff05bcf8c475f340c35f410f5bd122f077e61dd9578ba182ddc1",
+      "research-ide/mathscope-m2/navier/actual-annulus-covariance-kernel.mjs": "dd4d6fa097b5c3bb6ee3520cf5a029b9c175d5f1d0094a368007f07fdba8c61d",
+      "research-ide/mathscope-m2/navier/actual-background-data.mjs": "f1d4d5da1b3489bd237c20deab6f2d5b05b7b47855cf9a1d1b071b7e1c57f112",
+      "research-ide/mathscope-m2/navier/actual-background-majorant.mjs": "e741d1cd144481c205874d05842b7961807c923f92155a662347dbcd48785b52",
+      "research-ide/mathscope-m2/navier/actual-background-physical-seminorms.mjs": "d3713e0a3f1cd17404e2afb23da20c4b32e9e840445eed53ce2849ecd200d240",
+      "research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs": "5b889de71fdb464e1ad0b1b17a4d5d0a7d6fb9a17a9a3e57379fd566cfd8fbea",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-b8-data.mjs": "733ecee70b95d39212d0a85bebbd7c46357cca308fbaf5f54b95564066c4bf1b",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-b8.mjs": "1e0d6586a60ee5aa3d5315c40f624ebb9e8a4925a00117818d41d6697fc67baf",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-core.mjs": "d657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-global.mjs": "497e18fc52c10b9eb482bdb6cc18b406c02f453dc19663ba5535c13a41ec015f",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-heat.mjs": "c999b45a6d1e18226c80fb9866b6743553f1859c67dffa39490cd25f7e13d172",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-identities.mjs": "bf7ba32a83fc5297de59cc620e24488d56a1e4c718e5b297373e78dbaf22b712",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-inner.mjs": "3deb02f1f7c9dfd0d0fc7936050eead9514f0e11e44ecb5bd4053073c2518ad8",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-linear.mjs": "0d6363d8df494e72d83d619c15548de43233e1f776c0a22a156635b46b0d4ff3",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-loop.mjs": "07ee5caa8ce45a9d8a910cab7243ae3e351965a8602a38030917f69114d8902d",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-order-one.mjs": "bdfa6fa313b09893850a567623135df699568d05f788c98c00fc9f31c6d41c72",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-order-two-source.mjs": "1ebf8b2b6f1df054a06309c5dc8695f2f3a867733544ab012f206bfed2969dd0",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-pregluing.mjs": "7fd65f8e2519e4bab3fe017e6349ae98d700592548bc0e5a28aee431080ff2c3",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-stress.mjs": "22d0fe9deae4dd7a5dca687758fb3b8b57a56cba7472c9fb23b76dd360f0bcc2",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-support.mjs": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-tail.mjs": "fa569df96f7950e4c1d908405d8a30bcb73088b1e2d3af7a0baa047d4b2a3df0",
+      "research-ide/mathscope-m2/navier/actual-covariance-concentration.mjs": "154460fb7d11eee113a2bd7f4d5a0f839824331f955775923291d4ab14104934",
+      "research-ide/mathscope-m2/navier/actual-covariance-matrix.mjs": "7419cc0aa5e08fb57c11264013f661f85a82fb481fb69e4610029d806c1efd26",
+      "research-ide/mathscope-m2/navier/actual-covariance-operator-bounds.mjs": "b5e96a01ba3a64c2d8b07c4562cccc3bf5c062180a1b0fb8cae9bd799e896d88",
+      "research-ide/mathscope-m2/navier/actual-covariance-sensitivity.mjs": "f27ed95c3a1e40a4dfa4a38340d170aa92c7ec6102b277c952e1dc2dc91ac27c",
+      "research-ide/mathscope-m2/navier/actual-covariance-source-operator.mjs": "8de6b94b5819ec7b7cdbf8312de32e0c7f8556d9e2d78fa250542f1d6ee3b759",
+      "research-ide/mathscope-m2/navier/actual-covariance-uniform.mjs": "93d714749420aff4d5fbb4ab4db2b373fd5ff447fc70202e6ba0b9b11f6670ad",
+      "research-ide/mathscope-m2/navier/actual-covariance-volterra.mjs": "b5f4b9f6e7eb4dde5259bd2df319c8c56882748b2a41a353a5627c7b91ccbdc7",
+      "research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs": "cd0b5900bba330c5d960bddd84bb695dd275094302dd9bc3cc5fcfee533895a3",
+      "research-ide/mathscope-m2/navier/actual-global-source-outer.mjs": "5a46c11ebe8ba3ef26eaf6d632ed7bba03ab98cd5e4354b32f989ae6adb367e9",
+      "research-ide/mathscope-m2/navier/actual-leading-all-order-jets-arithmetic.mjs": "99c66508b58b46a3e22053bee1eb8f6963c46abde88bdcb54ada5a3f62ba4d7f",
+      "research-ide/mathscope-m2/navier/actual-leading-all-order-jets.mjs": "d3af156118671a3e582c19a82064aab884a09d6ce81f51a6b2d64d35444cd29d",
+      "research-ide/mathscope-m2/navier/actual-leading-enlarged-c2.mjs": "96d9ab3f064aff348ca9b1a489b56060b529827ab288b144358ff54438829529",
+      "research-ide/mathscope-m2/navier/actual-leading-high-jets-arithmetic.mjs": "fcd064c1d467f50bb98b1903f33ef139ca0ac3b895a80b12ea3a0b1b4b1e4a09",
+      "research-ide/mathscope-m2/navier/actual-leading-high-jets.mjs": "c1af950944adeecc10e4248da77cddc4970a7fede935b462aea1f4006be6fa2e",
+      "research-ide/mathscope-m2/navier/actual-mean-stress.mjs": "7dc194a8a33ff5a3882c1bedf82cf1d26efe3220f0bd66a1e550482369ccad71",
+      "research-ide/mathscope-m2/navier/actual-pulse-jet-kernel.mjs": "5c9ff736284cae2d6cbfaf5b52d343a5cf3574228b6711c83686bc6e901f020e",
+      "research-ide/mathscope-m2/navier/actual-pulse-jet-source.mjs": "dfdec0ab6ae752080bc919822b917a2e8720ccaa889d35d524318211be01739d",
+      "research-ide/mathscope-m2/navier/actual-pulse-meanpatch.mjs": "4e2930c8c89596c11f0db8ce72c417b52d01393f8d760920a197f6139bcb0e32",
+      "research-ide/mathscope-m2/navier/actual-pulse-sensitivity-bounds.mjs": "3afdf6bb13505883ee4e0d2f8eb3c93878012d734b5f7b1734f160a8813c7976",
+      "research-ide/mathscope-m2/navier/actual-pulse-sensitivity-kernel.mjs": "4752ca6470761ab921237bbad273fd39e891e665260af0ddeafdf3673e63069a",
+      "research-ide/mathscope-m2/navier/actual-pulse-sensitivity.mjs": "cfe98cc6dd43b4fc4615a9dcbd74a66df5c3ca4ca5878ca08b68a13b7bbd6939",
+      "research-ide/mathscope-m2/navier/actual-pulse-source.mjs": "4ed3dab683af1dce82c85c8d50ffaede2d9235789d1efb61233cbaacff818bf6",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-background.mjs": "e04a02a8878168d673fd7deed45de6bbfb2591ec58f3abc9eb8f08e1d2770879",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-cutoffs.mjs": "be8c7dbe6a7bc78ace2e87dc5e205640a06237e3db0670f9388aab4c0c0772f5",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs": "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-kernels.mjs": "97f8bbc5927ee2b2ac5b41851ba5bc2c800fd4cad6b85c7a1039095c066f7fef",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-norms.mjs": "0387335a081650c4a6ffed6e213215d32a363350c2a156a7163e82f4c0234634",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-proof.mjs": "ca7149281d52e609664f90dea14c2ca2009ac982fc3087ec8714f0152de831f7",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-source.mjs": "30e135309b5e0a5866917949d2ded96cce64828b1331400cb8e2260caabdc047",
+      "research-ide/mathscope-m2/navier/actual-stress-direction-bounds.mjs": "42a3870cb4cc177333d7fa5ae32be988b2fb43c00fe1cb89c8ee614f70ff23f4",
+      "research-ide/mathscope-m2/navier/actual-stress-direction-program.mjs": "b3567c39a9381ef16c3d94f0a24a88571a87dee7a61b9fe782d2076732b165f5",
+      "research-ide/mathscope-m2/navier/actual-third-jet-ftc.mjs": "f9395c275e954d352bc159d8005a2c20adef3fe6023cf95cea90dcc3b166d98b",
+      "research-ide/mathscope-m2/navier/source-profile-data.mjs": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a",
+      "research-ide/mathscope-m2/navier/source-profile.mjs": "4578d632c3da8c6994557bcb4e78babf4dcede1e4893252c6a8ae2e342426133",
+      "research-ide/mathscope-m2/navier/tests/actual-admissible-annulus-covariance-source.test.mjs": "395906ec12fca50a27a850a8e7738083cd882703e1361fc11ad979dd49f0c885"
+    },
+    "sha256": "ac0c8084b03d93c51b619b7c1338734db771cf87a30f7d18f1065e81bfd1c3f6"
+  },
+  "sourceManifestUnchangedAfterRun": true,
+  "progress": [
+    {
+      "stage": "annulus-original-C2-source-ready",
+      "nodeCount": 216830,
+      "elapsedMs": 11505.412925999999,
+      "rssBytes": 992821248
+    },
+    {
+      "stage": "annulus-actual-physical-prefix-1",
+      "nodeCount": 253185,
+      "elapsedMs": 13244.331503,
+      "rssBytes": 1107263488
+    },
+    {
+      "stage": "annulus-actual-physical-prefix-2",
+      "nodeCount": 512362,
+      "elapsedMs": 15725.100923,
+      "rssBytes": 1164513280
+    },
+    {
+      "stage": "annulus-covariance-source-caches-cleared",
+      "nodeCount": 512747,
+      "memoizedEntriesDiscarded": 3654110,
+      "elapsedMs": 21667.276002,
+      "rssBytes": 1922043904
+    },
+    {
+      "stage": "annulus-actual-two-sign-Volterra-and-H",
+      "nodeCount": 513563,
+      "elapsedMs": 23193.670919,
+      "rssBytes": 2005090304
+    }
+  ],
+  "certificate": {
+    "schema": "MathScope.ActualAdmissibleAnnulusCovarianceCertificate/1",
+    "status": "ACTUAL_SOURCE_BOUND_WHOLE_ANNULUS_POSITIVITY_ON_SELECTED_BAND",
+    "pass": true,
+    "request": {
+      "sourceProfile": "same-profile-2026-10-10.3"
+    },
+    "sourceBinding": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+      "backgroundCompiler": "actual-admissible-annulus-background.mjs:attachActualAdmissibleAnnulusBackground",
+      "backgroundPrefixNodeCount": 512747,
+      "backgroundDefinition": "Distinct enlarged b_n with actual n1 on its whole selected annulus band; canonical c_n and original coefficients are unchanged.",
+      "operatorDefinition": "Original palette, frozen leading reference, actual completed F/G phase and moving frame, pressure, exact Volterra limits and both Haar covariance columns.",
+      "targetDefinition": "Actual full leading source moments, original pressure datum and both shear terms; no supplied target vector.",
+      "functionCacheOnlyDiscarded": true,
+      "sourceBodyOrDefinitionChanged": false,
+      "originalEllOneOperatorReused": false,
+      "terminalOnlySupportReductionUsed": false
+    },
+    "background": {
+      "graph": {
+        "sha256": "c2e0e84547b245eb3687ecc8b78d94badfcf3efbddc191b5f7ef2de6f65867ed",
+        "nodeCount": 512747,
+        "canonicalBytes": 21439364,
+        "compiler": "actual-admissible-annulus-background.mjs:attachActualAdmissibleAnnulusBackground",
+        "fixedCompilerPrefix": true,
+        "laterAppendsExcluded": true,
+        "graphIncluded": false
+      },
+      "scope": {
+        "actualNormalizedCutoffEnlargementCertified": true,
+        "actualC2ConstantsTransferredUnchanged": true,
+        "actualFinitePhysicalConstraintsRetained": true,
+        "actualWholeAnnulusOneActiveOrderBandConstructed": true,
+        "actualSourceSlowJetsThrough": 2,
+        "actualN1TermNotDropped": true,
+        "canonicalBackgroundIdentifiedWithNewBackground": false,
+        "allDyadicBandsConstructed": false,
+        "allOrderPhysicalCutoffClausesComplete": false,
+        "actualNewCovarianceHConstructed": false,
+        "actualNewPositiveWeightsProved": false,
+        "innerFlatSquareRootExtension": false,
+        "wholeGPOSComplete": false,
+        "wholePhysicalResidualAndFlatErrorComplete": false,
+        "newAnalyticLeanKernelProof": false,
+        "m3MayStart": false
+      }
+    },
+    "graph": {
+      "sha256": "e042e57c7d59bed083da9a7b786fbcc5ae538d936484132310e684d2482a0b4b",
+      "nodeCount": 526428,
+      "canonicalBytes": 22467199,
+      "compiler": "actual-admissible-annulus-covariance.mjs:prepareActualAdmissibleAnnulusCovariance",
+      "fixedCompilerPrefix": true,
+      "laterAppendsExcluded": true,
+      "graphIncluded": false
+    },
+    "selection": {
+      "ell": 512374,
+      "Q": 512377,
+      "S": 512378,
+      "epsilon": 512381,
+      "b1": 512366,
+      "b2": 512370,
+      "sourceEllMinimum": 216986,
+      "sourceQStar": 216990,
+      "entireBandSourceQStarRatioUpper": 28811,
+      "actualOneActiveOrderBand": true,
+      "backgroundIsDistinctFromCanonical": true,
+      "exactBackgroundSource": "actual-admissible-annulus-background.mjs",
+      "originalPhysicalAllOrderSelectorComplete": false,
+      "unknownOriginalGammaMembership": "NOT_EVALUATED"
+    },
+    "domain": {
+      "system": 2,
+      "s": 512439,
+      "X": 512443,
+      "eta": 512448,
+      "q": 512449,
+      "slowPointDomain": "Image of [1/2,2]x[Xa/2,2Xb]x[-1,1].",
+      "representativeDomain": "Xrep in[Xa,Xb], etaRep in[-1,1], sRep in[1/2,2].",
+      "covarianceDomain": "Same original slow box with Euclidean distance<=4/S^3; both signs are columns of that box.",
+      "positiveWeightDomain": "Intersect the slow point with Xa<X<Xb; all nonzero stress positions in this open annulus.",
+      "smoothSquareRootDomain": "Interior eta/positive-time slow chart for fixed labels; eta endpoints use only original inward continuous jets. Flat radial extensions are separate."
+    },
+    "decision": {
+      "actualCompletedN1BackgroundRetained": true,
+      "actualNewWholeAnnulusTwoSignHConstructed": true,
+      "actualWholeSelectedBandBelowSourceQStar": true,
+      "actualDeterminantSign": "NEGATIVE",
+      "actualDeterminantNonzeroOnDeclaredAnnulusDomain": true,
+      "actualInverseWeightSigns": [
+        "POSITIVE",
+        "POSITIVE"
+      ],
+      "actualPositiveWeightsOnOpenWholeAnnulus": true,
+      "actualPositiveSmoothSquareRootsInOpenFixedLabelChart": true,
+      "actualSourceUniformC2AndOperatorNormArgumentWritten": true,
+      "allBandsLiteralCovarianceGraphsConstructed": false,
+      "allSourceBoxIndicesMaterialized": false,
+      "originalAllOrderPhysicalCutoffSelectionComplete": false,
+      "innerFlatSquareRootExtensionCertified": false,
+      "outerFlatExtensionForThisNewBackgroundCertified": false,
+      "numericalWholeHEnclosure": false,
+      "unknownOriginalGammaMembership": "NOT_EVALUATED",
+      "wholeGPOSComplete": false,
+      "wholePhysicalResidualAndFlatErrorComplete": false,
+      "newAnalyticLeanKernelProof": false,
+      "m3MayStart": false
+    },
+    "quantitative": {
+      "Ac": 512875,
+      "C": [
+        [
+          513231,
+          513556
+        ],
+        [
+          513237,
+          513562
+        ]
+      ],
+      "detC": 518924,
+      "maximumColumnError": 216900,
+      "normalizedDeterminantBounds": [
+        518930,
+        518966
+      ],
+      "normalizedWeightBounds": [
+        518967,
+        24
+      ],
+      "massLower": 518927,
+      "massUpper": 518929,
+      "absoluteDeterminantLower": 518934,
+      "uniformAbsoluteDeterminantLower": 518936,
+      "signedDeterminantUpper": 518968,
+      "weightLower": [
+        518940,
+        518943
+      ],
+      "weightUpper": [
+        518946,
+        518948
+      ],
+      "weightLowerWithoutH": 518951,
+      "weightUpperWithoutH": 518953,
+      "squareRootLowerWithoutH": 518969,
+      "squareRootUpperWithoutH": 518970,
+      "numericalIntegralEvaluation": false
+    },
+    "proof": {
+      "kind": "SOURCE_BOUND_ANALYTIC_POSITIVITY_FOR_ACTUAL_COMPLETED_ANNULUS_PULSE",
+      "sourceTransfer": {
+        "sourceInputs": {
+          "actualC2Roots": {
+            "FErrorConstant": 215562,
+            "GErrorConstant": 215564,
+            "FGErrorConstant": 215573,
+            "bErrorConstant": 215566,
+            "bLeadingConstant": 215570,
+            "bTotalConstant": 215574,
+            "FLeadingConstant": 216828,
+            "FTotalConstant": 216829,
+            "GLeadingConstant": 215572,
+            "GTotalConstant": 215575,
+            "FLeadingOnPositiveSupportConstant": 215578
+          },
+          "actualCutoffEnlargement": "Source-bound normalized cutoff enlargement, finite block and all-n normalized induction.",
+          "actualFiniteBlockOrders": [
+            1,
+            2
+          ],
+          "actualN1RemainsInBothPulseFields": true,
+          "sourceThreshold": {
+            "constants": {
+              "h": 9,
+              "Renv": 216823,
+              "kappa": 216830,
+              "u": 216832,
+              "Bnorm": 216841,
+              "E": 216842,
+              "r0": 216844,
+              "Tg": 216845
+            },
+            "conditions": [
+              {
+                "id": "positive-unit-band-scale",
+                "lower": 1,
+                "inequality": "S >= 1",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "cone-ratio-at-most-one-half",
+                "lower": 216902,
+                "inequality": "coneK/S <= 1/2",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "pulse-length-at-least-one",
+                "lower": 137446,
+                "inequality": "Ls >= Lmin*S >= 1",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "actual-slope-at-most-two-u",
+                "lower": 216903,
+                "inequality": "|s_a-s| <= u/2",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "normalized-frame-column-budget",
+                "lower": 216981,
+                "inequality": "frameColumnK/S <= kappa/256",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "normalized-concentration-budget",
+                "lower": 216908,
+                "inequality": "concentrationK/sqrt(Ls) <= kappa/256",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "actual-moving-frame-denominators-and-primitive-budget",
+                "lower": 216982,
+                "inequality": "S>=Bnorm^512"
+              },
+              {
+                "id": "actual-flat-edge-direction-box",
+                "lower": 216983,
+                "inequality": "S>=Renv^1024"
+              }
+            ],
+            "Sminimum": 216984,
+            "frequencyMinimum": 216911,
+            "producer": "The same fixed source constants and condition formula as actual-covariance-operator-bounds.mjs. Its actual operator assembly is not replaced by this threshold calculation.",
+            "representativeRange": {
+              "ranges": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  216902,
+                  216902
+                ],
+                [
+                  137446,
+                  137446
+                ],
+                [
+                  216903,
+                  216903
+                ],
+                [
+                  216980,
+                  216981
+                ],
+                [
+                  216908,
+                  216908
+                ]
+              ],
+              "visitedDependentNodes": 13,
+              "method": "Positive reciprocal/square-root interval arithmetic: inverse reverses endpoints; all four product corners are retained, including signed constant coefficients."
+            },
+            "sourceOnly": true,
+            "actualNewPulseOperatorChecked": false
+          },
+          "actualLeadingDirection": {
+            "closedAnnulus": {
+              "X": [
+                "Xa",
+                "Xb"
+              ],
+              "eta": [
+                -1,
+                1
+              ]
+            },
+            "profileUnitDirectionFirstDerivativeUpper": "R^512",
+            "frozenSlowTargetRatioLipschitzUpper": "R^2048",
+            "sufficientDirectionBandCondition": "Sstar>=R^1024",
+            "directionConeVariation": "<=kappa/16",
+            "physicalCartesianVectorFieldClaimed": false
+          }
+        },
+        "scope": "The same original actual coefficient family, every source-only b_n>=c_n doubling continuation, all integer ell>=ellMinimum, and one original slow box. The selected H roots below exercise one complete band of that family.",
+        "normalizedTransfer": "For every q>0 the enlarged cutoff family is locally finite. The exact Euler-scale identity and b_n>=c_n preserve the actual n1/n2 C2 finite block and each original all-n diagonal bound. Thus the SAME constants control F,G and completed-leading slow C2 error O(q^(2h)).",
+        "chartPath": "Use the straight path in [1/2,2]x[Xa/2,2Xb]x[-1,1] and its slow image. Subtraction of the two implicit s equations gives |Delta s|<=2(|Delta T|+4|Delta Z|); X and eta endpoint changes and chart path length are bounded by the source B. No convexity of the slow image is assumed.",
+        "sourceJetDifference": "The fixed leading source C2 and completed-leading C2 bounds, same-box distance<=4/S^3, S^2*(epsilon+epsilon^2+k^-1)<=1 and B>=2^128 give |F-F0|,|F_R-F_R0|,|G_R-G_R0|<=B^5/S^3. The actual n1 term is bounded, not deleted.",
+        "frozenCancellation": "pTilde*F_R0+pz*G_R0=beta dot(Rrep*F_R0,G_R0)=-sign*Bs*u/Ls by the exact leading N,K definitions.",
+        "rounding": "p*k is the nearest nonzero integer with signed fallback in the zero cell; |p-pTilde|<=1/k. Only representative/source quantities enter the rounding, so every slow or pulse derivative of this label is zero.",
+        "radialNormal": "n_r=sign*Bs*(u/2+u*v/Ls)-v[(p-pTilde)F_R0+p(F_R-F_R0)+pz(G_R-G_R0)]. With Ls<=B*S, the error is <=B^12/S.",
+        "tangentNormal": "n_theta=p/R and n_z=pz-epsilon*v*(pF_Z+pzG_Z). Keep the original O(1/Ls) designed tilt, rounding, radial coordinate difference and entire epsilon*v term. Their total difference from Bs*K is <=B^12/S.",
+        "movingNormal": "n_prime=(-phaseSpeed_R,0,-epsilon*phaseSpeed_Z); the same cancellation and scale inequalities give |n_prime|<=B^12/S.",
+        "denominators": "Original leading source: F0>Renv^-10, |Ntheta|>Renv^-14, |g0|>Renv^-20, Renv^-6<|c0|<Renv^10, Renv^-31<lambda0<Renv^83. epsilon*k^2<=4 and u=2Renv^10 give Bs>Renv^-40>B^-1. S>=B^512 makes |n_tan-Bs*K|<=Bs/2 and hence |n_tan|>=B^-2. No finite H inversion is used to prove these primitive bounds.",
+        "referenceProjection": "At nref=Bs*(sref,K), retain the full original cylindrical K0. Its n-prime-free projection in Uref=[e_r-sref*K,N] is [[0,2F0*Ntheta/(1+sref^2)],[-(gabs+2F0*Ntheta),0]]. The separate exact generic projection check proves this identity for every relevant unit frame.",
+        "referenceDiagonalization": "The actual lambda0 sqrt radicand and c0=lambda0/(2F0*Ntheta) make J=[[1,1],[c0*sqrt(1+sref^2),-c0*sqrt(1+sref^2)]] diagonalize that reference to (+lambda,-lambda). Actual n-prime and B-prime stay in E_actual.",
+        "actualFrameError": "The executed FramePowerLedger applies ordinary products, reciprocals with the preceding source lower bounds, square roots and v derivatives to the retained actual Aphi,B,Bleft,Bprime. Its calculated exponents are each <256. Therefore |E_actual_ij|, |d-dref|, |N_a-N|, |K_a-K| and |s_a-sref| are bounded by B^256/S.",
+        "damping": "epsilon*k^2*Bs^2=lambda0/(1+u^2)^(3/2); therefore damping at the reference normal is exactly dref, and the actual normal difference gives the retained damping error.",
+        "unconditionalNorm": "Before smallness is used, nonzero p*k and R<=B give 1/|n_tan|<=kB. The finite actual products and derivatives give ||wMatrix||_infinity<=B^40*(1+k)^3*(1+Ls)^2, dominated by the retained B^256*(1+k)^8*(1+Ls)^8.",
+        "targetDirection": "The same actual full leading stress Tbar=s^(-A-1/2)*T0 and its closed-annulus unit-direction modulus are used. S>=Renv^1024 gives frozen target ratio variation<=kappa/16 inside the same box, including limiting directions at the two flat edges. Weight positivity below is claimed only where Xa<X<Xb and Tbar is nonzero.",
+        "allBandQualification": "This is a written source-bound universal estimate for the explicitly defined locally finite enlarged source family. A finite selected-band execution is not a materialization of every band, a choice of all original physical cutoff clauses, or a decision of the original unspecified Gamma."
+      },
+      "band": "The authenticated b1,b2 selection gives ell>=ellMinimum+12 and q<=qStar/128 throughout the selected physical band. S>=every source condition and S^2*(epsilon+epsilon^2+k^-1)<1 follow with original h>0.",
+      "palette": "For m=floor(((1+h)*ell*log2-2logell)/logTg), 1/(Tg*S)<ci<=1/S. Hence 2r0<=Ls/S<2r0*Tg for the actual source palette.",
+      "exactSolutions": "Each w is the exact Volterra limit of its retained actual moving-frame matrix, initial (1,0), and finite source matrix norm. The actual t=B*(P*w), pressure and n-prime/B-prime are preserved.",
+      "radialMass": "The source error bounds and Riccati cone give z_plus>0, |z_minus/z_plus|<=coneK/S<=1/2, and x=t_r>0. The original psi plateau and Gaussian curvature imply the displayed positive massLower; P<=1 implies massUpper.",
+      "columns": "The actual frame bounds and the continuous Gaussian absolute-moment estimate give |C-Cideal|_max<=kappa/128, Cideal=[[1,1],[-1,1]]. No finite pulse sample or asymptotic limit is substituted for its integral.",
+      "determinant": "The exact cone polynomial certificate gives 15/8<det C<17/8; det H=-Ac*u*mass_plus*mass_minus*det C<0. Thus the actual inverse denominators on the full declared annulus domain do not vanish.",
+      "positiveWeights": "For Xa<X<Xb, the unchanged full leading target and the source same-box direction modulus give targetScale=-(N dot Tbar)/Ac>0 and kappa/64<=mass_sign*y_sign/targetScale<=2. Both actual y_sign and their positive square roots satisfy the displayed bounds.",
+      "interiorSmoothness": "For fixed band and frozen labels, the actual finite coefficient body is smooth on the open slow chart; its compact-interval Volterra solution, H and full target have every finite slow derivative. Nonzero determinant and positive y imply smooth positive square roots in the interior. No derivative of a rounded label is included.",
+      "universalNormScope": "This is a written source-bound universal estimate for the explicitly defined locally finite enlarged source family. A finite selected-band execution is not a materialization of every band, a choice of all original physical cutoff clauses, or a decision of the original unspecified Gamma.",
+      "remaining": "Radial flat zero-extensions, coherent all-n original physical cutoff selection, every-band literal covariance roots and final paper Gamma remain separate. Eta endpoints use the original inward heat jets, not negative-time extension."
+    },
+    "checks": [
+      {
+        "id": "private-actual-whole-annulus-background",
+        "pass": true
+      },
+      {
+        "id": "source-node-prefix-copied-exactly",
+        "pass": true
+      },
+      {
+        "id": "actual-slow-leading-and-completed-fields-retained",
+        "pass": true
+      },
+      {
+        "id": "actual-positive-h-not-replaced",
+        "pass": true
+      },
+      {
+        "id": "source-uniform-B-and-E-exactly-retained",
+        "pass": true
+      },
+      {
+        "id": "actual-leading-reference-sqrt-relations",
+        "pass": true
+      },
+      {
+        "id": "actual-selected-source-dyadic-membership",
+        "pass": true
+      },
+      {
+        "id": "original-palette-and-length-ratios",
+        "pass": true
+      },
+      {
+        "id": "actual-representative-recipe-under-source-uniform-selector",
+        "pass": true
+      },
+      {
+        "id": "actual-operator-error-power-and-concentration-lemmas",
+        "pass": true
+      },
+      {
+        "id": "actual-full-leading-target-pressure-and-both-shears",
+        "pass": true
+      },
+      {
+        "id": "exact-actual-two-row-inverse",
+        "pass": true
+      },
+      {
+        "id": "all-witness-slow-and-representative-coordinates-substituted",
+        "pass": true
+      },
+      {
+        "id": "actual-completed-fields-in-phase-1",
+        "pass": true
+      },
+      {
+        "id": "actual-moving-normal-and-pressure-1",
+        "pass": true
+      },
+      {
+        "id": "actual-basis-v-derivative-1",
+        "pass": true
+      },
+      {
+        "id": "actual-fixed-zero-initial-Volterra-1",
+        "pass": true
+      },
+      {
+        "id": "actual-two-H-and-positive-mass-integrands-1",
+        "pass": true
+      },
+      {
+        "id": "actual-rounded-labels-are-slow-and-time-independent-1",
+        "pass": true
+      },
+      {
+        "id": "actual-completed-fields-in-phase--1",
+        "pass": true
+      },
+      {
+        "id": "actual-moving-normal-and-pressure--1",
+        "pass": true
+      },
+      {
+        "id": "actual-basis-v-derivative--1",
+        "pass": true
+      },
+      {
+        "id": "actual-fixed-zero-initial-Volterra--1",
+        "pass": true
+      },
+      {
+        "id": "actual-two-H-and-positive-mass-integrands--1",
+        "pass": true
+      },
+      {
+        "id": "actual-rounded-labels-are-slow-and-time-independent--1",
+        "pass": true
+      }
+    ],
+    "algebra": {
+      "schema": "MathScope.AnnulusCovarianceAlgebraAudit/1",
+      "checks": {
+        "referenceProjection": [
+          {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3662,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              3617,
+              3628
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 24,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3684,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 3,
+            "denominatorOperands": [
+              3617,
+              3628,
+              3678
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 15,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3686,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              3617,
+              3628
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 39,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3675,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 3,
+            "denominatorOperands": [
+              3617,
+              3628
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 12,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          }
+        ],
+        "referenceDiagonalization": [
+          {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3723,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              3695,
+              3698,
+              3705,
+              3700
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3719,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              3698,
+              3700,
+              3705
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3721,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              3698,
+              3705,
+              3700
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3725,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              3698,
+              3705,
+              3700,
+              3695
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          }
+        ],
+        "physicalDeterminant": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 3787,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [],
+          "actualAtomicOperandCount": 9,
+          "denominatorOperands": [
+            3617
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 3,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        }
+      },
+      "negativeControls": {
+        "omittedPressureDetected": true,
+        "omittedReferenceRootDetected": true,
+        "reversedDeterminantSignDetected": true
+      },
+      "pass": true,
+      "sourceAuthenticated": false,
+      "unitFrame": "N=((t^2-1)/(1+t^2),2t/(1+t^2)), K=(-N_z,N_theta). For every source N_theta<0, t=N_z/(1-N_theta) gives this same frame.",
+      "referenceRelationsRequired": "root^2=1+s^2, lambda0^2=-2F0*Ntheta*(gabs+2F0*Ntheta), c0=lambda0/(2F0*Ntheta), all required denominators nonzero.",
+      "pressureRetained": "Reference n-prime is zero only in the algebraic reference comparison. Actual n-prime and B-prime remain in the source operator and its error estimate.",
+      "determinantIdentity": "det(H)=-Ac*u*mass_plus*mass_minus*det(C). Positive masses and det(C)>0 give negative physical determinant.",
+      "numericalSourceValuesSubstituted": false,
+      "analyticErrorBoundsProducedHere": false
+    },
+    "sourceBounds": {
+      "primitive": {
+        "sourceInputs": {
+          "actualC2Roots": {
+            "FErrorConstant": 215562,
+            "GErrorConstant": 215564,
+            "FGErrorConstant": 215573,
+            "bErrorConstant": 215566,
+            "bLeadingConstant": 215570,
+            "bTotalConstant": 215574,
+            "FLeadingConstant": 216828,
+            "FTotalConstant": 216829,
+            "GLeadingConstant": 215572,
+            "GTotalConstant": 215575,
+            "FLeadingOnPositiveSupportConstant": 215578
+          },
+          "actualCutoffEnlargement": "Source-bound normalized cutoff enlargement, finite block and all-n normalized induction.",
+          "actualFiniteBlockOrders": [
+            1,
+            2
+          ],
+          "actualN1RemainsInBothPulseFields": true,
+          "sourceThreshold": {
+            "constants": {
+              "h": 9,
+              "Renv": 216823,
+              "kappa": 216830,
+              "u": 216832,
+              "Bnorm": 216841,
+              "E": 216842,
+              "r0": 216844,
+              "Tg": 216845
+            },
+            "conditions": [
+              {
+                "id": "positive-unit-band-scale",
+                "lower": 1,
+                "inequality": "S >= 1",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "cone-ratio-at-most-one-half",
+                "lower": 216902,
+                "inequality": "coneK/S <= 1/2",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "pulse-length-at-least-one",
+                "lower": 137446,
+                "inequality": "Ls >= Lmin*S >= 1",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "actual-slope-at-most-two-u",
+                "lower": 216903,
+                "inequality": "|s_a-s| <= u/2",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "normalized-frame-column-budget",
+                "lower": 216981,
+                "inequality": "frameColumnK/S <= kappa/256",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "normalized-concentration-budget",
+                "lower": 216908,
+                "inequality": "concentrationK/sqrt(Ls) <= kappa/256",
+                "frozenRepresentativeRemoved": true
+              },
+              {
+                "id": "actual-moving-frame-denominators-and-primitive-budget",
+                "lower": 216982,
+                "inequality": "S>=Bnorm^512"
+              },
+              {
+                "id": "actual-flat-edge-direction-box",
+                "lower": 216983,
+                "inequality": "S>=Renv^1024"
+              }
+            ],
+            "Sminimum": 216984,
+            "frequencyMinimum": 216911,
+            "producer": "The same fixed source constants and condition formula as actual-covariance-operator-bounds.mjs. Its actual operator assembly is not replaced by this threshold calculation.",
+            "representativeRange": {
+              "ranges": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  216902,
+                  216902
+                ],
+                [
+                  137446,
+                  137446
+                ],
+                [
+                  216903,
+                  216903
+                ],
+                [
+                  216980,
+                  216981
+                ],
+                [
+                  216908,
+                  216908
+                ]
+              ],
+              "visitedDependentNodes": 13,
+              "method": "Positive reciprocal/square-root interval arithmetic: inverse reverses endpoints; all four product corners are retained, including signed constant coefficients."
+            },
+            "sourceOnly": true,
+            "actualNewPulseOperatorChecked": false
+          },
+          "actualLeadingDirection": {
+            "closedAnnulus": {
+              "X": [
+                "Xa",
+                "Xb"
+              ],
+              "eta": [
+                -1,
+                1
+              ]
+            },
+            "profileUnitDirectionFirstDerivativeUpper": "R^512",
+            "frozenSlowTargetRatioLipschitzUpper": "R^2048",
+            "sufficientDirectionBandCondition": "Sstar>=R^1024",
+            "directionConeVariation": "<=kappa/16",
+            "physicalCartesianVectorFieldClaimed": false
+          }
+        },
+        "scope": "The same original actual coefficient family, every source-only b_n>=c_n doubling continuation, all integer ell>=ellMinimum, and one original slow box. The selected H roots below exercise one complete band of that family.",
+        "normalizedTransfer": "For every q>0 the enlarged cutoff family is locally finite. The exact Euler-scale identity and b_n>=c_n preserve the actual n1/n2 C2 finite block and each original all-n diagonal bound. Thus the SAME constants control F,G and completed-leading slow C2 error O(q^(2h)).",
+        "chartPath": "Use the straight path in [1/2,2]x[Xa/2,2Xb]x[-1,1] and its slow image. Subtraction of the two implicit s equations gives |Delta s|<=2(|Delta T|+4|Delta Z|); X and eta endpoint changes and chart path length are bounded by the source B. No convexity of the slow image is assumed.",
+        "sourceJetDifference": "The fixed leading source C2 and completed-leading C2 bounds, same-box distance<=4/S^3, S^2*(epsilon+epsilon^2+k^-1)<=1 and B>=2^128 give |F-F0|,|F_R-F_R0|,|G_R-G_R0|<=B^5/S^3. The actual n1 term is bounded, not deleted.",
+        "frozenCancellation": "pTilde*F_R0+pz*G_R0=beta dot(Rrep*F_R0,G_R0)=-sign*Bs*u/Ls by the exact leading N,K definitions.",
+        "rounding": "p*k is the nearest nonzero integer with signed fallback in the zero cell; |p-pTilde|<=1/k. Only representative/source quantities enter the rounding, so every slow or pulse derivative of this label is zero.",
+        "radialNormal": "n_r=sign*Bs*(u/2+u*v/Ls)-v[(p-pTilde)F_R0+p(F_R-F_R0)+pz(G_R-G_R0)]. With Ls<=B*S, the error is <=B^12/S.",
+        "tangentNormal": "n_theta=p/R and n_z=pz-epsilon*v*(pF_Z+pzG_Z). Keep the original O(1/Ls) designed tilt, rounding, radial coordinate difference and entire epsilon*v term. Their total difference from Bs*K is <=B^12/S.",
+        "movingNormal": "n_prime=(-phaseSpeed_R,0,-epsilon*phaseSpeed_Z); the same cancellation and scale inequalities give |n_prime|<=B^12/S.",
+        "denominators": "Original leading source: F0>Renv^-10, |Ntheta|>Renv^-14, |g0|>Renv^-20, Renv^-6<|c0|<Renv^10, Renv^-31<lambda0<Renv^83. epsilon*k^2<=4 and u=2Renv^10 give Bs>Renv^-40>B^-1. S>=B^512 makes |n_tan-Bs*K|<=Bs/2 and hence |n_tan|>=B^-2. No finite H inversion is used to prove these primitive bounds.",
+        "referenceProjection": "At nref=Bs*(sref,K), retain the full original cylindrical K0. Its n-prime-free projection in Uref=[e_r-sref*K,N] is [[0,2F0*Ntheta/(1+sref^2)],[-(gabs+2F0*Ntheta),0]]. The separate exact generic projection check proves this identity for every relevant unit frame.",
+        "referenceDiagonalization": "The actual lambda0 sqrt radicand and c0=lambda0/(2F0*Ntheta) make J=[[1,1],[c0*sqrt(1+sref^2),-c0*sqrt(1+sref^2)]] diagonalize that reference to (+lambda,-lambda). Actual n-prime and B-prime stay in E_actual.",
+        "actualFrameError": "The executed FramePowerLedger applies ordinary products, reciprocals with the preceding source lower bounds, square roots and v derivatives to the retained actual Aphi,B,Bleft,Bprime. Its calculated exponents are each <256. Therefore |E_actual_ij|, |d-dref|, |N_a-N|, |K_a-K| and |s_a-sref| are bounded by B^256/S.",
+        "damping": "epsilon*k^2*Bs^2=lambda0/(1+u^2)^(3/2); therefore damping at the reference normal is exactly dref, and the actual normal difference gives the retained damping error.",
+        "unconditionalNorm": "Before smallness is used, nonzero p*k and R<=B give 1/|n_tan|<=kB. The finite actual products and derivatives give ||wMatrix||_infinity<=B^40*(1+k)^3*(1+Ls)^2, dominated by the retained B^256*(1+k)^8*(1+Ls)^8.",
+        "targetDirection": "The same actual full leading stress Tbar=s^(-A-1/2)*T0 and its closed-annulus unit-direction modulus are used. S>=Renv^1024 gives frozen target ratio variation<=kappa/16 inside the same box, including limiting directions at the two flat edges. Weight positivity below is claimed only where Xa<X<Xb and Tbar is nonzero.",
+        "allBandQualification": "This is a written source-bound universal estimate for the explicitly defined locally finite enlarged source family. A finite selected-band execution is not a materialization of every band, a choice of all original physical cutoff clauses, or a decision of the original unspecified Gamma."
+      },
+      "powerAudit": {
+        "schema": "MathScope.ActualCovarianceOperatorPowerAudit/1",
+        "baseLower": "B>=2^128",
+        "smallness": "S>=B^512, S^2*(epsilon+epsilon^2+k^-1)<=1",
+        "primitives": {
+          "fieldValueAndC2": "<=B",
+          "fieldJetDifference": "<=B^5/S^3, relaxed only after the n primitive is built",
+          "normalDifference": "|n-n_ref|<=B^12/S",
+          "normalDerivative": "|n_prime|<=B^12/S",
+          "normalMagnitude": "|n|,|n_ref|<=B^4",
+          "tangentNormLower": "|n_tan|,Bs>=B^-2",
+          "referenceScalarDenominator": "|c0|*sqrt(1+s_ref^2)>=B^-1"
+        },
+        "rows": [
+          {
+            "label": "zero",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "one",
+            "v": 0,
+            "e": null,
+            "d": null,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "two",
+            "v": 1,
+            "e": null,
+            "d": null,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "F",
+            "v": 1,
+            "e": 5,
+            "d": null,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "F_R",
+            "v": 1,
+            "e": 5,
+            "d": null,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "G_R",
+            "v": 1,
+            "e": 5,
+            "d": null,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "R_chart",
+            "v": 1,
+            "e": 1,
+            "d": null,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "n_0",
+            "v": 4,
+            "e": 12,
+            "d": 12,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "n_1",
+            "v": 4,
+            "e": 12,
+            "d": 12,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "n_2",
+            "v": 4,
+            "e": 12,
+            "d": 12,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "n_prime_0",
+            "v": 12,
+            "e": 12,
+            "d": null,
+            "rule": "actual v derivative with zero reference; the factor 1/S is retained",
+            "inputs": [
+              "n_0"
+            ]
+          },
+          {
+            "label": "n_prime_1",
+            "v": 12,
+            "e": 12,
+            "d": null,
+            "rule": "actual v derivative with zero reference; the factor 1/S is retained",
+            "inputs": [
+              "n_1"
+            ]
+          },
+          {
+            "label": "n_prime_2",
+            "v": 12,
+            "e": 12,
+            "d": null,
+            "rule": "actual v derivative with zero reference; the factor 1/S is retained",
+            "inputs": [
+              "n_2"
+            ]
+          },
+          {
+            "label": "n_squared_term0",
+            "v": 8,
+            "e": 17,
+            "d": 17,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_0",
+              "n_0"
+            ]
+          },
+          {
+            "label": "n_squared_term1",
+            "v": 8,
+            "e": 17,
+            "d": 17,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_1",
+              "n_1"
+            ]
+          },
+          {
+            "label": "n_squared_term2",
+            "v": 8,
+            "e": 17,
+            "d": 17,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_2",
+              "n_2"
+            ]
+          },
+          {
+            "label": "n_squared",
+            "v": 10,
+            "e": 19,
+            "d": 19,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "n_squared_term0",
+              "n_squared_term1",
+              "n_squared_term2"
+            ]
+          },
+          {
+            "label": "inverse_n_squared",
+            "v": 4,
+            "e": 27,
+            "d": 27,
+            "rule": "both actual/reference absolute values >= B^-4",
+            "inputs": [
+              "n_squared"
+            ]
+          },
+          {
+            "label": "K_rtheta",
+            "v": 2,
+            "e": 7,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "two",
+              "F"
+            ]
+          },
+          {
+            "label": "twice_F",
+            "v": 2,
+            "e": 7,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "two",
+              "F"
+            ]
+          },
+          {
+            "label": "R_FR",
+            "v": 2,
+            "e": 7,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "R_chart",
+              "F_R"
+            ]
+          },
+          {
+            "label": "K_thetar",
+            "v": 3,
+            "e": 8,
+            "d": null,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "twice_F",
+              "R_FR"
+            ]
+          },
+          {
+            "label": "nTK_0_term0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_0",
+              "zero"
+            ]
+          },
+          {
+            "label": "nTK_0_term1",
+            "v": 7,
+            "e": 16,
+            "d": 16,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_1",
+              "K_thetar"
+            ]
+          },
+          {
+            "label": "nTK_0_term2",
+            "v": 5,
+            "e": 14,
+            "d": 14,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_2",
+              "G_R"
+            ]
+          },
+          {
+            "label": "nTK_0",
+            "v": 8,
+            "e": 17,
+            "d": 17,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "nTK_0_term0",
+              "nTK_0_term1",
+              "nTK_0_term2"
+            ]
+          },
+          {
+            "label": "pressure_numerator_0",
+            "v": 13,
+            "e": 18,
+            "d": 18,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "nTK_0",
+              "n_prime_0"
+            ]
+          },
+          {
+            "label": "nTK_1_term0",
+            "v": 6,
+            "e": 15,
+            "d": 15,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_0",
+              "K_rtheta"
+            ]
+          },
+          {
+            "label": "nTK_1_term1",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_1",
+              "zero"
+            ]
+          },
+          {
+            "label": "nTK_1_term2",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_2",
+              "zero"
+            ]
+          },
+          {
+            "label": "nTK_1",
+            "v": 6,
+            "e": 15,
+            "d": 15,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "nTK_1_term0",
+              "nTK_1_term1",
+              "nTK_1_term2"
+            ]
+          },
+          {
+            "label": "pressure_numerator_1",
+            "v": 13,
+            "e": 16,
+            "d": 16,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "nTK_1",
+              "n_prime_1"
+            ]
+          },
+          {
+            "label": "nTK_2_term0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_0",
+              "zero"
+            ]
+          },
+          {
+            "label": "nTK_2_term1",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_1",
+              "zero"
+            ]
+          },
+          {
+            "label": "nTK_2_term2",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_2",
+              "zero"
+            ]
+          },
+          {
+            "label": "nTK_2",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "zero sum",
+            "inputs": []
+          },
+          {
+            "label": "pressure_numerator_2",
+            "v": 12,
+            "e": 12,
+            "d": null,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "nTK_2",
+              "n_prime_2"
+            ]
+          },
+          {
+            "label": "n_pressure_00",
+            "v": 17,
+            "e": 26,
+            "d": 26,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_0",
+              "pressure_numerator_0"
+            ]
+          },
+          {
+            "label": "Aphi_rank_00",
+            "v": 21,
+            "e": 45,
+            "d": 45,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_pressure_00",
+              "inverse_n_squared"
+            ]
+          },
+          {
+            "label": "Aphi_00",
+            "v": 21,
+            "e": 45,
+            "d": 45,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "zero",
+              "Aphi_rank_00"
+            ]
+          },
+          {
+            "label": "n_pressure_01",
+            "v": 17,
+            "e": 26,
+            "d": 26,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_0",
+              "pressure_numerator_1"
+            ]
+          },
+          {
+            "label": "Aphi_rank_01",
+            "v": 21,
+            "e": 45,
+            "d": 45,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_pressure_01",
+              "inverse_n_squared"
+            ]
+          },
+          {
+            "label": "Aphi_01",
+            "v": 22,
+            "e": 46,
+            "d": 46,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "K_rtheta",
+              "Aphi_rank_01"
+            ]
+          },
+          {
+            "label": "n_pressure_02",
+            "v": 16,
+            "e": 25,
+            "d": 25,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_0",
+              "pressure_numerator_2"
+            ]
+          },
+          {
+            "label": "Aphi_rank_02",
+            "v": 20,
+            "e": 44,
+            "d": 44,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_pressure_02",
+              "inverse_n_squared"
+            ]
+          },
+          {
+            "label": "Aphi_02",
+            "v": 20,
+            "e": 44,
+            "d": 44,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "zero",
+              "Aphi_rank_02"
+            ]
+          },
+          {
+            "label": "n_pressure_10",
+            "v": 17,
+            "e": 26,
+            "d": 26,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_1",
+              "pressure_numerator_0"
+            ]
+          },
+          {
+            "label": "Aphi_rank_10",
+            "v": 21,
+            "e": 45,
+            "d": 45,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_pressure_10",
+              "inverse_n_squared"
+            ]
+          },
+          {
+            "label": "Aphi_10",
+            "v": 22,
+            "e": 46,
+            "d": 46,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "K_thetar",
+              "Aphi_rank_10"
+            ]
+          },
+          {
+            "label": "n_pressure_11",
+            "v": 17,
+            "e": 26,
+            "d": 26,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_1",
+              "pressure_numerator_1"
+            ]
+          },
+          {
+            "label": "Aphi_rank_11",
+            "v": 21,
+            "e": 45,
+            "d": 45,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_pressure_11",
+              "inverse_n_squared"
+            ]
+          },
+          {
+            "label": "Aphi_11",
+            "v": 21,
+            "e": 45,
+            "d": 45,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "zero",
+              "Aphi_rank_11"
+            ]
+          },
+          {
+            "label": "n_pressure_12",
+            "v": 16,
+            "e": 25,
+            "d": 25,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_1",
+              "pressure_numerator_2"
+            ]
+          },
+          {
+            "label": "Aphi_rank_12",
+            "v": 20,
+            "e": 44,
+            "d": 44,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_pressure_12",
+              "inverse_n_squared"
+            ]
+          },
+          {
+            "label": "Aphi_12",
+            "v": 20,
+            "e": 44,
+            "d": 44,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "zero",
+              "Aphi_rank_12"
+            ]
+          },
+          {
+            "label": "n_pressure_20",
+            "v": 17,
+            "e": 26,
+            "d": 26,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_2",
+              "pressure_numerator_0"
+            ]
+          },
+          {
+            "label": "Aphi_rank_20",
+            "v": 21,
+            "e": 45,
+            "d": 45,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_pressure_20",
+              "inverse_n_squared"
+            ]
+          },
+          {
+            "label": "Aphi_20",
+            "v": 22,
+            "e": 46,
+            "d": 46,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "G_R",
+              "Aphi_rank_20"
+            ]
+          },
+          {
+            "label": "n_pressure_21",
+            "v": 17,
+            "e": 26,
+            "d": 26,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_2",
+              "pressure_numerator_1"
+            ]
+          },
+          {
+            "label": "Aphi_rank_21",
+            "v": 21,
+            "e": 45,
+            "d": 45,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_pressure_21",
+              "inverse_n_squared"
+            ]
+          },
+          {
+            "label": "Aphi_21",
+            "v": 21,
+            "e": 45,
+            "d": 45,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "zero",
+              "Aphi_rank_21"
+            ]
+          },
+          {
+            "label": "n_pressure_22",
+            "v": 16,
+            "e": 25,
+            "d": 25,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_2",
+              "pressure_numerator_2"
+            ]
+          },
+          {
+            "label": "Aphi_rank_22",
+            "v": 20,
+            "e": 44,
+            "d": 44,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_pressure_22",
+              "inverse_n_squared"
+            ]
+          },
+          {
+            "label": "Aphi_22",
+            "v": 20,
+            "e": 44,
+            "d": 44,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "zero",
+              "Aphi_rank_22"
+            ]
+          },
+          {
+            "label": "ntheta_squared",
+            "v": 8,
+            "e": 17,
+            "d": 17,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_1",
+              "n_1"
+            ]
+          },
+          {
+            "label": "nz_squared",
+            "v": 8,
+            "e": 17,
+            "d": 17,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_2",
+              "n_2"
+            ]
+          },
+          {
+            "label": "nt_squared",
+            "v": 9,
+            "e": 18,
+            "d": 18,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "ntheta_squared",
+              "nz_squared"
+            ]
+          },
+          {
+            "label": "nt",
+            "v": 5,
+            "e": 20,
+            "d": 20,
+            "rule": "positive square root; both roots >= B^-2",
+            "inputs": [
+              "nt_squared"
+            ]
+          },
+          {
+            "label": "inverse_nt",
+            "v": 2,
+            "e": 24,
+            "d": 24,
+            "rule": "both actual/reference absolute values >= B^-2",
+            "inputs": [
+              "nt"
+            ]
+          },
+          {
+            "label": "K_a_raw_0",
+            "v": 6,
+            "e": 29,
+            "d": 29,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_1",
+              "inverse_nt"
+            ]
+          },
+          {
+            "label": "K_a_0",
+            "v": 0,
+            "e": 29,
+            "d": 29,
+            "rule": "exact normalized tangential unit vector",
+            "inputs": [
+              "K_a_raw_0"
+            ]
+          },
+          {
+            "label": "K_a_raw_1",
+            "v": 6,
+            "e": 29,
+            "d": 29,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_2",
+              "inverse_nt"
+            ]
+          },
+          {
+            "label": "K_a_1",
+            "v": 0,
+            "e": 29,
+            "d": 29,
+            "rule": "exact normalized tangential unit vector",
+            "inputs": [
+              "K_a_raw_1"
+            ]
+          },
+          {
+            "label": "s_a_raw",
+            "v": 6,
+            "e": 29,
+            "d": 29,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "n_0",
+              "inverse_nt"
+            ]
+          },
+          {
+            "label": "s_a",
+            "v": 3,
+            "e": 29,
+            "d": 29,
+            "rule": "|s_a-s_ref|<=B^29/S, |s_ref|<=3u/2, S>=B^512",
+            "inputs": [
+              "s_a_raw"
+            ]
+          },
+          {
+            "label": "s_reference",
+            "v": 2,
+            "e": null,
+            "d": 2,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "s_reference_squared",
+            "v": 4,
+            "e": null,
+            "d": 5,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "s_reference",
+              "s_reference"
+            ]
+          },
+          {
+            "label": "one_plus_s_squared",
+            "v": 5,
+            "e": null,
+            "d": 6,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "one",
+              "s_reference_squared"
+            ]
+          },
+          {
+            "label": "reference_sqrt",
+            "v": 3,
+            "e": null,
+            "d": 6,
+            "rule": "positive square root; both roots >= B^-0",
+            "inputs": [
+              "one_plus_s_squared"
+            ]
+          },
+          {
+            "label": "c0",
+            "v": 1,
+            "e": null,
+            "d": null,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "c0_reference_sqrt",
+            "v": 4,
+            "e": null,
+            "d": 8,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "c0",
+              "reference_sqrt"
+            ]
+          },
+          {
+            "label": "inverse_c0_reference_sqrt",
+            "v": 1,
+            "e": null,
+            "d": 10,
+            "rule": "both actual/reference absolute values >= B^-1",
+            "inputs": [
+              "c0_reference_sqrt"
+            ]
+          },
+          {
+            "label": "U_theta_first",
+            "v": 3,
+            "e": 33,
+            "d": 33,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "s_a",
+              "K_a_0"
+            ]
+          },
+          {
+            "label": "U_z_first",
+            "v": 3,
+            "e": 33,
+            "d": 33,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "s_a",
+              "K_a_1"
+            ]
+          },
+          {
+            "label": "B_00_0",
+            "v": 0,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "one",
+              "one"
+            ]
+          },
+          {
+            "label": "B_00_1",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "zero",
+              "c0_reference_sqrt"
+            ]
+          },
+          {
+            "label": "B_00",
+            "v": 0,
+            "e": null,
+            "d": null,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "B_00_0",
+              "B_00_1"
+            ]
+          },
+          {
+            "label": "B_01_0",
+            "v": 0,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "one",
+              "one"
+            ]
+          },
+          {
+            "label": "B_01_1",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "zero",
+              "c0_reference_sqrt"
+            ]
+          },
+          {
+            "label": "B_01",
+            "v": 0,
+            "e": null,
+            "d": null,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "B_01_0",
+              "B_01_1"
+            ]
+          },
+          {
+            "label": "B_10_0",
+            "v": 3,
+            "e": 34,
+            "d": 34,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "U_theta_first",
+              "one"
+            ]
+          },
+          {
+            "label": "B_10_1",
+            "v": 4,
+            "e": 34,
+            "d": 34,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "K_a_1",
+              "c0_reference_sqrt"
+            ]
+          },
+          {
+            "label": "B_10",
+            "v": 5,
+            "e": 35,
+            "d": 35,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "B_10_0",
+              "B_10_1"
+            ]
+          },
+          {
+            "label": "B_11_0",
+            "v": 3,
+            "e": 34,
+            "d": 34,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "U_theta_first",
+              "one"
+            ]
+          },
+          {
+            "label": "B_11_1",
+            "v": 4,
+            "e": 34,
+            "d": 34,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "K_a_1",
+              "c0_reference_sqrt"
+            ]
+          },
+          {
+            "label": "B_11",
+            "v": 5,
+            "e": 35,
+            "d": 35,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "B_11_0",
+              "B_11_1"
+            ]
+          },
+          {
+            "label": "B_20_0",
+            "v": 3,
+            "e": 34,
+            "d": 34,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "U_z_first",
+              "one"
+            ]
+          },
+          {
+            "label": "B_20_1",
+            "v": 4,
+            "e": 34,
+            "d": 34,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "K_a_0",
+              "c0_reference_sqrt"
+            ]
+          },
+          {
+            "label": "B_20",
+            "v": 5,
+            "e": 35,
+            "d": 35,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "B_20_0",
+              "B_20_1"
+            ]
+          },
+          {
+            "label": "B_21_0",
+            "v": 3,
+            "e": 34,
+            "d": 34,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "U_z_first",
+              "one"
+            ]
+          },
+          {
+            "label": "B_21_1",
+            "v": 4,
+            "e": 34,
+            "d": 34,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "K_a_0",
+              "c0_reference_sqrt"
+            ]
+          },
+          {
+            "label": "B_21",
+            "v": 5,
+            "e": 35,
+            "d": 35,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "B_21_0",
+              "B_21_1"
+            ]
+          },
+          {
+            "label": "Bleft_00_0",
+            "v": 0,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "one",
+              "one"
+            ]
+          },
+          {
+            "label": "Bleft_00_1",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "inverse_c0_reference_sqrt",
+              "zero"
+            ]
+          },
+          {
+            "label": "Bleft_00",
+            "v": 0,
+            "e": null,
+            "d": null,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_00_0",
+              "Bleft_00_1"
+            ]
+          },
+          {
+            "label": "Bleft_01_0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "one",
+              "zero"
+            ]
+          },
+          {
+            "label": "Bleft_01_1",
+            "v": 1,
+            "e": 31,
+            "d": 31,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "inverse_c0_reference_sqrt",
+              "K_a_1"
+            ]
+          },
+          {
+            "label": "Bleft_01",
+            "v": 1,
+            "e": 31,
+            "d": 31,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_01_0",
+              "Bleft_01_1"
+            ]
+          },
+          {
+            "label": "Bleft_02_0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "one",
+              "zero"
+            ]
+          },
+          {
+            "label": "Bleft_02_1",
+            "v": 1,
+            "e": 31,
+            "d": 31,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "inverse_c0_reference_sqrt",
+              "K_a_0"
+            ]
+          },
+          {
+            "label": "Bleft_02",
+            "v": 1,
+            "e": 31,
+            "d": 31,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_02_0",
+              "Bleft_02_1"
+            ]
+          },
+          {
+            "label": "Bleft_10_0",
+            "v": 0,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "one",
+              "one"
+            ]
+          },
+          {
+            "label": "Bleft_10_1",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "inverse_c0_reference_sqrt",
+              "zero"
+            ]
+          },
+          {
+            "label": "Bleft_10",
+            "v": 0,
+            "e": null,
+            "d": null,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_10_0",
+              "Bleft_10_1"
+            ]
+          },
+          {
+            "label": "Bleft_11_0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "one",
+              "zero"
+            ]
+          },
+          {
+            "label": "Bleft_11_1",
+            "v": 1,
+            "e": 31,
+            "d": 31,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "inverse_c0_reference_sqrt",
+              "K_a_1"
+            ]
+          },
+          {
+            "label": "Bleft_11",
+            "v": 1,
+            "e": 31,
+            "d": 31,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_11_0",
+              "Bleft_11_1"
+            ]
+          },
+          {
+            "label": "Bleft_12_0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "one",
+              "zero"
+            ]
+          },
+          {
+            "label": "Bleft_12_1",
+            "v": 1,
+            "e": 31,
+            "d": 31,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "inverse_c0_reference_sqrt",
+              "K_a_0"
+            ]
+          },
+          {
+            "label": "Bleft_12",
+            "v": 1,
+            "e": 31,
+            "d": 31,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_12_0",
+              "Bleft_12_1"
+            ]
+          },
+          {
+            "label": "Bprime_00",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "actual v derivative with zero reference; the factor 1/S is retained",
+            "inputs": [
+              "B_00"
+            ]
+          },
+          {
+            "label": "Bprime_01",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "actual v derivative with zero reference; the factor 1/S is retained",
+            "inputs": [
+              "B_01"
+            ]
+          },
+          {
+            "label": "Bprime_10",
+            "v": 35,
+            "e": 35,
+            "d": null,
+            "rule": "actual v derivative with zero reference; the factor 1/S is retained",
+            "inputs": [
+              "B_10"
+            ]
+          },
+          {
+            "label": "Bprime_11",
+            "v": 35,
+            "e": 35,
+            "d": null,
+            "rule": "actual v derivative with zero reference; the factor 1/S is retained",
+            "inputs": [
+              "B_11"
+            ]
+          },
+          {
+            "label": "Bprime_20",
+            "v": 35,
+            "e": 35,
+            "d": null,
+            "rule": "actual v derivative with zero reference; the factor 1/S is retained",
+            "inputs": [
+              "B_20"
+            ]
+          },
+          {
+            "label": "Bprime_21",
+            "v": 35,
+            "e": 35,
+            "d": null,
+            "rule": "actual v derivative with zero reference; the factor 1/S is retained",
+            "inputs": [
+              "B_21"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_00_0",
+            "v": 21,
+            "e": 46,
+            "d": 46,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_00",
+              "Aphi_00"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_00_1",
+            "v": 23,
+            "e": 54,
+            "d": 54,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_01",
+              "Aphi_10"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_00_2",
+            "v": 23,
+            "e": 54,
+            "d": 54,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_02",
+              "Aphi_20"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_00",
+            "v": 25,
+            "e": 56,
+            "d": 56,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_00_0",
+              "Bleft_Aphi_00_1",
+              "Bleft_Aphi_00_2"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_01_0",
+            "v": 22,
+            "e": 47,
+            "d": 47,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_00",
+              "Aphi_01"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_01_1",
+            "v": 22,
+            "e": 53,
+            "d": 53,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_01",
+              "Aphi_11"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_01_2",
+            "v": 22,
+            "e": 53,
+            "d": 53,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_02",
+              "Aphi_21"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_01",
+            "v": 24,
+            "e": 55,
+            "d": 55,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_01_0",
+              "Bleft_Aphi_01_1",
+              "Bleft_Aphi_01_2"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_02_0",
+            "v": 20,
+            "e": 45,
+            "d": 45,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_00",
+              "Aphi_02"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_02_1",
+            "v": 21,
+            "e": 52,
+            "d": 52,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_01",
+              "Aphi_12"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_02_2",
+            "v": 21,
+            "e": 52,
+            "d": 52,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_02",
+              "Aphi_22"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_02",
+            "v": 23,
+            "e": 54,
+            "d": 54,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_02_0",
+              "Bleft_Aphi_02_1",
+              "Bleft_Aphi_02_2"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_10_0",
+            "v": 21,
+            "e": 46,
+            "d": 46,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_10",
+              "Aphi_00"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_10_1",
+            "v": 23,
+            "e": 54,
+            "d": 54,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_11",
+              "Aphi_10"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_10_2",
+            "v": 23,
+            "e": 54,
+            "d": 54,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_12",
+              "Aphi_20"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_10",
+            "v": 25,
+            "e": 56,
+            "d": 56,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_10_0",
+              "Bleft_Aphi_10_1",
+              "Bleft_Aphi_10_2"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_11_0",
+            "v": 22,
+            "e": 47,
+            "d": 47,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_10",
+              "Aphi_01"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_11_1",
+            "v": 22,
+            "e": 53,
+            "d": 53,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_11",
+              "Aphi_11"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_11_2",
+            "v": 22,
+            "e": 53,
+            "d": 53,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_12",
+              "Aphi_21"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_11",
+            "v": 24,
+            "e": 55,
+            "d": 55,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_11_0",
+              "Bleft_Aphi_11_1",
+              "Bleft_Aphi_11_2"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_12_0",
+            "v": 20,
+            "e": 45,
+            "d": 45,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_10",
+              "Aphi_02"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_12_1",
+            "v": 21,
+            "e": 52,
+            "d": 52,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_11",
+              "Aphi_12"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_12_2",
+            "v": 21,
+            "e": 52,
+            "d": 52,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_12",
+              "Aphi_22"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_12",
+            "v": 23,
+            "e": 54,
+            "d": 54,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_12_0",
+              "Bleft_Aphi_12_1",
+              "Bleft_Aphi_12_2"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_00_0",
+            "v": 25,
+            "e": 57,
+            "d": 57,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_00",
+              "B_00"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_00_1",
+            "v": 29,
+            "e": 61,
+            "d": 61,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_01",
+              "B_10"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_00_2",
+            "v": 28,
+            "e": 60,
+            "d": 60,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_02",
+              "B_20"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_00",
+            "v": 31,
+            "e": 63,
+            "d": 63,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_B_00_0",
+              "Bleft_Aphi_B_00_1",
+              "Bleft_Aphi_B_00_2"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_01_0",
+            "v": 25,
+            "e": 57,
+            "d": 57,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_00",
+              "B_01"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_01_1",
+            "v": 29,
+            "e": 61,
+            "d": 61,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_01",
+              "B_11"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_01_2",
+            "v": 28,
+            "e": 60,
+            "d": 60,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_02",
+              "B_21"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_01",
+            "v": 31,
+            "e": 63,
+            "d": 63,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_B_01_0",
+              "Bleft_Aphi_B_01_1",
+              "Bleft_Aphi_B_01_2"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_10_0",
+            "v": 25,
+            "e": 57,
+            "d": 57,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_10",
+              "B_00"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_10_1",
+            "v": 29,
+            "e": 61,
+            "d": 61,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_11",
+              "B_10"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_10_2",
+            "v": 28,
+            "e": 60,
+            "d": 60,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_12",
+              "B_20"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_10",
+            "v": 31,
+            "e": 63,
+            "d": 63,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_B_10_0",
+              "Bleft_Aphi_B_10_1",
+              "Bleft_Aphi_B_10_2"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_11_0",
+            "v": 25,
+            "e": 57,
+            "d": 57,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_10",
+              "B_01"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_11_1",
+            "v": 29,
+            "e": 61,
+            "d": 61,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_11",
+              "B_11"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_11_2",
+            "v": 28,
+            "e": 60,
+            "d": 60,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_Aphi_12",
+              "B_21"
+            ]
+          },
+          {
+            "label": "Bleft_Aphi_B_11",
+            "v": 31,
+            "e": 63,
+            "d": 63,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_B_11_0",
+              "Bleft_Aphi_B_11_1",
+              "Bleft_Aphi_B_11_2"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_00_0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_00",
+              "Bprime_00"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_00_1",
+            "v": 36,
+            "e": 67,
+            "d": 67,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_01",
+              "Bprime_10"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_00_2",
+            "v": 36,
+            "e": 67,
+            "d": 67,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_02",
+              "Bprime_20"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_00",
+            "v": 37,
+            "e": 68,
+            "d": 68,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Bprime_00_0",
+              "Bleft_Bprime_00_1",
+              "Bleft_Bprime_00_2"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_01_0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_00",
+              "Bprime_01"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_01_1",
+            "v": 36,
+            "e": 67,
+            "d": 67,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_01",
+              "Bprime_11"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_01_2",
+            "v": 36,
+            "e": 67,
+            "d": 67,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_02",
+              "Bprime_21"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_01",
+            "v": 37,
+            "e": 68,
+            "d": 68,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Bprime_01_0",
+              "Bleft_Bprime_01_1",
+              "Bleft_Bprime_01_2"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_10_0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_10",
+              "Bprime_00"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_10_1",
+            "v": 36,
+            "e": 67,
+            "d": 67,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_11",
+              "Bprime_10"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_10_2",
+            "v": 36,
+            "e": 67,
+            "d": 67,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_12",
+              "Bprime_20"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_10",
+            "v": 37,
+            "e": 68,
+            "d": 68,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Bprime_10_0",
+              "Bleft_Bprime_10_1",
+              "Bleft_Bprime_10_2"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_11_0",
+            "v": null,
+            "e": null,
+            "d": null,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_10",
+              "Bprime_01"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_11_1",
+            "v": 36,
+            "e": 67,
+            "d": 67,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_11",
+              "Bprime_11"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_11_2",
+            "v": 36,
+            "e": 67,
+            "d": 67,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "Bleft_12",
+              "Bprime_21"
+            ]
+          },
+          {
+            "label": "Bleft_Bprime_11",
+            "v": 37,
+            "e": 68,
+            "d": 68,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Bprime_11_0",
+              "Bleft_Bprime_11_1",
+              "Bleft_Bprime_11_2"
+            ]
+          },
+          {
+            "label": "projected_error_00",
+            "v": 38,
+            "e": 69,
+            "d": 69,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_B_00",
+              "Bleft_Bprime_00"
+            ]
+          },
+          {
+            "label": "projected_error_01",
+            "v": 38,
+            "e": 69,
+            "d": 69,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_B_01",
+              "Bleft_Bprime_01"
+            ]
+          },
+          {
+            "label": "projected_error_10",
+            "v": 38,
+            "e": 69,
+            "d": 69,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_B_10",
+              "Bleft_Bprime_10"
+            ]
+          },
+          {
+            "label": "projected_error_11",
+            "v": 38,
+            "e": 69,
+            "d": 69,
+            "rule": "triangle inequality; finite sum <= B^ceil(log2 count)",
+            "inputs": [
+              "Bleft_Aphi_B_11",
+              "Bleft_Bprime_11"
+            ]
+          },
+          {
+            "label": "epsilon_k_squared",
+            "v": 1,
+            "e": null,
+            "d": null,
+            "rule": "source primitive",
+            "inputs": []
+          },
+          {
+            "label": "damping_difference",
+            "v": 11,
+            "e": 21,
+            "d": 21,
+            "rule": "two-term difference and ordinary Leibniz rule",
+            "inputs": [
+              "epsilon_k_squared",
+              "n_squared"
+            ]
+          }
+        ],
+        "computed": {
+          "operatorError": 69,
+          "dampingError": 21,
+          "unitFrameError": 29,
+          "slopeError": 29
+        },
+        "chosen": {
+          "operatorErrorPower": 256,
+          "dampingErrorPower": 256,
+          "unitFrameErrorPower": 256,
+          "slopeErrorPower": 256
+        },
+        "unconditional": [
+          {
+            "id": "nonzero-carrier-normal-floor",
+            "upperPower": 1,
+            "formula": "1/|n| <= 1/|n_tan| <= k*B; p*k is a nonzero integer and R_chart<=B"
+          },
+          {
+            "id": "unrounded-and-rounded-carrier",
+            "upperPower": 5,
+            "formula": "|p|,|pz| <= B^5 using Ls>=1/B and actual frozen reciprocal bounds"
+          },
+          {
+            "id": "phase-gradient",
+            "upperPower": 8,
+            "formula": "|n| <= B^8*(1+Ls), |n_prime|<=B^8"
+          },
+          {
+            "id": "rank-one-normal-projector",
+            "upperPower": 12,
+            "formula": "|Aphi| <= B^12*(1+k), since ||n n_prime^T/|n|^2||<=|n_prime|/|n|"
+          },
+          {
+            "id": "actual-tangent-frame",
+            "upperPower": 20,
+            "formula": "|s_a|<=B^10*k*(1+Ls), |s_a_prime|+|K_a_prime|<=B^20*k^2*(1+Ls)"
+          },
+          {
+            "id": "actual-moving-basis",
+            "upperPower": 28,
+            "formula": "|B|<=B^16*k*(1+Ls), |B_prime|<=B^28*k^2*(1+Ls), |Bleft|<=B^3"
+          },
+          {
+            "id": "normalized-w-ode",
+            "upperPower": 40,
+            "formula": "Induced infinity ||Bleft(Aphi B-Bprime)-lambda I-(d-dref)I|| <= B^40*(1+k)^3*(1+Ls)^2"
+          }
+        ],
+        "checks": [
+          {
+            "id": "all-moving-matrix-terms-below-output",
+            "pass": true
+          },
+          {
+            "id": "unconditional-volterra-bound-dominates-all-products",
+            "pass": true
+          },
+          {
+            "id": "tangent-normal-floor-follows-smallness",
+            "pass": true
+          },
+          {
+            "id": "reference-slope-value-tightening",
+            "pass": true
+          },
+          {
+            "id": "log-frequency-and-profile-path-reserve",
+            "pass": true
+          }
+        ],
+        "pass": true,
+        "movingNormalIncluded": true,
+        "movingBasisIncluded": true,
+        "ordinaryProductDerivativesIncluded": true,
+        "referenceDiagonalizationRequiresSourceAlgebra": true
+      },
+      "conditions": [
+        {
+          "id": "positive-unit-band-scale",
+          "lower": 1,
+          "inequality": "S >= 1",
+          "frozenRepresentativeRemoved": true
+        },
+        {
+          "id": "cone-ratio-at-most-one-half",
+          "lower": 216902,
+          "inequality": "coneK/S <= 1/2",
+          "frozenRepresentativeRemoved": true
+        },
+        {
+          "id": "pulse-length-at-least-one",
+          "lower": 137446,
+          "inequality": "Ls >= Lmin*S >= 1",
+          "frozenRepresentativeRemoved": true
+        },
+        {
+          "id": "actual-slope-at-most-two-u",
+          "lower": 216903,
+          "inequality": "|s_a-s| <= u/2",
+          "frozenRepresentativeRemoved": true
+        },
+        {
+          "id": "normalized-frame-column-budget",
+          "lower": 216981,
+          "inequality": "frameColumnK/S <= kappa/256",
+          "frozenRepresentativeRemoved": true
+        },
+        {
+          "id": "normalized-concentration-budget",
+          "lower": 216908,
+          "inequality": "concentrationK/sqrt(Ls) <= kappa/256",
+          "frozenRepresentativeRemoved": true
+        },
+        {
+          "id": "actual-moving-frame-denominators-and-primitive-budget",
+          "lower": 216982,
+          "inequality": "S>=Bnorm^512"
+        },
+        {
+          "id": "actual-flat-edge-direction-box",
+          "lower": 216983,
+          "inequality": "S>=Renv^1024"
+        }
+      ],
+      "recipe": {
+        "schema": "MathScope.CovarianceConcentrationRecipe/1",
+        "input": {
+          "h": 9,
+          "kappa": 216830,
+          "u": 216832,
+          "lambdaLower": 216847,
+          "lambdaUpper": 216848,
+          "absoluteC0": 512874,
+          "operatorError": 216842,
+          "dampingError": 216842,
+          "unitFrameError": 216842,
+          "slopeError": 216842,
+          "lengthRatioLower": 216849,
+          "lengthRatioUpper": 216850
+        },
+        "premises": {
+          "sourceBindingRequired": true,
+          "parameters": "0<h<1, 0<kappa<=1, u=2/kappa>=2, 0<lambdaLower<=lambda0<=lambdaUpper, c0=-absoluteC0<0, E,Ed,Ef,Es>=0, 0<Lmin<=Ls/S<=Lmax",
+          "negativeC0Required": true,
+          "c0Root": 512895,
+          "exactSolution": "z_prime=(diag(lambda,-lambda)+E_actual-d*I)z; z(0)=(P(0),0); |E_actual_ij|<=E/S, |d-dref|<=Ed/S",
+          "exactFrame": "t=Bz, x=t_r=z_plus+z_minus, B=[e_r-s_a*K_a+c0*sqrt(1+s^2)*N_a, e_r-s_a*K_a-c0*sqrt(1+s^2)*N_a]",
+          "frameBounds": "N,K and N_a,K_a are oriented orthonormal pairs; |K_a-K|,|N_a-N|<=Ef/S, |s_a-s|<=Es/S",
+          "cutoffs": "0<=psi<=1 and psi=1 on [Ls/4,3Ls/4]; 0<=v<=Ls, s=sign*(u/2+u*v/Ls)",
+          "actualGlobalBackgroundRequired": true
+        },
+        "cone": {
+          "lambdaFloor": 216857,
+          "coneK": 216860,
+          "ratio": "|z_minus/z_plus|<=coneK/S<=1/2",
+          "logRatioBound": 216863,
+          "amplitudeLower": 216866,
+          "amplitudeUpper": 216868,
+          "amplitude": "amplitudeLower*P <= x <= amplitudeUpper*P",
+          "inwardProof": "r_prime=E21+(-2*lambda+E22-E11)*r-E12*r^2. At r=+beta, beta=4E/(lambdaFloor*S)<=1, r_prime<=(E/S)*(1-8+2*beta+beta^2)<=-4E/S; the lower boundary is symmetric. E=0 gives r=0 exactly.",
+          "positivity": "z_plus is the positive exponential solution of its scalar equation after the invariant ratio is inserted; x=(1+r)*z_plus>0."
+        },
+        "gaussian": {
+          "lower": 216871,
+          "upper": 216873,
+          "bounds": "exp(-gaussianUpper*(v-Ls/2)^2/Ls) <= P(v) <= exp(-gaussianLower*(v-Ls/2)^2/Ls)",
+          "derivativeIdentity": "-Ls*(lambda-dref)_prime = lambda0*u*|s|*((1+s^2)^(-3/2)+2*(1+u^2)^(-3/2))",
+          "continuousProof": "u>=2 and u/2<=|s|<=3u/2 give lambdaLower/(2u) <= -Ls*(lambda-dref)_prime <= 7*lambdaUpper/u <= 15*lambdaUpper/u. The lower bound uses (5/4)^3<4. Integrate from the exact zero at v=Ls/2."
+        },
+        "mass": {
+          "centralRadiusDenominator": 216875,
+          "massLowerCoefficient": 216879,
+          "absoluteMomentUpper": 216883,
+          "concentrationK": 216885,
+          "I0": "Integral_0^Ls psi^2*x^2 dv >= massLowerCoefficient*sqrt(Ls)",
+          "I1": "Integral_0^Ls (|v-Ls/2|/Ls)*psi^2*x^2 dv <= absoluteMomentUpper",
+          "ratio": "I1/I0 <= concentrationK/sqrt(Ls)",
+          "lowerProof": "For |v-Ls/2|<=sqrt(Ls)/(10a), a=max(1,2*gaussianUpper), psi=1 and P^2>=exp(-1/100)>1/3. Integrate over the interval of length sqrt(Ls)/(5a).",
+          "upperProof": "Extend the nonnegative integrand to the real line and set w=2*gaussianLower*(v-Ls/2)^2/Ls. The absolute first moment equals amplitudeUpper^2/(2*gaussianLower).",
+          "noGaussianLimitSubstituted": true
+        },
+        "columns": {
+          "Ac": 512875,
+          "normalColumnError": 512880,
+          "tangentColumnError": 512885,
+          "frameColumnK": 512886,
+          "columnBudget": 216900,
+          "exactH": "H_sign=(|det(v_r,v_t)|/2)*(Integral chi^2 dxi)*c_i*Integral psi^2*x*t_tan dv",
+          "exactPositiveMass": "h_sign=(|det(v_r,v_t)|/2)*(Integral chi^2 dxi)*c_i*Integral psi^2*x^2 dv > 0",
+          "normalizedRows": "C_1sign=-(N dot H_sign)/(Ac*h_sign); C_2sign=(K dot H_sign)/(u*h_sign)",
+          "idealColumns": "[[1,1],[-1,1]] for sign=+1,-1",
+          "error": "max_ij |C_ij-Cideal_ij| <= concentrationK/sqrt(Ls)+frameColumnK/S <= kappa/128",
+          "normalProof": "|(1-r)/(1+r)-1|<=4*beta; sqrt(1+s^2)/sqrt(1+u^2)<=3/2; |s_a|<=2u. Normal-row error <=6*beta+(2+2u/Ac)*Ef/S.",
+          "tangentProof": "Tangent-row error <=Es/(u*S)+(2+5*Ac/u)*Ef/S. Both reference normalized rows differ from their midpoint value by at most |v-Ls/2|/Ls; the factor u cancels.",
+          "signsAreColumnsInsideOneSlowBox": true,
+          "angularHalfIncluded": true,
+          "haarJacobianIncluded": true
+        },
+        "selection": {
+          "conditions": [
+            {
+              "id": "positive-unit-band-scale",
+              "lower": 1,
+              "inequality": "S >= 1"
+            },
+            {
+              "id": "cone-ratio-at-most-one-half",
+              "lower": 216902,
+              "inequality": "coneK/S <= 1/2"
+            },
+            {
+              "id": "pulse-length-at-least-one",
+              "lower": 137446,
+              "inequality": "Ls >= Lmin*S >= 1"
+            },
+            {
+              "id": "actual-slope-at-most-two-u",
+              "lower": 216903,
+              "inequality": "|s_a-s| <= u/2"
+            },
+            {
+              "id": "normalized-frame-column-budget",
+              "lower": 512887,
+              "inequality": "frameColumnK/S <= kappa/256"
+            },
+            {
+              "id": "normalized-concentration-budget",
+              "lower": 216908,
+              "inequality": "concentrationK/sqrt(Ls) <= kappa/256"
+            }
+          ],
+          "Sminimum": 512888,
+          "frequencyBandMinimum": 216911,
+          "ellMinimum": 512890,
+          "qStar": 512894,
+          "bandProof": "ell>=ellMinimum>=Sminimum>=1 implies S=ell^2>=Sminimum. For ell>=(64/h)^2, log(3)+4log(ell)-(h*log(2)/2)*ell<0, using log(2)>=1/2 and log(ell)<=sqrt(ell). Hence S^2*(epsilon+epsilon^2+k^-1)<=3ell^4*2^(-h*ell/2)<1.",
+          "activeBandBuffer": 4,
+          "higherDerivativeOrdersChangeQStar": false,
+          "additionalSourceConditionsMustBeMerged": true
+        },
+        "scope": {
+          "conditionalAnalyticLemma": true,
+          "actualOperatorBoundsProducedHere": false,
+          "actualUniformHColumnsCertified": false,
+          "sourceUniformQStarCertified": false,
+          "originalN506Complete": false,
+          "numericQuadratureExecuted": false,
+          "formalKernelProof": false
+        }
+      }
+    },
+    "actualInverseChecks": [
+      {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 518910,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          513205,
+          513531,
+          513208,
+          513534,
+          518880,
+          518887
+        ],
+        "actualAtomicOperandCount": 6,
+        "denominatorOperands": [
+          518891
+        ],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 0,
+        "denominatorMonomials": 2,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": true
+      },
+      {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 518912,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          513205,
+          513531,
+          513208,
+          513534,
+          518880,
+          518887
+        ],
+        "actualAtomicOperandCount": 6,
+        "denominatorOperands": [
+          518891
+        ],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 0,
+        "denominatorMonomials": 2,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": true
+      }
+    ],
+    "roots": {
+      "Q": 512377,
+      "ell": 512374,
+      "S": 512378,
+      "epsilon": 512381,
+      "k": 512811,
+      "ci": 512828,
+      "Ls": 512830,
+      "Bs": 512837,
+      "sourceNorm": 216841,
+      "sourceEllMinimum": 216986,
+      "sourceQStar": 216990,
+      "H": [
+        [
+          513205,
+          513531
+        ],
+        [
+          513208,
+          513534
+        ]
+      ],
+      "determinant": 518891,
+      "weights": [
+        518898,
+        518902
+      ],
+      "squareRootWeights": [
+        518954,
+        518955
+      ],
+      "actualCompletedF": 512487,
+      "actualCompletedG": 512488,
+      "actualLeadingF": 512497,
+      "actualLeadingG": 512505,
+      "massLower": 518927,
+      "massUpper": 518929,
+      "uniformAbsoluteDeterminantLower": 518936,
+      "weightLowerWithoutH": 518951,
+      "weightUpperWithoutH": 518953,
+      "witness": {
+        "X": 3618,
+        "R": 4473,
+        "Z": 0,
+        "T": 1,
+        "Xrep": 3618,
+        "etaRep": 0,
+        "sRep": 1,
+        "q": 512377,
+        "H": [
+          [
+            519893,
+            520787
+          ],
+          [
+            521624,
+            522461
+          ]
+        ],
+        "weights": [
+          524393,
+          526308
+        ],
+        "target": [
+          523819,
+          523863
+        ],
+        "actualF": 526416,
+        "leadingF": 519798,
+        "activeOrderOneRetainedInFormula": true,
+        "coefficientNonzeroNumericallyAsserted": false,
+        "proof": "Original Xi=110 lies between Xa and Xb. Choose a slow box containing this point and the point as its permitted representative. Both slow and representative points then coincide; no unproved lattice-center constraint is imposed.",
+        "explicitLatticeIndexMaterialized": false
+      }
+    },
+    "scope": "Actual completed-background two-sign H with written source-bound det<0 and positive inverse/sqrt weights for the selected complete band and every same-box pair in the whole open annulus. Source C2/operator norm theorem is uniform for the enlarged family; all-band literal graphs, radial flat extensions, final physical selector/Gamma, numeric whole H, analytic Lean and M3 are not completed here."
+  },
+  "executedChecks": [
+    {
+      "id": "the authentic whole-annulus b_n background is reproduced and privately bound",
+      "pass": true
+    },
+    {
+      "id": "the original n1 correction and slow factors enter both actual phase speeds",
+      "pass": true
+    },
+    {
+      "id": "source-only B and the original all-order C2 bounds control the retained actual matrices",
+      "pass": true
+    },
+    {
+      "id": "the exact selected band, palette and positive length use the same sufficient source selector",
+      "pass": true
+    },
+    {
+      "id": "the order-zero reference and every carrier label remain independent of all slow derivatives",
+      "pass": true
+    },
+    {
+      "id": "both moving pressure terms, moving bases and their original normalized ODEs are retained",
+      "pass": true
+    },
+    {
+      "id": "the original transverse mass, angular half, Haar and two full covariance integrands survive",
+      "pass": true
+    },
+    {
+      "id": "the target keeps the actual full leading moments, pressure and both viscosity shear terms",
+      "pass": true
+    },
+    {
+      "id": "the two actual inverse identities and positive analytic bounds refer to this H",
+      "pass": true
+    },
+    {
+      "id": "the nonterminal witness substitutes all slow and representative variables without replacing its n1 body",
+      "pass": true
+    },
+    {
+      "id": "whole-annulus positivity does not declare flat edges, every-band graph, final Gamma or M3 complete",
+      "pass": true
+    },
+    {
+      "id": "forged objects, changed norms, dropped n1 fields and changed pulse coefficients lose source authority",
+      "pass": true
+    },
+    {
+      "id": "issued graph prefix and metadata are immutable while independent later appends preserve its hash",
+      "pass": true
+    },
+    {
+      "id": "the saved result binds every executed source group to the unchanged literal import closure",
+      "pass": true
+    }
+  ],
+  "executedTestGroupCount": 14,
+  "elapsedMs": 62731.313966,
+  "peakRSSBytes": 2834210816,
+  "decision": {
+    "actualCompletedN1BackgroundRetained": true,
+    "actualNewWholeAnnulusTwoSignHConstructed": true,
+    "actualWholeSelectedBandBelowSourceQStar": true,
+    "actualDeterminantSign": "NEGATIVE",
+    "actualDeterminantNonzeroOnDeclaredAnnulusDomain": true,
+    "actualInverseWeightSigns": [
+      "POSITIVE",
+      "POSITIVE"
+    ],
+    "actualPositiveWeightsOnOpenWholeAnnulus": true,
+    "actualPositiveSmoothSquareRootsInOpenFixedLabelChart": true,
+    "actualSourceUniformC2AndOperatorNormArgumentWritten": true,
+    "allBandsLiteralCovarianceGraphsConstructed": false,
+    "allSourceBoxIndicesMaterialized": false,
+    "originalAllOrderPhysicalCutoffSelectionComplete": false,
+    "innerFlatSquareRootExtensionCertified": false,
+    "outerFlatExtensionForThisNewBackgroundCertified": false,
+    "numericalWholeHEnclosure": false,
+    "unknownOriginalGammaMembership": "NOT_EVALUATED",
+    "wholeGPOSComplete": false,
+    "wholePhysicalResidualAndFlatErrorComplete": false,
+    "newAnalyticLeanKernelProof": false,
+    "m3MayStart": false
+  },
+  "pass": true
+}
