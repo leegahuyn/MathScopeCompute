@@ -1,0 +1,124 @@
+TAP version 13
+# \# SOURCE_PROGRESS {"phase":"original-constructor-start","at":"2026-10-11T08:22:34.375Z","rssBytes":48103424}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-start","order":1,"nodes":120820,"at":"2026-10-11T08:22:40.417Z","rssBytes":683356160}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-picard-bound","order":1,"nodes":120822,"at":"2026-10-11T08:22:40.417Z","rssBytes":683356160}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-mass-bound","order":1,"nodes":120870,"at":"2026-10-11T08:22:40.421Z","rssBytes":683356160}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-complete","order":1,"nodes":120890,"at":"2026-10-11T08:22:40.421Z","rssBytes":683356160}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-start","order":2,"nodes":120890,"at":"2026-10-11T08:22:40.421Z","rssBytes":683356160}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-picard-bound","order":2,"nodes":120892,"at":"2026-10-11T08:22:40.421Z","rssBytes":683356160}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-mass-bound","order":2,"nodes":120930,"at":"2026-10-11T08:22:40.423Z","rssBytes":683356160}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-pressure-body-bound","order":2,"nodes":120980,"at":"2026-10-11T08:22:40.426Z","rssBytes":683356160}
+# Subtest: original completed M1/M2 each bind their literal core, cutoff, two bump primitives and actual zero moment
+not ok 1 - original completed M1/M2 each bind their literal core, cutoff, two bump primitives and actual zero moment
+  ---
+  duration_ms: 6552.198664
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:14:1'
+  failureType: 'testCodeFailure'
+  error: 'The actual primitive endpoint density did not match its retained source body.'
+  code: 'INTERNAL_VALIDATION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:27:52)
+    literalFTC (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:51:18)
+    buildOne (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:169:20)
+    attachActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:223:87)
+    prepareActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:246:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:10:70)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:15:11)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  ...
+# Subtest: original n2 pressure binds every lower-support primitive and all three real-exponent radial bump derivatives
+not ok 2 - original n2 pressure binds every lower-support primitive and all three real-exponent radial bump derivatives
+  ---
+  duration_ms: 0.177001
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: 'The actual primitive endpoint density did not match its retained source body.'
+  code: 'INTERNAL_VALIDATION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:27:52)
+    literalFTC (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:51:18)
+    buildOne (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:169:20)
+    attachActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:223:87)
+    prepareActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:246:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:10:70)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:15:11)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  ...
+# Subtest: full radial pressure differences remain explicit; n1 Omega binding is not inferred from n2
+not ok 3 - full radial pressure differences remain explicit; n1 Omega binding is not inferred from n2
+  ---
+  duration_ms: 0.113808
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:32:1'
+  failureType: 'testCodeFailure'
+  error: 'The actual primitive endpoint density did not match its retained source body.'
+  code: 'INTERNAL_VALIDATION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:27:52)
+    literalFTC (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:51:18)
+    buildOne (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:169:20)
+    attachActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:223:87)
+    prepareActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:246:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:10:70)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:15:11)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  ...
+# Subtest: the actual primitive result rejects copied or edited mathematical receipts
+not ok 4 - the actual primitive result rejects copied or edited mathematical receipts
+  ---
+  duration_ms: 0.104374
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:42:1'
+  failureType: 'testCodeFailure'
+  error: 'The actual primitive endpoint density did not match its retained source body.'
+  code: 'INTERNAL_VALIDATION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:27:52)
+    literalFTC (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:51:18)
+    buildOne (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:169:20)
+    attachActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:223:87)
+    prepareActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:246:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:10:70)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:15:11)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  ...
+# Subtest: the fixed original primitive graph receipt survives later graph appends
+not ok 5 - the fixed original primitive graph receipt survives later graph appends
+  ---
+  duration_ms: 0.300432
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:51:1'
+  failureType: 'testCodeFailure'
+  error: 'The actual primitive endpoint density did not match its retained source body.'
+  code: 'INTERNAL_VALIDATION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:27:52)
+    literalFTC (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:51:18)
+    buildOne (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:169:20)
+    attachActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:223:87)
+    prepareActualGlobalPositivePrimitives (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-positive-primitives.mjs:246:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:10:70)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-positive-primitives-source.test.mjs:15:11)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 0
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6680.177075

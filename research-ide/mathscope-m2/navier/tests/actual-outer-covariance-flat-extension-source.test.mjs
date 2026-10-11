@@ -1,0 +1,168 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+import {prepareActualOuterCovarianceFlatExtension,assertActualOuterCovarianceFlatExtension,actualOuterCovarianceFlatExtensionCertificateFromProgram} from '../actual-outer-covariance-flat-extension.mjs';
+import {assertActualAdmissibleTerminalCovariance} from '../actual-admissible-terminal-covariance.mjs';
+import {assertActualCovarianceOperator} from '../actual-covariance-source-operator.mjs';
+import {sourceGraphRationalIdentity} from '../actual-continuation-exact-identities.mjs';
+import {canonicalStringify} from '../../../mathscope-m0/contracts.mjs';
+
+const repository=fileURLToPath(new URL('../../../../',import.meta.url)),relative=file=>path.relative(repository,file).split(path.sep).join('/'),digest=bytes=>createHash('sha256').update(bytes).digest('hex');
+function sourceManifest(){
+  const seen=new Map(),pending=[fileURLToPath(import.meta.url)];
+  while(pending.length){
+    const file=pending.pop();if(seen.has(file))continue;
+    const bytes=fs.readFileSync(file),body=bytes.toString('utf8');seen.set(file,digest(bytes));
+    const imports=[...body.matchAll(/(?:^|\n)\s*(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]+)['"]/g),...body.matchAll(/\bimport\s*\(\s*['"]([^'"]+)['"]\s*\)/g)];
+    for(const m of imports)if(m[1].startsWith('.'))pending.push(path.resolve(path.dirname(file),m[1]));
+  }
+  const files=Object.fromEntries([...seen].map(([file,sha256])=>[relative(file),sha256]).sort(([a],[b])=>a.localeCompare(b)));
+  return {scope:'Literal local import closure of this direct actual-source run, including this exact runner.',fileCount:seen.size,sha256:digest(canonicalStringify(files)),files};
+}
+const evidenceDirectory=process.env.MATHSCOPE_OUTER_COVARIANCE_EVIDENCE_DIR,stem=process.env.MATHSCOPE_OUTER_COVARIANCE_RECEIPT_STEM??'actual-outer-covariance-flat-extension-source';
+assert.match(stem,/^[a-z0-9-]+$/);const recordPath=evidenceDirectory?path.join(path.resolve(evidenceDirectory),stem+'.json'):null;
+if(recordPath){fs.mkdirSync(path.dirname(recordPath),{recursive:true});assert.ok(!fs.existsSync(recordPath),'An existing receipt must never be overwritten.');}
+const started=performance.now(),manifestBefore=sourceManifest(),sourceCommit=execFileSync('git',['rev-parse','HEAD'],{cwd:repository,encoding:'utf8'}).trim(),executed=[];
+const sourceTest=(name,fn)=>test(name,async()=>{try{await fn();executed.push({id:name,pass:true});}catch(error){executed.push({id:name,pass:false,message:error.message});throw error;}});let p;
+try{p=prepareActualOuterCovarianceFlatExtension();}
+catch(error){
+  const failure={schema:'MathScope.ActualOuterCovarianceFlatExtensionSourceFailure/1',generatedAt:new Date().toISOString(),sourceCommit,sourceManifest:manifestBefore,
+    sourceManifestUnchangedAfterRun:canonicalStringify(sourceManifest())===canonicalStringify(manifestBefore),failure:{code:error.code??null,message:error.message,stack:error.stack},
+    elapsedMs:performance.now()-started,peakRSSBytes:process.resourceUsage().maxRSS*1024,actualCertificateIssued:false,pass:false,negativeControl:false};
+  if(recordPath)fs.writeFileSync(recordPath,JSON.stringify(failure,null,2)+'\n',{flag:'wx'});throw error;
+}
+
+sourceTest('the new outer program preserves both privately authenticated actual source ancestors',()=>{
+  assert.equal(assertActualOuterCovarianceFlatExtension(p),true);
+  assert.equal(assertActualAdmissibleTerminalCovariance(p.selected),true);assert.equal(assertActualCovarianceOperator(p.selected.operator),true);
+  assert.notEqual(p.G,p.selected.G);assert.ok(p.checks.every(x=>x.pass));
+  assert.equal(p.selected.operator.program.band.ellExact,'1');assert.equal(p.selected.decision.selectedSourceCovarianceDomainMember,true);
+  assert.equal(p.sourceBinding.oldSourceModulesChanged,false);
+});
+
+sourceTest('the retained outer factor has the scaled axial direction and every original angular pressure and heat term',()=>{
+  const f=p.sourceFactor,G=p.G,q=(n,d=1)=>G.q(n,d),{delta}=p.coordinates;
+  assert.equal(f.bProfile[1],G.mul(G.pow(delta,6),f.importedRoots.outerZ));
+  assert.equal(f.flat,G.mul(G.exp(G.neg(G.mul(q(4),G.pow(delta,-2)))),G.pow(delta,-3)));
+  assert.ok(f.importedOuterKernels.length>=4);assert.ok(f.importedOuterKernels.every(x=>Number.isSafeInteger(x.m)&&x.m>=-3));
+  assert.ok(f.copyTrace.length>100);assert.equal(f.commonFactorDividedNumerically,false);
+  assert.equal(f.endpointIdentity.pass,true);assert.equal(f.heightIdentity.pass,true);assert.equal(f.endpointIdentity.analyticValueSubstitution,false);
+  assert.equal(f.rawActualForwardMomentTargetRetained,true);assert.notDeepEqual(f.actualFullTarget,f.factoredTarget);
+  for(const name of ['actual-full-heat-and-I2-branch-retained','original-leading-moment-restoration-functions-retained','actual-A48-A49-factor-with-all-A54-and-pressure-terms'])
+    assert.equal(p.checks.find(x=>x.id===name)?.pass,true);
+});
+
+sourceTest('the actual positive normalized coefficient solves H W equal bbar and an altered weight fails',()=>{
+  assert.ok(p.coefficient.inverseChecks.every(x=>x.pass));assert.ok(p.endpoint.inverseChecks.every(x=>x.pass));
+  const G=p.G,{H,HW,target}=p.coefficient;
+  const controls=HW.map((x,j)=>sourceGraphRationalIdentity(G,G.sub(G.add(x,H[j][0]),target[j]),{atomicNodes:[...H.flat(),...target]}));
+  assert.ok(controls.every(x=>!x.pass));
+  assert.equal(p.decision.actualNormalizedWeightsPositiveThroughOuterEdge,true);
+});
+
+sourceTest('the separate closed endpoint retains full heat and never evaluates a singular interior flat formula',()=>{
+  const e=p.endpoint,G=p.G,q=(n,d=1)=>G.q(n,d),f=p.sourceFactor;
+  const expected=G.div(G.mul(q(16),f.importedRoots.rho,G.exp(G.one),e.heatPrefactor,e.heat),G.sqrt(G.mul(q(2),f.Xb)));
+  assert.equal(sourceGraphRationalIdentity(G,G.sub(e.bProfile[0],expected),{atomicNodes:[f.importedRoots.rho,G.exp(G.one),e.heatPrefactor,e.heat,G.sqrt(G.mul(q(2),f.Xb))]}).pass,true);
+  assert.equal(e.bProfile[1],G.zero);assert.notEqual(e.heat,G.one);
+  assert.equal(e.singularEndpointSampleEvaluated,false);assert.equal(e.originalActualForwardTargetReplacedInGraph,false);
+  assert.deepEqual(e.provenTargetValue,[G.zero,G.zero]);assert.deepEqual(e.provenWeightValue,[G.zero,G.zero]);assert.deepEqual(e.provenSquareRootValue,[G.zero,G.zero]);
+  assert.notDeepEqual(e.actualForwardTargetAtEndpoint,[G.zero,G.zero]);
+});
+
+sourceTest('the original allowed boundary representative actually substitutes all source chart coordinates',()=>{
+  const w=p.endpoint.witness,G=p.G;
+  assert.equal(w.X,p.sourceFactor.Xb);assert.equal(w.Xrep,w.X);assert.equal(w.T,G.one);assert.equal(w.Z,G.zero);assert.equal(w.q,p.selected.geometry.Q);
+  for(const root of [...w.H.flat(),w.determinant,...w.normalizedWeights,...w.normalizedSquareRoots,...w.coefficient,w.heat,
+    w.normalizedWeightLower,w.normalizedWeightUpper,w.determinantAbsoluteLower,...w.actualForwardTarget])assert.equal(G.freeCoordinates(root).size,0);
+  assert.equal(w.frozenLabelsRetained,true);assert.equal(w.singularInteriorFormulaEvaluated,false);
+  assert.match(w.originalClosedRepresentativeRule,/6\.8/);
+});
+
+sourceTest('the mass cancellation produces a strictly positive band independent coefficient lower root',()=>{
+  const G=p.G,q=(n,d=1)=>G.q(n,d),b=p.quantitative,c=p.selected.constants,g=p.selected.geometry;
+  assert.equal(b.massUpperCancellation.pass,true);assert.equal(b.normalizedTargetScaleLower,G.pow(c.Renv,-56));
+  assert.equal(b.normalizedTargetScaleUpper,G.pow(c.Renv,8));assert.equal(b.normalizedWeightLower,G.div(G.mul(c.kappa,b.normalizedTargetScaleLower),G.mul(q(64),b.massUpperIndependentOfBand)));
+  assert.equal(b.normalizedSquareRootLower,G.sqrt(b.normalizedWeightLower));
+  for(const root of [b.massUpperIndependentOfBand,b.normalizedTargetScaleLower,b.normalizedWeightLower])assert.equal(G.freeCoordinates(root).size,0);
+  assert.equal(p.G.nodes[g.ci].op,'multiply');assert.ok(b.scalarRows.every(x=>x.pass));
+});
+
+sourceTest('the actual determinant lower keeps the positive sqrt rule separate from exact rational cancellation',()=>{
+  const b=p.quantitative,G=p.G,q=(n,d=1)=>G.q(n,d),g=p.selected.geometry;
+  assert.equal(b.determinantScaleIdentity.sourceSquareExpansion.pass,true);assert.equal(b.determinantScaleIdentity.normalization.pass,true);
+  assert.equal(b.determinantScaleIdentity.positiveSquareRootRule.argument,g.Ls);
+  assert.equal(b.determinantScaleIdentity.positiveSquareRootRule.square,G.pow(G.sqrt(g.Ls),2));
+  assert.equal(b.determinantAbsoluteLowerByScale,G.div(b.determinantScaledLower,g.S));
+  assert.equal(b.inverseScaleUpper,G.div(G.mul(q(2),b.covarianceEntryUpper),b.determinantScaledLower));
+  for(const root of [b.determinantScaledLower,b.covarianceEntryUpper,b.inverseScaleUpper])assert.equal(G.freeCoordinates(root).size,0);
+});
+
+sourceTest('both actual matrices preserve the negative reference eigenvalue and the frozen slow envelope',()=>{
+  assert.equal(p.logarithmicNorm.identities.length,8);assert.ok(p.logarithmicNorm.identities.every(x=>x.pass));
+  assert.equal(p.logarithmicNorm.negativeReferenceEigenvalueRetained,true);assert.equal(p.logarithmicNorm.absoluteNormGronwallUsed,false);
+  assert.equal(p.logarithmicNorm.allSlowPointDerivativesOfPZero,true);
+  const G=p.G,q=(n,d=1)=>G.q(n,d),E=G.pow(p.selected.constants.Bnorm,256),g=p.selected.geometry;
+  assert.equal(p.logarithmicNorm.muInfinityUpper,G.div(G.mul(q(3),E),g.S));
+  assert.equal(p.logarithmicNorm.forwardPropagatorUpper,G.exp(G.mul(q(3),E,g.lengthRatioBounds[1])));
+  for(const f of p.selected.families)for(const c of ['R','Z','T'])assert.equal(G.freeCoordinates(f.P).has(p.selected.coordinates[c]),false);
+});
+
+sourceTest('executed flat derivatives and whole zero branches keep all finite-order factors',()=>{
+  assert.deepEqual(p.flatJets.actualDerivativeIdentityChecks.map(x=>x.order),[0,1,2,3]);assert.ok(p.flatJets.actualDerivativeIdentityChecks.every(x=>x.pass));
+  for(const row of p.flatJets.actualSourceJetRoots){
+    const node=p.G.nodes[row.zeroExtension];assert.equal(node.op,'smooth_piecewise');assert.deepEqual(node.args,[p.coordinates.delta,p.G.zero,p.G.zero,p.G.zero,p.G.zero,row.recurrence]);
+  }
+  assert.equal(p.flatJets.finiteOrderSamplesUsedAsAllOrderProof,false);assert.equal(p.degreeAudit.pass,true);
+  assert.equal(p.degreeAudit.rows[3].inverseCoefficientJetExponent,10);assert.equal(p.degreeAudit.rows[3].squareRootCoefficientJetExponent,12);
+  assert.equal(p.quantitative.allDerivativeNumericConstantsEvaluated,false);
+});
+
+sourceTest('outer smooth zero extension does not promote the inner edge all source boxes unknown Gamma or M3',()=>{
+  assert.equal(p.decision.actualSquareRootZeroExtensionAtOuterEdge,true);assert.equal(p.decision.allFiniteOuterRadialFlatJetsByWrittenInduction,true);
+  assert.equal(p.decision.unknownPaperGammaMembership,'NOT_EVALUATED');assert.match(p.proof.domain,/0<=delta<=1\/2/);assert.match(p.proof.chartBoundary,/one-sided/);
+  for(const key of ['actualInnerFlatEdgeCertified','allSourceBoxesCovered','rigorousWholeHNumericalEnclosure','wholeGPOSComplete','fullPhysicalResidualAndFlatErrorPackageComplete','newLeanKernelProof','m3MayStart'])assert.equal(p.decision[key],false);
+});
+
+sourceTest('copied result records and broadened domain conclusions fail private source authentication',()=>{
+  assert.throws(()=>assertActualOuterCovarianceFlatExtension({...p}),{code:'INVALID_SOURCE_CONSTRUCTION'});
+  p.decision.wholeGPOSComplete=true;try{assert.throws(()=>assertActualOuterCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});}finally{p.decision.wholeGPOSComplete=false;}
+  const before=p.quantitative.normalizedWeightLower;p.quantitative.normalizedWeightLower=p.G.one;
+  try{assert.throws(()=>assertActualOuterCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});}finally{p.quantitative.normalizedWeightLower=before;}
+  assert.equal(assertActualOuterCovarianceFlatExtension(p),true);
+});
+
+sourceTest('mutation of an original copied source node or actual pulse body fails the seal',()=>{
+  const id=p.selected.geometry.ell,before=p.G.nodes[id];p.G.nodes[id]={op:'rational',args:['1','1']};
+  try{assert.throws(()=>assertActualOuterCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});}finally{p.G.nodes[id]=before;}
+  const system=p.G.covarianceSystems[p.selected.families[0].system],entry=system.matrix[0][0];system.matrix[0][0]=p.G.zero;
+  try{assert.throws(()=>assertActualOuterCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});}finally{system.matrix[0][0]=entry;}
+  assert.equal(assertActualOuterCovarianceFlatExtension(p),true);
+});
+
+sourceTest('compiler metadata and array replacement fail while later independent graph appends keep the issued prefix fixed',async()=>{
+  const nodes=p.program.nodes;p.program.nodes=nodes.slice();try{assert.throws(()=>assertActualOuterCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});}finally{p.program.nodes=nodes;}
+  p.program.globalNSComplete=true;try{assert.throws(()=>assertActualOuterCovarianceFlatExtension(p),{code:'INVALID_SOURCE_CONSTRUCTION'});}finally{delete p.program.globalNSComplete;}
+  const before=await actualOuterCovarianceFlatExtensionCertificateFromProgram(p),count=p.program.nodes.length;p.G.fresh('later_independent_outer_graph_append');
+  assert.deepEqual(await actualOuterCovarianceFlatExtensionCertificateFromProgram(p),before);assert.equal(p.program.nodes.length,count);assert.ok(p.G.nodes.length>count);
+});
+
+test('receipt binds the actual outer-edge program to unchanged source modules and exact scope',async()=>{
+  const certificate=await actualOuterCovarianceFlatExtensionCertificateFromProgram(p),manifestAfter=sourceManifest(),unchanged=canonicalStringify(manifestAfter)===canonicalStringify(manifestBefore),pass=executed.length===13&&executed.every(x=>x.pass)&&unchanged;
+  const record={schema:'MathScope.ActualOuterCovarianceFlatExtensionSourceTest/1',generatedAt:new Date().toISOString(),sourceCommit,
+    command:['node','--max-old-space-size=3072','--test','--test-reporter=tap',relative(fileURLToPath(import.meta.url))],mode:'DIRECT_ACTUAL_OUTER_COVARIANCE_SOURCE_AND_WRITTEN_ANALYTIC_FLAT_EXTENSION',
+    runtime:{node:process.version,v8:process.versions.v8,platform:process.platform,architecture:process.arch},sourceManifest:manifestBefore,sourceManifestUnchangedAfterRun:unchanged,
+    certificate,executedChecks:[...executed,{id:'receipt binds the actual outer-edge program to unchanged source modules and exact scope',pass:unchanged}],executedTestGroupCount:14,
+    elapsedMs:performance.now()-started,peakRSSBytes:process.resourceUsage().maxRSS*1024,pass,
+    scope:{actualOuterSourceExecuted:true,actualEndpointFrozenRepresentativeExecuted:true,sourceBoundOuterSquareRootZeroExtensionByWrittenProof:true,
+      actualDeterminantScaleAndPositiveCoefficientLower:true,sourceBoundAllFiniteJetDegrees:true,numericalAllDerivativeConstantsEvaluated:false,
+      originalUnknownGammaMembershipEvaluated:false,numericalWholeHEnclosure:false,allSourceBoxesCovered:false,innerFlatEndpointCovered:false,newAnalyticLeanProof:false,wholeGPOSComplete:false,m3MayStart:false}};
+  if(recordPath)fs.writeFileSync(recordPath,JSON.stringify(record,null,2)+'\n',{flag:'wx'});
+  console.log(JSON.stringify({schema:record.schema,graphSHA256:certificate.graph.sha256,nodeCount:certificate.graph.nodeCount,canonicalBytes:certificate.graph.canonicalBytes,
+    sourceManifestSHA256:manifestBefore.sha256,sourceFileCount:manifestBefore.fileCount,executedTestGroupCount:14,elapsedMs:record.elapsedMs,peakRSSBytes:record.peakRSSBytes,pass}));
+  assert.equal(pass,true);
+});

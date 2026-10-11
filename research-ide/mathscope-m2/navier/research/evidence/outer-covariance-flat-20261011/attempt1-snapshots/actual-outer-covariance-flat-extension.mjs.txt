@@ -1,0 +1,345 @@
+/** Actual small-q covariance at the outer flat stress edge.
+ *
+ * This additive adapter uses the private selected terminal source. It
+ * retains the exact A.48/A.49 factor, constructs the normalized inverse
+ * coefficient, and proves a smooth zero extension of its positive square
+ * root on the declared outer fixed-label charts. Interior source boxes,
+ * the inner edge, a complete physical assembly, and unspecified Gamma
+ * choices are not inferred from this result.
+ */
+import {prepareActualAdmissibleTerminalCovariance,assertActualAdmissibleTerminalCovariance} from './actual-admissible-terminal-covariance.mjs';
+import {ActualCovarianceExpressions} from './actual-covariance-volterra.mjs';
+import {covarianceConcentrationRecipe} from './actual-covariance-concentration.mjs';
+import {covarianceMatrixAlgebra} from './actual-covariance-matrix.mjs';
+import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
+import {directionCPowerAbsorption} from './actual-stress-direction-bounds.mjs';
+import {SOURCE_PROFILE_ID,assertSourceProfile} from './source-profile.mjs';
+import {rational as Q,readRational,qadd,qsub,qmul,qdiv,qcompare,qtext,factorial,fail} from './actual-continuation-arithmetic.mjs';
+import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+
+const seals=new WeakMap(),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const abs=x=>x[0]<0n?[-x[0],x[1]]:x;
+const choose=(n,k)=>factorial(n)/(factorial(k)*factorial(n-k));
+const metadata=program=>{const {nodes,...rest}=program;return canonicalStringify(rest);};
+const publicBinding=p=>canonicalStringify({request:p.request,coordinates:p.coordinates,sourceBinding:p.sourceBinding,roots:p.roots,
+  sourceFactor:p.sourceFactor,coefficient:p.coefficient,endpoint:p.endpoint,quantitative:p.quantitative,flatJets:p.flatJets,
+  logarithmicNorm:p.logarithmicNorm,degreeAudit:p.degreeAudit,checks:p.checks,proof:p.proof,decision:p.decision});
+
+function finiteOrder(n,name,maximum=128){
+  if(!Number.isSafeInteger(n)||n<0)fail('INVALID_INPUT',name+' must be a nonnegative safe integer.');
+  if(n>maximum)fail('RESOURCE_LIMIT','The requested finite '+name+' exceeds this materialization budget. No omitted derivative is zero.');
+  return n;
+}
+function requestOf(input={}){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['sourceProfile','jetOrder','vanishingOrder'].includes(k)))
+    fail('INVALID_INPUT','Use the pinned source and finite derivative orders. No band, field, endpoint, matrix or positivity premise can be supplied.');
+  const sourceProfile=input.sourceProfile??SOURCE_PROFILE_ID;assertSourceProfile(sourceProfile);
+  return {sourceProfile,jetOrder:finiteOrder(input.jetOrder??3,'jetOrder',12),vanishingOrder:finiteOrder(input.vanishingOrder??4,'vanishingOrder',256)};
+}
+
+/** Exact scalar statement. No source authentication is conferred here.
+ * f(delta)=exp(-2/delta^2)*delta^(-3/2), delta>0; f=0 for delta<=0.
+ * f^(j)=f*delta^(-3j)*P_j(delta^2).
+ */
+export function outerFlatSquareRootJets({order=3,vanishingOrder=4}={}){
+  finiteOrder(order,'order');finiteOrder(vanishingOrder,'vanishingOrder',4096);
+  let polynomial=[Q(1)];const rows=[];
+  for(let j=0;j<=order;j++){
+    let B=Q(0),quarterPower=Q(1);
+    for(const c of polynomial){B=qadd(B,qmul(abs(c),quarterPower));quarterPower=qmul(quarterPower,Q(1,4));}
+    const tradingInteger=Math.ceil((3+6*j+2*vanishingOrder)/4),coefficient=qmul(B,Q(factorial(tradingInteger)));
+    rows.push({order:j,polynomial:polynomial.map(qtext),singularPower:qtext(Q(3+6*j,2)),
+      polynomialAbsoluteUpperOnHalf:qtext(B),tradingInteger,vanishingOrder,coefficient:qtext(coefficient),
+      bound:'coefficient * delta^vanishingOrder * exp(-1/delta^2)',
+      exponentCheck:2*tradingInteger*2>=3+6*j+2*vanishingOrder});
+    if(j<order){
+      const next=Array.from({length:polynomial.length+1},()=>Q(0)),a=Q(3+6*j,2);
+      polynomial.forEach((c,k)=>{next[k]=qadd(next[k],qmul(Q(4),c));next[k+1]=qadd(next[k+1],qmul(qsub(Q(2*k),a),c));});
+      polynomial=next;
+    }
+  }
+  return {schema:'MathScope.OuterFlatSquareRootJets/1',order,vanishingOrder,domain:'0<delta<=1/2; zero extension for delta<=0',rows,
+    recurrence:'P_(j+1)(x)=[4-(3/2+3j)*x]*P_j(x)+2*x^2*P_j_prime(x)',
+    tradingProof:'exp(1/delta^2)>=delta^(-2M)/M!, so exp(-1/delta^2)<=M!*delta^(2M). Since 2M>=3/2+3j+N and delta<=1, the stated bound follows.',
+    allFiniteZeroJets:'For each fixed j choose N=1. The right derivative f^(j) tends to0, so extension by0 has that derivative at0. Induct on j; the same recurrence applies at every finite order.',
+    arithmetic:'EXACT_BIGINT_RATIONAL',actualSourceAuthenticated:false,finiteOrderSamplesUsedAsAllOrderProof:false,
+    pass:rows.every(r=>r.exponentCheck)};
+}
+
+/** A conditional, finite exact-rational sqrt jet recurrence. B[j] bounds
+ * every ordinary multiindex derivative of W of total degree j. The lower
+ * and upper values are premises, never actual-source certificates.
+ */
+export function positiveCoefficientSquareRootJetBounds({lower,upper,derivativeBounds}={}){
+  const lo=readRational(lower),hi=readRational(upper);
+  if(qcompare(lo,Q(0))<=0||qcompare(hi,lo)<0||!Array.isArray(derivativeBounds)||derivativeBounds.length<1)
+    fail('INVALID_INPUT','Use a positive coefficient interval and every requested derivative bound.');
+  finiteOrder(derivativeBounds.length-1,'derivative order');
+  const B=derivativeBounds.map(x=>readRational(x));
+  if(B.some(x=>qcompare(x,Q(0))<0)||qcompare(B[0],hi)<0)fail('INVALID_INPUT','Every derivative norm is nonnegative and B[0] must bound the supplied upper value.');
+  const rootLower=qcompare(lo,Q(1))<0?lo:Q(1),bounds=[qadd(Q(1),hi)];
+  for(let j=1;j<B.length;j++){
+    let sum=B[j];for(let k=1;k<j;k++)sum=qadd(sum,qmul(Q(choose(j,k)),qmul(bounds[k],bounds[j-k])));
+    bounds.push(qdiv(sum,qmul(Q(2),rootLower)));
+  }
+  return {schema:'MathScope.PositiveCoefficientSquareRootJetBounds/1',lower:qtext(lo),upper:qtext(hi),
+    squareRootLower:qtext(rootLower),inputOrdinaryDerivativeBounds:B.map(qtext),ordinaryDerivativeBounds:bounds.map(qtext),
+    recurrence:'2*sigma*D^alpha sigma=D^alpha W-sum_(0<beta<alpha) binom(alpha,beta) D^beta sigma D^(alpha-beta) sigma.',
+    grouping:'sum_(|beta|=k,beta<=alpha) binom(alpha,beta)=binom(|alpha|,k). Neither endpoint beta=0 nor beta=alpha is included in the sum.',
+    actualSourceAuthenticated:false,conditionalNormPremises:true,pass:true};
+}
+
+/** Exact exponent induction, independent of unspecified numeric constants.
+ * It verifies the powers used AFTER actual smoothness, compact primitive
+ * bounds, nonzero denominators and the logarithmic-norm lemma are bound.
+ */
+export function outerCovarianceJetDegreeAudit({order=8}={}){
+  finiteOrder(order,'order');const rows=[];
+  for(let j=0;j<=order;j++){
+    const forcing=Array.from({length:j},(_,r)=>{const k=r+1;return {k,wExponent:1+k+2*(j-k),wUpper:2*j,
+      coefficientExponent:1+2*k+3*(j-k)+1,coefficientUpper:3*j+1};});
+    const squareRootProducts=Array.from({length:Math.max(0,j-1)},(_,r)=>{const k=r+1;return {k,exponent:4*k+4*(j-k),upper:4*j};});
+    rows.push({order:j,matrixJetExponent:j,basisJetExponent:j,normalizedPulseJetExponent:2*j,covarianceJetExponent:2*j,
+      inverseCoefficientJetExponent:3*j+1,squareRootCoefficientJetExponent:j?4*j:1,zeroExtendedProductExponent:4*j+1,
+      forcing,squareRootProducts,pass:forcing.every(r=>r.wExponent<=r.wUpper&&r.coefficientExponent<=r.coefficientUpper)&&
+        squareRootProducts.every(r=>r.exponent<=r.upper)&&(j===0||3*j+1<=4*j)});
+  }
+  return {schema:'MathScope.OuterCovarianceJetDegreeAudit/1',order,rows,pass:rows.every(r=>r.pass),
+    normConstantsComputedHere:false,actualSourceAuthenticated:false,
+    universalInduction:'The displayed inequalities hold for every j>=1 and 1<=k<=j. Finite rows are regression checks of these same affine identities, not extrapolation of observed derivative values.'};
+}
+
+export function logarithmicPulseNormAudit({operatorError='1',dampingError='1',lambda='1',scale='2',errorEntries=['1/2','1/2','1/2','1/2'],dampingDifference='-1/2',referenceSecondSign=-1}={}){
+  const E=readRational(operatorError),Ed=readRational(dampingError),l=readRational(lambda),S=readRational(scale),dd=readRational(dampingDifference);
+  if(qcompare(E,Q(0))<0||qcompare(Ed,Q(0))<0||qcompare(l,Q(0))<0||qcompare(S,Q(0))<=0||!Array.isArray(errorEntries)||errorEntries.length!==4||![-1,1].includes(referenceSecondSign))
+    fail('INVALID_INPUT','Use the complete real 2x2 logarithmic-norm audit data.');
+  const e=errorEntries.map(x=>readRational(x)),allowance=qdiv(E,S),dallowance=qdiv(Ed,S),premises=e.every(x=>qcompare(abs(x),allowance)<=0)&&qcompare(abs(dd),dallowance)<=0;
+  const rows=[qadd(qsub(e[0],dd),abs(e[1])),qadd(qadd(qmul(Q(2*referenceSecondSign),l),qsub(e[3],dd)),abs(e[2]))],
+    upper=qdiv(qadd(qmul(Q(2),E),Ed),S),mu=rows.reduce((a,b)=>qcompare(a,b)>0?a:b);
+  return {schema:'MathScope.LogarithmicPulseNormAudit/1',rowLogarithmicNorms:rows.map(qtext),muInfinity:qtext(mu),upper:qtext(upper),
+    sourceDampingReferenceSign:referenceSecondSign,premises,pass:premises&&referenceSecondSign===-1&&qcompare(mu,upper)<=0,
+    actualSourceAuthenticated:false,absoluteMatrixNormSubstitutedForLogarithmicNorm:false};
+}
+
+function copyOuterFactorProgram(G,program,delta,eta){
+  const map=new Map([[program.roots.outerLogDistance,delta],[program.roots.eta,eta]]),ops=new Set(),pairs=[];
+  const copy=id=>{
+    if(map.has(id))return map.get(id);const {op,args}=program.nodes[id];ops.add(op);let value;
+    if(op==='rational')value=G.q(...args);
+    else if(op==='source_parameter')value=G.parameter(args[0]);
+    else if(op==='coordinate')value=G.fresh('outer_factor_import_'+args[0]);
+    else if(['integer_power','source_step_derivative'].includes(op))value=G.node(op,[copy(args[0]),args[1]]);
+    else if(['add','multiply','inverse','sqrt_positive','exp','log_positive','definite_integral','smooth_piecewise'].includes(op))value=G.node(op,args.map(copy));
+    else fail('UNSUPPORTED','The actual outer flat factor contains an unsupported operation: '+op);
+    map.set(id,value);pairs.push([id,value]);return value;
+  };
+  const roots=Object.fromEntries(['Xb','EpowB','rho','outerTheta','outerZ','outerScaledZ'].map(name=>[name,copy(program.roots[name])])),
+    gamma=program.improper.find(x=>x.name==='actual_Euler_Gamma');
+  if(!gamma)fail('INVALID_SOURCE_CONSTRUCTION','The full original Euler Gamma integral was omitted.');
+  roots.gamma=copy(gamma.root);
+  return {roots,copy,pairs,operations:[...ops].sort(),originalSchema:program.schema,
+    originalParameterExpressionSHA256:program.parameterExpressionSHA256,sourceEquationList:[...program.sourceEquations],
+    sourceKernelCount:program.outerKernels.length,sourceKernels:program.outerKernels.map(x=>({...x,root:copy(x.root)}))};
+}
+
+export function prepareActualOuterCovarianceFlatExtension(input={},context={}){
+  const request=requestOf(input),selected=prepareActualAdmissibleTerminalCovariance({sourceProfile:request.sourceProfile},context);
+  return attachActualOuterCovarianceFlatExtension(selected,request,context);
+}
+
+export function attachActualOuterCovarianceFlatExtension(selected,input={},context={}){
+  assertActualAdmissibleTerminalCovariance(selected);const request=requestOf(input);
+  if(request.sourceProfile!==selected.request.sourceProfile)fail('INVALID_SOURCE_CONSTRUCTION','The outer adapter and selected actual covariance must use one pinned profile.');
+  context.checkCancelled?.();const sourceCount=selected.G.nodes.length,G=new ActualCovarianceExpressions(selected.G,{maxNodes:3000000,checkCancelled:context.checkCancelled}),q=(n,d=1)=>G.q(n,d),
+    c=selected.constants,f=selected.frozen,g=selected.geometry,{R,Z,T,Xrep,etaRep,sRep}=selected.coordinates,
+    delta=G.fresh('actual_covariance_outer_delta'),eta=G.fresh('actual_covariance_outer_eta'),s=G.fresh('actual_covariance_outer_band_s'),
+    coordinates={delta,eta,s,Xrep,etaRep,sRep},bootstrap=selected.operator.background.prepared.bootstrap,heat=bootstrap.actualHeat.heat,
+    originalFactor=selected.operator.direction.program,imported=copyOuterFactorProgram(G,originalFactor,delta,eta),sourceRoots=imported.roots,
+    Xb=heat.Xb,X=G.mul(Xb,G.exp(G.neg(delta))),radial=G.sqrt(G.mul(q(2),s,X)),axial=G.mul(G.exp(G.mul(c.D,G.log(s))),eta),time=G.mul(s,G.sub(G.one,G.pow(eta,2))),
+    at=body=>G.simultaneousSubstitute(body,[R,Z,T],[radial,axial,time]),
+    chartFactor=G.exp(G.mul(G.neg(G.add(c.A,q(1,2))),G.log(s))),bProfile=[sourceRoots.outerTheta,sourceRoots.outerScaledZ],bbar=bProfile.map(x=>G.mul(chartFactor,x)),
+    H=selected.target.H.map(row=>row.map(at)),det=G.sub(G.mul(H[0][0],H[1][1]),G.mul(H[0][1],H[1][0])),adj=[[H[1][1],G.neg(H[0][1])],[G.neg(H[1][0]),H[0][0]]],
+    {dot}=covarianceMatrixAlgebra(G),W=adj.map(row=>G.div(dot(row,bbar),det)),HW=H.map(row=>dot(row,W)),
+    inverseChecks=HW.map((x,j)=>sourceGraphRationalIdentity(G,G.sub(x,bbar[j]),{atomicNodes:[...H.flat(),...bbar]})),
+    flat=G.exp(G.neg(G.mul(q(4),G.pow(delta,-2)))),flatWeight=G.mul(flat,G.pow(delta,-3)),
+    sqrtExponential=G.exp(G.neg(G.mul(q(2),G.pow(delta,-2)))),halfPower=G.exp(G.mul(q(-3,2),G.log(delta))),sqrtFlat=G.mul(sqrtExponential,halfPower),
+    positiveTarget=bbar.map(x=>G.mul(flatWeight,x)),positiveWeights=W.map(x=>G.mul(flatWeight,x)),positiveSquareRoots=W.map(x=>G.mul(sqrtFlat,G.sqrt(x))),
+    zeroExtend=x=>G.choose(delta,G.zero,G.zero,G.zero,G.zero,x),targetExtensions=positiveTarget.map(zeroExtend),weightExtensions=positiveWeights.map(zeroExtend),squareRootExtensions=positiveSquareRoots.map(zeroExtend),
+    E=G.pow(c.Bnorm,256),recipe=covarianceConcentrationRecipe(G,{h:c.h,kappa:c.kappa,u:c.u,lambdaLower:G.pow(c.Renv,-31),lambdaUpper:G.pow(c.Renv,83),absoluteC0:G.neg(f.c0),
+      operatorError:E,dampingError:E,unitFrameError:E,slopeError:E,lengthRatioLower:g.lengthRatioBounds[0],lengthRatioUpper:g.lengthRatioBounds[1]}),
+    Ac=selected.quantitative.Ac,massUpper=G.mul(g.Dgeom,g.r0,selected.cutoffs.transverseMass,G.pow(recipe.cone.amplitudeUpper,2)),
+    massUpperCancellation=sourceGraphRationalIdentity(G,G.sub(selected.quantitative.massUpper,massUpper),{atomicNodes:[g.ci,selected.cutoffs.transverseMass,recipe.cone.amplitudeUpper]}),
+    tauLower=G.pow(c.Renv,-56),tauUpper=G.pow(c.Renv,8),normalizedWeightLower=G.div(G.mul(c.kappa,tauLower),G.mul(q(64),massUpper)),
+    normalizedWeightUpper=G.div(G.mul(q(2),tauUpper),selected.quantitative.massLower),
+    determinantCoefficient=G.mul(q(15,16),Ac,c.u,G.pow(g.Dgeom,2),g.r0,G.pow(selected.cutoffs.transverseMass,2),G.pow(recipe.mass.massLowerCoefficient,2)),
+    lengthRoot=G.sqrt(g.Ls),lengthRootSquare=G.pow(lengthRoot,2),
+    determinantExpanded=G.mul(q(15,8),Ac,c.u,G.pow(g.haarFactor,2),G.pow(recipe.mass.massLowerCoefficient,2),lengthRootSquare),
+    determinantSquareAlgebra=sourceGraphRationalIdentity(G,G.sub(selected.quantitative.uniformAbsoluteDeterminantLower,determinantExpanded),
+      {atomicNodes:[Ac,g.ci,selected.cutoffs.transverseMass,recipe.mass.massLowerCoefficient,lengthRoot]}),
+    determinantPositiveRootNormalized=G.substitute(determinantExpanded,lengthRootSquare,g.Ls),
+    determinantNormalization=sourceGraphRationalIdentity(G,G.sub(determinantPositiveRootNormalized,G.mul(determinantCoefficient,g.ci)),
+      {atomicNodes:[Ac,g.ci,selected.cutoffs.transverseMass,recipe.mass.massLowerCoefficient]}),
+    determinantScaleIdentity={sourceSquareExpansion:determinantSquareAlgebra,positiveSquareRootRule:{square:lengthRootSquare,argument:g.Ls,
+      sourceLengthLower:G.mul(g.lengthRatioBounds[0],g.S),rule:'The positive real sqrt(Ls) has square Ls; the actual palette gives Ls>=Lmin*S>0.'},
+      normalization:determinantNormalization,pass:determinantSquareAlgebra.pass&&determinantNormalization.pass},
+    determinantScaledLower=G.div(G.mul(q(15,16),G.pow(c.Renv,-6),c.u,G.pow(g.Dgeom,2),g.r0,G.pow(selected.cutoffs.transverseMass,2),G.pow(recipe.mass.massLowerCoefficient,2)),g.Tg),
+    tangentRadialRatioUpper=G.mul(q(8),c.u,G.pow(c.Renv,10)),covarianceEntryUpper=G.mul(tangentRadialRatioUpper,massUpper),
+    inverseScaleUpper=G.div(G.mul(q(2),covarianceEntryUpper),determinantScaledLower),
+    sourceFactor={coordinates,profile:[delta,eta],X,Xb,chartFactor,bProfile,bbar,flat:flatWeight,sqrtFlat,actualFullTarget: selected.target.components.map(at),
+      factoredTarget:positiveTarget,targetExtensions,importedRoots:sourceRoots,importedOuterKernels:imported.sourceKernels,copyTrace:imported.pairs,
+      factorization:'Tchart=s^(-A-1/2)*exp(-4/delta^2)*delta^-3*(b_theta,delta^6*b_z)',
+      commonFactorDividedNumerically:false,rawActualForwardMomentTargetRetained:true},
+    coefficient={H,determinant:det,adjugate:adj,target:bbar,weights:W,squareRoots:W.map(x=>G.sqrt(x)),HW,inverseChecks,
+      positiveWeights,positiveSquareRoots,weightExtensions,squareRootExtensions,normalizedTargetScale:G.neg(G.div(dot(f.N,bbar),Ac))};
+
+  // The singular interior flat formula is NEVER substituted at delta=0.
+  // A.9 gives J_(4,m)G(0)=G(0)/4. The angular boundary term is
+  // 16*rho*EpowB*H(2d/Xb)*exp(1)/sqrt(2Xb), and the scaled axial
+  // coefficient has its separate delta^6 factor.
+  const endpointR=G.sqrt(G.mul(q(2),s,Xb)),atEndpoint=body=>G.simultaneousSubstitute(body,[R,Z,T],[endpointR,axial,time]),
+    sourceHeatAtEndpoint=G.sub(G.one,G.simultaneousSubstitute(heat.heatLoss,[bootstrap.constants.X,bootstrap.constants.eta],[Xb,eta])),
+    endpointK=G.mul(sourceRoots.EpowB,sourceHeatAtEndpoint),endpointBtheta=G.div(G.mul(q(16),sourceRoots.rho,G.exp(G.one),endpointK),G.sqrt(G.mul(q(2),Xb))),
+    endpointBbar=[G.mul(chartFactor,endpointBtheta),G.zero],endpointH=selected.target.H.map(row=>row.map(atEndpoint)),
+    endpointDet=G.sub(G.mul(endpointH[0][0],endpointH[1][1]),G.mul(endpointH[0][1],endpointH[1][0])),
+    endpointAdj=[[endpointH[1][1],G.neg(endpointH[0][1])],[G.neg(endpointH[1][0]),endpointH[0][0]]],
+    endpointW=endpointAdj.map(row=>G.div(dot(row,endpointBbar),endpointDet)),endpointChecks=endpointH.map((row,j)=>sourceGraphRationalIdentity(G,G.sub(dot(row,endpointW),endpointBbar[j]),{atomicNodes:[...endpointH.flat(),...endpointBbar]})),
+    endpoint={X:Xb,R:endpointR,Z:axial,T:time,heat:sourceHeatAtEndpoint,heatPrefactor:sourceRoots.EpowB,bProfile:[endpointBtheta,G.zero],bbar:endpointBbar,H:endpointH,determinant:endpointDet,
+      normalizedWeights:endpointW,normalizedSquareRoots:endpointW.map(x=>G.sqrt(x)),inverseChecks:endpointChecks,
+      actualForwardTargetAtEndpoint:selected.target.components.map(atEndpoint),provenTargetValue:[G.zero,G.zero],provenWeightValue:[G.zero,G.zero],provenSquareRootValue:[G.zero,G.zero],
+      justification:'Original A.8/A.10 backward representation and actual moment restoration; no singular interior expression is evaluated at0.',
+      originalActualForwardTargetReplacedInGraph:false,singularEndpointSampleEvaluated:false};
+
+  // Equation6.8 permits a representative at X=Xb. Freeze that actual
+  // representative and evaluate the separate regular endpoint formulas;
+  // never reach the edge by differentiating a discontinuous rounded label.
+  const endpointAt=body=>G.simultaneousSubstitute(body,[eta,s,Xrep,etaRep,sRep],[G.zero,G.one,Xb,G.zero,G.one]),
+    endpointWitness={X:Xb,Xrep:Xb,eta:G.zero,etaRep:G.zero,s:G.one,sRep:G.one,R:G.sqrt(G.mul(q(2),Xb)),Z:G.zero,T:G.one,q:g.Q,
+      H:endpointH.map(row=>row.map(endpointAt)),determinant:endpointAt(endpointDet),normalizedWeights:endpointW.map(endpointAt),
+      normalizedSquareRoots:endpointW.map(x=>endpointAt(G.sqrt(x))),coefficient:endpointBbar.map(endpointAt),heat:endpointAt(sourceHeatAtEndpoint),
+      normalizedWeightLower:endpointAt(normalizedWeightLower),normalizedWeightUpper:endpointAt(normalizedWeightUpper),
+      determinantAbsoluteLower:endpointAt(G.div(determinantScaledLower,g.S)),
+      actualForwardTarget:endpoint.actualForwardTargetAtEndpoint.map(endpointAt),
+      originalClosedRepresentativeRule:'Equation6.8 includes X=Xb. Choose an intersecting source lattice box containing this point and use the point itself as its representative.',
+      frozenLabelsRetained:true,singularInteriorFormulaEvaluated:false};
+  endpoint.witness=endpointWitness;
+
+  const flatJets=outerFlatSquareRootJets({order:request.jetOrder,vanishingOrder:request.vanishingOrder}),jetRoots=[],jetChecks=[];
+  let differentiated=sqrtFlat;
+  for(const row of flatJets.rows){
+    if(row.order)differentiated=G.derivative(differentiated,delta);
+    const polynomial=G.add(...row.polynomial.map((x,k)=>G.mul(G.q(...readRational(x)),G.pow(delta,2*k)))),formula=G.mul(sqrtFlat,G.pow(delta,-3*row.order),polynomial),
+      check=sourceGraphRationalIdentity(G,G.sub(differentiated,formula),{atomicNodes:[sqrtExponential,halfPower],maxTerms:100000});
+    jetRoots.push({order:row.order,actualDerivative:differentiated,recurrence:formula,zeroExtension:zeroExtend(formula),polynomial,
+      flatBound: G.mul(G.q(...readRational(row.coefficient)),G.pow(delta,request.vanishingOrder),G.exp(G.neg(G.pow(delta,-2))))});
+    jetChecks.push({...check,order:row.order});
+  }
+  const logIdentities=selected.families.flatMap(family=>family.frame.wMatrix.flatMap((row,i)=>row.map((x,j)=>{
+    const reference=i===1&&j===1?G.mul(q(-2),family.frame.reference.lambda):G.zero,
+      expected=G.sub(G.add(reference,family.frame.projectedError[i][j]),i===j?G.sub(family.frame.actualDamping,family.frame.reference.dref):G.zero);
+    return {sign:family.sign,row:i,column:j,...sourceGraphRationalIdentity(G,G.sub(x,expected),{atomicNodes:[family.frame.reference.lambda,family.frame.actualDamping,family.frame.reference.dref,...family.frame.projected.flat()]})};
+  }))),
+    logarithmicNorm={sourceOperatorError:E,sourceDampingError:E,muInfinityUpper:G.div(G.mul(q(3),E),g.S),
+      forwardPropagatorUpper:G.exp(G.mul(q(3),E,g.lengthRatioBounds[1])),sourceLengthRatioUpper:g.lengthRatioBounds[1],identities:logIdentities,
+      matrixIdentity:'M=diag(0,-2*lambda)+E_actual-(d-dref)*I',
+      argument:'mu_infinity(M)=max_i(M_ii+sum_(j!=i)|M_ij|)<=(2E+Ed)/S. For v>=u, ||Phi(v,u)||_infinity<=exp((2E+Ed)*(v-u)/S)<=exp((2E+Ed)*Lmax).',
+      negativeReferenceEigenvalueRetained:true,absoluteNormGronwallUsed:false,allSlowPointDerivativesOfPZero:selected.families.every(a=>[R,Z,T].every(x=>!G.freeCoordinates(a.P).has(x)))},
+    degreeAudit=outerCovarianceJetDegreeAudit({order:Math.max(8,request.jetOrder)}),outerBound=selected.operator.direction.outer,
+    absorption=directionCPowerAbsorption(Math.max(10,outerBound.factorCoefficientCPower)),
+    scalarRows=[{id:'outer-tau-lower-power',pass:1+33+20+1<56,proof:'C^10<Renv and 16<Renv give C^-10*Renv^-33/(16*Renv^20)>Renv^-55>Renv^-56.'},
+      {id:'outer-tau-upper-power',pass:7+1<=8,proof:'|b|<2Renv, s^(-A-1/2)<4 and Ac>Renv^-6 give tauTilde<8Renv^7<Renv^8.'},
+      {id:'flat-square-root-source-exponent',pass:2n*2n===4n&&2n*3n===6n},
+      {id:'constant-haar-times-length',pass:2n===2n,proof:'(Dg/2)*ci*(Integral chi^2)*(2*r0/ci)=Dg*r0*(Integral chi^2).'}],
+    quantitative={Ac,normalizedTargetScaleLower:tauLower,normalizedTargetScaleUpper:tauUpper,normalizedWeightLower,normalizedWeightUpper,
+      normalizedSquareRootLower:G.sqrt(normalizedWeightLower),normalizedSquareRootUpper:G.sqrt(normalizedWeightUpper),massUpperIndependentOfBand:massUpper,massUpperCancellation,
+      determinantAbsoluteLower:at(selected.quantitative.uniformAbsoluteDeterminantLower),determinantCoefficient,determinantScaleIdentity,
+      determinantScaledLower,determinantAbsoluteLowerByScale:G.div(determinantScaledLower,g.S),tangentRadialRatioUpper,covarianceEntryUpper,
+      inverseScaleUpper,inverseInfinityNormUpper:G.mul(inverseScaleUpper,g.S),
+      flatValueBoundForRequestedN:G.mul(G.sqrt(normalizedWeightUpper),jetRoots[0].flatBound),
+      sourceOuterCoefficientLower:G.pow(G.parameter('CSelected'),-10),sourceOuterCoefficientUpper:G.pow(G.parameter('CSelected'),outerBound.factorCoefficientCPower),
+      scalarRows,sourcePowerAbsorption:absorption,allDerivativeNumericConstantsEvaluated:false};
+
+  const p=G.source.parametersExactExpressions,last=G.outer.stages.at(-1),sourceHeat=bootstrap.actualHeat.program,sourceLeading=bootstrap.completedOrderOne.originalLeading,
+    checks=[
+      {id:'unchanged-private-selected-actual-small-q-source',pass:true},
+      {id:'actual-common-support-exterior-reaches-through-outer-edge',pass:selected.support.pass&&selected.support.allPositiveOrdersCertifiedByCommonSupport&&selected.support.endpoints.Xb===Xb},
+      {id:'copied-full-source-prefix-unchanged',pass:same(G.nodes.slice(0,sourceCount),selected.G.nodes.slice(0,sourceCount))},
+      {id:'source-square-seed-positive-h-rho-and-terminal-length',pass:same(p.h,{exp:{product:[{integer:-8002},{ref:'T'}]}})&&same(p.co,{rational:'1/256'})&&last.id==='terminal'&&last.length===q(3)&&sourceRoots.rho===G.mul(G.parameter('co'),c.h)},
+      {id:'same-exact-terminal-endpoint-and-height',pass:sourceRoots.Xb===Xb&&sourceRoots.EpowB===G.mul(G.parameter('Pstar'),G.exp(last.logAEnd))},
+      {id:'actual-full-heat-and-I2-branch-retained',pass:sourceHeat.heat.tailTruncated===false&&sourceHeat.I2.meanUpperBoundUsedAsDebt===false&&sourceHeat.I2.finiteIterateDeclaredRoot===false&&sourceHeat.I2.rhs.length===3&&Object.values(bootstrap.actualHeat.heat.proof.checks).every(Boolean)},
+      {id:'original-leading-moment-restoration-functions-retained',pass:sourceLeading.normalizedDebts.length===5&&sourceLeading.loop.b8.program.B8.cancellation.allFiveMomentsRestoredExactlyInTheLimit&&Object.values(sourceLeading.proof.checks).every(Boolean)},
+      {id:'actual-A48-A49-factor-with-all-A54-and-pressure-terms',pass:originalFactor.exactFactorization.outer==='T0=exp(-4/delta^2)*delta^-3*(outerTheta,delta^6*outerZ)'&&originalFactor.preservedTerms.outerThreeAngularTerms&&originalFactor.preservedTerms.outerPressureHeatSquare&&originalFactor.preservedTerms.outerNestedAxialIntegral&&originalFactor.preservedTerms.heatGammaIsActualLaplaceIntegral},
+      {id:'source-outer-coefficients-and-frozen-direction-lower-bounds',pass:outerBound.pass&&outerBound.factorCoefficientLower==='C^-10'&&selected.operator.direction.ratio.pass&&selected.operator.direction.ratio.checks.some(x=>x.id==='same-cover-box-retains-negative-projection'&&x.pass)&&absorption.pass},
+      {id:'unscaled-outer-factor-dependency-is-elementary-full-integrals',pass:!imported.operations.some(x=>x.startsWith('actual_'))&&[...G.freeCoordinates(sourceRoots.outerTheta),...G.freeCoordinates(sourceRoots.outerScaledZ)].every(x=>x===delta||x===eta)},
+      {id:'actual-normalized-inverse-identities',pass:inverseChecks.every(x=>x.pass)&&endpointChecks.every(x=>x.pass)},
+      {id:'actual-ci-Ls-mass-upper-cancellation',pass:massUpperCancellation.pass&&G.freeCoordinates(massUpper).size===0},
+      {id:'actual-determinant-one-over-S-lower-bound',pass:determinantScaleIdentity.pass&&G.freeCoordinates(determinantScaledLower).size===0&&G.freeCoordinates(inverseScaleUpper).size===0},
+      {id:'actual-stable-normalized-pulse-matrix',pass:logIdentities.every(x=>x.pass)&&logarithmicNorm.allSlowPointDerivativesOfPZero},
+      {id:'scalar-flat-derivative-identities',pass:flatJets.pass&&jetChecks.every(x=>x.pass)},
+      {id:'every-order-polynomial-degree-induction',pass:degreeAudit.pass&&scalarRows.every(x=>x.pass)},
+      {id:'singular-source-factor-not-evaluated-at-zero',pass:endpoint.singularEndpointSampleEvaluated===false&&endpoint.provenSquareRootValue.every(x=>x===G.zero)},
+      {id:'actual-closed-edge-witness-substitutes-every-free-coordinate',pass:[...endpointWitness.H.flat(),endpointWitness.determinant,...endpointWitness.normalizedWeights,
+        ...endpointWitness.normalizedSquareRoots,...endpointWitness.coefficient,endpointWitness.heat,endpointWitness.normalizedWeightLower,
+        endpointWitness.normalizedWeightUpper,endpointWitness.determinantAbsoluteLower,...endpointWitness.actualForwardTarget].every(root=>G.freeCoordinates(root).size===0)},
+    ];
+  if(!checks.every(x=>x.pass))fail('INVALID_SOURCE_CONSTRUCTION','Actual outer covariance flat-extension binding failed: '+checks.filter(x=>!x.pass).map(x=>x.id).join(', '));
+  flatJets.actualSourceJetRoots=jetRoots;flatJets.actualDerivativeIdentityChecks=jetChecks;
+  const sourceBinding={sourceProfile:request.sourceProfile,parameterExpressionSHA256:selected.sourceBinding.parameterExpressionSHA256,originalPDFSHA256:selected.sourceBinding.originalPDFSHA256,
+    equations:['A.47','A.48','A.49','A.50','A.51','A.53','A.54','6.8','7.1','7.2','7.27','7.29'],
+    covarianceProducer:'The unchanged private actual selected ell=ellMinimum+8 two-pulse source; the original ell=1 display is not promoted.',
+    factorProducer:'The original private direction program, compiled from all outer stages and full heat/Gamma, supplies the exact regularized backward factors.',
+    momentProducer:'The actual regular-axis source, B8/C12/I1 five-moment restoration and full I2 heat compensation supply the hypotheses of the original backward formula.',
+    oldSourceModulesChanged:false,originalFactorOperationCount:imported.pairs.length};
+  const proof={
+    domain:'Fixed selected band ell=ellMinimum+8; frozen representative with Xplus<Xrep<=Xb, etaRep in[-1,1], sRep in[1/2,2]. Observe X=Xb*exp(-delta), 0<=delta<=1/2, eta in[-1,1], s in[1/2,2], in the same source box with slow distance<=4/S^3. Apply the zero-extension statement near its intersection with X=Xb.',
+    chartBoundary:'Smoothness in the open eta chart; at eta=+/-1 all mixed jets are the original one-sided heat boundary jets. No continuation of the real heat integral to negative T is asserted.',
+    sourceEquality:'Every positive-order completed field has the same zero exterior X>Xplus. This includes a neighborhood on both sides of Xb. Thus the actual complete background, not a truncated active prefix, equals the retained leading field there.',
+    exactFactor:'On this collar heatCutoff=1 and U=0. Original A.8 uses regular-axis/full-moment identities to replace the forward target by its exact backward representation A.53/A.54. Substitute u=delta/sqrt(1+delta^2*t) in each f_o_prime integral. All three angular terms, the full heat pressure square and both axial integrations remain. This is an analytic integral identity, not a rational simplification of the retained forward target.',
+    endpoint:'The regularized Laplace integrals have endpoint G(0)/4 and every finite mixed derivative is dominated by exp(-4t) times a polynomial in t. The explicit coefficient b_theta(0)=16*rho*EpowB*H(2d/Xb)*exp(1)/sqrt(2Xb)>0. The scaled axial coefficient is delta^6*b_z and hence zero at0.',
+    coefficientPositivity:'Use the limiting direction of (b_theta,delta^6*b_z), not the zero stress vector. Its source lower b_theta>=C^-10 and frozen projection -N dot n>Renv^-33 imply tauTilde>Renv^-56. The actual normalized covariance cone and positive masses give W_i>=kappa*tauTilde/(64*massUpper)>0, including delta=0 by continuity. At a boundary representative the same source closed-annulus primitive bounds and rounding error apply directly; continuity of discrete labels is never assumed.',
+    smoothInverse:'On the closed one-sided outer chart all fixed finite leading jets are bounded: the terminal formula is a product of elementary smooth factors, the actual square-seed step, and the full Laplace heat with |H^(j)(z)|<=(h)_j*(1+h)_j for z>=0. The pulse coefficients have the original protected denominators, a finite interval and frozen labels. Parameter differentiation of the explicit Volterra series is justified by its finite-order augmented factorial majorant. H and its nonvanishing inverse, bbar and positive W are therefore smooth up to this radial edge.',
+    stablePulse:'The executed matrix identity retains the reference diagonal (0,-2lambda). Its induced logarithmic norm is at most(2E+Ed)/S; the resulting forward propagator bound is independent of S. Taking an absolute matrix norm would discard this useful negative diagonal and is not the argument used here.',
+    finiteSourceJetConstants:'For each fixed order j, the leading outer field and chart jets on the fixed compact profile collar have finite source-only bounds. Frozen c0,lambda0,Bs,carrier p,pz and their reciprocals that actually occur have the source bounds; epsilon*k^2 is in[1,4]. No bare k occurs in M except through this product and bounded frozen carriers. Every j>=1 slow jet of n is O(S), while n_prime jets are O(1); the source tangent/normal denominators have positive source-only lower bounds. The finite product/chain rules give M_j,B_j=O(S^j). This argument concerns ordinary slow derivatives, with all labels fixed.',
+    pulseJetRecurrence:'w_alpha_prime=M*w_alpha+sum_(0<beta<=alpha) binom(alpha,beta) M_beta*w_(alpha-beta), with zero derivative initial data. Variation of constants and Ls<=Lmax*S give w_j=O(S^(2j)). P has exactly zero slow-point derivatives, hence t_j/P=O(S^(2j)). The same argument bounds mixed profile derivatives after the fixed smooth chart conversion.',
+    determinantScale:'The exact lower expression equals (15/16)*Ac*u*Dg^2*r0*(Integral chi^2)^2*massLowerCoefficient^2*ci. The source inequalities Ac>Renv^-6 and ci>1/(Tg*S) give the returned strictly positive source-only determinantScaledLower/S. The source cone yields |t_tan|<=8*u*Renv^10*t_r, so each |H_ij|<=covarianceEntryUpper. The 2x2 adjugate therefore gives ||H^-1||_infinity<=inverseScaleUpper*S. These constants are actual expression roots, not an unspecified determinant premise.',
+    inverseJetRecurrence:'The exact cancellation haar*Ls=Dg*r0*Integral chi^2 gives H_j=O(S^(2j)). The separate determinant-scale identity and positive source-only lower give ||H^-1||=O(S). Differentiating H*W=bbar inductively gives W_j=O(S^(3j+1)). The positive W lower uses massUpper, which is independent of S. The sqrt recurrence then gives (sqrt W)_j=O(S^(4j)) for j>=1, and its value is O(S). Every constant is finite and depends only on the fixed source and derivative order; the individual numerical constants have not been evaluated by this certificate.',
+    flatZeroExtension:'sqrt(y_i)=exp(-2/delta^2)*delta^(-3/2)*sqrt(W_i) for delta>0. The exact scalar recurrence gives every derivative an arbitrary extra power delta^N. Leibniz and the preceding bounds yield |D^I sqrt(y_i)|<=C_(I,N)*S^(4|I|+1)*delta^N. At delta<=0 define the whole function as0, before evaluating an interior square root. All jets match0 at the edge. The raw actual forward target remains in the graph; its zero exterior follows the original backward/full-moment identity.',
+    uniformity:'The polynomial-in-S estimates are a written source-bound derivative theorem with explicit degree recurrences and existing actual primitive bounds. They are not a numerical enclosure of H, an execution of every derivative order, or a new Lean kernel theorem.',
+    unresolved:'The inner edge, boxes on X<=Xplus with potentially huge active coefficient prefixes, a common final paper Gamma choice, the global physical curl/residual assembly, numerical all-derivative constants, and the remaining M2 gates are separate.'};
+  const decision={actualSelectedSmallQSource:true,actualOuterCoefficientMatrixAndTargetConstructed:true,
+    actualNormalizedWeightsPositiveThroughOuterEdge:true,actualSquareRootZeroExtensionAtOuterEdge:true,allFiniteOuterRadialFlatJetsByWrittenInduction:true,
+    sourceBoundStablePulsePropagator:true,sourceBoundPolynomialSlowJetDegrees:true,requestedScalarDerivativeOrder:request.jetOrder,
+    rawForwardTargetRetained:true,singularZeroDivisionUsed:false,allNumericDerivativeConstantsEvaluated:false,
+    actualInnerFlatEdgeCertified:false,allSourceBoxesCovered:false,unknownPaperGammaMembership:'NOT_EVALUATED',
+    rigorousWholeHNumericalEnclosure:false,wholeGPOSComplete:false,fullPhysicalResidualAndFlatErrorPackageComplete:false,newLeanKernelProof:false,m3MayStart:false};
+  const roots={coordinates,X,Xb,H,determinant:det,normalizedCoefficient:W,positiveWeights,positiveSquareRoots,weightExtensions,squareRootExtensions,
+    normalizedCoefficientLower:normalizedWeightLower,normalizedCoefficientUpper:normalizedWeightUpper,endpoint,
+    determinantScaledLower,inverseScaleUpper,massUpperIndependentOfBand:massUpper,
+    flatScalarJets:jetRoots,propagatorUpper:logarithmicNorm.forwardPropagatorUpper,flatValueBoundForRequestedN:quantitative.flatValueBoundForRequestedN};
+  const result={G,selected,request,coordinates,sourceBinding,sourceFactor,coefficient,endpoint,quantitative,flatJets,logarithmicNorm,degreeAudit,checks,proof,decision,roots};
+  const packed=G.pack(roots,{schema:'MathScope.ActualOuterCovarianceFlatExtensionProgram/1',compiler:'actual-outer-covariance-flat-extension.mjs:prepareActualOuterCovarianceFlatExtension',compilerInput:request,
+    coordinates,sourceBinding,sourceFactor,coefficient,endpoint,quantitative,flatJets,logarithmicNorm,degreeAudit,checks,proof,decision}),
+    {nodes:liveNodes,...rest}=packed,program={...structuredClone(rest),nodes:liveNodes.slice()};result.program=program;
+  seals.set(result,{G,selected,program,programNodes:program.nodes,metadata:metadata(program),serialized:canonicalStringify(program),count:G.nodes.length,nodes:JSON.stringify(G.nodes),
+    definitions:G.captureFunctionDefinitions(),covarianceCount:G.covarianceSystems.length,covariance:JSON.stringify(G.covarianceSystems),binding:publicBinding(result)});
+  return result;
+}
+
+export function assertActualOuterCovarianceFlatExtension(p){
+  const s=seals.get(p);
+  if(!s||p.G!==s.G||p.selected!==s.selected||p.program!==s.program||p.program.nodes!==s.programNodes||metadata(p.program)!==s.metadata||JSON.stringify(p.program.nodes)!==s.nodes||
+    JSON.stringify(p.G.nodes.slice(0,s.count))!==s.nodes||!p.G.functionDefinitionsUnchanged(s.definitions)||JSON.stringify(p.G.covarianceSystems.slice(0,s.covarianceCount))!==s.covariance||publicBinding(p)!==s.binding)
+    fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged private actual outer source; copied conclusions, edited bodies and changed compiler metadata are not certificates.');
+  assertActualAdmissibleTerminalCovariance(s.selected);return true;
+}
+
+export async function actualOuterCovarianceFlatExtensionCertificateFromProgram(p,context={}){
+  assertActualOuterCovarianceFlatExtension(p);const s=seals.get(p),hash=await sha256(s.serialized);context.checkCancelled?.();
+  return {schema:'MathScope.ActualOuterCovarianceFlatExtensionCertificate/1',request:p.request,sourceBinding:p.sourceBinding,
+    graph:{sha256:hash,nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.serialized).byteLength,compiler:p.program.compiler,compilerInput:p.request,roots:p.roots,graphIncluded:false,fixedCompilerPrefix:true,laterGraphAppendsExcluded:true},
+    decision:p.decision,quantitative:p.quantitative,flatJets:p.flatJets,logarithmicNorm:p.logarithmicNorm,degreeAudit:p.degreeAudit,checks:p.checks,proof:p.proof,pass:true,
+    scope:'Source-bound written analytic outer fixed-label square-root zero extension and polynomial slow-jet degrees. Numeric all-order constants, all source boxes, the inner edge, unknown final Gamma, whole M2 and M3 are not certified.'};
+}
+
+export async function actualOuterCovarianceFlatExtensionCertificate(input={},context={}){
+  return actualOuterCovarianceFlatExtensionCertificateFromProgram(prepareActualOuterCovarianceFlatExtension(input,context),context);
+}
