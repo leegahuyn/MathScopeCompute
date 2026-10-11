@@ -2,15 +2,19 @@
 
 ## 현재 판정
 
-**M2의 추가 구현과 검증을 계속 진행 중이며, 사용자가 요청한 모든 수학 범위의 완료 판정과 M3 시작은 아직 하지 않았다.** 최초 복구점 `8a0046c5` 이후의 저장 기록을 이어가고 있다. 현재 실제 source·생성된 Worker·공개 v79 브라우저에서 확인한 실행 코드의 버전은 **`0.3.11`**이다. 원래 terminal F와 아홉 도함수의 새 실행을 [terminal F runtime 기록](ACTUAL_TERMINAL_FIELD_RUNTIME_KO.md)에, 이전 `0.3.10/v77` 실행은 [heat runtime 기록](evidence/heat-runtime-20261011/HEAT_RUNTIME_RELEASE_KO.md)에 각각 보존한다. 아래 각 절의 이전 공개 버전은 해당 저장 시점의 기록이다.
+**현재 정의한 M2 수학 관문을 모두 완료했다.** 교정된 실제 물리점의 numerical source4와 전역 common source6는 각각 **8/8, 관측 exit 0**으로 완료됐고, 원래 수식·정량 경계·같은 source 구성·독립 및 교차 검토를 함께 집계했다. 설치·빌드한 runtime **`0.3.12 / 공개 v80`**에서 module **9/9**, 실제 Worker **11/11**, 같은 결과 및 replay MATCH를 확인했다. 공개 새 작업은 **COMPLETED, 10/10**, 열한 표의 별도 대조는 **8/8**이며 저장·내보내기도 성공했다. [실제 수치 실행 설명](ACTUAL_PHYSICAL_CENTER_NUMERICS_KO.md)과 제19·20절에 근거를 연결한다.
 
-2026-10-11의 후속 원문 감사에서 물리 위상 지수의 괄호 불일치를 확인했다. 원문 (6.2)는 `d_r=2*((1+h)*rho_g-h*kappa_s)`, `kappa_s=1/100000`인데, 기존 live 코드 다섯 곳은 마지막 항을 한 번만 뺐다. 원래 `M_i`와 기존 값의 비는 `epsilon^(-kappa_s/2)`이므로 작은 h만으로 무시할 수 없다. [발견·영향 기록](evidence/original-radial-exponent-20261011/original-radial-exponent-mismatch.json)에 원문과 실행 파일 해시를 보존했다. **G-CURL·G-N5의 원문 물리 지도 결속을 다시 검증하며, G-NUM과 M3는 아직 완료·시작하지 않는다.**
+이 완료는 명시된 M2 구현·수학·수치 계약의 완료다. **전체 해석학의 새 Lean 증명, NS 전체 해법, N6 보정 전 모든 잔차의 flatness, 원래 수치값의 균일 절대·상대정밀도**를 뜻하지 않는다. M3의 선행 조건은 충족했지만 실제 P7 구현·실행은 아직 이 문서의 근거에 포함하지 않는다. 브라우저 파일 선택·재가져오기 직접 조작은 도구 gateway timeout으로 미확인이며, module·실제 Worker의 재현과 공개 저장·내보내기 성공에서 따로 구분한다.
 
-이전 공통 family의 **8/8, 관측 exit 0**과 당시 네 gate 완료 판단은 [교정 전 판단 기록](evidence/original-radial-exponent-20261011/before-radial-exponent-audit-M2_COMPLETION_GATE.json)에 그대로 보존한다. 원래 보조 변수에서의 양의 공분산 정의와 같은 배경 E_B/N4 수학은 이 지수 교정으로 직접 바뀌지 않는다. 실제 물리 inverse·새 대표점·270개 도함수와 양의 배율 결속은 올바른 지도에서 다시 생성해야 한다. 발견 당시 진행 중인 source attempt3는 고정된 기존 코드를 끝까지 검사하는 기록이며, 성공하더라도 교정한 원문점의 인증으로 사용하지 않는다.
+최초 복구점 `8a0046c5` 이후의 저장 기록을 이어가고 있다. 원래 terminal F와 아홉 도함수의 `0.3.11/v79` 실행은 [terminal F runtime 기록](ACTUAL_TERMINAL_FIELD_RUNTIME_KO.md)에, 이전 `0.3.10/v77` 실행은 [heat runtime 기록](evidence/heat-runtime-20261011/HEAT_RUNTIME_RELEASE_KO.md)에 보존한다. 제1–6절과 제9–18절의 당시 상태·공개 버전·남은 범위는 각 저장 시점의 기록이며 현재 판정은 이 머리말과 제7·19·20절을 기준으로 읽는다.
 
-후속 실행 attempt3는 **8/8, 관측 exit 0, 시간 제한 없음, 1595.337초**로 종료했다. 이 결과의 [구 지도 범위 제한](evidence/physical-full-jets-20261011/physical-full-jet-attempt3-original-map-limitation.json)을 별도로 보존했고, 원문 식 결속이 없는 이 실행을 새 설치물로 가져오려는 실제 음성 대조는 거부됐다. 이후 다섯 live 정의를 공통 원문 식으로 교정하여 관련 경량 **31/31 및 geometry 2/2**, 실제 물리점 연결의 경량 **11/11**을 확인했다. **교정된 원본 attempt4는 2026-10-11 14:28 UTC에 시작했으며 현재 완료 근거가 아니다.** 원문 식·같은 실제 역지도·270개 원본 도함수와 배율·외부 종료 상태를 새로 검증한 뒤에만 다음 판정을 내린다.
+2026-10-11의 후속 원문 감사에서 물리 위상 지수의 괄호 불일치를 확인했다. 원문 (6.2)는 `d_r=2*((1+h)*rho_g-h*kappa_s)`, `kappa_s=1/100000`인데, 기존 live 코드 다섯 곳은 마지막 항을 한 번만 뺐다. 원래 `M_i`와 기존 값의 비는 `epsilon^(-kappa_s/2)`이므로 작은 h만으로 무시할 수 없다. [발견·영향 기록](evidence/original-radial-exponent-20261011/original-radial-exponent-mismatch.json)에 원문과 실행 파일 해시를 보존했다. **당시 G-CURL·G-N5를 다시 열고 G-NUM 완료를 보류했으며, 이제 올바른 지도의 common source6와 numerical source4로 필요한 재검증을 마쳤다.**
 
-기계 판독 판단은 [M2_COMPLETION_GATE.json](M2_COMPLETION_GATE.json), 이번 실행·배포 기록은 [continuation evidence](evidence/m2-continuation-20261011/)에 있다. 이 문서와 JSON은 **범위가 명시된 감사 판단**이다. 상태값·파일명·테스트 개수·hash만으로 모든 해석학적 명제가 자동 증명되는 것은 아니다.
+이전 공통 family의 **8/8, 관측 exit 0**과 당시 네 gate 완료 판단은 [교정 전 판단 기록](evidence/original-radial-exponent-20261011/before-radial-exponent-audit-M2_COMPLETION_GATE.json)에 그대로 보존한다. 원래 보조 변수에서의 양의 공분산 정의와 같은 배경 E_B/N4 수학은 이 지수 교정으로 직접 바뀌지 않는다. 실제 물리 inverse·새 대표점·270개 도함수와 양의 배율 결속은 source4에서 올바른 지도로 다시 생성했다. 발견 당시 진행 중이던 source attempt3는 고정된 기존 코드의 검사 기록으로 남기며 교정한 원문점의 인증으로 사용하지 않는다.
+
+후속 실행 attempt3는 **8/8, 관측 exit 0, 시간 제한 없음, 1595.337초**로 종료했다. 이 결과의 [구 지도 범위 제한](evidence/physical-full-jets-20261011/physical-full-jet-attempt3-original-map-limitation.json)을 별도로 보존했고, 원문 식 결속이 없는 이 실행을 새 설치물로 가져오려는 실제 음성 대조는 거부됐다. 이후 다섯 live 정의를 공통 원문 식으로 교정하여 관련 경량 **31/31 및 geometry 2/2**, 실제 물리점 연결의 경량 **11/11**을 확인했다. **교정된 원본 attempt4는 2026-10-11 14:55 UTC에 8/8, 관측 exit 0, timeout 없이 완료**됐다. 원문 식·같은 실제 역지도·270개 원본 도함수와 배율을 새로 검증했고, 전역 common source6는 **15:19 UTC에 별도로 8/8, exit 0**으로 완료됐다. 서로 다른 원본 graph·실행·범위를 같은 root나 한 번의 실행으로 합치지 않는다.
+
+기계 판독 판단은 [M2_COMPLETION_GATE.json](M2_COMPLETION_GATE.json), 재개 시점의 실행·배포 기록은 [continuation evidence](evidence/m2-continuation-20261011/), 현재 수치 배포 기록은 [physical-center runtime evidence](evidence/physical-center-runtime-20261011/)에 있다. 이 문서와 JSON은 **범위가 명시된 감사 판단**이다. 상태값·파일명·테스트 개수·hash만으로 모든 해석학적 명제가 자동 증명되는 것은 아니다.
 
 ## 1. 복구한 저장점과 이전 결과
 
@@ -23,7 +27,7 @@
 - 원래 moving frame·weight·phase·cutoff·원통 기저항을 포함한 조건부 local full curl.
 - 공식 Lean `4.34.0-rc2`에서 검증한 대수 보조정리 14개와 보조 선언 2개, fresh import·axiom 감사 및 음성 대조 3개.
 
-이 실행들의 상세 provenance는 [재개 시점 JSON 원본](evidence/m2-continuation-20261011/at-resume-M2_COMPLETION_GATE.json)과 해당 [불변 커밋의 설명](https://github.com/leegahuyn/MathScopeCompute/blob/8a0046c547af4cccdbecae81fe647d414dd75d3f/research-ide/mathscope-m2/navier/research/M2_COMPLETION_GATE_KO.md)에 보존한다. 과거의 Worker·브라우저 hash를 현재 `0.3.9`의 새 실행 hash라고 기록하지 않는다.
+이 실행들의 상세 provenance는 [재개 시점 JSON 원본](evidence/m2-continuation-20261011/at-resume-M2_COMPLETION_GATE.json)과 해당 [불변 커밋의 설명](https://github.com/leegahuyn/MathScopeCompute/blob/8a0046c547af4cccdbecae81fe647d414dd75d3f/research-ide/mathscope-m2/navier/research/M2_COMPLETION_GATE_KO.md)에 보존한다. 과거의 Worker·브라우저 hash를 이후 버전의 새 실행 hash라고 기록하지 않는다.
 
 원문 Blueprint의 SHA-256은 `f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac`, Handoff는 `e5a3ff18db7c804ca972cf7105068b9f8c9ff49d4e5a3535184ac88fd5872cc5`이다. 원문 64개 항목의 기존 범위 내 `64 PASS`는 그대로 보존한다. 새 테스트·서면 증명·Lean 선언 수를 이 64개에 더하지 않는다.
 
@@ -56,7 +60,7 @@ I=\int_0^1\sigma(s)^2\,ds,\qquad
 | 종방향 질량 / Ls | [0.54705932615718678, 0.54705932615719421] |
 | 전체 종방향 질량 | [1.2737217502602999, 1.2737217502603173] × 10⁻¹⁰ |
 
-[전체 설명](ACTUAL_CUTOFF_MASS_ENCLOSURE_KO.md)과 [실제 source 검증](evidence/m2-continuation-20261011/actual-cutoff-mass-enclosure-validation.json)을 함께 읽는다. **전체 H, 실제 Volterra 진폭·도함수, inverse·sqrt weight, curl의 수치 구간은 아직 없다.** `wholeGNUMComplete=false`이다.
+[전체 설명](ACTUAL_CUTOFF_MASS_ENCLOSURE_KO.md)과 [실제 source 검증](evidence/m2-continuation-20261011/actual-cutoff-mass-enclosure-validation.json)을 함께 읽는다. **이 cutoff 단독 단계는 전체 H·Volterra 진폭·inverse·sqrt weight·curl의 수치 구간을 제공하지 않았다.** 당시 `wholeGNUMComplete=false`였으며 후속 수치 결과는 제19절에서 별도로 다룬다.
 
 ## 3. 표시 band와 원문 인증 영역의 차이
 
@@ -71,7 +75,7 @@ h=\exp[-8002(\exp(1048576)+10)],\quad 0<h<2^{-4096},
 >2^{8204}>128,\qquad q_*=2^{-\ell_{\min}-4}.
 \]
 
-따라서 현재 지원하는 유한 표시 band `1..128`은 **이 bounds producer가 선택한 명시적 충분조건 영역 밖**이다. 이 일반 부등식을 한 source에서 결속했다고 128개 graph를 모두 실행한 것으로 세지 않는다. 지정되지 않은 원문의 ell₀·q_big을 이 구현의 선택식과 동일하다고 가정하지 않는다.
+따라서 이 유한 표시 검사가 지원하는 band `1..128`은 **이 bounds producer가 선택한 명시적 충분조건 영역 밖**이다. 이 일반 부등식을 한 source에서 결속했다고 128개 graph를 모두 실행한 것으로 세지 않는다. 지정되지 않은 원문의 ell₀·q_big을 이 구현의 선택식과 동일하다고 가정하지 않는다.
 
 별도로 원래 canonical cutoff의 `log(c1) >= log(2)/h`, 모든 후속 cutoff의 doubling을 사용하면 표시 범위에서는 모든 양의 order 항과 그 미분이 정확히 소멸한다. 이 결론은 `terms:0`을 exact limit으로 해석한 것이 아니라, 원래 cutoff의 flat zero branch에서 나온다. 원래 h는 계속 양수다.
 
@@ -126,7 +130,7 @@ y_+,y_-\ge0\quad\Longrightarrow\quad
 
 기존 정규화 조건, 새 physical 조건과 weighted 조건을 함께 만족시키는 **별도의 강화 cutoff 선택식**을 만들었다. 기존 canonical background에 이미 적용한 것으로 기록하지 않는다. 그 선택식의 실제 재조립, n=1 경계 추정, 무한합·미분·비선형 곱의 교환과 전역 잔차는 남아 있다. [상세 유도와 실행](ACTUAL_BACKGROUND_PHYSICAL_SEMINORMS_KO.md)을 참고한다.
 
-## 6. 이번 검증의 개수와 범위
+## 6. 초기 후속 검증의 개수와 당시 범위
 
 | 실제 실행 | 통과 결과 | 범위 |
 |---|---:|---|
@@ -136,7 +140,7 @@ y_+,y_-\ge0\quad\Longrightarrow\quad
 | physical seminorm kernel / 실제 source | 5/5 · 8/8 | 실제 n=1,2·m≤2, 강화 selector 두 단계 |
 | physical curl kernel / 실제 source | 7/7 · 5/5 | 원래 cutoff·physical map·pressure의 고정 label 연결 |
 | 기존 integer partition 회귀 | 8/8 | 기존 partition 보존 |
-| 최종 Worker·기존/신규 화면·입력 경계 검사 | 24/24 | 현재 번들, replay 신뢰 경계, null·과대 tolerance, 표시 값 결속 |
+| 당시 최종 Worker·기존/신규 화면·입력 경계 검사 | 24/24 | 당시 번들, replay 신뢰 경계, null·과대 tolerance, 표시 값 결속 |
 | 신규 두 예제의 source·Worker 대조 | 4회 exit 0 | 각 예제의 mathematical hash 및 certificate hash 일치 |
 
 두 신규 예제는 **5개 패널, 60개 원본 값 셀**을 가진다. 항목명 55개는 표시용이므로 `allCellsSourceBound=false`이다. 원본 경로가 있는 값 셀만 정확히 비교했다고 기록한다. 함수식 ID로 물리 수치 좌표를 생성하지 않는다.
@@ -145,26 +149,26 @@ source 실행은 별도 process에서 수행하고 실제 코드 SHA, 원본 gra
 
 이 표의 일부 kernel 검사는 다른 회귀 묶음에도 포함된다. 행을 합쳐 총 수학 정리 수로 만들지 않는다. 원문 64개 기준과 과거 Lean 14개 선언 역시 별개다.
 
-## 7. M2 전체 완료에 남은 관문
+## 7. M2 수학 관문의 최종 판정
 
-다음은 제18절의 최신 통합 결과와 수학 검토를 반영한 판정이다. 뒤의 제9–17절은 각 저장 시점의 기록을 그대로 남긴다.
+다음은 원문 물리 지도 교정, 실제 재실행과 수학 검토를 반영한 최종 판정이다. 제18절의 네 관문 완료는 교정 전 source5 당시의 판단으로 보존하며, 현재 G-CURL/G-N5의 근거는 제20절의 새 source6다. 제9–18절은 각 저장 시점의 기록이다.
 
 | 관문 | 현재 판정 | 완료 범위 또는 남은 의무 |
 |---|---|---|
 | G-POS | 완료 | 같은 원래 family의 허용 band와 모든 label, 열린 shell의 양의 H 역가중치, 안쪽·바깥쪽 smooth weighted zero 연장. η 끝점은 원래 한쪽 미분 의미 |
-| G-CURL | 완료 | 원래 potential의 실제 전체 curl, 모든 label의 전역 조립, 원래 Haar·cosine 공분산과 support·divergence 연결 |
+| G-CURL | 완료 — 원문 지도 재검증 | 올바른 원문 지도의 common source6와 같은 원본의 전역 조립·Haar·cosine·support·divergence 논증을 결속 |
 | G-N4 | 완료 | 동일한 재귀 cutoff 수열의 전체 pressure·stress·비선형 배경 잔차, 실제 E_B와 모든 고정 유한 차수의 flat 경계 |
-| G-N5 | 완료 | 원래 물리 velocity의 2차 공간 미분, 전역 Gaussian 합과 전체 temporal-cutoff force의 flat 경계. 전체 미보정 NS 잔차는 N6 입력으로 보존 |
-| G-NUM | 진행 중 | 보조 중심의 138개 도함수와 새 물리점의 값은 검증. 새 물리점의 전체 도함수 및 원래 양의 geometry·target·선택 인자의 닫힌 수치 경계 연결은 남아 있음 |
+| G-N5 | 완료 — 원문 지도 재검증 | 물리 velocity의 2차 공간 미분·전역 Gaussian 합·temporal-cutoff force의 모든 고정 차수 flat 경계를 교정 source6에 결속. 전체 미보정 잔차는 N6 입력으로 보존 |
+| G-NUM | 완료 — 선언된 수치 영역·정밀도 | 교정 source4, 원래 결합계 VALUE 네 개와 270개 도함수·양의 배율, module/Worker 및 공개 v80 실행·전체 표·저장·내보내기를 확인. 브라우저 파일 선택 재가져오기만 도구 미확인으로 별도 기록 |
 | 실제 해석학 Lean | 별도 확장 | 이전 공식 Lean 실행의 대수 보조정리 14개 및 보조 선언 2개를 보존. 전체 함수 공간·적분·극한·양성·smoothness에 대한 새 Lean kernel 증명이 완료됐다는 주장은 하지 않음 |
 
-네 관문의 완료는 원래 source 식, 정량적 상계, 같은 수열의 모든 고정 유한 차수 논증 및 교차 검토를 근거로 한다. 검사 개수나 hash만으로 해석학적 명제를 증명했다고 해석하지 않는다. 모든 무한 graph를 문자 그대로 실행했다는 뜻도 아니다.
+각 관문의 판단은 원래 source 식, 정량적 상계, 같은 수열의 모든 고정 유한 차수 논증 및 교차 검토를 근거로 한다. 검사 개수나 hash만으로 해석학적 명제를 증명했다고 해석하지 않는다. 모든 무한 graph를 문자 그대로 실행했다는 뜻도 아니다. source4의 수치 구간과 source6의 전역 물리 패키지를 각각 실제 근거에 결속하여 집계한다. 별도 해석학 Lean 전체 형식화는 이 완료 판정에 새로 포함하거나 새 미완료 의무로 추가하지 않는다.
 
 N5의 `div(δu tensor δu)`, 교차 mode, `(1-ψ)f + ψ′ t`, nonzero eikonal remainder와 전체 미보정 NS 잔차를 그대로 N6에 넘긴다. 전체 미보정 잔차를 flat이라고 선언하지 않는다.
 
 ## 8. M3 진행 순서와 실행 화면
 
-`userRequestedM2Complete=false`, `m3MayStart=false`이다. 위 실제 의무가 해소된 뒤에 사용자 요청 순서대로 다음 tracks를 시작한다.
+최종 집계의 `userRequestedM2Complete=true`, `m3MayStart=true`다. 이 문서의 갱신 자체는 M3 구현·실행을 시작한 증거가 아니다. 완료한 M2 다음에 사용자 요청 순서대로 아래 여덟 패키지를 진행한다.
 
 - 산술: **P7 → P8**.
 - 게이지: **Y5 → Y6 → Y7**.
@@ -172,18 +176,19 @@ N5의 `div(δu tensor δu)`, 교차 mode, `(1-ψ)f + ψ′ t`, nonzero eikonal r
 
 이는 작업 순서다. 원문에서 P8의 선행 조건이 P1–P4라는 사실을 P7 의존성으로 바꾸지 않는다. N8의 일반적인 별도 계산 branch가 N2 뒤 시작할 수 있다는 원문 구분도 보존하되, 이번에는 사용자의 M2 우선 순서를 따른다. N6의 전체 correction cycle, N7의 global force·energy, N8의 near-terminal 재구성을 M2로 이름만 바꿔 완료 처리하지 않는다.
 
-기존 [M2 화면](https://project29770.websitepublisher.ai/v0.3.1.html#research-m2/ns)의 **배경 · Pulse** 예제에서 다음 세 작업을 사용한다.
+기존 [M2 화면](https://project29770.websitepublisher.ai/v0.3.1.html#research-m2/ns)의 **배경 · Pulse** 예제에서 다음 작업을 사용한다.
 
 1. **N5 · 원래 cutoff 적분 · 엄밀한 수치 구간과 분리 오차**.
 2. **N5 · 표시 band의 양성 정리 적용 범위 검사**.
 3. **N5 · 원래 heat와 1차·2차 도함수의 엄밀한 수치 구간**.
+4. **N5 · 가중 pulse·공분산·전체 curl · 도함수 270개 수치 구간** — 새 `0.3.12/v80` 실행. 네 coupled VALUE와 배율·오차·원본 인증도 함께 표시한다.
 
 실행 결과의 JSON과 원본 경로가 있는 표에서 구간·오차·적용 범위를 함께 볼 수 있다. 예전 환경의 실행 기록은 **저장한 M2 실행 기록 가져오기 → 입력만 불러오기**로 새 작업을 만들 수 있다. 기존 환경과 다른 Worker hash의 결과를 현재 검증으로 자동 채택하지 않는다.
 
 물리 curl·physical seminorm·ell=1 obstruction의 무거운 source 검사는 저장소의 별도 재현 명령과 원본 receipt로 제공한다. 이 세 작업이 모두 새 브라우저 예제로 설치되었다고 주장하지 않는다. 공개 페이지의 실제 게시·원본 바이트·브라우저 확인 범위는 이번 evidence의 publication 및 browser 기록으로 별도 확인한다.
 
 
-## 9. 재개 후 추가한 실제 heat·n=1 경계·작은 q 양성 결과
+## 9. 저장 당시 기록: 실제 heat·n=1 경계·작은 q 양성 결과
 
 공개된 v76은 runtime `0.3.9`의 cutoff/domain 화면과 숫자 줄바꿈을 검증한 저장점이다. 아래 세 모듈의 최초 실행은 **별도 Node source 경로**다. 이를 v75/v76 Worker·브라우저에서 이미 실행한 결과로 기록하지 않는다. 이후 화면 연결은 해당 버전의 별도 실행 영수증으로 검증한다.
 
@@ -230,7 +235,7 @@ M0 검증은 기존 원문 smoothness·contraction·support 계약을 사용한 
 
 새 cutoff 조건을 합칠 때는 단순한 pointwise max로 끝내지 않는다. 새로운 $b_1$을 먼저 선택하고 $b_2\ge16b_1$, 이후 $b_n\ge2b_{n-1}$를 각 단계의 max에 포함한다. 원래 normalized 조건과 새 physical·velocity·weighted 조건을 모두 한 수열에 결속해야 한다.
 
-현재 다음 작업은 전체 pressure convolution과 stress 취소, 실제 전체 물리 velocity jet, 안쪽 양성·flat 경계, 모든 label의 Gaussian tail/물리 residual 연결이다. **M2 전체 완료와 M3 시작은 아직 false**이다. 새 source packet은 v77 Worker·브라우저의 실행 기록을 대체하지 않는다.
+이 저장 시점의 다음 작업은 전체 pressure convolution과 stress 취소, 실제 전체 물리 velocity jet, 안쪽 양성·flat 경계, 모든 label의 Gaussian tail/물리 residual 연결이었다. **당시 M2 전체 완료와 M3 시작은 false**였다. 이 source packet은 v77 Worker·브라우저의 실행 기록을 대체하지 않는다.
 
 ## 12. 전체 annulus H·실제 물리 미분·pressure 원본 연결
 
@@ -308,7 +313,7 @@ Gaussian 꼬리에서는 stable matrix의 음의 대각 성분을 유지하여 e
 
 이 저장점에서는 공통 family를 실제 물리 전체 curl·전역 Gaussian 합·E_B에 연결하는 최종 통합과 수치 도함수 관문을 계속 검증한다. 공개 runtime은 **0.3.10/v77**이며, 전체 M2 완료와 M3 시작은 여전히 false다.
 
-## 17. 중심 slow 수치 미분과 공개 terminal F 실행
+## 17. 저장 당시 기록: 중심 slow 수치 미분과 공개 terminal F 실행
 
 [중심 slow-jet 패킷](evidence/centered-slow-jets-20261011/centered-slow-jet-enclosure-packet.json)은 두 원래 부호의 radial 가중 pulse에 대해 R/Z/T 1차와 대칭 2차 미분 18개를 계산했다. 실제 source 실행은 **12/12**, 내부 source 검사 **11/11**, 관측 exit **0**, **82.389초**였다. 68개 실제 import 바이트와 구현·시험·실행·독립 검토 26개 파일을 최종 패킷과 대조했다. 공분산 역원·양의 제곱근·움직이는 중심의 미분 및 양의 Gaussian 오차를 유지한다. 자세한 정규화와 도함수의 의미는 [설명](ACTUAL_CENTERED_SLOW_JET_ENCLOSURE_KO.md)에 있다.
 
@@ -316,9 +321,11 @@ Gaussian 꼬리에서는 stable matrix의 음의 대각 성분을 유지하여 e
 
 terminal F의 runtime `0.3.11`은 실제 source와 Worker를 각각 실행해 같은 원본 certificate와 수학 결과 해시를 얻었다. 두 프로세스의 관측 exit은 **0/0**이었다. 공개 **v79 / `596b9751`**에서도 새 실행이 `COMPLETED`와 **10/10**을 반환했다. 네 표의 값 셀 **129개**, 10·10·17·12행은 원본과 일치했고, 긴 유리수의 줄바꿈 및 가로 폭을 실제 화면에서 확인했다. 29개 항목명은 표시용이다. [공개 검증](evidence/terminal-field-runtime-20261011/browser-v79-verification.json)과 [실행·범위 설명](ACTUAL_TERMINAL_FIELD_RUNTIME_KO.md)을 함께 보관한다.
 
-중심 slow 결과의 나머지 fast·절대 a/H/y 미분, 실제 물리 curl의 수치 구간과 원래 양의 geometry/target 인자는 별도 후속 검증이다. G-POS·G-NUM·G-CURL·G-N4·G-N5 전체 관문은 최종 통합 결과를 확인하기 전까지 false이며, 원문 64개 PASS와 이 추가 완료 판정을 합치지 않는다.
+이 저장 시점에는 나머지 fast·절대 a/H/y 미분, 실제 물리 curl의 수치 구간과 원래 양의 geometry/target 인자가 후속 범위였다. 당시 G-POS·G-NUM·G-CURL·G-N4·G-N5는 최종 통합 결과 전의 false 상태로 기록됐다. 이 역사적 판정이나 이후 추가 검증의 수를 원문 64개 PASS와 합치지 않는다.
 
-## 18. 공통 전역 물리 패키지 완료와 새 중심 수치 패킷
+## 18. 교정 전 source5 당시의 완료 판단과 중심 수치 패킷
+
+**이 절은 원문 `d_r` 괄호 오류 발견 전의 실행과 판단이다.** 구 지도에서 얻은 성공 기록은 보존하지만 원문 물리 지도 교정 후의 G-CURL·G-N5 완료를 대신하지 않는다. 현재 상태는 제7·19·20절에 있다.
 
 [6a3e71a8 저장점](https://github.com/leegahuyn/MathScopeCompute/commit/6a3e71a884e6faebe808fd67fd0274304a7f45e4) 뒤의 실제 다섯 번째 통합 시도는 **8/8, 관측 exit 0**, **1,344.409초**로 완료됐다. family, 자체 band, 전체 물리 curl, 전체 target, 전역 wave, 공분산, 같은 배경의 flat 경계, 실제 E_B를 각각 한 번 구성했다. 앞선 1–4번째 실패·시간 제한·중단 기록과 당시 바이트는 그대로 보존한다.
 
@@ -328,4 +335,32 @@ terminal F의 runtime `0.3.11`은 실제 source와 Worker를 각각 실행해 �
 
 [확장 중심 도함수 패킷](evidence/centered-full-jets-20261011/centered-full-jet-enclosure-packet.json)은 **14/14 일반 검사·12/12 실제 source 검사**를 마쳤다. 실제 원본 검사의 외부 관측 시간은 **162.952초**, exit은 **0**이며, 원래 보조 중심의 138개 수치 도함수를 결속한다. 이것을 새 물리점의 도함수 결과로 옮겨 쓰지 않는다.
 
-최신 기계 판정은 **네 해석학적 관문 완료, G-NUM 진행 중, M2 전체 완료 false, M3 시작 false**이다. 공개 runtime은 여전히 **0.3.11/v79**이며, 이번 원본 수치 패킷을 이미 그 화면에서 실행한 결과로 기록하지 않는다.
+이 저장 시점의 기계 판정은 **네 해석학적 관문 완료, G-NUM 진행 중, M2 전체 완료 false, M3 시작 false**였다. 당시 공개 runtime은 **0.3.11/v79**였고, 이 원본 수치 패킷을 그 화면에서 실행한 것으로 기록하지 않았다. 이후 원문 지도 감사가 G-CURL·G-N5의 재검증을 요구한 사실과 새로운 source4/v80 결과를 이 과거 기록에 덮어쓰지 않는다.
+
+## 19. 교정된 물리점 source4와 공개 v80 수치 실행
+
+[교정된 source4](evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt4.json)는 원문 (6.2)의 같은 역지도에서 원래 두 결합계·H·target·가중치와 270개 도함수를 다시 구성했다. [외부 process 관측](evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt4-process.json)은 **8/8, exit 0, timeout 없음, 1600.967초**를 기록한다. 시작 119개와 late 131개 import를 구분하고, 옛 물리점의 실제 해나 도함수를 새점 결과로 복사하지 않는다.
+
+270개 행은 가중 pulse 84, 원래 pulse 54, `a` 18, `wMinus` 18, H 36, y 18, 실제 전체 curl 42개다. 별도의 네 VALUE는 두 부호 가족 각각의 `wPlus`와 `wMinus`다. 작은 성분을 정확한 0으로 바꾸지 않는다. H·역가중치·sqrt의 실제 미분, fast·mixed 항, 각도 벡터 및 방향 기저의 연결항을 유지한다. [수치 의미와 실행 표](ACTUAL_PHYSICAL_CENTER_NUMERICS_KO.md)에 각 정규화와 원본 경로가 있다.
+
+[source4 설치](evidence/physical-center-runtime-20261011/physical-center-install-attempt1.json)와 [0.3.12 빌드](evidence/physical-center-runtime-20261011/physical-center-build-attempt1.json)는 관측 exit 0이다. [module 9/9](evidence/physical-center-runtime-20261011/physical-center-attempt1-module-runtime.json), [Worker 11/11](evidence/physical-center-runtime-20261011/physical-center-attempt1-worker-runtime.json)은 같은 결과와 replay MATCH를 확인했다. 열한 표의 원본 경로가 있는 값 셀 **4210개**를 검사했으며 표시용 항목명은 이 수에 포함하지 않는다.
+
+[공개 v80 / `4831474d`](evidence/physical-center-runtime-20261011/provider-publication-v80.json)의 [실제 새 작업](evidence/physical-center-runtime-20261011/browser-v80-job.json)은 **COMPLETED, 10/10**을 반환했다. module·Worker·공개 작업의 수학 결과 해시는 모두 `c65a77812b1d85a6530998004f763e6fc02cf52591f8970ab520ecf96664e28f`다. 별도의 [공개 DOM 대조 8/8](evidence/physical-center-runtime-20261011/browser-v80-panel-value-parity.json)에서 열한 표의 **676행·4210개 원본 값 셀·36개 표시 항목명**을 확인했다. 항목명과 값 셀의 개수·인증 범위를 구분한다.
+
+공개 [저장](evidence/physical-center-runtime-20261011/browser-v80-save-result.json)과 [내보내기](evidence/physical-center-runtime-20261011/browser-v80-export-response.json)는 각각 `ok:true`였고, 실제 [M2-physical-center-v80-replay.json](evidence/physical-center-runtime-20261011/M2-physical-center-v80-replay.json)을 확보했다. module·실제 Worker의 import/replay는 MATCH다. **브라우저 파일 선택·재가져오기 직접 조작은 자동화 도구의 300초 gateway timeout 두 번으로 미확인**이다. 이 한계를 앱의 실패나 성공으로 바꾸지 않으며, 수학 source·새 계산·공개 표시·저장·내보내기의 완료와 별도로 보존한다.
+
+[재개 시점 요구와의 최종 대조](evidence/m2-final-requirements-20261011/M2_FINAL_GNUM_REQUIREMENTS_NS_AUDIT_KO.md)는 선언된 수치 영역·표현 안에서 추가로 빠진 수학적 요구를 발견하지 못했다. 계수와 배율의 반복 로그 좌표 폭은 각각 정확한 유리수 허용오차로 검사한다. **이것은 원래 값의 동일한 절대·상대오차 보장이 아니다.** slow R 행은 미분 후 `Rsharp^r`를 곱한 표현이며, T·eta_beta 개별 정밀도는 false를 유지한다. 해당 숫자·정밀도·물리점 범위를 모든 label의 수치 계산으로 확대하지 않는다.
+
+이 수치 근거와 다음 절의 교정된 common physical source6를 집계해 **M2 수학 관문을 완료**한다. 개별 source/runtime 결과가 자체적으로 전체 관문을 발급하지 않는 범위는 그대로 보존한다. 별도의 새 해석학 Lean 목표나 N6/N7의 후속 보정 문제를 이 완료 조건에 몰래 추가하거나 이미 해결한 것으로 바꾸지 않는다.
+
+## 20. 교정된 common source6와 M2 수학 관문 완료
+
+[교정된 common source6](evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json)는 **8/8, 관측 exit 0, timeout 없음**으로 완료됐다. [외부 process](evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6-process.json)의 경과 시간은 **1386.959551577초**, 종료 시각은 **2026-10-11 15:19:38 UTC**다. 현재 118개 import와 실행 snapshot 118개의 SHA가 각각 일치한다.
+
+원문 식 (6.2)의 typed 본문과 실제 `dr`가 결속됐고, 공통 family·자체 band·full physical curl·weighted target·전역 wave·covariance·배경 flatness·실제 E_B를 각각 한 번 생성했다. 지도에 무관한 family·band·target·배경 정리는 같은 원래 식으로 남고, 지도를 사용하는 physical·global wave·covariance·E_B는 교정된 새 graph로 생성됐다. 숫자점 source4와 common source6의 정수 root ID를 서로 같다고 취급하지 않는다.
+
+[최종 수학·출처 검토](evidence/common-physical-package-20261011/CORRECTED_COMMON6_COMPLETION_REVIEW_POSITIVE_STRESS_20261011_KO.md)는 원래 지도 식, 전체 epsilon 손실, 같은 재귀 cutoff 수열, 각 label의 자체 Volterra/H/weight, inner·outer flat 연장, 실제 E_B와 모든 고정 미분 차수의 Gaussian 합을 대조했다. 기존 N4 본문 작성자의 검토 기여와 별도 독립 검토의 범위를 구별한다. finite test 수를 전칭 정리로 바꾸지 않으며, 같은 source 생성 절차와 정량 귀납 논증을 실제 실행에 연결한다.
+
+Source6 SHA는 `ac98143158c9e7abc6bd656e687269f183bb803ecdc036edb8a3937edc24bc01`, process SHA는 `586afe71fa150a1525836903caabc9ff95fa80adadf12ad90d2e735b965eda82`다. 구 지도 source3·common source5 및 앞선 실패·timeout 기록은 불변으로 보존한다. 새 성공으로 과거 결과의 의미를 바꾸지 않는다.
+
+이 결과와 source4·runtime·공개 검증을 함께 사용해 G-POS·G-CURL·G-N4·G-N5·G-NUM을 닫는다. 전체 미보정 NS 잔차·self-advection·curl remainder·비영 eikonal 및 다음 보정 항은 N6 입력으로 남는다. 전체 해석학의 새로운 Lean kernel proof나 NS 최종 해법을 완료했다고 주장하지 않는다. **M2 다음의 P7 → P8, Y5 → Y6 → Y7, N6 → N7 → N8** 순서를 유지하며, M3의 실제 첫 실행은 후속 별도 근거로 기록한다.
