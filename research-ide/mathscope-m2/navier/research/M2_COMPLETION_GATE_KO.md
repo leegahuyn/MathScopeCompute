@@ -284,3 +284,18 @@ Gaussian 꼬리에서는 stable matrix의 음의 대각 성분을 유지하여 e
 두 source packet, 실제 실행 import, 독립 검토의 현재 바이트를 확인했다. 진폭 설명 문서에는 독립 검토 링크 한 줄만 추가되었으며, 그 줄을 제거하면 검토 당시 문서 SHA가 정확히 복원됨을 별도로 확인했다. 보존된 진폭 첫 실패 및 generic test의 잘못된 metadata 경로 실패를 삭제하거나 성공으로 바꾸지 않았다.
 
 공통 cutoff 수열·모든 label의 H·전체 curl·같은 배경장의 물리 잔차 결속과 slow/mixed/curl 수치 구간은 다음 단계에서 확인한다. 공개 runtime은 **0.3.10/v77**이고, 이 저장점의 전체 M2 완료 및 M3 시작 값은 false다.
+
+## 16. 공통 family와 실제 유한 물리 잔차
+
+[675a4139 저장점](https://github.com/leegahuyn/MathScopeCompute/commit/675a413968e964454bef1295fd35b0488f0e45df) 다음의 source 검증이다.
+
+| 결과 | 실제 관측 | 완료 범위 |
+|---|---:|---|
+| [공통 선택 수열과 자체 band](ACTUAL_COMMON_ADMISSIBLE_FAMILY_KO.md) | source8/8, 내부9/16/9; exit0,271.441초 | 전체 C3, positive prepared3, n1/n2 모든 diagonal norm, 자체 두 Volterra/H, target N0..N2 및 같은 수열의 모든 유한 차수 양성·sqrt 미분 논증 |
+| [실제 유한 물리 잔차](../ACTUAL_GLOBAL_FINITE_RESIDUAL_KO.md) | source5/5, 내부6; exit0,48.557초; generic7/7 | 원래 전체 leading 및 n1/n2의 pressure·두 stress·운동량 결속, 실제 고차 n3..n5 잔여항과165개 FTC 항 보존 |
+
+공통 sourceRefs124개, 유한 잔차의 실제 import72개와 최종 코드·문서7개를 현재 바이트와 다시 비교했다. 독립 검토는 공통 family의 수학 귀납을 읽고, 유한 잔차와 후속 같은 수열 비교 초안을 구별한다.
+
+전체 curl/잔차 통합의 첫 시도는 **2/8, exit1**이었다. 큰 그래프의 표현-변수 의존성 캐시가 Map 한도를 넘었고, 같은 leading stress를 두 source 표현으로 결속하는 비교에서 차이가 발견되었다. 실제 실패 snapshot과 로그를 그대로 보존했으며, 통과로 바꾸지 않았다. 입력 역공분산의 auxiliary 좌표 제한 및 후속 W_(1/2) 가정도 별도 보완 중이다.
+
+이 저장점에서는 공통 family를 실제 물리 전체 curl·전역 Gaussian 합·E_B에 연결하는 최종 통합과 수치 도함수 관문을 계속 검증한다. 공개 runtime은 **0.3.10/v77**이며, 전체 M2 완료와 M3 시작은 여전히 false다.

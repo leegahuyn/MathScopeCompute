@@ -1,0 +1,171 @@
+/** All-finite source weighted target jets for the same common family.
+ * The endpoints use regular source factors and exact finite FTC constants;
+ * no vanishing stress is divided by zero. Only explicitly requested norm
+ * orders are materialized. The recipe itself has no mathematical cap.
+ */
+import {assertActualCommonAdmissibleFamily} from './actual-common-admissible-family.mjs';
+import {ActualInnerCovarianceExpressions} from './actual-inner-covariance-flat-extension.mjs';
+import {copyInnerFactorProgram,innerActivationSourceIdentity} from './actual-inner-flat-kernel.mjs';
+import {copyOuterFactorProgram} from './actual-outer-covariance-flat-extension.mjs';
+import {rectangularSourceFTC} from './actual-background-physical-seminorms.mjs';
+import {clearDisposableThirdJetCaches,disposableThirdJetCacheCopy} from './actual-third-jet-ftc.mjs';
+import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
+import {ellOneSourceScalarIdentity} from './actual-covariance-ell-one-obstruction.mjs';
+import {factorial,fail} from './actual-continuation-arithmetic.mjs';
+import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+
+const seals=new WeakMap(),same=(a,b)=>canonicalStringify(a)===canonicalStringify(b),binom=(n,k)=>factorial(n)/(factorial(k)*factorial(n-k)),
+  data=p=>canonicalStringify({request:p.request,sourceBinding:p.sourceBinding,coordinates:p.coordinates,factors:p.factors,regularity:p.regularity,
+    ftcRows:p.ftcRows,profileRows:p.profileRows,rows:p.rows,scalarRules:p.scalarRules,checks:p.checks,roots:p.roots,scope:p.scope});
+
+/** Exact Gaussian/Laurent derivative recurrence, generic until a private
+ * source adapter supplies its a>0 and its regular coefficient body.
+ */
+export function weightedGaussianDerivativeRules(G,{a,initialPole=0,order=2}={}){
+  if(!G?.nodes?.[a]||!Number.isSafeInteger(initialPole)||initialPole<0||!Number.isSafeInteger(order)||order<0)
+    fail('INVALID_INPUT','Use an exact positive scalar, nonnegative pole, and finite derivative order.');
+  let terms=new Map([[-initialPole,G.one]]),absoluteTerms=new Map([[-initialPole,G.one]]);const rows=[];
+  for(let j=0;j<=order;j++){
+    const signed=[...terms].map(([power,coefficient])=>({power,coefficient})),absolute=[...absoluteTerms].map(([power,coefficient])=>({power,coefficient}));
+    rows.push({order:j,pole:initialPole+3*j,signed,absolute,upperCoefficient:G.add(...absolute.map(t=>t.coefficient))});
+    const next=new Map(),nextAbsolute=new Map(),put=(map,p,c)=>map.set(p,map.has(p)?G.add(map.get(p),c):c);
+    for(const [p,c]of terms){if(p)put(next,p-1,G.mul(G.q(p),c));put(next,p-3,G.mul(G.q(2),a,c));}
+    for(const [p,c]of absoluteTerms){if(p)put(nextAbsolute,p-1,G.mul(G.q(Math.abs(p)),c));put(nextAbsolute,p-3,G.mul(G.q(2),a,c));}
+    terms=next;absoluteTerms=nextAbsolute;
+  }
+  const stirling=[[1n]];
+  for(let r=1;r<=order;r++){const row=Array(r+1).fill(0n);for(let j=1;j<=r;j++)row[j]=(stirling[r-1][j-1]??0n)+BigInt(r-1)*(stirling[r-1][j]??0n);stirling.push(row);}
+  return {a,initialPole,order,rows,unsignedFirstStirling:stirling.map(r=>r.map(String)),
+    identity:'d_t[e^(-a/t^2)*sum c_p t^p] = e^(-a/t^2)*sum(c_p*p*t^(p-1)+2*a*c_p*t^(p-3)).',
+    radialIdentity:'d_X^r = X^-r*sum_j signed_first_Stirling(r,j)*d_logX^j; delta=log(Xb/X) adds only signs.',
+    bound:'For 0<delta_*<=min(1,t), the jth derivative of exp(-a/t^2)*t^(-initialPole) is at most exp(-a/t^2)*upperCoefficient[j]*delta_*^(-initialPole-3j).',
+    sourceAuthenticated:false,mathematicalOrderCap:null};
+}
+
+export function attachActualCommonTargetWeightedNorms(family,input={},context={}){
+  assertActualCommonAdmissibleFamily(family);
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['derivativeOrder','maxNodes','maxJetRequests'].includes(k)))
+    fail('INVALID_INPUT','Use a finite target derivative order and finite representation budgets.');
+  const request={derivativeOrder:input.derivativeOrder??2,maxNodes:input.maxNodes??4000000,maxJetRequests:input.maxJetRequests??200000},m=request.derivativeOrder;
+  if(!Number.isSafeInteger(m)||m<0||!Number.isSafeInteger(request.maxNodes)||request.maxNodes<1||!Number.isSafeInteger(request.maxJetRequests)||request.maxJetRequests<1)
+    fail('INVALID_INPUT','Use a nonnegative derivative order and positive finite budgets.');
+  if(m>family.source.backgroundNorms.request.derivativeOrder)fail('RESOURCE_LIMIT','Generate the SAME full leading slow coefficient norms through this order first. A missing C_m is not inferred from C2.');
+  clearDisposableThirdJetCaches(family.G);assertActualCommonAdmissibleFamily(family);
+  const count=family.G.nodes.length,G=new ActualInnerCovarianceExpressions(disposableThirdJetCacheCopy(family.G),{maxNodes:request.maxNodes,maxDerivativeOrder:Math.max(128,m+4),checkCancelled:context.checkCancelled}),
+    q=(n,d=1)=>G.q(n,d),c=family.constants,program=family.uniformCovariance.threshold.direction.program,
+    y=G.fresh('common_target_inner_log_distance'),delta=G.fresh('common_target_outer_log_distance'),eta=G.fresh('common_target_eta'),
+    inner=copyInnerFactorProgram(G,program,y,eta),outer=copyOuterFactorProgram(G,program,delta,eta),
+    aInner=G.pow(c.t1,2),innerRule=weightedGaussianDerivativeRules(G,{a:aInner,initialPole:0,order:m}),outerRule=weightedGaussianDerivativeRules(G,{a:q(4),initialPole:3,order:m}),
+    flat=t=>G.choose(t,G.zero,G.one,G.zero,G.exp(G.neg(G.pow(t,-2))),G.exp(G.neg(G.pow(t,-2)))),
+    ratio=G.div(y,c.t1),ga=G.div(G.sub(G.one,G.parameter('kappa0')),G.add(flat(ratio),flat(G.sub(G.one,ratio)))),
+    innerBodies=[inner.roots.innerTheta,inner.roots.innerZ].map(b=>G.mul(ga,b)),outerBodies=[outer.roots.outerTheta,outer.roots.outerScaledZ],
+    widthInner=G.div(c.t1,q(4)),widthOuter=q(1,2),ftcRows=[],regularRows={inner:[],outer:[],middle:[]},shareRows=[];let work=0;
+  const charge=()=>{context.checkCancelled?.();if(++work>request.maxJetRequests)fail('RESOURCE_LIMIT','The complete target weighted-jet work budget was exhausted.');};
+  const anchoredRegularNorms=(kind,coordinate,width,bodies)=>{
+    const reverse=G.fresh('common_target_'+kind+'_reverse_distance');
+    bodies.forEach((body,component)=>{
+      const system=G.defineExpressionFunction({name:'ActualCommonTargetRegular_'+kind+'_'+component,parameters:[coordinate,eta],body,derivativeLimits:[m+2,m+2]}),
+        materialized=G.materializeExpressionFunction(system,[coordinate,eta]);
+      if(materialized!==body)fail('INVALID_SOURCE_CONSTRUCTION','A regular target coefficient body was not retained.');
+      shareRows.push({kind,component,body,system,materialized});
+      for(let r=0;r<=m;r++)for(let e=0;r+e<=m;e++){
+        charge();const derivative=G.expressionValue(system,[G.sub(width,reverse),eta],[r,e]),
+          ftc=rectangularSourceFTC(G,{body:derivative,coordinates:[reverse,eta],lower:[G.zero,q(-1)],upper:[width,G.one]}),
+          row={kind,component,radialOrder:r,etaOrder:e,actualCoefficientBody:body,actualDerivative:derivative,...ftc,
+            anchorAtPositiveDistance:width,flatEndpointNeverPointEvaluated:true};
+        ftcRows.push(row);regularRows[kind].push(row);
+      }
+    });
+  };
+  anchoredRegularNorms('inner',y,widthInner,innerBodies);anchoredRegularNorms('outer',delta,widthOuter,outerBodies);
+  const {X:X0,eta:eta0}=family.leading.coordinates,zeta=family.roots.zeta,Xlo=G.mul(c.Xa,G.exp(G.div(c.t1,q(8)))),Xhi=G.mul(c.Xb,G.exp(q(-1,4))),
+    middleShares=family.leading.raw.map((body,component)=>{
+      const system=G.defineExpressionFunction({name:'ActualCommonTargetMiddle_'+component,parameters:[X0,eta0],body,derivativeLimits:[m+2,m+2]}),materialized=G.materializeExpressionFunction(system,[X0,eta0]);
+      if(materialized!==body)fail('INVALID_SOURCE_CONSTRUCTION','The original full T0 source body was replaced.');
+      return {body,system,materialized};
+    });
+  for(let component=0;component<2;component++)for(let r=0;r<=m;r++)for(let e=0;r+e<=m;e++){
+    charge();const derivative=G.expressionValue(middleShares[component].system,[X0,eta0],[r,e]),body=G.div(derivative,zeta),
+      ftc=rectangularSourceFTC(G,{body,coordinates:[X0,eta0],lower:[Xlo,q(-1)],upper:[Xhi,G.one]}),
+      row={kind:'middle',component,radialOrder:r,etaOrder:e,actualStressBody:family.leading.raw[component],actualDerivative:derivative,...ftc};
+    ftcRows.push(row);regularRows.middle.push(row);
+  }
+  const totalLogWidth=G.log(G.div(c.Xb,c.Xa)),innerOtherDistance=G.sub(totalLogWidth,widthInner),outerOtherDistance=G.sub(totalLogWidth,widthOuter),
+    complement={inner:G.exp(G.div(q(4),G.pow(innerOtherDistance,2))),outer:G.exp(G.div(aInner,G.pow(outerOtherDistance,2)))},
+    norm=(kind,component,r,e)=>{const row=regularRows[kind].find(x=>x.component===component&&x.radialOrder===r&&x.etaOrder===e);if(!row)fail('INTERNAL_VALIDATION','A needed regular coefficient derivative was not generated.');return row.bound;},
+    profileRows=[];
+  for(let r=0;r<=m;r++)for(let e=0;r+e<=m;e++){
+    const components=[];
+    for(let component=0;component<2;component++){
+      const collar=(kind,rule)=>G.mul(complement[kind],G.pow(c.Xa,-r),G.add(...Array.from({length:r+1},(_,j)=>{
+        const sj=BigInt(rule.unsignedFirstStirling[r][j]??'0');if(!sj)return G.zero;
+        return G.mul(q(sj),G.add(...Array.from({length:j+1},(_,a)=>G.mul(q(binom(j,a)),rule.rows[a].upperCoefficient,norm(kind,component,j-a,e)))));
+      }))),innerBound=collar('inner',innerRule),outerBound=collar('outer',outerRule),middleBound=norm('middle',component,r,e);
+      components.push({component,innerBound,outerBound,middleBound,bound:G.maximum(G.one,innerBound,outerBound,middleBound)});
+    }
+    profileRows.push({radialOrder:r,etaOrder:e,pole:3+3*r,components,bound:G.maximum(...components.map(x=>x.bound))});
+  }
+  const expansion=family.source.backgroundNorms.coefficientExpansions.leadingF,rows=[];
+  for(let order=0;order<=m;order++){
+    const derivatives=expansion.rows.filter(r=>r.slowOrders.reduce((a,b)=>a+b,0)<=order).map(r=>({orders:r.slowOrders,
+      terms:r.terms.filter(t=>t.profileOrders[0]===0).map(t=>{
+        const b=profileRows.find(p=>p.radialOrder===t.profileOrders[1]&&p.etaOrder===t.profileOrders[2]);
+        if(!b)fail('INTERNAL_VALIDATION','A required source weighted target profile derivative is missing.');
+        return {coefficient:t.coefficient,coefficientUpper:t.coefficientUpper,profileOrders:t.profileOrders,profileBound:b.bound,bound:G.mul(t.coefficientUpper,b.bound)};
+      })}));
+    derivatives.forEach(r=>{r.bound=G.add(...r.terms.map(t=>t.bound));});
+    rows.push({derivativeOrder:order,pole:3+3*order,N_m:G.maximum(G.one,...derivatives.map(r=>r.bound)),derivatives,
+      statement:'For every same-source slow derivative of total order<=m, |D^alpha Tbar|<=N_m*zeta*delta_*^(-pole), where delta_*=min(1,log(X/Xa),log(Xb/X)).'});
+  }
+  const activation=innerActivationSourceIdentity(G,{sourceActivation:inner.roots.innerFactor,y,width:c.t1,kappa:G.parameter('kappa0')}),
+    XbIdentity=ellOneSourceScalarIdentity(G,outer.roots.Xb,c.Xb),
+    sourceBinding={sourceProfile:family.request.sourceProfile,parameterExpressionSHA256:family.sourceBinding.parameterExpressionSHA256,
+      originalFullLeadingTarget:family.leading.raw,originalFactorSchema:program.schema,innerCopyTrace:inner.pairs,outerCopyTrace:outer.pairs,
+      innerNaturalSeriesRetained:inner.operations.includes('actual_natural_series'),outerFullHeatGamma:outer.roots.gamma,
+      sourceEquations:[...program.sourceEquations],sourceFactorsDerivedForThisSameOriginalProfile:true,
+      mathematicalFactorization:'The inner exact difference algebra keeps all nonlinear M/I/J/S/Cp terms of the actual activation; the outer backward integral uses the restored original full moments and the untruncated heat kernel. These are T0, the exact leading target retained by this common family; changing b_n affects F/G but not that target.',
+      noArbitraryBoundOrFactorInputAccepted:true},
+    regularity={inner:'The actual Ka kernel is y^3 times an exponentially dominated integral with smooth positive ga denominator. Every finite radial/eta derivative is dominated by exp(-u) times a polynomial; the original natural series provides every finite coefficient derivative. Its regular endpoint is the natural Y=4 value.',
+      outer:'The actual J_(4,m) kernels have fixed exp(-4u) weight. Every finite delta/eta derivative is dominated by that weight times a polynomial and the same original nonnegative-z heat moments. The axial regular factor is delta^6*b_z.',
+      FTC:'Reverse distance places the FTC anchor at t1/4 or1/2, where no inverse power vanishes. The other endpoint occurs only as a one-sided limit in an integrable face integral. The preceding all-finite dominated regularity gives its finite absolute integral.',
+      middle:'The compact rectangle begins at log(X/Xa)=t1/8 and ends at log(Xb/X)=1/4. The original zeta is strictly positive there; all full leading heat/I2/moment jets are retained by the private source.',
+      cover:'Inner reaches t1/4 while middle begins t1/8; outer reaches1/2 while middle ends1/4. Thus the three source estimates cover the full annulus without a gap.',
+      slowConversion:'Use the exact retained slow derivative coefficient expansion of s^(-A-1/2)*P(X,eta), whose P has no s dependence. No chart multiplier or coefficient derivative is dropped.',
+      etaEndpoints:'All endpoint heat derivatives are continuous from eta in[-1,1] / T>=0. No negative-time real heat extension is asserted.',
+      gaussianPoleRule:'Each radial derivative of the isolated Gaussian costs at most three powers of the appropriate log distance. The outer initial factor costs three more. Leibniz and unsigned first Stirling numbers give the displayed source bound; eta derivatives fall only on regular factors.'},
+    factors={inner:{...inner,regularBodies:innerBodies,ga,width:widthInner,activationIdentity:activation},
+      outer:{...outer,regularBodies:outerBodies,width:widthOuter,XbIdentity},middle:{shares:middleShares,box:{X:[Xlo,Xhi],eta:[q(-1),G.one]},zeta},
+      sharedRegularCoefficientBindings:shareRows,regularNormRows:regularRows,complement},
+    scalarRules={inner:innerRule,outer:outerRule},checks=[
+      {id:'same-private-common-family-source',pass:assertActualCommonAdmissibleFamily(family)},
+      {id:'same-source-factor-profile-and-exponents',pass:program.request.sourceProfile===family.request.sourceProfile&&program.parameterExpressionSHA256===family.sourceBinding.parameterExpressionSHA256&&inner.roots.Xa===c.Xa&&inner.roots.t1===c.t1},
+      {id:'same-actual-inner-activation-and-outer-endpoint',pass:activation.pass&&XbIdentity.pass},
+      {id:'complete-inner-natural-and-nonlinear-moment-factors',pass:inner.operations.includes('actual_natural_series')&&inner.kernels.length===program.innerKernels.length&&program.preservedTerms.innerNonlinearMomentDifferences},
+      {id:'complete-outer-heat-and-two-shears',pass:!!outer.roots.gamma&&outer.sourceKernels.length===program.outerKernels.length&&program.preservedTerms.outerThreeAngularTerms&&program.preservedTerms.outerNestedAxialIntegral},
+      {id:'every-regular-and-middle-profile-derivative-generated',pass:ftcRows.length===3*(m+1)*(m+2)&&ftcRows.every(r=>r.faces.length===4)},
+      {id:'all-source-only-weighted-bound-constants',pass:[...rows.map(r=>r.N_m),...profileRows.map(r=>r.bound)].every(x=>G.freeCoordinates(x).size===0)},
+      {id:'all-required-slow-coefficient-norms-retained',pass:expansion.includesCoefficientDerivatives&&rows.length===m+1&&rows.every(r=>r.derivatives.length===(r.derivativeOrder+1)*(r.derivativeOrder+2)*(r.derivativeOrder+3)/6)},
+      {id:'source-prefix-and-full-leading-body-preserved',pass:same(G.nodes.slice(0,count),family.G.nodes.slice(0,count))&&middleShares.every(r=>r.body===r.materialized)}];
+  if(checks.some(r=>!r.pass))fail('INVALID_SOURCE_CONSTRUCTION','The common full-target weighted jet binding failed: '+checks.filter(r=>!r.pass).map(r=>r.id).join(', '));
+  const roots={zeta,innerRegularBodies:innerBodies,outerRegularBodies:outerBodies,...Object.fromEntries(rows.map(r=>['N_'+r.derivativeOrder,r.N_m]))},
+    scope={actualSameSourceWeightedTargetJets:true,actualGeneratedDerivativeOrder:m,arbitraryFiniteDerivativeRecipe:true,mathematicalDerivativeOrderCap:null,
+      allEndpointPolesExplicit:true,flatZeroStressDividedNumerically:false,actualFullLeadingHeatAndMomentsRetained:true,
+      uniformInEllAndFrozenMeshLabels:true,numericalNormsEvaluated:false,allLabelWaveBoundsAttached:false,wholeGPOSComplete:false,wholeM2Complete:false,M3Started:false},
+    result={G,family,request,sourceBinding,coordinates:{y,delta,eta},factors,regularity,ftcRows,profileRows,rows,scalarRules,checks,roots,scope},
+    packed=G.pack(roots,{schema:'MathScope.ActualCommonTargetWeightedNormProgram/1',request,sourceBinding,coordinates:result.coordinates,factors,regularity,
+      ftcRows,profileRows,rows,scalarRules,checks,scope});
+  result.program=JSON.parse(canonicalStringify(packed));seals.set(result,{G,family,count:G.nodes.length,prefix:canonicalStringify(G.nodes),definitions:G.captureFunctionDefinitions(),data:data(result),program:canonicalStringify(result.program)});
+  context.onProgress?.({stage:'common-target-all-finite-weighted-jets-sealed',nodeCount:G.nodes.length,derivativeOrder:m,ftcRows:ftcRows.length});return result;
+}
+
+export function assertActualCommonTargetWeightedNorms(p){
+  const s=seals.get(p);if(!s||p.G!==s.G||p.family!==s.family||data(p)!==s.data||canonicalStringify(p.program)!==s.program||
+    canonicalStringify(p.G.nodes.slice(0,s.count))!==s.prefix||!p.G.functionDefinitionsUnchanged(s.definitions))
+    fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged private original weighted target norm recipe.');
+  assertActualCommonAdmissibleFamily(s.family);return true;
+}
+export async function actualCommonTargetWeightedNormCertificate(p){
+  assertActualCommonTargetWeightedNorms(p);const s=seals.get(p);
+  return {schema:'MathScope.ActualCommonTargetWeightedNormCertificate/1',request:p.request,sourceBinding:p.sourceBinding,rows:p.rows,checks:p.checks,scope:p.scope,
+    graph:{sha256:await sha256(s.program),nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.program).length,fixedCompilerPrefix:true}};
+}
