@@ -1,0 +1,27 @@
+{
+  "schema": "MathScope.ActualPhysicalCurlCancelledSourceAttempt/1",
+  "status": "CANCELLED_AFTER_NO_TEST_COMPLETION_OUTPUT",
+  "testPassClaimed": false,
+  "executionSession": 38279,
+  "toolExitCode": 130,
+  "cancellation": "Normal Ctrl+C sent through originating write_stdin session; no cross-namespace signal delivered",
+  "tapFirstWriteUTC": "2026-10-11T06:23:32.224613+00:00",
+  "cancellationRecordedAtUTC": "2026-10-11T06:31:09.793343+00:00",
+  "constructorCompletionObserved": false,
+  "observedPeakRSSBytes": 2240229376,
+  "peakIsObservationNotFinalProcessResource": true,
+  "lastObservedCPUState": "RUNNING",
+  "stackSampling": "Attempted SIGUSR1 to the /proc-visible PID returned ProcessLookupError; no inspector was enabled and no stack was obtained",
+  "nextAction": "Add expression-preserving stage instrumentation and a timeout owned by the runner process",
+  "sourceFilesSHA256": {
+    "actual-physical-full-curl.mjs": "aa265ea518ca096633d305e71901cfb7a9cb79a3a80c4b7cf9953252cab2b042",
+    "tests/actual-physical-full-curl-source.test.mjs": "1caadd94197f0814fb706f2e1e1972945030142732f997f1f93669b0dbb22359"
+  },
+  "tapSHA256": "7cb03ab03edf5190a8aa546c78285344395fad3d42d4011cd224f934aef96b3f",
+  "headBeforePersistence": "8a0046c547af4cccdbecae81fe647d414dd75d3f",
+  "diagnosisCorrection": {
+    "initialAttribution": "The absence of further TAP output was initially attributed to construction.",
+    "evidenceFromInstrumentedRetry": "Retry2 explicitly finished all physical construction and sealing at17170.304925ms; its later test comparison did not complete before the70s timeout.",
+    "conclusion": "TAP buffering hid constructor completion. The initial attribution was not established and is withdrawn. No PASS is assigned to attempt1."
+  }
+}

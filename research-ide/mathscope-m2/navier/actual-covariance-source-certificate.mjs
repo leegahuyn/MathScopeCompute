@@ -50,7 +50,7 @@ export function covariancePositiveRootProgram(G,roots){
   return {schema:'MathScope.CovarianceFixedSourcePositiveProgram/1',parameterExpressionSHA256:G.source.parameterExpressionSHA256,nodes,roots:mapped};
 }
 
-function attachSourcePalette(operator){
+export function attachSourcePalette(operator){
   const {G,geometry:g,constants:c}=operator,q=(n,d=1)=>G.q(n,d),palette=uniformSupportPalette(),torus=torusExactIdentityAudit();
   if(!palette.pass||!palette.commonToAllBandsAndLabels||!torus.pass)fail('INTERNAL_VALIDATION','The actual all-label support palette or Haar geometry failed.');
   const floor=x=>G.neg(G.ceiling(G.neg(x))),mod=(x,m)=>G.sub(x,G.mul(q(m),floor(G.div(x,q(m))))),grid=[0,1,2].map(j=>G.fresh('actual_global_mesh_integer_'+j));
@@ -80,7 +80,7 @@ function attachSourcePalette(operator){
     crossTerms:'Every pair of different labels with overlapping slow supports has disjoint enlarged auxiliary supports. The exact finite palette proves this for the complete countable source mesh; it is not an enumeration of displayed labels.'};
 }
 
-function attachActualSlowPartition(operator){
+export function attachActualSlowPartition(operator){
   const {G,geometry:g,chart,constants:c,coordinates:{R,Z,T}}=operator,q=(n,d=1)=>G.q(n,d),floor=x=>G.neg(G.ceiling(G.neg(x))),power=(x,a)=>G.exp(G.mul(a,G.log(x)));
   const bandCoordinate=G.neg(G.div(G.log(chart.qActual),G.log(q(2)))),nearestBand=floor(G.add(bandCoordinate,q(1,2))),bandOffset=G.sub(bandCoordinate,nearestBand);
   const bands=[-1,0,1].map(relativeBand=>{

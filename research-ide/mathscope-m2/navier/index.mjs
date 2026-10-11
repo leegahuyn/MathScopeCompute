@@ -27,11 +27,15 @@ import {actualPulseSensitivityCertificate} from './actual-pulse-sensitivity.mjs'
 import {actualCovarianceSensitivityCertificate} from './actual-covariance-sensitivity.mjs';
 import {actualPulseJetCertificate} from './actual-pulse-jet-source.mjs';
 import {actualFullCurlCertificate} from './actual-full-curl.mjs';
+import {actualCutoffMassEnclosure} from './actual-cutoff-mass-enclosure.mjs';
+import {actualCovarianceBandAdmissibilityCertificate} from './actual-covariance-band-admissibility.mjs';
+import {readRational as readExactRational,qcompare as compareExactRational,rational as exactRational} from './actual-continuation-arithmetic.mjs';
 
 const PAPER={title:'Finite Time Blowup for Navier–Stokes',url:'https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf',sha256:'0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f'};
 const PROFILE={id:'same-profile-2026-10-10.3',commit:'55dacb898f8c204bf0c5925ea901d75d6c2d0f46',assessmentSha256:'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c',role:'ACCEPTED_N3_ARCHIVE_REFERENCE',globalEvaluator:false,description:'Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.'};
 const DIFFERENTIAL_KINDS=['ns.actual-covariance-sensitivity','ns.actual-pulse-jet','ns.actual-full-curl'];
-const KINDS=[...DIFFERENTIAL_KINDS,'ns.actual-pulse-sensitivity','ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-uniform-covariance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
+const CONTINUATION_KINDS=['ns.actual-cutoff-masses','ns.actual-band-admissibility'];
+const KINDS=[...CONTINUATION_KINDS,...DIFFERENTIAL_KINDS,'ns.actual-pulse-sensitivity','ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-uniform-covariance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
 const fail=(code,message)=>{throw Object.assign(Error(message),{code});};
 const finite=(v,name,lo=-1e6,hi=1e6)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)fail('INVALID_INPUT',name+' is outside the finite supported interval.');return v;};
 const int=(v,name,lo,hi)=>{finite(v,name,lo,hi);if(!Number.isSafeInteger(v))fail('INVALID_INPUT',name+' must be an integer.');return v;};
@@ -58,6 +62,29 @@ async function actualDifferential(input,ctx,kind){
     kind==='ns.actual-full-curl'?'CONDITIONAL_ACTUAL_LOCAL_FULL_POTENTIAL_CURL':'EXACT_ACTUAL_SOURCE_DERIVATIVES_WITH_FUNCTIONAL_TAILS');
   return {...output,scope:{...output.scope,finite:false,...data.scope,formalPass:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,
     sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; the new compiler inputs and complete differential graph hash are retained in results.graph'};
+}
+
+async function actualCutoffMasses(input,ctx){
+  const data=await actualCutoffMassEnclosure({...input,precisionBits:input.precisionBits??ctx.precision?.bits??192},ctx);
+  const output=result({kind:'ACTUAL_SOURCE_DIRECTED_CUTOFF_MASSES',sourceProfile:data.sourceProfile},data,data.checks,
+    {axes:[axis('actual cutoff integral'),axis('exact rational enclosure'),axis('0')],points:[],lines:[],
+      description:'원래 두 cutoff 질량의 엄밀한 유리수 구간과 구적·반올림 오차를 표시합니다.',
+      lostInformation:['이 구간은 cutoff 적분 인자에 적용됩니다. 전체 공분산, 가중치와 pulse 도함수의 수치 구간은 별도입니다.']},[],
+    'ACTUAL_SOURCE_CUTOFF_FACTORS_WITH_DIRECTED_BIGINT_ENCLOSURES');
+  return {...output,scope:{...output.scope,...data.scope,formalPass:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,
+    sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; original and appended cutoff source graph hashes are retained in results.sourceProgram and results.bindingProgram'};
+}
+
+async function actualBandAdmissibility(input,ctx){
+  const data=await actualCovarianceBandAdmissibilityCertificate({ellExact:'1',...input},ctx);
+  const output=result({kind:'ACTUAL_SOURCE_POSITIVE_FAMILY_DOMAIN_CHECK',sourceProfile:data.sourceBinding.sourceProfile},data,data.checks,
+    {axes:[axis('source domain condition'),axis('exact source conclusion'),axis('0')],points:[],lines:[],
+      description:'표시용 band와 원래 양성 정리의 적용 범위를 실제 source에서 비교합니다.',
+      lostInformation:['기존 양성 정리에 포함되지 않는다는 결론은 행렬식 또는 가중치의 부호 결론과 구별합니다.']},[],
+    'ACTUAL_SOURCE_FINITE_BAND_THEOREM_NONMEMBERSHIP');
+  return {...output,scope:{...output.scope,uniformTheoremNonmembershipProved:data.decision.uniformTheoremNonmembershipProved,
+    actualPositiveWeightsProved:false,fullPhysicalResidualAndFlatErrorPackageComplete:false,m3MayStart:false,formalPass:false},
+    sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; actual threshold and c1 proof graph retained in results.graph'};
 }
 
 function actualCore(input,ctx){
@@ -267,6 +294,8 @@ function pulseTail(input,ctx){
 }
 
 const INPUT_FIELDS={
+  'ns.actual-cutoff-masses':['sourceProfile','ellExact','precisionBits','tolerance','maxCells'],
+  'ns.actual-band-admissibility':['sourceProfile','ellExact'],
   'ns.actual-covariance-sensitivity':['sourceProfile','ellExact','slowCoordinate','derivativeOrder','terms'],
   'ns.actual-pulse-jet':['sourceProfile','ellExact','terms'],
   'ns.actual-full-curl':['sourceProfile','ellExact','terms'],
@@ -299,6 +328,8 @@ const INPUT_FIELDS={
 };
 // These are installed finite-component domains, not uniform domains for the paper's profile.
 const NUMERIC_FIELDS={
+  'ns.actual-cutoff-masses':{precisionBits:[96,512,true],maxCells:[4,4096,true]},
+  'ns.actual-band-admissibility':{},
   'ns.actual-covariance-sensitivity':{terms:[0,0,true]},
   'ns.actual-pulse-jet':{terms:[0,1,true]},
   'ns.actual-full-curl':{terms:[0,0,true]},
@@ -348,6 +379,18 @@ export function validate(kind,input={}){
     if(!input||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Input must be an object.');
     const unknown=Object.keys(input).filter(k=>!INPUT_FIELDS[kind].includes(k));if(unknown.length)fail('INVALID_INPUT','Unknown '+kind+' input fields: '+unknown.join(', ')+'.');
     finiteTree(input);
+    if(CONTINUATION_KINDS.includes(kind)){
+      if(input.ellExact!==undefined&&(typeof input.ellExact!=='string'||!/^[0-9]+$/.test(input.ellExact)))fail('INVALID_INPUT','ellExact requires a positive exact integer string; omit it to use the measured ell=1 source.');
+      if((input.ellExact??'1')!=='1')fail('BUDGET_EXCEEDED','This browser entry executes the measured ell=1 source. The band theorem exclusion itself covers 1..128 without claiming those other graphs were run.');
+      if(kind==='ns.actual-cutoff-masses'){
+        const bits=input.precisionBits??192,cells=input.maxCells??1024;
+        int(bits,'precisionBits',96,512);int(cells,'maxCells',4,4096);
+        if(cells&(cells-1))fail('INVALID_INPUT','maxCells must be a power of two.');
+        if(typeof(input.tolerance??'1/10000000000')!=='string')fail('INVALID_INPUT','Use an exact rational tolerance string.');
+        const tolerance=readExactRational(input.tolerance??'1/10000000000');
+        if(compareExactRational(tolerance,exactRational(0))<=0||compareExactRational(tolerance,exactRational(1))>0)fail('INVALID_INPUT','The absolute integral-width tolerance must lie in (0,1].');
+      }
+    }
     if(['ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)){
       if(input.anchorOrder!==undefined&&input.ellExact!==undefined)fail('INVALID_INPUT','Choose anchorOrder or ellExact, not both.');
       if(input.ellExact!==undefined){
@@ -412,11 +455,27 @@ export function validate(kind,input={}){
     if(kind==='ns.background-picard'&&(input.rhoPrime??.25)>=(input.rho??.5))fail('INVALID_INPUT','Use 0<rhoPrime<rho.');
     if(kind==='ns.pulse-covariance'&&input.target!==undefined){if(!Array.isArray(input.target)||input.target.length!==2)fail('INVALID_INPUT','target is a 2-component stress.');input.target.forEach((x,i)=>finite(x,'target '+i,-100,100));}
     return {ok:true};
-  }catch(e){return {ok:false,code:e.code||'INVALID_INPUT',errors:[e.message]};}
+  }catch(e){return {ok:false,code:e.code==='RESOURCE_LIMIT'&&CONTINUATION_KINDS.includes(kind)?'BUDGET_EXCEEDED':e.code||'INVALID_INPUT',errors:[e.message]};}
 }
 function precisionContract(kind,value={},input={}){
   if(!value||typeof value!=='object'||Array.isArray(value))fail('INVALID_INPUT','precision must be an object.');
   const unknown=Object.keys(value).filter(k=>!['mode','bits'].includes(k));if(unknown.length)fail('UNSUPPORTED','This finite NS adapter does not implement requested tolerance/precision fields: '+unknown.join(', ')+'.');
+  if(kind==='ns.actual-cutoff-masses'){
+    const bits=input.precisionBits??value.bits??192;
+    if(!['AUTO','DIRECTED_BIGINT'].includes(value.mode??'AUTO'))fail('PRECISION_REQUIRED','The cutoff factors use outward BigInt intervals; choose AUTO or DIRECTED_BIGINT.');
+    int(bits,'precision.bits',96,512);
+    if(value.bits!==undefined&&value.bits!==bits)fail('INVALID_INPUT','precision.bits and input.precisionBits must agree.');
+    if(compareExactRational(readExactRational(input.tolerance??'1/10000000000'),exactRational(1,1n<<BigInt(bits-24)))<0)fail('PRECISION_REQUIRED','The requested cutoff-integral tolerance needs more directed precision.');
+    return {requested:value,arithmeticBits:bits,arithmetic:'DIRECTED_BIGINT_DYADIC_INTERVAL',fullResultExact:false,
+      absoluteWidthTolerance:input.tolerance??'1/10000000000',toleranceScope:'NORMALIZED_SIGMA_SQUARE_INTEGRAL',
+      quadratureAndRoundingErrorsSeparated:true,actualWholeCovarianceNumericallyEnclosed:false,actualSlowPulseDerivativeNumericallyEnclosed:false,
+      originalPositiveHRetained:true,formalPass:false};
+  }
+  if(kind==='ns.actual-band-admissibility'){
+    if(!['AUTO','EXACT_CONSTRUCTIVE'].includes(value.mode??'AUTO')||value.bits!==undefined)fail('PRECISION_REQUIRED','Band admissibility uses exact source expressions and integer inequalities; no numerical precision is claimed.');
+    return {requested:value,arithmetic:'EXACT_SOURCE_EXPRESSIONS_AND_INTEGER_DOMAIN_INEQUALITIES',arithmeticBits:null,fullResultExact:false,
+      determinantOrWeightSignDecided:false,formalPass:false};
+  }
   if(DIFFERENTIAL_KINDS.includes(kind)){
     if(!['AUTO','EXACT_CONSTRUCTIVE'].includes(value.mode??'AUTO')||value.bits!==undefined)fail('PRECISION_REQUIRED','These are exact differential source expressions and functional tails; an evaluated numerical enclosure at requested bits is not installed.');
     return {requested:value,arithmetic:'EXACT_ACTUAL_SOURCE_DIFFERENTIAL_EXPRESSIONS',arithmeticBits:null,fullResultExact:false,exactAlgebra:true,slowDerivativeOrder:kind==='ns.actual-covariance-sensitivity'?1:2,numericalWholeSourceEvaluation:false,finiteTermsAreNotTheSolution:true,formalPass:false};
@@ -455,6 +514,8 @@ function precisionContract(kind,value={},input={}){
 }
 function resourceEstimate(kind,input){
   const operations={
+    'ns.actual-cutoff-masses':()=>45000000,
+    'ns.actual-band-admissibility':()=>45000000,
     'ns.actual-covariance-sensitivity':()=>45000000,
     'ns.actual-pulse-jet':()=>50000000,
     'ns.actual-full-curl':()=>50000000,
@@ -485,7 +546,7 @@ function resourceEstimate(kind,input){
     'ns.pulse-curl':()=>1800000,
     'ns.pulse-tail':()=>500*(input.count??80)
   }[kind]();
-  const items=DIFFERENTIAL_KINDS.includes(kind)?10000:kind==='ns.actual-pulse-sensitivity'?2000:kind==='ns.actual-uniform-covariance'?100000:kind==='ns.actual-moment-restoration'?30000:kind==='ns.actual-residual-order'?12000+24*(input.mesh??8):kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
+  const items=CONTINUATION_KINDS.includes(kind)?10000:DIFFERENTIAL_KINDS.includes(kind)?10000:kind==='ns.actual-pulse-sensitivity'?2000:kind==='ns.actual-uniform-covariance'?100000:kind==='ns.actual-moment-restoration'?30000:kind==='ns.actual-residual-order'?12000+24*(input.mesh??8):kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
   return {algorithmicOperationsEstimate:operations,outputItemsEstimate:items,policy:'STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE'};
 }
 export function validateRequest(r){
@@ -507,12 +568,14 @@ function finiteJson(value){
   return value;
 }
 export async function run(kind,input={},context={}){
-  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-covariance-sensitivity':(a,c)=>actualDifferential(a,c,'ns.actual-covariance-sensitivity'),'ns.actual-pulse-jet':(a,c)=>actualDifferential(a,c,'ns.actual-pulse-jet'),'ns.actual-full-curl':(a,c)=>actualDifferential(a,c,'ns.actual-full-curl'),'ns.actual-pulse-sensitivity':actualPulseSensitivity,'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-uniform-covariance':actualUniformCovariance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
-  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:DIFFERENTIAL_KINDS.includes(kind)?'m2-ns-0.3.8':'m2-ns-0.3.7',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
-  catch(error){if([...DIFFERENTIAL_KINDS,'ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)&&error.code==='RESOURCE_LIMIT')return {kind,status:'BUDGET_EXCEEDED',checks:[],blockers:[error.message],message:error.message};if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
+  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-cutoff-masses':actualCutoffMasses,'ns.actual-band-admissibility':actualBandAdmissibility,'ns.actual-covariance-sensitivity':(a,c)=>actualDifferential(a,c,'ns.actual-covariance-sensitivity'),'ns.actual-pulse-jet':(a,c)=>actualDifferential(a,c,'ns.actual-pulse-jet'),'ns.actual-full-curl':(a,c)=>actualDifferential(a,c,'ns.actual-full-curl'),'ns.actual-pulse-sensitivity':actualPulseSensitivity,'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-uniform-covariance':actualUniformCovariance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
+  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:CONTINUATION_KINDS.includes(kind)?'m2-ns-0.3.9':DIFFERENTIAL_KINDS.includes(kind)?'m2-ns-0.3.8':'m2-ns-0.3.7',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
+  catch(error){if([...CONTINUATION_KINDS,...DIFFERENTIAL_KINDS,'ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)&&error.code==='RESOURCE_LIMIT')return {kind,status:'BUDGET_EXCEEDED',checks:[],blockers:[error.message],message:error.message};if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
 }
 export async function runJob(r,context={}){return run(r.kind,r.input,{...context,precision:r.precision??context.precision??{},budget:r.budget??context.budget??{}});}
 export function getExamples(){return [
+  ['ns-m2-actual-cutoff-masses','N5 · 원래 cutoff 적분 · 엄밀한 수치 구간과 분리 오차','ns.actual-cutoff-masses',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',precisionBits:192,tolerance:'1/10000000000',maxCells:1024}],
+  ['ns-m2-actual-band-admissibility','N5 · 표시 band의 양성 정리 적용 범위 검사','ns.actual-band-admissibility',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1'}],
   ['ns-m2-actual-pulse-jet','N5 · 실제 pulse R/Z/T 2차·혼합 미분 · 20성분 수렴계','ns.actual-pulse-jet',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',terms:1}],
   ['ns-m2-actual-covariance-sensitivity','N5 · 실제 공분산·가중치의 1차 미분 · 비영 tail','ns.actual-covariance-sensitivity',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',slowCoordinate:'R',derivativeOrder:1,terms:0}],
   ['ns-m2-actual-full-curl','N5 · 실제 국소 전체 curl · 양의 가중치 영역 조건부','ns.actual-full-curl',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',terms:0}],
@@ -542,5 +605,11 @@ export function getExamples(){return [
   ['ns-m2-covariance','N5 · 두 family 공분산·정규화 Haar·실제 Jacobian','ns.pulse-covariance',{target:[-1,0],amplitude:1,liftedArea:1/64,epsilon:.1}],
   ['ns-m2-pulse-curl','N5 · 원문 C_m·전체 r_m·Cartesian curl 대조','ns.pulse-curl',{ell:8}],
   ['ns-m2-tail','N5 · 전체 cutoff 잔차 jet·조건부 고정차수 flatness','ns.pulse-tail',{c:.2,C:2,derivativeLoss:2,targetPower:4,ellStart:8,count:80}]
-].map(([id,label,kind,input])=>({id,label,request:{kind,input,...([...DIFFERENTIAL_KINDS,'ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)?{precision:{mode:'EXACT_CONSTRUCTIVE'},budget:{maxMillis:60000}}:{})}}));}
+].map(([id,label,kind,input])=>{
+  const settings=kind==='ns.actual-cutoff-masses'?{precision:{mode:'DIRECTED_BIGINT',bits:192},budget:{maxMillis:60000}}:
+    [...DIFFERENTIAL_KINDS,'ns.actual-band-admissibility','ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)?
+      {precision:{mode:'EXACT_CONSTRUCTIVE'},budget:{maxMillis:60000}}:{};
+  return {id,label,request:{kind,input,...settings}};
+});}
+
 export function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],differentialExtension:{version:'0.3.8',slowDirections:['R','Z','T'],maximumSlowOrder:2,covarianceDerivativeOrder:1,sourceDisplayBands:['1'],fullCurl:'CONDITIONAL_LOCAL_FIXED_BOX',numericalDerivativeEnclosures:false,globalPhysicalResidualAndFlatErrors:false,newLeanResults:'14 universal differential algebra declarations; no actual-source analytic theorem'},implemented:'Actual fixed-label R/Z/T second and mixed pulse jets with exact time-uniform FTC functional bounds; actual covariance/target/inverse first derivatives; conditional actual local full potential curl retaining sqrt(epsilon), weight derivatives, transverse cutoff and cylindrical connection; actual fixed-label first slow R/Z/T pulse sensitivity, source-derived matrix derivative bounds, original initial frame and endpoint chain rules, with convergent nonzero functional tails; actual uniform source covariance family with internally generated common qStar, all-band completed C2 background, actual moving operators, convergent H integrals, positive inverse on the open annulus, flat endpoint extension and complete global (7.30); actual first/second-order convergent functions, ten restored continuous moments, twelve inner PDE identities, preheat/heat invariant, four stress supports and private prior-order gates; actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order','EXACT_CONSTRUCTIVE with 16..4096 analytic tail target bits for ns.actual-moment-restoration; signed numerical quadrature is not implied','EXACT_CONSTRUCTIVE without requested bits for ns.actual-uniform-covariance; finite Volterra terms retain a nonzero factorial tail'],checklist:getChecklist(),requiredNext:['extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N','materialize all slow Gaussian derivative bounds and the complete physical flat-error assembly beyond the accepted original criteria']};}

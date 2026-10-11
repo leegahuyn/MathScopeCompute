@@ -13428,7 +13428,7 @@ async function actualCovarianceFamilyCertificate(input={},context={}){
   return packet;
 }
 
-return {ACTUAL_COVARIANCE_CRITERION,covariancePositiveRootProgram,prepareActualCovarianceFamilyProgram,actualCovarianceFamilyCertificate};
+return {ACTUAL_COVARIANCE_CRITERION,covariancePositiveRootProgram,attachSourcePalette,attachActualSlowPartition,prepareActualCovarianceFamilyProgram,actualCovarianceFamilyCertificate};
 })();
 const __m2_134 = (()=>{
 /** First slow-parameter variations of an explicitly retained Volterra ODE.
@@ -14775,6 +14775,411 @@ async function actualFullCurlCertificateFromProgram(p,context={}){
 return {normalizeEqualPiecewiseBranches,exactCylindricalHarmonicCurl,attachActualFullCurl,prepareActualFullCurlProgram,assertActualFullCurlProgram,actualFullCurlCertificate,actualFullCurlCertificateFromProgram};
 })();
 const __m2_141 = (()=>{
+/** Directed numerical integrals for the two literal cutoffs in the genuine
+ * covariance operator. This evaluates source factors, not the whole H matrix,
+ * its inverse, a pulse solution, or the physical residual.
+ */
+const {directedArithmetic,intervalJets,readRational,rational,qadd,qsub,qmul,qdiv,qcompare,qtext,factorial,fail} = __m2_74;
+const {prepareActualCovarianceOperator,assertActualCovarianceOperator} = __m2_126;
+const {SOURCE_PROFILE_ID,sourceExponentContract} = __m2_45;
+const {canonicalStringify,sha256} = __m2_24;
+const ORDER=8,seals=new WeakMap(),sourceSnapshots=new WeakMap();
+const floor=(a,b)=>{let n=a/b;if(a<0n&&a%b)n--;return n;},ceil=(a,b)=>-floor(-a,b);
+const abs=a=>a<0n?-a:a;
+const divideInteger=(x,n)=>[floor(x[0],BigInt(n)),ceil(x[1],BigInt(n))];
+const qpow=(q,n)=>rational(q[0]**BigInt(n),q[1]**BigInt(n));
+const interval=(lo,hi)=>({lower:qtext(lo),upper:qtext(hi)});
+const scaledInterval=(box,scale)=>interval(qmul(readRational(box.lower),scale),qmul(readRational(box.upper),scale));
+const shiftedInterval=(box,shift)=>interval(qadd(readRational(box.lower),shift),qadd(readRational(box.upper),shift));
+const positiveProductInterval=(a,b)=>interval(qmul(readRational(a.lower),readRational(b.lower)),qmul(readRational(a.upper),readRational(b.upper)));
+
+function requestOf(input){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['precisionBits','tolerance','maxCells'].includes(k)))fail('INVALID_INPUT','Use precisionBits, an exact rational tolerance, and maxCells only.');
+  const precisionBits=input.precisionBits??192,maxCells=input.maxCells??1024,tolerance=input.tolerance??'1/10000000000';
+  if(!Number.isSafeInteger(precisionBits)||precisionBits<96||precisionBits>512)fail('INVALID_INPUT','Use 96..512 directed arithmetic bits.');
+  if(typeof tolerance!=='string')fail('INVALID_INPUT','Tolerance must be an exact rational string, never a rounded decimal Number.');
+  const tol=readRational(tolerance);
+  if(qcompare(tol,rational(0))<=0||qcompare(tol,rational(1))>0)fail('INVALID_INPUT','The absolute interval-width tolerance must lie in (0,1].');
+  if(qcompare(tol,rational(1,1n<<BigInt(precisionBits-24)))<0)fail('PRECISION_REQUIRED','The requested tolerance needs more directed precision; no zero-width result is substituted.');
+  if(!Number.isSafeInteger(maxCells)||maxCells<4||maxCells>4096||(maxCells&(maxCells-1)))fail('INVALID_INPUT','maxCells must be a power of two from 4 through 4096.');
+  return {precisionBits,tolerance:qtext(tol),maxCells};
+}
+
+/** All decisions use exact integers. e^x for x<=0 is enclosed using positive
+ * Taylor series on [0,1/8], outward squaring, and an outward reciprocal.
+ * A very small value has a positive upper endpoint; it is not replaced by 0.
+ */
+function elementary(A){
+  let degree=0,denominator=1n;
+  while(8n*(1n<<BigInt(A.bits+20))>7n*denominator){degree++;denominator=8n**BigInt(degree+1)*factorial(degree+1);}
+  const seriesTail=rational(8n,7n*denominator),tailUnits=ceil(seriesTail[0]*A.S,seriesTail[1]);
+  let evaluations=0,positiveTinyUpperBounds=0;
+  function expPoint(n){
+    evaluations++;
+    if(n>0n)fail('INTERNAL_VALIDATION','The stable cutoff exponential must have a nonpositive argument.');
+    if(n===0n)return A.one();
+    const x=-n;
+    if(x>=BigInt(A.bits+8)*A.S){positiveTinyUpperBounds++;return [0n,1n];}
+    let shifts=0;while(x*8n>A.S*(1n<<BigInt(shifts)))shifts++;
+    const small=A.point(rational(x,A.S*(1n<<BigInt(shifts))));
+    if(small[1]*8n>A.S+8n)fail('INTERNAL_VALIDATION','Invalid exponential range reduction.');
+    // The exact reduced argument is <=1/8. Its outward enclosure can extend
+    // one ulp above; intersect with this proved range before the Taylor sum.
+    small[1]=small[1]>A.S/8n?A.S/8n:small[1];
+    let term=A.one(),sum=A.one();
+    for(let k=1;k<=degree;k++){term=divideInteger(A.mul(term,small),k);sum=A.add(sum,term);}
+    sum=[sum[0],sum[1]+tailUnits];
+    for(let k=0;k<shifts;k++)sum=A.mul(sum,sum);
+    return A.div(A.one(),sum);
+  }
+  const exp=x=>[expPoint(x[0])[0],expPoint(x[1])[1]];
+  function expJet(a){
+    const out=[exp(a[0])];
+    for(let n=1;n<a.length;n++){
+      let coefficient=A.zero();
+      for(let k=1;k<=n;k++)coefficient=A.add(coefficient,A.mul(A.mul(A.point(k),a[k]),out[n-k]));
+      out.push(divideInteger(coefficient,n));
+    }
+    return out;
+  }
+  return {expJet,report:()=>({method:'POSITIVE_TAYLOR_RANGE_REDUCTION_OUTWARD_SQUARING_AND_RECIPROCAL',degree,
+    reducedArgument:['0','1/8'],positiveSeriesTail:qtext(seriesTail),evaluations,positiveTinyUpperBounds,
+    tinyValuePolicy:'For x<=-(bits+8), 0<exp(x)<2^(-bits); enclosure [0,2^(-bits)] preserves a positive upper bound.'})};
+}
+
+// Coefficients are f^(k)(s)/k!, for f=σ(1-σ), on the WHOLE supplied cell.
+function productJet(A,E,left,right){
+  if(qcompare(left,rational(0))<=0||qcompare(right,rational(1,2))>0||qcompare(left,right)>0)fail('INVALID_INPUT','The interior Taylor cell must be contained in (0,1/2].');
+  const J=intervalJets(A,ORDER),x=J.c([A.point(left)[0],A.point(right)[1]]);x[1]=A.one();
+  const ix=J.inv(x),iy=J.inv(J.sub(J.c(1),x)),z=J.sub(J.mul(iy,iy),J.mul(ix,ix));
+  // z(s)<=0 on this exact cell; intersect only the value, not its jets.
+  z[0][1]=z[0][1]>0n?0n:z[0][1];
+  const e=E.expJet(z),inverse=J.inv(J.add(J.c(1),e));
+  return J.mul(e,J.mul(inverse,inverse));
+}
+
+/** Numerical kernel for the literal source σ integral. This return value is
+ * not an authentication token for a covariance operator or an actual member.
+ */
+function encloseSigmaSquareIntegral(input={},context={}){
+  const request=requestOf(input),A=directedArithmetic(request.precisionBits),E=elementary(A),tol=readRational(request.tolerance);
+  let power=1;while(4n**BigInt(power)<BigInt(A.bits+16))power++;
+  const delta=rational(1,1n<<BigInt(power)),oneMinus=rational(delta[1]-delta[0],delta[1]);
+  const decay=rational(delta[1]**2n,delta[0]**2n),correction=rational(oneMinus[1]**2n,oneMinus[0]**2n);
+  const decayFloor=floor(decay[0]*correction[1]-correction[0]*decay[1],decay[1]*correction[1]);
+  // z increases on (0,1/2]; σ(1-σ)<=exp(z). Since e>2,
+  // Integral_0^delta f <= delta*2^(-floor(-z(delta))).
+  const endpointTail=qmul(delta,rational(1,1n<<decayFloor)),tailUnits=ceil(endpointTail[0]*A.S,endpointTail[1]);
+  const length=rational(delta[1]-2n*delta[0],2n*delta[1]),history=[];
+  for(let cells=4;cells<=request.maxCells;cells*=2){
+    let polynomial=A.zero(),radius=0n;
+    const width=qdiv(length,rational(cells)),halfWidth=qdiv(width,rational(2));
+    for(let i=0;i<cells;i++){
+      context.checkCancelled?.();
+      const left=qadd(delta,qmul(width,rational(i))),right=qadd(left,width),center=qadd(left,halfWidth);
+      const midpoint=productJet(A,E,center,center),wholeCell=productJet(A,E,left,right);
+      for(let k=0;k<ORDER;k+=2)polynomial=A.add(polynomial,A.mul(A.point(qmul(rational(2,k+1),qpow(halfWidth,k+1))),midpoint[k]));
+      const c8=abs(wholeCell[ORDER][0])>abs(wholeCell[ORDER][1])?abs(wholeCell[ORDER][0]):abs(wholeCell[ORDER][1]);
+      radius+=A.mul(A.point(qmul(rational(2,ORDER+1),qpow(halfWidth,ORDER+1))),[0n,c8])[1];
+    }
+    const quadratureWidth=4n*radius+2n*tailUnits,arithmeticWidth=2n*(polynomial[1]-polynomial[0]);
+    const quadPass=qcompare(rational(2n*quadratureWidth,A.S),tol)<=0,arithmeticPass=qcompare(rational(2n*arithmeticWidth,A.S),tol)<=0;
+    history.push({cells,quadratureWidth:qtext(rational(quadratureWidth,A.S)),arithmeticAndElementaryWidth:qtext(rational(arithmeticWidth,A.S)),quadPass,arithmeticPass});
+    if(quadPass&&arithmeticPass){
+      const j=[polynomial[0]-radius,polynomial[1]+radius+tailUnits],I=[A.S/2n-2n*j[1],A.S/2n-2n*j[0]];
+      // Independent exact inequalities: 1/4 <= Integral sigma^2 <= 1/2.
+      if(I[0]<A.S/4n||I[1]>A.S/2n||I[0]>I[1])fail('INTERNAL_VALIDATION','The computed source sigmoid integral violates its proved elementary range.');
+      return {schema:'MathScope.SourceStepSquareDirectedIntegral/1',status:'COMPLETED',pass:true,request,
+        integral:interval(rational(I[0],A.S),rational(I[1],A.S)),integralWidth:qtext(rational(I[1]-I[0],A.S)),
+        sourceAuthenticated:false,sourceDefinition:'sigma(s)=exp(-s^-2)/(exp(-s^-2)+exp(-(1-s)^-2)), with sigma=0 for s<=0 and sigma=1 for s>=1.',
+        proof:{reflection:'sigma(1-s)=1-sigma(s)',reduction:'Integral_0^1 sigma^2 = 1/2 - 2 Integral_0^(1/2) sigma(1-sigma)',
+          interior:['delta','1/2'],delta:qtext(delta),taylorDegree:ORDER-1,wholeCellDerivativeOrder:ORDER,
+          cellRemainder:'2*halfWidth^9*sup_cell |f^(8)/8!|/9',endpointTailUpper:qtext(endpointTail),
+          endpointTailProof:'z(s)=(1-s)^-2-s^-2 is increasing; f<=exp(z); exp(-m)<2^-m for positive integer m.',
+          midpointCoefficientsAreIntervals:true,wholeCellJetsAreIntervals:true},
+        errorBudget:{definition:'Absolute width of the normalized sigma-square integral enclosure.',tolerance:request.tolerance,
+          quadratureAllocation:qtext(qdiv(tol,rational(2))),arithmeticAllocation:qtext(qdiv(tol,rational(2))),
+          quadratureWidth:qtext(rational(quadratureWidth,A.S)),taylorWidth:qtext(rational(4n*radius,A.S)),endpointTailWidth:qtext(rational(2n*tailUnits,A.S)),
+          quadratureMeaning:'Validated Taylor and omitted-collar contributions, including outward rounding of their derivative enclosures and radii.',
+          arithmeticAndElementaryWidth:qtext(rational(arithmeticWidth,A.S)),
+          arithmeticMeaning:'Outward midpoint-jet and polynomial arithmetic plus the explicit elementary exponential-series remainders. No refinement difference is used as a quadrature bound.',
+          totalWidth:qtext(rational(I[1]-I[0],A.S)),toleranceMet:true},
+        arithmetic:{kind:'DIRECTED_BIGINT_DYADIC_INTERVAL',bits:A.bits,operations:A.operations(),binary64UsedForDecisions:false,elementary:E.report()},
+        cells,history};
+    }
+    if(!arithmeticPass&&quadPass)fail('PRECISION_REQUIRED','Directed evaluation width exceeds its error allocation; increase precisionBits.');
+  }
+  fail('RESOURCE_LIMIT','The verified Taylor remainder exceeds the requested tolerance at maxCells; no uncertified integral is returned.');
+}
+
+function originalEllOneLengthEnclosure(operator){
+  const {G,geometry:g,constants:{h}}=operator,q=(n,d=1)=>G.q(n,d);
+  if(g.ell!==G.one)return null;
+  const contract=sourceExponentContract(),logTwo=G.log(q(2)),Tg=G.add(q(4),G.sqrt(q(2)));
+  const Q=G.exp(G.neg(G.mul(g.ell,logTwo))),quotient=G.div(G.sub(G.mul(G.add(G.one,h),g.ell,logTwo),G.mul(q(2),G.log(g.ell))),G.log(Tg));
+  const paletteIndex=G.neg(G.ceiling(G.neg(quotient))),ci=G.mul(G.exp(G.mul(paletteIndex,G.log(Tg))),G.exp(G.mul(G.add(G.one,h),G.log(Q))));
+  if(g.Q!==Q||g.Tg!==Tg||g.paletteIndex!==paletteIndex||g.ci!==ci||g.Ls!==G.div(G.mul(q(2),g.r0),ci)||h!==G.parameter('h')
+    ||contract.profileId!==operator.sourceProfile||contract.parameterExpressionSHA256!==operator.parameterExpressionSHA256
+    ||contract.upperBoundExact!=='2^-4096'||!contract.positive||!contract.notNumericallyReplaced)
+    fail('INVALID_SOURCE_CONSTRUCTION','The original ell=1 Q, palette, ci, length or strict h source contract changed.');
+  const lower=rational(1,1n<<32n),upper=qmul(lower,qadd(rational(1),rational(1,1n<<4095n)));
+  return {ellExact:'1',roots:{ell:g.ell,Q,Tg,h,paletteIndex,ci,Ls:g.Ls},enclosure:interval(lower,upper),
+    exactReduction:'For ell=1 the original Q=exp(-ell*log(2)) equals 1/2; paletteIndex=0; ci=2^(-(1+h)); Ls=2^(-32)*2^h.',
+    paletteProof:'0<(1+h)*log(2)/log(4+sqrt(2))<1 because 0<h<1/16 and 4+sqrt(2)>4; its floor is exactly zero.',
+    lengthProof:'0<h<2^-4096<1/2 implies 1<2^h<=exp(h)<=1/(1-h)<=1+2*h<1+2^-4095.',
+    strictHContract:contract,strictInsideDisplayedClosedInterval:true,hSetToZero:false,LsReplacedByPoint:false};
+}
+
+function sourceCutoffBindings(operator){
+  assertActualCovarianceOperator(operator);
+  const {G,geometry:g,cutoffs:c,coordinates:{v}}=operator,q=(n,d=1)=>G.q(n,d);
+  if(g.r0!==q(1,1n<<34n))fail('INVALID_SOURCE_CONSTRUCTION','The original dyadic r0 must be retained.');
+  const t=G.div(c.xi,g.r0),absolute=G.sqrt(G.pow(t,2));
+  const chi=G.choose(absolute,q(1,4),q(3,4),G.one,G.step(G.sub(q(3,2),G.mul(q(2),absolute))),G.zero);
+  const transverse=G.integral(G.pow(chi,2),c.xi,G.neg(g.r0),g.r0);
+  const psi=G.mul(G.step(G.sub(G.div(G.mul(q(20),v),g.Ls),q(4))),G.step(G.sub(q(16),G.div(G.mul(q(20),v),g.Ls))));
+  if(chi!==c.chi||transverse!==c.transverseMass||psi!==c.psi)fail('INVALID_SOURCE_CONSTRUCTION','The original sigma branches, transition widths or source mass integral changed.');
+  const longitudinal=G.integral(G.pow(psi,2),v,G.zero,g.Ls),normalizedLongitudinal=G.div(longitudinal,g.Ls);
+  const roots={chi,transverseMass:transverse,psi,longitudinalSquareMass:longitudinal,normalizedLongitudinalSquareMass:normalizedLongitudinal,r0:g.r0,Ls:g.Ls};
+  const slowDirections=['R','Z','T'];
+  for(const root of [transverse,longitudinal,normalizedLongitudinal])for(const name of slowDirections)if(G.freeCoordinates(root).has(operator.coordinates[name]))fail('INVALID_SOURCE_CONSTRUCTION','A fixed-label cutoff mass unexpectedly depends on a slow coordinate.');
+  return {roots,slowDirections,ellOneLength:originalEllOneLengthEnclosure(operator),chiBranches:{plateau:['-1/4','1/4'],transition:'sigma(3/2-2*abs(xi/r0))',outerSupport:['-3/4','3/4']},
+    psiBranches:{normalizedPulseCoordinate:'u=v/Ls',leftTransition:['1/5','1/4'],plateau:['1/4','3/4'],rightTransition:['3/4','4/5']},
+    literalOriginalBranchesChecked:true,originalHaarMassRootRetained:true,
+    reductions:{transverse:'Integral chi^2 dxi = r0*(1/2+I)',longitudinal:'Integral_0^Ls psi^2 dv / Ls = 1/2+I/10',I:'Integral_0^1 sigma(s)^2 ds'},
+    slowDerivativeProof:'The authenticated integral roots have no free R, Z or T coordinates when band and labels are frozen.'};
+}
+
+/** Attach the directed factors only to a live authentic operator. */
+async function attachActualCutoffMassEnclosure(operator,input={},context={}){
+  assertActualCovarianceOperator(operator);const request=requestOf(input);
+  if(!sourceSnapshots.has(operator)){
+    const nodeCount=operator.G.nodes.length,program={...operator.program,nodes:operator.G.nodes.slice(0,nodeCount)};
+    sourceSnapshots.set(operator,{nodeCount,sha256:await sha256(canonicalStringify(program))});
+  }
+  const sourceBinding=sourceCutoffBindings(operator),sigma=encloseSigmaSquareIntegral(request,context),r0=rational(1,1n<<34n);
+  const normalizedTransverseMass=shiftedInterval(sigma.integral,rational(1,2));
+  const normalizedLongitudinalSquareMass=shiftedInterval(scaledInterval(sigma.integral,rational(1,10)),rational(1,2));
+  const length=sourceBinding.ellOneLength;
+  const absoluteLongitudinalMass=length?positiveProductInterval(length.enclosure,normalizedLongitudinalSquareMass):null;
+  const bindingNodeCount=operator.G.nodes.length,bindingNodes=JSON.stringify(operator.G.nodes.slice(0,bindingNodeCount));
+  const bindingProgram={...operator.program,nodes:operator.G.nodes.slice(0,bindingNodeCount),cutoffMassEnclosure:sourceBinding};
+  const result={schema:'MathScope.ActualCutoffMassEnclosure/1',status:'COMPLETED',pass:true,request,
+    sourceProfile:operator.sourceProfile,parameterExpressionSHA256:operator.parameterExpressionSHA256,
+    sourceProgram:{...sourceSnapshots.get(operator),compiler:'actual-covariance-source-operator.mjs:prepareActualCovarianceOperator',ellExact:operator.program.band.ellExact,
+      hashDomain:'Authentic covariance operator program at first attachment, before cutoff checker appends.'},
+    bindingProgram:{nodeCount:bindingNodeCount,sha256:await sha256(canonicalStringify(bindingProgram)),
+      hashDomain:'Authentic source program and the appended literal longitudinal integral roots, with the cutoff reduction bindings.'},
+    sourceBinding,sigmaIntegral:sigma,
+    values:{normalizedTransverseMass,transverseMass:scaledInterval(normalizedTransverseMass,r0),normalizedLongitudinalSquareMass,
+      longitudinalSquareMass:{coefficient:normalizedLongitudinalSquareMass,positiveExactScaleRoot:operator.geometry.Ls,
+        ...(length?{scaleEnclosure:length.enclosure,absoluteEnclosure:absoluteLongitudinalMass,
+          absoluteWidthBudget:{normalizedIntegralContribution:qtext(qmul(readRational(length.enclosure.lower),qdiv(readRational(sigma.integralWidth),rational(10)))),
+            originalLengthEnclosureContribution:qtext(qmul(qsub(readRational(length.enclosure.upper),readRational(length.enclosure.lower)),readRational(normalizedLongitudinalSquareMass.upper))),
+            totalWidth:qtext(qsub(readRational(absoluteLongitudinalMass.upper),readRational(absoluteLongitudinalMass.lower))),
+            exactRationalProducts:true,additionalFloatingRounding:'0',requestedToleranceIsForNormalizedSigmaIntegral:true}}:{}),
+        meaning:length?'The original Ls remains bound to its expression; its strict source interval gives an absolute rational enclosure of the whole longitudinal mass.':
+          'The whole longitudinal mass is Ls times this rational interval. Ls remains the original exact source expression; no absolute numerical enclosure of Ls is claimed for this band.'}},
+    slowDerivatives:{first:sourceBinding.slowDirections.map(coordinate=>({coordinate,transverseMass:{lower:'0',upper:'0'},longitudinalSquareMass:{lower:'0',upper:'0'}})),
+      symmetricSecond:['RR','RZ','RT','ZZ','ZT','TT'].map(coordinate=>({coordinate,transverseMass:{lower:'0',upper:'0'},longitudinalSquareMass:{lower:'0',upper:'0'}})),
+      proof:sourceBinding.slowDerivativeProof},
+    checks:[{id:'authentic-unchanged-source-operator',pass:true},{id:'literal-original-sigma-branches-and-mass-root',pass:sourceBinding.literalOriginalBranchesChecked},
+      {id:'directed-numerical-sigma-square-integral-with-split-error-budget',pass:sigma.errorBudget.toleranceMet},
+      {id:'actual-transverse-and-longitudinal-reductions',pass:true},{id:'fixed-label-slow-mass-derivatives',pass:true},
+      ...(length?[{id:'original-ell-one-length-and-absolute-longitudinal-mass',pass:true}]:[])],
+    scope:{actualSourceCutoffFactorsNumericallyEnclosed:true,actualTransverseMassAbsoluteEnclosure:true,actualNormalizedLongitudinalSquareMassEnclosure:true,
+      actualLongitudinalSquareMassAbsoluteEnclosure:!!length,actualOriginalLsNumericallyEnclosed:!!length,LsNumericallyReplacedByPoint:false,
+      originalHRecomputed:false,actualVolterraSolutionNumericallyEnclosed:false,actualSlowPulseDerivativeNumericallyEnclosed:false,
+      positiveWeightsOfExercisedMemberCertified:false,actualFullCurlNumericalEnclosure:false,fullPhysicalResidualAndFlatErrorPackageComplete:false,
+      wholeGNUMComplete:false,newLeanKernelProof:false,hNumericallyReplacedByZero:false,sourceAuthenticated:true},
+    interpretation:'Two actual cutoff integral factors and their fixed-label zero slow derivatives are enclosed. H, its weights, pulse derivatives and the full curl require their own source numerical enclosures.'};
+  assertActualCovarianceOperator(operator);
+  if(JSON.stringify(operator.G.nodes.slice(0,bindingNodeCount))!==bindingNodes)fail('INVALID_SOURCE_CONSTRUCTION','The cutoff integral program changed while its numerical result was being sealed.');
+  seals.set(result,{operator,bindingNodeCount,bindingNodes,data:canonicalStringify(result)});return result;
+}
+
+function assertActualCutoffMassEnclosure(result){
+  const seal=seals.get(result);
+  if(!seal||canonicalStringify(result)!==seal.data)fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged live cutoff-factor enclosure; a copied or edited receipt is not an authentication token.');
+  assertActualCovarianceOperator(seal.operator);
+  if(JSON.stringify(seal.operator.G.nodes.slice(0,seal.bindingNodeCount))!==seal.bindingNodes)fail('INVALID_SOURCE_CONSTRUCTION','An authenticated cutoff integral body was changed after numerical enclosure.');
+  sourceCutoffBindings(seal.operator);return true;
+}
+
+async function actualCutoffMassEnclosure(input={},context={}){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['sourceProfile','ellExact','precisionBits','tolerance','maxCells'].includes(k)))fail('INVALID_INPUT','Use the original source selector and directed integration controls only.');
+  const {sourceProfile=SOURCE_PROFILE_ID,ellExact='1',...controls}=input;
+  if(ellExact!=='1')fail('RESOURCE_LIMIT','The exercised factory is limited to original ellExact:1; other members are not replaced by it.');
+  requestOf(controls);
+  const operator=prepareActualCovarianceOperator({sourceProfile,ellExact},context);
+  return attachActualCutoffMassEnclosure(operator,controls,context);
+}
+
+return {encloseSigmaSquareIntegral,attachActualCutoffMassEnclosure,assertActualCutoffMassEnclosure,actualCutoffMassEnclosure};
+})();
+const __m2_142 = (()=>{
+/** Exact exclusion of the displayed finite bands from the original positive
+ * covariance theorem. This does not decide the sign of an actual H inverse.
+ * The threshold and first cutoff are consumed from private source producers.
+ */
+const {prepareActualCovarianceOperator,assertActualCovarianceOperator} = __m2_126;
+const {certifyActualCovarianceOperatorBounds} = __m2_129;
+const {SOURCE_PROFILE_ID,assertSourceProfile,sourceExponentContract} = __m2_45;
+const {canonicalStringify,sha256} = __m2_24;
+const {fail} = __m2_74;
+const witnesses=new WeakMap();
+const programMetadata=program=>{const {nodes,...metadata}=program;return canonicalStringify(metadata);};
+const publicData=p=>JSON.stringify({request:p.request,roots:p.roots,sourceBinding:p.sourceBinding,proof:p.proof,decision:p.decision,checks:p.checks,
+  program:{compiler:p.program.compiler,compilerInput:p.program.compilerInput,roots:p.program.roots,sourceBinding:p.program.sourceBinding,proof:p.program.proof,decision:p.program.decision,checks:p.program.checks}});
+
+function requestOf(input){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['sourceProfile','ellExact'].includes(k)))
+    fail('INVALID_INPUT','Use only the pinned source profile and an exact finite band integer. Bounds, h, matrices and completion flags are never caller inputs.');
+  const sourceProfile=input.sourceProfile??SOURCE_PROFILE_ID;assertSourceProfile(sourceProfile);
+  const ellExact=input.ellExact??'1';
+  if(typeof ellExact!=='string'||!/^[0-9]+$/.test(ellExact)||ellExact.length>4)fail('INVALID_INPUT','ellExact must be an exact positive integer string in 1..128.');
+  const ell=BigInt(ellExact);if(ell<1n||ell>128n)fail('UNSUPPORTED','This certificate covers precisely the finite band range 1..128. It does not declare a larger requested band admissible.');
+  return {sourceProfile,ellExact:String(ell)};
+}
+
+/** Only integer arithmetic is evaluated here; powers such as 2^(-ellMinimum)
+ * remain exact expressions. Analytic monotonicity steps are stated in proof. */
+function finiteCovarianceBandExclusionArithmetic(){
+  const hExponent=4096,coefficientExponent=6,frequencyExponent=2*(hExponent+coefficientExponent),limit=128;
+  const rows=[
+    {id:'threshold-multiplier-is-power-of-two',pass:(1n<<BigInt(coefficientExponent))===64n},
+    {id:'inverse-h-dominates-entire-finite-band',pass:(1n<<BigInt(hExponent))>BigInt(limit+1)},
+    {id:'frequency-lower-exponent-computed',pass:frequencyExponent===8204},
+    {id:'frequency-lower-dominates-finite-band',pass:(1n<<BigInt(frequencyExponent))>BigInt(limit)},
+    {id:'epsilon-exponent-strictly-below-one',pass:BigInt(limit)<(1n<<BigInt(hExponent))},
+    {id:'physical-band-threshold-gap',pass:133-129===4&&(1n<<4n)===16n}
+  ];
+  return {schema:'MathScope.FiniteCovarianceBandExclusionArithmetic/1',hExponent,coefficientExponent,frequencyExponent,limit,rows,pass:rows.every(r=>r.pass),floatingTranscendentalEvaluation:false};
+}
+
+/** Consume a live original operator. Copied objects and edited source bodies
+ * fail its private authenticator before any domain conclusion is constructed. */
+function certifyActualCovarianceBandAdmissibility(operator,context={}){
+  assertActualCovarianceOperator(operator);context.checkCancelled?.();
+  const request=requestOf({sourceProfile:operator.sourceProfile,ellExact:operator.program.band.ellExact});
+  if(operator.program.band.selectionKind!=='ARBITRARY_ORIGINAL_DYADIC_INTEGER')fail('UNSUPPORTED','Use an actual exact integer band, not a canonical anchor.');
+  const bounds=certifyActualCovarianceOperatorBounds(operator),{G}=operator,q=(n,d=1)=>G.q(n,d),h=G.parameter('h'),logTwo=G.log(q(2));
+  const exponent=sourceExponentContract(),arithmetic=finiteCovarianceBandExclusionArithmetic(),selection=bounds.selection;
+  const expectedH={exp:{product:[{integer:-8002},{ref:'T'}]}};
+  const sourceDefinition=assertSourceProfile(request.sourceProfile).parametersExactExpressions;
+  const first=operator.background.cutoffs.rows[0],zeroNorm=first?.coefficientBounds.find(r=>r.derivativeOrder===0);
+  if(!first||!zeroNorm)fail('INVALID_SOURCE_CONSTRUCTION','The actual canonical c1 zeroth-derivative norm is required.');
+  const frequency=G.pow(G.div(q(64),h),2),expectedSminimum=G.maximum(...selection.conditions.map(r=>r.lower));
+  const expectedEllMinimum=G.ceiling(G.maximum(q(8),expectedSminimum,frequency));
+  const expectedQStar=G.exp(G.neg(G.mul(G.add(expectedEllMinimum,q(4)),logTwo)));
+  const norm=G.maximum(G.one,...zeroNorm.terms.map(t=>t.upper));
+  const firstRequiredLog=G.div(G.add(logTwo,G.log(norm)),h);
+  const firstLog=G.maximum(G.add(G.zero,logTwo),...first.coefficientBounds.map(r=>r.requiredLog));
+  const actualFirstBandRow=operator.band.rows.find(r=>r.order===1);
+  const cutoffDefinition=G.expressionSystems[operator.band.cutoffSystem];
+  if(!cutoffDefinition||cutoffDefinition.parameters.length!==1)fail('INVALID_SOURCE_CONSTRUCTION','The actual complete summation cutoff definition is required.');
+  const cutoffArgument=cutoffDefinition.parameters[0],cutoffU=G.sub(G.mul(q(2),cutoffArgument),G.one);
+  const cutoffA=G.exp(G.neg(G.inv(cutoffU))),cutoffB=G.exp(G.neg(G.inv(G.sub(G.one,cutoffU))));
+  const cutoffBody=G.choose(cutoffArgument,q(1,2),G.one,G.one,G.div(cutoffB,G.add(cutoffA,cutoffB)),G.zero);
+  const recurrenceChecks=operator.background.cutoffs.rows.map((row,index)=>{
+    const previous=index?operator.background.cutoffs.rows[index-1].logScale:G.zero,doubling=G.add(previous,logTwo);
+    return {id:'canonical-doubling-recurrence-'+row.order,pass:row.previousLogScale===previous&&row.doubling===doubling&&row.logScale===G.maximum(doubling,...row.coefficientBounds.map(r=>r.requiredLog))&&row.scale===G.exp(row.logScale)};
+  });
+  const g=operator.geometry,powReal=(a,b)=>G.exp(G.mul(b,G.log(a))),Tg=G.add(q(4),G.sqrt(q(2)));
+  const paletteQuotient=G.div(G.sub(G.mul(G.add(G.one,h),g.ell,logTwo),G.mul(q(2),G.log(g.ell))),G.log(Tg));
+  const paletteIndex=G.neg(G.ceiling(G.neg(paletteQuotient))),r0=q(1,1n<<34n),ci=G.mul(powReal(Tg,paletteIndex),powReal(g.Q,G.add(G.one,h)));
+  const checks=[
+    {id:'private-original-operator',pass:true},
+    {id:'unchanged-positive-h-definition',pass:JSON.stringify(exponent.hExact)===JSON.stringify(expectedH)&&JSON.stringify(sourceDefinition.h)===JSON.stringify(expectedH)&&JSON.stringify(sourceDefinition.T)===JSON.stringify({sum:[{exp:{ref:'Md'}},{integer:10}]})&&JSON.stringify(sourceDefinition.Md)===JSON.stringify({integer:1048576})&&exponent.positive&&exponent.upperBoundExact==='2^-4096'&&exponent.notNumericallyReplaced},
+    {id:'original-frequency-threshold-root',pass:selection.frequencyMinimum===frequency},
+    {id:'original-maximum-and-ceiling-root',pass:selection.Sminimum===expectedSminimum&&selection.ellMinimum===expectedEllMinimum},
+    {id:'original-qstar-and-buffer-root',pass:selection.qStar===expectedQStar&&selection.activeBandBuffer===4},
+    {id:'threshold-has-no-display-coordinate',pass:G.freeCoordinates(selection.qStar).size===0},
+    {id:'original-c1-prefix-independent-norm',pass:first.order===1&&first.canonicalNormRequest?.throughOrder===1&&first.canonicalNormRequest?.derivativeOrder===1&&first.selectedByLaterPrefix===false&&zeroNorm.bound===norm&&zeroNorm.requiredLog===firstRequiredLog},
+    {id:'original-c1-maximum-and-exponential',pass:first.previousLogScale===G.zero&&first.logScale===firstLog&&first.scale===G.exp(firstLog)},
+    {id:'c1-is-the-actual-field-cutoff-operand',pass:!!actualFirstBandRow&&actualFirstBandRow.sigma===G.mul(first.scale,operator.band.qVariable)},
+    {id:'original-complete-cutoff-body-and-flat-zero-branch',pass:cutoffDefinition.body===cutoffBody},
+    {id:'actual-field-retains-cutoff-and-extra-stream-derivative',pass:!!actualFirstBandRow&&actualFirstBandRow.chi===G.expressionValue(operator.band.cutoffSystem,[actualFirstBandRow.sigma])&&actualFirstBandRow.extraCutoff===G.mul(actualFirstBandRow.sigma,G.expressionValue(operator.band.cutoffSystem,[actualFirstBandRow.sigma],[1]))},
+    {id:'original-dyadic-scale',pass:operator.geometry.ell===q(BigInt(request.ellExact))&&operator.geometry.Q===G.exp(G.neg(G.mul(operator.geometry.ell,logTwo)))},
+    {id:'original-epsilon-and-carrier-ceiling',pass:g.S===G.pow(g.ell,2)&&g.epsilon===powReal(g.Q,h)&&g.k===G.ceiling(G.inv(G.sqrt(g.epsilon)))},
+    {id:'original-palette-and-pulse-length',pass:g.Tg===Tg&&g.paletteIndex===paletteIndex&&g.r0===r0&&g.ci===ci&&g.Ls===G.div(G.mul(q(2),r0),ci)},
+    ...recurrenceChecks,...arithmetic.rows
+  ];
+  if(!checks.every(r=>r.pass))fail('INVALID_SOURCE_CONSTRUCTION','An actual source threshold or cutoff root differs from the proved definition: '+checks.filter(r=>!r.pass).map(r=>r.id).join(', '));
+  const roots={h,frequencyMinimum:frequency,Sminimum:selection.Sminimum,ellMinimum:selection.ellMinimum,qStar:selection.qStar,ell:operator.geometry.ell,Q:operator.geometry.Q,
+    actualC1:first.scale,actualC1Norm:norm,actualC1RequiredLog:firstRequiredLog,canonicalC1LowerBound:G.exp(G.div(logTwo,h)),actualCompleteTimeCutoffBody:cutoffBody};
+  const proof={
+    kind:'SOURCE_BOUND_WRITTEN_ANALYTIC_DOMAIN_EXCLUSION_WITH_EXACT_STRUCTURAL_AND_INTEGER_CHECKS',
+    positiveH:{exact:exponent.hExact,strictRange:'0 < h < 2^-4096',derivation:exponent.proof,zeroSubstitutionUsed:false},
+    originalThreshold:{definition:'ellMinimum=ceil(max(8,Sminimum,(64/h)^2)); qStar=2^(-ellMinimum-4)',
+      frequencyLower:'(64/h)^2 > (2^6 * 2^4096)^2 = 2^8204',integerBandLower:'ellMinimum > 2^8204 > 128',
+      argument:'Positive inversion reverses h<2^-4096. Squaring positive quantities preserves strict inequality. The original maximum and ceiling are at least their frequency operand.'},
+    memberExclusion:{range:'Every exact integer 1<=ell<=128',physicalBand:'q=2^-ell*s, 1/2<=s<=2',
+      memberQLower:'q>=2^-129',uniformQStarUpper:'qStar<=2^-133',separation:'q/qStar>=16',
+      argument:'ellMinimum is an integer greater than 128, hence at least 129. The original buffer 4 gives qStar<=2^-133, while each declared finite band has q>=2^-129.'},
+    exactLeadingBackgroundOnFiniteBands:{
+      canonicalFirstScale:'log(c1)>=requiredLog_1,0=(log2+log B_1,0)/h; B_1,0=max(1, actual norm terms)>=1',
+      firstScaleLower:'c1>=2^(1/h)>2^129',sequenceRule:'The unchanged canonical recipe has c_n>=2*c_(n-1) for every n>=2, hence c_n>=c1.',
+      strictInactiveArgument:'For every finite displayed band and every n>=1, c_n*q>2^129*2^-129=1.',
+      cutoffDefinition:'The original complete time cutoff is 1 for t<=1/2, exp(-1/(1-u))/(exp(-1/u)+exp(-1/(1-u))) for 1/2<t<1 with u=2t-1, and 0 for t>=1. Its flat extension and every derivative equal zero for argument>=1. This literal function body and the extra stream derivative are matched to the actual field roots.',
+      conclusion:'All positive-order normalized background terms, including every differentiated cutoff and the extra stream term, vanish identically on an open neighborhood of each point of these bands. The actual completed F and G equal their original leading fields there.',
+      proofUsesCanonicalSequenceDefinitionForAllN:true,generated128SourceGraphsClaimed:false,leadingFieldNumericallyEvaluated:false,
+      sourceSequenceScope:'The currently implemented canonical normalized sequence, and any later enlargement that retains its doubling recurrence. The complete physical and weighted-stress selector is not asserted here.'},
+    finiteBandCarrier:{definition:'epsilon=2^(-ell*h); k=ceil(epsilon^(-1/2))',conclusion:'k=2 for every 1<=ell<=128',
+      argument:'0<ell*h<128*2^-4096<1, hence 1/2<epsilon<1 and 1<epsilon^(-1/2)<sqrt2<2.'},
+    ellOneGeometry:request.ellExact==='1'?{Q:'1/2',S:'1',k:'2',paletteIndex:'0',ci:'2^(-1-h)',Ls:'2^(-32+h)',
+      argument:'0<(1+h)log2/log(4+sqrt2)<1, since 0<h<1 and 2^(1+h)<4<4+sqrt2. Its floor is 0. Substitute original r0=2^-34 and Ls=2*r0/ci. No approximation h=0 is taken.'}:null,
+    signBoundary:'Nonmembership in this sufficient theorem is not a counterexample to invertibility or positive weights. Actual det(H) and both weight signs require a separate theorem or rigorous enclosure.'
+  };
+  const decision={uniformTheoremMember:false,uniformTheoremNonmembershipProved:true,physicalQBelowUniformQStar:false,physicalQNonmembershipProved:true,
+    actualDeterminantSign:'UNKNOWN',actualWeightSigns:['UNKNOWN','UNKNOWN'],actualDeterminantNonzeroProved:false,actualPositiveWeightsProved:false,
+    squareRootWeightsOnThisMemberCertified:false,positiveOrderBackgroundCutoffsAllInactive:true,completedFGExactlyLeadingOnFiniteBands:true,
+    fullPhysicalResidualAndFlatErrorPackageComplete:false,newLeanKernelProof:false,m3MayStart:false};
+  const sourceBinding={sourceProfile:operator.sourceProfile,parameterExpressionSHA256:operator.parameterExpressionSHA256,
+    actualOperator:'prepareActualCovarianceOperator; live private identity checked',actualBounds:'certifyActualCovarianceOperatorBounds; recomputed internally',
+    actualCutoff:'operator.background.cutoffs.rows[0], matched to the actual first field cutoff operand',
+    scope:'One actual source graph authenticates the original threshold and prefix-independent c1. The inequality proof covers all integers 1..128; other band graphs are not claimed to have been executed.'};
+  const packed=G.pack(roots,{schema:'MathScope.ActualCovarianceBandAdmissibilityProgram/1',compiler:'actual-covariance-band-admissibility.mjs:prepareActualCovarianceBandAdmissibility',compilerInput:request,sourceBinding,proof,decision,checks});
+  // G may later append another authenticated construction. Keep this compiler
+  // result fixed: function-system metadata and the node-list prefix must not
+  // grow together with G or be replaceable by a caller before hashing.
+  const {nodes:liveNodes,...metadata}=packed,program={...structuredClone(metadata),nodes:liveNodes.slice()};
+  const result={G,operator,bounds,request,roots,sourceBinding,proof,decision,checks,program};
+  witnesses.set(result,{G,operator,data:publicData(result),count:G.nodes.length,nodes:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),
+    program,programNodes:program.nodes,programMetadata:programMetadata(program),serializedProgram:canonicalStringify(program)});
+  return result;
+}
+
+function assertActualCovarianceBandAdmissibility(prepared){
+  const saved=witnesses.get(prepared);
+  if(!saved||prepared.G!==saved.G||prepared.operator!==saved.operator||publicData(prepared)!==saved.data||JSON.stringify(saved.G.nodes.slice(0,saved.count))!==saved.nodes||!saved.G.functionDefinitionsUnchanged(saved.definitions)||
+     prepared.program!==saved.program||prepared.program.nodes!==saved.programNodes||JSON.stringify(prepared.program.nodes)!==saved.nodes||programMetadata(prepared.program)!==saved.programMetadata)
+    fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged private actual band admissibility construction; a copied or edited conclusion is not evidence.');
+  assertActualCovarianceOperator(saved.operator);return true;
+}
+
+function prepareActualCovarianceBandAdmissibility(input={},context={}){
+  const request=requestOf(input),operator=prepareActualCovarianceOperator(request,context);
+  return certifyActualCovarianceBandAdmissibility(operator,context);
+}
+
+async function actualCovarianceBandAdmissibilityCertificateFromProgram(prepared,context={}){
+  assertActualCovarianceBandAdmissibility(prepared);
+  const saved=witnesses.get(prepared),serialized=saved.serializedProgram,graphSHA256=await sha256(serialized);context.checkCancelled?.();
+  return {schema:'MathScope.ActualCovarianceBandAdmissibilityCertificate/1',sourceBinding:prepared.sourceBinding,request:prepared.request,
+    graph:{sha256:graphSHA256,nodeCount:saved.count,canonicalBytes:new TextEncoder().encode(serialized).byteLength,compiler:prepared.program.compiler,compilerInput:prepared.request,roots:prepared.roots,graphIncluded:false,
+      fixedCompilerPrefix:true,laterSourceAppendsExcluded:true},
+    proof:prepared.proof,decision:prepared.decision,checks:prepared.checks,pass:true,
+    scope:'The requested finite member is proved outside the original positive-family theorem. This certificate does not assert a sign of its determinant or weights and does not authorize M3.'};
+}
+
+async function actualCovarianceBandAdmissibilityCertificate(input={},context={}){
+  return actualCovarianceBandAdmissibilityCertificateFromProgram(prepareActualCovarianceBandAdmissibility(input,context),context);
+}
+
+return {finiteCovarianceBandExclusionArithmetic,certifyActualCovarianceBandAdmissibility,assertActualCovarianceBandAdmissibility,prepareActualCovarianceBandAdmissibility,actualCovarianceBandAdmissibilityCertificateFromProgram,actualCovarianceBandAdmissibilityCertificate};
+})();
+const __m2_143 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
 const {iadd,isub,imul,idiv,iscale,ilog,point,nextUp,nextDown} = __m2_40;
 const {integrateAffineTangentPulse} = __m2_41;
@@ -14804,10 +15209,14 @@ const {actualPulseSensitivityCertificate} = __m2_136;
 const {actualCovarianceSensitivityCertificate} = __m2_137;
 const {actualPulseJetCertificate} = __m2_139;
 const {actualFullCurlCertificate} = __m2_140;
+const {actualCutoffMassEnclosure} = __m2_141;
+const {actualCovarianceBandAdmissibilityCertificate} = __m2_142;
+const {readRational: readExactRational,qcompare: compareExactRational,rational: exactRational} = __m2_74;
 const PAPER={title:'Finite Time Blowup for Navier–Stokes',url:'https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf',sha256:'0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f'};
 const PROFILE={id:'same-profile-2026-10-10.3',commit:'55dacb898f8c204bf0c5925ea901d75d6c2d0f46',assessmentSha256:'e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c',role:'ACCEPTED_N3_ARCHIVE_REFERENCE',globalEvaluator:false,description:'Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.'};
 const DIFFERENTIAL_KINDS=['ns.actual-covariance-sensitivity','ns.actual-pulse-jet','ns.actual-full-curl'];
-const KINDS=[...DIFFERENTIAL_KINDS,'ns.actual-pulse-sensitivity','ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-uniform-covariance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
+const CONTINUATION_KINDS=['ns.actual-cutoff-masses','ns.actual-band-admissibility'];
+const KINDS=[...CONTINUATION_KINDS,...DIFFERENTIAL_KINDS,'ns.actual-pulse-sensitivity','ns.actual-core-evaluation','ns.actual-global-source','ns.actual-continuation','ns.actual-background','ns.actual-picard-acceptance','ns.actual-moment-restoration','ns.actual-uniform-covariance','ns.actual-pulse-amplitude','ns.actual-covariance-matching','ns.actual-residual-order','ns.actual-mean-pulse','ns.background-recursion','ns.background-picard','ns.background-moments','ns.background-residual','ns.background-cutoffs','ns.potential-curl','ns.dyadic-charts','ns.source-core-charts','ns.torus-derivatives','ns.pulse-support','ns.pulse-ode','ns.pulse-covariance','ns.pulse-curl','ns.pulse-tail'];
 const fail=(code,message)=>{throw Object.assign(Error(message),{code});};
 const finite=(v,name,lo=-1e6,hi=1e6)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)fail('INVALID_INPUT',name+' is outside the finite supported interval.');return v;};
 const int=(v,name,lo,hi)=>{finite(v,name,lo,hi);if(!Number.isSafeInteger(v))fail('INVALID_INPUT',name+' must be an integer.');return v;};
@@ -14834,6 +15243,29 @@ async function actualDifferential(input,ctx,kind){
     kind==='ns.actual-full-curl'?'CONDITIONAL_ACTUAL_LOCAL_FULL_POTENTIAL_CURL':'EXACT_ACTUAL_SOURCE_DERIVATIVES_WITH_FUNCTIONAL_TAILS');
   return {...output,scope:{...output.scope,finite:false,...data.scope,formalPass:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,
     sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; the new compiler inputs and complete differential graph hash are retained in results.graph'};
+}
+
+async function actualCutoffMasses(input,ctx){
+  const data=await actualCutoffMassEnclosure({...input,precisionBits:input.precisionBits??ctx.precision?.bits??192},ctx);
+  const output=result({kind:'ACTUAL_SOURCE_DIRECTED_CUTOFF_MASSES',sourceProfile:data.sourceProfile},data,data.checks,
+    {axes:[axis('actual cutoff integral'),axis('exact rational enclosure'),axis('0')],points:[],lines:[],
+      description:'원래 두 cutoff 질량의 엄밀한 유리수 구간과 구적·반올림 오차를 표시합니다.',
+      lostInformation:['이 구간은 cutoff 적분 인자에 적용됩니다. 전체 공분산, 가중치와 pulse 도함수의 수치 구간은 별도입니다.']},[],
+    'ACTUAL_SOURCE_CUTOFF_FACTORS_WITH_DIRECTED_BIGINT_ENCLOSURES');
+  return {...output,scope:{...output.scope,...data.scope,formalPass:false},sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,
+    sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; original and appended cutoff source graph hashes are retained in results.sourceProgram and results.bindingProgram'};
+}
+
+async function actualBandAdmissibility(input,ctx){
+  const data=await actualCovarianceBandAdmissibilityCertificate({ellExact:'1',...input},ctx);
+  const output=result({kind:'ACTUAL_SOURCE_POSITIVE_FAMILY_DOMAIN_CHECK',sourceProfile:data.sourceBinding.sourceProfile},data,data.checks,
+    {axes:[axis('source domain condition'),axis('exact source conclusion'),axis('0')],points:[],lines:[],
+      description:'표시용 band와 원래 양성 정리의 적용 범위를 실제 source에서 비교합니다.',
+      lostInformation:['기존 양성 정리에 포함되지 않는다는 결론은 행렬식 또는 가중치의 부호 결론과 구별합니다.']},[],
+    'ACTUAL_SOURCE_FINITE_BAND_THEOREM_NONMEMBERSHIP');
+  return {...output,scope:{...output.scope,uniformTheoremNonmembershipProved:data.decision.uniformTheoremNonmembershipProved,
+    actualPositiveWeightsProved:false,fullPhysicalResidualAndFlatErrorPackageComplete:false,m3MayStart:false,formalPass:false},
+    sourceHash:getPinnedSourceProfile().inputs.assembly.sha256,sourceHashScope:'PINNED_N3_ACCEPTED_ASSEMBLY; actual threshold and c1 proof graph retained in results.graph'};
 }
 
 function actualCore(input,ctx){
@@ -15043,6 +15475,8 @@ function pulseTail(input,ctx){
 }
 
 const INPUT_FIELDS={
+  'ns.actual-cutoff-masses':['sourceProfile','ellExact','precisionBits','tolerance','maxCells'],
+  'ns.actual-band-admissibility':['sourceProfile','ellExact'],
   'ns.actual-covariance-sensitivity':['sourceProfile','ellExact','slowCoordinate','derivativeOrder','terms'],
   'ns.actual-pulse-jet':['sourceProfile','ellExact','terms'],
   'ns.actual-full-curl':['sourceProfile','ellExact','terms'],
@@ -15075,6 +15509,8 @@ const INPUT_FIELDS={
 };
 // These are installed finite-component domains, not uniform domains for the paper's profile.
 const NUMERIC_FIELDS={
+  'ns.actual-cutoff-masses':{precisionBits:[96,512,true],maxCells:[4,4096,true]},
+  'ns.actual-band-admissibility':{},
   'ns.actual-covariance-sensitivity':{terms:[0,0,true]},
   'ns.actual-pulse-jet':{terms:[0,1,true]},
   'ns.actual-full-curl':{terms:[0,0,true]},
@@ -15124,6 +15560,18 @@ function validate(kind,input={}){
     if(!input||typeof input!=='object'||Array.isArray(input))fail('INVALID_INPUT','Input must be an object.');
     const unknown=Object.keys(input).filter(k=>!INPUT_FIELDS[kind].includes(k));if(unknown.length)fail('INVALID_INPUT','Unknown '+kind+' input fields: '+unknown.join(', ')+'.');
     finiteTree(input);
+    if(CONTINUATION_KINDS.includes(kind)){
+      if(input.ellExact!==undefined&&(typeof input.ellExact!=='string'||!/^[0-9]+$/.test(input.ellExact)))fail('INVALID_INPUT','ellExact requires a positive exact integer string; omit it to use the measured ell=1 source.');
+      if((input.ellExact??'1')!=='1')fail('BUDGET_EXCEEDED','This browser entry executes the measured ell=1 source. The band theorem exclusion itself covers 1..128 without claiming those other graphs were run.');
+      if(kind==='ns.actual-cutoff-masses'){
+        const bits=input.precisionBits??192,cells=input.maxCells??1024;
+        int(bits,'precisionBits',96,512);int(cells,'maxCells',4,4096);
+        if(cells&(cells-1))fail('INVALID_INPUT','maxCells must be a power of two.');
+        if(typeof(input.tolerance??'1/10000000000')!=='string')fail('INVALID_INPUT','Use an exact rational tolerance string.');
+        const tolerance=readExactRational(input.tolerance??'1/10000000000');
+        if(compareExactRational(tolerance,exactRational(0))<=0||compareExactRational(tolerance,exactRational(1))>0)fail('INVALID_INPUT','The absolute integral-width tolerance must lie in (0,1].');
+      }
+    }
     if(['ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)){
       if(input.anchorOrder!==undefined&&input.ellExact!==undefined)fail('INVALID_INPUT','Choose anchorOrder or ellExact, not both.');
       if(input.ellExact!==undefined){
@@ -15188,11 +15636,27 @@ function validate(kind,input={}){
     if(kind==='ns.background-picard'&&(input.rhoPrime??.25)>=(input.rho??.5))fail('INVALID_INPUT','Use 0<rhoPrime<rho.');
     if(kind==='ns.pulse-covariance'&&input.target!==undefined){if(!Array.isArray(input.target)||input.target.length!==2)fail('INVALID_INPUT','target is a 2-component stress.');input.target.forEach((x,i)=>finite(x,'target '+i,-100,100));}
     return {ok:true};
-  }catch(e){return {ok:false,code:e.code||'INVALID_INPUT',errors:[e.message]};}
+  }catch(e){return {ok:false,code:e.code==='RESOURCE_LIMIT'&&CONTINUATION_KINDS.includes(kind)?'BUDGET_EXCEEDED':e.code||'INVALID_INPUT',errors:[e.message]};}
 }
 function precisionContract(kind,value={},input={}){
   if(!value||typeof value!=='object'||Array.isArray(value))fail('INVALID_INPUT','precision must be an object.');
   const unknown=Object.keys(value).filter(k=>!['mode','bits'].includes(k));if(unknown.length)fail('UNSUPPORTED','This finite NS adapter does not implement requested tolerance/precision fields: '+unknown.join(', ')+'.');
+  if(kind==='ns.actual-cutoff-masses'){
+    const bits=input.precisionBits??value.bits??192;
+    if(!['AUTO','DIRECTED_BIGINT'].includes(value.mode??'AUTO'))fail('PRECISION_REQUIRED','The cutoff factors use outward BigInt intervals; choose AUTO or DIRECTED_BIGINT.');
+    int(bits,'precision.bits',96,512);
+    if(value.bits!==undefined&&value.bits!==bits)fail('INVALID_INPUT','precision.bits and input.precisionBits must agree.');
+    if(compareExactRational(readExactRational(input.tolerance??'1/10000000000'),exactRational(1,1n<<BigInt(bits-24)))<0)fail('PRECISION_REQUIRED','The requested cutoff-integral tolerance needs more directed precision.');
+    return {requested:value,arithmeticBits:bits,arithmetic:'DIRECTED_BIGINT_DYADIC_INTERVAL',fullResultExact:false,
+      absoluteWidthTolerance:input.tolerance??'1/10000000000',toleranceScope:'NORMALIZED_SIGMA_SQUARE_INTEGRAL',
+      quadratureAndRoundingErrorsSeparated:true,actualWholeCovarianceNumericallyEnclosed:false,actualSlowPulseDerivativeNumericallyEnclosed:false,
+      originalPositiveHRetained:true,formalPass:false};
+  }
+  if(kind==='ns.actual-band-admissibility'){
+    if(!['AUTO','EXACT_CONSTRUCTIVE'].includes(value.mode??'AUTO')||value.bits!==undefined)fail('PRECISION_REQUIRED','Band admissibility uses exact source expressions and integer inequalities; no numerical precision is claimed.');
+    return {requested:value,arithmetic:'EXACT_SOURCE_EXPRESSIONS_AND_INTEGER_DOMAIN_INEQUALITIES',arithmeticBits:null,fullResultExact:false,
+      determinantOrWeightSignDecided:false,formalPass:false};
+  }
   if(DIFFERENTIAL_KINDS.includes(kind)){
     if(!['AUTO','EXACT_CONSTRUCTIVE'].includes(value.mode??'AUTO')||value.bits!==undefined)fail('PRECISION_REQUIRED','These are exact differential source expressions and functional tails; an evaluated numerical enclosure at requested bits is not installed.');
     return {requested:value,arithmetic:'EXACT_ACTUAL_SOURCE_DIFFERENTIAL_EXPRESSIONS',arithmeticBits:null,fullResultExact:false,exactAlgebra:true,slowDerivativeOrder:kind==='ns.actual-covariance-sensitivity'?1:2,numericalWholeSourceEvaluation:false,finiteTermsAreNotTheSolution:true,formalPass:false};
@@ -15231,6 +15695,8 @@ function precisionContract(kind,value={},input={}){
 }
 function resourceEstimate(kind,input){
   const operations={
+    'ns.actual-cutoff-masses':()=>45000000,
+    'ns.actual-band-admissibility':()=>45000000,
     'ns.actual-covariance-sensitivity':()=>45000000,
     'ns.actual-pulse-jet':()=>50000000,
     'ns.actual-full-curl':()=>50000000,
@@ -15261,7 +15727,7 @@ function resourceEstimate(kind,input){
     'ns.pulse-curl':()=>1800000,
     'ns.pulse-tail':()=>500*(input.count??80)
   }[kind]();
-  const items=DIFFERENTIAL_KINDS.includes(kind)?10000:kind==='ns.actual-pulse-sensitivity'?2000:kind==='ns.actual-uniform-covariance'?100000:kind==='ns.actual-moment-restoration'?30000:kind==='ns.actual-residual-order'?12000+24*(input.mesh??8):kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
+  const items=CONTINUATION_KINDS.includes(kind)?10000:DIFFERENTIAL_KINDS.includes(kind)?10000:kind==='ns.actual-pulse-sensitivity'?2000:kind==='ns.actual-uniform-covariance'?100000:kind==='ns.actual-moment-restoration'?30000:kind==='ns.actual-residual-order'?12000+24*(input.mesh??8):kind==='ns.actual-covariance-matching'?25000+4*((input.cells??256)+(input.cutoffCells??input.cells??256)):kind==='ns.actual-continuation'?20000:kind==='ns.actual-core-evaluation'?2048:kind==='ns.actual-global-source'?10000+3*(input.xi?.length??5):kind==='ns.actual-pulse-amplitude'?12000+2*(input.steps??64):kind==='ns.actual-picard-acceptance'?12000:kind==='ns.actual-background'?2000*((input.radialDegree??3)+1):kind==='ns.actual-mean-pulse'?512+(input.samples??32):kind==='ns.pulse-ode'?2*(input.steps??128)+1:kind==='ns.potential-curl'?(input.grid??7)**3:kind==='ns.pulse-tail'?(input.count??80):kind==='ns.dyadic-charts'?(input.count??10):kind==='ns.source-core-charts'?10:kind==='ns.pulse-curl'?17:kind==='ns.pulse-support'?(input.labels?.length??4)**2:kind==='ns.background-recursion'?(input.maxOrder??2)+1:(input.orders??4);
   return {algorithmicOperationsEstimate:operations,outputItemsEstimate:items,policy:'STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE'};
 }
 function validateRequest(r){
@@ -15283,12 +15749,14 @@ function finiteJson(value){
   return value;
 }
 async function run(kind,input={},context={}){
-  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-covariance-sensitivity':(a,c)=>actualDifferential(a,c,'ns.actual-covariance-sensitivity'),'ns.actual-pulse-jet':(a,c)=>actualDifferential(a,c,'ns.actual-pulse-jet'),'ns.actual-full-curl':(a,c)=>actualDifferential(a,c,'ns.actual-full-curl'),'ns.actual-pulse-sensitivity':actualPulseSensitivity,'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-uniform-covariance':actualUniformCovariance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
-  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:DIFFERENTIAL_KINDS.includes(kind)?'m2-ns-0.3.8':'m2-ns-0.3.7',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
-  catch(error){if([...DIFFERENTIAL_KINDS,'ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)&&error.code==='RESOURCE_LIMIT')return {kind,status:'BUDGET_EXCEEDED',checks:[],blockers:[error.message],message:error.message};if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
+  const v=validateRequest({kind,input,precision:context.precision??{},budget:context.budget??{}});if(!v.ok)return {kind,status:['UNSUPPORTED','PRECISION_REQUIRED','BUDGET_EXCEEDED'].includes(v.code)?v.code:'FAILED',checks:[],blockers:v.errors,message:v.errors.join(' ')};const map={'ns.actual-cutoff-masses':actualCutoffMasses,'ns.actual-band-admissibility':actualBandAdmissibility,'ns.actual-covariance-sensitivity':(a,c)=>actualDifferential(a,c,'ns.actual-covariance-sensitivity'),'ns.actual-pulse-jet':(a,c)=>actualDifferential(a,c,'ns.actual-pulse-jet'),'ns.actual-full-curl':(a,c)=>actualDifferential(a,c,'ns.actual-full-curl'),'ns.actual-pulse-sensitivity':actualPulseSensitivity,'ns.actual-core-evaluation':actualCore,'ns.actual-global-source':actualGlobalSource,'ns.actual-continuation':actualContinuation,'ns.actual-background':actualBackground,'ns.actual-picard-acceptance':actualPicardAcceptance,'ns.actual-moment-restoration':actualMomentRestoration,'ns.actual-uniform-covariance':actualUniformCovariance,'ns.actual-pulse-amplitude':actualPulseAmplitude,'ns.actual-covariance-matching':actualCovarianceMatching,'ns.actual-residual-order':actualResidualOrder,'ns.actual-mean-pulse':actualMeanPulse,'ns.background-recursion':backgroundRecursion,'ns.background-picard':backgroundPicard,'ns.background-moments':backgroundMoments,'ns.background-residual':backgroundResidual,'ns.torus-derivatives':torusDerivatives,'ns.background-cutoffs':cutoffSchedule,'ns.potential-curl':potentialCurl,'ns.dyadic-charts':dyadicCharts,'ns.source-core-charts':sourceCoreCharts,'ns.pulse-support':pulseSupport,'ns.pulse-ode':pulseOde,'ns.pulse-covariance':covariance,'ns.pulse-curl':pulseCurl,'ns.pulse-tail':pulseTail};
+  try{const r=await map[kind](input,context),body=finiteJson({kind,moduleVersion:CONTINUATION_KINDS.includes(kind)?'m2-ns-0.3.9':DIFFERENTIAL_KINDS.includes(kind)?'m2-ns-0.3.8':'m2-ns-0.3.7',...r,precisionLedger:v.precision,resourceEstimate:v.estimate});return {...body,resultHash:await sha256(body)};}
+  catch(error){if([...CONTINUATION_KINDS,...DIFFERENTIAL_KINDS,'ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)&&error.code==='RESOURCE_LIMIT')return {kind,status:'BUDGET_EXCEEDED',checks:[],blockers:[error.message],message:error.message};if(['PRECISION_REQUIRED','UNSUPPORTED','INVALID_INPUT','BUDGET_EXCEEDED'].includes(error.code))return {kind,status:error.code==='INVALID_INPUT'?'FAILED':error.code,checks:[],blockers:[error.message],message:error.message};throw error;}
 }
 async function runJob(r,context={}){return run(r.kind,r.input,{...context,precision:r.precision??context.precision??{},budget:r.budget??context.budget??{}});}
 function getExamples(){return [
+  ['ns-m2-actual-cutoff-masses','N5 · 원래 cutoff 적분 · 엄밀한 수치 구간과 분리 오차','ns.actual-cutoff-masses',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',precisionBits:192,tolerance:'1/10000000000',maxCells:1024}],
+  ['ns-m2-actual-band-admissibility','N5 · 표시 band의 양성 정리 적용 범위 검사','ns.actual-band-admissibility',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1'}],
   ['ns-m2-actual-pulse-jet','N5 · 실제 pulse R/Z/T 2차·혼합 미분 · 20성분 수렴계','ns.actual-pulse-jet',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',terms:1}],
   ['ns-m2-actual-covariance-sensitivity','N5 · 실제 공분산·가중치의 1차 미분 · 비영 tail','ns.actual-covariance-sensitivity',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',slowCoordinate:'R',derivativeOrder:1,terms:0}],
   ['ns-m2-actual-full-curl','N5 · 실제 국소 전체 curl · 양의 가중치 영역 조건부','ns.actual-full-curl',{sourceProfile:SOURCE_PROFILE_ID,ellExact:'1',terms:0}],
@@ -15318,12 +15786,18 @@ function getExamples(){return [
   ['ns-m2-covariance','N5 · 두 family 공분산·정규화 Haar·실제 Jacobian','ns.pulse-covariance',{target:[-1,0],amplitude:1,liftedArea:1/64,epsilon:.1}],
   ['ns-m2-pulse-curl','N5 · 원문 C_m·전체 r_m·Cartesian curl 대조','ns.pulse-curl',{ell:8}],
   ['ns-m2-tail','N5 · 전체 cutoff 잔차 jet·조건부 고정차수 flatness','ns.pulse-tail',{c:.2,C:2,derivativeLoss:2,targetPower:4,ellStart:8,count:80}]
-].map(([id,label,kind,input])=>({id,label,request:{kind,input,...([...DIFFERENTIAL_KINDS,'ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)?{precision:{mode:'EXACT_CONSTRUCTIVE'},budget:{maxMillis:60000}}:{})}}));}
+].map(([id,label,kind,input])=>{
+  const settings=kind==='ns.actual-cutoff-masses'?{precision:{mode:'DIRECTED_BIGINT',bits:192},budget:{maxMillis:60000}}:
+    [...DIFFERENTIAL_KINDS,'ns.actual-band-admissibility','ns.actual-uniform-covariance','ns.actual-pulse-sensitivity'].includes(kind)?
+      {precision:{mode:'EXACT_CONSTRUCTIVE'},budget:{maxMillis:60000}}:{};
+  return {id,label,request:{kind,input,...settings}};
+});}
+
 function getCapabilities(){return {kinds:KINDS,n3Profile:PROFILE,paper:PAPER,sourceEquations:['5.1–5.8','5.10–5.16','5.25','5.37','5.45','6.1–6.19','7.2–7.8','7.13','7.17','7.22','7.27','7.30','7.40'],differentialExtension:{version:'0.3.8',slowDirections:['R','Z','T'],maximumSlowOrder:2,covarianceDerivativeOrder:1,sourceDisplayBands:['1'],fullCurl:'CONDITIONAL_LOCAL_FIXED_BOX',numericalDerivativeEnclosures:false,globalPhysicalResidualAndFlatErrors:false,newLeanResults:'14 universal differential algebra declarations; no actual-source analytic theorem'},implemented:'Actual fixed-label R/Z/T second and mixed pulse jets with exact time-uniform FTC functional bounds; actual covariance/target/inverse first derivatives; conditional actual local full potential curl retaining sqrt(epsilon), weight derivatives, transverse cutoff and cylindrical connection; actual fixed-label first slow R/Z/T pulse sensitivity, source-derived matrix derivative bounds, original initial frame and endpoint chain rules, with convergent nonzero functional tails; actual uniform source covariance family with internally generated common qStar, all-band completed C2 background, actual moving operators, convergent H integrals, positive inverse on the open annulus, flat endpoint extension and complete global (7.30); actual first/second-order convergent functions, ten restored continuous moments, twelve inner PDE identities, preheat/heat invariant, four stress supports and private prior-order gates; actual same-source N=0/1 fixed-core residual with computed CNm/Km, positive norm decrease and independent precision/mesh refinement; actual Imean homogeneous-pulse covariance with heat-prepared stress, exact positive inverse and complete representative-point partition sum; actual fixed-source n=1 Picard acceptance; actual completed-background Imean homogeneous pulse and moving frame with a certified full pulse interval; actual core-integral and source-continuation cells; actual n=0 nonlinear core point enclosures with directed BigInt arithmetic and retained analytic errors; actual outer-source intervals and exact weighted-moment reduction; actual order-one jets, common-collar analytic bounds and positive-core enclosures; actual Imean slow jets and local pulse bounds; source algebra, Picard/moment operators and dyadic/support identities',fullN4:false,fullN5:false,precision:'Exact BigInt rational differential polynomials and Q(sqrt(2)); outward IEEE754 operator/log intervals; source-bound positive Volterra comparison for ns.actual-pulse-amplitude; the separate ns.pulse-ode fixture uses RK4 and empirical convergence',precisionModes:['FLOAT64','AUTO','OUTWARD_FLOAT64 for scalar/source geometry/operator enclosures','DIRECTED_BIGINT with 96..512 bits for ns.actual-core-evaluation, ns.actual-continuation and ns.actual-residual-order','EXACT_CONSTRUCTIVE with 16..4096 analytic tail target bits for ns.actual-moment-restoration; signed numerical quadrature is not implied','EXACT_CONSTRUCTIVE without requested bits for ns.actual-uniform-covariance; finite Volterra terms retain a nonzero factorial tail'],checklist:getChecklist(),requiredNext:['extend the accepted fixed-core N=0/1 residual to the global repaired profile and higher N','materialize all slow Gaussian derivative bounds and the complete physical flat-error assembly beyond the accepted original criteria']};}
 
 return {validate,validateRequest,run,runJob,getExamples,getCapabilities};
 })();
-const __m2_142 = (()=>{
+const __m2_144 = (()=>{
 const {requireCondition,groupDescriptor} = __m2_23;
 const {createField,normalizeFieldSpec} = __m2_25;
 function positive(x,name){requireCondition(Number.isFinite(x)&&x>0&&x>=1e-4&&x<=1e4,'DELTA_OR_SCALE_BOUNDS',`${name} must lie in [1e-4,1e4].`,name);}
@@ -15372,7 +15846,7 @@ function finiteSpectralModel(s){requireCondition(s&&Number.isFinite(s.delta)&&s.
 
 return {canonical,sha256,normalizeFamily,createStateFamily,stateFamilyDescriptor,finiteSpectralModel};
 })();
-const __m2_143 = (()=>{
+const __m2_145 = (()=>{
 const {requireCondition} = __m2_23;
 const {evaluateField,bpstMarginal,simpson} = __m2_25;
 function intervals(x,n,name){requireCondition(Array.isArray(x)&&x.length===n&&x.every(v=>Array.isArray(v)&&v.length===2&&v.every(w=>Number.isFinite(w)&&Math.abs(w)<=1e4)&&v[0]<v[1]),'OBSERVATION_BOUNDS',`${name} needs ${n} finite ordered intervals.`);return x.map(v=>v.slice());}
@@ -15416,13 +15890,13 @@ function sampleObservation(state,observation){
 
 return {normalizeObservation,observationCost,sampleObservation};
 })();
-const __m2_144 = (()=>{
+const __m2_146 = (()=>{
 /** MathScope M1 gauge facade. Pure bounded worker API; JSON-safe output. */
 const M = __m2_21;
 const {GaugeInputError,requireCondition,normalizeGroupSpec,createGroup,availableGroups,groupDescriptor,detailedDescriptor,verifyGroup} = __m2_23;
 const {createField,normalizeFieldSpec,verifyFieldAt,verifyDensityQuadrature,evaluateField,normalizeGauge,bpstBallMass,verifyCoordinateCurvature,verifyPeriodicSeam,normalizeFieldGauge} = __m2_25;
-const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_142;
-const {normalizeObservation,observationCost,sampleObservation} = __m2_143;
+const {normalizeFamily,createStateFamily,canonical,sha256,stateFamilyDescriptor,finiteSpectralModel} = __m2_144;
+const {normalizeObservation,observationCost,sampleObservation} = __m2_145;
 const {normalizePath,wilsonLoop,plaquettePath} = __m2_27;
 const KINDS=['gauge.group','gauge.field','gauge.family','gauge.holonomy','gauge.spectral'];
 const SOURCES=[{"id":"YM-R01","title":"Quantum Yang–Mills Theory / Yang–Mills & the Mass Gap","authors":"Arthur Jaffe; Edward Witten; Clay Mathematics Institute","url":"https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf","locator":"인쇄 p. 6 §4: 존재·스펙트럼 간극 정의; p. 7 §5: 부피에 균일한 간극과 무한 부피 문제","status":"THEOREM_REFERENCE","role":"compact simple G, nontrivial R⁴ quantum theory, QFT axioms, positive spectral gap의 동시 요구. 현재 공식 상태 Unsolved.","leanImport":null,"kernelReceipt":null},{"id":"YM-R02","title":"Math 210C. Compact Lie Groups","authors":"Brian Conrad; Aaron Landesman","url":"https://math.stanford.edu/~conrad/210CPage/handouts/lie_groups_notes.pdf","locator":"§§17–18 pp.75–83; §26 p.114 이하; Appendices K,V,Y","status":"THEOREM_REFERENCE","role":"rank-one subgroup, character/cocharacter lattice, normal subgroup, global group center/fundamental group를 분리하는 구조 설계","leanImport":null,"kernelReceipt":null},{"id":"YM-R05","title":"Matter representations from geometry: under the spell of Dynkin","authors":"Mboyo Esole; Monica Jinwoo Kang","url":"https://arxiv.org/pdf/2012.13401","locator":"§2.5 pp.15–16(현재 PDF 페이지 16), Dynkin index of an embedding","status":"THEOREM_REFERENCE","role":"기본 불변형의 정규화에 대한 Lie algebra embedding index. 본 설계의 B_G(ιX,ιY)=IιB_SU2(X,Y) convention을 독립 명시.","leanImport":null,"kernelReceipt":null},{"id":"YM-R06","title":"Lectures on instantons","authors":"Stefan Vandoren; Peter van Nieuwenhuizen","url":"https://arxiv.org/pdf/0802.1862","locator":"§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding","status":"THEOREM_REFERENCE","role":"anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.","leanImport":null,"kernelReceipt":null},{"id":"YM-R07","title":"Gauge Theory — Chapter 4: Lattice Gauge Theory","authors":"David Tong","url":"https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf","locator":"§4.1; 인쇄 p.202 이하; link gauge transform eq.(4.8)","status":"THEOREM_REFERENCE","role":"4D Euclidean lattice, group links, Wilson loops와 작용 및 격자 cutoff의 의미","leanImport":null,"kernelReceipt":null},{"id":"YM-R08","title":"Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories","authors":"Martin Lüscher","url":"https://link.springer.com/article/10.1007/BF01614090","locator":"출판사 초록과 서지사항; 실제 선택한 모델의 가정 대응은 Y4-06/Y7-06의 후속 작업","status":"THEOREM_REFERENCE","role":"Wilson lattice gauge theory의 physical positivity와 transfer matrix 구성 근거","leanImport":null,"kernelReceipt":null},{"id":"YM-R09","title":"Gauge field theories on a lattice","authors":"Konrad Osterwalder; Erhard Seiler","url":"https://www.sciencedirect.com/science/article/abs/pii/0003491678900398","locator":"출판사 초록·서지사항; Euclidean lattice construction 및 positivity","status":"THEOREM_REFERENCE","role":"유클리드 격자 gauge theory의 positivity/constructive framework. continuum 존재 증명으로 확장하지 않음.","leanImport":null,"kernelReceipt":null},{"id":"YM-R13","title":"The Lean Language Reference — Axioms","authors":"Lean FRO contributors","url":"https://lean-lang.org/doc/reference/latest/Axioms/","locator":"axiom declaration, consistency 및 #print axioms","status":"THEOREM_REFERENCE","role":"사용자 axiom의 논리적 지위·의존성 감사. 기존 Lean 4.34.1 결과는 로컬 source/hash/log로 별도 증빙.","leanImport":null,"kernelReceipt":null},{"id":"YM-R14","title":"The Octonions","authors":"John C. Baez","url":"https://math.ucr.edu/home/baez/octonions/node14.html","locator":"§4.1 G2; Theorem 4, compact Der(O) subset so(Im O); 7-dimensional faithful representation and invariant cross product","status":"THEOREM_REFERENCE","role":"Compact G2 as octonion automorphisms/positive 3-form stabilizer, not split G2. The generator uses its explicitly documented equivalent Cayley–Dickson convention.","leanImport":null,"kernelReceipt":null},{"id":"YM-R15","title":"Math 249B. Root systems for split classical groups","authors":"Brian Conrad","url":"https://virtualmath1.stanford.edu/~conrad/249BW16Page/handouts/classicalgps.pdf","locator":"§§2–5 (8-page PDF), roots/coroots/character lattices for A/B/C/D; use complexification to connect with the separately constructed compact real form","status":"THEOREM_REFERENCE","role":"Classical root and coroot integer data. This split-algebra reference alone is not a proof of the compact form, which is constructed and checked separately.","leanImport":null,"kernelReceipt":null}];
@@ -15518,7 +15992,7 @@ function getExamples(){
 
 return {validateRequest,runJob,getCapabilities,getExamples,createGroup,createField,createStateFamily,evaluateField,verifyGroup,verifyFieldAt,verifyDensityQuadrature,sampleObservation,wilsonLoop,canonical,sha256};
 })();
-const __m2_145 = (()=>{
+const __m2_147 = (()=>{
 const {ComputeError,positive,finiteNumber} = __m2_40;
 function parameters(input={}){
   const tau=positive(input.tau??.1,'tau'),h=finiteNumber(input.h??.005,'h'),viscosity=positive(input.viscosity??1,'viscosity');
@@ -15558,7 +16032,7 @@ function coordinateFieldSample(input={},budget){
 
 return {parameters,fromSimilarity,toSimilarity,transformedDerivative,monomialJet,coordinateFieldSample};
 })();
-const __m2_146 = (()=>{
+const __m2_148 = (()=>{
 const {ComputeError,integrate,makeBudget,finiteNumber,positive,boundedInteger,point,iadd,isub,idiv,imul,iscale,nextUp,nextDown,ball} = __m2_40;
 // Real Taylor coefficients in eta. These are formal finite jets, not a tail proof.
 const jetC=(x,n)=>[x,...Array(n).fill(0)];
@@ -15629,7 +16103,7 @@ function evaluateAxis(solution,X){
 
 return {jetC,jetVar,jetAdd,jetScale,jetSub,jetMul,jetInv,jetDiv,jetDeriv,jetExp,jetLog,jetPow,jetEval,comparisonSeries,axisData,solveAxisCoefficients,evaluateAxis};
 })();
-const __m2_147 = (()=>{
+const __m2_149 = (()=>{
 const {ComputeError,point,interval,iadd,isub,imul,idiv,iscale,ipow,iexp,ilog,ipower,ball,midpoint,maxabs,nextUp,nextDown,jvar,jconst,jadd,jsub,jmul,jscale,jexp,jlog,certifiedSimpson,integrate,makeBudget,positive,finiteNumber} = __m2_40;
 const validateH=h=>{h=finiteNumber(h,'h');if(!(h>0&&h<.01))throw new ComputeError('INVALID_INPUT','0 < h < .01 required');return h;};
 const rising=(h,m)=>{let v=1;for(let i=0;i<m;i++)v*=h+i;return v;};
@@ -15701,10 +16175,10 @@ function heatTaylorFinite(Z,h=.005,N=8){
 
 return {heatIntegralCertificate,heatFast,exteriorJet,exteriorPoint,taylorGreenPoint,heatTaylorFinite};
 })();
-const __m2_148 = (()=>{
+const __m2_150 = (()=>{
 const {ComputeError,integrate,makeBudget,solveLinear,positive,boundedInteger,point,interval,iadd,isub,imul,idiv,ipow,ipower,ball} = __m2_40;
-const {heatFast} = __m2_147;
-const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_146;
+const {heatFast} = __m2_149;
+const {jetC,jetVar,jetAdd,jetScale,jetMul,jetInv,jetLog,jetExp} = __m2_148;
 function smoothStep(y){if(y<=0)return 0;if(y>=1)return 1;const z=-1/(y*y)+1/((1-y)**2);return z>0?1/(1+Math.exp(-z)):Math.exp(z)/(1+Math.exp(z));}
 function smoothStepDerivative(y){if(y<=0||y>=1)return 0;const s=smoothStep(y);return s*(1-s)*(2/y**3+2/(1-y)**3);}
 function compactBump(x,a,b){if(!(a<b))throw new ComputeError('INVALID_SUPPORT','Bump support must have positive width');if(x<=a||x>=b)return 0;return smoothStepDerivative((x-a)/(b-a))/(b-a);}
@@ -15826,11 +16300,11 @@ function coneModulationFixture({N=32,amplitude=.12,Xa=1,Xb=4}={}){
 
 return {smoothStep,smoothStepDerivative,compactBump,parameterOrder,buildOuterSchedule,fiveMoments,solveFiveMomentRepair,coneMargins,certifiedConeBox,coneModulationFixture};
 })();
-const __m2_149 = (()=>{
+const __m2_151 = (()=>{
 const {ComputeError,integrate,makeBudget,boundedInteger,positive} = __m2_40;
-const {parameters,fromSimilarity,toSimilarity} = __m2_145;
-const {solveAxisCoefficients,evaluateAxis} = __m2_146;
-const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_148;
+const {parameters,fromSimilarity,toSimilarity} = __m2_147;
+const {solveAxisCoefficients,evaluateAxis} = __m2_148;
+const {buildOuterSchedule,parameterOrder,smoothStep,compactBump,solveFiveMomentRepair,coneMargins,coneModulationFixture} = __m2_150;
 /** Executable candidate, not Theorem 4.6 certification.
  * The nonlinear axis coefficients and outer unedited schedule are source formulae.
  * The intervening C-infinity diagnostic continuation is identified as such; the
@@ -15885,7 +16359,7 @@ function constructLeadingCandidate(input={},budget=makeBudget()){
 
 return {constructLeadingCandidate};
 })();
-const __m2_150 = (()=>{
+const __m2_152 = (()=>{
 const {matrix,identity,zero,multiply,equalMatrix} = __m2_0;
 const {p1Model,p1Retraction,checkComplex,checkRetraction,checkChainMap} = __m2_3;
 /** Integral unimodular coordinate changes, including a non-permutation shear. */
@@ -15921,15 +16395,15 @@ function transportRetraction(C,a){const R=p1Retraction(C);return {...R,i:R.i.map
 
 return {basisChange,transportComplex,complexBasis};
 })();
-const __m2_151 = (()=>{
+const __m2_153 = (()=>{
 const {canonicalStringify,sha256} = __m2_24;
-const LegacyGauge = __m2_144;
-const {finiteSpectralModel} = __m2_142;
-const {fromSimilarity} = __m2_145;
-const {constructLeadingCandidate} = __m2_149;
+const LegacyGauge = __m2_146;
+const {finiteSpectralModel} = __m2_144;
+const {fromSimilarity} = __m2_147;
+const {constructLeadingCandidate} = __m2_151;
 const {makeBudget} = __m2_40;
 const Gauge = __m2_39;
-const {complexBasis} = __m2_150;
+const {complexBasis} = __m2_152;
 const clone=x=>JSON.parse(JSON.stringify(x));
 const KINDS=['observation.delta-family','observation.gauge-4d','observation.blowup-pair','observation.complex-basis'];
 const MODES=['ASSUMED_BOUND','UNITS','EFFECTIVE_MODEL','ENSEMBLE_ESTIMATE'];
@@ -16074,13 +16548,13 @@ function getExamples(){
 
 return {validateRequest,verifyCorrelatorFamily,runJob,getCapabilities,getExamples};
 })();
-const __m2_152 = (()=>{
+const __m2_154 = (()=>{
 const Arithmetic = __m2_19;
 const Gauge = __m2_39;
-const Navier = __m2_141;
-const Observatory = __m2_151;
+const Navier = __m2_143;
+const Observatory = __m2_153;
 const {canonicalStringify,sha256} = __m2_24;
-const M2_VERSION='0.3.8';
+const M2_VERSION='0.3.9';
 const LIMITS=Object.freeze({maxMillis:60000,maxBytes:8*1024*1024,maxItems:250000,maxOperations:50000000,maxJobs:128,maxConcurrent:1,maxInputBytes:262144});
 const DOMAINS=Object.freeze({arithmetic:Arithmetic,gauge:Gauge,ns:Navier,observation:Observatory});
 const clone=x=>JSON.parse(canonicalStringify(x));
@@ -16114,8 +16588,8 @@ async function requestHash(request){return sha256(normalizeRequest(request));}
 
 return {M2_VERSION,LIMITS,clone,bytes,normalizeRequest,validateDomainRequest,listExamples,listCapabilities,executeDomain,requestHash};
 })();
-const __m2_153 = (()=>{
-const {executeDomain} = __m2_152;
+const __m2_155 = (()=>{
+const {executeDomain} = __m2_154;
 let cancelled=false;
 self.onmessage=async event=>{
   if(event.data?.type==='cancel'){cancelled=true;return;}
