@@ -1,0 +1,1632 @@
+{
+  "schema": "MathScope.ActualOrderOneWeightedStressSourceRun/1",
+  "certificate": {
+    "schema": "MathScope.ActualOrderOneWeightedStressCertificate/1",
+    "status": "COMPLETED",
+    "pass": true,
+    "completedScope": "Actual n=1 weighted stress constants through the requested derivative order, including the terminal backward-integral gain and the unchanged first cutoff.",
+    "request": {
+      "derivativeOrder": 2
+    },
+    "sourceBinding": {
+      "profileId": "same-profile-2026-10-10.3",
+      "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+      "originalRoots": {
+        "Ttheta": 117068,
+        "Tz": 117069,
+        "thetaForward": 117054,
+        "thetaBackward": 117063,
+        "zForward": 117059,
+        "zBackward": 117067,
+        "angularResidual": 117038,
+        "heatF": 71979,
+        "heatFullF": 71959,
+        "heatEcl": 71924,
+        "fo": 71918,
+        "heatArgument": 71925,
+        "gamma": 71517,
+        "heatLoss": 71948
+      },
+      "support": {
+        "schema": "MathScope.ActualBackgroundSupportOrder/1",
+        "profileId": "same-profile-2026-10-10.3",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "parameterChecks": {
+          "samePinnedSource": true,
+          "actualH": true,
+          "actualLambda": true,
+          "actualT": true,
+          "actualTf": true,
+          "actualCo": true,
+          "actualXa": true,
+          "actualT1": true,
+          "actualLambdaScale": true,
+          "actualXR": true,
+          "actualIposLeft": true,
+          "actualIposRight": true
+        },
+        "expressionChecks": {
+          "pulseStart": true,
+          "pulseLength": true,
+          "axialEnd": true,
+          "plus": true,
+          "terminal": true,
+          "interpolationStartsAfterPulse": true,
+          "cutoff": true,
+          "commonInterval": true,
+          "stageOrder": true,
+          "consecutiveStages": true,
+          "allEndpointsIndependentOfEta": true
+        },
+        "arithmeticChecks": {
+          "TLower": true,
+          "hSmallerThanLambda": true,
+          "hDyadicSmall": true,
+          "QbGreaterThanOne": true,
+          "QpLessThanH": true,
+          "nextStageLongerThanOne": true,
+          "positivePulseLength": true,
+          "allIposBumpsBeforeRight": true,
+          "cutoffBelowOne": true,
+          "IposStartsAfterXR": true
+        },
+        "endpoints": {
+          "Xa": 3617,
+          "Xminus": 28814,
+          "Xkeep": 28819,
+          "Xcut": 28823,
+          "aSquared": 24805,
+          "IposLeft": 28987,
+          "IposRight": 28988,
+          "lastU": 29328,
+          "Xv": 3293,
+          "Xplus": 28824,
+          "Xb": 28826
+        },
+        "derivation": {
+          "inner": "0<t1<1; Xa=4/Lambda with Lambda>=2^16640. Hence Xa<Xminus<Xkeep<Xcut<a^2<1<XR<IposLeft.",
+          "bump": "Every normalized radial bump lies below 4. Its physical X endpoint is below 16*X0Ipos < exp(5)*X0Ipos.",
+          "middle": "IposRight/Xv=exp(-9-13/lambda)<1 and Xplus/Xv=exp(1).",
+          "wait": "lambda>h>0 makes Qsteep>0. Qb>(1/3)*(1/2)*4*2048>1, while 0<Qp<27*h/255<h<1. Thus log(Qb/Qp)/(1-h)>0.",
+          "final": "Immediately after the pulse lies an interval of length Tf=128, followed by positive stage lengths. Thus Xplus<Xv*exp(128)<Xb.",
+          "sourceStep": "sigma=exp(-1/s^2)/(exp(-1/s^2)+exp(-1/(1-s)^2)) on (0,1), with flat endpoint jets; integral sigma_prime=1."
+        },
+        "inequalities": [
+          "Xminus<Xkeep<Xcut<a^2<IposLeft<IposRight<Xv<Xplus<Xb",
+          "all five radial bump endpoints<IposRight",
+          "all endpoints are independent of eta"
+        ],
+        "numericalCoordinateComparisonUsed": false,
+        "pass": true,
+        "leadingExterior": {
+          "parameterChecks": {
+            "loopRight": true,
+            "I1Left": true,
+            "I1Right": true,
+            "logGapsPositive": true
+          },
+          "physicalRightEnds": [
+            5089,
+            5093,
+            6258,
+            7982
+          ],
+          "tailLogCoordinate": 5099,
+          "tailLogRight": 103,
+          "rootBumpStepArguments": [
+            9198,
+            9203,
+            9211,
+            9216,
+            9221
+          ],
+          "derivation": "I1Right/IposLeft=exp(-6), decayEnd<IposLeft and loopIRight/IposLeft=exp(15-60000T)<1. X>=Xplus gives log(X/Xp)>=13/lambda+1. For I1 derivative bumps, X/X0I1>=exp(5)>32, beyond every support ending at 13.5."
+        }
+      },
+      "heatIdentity": {
+        "schema": "MathScope.ActualExteriorHeatIdentity/1",
+        "argument": 71925,
+        "amplitude": 71966,
+        "exponent": 25246,
+        "amplitudeEtaDerivative": 0,
+        "quantity": "Z_b [C*X^b*H(zeta)]",
+        "heatFunctionAndDerivativeKeptSymbolic": true,
+        "identity": "2*eta*(b*F-X*F_X)+d*F_eta = C*X^b*H_prime(zeta)*[-2*eta*X*zeta_X+d*zeta_eta]",
+        "chainCoefficient": 117078,
+        "check": {
+          "schema": "MathScope.SourceGraphPolynomialIdentity/1",
+          "expression": 117078,
+          "arithmetic": "exact BigInt rational Laurent polynomials; every analytic/integral operand is a distinct indeterminate",
+          "remainingMonomials": 0,
+          "residual": [],
+          "atomicOperandCount": 2,
+          "analyticValuesReplaced": false,
+          "pass": true
+        },
+        "negativeControl": {
+          "omitted": "d*zeta_eta",
+          "check": {
+            "schema": "MathScope.SourceGraphPolynomialIdentity/1",
+            "expression": 117076,
+            "arithmetic": "exact BigInt rational Laurent polynomials; every analytic/integral operand is a distinct indeterminate",
+            "remainingMonomials": 2,
+            "residual": [
+              {
+                "monomial": "2:1,4756:-1",
+                "coefficient": "4"
+              },
+              {
+                "monomial": "2:3,4756:-1",
+                "coefficient": "-4"
+              }
+            ],
+            "atomicOperandCount": 2,
+            "analyticValuesReplaced": false,
+            "pass": false
+          },
+          "correctlyRejected": true
+        },
+        "pass": true
+      },
+      "angularExterior": {
+        "schema": "MathScope.ActualExteriorZeroEvaluation/1",
+        "endpoint": 28824,
+        "checks": [
+          {
+            "index": 0,
+            "expression": 87448,
+            "zero": true
+          },
+          {
+            "index": 1,
+            "expression": 87450,
+            "zero": true
+          },
+          {
+            "index": 2,
+            "expression": 87457,
+            "zero": true
+          },
+          {
+            "index": 3,
+            "expression": 87459,
+            "zero": true
+          },
+          {
+            "index": 4,
+            "expression": 87460,
+            "zero": true
+          },
+          {
+            "index": 5,
+            "expression": 87464,
+            "zero": true
+          }
+        ],
+        "visitedNodes": 93,
+        "zeroBranchTrace": [
+          {
+            "node": 72026,
+            "rightEndpoint": 28823,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 72134,
+            "rightEndpoint": 28988,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 28837,
+            "rightEndpoint": 28823,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 29288,
+            "rightEndpoint": 28988,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 79052,
+            "rightEndpoint": 28823,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 87442,
+            "rightEndpoint": 28988,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 5128,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 5157,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 5128
+          },
+          {
+            "node": 5175,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 5157
+          },
+          {
+            "node": 5148,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 5173,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 5148
+          },
+          {
+            "node": 5293,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 5173
+          },
+          {
+            "node": 6180,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 6181,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 6180
+          },
+          {
+            "node": 6182,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 6181
+          },
+          {
+            "node": 6202,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 6193
+          },
+          {
+            "node": 18778,
+            "rightEndpoint": 7982,
+            "selected": "after",
+            "after": 6202
+          },
+          {
+            "node": 7959,
+            "rightEndpoint": 6258,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 9199,
+            "stepArgument": 9198,
+            "derivativeOrder": 1,
+            "rule": "flat step derivative outside the actual I1 bump support"
+          },
+          {
+            "node": 9204,
+            "stepArgument": 9203,
+            "derivativeOrder": 1,
+            "rule": "flat step derivative outside the actual I1 bump support"
+          },
+          {
+            "node": 28839,
+            "rightEndpoint": 28823,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 29268,
+            "rightEndpoint": 28988,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 29336,
+            "rightEndpoint": 29328,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 29436,
+            "rightEndpoint": 29328,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 72150,
+            "rightEndpoint": 28823,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 72255,
+            "rightEndpoint": 28988,
+            "selected": "after",
+            "after": 0
+          }
+        ],
+        "compactIntegrandMistakenForZeroPrimitive": false,
+        "pass": true
+      },
+      "axialExterior": {
+        "schema": "MathScope.ActualExteriorZeroEvaluation/1",
+        "endpoint": 28824,
+        "checks": [
+          {
+            "index": 0,
+            "expression": 87480,
+            "zero": true
+          },
+          {
+            "index": 1,
+            "expression": 87481,
+            "zero": true
+          },
+          {
+            "index": 2,
+            "expression": 87488,
+            "zero": true
+          },
+          {
+            "index": 3,
+            "expression": 87489,
+            "zero": true
+          },
+          {
+            "index": 4,
+            "expression": 87490,
+            "zero": true
+          },
+          {
+            "index": 5,
+            "expression": 117027,
+            "zero": true
+          },
+          {
+            "index": 6,
+            "expression": 117030,
+            "zero": true
+          },
+          {
+            "index": 7,
+            "expression": 117031,
+            "zero": true
+          }
+        ],
+        "visitedNodes": 291,
+        "zeroBranchTrace": [
+          {
+            "node": 72261,
+            "rightEndpoint": 28823,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 72308,
+            "rightEndpoint": 28988,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 28839,
+            "rightEndpoint": 28823,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 29268,
+            "rightEndpoint": 28988,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 87469,
+            "rightEndpoint": 28823,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 87474,
+            "rightEndpoint": 28988,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 5128,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 5157,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 5128
+          },
+          {
+            "node": 5175,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 5157
+          },
+          {
+            "node": 5148,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 5173,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 5148
+          },
+          {
+            "node": 5293,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 5173
+          },
+          {
+            "node": 6180,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 6181,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 6180
+          },
+          {
+            "node": 6182,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 6181
+          },
+          {
+            "node": 6202,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 6193
+          },
+          {
+            "node": 18778,
+            "rightEndpoint": 7982,
+            "selected": "after",
+            "after": 6202
+          },
+          {
+            "node": 7959,
+            "rightEndpoint": 6258,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 9199,
+            "stepArgument": 9198,
+            "derivativeOrder": 1,
+            "rule": "flat step derivative outside the actual I1 bump support"
+          },
+          {
+            "node": 9204,
+            "stepArgument": 9203,
+            "derivativeOrder": 1,
+            "rule": "flat step derivative outside the actual I1 bump support"
+          },
+          {
+            "node": 29336,
+            "rightEndpoint": 29328,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 29436,
+            "rightEndpoint": 29328,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 50558,
+            "rightEndpoint": 28824,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 96317,
+            "rightEndpoint": 28824,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 117024,
+            "rightEndpoint": 28824,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 72317,
+            "rightEndpoint": 28823,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 72375,
+            "rightEndpoint": 28988,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 7286,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 7287,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 7286
+          },
+          {
+            "node": 7288,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 7287
+          },
+          {
+            "node": 33202,
+            "rightEndpoint": 6258,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 19021,
+            "stepArgument": 9198,
+            "derivativeOrder": 2,
+            "rule": "flat step derivative outside the actual I1 bump support"
+          },
+          {
+            "node": 19023,
+            "stepArgument": 9203,
+            "derivativeOrder": 2,
+            "rule": "flat step derivative outside the actual I1 bump support"
+          },
+          {
+            "node": 11166,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 11167,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 11166
+          },
+          {
+            "node": 11168,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 11167
+          },
+          {
+            "node": 19017,
+            "rightEndpoint": 6258,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 32340,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 32341,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 32340
+          },
+          {
+            "node": 32342,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 32341
+          },
+          {
+            "node": 53445,
+            "rightEndpoint": 6258,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 53448,
+            "stepArgument": 9198,
+            "derivativeOrder": 3,
+            "rule": "flat step derivative outside the actual I1 bump support"
+          },
+          {
+            "node": 53453,
+            "stepArgument": 9203,
+            "derivativeOrder": 3,
+            "rule": "flat step derivative outside the actual I1 bump support"
+          },
+          {
+            "node": 74673,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 74674,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 74673
+          },
+          {
+            "node": 74675,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 74674
+          },
+          {
+            "node": 78381,
+            "rightEndpoint": 6258,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 11679,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 11680,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 11679
+          },
+          {
+            "node": 11681,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 11680
+          },
+          {
+            "node": 78706,
+            "rightEndpoint": 6258,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 77542,
+            "rightEndpoint": 103,
+            "selected": "after",
+            "after": 0
+          },
+          {
+            "node": 77543,
+            "rightEndpoint": 5093,
+            "selected": "after",
+            "after": 77542
+          },
+          {
+            "node": 77544,
+            "rightEndpoint": 5089,
+            "selected": "after",
+            "after": 77543
+          },
+          {
+            "node": 79027,
+            "rightEndpoint": 6258,
+            "selected": "after",
+            "after": 0
+          }
+        ],
+        "compactIntegrandMistakenForZeroPrimitive": false,
+        "pass": true
+      },
+      "analyticPremises": {
+        "totalStressMoments": "Original (5.19)-(5.21): the executed five-moment inverse and the complete I2 heat compensation give zero total residual integrals. Thus the retained forward stress equals its backward primitive; a compact integrand alone is never declared to have zero integral.",
+        "terminalReduction": "On X>=Xb*exp(-1/4), all earlier stages/repairs have ended and the heat cutoff is one. The matched terminal pressure density has positive square root Ecl. Therefore F0=Fheat*fo, with Fheat the same complete Laplace heat factor.",
+        "completeHeatSmoothness": "For every fixed j>=0 and Z>=0, (-1)^j H^(j)(Z)=(h)_j/Gamma(1+h)*Integral_0^infinity exp(-v)*v^(h+j)*(1+Zv)^(-h-j)dv. Positive gamma moments and integration by parts give |H^(j)|<=(h)_j*(1+h)_j<=j!*(j+1)!. This dominates all finite mixed derivatives on the closed compact X/eta rectangle, including eta=+/-1; the improper tail is retained.",
+        "endpointSmoothness": "The original square-seed cutoff is flat at both endpoints. Every fixed derivative of exp(-4/delta^2) times a finite inverse power tends to zero at delta=0.",
+        "noNewLeanTheorem": true
+      },
+      "provenance": "The privately authenticated original coefficient prefix, heat source, signed stress primitives and prefix-independent first normalized cutoff.",
+      "originalPDFSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "equationReferences": [
+        "5.19-5.22",
+        "5.43",
+        "5.46",
+        "A.9",
+        "A.12"
+      ]
+    },
+    "domain": {
+      "activeAnnulus": [
+        3617,
+        28826
+      ],
+      "eta": [
+        "-1",
+        "1"
+      ],
+      "q": "0<q<=1",
+      "innerZero": [
+        0,
+        28814
+      ],
+      "interior": [
+        28814,
+        117683
+      ],
+      "terminal": [
+        117683,
+        28826
+      ],
+      "terminalDelta": [
+        "0",
+        "1/4"
+      ],
+      "terminalDeltaEqualsGlobalDelta": true,
+      "ordering": "log(Xb/Xplus)>127 implies log(Xedge/Xplus)>126.75>1; Xa<Xminus<Xplus<Xedge<Xb. Thus the terminal collar is after every positive-order source support and delta_global=delta_b there.",
+      "weightedInequalityOnlyOnOpenAnnulus": true,
+      "stressSmoothZeroExtensionAtBothEndpoints": true
+    },
+    "graph": {
+      "sha256": "09872de49e1f1d7c80dd65e166705be88e17aa1015638d9b0f1569ffd83c64ce",
+      "nodeCount": 135670,
+      "canonicalBytes": 5360448,
+      "compiler": "actual-order-one-weighted-stress.mjs:prepareActualOrderOneWeightedStress",
+      "roots": {
+        "actualT1theta": 117068,
+        "actualT1z": 117069,
+        "sourceZeta": 118140,
+        "terminalSmoothFactor": 117700,
+        "terminalCompleteHeat": 117727,
+        "terminalResidualCoefficient": 117796,
+        "terminalPrimitiveCoefficient": 117809,
+        "originalC1": 135164,
+        "actualCutoffT1theta": 135668,
+        "actualCutoffT1z": 135669,
+        "weighted_B_0_0": 118761,
+        "weighted_B_0_1": 119329,
+        "weighted_B_0_2": 119897,
+        "weighted_B_1_0": 120471,
+        "weighted_B_1_1": 121035,
+        "weighted_B_2_0": 121610
+      },
+      "graphIncluded": false,
+      "fixedCompilerPrefix": true,
+      "laterSourceAppendsExcluded": true
+    },
+    "weightedRows": [
+      {
+        "radialOrder": 0,
+        "etaOrder": 0,
+        "pole": 3,
+        "interiorConstants": [
+          118471,
+          118759
+        ],
+        "terminalThetaConstant": 118760,
+        "terminalZIdenticallyZero": true,
+        "bound": 118761,
+        "statement": "|partial_X^r partial_eta^k T1,a| <= bound*zeta*delta_global^(-pole), a=theta,z; delta_global=min(1,log(X/Xa),log(Xb/X))."
+      },
+      {
+        "radialOrder": 0,
+        "etaOrder": 1,
+        "pole": 3,
+        "interiorConstants": [
+          119044,
+          119327
+        ],
+        "terminalThetaConstant": 119328,
+        "terminalZIdenticallyZero": true,
+        "bound": 119329,
+        "statement": "|partial_X^r partial_eta^k T1,a| <= bound*zeta*delta_global^(-pole), a=theta,z; delta_global=min(1,log(X/Xa),log(Xb/X))."
+      },
+      {
+        "radialOrder": 0,
+        "etaOrder": 2,
+        "pole": 3,
+        "interiorConstants": [
+          119612,
+          119895
+        ],
+        "terminalThetaConstant": 119896,
+        "terminalZIdenticallyZero": true,
+        "bound": 119897,
+        "statement": "|partial_X^r partial_eta^k T1,a| <= bound*zeta*delta_global^(-pole), a=theta,z; delta_global=min(1,log(X/Xa),log(Xb/X))."
+      },
+      {
+        "radialOrder": 1,
+        "etaOrder": 0,
+        "pole": 6,
+        "interiorConstants": [
+          120182,
+          120467
+        ],
+        "terminalThetaConstant": 120470,
+        "terminalZIdenticallyZero": true,
+        "bound": 120471,
+        "statement": "|partial_X^r partial_eta^k T1,a| <= bound*zeta*delta_global^(-pole), a=theta,z; delta_global=min(1,log(X/Xa),log(Xb/X))."
+      },
+      {
+        "radialOrder": 1,
+        "etaOrder": 1,
+        "pole": 6,
+        "interiorConstants": [
+          120752,
+          121033
+        ],
+        "terminalThetaConstant": 121034,
+        "terminalZIdenticallyZero": true,
+        "bound": 121035,
+        "statement": "|partial_X^r partial_eta^k T1,a| <= bound*zeta*delta_global^(-pole), a=theta,z; delta_global=min(1,log(X/Xa),log(Xb/X))."
+      },
+      {
+        "radialOrder": 2,
+        "etaOrder": 0,
+        "pole": 9,
+        "interiorConstants": [
+          121320,
+          121605
+        ],
+        "terminalThetaConstant": 121609,
+        "terminalZIdenticallyZero": true,
+        "bound": 121610,
+        "statement": "|partial_X^r partial_eta^k T1,a| <= bound*zeta*delta_global^(-pole), a=theta,z; delta_global=min(1,log(X/Xa),log(Xb/X))."
+      }
+    ],
+    "terminal": {
+      "deltaMax": 847,
+      "primitiveRules": {
+        "schema": "MathScope.TerminalGaussianPrimitiveRules/1",
+        "derivativeOrder": 2,
+        "seed": "E(delta)=exp(-4/delta^2), extended flat by zero at delta=0",
+        "deltaInterval": [
+          "0",
+          "1/4"
+        ],
+        "derivativeRule": "d_delta(E*Q)=E*(Q_prime+8*delta^-3*Q)",
+        "laurent": [
+          {
+            "derivativeOrder": 0,
+            "coefficients": [
+              [
+                -6,
+                "1"
+              ]
+            ],
+            "pole": 6,
+            "absoluteCoefficientSum": "1"
+          },
+          {
+            "derivativeOrder": 1,
+            "coefficients": [
+              [
+                -9,
+                "8"
+              ],
+              [
+                -7,
+                "-6"
+              ]
+            ],
+            "pole": 9,
+            "absoluteCoefficientSum": "14"
+          },
+          {
+            "derivativeOrder": 2,
+            "coefficients": [
+              [
+                -12,
+                "64"
+              ],
+              [
+                -10,
+                "-120"
+              ],
+              [
+                -8,
+                "42"
+              ]
+            ],
+            "pole": 12,
+            "absoluteCoefficientSum": "226"
+          }
+        ],
+        "integration": {
+          "identity": "d_delta(E*delta^-3)=E*delta^-6*(8-3*delta^2)",
+          "positiveFactorLower": "125/16",
+          "integralUpperFactor": "16/125",
+          "inequality": "Integral_0^delta E(u)*u^-6 du <= (16/125)*E(delta)*delta^-3",
+          "zeroEndpoint": "exp(-4/delta^2)*delta^-3 tends to zero, with all fixed derivative orders."
+        },
+        "ordinaryXConversion": {
+          "identity": "partial_X^r=(-1)^r X^-r sum_j unsignedStirlingFirst(r,j)*partial_delta^j",
+          "unsignedStirlingFirst": [
+            [
+              "1"
+            ],
+            [
+              "0",
+              "1"
+            ],
+            [
+              "0",
+              "1",
+              "1"
+            ]
+          ]
+        },
+        "checks": [
+          {
+            "id": "positive-integrating-factor-lower-bound",
+            "pass": true
+          },
+          {
+            "id": "three-powers-gained-by-backward-integration",
+            "pass": true
+          },
+          {
+            "id": "highest-pole-and-positive-leading-coefficient",
+            "pass": true
+          },
+          {
+            "id": "every-finite-coordinate-conversion-generated",
+            "pass": true
+          }
+        ],
+        "pass": true,
+        "sourceAuthenticated": false,
+        "numericalQuadrature": false
+      },
+      "factorizationCheck": {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 117801,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          117700,
+          117741,
+          117742,
+          117727,
+          117728,
+          117737,
+          117690
+        ],
+        "actualAtomicOperandCount": 8,
+        "denominatorOperands": [
+          117680
+        ],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 0,
+        "denominatorMonomials": 1,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": true
+      },
+      "backwardRepresentation": "T1theta(Xb*exp(-delta),eta)=Xb*exp(delta)*Integral_0^delta exp(-4/u^2)*u^-6*B(u,eta) du",
+      "terminalEnvelopeCount": 6,
+      "primitiveBounds": [
+        {
+          "deltaOrder": 0,
+          "etaOrder": 0,
+          "pole": 3,
+          "constant": 118105
+        },
+        {
+          "deltaOrder": 0,
+          "etaOrder": 1,
+          "pole": 3,
+          "constant": 118106
+        },
+        {
+          "deltaOrder": 0,
+          "etaOrder": 2,
+          "pole": 3,
+          "constant": 118107
+        },
+        {
+          "deltaOrder": 1,
+          "etaOrder": 0,
+          "pole": 6,
+          "constant": 117859
+        },
+        {
+          "deltaOrder": 1,
+          "etaOrder": 1,
+          "pole": 6,
+          "constant": 117908
+        },
+        {
+          "deltaOrder": 2,
+          "etaOrder": 0,
+          "pole": 9,
+          "constant": 118109
+        }
+      ],
+      "stressDeltaBounds": [
+        {
+          "deltaOrder": 0,
+          "etaOrder": 0,
+          "pole": 3,
+          "constant": 118112
+        },
+        {
+          "deltaOrder": 0,
+          "etaOrder": 1,
+          "pole": 3,
+          "constant": 118113
+        },
+        {
+          "deltaOrder": 0,
+          "etaOrder": 2,
+          "pole": 3,
+          "constant": 118114
+        },
+        {
+          "deltaOrder": 1,
+          "etaOrder": 0,
+          "pole": 6,
+          "constant": 118116
+        },
+        {
+          "deltaOrder": 1,
+          "etaOrder": 1,
+          "pole": 6,
+          "constant": 118118
+        },
+        {
+          "deltaOrder": 2,
+          "etaOrder": 0,
+          "pole": 9,
+          "constant": 118122
+        }
+      ]
+    },
+    "interiorEnvelopeCount": 12,
+    "cutoff": {
+      "c1": 135164,
+      "logC1": 135163,
+      "sourceNormRequest": {
+        "throughOrder": 1,
+        "derivativeOrder": 1
+      },
+      "sourceCoefficientBounds": [
+        {
+          "derivativeOrder": 0,
+          "bound": 135144,
+          "requiredLog": 135147,
+          "terms": [
+            {
+              "field": "E",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 134862
+            },
+            {
+              "field": "U",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 134994
+            },
+            {
+              "field": "Pi",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135019
+            },
+            {
+              "field": "StreamOverR",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135113
+            },
+            {
+              "field": "complete radial cutoff bracket / R",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135143
+            }
+          ]
+        },
+        {
+          "derivativeOrder": 1,
+          "bound": 135159,
+          "requiredLog": 135162,
+          "terms": [
+            {
+              "field": "E",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 134862
+            },
+            {
+              "field": "U",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 134994
+            },
+            {
+              "field": "Pi",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135019
+            },
+            {
+              "field": "StreamOverR",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135113
+            },
+            {
+              "field": "complete radial cutoff bracket / R",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135143
+            },
+            {
+              "field": "E",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 1,
+              "upper": 134960
+            },
+            {
+              "field": "U",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 1,
+              "upper": 135005
+            },
+            {
+              "field": "Pi",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 1,
+              "upper": 135028
+            },
+            {
+              "field": "StreamOverR",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 1,
+              "upper": 135115
+            },
+            {
+              "field": "complete radial cutoff bracket / R",
+              "eulerOrder": 0,
+              "radialOrder": 0,
+              "etaOrder": 1,
+              "upper": 135149
+            },
+            {
+              "field": "E",
+              "eulerOrder": 0,
+              "radialOrder": 1,
+              "etaOrder": 0,
+              "upper": 134984
+            },
+            {
+              "field": "U",
+              "eulerOrder": 0,
+              "radialOrder": 1,
+              "etaOrder": 0,
+              "upper": 135008
+            },
+            {
+              "field": "Pi",
+              "eulerOrder": 0,
+              "radialOrder": 1,
+              "etaOrder": 0,
+              "upper": 135018
+            },
+            {
+              "field": "StreamOverR",
+              "eulerOrder": 0,
+              "radialOrder": 1,
+              "etaOrder": 0,
+              "upper": 135120
+            },
+            {
+              "field": "complete radial cutoff bracket / R",
+              "eulerOrder": 0,
+              "radialOrder": 1,
+              "etaOrder": 0,
+              "upper": 135151
+            },
+            {
+              "field": "E",
+              "eulerOrder": 1,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135152
+            },
+            {
+              "field": "U",
+              "eulerOrder": 1,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135153
+            },
+            {
+              "field": "Pi",
+              "eulerOrder": 1,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135154
+            },
+            {
+              "field": "StreamOverR",
+              "eulerOrder": 1,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135155
+            },
+            {
+              "field": "complete radial cutoff bracket / R",
+              "eulerOrder": 1,
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "upper": 135158
+            }
+          ]
+        }
+      ],
+      "originalNormalizedRecipeRetained": true,
+      "weightedConstantsAddedToSelector": false,
+      "otherCutoffScalesChanged": false,
+      "timeCutoffSystem": 16,
+      "timeCutoffBody": 135185,
+      "qVariable": 135186,
+      "qPower": 135189,
+      "sigma": 135190,
+      "chi": 135191,
+      "qFactorJets": [
+        135192,
+        135625,
+        135643
+      ],
+      "weights": {
+        "schema": "MathScope.SourceNormalizedCutoffWeights/1",
+        "profileId": "same-profile-2026-10-10.3",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "order": 1,
+        "derivativeOrder": 2,
+        "weights": [
+          {
+            "eulerOrder": 0,
+            "polynomialInSourceH": [
+              "1"
+            ],
+            "extraPotentialCutoffPolynomialInSourceH": [
+              "4224"
+            ]
+          },
+          {
+            "eulerOrder": 1,
+            "polynomialInSourceH": [
+              "4224",
+              "2"
+            ],
+            "extraPotentialCutoffPolynomialInSourceH": [
+              "2821632",
+              "8448"
+            ]
+          },
+          {
+            "eulerOrder": 2,
+            "polynomialInSourceH": [
+              "2821632",
+              "16896",
+              "4"
+            ],
+            "extraPotentialCutoffPolynomialInSourceH": [
+              "2957813760",
+              "11286528",
+              "16896"
+            ]
+          }
+        ],
+        "sourceCutoff": "chi(s)=1-sigma_1(2s-1)",
+        "identity": "(q*d_q)^r[chi(c*q)*q^(2*n*h)]=q^(2*n*h)*sum_k binom(r,k)*(2*n*h)^(r-k)*(s*d_s)^k chi(s), s=c*q",
+        "extraPotentialIdentity": "Replace the k-th chi Euler derivative by its k+1 derivative for s*chi_prime(s).",
+        "pendingNorm": "B_(n,m) must be computed from the actual normalized coefficient/potential jets multiplied by these weights, through all mixed profile derivatives <=m.",
+        "selectorOnceNormExists": "log(c_n) >= max(log(c_(n-1))+log2, [n*log2+log(max(1,B_(n,m)))]/(n*h), for every m<=n, plus the actual (5.37) requirements.",
+        "allQProof": "For 0<q<=1/c_n, B_(n,m)*q^(n*h)<=2^-n; for q>=1/c_n the cutoff and every derivative are zero.",
+        "scope": {
+          "actualSourceCutoffWeightsComputed": true,
+          "allPositiveNExponentRetained": true,
+          "actualCoefficientNormMissing": true,
+          "completeScheduleSelected": false,
+          "backgroundC2TailCertified": false,
+          "sourceUniformQStarCertified": false,
+          "originalN506Complete": false
+        },
+        "pass": true
+      },
+      "normalizedRows": [
+        {
+          "eulerOrder": 0,
+          "radialOrder": 0,
+          "etaOrder": 0,
+          "pole": 3,
+          "bound": 118761,
+          "actualDerivatives": {
+            "theta": 135644,
+            "z": 135645
+          }
+        },
+        {
+          "eulerOrder": 0,
+          "radialOrder": 0,
+          "etaOrder": 1,
+          "pole": 3,
+          "bound": 119329,
+          "actualDerivatives": {
+            "theta": 135646,
+            "z": 135647
+          }
+        },
+        {
+          "eulerOrder": 0,
+          "radialOrder": 0,
+          "etaOrder": 2,
+          "pole": 3,
+          "bound": 119897,
+          "actualDerivatives": {
+            "theta": 135648,
+            "z": 135649
+          }
+        },
+        {
+          "eulerOrder": 0,
+          "radialOrder": 1,
+          "etaOrder": 0,
+          "pole": 6,
+          "bound": 120471,
+          "actualDerivatives": {
+            "theta": 135650,
+            "z": 135651
+          }
+        },
+        {
+          "eulerOrder": 0,
+          "radialOrder": 1,
+          "etaOrder": 1,
+          "pole": 6,
+          "bound": 121035,
+          "actualDerivatives": {
+            "theta": 135652,
+            "z": 135653
+          }
+        },
+        {
+          "eulerOrder": 0,
+          "radialOrder": 2,
+          "etaOrder": 0,
+          "pole": 9,
+          "bound": 121610,
+          "actualDerivatives": {
+            "theta": 135654,
+            "z": 135655
+          }
+        },
+        {
+          "eulerOrder": 1,
+          "radialOrder": 0,
+          "etaOrder": 0,
+          "pole": 3,
+          "bound": 135656,
+          "actualDerivatives": {
+            "theta": 135657,
+            "z": 135658
+          }
+        },
+        {
+          "eulerOrder": 1,
+          "radialOrder": 0,
+          "etaOrder": 1,
+          "pole": 3,
+          "bound": 135659,
+          "actualDerivatives": {
+            "theta": 135660,
+            "z": 135661
+          }
+        },
+        {
+          "eulerOrder": 1,
+          "radialOrder": 1,
+          "etaOrder": 0,
+          "pole": 6,
+          "bound": 135662,
+          "actualDerivatives": {
+            "theta": 135663,
+            "z": 135664
+          }
+        },
+        {
+          "eulerOrder": 2,
+          "radialOrder": 0,
+          "etaOrder": 0,
+          "pole": 3,
+          "bound": 135665,
+          "actualDerivatives": {
+            "theta": 135666,
+            "z": 135667
+          }
+        }
+      ],
+      "statement": "Every displayed mixed derivative of the actual n=1 cutoff stress is <=bound*q^(2h)*zeta*delta_global^(-pole), for 0<q<=1. This is the finite n=1 block of (5.43), independent of any large-n diagonal tail.",
+      "asymptoticSummationOfAllOrdersClaimed": false
+    },
+    "checks": [
+      {
+        "id": "private-original-coefficient-and-heat-producers",
+        "pass": true
+      },
+      {
+        "id": "unchanged-pinned-positive-h-and-parameter-map",
+        "pass": true
+      },
+      {
+        "id": "actual-leading-root-is-full-heat-body",
+        "pass": true
+      },
+      {
+        "id": "actual-terminal-three-unit-stage",
+        "pass": true
+      },
+      {
+        "id": "actual-terminal-pressure-density-and-positive-square-root",
+        "pass": true
+      },
+      {
+        "id": "actual-terminal-fo-and-complete-heat-argument",
+        "pass": true
+      },
+      {
+        "id": "actual-heat-cutoff-already-one-on-terminal-collar",
+        "pass": true
+      },
+      {
+        "id": "source-support-order-and-nonheat-terminal-zeros",
+        "pass": true
+      },
+      {
+        "id": "actual-heat-physical-z-chain-identity",
+        "pass": true
+      },
+      {
+        "id": "actual-order-one-stress-primitives-and-cancelled-total-moments",
+        "pass": true
+      },
+      {
+        "id": "literal-angular-residual-has-only-the-retained-heat-viscosity-after-Xplus",
+        "pass": true
+      },
+      {
+        "id": "terminal-collar-is-strictly-beyond-higher-support",
+        "pass": true
+      },
+      {
+        "id": "positive-integrating-factor-lower-bound",
+        "pass": true
+      },
+      {
+        "id": "three-powers-gained-by-backward-integration",
+        "pass": true
+      },
+      {
+        "id": "highest-pole-and-positive-leading-coefficient",
+        "pass": true
+      },
+      {
+        "id": "every-finite-coordinate-conversion-generated",
+        "pass": true
+      },
+      {
+        "id": "actual-terminal-residual-product-rule",
+        "pass": true
+      },
+      {
+        "id": "terminal-and-interior-norms-have-no-free-coordinates",
+        "pass": true
+      },
+      {
+        "id": "unchanged-first-diagonal-source-cutoff",
+        "pass": true
+      },
+      {
+        "id": "original-all-requested-time-cutoff-weights",
+        "pass": true
+      },
+      {
+        "id": "every-requested-weighted-profile-derivative-present",
+        "pass": true
+      }
+    ],
+    "scope": {
+      "actualOrderOneWeightedBoundaryConstantsConstructed": true,
+      "actualRequestedOrderOneWeightedEstimateEstablished": true,
+      "actualSignedStressAndBackwardPrimitiveRetained": true,
+      "completeTerminalHeatFactorRetained": true,
+      "allRequestedMixedDerivativesIncluded": true,
+      "originalC1RecomputedByUnchangedRecipe": true,
+      "historicalBackgroundChanged": false,
+      "physicalSelectorApplied": false,
+      "actualPositiveWeightsAssumed": false,
+      "actualPositiveWeightsProved": false,
+      "numericalStressEnclosures": false,
+      "numericalNormEvaluation": false,
+      "allOrderBackgroundPhysicalResidualProved": false,
+      "fullPhysicalResidualAndFlatErrorPackageComplete": false,
+      "wholeGN4Complete": false,
+      "newLeanKernelProof": false,
+      "m3MayStart": false
+    }
+  },
+  "stages": [
+    {
+      "stage": "original-source-bindings",
+      "nodeCount": 117680,
+      "elapsedMs": 5851.727162
+    },
+    {
+      "stage": "terminal-ftc-norms",
+      "nodeCount": 118104,
+      "elapsedMs": 5858.965759
+    },
+    {
+      "stage": "interior-and-weighted-norms",
+      "nodeCount": 121611,
+      "elapsedMs": 5906.573302
+    },
+    {
+      "stage": "unchanged-first-cutoff",
+      "nodeCount": 135171,
+      "elapsedMs": 6982.949783
+    },
+    {
+      "stage": "sealed-actual-order-one-weighted-stress",
+      "nodeCount": 135670,
+      "elapsedMs": 7265.018486
+    }
+  ],
+  "peakRSSBytes": 1369096192,
+  "elapsedMs": 9404.053838,
+  "meaning": "One genuine source construction. The accompanying process record and TAP determine completion; this file is not an independent source theorem."
+}

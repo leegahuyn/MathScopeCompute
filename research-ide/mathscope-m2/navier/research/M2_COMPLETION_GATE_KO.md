@@ -4,7 +4,7 @@
 
 **M2의 이번 추가 구현과 검증은 진행됐지만, 사용자가 요청한 모든 수학 범위는 아직 완료되지 않았다. M3는 시작하지 않았다.** 연결이 끊기기 전의 최신 저장점 `8a0046c5`에서 이어서 작업했으며, 현재 실행 코드의 버전은 `0.3.9`이다.
 
-이번에 원래 cutoff 적분의 엄밀한 수치 구간, 실제 고정 label의 물리 curl, 배경 1·2차 계수의 물리 미분 상수와 강화 cutoff 선택식을 추가했다. 또한 표시용 `ell=1` 확장의 지정된 점에서는 **비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명**을 얻었다. 따라서 이 표시 확장을 그대로 전체 양성 구성으로 승격할 수 없다. 전체 M2 목표에는 **원문이 허용하는 작은 q 영역에서의 후속 구성**이 필요하다.
+이번에 원래 cutoff 적분의 엄밀한 수치 구간, 실제 고정 label의 물리 curl, 배경 1·2차 계수의 물리 미분 상수와 강화 cutoff 선택식을 추가했다. 또한 표시용 `ell=1` 확장의 지정된 점에서는 **비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명**을 얻었다. 따라서 이 표시 확장을 그대로 전체 양성 구성으로 승격할 수 없다. 이후 별도로 선택한 작은 q의 실제 pulse에서는 공통 보정 지지집합 바깥 열린 영역의 양의 가중치를 구성했다. 원래 heat의 수치 도함수 구간과 n=1 응력의 말단 경계 추정도 추가했으며, 상세한 새 실행 범위는 9절에 기록한다. 내부 활성 보정·모든 label·전역 잔차는 여전히 남는다.
 
 기계 판독 판단은 [M2_COMPLETION_GATE.json](M2_COMPLETION_GATE.json), 이번 실행·배포 기록은 [continuation evidence](evidence/m2-continuation-20261011/)에 있다. 이 문서와 JSON은 **범위가 명시된 감사 판단**이다. 상태값·파일명·테스트 개수·hash만으로 모든 해석학적 명제가 자동 증명되는 것은 아니다.
 
@@ -145,10 +145,10 @@ source 실행은 별도 process에서 수행하고 실제 코드 SHA, 원본 gra
 
 | 관문 | 현재 확보한 부분 | 남아 있는 의무 |
 |---|---|---|
-| G-POS | 선택한 인증 영역의 비멤버십과 ell=1 지정점의 비음수 해 부존재 | 원문 허용 영역의 실제 양성 weight, 비영 determinant·inverse 안정성, 필요한 sqrt 경계 연장 |
-| G-NUM | 원래 cutoff 질량과 Ls의 엄밀 구간 | 실제 pulse·도함수·H·weight·curl의 합산 truncation/heat/quadrature/rounding 오차 |
+| G-POS | 표시 영역의 비멤버십·ell=1 장애와 새 작은 q 외측 영역의 실제 양성 weight·비영 determinant | 내부 활성 보정, 모든 box와 label, 최종 Γ 선택과 필요한 sqrt 경계 연장 |
+| G-NUM | 원래 cutoff 질량·Ls, 지정점의 heat와 아홉 slow jet의 엄밀 구간 | 전체 leading F·pulse·도함수·공분산 H·weight·curl의 합산 truncation/heat/quadrature/rounding 오차 |
 | G-CURL | 원래 cutoff·physical map을 포함한 실제 fixed label의 조건부 curl | 원래 허용 bands의 모든 label, support·경계 연장·전역 divergence |
-| G-N4 | 실제 1·2차 물리 미분 상수, n=2 weighted stress, 강화 selector 후보 | n=1 경계, selector 적용, 모든 차수의 실제 배경 잔차·점근·flat tail 연결 |
+| G-N4 | 실제 1·2차 물리 미분 상수, n=2 weighted stress, n=1 말단 경계의 차수 2 이하 상수, 강화 selector 후보 | selector 실제 적용, 모든 차수의 실제 배경·압력·응력 항등식과 잔차·점근·flat tail 연결 |
 | G-N5 | 기존 2차 변분계와 실제 fixed-label 물리 curl | 공간 2차 velocity에 필요한 potential 3차 또는 동등한 정리, 공통 Gaussian·모든 label의 summable tail, 직접 PDE 잔차와 N6 interface |
 | 실제 해석학 Lean | 이전 조건부 대수 kernel 보조정리 | 실제 함수 공간·적분·극한·양성·smoothness 가정을 해소한 source 인스턴스 |
 
@@ -172,3 +172,22 @@ N5의 `div(δu tensor δu)`, 교차 mode, `(1-ψ)f + ψ' t`, nonzero eikonal rem
 실행 결과의 JSON과 원본 경로가 있는 표에서 구간·오차·적용 범위를 함께 볼 수 있다. 예전 환경의 실행 기록은 **저장한 M2 실행 기록 가져오기 → 입력만 불러오기**로 새 작업을 만들 수 있다. 기존 환경과 다른 Worker hash의 결과를 현재 검증으로 자동 채택하지 않는다.
 
 물리 curl·physical seminorm·ell=1 obstruction의 무거운 source 검사는 저장소의 별도 재현 명령과 원본 receipt로 제공한다. 이 세 작업이 모두 새 브라우저 예제로 설치되었다고 주장하지 않는다. 공개 페이지의 실제 게시·원본 바이트·브라우저 확인 범위는 이번 evidence의 publication 및 browser 기록으로 별도 확인한다.
+
+
+## 9. 재개 후 추가한 실제 heat·n=1 경계·작은 q 양성 결과
+
+공개된 v76은 runtime `0.3.9`의 cutoff/domain 화면과 숫자 줄바꿈을 검증한 저장점이다. 아래 세 모듈의 최초 실행은 **별도 Node source 경로**다. 이를 v75/v76 Worker·브라우저에서 이미 실행한 결과로 기록하지 않는다. 이후 화면 연결은 해당 버전의 별도 실행 영수증으로 검증한다.
+
+| 새 실제 source | 실행 | 얻은 결과 | 남아 있는 범위 |
+|---|---:|---|---|
+| 원래 heat와 slow jet 구간 | 12/12, exit 0 | 원래 양수 h·z를 유지한 지정점 heat와 R/Z/T 1차·대칭 2차 아홉 도함수 구간 | 전체 F·pulse·공분산·가중치·curl 수치 구간 |
+| n=1 weighted stress | 6/6, exit 0 | 원래 (5.22)의 말단 적분 추정, 총 차수 2 이하 FTC 상수, 원래 c1의 (5.43) mixed 항 | 강화 selector의 모든 차수 적용과 전역 물리 잔차 |
+| 새 작은 q terminal covariance | 13/13, 관측 exit 0 | 실제 새 pulse·H·target, 열린 외측 영역의 det H<0와 두 양의 weight 및 smooth sqrt | 내부 활성 보정, 모든 box·label, flat endpoint, 미지 Γ |
+
+heat에서 `D0=(1−H)/(hz)`, `D1=−H′/h`, `D2=H″/[h(1+h)]`를 사용한다. 192-bit 산술에서 u=2⁻¹⁹²라 하면 실제 반환 구간은 D0∈[1−2u,1+u], D1∈[1−3u,1+u], D2∈[2−13u,2+4u]다. 완성된 slow 계수의 최대 구간 폭은 **35u≈5.57583×10⁻⁵⁷**이며 요청 폭 10⁻⁴⁰보다 작다. 실제 h, z와 양의 미분 인자는 source root로 유지한다. 이 수치는 원래 h의 상대 정밀도를 보증하지 않는다. [heat 수식·오차·실행](evidence/actual-heat-20261011/ACTUAL_HEAT_SCALED_ENCLOSURE_KO.md)을 참고한다.
+
+n=1 응력에서는 δ=log(Xb/X)에 대해 원래 flat factor E=exp(−4/δ²)를 유지한다. `(E δ⁻³)′=E δ⁻⁶(8−3δ²)`에서 0<δ≤1/4이면 정확한 적분 계수 **16/125**를 얻는다. 원래 ζ는 바꾸지 않으며 ζ로 나누는 내부 직사각형에서 양수임을 확보하고 말단은 E/ζ의 별도 상계로 처리한다. [원래 signed stress와 가중 추정](ACTUAL_ORDER_ONE_WEIGHTED_STRESS_KO.md)에 증명과 실제 상수가 있다.
+
+새 공분산은 **ell*=ellMinimum+8**의 실제 band다. 원래 작은 q 조건을 만족하는 새 carrier·길이·moving-frame pressure·두 Volterra 계를 다시 만들었다. 모든 양의 차수 보정이 공통 Xplus 뒤에서 정확히 사라지는 원래 support 귀납을 사용한다. 그 외측 열린 영역에서만 completed source와 leading source를 동일시한다. 실제 정규화 행렬의 determinant는 양수이고, 원래 좌표로 되돌린 **det H는 음수**다. 두 inverse weight는 실제 양의 target scale과 mass로 양쪽에서 감싼다. [작은 q 실제 구성과 남은 영역](ACTUAL_ADMISSIBLE_TERMINAL_COVARIANCE_KO.md)을 참고한다.
+
+[독립 종합 검토](evidence/m2-math-progress-20261011/INDEPENDENT_COMPONENT_REVIEW_KO.md)와 [원본·실행 SHA 대조](evidence/m2-math-progress-20261011/review-validation.json)는 이 세 결과의 구체적인 근거와 경계를 기록한다. generic kernel, source 내부 항등 검사와 원문 64개 기준의 개수는 합산하지 않는다. 전체 M2와 M3 gate는 false를 유지한다.
