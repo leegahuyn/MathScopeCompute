@@ -1,8 +1,8 @@
 {
   "schema": "MathScope.M2.Navier.ExtendedCompletionAssessment/2",
-  "generatedAt": "2026-10-11T10:22:32.660353+00:00",
+  "generatedAt": "2026-10-11T10:54:23.084585+00:00",
   "assessmentKind": "SOURCE_BOUND_REVIEW_MANIFEST_NOT_PROOF_CERTIFICATE",
-  "assessmentRevision": "SOURCE_INNER_FLAT_POSITIVE_GLOBAL_STRESS_ALL_FINITE_NORMS_CENTERED_NUMERICS_REVIEWED",
+  "assessmentRevision": "SOURCE_ALL_BAND_CM_ABSOLUTE_PULSE_CENTER_AND_MIXED_CALCULUS_REVIEWED",
   "resumedCommit": "8a0046c547af4cccdbecae81fe647d414dd75d3f",
   "implementationCommit": "6c9ee58a1e82cd0bf4c0c813f1f9e7346b9dbfa6",
   "implementationBranch": "mathscope-m2-completion-20261011",
@@ -497,6 +497,44 @@
       "path": "research-ide/mathscope-m2/navier/research/evidence/m2-inner-positive-center-progress-20261011/at-edb69fd4-M2_COMPLETION_GATE.json",
       "sha256": "0965a3bdc4a8caa3f5d523d0c8d3e0f6bb9ca2b1f88a7ed2304fcb37f22b262c",
       "state": "IMMUTABLE_PRIOR_ASSESSMENT_BYTES"
+    },
+    "actualAllBandBackgroundCmPacket": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/all-band-background-norms-20261011/all-band-background-norms-packet.json",
+      "sha256": "70966357e1d5e4f886a3141c2c1a9ea91ae568006ead76856c9e471d6d776017",
+      "state": "CURRENT_BYTES_CHECKED",
+      "execution": "DIRECT_NODE_SOURCE"
+    },
+    "actualAbsolutePulseCenterPacket": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/adiabatic-pulse-center-20261011/adiabatic-pulse-center-enclosure-packet.json",
+      "sha256": "c8d5d56c185446706d5f2ebc2c5e0fde8e04a575607b345299c298d1b2eb9b93",
+      "state": "CURRENT_BYTES_CHECKED",
+      "execution": "DIRECT_NODE_SOURCE"
+    },
+    "allFiniteMixedWaveGenericCalculus": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-wave-calculus-20261011/common-wave-kernels-attempt1.json",
+      "sha256": "bedf3b720b30bf02c49bb139f82554602c0a02485fda3e19768b17d3112a87c4",
+      "state": "CURRENT_BYTES_CHECKED",
+      "execution": "GENERIC_KERNEL_ONLY; actual source adapter remains separate"
+    },
+    "allBandCmIndependentReview": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/all-band-background-norms-20261011/INDEPENDENT_ALL_BAND_BACKGROUND_NORMS_REVIEW_KO.md",
+      "sha256": "6f5b2128d9106fab1084161236e468722a4320839c7436b513a75959a94671f8",
+      "state": "INDEPENDENT_READ_ONLY_MATHEMATICAL_REVIEW; no additional source execution"
+    },
+    "absolutePulseIndependentReview": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/adiabatic-pulse-center-20261011/INDEPENDENT_ADIABATIC_PULSE_CENTER_REVIEW_KO.md",
+      "sha256": "3405017dc7401d964c5c7d4cddb1b69f2b99b2e9f57485e61237a1500666faf9",
+      "state": "INDEPENDENT_READ_ONLY_MATHEMATICAL_REVIEW; no additional source execution"
+    },
+    "allFiniteMixedWaveIndependentReview": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-wave-calculus-20261011/INDEPENDENT_COMMON_WAVE_KERNEL_REVIEW_KO.md",
+      "sha256": "f0210d545261a89abadaac1377f29fa06d040eb7be553476f548e9f52c93d94b",
+      "state": "INDEPENDENT_READ_ONLY_MATHEMATICAL_REVIEW; no additional source execution"
+    },
+    "beforeCmAbsolutePulseAssessment": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/m2-cm-absolute-pulse-progress-20261011/at-1c7c37eb-M2_COMPLETION_GATE.json",
+      "sha256": "179a3a815acbb57b68ebedaf041ebb8bf25156cf39025f9b2350582d3ce4def7",
+      "state": "IMMUTABLE_PRIOR_ASSESSMENT_BYTES"
     }
   },
   "additionalClaims": [
@@ -583,9 +621,9 @@
     },
     {
       "id": "G-NUM",
-      "status": "PARTIAL_CENTERED_PULSE_H_WEIGHT_ENCLOSURES_AND_FULL_F_JETS",
+      "status": "PARTIAL_ACTUAL_ABSOLUTE_CENTER_AMPLITUDE_AND_COVARIANCE_SCALE_ENCLOSURES",
       "blockingForUserRequestedM2": true,
-      "remaining": "The centered actual pulse/H/weight packet encloses normalized mass and normalized covariance/weight coefficients with positive errors. Absolute center amplitudes, all requested slow/mixed derivatives and physical curl numerical intervals remain.",
+      "remaining": "Both actual Volterra center amplitudes now have directed numerical enclosures around1/(2sqrt(2)), using the full original matrix, rounding, pressure and moving basis. Requested slow/mixed/fast derivative and physical-curl numerical intervals, and remaining geometric/target factors in absolute H/y, remain.",
       "wholeGateComplete": false
     },
     {
@@ -813,6 +851,36 @@
       "statement": "Every requested finite derivative has an actual source pressure/stress seminorm constructor. The n1 complete heat factor uses exact Gaussian/Leibniz/Stirling recurrences; higher stress quotient and direct weighted derivatives are distinct. Actual source execution here is n1/n2 at m1; no infinite literal execution is asserted.",
       "publicWorkerOrBrowserExecuted": false,
       "wholeM2Complete": false
+    },
+    {
+      "id": "M2X-ALL-BAND-CM",
+      "status": "SOURCE_AND_INDEPENDENT_REVIEW_SCOPED",
+      "sourceRefs": [
+        "actualAllBandBackgroundCmPacket"
+      ],
+      "statement": "The full original heat/I2 leading fields and all positive corrections have a source-bound finite-order slow norm constructor uniform under cutoff enlargement. Actual source execution emitted C0,C1,C2 and Gaussian B0 only; the same all-finite recipe needs its requested higher prefix and constants.",
+      "publicWorkerOrBrowserExecuted": false,
+      "wholeM2Complete": false
+    },
+    {
+      "id": "M2X-ABSOLUTE-PULSE-CENTER",
+      "status": "SOURCE_AND_INDEPENDENT_REVIEW_SCOPED",
+      "sourceRefs": [
+        "actualAbsolutePulseCenterPacket"
+      ],
+      "statement": "The selected actual two-component Volterra pulses have positive directed center amplitude enclosures, with full moving matrix, original rounded carrier, pressure and Bprime retained. Independent sign intervals propagate to covariance/weight coefficients without leaving the center amplitude unknown. Other exact geometry/target factors and requested derivative/curl intervals remain separate.",
+      "publicWorkerOrBrowserExecuted": false,
+      "wholeM2Complete": false
+    },
+    {
+      "id": "M2X-MIXED-WAVE-CALCULUS",
+      "status": "GENERIC_KERNEL_AND_INDEPENDENT_REVIEW_ONLY",
+      "sourceRefs": [
+        "allFiniteMixedWaveGenericCalculus"
+      ],
+      "statement": "Finite mixed slow/fast Duhamel, covariance inverse/square-root derivatives, full physical residual algebra and Gaussian all-label scalar-tail recurrences passed17 generic tests and independent review. These kernels do not authenticate a common actual family by themselves.",
+      "publicWorkerOrBrowserExecuted": false,
+      "wholeM2Complete": false
     }
   ],
   "gate": {
@@ -862,7 +930,10 @@
     "actualInnerCovarianceFlatSquareRootExtension": true,
     "actualPositiveGlobalStressDivergenceCancellation": true,
     "actualAllFinitePressureStressSeminormConstructor": true,
-    "actualCenteredNormalizedPulseCovarianceNumericallyEnclosed": true
+    "actualCenteredNormalizedPulseCovarianceNumericallyEnclosed": true,
+    "actualAllBandBackgroundFiniteCmConstructor": true,
+    "actualAbsolutePulseCenterAmplitudesNumericallyEnclosed": true,
+    "allFiniteMixedWaveGenericCalculusValidated": true
   },
   "m3Plan": {
     "status": "NOT_STARTED_BLOCKED_BY_USER_REQUESTED_M2_GATE",
@@ -1288,58 +1359,39 @@
     }
   },
   "finalProvenanceReview": {
-    "checkedAt": "2026-10-11T10:22:32.660353+00:00",
+    "checkedAt": "2026-10-11T10:54:23.084585+00:00",
     "checkedGroups": [
       {
-        "group": "inner-source-refs",
-        "files": 115,
+        "group": "all-band-Cm-source-refs",
+        "files": 58,
         "allCurrentBytesMatch": true
       },
       {
-        "group": "centered-files",
-        "files": 13,
+        "group": "absolute-a-packet-files",
+        "files": 21,
         "allCurrentBytesMatch": true
       },
       {
-        "group": "centered-imports",
-        "files": 60,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "actualPositiveGlobalStressPacket-modules",
-        "files": 3,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "actualPositiveGlobalStressPacket-artifacts",
-        "files": 5,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "actualPositiveGlobalStressPacket-imports",
+        "group": "absolute-a-source-imports",
         "files": 62,
         "allCurrentBytesMatch": true
       },
       {
-        "group": "actualAllFinitePressureStressNormPacket-modules",
-        "files": 3,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "actualAllFinitePressureStressNormPacket-artifacts",
-        "files": 5,
-        "allCurrentBytesMatch": true
-      },
-      {
-        "group": "actualAllFinitePressureStressNormPacket-imports",
-        "files": 74,
+        "group": "three-generic-kernels-executed-bytes",
+        "files": 7,
         "allCurrentBytesMatch": true
       }
     ],
-    "newSourcePacketsReferenced": 4,
+    "newSourcePacketsReferenced": 2,
+    "genericKernelPacketReferenced": 1,
+    "docEvolution": {
+      "reviewedDocSHA256": "f73d4fd9871cf304e772162ff8d01deb7b13627b6edfc5a2cd39b19526c7e45e",
+      "finalDocSHA256": "5f22d75e9dc2106a54c3ea46297eb9a0c07fe4c36f71fdc05674f13387adc809",
+      "exactOnlyChange": "One link to the completed independent review was appended to the execution references. Removing exactly that line reproduces reviewed SHA.",
+      "mathematicalTextChangedAfterReview": false
+    },
     "runtimeUnchanged": true,
-    "mathematicalGatePromotedByHashing": false,
-    "runtimeVerificationRetainedFromPriorAssessment": true
+    "mathematicalGatePromotedByHashing": false
   },
   "promotionPolicy": {
     "allTestsPassImpliesMathematicalCompletion": false,
@@ -1350,7 +1402,7 @@
     "trustLimit": "Editing or rehashing this review never proves an analytic claim or authorizes M3."
   },
   "assessmentHashAlgorithm": "SHA-256 over UTF-8 json.dumps(record_without_assessmentSHA256, ensure_ascii=False, sort_keys=True, separators=(comma,colon)); no trailing newline.",
-  "previousCheckpointCommit": "edb69fd4f7e5330333e8e4bb819d0e6780466e88",
+  "previousCheckpointCommit": "1c7c37eb10287e60b6c430cdcaa3fbc3b1316577",
   "threeComponentSourceReview": {
     "path": "research-ide/mathscope-m2/navier/research/evidence/m2-math-progress-20261011/review-validation.json",
     "sha256": "14847054372f32d77d1922f78c48a746389d7d5f781fb62dbe043d1ca8568684",
@@ -1669,10 +1721,10 @@
     "heatRuntimeCurrentFilesMatchObservedRuns": true
   },
   "newSourceProgress": {
-    "generatedAt": "2026-10-11T10:22:32.660353+00:00",
+    "generatedAt": "2026-10-11T10:54:23.084585+00:00",
     "lastPublishedRuntime": "0.3.10",
     "lastPublishedVersion": "v77",
-    "savedSourceCheckpoint": "edb69fd4f7e5330333e8e4bb819d0e6780466e88",
+    "savedSourceCheckpoint": "1c7c37eb10287e60b6c430cdcaa3fbc3b1316577",
     "packetRefs": [
       "terminalThirdJetPacket",
       "outerFlatPacket",
@@ -1692,7 +1744,10 @@
       "actualInnerFlatPacket",
       "actualCenteredPulseNumericalPacket",
       "actualPositiveGlobalStressPacket",
-      "actualAllFinitePressureStressNormPacket"
+      "actualAllFinitePressureStressNormPacket",
+      "actualAllBandBackgroundCmPacket",
+      "actualAbsolutePulseCenterPacket",
+      "allFiniteMixedWaveGenericCalculus"
     ],
     "failedMathematicalFirstFAttemptCountedAsCompletion": false,
     "newAnalyticLeanRun": false,
@@ -1836,5 +1891,59 @@
     "mathematicalGatePromotedByHashing": false,
     "runtimeVerificationRetainedFromPriorAssessment": true
   },
-  "assessmentSHA256": "c988f1f1e04ef8ddd402ea4d79f4c4b86c979e4dac302f6f6b81cd875d9771cf"
+  "priorCmAbsolutePulseProvenanceReview": {
+    "checkedAt": "2026-10-11T10:22:32.660353+00:00",
+    "checkedGroups": [
+      {
+        "group": "inner-source-refs",
+        "files": 115,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "centered-files",
+        "files": 13,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "centered-imports",
+        "files": 60,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "actualPositiveGlobalStressPacket-modules",
+        "files": 3,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "actualPositiveGlobalStressPacket-artifacts",
+        "files": 5,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "actualPositiveGlobalStressPacket-imports",
+        "files": 62,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "actualAllFinitePressureStressNormPacket-modules",
+        "files": 3,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "actualAllFinitePressureStressNormPacket-artifacts",
+        "files": 5,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "actualAllFinitePressureStressNormPacket-imports",
+        "files": 74,
+        "allCurrentBytesMatch": true
+      }
+    ],
+    "newSourcePacketsReferenced": 4,
+    "runtimeUnchanged": true,
+    "mathematicalGatePromotedByHashing": false,
+    "runtimeVerificationRetainedFromPriorAssessment": true
+  },
+  "assessmentSHA256": "fe3ff7239c3b1f7f8d495fbffca02cb30a1b3598d371564872f42c6876129afd"
 }

@@ -270,3 +270,17 @@ Gaussian 꼬리에서는 stable matrix의 음의 대각 성분을 유지하여 e
 각 packet의 현재 source/import 바이트와 실제 관측 exit code를 대조했다. 독립 읽기 검토는 source 실행 수에 포함하지 않는다. 유한 프로그램의 표현 예산은 유한 차수 정리의 수학적 제한과 구분한다.
 
 이 단계에서는 하나의 최종 cutoff 수열로 모든 band/label을 구성하고, 그 같은 배경장의 물리 잔차 및 전체 curl에 위 경계를 연결해야 한다. 중심 정규화 수치만으로 절대 진폭·slow/mixed 도함수·전체 curl의 수치 완료를 선언하지 않는다. 공개 runtime은 **0.3.10/v77**이며, 전체 M2와 M3 시작은 아직 false이다.
+
+## 15. 모든 band의 C_m와 실제 중심 진폭
+
+[1c7c37eb 저장점](https://github.com/leegahuyn/MathScopeCompute/commit/1c7c37eb10287e60b6c430cdcaa3fbc3b1316577)의 source를 유지한 추가 검증이다.
+
+| 결과 | 실제 관측 | 범위 |
+|---|---:|---|
+| [모든 band 배경장 C_m](ACTUAL_ALL_BAND_BACKGROUND_NORMS_KO.md) | source7/7, 내부11; exit0,20.621초 | Full heat/I2·양의 correction과 정확한 slow 계수 미분을 유지. 실제 생성은 C0,C1,C2이며 임의의 고정 유한 차수는 동일한 명시적 생성 절차로 제공 |
+| [실제 중심 진폭 a±](ACTUAL_ADIABATIC_PULSE_CENTER_KO.md) | source12/12, 내부9와 양쪽7; exit0,106.340초 | 원래 전체 두 성분 행렬·반올림·이동 압력·Bprime에 직접 결속. a±는 0.3535533905932738 주변의 외향 유리 구간. 선택된 terminal 중심의 결과이며 임의의 점이나 ell=1로 확대하지 않음 |
+| [혼합 미분·물리 잔차·Gaussian 계산 kernel](evidence/common-wave-calculus-20261011/INDEPENDENT_COMMON_WAVE_KERNEL_REVIEW_KO.md) | 일반 검사17/17; exit0,3.226초 | 역공분산·제곱근의 모든 곱 미분, 안정적인 mixed Duhamel, 원래 h의 물리 지수, 전체 mesh와 양의 무한 tail. 실제 공통 family에 대한 결속은 후속 source 작업 |
+
+두 source packet, 실제 실행 import, 독립 검토의 현재 바이트를 확인했다. 진폭 설명 문서에는 독립 검토 링크 한 줄만 추가되었으며, 그 줄을 제거하면 검토 당시 문서 SHA가 정확히 복원됨을 별도로 확인했다. 보존된 진폭 첫 실패 및 generic test의 잘못된 metadata 경로 실패를 삭제하거나 성공으로 바꾸지 않았다.
+
+공통 cutoff 수열·모든 label의 H·전체 curl·같은 배경장의 물리 잔차 결속과 slow/mixed/curl 수치 구간은 다음 단계에서 확인한다. 공개 runtime은 **0.3.10/v77**이고, 이 저장점의 전체 M2 완료 및 M3 시작 값은 false다.
