@@ -1,8 +1,8 @@
 {
   "schema": "MathScope.M2.Navier.ExtendedCompletionAssessment/2",
-  "generatedAt": "2026-10-11T09:36:27.987073+00:00",
+  "generatedAt": "2026-10-11T09:59:07.592096+00:00",
   "assessmentKind": "SOURCE_BOUND_REVIEW_MANIFEST_NOT_PROOF_CERTIFICATE",
-  "assessmentRevision": "SOURCE_WHOLE_ANNULUS_H_PHYSICAL_SECOND_JETS_GLOBAL_PRESSURE_REVIEWED",
+  "assessmentRevision": "SOURCE_ACTUAL_GAUSSIAN_TAIL_GLOBAL_FIVE_MOMENTS_LEADING_STRESS_REVIEWED",
   "resumedCommit": "8a0046c547af4cccdbecae81fe647d414dd75d3f",
   "implementationCommit": "6c9ee58a1e82cd0bf4c0c813f1f9e7346b9dbfa6",
   "implementationBranch": "mathscope-m2-completion-20261011",
@@ -430,6 +430,34 @@
       "path": "research-ide/mathscope-m2/navier/research/evidence/m2-physical-pressure-progress-20261011/at-fdf2ea19-M2_COMPLETION_GATE.json",
       "sha256": "4b7f43ead44e3c7dca84cf005320e64537ba9153018b844954eaa66cd6ccf8c4",
       "state": "IMMUTABLE_PRIOR_ASSESSMENT_BYTES"
+    },
+    "actualGaussianTailPacket": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/gaussian-flat-tail-20261011/validation.json",
+      "sha256": "2debc35506e4b9c9102fc49924986410d404de99bf22481e61b7c54ea6ebc9b2",
+      "state": "PRESENT_AND_HASH_CHECKED_AT_THIS_ASSESSMENT",
+      "execution": "DIRECT_NODE_SOURCE_ONLY; public runtime remains0.3.10/v77"
+    },
+    "actualGlobalConservativeMomentsPacket": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/global-conservative-moments-20261011/validation.json",
+      "sha256": "ce822622c0fa3145bf88f295f3090d79ccd4239bbe4a3bd16a4f4dcc974e520e",
+      "state": "PRESENT_AND_HASH_CHECKED_AT_THIS_ASSESSMENT",
+      "execution": "DIRECT_NODE_SOURCE_ONLY; public runtime remains0.3.10/v77"
+    },
+    "actualLeadingGlobalStressBridgePacket": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/leading-global-stress-bridge-20261011/validation.json",
+      "sha256": "a4e72ccf6cc20f3bb25751b5283dda2906ba76c879484922ad3a877ed5fb9424",
+      "state": "PRESENT_AND_HASH_CHECKED_AT_THIS_ASSESSMENT",
+      "execution": "DIRECT_NODE_SOURCE_ONLY; public runtime remains0.3.10/v77"
+    },
+    "globalConservativeMomentsIndependentReview": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/global-conservative-moments-20261011/INDEPENDENT_GLOBAL_CONSERVATIVE_MOMENTS_REVIEW_KO.md",
+      "sha256": "1071da6ee2138e13ba8072b5a1c75dc73f6eb4f65d65e852d406e824f26e0901",
+      "state": "READ_ONLY_INDEPENDENT_REVIEW_NO_ADDITIONAL_EXECUTION"
+    },
+    "beforeGaussianStressAssessment": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/m2-gaussian-stress-progress-20261011/at-4f09dfbb-M2_COMPLETION_GATE.json",
+      "sha256": "ef2fb1e7203062d29be8bec4b4b101b0eaf1155a171fa8ca116bacea69a74edc",
+      "state": "IMMUTABLE_PRIOR_ASSESSMENT_BYTES"
     }
   },
   "additionalClaims": [
@@ -530,16 +558,16 @@
     },
     {
       "id": "G-N4",
-      "status": "PARTIAL_GLOBAL_M0_M1_M2_POSITIVE_PRESSURE_AND_VELOCITY_TAIL",
+      "status": "PARTIAL_LEADING_GLOBAL_STRESS_AND_FIVE_POSITIVE_MOMENTS",
       "blockingForUserRequestedM2": true,
-      "remaining": "Leading pressure/stress bridge, the five conservative stress cancellations and common recursive cutoff choices; connect the full physical residual and flat tail. Positive pressure convolution and n1 Omega prefixes are now source-bound on the generated prefix.",
+      "remaining": "Positive-order global stress cancellation and a single recursive cutoff sequence; connect every finite order to the full physical residual and its infinite flat tail. The leading pressure/stress bridge and all five original positive-order moment densities are now source-bound.",
       "wholeGateComplete": false
     },
     {
       "id": "G-N5",
-      "status": "PARTIAL_ACTUAL_CANONICAL_PHYSICAL_VELOCITY_SECOND_JETS",
+      "status": "PARTIAL_CANONICAL_PHYSICAL_SECOND_JETS_AND_ACTUAL_GAUSSIAN_FAST_TAIL",
       "blockingForUserRequestedM2": true,
-      "remaining": "Uniform actual Gaussian amplitudes, all-label tails, retained nonlinear/cutoff/eikonal residuals and the actual N6 interface. Original basis/fast/slow derivatives through space order2 and time order1 are now bound for the canonical terminal member.",
+      "remaining": "All-band amplitude authentication and slow/weight/physical Gaussian derivative bounds, retained nonlinear/cutoff/eikonal residuals and the actual N6 interface. The exact original homogeneous terminal pulse now has a positive Gaussian tail bound through fast order2.",
       "wholeGateComplete": false
     },
     {
@@ -675,6 +703,37 @@
       "statement": "Original positive pressure convolution on the generated n1/n2 prefix retains full F0, lambda, all ordered pairs and original O=Omega/X normalization. The four n1 global Omega prefixes are tied by literal FTC and the same M0 continuity; leading stress and five final stress moments remain separate.",
       "publicWorkerOrBrowserExecuted": false,
       "wholeM2Complete": false
+    },
+    {
+      "id": "M2X-ACTUAL-GAUSSIAN-TAIL",
+      "status": "DIRECT_NODE_SOURCE_AND_INDEPENDENT_REVIEW_SCOPED",
+      "sourceRefs": [
+        "actualGaussianTailPacket"
+      ],
+      "statement": "The actual full homogeneous terminal Volterra solution, both original signs and all temporal cutoff Leibniz terms through order2 have an explicit positive Gaussian estimate. The complete integer mesh count and positive infinite-tail formula are bound. All-label amplitude/slow/weight/physical residual assembly remains separate.",
+      "publicWorkerOrBrowserExecuted": false,
+      "wholeM2Complete": false
+    },
+    {
+      "id": "M2X-GLOBAL-FIVE-CONSERVATIVE-MOMENTS",
+      "status": "DIRECT_NODE_SOURCE_AND_INDEPENDENT_REVIEW_SCOPED",
+      "sourceRefs": [
+        "actualGlobalConservativeMomentsPacket",
+        "globalConservativeMomentsIndependentReview"
+      ],
+      "statement": "Original global pressure and M0 proofs identify all five actual n1/n2 whole moment densities with original continuous correction equations. Original weighted Omega history, all ordered pairs, thirteen continuous bump matrix entries and positive continuity are retained. Global positive stress and the infinite physical residual are separate.",
+      "publicWorkerOrBrowserExecuted": false,
+      "wholeM2Complete": false
+    },
+    {
+      "id": "M2X-LEADING-GLOBAL-STRESS",
+      "status": "DIRECT_NODE_SOURCE_AND_INDEPENDENT_REVIEW_SCOPED",
+      "sourceRefs": [
+        "actualLeadingGlobalStressBridgePacket"
+      ],
+      "statement": "Original full F0/U0/M0 and Pi0=P0+Cp, four literal prefixes and both original radial shear terms give exact leading radial/angular/axial momentum cancellation against the actual weighted stress derivatives. Positive stress/cutoff/infinite-tail assembly remains separate.",
+      "publicWorkerOrBrowserExecuted": false,
+      "wholeM2Complete": false
     }
   ],
   "gate": {
@@ -717,7 +776,10 @@
     "actualWholePhysicalVelocitySecondJetsComplete": false,
     "actualWholeAnnulusSelectedBandCovariancePositive": true,
     "actualCanonicalTerminalPhysicalVelocitySecondJets": true,
-    "actualGlobalPressureConvolutionOnGeneratedPrefix": true
+    "actualGlobalPressureConvolutionOnGeneratedPrefix": true,
+    "actualTerminalFastGaussianTailThroughSecondOrder": true,
+    "actualGlobalFivePositiveMomentDensities": true,
+    "actualLeadingGlobalStressDivergenceCancellation": true
   },
   "m3Plan": {
     "status": "NOT_STARTED_BLOCKED_BY_USER_REQUESTED_M2_GATE",
@@ -1143,31 +1205,42 @@
     }
   },
   "finalProvenanceReview": {
-    "checkedAt": "2026-10-11T09:36:27.987073+00:00",
+    "checkedAt": "2026-10-11T09:59:07.592096+00:00",
     "checkedGroups": [
       {
-        "group": "annulus-H-source-refs",
-        "files": 69,
+        "packet": "actualGaussianTailPacket",
+        "group": "files",
+        "files": 68,
         "allCurrentBytesMatch": true
       },
       {
-        "group": "physical-files",
-        "files": 20,
+        "packet": "actualGaussianTailPacket",
+        "group": "imports",
+        "files": 61,
         "allCurrentBytesMatch": true
       },
       {
-        "group": "physical-imports",
-        "files": 72,
+        "packet": "actualGlobalConservativeMomentsPacket",
+        "group": "files",
+        "files": 49,
         "allCurrentBytesMatch": true
       },
       {
-        "group": "pressure-files",
-        "files": 69,
+        "packet": "actualGlobalConservativeMomentsPacket",
+        "group": "imports",
+        "files": 37,
         "allCurrentBytesMatch": true
       },
       {
-        "group": "pressure-imports",
-        "files": 35,
+        "packet": "actualLeadingGlobalStressBridgePacket",
+        "group": "files",
+        "files": 16,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "packet": "actualLeadingGlobalStressBridgePacket",
+        "group": "imports",
+        "files": 60,
         "allCurrentBytesMatch": true
       }
     ],
@@ -1185,7 +1258,7 @@
     "trustLimit": "Editing or rehashing this review never proves an analytic claim or authorizes M3."
   },
   "assessmentHashAlgorithm": "SHA-256 over UTF-8 json.dumps(record_without_assessmentSHA256, ensure_ascii=False, sort_keys=True, separators=(comma,colon)); no trailing newline.",
-  "previousCheckpointCommit": "fdf2ea19d373e7bb280913db6403c4103af145c0",
+  "previousCheckpointCommit": "4f09dfbbee1925e0b8d5d63e1943147a02144464",
   "threeComponentSourceReview": {
     "path": "research-ide/mathscope-m2/navier/research/evidence/m2-math-progress-20261011/review-validation.json",
     "sha256": "14847054372f32d77d1922f78c48a746389d7d5f781fb62dbe043d1ca8568684",
@@ -1504,10 +1577,10 @@
     "heatRuntimeCurrentFilesMatchObservedRuns": true
   },
   "newSourceProgress": {
-    "generatedAt": "2026-10-11T09:36:27.987073+00:00",
+    "generatedAt": "2026-10-11T09:59:07.592096+00:00",
     "lastPublishedRuntime": "0.3.10",
     "lastPublishedVersion": "v77",
-    "savedSourceCheckpoint": "fdf2ea19d373e7bb280913db6403c4103af145c0",
+    "savedSourceCheckpoint": "4f09dfbbee1925e0b8d5d63e1943147a02144464",
     "packetRefs": [
       "terminalThirdJetPacket",
       "outerFlatPacket",
@@ -1520,15 +1593,18 @@
       "leadingStreamPrimitivePacket",
       "wholeAnnulusCovariancePacket",
       "physicalVelocitySecondJetPacket",
-      "globalPressureConvolutionPacket"
+      "globalPressureConvolutionPacket",
+      "actualGaussianTailPacket",
+      "actualGlobalConservativeMomentsPacket",
+      "actualLeadingGlobalStressBridgePacket"
     ],
     "failedMathematicalFirstFAttemptCountedAsCompletion": false,
     "newAnalyticLeanRun": false,
     "nextDependencies": [
       "inner flat sqrt and all-band common recursive selector",
-      "five conservative stress moments and leading n0 bridge",
-      "uniform all-label Gaussian amplitude and physical residual tails",
-      "complete numerical pulse/H/weight/curl enclosures"
+      "positive global stress and universal physical residual tails",
+      "uniform weighted all-label Gaussian and full curl assembly",
+      "absolute actual numerical pulse/H/weight/curl derivative enclosures"
     ]
   },
   "priorPhysicalPressureProvenanceReview": {
@@ -1585,5 +1661,39 @@
     "mathematicalGatePromotedByHashing": false,
     "runtimeVerificationRetainedFromPriorAssessment": true
   },
-  "assessmentSHA256": "581ddf0b6098f9f9ac437b008a3b65b9c4b970b2a7c7c0f94c868b8a12aa96f8"
+  "priorGaussianStressProvenanceReview": {
+    "checkedAt": "2026-10-11T09:36:27.987073+00:00",
+    "checkedGroups": [
+      {
+        "group": "annulus-H-source-refs",
+        "files": 69,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "physical-files",
+        "files": 20,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "physical-imports",
+        "files": 72,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "pressure-files",
+        "files": 69,
+        "allCurrentBytesMatch": true
+      },
+      {
+        "group": "pressure-imports",
+        "files": 35,
+        "allCurrentBytesMatch": true
+      }
+    ],
+    "newSourcePacketsReferenced": 3,
+    "runtimeUnchanged": true,
+    "mathematicalGatePromotedByHashing": false,
+    "runtimeVerificationRetainedFromPriorAssessment": true
+  },
+  "assessmentSHA256": "c5b749065045e5fe83279a061188f742619bd7371b03c7a13f973cd6cedf6e98"
 }

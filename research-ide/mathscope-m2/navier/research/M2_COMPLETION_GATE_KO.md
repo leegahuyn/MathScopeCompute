@@ -4,7 +4,7 @@
 
 **M2의 이번 추가 구현과 검증은 진행됐지만, 사용자가 요청한 모든 수학 범위는 아직 완료되지 않았다. M3는 시작하지 않았다.** 연결이 끊기기 전의 최신 저장점 `8a0046c5`에서 이어서 작업했으며, 현재 source·생성된 Worker·공개 v77 브라우저에서 확인한 실행 코드의 버전은 `0.3.10`이다. 공개 페이지 v75/v76의 기존 검증은 runtime `0.3.9`에 해당한다. 새 runtime의 실제 공개 검증은 [heat runtime 기록](evidence/heat-runtime-20261011/HEAT_RUNTIME_RELEASE_KO.md)에 구분했다.
 
-원래 cutoff 적분의 엄밀한 수치 구간, 실제 고정 label의 물리 curl, 배경 1·2차 계수의 물리 미분 상수와 강화 cutoff 선택식에서 이어서 작업했다. 표시용 `ell=1` 확장의 지정점에는 비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명이 있으므로, 별도의 실제 작은 q 영역에서 양성을 구성한다. 최신 source 결과는 **전체 terminal F의 지정점 수치 도함수, 실제 potential·harmonic 3차 미분, 전체 annulus의 선택 band 공분산 양성, 실제 물리 velocity의 공간 2차·시간 1차 미분 및 양의 order pressure convolution**까지 확장되었다. 10–12절에 정확한 실행·독립 검토 범위를 기록한다. 안쪽 flat 경계, 다섯 전역 stress 모멘트 및 모든 label의 물리 잔차 연결은 진행 중이다. 새 source 결과를 공개 v77에서 이미 실행했다고 기록하지 않는다.
+원래 cutoff 적분의 엄밀한 수치 구간, 실제 고정 label의 물리 curl, 배경 1·2차 계수의 물리 미분 상수와 강화 cutoff 선택식에서 이어서 작업했다. 표시용 `ell=1` 확장의 지정점에는 비음수 공분산 가중치 쌍이 존재하지 않는다는 원본 결속 서면 증명이 있으므로, 별도의 실제 작은 q 영역에서 양성을 구성한다. 최신 source 결과는 **전체 terminal F의 지정점 수치 도함수, 전체 annulus의 선택 band 공분산 양성, 실제 물리 velocity의 공간 2차·시간 1차 미분, 원래 pulse의 Gaussian 꼬리, 다섯 전역 보존 모멘트와 leading 압력·응력 소거**까지 확장되었다. 10–13절에 정확한 실행·독립 검토 범위를 기록한다. 안쪽 flat 경계, 양의 차수 stress와 모든 label의 전역 물리 잔차 연결은 진행 중이다. 새 source 결과를 공개 v77에서 이미 실행했다고 기록하지 않는다.
 
 기계 판독 판단은 [M2_COMPLETION_GATE.json](M2_COMPLETION_GATE.json), 이번 실행·배포 기록은 [continuation evidence](evidence/m2-continuation-20261011/)에 있다. 이 문서와 JSON은 **범위가 명시된 감사 판단**이다. 상태값·파일명·테스트 개수·hash만으로 모든 해석학적 명제가 자동 증명되는 것은 아니다.
 
@@ -239,3 +239,19 @@ M0 검증은 기존 원문 smoothness·contraction·support 계약을 사용한 
 pressure에서는 compact integrand 뒤에서도 남는 원래 적분 질량을 유지한다. 원래 full F0의 양의 λ와 두 bump의 모멘트, 실제 Xv 항, axis 값 및 cut 이후의 상수를 모두 추적하여 pressure의 전체 prefix를 연결했다. [독립 pressure 검토](evidence/global-pressure-convolution-20261011/INDEPENDENT_GLOBAL_PRESSURE_CONVOLUTION_REVIEW_KO.md)는 37개 원본 import의 hash와 수식을 대조했으며 추가 source 실행으로 세지 않는다.
 
 이 세 결과로 확인한 부분만 새 true 항목으로 추가했다. **M2 전체 완료·정밀 pulse 수치 계산·모든 label의 전역 잔차·M3 시작은 아직 false**이다. Gaussian 원본 시도의 제한 시간 종료는 통과 기록으로 사용하지 않는다. 공개 runtime 0.3.10/v77의 실행 범위도 그대로 유지한다.
+
+## 13. 원래 Gaussian 꼬리·다섯 전역 모멘트·leading 응력 소거
+
+앞선 [4f09dfbb 저장점](https://github.com/leegahuyn/MathScopeCompute/commit/4f09dfbbee1925e0b8d5d63e1943147a02144464)의 원본 위에서 다음 결과를 검증했다.
+
+| 결과 | 최종 source 실행 | 수학적 범위 |
+|---|---:|---|
+| [원래 homogeneous Gaussian 꼬리](ACTUAL_PULSE_GAUSSIAN_TAIL_KO.md) | 8/8, 내부12개; exit0,33.617초 | 실제 full Volterra 해의 stable matrix와 원래 envelope/cutoff를 결속. fast v 미분2차까지 모든 Leibniz 항, 양의 Gaussian 지수, 전체 정수 mesh 계수와 양의 무한 tail. 모든 label의 amplitude·slow·weight·물리 미분 연결은 별도 |
+| [다섯 전역 보존 모멘트](ACTUAL_GLOBAL_CONSERVATIVE_MOMENTS_KO.md) | 8/8; exit0,20.244초 | 실제 n1/n2의 다섯 전체 밀도, weighted Omega의 원래 다섯 적분,13개 continuous bump matrix entry와 모든 ordered pair. positive continuity 및 동일 원래 inverse equation을 소비 |
+| [leading 압력·응력 소거](ACTUAL_LEADING_GLOBAL_STRESS_BRIDGE_KO.md) | 7/7, 내부9개; exit0,19.390초 | full F0/U0/M0, 비상수 pressure axis datum,4개 literal primitive와 두 shear를 유지한 실제 radial/angular/axial momentum 및 weighted stress 미분 소거 |
+
+각 결과는 독립 읽기 검토와 현재 source/import hash 대조를 거쳤다. 검토나 hash 검사를 추가 source 실행 수로 합산하지 않는다. 첫 실패, 제한 시간 종료, 잘못된 test key와 정확한 수정 snapshot은 각 evidence 안에 남긴다. 원래 수학 생성기와 봉인된 기존 결과를 바꾸지 않는다.
+
+Gaussian 꼬리에서는 stable matrix의 음의 대각 성분을 유지하여 ell에 독립인 propagator 상계를 얻는다. 원래 cutoff의 미분항 psi′t를 빠뜨리지 않으며 무한 tail을 수치0으로 대체하지 않는다. leading stress의 두 shear 중 하나를 빼면 실제 residual 검사에서 실패한다.
+
+이 저장점의 공개 runtime은 0.3.10/v77이다. **전체 M2, 정밀 pulse/H/weight/curl 도함수의 수치 예산, 모든 label의 물리 flat-error와 M3 시작은 아직 false**다. 이 표의 source 결과를 전체 연구 증명 완료로 확대하지 않는다.
