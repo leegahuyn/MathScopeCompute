@@ -1,0 +1,450 @@
+{
+  "schema": "MathScope.M3.N8.Progress/1",
+  "status": "GENERIC_GALERKIN_EXECUTED_RECONSTRUCTION_PARTIAL",
+  "sourceBlueprint": {
+    "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+    "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+    "pageCount": 99,
+    "checklistPage": 66,
+    "sourceExtraction": "PyMuPDF exact page text; spaces in the displayed title may be inherited only when the text agrees ignoring whitespace."
+  },
+  "sourcePaper": {
+    "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"
+  },
+  "P7Changed": false,
+  "M2Changed": false,
+  "originalCriterionCount": 8,
+  "completedOriginalCriteria": 6,
+  "criteria": [
+    {
+      "id": "N8-01",
+      "title": "Divergence-free Fourier 기저",
+      "text": "2π 주기영역에서k·ûk=0, û−k=conj(ûk), Pk=I−kkᵀ/|k|²를사용한다. k=0은별도mean equation이다. 합격: 제약이초\n기·각accepted step에서유지되고pressure 회복에div f가포함된다. 이branch의periodic domain을whole-space 논문\n해와혼동하지않는다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
+      "evidence": [
+        "navier/galerkin.mjs",
+        "navier/evidence/N8-acceptance.json",
+        "navier/evidence/N8-TG.json",
+        "navier/tests/flow-observations.test.mjs"
+      ],
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "The independent 2pi-periodic Fourier Galerkin branch still validates divergence, conjugate symmetry and zero mode initially and at each accepted step, with div f in pressure recovery. The new bounded accepted-state history is independently checked to leave the final integrator coefficients bit-for-bit unchanged. This domain is explicitly separate from the paper whole-space field.",
+      "genericBranchOnly": true,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N8-02",
+      "title": "비선형 convolution과 dealiasing",
+      "text": "모든p+q=k 상호작용을계산한다. quadratic product는3/2 padding 또는그와동등한정확한retained-mode convolu-\ntion을사용한다. 합격: 작은random solenoidal fixture에서direct convolution과FFT product가정규화10^−11 이내\n일치한다. high-mode aliasing negative control이검출된다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
+      "evidence": [
+        "navier/galerkin.mjs",
+        "navier/evidence/acceptance.json",
+        "navier/evidence/independent-numpy.json"
+      ],
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "All retained direct convolution interactions and the separately implemented padded FFT remain compared below1e-11. The high-mode aliasing omission is rejected, and independent NumPy output is preserved. The observation changes do not alter this numerical kernel.",
+      "genericBranchOnly": true,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N8-03",
+      "title": "시간 적응과 에너지 안정성",
+      "text": "diffusion integrating factor/IMEX 등으로stiff linear term을처리하고advection CFL·embedded local error·energy\ndefect로step을승인한다. 합격: Taylor-Green의amplitude/energy를시간반분에서설계차수로수렴시킨다. dt를줄여\n도사라지지않는energy defect는spatial/aliasing 오류로조사한다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
+      "evidence": [
+        "navier/galerkin.mjs",
+        "navier/evidence/N8-acceptance.json",
+        "navier/evidence/independent-numpy.json",
+        "navier/flow-observations.mjs"
+      ],
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "The existing IMEX method retains advection CFL, embedded step doubling and energy-defect acceptance. Taylor-Green amplitude and energy show the intended second-order time refinement, independently checked with NumPy. New path integration has its own distinct error estimate and does not substitute for the solver acceptance gate.",
+      "genericBranchOnly": true,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N8-04",
+      "title": "τ 기반 near-terminal sampling",
+      "text": "s=−logτ를주변수로쓰고τ>0만평가한다. normalized coordinates와velocity를계산한뒤physical scaling을적용한다.\n합격: τ=10^−2,10^−4,10^−8,10^−12 예시와더작은값의precision mode가재현된다. 표시t가1로반올림돼도내\n부τ>0 계약은유지한다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T14:01:32.114508+00:00",
+      "assessedBy": "Root original-criterion review of actual source gates and exact support proof",
+      "evidence": [
+        "navier/localization.mjs",
+        "navier/evidence/N8-nearT.json",
+        "navier/flow-observations.mjs",
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-near-terminal.mjs",
+        "navier/source-near-terminal-evidence.mjs",
+        "navier/source-core-refinement.mjs",
+        "navier/evidence/source-near-terminal-20261012/attempt2/receipt.json",
+        "navier/evidence/source-core-refinement-20261012/attempt2/receipt.json",
+        "navier/SOURCE_NEAR_TERMINAL_N8.md",
+        "navier/evidence/source-core-restriction-20261012/attempt1/receipt.json",
+        "navier/source-core-restriction.mjs",
+        "navier/tests/near-terminal-archive.test.mjs",
+        "navier/tests/build-core-restriction-evidence.py",
+        "web/navier-near-terminal-view.mjs",
+        "web/tests/navier-near-terminal-view.test.mjs"
+      ],
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "The original three-component near-terminal intervals are now bound to the same final localized field on the checked original core restriction. The consumer independently revalidates the recorded inner/domain/near-terminal sources and executes the new support induction, matching source binding, Xin/Y/eta, qStar and all five unit-plateau rows. The exact identity s=-log(tau), strictly positive internal tau, three separate physical scale formulas, source depths0/2/4/8/12 and the requested decimal examples plus smaller precision examples are retained. Decimal examples in the genuine initial zero interval are explicitly distinguished from the nonzero source-depth intervals. A displayed t rounded to1 never sets internal tau to0. The original10-test/38-check near-terminal gate and new16-test/41-check source-core proof reproduce these values. This completes near-terminal sampling on the original core path; it does not complete an arbitrary-coordinate annular evaluator or the independent N8-05 adaptation/tail requirements.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      },
+      "previousSourceResumeAssessments": [
+        {
+          "status": "PARTIAL",
+          "originalCriterionComplete": false,
+          "assessedAt": "2026-10-12T13:33:58.646483+00:00",
+          "assessedBy": "MathScope original-criterion source execution review",
+          "acceptanceScope": "The original positive tau and s=-log(tau) binding is now checked exactly, including five source-admissible inner paths with all three outward normalized velocity intervals and exact physical scale expressions. The prescribed decimal tau examples lie in the actual initial zero extension for the original tiny constants. Their zero values are retained. The near-terminal source gate passed10 tests plus38 independent Fraction checks, with117 source bytes unchanged. Final-field identity remains separate from this authenticated original background/core computation.",
+          "remaining": [
+            "Complete the original final-field identification and its complete near-terminal evaluator, preserving exact positive tau and source scales.",
+            "Do not turn a restricted background/core interval or the initial zero branch into a complete reconstructed Navier field."
+          ],
+          "remainingObligations": [
+            "Complete the original final-field identification and its complete near-terminal evaluator, preserving exact positive tau and source scales.",
+            "Do not turn a restricted background/core interval or the initial zero branch into a complete reconstructed Navier field."
+          ]
+        }
+      ],
+      "criterionDependencyReview": {
+        "requiredAndVerified": [
+          "Positive exact tau and s=-log(tau) identity",
+          "All three normalized and physical velocity scale formulas",
+          "Reproducible requested decimal examples and smaller exact positive times",
+          "Same final source-core restriction and unchanged source/archive binding"
+        ],
+        "separateUncompletedObligations": [
+          "N8-05 annular pulse/axial/Fourier/active-order refinement and uniform tails",
+          "All-space final field evaluation",
+          "N8-08 independent-environment final release bundle"
+        ],
+        "historicalReceiptsAndSourceBytesUnchanged": true,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false
+      }
+    },
+    {
+      "id": "N8-05",
+      "title": "공간·급수·정밀도 적응",
+      "text": "core radius, axial length, pulse wavelength, active cutoff orders를함께해결한다. 각refinement 축을독립증가시킨\n다. 합격: 2배grid, Fourier cutoff, coefficient order, arithmetic precision 비교표와별도tail bound를저장한다. 예산\n초과시last-resolved τ와원인을표시한다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T13:33:58.646483+00:00",
+      "assessedBy": "MathScope original-criterion source execution review",
+      "evidence": [
+        "navier/galerkin.mjs",
+        "navier/evidence/acceptance.json",
+        "navier/evidence/independent-numpy.json",
+        "navier/flow-observations.mjs",
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-near-terminal.mjs",
+        "navier/source-near-terminal-evidence.mjs",
+        "navier/source-core-refinement.mjs",
+        "navier/evidence/source-near-terminal-20261012/attempt2/receipt.json",
+        "navier/evidence/source-core-refinement-20261012/attempt2/receipt.json",
+        "navier/SOURCE_NEAR_TERMINAL_N8.md"
+      ],
+      "remaining": [
+        "Add actual annular Fourier cutoff, axial length, pulse wavelength and all active correction orders as independent source refinement axes.",
+        "Certify uniform omitted tails and a last-resolved positive tau with a precise resource or enclosure failure reason."
+      ],
+      "remainingObligations": [
+        "Add actual annular Fourier cutoff, axial length, pulse wavelength and all active correction orders as independent source refinement axes.",
+        "Certify uniform omitted tails and a last-resolved positive tau with a precise resource or enclosure failure reason."
+      ],
+      "acceptanceScope": "The actual original core is freshly evaluated with independent grid[1,2,4], coefficient-order[32,48,64] and arithmetic-precision[128,192,256] axes. Common-coordinate intervals are compared with positive nonlinear/pressure errors retained; the bounded execution cache rejects over-budget unions, including a baseline omitted from requested grids.196 independent Fraction checks pass. Full annular Fourier, axial/pulse scales, active correction cutoffs and uniform source tails remain missing.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N8-06",
+      "title": "시각화·물리량 연결",
+      "text": "fixed physical bounds와normalized view를제공하고instantaneous streamlines/particle paths, 속도/각속도, core/\nglobal energy를구분한다. 합격: 모든scene은실제run hash·샘플위치·단위·색범위·vector scale를갖는다. 자동확대나\nvector 정규화가core 수축·성장을숨기지않는다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
+      "evidence": [
+        "navier/index.mjs",
+        "navier/evidence/N8-TG.json",
+        "evidence/live-ui/acceptance.json",
+        "web/extended-view-contract.mjs",
+        "web/tests/extended-worker.test.mjs",
+        "navier/flow-observations.mjs",
+        "navier/tests/flow-interface.test.mjs",
+        "navier/tests/flow-observations.test.mjs",
+        "navier/evidence/source-current-20261012/fast-tests.log",
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "evidence/all64-20261012/public-v93/navier-flow-ui-audit.json",
+        "evidence/all64-20261012/public-v93/navier-energy-ui-audit.json"
+      ],
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "Actual finite-run observations preserve81 sample positions/vectors, fixed physical bounds, separately declared normalized periodic coordinates, fixed vector scale and common color bounds. Published v93 controls and exact selections verified instantaneous streamlines/coefficient-history particle paths, velocity/axis-dependent angular velocity (undefined on axis), and whole-box Parseval/fixed-core midpoint energy. Input/source/result and archive replay remain bound. This is the finite flow/display criterion; no original near-terminal field or complete source reconstruction is inferred. The earlier v85 liveVerification remains a historical receipt.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      },
+      "liveVerification": {
+        "receipt": "evidence/live-ui/acceptance.json",
+        "receiptSHA256": "ad15205805dade8f24cc4d75a52fb00ad7740932fb2f8387ee6348d816e2d408",
+        "receiptCheckCount": 20,
+        "relevantCheckIDs": [
+          "N8-import-fresh-replay-view-restore",
+          "N8-keyboard-LOD-source-invariance"
+        ],
+        "observedVersions": [
+          85
+        ],
+        "sourceReconstructionComplete": false,
+        "originalCriterionPromoted": false
+      },
+      "currentReleaseAcceptance": {
+        "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+        "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+        "reason": "고정 물리/정규화 좌표, streamline/pathline, 속도/각속도와 core/global controls를 조작하고 실제 위치·단위·색·vector scale과 replay 결속을 확인했다.",
+        "evidence": [
+          {
+            "path": "evidence/all64-20261012/public-v93/navier-flow-ui-audit.json",
+            "bytes": 21166,
+            "sha256": "ebb740b1f95cfc353c47647b1e158e0b2d0cf2863c5e5cc7d25989f9b5bfa258"
+          },
+          {
+            "path": "evidence/all64-20261012/public-v93/navier-energy-ui-audit.json",
+            "bytes": 304,
+            "sha256": "ed792f492b14cafcf94ee0382d6750708feb8c0debfc7efe31eb4d0276594949"
+          }
+        ],
+        "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+        "historicalEvidenceUnchanged": true
+      },
+      "currentLiveVerification": {
+        "evidence": [
+          {
+            "path": "evidence/all64-20261012/public-v93/navier-flow-ui-audit.json",
+            "bytes": 21166,
+            "sha256": "ebb740b1f95cfc353c47647b1e158e0b2d0cf2863c5e5cc7d25989f9b5bfa258"
+          },
+          {
+            "path": "evidence/all64-20261012/public-v93/navier-energy-ui-audit.json",
+            "bytes": 304,
+            "sha256": "ed792f492b14cafcf94ee0382d6750708feb8c0debfc7efe31eb4d0276594949"
+          }
+        ],
+        "observedVersion": 93,
+        "originalCriterionPromoted": true,
+        "sourceReconstructionComplete": false,
+        "analyticOrLeanProofIssued": false
+      }
+    },
+    {
+      "id": "N8-07",
+      "title": "Claim-test-proof 연결",
+      "text": "각관측량에원문reference, numerical test, analytic certificate, Lean theorem을별도링크한다. 합격: arbitrary\nsampled array를axiom으로놓고PDE 해라고결론내리지않는다. certified approximation 표시는해당구간의error\nenclosure와조건을요구한다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
+      "evidence": [
+        "navier/index.mjs",
+        "navier/evidence/acceptance.json",
+        "navier/flow-observations.mjs",
+        "navier/source-current-evidence.mjs",
+        "navier/tests/flow-interface.test.mjs",
+        "navier/evidence/source-current-20261012/source-current-execution.json",
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "evidence/all64-20261012/public-v93/navier-flow-ui-audit.json",
+        "evidence/all64-20261012/public-v93/navier-source-archive-ui-audit.json"
+      ],
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "Each new flow observation carries source-definition/finite-test metadata and explicit null analytic/Lean proof fields. Error indicators are not called certified enclosures. The N6 source summary separately exposes the actual recorded heavy execution, original hashes and remaining proof duties; browser replay only recreates this summary. Mutating paths, settings or claim authority is rejected.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      },
+      "currentReleaseAcceptance": {
+        "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+        "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+        "reason": "관측별 원문/정의·numerical test·analytic/Lean 부재 표기와 source archive의 recorded-only scope, 권위 변조 거부를 확인했다.",
+        "evidence": [
+          {
+            "path": "evidence/all64-20261012/public-v93/navier-flow-ui-audit.json",
+            "bytes": 21166,
+            "sha256": "ebb740b1f95cfc353c47647b1e158e0b2d0cf2863c5e5cc7d25989f9b5bfa258"
+          },
+          {
+            "path": "evidence/all64-20261012/public-v93/navier-source-archive-ui-audit.json",
+            "bytes": 4111,
+            "sha256": "898eef87d404fd441080d76d9c619e7aa591832fb932a5e3d4449e472328724c"
+          }
+        ],
+        "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+        "historicalEvidenceUnchanged": true
+      },
+      "currentLiveVerification": {
+        "evidence": [
+          {
+            "path": "evidence/all64-20261012/public-v93/navier-flow-ui-audit.json",
+            "bytes": 21166,
+            "sha256": "ebb740b1f95cfc353c47647b1e158e0b2d0cf2863c5e5cc7d25989f9b5bfa258"
+          },
+          {
+            "path": "evidence/all64-20261012/public-v93/navier-source-archive-ui-audit.json",
+            "bytes": 4111,
+            "sha256": "898eef87d404fd441080d76d9c619e7aa591832fb932a5e3d4449e472328724c"
+          }
+        ],
+        "observedVersion": 93,
+        "originalCriterionPromoted": true,
+        "sourceReconstructionComplete": false,
+        "analyticOrLeanProofIssued": false
+      }
+    },
+    {
+      "id": "N8-08",
+      "title": "재현 패키지와 최종 체크",
+      "text": "판본·commit·상수·기저·domain·time schedule·quadrature·truncations·precision·tails·residual·energy·camera·build\nlogs를묶는다. 합격: 다른환경에서fixture와selected run이같은허용오차로재현된다. 이번문서작성턴의상태는설계\n완료이며구현·사이트변경·배포완료로표시하지않는다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T13:33:58.646483+00:00",
+      "assessedBy": "MathScope original-criterion source execution review",
+      "evidence": [
+        "navier/tests/build-source-inheritance.py",
+        "navier/tests/run.mjs",
+        "navier/tests/independent_numpy.py",
+        "navier/source-inheritance.json",
+        "navier/implementation-pin.mjs",
+        "navier/evidence/acceptance.json",
+        "evidence/live-ui/acceptance.json",
+        "web/extended-view-contract.mjs",
+        "web/tests/extended-worker.test.mjs",
+        "web/build_extended.py",
+        "web/tests/test_extended_build.py",
+        "CI_EXECUTION_WORKSPACES.md",
+        "navier/tests/build-source-current-evidence.py",
+        "navier/tests/flow-interface.test.mjs",
+        "navier/evidence/independent-numpy.json",
+        "navier/evidence/source-current-20261012/source-current-execution.json",
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-near-terminal.mjs",
+        "navier/source-near-terminal-evidence.mjs",
+        "navier/source-core-refinement.mjs",
+        "navier/evidence/source-near-terminal-20261012/attempt2/receipt.json",
+        "navier/evidence/source-core-refinement-20261012/attempt2/receipt.json",
+        "navier/SOURCE_NEAR_TERMINAL_N8.md"
+      ],
+      "remaining": [
+        "Bind every final source constant, cutoff, precision, tail, full residual and whole-K energy to the completed reconstruction.",
+        "Verify the published final build, export/replay, actual matching CI commit and independent-environment tolerances."
+      ],
+      "remainingObligations": [
+        "Bind every final source constant, cutoff, precision, tail, full residual and whole-K energy to the completed reconstruction.",
+        "Verify the published final build, export/replay, actual matching CI commit and independent-environment tolerances."
+      ],
+      "acceptanceScope": "The new exact source archives bind their original constants, source captures, command/logs, graph hashes, positive tau/scales and recorded-only browser consumers. Fresh core refinement and archive replay are distinct. The large historical signed artifact is losslessly packed with exact raw SHA restoration. Full final-field reconstruction, every tail/energy obligation and a complete cross-environment final release remain incomplete.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      },
+      "liveVerification": {
+        "receipt": "evidence/live-ui/acceptance.json",
+        "receiptSHA256": "ad15205805dade8f24cc4d75a52fb00ad7740932fb2f8387ee6348d816e2d408",
+        "receiptCheckCount": 20,
+        "relevantCheckIDs": [
+          "N8-direct-reload-startup-route",
+          "N8-import-fresh-replay-view-restore",
+          "edited-input-and-stale-result-protection"
+        ],
+        "observedVersions": [
+          85
+        ],
+        "sourceReconstructionComplete": false,
+        "originalCriterionPromoted": false
+      }
+    }
+  ],
+  "allOriginalCriteriaComplete": false,
+  "wholeM3Complete": false,
+  "assessmentRevision": "m3-original-source-operators-and-core-restriction-20261012",
+  "actualSourceExecution": {
+    "receipt": "navier/evidence/source-current-20261012/source-current-execution.json",
+    "sha256": "3c24c84c3356b458d4866cf2008047ff809dfb0a51524caed1044c5c73334b21",
+    "browserSummaryIsRecordedOnly": true,
+    "completeN6": false
+  },
+  "actualNewSourceExecutions": {
+    "nearTerminal": {
+      "path": "navier/evidence/source-near-terminal-20261012/attempt2/receipt.json",
+      "sha256": "e7fdec60f4ef086212dac752ccdb6419c8898b7cb91945a617b3704c676253bc",
+      "bytes": 2874
+    },
+    "independentCoreRefinement": {
+      "path": "navier/evidence/source-core-refinement-20261012/attempt2/receipt.json",
+      "sha256": "2ac25e1ef1bc1f5bfe9d98ac381d33233f7719c4b4a3ff0da396e7b4bc2af6c5",
+      "bytes": 1797
+    },
+    "fullFinalFieldConstructed": false,
+    "originalCriterionPromoted": false
+  }
+}

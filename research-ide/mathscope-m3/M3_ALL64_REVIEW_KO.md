@@ -1,8 +1,8 @@
 # MathScope M3 전체 64개 원문 기준 누적 검토
 
-**현재 원문 기준 완료는 54/64개이며, 실질 잔여는 10개다.** 원문의 제목·본문·쪽수·출처는 보존했다. 개별 연산자 또는 관측 요구의 완료와 전체 Navier 장의 재구성은 별도 판정한다.
+**현재 원문 기준 완료는 55/64개이며, 실질 잔여는 9개다.** 원문의 제목·본문·쪽수·출처는 보존했다. 개별 연산자 또는 관측 요구의 완료와 전체 Navier 장의 재구성은 별도 판정한다.
 
-검토 기준 시각: `2026-10-12T14:42:19.692291+00:00`. 이 보고서는 연결 복구 뒤 실제 추가한 소스 연산·검증·표시 연결을 반영한다. 공개 사이트와 GitHub의 최종 배포 검증은 별도 릴리스 기록에서 확인한다.
+검토 기준 시각: `2026-10-12T16:48:05.035719+00:00`. 이 보고서는 연결 복구 뒤 실제 추가한 소스 연산·검증·표시 연결을 반영한다. 공개 사이트와 GitHub의 최종 배포 검증은 별도 릴리스 기록에서 확인한다.
 
 ## 1. 원문별 현재 집계
 
@@ -15,8 +15,8 @@
 | Y7 | 8 | 8 | 0 | [GAUGE_PROGRESS.json](GAUGE_PROGRESS.json) |
 | N6 | 8 | 3 | 5 | [N6_PROGRESS.json](N6_PROGRESS.json) |
 | N7 | 8 | 5 | 3 | [N7_PROGRESS.json](N7_PROGRESS.json) |
-| N8 | 8 | 6 | 2 | [N8_PROGRESS.json](N8_PROGRESS.json) |
-| **전체** | **64** | **54** | **10** | |
+| N8 | 8 | 7 | 1 | [N8_PROGRESS.json](N8_PROGRESS.json) |
+| **전체** | **64** | **55** | **9** | |
 
 완료 수는 `originalCriterionComplete === true`만 센다. 실행 성공, 그래프 해시 일치, 조건부 명제, 유한 모형 결과를 다른 원문 요구의 완료로 바꾸지 않는다. M2의 보존된 64개와 M4의 별도 16개는 이번 집계에 합산하지 않는다.
 
@@ -35,6 +35,7 @@
 | N7-07 | 같은 열린 내부 영역에서 모든 원문 보정 연산의 지지가 사라지는 증명을 새로 실행해 실제 경로를 식별했다. 양의 e0 하한과 전체 Cτ^(2h) 꼬리를 모든 충분히 작은 양의 τ에 연결했다. | core-restriction, domain-exterior |
 | N7-08 | 원문은 비교·배율·지지 분리 주기화를 검토하고 같은 force/data·주기적 압력·에너지 가정을 유지하도록 요구한다. 실제 source cutoff의 정확한 배율·미분·전체 PDE와 간격을 검증했으며 미완료 전역 가정을 보존한다. 별도 N7-06 계산이나 무조건 C/D 발급을 추가 조건으로 붙이지 않는다. | periodization-review, localization-operator, domain-exterior |
 | N8-04 | 같은 최종 장의 내부 경로에 세 성분 구간을 연결하고, 정확한 양의 τ·s=-logτ·물리 배율·요청한 소수 예시와 더 작은 시간의 재현을 확인했다. | core-restriction, near-terminal |
+| N8-08 | 실제 공개 유동 selected run과 원문 core fixture 두 개를 다른 GitHub 환경의 원본 Node 모듈·배포 Worker로 재실행하고 각 기록을 재생했다. 총105713개 수치가 같은 허용오차로 일치했으며, 14개 독립 NumPy 계산과 6개 변조 방지 검사도 통과했다. 판본·commit·전체 소스·상수·기저·영역·시간표·적분·절단·정밀도·tail·실제 residual/energy·camera·build logs를 하나의 검증 manifest와 원본 CI ZIP으로 묶었다. 원문의 재현 요구는 충족하며, 전체 원문장의 에너지·전역 잔차 및 N8-05 적응 요구는 이 판정으로 대체하지 않는다. | n8-public-selected-reproduction |
 
 ### 실제 새 소스 관문
 
@@ -49,6 +50,7 @@
 | localization-operator | 10 | 55 | 13 | 2.992 | [receipt](navier/evidence/source-localization-operator-20261012/attempt1/receipt.json) |
 | periodization-review | 5 | 33 | 17 | 2.040 | [receipt](navier/evidence/source-periodization-review-20261012/attempt2/receipt.json) |
 | global-temporal | 15 | — | 123 | 423.506 | [receipt](navier/evidence/global-temporal-20261012/attempt3/receipt.json) |
+| n8-public-selected-reproduction | 6 | 14 | 523 | 10.228 | [receipt](navier/evidence/n8-reproduction-20261012/manifest.json) |
 
 관문별 실행 횟수는 서로 합산해 새 전체 테스트 수로 표시하지 않는다. 원본 생성자 실행과 작은 기록 검증·새 재생·표시 검증은 서로 다른 동작이다. signed 대형 원본은 [무손실 압축 manifest](navier/evidence/packed-evidence.json)의 원본 SHA와 정확히 일치하도록 복원 가능하다.
 
@@ -59,6 +61,7 @@
 원문 국소화 연산 증명은 같은 cutoff·계수에 전체 직접 PDE와 모든 교차항·압력 항등식을 대조한다. 미완료인 비영 영역의 모든 수치값을 이 개별 연산 항등식의 추가 전제로 붙이지 않는다. 전역 force jets·extension·에너지 완료와는 구분한다.
 현재 빠진 비영 angular 보정·temporal 이후 pressure/moment 연결·순서 있는 j=0 초기화·모든 finite stage의 class와 shrinking cutoff 합은 그대로 남아 있다. 전체 공간 force jets/extension 및 활동 구간의 전체 K 에너지를 core 계산이나 manufactured fixture로 대신하지 않는다.
 원래 논문의 연산자·정리를 실제 검증된 소스 조건에 적용한 분석적 범위와, 새 Lean kernel 증명·독립 수치 enclosure·화면 관찰은 서로 다른 증거 층이다. universal RH/BSD, continuum Yang–Mills 및 전체 원문 Navier 재구성의 완료를 주장하지 않는다.
+- N8-08은 실제 selected run과 원문 fixture의 다른 환경 재현으로 승인했다. 원문 p.66에 없는 매 selected run의 브라우저 import 의무나 전체 N6 완성을 이 항목에 덧붙이지 않았다. 실제 periodic/subregion energy와 step residual을 재현한 유동 run, 원문 core 관측 두 개, 공개 export·core import·near-terminal replay는 각자의 범위를 유지한다. 이후 배포도 해당 판본의 fresh CI 재현을 통과해야 한다.
 
 ## 3. 원문 64개와 현재 판정
 
@@ -1772,14 +1775,9 @@ logs를 묶는다. 합격: 다른 환경에서 fixture와 selected run이 같은
 완료이며 구현·사이트 변경·배포 완료로 표시하지 않는다.
 ```
 
-**판정:** `status=PARTIAL` · `originalCriterionComplete=false`.
+**판정:** `status=COMPLETE_WITHIN_STATED_SCOPE` · `originalCriterionComplete=true`.
 
-**검증 범위:** The new exact source archives bind their original constants, source captures, command/logs, graph hashes, positive tau/scales and recorded-only browser consumers. Fresh core refinement and archive replay are distinct. The large historical signed artifact is losslessly packed with exact raw SHA restoration. Full final-field reconstruction, every tail/energy obligation and a complete cross-environment final release remain incomplete.
-
-**남은 의무:**
-
-- Bind every final source constant, cutoff, precision, tail, full residual and whole-K energy to the completed reconstruction.
-- Verify the published final build, export/replay, actual matching CI commit and independent-environment tolerances.
+**검증 범위:** The original N8-08 metadata and independent-environment reproduction requirement is satisfied for the actually exported finite periodic selected flow and the two authenticated original-source core fixtures. All105713 numerical values match within their original declared tolerances; current source execution, the actual shipped Worker and each fresh replay agree. Actual hosted Node24.21/Python3.12.15/NumPy2.3.5, commit/tree, complete523-file source manifest, constants, modes, domain, every accepted/rejected step, quadrature, truncations, precision, tails, residual/energy scope, camera and logs are packaged. The selected finite flow retains its actual periodic and subregion energies and discrete residual; it does not substitute them for original whole-K energy or a full original-source residual. Final full-field construction and all-scale adaptation remain separate original criteria. Each subsequent shipped build must run the fresh reproduction CI gate.
 
 **증거와 구현:**
 
@@ -1806,6 +1804,20 @@ logs를 묶는다. 합격: 다른 환경에서 fixture와 selected run이 같은
 - [navier/evidence/source-near-terminal-20261012/attempt2/receipt.json](navier/evidence/source-near-terminal-20261012/attempt2/receipt.json)
 - [navier/evidence/source-core-refinement-20261012/attempt2/receipt.json](navier/evidence/source-core-refinement-20261012/attempt2/receipt.json)
 - [navier/SOURCE_NEAR_TERMINAL_N8.md](navier/SOURCE_NEAR_TERMINAL_N8.md)
+- [navier/N8_REPRODUCTION_PROTOCOL.md](navier/N8_REPRODUCTION_PROTOCOL.md)
+- [navier/N8_LITERAL_ACCEPTANCE_REVIEW_2026_10_12.md](navier/N8_LITERAL_ACCEPTANCE_REVIEW_2026_10_12.md)
+- [navier/evidence/n8-reproduction-20261012/manifest.json](navier/evidence/n8-reproduction-20261012/manifest.json)
+- [navier/evidence/n8-reproduction-20261012/ci-a210590/github-observation.json](navier/evidence/n8-reproduction-20261012/ci-a210590/github-observation.json)
+- [navier/evidence/n8-reproduction-20261012/ci-a210590/observed-ci.zip](navier/evidence/n8-reproduction-20261012/ci-a210590/observed-ci.zip)
+- [navier/tests/build-n8-reproduction-evidence.py](navier/tests/build-n8-reproduction-evidence.py)
+- [navier/tests/n8-reproduction-contract.test.mjs](navier/tests/n8-reproduction-contract.test.mjs)
+- [navier/tools/reproduce-selected-runs.py](navier/tools/reproduce-selected-runs.py)
+- [navier/tools/reproduce-selected-runs.mjs](navier/tools/reproduce-selected-runs.mjs)
+- [navier/tools/n8-reproduction-contract.mjs](navier/tools/n8-reproduction-contract.mjs)
+- [navier/tools/verify-selected-reference.py](navier/tools/verify-selected-reference.py)
+- [evidence/all64-20261012/public-v99/flow-export.json](evidence/all64-20261012/public-v99/flow-export.json)
+- [evidence/all64-20261012/public-v99/core-import-replay-state.json](evidence/all64-20261012/public-v99/core-import-replay-state.json)
+- [evidence/all64-20261012/public-v99/near-terminal-replay.json](evidence/all64-20261012/public-v99/near-terminal-replay.json)
 
 ## 4. 현재 진행표 바이트와 검토 재현
 
@@ -1816,7 +1828,7 @@ logs를 묶는다. 합격: 다른 환경에서 fixture와 selected run이 같은
 | [GAUGE_PROGRESS.json](GAUGE_PROGRESS.json) | 51288 | `b7386584873c9c9635efd2ee255ba7d42c28b83aa3bb1e547e4ea76d428b34ca` |
 | [N6_PROGRESS.json](N6_PROGRESS.json) | 32983 | `0c761dfded8499d69d436ef35aa1b99458cbdf906bb66d7b81eddd5281eac22e` |
 | [N7_PROGRESS.json](N7_PROGRESS.json) | 38315 | `e15f0fa59481dbd5e06bc00c9d58d836e976095057931b2ca6ee6c6baff675db` |
-| [N8_PROGRESS.json](N8_PROGRESS.json) | 26510 | `6c5c063cf9c98b72330dab37d31d791c3cd7b182f50645aa25fb0b232561fcc0` |
+| [N8_PROGRESS.json](N8_PROGRESS.json) | 28062 | `4d229d3844e2c2529a900c5dc754251db1901a246f5d669c61fac9c72c01ede4` |
 
 ```bash
 python -B research-ide/mathscope-m3/evidence/all64-20261012/assessment-source-resume/build_review.py --check

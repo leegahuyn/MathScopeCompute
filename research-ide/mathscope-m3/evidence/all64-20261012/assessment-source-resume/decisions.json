@@ -1,16 +1,17 @@
 {
   "schema": "MathScope.M3.ReviewedSourceCriterionDecisions/1",
-  "reviewedAt": "2026-10-12T14:42:19.692291+00:00",
+  "reviewedAt": "2026-10-12T16:48:05.035719+00:00",
   "approvedPromotions": [
     "N6-04",
-    "N7-01",
+    "N6-05",
     "N6-06",
-    "N7-07",
-    "N8-04",
+    "N7-01",
     "N7-02",
     "N7-03",
+    "N7-07",
     "N7-08",
-    "N6-05"
+    "N8-04",
+    "N8-08"
   ],
   "criterionDecisions": {
     "N6-04": {
@@ -72,6 +73,12 @@
       "gates": [
         "global-temporal"
       ]
+    },
+    "N8-08": {
+      "gates": [
+        "n8-public-selected-reproduction"
+      ],
+      "reason": "실제 공개 유동 selected run과 원문 core fixture 두 개를 다른 GitHub 환경의 원본 Node 모듈·배포 Worker로 재실행하고 각 기록을 재생했다. 총105713개 수치가 같은 허용오차로 일치했으며, 14개 독립 NumPy 계산과 6개 변조 방지 검사도 통과했다. 판본·commit·전체 소스·상수·기저·영역·시간표·적분·절단·정밀도·tail·실제 residual/energy·camera·build logs를 하나의 검증 manifest와 원본 CI ZIP으로 묶었다. 원문의 재현 요구는 충족하며, 전체 원문장의 에너지·전역 잔차 및 N8-05 적응 요구는 이 판정으로 대체하지 않는다."
     }
   },
   "observedGates": [
@@ -290,6 +297,25 @@
         "wholeM3Complete": false,
         "newLeanExecuted": false
       }
+    },
+    {
+      "id": "n8-public-selected-reproduction",
+      "receipt": {
+        "path": "navier/evidence/n8-reproduction-20261012/manifest.json",
+        "bytes": 153503,
+        "sha256": "f82c98a92ee6f760fe4c5a9a48c0d8fef021e53a7bb7b918d66258308a2d6738"
+      },
+      "requiredReceiptFields": {
+        "status": "PASS",
+        "pass": true,
+        "fixtureCount": 3,
+        "comparedNumericValues": 105713,
+        "sourceFileCount": 523,
+        "currentBuildReproductionRequiredInCI": true,
+        "wholeM3Complete": false,
+        "wholeLocalizedFieldOrEnergyProved": false
+      },
+      "archiveBuilder": "navier/tests/build-n8-reproduction-evidence.py"
     }
   ],
   "scopeNotes": [
@@ -297,6 +323,7 @@
     "새 내부 경로 지지 증명은 기록된 초기 소스·정의역·양의 core 구간에 결속되어 있다. 원래 연산자별 열린 zero 영역과 전체 cutoff curl을 확인해 실제 최종 장의 내부 경로를 식별했다. 비영 보정항의 값을 모두 계산하거나 새 Lean 정리를 발급했다는 뜻은 아니다.",
     "원문 국소화 연산 증명은 같은 cutoff·계수에 전체 직접 PDE와 모든 교차항·압력 항등식을 대조한다. 미완료인 비영 영역의 모든 수치값을 이 개별 연산 항등식의 추가 전제로 붙이지 않는다. 전역 force jets·extension·에너지 완료와는 구분한다.",
     "현재 빠진 비영 angular 보정·temporal 이후 pressure/moment 연결·순서 있는 j=0 초기화·모든 finite stage의 class와 shrinking cutoff 합은 그대로 남아 있다. 전체 공간 force jets/extension 및 활동 구간의 전체 K 에너지를 core 계산이나 manufactured fixture로 대신하지 않는다.",
-    "원래 논문의 연산자·정리를 실제 검증된 소스 조건에 적용한 분석적 범위와, 새 Lean kernel 증명·독립 수치 enclosure·화면 관찰은 서로 다른 증거 층이다. universal RH/BSD, continuum Yang–Mills 및 전체 원문 Navier 재구성의 완료를 주장하지 않는다."
+    "원래 논문의 연산자·정리를 실제 검증된 소스 조건에 적용한 분석적 범위와, 새 Lean kernel 증명·독립 수치 enclosure·화면 관찰은 서로 다른 증거 층이다. universal RH/BSD, continuum Yang–Mills 및 전체 원문 Navier 재구성의 완료를 주장하지 않는다.",
+    "- N8-08은 실제 selected run과 원문 fixture의 다른 환경 재현으로 승인했다. 원문 p.66에 없는 매 selected run의 브라우저 import 의무나 전체 N6 완성을 이 항목에 덧붙이지 않았다. 실제 periodic/subregion energy와 step residual을 재현한 유동 run, 원문 core 관측 두 개, 공개 export·core import·near-terminal replay는 각자의 범위를 유지한다. 이후 배포도 해당 판본의 fresh CI 재현을 통과해야 한다."
   ]
 }
