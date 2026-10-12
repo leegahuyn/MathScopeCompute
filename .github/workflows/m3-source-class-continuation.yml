@@ -44,9 +44,9 @@ jobs:
           python -B - <<'PY' | tee "$M3_CLASS_CI_DIAGNOSTICS/frozen-source-inputs.json"
           from pathlib import Path
           import hashlib, json, os
-          path = Path('research-ide/mathscope-m3/navier/evidence/global-source-class-composition-20261012/ci-preflight/ready.json')
+          path = Path('research-ide/mathscope-m3/navier/evidence/global-source-class-composition-20261012/ci-preflight/ready-retry2.json')
           raw = path.read_bytes()
-          assert hashlib.sha256(raw).hexdigest() == '2b7420c39cf968b78b663faa7ffae75adc4fabed8caadbf26a3231ba83ca1a98'
+          assert hashlib.sha256(raw).hexdigest() == '5bd1202b04196056068007e092755e5b7b71154166a4a3d2f77b96e11b67b701'
           record = json.loads(raw)
           rows = record['sourceFiles']
           assert len(rows) == 146 and record['expectedNodeTests'] == 14

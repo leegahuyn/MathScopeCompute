@@ -50,7 +50,7 @@ const getPrimary=()=>primaryTask??=Promise.resolve().then(async()=>{
   certificates.family=await actualCommonAdmissibleFamilyCertificate(family);
   await save('actual-common-C4-family.json',certificates.family);
   dispose(family.G);observe({stage:'actual-coherent-C4-family-saved',nodes:family.G.nodes.length});
-  const band=attachGlobalSourceBand(family,{coefficientOrder:1,maxNodes:5000000},context),
+  const band=attachGlobalSourceBand(family,{coefficientOrder:1,maxNodes:4000000},context),
     current=attachGlobalCurrentState(attachGlobalFixedRepresentative(band,context),context);
   certificates.current=await globalCurrentStateCertificate(current);
   await save('actual-primary-current.json',certificates.current);
