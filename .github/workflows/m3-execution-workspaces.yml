@@ -26,7 +26,6 @@ jobs:
         shell: bash
     env:
       PYTHONDONTWRITEBYTECODE: '1'
-      M3_CI_OUTPUT: ${{ runner.temp }}/m3-execution-evidence
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,6 +38,8 @@ jobs:
           python-version: '3.12'
       - name: Record the actual runtime
         run: |
+          M3_CI_OUTPUT="$RUNNER_TEMP/m3-execution-evidence"
+          printf '%s\n' "M3_CI_OUTPUT=$M3_CI_OUTPUT" >> "$GITHUB_ENV"
           mkdir -p "$M3_CI_OUTPUT"
           node --version | tee "$M3_CI_OUTPUT/node-version.txt"
           python --version | tee "$M3_CI_OUTPUT/python-version.txt"
