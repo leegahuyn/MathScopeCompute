@@ -131,13 +131,13 @@
       },
       {
         "path": "mathscope-m3/P7_PROGRESS.json",
-        "bytes": 36271,
-        "sha256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d"
+        "bytes": 57828,
+        "sha256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b"
       },
       {
         "path": "mathscope-m3/P8_PROGRESS.json",
-        "bytes": 15539,
-        "sha256": "0274350087b9b35aa6b37c20ca70077f26ed8505e62aa7473d1f1c7cff8d1041"
+        "bytes": 19352,
+        "sha256": "42248ed057895fb9f37142ffbdc6c3e0a3d1b3d00025c707751ff49a858b4ca1"
       },
       {
         "path": "mathscope-m3/cli.py",
@@ -311,8 +311,8 @@
       },
       {
         "path": "mathscope-m3/p8/evidence/p7-mutation-release.json",
-        "bytes": 29118,
-        "sha256": "7871d7f89f395916952e3f21261d7d4e7bbf3bcb1378db1f7245b8b1ebc4fc28"
+        "bytes": 36604,
+        "sha256": "421ee2fbe6f898976a143e08d94844092bf36d180981e2b72fa110306632b826"
       },
       {
         "path": "mathscope-m3/p8/examples.mjs",
@@ -490,7 +490,7 @@
         "sha256": "cce4a0377098d32154eab27067e1fe7790ff6e13f66df5fb8e630378aeebdc03"
       }
     ],
-    "manifestSHA256": "ad3cc46a5e144bad6e4be5d7826d438c3d7dd04c2e9a567f88573af0b2bfbdf3",
+    "manifestSHA256": "d8b43276455eb34651a16ee4db876e9b9ea065b80af725902b1b58d06209dd77",
     "environment": {
       "arithmetic": "ECMASCRIPT_EXACT_BIGINT_AND_RATIONAL",
       "hash": "SHA-256_WEBCRYPTO",
@@ -547,10 +547,10 @@
           "text": "ζ의 completed ξ와 E의 Λ_E=N_E^{s/2}(2 π)^{-s}Γ(s)L(E,s)를 각각 명세한다. minimum model/Tate reduction, root\nnumber, bad factors의 certificate를 묶는다. 합격: good-only product는 L^S라고 표시한다. ζ↔ξ 또는 L↔ Λ의 영점·극\n점·trivial zero 차이가 자동 변환 기록에 남는다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Fresh official PARI 2.19.0 global minimal model and Tate reduction, including additive examples; independently checked five-coefficient transform and all discriminant factors.",
             "All good/bad Euler data, Tamagawa/conductor/root-number products and all finite coefficients checked against independent exact prime counts and Euler recurrence.",
@@ -570,16 +570,64 @@
             "p7/evidence/final-all64-20261012/attempt1/arithmetic-37a1.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/complex-additive-32.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/euler-finite.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/zeta-2.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/zeta-2.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Exact supported rational models, pinned CAS Tate/minimal algorithms and independently checked exported arithmetic; no rank database or hidden Manin constant.",
           "researchLimitations": [
             "The CAS minimality/local-solubility algorithms are external computational dependencies, not newly formalized Lean theorems."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "실제 공개 최소모형·Tate·good/bad factor·root number와 normalization ledger, 실행·fresh replay 및 원본 선택/내보내기를 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-02",
@@ -587,10 +635,10 @@
           "text": "유한 Euler product는 ζ에서 Re(s)>1, E good-factor product에서 Re(s)>3/2의 탐색으로 제한한다. critical strip 계산은\ncertified analytic continuation과 complex balls를 사용한다. 합격: s=1/2+it에서 finite Euler product를 ζ의 인증값으로\n반환하면 실패한다. 반올림·series truncation·tail error를 각각 포함한 ball을 내보낸다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Explicit zeta Euler-Maclaurin evaluation with finite arithmetic balls, integrated unit-cell binomial-series truncation, and separate infinite [B,infinity) tail.",
             "Strict finite Euler-product domains Re(s)>1 for zeta and Re(s)>3/2 for elliptic good factors; critical-strip substitution is rejected.",
@@ -610,16 +658,64 @@
             "p7/evidence/final-all64-20261012/attempt1/zeta-em-critical.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/euler-finite.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/complex-37a1.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/complex-additive-32.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/complex-additive-32.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Certified analytic continuation with explicit finite truncation and infinite tail ledgers, distinct from finite Euler exploration.",
           "researchLimitations": [
             "Primitive FLINT special-function enclosures include their internal numerical approximation; the explicit higher-level series and infinite tails are separate. No claim of a new proof of modularity is made."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "실제 complex continuation의 ball·명시적 급수/무한 tail과 strict finite Euler domain 거부를 API/UI에서 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-03",
@@ -627,10 +723,10 @@
           "text": "N(T)는 0<Imρ≤T인 strip 전체 영점의 중복도 포함 개수로 정의한다. Hardy Z의 실수 영점 고립으로 Re ρ=1/2를 인증하고 독\n립 zero counter와 비교한다. T=20,30의 endpoint exclusion도 확인한다. 합격: N(20)=1, N(30)=3을 count certificate\n로 재확인한다. 임계선에서 찾은 영점 수와 전체 strip의 count가 다르면 RH_VERIFIED_TO_T를 주지 않는다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Whole-strip argument-principle count with multiplicity and pole correction is independent as an algorithm from Hardy-Z critical-line isolation.",
             "Fresh current-source T=20 and T=30 acceptance runs have complete boundary exclusion and count saturation: N(20)=1 and N(30)=3; both separate CLI replays matched.",
@@ -644,16 +740,64 @@
             "evidence/p7-release-20261011/attempt3/zeros-to-30.json",
             "p7/evidence/final-all64-20261012/attempt1/manifest.json",
             "p7/evidence/final-all64-20261012/attempt1/zeros-20.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/zeros-30.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/zeros-30.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "The two original finite heights and algorithmic independence; a common FLINT arithmetic backend is disclosed.",
           "researchLimitations": [
             "Other requested heights, a second independent arithmetic implementation, and a new Lean argument-principle proof are not claimed or required by these two original acceptance examples."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "유한 높이 T20/T30의 strip count·Hardy 고립·endpoint와 RH_VERIFIED_TO_T 범위가 공개 실행·표시·내보내기에 보존됐다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-04",
@@ -661,10 +805,10 @@
           "text": "우선 x를 half-integer로 제한한 ψ(x)와 symmetric zero sum을 제공한다. 숫자 오차 밴드는 선택한 truncated/smoothed\nformula의 명시 상수·가정·tail bound가 있을 때만 인증한다. 합격: x=10.5의 prime side=log2520. ψ 또는 ψ₀ endpoint\nconvention을 기록한다. 이름만 있는 O(·)나 수치 residual을 rigorous tail bound로 쓰면 실패한다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Half-integer psi uses the absolutely convergent integrated explicit formula and unit secant, with symmetric zero data, explicit constants and standard theorem dependencies.",
             "The actual independent prime side at x=10.5 is log(2520); psi versus psi0 endpoint conventions are recorded.",
@@ -674,16 +818,64 @@
             "p7/explicit_formula.py",
             "evidence/resume-20261012/attempt2/explicit-psi.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/manifest.json",
-            "p7/evidence/final-all64-20261012/attempt1/explicit-psi.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/explicit-psi.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "The original half-integer finite acceptance case with a rigorous but coarse smoothed band.",
           "researchLimitations": [
             "The finite T=30 band is coarse; a narrow error band or arbitrary-height extension is not asserted. The unsmoothed diagnostic does not borrow the smoothed tail."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "half-integer x=10.5의 prime side, smoothed 규약·상수·tail과 coarse band, 별도 unsmoothed 진단을 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-05",
@@ -691,10 +883,10 @@
           "text": "사용자가 operator/domain, spectrum-zero 대응, regularized determinant, trace formula, duality/positivity 가설을 등\n록하게 한다. truncation별 spectrum·극점·중복도·정규화·functional-equation residual을 비교한다. 합격: 누락 영점, 잘못\n된 trivial-zero factor, determinant의 상수/선형 exponential normalization 차이, multiplicity 불일치는 counterexample\n후보로 저장한다. 유한 통과가 전체 operator의 존재나 RH 증명이 되지 않는다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "User registrations preserve unique IDs and exact operator/domain, zero-spectrum, determinant, trace, duality and positivity hypothesis text.",
             "Two to four editable rational-matrix cutoffs carry complete spectrum/poles/multiplicities and constant/linear exponential normalization, exact trace/reflection checks and rigorous finite residual probes.",
@@ -710,16 +902,64 @@
             "p7/OPERATOR_REGISTRY_KO.md",
             "p7/evidence/final-all64-20261012/attempt1/manifest.json",
             "p7/evidence/final-all64-20261012/attempt1/operator-reference.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/operator-registered.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/operator-registered.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Editable research registration and falsifiable finite comparisons; finite matrix success is never a global existence theorem.",
           "researchLimitations": [
             "No operator with the classical zeta zero spectrum is constructed or proved to exist. Rational finite spectra and bounded dimensions are the implemented comparison domain."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "사용자 operator/domain/assumption 등록, 유한 비교와 반례, 입력 보존/replay 및 global/RH 미승격을 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-06",
@@ -727,10 +967,10 @@
           "text": "root-number 대칭으로 강제되는 vanishing과 exact modular-symbol vanishing, 도함수의 rigorous nonzero ball을 구분\n한다. completed Λ의 Taylor parity를 사용한다. 합격: w=−1이면 Λ(1)=0의 정확한 이유를 기록하고 0∉ Λ′(1)의 인증구간\n이 있어야 rank=1. 0을 포함하는 작은 interval은 vanishing 증명이 아니다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Exact root-number parity forces the central completed Lambda zero for 37a1; the rigorous first derivative interval excludes zero and certifies analytic rank 1.",
             "11a1 has a certified central L interval excluding zero, hence analytic rank 0 with stated analytic theorem dependencies.",
@@ -751,17 +991,65 @@
             "p7/evidence/final-all64-20261012/attempt1/central-11a1.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/central-37a1.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/modular-11a1.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/modular-37a1.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/modular-37a1.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "The original root-number -1 acceptance condition and rigorous central derivative, with exact vanishing mechanisms distinguished.",
           "researchLimitations": [
             "The central parity/derivative producer correctly records modularSymbolsExecuted=false because the independently executed exact modular-symbol route is a separate result. Its 37a1 zero alone gives analytic rank at least one, not exact rank one.",
             "General higher analytic rank and new Lean modularity/analytic-continuation proofs are not claimed."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "central parity/derivative와 독립 modular-symbol 두 경로를 실행·표시했다. 37a1 symbol zero 단독의 rank≥1과 별도 derivative의 rank1을 구분했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-07",
@@ -769,10 +1057,10 @@
           "text": "독 립 유 리 점 ·height/ regulator 로 lower bound, descent/ Selmer certificate 로 upper bound 를 얻 는 다. tor-\nsion·saturation·Tamagawa·period·Sha 의 known/ conditional/ unknown 을 각 각 저 장 한 다. 합 격: rank interval\n[r_min,r_max]가 한 점일 때만 해당 곡선 rank 확정. Sage L_ratio() 등의 숨은 Manin-constant 가정이 충족되지 않으면 조\n건부로 표시한다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Independent exact rational points, explicit canonical-height duplication bounds and positive Gram determinants supply arithmetic rank lower bounds.",
             "Fresh pinned PARI 2-descent/Cassels data supplies upper=C-T-s; exact rational maps of every exported 2-cover are independently checked.",
@@ -791,17 +1079,65 @@
             "p7/ARITHMETIC_CERTIFICATES_KO.md",
             "p7/evidence/final-all64-20261012/attempt1/manifest.json",
             "p7/evidence/final-all64-20261012/attempt1/arithmetic-11a1.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/arithmetic-37a1.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/arithmetic-37a1.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Exact supported arithmetic computations plus standard height theorems and pinned CAS descent dependencies; the full finite witness and raw GP output remain inspectable.",
           "researchLimitations": [
             "Selmer local-solubility/basis completeness and CAS Tate algorithms remain explicit external algorithm dependencies.",
             "Full Sha order, universal BSD and an arbitrary-rank saturated Mordell-Weil basis are not inferred."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "실제 descent lower/upper·산술 rank, height/saturation/period/Sha 상태와 외부 의존성을 공개 실행·replay·원본 선택에서 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-08",
@@ -809,10 +1145,10 @@
           "text": "finite-height zero certificate, 특정 curve의 rank equality, refined leading-term 검증, universal conjecture를 별도 결\n과 타입으로 제공한다. coefficient/prime/zero completeness의 빠진 항을 자동 목록화한다. 합격: 한 E에서 두 rank가 같\n다고 universal BSD를 표시하지 않는다. finite-field RH theorem을 classical RH axiom으로 복사하는 요청은 거부한다. 연\n구가설은 Lean 가정 목록과 함께 내보낸다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Four distinct result types execute fresh underlying finite zero, arithmetic and analytic producers; one-curve rank equality is separate from refined leading terms and universal conjectures.",
             "Missing/extra/duplicate coefficient, prime and zero inventories are automatically listed against fresh exact expected data.",
@@ -834,74 +1170,122 @@
             "p7/evidence/final-all64-20261012/attempt1/typed-universal-open.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/typed-omitted-coefficient-prime.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/typed-omitted-zero.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/typed-finite-field-copy.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/typed-finite-field-copy.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Typed finite/research results, complete finite inventories, scope rejection and transparent assumption export; no natural-language-to-Lean mathematical formalization is claimed.",
           "researchLimitations": [
             "The research export theorem bundles opaque proposition assumptions only. A formal mathematical operator/trace/RH bridge still needs explicit definitions and a proof.",
             "Independent Sha information remains missing in the refined example; this is an open dependency inside a implemented result type, not a universal BSD proof."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "네 result type, 누락 inventory와 finite-field→RH 거부, universal RESEARCH_OPEN 및 opaque 가정 export 범위를 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         }
       ],
       "fixtures": [
         {
           "id": "P7-01",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-02",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-03",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-04",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-05",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-06",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-07",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-08",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         }
       ]
@@ -1016,9 +1400,9 @@
           "text": "bad prime 하나, Frobenius coefficient 하나, truncation bound 하나, zero box 하나, rank upper certificate 하나를 제\n거·변조하여 관문을 다시 실행한다. 합격: 변조된 입력은 해당 단계에서 실패하고 후속 theorem badge가 취소된다. session\n저장은 입력 해시·정밀도·비교 근거를 보존하며 재계산 결과와 일치한다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:59:29.407650+00:00",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
           "evidence": [
             "tests/p8-mutation-audit.test.mjs",
             "p8/evidence/p7-mutation-release.json",
@@ -1027,13 +1411,19 @@
             "p8/tools/audit_p7_mutations.py",
             "tests/test_p8_p7_mutations.py",
             "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/process.json",
-            "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/report.json"
+            "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/report.json",
+            "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+            "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/github-observation.json",
+            "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/report.json",
+            "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/process.json",
+            "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/consumer-validation.json",
+            "tests/p8-recorded-arithmetic.test.mjs",
+            "p8/evidence/p7-mutation-release-historical-v1.json",
+            "evidence/all64-20261012/public-v95/p8-acceptance.json",
+            "evidence/all64-20261012/ci-c971/receipt.json"
           ],
-          "remainingObligations": [
-            "Collect and byte-verify the new source-bound GitHub CI artifact for the actual valid arithmetic rank-upper certificate deletion and zero-box corruption.",
-            "Package that observed CI receipt, then verify the published current-source mutation result and revoked downstream badges."
-          ],
-          "acceptanceScope": "Existing bad-prime, Frobenius, truncation and comparison mutation gates remain. Fresh P7 arithmetic supplies a valid descent upper bound; the actual current-source audit deleted that certificate and completed all six child executions with nine passing tests. GitHub CI packaging and public verification are pending. The older /1 fabricated-certificate audit remains historical evidence.",
+          "remainingObligations": [],
+          "acceptanceScope": "Bad-prime, Frobenius, truncation and comparison mutations execute in the current browser. The separate source-bound /2 CI receipt contains actual fresh P7 child runs deleting a valid arithmetic descent upper certificate and corrupting a zero box. Successful CI artifact bytes/current source hashes and public downstream badge revocation, replay/import and forged-import rejection are verified. The /1 audit, failed first /2 CI and the packaging-time publishedResultVerified=false remain historical; currentReleaseAcceptance supplies the later positive public gate. Browser replay does not claim fresh P7 execution or a whole-application claim graph.",
           "currentArithmeticMutationEvidence": {
             "audit": "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/report.json",
             "process": "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/process.json",
@@ -1046,6 +1436,65 @@
             "sourceEpochSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
             "validRankUpperCertificateDeletionExecuted": true,
             "localReceiptNotCI": true
+          },
+          "currentRecordedArithmeticMutationEvidence": {
+            "receipt": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+            "artifact": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/artifact.zip",
+            "report": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/report.json",
+            "process": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/process.json",
+            "consumerValidation": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/consumer-validation.json",
+            "headCommit": "529e864c8b2ed19399bab8bbc53a08721873d5d4",
+            "observedCheckoutCommit": "eb2bc3a4a14d05a88248e85167286bb4f46a6ef5",
+            "runId": "38237430568",
+            "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38237430568",
+            "artifactId": 11741622609,
+            "artifactSHA256": "067e231cfaefde97e165121f87bffafa7d7bf963eb01ee8ece859d885961a596",
+            "artifactBytes": 6814,
+            "packageCanonicalSHA256": "a46ce8dcb8c62a272cebd0535a75297eed5e124c9e091a454522b007c438d263",
+            "innerReportSHA256": "f3019437c40c56f69ce7cd534a0dee6e773667208428eff23eb1fd5f9c335099",
+            "observedPytestExitCode": 0,
+            "actualP7ChildExecutions": 6,
+            "validRankUpperCertificateDeletionExecuted": true,
+            "sourceEpochSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+            "consumerStatus": "RECORDED_CI_SOURCE_MATCH",
+            "freshBrowserP7Execution": false,
+            "publishedResultVerified": false
+          },
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "실제 유효 descent upper 삭제·zero-box 변조의 source-bound CI /2와 네 browser mutation, 후속 badge 취소, 공개 replay/import·변조 거부를 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-v95/p8-acceptance.json",
+                "bytes": 2733,
+                "sha256": "fd3ac05e09edd99ef8d1b3aa6c9e5e37d7a76ad77476b374c38516281dfa87ab"
+              },
+              {
+                "path": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+                "bytes": 10035,
+                "sha256": "e812c0d18b3f292ffc82823cd968eddcdb51050da09205677ffe4f6285713893"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          },
+          "currentPublicMutationAcceptance": {
+            "receipt": {
+              "path": "evidence/all64-20261012/public-v95/p8-acceptance.json",
+              "bytes": 2733,
+              "sha256": "fd3ac05e09edd99ef8d1b3aa6c9e5e37d7a76ad77476b374c38516281dfa87ab"
+            },
+            "browserCases": 4,
+            "recordedCICases": 2,
+            "actualP7FreshBrowserExecution": false,
+            "wholeApplicationGraphAudited": false,
+            "publishedResultVerified": true
           }
         },
         {
@@ -3947,14 +4396,14 @@
       "kind": "P7_MUTATIONS",
       "ci": {
         "repository": "leegahuyn/MathScopeCompute",
-        "commit": "dd37b6a8953dd5de3d85451d88b888022cd66fa6",
-        "runId": "38208308358",
-        "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38208308358",
-        "artifactId": 11727724970,
-        "artifactSHA256": "3d6eb1cf6852d9e0e81f07498c3f8583847c29625c07875bda6a7c4ac2eb46ab"
+        "commit": "eb2bc3a4a14d05a88248e85167286bb4f46a6ef5",
+        "runId": "38237430568",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38237430568",
+        "artifactId": 11741622609,
+        "artifactSHA256": "067e231cfaefde97e165121f87bffafa7d7bf963eb01ee8ece859d885961a596"
       },
       "report": {
-        "schema": "MathScope.M3.P8.P7MutationAudit/1",
+        "schema": "MathScope.M3.P8.P7MutationAudit/2",
         "status": "PASS",
         "criterion": "P8-06",
         "cases": [
@@ -3975,21 +4424,22 @@
             },
             "baseline": {
               "schema": "MathScope.M3.P7Execution/1",
-              "recordSHA256": "60b9951061f63111f987e86bd6fc281ff21675bc589e8a42ce7f6b9956c7b4b4",
+              "recordSHA256": "909513ebaddda3f12e85c37e6e8e955935b1a414c24c7df8a272eef4864dfd60",
               "mathematicalSHA256": "d8f62cb05c062f11a38de2d926653c15c921937fb4dfefeef5f57bd26c02ce7f",
               "inputSHA256": "f33b346f8858dacb9b7d4e8e47f897f59d45a2149a316c04c0801ecac204a380",
               "environmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
-              "sourceBindingSHA256": "bb54954d3b22fe2602687504eed5a73f3a12ac34cfa1034d4abf7698ea916864",
+              "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
               "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
               "execution": {
                 "status": "COMPLETED",
-                "startedAt": "2026-10-12T05:32:42.850169+00:00",
-                "finishedAt": "2026-10-12T05:32:43.869008+00:00",
-                "elapsedSeconds": 1.0188408260000017,
+                "startedAt": "2026-10-12T10:39:45.333803+00:00",
+                "finishedAt": "2026-10-12T10:39:46.041201+00:00",
+                "elapsedSeconds": 0.7074002820000089,
                 "observedExitCode": 0,
                 "timedOut": false,
                 "maxSeconds": 90,
                 "memoryLimitMiB": 768,
+                "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
                 "observedChildResourceLimits": {
                   "addressSpaceBytes": [
                     805306368,
@@ -4015,21 +4465,22 @@
               "importedProofStatusAdopted": false,
               "fresh": {
                 "schema": "MathScope.M3.P7Execution/1",
-                "recordSHA256": "efc5909d3e39e289f0baad0900c76cb14c0771e95cc650e3e0f2902c4663f31a",
+                "recordSHA256": "597fb3aece769de93c012bc53fb21e8600f7f7c49e01056ab137e107b1d8bb31",
                 "mathematicalSHA256": "d8f62cb05c062f11a38de2d926653c15c921937fb4dfefeef5f57bd26c02ce7f",
                 "inputSHA256": "f33b346f8858dacb9b7d4e8e47f897f59d45a2149a316c04c0801ecac204a380",
                 "environmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
-                "sourceBindingSHA256": "bb54954d3b22fe2602687504eed5a73f3a12ac34cfa1034d4abf7698ea916864",
+                "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
                 "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
                 "execution": {
                   "status": "COMPLETED",
-                  "startedAt": "2026-10-12T05:32:44.175720+00:00",
-                  "finishedAt": "2026-10-12T05:32:45.154209+00:00",
-                  "elapsedSeconds": 0.9784923730000088,
+                  "startedAt": "2026-10-12T10:39:46.288123+00:00",
+                  "finishedAt": "2026-10-12T10:39:47.044171+00:00",
+                  "elapsedSeconds": 0.7560515570000064,
                   "observedExitCode": 0,
                   "timedOut": false,
                   "maxSeconds": 90,
                   "memoryLimitMiB": 768,
+                  "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
                   "observedChildResourceLimits": {
                     "addressSpaceBytes": [
                       805306368,
@@ -4076,21 +4527,22 @@
               ],
               "forged": {
                 "schema": "MathScope.M3.P7Execution/1",
-                "recordSHA256": "22956843d209f75347c5dcc657246f6d99363ca609699ec1ee9bc3ec2bd3116e",
+                "recordSHA256": "d47cbcbd6218812bcdb55231c572e53e7a25451fcef4d842e5bb8410e1ad0332",
                 "mathematicalSHA256": "dc1db332c8ca3e996e81363e45565ecae8f07c32959fb66c9ef84df655878caa",
                 "inputSHA256": "f33b346f8858dacb9b7d4e8e47f897f59d45a2149a316c04c0801ecac204a380",
                 "environmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
-                "sourceBindingSHA256": "bb54954d3b22fe2602687504eed5a73f3a12ac34cfa1034d4abf7698ea916864",
+                "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
                 "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
                 "execution": {
                   "status": "COMPLETED",
-                  "startedAt": "2026-10-12T05:32:42.850169+00:00",
-                  "finishedAt": "2026-10-12T05:32:43.869008+00:00",
-                  "elapsedSeconds": 1.0188408260000017,
+                  "startedAt": "2026-10-12T10:39:45.333803+00:00",
+                  "finishedAt": "2026-10-12T10:39:46.041201+00:00",
+                  "elapsedSeconds": 0.7074002820000089,
                   "observedExitCode": 0,
                   "timedOut": false,
                   "maxSeconds": 90,
                   "memoryLimitMiB": 768,
+                  "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
                   "observedChildResourceLimits": {
                     "addressSpaceBytes": [
                       805306368,
@@ -4112,21 +4564,22 @@
               },
               "fresh": {
                 "schema": "MathScope.M3.P7Execution/1",
-                "recordSHA256": "9c2c3038fd5c8c328a222f2d1281090c74653422908d378db11e9ab1b429c0b7",
+                "recordSHA256": "e3538c5e9f4c7de195a5704ac8cf989a2d4230453e3f461dc4832afef42b9fdb",
                 "mathematicalSHA256": "d8f62cb05c062f11a38de2d926653c15c921937fb4dfefeef5f57bd26c02ce7f",
                 "inputSHA256": "f33b346f8858dacb9b7d4e8e47f897f59d45a2149a316c04c0801ecac204a380",
                 "environmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
-                "sourceBindingSHA256": "bb54954d3b22fe2602687504eed5a73f3a12ac34cfa1034d4abf7698ea916864",
+                "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
                 "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
                 "execution": {
                   "status": "COMPLETED",
-                  "startedAt": "2026-10-12T05:32:45.883136+00:00",
-                  "finishedAt": "2026-10-12T05:32:46.862512+00:00",
-                  "elapsedSeconds": 0.9793766680000004,
+                  "startedAt": "2026-10-12T10:39:47.593303+00:00",
+                  "finishedAt": "2026-10-12T10:39:48.350301+00:00",
+                  "elapsedSeconds": 0.7569984280000028,
                   "observedExitCode": 0,
                   "timedOut": false,
                   "maxSeconds": 90,
                   "memoryLimitMiB": 768,
+                  "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
                   "observedChildResourceLimits": {
                     "addressSpaceBytes": [
                       805306368,
@@ -4274,7 +4727,7 @@
             "mathematicalScope": {
               "mutationDetection": "FRESH_P7_RESULT_COMPARISON",
               "rankUpperBoundComputed": false,
-              "rankUpperBoundStatus": "OPEN",
+              "rankUpperBoundStatus": "NOT_APPLICABLE",
               "globalRHProved": false,
               "globalBSDProved": false,
               "finiteHeightOnly": true
@@ -4285,36 +4738,32 @@
             "id": "rank-upper",
             "status": "PASS",
             "request": {
-              "kind": "p7.elliptic_local",
+              "kind": "p7.elliptic_arithmetic",
               "input": {
                 "model": "37a1",
-                "primes": [
-                  2,
-                  3,
-                  5,
-                  7,
-                  37
-                ],
-                "coefficientLimit": 16
+                "coefficientLimit": 16,
+                "precisionBits": 192,
+                "heightIterations": 7
               }
             },
             "baseline": {
               "schema": "MathScope.M3.P7Execution/1",
-              "recordSHA256": "f7933327ec6e7edbd13eae384a72892203b843dea45c2c57fdaab8a2dd395de8",
-              "mathematicalSHA256": "7025841a0101ac2ed745400ca2ec7e0d2c3fcff53fc37ff3d5e1d739b88ca695",
-              "inputSHA256": "d2007148b1328de67e9bf82efe62f2174a92590f73a73805d5affa8309e69cba",
-              "environmentSHA256": "9119127af124fc1f3c604388573ef6d3edc20660093f6006d7ca1d2b1551c40c",
-              "sourceBindingSHA256": "bb54954d3b22fe2602687504eed5a73f3a12ac34cfa1034d4abf7698ea916864",
+              "recordSHA256": "6d4826ef3e236dcbb604b5f288b6490b2f71b2929e2572e39e4f5b66fd3f6627",
+              "mathematicalSHA256": "27fbccc7da62841cb9f7033e7606af5657717a04e8743c700b6c5df0508f4af3",
+              "inputSHA256": "d014821927ca1d8d3344f8390320e013f45d8416f78efa5b14c4e14669f28d08",
+              "environmentSHA256": "db59605102bc8e8b518cb473f88afdd410152783173f10a32c9bc2295a7e25ab",
+              "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
               "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
               "execution": {
                 "status": "COMPLETED",
-                "startedAt": "2026-10-12T05:32:48.275353+00:00",
-                "finishedAt": "2026-10-12T05:32:48.364617+00:00",
-                "elapsedSeconds": 0.08926112700000033,
+                "startedAt": "2026-10-12T10:39:49.475516+00:00",
+                "finishedAt": "2026-10-12T10:39:49.750268+00:00",
+                "elapsedSeconds": 0.2747525349999762,
                 "observedExitCode": 0,
                 "timedOut": false,
                 "maxSeconds": 90,
                 "memoryLimitMiB": 768,
+                "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
                 "observedChildResourceLimits": {
                   "addressSpaceBytes": [
                     805306368,
@@ -4325,7 +4774,7 @@
                     91
                   ]
                 },
-                "observedChildEnvironmentSHA256": "9119127af124fc1f3c604388573ef6d3edc20660093f6006d7ca1d2b1551c40c",
+                "observedChildEnvironmentSHA256": "db59605102bc8e8b518cb473f88afdd410152783173f10a32c9bc2295a7e25ab",
                 "failure": null,
                 "stderr": ""
               },
@@ -4340,21 +4789,22 @@
               "importedProofStatusAdopted": false,
               "fresh": {
                 "schema": "MathScope.M3.P7Execution/1",
-                "recordSHA256": "06bd455b8220696152b595d032a13bd7e036c939e3429c017da7a5b049691039",
-                "mathematicalSHA256": "7025841a0101ac2ed745400ca2ec7e0d2c3fcff53fc37ff3d5e1d739b88ca695",
-                "inputSHA256": "d2007148b1328de67e9bf82efe62f2174a92590f73a73805d5affa8309e69cba",
-                "environmentSHA256": "9119127af124fc1f3c604388573ef6d3edc20660093f6006d7ca1d2b1551c40c",
-                "sourceBindingSHA256": "bb54954d3b22fe2602687504eed5a73f3a12ac34cfa1034d4abf7698ea916864",
+                "recordSHA256": "e0593473af3dda58e5c2b1f1b5489b745055891863fc0df90bba19c1d25bb87b",
+                "mathematicalSHA256": "27fbccc7da62841cb9f7033e7606af5657717a04e8743c700b6c5df0508f4af3",
+                "inputSHA256": "d014821927ca1d8d3344f8390320e013f45d8416f78efa5b14c4e14669f28d08",
+                "environmentSHA256": "db59605102bc8e8b518cb473f88afdd410152783173f10a32c9bc2295a7e25ab",
+                "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
                 "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
                 "execution": {
                   "status": "COMPLETED",
-                  "startedAt": "2026-10-12T05:32:48.368113+00:00",
-                  "finishedAt": "2026-10-12T05:32:48.457045+00:00",
-                  "elapsedSeconds": 0.08893662799999902,
+                  "startedAt": "2026-10-12T10:39:49.835513+00:00",
+                  "finishedAt": "2026-10-12T10:39:50.099543+00:00",
+                  "elapsedSeconds": 0.2640380119999861,
                   "observedExitCode": 0,
                   "timedOut": false,
                   "maxSeconds": 90,
                   "memoryLimitMiB": 768,
+                  "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
                   "observedChildResourceLimits": {
                     "addressSpaceBytes": [
                       805306368,
@@ -4365,7 +4815,7 @@
                       91
                     ]
                   },
-                  "observedChildEnvironmentSHA256": "9119127af124fc1f3c604388573ef6d3edc20660093f6006d7ca1d2b1551c40c",
+                  "observedChildEnvironmentSHA256": "db59605102bc8e8b518cb473f88afdd410152783173f10a32c9bc2295a7e25ab",
                   "failure": null,
                   "stderr": ""
                 },
@@ -4386,62 +4836,149 @@
               "importedProofStatusAdopted": false,
               "mutations": [
                 {
-                  "fieldPath": "result.arithmeticRank",
+                  "fieldPath": "result.arithmeticRank.rankUpperCertificate",
+                  "operation": "DELETE_VALID_CERTIFICATE",
                   "before": {
-                    "bsdEquality": "open",
-                    "canonicalHeight": "not-computed",
-                    "descentPerformed": false,
-                    "exactRank": null,
-                    "lowerBound": 1,
-                    "realPeriod": "not-computed",
-                    "regulator": "not-computed",
-                    "saturation": "open",
-                    "selmerBoundComputed": false,
-                    "sha": "open",
-                    "upperBound": null
+                    "BSDOrParityConjectureAssumed": false,
+                    "analyticRankUsed": false,
+                    "backend": {
+                      "binaryBytes": 11208080,
+                      "binarySHA256": "0a54b74f6006a664c9c918a5d715cbe8e68b81096e0d398d03dc7139ba039a46",
+                      "buildProvenanceSHA256": "ea81237e03569f741bfa4b926217898b22d8b7e0bd48cee7d305c17b8826e29e",
+                      "databasesUsed": false,
+                      "name": "PARI/GP",
+                      "observedVersionMatchesBuild": true,
+                      "sourceArchiveSHA256": "f317b9722eb5d9094a60303774f066f3a83e3ec1f170be8546c44d7583f30b6d",
+                      "sourceVerifiedBeforeBuild": true,
+                      "trustBoundary": "pinned compiled PARI algorithms; exact exported witnesses are checked separately; no formal Lean proof",
+                      "version": "2.19.0",
+                      "versionOutput": "                  GP/PARI CALCULATOR Version 2.19.0 (released)\n               amd64 running linux (x86-64 kernel) 64-bit version\n   compiled: Sep 28 2026, gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1)\n                            threading engine: single\n               (readline not compiled in, extended help enabled)\n"
+                    },
+                    "casselsPairingRank": 0,
+                    "certificateSHA256": "9f277f45081d33f5acd0acdc6909d7e06bc8991bef3c0f90a767e9f37878bd76",
+                    "coverMapChecks": [
+                      {
+                        "coverSHA256": "41dc2d98da263670b99c6656812111623a944b825624a871ad254ed032da5736",
+                        "exactRationalMapIdentityChecked": true,
+                        "localSolubilityAndBasisCompleteness": "trusted pinned PARI ell2cover algorithm, recomputed in the same fresh process",
+                        "mapCoefficientOrder": "outer index is x degree; inner index is y degree",
+                        "quarticCoefficientOrder": "ascending powers of x",
+                        "quotientRing": "Q[x,y]/(y^2-R(x))"
+                      }
+                    ],
+                    "databaseLookupUsed": false,
+                    "exactTwoCovers": [
+                      [
+                        [
+                          "1",
+                          "0",
+                          "6",
+                          "-4",
+                          "1"
+                        ],
+                        [
+                          [
+                            [
+                              "-1"
+                            ],
+                            [
+                              "2"
+                            ],
+                            [
+                              "2"
+                            ],
+                            [
+                              "-2"
+                            ]
+                          ],
+                          [
+                            [
+                              "0",
+                              "0",
+                              "1"
+                            ]
+                          ]
+                        ],
+                        [
+                          [
+                            [
+                              "1",
+                              "0",
+                              "0",
+                              "-1"
+                            ],
+                            [
+                              "8"
+                            ],
+                            [
+                              "-15"
+                            ],
+                            [
+                              "10"
+                            ],
+                            [
+                              "-5"
+                            ],
+                            [
+                              "-2"
+                            ],
+                            [
+                              "1"
+                            ]
+                          ],
+                          [
+                            [
+                              "0",
+                              "0",
+                              "0",
+                              "2"
+                            ]
+                          ]
+                        ],
+                        "1"
+                      ]
+                    ],
+                    "executionScriptSHA256": "d84160430addf16c4a0b2af61106f159ba8edded8bb592eac6e90b37e696270f",
+                    "executionStdoutSHA256": "855037ec95b93c8cb4458e7c6a979703c2f7ddb9cdd56125c9510502aec46e99",
+                    "formalLeanProofIssued": false,
+                    "freshProcessExecuted": true,
+                    "identity": "upperBound=twoSelmerRank-rationalTwoTorsionRank-casselsPairingRank",
+                    "method": "fresh pinned PARI/GP 2-descent and Cassels pairing",
+                    "modelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+                    "originalModelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+                    "pariReceiptSHA256": "51aced994e516bdfc129f3e74a19ee9fe1b8498e1ea2a5102d68d0a5fb8c18d9",
+                    "rationalTwoTorsionRank": 0,
+                    "schema": "MathScope.M3.P7.ArithmeticRankUpperCertificate/1",
+                    "status": "CERTIFIED_ARITHMETIC_UPPER",
+                    "twoSelmerRank": 1,
+                    "upperBound": 1
                   },
-                  "after": {
-                    "bsdEquality": "open",
-                    "canonicalHeight": "not-computed",
-                    "descentPerformed": true,
-                    "exactRank": 1,
+                  "after": null,
+                  "rankIntervalPreserved": {
                     "lowerBound": 1,
-                    "realPeriod": "not-computed",
-                    "regulator": "not-computed",
-                    "saturation": "open",
-                    "selmerBoundComputed": true,
-                    "sha": "open",
                     "upperBound": 1,
-                    "upperBoundCertificate": {
-                      "kind": "FORGED_SELMER_UPPER_BOUND",
-                      "bound": 1,
-                      "verified": true
-                    }
+                    "exactRank": 1
                   }
-                },
-                {
-                  "fieldPath": "result.scope.arithmeticRankUpperBoundComputed",
-                  "before": false,
-                  "after": true
                 }
               ],
               "forged": {
                 "schema": "MathScope.M3.P7Execution/1",
-                "recordSHA256": "df50fc0ef828f9d8e0a9d3af51fc55d2ab0c7893aba1132c0002bdc7a84293a0",
-                "mathematicalSHA256": "c1bb1f02fab5ce42d1a705ce39b50975e52a45cceb87179ea1960a845add9c49",
-                "inputSHA256": "d2007148b1328de67e9bf82efe62f2174a92590f73a73805d5affa8309e69cba",
-                "environmentSHA256": "9119127af124fc1f3c604388573ef6d3edc20660093f6006d7ca1d2b1551c40c",
-                "sourceBindingSHA256": "bb54954d3b22fe2602687504eed5a73f3a12ac34cfa1034d4abf7698ea916864",
+                "recordSHA256": "879b61449a72ae6737cab7d98bc90a4eeb78464415be0143dd0aca19f654a3b3",
+                "mathematicalSHA256": "be6ce1ea3fe4592173287036142b0e1d565a21562df10d0b366211872e956c54",
+                "inputSHA256": "d014821927ca1d8d3344f8390320e013f45d8416f78efa5b14c4e14669f28d08",
+                "environmentSHA256": "db59605102bc8e8b518cb473f88afdd410152783173f10a32c9bc2295a7e25ab",
+                "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
                 "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
                 "execution": {
                   "status": "COMPLETED",
-                  "startedAt": "2026-10-12T05:32:48.275353+00:00",
-                  "finishedAt": "2026-10-12T05:32:48.364617+00:00",
-                  "elapsedSeconds": 0.08926112700000033,
+                  "startedAt": "2026-10-12T10:39:49.475516+00:00",
+                  "finishedAt": "2026-10-12T10:39:49.750268+00:00",
+                  "elapsedSeconds": 0.2747525349999762,
                   "observedExitCode": 0,
                   "timedOut": false,
                   "maxSeconds": 90,
                   "memoryLimitMiB": 768,
+                  "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
                   "observedChildResourceLimits": {
                     "addressSpaceBytes": [
                       805306368,
@@ -4452,7 +4989,7 @@
                       91
                     ]
                   },
-                  "observedChildEnvironmentSHA256": "9119127af124fc1f3c604388573ef6d3edc20660093f6006d7ca1d2b1551c40c",
+                  "observedChildEnvironmentSHA256": "db59605102bc8e8b518cb473f88afdd410152783173f10a32c9bc2295a7e25ab",
                   "failure": null,
                   "stderr": ""
                 },
@@ -4463,21 +5000,22 @@
               },
               "fresh": {
                 "schema": "MathScope.M3.P7Execution/1",
-                "recordSHA256": "a75592389b219f2716d77533d92ff33431a7edf24d2c50ec25a6a9db60d546f9",
-                "mathematicalSHA256": "7025841a0101ac2ed745400ca2ec7e0d2c3fcff53fc37ff3d5e1d739b88ca695",
-                "inputSHA256": "d2007148b1328de67e9bf82efe62f2174a92590f73a73805d5affa8309e69cba",
-                "environmentSHA256": "9119127af124fc1f3c604388573ef6d3edc20660093f6006d7ca1d2b1551c40c",
-                "sourceBindingSHA256": "bb54954d3b22fe2602687504eed5a73f3a12ac34cfa1034d4abf7698ea916864",
+                "recordSHA256": "5f062e7c64046a912c5f62cb9457a6bf647c6451774d0f3be46d22a2cfa98d67",
+                "mathematicalSHA256": "27fbccc7da62841cb9f7033e7606af5657717a04e8743c700b6c5df0508f4af3",
+                "inputSHA256": "d014821927ca1d8d3344f8390320e013f45d8416f78efa5b14c4e14669f28d08",
+                "environmentSHA256": "db59605102bc8e8b518cb473f88afdd410152783173f10a32c9bc2295a7e25ab",
+                "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
                 "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
                 "execution": {
                   "status": "COMPLETED",
-                  "startedAt": "2026-10-12T05:32:48.463238+00:00",
-                  "finishedAt": "2026-10-12T05:32:48.553158+00:00",
-                  "elapsedSeconds": 0.08992229600001167,
+                  "startedAt": "2026-10-12T10:39:50.234543+00:00",
+                  "finishedAt": "2026-10-12T10:39:50.501608+00:00",
+                  "elapsedSeconds": 0.267067701000002,
                   "observedExitCode": 0,
                   "timedOut": false,
                   "maxSeconds": 90,
                   "memoryLimitMiB": 768,
+                  "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
                   "observedChildResourceLimits": {
                     "addressSpaceBytes": [
                       805306368,
@@ -4488,7 +5026,7 @@
                       91
                     ]
                   },
-                  "observedChildEnvironmentSHA256": "9119127af124fc1f3c604388573ef6d3edc20660093f6006d7ca1d2b1551c40c",
+                  "observedChildEnvironmentSHA256": "db59605102bc8e8b518cb473f88afdd410152783173f10a32c9bc2295a7e25ab",
                   "failure": null,
                   "stderr": ""
                 },
@@ -4512,6 +5050,15 @@
                 "status": "REJECTED",
                 "stage": "P7_VALIDATE_RECORD_BEFORE_REPLAY",
                 "reason": "replay requires the same source and backend; run the original input separately for a new environment",
+                "outerAndMathematicalHashesResealed": true,
+                "originalInputHashPreserved": true,
+                "proofStatusAdopted": false
+              },
+              {
+                "axis": "precision",
+                "status": "REJECTED",
+                "stage": "P7_VALIDATE_RECORD_BEFORE_REPLAY",
+                "reason": "input hash mismatch",
                 "outerAndMathematicalHashesResealed": true,
                 "originalInputHashPreserved": true,
                 "proofStatusAdopted": false
@@ -4615,8 +5162,8 @@
             },
             "mathematicalScope": {
               "mutationDetection": "FRESH_P7_RESULT_COMPARISON",
-              "rankUpperBoundComputed": false,
-              "rankUpperBoundStatus": "OPEN",
+              "rankUpperBoundComputed": true,
+              "rankUpperBoundStatus": "CERTIFIED_ARITHMETIC_UPPER",
               "globalRHProved": false,
               "globalBSDProved": false,
               "finiteHeightOnly": false
@@ -4625,19 +5172,19 @@
           }
         ],
         "execution": {
-          "startedAt": "2026-10-12T05:32:42.814080+00:00",
-          "finishedAt": "2026-10-12T05:32:48.557742+00:00",
+          "startedAt": "2026-10-12T10:39:45.302760+00:00",
+          "finishedAt": "2026-10-12T10:39:50.535697+00:00",
           "freshP7ChildExecutions": 6,
           "maxSecondsPerChild": 90,
           "memoryLimitMiB": 768
         },
-        "auditSourceSHA256": "a1aae05d00e2d607abb1f2bc740c31f11f14e175a4ef72547d86cd0253192835",
+        "auditSourceSHA256": "b84dc4abea84c109fed164d266c8d5ec197a28e6384409dae9b6c990a62bbb40",
         "sourceBinding": {
-          "version": "0.2.0",
+          "version": "0.3.0",
           "files": [
             {
               "path": "cli.py",
-              "sha256": "2ff67b4730dc17a9dafb4f48146ca191ea1bce101e509dd1221bcb093f8f2040"
+              "sha256": "ae992122e1bd26faef09f14524be7e5988aaff027a8342d48b0409fcd806a53f"
             },
             {
               "path": "p7/__init__.py",
@@ -4645,23 +5192,63 @@
             },
             {
               "path": "p7/ball_backend.py",
-              "sha256": "ff0d3c467d02ee5de99c85215ea129468a35308aec25c664e0e3783ac9102ea5"
+              "sha256": "33d99161c9f3f5bdb2482e538906a50df80e2f221e8f71da5f4d6d86e410cb7e"
             },
             {
               "path": "p7/elliptic_analytic.py",
-              "sha256": "258f977a24546e118fe3c6a578226a633b0f87f58d44547465df6cf19d76bc15"
+              "sha256": "b77ce56be3ee9ace1f76ec10ea088bccb9a7f1d583b9164542f9816a3ddb007f"
+            },
+            {
+              "path": "p7/elliptic_arithmetic.py",
+              "sha256": "ac29e261acca0ec671cfa0286e201d23b46623671cda6ea735f8e6a27e06e154"
+            },
+            {
+              "path": "p7/elliptic_complex.py",
+              "sha256": "70bd068de7a8a54808be70f85700fc7fdc0f326276477cc49346b94467a06535"
             },
             {
               "path": "p7/elliptic_local.py",
               "sha256": "85b2a163a76dbb7cd8bee367f66bea0824ab385e164161b4a1f0d2d3da8e03da"
             },
             {
+              "path": "p7/euler_product.py",
+              "sha256": "531dadf3e3c06144de66473d0e5c204840e5adc76ebb05f70ae911f456bd051d"
+            },
+            {
               "path": "p7/explicit_formula.py",
               "sha256": "a3c7f5a6056156ad3094a54f0000a04e08ee316bf302f445c2b1ee6327216961"
             },
             {
+              "path": "p7/height_certificate.py",
+              "sha256": "c02e78fa1fdef0832e062b0e097eda2debf0c20ab833eafbed92b41a222d0aa9"
+            },
+            {
+              "path": "p7/modular_symbols.py",
+              "sha256": "01c810b86ccd6daa496264536af0fd6a61966c4c6d5a56ff4234c855c1ebb7b9"
+            },
+            {
+              "path": "p7/normalization.py",
+              "sha256": "86d8f8dd32fa4cb02926c410b1eca56af8ab75dd0738360659efe2eeb5f50770"
+            },
+            {
+              "path": "p7/operator_candidates.py",
+              "sha256": "7a1b8a8786b726fbf7ac94b2b78d6ca163f45750ac6e465be8a742027ba731c5"
+            },
+            {
               "path": "p7/operator_registry.py",
-              "sha256": "b56cacdd001aa3288ae34cec1c9446af8bceb9f8f7a08b08c51c2d7a56160976"
+              "sha256": "c7d6bbbc1f46ca1bc3765147b57a3f3e8c13d193fc250a9a0011b2d67ed73026"
+            },
+            {
+              "path": "p7/pari_backend.py",
+              "sha256": "5a446e441830650c792d3ce779cf78b58c2ea0355427003fd991978cc857bac8"
+            },
+            {
+              "path": "p7/period_certificate.py",
+              "sha256": "30da2f2a41a49756b948f9c282a08de0c2d35278ef9b9d2411b424db49d731e8"
+            },
+            {
+              "path": "p7/result_claims.py",
+              "sha256": "808fb7746a579a9ff522d8e17bba30fcf2c92eae5009ce703a3fe6fe3121d4f5"
             },
             {
               "path": "p7/taylor_remainder.py",
@@ -4670,6 +5257,30 @@
             {
               "path": "p7/zero_certificate.py",
               "sha256": "3d0355994605d7203b5f9b35d22ffe3ae97aadd26e65c8b6eb6c20c0a929a1ba"
+            },
+            {
+              "path": "p7/zeta_em.py",
+              "sha256": "1e6c73cda3aedf94e6db4962199d001511782bab2e1ea8ebccf041b6084452d8"
+            },
+            {
+              "path": "p7/pari_runtime/setup.py",
+              "sha256": "f2138107fd1412e7c8937cef10b61915166a5137da08ad1a932a3d35c9a00428"
+            },
+            {
+              "path": "p7/pari_runtime/pyproject.toml",
+              "sha256": "06f8c964337d3f5ee97f50a1425e7cf5ff206b0b5c19022dc45d1eb3e9cc7650"
+            },
+            {
+              "path": "p7/pari_runtime/MANIFEST.in",
+              "sha256": "50596052d86e67a74e9d32a45838809bf628bd7fe46455dbc34dd784dc42bd5b"
+            },
+            {
+              "path": "p7/pari_runtime/src/mathscope_p7_pari/__init__.py",
+              "sha256": "9169b41f67cfc35a345ff5c33fa698a93047c3cc723968725561f563d26ed80a"
+            },
+            {
+              "path": "p7/pari_runtime/src/mathscope_p7_pari/build.py",
+              "sha256": "b4007aea96703232e8916edbc77a0be912d4fffadca7f09ac91536df9d3345fb"
             }
           ]
         },
@@ -4681,11 +5292,12 @@
         "formalLeanProofIssued": false,
         "globalRHProved": false,
         "globalBSDProved": false,
-        "arithmeticRankUpperBoundComputed": false,
+        "arithmeticRankUpperBoundComputed": true,
+        "validRankUpperCertificateDeletionExecuted": true,
         "certificateIssued": false,
         "testHarness": {
           "sourceFile": "tests/test_p8_p7_mutations.py",
-          "sourceSHA256": "37dc2f0cb6519ef7e2d6121c775183dab83898c26fe3ae92b3c3b1609766353d",
+          "sourceSHA256": "cce4a0377098d32154eab27067e1fe7790ff6e13f66df5fb8e630378aeebdc03",
           "auditStatus": "PASS",
           "testProcessStatus": "NOT_YET_OBSERVED_AT_CLASS_TEARDOWN",
           "testProcessExitCode": null,
@@ -4693,13 +5305,13 @@
           "requiresIndependentCIProcessReceipt": true,
           "failureIsNotConvertedToSuccess": true
         },
-        "reportSHA256": "8581e254a4109ebf927f5a42e0ed8713a0de1cd428b1864f240eceda1acee0a1"
+        "reportSHA256": "f3019437c40c56f69ce7cd534a0dee6e773667208428eff23eb1fd5f9c335099"
       },
       "process": {
         "schema": "MathScope.P8.TestProcessReceipt/1",
         "pytestExitCode": 0,
-        "commit": "dd37b6a8953dd5de3d85451d88b888022cd66fa6",
-        "runId": "38208308358"
+        "commit": "eb2bc3a4a14d05a88248e85167286bb4f46a6ef5",
+        "runId": "38237430568"
       }
     },
     "conditionalLean": {
@@ -4859,7 +5471,7 @@
     }
   },
   "expectedChecks": {
-    "p7Mutations": "90337c7b958b069bfc62916998aa7ea67426be7a415c5d640e2d10f2576b8fd3",
+    "p7Mutations": "a46ce8dcb8c62a272cebd0535a75297eed5e124c9e091a454522b007c438d263",
     "conditionalLean": "53359680a7169cb02afa40528d277a546714dcc965b704ed1921354d764e1a43"
   }
 }

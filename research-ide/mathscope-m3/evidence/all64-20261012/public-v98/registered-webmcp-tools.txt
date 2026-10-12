@@ -1,0 +1,1631 @@
+WebMCP tools available in this document:
+[
+  {
+    "name": "mathscope.compute.capabilities__404bf41d-39de-4a34-b3e4-0772f9bdfcce",
+    "title": "",
+    "description": "Read MathScopeCompute cloud capabilities and trust boundary.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.foundation.self_test__13e4c0e0-6768-42cb-b233-6ad12e15ffcd",
+    "title": "",
+    "description": "Run read-only Stage 1 Foundation schema, dependency-invalidation and evidence-promotion guard tests.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m0.cancel_job__83c27d3e-675a-4e1b-be78-c35f9dfb51a6",
+    "title": "",
+    "description": "Request cancellation of a named M0 browser calculation. Preserves its last checkpoint for resume. Cancellation is not a rollback of previously saved session records.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 160,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m0.job_status__5f2d1149-e586-46ab-b8d9-45ca0721aec9",
+    "title": "",
+    "description": "Read one M0 browser job using an ID returned by run_fixture or the job list. This does not issue proof status.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 160,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m0.proof_audit__f7b6420a-98a5-4a96-aada-f412a9b6c426",
+    "title": "",
+    "description": "Compare the selected Lean source and assumptions with the exact shipped local kernel audit. Modified or untrusted imported sources require revalidation. This neither runs a remote compiler nor issues the existing FORMAL PASS certificate.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m0.run_fixture__a610c98b-730f-437d-80e4-905d3511b574",
+    "title": "",
+    "description": "Run one named small M0 reference calculation in the current browser worker. Adds only a local job and displays its result; does not save mathematical evidence or replace edited inputs. Returns the job ID for status/cancel.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter": {
+          "enum": [
+            "prime-segment",
+            "padic-delta",
+            "rational-interval",
+            "integer-matrix-product"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "adapter"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m0.self_test__5dcd9b9f-86a0-484a-9a7d-34fb28e85bc9",
+    "title": "",
+    "description": "Run bounded M0 contract, arithmetic, selective-stale and proof-audit acceptance checks in isolated memory. No active-session mutation and no external computation.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m0.status__3d91bc4b-42e3-4c0f-aa84-de88dfc4e948",
+    "title": "",
+    "description": "Read the active MathScope M0 session, typed-object counts, bounded compute capabilities, jobs and evidence-audit summary. Does not modify the session.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m0.validate_contract__c9a66e75-23bd-40eb-b4fb-cf6d502bebe0",
+    "title": "",
+    "description": "Validate a versioned MathScope research contract without saving it. Schemas and data validation do not prove the mathematical hypotheses.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "maxLength": 100,
+          "type": "string"
+        },
+        "value": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m1.audit_adapters__2ece813a-95cb-4f95-ba3d-9755fba84a8c",
+    "title": "",
+    "description": "Check analytic-contract completeness and theorem-reference/Lean-target separation using finite negative controls. Does not prove the asserted hypotheses or recompile Lean.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m1.cancel_job__29e2a714-9e2f-4e77-b77d-e72966539b65",
+    "title": "",
+    "description": "Stop a named local M1 worker. The last diagnostic checkpoint is retained; restarting recomputes the exact original input from the beginning.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 150,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m1.job_status__cb20b8a6-d385-41e6-907b-0fdebaaeb83b",
+    "title": "",
+    "description": "Read one locally executed M1 job, including exact request, result scope, source hash, precision diagnostics and open obligations. It cannot issue a proof certificate.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 150,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m1.run_example__530acefa-ca60-48e9-9961-16831b724b7b",
+    "title": "",
+    "description": "Load one named M1 example in the visible editor and execute it in the bounded static browser worker. Returns a job ID; no mathematical evidence is saved automatically.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "exampleId": {
+          "maxLength": 160,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "exampleId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m1.save_result__e5650f01-acb4-4f1f-8833-95506ce37d9e",
+    "title": "",
+    "description": "Save an already executed local M1 result to the same active research session with exact object, assumptions, source and job bindings. Refuses changed sessions, stale references and imported/forged receipts. This records finite computation metadata and never issues FORMAL PASS.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 150,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m1.status__42c6057a-39e0-45f4-b282-5471b3b1dbb0",
+    "title": "",
+    "description": "Read installed M1 actual mathematical domains, examples, active session identity, finite jobs and native registration. No session mutation or formal proof is issued.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m1.validate_request__7a97fe25-9e98-4f5e-9b26-309ec539b3e3",
+    "title": "",
+    "description": "Validate a finite M1 mathematical domain input with installed bounds. It validates a contract and does not establish its analytic hypotheses.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "request": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "request"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.cancel_job__7c7536ed-b10e-4eeb-a443-b77fa6bb1939",
+    "title": "",
+    "description": "Cancel an owned M2 Worker and retain diagnostic checkpoint metadata. Restart recomputes the original input.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 150,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.export_job__4cb462da-490c-4d54-a6ec-2cb855288b42",
+    "title": "",
+    "description": "Read a complete replay JSON bundle for an existing local job. Preserves exact input, source/environment hashes and untrusted serialized status. Does not save to the research session.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 150,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.import_bundle__2bcfe5f2-8044-4fdf-9e2a-7ca4680ae5e1",
+    "title": "",
+    "description": "Import a hash-consistent M2 replay bundle. REPLAY recomputes under the same source/environment and compares exact mathematical hashes. INPUT_ONLY restores only the validated request without executing. Preserves later user edits; never adopts imported evidence or saves automatically. Use the visible file picker above 280,000 characters.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "json": {
+          "maxLength": 280000,
+          "minLength": 2,
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "REPLAY",
+            "INPUT_ONLY"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "json",
+        "mode"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.inspect_import__e7a749f3-d5c0-4a01-8d6b-60e36ab29b46",
+    "title": "",
+    "description": "Validate a serialized M2 bundle and report whether this source/environment can replay it, without submitting a job or changing the editor. Tool input is limited to 280,000 characters; larger files use the visible file picker.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "json": {
+          "maxLength": 280000,
+          "minLength": 2,
+          "type": "string"
+        }
+      },
+      "required": [
+        "json"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.job_status__affdac49-bfe1-4f27-a58e-f7bbb5f9756c",
+    "title": "",
+    "description": "Read the exact input, finite result and source bindings of one locally executed M2 job.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 150,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.rendering_audit__01eec8f3-b24d-43cf-8c25-c2046948da23",
+    "title": "",
+    "description": "Run a bounded CPU/WebGL display audit of the currently selected observation; preserve its input, source values and table. Reports actual context availability, raster probes and retained-coordinate equivalence.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.replay_job__ff0ebfe6-5c17-492c-8085-0354a2fb48a2",
+    "title": "",
+    "description": "Recompute an existing owned M2 run under the same installed source and compare semantic digests. No imported evidence is trusted.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 150,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.run_example__add85bfa-4d94-42de-991e-feb512bd5761",
+    "title": "",
+    "description": "Load a named M2 example into the visible editor and execute it in the static bounded Worker. Returns a job ID. No evidence is saved automatically.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "exampleId": {
+          "maxLength": 160,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "exampleId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.run_example_suite__8fea3c4f-f215-4c08-ab42-46ee52e03757",
+    "title": "",
+    "description": "Sequentially run 1–12 distinct installed examples in the visible editor and render each observation panel. Returns computation and display checks within a 50-second budget; stops on cancellation or changed user input. Retains jobs without automatically saving evidence.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "exampleIds": {
+          "items": {
+            "maxLength": 160,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 12,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "exampleIds"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.run_request__a2bf85ab-ecd9-4dcd-9da1-9a263202cf18",
+    "title": "",
+    "description": "Load an explicit bounded M2 request into the visible editor and execute it. Scope, changed-input and resource limits are preserved; no automatic evidence save.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "request": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "request"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.save_result__c8697146-8626-42a4-be23-ab41aad9c96f",
+    "title": "",
+    "description": "Save an already executed M2 finite result to the same unchanged research session. It checks owned receipts, input/result/source hashes and session revision. Never grants FORMAL PASS.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 150,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.select_job__84f4e32f-d8d3-49b6-a8da-f445763e949f",
+    "title": "",
+    "description": "Select an existing M2 run, restoring its own input and source-bound visualizations together.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "maxLength": 150,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.status__363d79e1-3c6d-419f-b2a1-4136a7af228e",
+    "title": "",
+    "description": "Read installed M2 examples, original-criteria counts, source hashes, finite jobs and visible visualization metadata. No session mutation or formal proof.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m2.validate_request__a916e9f3-db77-4de3-ae85-91e2b8f0102e",
+    "title": "",
+    "description": "Validate an explicit bounded M2 request. It checks the installed input contract, not mathematical hypotheses.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "request": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "request"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m3.export_record__59b31077-ceb9-4a5a-b04b-78dde95750af",
+    "title": "",
+    "description": "Read the current server execution envelope up to 280,000 characters. Larger results remain available through the visible JSON download. This does not create proof authority.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m3.replay_current__7e4c7aef-82ee-48e5-bed0-51c5e3d2871b",
+    "title": "",
+    "description": "Recompute the current completed P7 result on the server and compare source, environment, predecessor and mathematical hashes. No imported proof authority is adopted.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m3.run_example__f176a611-bde1-487e-95c6-6169ba44a0c1",
+    "title": "",
+    "description": "Load a named installed P7 example and execute it on the bounded compute server. Refuses to replace edited input or overlap a running job. Displays actual server output without issuing a proof.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "exampleId": {
+          "maxLength": 160,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "exampleId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m3.start_example__05d1b8df-380e-4a4e-9de4-b0fb93cecb33",
+    "title": "",
+    "description": "Start one installed P7 example on the bounded server and immediately return RUNNING with a page-local execution ticket. Poll status.activeStart for this ticket and the actual outcome. Refuses edited input and overlapping work; the ticket is not a durable server job or proof. Leaving this document may lose the ticket without cancelling server work.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "exampleId": {
+          "maxLength": 160,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "exampleId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.research_m3.status__9b76460f-8c11-4009-b9db-b0194eb2190d",
+    "title": "",
+    "description": "Read P7 server capabilities, installed example identifiers and current execution summary. No request is submitted and no proof status is issued.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.session.create_checkpoint__3cb60af9-7dfc-4270-814a-cdd5ee39e3ba",
+    "title": "",
+    "description": "Create a checkpoint snapshot of the active ResearchSession. This modifies only local MathScope session state.",
+    "inputSchema": {
+      "properties": {
+        "label": {
+          "description": "Optional checkpoint label.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.session.summary__89ad4ffa-f1c0-426b-bff4-8db209126ea0",
+    "title": "",
+    "description": "Read the active MathScope v0.3.1 ResearchSession summary, revisions, evidence counts and current representation guard state.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage3.run_acceptance__95f0b4e3-a84c-4088-a4ad-899f78260b34",
+    "title": "",
+    "description": "Run read-only Stage 3 A1-A12 coverage and A1-A6 semantic gates.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage3.summary__d3fb861f-c162-40c9-9078-2d0aa874f390",
+    "title": "",
+    "description": "Read Stage 3 hybrid analytic-core status.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage4.run_gate__4fe80cf9-06e0-4b9f-b319-15f02db268de",
+    "title": "",
+    "description": "Run read-only B1-B6 semantic acceptance checks.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage4.run_topology__eaa19ad1-46ad-44bf-92e0-3ad40ce4a943",
+    "title": "",
+    "description": "Run a read-only finite persistent-homology computation using the selected Stage4 B7 settings. This never proves topology equivalence.",
+    "inputSchema": {
+      "properties": {
+        "mode": {
+          "enum": [
+            "projection-compare",
+            "rips",
+            "cubical",
+            "simplex"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage4.summary__2991f44f-dd45-4f61-9678-4513d9568752",
+    "title": "",
+    "description": "Read Stage4 B Geometry Engine status and current B7 blocker.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage4.topology_status__3702e18d-e12a-4b43-b0d8-48ad92a5cb26",
+    "title": "",
+    "description": "Read the current Stage4 B7 persistent-homology result and finite-topology trust boundary.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage5.copilot_plan__e092019e-d727-4789-a61d-0c117eaa4c4c",
+    "title": "",
+    "description": "Generate a permission-bounded research orchestration plan. Suggestions cannot set theorem or formal proof status.",
+    "inputSchema": {
+      "properties": {
+        "prompt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage5.graph_summary__b210bfaf-e9c9-40dd-853f-ac80b5a16765",
+    "title": "",
+    "description": "Read the current ResearchSession dependency graph summary, including stale nodes and relation counts.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage5.proof_status__5ad31320-977d-4ed4-a381-2d22b5439621",
+    "title": "",
+    "description": "Read Proof Dock verifier metadata and current result. This is read-only and does not issue or commit proof evidence.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage5.run_stress_test__27446465-b12d-4bbf-ba5b-5efd8821310c",
+    "title": "",
+    "description": "Run one deterministic read-only stress/counterexample test. The result never promotes a claim to theorem status.",
+    "inputSchema": {
+      "properties": {
+        "claimId": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "identifiability",
+            "coordinate",
+            "basis",
+            "mesh",
+            "timestep",
+            "truncation",
+            "parameter",
+            "assumption",
+            "adversarial",
+            "divergence",
+            "symmetry"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage6.guard_report__ba61d307-8183-436a-a326-6300dc920fc1",
+    "title": "",
+    "description": "Run the Stage6 D1-D6 semantic acceptance checks without committing any session mutation.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage6.run_reference__4a232ff9-3798-45c7-9cd4-a405d1651317",
+    "title": "",
+    "description": "Run the bounded Stage6 structural reference adapter. Output remains scoped evidence; no FORMAL PASS is issued.",
+    "inputSchema": {
+      "properties": {
+        "analysisMode": {
+          "enum": [
+            "theorem",
+            "symbolic",
+            "sampled"
+          ],
+          "type": "string"
+        },
+        "model": {
+          "enum": [
+            "closed_scalar_laplacian",
+            "nonlinear_elliptic_linearization",
+            "custom_quadratic_symbol",
+            "hyperbolic_counterexample"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage6.structure_status__ec9ded94-27be-4f9e-b4df-f1a4bde5733c",
+    "title": "",
+    "description": "Read the current Stage6 principal-symbol, ellipticity, K-class, index and boundary result. This does not promote evidence.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage7.guard_report__111828ef-ee43-4a70-a39a-75512e91e984",
+    "title": "",
+    "description": "Evaluate Stage7 semantic guards: Galois structure, zeta separation, spectral-flow preconditions, equivariant/K-homology scope, Ricci-flow scope and evidence boundary.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage7.module_status__85aa9dde-0280-4422-bb79-2548775dcdc2",
+    "title": "",
+    "description": "Read current Stage7 Galois/zeta/spectral-flow/equivariant/perturbation/Ricci reference results without evidence promotion.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage7.run_reference_suite__2c4887ed-e568-4881-984b-42044aa342ae",
+    "title": "",
+    "description": "Run the bounded Stage7 advanced-research reference suite. Results remain scoped evidence and never become FORMAL PASS automatically.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage8.golden_status__08add61d-f1e9-40be-b659-e53e842a1cef",
+    "title": "",
+    "description": "Read the current linked Golden numerical session, revision checks and replay outcome. Does not run jobs or promote evidence.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage8.hardening_status__b5b665c9-f18c-407f-8708-ba67a8387f26",
+    "title": "",
+    "description": "Read Stage8 3D metadata, bundle/benchmark/gate state without mutation or evidence promotion.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage8.validate_current_session__7952f7ee-0ff6-4f2f-913f-a7322cb81633",
+    "title": "",
+    "description": "Run Stage8 non-mutating checks including in-memory ZIP SHA-256 roundtrip (no download).",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope.stage8.zeta3d_summary__5bd96d6b-3dfa-4dd1-b4dc-d97c86738ffb",
+    "title": "",
+    "description": "Read numerical-only complex zeta 3D surface summary and guards; computes the reference grid if absent.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_get_cloud_acceptance__89f03c92-148b-416d-918c-c3c30b44880c",
+    "title": "",
+    "description": "Read the most recent browser-session Cloud Acceptance result without rerunning it.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_get_release_audit__9c8ce8cb-9606-4098-8510-482155533aa8",
+    "title": "",
+    "description": "Read the most recent integrated release audit result without rerunning it.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_get_state__6c0a162f-d4ea-4874-aadb-4c1a6688afbd",
+    "title": "",
+    "description": "Read the current MathScope module, revisions, S3 observation settings, and selected claim. Read-only.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_get_visualization_spec__7d7b9897-ce50-4b0d-bd79-5bebe5d3ca01",
+    "title": "",
+    "description": "Read the common VisualizationSpec for the current or requested MathScope module.",
+    "inputSchema": {
+      "properties": {
+        "module": {
+          "enum": [
+            "geometry",
+            "functional",
+            "fidelity",
+            "dynamics",
+            "arithmetic",
+            "advanced",
+            "claims"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_m3_camera__432579c8-b52f-4339-9bc3-a9786b7a84a5",
+    "title": "",
+    "description": "Change the visible M3 camera with a bounded action. Does not alter source coordinates, physics, numerical values or proof status.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "left",
+            "right",
+            "up",
+            "down",
+            "in",
+            "out",
+            "reset"
+          ],
+          "type": "string"
+        },
+        "workspace": {
+          "enum": [
+            "gauge",
+            "navier"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace",
+        "action"
+      ],
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_m3_export_record__684c8275-d036-4a0f-bcf9-01d16ee0abd7",
+    "title": "",
+    "description": "Read the current non-stale M3 execution JSON, including exact source/environment bindings and original results, without starting a download or sending it elsewhere.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "workspace": {
+          "enum": [
+            "gauge",
+            "navier"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_m3_get_state__55b2c2f1-decf-4ddc-9e74-273a8230feac",
+    "title": "",
+    "description": "Read M3 Y5–Y7 or N6–N8 current execution, source hash, stale state and installed examples. It does not execute calculations.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "workspace": {
+          "enum": [
+            "gauge",
+            "navier"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_m3_load_example__60c7412b-1168-4fa7-b509-ae58560a0aa4",
+    "title": "",
+    "description": "Load one installed M3 example into its visible editor. Preserves edited input and returns EDITED_INPUT_PRESERVED when necessary. No calculation or proof promotion.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "exampleId": {
+          "enum": [
+            "y5-effective-su3",
+            "y5-assumed-bound",
+            "y5-units",
+            "y6-g2-slice",
+            "y6-bpst-marginal",
+            "y5-finite-spectrum",
+            "y5-new-chains",
+            "y7-exact-transfer",
+            "y7-proof-audit",
+            "y6-lattice-slice",
+            "y6-lattice-marginal-mean",
+            "y6-wilson-flow-su2",
+            "y6-wilson-flow-g2",
+            "y5-independent-t0",
+            "y5-matched-reference-study",
+            "y5-production-reference-record",
+            "N6-workbench",
+            "N6-source-reconstruction",
+            "N6-source-mean",
+            "N6-harmonic",
+            "N6-signed",
+            "N6-moments",
+            "N7-workbench",
+            "N7-inner-growth-record",
+            "N7-periodic",
+            "N8-TG",
+            "N8-nonlinear",
+            "N8-flow",
+            "N8-nearT",
+            "N8-acceptance"
+          ],
+          "type": "string"
+        },
+        "workspace": {
+          "enum": [
+            "gauge",
+            "navier"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace",
+        "exampleId"
+      ],
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_m3_replay__9b2e9991-e584-4d02-9625-d6380047bedd",
+    "title": "",
+    "description": "Validate current M3 source, environment and record digests, then repeat the selected operation and compare results. An archive operation repeats source validation and does not rerun its original long numerical study. Requires a current non-stale record. Does not adopt imported proof authority.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "workspace": {
+          "enum": [
+            "gauge",
+            "navier"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace"
+      ],
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_m3_run__229a7e63-ec47-468c-ba3b-475428cd3bdb",
+    "title": "",
+    "description": "Execute the current visible JSON editor for M3 Y5–Y7 or N6–N8 using the same bounded static Worker as the Run button. P7 has its own API and browser tools. Reports actual finite results and unresolved source obligations.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "workspace": {
+          "enum": [
+            "gauge",
+            "navier"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace"
+      ],
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_m3_select_point__d8165e0e-a66d-4872-ba99-01b45ef22761",
+    "title": "",
+    "description": "Select an actual computed source point and read its original coordinates, observable value and source hash. A view operation never changes the execution digest.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceId": {
+          "maxLength": 5,
+          "pattern": "^[0-3]:[0-9]{1,3}$",
+          "type": "string"
+        },
+        "workspace": {
+          "enum": [
+            "gauge",
+            "navier"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace",
+        "sourceId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_open_module__8bd851b4-45b2-4a27-beac-6132140ea20f",
+    "title": "",
+    "description": "Open one MathScope workspace module by its stable module name.",
+    "inputSchema": {
+      "properties": {
+        "module": {
+          "enum": [
+            "overview",
+            "geometry",
+            "functional",
+            "fidelity",
+            "dynamics",
+            "arithmetic",
+            "advanced",
+            "claims",
+            "validation",
+            "architecture"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "module"
+      ],
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_run_cloud_acceptance__827ff406-a546-4f0b-86ce-257d301805cd",
+    "title": "",
+    "description": "Run the same four-step Cloud Lean acceptance flow exposed in the MathScope Validation UI: health, startup self-test, real lake serve diagnostics, and FORMAL EvidenceRecord preservation through STALE after a revision bump.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_run_release_audit__7757b448-66d1-447e-a0a6-5f04ef13a64f",
+    "title": "",
+    "description": "Run the integrated MathScope v0.2.1.1 browser release audit: routes/scenes, accessibility, deterministic replay, evidence boundary, no-go regressions, performance sample, Private Local fallback and Cloud Lean acceptance.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_run_visualization_regression__2c083f9b-d214-49e9-9cda-2c2dfd2706c1",
+    "title": "",
+    "description": "Run deterministic no-go/boundary regressions for the visualization expansion and return results.",
+    "inputSchema": {
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": false,
+      "consequentialHint": false
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_set_s3_slice__34ca4ffe-6afb-4a40-9bb6-563b62dab299",
+    "title": "",
+    "description": "Set the S3 slice parameter c and choose exact analytic slice or slab approximation. This updates only the local browser session.",
+    "inputSchema": {
+      "properties": {
+        "c": {
+          "maximum": 1.2,
+          "minimum": -1.2,
+          "type": "number"
+        },
+        "epsilon": {
+          "maximum": 0.25,
+          "minimum": 0.005,
+          "type": "number"
+        },
+        "kind": {
+          "enum": [
+            "exact",
+            "slab"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "c"
+      ],
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  },
+  {
+    "name": "mathscope_set_visualization_parameter__e06d44ed-06db-4bae-887e-dc46c791aba5",
+    "title": "",
+    "description": "Set one bounded visualization parameter in the local MathScope browser session.",
+    "inputSchema": {
+      "properties": {
+        "parameter": {
+          "enum": [
+            "functionalMode",
+            "p",
+            "k",
+            "ifcCollision",
+            "ifcEncoder",
+            "geometrySurface",
+            "geometryTopology",
+            "pdeEquation",
+            "pdeTime",
+            "adapterCMode",
+            "perfectoidSubset"
+          ],
+          "type": "string"
+        },
+        "value": {}
+      },
+      "required": [
+        "parameter",
+        "value"
+      ],
+      "type": "object"
+    },
+    "origin": "https://project29770.websitepublisher.ai",
+    "pageUrl": "https://project29770.websitepublisher.ai/v0.3.1.html?p7=P7-08#research-fluid-m3/N7"
+  }
+]
+Call tools.call(name, input) to invoke one.

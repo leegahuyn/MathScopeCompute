@@ -1,0 +1,152 @@
+{
+  "schema": "MathScope.M3.P7.WebMCPStartVerification/1",
+  "status": "LOCAL_FROZEN_SOURCE_TESTS_PASS",
+  "createdAt": "2026-10-12T11:24:38.352638+00:00",
+  "headAtVerification": "529e864c8b2ed19399bab8bbc53a08721873d5d4",
+  "changedSourceFiles": [
+    "web/workspace.js",
+    "tests/p7-workspace.webmcp.test.mjs"
+  ],
+  "files": [
+    {
+      "path": "web/workspace.js",
+      "bytes": 31293,
+      "sha256": "09240fb89671c6a4760ff6a6ec9759ea645645c1f5679d913e08bda95a3f1372"
+    },
+    {
+      "path": "tests/p7-workspace.webmcp.test.mjs",
+      "bytes": 15181,
+      "sha256": "0422ad278f0bbdf44ae5582738a37be183db51f0fa49aeee73da54cbbc4f973f"
+    },
+    {
+      "path": "web/p7-visualization.js",
+      "bytes": 40395,
+      "sha256": "5c7b39bfab5709834b148fdadc39cddd55c42cc33b999fadae03511d5fa1e7db"
+    },
+    {
+      "path": "tests/p7-visualization.canvas.test.mjs",
+      "bytes": 20479,
+      "sha256": "bc6e3dc6aa244bec5f39a235085ff69a9fbe15a4d7747441c947c7d7c9b38e55"
+    }
+  ],
+  "fileHashesUnchangedDuringTests": true,
+  "originalRunFunctionByteUnchanged": true,
+  "originalRunExampleCallbackByteUnchanged": true,
+  "originalOtherMutationAndReadToolsByteUnchanged": {
+    "replay_current": true,
+    "export_record": true
+  },
+  "statusOnlyAddsActiveStart": true,
+  "rootProgressChangesPreserved": true,
+  "frozenCanvasSourceUnchanged": true,
+  "processes": [
+    {
+      "command": [
+        "node",
+        "--check",
+        "research-ide/mathscope-m3/web/workspace.js"
+      ],
+      "startedAt": "2026-10-12T11:24:38.062824+00:00",
+      "endedAt": "2026-10-12T11:24:38.148631+00:00",
+      "exitCode": 0,
+      "stdout": {
+        "path": "evidence/all64-20261012/p7-webmcp-start/syntax.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "evidence/all64-20261012/p7-webmcp-start/syntax.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "research-ide/mathscope-m3/tests/p7-workspace.webmcp.test.mjs"
+      ],
+      "startedAt": "2026-10-12T11:24:38.148960+00:00",
+      "endedAt": "2026-10-12T11:24:38.347354+00:00",
+      "exitCode": 0,
+      "stdout": {
+        "path": "evidence/all64-20261012/p7-webmcp-start/mounted-webmcp-tests.tap",
+        "bytes": 1873,
+        "sha256": "a9592b571dfc65f7906188f348c4b249c5d6e8ef7aa6f435282ffc23a837053c"
+      },
+      "stderr": {
+        "path": "evidence/all64-20261012/p7-webmcp-start/mounted-webmcp-tests.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "observedTestCounts": {
+    "tests": 7,
+    "pass": 7,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "workflow": {
+    "tool": "mathscope.research_m3.start_example",
+    "input": {
+      "exampleId": "one current installed example identifier"
+    },
+    "initialOutcome": "RUNNING only after existing run() enters its busy state; immediate validation failures return the actual failure",
+    "executionTicket": "p7-start-<monotonic document-local sequence>",
+    "ticketScope": "CURRENT_DOCUMENT_NOT_SERVER_JOB",
+    "pollTool": "mathscope.research_m3.status",
+    "pollFields": [
+      "busy",
+      "current",
+      "activeStart.executionTicket",
+      "activeStart.status",
+      "activeStart.outcome",
+      "activeStart.currentRecordMatchesTicket"
+    ],
+    "legacyToolsPreserved": [
+      "status",
+      "run_example",
+      "replay_current",
+      "export_record"
+    ],
+    "mathSourceOrAPISchemaChanged": false,
+    "pageCleanupCancelsServerWork": false
+  },
+  "observedBehavior": [
+    "Response returns while mocked HTTP remains unresolved, then only the actual existing run() outcome settles the ticket",
+    "Same bounds and explicit pre-call cancellation; invalid input, unknown example, unsaved edits and busy state cause no new HTTP request",
+    "Original normal UI run and blocking run_example behavior remain available",
+    "HTTP failure and unexpected Promise rejection update both ticket and visible failure",
+    "Changed input yields STALE; changed source fails; server UNRESOLVED remains UNRESOLVED",
+    "Old tickets do not identify a later current record; subsequent tickets receive a distinct sequence",
+    "Registration-only capability is sufficient; owned registrations clean up and restore without pretending to cancel the server",
+    "Original 110-second HTTP timeout message preserves uncertainty about actual server termination"
+  ],
+  "documentationChecked": [
+    {
+      "url": "https://webmachinelearning.github.io/webmcp/",
+      "draftDate": "2026-10-09",
+      "observedContract": "document.modelContext.registerTool; owned AbortSignal registration and JSON-serializable results"
+    },
+    {
+      "url": "https://developer.chrome.com/docs/ai/webmcp/imperative-api",
+      "observedContract": "official browser imperative API guidance"
+    }
+  ],
+  "verificationLimits": {
+    "mountedWorkspaceExecuted": true,
+    "WebMCPRegistryMocked": true,
+    "HTTPDeferredFixtures": true,
+    "nativeBrowserVerified": false,
+    "targetAgentVerified": false,
+    "newMathematicalExecutionPerformed": false,
+    "formalLeanProofIssued": false,
+    "wholeP7Complete": false,
+    "wholeM3Complete": false
+  },
+  "priorEvidenceModified": false,
+  "gitIndexOrRefsModified": false
+}

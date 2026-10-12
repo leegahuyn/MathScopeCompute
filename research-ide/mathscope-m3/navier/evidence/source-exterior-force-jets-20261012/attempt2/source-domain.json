@@ -1,0 +1,2324 @@
+{
+  "schema": "MathScope.N7.ActualSourceLocalizationDomain/1",
+  "sourceBinding": {
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "pages": 166
+    },
+    "profileId": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "common6FamilyGraph": {
+      "sha256": "bff6b64458f52426e996a7b5a1dee44b4ae1f7fb226d54654889c79679e4e219",
+      "nodeCount": 622781,
+      "canonicalBytes": 28446215,
+      "fixedCompilerPrefix": true
+    },
+    "common6Path": "mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json",
+    "sourceProfileArchive": {
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+      "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+      "bytes": 77149
+    },
+    "acceptedCoreArchive": {
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/core-intervals-0002/receipt.json",
+      "sha256": "8f65d85d903df534c2c10501119fbcef636678c95ec214e165041681d16fb5a5",
+      "bytes": 936426
+    }
+  },
+  "constants": {
+    "commonQStar": 617437,
+    "qBig": 622791,
+    "ellMinimum": 617432,
+    "ell0": 617433,
+    "ratioExponent": 624135,
+    "domainRatio": "1/64",
+    "tauRatio": 28820,
+    "supportRatio": 847,
+    "strictSupportGap": 847,
+    "meanSupportUpper": 624140,
+    "meanSupportRationalUpper": 24,
+    "meanPatchUpper": 3430,
+    "fixedAxialGap": 624146
+  },
+  "initialPrerequisites": [
+    {
+      "id": "fixed-original-background-and-common-selector",
+      "source": "actual-common-admissible-family.mjs",
+      "authenticatedFamilyGraph": {
+        "sha256": "bff6b64458f52426e996a7b5a1dee44b4ae1f7fb226d54654889c79679e4e219",
+        "nodeCount": 622781,
+        "canonicalBytes": 28446215,
+        "fixedCompilerPrefix": true
+      },
+      "sourceRoots": {
+        "FErrorConstant": 215562,
+        "GErrorConstant": 215564,
+        "FGErrorConstant": 215573,
+        "bErrorConstant": 215566,
+        "bLeadingConstant": 215570,
+        "bTotalConstant": 215574,
+        "FLeadingConstant": 216828,
+        "FTotalConstant": 216829,
+        "GLeadingConstant": 215572,
+        "GTotalConstant": 215575,
+        "FLeadingOnPositiveSupportConstant": 215578
+      },
+      "proof": "The authenticated c_n finite block and diagonal induction are unchanged for b_n>=c_n, since the Euler cutoff derivative bounds do not depend on the scale. Every positive coefficient remains in the actual finite active sum.",
+      "sameSourceOnly": true,
+      "callerProvidedBoundsAccepted": false
+    },
+    {
+      "id": "fixed-pulse-and-noncharacteristic-estimates",
+      "source": "actual-common-admissible-family.mjs thresholdFromOriginal / primitiveProof",
+      "thresholdConditions": [
+        {
+          "id": "positive-unit-band-scale",
+          "lower": 1,
+          "inequality": "S >= 1",
+          "representativeRemovedByIntervalRule": true
+        },
+        {
+          "id": "cone-ratio-at-most-one-half",
+          "lower": 617348,
+          "inequality": "coneK/S <= 1/2",
+          "representativeRemovedByIntervalRule": true
+        },
+        {
+          "id": "pulse-length-at-least-one",
+          "lower": 137446,
+          "inequality": "Ls >= Lmin*S >= 1",
+          "representativeRemovedByIntervalRule": true
+        },
+        {
+          "id": "actual-slope-at-most-two-u",
+          "lower": 617349,
+          "inequality": "|s_a-s| <= u/2",
+          "representativeRemovedByIntervalRule": true
+        },
+        {
+          "id": "normalized-frame-column-budget",
+          "lower": 617427,
+          "inequality": "frameColumnK/S <= kappa/256",
+          "representativeRemovedByIntervalRule": true
+        },
+        {
+          "id": "normalized-concentration-budget",
+          "lower": 617354,
+          "inequality": "concentrationK/sqrt(Ls) <= kappa/256",
+          "representativeRemovedByIntervalRule": true
+        },
+        {
+          "id": "actual-moving-frame-source-primitives",
+          "lower": 617428
+        },
+        {
+          "id": "actual-flat-boundary-direction-neighbourhood",
+          "lower": 617429
+        }
+      ],
+      "Bnorm": 300170,
+      "E": 617292,
+      "actualFrameErrorUpper": "Bnorm^256/S",
+      "normalLower": "|n_Phi|>=|n_tangent|>=Bnorm^-2>0",
+      "normalProof": "Same-box chart paths, full leading C2, and error<=C2*epsilon^2 give each completed-leading frozen jet error<=B^5/S^3. Rounding contributes at most1/k, n=(x0-v*H_R,p/R,pz-epsilon*v*H_Z), and n_prime=(-H_R,0,-epsilon*H_Z). With v<=Lmax*S all normal and slope errors are<=B^12/S.",
+      "frameProof": "The actual source lower bounds Bs>B^-1, |n_tangent|>=B^-2 and the executed original FramePowerLedger give each operator, damping, unit-frame and slope error<=B^256/S. The full pressure term and B_prime are retained.",
+      "propagatorProof": "wMatrix=diag(0,-2*lambda)+E_actual-(d-dref)I. Its infinity logarithmic norm is at most(2*E+Ed)/S, hence every forward propagator is bounded by exp((2*E+Ed)*Lmax), independently of S.",
+      "allLabelsProof": "Each label uses its own original representative, rounded carrier, actual completed fields, Volterra matrix and H. The proof depends only on these uniform source inequalities and the original same-box hypotheses, not on the default materialized band.",
+      "entireOriginalPressureTermRetained": true,
+      "allHarmonics": "Lemma9.7 p111 and (7.18): a harmonic propagator is the fundamental propagator times a forward damping factor of magnitude at most one."
+    },
+    {
+      "id": "fixed-primary-covariance-and-signed-denominators",
+      "source": "actual-common-admissible-family.mjs uniformCovariance",
+      "inverse": {
+        "determinantSign": "NEGATIVE",
+        "normalizedDeterminantBounds": [
+          "15/8",
+          "17/8"
+        ],
+        "determinantScaleLower": 622768,
+        "determinantBound": "abs(det H)>=determinantScaleLower/S",
+        "entryUpper": 622771,
+        "inverseScaleUpper": 622774,
+        "inverseBound": "max abs(H^-1_ij)<=inverseScaleUpper*S"
+      },
+      "positivity": {
+        "targetScaleOverZetaLower": 622775,
+        "weightOverZetaLower": 622779,
+        "normalizedWeightBounds": [
+          622780,
+          24
+        ],
+        "derivation": "The original S14 lower |T0|>=min(C^-11,Renv^-8)*zeta, chart factor>=1/4, same-box -unit(T0) dot N>Renv^-33 and Ac<Renv^22 imply targetScale>=Renv^-128*zeta. The actual positive mass is at most uniformUpper.",
+        "actualTargetSource": [
+          622748,
+          622749
+        ],
+        "openRadialInteriorRequiredForStrictPositivity": true,
+        "endpointWeights": "zero with smooth flat extensions"
+      },
+      "signedDivision": "The original 2*sqrt(y_sigma) from (7.31); positive on the radial interior, with the inherited regular Gaussian endpoint factors.",
+      "laterSignedUpdatesDoNotChangePrimaryDenominator": true
+    },
+    {
+      "id": "fixed-original-supported-mean-inverse",
+      "source": "source-mean-map.mjs sourceMeanMomentBridge",
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+      "meanSupportUpper": 624140,
+      "meanSupportRationalUpper": 24,
+      "meanPatchUpper": 3430,
+      "supportProof": "log(11/10)<1/10 implies1+4/5+2log(11/10)<2<5. The five original profiles and their potential hull lie in Imean.",
+      "fixedPositiveLambda": 8,
+      "fixedAxialGap": 624146,
+      "lambdaProof": "lambda=exp(-1000*T)>0, so1-exp(-2*lambda/5)>0; it is never computed as zero by binary64 subtraction.",
+      "originalPowerLaw": {
+        "lambda": {
+          "exp": {
+            "product": [
+              {
+                "integer": -1000
+              },
+              {
+                "ref": "T"
+              }
+            ]
+          }
+        },
+        "h": {
+          "exp": {
+            "product": [
+              {
+                "integer": -8002
+              },
+              {
+                "ref": "T"
+              }
+            ]
+          }
+        },
+        "T": {
+          "sum": [
+            {
+              "exp": {
+                "ref": "Md"
+              }
+            },
+            {
+              "integer": 10
+            }
+          ]
+        },
+        "lambdaPositive": true,
+        "lambdaUpper": "2^-1000",
+        "binary64LambdaInterval": [
+          0,
+          9.332636185032189e-302
+        ],
+        "zeroIsEnclosureEndpointOnly": true,
+        "a": "Kmean*(2*X0Imean)^(1/2+lambda)/(1+eta^2)",
+        "aLower": "Kmean*(2*X0Imean)^(1/2+lambda)/2 > 0",
+        "x0": "sqrt(2*X0Imean)*exp(1/2)",
+        "aOverKmeanX0Power": "a/(Kmean*x0^(1+2lambda))=exp(-1/2-lambda)/(1+eta^2)",
+        "aOverKmeanX0PowerInterval": [
+          0.30326532985630617,
+          0.6065306597126431
+        ],
+        "Gq": "0",
+        "b": "-epsilon*mConst/R",
+        "backgroundPressure": "Retained unchanged; the correction pressure must be newly reconstructed from gr."
+      },
+      "positiveMoments": {
+        "powers": [
+          "2",
+          "-2-2lambda",
+          "-2lambda",
+          "1",
+          "1-2lambda"
+        ],
+        "intervals": [
+          [
+            0.0007588295899924582,
+            0.0007915469748472482
+          ],
+          [
+            0.0006245020069805467,
+            0.0006514402677912078
+          ],
+          [
+            0.0006886767477789453,
+            0.0007172949335429812
+          ],
+          [
+            0.0007228415708132917,
+            0.0007534398735535456
+          ],
+          [
+            0.0007228415708132917,
+            0.0007534398735535456
+          ]
+        ],
+        "restoration": "mu_p = x0^p * normalizedMoment_p; all x0 powers remain exact symbolic nonzero factors",
+        "method": "Outward interval lower and upper rectangles on the positive compact bump; moment integrals enclosed over all of its support.",
+        "panels": 128
+      },
+      "angularInverse": {
+        "rowFactorExpressions": [
+          "x0^2 * m_2",
+          "2*Kmean*x0^-1*kappa(eta)*m_-2-2lambda",
+          "-Kmean*x0*kappa(eta)*m_-2lambda"
+        ],
+        "kappa": "exp(-1/2-lambda)/(1+eta^2)",
+        "targets": [
+          "0",
+          "-Pq",
+          "-Jzq"
+        ],
+        "nodes": [
+          [
+            1.4918246976412446,
+            1.4918246976412934
+          ],
+          [
+            0.6703200460356287,
+            0.6703200460356511
+          ],
+          [
+            0.9999999999999956,
+            1.0000000000000042
+          ]
+        ],
+        "inverseIntervals": [
+          [
+            [
+              1.659059060737026,
+              1.6590590607374363
+            ],
+            [
+              5.5082700633724535,
+              5.508270063373689
+            ],
+            [
+              -6.167329124111164,
+              -6.1673291241094415
+            ]
+          ],
+          [
+            [
+              -4.134084342391022,
+              -4.134084342390096
+            ],
+            [
+              -9.200573905830996,
+              -9.200573905829097
+            ],
+            [
+              13.334658248218966,
+              13.334658248222246
+            ]
+          ],
+          [
+            [
+              2.4750252816530742,
+              2.475025281653582
+            ],
+            [
+              3.6923038424566377,
+              3.692303842457312
+            ],
+            [
+              -6.1673291241109585,
+              -6.167329124109647
+            ]
+          ]
+        ],
+        "determinantInterval": [
+          0.13320266116396312,
+          0.133202661164003
+        ],
+        "identityEnclosures": [
+          [
+            {
+              "row": 0,
+              "column": 0,
+              "enclosure": [
+                0.9999999999982546,
+                1.0000000000017464
+              ],
+              "identity": 1,
+              "pass": true
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "enclosure": [
+                -3.288036509729864e-12,
+                3.2862601528904638e-12
+              ],
+              "identity": 0,
+              "pass": true
+            },
+            {
+              "row": 0,
+              "column": 2,
+              "enclosure": [
+                -5.552891479965184e-12,
+                5.552891479965184e-12
+              ],
+              "identity": 0,
+              "pass": true
+            }
+          ],
+          [
+            {
+              "row": 1,
+              "column": 0,
+              "enclosure": [
+                -7.140954494389008e-13,
+                7.138734048339758e-13
+              ],
+              "identity": 0,
+              "pass": true
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "enclosure": [
+                0.9999999999984328,
+                1.0000000000015665
+              ],
+              "identity": 1,
+              "pass": true
+            },
+            {
+              "row": 1,
+              "column": 2,
+              "enclosure": [
+                -2.501110429875553e-12,
+                2.501110429875553e-12
+              ],
+              "identity": 0,
+              "pass": true
+            }
+          ],
+          [
+            {
+              "row": 2,
+              "column": 0,
+              "enclosure": [
+                -9.63673585374636e-13,
+                9.63673585374636e-13
+              ],
+              "identity": 0,
+              "pass": true
+            },
+            {
+              "row": 2,
+              "column": 1,
+              "enclosure": [
+                -1.9810819651411297e-12,
+                1.9797496975115795e-12
+              ],
+              "identity": 0,
+              "pass": true
+            },
+            {
+              "row": 2,
+              "column": 2,
+              "enclosure": [
+                0.9999999999967278,
+                1.000000000003274
+              ],
+              "identity": 1,
+              "pass": true
+            }
+          ]
+        ],
+        "rowNormalizedInfinityInverseBound": 26.669316496444267
+      },
+      "axialInverse": {
+        "rowFactors": [
+          "x0*m_1",
+          "Kmean*x0^2*kappa(eta)*m_1-2lambda"
+        ],
+        "r": "-Jthetaq/(a*mu_1-2lambda)",
+        "delta": "lambda*theta(lambda)",
+        "theta": "(1-exp(-2*d*lambda))/lambda",
+        "thetaInterval": [
+          0.3999999999999998,
+          0.4000000000000002
+        ],
+        "lambdaTimesCoefficientsPerR": [
+          [
+            2.499999999999998,
+            2.500000000000002
+          ],
+          [
+            -2.0468268826949747,
+            -2.046826882694936
+          ]
+        ],
+        "exactIdentities": [
+          "lambda*s0=r/theta",
+          "lambda*s1=-exp(-d)*r/theta",
+          "s0+exp(d)*s1=0",
+          "s0+exp(d-2*d*lambda)*s1=r"
+        ],
+        "physicalCoefficientRestoration": "s_j=(lambda*s_j)/lambda with the original strictly positive exact lambda; no finite unscaled binary64 value asserted",
+        "cutoffRemainderExactlyZeroReason": "The field is independent of auxiliary variables and the weighted axial integral is exactly zero; T1 realizes gamma_d exactly by (8.14)."
+      },
+      "fixedOrderSmoothness": {
+        "fixedLambdaConstantsAllowed": true,
+        "targetClassesNotAssumed": true,
+        "derivativeOrder": 3,
+        "reciprocalProfileNumerator": [
+          0,
+          24,
+          0,
+          -24
+        ],
+        "derivativeNumeratorL1": 48,
+        "exactRecurrence": "P_0=1; P_(n+1)=(1+eta^2)P_n'-2(n+1)eta P_n; D_eta^n(1+eta^2)^-1=P_n/(1+eta^2)^(n+1)",
+        "allFixedOrderArgument": "The fixed profile support lies in x>0 and 1+eta^2>=1. Distinct angular nodes and positive fixed lambda give smooth inverse entries. Each fixed derivative has finite constants, with lambda-dependence retained.",
+        "baseRadialDerivativeFormula": "partial_R^n b=(-1)^(n+1) epsilon*mConst*n!*R^(-n-1)"
+      },
+      "sourceMapActuallyExecuted": true
+    },
+    {
+      "id": "remaining-mean-and-pressure-maps-are-fixed-linear-maps",
+      "source": "Lemma9.7 p112; Lemma8.6; Lemma8.7",
+      "proof": "Pressure, the zero-average temporal inverse, and the modified radial integrals use the fixed source coordinates and coefficients. Lemma9.7 states that arbitrary-size sources are allowed on this same domain. Stage-dependent derivative bounds enter constants, not a smaller q threshold.",
+      "sourceTheoremApplication": true,
+      "newImplementationOfAllTheseMapsClaimed": false
+    }
+  ],
+  "fixedMeanMap": {
+    "schema": "MathScope.N6.ActualSourceMeanMomentBridge/1",
+    "status": "ACTUAL_SOURCE_INVERSE_DEPENDENCY_EXECUTED",
+    "pass": true,
+    "checks": [
+      {
+        "id": "actual-original-parameter-DAG",
+        "pass": true
+      },
+      {
+        "id": "actual-mean-field-power-law-overlap",
+        "pass": true
+      },
+      {
+        "id": "all-five-bump-supports-and-potential-hull-in-Imean",
+        "pass": true
+      },
+      {
+        "id": "positive-source-normalized-a-for-entire-eta-domain",
+        "pass": true
+      },
+      {
+        "id": "five-positive-enclosed-power-integrals",
+        "pass": true
+      },
+      {
+        "id": "actual-lambda-angular-inverse-separated",
+        "pass": true
+      },
+      {
+        "id": "angular-inverse-times-original-power-matrix",
+        "pass": true
+      },
+      {
+        "id": "positive-lambda-factored-axial-inverse",
+        "pass": true
+      },
+      {
+        "id": "source-uniform-third-jet-bound-on-entire-potential-support",
+        "pass": true
+      }
+    ],
+    "input": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "panels": 128,
+      "derivativeOrder": 3
+    },
+    "source": {
+      "profile": "same-profile-2026-10-10.3",
+      "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+      "assembly": {
+        "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+        "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+        "bytes": 77149
+      },
+      "functions": [
+        "actualMeanPatchDefinitions",
+        "evaluateActualMeanPatchJet",
+        "boundActualMeanPatchJets",
+        "validateParameterGraph"
+      ],
+      "actualImportedSourceExecuted": true,
+      "sourceBaseChanged": false,
+      "sourceWaveChanged": false,
+      "sourcePressureChanged": false
+    },
+    "exactSource": {
+      "lambda": {
+        "exp": {
+          "product": [
+            {
+              "integer": -1000
+            },
+            {
+              "ref": "T"
+            }
+          ]
+        }
+      },
+      "h": {
+        "exp": {
+          "product": [
+            {
+              "integer": -8002
+            },
+            {
+              "ref": "T"
+            }
+          ]
+        }
+      },
+      "T": {
+        "sum": [
+          {
+            "exp": {
+              "ref": "Md"
+            }
+          },
+          {
+            "integer": 10
+          }
+        ]
+      },
+      "lambdaPositive": true,
+      "lambdaUpper": "2^-1000",
+      "binary64LambdaInterval": [
+        0,
+        9.332636185032189e-302
+      ],
+      "zeroIsEnclosureEndpointOnly": true,
+      "a": "Kmean*(2*X0Imean)^(1/2+lambda)/(1+eta^2)",
+      "aLower": "Kmean*(2*X0Imean)^(1/2+lambda)/2 > 0",
+      "x0": "sqrt(2*X0Imean)*exp(1/2)",
+      "aOverKmeanX0Power": "a/(Kmean*x0^(1+2lambda))=exp(-1/2-lambda)/(1+eta^2)",
+      "aOverKmeanX0PowerInterval": [
+        0.30326532985630617,
+        0.6065306597126431
+      ],
+      "Gq": "0",
+      "b": "-epsilon*mConst/R",
+      "backgroundPressure": "Retained unchanged; the correction pressure must be newly reconstructed from gr."
+    },
+    "profiles": {
+      "base": "eta0(x)=x0^-1 exp(-1/[t(1-t)]), t=10*(x/x0-1), 0<t<1",
+      "copies": "eta_j(x)=exp(-j/5)*eta0(x*exp(-j/5))",
+      "azimuthal": [
+        0,
+        1,
+        2
+      ],
+      "axial": [
+        0,
+        1
+      ],
+      "supportLogX": [
+        1,
+        1.9906203596086525
+      ],
+      "potentialHullIncluded": true,
+      "smoothZeroExtension": true,
+      "dExact": "1/5"
+    },
+    "moments": {
+      "powers": [
+        "2",
+        "-2-2lambda",
+        "-2lambda",
+        "1",
+        "1-2lambda"
+      ],
+      "intervals": [
+        [
+          0.0007588295899924582,
+          0.0007915469748472482
+        ],
+        [
+          0.0006245020069805467,
+          0.0006514402677912078
+        ],
+        [
+          0.0006886767477789453,
+          0.0007172949335429812
+        ],
+        [
+          0.0007228415708132917,
+          0.0007534398735535456
+        ],
+        [
+          0.0007228415708132917,
+          0.0007534398735535456
+        ]
+      ],
+      "restoration": "mu_p = x0^p * normalizedMoment_p; all x0 powers remain exact symbolic nonzero factors",
+      "method": "Outward interval lower and upper rectangles on the positive compact bump; moment integrals enclosed over all of its support.",
+      "panels": 128
+    },
+    "angular": {
+      "rowFactorExpressions": [
+        "x0^2 * m_2",
+        "2*Kmean*x0^-1*kappa(eta)*m_-2-2lambda",
+        "-Kmean*x0*kappa(eta)*m_-2lambda"
+      ],
+      "kappa": "exp(-1/2-lambda)/(1+eta^2)",
+      "targets": [
+        "0",
+        "-Pq",
+        "-Jzq"
+      ],
+      "nodes": [
+        [
+          1.4918246976412446,
+          1.4918246976412934
+        ],
+        [
+          0.6703200460356287,
+          0.6703200460356511
+        ],
+        [
+          0.9999999999999956,
+          1.0000000000000042
+        ]
+      ],
+      "inverseIntervals": [
+        [
+          [
+            1.659059060737026,
+            1.6590590607374363
+          ],
+          [
+            5.5082700633724535,
+            5.508270063373689
+          ],
+          [
+            -6.167329124111164,
+            -6.1673291241094415
+          ]
+        ],
+        [
+          [
+            -4.134084342391022,
+            -4.134084342390096
+          ],
+          [
+            -9.200573905830996,
+            -9.200573905829097
+          ],
+          [
+            13.334658248218966,
+            13.334658248222246
+          ]
+        ],
+        [
+          [
+            2.4750252816530742,
+            2.475025281653582
+          ],
+          [
+            3.6923038424566377,
+            3.692303842457312
+          ],
+          [
+            -6.1673291241109585,
+            -6.167329124109647
+          ]
+        ]
+      ],
+      "determinantInterval": [
+        0.13320266116396312,
+        0.133202661164003
+      ],
+      "identityEnclosures": [
+        [
+          {
+            "row": 0,
+            "column": 0,
+            "enclosure": [
+              0.9999999999982546,
+              1.0000000000017464
+            ],
+            "identity": 1,
+            "pass": true
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "enclosure": [
+              -3.288036509729864e-12,
+              3.2862601528904638e-12
+            ],
+            "identity": 0,
+            "pass": true
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "enclosure": [
+              -5.552891479965184e-12,
+              5.552891479965184e-12
+            ],
+            "identity": 0,
+            "pass": true
+          }
+        ],
+        [
+          {
+            "row": 1,
+            "column": 0,
+            "enclosure": [
+              -7.140954494389008e-13,
+              7.138734048339758e-13
+            ],
+            "identity": 0,
+            "pass": true
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "enclosure": [
+              0.9999999999984328,
+              1.0000000000015665
+            ],
+            "identity": 1,
+            "pass": true
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "enclosure": [
+              -2.501110429875553e-12,
+              2.501110429875553e-12
+            ],
+            "identity": 0,
+            "pass": true
+          }
+        ],
+        [
+          {
+            "row": 2,
+            "column": 0,
+            "enclosure": [
+              -9.63673585374636e-13,
+              9.63673585374636e-13
+            ],
+            "identity": 0,
+            "pass": true
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "enclosure": [
+              -1.9810819651411297e-12,
+              1.9797496975115795e-12
+            ],
+            "identity": 0,
+            "pass": true
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "enclosure": [
+              0.9999999999967278,
+              1.000000000003274
+            ],
+            "identity": 1,
+            "pass": true
+          }
+        ]
+      ],
+      "rowNormalizedInfinityInverseBound": 26.669316496444267
+    },
+    "axial": {
+      "rowFactors": [
+        "x0*m_1",
+        "Kmean*x0^2*kappa(eta)*m_1-2lambda"
+      ],
+      "r": "-Jthetaq/(a*mu_1-2lambda)",
+      "delta": "lambda*theta(lambda)",
+      "theta": "(1-exp(-2*d*lambda))/lambda",
+      "thetaInterval": [
+        0.3999999999999998,
+        0.4000000000000002
+      ],
+      "lambdaTimesCoefficientsPerR": [
+        [
+          2.499999999999998,
+          2.500000000000002
+        ],
+        [
+          -2.0468268826949747,
+          -2.046826882694936
+        ]
+      ],
+      "exactIdentities": [
+        "lambda*s0=r/theta",
+        "lambda*s1=-exp(-d)*r/theta",
+        "s0+exp(d)*s1=0",
+        "s0+exp(d-2*d*lambda)*s1=r"
+      ],
+      "physicalCoefficientRestoration": "s_j=(lambda*s_j)/lambda with the original strictly positive exact lambda; no finite unscaled binary64 value asserted",
+      "cutoffRemainderExactlyZeroReason": "The field is independent of auxiliary variables and the weighted axial integral is exactly zero; T1 realizes gamma_d exactly by (8.14)."
+    },
+    "smoothness": {
+      "fixedLambdaConstantsAllowed": true,
+      "targetClassesNotAssumed": true,
+      "derivativeOrder": 3,
+      "reciprocalProfileNumerator": [
+        0,
+        24,
+        0,
+        -24
+      ],
+      "derivativeNumeratorL1": 48,
+      "exactRecurrence": "P_0=1; P_(n+1)=(1+eta^2)P_n'-2(n+1)eta P_n; D_eta^n(1+eta^2)^-1=P_n/(1+eta^2)^(n+1)",
+      "allFixedOrderArgument": "The fixed profile support lies in x>0 and 1+eta^2>=1. Distinct angular nodes and positive fixed lambda give smooth inverse entries. Each fixed derivative has finite constants, with lambda-dependence retained.",
+      "baseRadialDerivativeFormula": "partial_R^n b=(-1)^(n+1) epsilon*mConst*n!*R^(-n-1)"
+    },
+    "executedSourceJet": {
+      "schema": "MathScope.ActualMeanPatchSlowJet/1",
+      "profileId": "same-profile-2026-10-10.3",
+      "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+      "coordinateFrame": "BAND_CHART_Q_FIXED",
+      "restoredQuantitiesArePhysicalCartesian": false,
+      "input": {
+        "y": 1.5,
+        "eta": 0.25,
+        "s": 1,
+        "order": 3
+      },
+      "coordinates": {
+        "rhoRInterval": [
+          2.1170000166125376,
+          2.1170000166128267
+        ],
+        "ZInterval": [
+          0.24999999999999886,
+          0.2500000000000011
+        ],
+        "TChartInterval": [
+          0.9374999999999998,
+          0.9375000000000002
+        ],
+        "XExact": "X0Imean*exp(1.5)",
+        "RExact": "sqrt(2*X0Imean)*sqrt(1)*exp(1.5/2)"
+      },
+      "normalizedValues": {
+        "EOverKmean": [
+          0.44458028493270474,
+          0.4445802849327331
+        ],
+        "FOverFscale": [
+          0.21000485661027193,
+          0.21000485661030033
+        ],
+        "VOverKmean": [
+          0.4445802849326592,
+          0.4445802849327801
+        ],
+        "bOverRadialScale": [
+          -0.4723665527410629,
+          -0.47236655274096295
+        ],
+        "G": [
+          0,
+          0
+        ]
+      },
+      "jets": [
+        {
+          "multiIndex": [
+            0,
+            0,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            0.2100048566102719,
+            0.21000485661030036
+          ],
+          "normalizedVInterval": [
+            0.44458028493265916,
+            0.4445802849327802
+          ],
+          "normalizedRadialInterval": [
+            -0.47236655274106293,
+            -0.4723665527409629
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[0]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            0,
+            0,
+            1
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            0.012353226859425588,
+            0.012353226859431486
+          ],
+          "normalizedVInterval": [
+            0.026151781466622406,
+            0.026151781466638484
+          ],
+          "normalizedRadialInterval": [
+            -6e-323,
+            6e-323
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[1]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            0,
+            1,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.09264920144573549,
+            -0.0926492014456923
+          ],
+          "normalizedVInterval": [
+            -0.19613836099978724,
+            -0.19613836099966886
+          ],
+          "normalizedRadialInterval": [
+            -6e-323,
+            6e-323
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[2]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            1,
+            0,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.19839854035180024,
+            -0.1983985403516838
+          ],
+          "normalizedVInterval": [
+            -0.2100048566104839,
+            -0.2100048566100859
+          ],
+          "normalizedRadialInterval": [
+            0.22313016014838905,
+            0.22313016014846737
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+          "sourcePath": "result.results.meanPatch.jets[3]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            0,
+            0,
+            2
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.02325313291187123,
+            -0.02325313291185974
+          ],
+          "normalizedVInterval": [
+            -0.049226882760731686,
+            -0.049226882760700585
+          ],
+          "normalizedRadialInterval": [
+            -1.43e-322,
+            1.43e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[4]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            0,
+            1,
+            1
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            0.07557268196354379,
+            0.0755726819635818
+          ],
+          "normalizedVInterval": [
+            0.15998736897227608,
+            0.15998736897237867
+          ],
+          "normalizedRadialInterval": [
+            -9e-323,
+            9e-323
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[5]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            0,
+            2,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.19619830894391732,
+            -0.19619830894381196
+          ],
+          "normalizedVInterval": [
+            -0.4153518232936817,
+            -0.4153518232934015
+          ],
+          "normalizedRadialInterval": [
+            -1.43e-322,
+            1.43e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[6]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            1,
+            0,
+            1
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.0116705023736355,
+            -0.011670502373628298
+          ],
+          "normalizedVInterval": [
+            -0.01235322685944081,
+            -0.012353226859416267
+          ],
+          "normalizedRadialInterval": [
+            -1e-322,
+            1e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+          "sourcePath": "result.results.meanPatch.jets[7]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            1,
+            1,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            0.08752876780221261,
+            0.08752876780226565
+          ],
+          "normalizedVInterval": [
+            0.09264920144562346,
+            0.09264920144580442
+          ],
+          "normalizedRadialInterval": [
+            -1e-322,
+            1e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+          "sourcePath": "result.results.meanPatch.jets[8]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            2,
+            0,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            0.2811505037243013,
+            0.2811505037245057
+          ],
+          "normalizedVInterval": [
+            0.19839854035136847,
+            0.19839854035211565
+          ],
+          "normalizedRadialInterval": [
+            -0.21079844912377807,
+            -0.21079844912367476
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-2/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-2/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-3/2)",
+          "sourcePath": "result.results.meanPatch.jets[9]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            0,
+            0,
+            3
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            0.06565590469230927,
+            0.06565590469234292
+          ],
+          "normalizedVInterval": [
+            0.1389935513243298,
+            0.13899355132442023
+          ],
+          "normalizedRadialInterval": [
+            -5.1e-322,
+            5.1e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[10]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            0,
+            1,
+            2
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.12036915860263087,
+            -0.12036915860256464
+          ],
+          "normalizedVInterval": [
+            -0.25482151076144194,
+            -0.2548215107612661
+          ],
+          "normalizedRadialInterval": [
+            -2.2e-322,
+            2.2e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[11]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            0,
+            2,
+            1
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.0041034940432892525,
+            -0.0041034940432518735
+          ],
+          "normalizedVInterval": [
+            -0.008687096957813995,
+            -0.008687096957733653
+          ],
+          "normalizedRadialInterval": [
+            -2.2e-322,
+            2.2e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[12]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            0,
+            3,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            1.6003626768750268,
+            1.6003626768758676
+          ],
+          "normalizedVInterval": [
+            3.3879678135305134,
+            3.387967813532763
+          ],
+          "normalizedRadialInterval": [
+            -5.1e-322,
+            5.1e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale",
+          "restoreVScale": "Kmean",
+          "restoreRadialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+          "sourcePath": "result.results.meanPatch.jets[13]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            1,
+            0,
+            2
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            0.021968004468006026,
+            0.02196800446801996
+          ],
+          "normalizedVInterval": [
+            0.023253132911841792,
+            0.023253132911889192
+          ],
+          "normalizedRadialInterval": [
+            -2.5e-322,
+            2.5e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+          "sourcePath": "result.results.meanPatch.jets[14]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            1,
+            1,
+            1
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.07139601452106514,
+            -0.07139601452101922
+          ],
+          "normalizedVInterval": [
+            -0.0755726819636409,
+            -0.07557268196348471
+          ],
+          "normalizedRadialInterval": [
+            -1.63e-322,
+            1.63e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+          "sourcePath": "result.results.meanPatch.jets[15]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            1,
+            2,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            0.1853550376987965,
+            0.185355037698922
+          ],
+          "normalizedVInterval": [
+            0.19619830894365212,
+            0.19619830894407728
+          ],
+          "normalizedRadialInterval": [
+            -2.5e-322,
+            2.5e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-1/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-1/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-2/2)",
+          "sourcePath": "result.results.meanPatch.jets[16]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            2,
+            0,
+            1
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            0.01653826492495867,
+            0.016538264924971194
+          ],
+          "normalizedVInterval": [
+            0.01167050237360903,
+            0.011670502373654775
+          ],
+          "normalizedRadialInterval": [
+            -2.7e-322,
+            2.7e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-2/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-2/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-3/2)",
+          "sourcePath": "result.results.meanPatch.jets[17]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            2,
+            1,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.12403698693728304,
+            -0.12403698693719059
+          ],
+          "normalizedVInterval": [
+            -0.08752876780240816,
+            -0.08752876780207007
+          ],
+          "normalizedRadialInterval": [
+            -2.7e-322,
+            2.7e-322
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-2/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-2/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-3/2)",
+          "sourcePath": "result.results.meanPatch.jets[18]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        },
+        {
+          "multiIndex": [
+            3,
+            0,
+            0
+          ],
+          "variables": [
+            "rhoR",
+            "Z",
+            "T_chart"
+          ],
+          "rawDerivative": true,
+          "normalizedFInterval": [
+            -0.5312243769830133,
+            -0.5312243769825534
+          ],
+          "normalizedVInterval": [
+            -0.281150503725274,
+            -0.28115050372353306
+          ],
+          "normalizedRadialInterval": [
+            0.2987224102070854,
+            0.29872241020727347
+          ],
+          "GInterval": [
+            0,
+            0
+          ],
+          "restoreFScale": "Fscale*(2*X0Imean)^(-3/2)",
+          "restoreVScale": "Kmean*(2*X0Imean)^(-3/2)",
+          "restoreRadialScale": "epsilon*mConst*(2*X0Imean)^(-4/2)",
+          "sourcePath": "result.results.meanPatch.jets[19]",
+          "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+        }
+      ],
+      "implicitCoordinateDenominator": [
+        0.9999999999999999,
+        1.0000000000000002
+      ],
+      "parameterEnclosures": {
+        "h": [
+          0,
+          9.332636185032189e-302
+        ],
+        "lambda": [
+          0,
+          9.332636185032189e-302
+        ],
+        "strictPositiveBoth": true,
+        "zeroIsEnclosureEndpointOnly": true
+      },
+      "exactScales": {
+        "X0": "XR*exp(T+2+60*BOuter-8)",
+        "BOuter": "1000*T",
+        "logKmean": "(3/2)*T-7/10-lambda/2-(1/2+lambda)*(60*BOuter-8)",
+        "logKmeanCollected": "-(59997/2)*T+33/10+(15/2-60000*T)*lambda",
+        "reflectionIdentity": "sigma(t)+sigma(1-t)=1; integral_0^1 sigma(t)dt=1/2",
+        "stageLogIncrements": [
+          "-1/5",
+          "-T/2",
+          "-1/2-lambda/2",
+          "-(1/2+lambda)*(60*BOuter-8)"
+        ],
+        "E": "Kmean*(1+eta^2)^(-1)*exp(-(1/2+lambda)*y)",
+        "U": "0",
+        "rhoR": "R/sqrt(2*X0Imean)=sqrt(s)*exp(y/2)",
+        "Fscale": "Kmean/sqrt(2*X0Imean)",
+        "F": "Fscale*s^(-1-h)*(1+eta^2)^(-1)*exp(-(1+lambda)*y)",
+        "G": "0",
+        "slowCoordinates": "Z=eta*s^(1/2-h); T_chart=s*(1-eta^2); T_chart=s-Z^2*s^(2h)",
+        "slowFormula": "F/Fscale=rhoR^(-2-2*lambda)*s^(lambda-h)/(1+Z^2*s^(-1+2h))",
+        "M": "eta*mConst",
+        "mConst": "XR*exp(1)*(4+integral_0^T exp(w)*4*(1-sigma(log(1+w)/Md))dw)",
+        "mConstBounds": [
+          "4*XR*exp(1)",
+          "4*XR*exp(T+1)"
+        ],
+        "radialV0": "-mConst",
+        "radialIdentity": "-(2D*eta^2+1-eta^2)*mConst/(1-2h*eta^2)=-mConst",
+        "b": "-epsilon*mConst/R",
+        "radialScale": "epsilon*mConst/sqrt(2*X0Imean)",
+        "shear": "a=v_s=2+2*lambda; b_s=0",
+        "normal": "N=(-1,0), K=(0,-1)",
+        "lambda0": "2*F*sqrt(lambda)",
+        "c0": "-sqrt(lambda)",
+        "normalizedPositiveFactors": {
+          "Fscale": "positive",
+          "mConst": "positive",
+          "lambda": "positive",
+          "h": "positive"
+        },
+        "physicalScalesAreNumbers": false
+      },
+      "arithmetic": "Outward binary64 interval Taylor coefficients with exp/log Taylor remainder bounds; raw derivatives restored with factorials.",
+      "normalization": "rhoR=R/sqrt(2*X0Imean); R derivatives multiply the displayed jet by (2*X0Imean)^(-r/2). No positive physical coefficient is rounded to zero.",
+      "actualSourceRestriction": true,
+      "radialVelocityExactlyZero": false,
+      "cumulativeStressEvaluated": false,
+      "actualPulseIntegrated": false,
+      "globalCertification": false
+    },
+    "executedSourceUniformBound": {
+      "schema": "MathScope.ActualMeanPatchUniformJetBound/1",
+      "profileId": "same-profile-2026-10-10.3",
+      "sourceHash": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+      "domain": {
+        "y": [
+          0,
+          5
+        ],
+        "eta": [
+          -1,
+          1
+        ],
+        "s": [
+          0.5,
+          2
+        ]
+      },
+      "order": 3,
+      "perDerivative": [
+        {
+          "multiIndex": [
+            0,
+            0,
+            0
+          ],
+          "F": [
+            0.0016844867497708667,
+            2.0000000000000853
+          ],
+          "V": [
+            0.0011911120035818371,
+            34.45729636552129
+          ],
+          "bNormalized": [
+            -1.4142135623731633,
+            -0.05804285916062307
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            0,
+            0,
+            1
+          ],
+          "F": [
+            -8.000000000001295,
+            8.000000000001295
+          ],
+          "V": [
+            -137.82918546210163,
+            137.82918546210163
+          ],
+          "bNormalized": [
+            -1.5e-322,
+            1.5e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            0,
+            1,
+            0
+          ],
+          "F": [
+            -28.284271247466837,
+            28.284271247466837
+          ],
+          "V": [
+            -487.2997584283579,
+            487.2997584283579
+          ],
+          "bNormalized": [
+            -1.5e-322,
+            1.5e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            1,
+            0,
+            0
+          ],
+          "F": [
+            -5.656854249493185,
+            -0.00019554485434968661
+          ],
+          "V": [
+            -97.45826719891869,
+            1.9998617289076954
+          ],
+          "bNormalized": [
+            0.0033689734995404003,
+            2.00000000000015
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            0,
+            0,
+            2
+          ],
+          "F": [
+            -104.00000000002042,
+            104.00000000002042
+          ],
+          "V": [
+            -1791.7794110073828,
+            1791.7794110073828
+          ],
+          "bNormalized": [
+            -3.7e-322,
+            3.7e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            0,
+            1,
+            1
+          ],
+          "F": [
+            -356.3818177180959,
+            356.3818177180959
+          ],
+          "V": [
+            -6139.976956197548,
+            6139.976956197548
+          ],
+          "bNormalized": [
+            -2.3e-322,
+            2.3e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            0,
+            2,
+            0
+          ],
+          "F": [
+            -1240.0000000002824,
+            1180.0000000002717
+          ],
+          "V": [
+            -21363.52374662716,
+            20329.804855661383
+          ],
+          "bNormalized": [
+            -3.7e-322,
+            3.7e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            1,
+            0,
+            1
+          ],
+          "F": [
+            -22.62741699797378,
+            22.62741699797378
+          ],
+          "V": [
+            -397.8398067426931,
+            397.8398067426931
+          ],
+          "bNormalized": [
+            -3.3e-322,
+            3.3e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            1,
+            1,
+            0
+          ],
+          "F": [
+            -80.0000000000161,
+            80.0000000000161
+          ],
+          "V": [
+            -1406.5761258685377,
+            1406.5761258685377
+          ],
+          "bNormalized": [
+            -3.3e-322,
+            3.3e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            2,
+            0,
+            0
+          ],
+          "F": [
+            0.00003404994732181501,
+            24.000000000004054
+          ],
+          "V": [
+            -11.313684422037726,
+            413.48716529659913
+          ],
+          "bNormalized": [
+            -5.656854249492955,
+            -0.00039108970869944506
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            0,
+            0,
+            3
+          ],
+          "F": [
+            -1992.0000000004595,
+            1992.0000000004595
+          ],
+          "V": [
+            -34319.46718006568,
+            34319.46718006568
+          ],
+          "bNormalized": [
+            -1.37e-321,
+            1.37e-321
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            0,
+            1,
+            2
+          ],
+          "F": [
+            -6748.627119646085,
+            6748.627119646085
+          ],
+          "V": [
+            -116269.72236101484,
+            116269.72236101484
+          ],
+          "bNormalized": [
+            -6.27e-322,
+            6.27e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            0,
+            2,
+            1
+          ],
+          "F": [
+            -23014.0000000061,
+            23104.000000006123
+          ],
+          "V": [
+            -396500.109278142,
+            398050.68761459074
+          ],
+          "bNormalized": [
+            -6.27e-322,
+            6.27e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            0,
+            3,
+            0
+          ],
+          "F": [
+            -79931.35054534968,
+            79931.35054534968
+          ],
+          "V": [
+            -1377109.1173186845,
+            1377109.1173186845
+          ],
+          "bNormalized": [
+            -1.37e-321,
+            1.37e-321
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            1,
+            0,
+            2
+          ],
+          "F": [
+            -294.15642097366947,
+            294.15642097366947
+          ],
+          "V": [
+            -5171.917487655194,
+            5171.917487655194
+          ],
+          "bNormalized": [
+            -8.94e-322,
+            8.94e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            1,
+            1,
+            1
+          ],
+          "F": [
+            -1008.0000000002414,
+            1008.0000000002414
+          ],
+          "V": [
+            -17722.85918594427,
+            17722.85918594427
+          ],
+          "bNormalized": [
+            -5.73e-322,
+            5.73e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            1,
+            2,
+            0
+          ],
+          "F": [
+            -3337.544007201361,
+            3507.249634686167
+          ],
+          "V": [
+            -58741.37149455128,
+            61605.17004512149
+          ],
+          "bNormalized": [
+            -8.94e-322,
+            8.94e-322
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            2,
+            0,
+            1
+          ],
+          "F": [
+            -96.00000000002062,
+            96.00000000002062
+          ],
+          "V": [
+            -1699.2050595412552,
+            1699.2050595412552
+          ],
+          "bNormalized": [
+            -1.17e-321,
+            1.17e-321
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            2,
+            1,
+            0
+          ],
+          "F": [
+            -339.4112549696202,
+            339.4112549696202
+          ],
+          "V": [
+            -6007.597101140644,
+            6007.597101140644
+          ],
+          "bNormalized": [
+            -1.17e-321,
+            1.17e-321
+          ],
+          "G": [
+            0,
+            0
+          ]
+        },
+        {
+          "multiIndex": [
+            3,
+            0,
+            0
+          ],
+          "F": [
+            -135.76450198784363,
+            -0.000007905425187308093
+          ],
+          "V": [
+            -2339.0387383063257,
+            71.99999441003246
+          ],
+          "bNormalized": [
+            0.00006809989464364256,
+            24.000000000003066
+          ],
+          "G": [
+            0,
+            0
+          ]
+        }
+      ],
+      "normalizedBounds": {
+        "FMax": 79931.35054534968,
+        "VMax": 1377109.1173186845,
+        "bMax": 24.000000000003066,
+        "FLowerExact": "2^-19",
+        "FUpperExact": "4"
+      },
+      "lowerProof": "f>=1/2, s^(-1-h)>=1/4, exp(-(1+lambda)*y)>=exp(-10)>3^-10; (8*3^10)<2^19.",
+      "uniformOverEntireBox": true,
+      "usesFiniteSampling": false,
+      "coefficientNormalizationRequired": true,
+      "actualFScale": "Kmean/sqrt(2*X0Imean)",
+      "actualBScale": "epsilon*mConst/sqrt(2*X0Imean)",
+      "actualWholeAnnulusBound": false,
+      "completedBackgroundBound": false,
+      "pass": true
+    },
+    "closedDependency": "The actual inherited base satisfies (8.24), and a fixed supported five-profile map with the original positive lambda and explicit source-scaled inverse bounds is installed.",
+    "currentFullCurlDefectsComputed": false,
+    "arbitraryTargetsPassedAsActualDefects": false,
+    "currentVelocityUpdated": false,
+    "currentPressureReconstructed": false,
+    "completeN6Criterion": false,
+    "remaining": [
+      "Compute gr,P,Jtheta,Jz from the complete current curl-generated velocity before calling the map.",
+      "Apply its coefficients to that same state and recompute pressure via (8.12).",
+      "Retain every old and new term of (8.26)-(8.27) and attach all required target derivative bounds."
+    ]
+  },
+  "domainProof": {
+    "sourcePages": [
+      111,
+      112,
+      114,
+      117,
+      118
+    ],
+    "references": [
+      "Lemma9.7",
+      "Proposition9.9",
+      "Proposition10.1"
+    ],
+    "choice": "Choose qbig=qBig=2^(-(ell0+4)), a permitted smaller domain inside the explicitly sufficient common6 threshold.",
+    "finalDomainIdentification": "Proposition9.9 p114 applies its summation lemma with qStar=qbig and shrinks the earlier local thresholds to this common value.",
+    "whyLaterStageConstantsDoNotShrinkIt": "Lemma9.7 p112 fixes all inverse coefficients and denominators at the primary construction. Later inputs may be arbitrary size; finite derivative losses change constants only.",
+    "sourceTheoremAppliedToExecutedInitialPremises": true,
+    "newLeanKernelProof": false,
+    "unknownHistoricalGammaValueUsed": false,
+    "finalFieldExistenceUsedToInventAThreshold": false,
+    "finalCorrectionSequenceExecuted": false
+  },
+  "cutoffConclusions": {
+    "support": "q<=qBig/4<qBig/2",
+    "initialZeroInterval": {
+      "time": "0<=t<=1-tau0",
+      "tau": "tau>=tau0",
+      "positiveLength": true,
+      "velocity": [
+        "0",
+        "0",
+        "0"
+      ],
+      "pressure": "0",
+      "reason": "The temporal cutoff and all its derivatives vanish."
+    },
+    "compactK": {
+      "definition": "{x1^2+x2^2<=r0^2/2, x3^2<=z0^2/2}",
+      "independentOfTime": true,
+      "strictlyInside": "{r<r0, |z|<z0}",
+      "containsVelocityAndPressureSupportByExactOperator": true
+    },
+    "unitPlateau": {
+      "region": "{r<=r0/2, |z|<=z0/2,0<tau<=tau0/2}",
+      "cutoff": "1",
+      "allPositiveDerivatives": "0",
+      "spatialNeighborhoodFixed": true
+    },
+    "inference": "The exact localization operator and zero extension give these support/zero/plateau conclusions without evaluating its final source field operands.",
+    "actualNonzeroFinalN6FieldValuesComputed": false
+  },
+  "checks": [
+    {
+      "id": "same-unchanged-private-localization-and-common6-family",
+      "pass": true
+    },
+    {
+      "id": "original-positive-parameters-and-same-fixed-mean-source",
+      "pass": true
+    },
+    {
+      "id": "every-original-concentration-condition-is-retained",
+      "pass": true
+    },
+    {
+      "id": "original-primitive-boundary-and-frequency-thresholds",
+      "pass": true
+    },
+    {
+      "id": "fixed-original-pulse-coefficients-and-nonzero-frame-premises",
+      "pass": true
+    },
+    {
+      "id": "original-positive-covariance-and-fixed-signed-inverse",
+      "pass": true
+    },
+    {
+      "id": "fixed-source-mean-profiles-and-inverses-actually-executed",
+      "pass": true
+    },
+    {
+      "id": "qbig-is-exactly-a-sixty-fourth-of-the-sufficient-common-domain",
+      "pass": true
+    },
+    {
+      "id": "same-qbig-in-time-and-space-cutoff",
+      "pass": true
+    },
+    {
+      "id": "exact-support-quarter-is-strictly-below-domain-half",
+      "pass": true
+    },
+    {
+      "id": "whole-cutoff-zero-extension-and-fixed-plateau-are-executed",
+      "pass": true
+    },
+    {
+      "id": "unchanged-source-prefix-and-source-function-definitions",
+      "pass": true
+    }
+  ],
+  "scope": {
+    "sourceBoundCommonDomainChoiceJustified": true,
+    "originalCutoffDomainPrerequisitesEstablished": true,
+    "sourceTheoremApplicationExplicit": true,
+    "fullN6FinalPotentialsConstructed": false,
+    "nonzeroLocalizedVelocityConstructed": false,
+    "wholeLocalizedForceConstructed": false,
+    "wholeKEnergyNearTerminalComputed": false,
+    "criterionAssessmentEdited": false,
+    "wholeM3Complete": false
+  },
+  "graph": {
+    "constructedNodeCount": 624149,
+    "domainMetadataSHA256": "062c082fe3c170ccc84fab52c720770bfc93d501e46184dd715b4913399aa29e"
+  },
+  "verification": {
+    "status": "ACTUAL_SOURCE_LOCALIZATION_DOMAIN_PREMISES_EXECUTED",
+    "checksPass": true,
+    "externalSourceLemma9_7Applied": true,
+    "finalN6FieldNumericallyConstructed": false,
+    "newLeanExecuted": false
+  }
+}

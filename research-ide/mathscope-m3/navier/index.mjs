@@ -6,6 +6,17 @@ import {sourceMeanMomentBridge} from './source-mean-map.mjs';
 import {implementationPin} from './implementation-pin.mjs';
 import {buildFlowObservations,validateFlowObservationOptions} from './flow-observations.mjs';
 import {recordedSourceReconstruction} from './source-current-evidence.mjs';
+import {recordedInnerGrowth,innerGrowthObservations} from './source-inner-growth-evidence.mjs';
+import {evaluateSourceCoreRefinement,sourceCoreRefinementObservations} from './source-core-refinement.mjs';
+import {recordedSourceNearTerminal,sourceNearTerminalObservations} from './source-near-terminal-evidence.mjs';
+import {recordedGlobalMoment,globalMomentObservations} from './source-global-moment-evidence.mjs';
+import {recordedSourceN7DomainExterior,sourceExteriorForceObservations} from './source-exterior-force-evidence.mjs';
+import {recordedGlobalSigned,globalSignedObservations} from './source-global-signed-evidence.mjs';
+import {recordedSourceCoreRestrictionEvidence,sourceCoreRestrictionEvidenceObservations} from './source-core-restriction-evidence.mjs';
+import {recordedGlobalMomentFullPressure,globalMomentFullPressureObservations} from './source-global-moment-pressure-evidence.mjs';
+import {sourceLocalizationOperatorEvidence,sourceLocalizationOperatorEvidenceObservations} from './source-localization-operator-evidence.mjs';
+import {sourcePeriodizationReviewEvidence,sourcePeriodizationReviewEvidenceObservations} from './source-periodization-review-evidence.mjs';
+import {recordedGlobalTemporalInverse,globalTemporalInverseObservations} from './source-global-temporal-evidence.mjs';
 
 const bad=(code,message)=>{throw Object.assign(new Error(message),{code});};
 const canonical=x=>x===null||typeof x!=='object'?JSON.stringify(x):Array.isArray(x)?'['+x.map(canonical).join(',')+']':'{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canonical(x[k])).join(',')+'}';
@@ -15,11 +26,20 @@ const copy=x=>JSON.parse(JSON.stringify(x));
 export const NAVIER_M3_EXAMPLES=[
   {id:'N6-workbench',title:'N6 보정 연산과 소스 의무',input:{package:'N6',operation:'workbench'}},
   {id:'N6-source-reconstruction',title:'N6 원본 압력·C5·signed curl 실제 실행 자료',input:{package:'N6',operation:'source-reconstruction'}},
+  {id:'N6-global-moment-record',title:'N6 전체 band·label의 다섯 모멘트·압력 보정 기록',input:{package:'N6',operation:'global-moment-record'}},
+  {id:'N6-global-moment-full-pressure-record',title:'N6 다섯 원문 적분·전체 보조 토러스 압력·비선형 나머지항',input:{package:'N6',operation:'global-moment-full-pressure-record'}},
+  {id:'N6-global-temporal-inverse-record',title:'N6 원문 시간평균 역연산 · 모든 Fourier 꼬리와 축 방향 potential',input:{package:'N6',operation:'global-temporal-inverse-record'}},
+  {id:'N6-global-signed-record',title:'N6 원래 고정 진폭 · 전체 signed covariance와 세 나머지항',input:{package:'N6',operation:'global-signed-record'}},
   {id:'N6-source-mean',title:'N6 원래 λ의 실제 mean-patch 연결',input:{package:'N6',operation:'source-mean-map'}},
   {id:'N6-harmonic',title:'N6 비영 조화항 응답',input:{package:'N6',operation:'harmonic-response'}},
   {id:'N6-signed',title:'N6 signed covariance increment',input:{package:'N6',operation:'signed-covariance',parameters:{target:[-.003,.002]}}},
   {id:'N6-moments',title:'N6 다섯 radial moment',input:{package:'N6',operation:'five-moments',parameters:{lambda:.2,a:1,d:.2}}},
   {id:'N7-workbench',title:'N7 localization·force 관문',input:{package:'N7',operation:'workbench'}},
+  {id:'N7-inner-growth-record',title:'N7 원래 내부 경로 · 양의 하한과 엄밀 구간',input:{package:'N7',operation:'inner-growth-record'}},
+  {id:'N7-source-domain-exterior',title:'N7 원문 cutoff 정의역 · 외부 영역의 실제 힘·압력',input:{package:'N7',operation:'source-domain-exterior-record'}},
+  {id:'N7-source-core-restriction',title:'N7 최종 장의 내부 경로 식별 · 전체 보정항 지지 검증',input:{package:'N7',operation:'source-core-restriction-record'}},
+  {id:'N7-source-localization-operator',title:'N7 원문 국소화 · 모든 교차항과 압력 항등식',input:{package:'N7',operation:'source-localization-operator'}},
+  {id:'N7-source-periodization-review',title:'N7 원문 비교 정리 · 점성 배율과 지지 분리 주기화',input:{package:'N7',operation:'source-periodization-review'}},
   {id:'N7-periodic',title:'N7 지지 분리와 주기화',input:{package:'N7',operation:'periodization',parameters:{sameForcing:true,periodicPressure:true,zeroInitialData:true}}},
   {id:'N8-TG',title:'N8 Taylor–Green 적응 계산',input:{package:'N8',operation:'galerkin',parameters:{cutoff:2,viscosity:1,endTime:.5,initialStep:.1}}},
   {id:'N8-nonlinear',title:'N8 비선형 Fourier 흐름',input:{package:'N8',operation:'galerkin',parameters:{cutoff:2,seed:103,endTime:.08,rtol:1e-5}}},
@@ -27,19 +47,21 @@ export const NAVIER_M3_EXAMPLES=[
     observation:{seeds:[[Math.PI/4,0,0],[Math.PI/3,Math.PI/4,0]],steps:16,angularOrigin:[0,0,0],
       coreBounds:[[Math.PI/4,3*Math.PI/4],[0,Math.PI/2],[0,Math.PI]],coreGrid:4}}}},
   {id:'N8-nearT',title:'N8 양의 τ와 log 좌표',input:{package:'N8',operation:'near-terminal'}},
+  {id:'N8-source-near-terminal',title:'N8 원문 내부 경로 · 세 속도 성분의 정확한 구간',input:{package:'N8',operation:'source-near-terminal-record'}},
+  {id:'N8-source-core-refinement',title:'N8 원문 내부장 · 독립 격자·차수·정밀도 비교',input:{package:'N8',operation:'source-core-refinement'}},
   {id:'N8-acceptance',title:'N8 FFT·aliasing·energy 검사',input:{package:'N8',operation:'acceptance'}}
 ];
 
 export const NAVIER_M3_PROGRESS={
   N6:{status:'PARTIAL_SOURCE_RECONSTRUCTION',complete:false,
-    implemented:['source4/common6 hash·root 상속과 같은 common6 원본 생성자 실제 재실행','선택한 원래 band/member의 전체 curl 6개 공분산·현재 P/J·전체 auxiliary pressure와 A0','두 원래 pulse의 실제 C4/C5·FTC body·비가환 변분계와 retained tail','현재 residual에서 유도한 signed target·고정 H/a·실제 full curl·세 remainder·갱신 mean pressure/P/J','전체 비선형 finite residual 항등식·projected ODE·대수적 divisor Fourier inverse','원래 M2 mean-patch의 양의 λ·a와 5 moment inverse 구간','고정 domain의 유리수 차수 장부'],
-    remaining:['모든 원래 band/label 합 및 실제 temporal+moment 초기화와 B0/C0 상수','현재 모든 조화항·압력·전체 physical PDE를 연결한 네 단계 반복','같은 qbig의 모든 필요한 도함수 상수·auxiliary Fourier tail','동일 최종 cutoff sum과 Lemma5.4 tail']},
-  N7:{status:'BLOCKED_BY_N6_LOCAL_FIELD',complete:false,
-    implemented:['qstar 내부 localization cutoff 선택','div f를 포함한 pressure contract','유한 terminal-jet cutoff schedule','지지 분리·same-force·periodic-pressure 관문'],
-    remaining:['N6 최종 A,B,p의 실제 localization','동일 force의 terminal 모든 차수 jets','전체 compact K의 energy balance','source e0 양의 하한과 remainder']},
+    implemented:['source4/common6 hash·root 상속과 같은 common6 원본 생성자 실제 재실행','전체 원래 band·label의 curl 6개 공분산·현재 P/J와 Haar 평균 압력','두 원래 pulse의 실제 C4/C5·FTC body·비가환 변분계와 retained tail','전체 현재 residual에서 유도한 signed target·고정 H/a·실제 full curl·세 remainder·갱신 mean pressure/P/J','전체 band·label 현재 P/J의 원래 다섯 bump·두 보존 적분·전체 보조 토러스 압력·비선형8.26/27 재계산','원래 M2 mean-patch의 양의 λ·a와 5 moment inverse 구간','원래 전체 zero-mean residual의 실제 Fourier inverse·m+4 도함수 꼬리·모든 요청별 bound·ci/T1/A1/느린 시간 항·독립 검산'],
+    remaining:['실제 temporal inverse 이후의 새 pressure·다섯 moment 보정·j0 초기화·B0/C0 class 지수','현재 모든 조화항·압력·전체 physical PDE를 연결한 네 단계 반복','같은 qbig의 모든 필요한 도함수 상수와 실제 source auxiliary Fourier tail','동일 최종 cutoff sum과 Lemma5.4 tail']},
+  N7:{status:'SOURCE_DOMAIN_VERIFIED_FINAL_FIELD_PARTIAL',complete:false,
+    implemented:['동일 원본 초기 조건과 Lemma9.7을 연결한 qstar 정의역·cutoff support·초기 영 구간·고정 K·unit plateau','원래 heat 외부 영역의 실제 pressure/force와 nonzero div f·Poisson 항등식','원래 양의 h를 보존한 외부 force/pressure terminal jet 0…4차','같은 source core의 양의 하한과 전체 꼬리·모든 원문 연산자의 열린 지지 귀납으로 최종 장 내부 경로 식별','원문 curl(cA)+cB·cp의 실제 계수와 전체 10개 commutator·div u=0·div f를 유지한 압력 항등식','같은 원문 cutoff의 ν·공간·시간 배율, 단위 토러스의 엄격한 지지 분리와 모든 비교 정리 가정 보존'],
+    remaining:['비영 환형 보정값을 포함하는 전체 공간 장의 수치 평가','동일 global force의 terminal 모든 차수 jets·정량 norm·t>1 접합 tail','활성 시간대의 전체 compact K energy/dissipation/forcing work와 독립 refinement']},
   N8:{status:'GENERIC_GALERKIN_EXECUTED_RECONSTRUCTION_PARTIAL',complete:false,
-    implemented:['divergence-free Fourier basis·zero mean','exact convolution 대 padded FFT','IMEX·CFL·local error·energy defect','실제 Taylor–Green 및 비선형 계산','독립 τ·log 좌표·관측 manifest','실제 accepted 계수 history의 경로·고정 시각 유선·각속도·core/global 에너지','관측량별 source/test·analytic/Lean 의무와 run hash 연결'],
-    remaining:['N7를 승계한 실제 near-terminal reconstruction','grid·Fourier·coefficient·precision의 source tail 포함 적응','원문해 수치 enclosure와 Lean refinement 연결']}
+    implemented:['divergence-free Fourier basis·zero mean','exact convolution 대 padded FFT','IMEX·CFL·local error·energy defect','실제 Taylor–Green 및 비선형 계산','원래 양의 τ·log 시간·세 성분의 다섯 내부 경로 구간과 최종 장의 동일한 core 식별','원래 내부장 격자·차수·정밀도 독립 refinement와 양의 비선형/압력 오차','실제 accepted 계수 history의 경로·고정 시각 유선·각속도·core/global 에너지','관측량별 source/test·analytic/Lean 의무와 run hash 연결'],
+    remaining:['비영 환형 영역을 포함하는 전체 공간 near-terminal 평가','전체 source의 grid·Fourier·coefficient·pulse/axial scale·precision 적응과 균일 tail','완전한 원문해 enclosure·Lean refinement·모든 claim과 replay artifact 연결']}
 };
 
 function fieldObservations(run,options,runPath='results'){
@@ -96,6 +118,10 @@ export async function runNavierM3(input={}){
   if(pack==='N6'){
     if(operation==='workbench'){results=correctionAcceptance();results.residual=residualSplitFixture();checks=[...results.checks,{id:'N6-02-full-quadratic-residual',pass:results.residual.pass}];}
     else if(operation==='source-reconstruction'){results=recordedSourceReconstruction(parameters);checks=results.checks;}
+    else if(operation==='global-moment-record'){results=await recordedGlobalMoment(parameters);checks=results.checks;observations=globalMomentObservations(results);}
+    else if(operation==='global-moment-full-pressure-record'){results=await recordedGlobalMomentFullPressure(parameters);checks=results.checks;observations=globalMomentFullPressureObservations(results);}
+    else if(operation==='global-temporal-inverse-record'){results=await recordedGlobalTemporalInverse(parameters);checks=results.checks;observations=globalTemporalInverseObservations(results);}
+    else if(operation==='global-signed-record'){results=await recordedGlobalSigned(parameters);checks=results.checks;observations=globalSignedObservations(results);}
     else if(operation==='temporal-inverse')results=temporalMeanInverse(parameters);
     else if(operation==='five-moments')results=fiveMomentCorrection(parameters);
     else if(operation==='source-moment-map')results=symbolicMomentMap();
@@ -107,6 +133,11 @@ export async function runNavierM3(input={}){
     else bad('UNSUPPORTED','Unknown N6 operation.');
   }else if(pack==='N7'){
     if(operation==='workbench'){results=localizationAcceptance();checks=results.checks;}
+    else if(operation==='inner-growth-record'){results=await recordedInnerGrowth(parameters);checks=results.checks;observations=innerGrowthObservations(results);}
+    else if(operation==='source-domain-exterior-record'){results=await recordedSourceN7DomainExterior(parameters);checks=results.checks;observations=sourceExteriorForceObservations(results);}
+    else if(operation==='source-core-restriction-record'){results=await recordedSourceCoreRestrictionEvidence(parameters);checks=results.checks;observations=sourceCoreRestrictionEvidenceObservations(results);}
+    else if(operation==='source-localization-operator'){results=await sourceLocalizationOperatorEvidence(parameters);checks=results.checks;observations=sourceLocalizationOperatorEvidenceObservations(results);}
+    else if(operation==='source-periodization-review'){results=await sourcePeriodizationReviewEvidence(parameters);checks=results.checks;observations=sourcePeriodizationReviewEvidenceObservations(results);}
     else if(operation==='localization')results=localizationContract(parameters);
     else if(operation==='force-extension')results=forceExtensionSchedule(parameters);
     else if(operation==='periodization')results=verifyPeriodization(parameters);
@@ -122,6 +153,13 @@ export async function runNavierM3(input={}){
     }
     else if(operation==='acceptance'){results=galerkinAcceptance();checks=results.checks;observations=fieldObservations(results.selectedRun,undefined,'results.selectedRun');}
     else if(operation==='near-terminal'){results=nearTerminalSchedule(parameters);observations={kind:'POSITIVE_TAU_COORDINATES_ONLY',samples:[],curves:results.rows.map(x=>({time:x.s,logRadialScale:x.radialLogScale}))};}
+    else if(operation==='source-near-terminal-record'){results=await recordedSourceNearTerminal(parameters);checks=results.checks;observations=sourceNearTerminalObservations(results);}
+    else if(operation==='source-core-refinement'){
+      results=await evaluateSourceCoreRefinement(parameters);observations=sourceCoreRefinementObservations(results);
+      checks=[{id:'fresh-directed-original-core-evaluations',pass:results.freshCoreComparisonsExecuted===true&&results.execution.binary64UsedForDecisions===false},
+        {id:'one-control-per-refinement-and-common-point-interval-agreement',pass:results.families.every(f=>f.variants.every(v=>v.verifiedUnchangedControls&&v.comparisons.every(c=>c.intervalsOverlap&&c.samePhysicalCoordinate)))},
+        {id:'positive-nonlinear-and-pressure-errors-retained',pass:results.families.every(f=>f.variants.every(v=>v.samples.every(s=>s.nonlinearComparisonErrorsRetained&&s.pressureAnalyticErrorsRetained)))}];
+    }
     else bad('UNSUPPORTED','Unknown N8 operation.');
   }
   const normalizedInput={package:pack,operation,parameters:copy(parameters)},resultHash=await sha({input:normalizedInput,results}),inputHash=await sha(normalizedInput);
@@ -129,14 +167,24 @@ export async function runNavierM3(input={}){
   for(const claim of observations.claims??[]){claim.runHash=resultHash;claim.inputHash=inputHash;}
   return {schema:'MathScope.NavierM3.Result/1',version:'0.1.0',package:pack,operation,input:normalizedInput,inputHash,runHash:resultHash,
     ...(results.recordedOnly===true?{recordedOnly:true,freshSourceConstructorExecuted:false}:{}),
+    ...(results.newSupportProofExecuted===true?{newSupportProofExecuted:true}:{}),
+    ...(results.freshExactOperatorProofExecuted===true?{freshExactOperatorProofExecuted:true,freshSourceConstructorExecuted:false}:{}),
     status:NAVIER_M3_PROGRESS[pack].status,executionStatus:results.status??(checks.every(x=>x.pass)?'FINITE_CHECKS_PASSED':'FINITE_CHECKS_FAILED'),
     source:{implementation:implementationPin,paper:NS_PAPER,profile:inheritedSource.sourceProfile,parameterExpressionSHA256:inheritedSource.parameterExpressionSHA256,
       common6:inheritedSource.files.common6,source4:inheritedSource.files.source4,physicalGraph:inheritedSource.graph,inheritedM2Assessment:inheritedSource.inheritedM2Assessment},
     sourceBoundaries:{M2Preserved:true,P7Changed:false,fullUncorrectedResidualAssumedFlat:false,completeN6:false,completeN7:false,completeN8:false,wholeM3Complete:false},
     results,checks,observations,progress:copy(NAVIER_M3_PROGRESS[pack]),
-    evidence:{numericOrAlgebraicFiniteExecution:results.recordedOnly!==true,
-      ...(results.recordedOnly===true?{recordedOnly:true,freshSourceConstructorExecuted:false,recordedSourceGatePassed:results.gate.exitCode===0}:{}),
-      analyticCertificate:null,leanTheorem:null,formalComplete:false,sourceReconstructionComplete:false}};
+    evidence:{numericOrAlgebraicFiniteExecution:results.recordedOnly!==true||results.newSupportProofExecuted===true,
+      ...(results.recordedOnly===true?{recordedOnly:true,freshSourceConstructorExecuted:false,
+        ...(results.gate?{recordedSourceGatePassed:results.gate.exitCode===0}:{})}:{}),
+      ...(results.newSupportProofExecuted===true?{newSupportProofExecuted:true,recordedSourceMeasurementsReused:true}:{}),
+      ...(results.freshExactOperatorProofExecuted===true?{freshExactOperatorProofExecuted:true,recordedSourceMeasurementsReused:true,recordedSourceGatePassed:results.gate.pass===true}:{}),
+      analyticCertificate:results.newSupportProofExecuted===true?{kind:'ORIGINAL_SOURCE_CORE_RESTRICTION',
+        proofSHA256:results.proofSHA256,scope:copy(results.scope),sourceArtifacts:copy(results.sourceArtifacts),
+        nonzeroCorrectionFieldsConstructed:false,newLeanKernelProof:false}:results.freshExactOperatorProofExecuted===true?{
+          kind:results.analyticProofKind??'ORIGINAL_LOCALIZATION_OPERATOR_IDENTITIES',proofSHA256:results.proofSHA256,scope:copy(results.scope),
+          sourceArtifacts:copy(results.sourceArtifacts),newLeanKernelProof:false}:null,
+      leanTheorem:null,formalComplete:false,sourceReconstructionComplete:false}};
 }
 
 export async function replayNavierM3(record){
@@ -145,7 +193,7 @@ export async function replayNavierM3(record){
   if(inputHash!==record.inputHash||originalHash!==record.runHash)bad('REPLAY_HASH_MISMATCH','The exported input or results were changed.');
   const fresh=await runNavierM3(record.input);
   if(fresh.runHash!==record.runHash)bad('REPLAY_RESULT_MISMATCH','The current runtime produces a different result; keep the prior run separate.');
-  for(const key of ['version','package','operation','status','executionStatus','source','sourceBoundaries','evidence','observations','progress','recordedOnly','freshSourceConstructorExecuted']){
+  for(const key of ['version','package','operation','status','executionStatus','source','sourceBoundaries','evidence','observations','progress','recordedOnly','freshSourceConstructorExecuted','newSupportProofExecuted','freshExactOperatorProofExecuted']){
     if(canonical(record[key])!==canonical(fresh[key]))bad('REPLAY_AUTHORITY_MISMATCH','The source, view or claim authority was changed: '+key);
   }
   return {schema:'MathScope.NavierM3.Replay/1',pass:true,inputHash,runHash:fresh.runHash,result:fresh};

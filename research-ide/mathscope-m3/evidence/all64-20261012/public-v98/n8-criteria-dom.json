@@ -1,0 +1,36 @@
+{
+  "criteria": [
+    {
+      "summary": "N8-01 · PASS · Divergence-free Fourier 기저",
+      "text": "N8-01 · PASS · Divergence-free Fourier 기저2π 주기영역에서k·ûk=0, û−k=conj(ûk), Pk=I−kkᵀ/|k|²를사용한다. k=0은별도mean equation이다. 합격: 제약이초\n기·각accepted step에서유지되고pressure 회복에div f가포함된다. 이branch의periodic domain을whole-space 논문\n해와혼동하지않는다.[\n  \"navier/galerkin.mjs\",\n  \"navier/evidence/N8-acceptance.json\",\n  \"navier/evidence/N8-TG.json\",\n  \"navier/tests/flow-observations.test.mjs\"\n]남은 조건: 원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.66 · 전체 조건 완료: true"
+    },
+    {
+      "summary": "N8-02 · PASS · 비선형 convolution과 dealiasing",
+      "text": "N8-02 · PASS · 비선형 convolution과 dealiasing모든p+q=k 상호작용을계산한다. quadratic product는3/2 padding 또는그와동등한정확한retained-mode convolu-\ntion을사용한다. 합격: 작은random solenoidal fixture에서direct convolution과FFT product가정규화10^−11 이내\n일치한다. high-mode aliasing negative control이검출된다.[\n  \"navier/galerkin.mjs\",\n  \"navier/evidence/acceptance.json\",\n  \"navier/evidence/independent-numpy.json\"\n]남은 조건: 원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.66 · 전체 조건 완료: true"
+    },
+    {
+      "summary": "N8-03 · PASS · 시간 적응과 에너지 안정성",
+      "text": "N8-03 · PASS · 시간 적응과 에너지 안정성diffusion integrating factor/IMEX 등으로stiff linear term을처리하고advection CFL·embedded local error·energy\ndefect로step을승인한다. 합격: Taylor-Green의amplitude/energy를시간반분에서설계차수로수렴시킨다. dt를줄여\n도사라지지않는energy defect는spatial/aliasing 오류로조사한다.[\n  \"navier/galerkin.mjs\",\n  \"navier/evidence/N8-acceptance.json\",\n  \"navier/evidence/independent-numpy.json\",\n  \"navier/flow-observations.mjs\"\n]남은 조건: 원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.66 · 전체 조건 완료: true"
+    },
+    {
+      "summary": "N8-04 · PARTIAL · τ 기반 near-terminal sampling",
+      "text": "N8-04 · PARTIAL · τ 기반 near-terminal samplings=−logτ를주변수로쓰고τ>0만평가한다. normalized coordinates와velocity를계산한뒤physical scaling을적용한다.\n합격: τ=10^−2,10^−4,10^−8,10^−12 예시와더작은값의precision mode가재현된다. 표시t가1로반올림돼도내\n부τ>0 계약은유지한다.[\n  \"navier/localization.mjs\",\n  \"navier/evidence/N8-nearT.json\",\n  \"navier/flow-observations.mjs\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Evaluate the reconstructed source velocity in the original normalized coordinates and apply its physical scaling. · Supply interval/tail-controlled precision modes at the original source-admissible tau examples.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.66 · 전체 조건 완료: false"
+    },
+    {
+      "summary": "N8-05 · PARTIAL · 공간·급수·정밀도 적응",
+      "text": "N8-05 · PARTIAL · 공간·급수·정밀도 적응core radius, axial length, pulse wavelength, active cutoff orders를함께해결한다. 각refinement 축을독립증가시킨\n다. 합격: 2배grid, Fourier cutoff, coefficient order, arithmetic precision 비교표와별도tail bound를저장한다. 예산\n초과시last-resolved τ와원인을표시한다.[\n  \"navier/galerkin.mjs\",\n  \"navier/evidence/acceptance.json\",\n  \"navier/evidence/independent-numpy.json\",\n  \"navier/flow-observations.mjs\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Resolve actual source core/axial/pulse scales and active cutoffs with independent grid, Fourier, coefficient and arithmetic-precision refinements. · Attach rigorous source tail bounds and a last-resolved positive tau with an explicit failure reason.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.66 · 전체 조건 완료: false"
+    },
+    {
+      "summary": "N8-06 · PASS · 시각화·물리량 연결",
+      "text": "N8-06 · PASS · 시각화·물리량 연결fixed physical bounds와normalized view를제공하고instantaneous streamlines/particle paths, 속도/각속도, core/\nglobal energy를구분한다. 합격: 모든scene은실제run hash·샘플위치·단위·색범위·vector scale를갖는다. 자동확대나\nvector 정규화가core 수축·성장을숨기지않는다.[\n  \"navier/index.mjs\",\n  \"navier/evidence/N8-TG.json\",\n  \"evidence/live-ui/acceptance.json\",\n  \"web/extended-view-contract.mjs\",\n  \"web/tests/extended-worker.test.mjs\",\n  \"navier/flow-observations.mjs\",\n  \"navier/tests/flow-interface.test.mjs\",\n  \"navier/tests/flow-observations.test.mjs\",\n  \"navier/evidence/source-current-20261012/fast-tests.log\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\",\n  \"evidence/all64-20261012/public-v93/navier-flow-ui-audit.json\",\n  \"evidence/all64-20261012/public-v93/navier-energy-ui-audit.json\"\n]남은 조건: 원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.66 · 전체 조건 완료: true"
+    },
+    {
+      "summary": "N8-07 · PASS · Claim-test-proof 연결",
+      "text": "N8-07 · PASS · Claim-test-proof 연결각관측량에원문reference, numerical test, analytic certificate, Lean theorem을별도링크한다. 합격: arbitrary\nsampled array를axiom으로놓고PDE 해라고결론내리지않는다. certified approximation 표시는해당구간의error\nenclosure와조건을요구한다.[\n  \"navier/index.mjs\",\n  \"navier/evidence/acceptance.json\",\n  \"navier/flow-observations.mjs\",\n  \"navier/source-current-evidence.mjs\",\n  \"navier/tests/flow-interface.test.mjs\",\n  \"navier/evidence/source-current-20261012/source-current-execution.json\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\",\n  \"evidence/all64-20261012/public-v93/navier-flow-ui-audit.json\",\n  \"evidence/all64-20261012/public-v93/navier-source-archive-ui-audit.json\"\n]남은 조건: 원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.66 · 전체 조건 완료: true"
+    },
+    {
+      "summary": "N8-08 · PARTIAL · 재현 패키지와 최종 체크",
+      "text": "N8-08 · PARTIAL · 재현 패키지와 최종 체크판본·commit·상수·기저·domain·time schedule·quadrature·truncations·precision·tails·residual·energy·camera·build\nlogs를묶는다. 합격: 다른환경에서fixture와selected run이같은허용오차로재현된다. 이번문서작성턴의상태는설계\n완료이며구현·사이트변경·배포완료로표시하지않는다.[\n  \"navier/tests/build-source-inheritance.py\",\n  \"navier/tests/run.mjs\",\n  \"navier/tests/independent_numpy.py\",\n  \"navier/source-inheritance.json\",\n  \"navier/implementation-pin.mjs\",\n  \"navier/evidence/acceptance.json\",\n  \"evidence/live-ui/acceptance.json\",\n  \"web/extended-view-contract.mjs\",\n  \"web/tests/extended-worker.test.mjs\",\n  \"web/build_extended.py\",\n  \"web/tests/test_extended_build.py\",\n  \"CI_EXECUTION_WORKSPACES.md\",\n  \"navier/tests/build-source-current-evidence.py\",\n  \"navier/tests/flow-interface.test.mjs\",\n  \"navier/evidence/independent-numpy.json\",\n  \"navier/evidence/source-current-20261012/source-current-execution.json\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Bind all remaining source constants, coefficient/precision cutoffs and rigorously controlled tails to actual complete reconstruction runs. · Verify the final newly published UI and its exported camera/scene contracts, then attach the actual new CI result without treating historical runs as the new commit.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.66 · 전체 조건 완료: false"
+    }
+  ]
+}

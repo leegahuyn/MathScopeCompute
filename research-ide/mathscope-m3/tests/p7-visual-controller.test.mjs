@@ -39,6 +39,7 @@ function setup({initialRecord=null,capabilities={sourceBinding:binding},records=
   const initialArchiveText=JSON.stringify(archive);
   const elements=new Map();
   const get=id=>{if(!elements.has(id))elements.set(id,element());return elements.get(id);};
+  get('m3-p7-visualization').querySelector=selector=>{assert.equal(selector,'.p7v-boundary');return get('p7v-boundary');};
   get('p7-visual-seeds').textContent=initialArchiveText;
   const events=new Map(),buildCalls=[],loads=[];
   let snapshot={revision:0,busy:false,capabilities,record:initialRecord};
@@ -56,6 +57,16 @@ function setup({initialRecord=null,capabilities={sourceBinding:binding},records=
     latest:()=>buildCalls.at(-1),calls:()=>buildCalls.length,audit:()=>plain(window.MathScopeP7VisualController.audit())};
 }
 const currents=h=>h.latest().records.filter(r=>r.visualSource?.current===true);
+
+test('criterion summary requires eight unique original IDs and follows their explicit accepted status',()=>{
+  const criteria=Array.from({length:8},(_,i)=>({id:'P7-0'+(i+1),originalCriterionComplete:i<3}));
+  const h=setup({capabilities:{sourceBinding:binding,progress:{criteria}}});
+  assert.match(h.get('p7v-boundary').textContent,/3\/8/);
+  h.emit({capabilities:{sourceBinding:binding,progress:{criteria:criteria.map(r=>({...r,originalCriterionComplete:true}))}}});
+  assert.match(h.get('p7v-boundary').textContent,/8\/8/);
+  h.emit({capabilities:{sourceBinding:binding,progress:{criteria:[...criteria.slice(0,7),criteria[0]]}}});
+  assert.equal(h.get('p7v-boundary').textContent,'P7 원문 기준 확인 중');
+});
 
 test('current 37a1 replaces only its archived analytic record; archived 11a1 and local data remain',()=>{
   const live=record('p7.elliptic_analytic','37a1','live-37',false),before=JSON.stringify(live);

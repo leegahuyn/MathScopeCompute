@@ -45,11 +45,15 @@ jobs:
           python --version | tee "$M3_CI_OUTPUT/python-version.txt"
       - name: Install the independent Fourier reference dependency
         run: python -m pip install numpy==2.3.5
+      - name: Verify losslessly packed observed source evidence
+        run: python -B research-ide/mathscope-m3/navier/tests/verify-packed-evidence.py --materialize 2>&1 | tee "$M3_CI_OUTPUT/packed-evidence.json"
 
       # Check committed evidence before runtime tests write fresh local receipts.
       # A stale release must fail here; CI must not silently rebuild it to pass.
       - name: Verify the shipped Worker and display contract build
         run: python -B research-ide/mathscope-m3/web/build_extended.py --check 2>&1 | tee "$M3_CI_OUTPUT/bundle-check.log"
+      - name: Verify all64 original identities, reviewed promotions and immutable source gates
+        run: python -B research-ide/mathscope-m3/evidence/all64-20261012/assessment-source-resume/build_review.py --check 2>&1 | tee "$M3_CI_OUTPUT/original64-assessment-check.json"
       - name: Recheck frozen M2 input bytes without executing M2 graphs
         run: |
           python -B - <<'PY' 2>&1 | tee "$M3_CI_OUTPUT/navier-inheritance-check.json"
@@ -87,7 +91,7 @@ jobs:
           import {inheritedSource} from './research-ide/mathscope-m3/navier/source-inheritance.mjs';
           const sha=value=>createHash('sha256').update(value).digest('hex');
           const stable=value=>Array.isArray(value)?'['+value.map(stable).join(',')+']':value&&typeof value==='object'?'{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+stable(value[key])).join(',')+'}':JSON.stringify(value);
-          const expected=['galerkin.mjs','corrections.mjs','localization.mjs','index.mjs','source-mean-map.mjs','source-inheritance.mjs','flow-observations.mjs','source-current-state.mjs','source-pressure.mjs','source-higher-jets.mjs','source-signed-stress.mjs','source-current-evidence.mjs'];
+          const expected=fs.readdirSync('research-ide/mathscope-m3/navier').filter(name=>name.endsWith('.mjs')&&name!=='implementation-pin.mjs').sort();
           assert.deepEqual(implementationPin.files.map(row=>row.path),expected.map(name=>'research-ide/mathscope-m3/navier/'+name));
           for(const row of implementationPin.files){const raw=fs.readFileSync(row.path);assert.equal(raw.length,row.bytes,row.path);assert.equal(sha(raw),row.sha256,row.path);}
           assert.equal(sha(stable(implementationPin.files)),implementationPin.sha256);
@@ -102,14 +106,61 @@ jobs:
         run: python -B research-ide/mathscope-m3/gauge/tests/verify_package_guards.py 2>&1 | tee "$M3_CI_OUTPUT/gauge-package-guards.log"
       - name: Reject changed original criteria, pages, SHA bindings and completion claims
         run: python -B research-ide/mathscope-m3/web/tests/test_extended_build.py 2>&1 | tee "$M3_CI_OUTPUT/builder-tests.log"
+      - name: Check deferred source assertion imports preserve identity and reject early access
+        run: python -B research-ide/mathscope-m3/web/tests/test_static_module_bundle.py 2>&1 | tee "$M3_CI_OUTPUT/static-cycle-tests.log"
       - name: Execute the actual static Worker and reject forged replay and display records
         run: node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/extended-worker.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/worker-tests.tap"
       - name: Verify flow coordinates, angular velocity, path semantics and view invariance
         run: node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/extended-flow-view.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/flow-view-tests.tap"
+      - name: Verify the original inner-path archive and its exact interval display
+        run: |
+          python -B research-ide/mathscope-m3/navier/tests/build-inner-growth-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/inner-growth-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/test_inner_growth_archive.py 2>&1 | tee "$M3_CI_OUTPUT/inner-growth-archive-python.log"
+          node --test --test-reporter=tap \
+            research-ide/mathscope-m3/navier/tests/inner-growth-archive.test.mjs \
+            research-ide/mathscope-m3/web/tests/navier-inner-growth-view.test.mjs \
+            2>&1 | tee "$M3_CI_OUTPUT/inner-growth-archive-view.tap"
       - name: Check lossless production packaging and graph provenance
         run: |
           node research-ide/mathscope-m3/gauge/experiments/package-study-record.mjs --check 2>&1 | tee "$M3_CI_OUTPUT/gauge-study-package.json"
           node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/gauge-study-view.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/gauge-study-view.tap"
+      - name: Verify the observed source moments and three-component near-terminal archives
+        run: |
+          python -B research-ide/mathscope-m3/navier/tests/build-global-moment-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/global-moment-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/build-global-moment-pressure-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/global-moment-full-pressure-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/build-global-signed-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/global-signed-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/build-near-terminal-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/near-terminal-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/build-exterior-force-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/domain-exterior-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/build-core-restriction-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/core-restriction-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/build-localization-operator-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/localization-operator-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/build-periodization-review-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/periodization-review-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/build-global-temporal-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/global-temporal-package.json"
+          node --test --test-reporter=tap \
+            research-ide/mathscope-m3/navier/tests/global-moment-archive.test.mjs \
+            research-ide/mathscope-m3/navier/tests/global-moment-pressure-archive.test.mjs \
+            research-ide/mathscope-m3/navier/tests/global-signed-archive.test.mjs \
+            research-ide/mathscope-m3/navier/tests/near-terminal-log-time.test.mjs \
+            research-ide/mathscope-m3/navier/tests/near-terminal-archive.test.mjs \
+            research-ide/mathscope-m3/navier/tests/source-core-refinement.test.mjs \
+            research-ide/mathscope-m3/navier/tests/source-exterior-force-evidence.test.mjs \
+            research-ide/mathscope-m3/navier/tests/core-restriction-archive.test.mjs \
+            research-ide/mathscope-m3/navier/tests/localization-operator-archive.test.mjs \
+            research-ide/mathscope-m3/navier/tests/periodization-review-archive.test.mjs \
+            research-ide/mathscope-m3/navier/tests/global-temporal-archive.test.mjs \
+            research-ide/mathscope-m3/web/tests/navier-near-terminal-view.test.mjs \
+            research-ide/mathscope-m3/web/tests/navier-source-refinement-view.test.mjs \
+            research-ide/mathscope-m3/web/tests/navier-source-domain-exterior-view.test.mjs \
+            2>&1 | tee "$M3_CI_OUTPUT/source-archives-views.tap"
+      - name: Independently verify the original core restriction and attached three-component source intervals
+        run: python -B research-ide/mathscope-m3/navier/tests/run-core-restriction-proof.py "$GITHUB_RUN_ID" 2>&1 | tee "$M3_CI_OUTPUT/core-restriction-proof.log"
+      - name: Reexecute all source localization commutators and independent force pressure identities
+        run: python -B research-ide/mathscope-m3/navier/tests/run-localization-operator.py "$GITHUB_RUN_ID" 2>&1 | tee "$M3_CI_OUTPUT/localization-operator-proof.log"
+      - name: Reexecute original comparison, viscosity, energy Jacobians and disjoint periodization
+        run: python -B research-ide/mathscope-m3/navier/tests/run-periodization-review.py "$GITHUB_RUN_ID" 2>&1 | tee "$M3_CI_OUTPUT/periodization-review.log"
+      - name: Independently refine the actual original core with exact Fraction arithmetic
+        run: python -B research-ide/mathscope-m3/navier/tests/run-core-refinement.py "$GITHUB_RUN_ID" 2>&1 | tee "$M3_CI_OUTPUT/core-refinement.log"
+      - name: Verify the exact auxiliary torus inverse kernel and retained Fourier tail
+        run: python -B research-ide/mathscope-m3/navier/tests/run-auxiliary-fourier-kernel.py "$GITHUB_RUN_ID" 2>&1 | tee "$M3_CI_OUTPUT/auxiliary-fourier-kernel.log"
       - name: Test gauge models, independent chains, lattice observations and Wilson flow
         run: node --test --test-reporter=tap research-ide/mathscope-m3/gauge/tests/*.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/gauge-tests.tap"
       - name: Run every public gauge example and independently recompute saved correlations
@@ -146,6 +197,9 @@ jobs:
               examples = sorted((evidence / 'examples').glob('*.json')) if package == 'gauge' else sorted(evidence.glob('N[678]-*.json'))
               for example in examples:
                   shutil.copy2(example, target / example.name)
+          for family in ['source-core-refinement-20261012', 'auxiliary-fourier-kernel-20261012', 'source-core-restriction-20261012', 'source-localization-operator-20261012', 'source-periodization-review-20261012']:
+              source = root / 'navier/evidence' / family / ('attempt' + os.environ['GITHUB_RUN_ID'])
+              shutil.copytree(source, output / 'navier' / family, dirs_exist_ok=True)
           PY
       - name: Preserve success or failure diagnostics
         if: always()
@@ -153,5 +207,93 @@ jobs:
         with:
           name: m3-execution-workspaces-${{ github.sha }}-${{ github.run_attempt }}
           path: ${{ env.M3_CI_OUTPUT }}/
+          if-no-files-found: warn
+          retention-days: 30
+
+  original-source-corrections-and-localization:
+    # Each constructor receives its own runner. These source graphs must not
+    # run concurrently in a single memory-limited job.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: global-moment
+            runner: run-global-moment.py
+            evidence: global-moment-20261012
+          - name: global-pressure
+            runner: run-global-pressure.py
+            evidence: global-pressure-20261012
+          - name: global-moment-pressure
+            runner: run-global-moment-pressure.py
+            evidence: global-moment-pressure-20261012
+          - name: global-temporal
+            runner: run-global-temporal.py
+            evidence: global-temporal-20261012
+          - name: near-terminal
+            runner: run-near-terminal-source.py
+            evidence: source-near-terminal-20261012
+          - name: domain-exterior
+            runner: run-exterior-force-jets.py
+            evidence: source-exterior-force-jets-20261012
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Execute the original source constructor and independent checks
+        run: |
+          node --version
+          python --version
+          python -B "research-ide/mathscope-m3/navier/tests/${{ matrix.runner }}" "$GITHUB_RUN_ID"
+      - name: Preserve fresh source, exact checks and success or failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-source-${{ matrix.name }}-${{ github.sha }}-${{ github.run_attempt }}
+          path: research-ide/mathscope-m3/navier/evidence/${{ matrix.evidence }}/attempt${{ github.run_id }}/
+          if-no-files-found: warn
+          retention-days: 30
+
+  original-inner-path-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reconstruct the original common family and verify the nonlinear inner-path interval
+        run: |
+          node --version
+          python --version
+          python -B research-ide/mathscope-m3/navier/tests/run-inner-growth-source.py "$GITHUB_RUN_ID"
+      - name: Preserve the fresh source construction and independent Fraction checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-inner-growth-source-${{ github.sha }}-${{ github.run_attempt }}
+          path: research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt${{ github.run_id }}/
           if-no-files-found: warn
           retention-days: 30

@@ -1,6 +1,6 @@
 {
   "schema": "MathScope.M3.P8.Progress/1",
-  "status": "PARTIAL_PENDING_CURRENT_P7_MUTATION_VERIFICATION",
+  "status": "COMPLETE_WITHIN_STATED_SCOPE",
   "inheritedM2Commit": "90e977ba9225bfaa20fd3dcc97db7f794c5ed4c9",
   "P7VisualizationPublished": true,
   "P7SourcePR": "https://github.com/leegahuyn/MathScopeCompute/pull/12",
@@ -114,9 +114,9 @@
       "text": "bad prime 하나, Frobenius coefficient 하나, truncation bound 하나, zero box 하나, rank upper certificate 하나를 제\n거·변조하여 관문을 다시 실행한다. 합격: 변조된 입력은 해당 단계에서 실패하고 후속 theorem badge가 취소된다. session\n저장은 입력 해시·정밀도·비교 근거를 보존하며 재계산 결과와 일치한다.",
       "page": 36,
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-      "status": "PARTIAL",
-      "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T09:59:29.407650+00:00",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T12:39:03.635099+00:00",
       "evidence": [
         "tests/p8-mutation-audit.test.mjs",
         "p8/evidence/p7-mutation-release.json",
@@ -125,13 +125,19 @@
         "p8/tools/audit_p7_mutations.py",
         "tests/test_p8_p7_mutations.py",
         "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/process.json",
-        "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/report.json"
+        "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/report.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/github-observation.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/report.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/process.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/consumer-validation.json",
+        "tests/p8-recorded-arithmetic.test.mjs",
+        "p8/evidence/p7-mutation-release-historical-v1.json",
+        "evidence/all64-20261012/public-v95/p8-acceptance.json",
+        "evidence/all64-20261012/ci-c971/receipt.json"
       ],
-      "remainingObligations": [
-        "Collect and byte-verify the new source-bound GitHub CI artifact for the actual valid arithmetic rank-upper certificate deletion and zero-box corruption.",
-        "Package that observed CI receipt, then verify the published current-source mutation result and revoked downstream badges."
-      ],
-      "acceptanceScope": "Existing bad-prime, Frobenius, truncation and comparison mutation gates remain. Fresh P7 arithmetic supplies a valid descent upper bound; the actual current-source audit deleted that certificate and completed all six child executions with nine passing tests. GitHub CI packaging and public verification are pending. The older /1 fabricated-certificate audit remains historical evidence.",
+      "remainingObligations": [],
+      "acceptanceScope": "Bad-prime, Frobenius, truncation and comparison mutations execute in the current browser. The separate source-bound /2 CI receipt contains actual fresh P7 child runs deleting a valid arithmetic descent upper certificate and corrupting a zero box. Successful CI artifact bytes/current source hashes and public downstream badge revocation, replay/import and forged-import rejection are verified. The /1 audit, failed first /2 CI and the packaging-time publishedResultVerified=false remain historical; currentReleaseAcceptance supplies the later positive public gate. Browser replay does not claim fresh P7 execution or a whole-application claim graph.",
       "currentArithmeticMutationEvidence": {
         "audit": "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/report.json",
         "process": "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/process.json",
@@ -144,6 +150,65 @@
         "sourceEpochSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
         "validRankUpperCertificateDeletionExecuted": true,
         "localReceiptNotCI": true
+      },
+      "currentRecordedArithmeticMutationEvidence": {
+        "receipt": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+        "artifact": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/artifact.zip",
+        "report": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/report.json",
+        "process": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/process.json",
+        "consumerValidation": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/consumer-validation.json",
+        "headCommit": "529e864c8b2ed19399bab8bbc53a08721873d5d4",
+        "observedCheckoutCommit": "eb2bc3a4a14d05a88248e85167286bb4f46a6ef5",
+        "runId": "38237430568",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38237430568",
+        "artifactId": 11741622609,
+        "artifactSHA256": "067e231cfaefde97e165121f87bffafa7d7bf963eb01ee8ece859d885961a596",
+        "artifactBytes": 6814,
+        "packageCanonicalSHA256": "a46ce8dcb8c62a272cebd0535a75297eed5e124c9e091a454522b007c438d263",
+        "innerReportSHA256": "f3019437c40c56f69ce7cd534a0dee6e773667208428eff23eb1fd5f9c335099",
+        "observedPytestExitCode": 0,
+        "actualP7ChildExecutions": 6,
+        "validRankUpperCertificateDeletionExecuted": true,
+        "sourceEpochSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+        "consumerStatus": "RECORDED_CI_SOURCE_MATCH",
+        "freshBrowserP7Execution": false,
+        "publishedResultVerified": false
+      },
+      "currentReleaseAcceptance": {
+        "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+        "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+        "reason": "실제 유효 descent upper 삭제·zero-box 변조의 source-bound CI /2와 네 browser mutation, 후속 badge 취소, 공개 replay/import·변조 거부를 확인했다.",
+        "evidence": [
+          {
+            "path": "evidence/all64-20261012/public-v95/p8-acceptance.json",
+            "bytes": 2733,
+            "sha256": "fd3ac05e09edd99ef8d1b3aa6c9e5e37d7a76ad77476b374c38516281dfa87ab"
+          },
+          {
+            "path": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+            "bytes": 10035,
+            "sha256": "e812c0d18b3f292ffc82823cd968eddcdb51050da09205677ffe4f6285713893"
+          },
+          {
+            "path": "evidence/all64-20261012/ci-c971/receipt.json",
+            "bytes": 10500,
+            "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+          }
+        ],
+        "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+        "historicalEvidenceUnchanged": true
+      },
+      "currentPublicMutationAcceptance": {
+        "receipt": {
+          "path": "evidence/all64-20261012/public-v95/p8-acceptance.json",
+          "bytes": 2733,
+          "sha256": "fd3ac05e09edd99ef8d1b3aa6c9e5e37d7a76ad77476b374c38516281dfa87ab"
+        },
+        "browserCases": 4,
+        "recordedCICases": 2,
+        "actualP7FreshBrowserExecution": false,
+        "wholeApplicationGraphAudited": false,
+        "publishedResultVerified": true
       }
     },
     {
@@ -180,16 +245,16 @@
       "acceptanceScope": "Five independent review packets retain supported inputs, current original criteria, explicitly historical recorded fixture references, open proofs and research questions; release review and conjecture resolution remain different. The user now includes P7; older fixture records are not relabeled as new execution."
     }
   ],
-  "wholeP8Complete": false,
+  "wholeP8Complete": true,
   "wholeM3Complete": false,
-  "policy": "Original blueprint criteria are unchanged. The user expanded scope to include P7 and all 64 M3 criteria. Historical CI/UI records remain immutable; new pinned PARI arithmetic now supplies a valid rank-upper certificate. P8-06 awaits current-source fresh replay/deletion, recorded CI packaging and public UI verification before completion.",
-  "assessedAt": "2026-10-12T09:57:28.854279+00:00",
+  "policy": "Original blueprint criteria are unchanged. Expanded scope includes P7 and all64 M3 criteria. Current valid arithmetic-rank certificate mutation, source-bound successful CI packaging and actual public downstream badge/replay/import checks are accepted. Historical attempts remain immutable; recorded browser verification is not a fresh P7 process or a whole-application graph audit.",
+  "assessedAt": "2026-10-12T12:39:03.635099+00:00",
   "assessmentBaseCommit": "656dedb50d891e9aeb461c22941cb9078dbc7a17",
   "continuedInBranch": "mathscope-m3-except-p7-20261012",
   "P7ExcludedFromCurrentUserRequest": false,
   "counts": {
-    "PASS": 7,
-    "PARTIAL": 1
+    "PASS": 8,
+    "PARTIAL": 0
   },
   "parallelMilestoneProgress": [
     "GAUGE_PROGRESS.json",

@@ -1,0 +1,47 @@
+{
+  "schema": "MathScope.N6.GlobalRepresentativeIndependentReview/1",
+  "reviewedAt": "2026-10-12T12:00:13.409433+00:00",
+  "reviewer": "root",
+  "reviewKind": "INDEPENDENT_SOURCE_AND_MATHEMATICAL_ARGUMENT_REVIEW",
+  "status": "ACCEPTED_AS_A_GLOBAL_CONSTRUCTION_COMPONENT",
+  "source": {
+    "path": "research-ide/mathscope-m3/navier/source-global-representative.mjs",
+    "bytes": 9824,
+    "sha256": "f3fbcf74b42c59cbfdd563e0fddcba9fab5cad782a96695930e3445c50373541"
+  },
+  "band": {
+    "path": "research-ide/mathscope-m3/navier/source-global-band.mjs",
+    "bytes": 24354,
+    "sha256": "039e7770be04c991838504155d30f17fe74304eb2a076bfd105ef9e661952c29"
+  },
+  "actualGate": {
+    "path": "research-ide/mathscope-m3/navier/evidence/global-source-20261012/attempt2/receipt.json",
+    "bytes": 2125,
+    "sha256": "833b12f2f90da2c3ca568d988552ad8ed5d4cbf92ff7179c899e654cdbf45eaa"
+  },
+  "sourceTheoremRequirements": [
+    "Original fixed parameters satisfy 0<h<1/16, 0<Xa<Xb.",
+    "The requesting term supplies an ACTIVE point in the same open mesh box with Xa<X<Xb, 1/2<s<2 and T>=0.",
+    "A full source term must apply its exterior flat guard before evaluating the representative root, inverse or Volterra function."
+  ],
+  "reasoning": [
+    "An active positive radius implies Ru>0 and sLower<sUpperRaw, so the radius projection gives the complete nonempty admissible s interval.",
+    "The two endpoint inequalities F(sLower,Z)<Tu and F(sUpper,Z)>max(0,Tl) give exactly the stated strict lower and upper bounds for Z squared.",
+    "The upper bound gives Z squared<2^(1-2h). On 1/2<=s<=2 this implies dF/ds>1-8h>1/2, so endpoint inequalities are sufficient for a unique admissible root.",
+    "Intersecting the open axial box with the negative and positive intervals preserves an open intersection; when the lower squared bound is negative, omitting the single point Z=0 cannot remove that intersection.",
+    "Negative-first chooses one nonempty open interval and its midpoint. The time midpoint then yields a unique root strictly within the admissible s interval.",
+    "The final radius midpoint lies strictly in both the mesh radius interval and the original annular shell.",
+    "All three coordinate differences within one open mesh box are<3/(2*ell^6), so Euclidean distance<3*sqrt(3)/(2*ell^6)<4/ell^6=4/S^3.",
+    "The representative depends on the fixed label and original constants, not the current source point or residual. Its slow derivatives are zero."
+  ],
+  "limits": {
+    "freshNumericalGateExecutedByReviewer": false,
+    "runtimeEvidenceIsSeparate": true,
+    "allBoxesNumericallyEnumerated": false,
+    "wholeGlobalWaveAssembled": false,
+    "currentSignedCovarianceClassConstructed": false,
+    "originalN604Complete": false,
+    "newLeanProofIssued": false,
+    "wholeM3Complete": false
+  }
+}
