@@ -126,7 +126,7 @@ def build(check_only=False):
                     {'builder': pin(module_path), 'heavyConstructorRerun': False})
         gates.append({**gate, 'observedNodeTests': receipt.get('nodeTests'),
                       'sourceFileCount': receipt.get('sourceFileCount'),
-                      'independentCheckCount': receipt.get('independentCheckCount'),
+                      'independentCheckCount': receipt.get('independentCheckCount', receipt.get('independentChecks')),
                       'elapsedSeconds': receipt.get('elapsedSeconds')})
     gate_ids = {gate['id'] for gate in gates}
     require('every-new-promotion-bound-to-reviewed-source-gates',

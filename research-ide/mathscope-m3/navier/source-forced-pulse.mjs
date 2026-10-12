@@ -11,6 +11,7 @@
 import {canonicalStringify} from '../../mathscope-m0/contracts.mjs';
 import {sourceGraphRationalIdentity} from '../../mathscope-m2/navier/actual-continuation-exact-identities.mjs';
 import {actualPulseTimeFTCNorm} from '../../mathscope-m2/navier/actual-pulse-jet-source.mjs';
+import {createFactoredRationalVerifier} from './forced-rational-identity.mjs';
 
 const owners=new WeakMap(),data=new WeakMap(),inverseSeals=new WeakMap();
 const fail=(message,code='INVALID_SOURCE_CONSTRUCTION')=>{throw Object.assign(new Error(message),{code});};
@@ -400,16 +401,21 @@ export function forcedAngularInverse(base,input){
     Aphi=K.map((row,i)=>row.map((x,j)=>G.add(G.neg(x),G.div(G.mul(n[i],normalRow[j]),nSquared)))),
     damping=G.mul(epsilon,G.pow(k,2),nSquared),matrix=Aphi.map((row,i)=>row.map((x,j)=>i===j?G.sub(x,G.mul(G.q(m*m),damping)):x)),
     projectedRaw=projection.map(row=>cscale(G,G.q(-1),cdot(G,row,forcing))),
-    atoms=[...n,...nPrime,...K.flat(),k,epsilon,...vectorRoots(forcing)],
-    normalizeZero=x=>sourceGraphRationalIdentity(G,x,{atomicNodes:atoms,maxTerms:50000}).pass?G.zero:x,
+    // Composite source/normal operands may share an exact algebraic body.
+    // The base graph flattens products and sums, so freezing such roots as
+    // unrelated atoms can fracture a valid identity. Retain the original
+    // coefficient algebra; the identity kernel already treats genuinely
+    // nonrational source operations as independent exact atoms.
+    coefficientIdentity=createFactoredRationalVerifier(G),
+    normalizeZero=x=>coefficientIdentity(x).pass?G.zero:x,
     projectedSource=projectedRaw.map(z=>complex(G,normalizeZero(z.real),normalizeZero(z.imaginary))),
     system=G.defineForcedPulse({name:input.name??'forced_original_7_13_m'+m,variable,parameters,directions,length,matrix,forcing:projectedSource}),
     velocity=n.map((_,j)=>complex(G,...realParts.map(part=>G.forcedPulseValue(system,part,j,variable,parameters)))),
     rhs=n.map((_,j)=>complex(G,...realParts.map(part=>G.forcedPulseRhs(system,part,j,variable,parameters)))),
     pressureNumerator=cadd(G,cdot(G,normalRow,velocity),cdot(G,n,forcing)),denominator=G.mul(G.q(m),k,nSquared),
     pressure=complex(G,G.neg(G.div(pressureNumerator.imaginary,denominator)),G.div(pressureNumerator.real,denominator)),
-    velocityAtoms=vectorRoots(velocity),proofAtoms=[...atoms,...velocityAtoms],
-    rational=root=>sourceGraphRationalIdentity(G,root,{atomicNodes:proofAtoms,maxTerms:120000}),
+    velocityAtoms=vectorRoots(velocity),
+    rational=createFactoredRationalVerifier(G,{atomicNodes:velocityAtoms,maxTerms:120000}),
     constraint=cdot(G,n,velocity),constraintDerivative=cadd(G,cdot(G,nPrime,velocity),cdot(G,n,rhs),cscale(G,G.mul(G.q(m*m),damping),constraint)),
     residual=velocity.map((z,i)=>cadd(G,rhs[i],cdot(G,K[i],velocity),cscale(G,G.mul(G.q(m*m),damping),z),forcing[i],
       complex(G,G.neg(G.mul(G.q(m),k,n[i],pressure.imaginary)),G.mul(G.q(m),k,n[i],pressure.real)))),
@@ -457,9 +463,9 @@ export function forcedAngularCutoff(result,{psi}={}){
     // Composite cutoffs/source coefficients can coincide with subterms of
     // n or K. Do not freeze them as unrelated atoms when checking the full
     // differentiated product: their original algebraic bodies are retained.
-    atoms=[...vectorRoots(result.velocity)],
+    rational=createFactoredRationalVerifier(G,{atomicNodes:vectorRoots(result.velocity),maxTerms:120000}),
     checks=residual.flatMap((z,j)=>realParts.map(part=>({id:'principal-cutoff-source-and-derivative-'+j+'-'+part,
-      ...sourceGraphRationalIdentity(G,G.sub(z[part],expected[j][part]),{atomicNodes:atoms,maxTerms:120000})})));
+      ...rational(G.sub(z[part],expected[j][part]))})));
   if(checks.some(x=>!x.pass))fail('The forced pulse cutoff dropped an actual source or derivative commutator.');
   return {schema:'MathScope.N6.ForcedAngularPrincipalCutoff/1',psi,dpsi,velocity,pressure,residual,expected,checks,
     formula:'principal(psi*t,psi*pi)+f=(1-psi)*f+psi_prime*t',fullPotentialCurlRemaindersHandledElsewhere:true,
@@ -477,12 +483,11 @@ export function forcedAngularHarmonics(base,input){
       !Array.isArray(row.forcing)||row.forcing.length!==3)fail('Nonzero harmonic rows must be complete, unique and explicit.','INVALID_INPUT');
     byMode.set(row.m,row);
   }
-  const pairs=[],out=[];
+  const pairs=[],out=[],rational=createFactoredRationalVerifier(G,{maxTerms:120000});
   for(const m of [...byMode.keys()].filter(m=>m>0).sort((a,b)=>a-b)){
     const positive=byMode.get(m),negative=byMode.get(-m);if(!negative)fail('A real original field requires every actual negative conjugate mode.','INVALID_INPUT');
     const checks=positive.forcing.flatMap((z,j)=>realParts.map(part=>({component:j,part,
-      ...sourceGraphRationalIdentity(G,G.sub(negative.forcing[j][part],part==='real'?z.real:G.neg(z.imaginary)),
-        {atomicNodes:[...vectorRoots(positive.forcing),...vectorRoots(negative.forcing)],maxTerms:30000})})));
+      ...rational(G.sub(negative.forcing[j][part],part==='real'?z.real:G.neg(z.imaginary)))})));
     if(checks.some(x=>!x.pass))fail('The supplied negative source is not the exact conjugate of its positive source.');
     const solution=forcedAngularInverse(G,{...common,m,forcing:positive.forcing}),negativeVelocity=solution.velocity.map(z=>cconj(G,z)),
       negativePressure=cconj(G,solution.pressure);

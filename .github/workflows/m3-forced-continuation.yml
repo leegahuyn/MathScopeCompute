@@ -1,0 +1,72 @@
+name: M3 forced current continuation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [mathscope-m3-continuation55-20261012]
+    paths:
+      - '.github/workflows/m3-forced-continuation.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: m3-forced-current-continuation
+  cancel-in-progress: false
+
+jobs:
+  original-source-forced-current:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      M3_FORCED_CI_ATTEMPT: ${{ github.run_id }}${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record runtime and verify every original frozen input
+        run: |
+          M3_FORCED_CI_DIAGNOSTICS="$RUNNER_TEMP/m3-forced-current-diagnostics"
+          mkdir -p "$M3_FORCED_CI_DIAGNOSTICS"
+          printf '%s\n' "M3_FORCED_CI_DIAGNOSTICS=$M3_FORCED_CI_DIAGNOSTICS" >> "$GITHUB_ENV"
+          node --version | tee "$M3_FORCED_CI_DIAGNOSTICS/node-version.txt"
+          python --version | tee "$M3_FORCED_CI_DIAGNOSTICS/python-version.txt"
+          python -B - <<'PY' | tee "$M3_FORCED_CI_DIAGNOSTICS/frozen-source-inputs.json"
+          from pathlib import Path
+          import hashlib, json, os
+          path = Path('research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt4/source-bytes-before.json')
+          raw = path.read_bytes()
+          assert hashlib.sha256(raw).hexdigest() == '37960fe03a79493d12b6b9051b8a69a88ab71cc3505cc8cd62c6f2fc4bc0daeb'
+          rows = json.loads(raw)['files']
+          assert len(rows) == 155
+          for row in rows:
+              actual = Path(row['path']).read_bytes()
+              assert len(actual) == row['bytes'], row['path']
+              assert hashlib.sha256(actual).hexdigest() == row['sha256'], row['path']
+          print(json.dumps({'status': 'PASS', 'commit': os.environ['GITHUB_SHA'], 'runId': os.environ['GITHUB_RUN_ID'], 'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'], 'sourceFileCount': len(rows), 'sourceBeforeSHA256': hashlib.sha256(raw).hexdigest(), 'sameFixedLimits': {'seconds': 2100, 'workerRSSBytes': 13*1024**3//2, 'addressSpaceBytes': 7*1024**3, 'v8MiB': 5120}, 'earlierDisconnectedExecutionOutcomeInferred': False}, indent=2))
+          PY
+      - name: Execute the complete unchanged source gate
+        run: |
+          python -B research-ide/mathscope-m3/navier/tests/run-global-forced-current.py "$M3_FORCED_CI_ATTEMPT" \
+            2>&1 | tee "$M3_FORCED_CI_DIAGNOSTICS/driver.log"
+      - name: Preserve completed and partial source evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-forced-current-ci${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/m3-forced-current-diagnostics/
+            research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt${{ env.M3_FORCED_CI_ATTEMPT }}/
+          if-no-files-found: warn
+          retention-days: 30
+          compression-level: 0

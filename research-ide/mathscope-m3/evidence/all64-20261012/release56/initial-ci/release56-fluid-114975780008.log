@@ -1,0 +1,550 @@
+﻿2026-10-12T19:35:16.8391595Z Current runner version: '2.337.0'
+2026-10-12T19:35:16.8415770Z ##[group]Runner Image Provisioner
+2026-10-12T19:35:16.8416636Z Hosted Compute Agent
+2026-10-12T19:35:16.8417231Z Version: 20261002.596
+2026-10-12T19:35:16.8418334Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-12T19:35:16.8419133Z Build Date: 2026-10-02T22:28:27Z
+2026-10-12T19:35:16.8419830Z Worker ID: {0dfd483a-8286-482b-8cb4-0c2b3cefc24a}
+2026-10-12T19:35:16.8420624Z Region: eastus
+2026-10-12T19:35:16.8421189Z Cloud: Azure
+2026-10-12T19:35:16.8421881Z ##[endgroup]
+2026-10-12T19:35:16.8423374Z ##[group]Operating System
+2026-10-12T19:35:16.8424100Z Ubuntu
+2026-10-12T19:35:16.8424662Z 24.04.5
+2026-10-12T19:35:16.8425186Z LTS
+2026-10-12T19:35:16.8425782Z ##[endgroup]
+2026-10-12T19:35:16.8426347Z ##[group]Runner Image
+2026-10-12T19:35:16.8426943Z Image: ubuntu-24.04
+2026-10-12T19:35:16.8427592Z Version: 20261004.327.1
+2026-10-12T19:35:16.8429303Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-12T19:35:16.8431040Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-12T19:35:16.8432074Z ##[endgroup]
+2026-10-12T19:35:16.8433250Z ##[group]GITHUB_TOKEN Permissions
+2026-10-12T19:35:16.8435496Z Contents: read
+2026-10-12T19:35:16.8436128Z Metadata: read
+2026-10-12T19:35:16.8436690Z ##[endgroup]
+2026-10-12T19:35:16.8439041Z Secret source: Actions
+2026-10-12T19:35:16.8439991Z Cache mode: write
+2026-10-12T19:35:16.8441225Z Prepare workflow directory
+2026-10-12T19:35:16.8848907Z Prepare all required actions
+2026-10-12T19:35:16.8898738Z Getting action download info
+2026-10-12T19:35:17.1523094Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-12T19:35:17.2465154Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-12T19:35:17.3472969Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-12T19:35:17.4220095Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-12T19:35:17.6290246Z Complete job name: finite-execution-contracts
+2026-10-12T19:35:17.7250216Z ##[group]Run actions/checkout@v4
+2026-10-12T19:35:17.7251073Z with:
+2026-10-12T19:35:17.7251525Z   persist-credentials: false
+2026-10-12T19:35:17.7252087Z   repository: leegahuyn/MathScopeCompute
+2026-10-12T19:35:17.7255847Z   token: ***
+2026-10-12T19:35:17.7256279Z   ssh-strict: true
+2026-10-12T19:35:17.7256704Z   ssh-user: git
+2026-10-12T19:35:17.7257121Z   clean: true
+2026-10-12T19:35:17.7257559Z   sparse-checkout-cone-mode: true
+2026-10-12T19:35:17.7258293Z   fetch-depth: 1
+2026-10-12T19:35:17.7258722Z   fetch-tags: false
+2026-10-12T19:35:17.7259170Z   show-progress: true
+2026-10-12T19:35:17.7259620Z   lfs: false
+2026-10-12T19:35:17.7260043Z   submodules: false
+2026-10-12T19:35:17.7260501Z   set-safe-directory: true
+2026-10-12T19:35:17.7261017Z   allow-unsafe-pr-checkout: false
+2026-10-12T19:35:17.7261793Z env:
+2026-10-12T19:35:17.7262229Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:35:17.7262728Z ##[endgroup]
+2026-10-12T19:35:17.8319463Z Syncing repository: leegahuyn/MathScopeCompute
+2026-10-12T19:35:17.8322782Z ##[group]Getting Git version info
+2026-10-12T19:35:17.8324240Z Working directory is '/home/runner/work/MathScopeCompute/MathScopeCompute'
+2026-10-12T19:35:17.8326237Z [command]/usr/bin/git version
+2026-10-12T19:35:17.8409631Z git version 2.55.0
+2026-10-12T19:35:17.8424585Z ##[endgroup]
+2026-10-12T19:35:17.8462741Z Temporarily overriding HOME='/home/runner/work/_temp/a1c052bb-f36a-4c6d-b8ca-65d62f5a8f84' before making global git config changes
+2026-10-12T19:35:17.8465612Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T19:35:17.8471546Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-12T19:35:17.8536036Z Deleting the contents of '/home/runner/work/MathScopeCompute/MathScopeCompute'
+2026-10-12T19:35:17.8544588Z ##[group]Initializing the repository
+2026-10-12T19:35:17.8549422Z [command]/usr/bin/git init /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-12T19:35:17.8657471Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-12T19:35:17.8680349Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-12T19:35:17.8682755Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-12T19:35:17.8684216Z hint: call:
+2026-10-12T19:35:17.8685077Z hint:
+2026-10-12T19:35:17.8686096Z hint: 	git config --global init.defaultBranch <name>
+2026-10-12T19:35:17.8690665Z hint:
+2026-10-12T19:35:17.8692079Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-12T19:35:17.8693945Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-12T19:35:17.8695518Z hint:
+2026-10-12T19:35:17.8696538Z hint: 	git branch -m <name>
+2026-10-12T19:35:17.8697717Z hint:
+2026-10-12T19:35:17.8699037Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-12T19:35:17.8700195Z Initialized empty Git repository in /home/runner/work/MathScopeCompute/MathScopeCompute/.git/
+2026-10-12T19:35:17.8702832Z [command]/usr/bin/git remote add origin https://github.com/leegahuyn/MathScopeCompute
+2026-10-12T19:35:17.8734822Z ##[endgroup]
+2026-10-12T19:35:17.8736116Z ##[group]Disabling automatic garbage collection
+2026-10-12T19:35:17.8739577Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-12T19:35:17.8795672Z ##[endgroup]
+2026-10-12T19:35:17.8818993Z ##[group]Setting up auth
+2026-10-12T19:35:17.8820195Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T19:35:17.8840209Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T19:35:17.9302350Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T19:35:17.9330771Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T19:35:17.9580999Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T19:35:17.9638517Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T19:35:17.9883706Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-12T19:35:17.9925456Z ##[endgroup]
+2026-10-12T19:35:17.9926491Z ##[group]Fetching the repository
+2026-10-12T19:35:17.9936036Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ceab13835221119d5fb0e2c33cd80201096bfe7a:refs/remotes/pull/20/merge
+2026-10-12T19:35:48.4512235Z From https://github.com/leegahuyn/MathScopeCompute
+2026-10-12T19:35:48.4513142Z  * [new ref]         ceab13835221119d5fb0e2c33cd80201096bfe7a -> pull/20/merge
+2026-10-12T19:35:48.4516925Z ##[endgroup]
+2026-10-12T19:35:48.4517440Z ##[group]Determining the checkout info
+2026-10-12T19:35:48.4519599Z ##[endgroup]
+2026-10-12T19:35:48.4525715Z [command]/usr/bin/git sparse-checkout disable
+2026-10-12T19:35:48.4589247Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-12T19:35:48.4621247Z ##[group]Checking out the ref
+2026-10-12T19:35:48.4624853Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/20/merge
+2026-10-12T19:35:49.4784681Z Updating files:  28% (3130/10823)
+2026-10-12T19:35:49.4942961Z Updating files:  29% (3139/10823)
+2026-10-12T19:35:49.5105976Z Updating files:  30% (3247/10823)
+2026-10-12T19:35:49.5443860Z Updating files:  31% (3356/10823)
+2026-10-12T19:35:49.5548132Z Updating files:  32% (3464/10823)
+2026-10-12T19:35:49.5628984Z Updating files:  33% (3572/10823)
+2026-10-12T19:35:49.5695884Z Updating files:  34% (3680/10823)
+2026-10-12T19:35:49.5783840Z Updating files:  35% (3789/10823)
+2026-10-12T19:35:49.5866373Z Updating files:  36% (3897/10823)
+2026-10-12T19:35:49.5944661Z Updating files:  37% (4005/10823)
+2026-10-12T19:35:49.6397509Z Updating files:  38% (4113/10823)
+2026-10-12T19:35:49.7169957Z Updating files:  39% (4221/10823)
+2026-10-12T19:35:49.7286984Z Updating files:  40% (4330/10823)
+2026-10-12T19:35:49.7394834Z Updating files:  41% (4438/10823)
+2026-10-12T19:35:49.7685777Z Updating files:  42% (4546/10823)
+2026-10-12T19:35:49.7870138Z Updating files:  43% (4654/10823)
+2026-10-12T19:35:49.7950887Z Updating files:  44% (4763/10823)
+2026-10-12T19:35:49.8022801Z Updating files:  45% (4871/10823)
+2026-10-12T19:35:49.8366500Z Updating files:  46% (4979/10823)
+2026-10-12T19:35:49.8769537Z Updating files:  47% (5087/10823)
+2026-10-12T19:35:49.8946537Z Updating files:  48% (5196/10823)
+2026-10-12T19:35:49.9212783Z Updating files:  49% (5304/10823)
+2026-10-12T19:35:49.9710693Z Updating files:  50% (5412/10823)
+2026-10-12T19:35:50.0564988Z Updating files:  51% (5520/10823)
+2026-10-12T19:35:50.1718616Z Updating files:  52% (5628/10823)
+2026-10-12T19:35:50.2230059Z Updating files:  53% (5737/10823)
+2026-10-12T19:35:50.2689144Z Updating files:  54% (5845/10823)
+2026-10-12T19:35:50.4049952Z Updating files:  55% (5953/10823)
+2026-10-12T19:35:50.4229969Z Updating files:  56% (6061/10823)
+2026-10-12T19:35:50.4402039Z Updating files:  57% (6170/10823)
+2026-10-12T19:35:50.4753933Z Updating files:  58% (6278/10823)
+2026-10-12T19:35:50.4767150Z Updating files:  59% (6386/10823)
+2026-10-12T19:35:50.4866389Z Updating files:  59% (6399/10823)
+2026-10-12T19:35:50.5061151Z Updating files:  60% (6494/10823)
+2026-10-12T19:35:50.5310615Z Updating files:  61% (6603/10823)
+2026-10-12T19:35:50.5487487Z Updating files:  62% (6711/10823)
+2026-10-12T19:35:50.7171854Z Updating files:  63% (6819/10823)
+2026-10-12T19:35:50.7280007Z Updating files:  64% (6927/10823)
+2026-10-12T19:35:50.7390018Z Updating files:  65% (7035/10823)
+2026-10-12T19:35:50.7494051Z Updating files:  66% (7144/10823)
+2026-10-12T19:35:50.7878637Z Updating files:  67% (7252/10823)
+2026-10-12T19:35:50.8696137Z Updating files:  68% (7360/10823)
+2026-10-12T19:35:50.8842352Z Updating files:  69% (7468/10823)
+2026-10-12T19:35:50.9057844Z Updating files:  70% (7577/10823)
+2026-10-12T19:35:50.9472371Z Updating files:  71% (7685/10823)
+2026-10-12T19:35:50.9805308Z Updating files:  72% (7793/10823)
+2026-10-12T19:35:51.0022986Z Updating files:  73% (7901/10823)
+2026-10-12T19:35:51.0488938Z Updating files:  74% (8010/10823)
+2026-10-12T19:35:51.0942841Z Updating files:  75% (8118/10823)
+2026-10-12T19:35:51.1068657Z Updating files:  76% (8226/10823)
+2026-10-12T19:35:51.1233925Z Updating files:  77% (8334/10823)
+2026-10-12T19:35:51.1426530Z Updating files:  78% (8442/10823)
+2026-10-12T19:35:51.1616939Z Updating files:  79% (8551/10823)
+2026-10-12T19:35:51.1737751Z Updating files:  80% (8659/10823)
+2026-10-12T19:35:51.2033476Z Updating files:  81% (8767/10823)
+2026-10-12T19:35:51.2149060Z Updating files:  82% (8875/10823)
+2026-10-12T19:35:51.2388597Z Updating files:  83% (8984/10823)
+2026-10-12T19:35:51.2506517Z Updating files:  84% (9092/10823)
+2026-10-12T19:35:51.2627360Z Updating files:  85% (9200/10823)
+2026-10-12T19:35:51.2738679Z Updating files:  86% (9308/10823)
+2026-10-12T19:35:51.3001511Z Updating files:  87% (9417/10823)
+2026-10-12T19:35:51.3120637Z Updating files:  88% (9525/10823)
+2026-10-12T19:35:51.3249905Z Updating files:  89% (9633/10823)
+2026-10-12T19:35:51.3363770Z Updating files:  90% (9741/10823)
+2026-10-12T19:35:51.3472983Z Updating files:  91% (9849/10823)
+2026-10-12T19:35:51.3687620Z Updating files:  92% (9958/10823)
+2026-10-12T19:35:51.3824156Z Updating files:  93% (10066/10823)
+2026-10-12T19:35:51.3896562Z Updating files:  94% (10174/10823)
+2026-10-12T19:35:51.4027585Z Updating files:  95% (10282/10823)
+2026-10-12T19:35:51.4227512Z Updating files:  96% (10391/10823)
+2026-10-12T19:35:51.4297987Z Updating files:  97% (10499/10823)
+2026-10-12T19:35:51.4377811Z Updating files:  98% (10607/10823)
+2026-10-12T19:35:51.4771230Z Updating files:  99% (10715/10823)
+2026-10-12T19:35:51.4939649Z Updating files:  99% (10732/10823)
+2026-10-12T19:35:51.4940268Z Updating files: 100% (10823/10823)
+2026-10-12T19:35:51.4940807Z Updating files: 100% (10823/10823), done.
+2026-10-12T19:35:51.5070285Z Note: switching to 'refs/remotes/pull/20/merge'.
+2026-10-12T19:35:51.5070912Z 
+2026-10-12T19:35:51.5071228Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-12T19:35:51.5071800Z changes and commit them, and you can discard any commits you make in this
+2026-10-12T19:35:51.5072326Z state without impacting any branches by switching back to a branch.
+2026-10-12T19:35:51.5072800Z 
+2026-10-12T19:35:51.5073157Z If you want to create a new branch to retain commits you create, you may
+2026-10-12T19:35:51.5073979Z do so (now or later) by using -c with the switch command. Example:
+2026-10-12T19:35:51.5074611Z 
+2026-10-12T19:35:51.5074815Z   git switch -c <new-branch-name>
+2026-10-12T19:35:51.5075140Z 
+2026-10-12T19:35:51.5075314Z Or undo this operation with:
+2026-10-12T19:35:51.5075630Z 
+2026-10-12T19:35:51.5075778Z   git switch -
+2026-10-12T19:35:51.5076001Z 
+2026-10-12T19:35:51.5076367Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-12T19:35:51.5076929Z 
+2026-10-12T19:35:51.5077538Z HEAD is now at ceab138 Merge 2a5114b019c42dc42d2d823458451429fe7c8a21 into 69007a2dd578c9d5cc49b4c623fb27a2ec527c1a
+2026-10-12T19:35:51.5176535Z ##[endgroup]
+2026-10-12T19:35:51.5232075Z [command]/usr/bin/git log -1 --format=%H
+2026-10-12T19:35:51.5258683Z ceab13835221119d5fb0e2c33cd80201096bfe7a
+2026-10-12T19:35:51.5279780Z ##[group]Removing auth
+2026-10-12T19:35:51.5280467Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T19:35:51.5311542Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T19:35:51.5543979Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T19:35:51.5572614Z http.https://github.com/.extraheader
+2026-10-12T19:35:51.5581291Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-12T19:35:51.5618193Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T19:35:51.5845521Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T19:35:51.5876721Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T19:35:51.6103576Z ##[endgroup]
+2026-10-12T19:35:51.6360671Z ##[group]Run actions/setup-node@v4
+2026-10-12T19:35:51.6360965Z with:
+2026-10-12T19:35:51.6361173Z   node-version: 24
+2026-10-12T19:35:51.6361389Z   always-auth: false
+2026-10-12T19:35:51.6361614Z   check-latest: false
+2026-10-12T19:35:51.6364010Z   token: ***
+2026-10-12T19:35:51.6364212Z env:
+2026-10-12T19:35:51.6364418Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:35:51.6364668Z ##[endgroup]
+2026-10-12T19:35:51.7748590Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-12T19:35:51.7753387Z (node:2415) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T19:35:51.7754305Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T19:35:51.7756113Z ##[group]Environment details
+2026-10-12T19:35:52.1931044Z node: v24.21.0
+2026-10-12T19:35:52.1931454Z npm: 11.19.0
+2026-10-12T19:35:52.1931758Z yarn: 1.22.22
+2026-10-12T19:35:52.1933154Z ##[endgroup]
+2026-10-12T19:35:52.2129665Z ##[group]Run actions/setup-python@v5
+2026-10-12T19:35:52.2130126Z with:
+2026-10-12T19:35:52.2130337Z   python-version: 3.12
+2026-10-12T19:35:52.2130574Z   check-latest: false
+2026-10-12T19:35:52.2132971Z   token: ***
+2026-10-12T19:35:52.2133195Z   update-environment: true
+2026-10-12T19:35:52.2133450Z   allow-prereleases: false
+2026-10-12T19:35:52.2133695Z   freethreaded: false
+2026-10-12T19:35:52.2133904Z env:
+2026-10-12T19:35:52.2134103Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:35:52.2134343Z ##[endgroup]
+2026-10-12T19:35:52.3421145Z ##[group]Installed versions
+2026-10-12T19:35:52.3576264Z (node:2446) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T19:35:52.3577492Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T19:35:52.3578462Z Successfully set up CPython (3.12.15)
+2026-10-12T19:35:52.3579122Z ##[endgroup]
+2026-10-12T19:35:52.3698277Z ##[group]Run M3_CI_OUTPUT="$RUNNER_TEMP/m3-execution-evidence"
+2026-10-12T19:35:52.3698829Z [36;1mM3_CI_OUTPUT="$RUNNER_TEMP/m3-execution-evidence"[0m
+2026-10-12T19:35:52.3699268Z [36;1mprintf '%s\n' "M3_CI_OUTPUT=$M3_CI_OUTPUT" >> "$GITHUB_ENV"[0m
+2026-10-12T19:35:52.3699649Z [36;1mmkdir -p "$M3_CI_OUTPUT"[0m
+2026-10-12T19:35:52.3699990Z [36;1mnode --version | tee "$M3_CI_OUTPUT/node-version.txt"[0m
+2026-10-12T19:35:52.3700426Z [36;1mpython --version | tee "$M3_CI_OUTPUT/python-version.txt"[0m
+2026-10-12T19:35:52.4054201Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-12T19:35:52.4054671Z env:
+2026-10-12T19:35:52.4054940Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:35:52.4055369Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:52.4055960Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T19:35:52.4056540Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:52.4057132Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:52.4057653Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:52.4058318Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T19:35:52.4058671Z ##[endgroup]
+2026-10-12T19:35:52.4220298Z v24.21.0
+2026-10-12T19:35:52.4385973Z Python 3.12.15
+2026-10-12T19:35:52.4432603Z ##[group]Run python -m pip install numpy==2.3.5
+2026-10-12T19:35:52.4432993Z [36;1mpython -m pip install numpy==2.3.5[0m
+2026-10-12T19:35:52.4493580Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-12T19:35:52.4493930Z env:
+2026-10-12T19:35:52.4494144Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:35:52.4494471Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:52.4494918Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T19:35:52.4495365Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:52.4495756Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:52.4496144Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:52.4496547Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T19:35:52.4496944Z   M3_CI_OUTPUT: /home/runner/work/_temp/m3-execution-evidence
+2026-10-12T19:35:52.4497267Z ##[endgroup]
+2026-10-12T19:35:53.5401732Z Collecting numpy==2.3.5
+2026-10-12T19:35:53.5931368Z   Downloading numpy-2.3.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+2026-10-12T19:35:53.6271364Z Downloading numpy-2.3.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.6 MB)
+2026-10-12T19:35:53.8135979Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.6/16.6 MB 91.3 MB/s  0:00:00
+2026-10-12T19:35:53.8925568Z Installing collected packages: numpy
+2026-10-12T19:35:55.7951794Z Successfully installed numpy-2.3.5
+2026-10-12T19:35:55.8425624Z ##[group]Run python -B research-ide/mathscope-m3/navier/tests/verify-packed-evidence.py --materialize 2>&1 | tee "$M3_CI_OUTPUT/packed-evidence.json"
+2026-10-12T19:35:55.8426771Z [36;1mpython -B research-ide/mathscope-m3/navier/tests/verify-packed-evidence.py --materialize 2>&1 | tee "$M3_CI_OUTPUT/packed-evidence.json"[0m
+2026-10-12T19:35:55.8493107Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-12T19:35:55.8493464Z env:
+2026-10-12T19:35:55.8493678Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:35:55.8494002Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:55.8494440Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T19:35:55.8494877Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:55.8495268Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:55.8495652Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:55.8496074Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T19:35:55.8496475Z   M3_CI_OUTPUT: /home/runner/work/_temp/m3-execution-evidence
+2026-10-12T19:35:55.8496803Z ##[endgroup]
+2026-10-12T19:35:57.3949447Z {
+2026-10-12T19:35:57.3949940Z   "schema": "MathScope.LosslessEvidenceVerification/1",
+2026-10-12T19:35:57.3950429Z   "pass": true,
+2026-10-12T19:35:57.3951013Z   "materializeRequested": true,
+2026-10-12T19:35:57.3951549Z   "artifacts": [
+2026-10-12T19:35:57.3951784Z     {
+2026-10-12T19:35:57.3952319Z       "path": "research-ide/mathscope-m3/navier/evidence/global-signed-20261012/attempt1/global-signed.json",
+2026-10-12T19:35:57.3953043Z       "sha256": "7876762c6e1b134a16bdf36a25afe7fcb33ca8ef1cfd4b94488c675a91ffea6c",
+2026-10-12T19:35:57.3953482Z       "bytes": 29064143,
+2026-10-12T19:35:57.3953725Z       "packedBytes": 892310,
+2026-10-12T19:35:57.3954029Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3954377Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3954685Z     },
+2026-10-12T19:35:57.3954876Z     {
+2026-10-12T19:35:57.3955491Z       "path": "research-ide/mathscope-m3/navier/evidence/global-moment-pressure-20261012/attempt1/global-moment-pressure.json",
+2026-10-12T19:35:57.3956286Z       "sha256": "9d81390a7d3bc6487b9bb24fc457b9732047f8c20717f263a0c8cd13e3e8aa6b",
+2026-10-12T19:35:57.3956710Z       "bytes": 15938453,
+2026-10-12T19:35:57.3956952Z       "packedBytes": 602825,
+2026-10-12T19:35:57.3957254Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3957588Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3958139Z     },
+2026-10-12T19:35:57.3958342Z     {
+2026-10-12T19:35:57.3958880Z       "path": "research-ide/mathscope-m3/navier/evidence/global-temporal-20261012/attempt3/global-temporal.json",
+2026-10-12T19:35:57.3959680Z       "sha256": "8ef4e695623643d6ed344ce092270b0ac392be1aa2e49bcc1990ebd5da39df58",
+2026-10-12T19:35:57.3960123Z       "bytes": 24527857,
+2026-10-12T19:35:57.3960366Z       "packedBytes": 841112,
+2026-10-12T19:35:57.3960673Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3961003Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3961296Z     },
+2026-10-12T19:35:57.3961483Z     {
+2026-10-12T19:35:57.3961983Z       "path": "research-ide/mathscope-m3/navier/evidence/global-angular-20261012/attempt1/global-angular.json",
+2026-10-12T19:35:57.3962691Z       "sha256": "8b7192099592302a4f79c13ba7acf1d25b8057498cf47979fb4198fa3fb1ca58",
+2026-10-12T19:35:57.3963099Z       "bytes": 20621196,
+2026-10-12T19:35:57.3963338Z       "packedBytes": 681517,
+2026-10-12T19:35:57.3963641Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3963967Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3964220Z     },
+2026-10-12T19:35:57.3964400Z     {
+2026-10-12T19:35:57.3964959Z       "path": "research-ide/mathscope-m3/navier/evidence/global-initial-mean-20261012/attempt1/global-base-residual.json",
+2026-10-12T19:35:57.3965712Z       "sha256": "05efda02e3f3a39fa7f57d2d416540411d2f8b9ac80e06a134d3410d682cb4b0",
+2026-10-12T19:35:57.3966369Z       "bytes": 156461212,
+2026-10-12T19:35:57.3966627Z       "packedBytes": 7989585,
+2026-10-12T19:35:57.3966928Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3967255Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3967672Z     },
+2026-10-12T19:35:57.3968141Z     {
+2026-10-12T19:35:57.3968864Z       "path": "research-ide/mathscope-m3/navier/evidence/global-initial-mean-20261012/attempt2/global-base-residual.json",
+2026-10-12T19:35:57.3969639Z       "sha256": "05efda02e3f3a39fa7f57d2d416540411d2f8b9ac80e06a134d3410d682cb4b0",
+2026-10-12T19:35:57.3970056Z       "bytes": 156461212,
+2026-10-12T19:35:57.3970302Z       "packedBytes": 7989585,
+2026-10-12T19:35:57.3970604Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3970922Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3971171Z     },
+2026-10-12T19:35:57.3971375Z     {
+2026-10-12T19:35:57.3971945Z       "path": "research-ide/mathscope-m3/navier/evidence/global-initial-mean-20261012/attempt3/global-base-residual.json",
+2026-10-12T19:35:57.3972729Z       "sha256": "05efda02e3f3a39fa7f57d2d416540411d2f8b9ac80e06a134d3410d682cb4b0",
+2026-10-12T19:35:57.3973196Z       "bytes": 156461212,
+2026-10-12T19:35:57.3973435Z       "packedBytes": 7989585,
+2026-10-12T19:35:57.3973741Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3974059Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3974307Z     },
+2026-10-12T19:35:57.3974484Z     {
+2026-10-12T19:35:57.3975025Z       "path": "research-ide/mathscope-m3/navier/evidence/global-initial-mean-20261012/attempt4/global-base-residual.json",
+2026-10-12T19:35:57.3976015Z       "sha256": "05efda02e3f3a39fa7f57d2d416540411d2f8b9ac80e06a134d3410d682cb4b0",
+2026-10-12T19:35:57.3976432Z       "bytes": 156461212,
+2026-10-12T19:35:57.3976685Z       "packedBytes": 7989585,
+2026-10-12T19:35:57.3977044Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3977364Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3977611Z     },
+2026-10-12T19:35:57.3977794Z     {
+2026-10-12T19:35:57.3979102Z       "path": "research-ide/mathscope-m3/navier/evidence/global-primary-class-20261012/attempt1/actual-target-weighted-norm-program.json",
+2026-10-12T19:35:57.3980691Z       "sha256": "dc26b02830235bf221e55ce5b3ffa73dc856e36f44f94738800f6d40ee20bfa2",
+2026-10-12T19:35:57.3981466Z       "bytes": 27826369,
+2026-10-12T19:35:57.3981895Z       "packedBytes": 3062069,
+2026-10-12T19:35:57.3982420Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3982989Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3983424Z     },
+2026-10-12T19:35:57.3983734Z     {
+2026-10-12T19:35:57.3984671Z       "path": "research-ide/mathscope-m3/navier/evidence/global-source-class-composition-20261012/attempt382935973541/actual-target-weighted-norm-program.json",
+2026-10-12T19:35:57.3985579Z       "sha256": "396a1d196e511ec554e0a184e3260ed4df6288d4d1ecf60d3d8906647373a0f0",
+2026-10-12T19:35:57.3986004Z       "bytes": 41601134,
+2026-10-12T19:35:57.3986249Z       "packedBytes": 4289431,
+2026-10-12T19:35:57.3986543Z       "exactOriginalBytesVerified": true,
+2026-10-12T19:35:57.3986871Z       "unpackedFilePresent": true
+2026-10-12T19:35:57.3987120Z     }
+2026-10-12T19:35:57.3987308Z   ]
+2026-10-12T19:35:57.3987490Z }
+2026-10-12T19:35:57.4431738Z ##[group]Run python -B research-ide/mathscope-m3/web/build_extended.py --check 2>&1 | tee "$M3_CI_OUTPUT/bundle-check.log"
+2026-10-12T19:35:57.4432981Z [36;1mpython -B research-ide/mathscope-m3/web/build_extended.py --check 2>&1 | tee "$M3_CI_OUTPUT/bundle-check.log"[0m
+2026-10-12T19:35:57.4496582Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-12T19:35:57.4496943Z env:
+2026-10-12T19:35:57.4497162Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:35:57.4497487Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:57.4498095Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T19:35:57.4498543Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:57.4498931Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:57.4499319Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:35:57.4499751Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T19:35:57.4500322Z   M3_CI_OUTPUT: /home/runner/work/_temp/m3-execution-evidence
+2026-10-12T19:35:57.4500652Z ##[endgroup]
+2026-10-12T19:36:03.3776451Z {"sourceFiles": 785, "sourceManifestSHA256": "f4e3d2ca13c6065a4046a11aae822ab3e808d339bb4ac61bd98e80815b3b3923", "workerBytes": 8915500, "viewBytes": 86408, "bundleBytes": 12257952, "criteria": 48, "assessed": 48, "examples": {"gauge": 16, "navier": 25}, "checkOnly": true}
+2026-10-12T19:36:03.3951039Z ##[group]Run node --test --test-reporter=tap research-ide/mathscope-m3/navier/tests/n8-reproduction-contract.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/n8-reproduction-contract.tap"
+2026-10-12T19:36:03.3953290Z [36;1mnode --test --test-reporter=tap research-ide/mathscope-m3/navier/tests/n8-reproduction-contract.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/n8-reproduction-contract.tap"[0m
+2026-10-12T19:36:03.4017341Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-12T19:36:03.4017695Z env:
+2026-10-12T19:36:03.4018168Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:36:03.4018520Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:03.4018972Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T19:36:03.4019419Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:03.4019821Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:03.4020248Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:03.4020641Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T19:36:03.4021045Z   M3_CI_OUTPUT: /home/runner/work/_temp/m3-execution-evidence
+2026-10-12T19:36:03.4021372Z ##[endgroup]
+2026-10-12T19:36:03.6926492Z TAP version 13
+2026-10-12T19:36:03.9406531Z # Subtest: the actual selected public record supplies every named numerical category and its actual camera
+2026-10-12T19:36:03.9408930Z ok 1 - the actual selected public record supplies every named numerical category and its actual camera
+2026-10-12T19:36:03.9413181Z   ---
+2026-10-12T19:36:03.9413635Z   duration_ms: 5.224623
+2026-10-12T19:36:03.9414059Z   type: 'test'
+2026-10-12T19:36:03.9414414Z   ...
+2026-10-12T19:36:03.9416434Z # Subtest: original source fixtures preserve their own missing whole-field observables explicitly
+2026-10-12T19:36:03.9418185Z ok 2 - original source fixtures preserve their own missing whole-field observables explicitly
+2026-10-12T19:36:03.9419274Z   ---
+2026-10-12T19:36:03.9419820Z   duration_ms: 27.393128
+2026-10-12T19:36:03.9420241Z   type: 'test'
+2026-10-12T19:36:03.9420580Z   ...
+2026-10-12T19:36:03.9422224Z # Subtest: a fabricated original whole-space energy claim cannot enter the selected-run manifest
+2026-10-12T19:36:03.9432107Z ok 3 - a fabricated original whole-space energy claim cannot enter the selected-run manifest
+2026-10-12T19:36:03.9433244Z   ---
+2026-10-12T19:36:03.9433939Z   duration_ms: 5.254639
+2026-10-12T19:36:03.9434654Z   type: 'test'
+2026-10-12T19:36:03.9435255Z   ...
+2026-10-12T19:36:03.9437587Z # Subtest: serialized milestone and proof flags never grant imported authority
+2026-10-12T19:36:03.9439160Z ok 4 - serialized milestone and proof flags never grant imported authority
+2026-10-12T19:36:03.9439862Z   ---
+2026-10-12T19:36:03.9440209Z   duration_ms: 6.620161
+2026-10-12T19:36:03.9440608Z   type: 'test'
+2026-10-12T19:36:03.9440823Z   ...
+2026-10-12T19:36:03.9441416Z # Subtest: comparison retains every computed field, path and energy value but separates presentation metadata
+2026-10-12T19:36:03.9442276Z ok 5 - comparison retains every computed field, path and energy value but separates presentation metadata
+2026-10-12T19:36:03.9442769Z   ---
+2026-10-12T19:36:03.9443039Z   duration_ms: 81.563978
+2026-10-12T19:36:03.9443277Z   type: 'test'
+2026-10-12T19:36:03.9443474Z   ...
+2026-10-12T19:36:03.9444029Z # Subtest: a tolerance accepts bounded roundoff and rejects changed structure, integers and nonfinite values
+2026-10-12T19:36:03.9444871Z ok 6 - a tolerance accepts bounded roundoff and rejects changed structure, integers and nonfinite values
+2026-10-12T19:36:03.9445601Z   ---
+2026-10-12T19:36:03.9445796Z   duration_ms: 0.465844
+2026-10-12T19:36:03.9446022Z   type: 'test'
+2026-10-12T19:36:03.9446215Z   ...
+2026-10-12T19:36:03.9478599Z 1..6
+2026-10-12T19:36:03.9479047Z # tests 6
+2026-10-12T19:36:03.9480015Z # suites 0
+2026-10-12T19:36:03.9480790Z # pass 6
+2026-10-12T19:36:03.9481382Z # fail 0
+2026-10-12T19:36:03.9482130Z # cancelled 0
+2026-10-12T19:36:03.9483951Z # skipped 0
+2026-10-12T19:36:03.9484327Z # todo 0
+2026-10-12T19:36:03.9484856Z # duration_ms 408.298891
+2026-10-12T19:36:03.9874003Z ##[group]Run python -B research-ide/mathscope-m3/navier/tools/reproduce-selected-runs.py \
+2026-10-12T19:36:03.9874846Z [36;1mpython -B research-ide/mathscope-m3/navier/tools/reproduce-selected-runs.py \[0m
+2026-10-12T19:36:03.9875513Z [36;1m  --output "$M3_CI_OUTPUT/n8-selected-run-reproduction" \[0m
+2026-10-12T19:36:03.9876058Z [36;1m  2>&1 | tee "$M3_CI_OUTPUT/n8-selected-run-reproduction.log"[0m
+2026-10-12T19:36:03.9876702Z [36;1mpython -B research-ide/mathscope-m3/navier/tools/verify-selected-reference.py \[0m
+2026-10-12T19:36:03.9877425Z [36;1m  "$M3_CI_OUTPUT/n8-selected-run-reproduction/N8-flow/N8-flow.json" \[0m
+2026-10-12T19:36:03.9878333Z [36;1m  --output "$M3_CI_OUTPUT/n8-selected-run-independent-numpy.json" \[0m
+2026-10-12T19:36:03.9878928Z [36;1m  2>&1 | tee "$M3_CI_OUTPUT/n8-selected-run-independent-numpy.log"[0m
+2026-10-12T19:36:03.9940623Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-12T19:36:03.9940971Z env:
+2026-10-12T19:36:03.9941221Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:36:03.9941554Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:03.9942008Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T19:36:03.9942455Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:03.9942846Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:03.9943238Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:03.9943644Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T19:36:03.9944045Z   M3_CI_OUTPUT: /home/runner/work/_temp/m3-execution-evidence
+2026-10-12T19:36:03.9944372Z ##[endgroup]
+2026-10-12T19:36:07.2812796Z {"id": "N8-flow", "startedAt": "2026-10-12T19:36:04.076607+00:00", "finishedAt": "2026-10-12T19:36:07.280062+00:00", "durationSeconds": 3.2034638619999924, "command": ["node", "--max-old-space-size=256", "--expose-gc", "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/navier/tools/reproduce-selected-runs.mjs", "--source-root", "/home/runner/work/MathScopeCompute/MathScopeCompute", "--observations-root", "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/evidence/all64-20261012/public-v99", "--output", "/home/runner/work/_temp/m3-execution-evidence/n8-selected-run-reproduction/N8-flow", "--fixture", "N8-flow"], "exitCode": 0, "stopReason": null, "ownedNodeHostPID": 2653, "observedPeakOwnedNodeRSSBytes": 548278272, "observedPeakSharedCgroupBytes": null, "completeChildReceipt": true, "receiptPath": "N8-flow/receipt.json", "receiptSHA256": "2f068cb484dcfc85a016abf0ad390a4c7b10f020bc875c730caed30409a3ba9f", "sourceManifestSHA256": "f4e3d2ca13c6065a4046a11aae822ab3e808d339bb4ac61bd98e80815b3b3923", "pass": true}
+2026-10-12T19:36:10.4099153Z {"id": "N8-source-core-refinement", "startedAt": "2026-10-12T19:36:07.280619+00:00", "finishedAt": "2026-10-12T19:36:10.408579+00:00", "durationSeconds": 3.1279622400000022, "command": ["node", "--max-old-space-size=256", "--expose-gc", "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/navier/tools/reproduce-selected-runs.mjs", "--source-root", "/home/runner/work/MathScopeCompute/MathScopeCompute", "--observations-root", "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/evidence/all64-20261012/public-v99", "--output", "/home/runner/work/_temp/m3-execution-evidence/n8-selected-run-reproduction/N8-source-core-refinement", "--fixture", "N8-source-core-refinement"], "exitCode": 0, "stopReason": null, "ownedNodeHostPID": 2668, "observedPeakOwnedNodeRSSBytes": 552906752, "observedPeakSharedCgroupBytes": null, "completeChildReceipt": true, "receiptPath": "N8-source-core-refinement/receipt.json", "receiptSHA256": "61bc9027ca7bba6aee124063aa7fa181b1fd23e14aaba2d9785d0f5c93174630", "sourceManifestSHA256": "f4e3d2ca13c6065a4046a11aae822ab3e808d339bb4ac61bd98e80815b3b3923", "pass": true}
+2026-10-12T19:36:15.3324482Z {"id": "N8-source-near-terminal", "startedAt": "2026-10-12T19:36:10.409121+00:00", "finishedAt": "2026-10-12T19:36:15.331138+00:00", "durationSeconds": 4.9220234069999975, "command": ["node", "--max-old-space-size=256", "--expose-gc", "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/navier/tools/reproduce-selected-runs.mjs", "--source-root", "/home/runner/work/MathScopeCompute/MathScopeCompute", "--observations-root", "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/evidence/all64-20261012/public-v99", "--output", "/home/runner/work/_temp/m3-execution-evidence/n8-selected-run-reproduction/N8-source-near-terminal", "--fixture", "N8-source-near-terminal"], "exitCode": 0, "stopReason": null, "ownedNodeHostPID": 2683, "observedPeakOwnedNodeRSSBytes": 708919296, "observedPeakSharedCgroupBytes": null, "completeChildReceipt": true, "receiptPath": "N8-source-near-terminal/receipt.json", "receiptSHA256": "743cb12e653d1b302404c7050c0e5eed7d5e31d4d1e111b54fbd103ef825cb4e", "sourceManifestSHA256": "f4e3d2ca13c6065a4046a11aae822ab3e808d339bb4ac61bd98e80815b3b3923", "pass": true}
+2026-10-12T19:36:15.3351717Z {"status": "PASS", "receipt": "/home/runner/work/_temp/m3-execution-evidence/n8-selected-run-reproduction/receipt.json"}
+2026-10-12T19:36:15.4751868Z {"pass": true, "checks": 14, "output": "/home/runner/work/_temp/m3-execution-evidence/n8-selected-run-independent-numpy.json", "measurements": {"modalAmplitudeAtSelectedTime": 0.6703139669036426, "visiblePointCount": 81, "undefinedAxisCount": 1, "independentWholePeriodicEnergy": 27.863530968223987, "continuousReferenceMeanEnergy": 0.11233224102930539, "selectedDiscreteMeanEnergy": 0.11233020355652455}}
+2026-10-12T19:36:15.4908961Z ##[group]Run python -B research-ide/mathscope-m3/evidence/all64-20261012/assessment-source-resume/build_review.py --check 2>&1 | tee "$M3_CI_OUTPUT/original64-assessment-check.json"
+2026-10-12T19:36:15.4910309Z [36;1mpython -B research-ide/mathscope-m3/evidence/all64-20261012/assessment-source-resume/build_review.py --check 2>&1 | tee "$M3_CI_OUTPUT/original64-assessment-check.json"[0m
+2026-10-12T19:36:15.4973137Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-12T19:36:15.4973508Z env:
+2026-10-12T19:36:15.4973722Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:36:15.4974052Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:15.4974519Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T19:36:15.4974968Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:15.4975372Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:15.4975815Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:15.4976218Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T19:36:15.4976626Z   M3_CI_OUTPUT: /home/runner/work/_temp/m3-execution-evidence
+2026-10-12T19:36:15.4976947Z ##[endgroup]
+2026-10-12T19:36:15.5479170Z Traceback (most recent call last):
+2026-10-12T19:36:15.5480910Z   File "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/evidence/all64-20261012/assessment-source-resume/build_review.py", line 231, in <module>
+2026-10-12T19:36:15.5482438Z     print(json.dumps(build(args.check), ensure_ascii=False))
+2026-10-12T19:36:15.5482853Z                      ^^^^^^^^^^^^^^^^^
+2026-10-12T19:36:15.5483825Z   File "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/evidence/all64-20261012/assessment-source-resume/build_review.py", line 84, in build
+2026-10-12T19:36:15.5485010Z     require('only-explicitly-reviewed-promotions', changed == approved
+2026-10-12T19:36:15.5499751Z   File "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/evidence/all64-20261012/assessment-source-resume/build_review.py", line 59, in require
+2026-10-12T19:36:15.5500664Z     raise ValueError(identity + ': ' + str(detail))
+2026-10-12T19:36:15.5501911Z ValueError: only-explicitly-reviewed-promotions: {'approved': ['N6-04', 'N6-05', 'N6-06', 'N7-01', 'N7-02', 'N7-03', 'N7-07', 'N7-08', 'N8-04', 'N8-08'], 'actualChangedBooleans': ['N6-03', 'N6-04', 'N6-05', 'N6-06', 'N7-01', 'N7-02', 'N7-03', 'N7-07', 'N7-08', 'N8-04', 'N8-08']}
+2026-10-12T19:36:15.5544295Z ##[error]Process completed with exit code 1.
+2026-10-12T19:36:15.5711352Z ##[group]Run actions/upload-artifact@v4
+2026-10-12T19:36:15.5711669Z with:
+2026-10-12T19:36:15.5712038Z   name: m3-execution-workspaces-ceab13835221119d5fb0e2c33cd80201096bfe7a-1
+2026-10-12T19:36:15.5712545Z   path: /home/runner/work/_temp/m3-execution-evidence/
+2026-10-12T19:36:15.5712881Z   if-no-files-found: warn
+2026-10-12T19:36:15.5713127Z   retention-days: 30
+2026-10-12T19:36:15.5713357Z   compression-level: 6
+2026-10-12T19:36:15.5713588Z   overwrite: false
+2026-10-12T19:36:15.5713817Z   include-hidden-files: false
+2026-10-12T19:36:15.5714060Z env:
+2026-10-12T19:36:15.5714271Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T19:36:15.5714602Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:15.5715047Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T19:36:15.5715484Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:15.5715875Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:15.5716305Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T19:36:15.5716704Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T19:36:15.5717115Z   M3_CI_OUTPUT: /home/runner/work/_temp/m3-execution-evidence
+2026-10-12T19:36:15.5717452Z ##[endgroup]
+2026-10-12T19:36:15.7363387Z (node:2709) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T19:36:15.7364260Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T19:36:15.7539795Z With the provided path, there will be 38 files uploaded
+2026-10-12T19:36:15.7540719Z Artifact name is valid!
+2026-10-12T19:36:15.7541048Z Root directory input is valid!
+2026-10-12T19:36:15.9551869Z Beginning upload of artifact content to blob storage
+2026-10-12T19:36:16.1098919Z (node:2709) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-12T19:36:16.2017876Z Uploaded bytes 1080091
+2026-10-12T19:36:16.2193696Z Finished uploading artifact content to blob storage!
+2026-10-12T19:36:16.2194813Z SHA256 digest of uploaded artifact zip is 3a5421681d1720fa282121be9cba91d96c369268bc6f32eced78234faf4a18d5
+2026-10-12T19:36:16.2197002Z Finalizing artifact upload
+2026-10-12T19:36:16.4663260Z Artifact m3-execution-workspaces-ceab13835221119d5fb0e2c33cd80201096bfe7a-1.zip successfully finalized. Artifact ID 11769821555
+2026-10-12T19:36:16.4664658Z Artifact m3-execution-workspaces-ceab13835221119d5fb0e2c33cd80201096bfe7a-1 has been successfully uploaded! Final size is 1080091 bytes. Artifact ID is 11769821555
+2026-10-12T19:36:16.4668957Z Artifact download URL: https://github.com/leegahuyn/MathScopeCompute/actions/runs/38298629613/artifacts/11769821555
+2026-10-12T19:36:16.4865840Z Post job cleanup.
+2026-10-12T19:36:16.5792913Z [command]/usr/bin/git version
+2026-10-12T19:36:16.5838633Z git version 2.55.0
+2026-10-12T19:36:16.5881782Z Temporarily overriding HOME='/home/runner/work/_temp/d6391d9d-c6b3-42a1-ad35-7765aac67fb7' before making global git config changes
+2026-10-12T19:36:16.5885414Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T19:36:16.5889202Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-12T19:36:16.5931728Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T19:36:16.5972964Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T19:36:16.6239591Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T19:36:16.6279648Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T19:36:16.6553398Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T19:36:16.6594638Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T19:36:16.7033458Z Cleaning up orphan processes
+2026-10-12T19:36:16.7427013Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

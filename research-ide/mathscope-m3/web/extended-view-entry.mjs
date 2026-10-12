@@ -4,6 +4,8 @@ import {buildInnerGrowthPanel,innerGrowthSummary,innerGrowthSelection,renderInne
 import {buildSourceRefinementPanel,sourceRefinementSummary,sourceRefinementSelection} from './navier-source-refinement-view.mjs';
 import {buildNearTerminalPanel,nearTerminalSummary,nearTerminalSelection,renderNearTerminalChart} from './navier-near-terminal-view.mjs';
 import {buildSourceDomainExteriorPanel,sourceDomainExteriorSummary,sourceDomainExteriorSelection,renderSourceDomainExterior} from './navier-source-domain-exterior-view.mjs';
+import {buildSourceForcedCurrentPanel,sourceForcedCurrentSummary,sourceForcedCurrentSelection,renderSourceForcedCurrent} from './navier-source-forced-current-view.mjs';
+globalThis.MathScopeM3SourceForcedCurrentView=Object.freeze({panel:buildSourceForcedCurrentPanel,summary:sourceForcedCurrentSummary,selection:sourceForcedCurrentSelection,render:renderSourceForcedCurrent});
 globalThis.MathScopeM3ViewContract=Object.freeze({validate:validateExtendedView,derive:deriveExtendedViewContract,scene:deriveExtendedScene});
 globalThis.MathScopeM3GaugeStudyView=Object.freeze({panels:buildGaugeStudyPanels});
 globalThis.MathScopeM3InnerGrowthView=Object.freeze({panel:buildInnerGrowthPanel,summary:innerGrowthSummary,selection:innerGrowthSelection,renderChart:renderInnerGrowthChart});

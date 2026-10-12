@@ -1,8 +1,8 @@
 # MathScope M3 전체 64개 원문 기준 누적 검토
 
-**현재 원문 기준 완료는 55/64개이며, 실질 잔여는 9개다.** 원문의 제목·본문·쪽수·출처는 보존했다. 개별 연산자 또는 관측 요구의 완료와 전체 Navier 장의 재구성은 별도 판정한다.
+**현재 원문 기준 완료는 56/64개이며, 실질 잔여는 8개다.** 원문의 제목·본문·쪽수·출처는 보존했다. 개별 연산자 또는 관측 요구의 완료와 전체 Navier 장의 재구성은 별도 판정한다.
 
-검토 기준 시각: `2026-10-12T16:48:05.035719+00:00`. 이 보고서는 연결 복구 뒤 실제 추가한 소스 연산·검증·표시 연결을 반영한다. 공개 사이트와 GitHub의 최종 배포 검증은 별도 릴리스 기록에서 확인한다.
+검토 기준 시각: `2026-10-12T19:46:11.227064+00:00`. 이 보고서는 연결 복구 뒤 실제 추가한 소스 연산·검증·표시 연결을 반영한다. 공개 사이트와 GitHub의 최종 배포 검증은 별도 릴리스 기록에서 확인한다.
 
 ## 1. 원문별 현재 집계
 
@@ -13,10 +13,10 @@
 | Y5 | 8 | 8 | 0 | [GAUGE_PROGRESS.json](GAUGE_PROGRESS.json) |
 | Y6 | 8 | 8 | 0 | [GAUGE_PROGRESS.json](GAUGE_PROGRESS.json) |
 | Y7 | 8 | 8 | 0 | [GAUGE_PROGRESS.json](GAUGE_PROGRESS.json) |
-| N6 | 8 | 3 | 5 | [N6_PROGRESS.json](N6_PROGRESS.json) |
+| N6 | 8 | 4 | 4 | [N6_PROGRESS.json](N6_PROGRESS.json) |
 | N7 | 8 | 5 | 3 | [N7_PROGRESS.json](N7_PROGRESS.json) |
 | N8 | 8 | 7 | 1 | [N8_PROGRESS.json](N8_PROGRESS.json) |
-| **전체** | **64** | **55** | **9** | |
+| **전체** | **64** | **56** | **8** | |
 
 완료 수는 `originalCriterionComplete === true`만 센다. 실행 성공, 그래프 해시 일치, 조건부 명제, 유한 모형 결과를 다른 원문 요구의 완료로 바꾸지 않는다. M2의 보존된 64개와 M4의 별도 16개는 이번 집계에 합산하지 않는다.
 
@@ -26,6 +26,7 @@
 
 | 새 완료 항목 | 원문 요구에 대한 추가 검토 | 실제 관문 |
 |---|---|---|
+| N6-03 | 원래 source의 10개 부호·정수 덮개 행과 20개 비영 역연산, cutoff 뒤 전체 curl, 갱신 평균·각도 압력 및 새 m+m′ 모드를 실제 11개 저장 그래프에서 검증했다. 540개 PDE 계수·2,320개 식·213개 독립 검사와 네 음성 대조가 통과했다. 원래 통합 생성자의 시간 제한 실패는 유지하며 전체 PDE·순서 있는 j=0·모든 차수 class는 N6-02/01/07의 별도 요구다. | forced-snapshot-replay |
 | N6-04 | 고정 H/a와 전체 81개 label의 B(W0,LΣ)=Σ, 세 종류 remainder를 실제 source에서 검증했다. j=0 초기화·모든 차수 class는 별도 N6-01/07 요구다. 과거 receipt의 false 판정은 그대로 남겼다. | global-signed |
 | N6-05 | 전체 원문 current/pressure의 실제 zero-mean Fourier 역연산과 N 항등식, m+4 도함수·전체 꼬리·각 느린 도함수별 bound를 구성했다. 원래 ci·T1·A1·느린 시간 항을 유지한다. 이후 pressure/moment/j0는 별도 N6-01 조건이다. | global-temporal |
 | N6-06 | 같은 원래 source에서 다섯 적분·두 보존량을 보정한 뒤 전체 보조 토러스 압력과 비선형(8.26)/(8.27)을 재계산했다. 원래 작은 양의 λ의 조건수 배율도 유지했다. | global-moment-full-pressure |
@@ -51,6 +52,7 @@
 | periodization-review | 5 | 33 | 17 | 2.040 | [receipt](navier/evidence/source-periodization-review-20261012/attempt2/receipt.json) |
 | global-temporal | 15 | — | 123 | 423.506 | [receipt](navier/evidence/global-temporal-20261012/attempt3/receipt.json) |
 | n8-public-selected-reproduction | 6 | 14 | 523 | 10.228 | [receipt](navier/evidence/n8-reproduction-20261012/manifest.json) |
+| forced-snapshot-replay | — | 213 | 9 | 332.551 | [receipt](navier/evidence/forced-snapshot-replay-20261012/attempt1/receipt.json) |
 
 관문별 실행 횟수는 서로 합산해 새 전체 테스트 수로 표시하지 않는다. 원본 생성자 실행과 작은 기록 검증·새 재생·표시 검증은 서로 다른 동작이다. signed 대형 원본은 [무손실 압축 manifest](navier/evidence/packed-evidence.json)의 원본 SHA와 정확히 일치하도록 복원 가능하다.
 
@@ -59,9 +61,10 @@
 원래 전체 공통 cover, fixed signed covariance, 전체 보조 토러스의 pressure, 실제 다섯 radial moment, 고정 localization domain과 세 성분 near-terminal 구간을 소스에서 계산했다. 공개 UI의 기록 소비자는 그 생성자를 새로 실행했다고 표시하지 않는다.
 새 내부 경로 지지 증명은 기록된 초기 소스·정의역·양의 core 구간에 결속되어 있다. 원래 연산자별 열린 zero 영역과 전체 cutoff curl을 확인해 실제 최종 장의 내부 경로를 식별했다. 비영 보정항의 값을 모두 계산하거나 새 Lean 정리를 발급했다는 뜻은 아니다.
 원문 국소화 연산 증명은 같은 cutoff·계수에 전체 직접 PDE와 모든 교차항·압력 항등식을 대조한다. 미완료인 비영 영역의 모든 수치값을 이 개별 연산 항등식의 추가 전제로 붙이지 않는다. 전역 force jets·extension·에너지 완료와는 구분한다.
-현재 빠진 비영 angular 보정·temporal 이후 pressure/moment 연결·순서 있는 j=0 초기화·모든 finite stage의 class와 shrinking cutoff 합은 그대로 남아 있다. 전체 공간 force jets/extension 및 활동 구간의 전체 K 에너지를 core 계산이나 manufactured fixture로 대신하지 않는다.
+비영 angular 보정의 원문 연산과 저장된 실제 식 검증은 N6-03으로 완료했다. 최신 압력을 사용한 전체 current PDE·순서 있는 j=0 초기화·모든 finite stage의 class·shrinking cutoff 합은 남아 있다. 전체 공간 force jets/extension 및 활동 구간의 전체 K 에너지를 core 계산이나 manufactured fixture로 대신하지 않는다.
 원래 논문의 연산자·정리를 실제 검증된 소스 조건에 적용한 분석적 범위와, 새 Lean kernel 증명·독립 수치 enclosure·화면 관찰은 서로 다른 증거 층이다. universal RH/BSD, continuum Yang–Mills 및 전체 원문 Navier 재구성의 완료를 주장하지 않는다.
 - N8-08은 실제 selected run과 원문 fixture의 다른 환경 재현으로 승인했다. 원문 p.66에 없는 매 selected run의 브라우저 import 의무나 전체 N6 완성을 이 항목에 덧붙이지 않았다. 실제 periodic/subregion energy와 step residual을 재현한 유동 run, 원문 core 관측 두 개, 공개 export·core import·near-terminal replay는 각자의 범위를 유지한다. 이후 배포도 해당 판본의 fresh CI 재현을 통과해야 한다.
+N6-03의 실제 저장 그래프 재생은 332.551초에 통과했고, 35분 제한으로 실패한 원래 생성자 receipt는 수정하지 않았다. 155개 원래 source와 9개 새 재생 source의 바이트를 확인했다. 전체 pressure 식·원래 private current certificate를 복원했다고 주장하지 않는다. 재생 receipt의 2 MB RSS 관측은 launcher 값이며 실제 Node 표본 최대 2,568,454,144 bytes와 구분한다. 이 관측을 전체 과정의 엄격한 peak memory 상한 증명으로 사용하지 않는다.
 
 ## 3. 원문 64개와 현재 판정
 
@@ -1106,14 +1109,9 @@ R(u+δu,p+δp)=R(u,p)+Lu(δu,δp)+div(δu⊗δu)를 사용하며 매 substep 후
 discarded-mode bound를 제공한다.
 ```
 
-**판정:** `status=PARTIAL` · `originalCriterionComplete=false`.
+**판정:** `status=PASS` · `originalCriterionComplete=true`.
 
-**검증 범위:** All-label source assembly is available, but the current complete nonzero angular harmonic inverses and supported curl realization are still unexecuted.
-
-**남은 의무:**
-
-- Derive the complete same-label current harmonic coefficients from the updated source field.
-- Solve their actual projected transport equations and realize supported physical curls with commutators and justified mode tails.
+**검증 범위:** Every nonzero harmonic of the same actual updated source is solved by the original projected inverse and realized by the full supported cutoff curl. All current and new m+m-prime modes are retained with a complete finite angular inventory and zero discarded angular tail. The saved eleven source graphs were independently rebound and replayed for 540 PDE coefficients and 2320 scalar identities. The original combined construction remains timed out; no absent final current certificate, uniform all-order class, whole-field numeric enclosure, j0 initialization or full correction cycle is inferred.
 
 **증거와 구현:**
 
@@ -1130,6 +1128,17 @@ discarded-mode bound를 제공한다.
 - [navier/evidence/global-signed-20261012/attempt1/receipt.json](navier/evidence/global-signed-20261012/attempt1/receipt.json)
 - [navier/evidence/global-moment-20261012/attempt1/receipt.json](navier/evidence/global-moment-20261012/attempt1/receipt.json)
 - [navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md](navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md)
+- [navier/source-global-forced-current-evidence.mjs](navier/source-global-forced-current-evidence.mjs)
+- [navier/source-global-forced-current-evidence-data.mjs](navier/source-global-forced-current-evidence-data.mjs)
+- [navier/tests/build-global-forced-current-evidence.py](navier/tests/build-global-forced-current-evidence.py)
+- [navier/tests/replay-forced-current-snapshots.mjs](navier/tests/replay-forced-current-snapshots.mjs)
+- [navier/tests/run-forced-snapshot-replay.py](navier/tests/run-forced-snapshot-replay.py)
+- [navier/evidence/forced-snapshot-replay-20261012/attempt1/receipt.json](navier/evidence/forced-snapshot-replay-20261012/attempt1/receipt.json)
+- [navier/evidence/forced-snapshot-replay-20261012/attempt1/replay.json](navier/evidence/forced-snapshot-replay-20261012/attempt1/replay.json)
+- [navier/evidence/forced-snapshot-replay-20261012/attempt1/independent.json](navier/evidence/forced-snapshot-replay-20261012/attempt1/independent.json)
+- [navier/evidence/global-forced-current-20261012/attempt382884203291/receipt.json](navier/evidence/global-forced-current-20261012/attempt382884203291/receipt.json)
+- [web/navier-source-forced-current-view.mjs](web/navier-source-forced-current-view.mjs)
+- [web/tests/navier-source-forced-current-view.test.mjs](web/tests/navier-source-forced-current-view.test.mjs)
 
 #### N6-04 — Signed covariance increment
 
@@ -1826,7 +1835,7 @@ logs를 묶는다. 합격: 다른 환경에서 fixture와 selected run이 같은
 | [P7_PROGRESS.json](P7_PROGRESS.json) | 57828 | `c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b` |
 | [P8_PROGRESS.json](P8_PROGRESS.json) | 19352 | `42248ed057895fb9f37142ffbdc6c3e0a3d1b3d00025c707751ff49a858b4ca1` |
 | [GAUGE_PROGRESS.json](GAUGE_PROGRESS.json) | 51288 | `b7386584873c9c9635efd2ee255ba7d42c28b83aa3bb1e547e4ea76d428b34ca` |
-| [N6_PROGRESS.json](N6_PROGRESS.json) | 32983 | `0c761dfded8499d69d436ef35aa1b99458cbdf906bb66d7b81eddd5281eac22e` |
+| [N6_PROGRESS.json](N6_PROGRESS.json) | 33830 | `bf50e58b376d5919e7e5e1a7509e005fc2938ce277ea843d2696dda9ee31ea63` |
 | [N7_PROGRESS.json](N7_PROGRESS.json) | 38315 | `e15f0fa59481dbd5e06bc00c9d58d836e976095057931b2ca6ee6c6baff675db` |
 | [N8_PROGRESS.json](N8_PROGRESS.json) | 28062 | `4d229d3844e2c2529a900c5dc754251db1901a246f5d669c61fac9c72c01ede4` |
 

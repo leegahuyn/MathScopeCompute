@@ -1,7 +1,8 @@
 {
   "schema": "MathScope.M3.ReviewedSourceCriterionDecisions/1",
-  "reviewedAt": "2026-10-12T16:48:05.035719+00:00",
+  "reviewedAt": "2026-10-12T19:46:11.227064+00:00",
   "approvedPromotions": [
+    "N6-03",
     "N6-04",
     "N6-05",
     "N6-06",
@@ -79,6 +80,12 @@
         "n8-public-selected-reproduction"
       ],
       "reason": "실제 공개 유동 selected run과 원문 core fixture 두 개를 다른 GitHub 환경의 원본 Node 모듈·배포 Worker로 재실행하고 각 기록을 재생했다. 총105713개 수치가 같은 허용오차로 일치했으며, 14개 독립 NumPy 계산과 6개 변조 방지 검사도 통과했다. 판본·commit·전체 소스·상수·기저·영역·시간표·적분·절단·정밀도·tail·실제 residual/energy·camera·build logs를 하나의 검증 manifest와 원본 CI ZIP으로 묶었다. 원문의 재현 요구는 충족하며, 전체 원문장의 에너지·전역 잔차 및 N8-05 적응 요구는 이 판정으로 대체하지 않는다."
+    },
+    "N6-03": {
+      "reason": "원래 source의 10개 부호·정수 덮개 행과 20개 비영 역연산, cutoff 뒤 전체 curl, 갱신 평균·각도 압력 및 새 m+m′ 모드를 실제 11개 저장 그래프에서 검증했다. 540개 PDE 계수·2,320개 식·213개 독립 검사와 네 음성 대조가 통과했다. 원래 통합 생성자의 시간 제한 실패는 유지하며 전체 PDE·순서 있는 j=0·모든 차수 class는 N6-02/01/07의 별도 요구다.",
+      "gates": [
+        "forced-snapshot-replay"
+      ]
     }
   },
   "observedGates": [
@@ -316,14 +323,47 @@
         "wholeLocalizedFieldOrEnergyProved": false
       },
       "archiveBuilder": "navier/tests/build-n8-reproduction-evidence.py"
+    },
+    {
+      "id": "forced-snapshot-replay",
+      "receipt": {
+        "path": "navier/evidence/forced-snapshot-replay-20261012/attempt1/receipt.json",
+        "bytes": 3128,
+        "sha256": "76cb0c616b6485bff14037bd3fd8c67e59f3f2edbd476e5d37ef15e456f3c736"
+      },
+      "archiveBuilder": "navier/tests/build-global-forced-current-evidence.py",
+      "requiredReceiptFields": {
+        "pass": true,
+        "exitCode": 0,
+        "stoppedReason": null,
+        "sourceFileCount": 9,
+        "sourceFilesUnchanged": true,
+        "originalConstructorReceiptSHA256": "d17bc42fcfaf8000d014977d4725f325dbdb73849a43c71c36d20ea63ef14684",
+        "originalConstructorPass": false,
+        "originalConstructorOutcomeRewritten": false,
+        "all155OriginalSourceBytesAndArtifactsVerified": true,
+        "actualCoefficientComparisons": 540,
+        "actualScalarIdentities": 2320,
+        "independentChecks": 213,
+        "independentPass": true,
+        "actualSavedSourceStageBound": true,
+        "negativeControls": 4,
+        "privateSourceAuthorityHydrated": false,
+        "wholeCurrentCertificateRecovered": false,
+        "originalN602Complete": false,
+        "initializedJ0": false,
+        "completeN6": false,
+        "wholeM3Complete": false
+      }
     }
   ],
   "scopeNotes": [
     "원래 전체 공통 cover, fixed signed covariance, 전체 보조 토러스의 pressure, 실제 다섯 radial moment, 고정 localization domain과 세 성분 near-terminal 구간을 소스에서 계산했다. 공개 UI의 기록 소비자는 그 생성자를 새로 실행했다고 표시하지 않는다.",
     "새 내부 경로 지지 증명은 기록된 초기 소스·정의역·양의 core 구간에 결속되어 있다. 원래 연산자별 열린 zero 영역과 전체 cutoff curl을 확인해 실제 최종 장의 내부 경로를 식별했다. 비영 보정항의 값을 모두 계산하거나 새 Lean 정리를 발급했다는 뜻은 아니다.",
     "원문 국소화 연산 증명은 같은 cutoff·계수에 전체 직접 PDE와 모든 교차항·압력 항등식을 대조한다. 미완료인 비영 영역의 모든 수치값을 이 개별 연산 항등식의 추가 전제로 붙이지 않는다. 전역 force jets·extension·에너지 완료와는 구분한다.",
-    "현재 빠진 비영 angular 보정·temporal 이후 pressure/moment 연결·순서 있는 j=0 초기화·모든 finite stage의 class와 shrinking cutoff 합은 그대로 남아 있다. 전체 공간 force jets/extension 및 활동 구간의 전체 K 에너지를 core 계산이나 manufactured fixture로 대신하지 않는다.",
+    "비영 angular 보정의 원문 연산과 저장된 실제 식 검증은 N6-03으로 완료했다. 최신 압력을 사용한 전체 current PDE·순서 있는 j=0 초기화·모든 finite stage의 class·shrinking cutoff 합은 남아 있다. 전체 공간 force jets/extension 및 활동 구간의 전체 K 에너지를 core 계산이나 manufactured fixture로 대신하지 않는다.",
     "원래 논문의 연산자·정리를 실제 검증된 소스 조건에 적용한 분석적 범위와, 새 Lean kernel 증명·독립 수치 enclosure·화면 관찰은 서로 다른 증거 층이다. universal RH/BSD, continuum Yang–Mills 및 전체 원문 Navier 재구성의 완료를 주장하지 않는다.",
-    "- N8-08은 실제 selected run과 원문 fixture의 다른 환경 재현으로 승인했다. 원문 p.66에 없는 매 selected run의 브라우저 import 의무나 전체 N6 완성을 이 항목에 덧붙이지 않았다. 실제 periodic/subregion energy와 step residual을 재현한 유동 run, 원문 core 관측 두 개, 공개 export·core import·near-terminal replay는 각자의 범위를 유지한다. 이후 배포도 해당 판본의 fresh CI 재현을 통과해야 한다."
+    "- N8-08은 실제 selected run과 원문 fixture의 다른 환경 재현으로 승인했다. 원문 p.66에 없는 매 selected run의 브라우저 import 의무나 전체 N6 완성을 이 항목에 덧붙이지 않았다. 실제 periodic/subregion energy와 step residual을 재현한 유동 run, 원문 core 관측 두 개, 공개 export·core import·near-terminal replay는 각자의 범위를 유지한다. 이후 배포도 해당 판본의 fresh CI 재현을 통과해야 한다.",
+    "N6-03의 실제 저장 그래프 재생은 332.551초에 통과했고, 35분 제한으로 실패한 원래 생성자 receipt는 수정하지 않았다. 155개 원래 source와 9개 새 재생 source의 바이트를 확인했다. 전체 pressure 식·원래 private current certificate를 복원했다고 주장하지 않는다. 재생 receipt의 2 MB RSS 관측은 launcher 값이며 실제 Node 표본 최대 2,568,454,144 bytes와 구분한다. 이 관측을 전체 과정의 엄격한 peak memory 상한 증명으로 사용하지 않는다."
   ]
 }

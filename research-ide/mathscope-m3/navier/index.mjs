@@ -17,6 +17,7 @@ import {recordedGlobalMomentFullPressure,globalMomentFullPressureObservations} f
 import {sourceLocalizationOperatorEvidence,sourceLocalizationOperatorEvidenceObservations} from './source-localization-operator-evidence.mjs';
 import {sourcePeriodizationReviewEvidence,sourcePeriodizationReviewEvidenceObservations} from './source-periodization-review-evidence.mjs';
 import {recordedGlobalTemporalInverse,globalTemporalInverseObservations} from './source-global-temporal-evidence.mjs';
+import {recordedGlobalForcedCurrent,globalForcedCurrentObservations} from './source-global-forced-current-evidence.mjs';
 
 const bad=(code,message)=>{throw Object.assign(new Error(message),{code});};
 const canonical=x=>x===null||typeof x!=='object'?JSON.stringify(x):Array.isArray(x)?'['+x.map(canonical).join(',')+']':'{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canonical(x[k])).join(',')+'}';
@@ -29,6 +30,7 @@ export const NAVIER_M3_EXAMPLES=[
   {id:'N6-global-moment-record',title:'N6 전체 band·label의 다섯 모멘트·압력 보정 기록',input:{package:'N6',operation:'global-moment-record'}},
   {id:'N6-global-moment-full-pressure-record',title:'N6 다섯 원문 적분·전체 보조 토러스 압력·비선형 나머지항',input:{package:'N6',operation:'global-moment-full-pressure-record'}},
   {id:'N6-global-temporal-inverse-record',title:'N6 원문 시간평균 역연산 · 모든 Fourier 꼬리와 축 방향 potential',input:{package:'N6',operation:'global-temporal-inverse-record'}},
+  {id:'N6-global-forced-current-record',title:'N6 모든 각도 source 역연산 · cutoff curl·새 모드·압력 검증',input:{package:'N6',operation:'global-forced-current-record'}},
   {id:'N6-global-signed-record',title:'N6 원래 고정 진폭 · 전체 signed covariance와 세 나머지항',input:{package:'N6',operation:'global-signed-record'}},
   {id:'N6-source-mean',title:'N6 원래 λ의 실제 mean-patch 연결',input:{package:'N6',operation:'source-mean-map'}},
   {id:'N6-harmonic',title:'N6 비영 조화항 응답',input:{package:'N6',operation:'harmonic-response'}},
@@ -54,8 +56,8 @@ export const NAVIER_M3_EXAMPLES=[
 
 export const NAVIER_M3_PROGRESS={
   N6:{status:'PARTIAL_SOURCE_RECONSTRUCTION',complete:false,
-    implemented:['source4/common6 hash·root 상속과 같은 common6 원본 생성자 실제 재실행','전체 원래 band·label의 curl 6개 공분산·현재 P/J와 Haar 평균 압력','두 원래 pulse의 실제 C4/C5·FTC body·비가환 변분계와 retained tail','전체 현재 residual에서 유도한 signed target·고정 H/a·실제 full curl·세 remainder·갱신 mean pressure/P/J','전체 band·label 현재 P/J의 원래 다섯 bump·두 보존 적분·전체 보조 토러스 압력·비선형8.26/27 재계산','원래 M2 mean-patch의 양의 λ·a와 5 moment inverse 구간','원래 전체 zero-mean residual의 실제 Fourier inverse·m+4 도함수 꼬리·모든 요청별 bound·ci/T1/A1/느린 시간 항·독립 검산'],
-    remaining:['실제 temporal inverse 이후의 새 pressure·다섯 moment 보정·j0 초기화·B0/C0 class 지수','현재 모든 조화항·압력·전체 physical PDE를 연결한 네 단계 반복','같은 qbig의 모든 필요한 도함수 상수와 실제 source auxiliary Fourier tail','동일 최종 cutoff sum과 Lemma5.4 tail']},
+    implemented:['source4/common6 hash·root 상속과 같은 common6 원본 생성자 실제 재실행','전체 원래 band·label의 curl 6개 공분산·현재 P/J와 Haar 평균 압력','두 원래 pulse의 실제 C4/C5·FTC body·비가환 변분계와 retained tail','전체 현재 residual에서 유도한 signed target·고정 H/a·실제 full curl·세 remainder·갱신 mean pressure/P/J','전체 band·label 현재 P/J의 원래 다섯 bump·두 보존 적분·전체 보조 토러스 압력·비선형8.26/27 재계산','원래 M2 mean-patch의 양의 λ·a와 5 moment inverse 구간','원래 전체 zero-mean residual의 실제 Fourier inverse·m+4 도함수 꼬리·모든 요청별 bound·ci/T1/A1/느린 시간 항·독립 검산','현재 source의 모든 비영 각도 inverse 20개·원래 cutoff 뒤 전체 curl·새 m+m′ 모드와 유한 각도 꼬리·540개 PDE 계수 및 2320개 식의 저장 그래프 재검증'],
+    remaining:['실제 temporal inverse 이후의 새 pressure·다섯 moment 보정·j0 초기화·B0/C0 class 지수','검증된 조화항 보정과 매 단계 새 압력·전체 physical PDE를 연결한 네 단계 반복','같은 qbig의 모든 필요한 도함수 상수와 실제 source auxiliary Fourier tail','동일 최종 cutoff sum과 Lemma5.4 tail']},
   N7:{status:'SOURCE_DOMAIN_VERIFIED_FINAL_FIELD_PARTIAL',complete:false,
     implemented:['동일 원본 초기 조건과 Lemma9.7을 연결한 qstar 정의역·cutoff support·초기 영 구간·고정 K·unit plateau','원래 heat 외부 영역의 실제 pressure/force와 nonzero div f·Poisson 항등식','원래 양의 h를 보존한 외부 force/pressure terminal jet 0…4차','같은 source core의 양의 하한과 전체 꼬리·모든 원문 연산자의 열린 지지 귀납으로 최종 장 내부 경로 식별','원문 curl(cA)+cB·cp의 실제 계수와 전체 10개 commutator·div u=0·div f를 유지한 압력 항등식','같은 원문 cutoff의 ν·공간·시간 배율, 단위 토러스의 엄격한 지지 분리와 모든 비교 정리 가정 보존'],
     remaining:['비영 환형 보정값을 포함하는 전체 공간 장의 수치 평가','동일 global force의 terminal 모든 차수 jets·정량 norm·t>1 접합 tail','활성 시간대의 전체 compact K energy/dissipation/forcing work와 독립 refinement']},
@@ -121,6 +123,7 @@ export async function runNavierM3(input={}){
     else if(operation==='global-moment-record'){results=await recordedGlobalMoment(parameters);checks=results.checks;observations=globalMomentObservations(results);}
     else if(operation==='global-moment-full-pressure-record'){results=await recordedGlobalMomentFullPressure(parameters);checks=results.checks;observations=globalMomentFullPressureObservations(results);}
     else if(operation==='global-temporal-inverse-record'){results=await recordedGlobalTemporalInverse(parameters);checks=results.checks;observations=globalTemporalInverseObservations(results);}
+    else if(operation==='global-forced-current-record'){results=await recordedGlobalForcedCurrent(parameters);checks=results.checks;observations=globalForcedCurrentObservations(results);}
     else if(operation==='global-signed-record'){results=await recordedGlobalSigned(parameters);checks=results.checks;observations=globalSignedObservations(results);}
     else if(operation==='temporal-inverse')results=temporalMeanInverse(parameters);
     else if(operation==='five-moments')results=fiveMomentCorrection(parameters);
