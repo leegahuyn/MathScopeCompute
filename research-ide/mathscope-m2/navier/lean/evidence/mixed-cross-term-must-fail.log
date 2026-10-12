@@ -1,0 +1,217 @@
+/workspace/scratch/cf975e3da716/lean-runtime/audit/mixed-cross-term-must-fail.lean:49:2: error: `grind` failed
+case grind
+K : Type u
+inst : Ring K
+D E : Differential K
+x y : K
+h :
+  ¬D.apply (E.apply x) * y + E.apply x * D.apply y + (D.apply x * E.apply y + x * D.apply (E.apply y)) =
+      D.apply (E.apply x) * y + D.apply x * E.apply y + x * D.apply (E.apply y)
+⊢ False
+[grind] Goal diagnostics
+  [facts] Asserted facts
+    [prop] ¬D.apply (E.apply x) * y + E.apply x * D.apply y + (D.apply x * E.apply y + x * D.apply (E.apply y)) =
+            D.apply (E.apply x) * y + D.apply x * E.apply y + x * D.apply (E.apply y)
+  [eqc] False propositions
+    [prop] D.apply (E.apply x) * y + E.apply x * D.apply y + (D.apply x * E.apply y + x * D.apply (E.apply y)) =
+          D.apply (E.apply x) * y + D.apply x * E.apply y + x * D.apply (E.apply y)
+  [linarith] Linarith assignment for `K`
+    [assign] x := 2
+    [assign] y := 3
+    [assign] D.apply x := 9
+    [assign] D.apply y := 7
+    [assign] D.apply (E.apply x) := 5
+    [assign] D.apply (E.apply y) := 11
+    [assign] E.apply x := 6
+    [assign] E.apply y := 10
+/workspace/scratch/cf975e3da716/lean-runtime/audit/mixed-cross-term-must-fail.lean:60:2: error: `grind` failed
+case grind
+K : Type u
+inst : Ring K
+D E : Differential K
+M w : K
+h :
+  ¬D.apply (E.apply M) * w + D.apply M * E.apply w + M * D.apply (E.apply w) =
+      M * D.apply (E.apply w) + D.apply M * E.apply w + E.apply M * D.apply w + D.apply (E.apply M) * w
+⊢ False
+[grind] Goal diagnostics
+  [facts] Asserted facts
+    [prop] ¬D.apply (E.apply M) * w + D.apply M * E.apply w + M * D.apply (E.apply w) =
+            M * D.apply (E.apply w) + D.apply M * E.apply w + E.apply M * D.apply w + D.apply (E.apply M) * w
+  [eqc] False propositions
+    [prop] D.apply (E.apply M) * w + D.apply M * E.apply w + M * D.apply (E.apply w) =
+          M * D.apply (E.apply w) + D.apply M * E.apply w + E.apply M * D.apply w + D.apply (E.apply M) * w
+  [linarith] Linarith assignment for `K`
+    [assign] M := 2
+    [assign] w := 3
+    [assign] D.apply M := 7
+    [assign] D.apply w := 14
+    [assign] D.apply (E.apply M) := 5
+    [assign] D.apply (E.apply w) := 9
+    [assign] E.apply M := 6
+    [assign] E.apply w := 8
+/workspace/scratch/cf975e3da716/lean-runtime/audit/mixed-cross-term-must-fail.lean:108:2: error: `grind` failed
+case grind
+K : Type u
+inst : Ring K
+D E : Differential K
+H J y target : K
+hJH : J * H = 1
+hsolve : H * y = target
+h : J * D.apply (E.apply H) * y + J * D.apply H * E.apply y + D.apply (E.apply y) = J * D.apply (E.apply target)
+h_1 :
+  ¬D.apply (E.apply y) =
+      J * D.apply (E.apply target) + -(J * D.apply (E.apply H) * y) + -(J * E.apply H * D.apply y) +
+        -(J * D.apply H * E.apply y)
+⊢ False
+[grind] Goal diagnostics
+  [facts] Asserted facts
+    [prop] J * H = 1
+    [prop] H * y = target
+    [prop] J * D.apply (E.apply H) * y + J * D.apply H * E.apply y + D.apply (E.apply y) = J * D.apply (E.apply target)
+    [prop] ¬D.apply (E.apply y) =
+            J * D.apply (E.apply target) + -(J * D.apply (E.apply H) * y) + -(J * E.apply H * D.apply y) +
+              -(J * D.apply H * E.apply y)
+  [eqc] False propositions
+    [prop] D.apply (E.apply y) =
+          J * D.apply (E.apply target) + -(J * D.apply (E.apply H) * y) + -(J * E.apply H * D.apply y) +
+            -(J * D.apply H * E.apply y)
+  [eqc] Equivalence classes
+    [eqc] {target, H * y}
+    [eqc] {1, J * H}
+    [eqc] {J * D.apply (E.apply H) * y + J * D.apply H * E.apply y + D.apply (E.apply y), J * D.apply (E.apply target)}
+  [linarith] Linarith assignment for `K`
+    [assign] H := 2
+    [assign] J := 3
+    [assign] y := 4
+    [assign] target := 5
+    [assign] D.apply H := 13
+    [assign] D.apply y := 22
+    [assign] D.apply (E.apply H) := 10
+    [assign] D.apply (E.apply y) := 0
+    [assign] D.apply (E.apply target) := 15
+    [assign] E.apply H := 11
+    [assign] E.apply y := 14
+    [assign] E.apply target := 16
+[grind] Issues
+  [issue] `grind linarith` term with unexpected instance
+        1
+  [issue] `grind linarith` term with unexpected instance
+        1
+/workspace/scratch/cf975e3da716/lean-runtime/audit/mixed-cross-term-must-fail.lean:122:2: error: `grind` failed
+case grind
+K : Type u
+inst : CommRing K
+D E : Differential K
+radial tangent : K
+h :
+  ¬D.apply (E.apply radial) * tangent + D.apply radial * E.apply tangent + radial * D.apply (E.apply tangent) =
+      D.apply (E.apply radial) * tangent + D.apply radial * E.apply tangent + E.apply radial * D.apply tangent +
+        radial * D.apply (E.apply tangent)
+⊢ False
+[grind] Goal diagnostics
+  [facts] Asserted facts
+    [prop] ¬D.apply (E.apply radial) * tangent + D.apply radial * E.apply tangent + radial * D.apply (E.apply tangent) =
+            D.apply (E.apply radial) * tangent + D.apply radial * E.apply tangent + E.apply radial * D.apply tangent +
+              radial * D.apply (E.apply tangent)
+  [eqc] False propositions
+    [prop] D.apply (E.apply radial) * tangent + D.apply radial * E.apply tangent + radial * D.apply (E.apply tangent) =
+          D.apply (E.apply radial) * tangent + D.apply radial * E.apply tangent + E.apply radial * D.apply tangent +
+            radial * D.apply (E.apply tangent)
+  [ring] Ring `K`
+    [diseqs] Disequalities
+      [_] ¬-1 * (E.apply radial * D.apply tangent) = 0
+/workspace/scratch/cf975e3da716/lean-runtime/audit/mixed-cross-term-must-fail.lean:138:2: error: `grind` failed
+case grind
+K : Type u
+inst : CommRing K
+D E : Differential K
+s y : K
+hs : s * s = y
+h : D.apply (E.apply s) * s + D.apply s * E.apply s + s * D.apply (E.apply s) = D.apply (E.apply y)
+h_1 : ¬(s + s) * D.apply (E.apply s) + (D.apply s * E.apply s + D.apply s * E.apply s) = D.apply (E.apply y)
+⊢ False
+[grind] Goal diagnostics
+  [facts] Asserted facts
+    [prop] s * s = y
+    [prop] D.apply (E.apply s) * s + D.apply s * E.apply s + s * D.apply (E.apply s) = D.apply (E.apply y)
+    [prop] ¬(s + s) * D.apply (E.apply s) + (D.apply s * E.apply s + D.apply s * E.apply s) = D.apply (E.apply y)
+  [eqc] False propositions
+    [prop] (s + s) * D.apply (E.apply s) + (D.apply s * E.apply s + D.apply s * E.apply s) = D.apply (E.apply y)
+  [eqc] Equivalence classes
+    [eqc] {y, s * s}
+    [eqc] {D.apply (E.apply y), D.apply (E.apply s) * s + D.apply s * E.apply s + s * D.apply (E.apply s)}
+  [ring] Ring `K`
+    [diseqs] Disequalities
+      [_] ¬D.apply s * E.apply s = 0
+MathScope.M2.Navier.Differential.mixed_product.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D E : MathScope.M2.Navier.Differential K) (x y : K) :
+  D.apply (E.apply (x * y)) = D.apply (E.apply x) * y + D.apply x * E.apply y + x * D.apply (E.apply y)
+'MathScope.M2.Navier.Differential.mixed_product' depends on axioms: [sorryAx]
+MathScope.M2.Navier.Differential.first_variation_rhs.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D : MathScope.M2.Navier.Differential K) (M w : K) : D.apply (M * w) = M * D.apply w + D.apply M * w
+'MathScope.M2.Navier.Differential.first_variation_rhs' does not depend on any axioms
+MathScope.M2.Navier.Differential.mixed_variation_rhs.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D E : MathScope.M2.Navier.Differential K) (M w : K) :
+  D.apply (E.apply (M * w)) =
+    M * D.apply (E.apply w) + D.apply M * E.apply w + E.apply M * D.apply w + D.apply (E.apply M) * w
+'MathScope.M2.Navier.Differential.mixed_variation_rhs' depends on axioms: [sorryAx]
+MathScope.M2.Navier.Differential.second_variation_rhs.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D : MathScope.M2.Navier.Differential K) (M w : K) :
+  D.apply (D.apply (M * w)) =
+    M * D.apply (D.apply w) + (D.apply M * D.apply w + D.apply M * D.apply w) + D.apply (D.apply M) * w
+'MathScope.M2.Navier.Differential.second_variation_rhs' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+MathScope.M2.Navier.Differential.inverse_first.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D : MathScope.M2.Navier.Differential K) (A B : K) (hAB : A * B = 1) (hBA : B * A = 1) :
+  D.apply B = -(B * D.apply A * B)
+'MathScope.M2.Navier.Differential.inverse_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.Differential.inverse_mixed.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D E : MathScope.M2.Navier.Differential K) (A B : K) (hAB : A * B = 1) (hBA : B * A = 1) :
+  D.apply (E.apply B) =
+    B * E.apply A * B * D.apply A * B + B * D.apply A * B * E.apply A * B - B * D.apply (E.apply A) * B
+'MathScope.M2.Navier.Differential.inverse_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.Differential.solve_first.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D : MathScope.M2.Navier.Differential K) (H J y target : K) (hJH : J * H = 1) (hsolve : H * y = target) :
+  D.apply y = J * (D.apply target - D.apply H * y)
+'MathScope.M2.Navier.Differential.solve_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.Differential.solve_mixed.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D E : MathScope.M2.Navier.Differential K) (H J y target : K) (hJH : J * H = 1) (hsolve : H * y = target) :
+  D.apply (E.apply y) =
+    J * (D.apply (E.apply target) - D.apply (E.apply H) * y - E.apply H * D.apply y - D.apply H * E.apply y)
+'MathScope.M2.Navier.Differential.solve_mixed' depends on axioms: [propext, sorryAx, Quot.sound]
+MathScope.M2.Navier.covariance_density_mixed.{u} {K : Type u} [Lean.Grind.CommRing K]
+  (D E : MathScope.M2.Navier.Differential K) (radial tangent : K) :
+  D.apply (E.apply (radial * tangent)) =
+    D.apply (E.apply radial) * tangent + D.apply radial * E.apply tangent + E.apply radial * D.apply tangent +
+      radial * D.apply (E.apply tangent)
+'MathScope.M2.Navier.covariance_density_mixed' depends on axioms: [sorryAx]
+MathScope.M2.Navier.square_root_first_relation.{u} {K : Type u} [Lean.Grind.CommRing K]
+  (D : MathScope.M2.Navier.Differential K) (s y : K) (hs : s * s = y) : (s + s) * D.apply s = D.apply y
+'MathScope.M2.Navier.square_root_first_relation' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.square_root_mixed_relation.{u} {K : Type u} [Lean.Grind.CommRing K]
+  (D E : MathScope.M2.Navier.Differential K) (s y : K) (hs : s * s = y) :
+  (s + s) * D.apply (E.apply s) + (D.apply s * E.apply s + D.apply s * E.apply s) = D.apply (E.apply y)
+'MathScope.M2.Navier.square_root_mixed_relation' depends on axioms: [sorryAx]
+MathScope.M2.Navier.full_cylindrical_curl_divergence.{u} {K : Type u} [Lean.Grind.CommRing K]
+  (Dr Dz : MathScope.M2.Navier.Differential K) (w nr nt nz ir Cr Ct Cz : K) (hwR : Dr.apply w = 0)
+  (hwZ : Dz.apply w = 0) (hntR : Dr.apply nt = -(ir * nt)) (hntZ : Dz.apply nt = 0)
+  (hgradient : Dr.apply nz = Dz.apply nr) (hirZ : Dz.apply ir = 0)
+  (hmixed : Dr.apply (Dz.apply Ct) = Dz.apply (Dr.apply Ct)) :
+  Dr.apply (MathScope.M2.Navier.curlRadial Dz w nt nz Ct Cz) + ir * MathScope.M2.Navier.curlRadial Dz w nt nz Ct Cz +
+        Dz.apply (MathScope.M2.Navier.curlAxial Dr w nr nt ir Cr Ct) +
+      w *
+        (nr * MathScope.M2.Navier.curlRadial Dz w nt nz Ct Cz + nt * MathScope.M2.Navier.curlTheta Dr Dz w nr nz Cr Cz +
+          nz * MathScope.M2.Navier.curlAxial Dr w nr nt ir Cr Ct) =
+    0
+'MathScope.M2.Navier.full_cylindrical_curl_divergence' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.square_root_first.{u} {K : Type u} [Lean.Grind.Field K] (D : MathScope.M2.Navier.Differential K)
+  (s y : K) (hs : s * s = y) (hnonzero : s + s ≠ 0) : D.apply s = (s + s)⁻¹ * D.apply y
+'MathScope.M2.Navier.square_root_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.two_column_inverse.{u} {K : Type u} [Lean.Grind.Field K] (a b c d u v : K)
+  (hdet : a * d - b * c ≠ 0) :
+  a * ((d * u - b * v) / (a * d - b * c)) + b * ((-c * u + a * v) / (a * d - b * c)) = u ∧
+    c * ((d * u - b * v) / (a * d - b * c)) + d * ((-c * u + a * v) / (a * d - b * c)) = v
+'MathScope.M2.Navier.two_column_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]

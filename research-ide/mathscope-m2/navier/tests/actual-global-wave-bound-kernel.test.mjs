@@ -1,0 +1,87 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {ActualConvergentExpressions} from '../actual-continuation-exact-functions.mjs';
+import {sourceGraphRationalIdentity} from '../actual-continuation-exact-identities.mjs';
+import {rational,qcompare} from '../actual-continuation-arithmetic.mjs';
+import {originalWeightedCovarianceJetPowers,originalPhysicalGaussianLossAudit,doubleBoundaryGaussianPoleBound,completePhysicalGaussianTailRecipe} from '../actual-global-wave-bound-kernel.mjs';
+
+const same=(G,a,b)=>sourceGraphRationalIdentity(G,G.sub(a,b),{maxTerms:100000}).pass;
+
+test('all differentiated inverse, positive square-root and full curl terms have finite explicit bounds',()=>{
+  const r=originalWeightedCovarianceJetPowers({order:3,targetPoles:[3,6,9,12,15]});
+  assert.equal(r.inverseRows.length,4);assert.equal(r.sqrtRows.length,4);
+  for(const x of r.inverseRows)assert.equal(x.terms.length,x.order);
+  for(const x of r.sqrtRows)assert.equal(x.terms.length,x.order);
+  for(const x of r.curlRows){
+    assert.equal(x.fastTerms.length,x.order+1);
+    assert.equal(x.connectionTerms.length,x.order+1);
+    for(const t of [...x.fastTerms,...x.connectionTerms]){
+      assert.ok(x.upper.power>=t.power);assert.ok(x.upper.pole>=t.pole);
+    }
+  }
+  assert.equal(r.dividingVanishingWeightAtEdge,false);
+  assert.equal(r.actualSourceAuthenticated,false);
+  assert.equal(r.actualTargetPoleBoundsProvedHere,false);
+});
+
+test('a changing inverse covariance contributes to second mixed weight derivatives',()=>{
+  const G=new ActualConvergentExpressions(),x=G.fresh('weight_test_x'),z=G.fresh('weight_test_z'),
+    H=[[G.add(G.one,x),G.one],[z,G.add(G.q(2),x)]],T=[G.add(G.q(3),z),G.add(G.q(5),G.mul(x,z))],
+    det=G.sub(G.mul(H[0][0],H[1][1]),G.mul(H[0][1],H[1][0])),
+    inv=[[G.div(H[1][1],det),G.neg(G.div(H[0][1],det))],[G.neg(G.div(H[1][0],det)),G.div(H[0][0],det)]],
+    weights=inv.map(row=>G.add(...row.map((a,j)=>G.mul(a,T[j]))));
+  for(let i=0;i<2;i++){
+    const direct=G.derivative(G.derivative(weights[i],x),z),
+      full=G.add(...inv[i].flatMap((a,j)=>[
+        G.mul(G.derivative(G.derivative(a,x),z),T[j]),
+        G.mul(G.derivative(a,x),G.derivative(T[j],z)),
+        G.mul(G.derivative(a,z),G.derivative(T[j],x)),
+        G.mul(a,G.derivative(G.derivative(T[j],x),z))])),
+      frozen=G.add(...inv[i].map((a,j)=>G.mul(a,G.derivative(G.derivative(T[j],x),z))));
+    assert.equal(same(G,direct,full),true);
+    assert.equal(same(G,direct,frozen),false);
+  }
+});
+
+test('positive physical derivative margins retain h and the axial cancellation budget',()=>{
+  const a=originalPhysicalGaussianLossAudit();assert.equal(a.rows.length,5);assert.equal(a.pass,true);
+  for(const r of a.rows){const q=r.strictMargin.split('/');assert.equal(qcompare(rational(BigInt(q[0]),BigInt(q[1]??1)),rational(0))>0,true);}
+  assert.equal(a.rows.find(r=>r.id==='physical-momentum-base').upperLoss,'13/8');
+  assert.equal(a.rows.find(r=>r.id==='time-harmonic').upperLoss,'35/32');
+  assert.equal(a.phaseAxialCancellationMustBeBoundToActualSource,true);
+  assert.equal(a.hReplacedByZero,false);assert.equal(a.sourceAuthenticated,false);
+});
+
+test('the double flat boundary bound keeps the actual narrow inner exponent',()=>{
+  const G=new ActualConvergentExpressions(),p=doubleBoundaryGaussianPoleBound(G,{innerExponent:G.q(1,1024),outerExponent:G.q(4),pole:17});
+  assert.equal(p.nu,G.q(4,4097));assert.equal(p.identity.pass,true);
+  assert.equal(p.constant,G.exp(G.q(1184033,8)));
+  assert.equal(p.zeroExtensionOfOriginalWeightProvedHere,false);
+  const lo=doubleBoundaryGaussianPoleBound(G,{innerExponent:G.q(1,4096),outerExponent:G.q(4),pole:17});
+  assert.equal(lo.nu,G.q(4,16385));assert.notEqual(lo.constant,p.constant);
+});
+
+test('the complete physical tail includes all mesh labels and a positive infinite remainder',()=>{
+  const G=new ActualConvergentExpressions(),p=completePhysicalGaussianTailRecipe(G,{gaussian:G.q(1,1000),innerExponent:G.q(1,1024),outerExponent:G.q(4),
+    polynomialOrder:7,boundaryPole:3,derivativeOrder:2,flatOrder:9,firstBand:G.q(8),meshCount:G.q(1372)});
+  assert.equal(p.band.input.polynomialOrder,32);
+  assert.equal(p.band.input.powerLoss,6);assert.equal(p.band.input.flatOrder,9);
+  assert.notEqual(p.roots.infiniteTail,G.zero);
+  assert.equal(same(G,p.roots.flatConstant,G.mul(G.q(1372),p.boundary.constant,p.band.roots.constant)),true);
+  assert.equal(p.actualAmplitudeBoundAuthenticated,false);assert.equal(p.totalUncorrectedNSResidualDeclaredFlat,false);
+});
+
+test('arbitrary finite orders use a recurrence and still respect a finite work budget',()=>{
+  const r=originalWeightedCovarianceJetPowers({order:17,maxWork:50000});
+  assert.equal(r.curl.length,18);assert.ok(r.curl.every(x=>Number.isSafeInteger(x.power)&&Number.isSafeInteger(x.pole)));
+  assert.throws(()=>originalWeightedCovarianceJetPowers({order:17,maxWork:2}),{code:'RESOURCE_LIMIT'});
+});
+
+test('bad boundary hypotheses, missing target jets and injected source flags are rejected',()=>{
+  const G=new ActualConvergentExpressions();
+  assert.throws(()=>originalWeightedCovarianceJetPowers({order:-1}),{code:'INVALID_INPUT'});
+  assert.throws(()=>originalWeightedCovarianceJetPowers({order:2,targetPoles:[3,6]}),{code:'INVALID_INPUT'});
+  assert.throws(()=>originalWeightedCovarianceJetPowers({sourceAuthenticated:true}),{code:'INVALID_INPUT'});
+  assert.throws(()=>doubleBoundaryGaussianPoleBound(G,{innerExponent:G.zero,outerExponent:G.one}),{code:'INVALID_INPUT'});
+  assert.throws(()=>completePhysicalGaussianTailRecipe(G,{sourceAuthenticated:true}),{code:'INVALID_INPUT'});
+});

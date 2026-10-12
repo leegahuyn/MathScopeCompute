@@ -1,0 +1,204 @@
+# M2 Navier–Stokes: 원문 연산자·실제 core 관측·구성 경계
+
+## 현재 상태
+
+원문 N4/N5 16개 기준은 **16개 PASS, 0개 PARTIAL, 0개 OPEN**입니다. 25개 예제는 원본 결과에 연결된 그림과 정확한 표를 반환합니다. 기본 예제 결과는 13개 인증·연산자·관측 `COMPLETED`, 12개 범위가 제한된 기존 구성·국소 계산 `PARTIAL`로 구별됩니다. 원문 기준 문구는 `tests/fixtures/original-n4-n5.json`과 byte-equivalent 문자열 대조를 하며 바꾸지 않았습니다.
+
+PASS는 해당 원문 기준과 명시된 영역의 acceptance를 뜻합니다. N5-06은 유한 대표점에 더해 **원래 annulus와 모든 허용 band의 실제 covariance family**를 인증합니다. Blueprint의 더 넓은 패키지 완료관문인 전체 물리 residual·stress·flat error의 모든 차수 연결은 별도입니다. 실제 N4-03/04/05와 N5-04/05/06의 명시된 소스 영역은 `sourceInstanceCertified: true`이며, 전체 패키지와 모든 차수에는 `fullSameProfileN4/fullSameProfileN5: false`, `allOrderSourceCertificate: false`, `formalComplete: false`를 유지합니다. [원문 기준 재심사](research/FINITE_CRITERIA_REAUDIT_KO.md)에 개별 유한 합격과 전체 패키지의 차이를 기록합니다. 기존 N3 완료 상태를 변경하거나 새 Lean 커널 실행을 주장하지 않습니다.
+
+## 원전과 동일한 N3 연결
+
+- 수학 원전: [Finite Time Blowup for Navier–Stokes](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf), §5–7. PDF SHA-256: `0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f`.
+- 원문 체크리스트: `MathScope_Research_IDE_Blueprint_v1_KO(1)(9).pdf`, N4 p.58, N5 p.60, 패키지 완료관문 p.57. SHA-256: `f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac`.
+- 보존한 N3 identity: `same-profile-2026-10-10.3`, repository commit `55dacb898f8c204bf0c5925ea901d75d6c2d0f46`; assessment SHA-256 `e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c`.
+- 원문 Lean snapshot: `f9e8bc5b38b6e212696e8a30e3e91517af887bbd`. 기존 형식 연결 검토 자료는 읽기만 했으며 새 proof term이 생성됐다고 표시하지 않습니다.
+- 동일 profile assembly: `mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json`, SHA-256 `184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd`.
+- 실제 core receipt: `mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/core-intervals-0002/receipt.json`, SHA-256 `8f65d85d903df534c2c10501119fbcef636678c95ec214e165041681d16fb5a5`.
+
+`tests/build-source-binding.py`는 기존 여섯 입력 파일의 hash와 전체 parameter expression graph를 보존합니다. `tests/build-source-core-binding.py`는 accepted assembly의 `acceptedEvidence.core` 링크를 먼저 검증한 뒤 원본 75개 구간을 그대로 추출합니다. 원본 파일은 수정하지 않습니다.
+
+원본 자료가 η=0의 75개 값에 한정된 것은 아닙니다. 같은 Φ에 대해 **125개 mixed radial/η coefficient와 75개 mixed derivative 관측**, 실제 nonlinear domain, B.26/B.34·B.8·C.12를 거치는 전역 구성 명세도 보존돼 있습니다. 75개 core 값만을 근거로 전체 자료가 없다고 보았던 이전 설명을 정정합니다. accepted Banach 오차는 실제 실수 η∈[-1,1] 전체에 적용됩니다. 이전 관측의 `|η|≤ρ/4`는 그 부분영역이며, η=0 중심 비교 급수의 `|ξ|≤1/16, ξ=η/j0`도 별도 조건입니다. 새 점 평가기는 요청한 η에서 비교함수를 다시 계산하고 실제 비선형 오차를 더합니다. [독립 수학 검토](research/ACTUAL_CORE_INDEPENDENT_REVIEW_KO.md)에 두 영역을 구분한 근거가 있습니다. 원본 정합성과 실행 가능한 함수의 현재 범위는 [재검토 기록](research/RESUMED_SOURCE_AUDIT_KO.md)에 있습니다.
+
+실제 source exponent는
+
+\[
+h=\exp[-8002(\exp(1048576)+10)]>0
+\]
+
+입니다. 이를 `.005`, `1/128` 또는 0으로 대체하지 않습니다. `[0,2^{-1000}]`는 양의 실제 h를 담는 표시용 enclosure이며, 하단 0은 대입값이 아닙니다. 별도의 수치 연산자 probe가 유한 h를 사용하면 `EXPLICIT_SMOOTH_VERIFICATION_COEFFICIENTS; NOT_N3_PROFILE_VALUES`로 표시합니다.
+
+## 실행 항목
+
+| 요청 kind | 실제 계산·표시 | scope |
+|---|---|---|
+| `ns.actual-core-evaluation` | 요청한 정확 Y·η에서 actual Φ의 0–2차 혼합 미분, actual pressure, u/K·평균 및 U의 구간; 96–512비트 directed BigInt | 원래 core와 B26용 자연 연장을 구분; 전체 접합·모멘트는 PARTIAL |
+| `ns.actual-global-source` | 실제 외곽 U/E·M/(XE)·V/(XE) 15관측, 전체 outer AST, Ω의 정규 6적분 축소와 축 경계 및 C12/I1 오차 | 원본 외곽 값과 적분식; 전체 적분·correction은 PARTIAL |
+| `ns.actual-continuation` | actual core 전체 적분 21개, 양의 폭 B.22 reference 적분 10개, 실제 U/M/V 물리 구간 10개와 전체 Ω remainder | 실제 구간과 reference를 구분; 정확한 전체 debt·복구는 PARTIAL |
+| `ns.actual-picard-acceptance` | 실제 n=1의 6성분 계, 원래 공통 collar, C1·strip·loss·finite K와 tail, 실제 관측 18개 | 원래 N4-03 유한 합격; K항 수치 합산과 전체 N4는 별도 |
+| `ns.actual-moment-restoration` | 실제 n=1,2의 수렴 함수·연속 5모멘트 복구, 12 PDE·4 응력 support·다음 차수 gate, 8개 패널 | N4-04 유한 합격; 전역 signed 수치 적분·모든 차수는 별도 |
+| `ns.actual-pulse-amplitude` | 실제 완성 배경의 Imean restriction, 원래 left datum의 전체 pulse 진폭 enclosure, phase·frame·energy·Gaussian | N5-04/05 명시된 대표점 및 이웃의 유한 합격; 전체 annulus는 별도 |
+| `ns.actual-uniform-covariance` | 실제 완성 배경 C²·공통 q*·두 moving ODE의 수렴 H 적분·양의 inverse·전역 (7.30) | N5-06 원문 전체 acceptance; ell≥ellMinimum 및 0<q<qStar의 명시된 영역 |
+| `ns.actual-covariance-matching` | 실제 Gaussian 적분·열 보상 응력·양의 H inverse와 완전한 대표점 활성 합, 8개 원본 패널 | 기존 local/point (7.30) 검증; 전체 영역은 별도 ns.actual-uniform-covariance에서 인증 |
+| `ns.actual-residual-order` | 같은 source의 고정 compact에서 N=0/1 실제 잔차·CNm/Km·양의 norm 감소, 독립 격자·정밀도, 7개 패널 | N4-05 유한 합격; 전체 profile·모든 N은 별도 |
+| `ns.actual-background` | 같은 N3의 실제 n=1 Taylor DAG, 공통 collar C1·Cauchy loss·무한 tail 식, 축 3개 미분과 양의 반경 15개 차분몫 구간, Imean의 0이 아닌 모멘트 기여 | 원본 기반 국소 계산; 전체 모멘트와 고차 잔차는 PARTIAL |
+| `ns.actual-mean-pulse` | 같은 N3의 Imean F/V/b/G와 3차 slow jet, whole-box 상계, 국소 phase/frame·원문 왼쪽 datum·Gaussian 값 비교 | 실제 Imean 국소 구성; 전역 phase/ODE/covariance는 PARTIAL |
+| `ns.background-recursion` | 원래 cylindrical PDE의 exact coefficient 추출, n=1,2 직접 대입 대조, 모든 i+j=n 항 | N4-01/02 PASS; 실제 계수 해는 미구성 |
+| `ns.background-picard` | 원문 6×6 선형계·공통 반경 계약·두 parity의 무한 tail 상계 | 선언한 Cn에 조건부인 별도 연산자; 실제 N4-03 인증은 새 예제 |
+| `ns.background-moments` | 실제 λ와 Ipos에 대한 2×2/3×3 모멘트 행렬과 interval inverse | 이 예제는 입력 probe; 실제 N4-04 인증은 ns.actual-moment-restoration |
+| `ns.background-residual` | 유한 차수 원래 PDE 잔차의 모든 differential polynomial | 이 예제는 기호 연산자; 실제 N4-05 인증은 ns.actual-residual-order |
+| `ns.background-cutoffs` | 모든 q·m에 대한 cutoff 부등식, C∞ cutoff를 곱한 supplied potential의 실제 합, 완전한 active prefix 증명 | N4-06/08 조건부 operator PASS |
+| `ns.potential-curl` | 원문 (5.45)의 χ′ radial 보정 exact 항등식과 Cartesian curl probe | N4-07 PASS |
+| `ns.dyadic-charts` | 실제 h로 선택한 고정 label·dyadic geometry, 별도 actual core overlap 자료 | N5-01 관측 PASS |
+| `ns.source-core-charts` | 실제 accepted Phi(Y,0) 구간을 두 chart에서 각각 복원 | N5-01 관측 PASS |
+| `ns.torus-derivatives` | 정확한 Q(√2) eigenvector·dual basis·전체 evaluated chain rule | N5-02 PASS |
+| `ns.pulse-support` | countable source mesh 전체를 위한 2,250색 유리수 지지 분리 certificate | N5-03 PASS |
+| `ns.pulse-ode` | 모든 세 normal 성분을 유지한 tangent-frame RK4, log amplitude, energy balance, reference Gaussian | 별도 입력 계수의 연산자 진단; 실제 N5-04/05 인증은 새 예제 |
+| `ns.pulse-covariance` | 정확한 정규화 규약의 두 polarization covariance와 cone 실패 | 입력 계수의 연산자 예제; 실제 N5-06은 ns.actual-uniform-covariance |
+| `ns.pulse-curl` | 원래 Cm의 mixed jet 미분·전체 rm·Cartesian curl/divergence·conjugate pair | N5-07 generic harmonic operator PASS |
+| `ns.pulse-tail` | 실제 supplied complex residual jets의 전체 (1−ψ)f+ψ′t 및 별도의 조건부 고정차수 log envelope | N5-08 conditional operator PASS |
+
+### 실제 비선형 core의 요청점 계산
+
+`ns.actual-core-evaluation`은 기존의 η=0 표본을 재사용하는 대신 각 입력점에서 비교 급수를 새로 평가하고, 전체 radial tail과 accepted nonlinear displacement를 별도로 더합니다. Y는 정확한 유리수로 0–4.1, η는 `RHO_SCALED`, `J_SCALED`, `DIRECT_RATIONAL` chart를 선택합니다. 직접 η는 [-1,1]에 속하는 분자·분모 각 4096비트 이하 유리수입니다. Y≤4는 실제 수정 전 core이고 Y>4는 B.26 입력을 위한 자연 연장으로 표시합니다.
+
+Φ의 η 도함수는 `j0^m ∂η^m ∂Y^k Φ`이며, 축방향 패널은 ordinary η 도함수를 사용합니다. U의 0차 값은 RHO/J chart에서만 j0로 나누고 DIRECT chart는 η=0에서도 ordinary 배율을 유지합니다. 정확한 끝점, 복원 식과 두 오차를 각 수치표에 보존합니다. 산술 bits를 늘려도 양의 실제 nonlinear 오차는 제거되지 않습니다.
+
+입력 `bits` 또는 `precision:{mode:"DIRECTED_BIGINT",bits:256}`로 96–512비트 산술을 선택합니다. 두 bits를 동시에 쓰면 일치해야 합니다. `ns.actual-continuation`과 `ns.actual-residual-order`도 동일한 96–512비트 범위의 directed BigInt 산술을 사용합니다. 다른 NS 계산은 이 arbitrary precision backend를 사용하지 않습니다. 실제 구간의 수학 검토와 지원 계약은 [계산 명세](research/ACTUAL_CORE_POINT_EVALUATOR.md), [독립 검토](research/ACTUAL_CORE_INDEPENDENT_REVIEW_KO.md)에 있습니다.
+
+### 실제 외곽 장과 전체 Ω 적분의 축소
+
+`ns.actual-global-source`는 선택한 η와 `xi=lambda*log(X/Xp)`에서 원본 외곽 U/E, M/(XE), V/(XE)를 계산합니다. 기본 5개 좌표의 15개 비영 관측은 원래 continuous integral receipt와 엄밀한 remainder를 사용하며, 원래 양의 h·lambda를 0으로 대입하지 않습니다.
+
+전체 두 Ω functional은 `v=V/X`를 사용한 6개 regular integral로 정확히 축소했습니다. 축 경계 `V_X(0,0)=-4`와 고정 부분구간의 양쪽 경계 부호를 보존합니다. C.12 및 I1의 차이는 두 functional의 **값**에 대한 별도 상계이며 고차 η 도함수나 pulse shear의 오차를 대신하지 않습니다. 전체 outer source의 scalar root·적분·보정 정의는 3,785개 노드의 실행 가능한 식 그래프로 반환합니다. 그 식 그래프를 모두 평가하거나 전역 debt가 닫혔다고 표시하지 않습니다.
+
+이 구간 예제는 전역 signed 적분값을 수치 계산하지 않습니다. 별도 `ns.actual-moment-restoration`은 같은 source의 B.22/B.26/B.34, B.8 root와 전체 연속 적분을 완전한 수렴 함수 연산으로 연결합니다. [외곽 구성 설명](research/ACTUAL_GLOBAL_SOURCE_KO.md)과 [정규 적분 유도](research/WEIGHTED_OMEGA_REDUCTION_KO.md)에 정확한 다음 입력과 184개 독립 검사를 기록했습니다.
+
+### 실제 core 전체 적분과 연장 구간
+
+`ns.actual-continuation`은 실제 core의 7개 적분과 η 0–2차를 합해 21개 구간으로 계산합니다. B.22 reference는 원래 양의 t1 폭을 유지하고, primitive offset을 포함한 10개 정규 적분을 반환합니다. 요청 `XInterval`은 정확한 유리수 두 끝점으로 `1/1024≤Xleft≤Xright≤110`이며 η∈[-1,1]은 고정된 요청점입니다. 실제 U/M/V 구간은 B.26/B.34/B.8 및 C.12의 남은 양의 오차를 더하므로 reference 값과 구별됩니다.
+
+전체 A.2 axial 식은 4,070개 노드로 전개되고 실제 최종 Ω와의 차이는 정량적인 nonzero remainder로 보존됩니다. 그 구간의 임의 한 점이나 A.2 중심을 실제 정확한 debt로 선택하지 않습니다. [연장 구간 유도와 독립 검증](research/ACTUAL_CONTINUATION_KO.md)을 참조하세요.
+
+### 실제 고정 차수 Picard의 유한 합격
+
+`ns.actual-picard-acceptance`는 같은 원본의 n=1에서 (5.7) 계를 정확한 대각변환으로 연결하고, 미분 block의 nilpotence와 전체 forcing을 검증합니다. 원래 공통 collar와 실제 source-derived C1·strip·Cauchy loss를 유지하며 정확한 유한 K식 및 tail 상계를 인증합니다. 15개 실행 규칙, Node 8개 및 독립 Laurent/Fraction 782개 검사가 근거입니다. 거대한 K항을 모두 수치 합산하지 않았다는 범위도 검증합니다. 개별 원문 N4-03은 이 유한 조건으로 PASS이며, 모든 차수·모멘트·잔차 및 전체 N4 패키지는 별도입니다.
+
+### 실제 1·2차의 다섯 모멘트 복구
+
+`ns.actual-moment-restoration`은 실제 같은 N3를 유지한 수렴 함수 구성입니다. 무한 radial/Picard 해와 유일한 B.8·I1·I2 implicit root를 실제 연산으로 보존하고, 전체 연속 적분으로 n=1,2의 다섯 incoming moments를 각각 만듭니다. 원래 Ipos의 연속 2×2·3×3 inverse를 적용해 열 개의 보정 후 모멘트가 정확한 0 함수임을 BigInt rational 식으로 확인합니다.
+
+원래 여섯 성분 시스템에서 두 차수의 내부 PDE 항등식 12개를 직접 검증합니다. 원래 preheat (5.19)의 B.8/I1·angular reset·Qp density·terminal wait를 열 보상과 함께 연결해 네 보존형 total을 0으로 환원합니다. `T1θ`는 `[Xminus,Xb]`, `T1z,T2θ,T2z`는 `[Xminus,Xplus]`에 지지되며 내부·외부의 원래 식과 양의 끝점 순서로 검사합니다. 실제 완료 객체가 있어야 다음 source를 허용하고 복사·변조·미보정 객체는 차단합니다. 2차 source는 생성되었으며 3차는 이 예시에서 생성하지 않았습니다.
+
+8개 관측 패널은 네 지지구간, 2×5 모멘트 영행렬, 실제 inverse, 차수 gate, 내부 PDE, 보존 total과 heat, 재현 그래프, 실행 범위입니다. 구간도는 물리 거리가 아닌 끝점 순서를 표시합니다. 보정 전 debt의 수치 크기를 만들어 그리지 않으며, 정확한 원문 식과 전체 수식 graph의 root·해시를 보존합니다. 기본 전체 graph는 138,172개 노드, canonical JSON 5,476,911 bytes이고 compact receipt는 88,150 bytes입니다.
+
+`precision.mode`는 `AUTO` 또는 `EXACT_CONSTRUCTIVE`입니다. `bits` 16–4096은 analytic tail의 목표이며 임의의 전역 수치 적분 정밀도를 뜻하지 않습니다. `terms` 0–2, `etaOrder` 0–2, `heatIterations` 0–2의 모든 공개 상한도 실행했습니다. 유한 표시 반복을 무한 수렴해 대신 사용하지 않습니다.
+
+49개 Node 검사와 독립 Fraction 보존식 12개·누락 대조 12개를 통과했습니다. 독립 다항식은 보편적인 적분부분적분 식을 검증하는 자료이고 실제 N3의 수치 적분값은 아닙니다. 실제 source 검증은 별도의 전체 program 재현과 43개 파일의 바이트 결속으로 확인합니다. [구성과 독립 검토](research/ACTUAL_MOMENT_RESTORATION_KO.md), [동결 manifest](tests/actual-continuation-exact-manifest.json), [실행 증거](evidence/actual-moment-restoration.json)에 상세를 보존합니다.
+
+### 실제 고정 영역의 N=0/1 잔차 감소
+
+`ns.actual-residual-order`는 같은 N3 source의 원래 압력, leading 해와 n=1 Picard 해를 실제 PDE에 대입합니다. X∈[0,4Xunit], η∈[-1,1], 전체 θ의 고정 compact에서 원래 cutoff와 모멘트 보정의 내부 restriction을 적용합니다. 이 영역에서는 T0와 T1 및 도함수가 정확히 0이므로 Fslow=R+div(T)의 실제 원문 잔차를 계산합니다.
+
+Xunit은 실제 source의 양의 상수식으로 한 번 정하며 N·mesh·bits·q에 따라 바꾸지 않습니다. 계산한 여덟 scalar norm과 물리 Cartesian 공간·시간 chain rule로 `C_N,m=8*Bres*(32*(m+2)*Dspace)^m`, `K_m=2+m`을 m=0..6까지 도출합니다. q와 X의 극소 양수는 0 대신 정확식으로 유지합니다.
+
+같은 q에서 N0의 양의 실제 radial witness가 전체 norm의 하한을 주고, N1 전체 compact의 해석적 norm이 상한을 줍니다. 기본 k=4,8,12,16에 대해 공통 배율을 제거한 N0 하한은 19.88773638보다 크고 N1 상한은 각각 1/16, 1/256, 1/4096, 1/65536입니다. 그래프는 이 두 부등식을 표시하며 실제 norm의 midpoint를 만들지 않습니다. q는 concentration scale이고 고정 q에서 η를 변화시키면 τ=q(1−η²), z=q^Dη가 함께 바뀌는 시공간 집합입니다.
+
+7개 패널에서 norm 비교, 여섯 실제 성분 구간, 같은 영역의 nested mesh, 산술 정밀도, 실제 CNm/Km, domain 및 PDE 항을 확인합니다. 96·128·192비트 정련은 고정된 source 해석 오차를 제거하지 않습니다. 전용 Node 12개와 독립 Fraction 1,544개 검사를 통과했고 [실제 잔차 유도](research/ACTUAL_RESIDUAL_ORDER_KO.md)와 [고정 source manifest](actual-residual-order-manifest.json)에 최종 교차 검토를 기록했습니다. 전체 모멘트 복구, 전체 profile과 모든 N의 잔차는 이 유한 인증의 범위 밖입니다.
+
+### 새로 연결한 실제 n=1 배경
+
+`ns.actual-background`는 같은 accepted nonlinear recurrence에서 `F1,U1,K1,Pi1,V1`의 exact Taylor DAG를 구성합니다. 원래 공통 반경 `a²=Xa exp(t1/16)`을 유지하며 실제 source 식으로 analytic strip, `C1`, Cauchy loss와 `4^(-K)/3` tail 상계를 도출합니다. K개의 Picard 항을 모두 수치 평가했다는 뜻은 아닙니다.
+
+축 그래프의 세 값은 **첫 방사 미분**이고 서로 다른 정확한 정규화를 사용합니다. 양의 반경 그래프의 15개 값은 5개 `Xi>0`에서 세 계수의 **정규화한 차분몫 `s*f(Xi)/Xi`**를 감싼 구간입니다. Xi는 극소 양의 exact 식이며 0으로 대입하지 않습니다. `tailBits`를 바꾸면 Xi도 달라지므로 고정 점의 정밀도 수렴 또는 N4-05 잔차 감소 검사로 해석할 수 없습니다.
+
+또한 Imean에서는 U가 0이어도 누적 모멘트로부터 `V0=-m*`, `Omega0=-m*²/(2X)`가 남습니다. 새 패널은 두 정규화 적분 기여 `1-exp(-5)`와 `-5/4`를 보여 줍니다. 전체 Ω 적분이나 다섯 debt가 닫힌 것으로 표시하지 않습니다. 수식 유도와 193개 독립 검사는 [실제 배경 설명](research/ACTUAL_BACKGROUND_KO.md)에 있습니다.
+
+### 새로 연결한 실제 Imean pulse
+
+`ns.actual-mean-pulse`는 같은 N3의 보존된 Imean에서 F, V, radial b, 정확히 0인 G를 계산합니다. 고정된 band chart의 `(rhoR,Z,T_chart)`에 대한 총차수 3까지 20개 도함수와 전체 관측 상자의 도함수 상계를 보관합니다. 정규화를 복원해도 이것이 곧 물리적 Cartesian 성분은 아닙니다.
+
+실제 방향 여유, 양의 h, 원래 왼쪽 초기조건 `z_plus(0)=P(0)>0, z_minus(0)=0`를 유지하고 국소 normal/frame 오차와 Riccati·Gaussian 값 비교를 연결합니다. 곡선은 **정규화한 기준 log P와 Gaussian 상계**이며 실제 진폭의 수치 적분값은 아닙니다. 전역 annulus, 모든 slow derivative Gaussian bound, covariance의 완료 플래그는 false입니다. 421개 독립 검사와 국소 증명의 범위는 [실제 pulse 설명](research/ACTUAL_MEAN_PATCH_PULSE.md)에 있습니다.
+
+### 실제 homogeneous pulse의 검증된 진폭
+
+`ns.actual-pulse-amplitude`은 원전 (5.18),(5.44),(5.45)에 의해 완성 배경과 정확히 일치하는 Imean velocity를 사용합니다. pressure와 누적 stress가 0이라고 가정하지 않습니다. 실제 η=0,s=1 대표점 및 y∈[1/4,19/4]에서 원래 growing left datum으로 전체 `0≤v≤Ls`를 적분합니다. 생성 phase의 domain과 N5-04가 인증된 대표점의 `4/Sstar³` 이웃을 구별합니다.
+
+원래 moving normal·B′·damping을 포함한 3D projected ODE를 Liouville 방정식으로 환원하고, 양의 Volterra 비교를 사용해 진폭을 구간화합니다. 실제 중점 `x/P≈0.353553390593`이며 reference P의 중점 1을 실제 진폭으로 대체하지 않습니다. 원래 (7.22) energy, n·t 제약, P의 midpoint, 샘플 사이를 포함한 연속 Gaussian을 검사합니다. `steps`는 8,16,32,64,128,256이고 sign은 ±1입니다.
+
+실제 진폭·세 성분·로그·energy·직교 구간·phase certificate를 6개 패널로 표시합니다. 13개 Node와 618개 독립 Fraction/80자리 Decimal 검사 및 별도 수학 검토는 [실제 진폭 유도](research/ACTUAL_PULSE_AMPLITUDE.md), [유한 기준 재심사](research/FINITE_CRITERIA_REAUDIT_KO.md)에 있습니다. 이 인증은 일반 nonzero forcing inverse, 모든 slow derivative 및 전체 annulus를 완료했다고 표시하지 않습니다.
+
+### 실제 core의 두 chart
+
+승인된 receipt는 `eta=0`, `Y=Lambda*X`의 `Y=0,1,2,4,41/10`에서 다섯 normalized quantity와 radial order 0,1,2를 기록합니다. 해당 구간에는 실제 infinite core와 비교 다항식 사이의 양의 비선형 오차, 전체 radial tail과 산술 오차가 이미 포함됩니다. 이 구현은 그 구간을 비교 다항식의 점값으로 줄이지 않습니다.
+
+`ns.source-core-charts` 예제는 그중 `Phi=CE/sqrt(2X)`의 order 0을 표시합니다. 두 인접 chart는 각각 `T=3/4,3/2`를 사용하여 같은 `q=Q*T`를 복원합니다. `Lambda*R²/(2*T)`로 원본 Y를 역산하고,
+
+\[
+ C Q^A u_\theta/R=T^{-1-h}\Phi,
+\quad
+ u_\theta=q^{-A}\sqrt{2Y/\Lambda}\,\Phi/C
+\]
+
+를 affine h 지수의 exact 합으로 확인합니다. 먼저 다른 chart 값으로 변환한 구간을 각 chart에서 되돌리므로 같은 interval을 두 번 복사하는 검사가 아닙니다. 표시축은 source Y와 normalized Phi이며, 물리량의 극소 배율은 식과 로그식으로 남깁니다. Y=0에서 `u_theta=0`은 analytic extension으로 처리합니다.
+
+`ell=8..900`은 이 **유한 좌표 관측**의 지원 범위이며, source pulse의 작은-q 인증 영역을 의미하지 않습니다. `ns.dyadic-charts`의 일반 R/Z/T geometry 행과 `actualCoreOverlap`의 실제 core 표본은 각각 자기 좌표와 tau를 보존합니다. 전체 eta 또는 gluing 이후 전역 field evaluator가 제공된다고 주장하지 않습니다.
+
+### 조건부 cutoff와 tail
+
+`ns.background-cutoffs`는 선언된 각 `C_hat[j,m]`에 대해 log-bound의 경계값과 단조성을 사용하므로 유한 q sampling을 전구간 증명으로 쓰지 않습니다. 실제 profile에서 그 상수들이 유도됐다는 주장과 scalar 부등식의 검증은 `constantLedger`에서 분리됩니다.
+
+`results.localPotentialSum`은 supplied 세 성분 potential에 실제 C∞ cutoff를 곱한 뒤 더합니다. `a_J*q_min>=1`과 이후 cutoff의 doubling 계약이 성립하면, compact domain 전체에서 보지 않은 모든 항의 cutoff가 정확히 0입니다. 이때만 `localSum`을 반환합니다. 조건이 부족하면 `PREFIX_EXHAUSTED`, `localSum:null`, 필요한 prefix 길이를 반환합니다. `uncutFiniteFormalTruncation`은 다른 값으로 별도 기록하며 uncut 무한급수 수렴을 주장하지 않습니다.
+
+`ns.pulse-tail`은 `residualJet`의 ψ 도함수 0..m+1, complex vector f/t 도함수 0..m를 사용해 모든 Leibniz 항을 계산합니다. m≤8의 실제 입력값·구간과 결과 경로가 export됩니다. 별도 log graph는 선언한 Gaussian/derivative-loss envelope의 조건부 결과입니다. **이 국소 jet은 특정 ell 또는 source family와 결속되어 있지 않으며, 실제 residual과 그 envelope의 크기 비교를 수행했다고 표시하지 않습니다.**
+
+### 수정한 원문 전사·정규화
+
+원문 (7.2)의 식은
+
+\[
+ B_s^2=\frac{\lambda_0}{\epsilon k^2(1+u_*^2)^{3/2}}
+\]
+
+입니다. 이전 `Bs=2*lambda0/(...)`는 잘못된 전사여서 수정했습니다. reference `P`는 실제 Bs² 정의로 midpoint log값 0과 연속 Gaussian 상계를 만족합니다. 그것만으로 실제 pulse t의 균일 Gaussian 상계를 인증하지 않습니다.
+
+정규화 Haar 평균에서 degree-14 covering의 **모든 inverse lift**를 포함하면 `14^Delta * 14^(-Delta)=1`입니다. 전역 factor를 `1/14`로 두지 않습니다. (6.19)/(7.27)의 국소 rectangle Jacobian은 `4−2√2`이고 angular 평균은 `1/2`입니다. 잘못된 과거 예제는 `evidence/historical-v0.1.1/`의 역사 자료로만 보존하며 현재 acceptance에서 제외됩니다.
+
+## 실제 응력과 공분산의 연결
+
+`ns.actual-covariance-matching`은 같은 원본의 homogeneous pulse를 `w=sqrt(Gscale)(a−1)`로 적분하고 양의 Gaussian tail을 보존합니다. 원문에서 허용한 구체적인 smooth χ의 제곱 질량, angular 평균 1/2와 원래 Haar Jacobian을 포함합니다. Gaussian 극한 값이나 균등 v 표본을 실제 적분으로 대체하지 않습니다.
+
+실제 B.8·I1 모멘트 복구와 I2 열 보상식의 leading stress를 만든 후 pulse와 stress의 F가 같은 정확한 식인지 비교합니다. 그 실제 target과 H로 양의 두 weight를 계산합니다. 512 cells의 정규화 제곱 진폭은 두 sign 모두 `[2.619808939012956, 2.787057138136905]`이며, 양의 거대한 물리 배율은 정확식으로 보존합니다. 열 보상의 양의 하한과 covariance tail을 0으로 없애지 않습니다.
+
+원문 smooth 제곱분할을 실제로 선택해 대표점에 활성인 한 band·한 slow box를 만들고, 생략한 모든 정수 index가 support 밖임을 확인합니다. 두 sign은 한 box의 내부에 포함합니다. 이 대표점의 원래 물리 (7.30) 잔차는 정확히 `[0,0]`입니다. 이 예제는 대표점의 수치 검증 범위를 유지합니다. 전체 annulus와 공통 analytic q*는 아래의 별도 실제 source family 인증으로 연결합니다. 기존 8개 패널은 값·배율·근거와 유한 범위를 보존합니다. [실제 연결 증명과 범위](research/ACTUAL_PULSE_COVARIANCE_MATCHING.md), [열 보상 응력](research/ACTUAL_MEAN_STRESS_KO.md)에 상세를 기록합니다.
+
+## 전체 실제 source family의 공분산과 전역 합
+
+`ns.actual-uniform-covariance`는 원래 source를 만드는 프로그램에서 실제 완성 배경, leading 방향, moving ODE, 적분 H와 target을 다시 생성합니다. 입력으로 상계·target·완료 판정을 받지 않습니다. 일반 차수의 여섯 성분 source와 다섯 모멘트 복구를 차례로 만들고, n 자체로 정한 canonical cutoff sequence를 적용합니다. 모든 n의 tail과 실제 유한 block에서 enlarged slow 영역의 C² 및 leading 근접 상계를 도출합니다.
+
+두 부호의 실제 phase·moving frame·B′·pressure projector·damping을 포함한 ODE를 ordered-integral 수렴해로 구성합니다. H의 angular 평균 `1/2`, rectangle Jacobian `4−2√2`, longitudinal factor `c_i`, 실제 `∫χ²`와 `ψ²`를 그대로 유지합니다. 정규화 Haar에서 covering의 모든 inverse lift를 합하므로 추가 `14^(-i)`는 붙이지 않습니다. 표시한 유한 Volterra 항에는 항상 양의 factorial tail이 남고, 유한 iterate를 정확한 해로 사용하지 않습니다.
+
+공통 `qStar=2^(-ellMinimum-4)>0`는 실제 source norm과 연속 concentration 부등식으로 생성한 정확한 양수식입니다. `h`를 0이나 유한 probe로 대체하지 않으며 극소 qStar를 Float64의 0으로 출력하지 않습니다. 모든 `ell≥ellMinimum`의 허용 box에서 정규화 H의 네 성분 오차는 `kappa/128` 이하이고, 정규화 determinant는 `15/8`보다 큽니다. 물리 `(theta,z)` 행과 `(+,-)` 열의 **det(H)는 음수**이므로 양의 하계는 `|det(H)|`에 적용합니다.
+
+실제 finalized leading `F,U,M`, prefix 적분 `I,J,S,Cp`와 두 shear 항으로 T0를 만듭니다. 실제 H의 adjugate inverse에서 `H*y−T0,star=(0,0)`을 정확히 환원합니다. 정규화 weight는 `[kappa/64,2]`에 있으며, `Xa<X<Xb`에서 y±가 엄밀히 양수입니다. 양 끝점에서는 target과 weight가 정확히 0이고 원래 flat factor로 smooth zero extension을 구성합니다. 경계에서 양수나 `0/0`을 주장하지 않습니다.
+
+원래 실제 q·각 band의 chart·mesh로 제곱분할을 만들고, 가능한 81개 이웃 box와 그 밖의 모든 정수 항의 정확한 0을 연결합니다. 두 signs는 **한 box 안의 두 열**입니다. box를 한 번씩 합하며, 공통 물리 torus와 모든 label의 지지 분리로 교차항이 사라집니다. 원래 물리 배율을 포함한 전역 (7.30)의 두 성분은 정확히 일치합니다. 화면의 `[0,0]`은 `0<q<qStar`에서 성립하는 평균 covariance의 함수 등식이며 수치 Navier–Stokes PDE 잔차가 아닙니다.
+
+공개 입력 `anchorOrder`는 1 또는 2이고, `ellExact`는 별도의 양의 10진 정수 문자열로 둘 중 하나를 고릅니다. `terms`는 0–2이며 기본값은 1입니다. `AUTO`와 `EXACT_CONSTRUCTIVE`를 지원하고, 사용하지 않는 `precision.bits`는 거절합니다. 유한 실행의 graph budget을 넘으면 명시적으로 실패하며 누락 coefficient를 0으로 놓지 않습니다. 기본 예제에는 60초 제한을 명시합니다.
+
+**화면에서 구성한 유한 member가 ellMinimum 이상이라고 판정하지 않습니다.** 그 member의 source 함수·실제 integrand·유한 적분 항은 구성하지만, 그 member의 determinant 비영성과 양의 weight는 인증하지 않습니다. 전체 family의 정량적 증명과 유한 실행의 예시를 별도 필드에 보존합니다. 전체 graph는 source compiler와 정규화된 입력으로 재구성하고 digest를 비교합니다. 작은 실행 receipt는 graph를 중복 저장하지 않으며 정확한 root와 tail을 반환합니다. 구현은 [실제 family compiler](actual-covariance-source-certificate.mjs)에 있습니다.
+
+## 검증과 재현
+
+```bash
+node research-ide/mathscope-m2/navier/tests/generate-evidence.mjs
+```
+
+릴리스 생성기는 기존 267개 Node·10,409개 독립 검사에 일반 차수 leading·source·cutoff·완성 배경 C², 연속 concentration, 전역 분할 및 최종 실제 H family 검사를 추가해 실행합니다. 최종 H 전에 추가한 지원 검사는 Node 66개와 독립 6,778개입니다. 별도 Python 검사가 없는 보조 명제는 독립 검사 0개로 기록합니다. 원본 manifest의 모든 바이트, 독립 checker의 현재 출력과 실제 producer 재현을 대조합니다. 보조 명제의 원래 false scope는 유지하고, 최종 source compiler가 실제 입력과 전체 영역을 연결할 때에만 N5-06을 인증합니다. 최종 정확한 검사 수·소스 hash·25개 example receipt는 `evidence/acceptance.json`에서 확인합니다.
+
+음성 대조는 axial viscosity의 n−1 항, pressure shift, cylindrical connection, χ′ 또는 rm 누락, 빠른 auxiliary chain rule 누락, Q/T 배율 누락, 잘못된 Haar factor, source receipt·Y·interval 변조, 부족한 cutoff prefix, ψ의 최고차 도함수 누락, covariance cone 밖의 target 등을 실제로 실패시킵니다. `EXACT`, `FORMAL`과 설치 범위를 벗어나는 정밀도 요청은 거절합니다. 실제 core와 continuation에 96–512비트 `DIRECTED_BIGINT`를 허용하며, 구간 포함과 정확한 함수값·형식 증명을 구분합니다.
+
+새 source operator는 exact BigInt rational polynomial 및 Q(√2) 산술, 또는 IEEE754 outward interval을 사용합니다. 별도 `ns.pulse-ode`의 RK4 refinement는 경험적 진단입니다. 새 실제 homogeneous pulse는 source-bound 양의 Volterra 비교 enclosure를 반환하며 이 두 검증 수준을 구별합니다. 그래프는 source hash와 raw interval/point 경로를 유지하며 축 라벨을 데이터 경로로 오인하지 않습니다.
+
+## 남은 실제 구성
+
+원문 N4/N5 16개 acceptance에는 PARTIAL이나 OPEN이 남지 않습니다. 이 판정과 별개로 전체 repaired profile 및 모든 N의 물리 PDE residual, 모든 slow Gaussian derivative의 명시적 상계와 전체 flat-error 조립은 추가 패키지 범위입니다. [PROOF_OBLIGATIONS_KO.md](PROOF_OBLIGATIONS_KO.md)에 완료 영역과 추가 범위를 함께 기록합니다. 기존 N3, 양의 h, 원문 기준은 보존합니다.

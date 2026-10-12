@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: the normalized matrix retains the damped second channel and the original envelope FTC
+not ok 1 - the normalized matrix retains the damped second channel and the original envelope FTC
+  ---
+  duration_ms: 31.526383
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-pulse-gaussian-power-kernel.test.mjs:14:1'
+  failureType: 'testCodeFailure'
+  error: 'The actual homogeneous pulse lost its stable matrix decomposition or original envelope.'
+  code: 'INVALID_SOURCE_CONSTRUCTION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    normalizedHomogeneousPulseBinding (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-pulse-gaussian-power-kernel.mjs:132:30)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-pulse-gaussian-power-kernel.test.mjs:15:31)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: omitting the stable eigenvalue, reversing damping, or resetting the original initial data is rejected
+ok 2 - omitting the stable eigenvalue, reversing damping, or resetting the original initial data is rejected
+  ---
+  duration_ms: 29.886379
+  type: 'test'
+  ...
+# Subtest: all finite fast-time orders keep the same positive denominator requirements and stable exponential
+ok 3 - all finite fast-time orders keep the same positive denominator requirements and stable exponential
+  ---
+  duration_ms: 12.888711
+  type: 'test'
+  ...
+# Subtest: resource exhaustion is explicit and supplied source completion flags are not accepted as orders
+ok 4 - resource exhaustion is explicit and supplied source completion flags are not accepted as orders
+  ---
+  duration_ms: 0.199053
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 165.457228

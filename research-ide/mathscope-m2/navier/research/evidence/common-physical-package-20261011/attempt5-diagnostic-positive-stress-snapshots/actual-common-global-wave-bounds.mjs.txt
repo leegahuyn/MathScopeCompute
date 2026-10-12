@@ -1,0 +1,195 @@
+/** Uniform full-curl / temporal-force bounds for the SAME original family.
+ * Norm expressions and physical expressions live in explicitly separate
+ * authenticated graphs. A sibling's integer root ID is never transplanted.
+ */
+import {assertActualCommonAdmissibleFamily} from './actual-common-admissible-family.mjs';
+import {assertActualCommonTargetWeightedNorms} from './actual-common-target-weighted-norms.mjs';
+import {assertActualCommonBandPhysicalCurl} from './actual-common-band-physical-curl.mjs';
+import {originalWeightedCovarianceJetPowers,completePhysicalGaussianTailRecipe} from './actual-global-wave-bound-kernel.mjs';
+import {normalizedHomogeneousPulseBinding} from './actual-pulse-gaussian-power-kernel.mjs';
+import {originalPulseTimeCutoff,originalPulseTimeCutoffBounds} from './actual-gaussian-flat-tail-kernel.mjs';
+import {fixedLabelSourcePartitionFactor} from './actual-physical-full-curl.mjs';
+import {exactSlowProfileExpansion} from './actual-all-band-background-norm-kernel.mjs';
+import {rectangularSourceFTC} from './actual-background-physical-seminorms.mjs';
+import {assertSourceSquaredProductPartition} from './actual-covariance-global-assembly.mjs';
+import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
+import {sourceExponentContract} from './source-profile.mjs';
+import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+import {factorial,fail} from './actual-continuation-arithmetic.mjs';
+
+const seals=new WeakMap(),same=(a,b)=>canonicalStringify(a)===canonicalStringify(b),
+  data=p=>canonicalStringify({request:p.request,sourceBinding:p.sourceBinding,coefficientConstants:p.coefficientConstants,
+    bounds:p.bounds,sourcePulseBindings:p.sourcePulseBindings,global:p.global,physicalReferences:p.physicalReferences,
+    roots:p.roots,checks:p.checks,scope:p.scope});
+const progress=(context,stage,G)=>{context.checkCancelled?.();context.onProgress?.({stage,nodeCount:G.nodes.length});};
+
+/** Every constant is a finite expression of this original family. A shared
+ * function is defined by the exact coefficient body before FTC; no caller
+ * derivative array or external function oracle is accepted.
+ */
+function sourceCutoffAndMapConstants(G,family,order){
+  const q=(n,d=1)=>G.q(n,d),c=family.constants,n=order+2,
+    offset=G.fresh('global_bound_fixed_partition_offset'),factor=fixedLabelSourcePartitionFactor(G,offset),
+    partitionSystem=G.defineExpressionFunction({name:'ActualGlobalBoundOriginalPartition',parameters:[offset],body:factor.value,derivativeLimits:[n+2]}),
+    partitionRows=Array.from({length:n+1},(_,j)=>({order:j,...rectangularSourceFTC(G,{body:G.expressionValue(partitionSystem,[offset],[j]),
+      coordinates:[offset],lower:[q(-1)],upper:[G.one]})})),
+    time=originalPulseTimeCutoffBounds(G,{order:n}),stepMax=G.maximum(G.one,...time.stepBounds),
+    transverse=Array.from({length:n+1},(_,j)=>G.mul(G.pow(G.div(q(2),c.r0),j),time.stepBounds[j])),
+    s=G.fresh('global_bound_chart_s'),X=G.fresh('global_bound_chart_X'),eta=G.fresh('global_bound_chart_eta'),
+    chart=exactSlowProfileExpansion(G,{s,X,eta,h:c.h,multiplier:G.one,order:n,maxJetRequests:200000}),
+    box={coordinates:[s,X,eta],lower:[q(1,2),G.div(c.Xa,q(2)),q(-1)],upper:[q(2),G.mul(q(2),c.Xb),G.one]},
+    coefficientRows=[],memo=new Map();
+  const norm=body=>{
+    if(memo.has(body))return memo.get(body);
+    const system=G.defineExpressionFunction({name:'ActualGlobalBoundChartCoefficient_'+body,parameters:box.coordinates,body,derivativeLimits:[3,3,3]}),
+      actual=G.expressionValue(system,box.coordinates),materialized=G.materializeExpressionFunction(system,box.coordinates),
+      ftc=rectangularSourceFTC(G,{body:actual,...box});
+    if(materialized!==body)fail('INVALID_SOURCE_CONSTRUCTION','The original slow chart coefficient body was lost.');
+    coefficientRows.push({body,system,materialized,...ftc});memo.set(body,ftc.bound);return ftc.bound;
+  };
+  // For every positive multi-index, D^alpha log(s) is exactly the
+  // coefficient of E_s P in D^alpha P; E_s log(s)=1 and all later
+  // E_s or X/eta profile derivatives vanish.
+  const logChartRows=chart.rows.filter(r=>r.slowOrders.some(Boolean)).map(r=>{
+    const t=r.terms.find(t=>same(t.profileOrders,[1,0,0]));
+    return {orders:r.slowOrders,body:t?.coefficient??G.zero,bound:t?G.div(norm(t.coefficient),G.log(q(2))):G.zero};
+  }),partitionMax=G.maximum(G.one,...partitionRows.map(r=>r.bound)),logChartMax=G.maximum(G.one,...logChartRows.map(r=>r.bound)),
+    // The number of set partitions is <=j!, and each mixed chain term
+    // has at most j factors. Four factors give the multinomial sum4^j.
+    slowCutoff=G.mul(q(4n**BigInt(n)*factorial(n)),G.pow(partitionMax,n+4),G.pow(logChartMax,n+4)),
+    Lambda=G.sub(q(4),G.sqrt(q(2))),rho=G.div(G.log(Lambda),G.log(c.Tg)),kappa=q(1,100000),
+    dr=G.sub(G.mul(q(2),G.add(G.one,c.h),rho),G.mul(c.h,kappa)),drAbs=G.sqrt(G.add(G.one,G.pow(dr,2))),
+    Rlower=G.sqrt(G.div(c.Xa,q(2))),Rupper=G.sqrt(G.mul(q(8),c.Xb)),Rbase=G.add(q(2),Rlower,G.inv(Rlower),Rupper),
+    radiusRows=Array.from({length:n+1},(_,j)=>({order:j,
+      inverseRadius:G.mul(q(factorial(j)),G.pow(Rbase,j+1)),
+      fastRadial:G.mul(G.pow(G.add(drAbs,q(j+1)),j+1),G.exp(G.mul(G.add(drAbs,q(j+1)),G.log(Rbase))))})),
+    maximum=G.maximum(q(2),stepMax,slowCutoff,...transverse,...time.rows.map(r=>r.coefficient),
+      ...radiusRows.flatMap(r=>[r.inverseRadius,r.fastRadial]),q(factorial(n)*2n**BigInt(n+4)));
+  if(G.materializeExpressionFunction(partitionSystem,[offset])!==factor.value||G.freeCoordinates(maximum).size)
+    fail('INVALID_SOURCE_CONSTRUCTION','All original cutoff/map norms must retain their actual body and be source-only.');
+  return {order:n,factor,partitionSystem,partitionRows,time,transverse,chart,coefficientRows,logChartRows,slowCutoff,
+    Lambda,rho,kappa,dr,Rlower,Rupper,Rbase,radiusRows,maximum,
+    partition:'The exact fixed-label denominator is >=1/4 on its numerator support. Its guarded smooth function is defined on [-1,1] and has all fixed derivatives zero at the outer endpoints.',
+    slow:'Each fixed jth slow cutoff derivative is <=slowCutoff*S^(3j). The band-factor argument uses the displayed log(s) derivatives; every mesh factor has affine argument ell^6 times its own coordinate.',
+    transverseProof:'On either transition of the original chi(xi), |xi| is linear and its slope has magnitude1. The transition inner slope has magnitude2/r0; on the central plateau every positive derivative is zero.',
+    fastRadialProof:'The actual palette i=floor(((1+h)*ell*log2-log S)/log Tg) gives Lambda^i*Q^(dr/2)<=epsilon^(-kappa_s/2)*S^(-rho)<=epsilon^(-kappa_s). Differentiate R^dr exactly; the displayed falling-product/radius bound controls every fixed derivative of a(R) after this single epsilon factor.',
+    materializedCoefficientBodies:true,sourceOnly:true};
+}
+
+export function attachActualCommonGlobalWaveBounds(family,inputs,options={},context={}){
+  assertActualCommonAdmissibleFamily(family);
+  if(!inputs||Object.keys(inputs).some(k=>!['targetWeightedNorms','physicalCurl'].includes(k))||!options||Object.keys(options).some(k=>!['derivativeOrder','flatOrder','maxWork'].includes(k)))
+    fail('INVALID_INPUT','Use the private actual weighted norms and physical curl with finite derivative/flat orders.');
+  const {targetWeightedNorms:target,physicalCurl:physical}=inputs;
+  assertActualCommonTargetWeightedNorms(target);assertActualCommonBandPhysicalCurl(physical);
+  if(target.family!==family||physical.family!==family)fail('INVALID_SOURCE_CONSTRUCTION','All norms, weights and physical residuals must use this same recursive family.');
+  const request={derivativeOrder:options.derivativeOrder??0,flatOrder:options.flatOrder??4,maxWork:options.maxWork??50000},m=request.derivativeOrder;
+  if([m,request.flatOrder].some(x=>!Number.isSafeInteger(x)||x<0)||!Number.isSafeInteger(request.maxWork)||request.maxWork<1)
+    fail('INVALID_INPUT','Use finite nonnegative orders and a positive finite work budget.');
+  const backgroundRow=family.source.backgroundNorms.gaussianRows.find(r=>r.derivativeOrder===m+1);
+  if(!backgroundRow||target.request.derivativeOrder<m+1)
+    fail('RESOURCE_LIMIT','This full-curl derivative order needs actual C_(m+3) and actual target norms through m+1. Missing higher norms are not replaced by C2.');
+  const G=target.G,sourceCount=G.nodes.length,sourcePrefix=canonicalStringify(G.nodes),q=(n,d=1)=>G.q(n,d),c=family.constants,
+    coefficientConstants=sourceCutoffAndMapConstants(G,family,m),targetRows=target.rows.slice(0,m+2),
+    powerLedger=originalWeightedCovarianceJetPowers({order:m,maxWork:request.maxWork,targetPoles:targetRows.map(r=>r.pole)}),
+    E=G.pow(c.Bnorm,256),Lmax=c.Lmax,W=G.exp(G.mul(q(3),E,Lmax)),
+    dstar=family.uniformCovariance.inverse.determinantScaleLower,cy=family.uniformCovariance.positivity.weightOverZetaLower,
+    haarLengthUpper=G.mul(q(2),G.sub(q(4),G.mul(q(2),G.sqrt(q(2)))),G.pow(c.r0,2)),
+    K=G.maximum(q(2),backgroundRow.B_m,G.pow(W,m+3),G.inv(dstar),G.inv(G.sqrt(cy)),haarLengthUpper,
+      coefficientConstants.maximum,...targetRows.map(r=>r.N_m)),
+    coefficientPower=Math.max(...powerLedger.curl.map(r=>r.power)),boundaryPole=Math.max(...powerLedger.curl.map(r=>r.pole)),
+    // Repeated physical derivatives add coefficient, basis and harmonic
+    // Leibniz factors. A phase derivative has at most one v factor, all
+    // background jets through m+3 are bounded by K, and k<=2/sqrt(eps).
+    // Charge each derivative TWO Q powers, while retaining its S power.
+    physicalPower=coefficientPower+(m+1)*(m+64)+4*(m+1)**2,
+    physicalPrefactor=G.pow(K,physicalPower),gaussian=G.div(G.mul(c.r0,G.pow(c.Renv,-31)),G.mul(q(32),c.u)),
+    meshCount=G.mul(q(2),G.add(G.mul(q(4),G.sqrt(c.Xb)),q(3)),q(7),q(7)),
+    qGlobalStar=G.exp(G.neg(G.mul(G.add(c.ell0,q(4)),G.log(q(2))))),
+    tail=completePhysicalGaussianTailRecipe(G,{gaussian,innerExponent:G.pow(c.t1,2),outerExponent:q(4),
+      polynomialOrder:physicalPower,boundaryPole,derivativeOrder:m,flatOrder:request.flatOrder,firstBand:c.ell0,meshCount}),
+    // A supported band satisfies |ell+log2(q)|<3/4. An interval of
+    // length3/2 contains at most two integers. The per-band flat bound
+    // therefore needs this factor even after the whole mesh is counted.
+    // The infinite tail already sums every band and needs no extra factor.
+    activeBandCount=2,flatConstant=G.mul(q(activeBandCount),physicalPrefactor,tail.roots.flatConstant),
+    infiniteTail=G.mul(physicalPrefactor,tail.roots.infiniteTail);
+  progress(context,'common-global-source-norm-constants',G);
+  // These are executed on the physical graph, not on the norm graph.
+  const PG=physical.G,band=physical.band,sourcePulseBindings=[];
+  for(const f of band.families){
+    const system=PG.covarianceSystems[f.system],binding=normalizedHomogeneousPulseBinding(PG,{v:band.coordinates.v,length:band.geometry.Ls,
+      lambda:f.frame.reference.lambda,dref:f.frame.reference.dref,damping:f.frame.actualDamping,projected:f.frame.projected,
+      error:f.frame.projectedError,matrix:system.matrix,P:f.P,initial:system.initial},context),
+      slowIndependent=['R','Z','T'].every(n=>!PG.freeCoordinates(f.P).has(band.coordinates[n])),
+      cutoff=originalPulseTimeCutoff(PG,band.coordinates.v,band.geometry.Ls);
+    sourcePulseBindings.push({graphNamespace:'physical',sign:f.sign,originalSystem:f.system,originalAmplitude:f.t,
+      originalP:f.P,binding,slowIndependent,originalCutoffMatches:cutoff.psi===band.cutoffs.psi,
+      fullMovingNormal:f.frame.n,initial:system.initial});
+  }
+  const physicalReferences={graphNamespace:'physical',sameActualCommonFamily:true,
+    fullPhysicalCurl:physical.roots.combinedPhysicalJets,fullPhysicalResidual:physical.roots.physicalResidual,
+    fullTemporalForce:physical.roots.actualTemporalCutoffForce,retainedAfterTemporalForce:physical.roots.retainedPhysicalResidualAfterTemporalForce,
+    retainedSelfAdvection:physical.roots.retainedWaveSelfAdvection,retainedEikonal:physical.roots.originalEikonalDefects,
+    integerIDsNeverTransplantedToNormGraph:true},
+    global={qGlobalStar,originalFamilyQStar:c.qStar,ell0:c.ell0,
+      activeBands:'If0<q<qGlobalStar=2^(-(ell0+4)) and the original band factor is nonzero, |ell+log(q)/log2|<3/4. Thus ell>ell0+13/4, and every active band satisfies the common source hypotheses. Also1/2<s=q/Q<2.',
+      sameSequence:'This is a smaller sufficient Gamma for the very same b_n; no second background or changed cutoff sequence is introduced.',
+      everyLabel:'For each original integer band and mesh label use that label\'s own full coefficient sum, representative, rounded carriers, exact Volterra solutions, literal H integrals and positive inverse weights. Every estimate used above depends only on the common source constants and the same-box hypotheses.',
+      squareRoots:'On the open annulus y>=cy*zeta>0. Differentiate H*y=T and sigma^2=y with the displayed full Leibniz recurrences. Each derivative is bounded by a source constant times sqrt(zeta) times a finite boundary pole. The two actual radial exponential factors absorb every such pole, so all fixed derivatives tend to0 at both edges. Extend by0 before evaluating any inverse or square root at/exterior to an edge.',
+      auxiliaryJoins:'The original chi and psi are flat on the boundary of their fixed rectangle. The nearest-lift map is constant on a supported enlarged rectangle because3*r0<1/2. Therefore all zero extensions are smooth and the coordinate lift introduces no jump.',
+      partition:'The original squared smooth partition has all81 local candidates; its exact omitted complement is0. At most16 beta labels (32 signs) are nonzero at any point, with the same bound for supported derivatives. Each band has the full signed mesh bound2*(4sqrt(Xb)+3)*7*7*ell^18. At fixed q the support interval for ell has length3/2, hence at most two bands contribute; the global flatConstant includes this additional factor2. The infiniteTail already sums all bands.',
+      divergence:'Each retained wave is an actual Cartesian curl. Its supported extension is smooth by the preceding original joins. On q>0 the band and mesh families are locally finite, so differentiation commutes with the actual global sum and global divergence is0.',
+      timeBoundary:'All smoothness statements refer to the original physical side T>=0. At eta=+-1 the heat jets are continuous one-sided limits from T>=0. No extension to negative T or two-sided real heat formula is claimed here; the later N7 endpoint problem remains separate.',
+      temporalFlatness:'The actual force is the sum of Q^(-A-1-h)*psi_prime*curl_star(A_base). Every differentiated term retains a positive derivative of the original temporal cutoff, hence its Gaussian envelope is at most exp(-gaussian*ell^2). The displayed two-boundary estimate, all-label count and completed square give |D^m F_psi|<=flatConstant*q^N. The same source threshold works for every fixed m,N.',
+      physicalChain:'A spatial or temporal derivative of the harmonic factor uses a derivative of its phase, never its unbounded absolute phase. The exact normal cancels the axial pz/epsilon factor. Each needed coefficient derivative costs a source constant or an S power; the original radial fast factor costs epsilon^-kappa_s. The rational loss audit charges at most2 powers of Q^-1 per further derivative. Bell/Leibniz counts are bounded by factorials already included in K; the displayed physicalPower leaves an additional(m+1)(m+64)+4(m+1)^2 powers for these products.',
+      residual:'The full nonlinear and eikonal residuals remain in the actual physical graph. Subtracting the separately flat temporal force defines the exact nonzero remainder passed to N6; no whole uncorrected Navier-Stokes residual is set to0 or declared flat.',
+      allFinite:'For every fixed m,N, first generate the SAME full background C_(m+3) and target weighted norms through m+1 by their authenticated finite constructors. Then run this finite recursion. A finite regression at one m witnesses implementation and does not claim infinitely many graph executions.'},
+    bounds={backgroundRow,targetRows,K,E,W,haarLengthUpper,powerLedger,coefficientPower,physicalPower,boundaryPole,
+      physicalPrefactor,gaussian,meshCount,activeBandCount,tail,flatConstant,infiniteTail,
+      exactPrefactorRetained:true,coefficientBound:'For each actual label, every fixed physical derivative through m of its full temporal force has modulus <=K^physicalPower*Q^(-2-2m)*S^physicalPower*sqrt(zeta)*delta_*^(-boundaryPole)*P(v).'},
+    checks=[{id:'same-private-common-family',pass:assertActualCommonAdmissibleFamily(family)},
+      {id:'same-private-original-weighted-norms',pass:assertActualCommonTargetWeightedNorms(target)},
+      {id:'same-private-actual-full-physical-curl',pass:assertActualCommonBandPhysicalCurl(physical)},
+      {id:'actual-higher-Cm-and-target-poles',pass:backgroundRow.backgroundDerivativeOrder===m+3&&targetRows.length===m+2&&targetRows.every((r,j)=>r.derivativeOrder===j&&r.pole===3+3*j)},
+      {id:'all-actual-moving-pulses-and-time-cutoff',pass:sourcePulseBindings.length===2&&sourcePulseBindings.every(r=>r.binding.checks.every(x=>x.pass)&&r.slowIndependent&&r.originalCutoffMatches&&same(r.initial,[PG.one,PG.zero]))},
+      {id:'complete-original-partition-and-palette',pass:assertSourceSquaredProductPartition(PG,physical.geometry.partition.partition)&&physical.geometry.palette.commonToAllBandsAndLabels},
+      {id:'full-temporal-curl-force-retained',pass:physical.rows.every(r=>r.temporal.originalFullCurlBeforeTimeCutoffDerivative&&!r.temporal.divisionByPsiUsed&&r.temporal.checks.every(x=>x.pass))},
+      {id:'both-actual-flat-target-exponents',pass:target.scalarRules.inner.a===G.pow(c.t1,2)&&target.scalarRules.outer.a===q(4)},
+      {id:'actual-source-prefactor-overlapping-bands-and-positive-tail',pass:activeBandCount===2&&infiniteTail!==G.zero&&flatConstant===G.mul(q(activeBandCount),physicalPrefactor,tail.roots.flatConstant)&&infiniteTail===G.mul(physicalPrefactor,tail.roots.infiniteTail)},
+      {id:'all-norm-constants-source-only',pass:[K,gaussian,meshCount,flatConstant,infiniteTail,qGlobalStar].every(x=>G.freeCoordinates(x).size===0)},
+      {id:'positive-h-and-exact-physical-losses',pass:sourceExponentContract().positive&&tail.loss.pass&&!tail.loss.hReplacedByZero},
+      {id:'unchanged-original-target-prefix',pass:canonicalStringify(G.nodes.slice(0,sourceCount))===sourcePrefix}],
+    sourceBinding={sourceProfile:family.request.sourceProfile,parameterExpressionSHA256:family.sourceBinding.parameterExpressionSHA256,
+      sameRecursiveSelector:true,sourceGraphs:['norm','physical'],graphRootIDsNamespaced:true,originalAllLabelConstruction:true,
+      sourceEquations:['7.12','7.16','7.19','7.20','7.27','7.37','7.40'],sourceBoundUniformDerivativeArgument:true},
+    scope={actualCommonAllBandPositiveSmoothWeights:true,actualGlobalFullCurlDivergenceZero:true,
+      actualUniformWeightedSlowFastGaussianBounds:true,actualPhysicalTemporalCutoffForceFlat:true,
+      actualGeneratedDerivativeOrder:m,actualFlatOrder:request.flatOrder,allFiniteOrdersBySameSourceRecipe:true,
+      sameSourceThresholdForAllFixedOrders:true,allIntegerGraphsLiterallyExecuted:false,actualOriginalPositiveH:true,etaEndpointsAreOneSided:true,
+      actualCompleteNSResidualRetained:true,totalUncorrectedNSResidualDeclaredFlat:false,
+      numericalDerivativeEnclosures:false,newLeanKernelProofExecuted:false,wholeM2Complete:false,M3Started:false};
+  if(checks.some(r=>!r.pass))fail('INVALID_SOURCE_CONSTRUCTION','Common all-label wave binding failed: '+checks.filter(r=>!r.pass).map(r=>r.id).join(', '));
+  const roots={K,physicalPrefactor,gaussian,qGlobalStar,flatConstant,infiniteTail},
+    result={G,family,target,physical,request,sourceBinding,coefficientConstants,bounds,sourcePulseBindings,global,physicalReferences,roots,checks,scope},
+    packed=G.pack(roots,{schema:'MathScope.ActualCommonGlobalWaveBoundProgram/1',request,sourceBinding,coefficientConstants,bounds,
+      sourcePulseBindings,global,physicalReferences,checks,scope});
+  result.program=JSON.parse(canonicalStringify(packed));
+  seals.set(result,{G,family,target,physical,count:G.nodes.length,prefix:canonicalStringify(G.nodes),definitions:G.captureFunctionDefinitions(),data:data(result),program:canonicalStringify(result.program)});
+  progress(context,'common-global-wave-bounds-sealed',G);return result;
+}
+
+export function assertActualCommonGlobalWaveBounds(p){
+  const s=seals.get(p);
+  if(!s||s.G!==p.G||s.family!==p.family||s.target!==p.target||s.physical!==p.physical||s.data!==data(p)||
+    s.program!==canonicalStringify(p.program)||s.prefix!==canonicalStringify(p.G.nodes.slice(0,s.count))||!p.G.functionDefinitionsUnchanged(s.definitions))
+    fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged private actual common global-wave bound object.');
+  assertActualCommonAdmissibleFamily(s.family);assertActualCommonTargetWeightedNorms(s.target);assertActualCommonBandPhysicalCurl(s.physical);return true;
+}
+
+export async function actualCommonGlobalWaveBoundCertificate(p){
+  assertActualCommonGlobalWaveBounds(p);const s=seals.get(p);
+  return {schema:'MathScope.ActualCommonGlobalWaveBoundCertificate/1',request:p.request,sourceBinding:p.sourceBinding,
+    roots:p.roots,checks:p.checks,scope:p.scope,global:p.global,
+    graph:{namespace:'norm',sha256:await sha256(s.program),nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.program).length,fixedCompilerPrefix:true}};
+}

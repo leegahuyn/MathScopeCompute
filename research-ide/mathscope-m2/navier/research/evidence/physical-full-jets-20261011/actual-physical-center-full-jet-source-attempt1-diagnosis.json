@@ -1,0 +1,16 @@
+{
+  "schema": "MathScope.PhysicalFullJetAttempt1FailureDiagnosis/1",
+  "sourceRecord": {
+    "path": "research-ide/mathscope-m2/navier/research/evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt1.json",
+    "sha256": "de73b1fb2a9360da480c2cc64b4bd818e741773fb1d6f4bead9b047c57201661"
+  },
+  "processRecord": {
+    "path": "research-ide/mathscope-m2/navier/research/evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt1-process.json",
+    "sha256": "e663968ca01a1ab3821136731eea77116ee25ef3c76a17f2656e89a62a05a7f1"
+  },
+  "observedSourceChecksPassed": 6,
+  "finalPass": false,
+  "cause": "The finite-body constructor retained pack().nodes by reference. The legitimate late numerical attachment appended nodes to that same array, so the earlier packed program changed length even though its original node prefix and function definitions were unchanged. The private predecessor assertion correctly rejected the changed packed record.",
+  "correction": "Snapshot every top-level array returned by pack() at the two new certificate boundaries. Keep existing node and definition objects, canonical node-prefix checks, function-definition checks and complete-record checks unchanged. Shared legacy pack() and mathematical constructors are not relaxed.",
+  "nextValidation": "A fresh original source run must regenerate both coupled variations and all270 derivatives and pass every original check, including tamper rejection. Attempt1 is retained as failed and cannot generate installed runtime source evidence."
+}

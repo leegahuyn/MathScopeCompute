@@ -1,0 +1,137 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+import {prepareActualCommonAdmissibleFamily,actualCommonAdmissibleFamilyCertificate} from '../actual-common-admissible-family.mjs';
+import {actualCommonAdmissibleBandCertificate} from '../actual-common-admissible-band.mjs';
+import {actualCommonTargetWeightedNormCertificate} from '../actual-common-target-weighted-norms.mjs';
+import {attachActualCommonBandPhysicalCurl,assertActualCommonBandPhysicalCurl,actualCommonBandPhysicalCurlCertificate} from '../actual-common-band-physical-curl.mjs';
+import {attachActualCommonGlobalWaveBounds,assertActualCommonGlobalWaveBounds,actualCommonGlobalWaveBoundCertificate} from '../actual-common-global-wave-bounds.mjs';
+import {attachActualCommonGlobalCovariance,assertActualCommonGlobalCovariance,actualCommonGlobalCovarianceCertificate} from '../actual-common-global-covariance.mjs';
+import {attachActualBackgroundResidualFlatness,actualBackgroundResidualFlatnessCertificate} from '../actual-background-residual-flatness.mjs';
+import {attachActualCommonBandBackgroundResidual,actualCommonBandBackgroundResidualCertificate} from '../actual-common-band-background-residual.mjs';
+import {validateActualBackgroundResidualFlatness,validateActualCommonBandBackgroundResidual} from './assert-common-background-residual-source.mjs';
+
+const objects=new Map(),failures=new Map(),counts={},certificates={},assertions={};
+const progress=e=>console.log('# SOURCE_PROGRESS '+JSON.stringify({...e,at:new Date().toISOString(),rssBytes:process.memoryUsage().rss}));
+const context={onProgress:progress};
+function once(name,build){
+  if(failures.has(name))throw failures.get(name);
+  if(objects.has(name))return objects.get(name);
+  counts[name]=(counts[name]??0)+1;progress({stage:name+'-start'});
+  try{const result=build();objects.set(name,result);progress({stage:name+'-complete',nodeCount:result.G.nodes.length});return result;}
+  catch(error){failures.set(name,error);throw error;}
+}
+const family=()=>once('commonFamily',()=>prepareActualCommonAdmissibleFamily({throughOrder:2,derivativeOrder:3,maxNodes:5000000,maxProfileJets:60000,maxJetRequests:600000},context));
+const band=()=>once('ownBand',()=>family().constructBand({maxNodes:5000000},context));
+const physical=()=>once('actualPhysicalCurl',()=>attachActualCommonBandPhysicalCurl(family(),band(),context));
+const target=()=>once('actualTargetN1',()=>family().constructTargetWeightedNorms({derivativeOrder:1,maxNodes:5000000},context));
+const globalWave=()=>once('globalWave',()=>attachActualCommonGlobalWaveBounds(family(),{targetWeightedNorms:target(),physicalCurl:physical()},{derivativeOrder:0,flatOrder:4},context));
+const covariance=()=>once('globalCovariance',()=>attachActualCommonGlobalCovariance(globalWave(),context));
+const theorem=()=>once('sameBackgroundFlatness',()=>attachActualBackgroundResidualFlatness(family(),{truncationOrder:2,derivativeOrder:0,decayOrder:1},context));
+const actualEB=()=>once('sameActualEB',()=>attachActualCommonBandBackgroundResidual(theorem(),physical(),context));
+async function persist(complete=false){
+  if(process.env.M2_COMMON_PHYSICAL_EVIDENCE)await writeFile(process.env.M2_COMMON_PHYSICAL_EVIDENCE,JSON.stringify({
+    schema:'MathScope.ActualCommonPhysicalPackageSourceExecution/1',complete,certificates,assertions,sourceConstructions:counts,
+    executedSourcePrefix:2,executedBackgroundSlowOrder:3,executedTargetWeightedOrder:1,executedGlobalWaveOrder:0,executedFlatOrder:4,
+    allInfiniteGraphsLiterallyExecuted:false,wholeM2Complete:false,M3Started:false,currentRSSBytes:process.memoryUsage().rss,
+  },null,2)+'\n');
+}
+
+test('the own physical member starts from one unchanged common C3 / all-tuple diagonal family',async()=>{
+  const f=family(),b=band();assert.equal(b.family,f);assert.equal(b.scope.actualBandInsideExplicitGamma,true);
+  assert.equal(f.source.backgroundNorms.gaussianRows[1].backgroundDerivativeOrder,3);
+  assert.equal(f.source.velocitySeminorms.request.derivativeOrder,2);
+  assert.equal(f.source.pressureStressSeminorms.request.derivativeOrder,2);
+  assert.equal(b.geometry.ell,f.selector.ellA);assert.equal(b.background.completeRadialCutoffCommutatorRetained,true);
+  assert.equal(b.background.pressureAxisDatumAndCentrifugalPrimitiveRetained,true);
+  certificates.family=await actualCommonAdmissibleFamilyCertificate(f);certificates.band=await actualCommonAdmissibleBandCertificate(b);await persist();
+});
+
+test('each sign has actual weighted third jets, complete Cartesian curl and guarded physical compositions',async()=>{
+  const p=physical(),G=p.G;assert.equal(p.family,family());assert.equal(p.band,band());assert.equal(p.rows.length,2);
+  assert.equal(p.checks.every(c=>c.pass),true);assert.equal(p.geometry.checks.every(c=>c.pass),true);
+  for(const row of p.rows){
+    assert.equal(row.jets.checks.length,19);assert.equal(row.jets.checks.every(c=>c.pass),true);
+    assert.equal(row.composition.length,40);assert.equal(row.primaryComposition.length,3);
+    assert.equal(row.originalWeight,p.band.target.weights[p.rows.indexOf(row)]);
+    for(const binding of [...row.jets.potentialBindings,row.jets.pressureBinding,row.jets.radialFastBinding]){
+      assert.equal(binding.originalBodyBound,true);assert.equal(binding.partials.every(x=>x.pass),true);
+    }
+    for(const c of [...row.composition,...row.primaryComposition]){
+      assert.equal(c.exactBodyRetained,true);assert.equal(c.auxiliaryCoordinatesEliminated,true);assert.equal(c.zeroGuardBeforeSingularEvaluation,true);
+    }
+    assert.equal(row.temporal.originalFullCurlBeforeTimeCutoffDerivative,true);assert.equal(row.temporal.divisionByPsiUsed,false);
+    assert.equal(row.temporal.checks.every(c=>c.pass),true);assert.equal(row.phaseChecks.every(c=>c.pass),true);
+    assert.equal(row.physicalCurlRemainder.length,3);
+  }
+  assert.equal(p.variations.every(x=>x.allFortyComponents&&x.originalMatrixAndDatumRetained&&!x.finiteSumReplacesLimit),true);
+  for(let j=0;j<3;j++){
+    assert.equal(p.roots.actualCurlRemainder[j],G.sub(p.roots.combinedPhysicalJets.velocity[j],p.roots.actualPrimaryWave[j]));
+    assert.equal(p.roots.retainedPhysicalResidualAfterTemporalForce[j],G.sub(p.roots.physicalResidual[j],p.roots.actualTemporalCutoffForce[j]));
+  }
+  assert.equal(p.residual.checks.every(x=>x.pass),true);assert.equal(p.scope.totalUncorrectedNSResidualDeclaredFlat,false);
+  certificates.physical=await actualCommonBandPhysicalCurlCertificate(p);await persist();
+});
+
+test('the actual target N0/N1 uses both original radial exponential factors and all regular derivatives',async()=>{
+  const t=target();assert.equal(t.family,family());assert.deepEqual(t.rows.map(r=>r.pole),[3,6]);
+  assert.equal(t.ftcRows.length,18);assert.equal(t.ftcRows.every(r=>r.faces.length===4),true);
+  for(const row of t.rows)assert.equal(t.G.freeCoordinates(row.N_m).size,0);
+  assert.equal(t.sourceBinding.innerNaturalSeriesRetained,true);assert.equal(t.scope.uniformInEllAndFrozenMeshLabels,true);
+  certificates.target=await actualCommonTargetWeightedNormCertificate(t);await persist();
+});
+
+test('the same actual full temporal curl force has all-label Gaussian bounds with a positive retained infinite tail',async()=>{
+  const g=globalWave(),G=g.G;assert.equal(g.G,target().G);assert.notEqual(g.G,physical().G);
+  assert.equal(g.checks.every(x=>x.pass),true);assert.equal(g.bounds.backgroundRow.backgroundDerivativeOrder,3);
+  assert.equal(g.bounds.targetRows.length,2);assert.equal(g.sourcePulseBindings.length,2);
+  assert.equal(g.bounds.exactPrefactorRetained,true);assert.notEqual(g.bounds.infiniteTail,G.zero);
+  assert.equal(g.roots.flatConstant,G.mul(g.bounds.physicalPrefactor,g.bounds.tail.roots.flatConstant));
+  assert.equal(g.roots.infiniteTail,G.mul(g.bounds.physicalPrefactor,g.bounds.tail.roots.infiniteTail));
+  assert.equal(g.sourceBinding.graphRootIDsNamespaced,true);assert.equal(g.physicalReferences.integerIDsNeverTransplantedToNormGraph,true);
+  assert.deepEqual(g.physicalReferences.fullTemporalForce,physical().roots.actualTemporalCutoffForce);
+  assert.equal(g.scope.actualPhysicalTemporalCutoffForceFlat,true);assert.equal(g.scope.etaEndpointsAreOneSided,true);
+  assert.equal(g.scope.totalUncorrectedNSResidualDeclaredFlat,false);assert.equal(g.scope.allIntegerGraphsLiterallyExecuted,false);
+  certificates.globalWave=await actualCommonGlobalWaveBoundCertificate(g);await persist();
+});
+
+test('the original all-label primary covariance and signed inverse retain the full physical residual for N6',async()=>{
+  const c=covariance(),G=c.G;assert.equal(c.G,physical().G);assert.equal(c.family,family());
+  assert.equal(c.checks.every(x=>x.pass),true);assert.equal(c.assembly.rows.length,81);
+  assert.equal(c.local.squareRootRule.every(x=>x.nodeIsThePositiveSquareRoot),true);
+  assert.equal(c.signedWitness.checks.every(x=>x.pass),true);assert.equal(c.signedWitness.inverse.checks.every(x=>x.pass),true);
+  assert.deepEqual(c.n6Interface.fullPhysicalResidual,physical().roots.physicalResidual);
+  assert.deepEqual(c.n6Interface.actualCurlRemainder,physical().roots.actualCurlRemainder);
+  assert.equal(c.scope.pointwiseProductReplacedByAverage,false);assert.equal(c.scope.actualN6CorrectionPerformed,false);
+  const more=c.constructSignedLocalTarget([G.one,G.neg(G.one)]);
+  assert.equal(more.inverse.checks.every(x=>x.pass),true);assert.equal(more.targetMayHaveEitherSign,true);
+  assert.equal(more.targetRegularityClassVerified,false);assert.equal(more.newPhysicalCorrectionAlreadyAdded,false);
+  assert.throws(()=>c.constructSignedLocalTarget([band().coordinates.v,G.one]),{code:'INVALID_INPUT'});
+  certificates.covariance=await actualCommonGlobalCovarianceCertificate(c);await persist();
+});
+
+test('the original complete common tuple has the source-defined all-fixed-order background residual bound',async()=>{
+  const p=theorem();assertions.backgroundFlatness=validateActualBackgroundResidualFlatness(p);
+  assert.equal(assertions.backgroundFlatness.checks.length,6);assert.equal(assertions.backgroundFlatness.pass,true);
+  certificates.backgroundFlatness=await actualBackgroundResidualFlatnessCertificate(p);await persist();
+});
+
+test('E_B is computed from the actual common physical background NS plus the original stress divergence',async()=>{
+  const p=actualEB();assertions.actualEB=validateActualCommonBandBackgroundResidual(p);
+  assert.equal(assertions.actualEB.checks.length,5);assert.equal(assertions.actualEB.pass,true);
+  certificates.actualEB=await actualCommonBandBackgroundResidualCertificate(p);await persist();
+});
+
+test('all final private packages reject copies and stay stable under append without prematurely closing M2',async()=>{
+  const p=physical(),g=globalWave(),c=covariance();actualEB();
+  for(const [object,check]of [[p,assertActualCommonBandPhysicalCurl],[g,assertActualCommonGlobalWaveBounds],[c,assertActualCommonGlobalCovariance]]){
+    assert.equal(check(object),true);assert.throws(()=>check({...object}),{code:'INVALID_SOURCE_CONSTRUCTION'});
+  }
+  p.G.fresh('after_common_physical_package');g.G.fresh('after_common_global_norms');
+  assert.equal((await actualCommonBandPhysicalCurlCertificate(p)).graph.sha256,certificates.physical.graph.sha256);
+  assert.equal((await actualCommonGlobalWaveBoundCertificate(g)).graph.sha256,certificates.globalWave.graph.sha256);
+  assert.equal((await actualCommonGlobalCovarianceCertificate(c)).graph.sha256,certificates.covariance.graph.sha256);
+  for(const object of [p,g,c,theorem(),actualEB()])assert.equal(object.scope.wholeM2Complete,false);
+  for(const count of Object.values(counts))assert.equal(count,1);
+  await persist(true);
+});

@@ -1,0 +1,228 @@
+/** Directed arithmetic on CLOSED numerical exponential endpoints.
+ * Each endpoint is a finite exp/neg tree with rational leaves. Logarithms
+ * cancel an outer exp exactly; ordinary rational logs use directed series.
+ * Positive sums/differences use log-sum-exp with a rigorously quantized
+ * ratio in [0,1]. No original parameter, integral or solution root is a
+ * numerical endpoint. The generic layer authenticates no source.
+ */
+import {directedArithmetic,rational as Q,readRational,qadd,qsub,qmul,qdiv,qcompare,qtext,fail} from './actual-continuation-arithmetic.mjs';
+import {terminalTargetElementary} from './actual-terminal-target-coefficient-kernel.mjs';
+
+const absQ=x=>x[0]<0n?[-x[0],x[1]]:x;
+const floorQ=x=>{let n=x[0]/x[1];if(x[0]<0n&&x[0]%x[1])n--;return n;};
+const negQ=x=>[-x[0],x[1]];
+const qpoint=x=>Object.freeze({kind:'rational',value:Object.freeze(x)});
+const sign=x=>x.kind==='rational'?(x.value[0]<0n?-1:x.value[0]>0n?1:0):x.sign;
+const negate=x=>x.kind==='rational'?qpoint(negQ(x.value)):Object.freeze({kind:'exp',sign:-x.sign,argument:x.argument});
+const absolute=x=>sign(x)<0?negate(x):x;
+
+export function closedNumericalExponentialEndpoint(endpoint,{maxDepth=128,maxRationalBits=32768}={}){
+  const seen=new Set();let p=endpoint,depth=0;
+  for(;;){
+    if(++depth>maxDepth||!p||typeof p!=='object'||Array.isArray(p)||seen.has(p)||Object.keys(p).length!==1)return false;
+    seen.add(p);
+    if(Object.hasOwn(p,'rational')){try{readRational(p.rational,maxRationalBits);return true;}catch{return false;}}
+    if(Object.hasOwn(p,'exp'))p=p.exp;
+    else if(Object.hasOwn(p,'neg'))p=p.neg;
+    else return false;
+  }
+}
+
+export function numericalExponentialArithmetic({precisionBits=384,maxOperations=5000000,maxRationalBits=32768,maxDepth=128,maxMemoEntries=200000}={}){
+  if(!Number.isSafeInteger(precisionBits)||precisionBits<256||precisionBits>512||!Number.isSafeInteger(maxOperations)||maxOperations<1||
+    !Number.isSafeInteger(maxRationalBits)||maxRationalBits<1024||!Number.isSafeInteger(maxDepth)||maxDepth<8||
+    !Number.isSafeInteger(maxMemoEntries)||maxMemoEntries<0)
+    fail('INVALID_INPUT','Use 256..512 directed bits and finite positive operation, rational and nesting budgets.');
+  const A=directedArithmetic(precisionBits),E=terminalTargetElementary(A),zero=qpoint(Q(0)),one=qpoint(Q(1)),
+    logs=new Map(),keys=new WeakMap(),depths=new WeakMap(),endpointIds=new Map(),rationals=new Map([['0',zero],['1',one]]),
+    comparisonMemo=new Map(),additionMemo=new Map(),multiplicationMemo=new Map();
+  let operations=0,deepest=0,maximumEndpointDepth=1,tinyRatioBounds=0,regularFallbacks=0,memoEntries=0,memoHits=0;
+  function tick(depth=0){if(++operations>maxOperations||depth>maxDepth)fail('RESOURCE_LIMIT','The closed numerical exponential arithmetic exhausted its finite budget.');deepest=Math.max(deepest,depth);}
+  function checkedQ(r){if(r.some(x=>(x<0n?-x:x).toString(2).length>maxRationalBits))fail('RESOURCE_LIMIT','A regular intermediate exceeded its exact rational bit budget.');
+    const k=qtext(r);if(!rationals.has(k))rationals.set(k,qpoint(r));return rationals.get(k);}
+  function endpointDepth(x){
+    if(depths.has(x))return depths.get(x);
+    const d=x.kind==='rational'?1:(x.sign<0?2:1)+endpointDepth(x.argument);
+    if(d>maxDepth)fail('RESOURCE_LIMIT','A closed numerical endpoint exceeded its declared exp/neg nesting budget.');
+    depths.set(x,d);maximumEndpointDepth=Math.max(maximumEndpointDepth,d);return d;
+  }
+  const negPoint=x=>{const y=negate(x);endpointDepth(y);return y;};
+  const qrange=(lo,hi)=>({lower:checkedQ(lo),upper:checkedQ(hi)}),single=x=>({lower:x,upper:x}),
+    fromA=x=>qrange(Q(x[0],A.S),Q(x[1],A.S)),negRange=x=>({lower:negPoint(x.upper),upper:negPoint(x.lower)});
+  function key(x){if(keys.has(x))return keys.get(x);const k=x.kind==='rational'?'q('+qtext(x.value)+')':x.sign+'e('+key(x.argument)+')';keys.set(x,k);return k;}
+  function endpointId(x){const k=key(x);if(!endpointIds.has(k))endpointIds.set(k,endpointIds.size);return endpointIds.get(k);}
+  function pairKey(a,b,commutes){const i=endpointId(a),j=endpointId(b);return commutes&&j<i?j+':'+i:i+':'+j;}
+  function remember(table,k,value){if(memoEntries<maxMemoEntries){table.set(k,value);memoEntries++;}return value;}
+  function rationalLog(r){const k=qtext(r);if(!logs.has(k))logs.set(k,fromA(A.logRational(r)));return logs.get(k);}
+  function logPoint(x,depth=0){tick(depth);if(sign(x)<=0)fail('PRECISION_REQUIRED','A real logarithm needs a strictly positive numerical endpoint.');return x.kind==='exp'?single(x.argument):rationalLog(x.value);}
+  function expPoint(x,depth=0){tick(depth);if(sign(x)===0)return one;
+    const y=Object.freeze({kind:'exp',sign:1,argument:x});endpointDepth(y);return y;}
+  function compare(a,b,depth=0){
+    tick(depth);const k=maxMemoEntries?pairKey(a,b,false):null;
+    if(k!==null&&comparisonMemo.has(k)){memoHits++;return comparisonMemo.get(k);}
+    const result=compareUncached(a,b,depth);return k===null?result:remember(comparisonMemo,k,result);
+  }
+  function compareUncached(a,b,depth=0){
+    const sa=sign(a),sb=sign(b);if(sa!==sb)return sa<sb?-1:1;if(sa===0)return 0;
+    if(sa<0){const c=compare(absolute(a),absolute(b),depth+1);return c===null?null:-c;}
+    if(a.kind==='rational'&&b.kind==='rational')return qcompare(a.value,b.value);
+    if(key(a)===key(b))return 0;
+    if(a.kind==='exp'&&b.kind==='exp')return compare(a.argument,b.argument,depth+1);
+    if(a.kind==='rational'){const c=compare(b,a,depth+1);return c===null?null:-c;}
+    const L=rationalLog(b.value),below=compare(a.argument,L.lower,depth+1),above=compare(a.argument,L.upper,depth+1);
+    if(below!==null&&below<0)return -1;if(above!==null&&above>0)return 1;
+    if(key(L.lower)===key(L.upper)&&below===0)return 0;return null;
+  }
+  function regularExp(box){
+    const limit=BigInt(maxRationalBits),loAbs=box[0]<0n?-box[0]:box[0],hiAbs=box[1]<0n?-box[1]:box[1],m=loAbs>hiAbs?loAbs:hiAbs;
+    if(m>limit*A.S)fail('RESOURCE_LIMIT','A regular exponential fallback would materialize too many digits.');
+    let reduced=box,shifts=0;
+    while(reduced[1]>512n*A.S||reduced[0]<-512n*A.S){reduced=A.div(reduced,A.point(2));shifts++;}
+    let value=E.exp(reduced);for(let j=0;j<shifts;j++)value=A.mul(value,value);return value;
+  }
+  function toRegular(x,depth=0){
+    tick(depth);if(x.kind==='rational')return A.point(x.value);if(x.sign<0)return A.neg(toRegular(absolute(x),depth+1));
+    const tail=compare(x.argument,qpoint(Q(-precisionBits-8)),depth+1);
+    if(tail!==null&&tail<=0){tinyRatioBounds++;return [0n,1n];}
+    // The only callers outside the explicit regular fallback use ratios
+    // in [0,1]. Their exponents are nonpositive. This recursion quantizes
+    // a tiny exponent with its positive upper endpoint before exp.
+    return regularExp(toRegular(x.argument,depth+1));
+  }
+  function logRegularBox(box){
+    if(box[0]<=0n)fail('PRECISION_REQUIRED','The positive difference was not separated by the requested regular arithmetic.');
+    return {lower:rationalLog(Q(box[0],A.S)).lower,upper:rationalLog(Q(box[1],A.S)).upper};
+  }
+  function addPoints(a,b,depth=0){
+    tick(depth);const k=maxMemoEntries?pairKey(a,b,true):null;
+    if(k!==null&&additionMemo.has(k)){memoHits++;return additionMemo.get(k);}
+    const result=addPointsUncached(a,b,depth);return k===null?result:remember(additionMemo,k,result);
+  }
+  function addPointsUncached(a,b,depth=0){
+    if(sign(a)===0)return single(b);if(sign(b)===0)return single(a);
+    if(a.kind==='rational'&&b.kind==='rational')return single(checkedQ(qadd(a.value,b.value)));
+    const sa=sign(a),sb=sign(b),aa=absolute(a),bb=absolute(b);let cmp=compare(aa,bb,depth+1);
+    if(cmp===0&&sa!==sb)return single(zero);
+    if(cmp===null){regularFallbacks++;return fromA(A.add(toRegular(a,depth+1),toRegular(b,depth+1)));}
+    const big=cmp>=0?aa:bb,small=cmp>=0?bb:aa,resultSign=cmp>=0?sa:sb,sameSign=sa===sb,
+      L=logPoint(big,depth+1),l=logPoint(small,depth+1),delta=addRanges(l,negRange(L),depth+1);
+    // small<=big was proved above. Intersecting this exact log-ratio
+    // information with its outward enclosure cannot remove its value.
+    const dc=compare(delta.upper,zero,depth+1);
+    if(dc===null)fail('PRECISION_REQUIRED','An uncertain logarithmic ratio needs more directed precision.');
+    const upper=dc>0?zero:delta.upper,ratio=[toRegular(expPoint(delta.lower,depth+1),depth+1)[0],toRegular(expPoint(upper,depth+1),depth+1)[1]];
+    ratio[0]=ratio[0]<0n?0n:ratio[0];ratio[1]=ratio[1]>A.S?A.S:ratio[1];
+    const factor=sameSign?[A.S+ratio[0],A.S+ratio[1]]:[A.S-ratio[1],A.S-ratio[0]];
+    let result;
+    if(factor[0]===0n){
+      // The actual difference is nonnegative but the current precision
+      // did not give a positive lower endpoint. A subsequent inverse or
+      // log must reject it; no source positivity is silently imported.
+      result={lower:zero,upper:big};
+    }else{
+      const correction=logRegularBox(factor),sum=addRanges(L,correction,depth+1);
+      result={lower:expPoint(sum.lower,depth+1),upper:expPoint(sum.upper,depth+1)};
+    }
+    return resultSign<0?negRange(result):result;
+  }
+  function addRanges(a,b,depth=0){return {lower:addPoints(a.lower,b.lower,depth+1).lower,upper:addPoints(a.upper,b.upper,depth+1).upper};}
+  function mulPoints(a,b,depth=0){
+    tick(depth);const k=maxMemoEntries?pairKey(a,b,true):null;
+    if(k!==null&&multiplicationMemo.has(k)){memoHits++;return multiplicationMemo.get(k);}
+    const result=mulPointsUncached(a,b,depth);return k===null?result:remember(multiplicationMemo,k,result);
+  }
+  function mulPointsUncached(a,b,depth=0){
+    if(!sign(a)||!sign(b))return single(zero);
+    if(a.kind==='rational'&&b.kind==='rational')return single(checkedQ(qmul(a.value,b.value)));
+    const sum=addRanges(logPoint(absolute(a),depth+1),logPoint(absolute(b),depth+1),depth+1),r={lower:expPoint(sum.lower,depth+1),upper:expPoint(sum.upper,depth+1)};
+    return sign(a)*sign(b)<0?negRange(r):r;
+  }
+  function extrema(points,kind,direction,depth=0){
+    let selected=points[0];for(const p of points.slice(1)){
+      const c=compare(selected,p,depth+1);if(c===null){
+        regularFallbacks++;const a=toRegular(selected,depth+1),b=toRegular(p,depth+1);
+        // A maximum of LOWER endpoints must use lower regular bounds,
+        // just as a maximum of UPPER endpoints must use upper bounds.
+        // Choosing the latter in both cases would silently overstate a
+        // lower endpoint whenever exact comparison is unresolved.
+        const j=direction==='lower'?0:1;
+        selected=checkedQ(Q(kind==='min'?(a[j]<b[j]?a[j]:b[j]):(a[j]>b[j]?a[j]:b[j]),A.S));
+      }else if(kind==='min'?c>0:c<0)selected=p;
+    }return selected;
+  }
+  function multiply(a,b){
+    const corners=[mulPoints(a.lower,b.lower),mulPoints(a.lower,b.upper),mulPoints(a.upper,b.lower),mulPoints(a.upper,b.upper)];
+    return {lower:extrema(corners.map(r=>r.lower),'min','lower'),upper:extrema(corners.map(r=>r.upper),'max','upper')};
+  }
+  function reciprocalPoint(x){
+    if(!sign(x))fail('PRECISION_REQUIRED','The reciprocal interval contains zero.');
+    if(x.kind==='rational')return single(checkedQ(qdiv(Q(1),x.value)));
+    return single(x.sign>0?expPoint(negPoint(x.argument)):negPoint(expPoint(negPoint(x.argument))));
+  }
+  function reciprocal(x){if(sign(x.lower)<=0&&sign(x.upper)>=0)fail('PRECISION_REQUIRED','The reciprocal interval contains zero.');
+    return {lower:reciprocalPoint(x.upper).lower,upper:reciprocalPoint(x.lower).upper};}
+  function logarithm(x){return {lower:logPoint(x.lower).lower,upper:logPoint(x.upper).upper};}
+  function exponential(x){return {lower:expPoint(x.lower),upper:expPoint(x.upper)};}
+  function power(x,n){
+    if(!Number.isSafeInteger(n))fail('INVALID_INPUT','An exact integer power is required.');
+    if(n===0)return single(one);if(n<0)return power(reciprocal(x),-n);
+    let r=single(one),b=x;while(n){if(n%2)r=multiply(r,b);n=Math.floor(n/2);if(n)b=multiply(b,b);}return r;
+  }
+  function squareRoot(x){
+    if(sign(x.lower)<0)fail('PRECISION_REQUIRED','The square-root interval is not nonnegative.');
+    if(sign(x.upper)===0)return single(zero);
+    const hi=expPoint(mulPoints(logPoint(x.upper).upper,qpoint(Q(1,2))).upper),
+      lo=sign(x.lower)===0?zero:expPoint(mulPoints(logPoint(x.lower).lower,qpoint(Q(1,2))).lower);
+    return {lower:lo,upper:hi};
+  }
+  function maximum(xs){if(!xs.length)fail('INVALID_INPUT','A finite nonempty maximum is required.');
+    return {lower:extrema(xs.map(x=>x.lower),'max','lower'),upper:extrema(xs.map(x=>x.upper),'max','upper')};}
+  function integerRounding(x,mode){
+    const pointRound=p=>p.kind==='rational'?single(qpoint(Q(mode==='floor'?floorQ(p.value):-floorQ(negQ(p.value))))):
+      mode==='floor'?{lower:addPoints(p,qpoint(Q(-1))).lower,upper:p}:{lower:p,upper:addPoints(p,one).upper};
+    return {lower:pointRound(x.lower).lower,upper:pointRound(x.upper).upper};
+  }
+  function encodePoint(x){return x.kind==='rational'?{rational:qtext(x.value)}:
+    x.sign>0?{exp:encodePoint(x.argument)}:{neg:{exp:encodePoint(x.argument)}};}
+  function decodePoint(x){
+    if(!closedNumericalExponentialEndpoint(x,{maxDepth,maxRationalBits}))fail('INVALID_INPUT','A numerical endpoint must be a closed rational/exp/neg expression within the declared finite budgets.');
+    if(Object.hasOwn(x,'rational'))return checkedQ(readRational(x.rational,maxRationalBits));
+    if(Object.hasOwn(x,'neg'))return negPoint(decodePoint(x.neg));return expPoint(decodePoint(x.exp));
+  }
+  function fromClosed({lower,upper}){const r={lower:decodePoint(lower),upper:decodePoint(upper)},c=compare(r.lower,r.upper);if(c===null||c>0)fail('INVALID_INPUT','The supplied closed interval endpoints are not ordered at this precision.');return r;}
+  function reportInterval(x,{logCoordinateTolerance='1/1000000000000',maxLogarithms=32}={}){
+    const tolerance=readRational(logCoordinateTolerance);if(qcompare(tolerance,Q(0))<=0||!Number.isSafeInteger(maxLogarithms)||maxLogarithms<1)
+      fail('INVALID_INPUT','Use a positive exact logarithm tolerance and a finite coordinate depth.');
+    if(sign(x.lower)<=0)fail('PRECISION_REQUIRED','A positive numerical output needs a strictly positive lower endpoint.');
+    let y=x,depth=0,small=false;
+    const oneCmp=compare(x.upper,one);if(oneCmp===null)fail('PRECISION_REQUIRED','The output coordinate orientation is not separated.');
+    if(oneCmp<0){y=negRange(logarithm(x));depth=1;small=true;}
+    for(;;){
+      if(y.lower.kind==='rational'&&y.upper.kind==='rational'){
+        const width=qsub(y.upper.value,y.lower.value);
+        if(qcompare(width,tolerance)<=0)return {lower:encodePoint(x.lower),upper:encodePoint(x.upper),strictlyPositiveLower:true,finiteUpper:true,
+          endpointsContainOnlyNumericalConstants:true,coordinateDefinition:small?(depth===1?'-log(value)':'log^'+(depth-1)+'(-log(value))'):(depth===0?'value':'log^'+depth+'(value)'),
+          logarithmCount:depth,small,coordinate:{lower:qtext(y.lower.value),upper:qtext(y.upper.value)},coordinateWidth:qtext(width),logCoordinateTolerance:qtext(tolerance),
+          toleranceMet:true,originalValueRelativeToleranceGuaranteed:false};
+      }
+      if(depth>=maxLogarithms||sign(y.lower)<=0)fail('PRECISION_REQUIRED','The retained absolute interval does not meet its logarithm-coordinate tolerance.');
+      y=logarithm(y);depth++;
+    }
+  }
+  const point=x=>{
+    if(Array.isArray(x)){
+      if(x.length!==2||x.some(n=>typeof n!=='bigint'))fail('INVALID_INPUT','An internal exact rational uses exactly two BigInt operands.');
+      return single(checkedQ(Q(x[0],x[1])));
+    }
+    return single(checkedQ(readRational(x,maxRationalBits)));
+  };
+  return {precisionBits,A,point,zero:()=>single(zero),one:()=>single(one),
+    add:(a,b)=>addRanges(a,b),neg:negRange,sub:(a,b)=>addRanges(a,negRange(b)),mul:multiply,div:(a,b)=>multiply(a,reciprocal(b)),
+    inverse:reciprocal,pow:power,exp:exponential,log:logarithm,sqrt:squareRoot,max:maximum,ceil:x=>integerRounding(x,'ceil'),floor:x=>integerRounding(x,'floor'),
+    fromClosed,toClosed:x=>({lower:encodePoint(x.lower),upper:encodePoint(x.upper)}),reportInterval,
+    compareEndpoints:(a,b)=>compare(decodePoint(a),decodePoint(b)),regularBounds:x=>A.pack([toRegular(x.lower)[0],toRegular(x.upper)[1]]),
+    report:()=>({schema:'MathScope.ClosedNumericalExponentialArithmetic/1',precisionBits,operations,regularOperations:A.operations(),deepest,maximumEndpointDepth,maxDepth,
+      memoEntries,maxMemoEntries,memoHits,memoizedEndpointsAreImmutable:true,
+      tinyRatioBounds,regularFallbacks,elementary:E.report(),sourceAuthenticated:false,sourceIntegralOrParameterEvaluated:false,
+      exactExpLogCancellation:true,outwardRatioQuantization:true,positiveTinyUpperEndpointsRetained:true,binary64UsedForNumericalDecisions:false})};
+}

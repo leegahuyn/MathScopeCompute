@@ -1,0 +1,106 @@
+"""Immutable actual-source/process receipts; reserve the shared heavy slot first."""
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import resource
+import signal
+import subprocess
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parents[4]
+BASE = ROOT / 'research-ide/mathscope-m2/navier'
+EVIDENCE = BASE / 'research/evidence/physical-center-20261011'
+mode = sys.argv[1]
+attempt = int(sys.argv[2])
+if mode not in ['kernel', 'source'] or attempt < 1:
+    raise ValueError('Use kernel/source and a new positive attempt number.')
+EVIDENCE.mkdir(parents=True, exist_ok=True)
+stem = 'actual-common-physical-center-' + mode + '-attempt' + str(attempt)
+log = EVIDENCE / (stem + ('.tap' if mode == 'kernel' else '-stdout.log'))
+certificate = EVIDENCE / (stem + '.json')
+process_record = EVIDENCE / (stem + '-process.json')
+if any(p.exists() for p in [log, certificate, process_record, EVIDENCE / (stem + '.log')]):
+    raise RuntimeError('Earlier executions must not be overwritten.')
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+sources = [BASE / n for n in [
+    'actual-physical-center-kernel.mjs', 'actual-common-physical-center-enclosure.mjs',
+    'tests/actual-physical-center-kernel.test.mjs', 'tests/actual-physical-center-source-kernel.test.mjs',
+    'tests/actual-common-physical-center-source-check.mjs', 'tests/run-physical-center-validation.py']]
+seen = set()
+
+
+def closure(p):
+    p = p.resolve()
+    if p in seen:
+        return
+    seen.add(p)
+    if p.suffix != '.mjs':
+        return
+    for spec in re.findall(r'''(?:from\s*|import\s*)['"](\.[^'"]+)['"]''', p.read_text()):
+        closure(p.parent / spec)
+
+
+for source in sources:
+    closure(source)
+manifest = [{'path': str(p.relative_to(ROOT)), 'sha256': sha(p), 'bytes': p.stat().st_size} for p in sorted(seen)]
+snapshot_dir = EVIDENCE / (mode + '-attempt' + str(attempt) + '-snapshots')
+snapshot_dir.mkdir()
+snapshots = []
+for source in sources:
+    target = snapshot_dir / (source.name + '.txt')
+    target.write_bytes(source.read_bytes())
+    snapshots.append({'original': str(source.relative_to(ROOT)), 'path': str(target.relative_to(ROOT)), 'sha256': sha(target)})
+if mode == 'kernel':
+    command = ['node', '--test', '--test-reporter=tap',
+               str((BASE / 'tests/actual-physical-center-kernel.test.mjs').relative_to(ROOT)),
+               str((BASE / 'tests/actual-physical-center-source-kernel.test.mjs').relative_to(ROOT))]
+    timeout_seconds = 60
+else:
+    command = ['node', '--expose-gc', '--max-old-space-size=4608',
+               str((BASE / 'tests/actual-common-physical-center-source-check.mjs').relative_to(ROOT)), str(EVIDENCE), stem]
+    timeout_seconds = 960
+started_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+tick = time.monotonic()
+timed_out = False
+with log.open('wb') as stream:
+    child = subprocess.Popen(command, cwd=ROOT, stdout=stream, stderr=subprocess.STDOUT, start_new_session=True)
+    try:
+        child.wait(timeout=timeout_seconds)
+    except subprocess.TimeoutExpired:
+        timed_out = True
+        os.killpg(child.pid, signal.SIGTERM)
+        try:
+            child.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            os.killpg(child.pid, signal.SIGKILL)
+            child.wait()
+elapsed = time.monotonic() - tick
+body = log.read_text(errors='replace')
+record = {
+    'schema': 'MathScope.ObservedPhysicalCenterProcess/1', 'mode': mode,
+    'startedAt': started_at, 'finishedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'command': command, 'runnerSHA256AtExecution': sha(__file__),
+    'sourceManifest': {'files': manifest, 'unchangedAfterExecution': all(sha(ROOT / r['path']) == r['sha256'] for r in manifest)},
+    'exitCode': child.returncode, 'timeout': timed_out, 'timeoutSeconds': timeout_seconds,
+    'elapsedSeconds': elapsed, 'peakRSSBytes': resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss * 1024,
+    'log': {'path': str(log.relative_to(ROOT)), 'sha256': sha(log)}, 'snapshots': snapshots,
+    'designedNegativeControl': False,
+}
+if mode == 'kernel':
+    record['tests'] = {'passed': len(re.findall(r'^ok \d+ - ', body, re.M)), 'failed': len(re.findall(r'^not ok \d+ - ', body, re.M))}
+    record['pass'] = child.returncode == 0 and record['tests']['passed'] == 11 and record['tests']['failed'] == 0
+    certificate.write_text(json.dumps({'schema': 'MathScope.PhysicalCenterGenericValidation/1', 'tests': record['tests'],
+        'sourceAuthenticated': False, 'actualSourceExecuted': False, 'observedExitCode': child.returncode,
+        'pass': record['pass'], 'knownEarlierLightFixtureCorrection': 'A preliminary local fixture used nonexistent G.insert. It was changed to the actual G.choose API before this captured execution; no mathematical source or heavy execution was involved.'}, indent=2) + '\n')
+else:
+    result = json.loads(certificate.read_text()) if certificate.exists() else None
+    record['tests'] = {'passed': len(result.get('checks', [])) if result else 0, 'failed': 0 if result and result.get('pass') else 1}
+    record['pass'] = child.returncode == 0 and bool(result and result.get('pass'))
+record['certificate'] = {'path': str(certificate.relative_to(ROOT)), 'exists': certificate.exists(), 'sha256': sha(certificate) if certificate.exists() else None}
+process_record.write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps({k: v for k, v in record.items() if k not in ['sourceManifest', 'snapshots']}, ensure_ascii=False, indent=2))
+sys.exit(0 if record['pass'] else 1)

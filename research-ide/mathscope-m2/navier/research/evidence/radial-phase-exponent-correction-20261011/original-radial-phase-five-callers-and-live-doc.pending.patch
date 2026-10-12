@@ -1,0 +1,130 @@
+--- a/research-ide/mathscope-m2/navier/source-geometry.mjs
++++ b/research-ide/mathscope-m2/navier/source-geometry.mjs
+@@ -1,5 +1,6 @@
+ import {iadd,isub,imul,idiv,iscale,ilog,iexp,point,nextDown,nextUp} from '../../mathscope-m1/navier/numerics.mjs';
+ import {sourceExponentContract,assertSourceProfile,SOURCE_PROFILE_ID} from './source-profile.mjs';
++import {originalRadialPhaseExponentRecipe,ORIGINAL_RADIAL_PHASE_SPECIFICATION} from './source-radial-phase-exponent.mjs';
+ 
+ const invalid=(code,message)=>{throw Object.assign(Error(message),{code});};
+ const midpoint=a=>a[0]+(a[1]-a[0])/2;
+@@ -22,13 +23,13 @@
+ 
+ export function sourceBandParameters(ell){
+   integer(ell,'ell',8,900);const g=sourceTorusGeometry(),h=sourceExponentContract(),hi=h.binary64Enclosure,ln2=ilog(point(2)),logQ=iscale(ln2,-ell),logS=iscale(ilog(point(ell)),2);
+-  const D=isub(point(.5),hi),dr=isub(iscale(imul(iadd(point(1),hi),g.rho.interval),2),iscale(hi,1e-5));
++  const D=isub(point(.5),hi),dr=originalRadialPhaseExponentRecipe({one:point(1),q:point,add:iadd,sub:isub,mul:imul},{h:hi,rho:g.rho.interval,kappa:idiv(point(1),point(100000))});
+   const indexBox=idiv(isub(iscale(imul(iadd(point(1),hi),ln2),ell),logS),ilog(g.Tg.interval)),i0=Math.floor(indexBox[0]),i1=Math.floor(indexBox[1]);
+   if(i0!==i1||i0<0)invalid('PRECISION_REQUIRED','The interval covering index is not one nonnegative integer; the label is not guessed.');
+   const logCi=iadd(iscale(ilog(g.Tg.interval),i0),imul(iadd(point(1),hi),logQ)),logMi=iadd(iscale(ilog(g.Lambda.interval),i0),imul(iscale(dr,.5),logQ)),ci=iexp(logCi),Mi=iexp(logMi),eps=iexp(imul(hi,logQ));
+   // Strict h>0 makes epsilon<1, even when both round to one at display precision.
+   eps[0]=Math.max(eps[0],.5);eps[1]=Math.min(eps[1],1);
+-  return {ell,Q:2**(-ell),QExact:`2^(-${ell})`,epsilon:{exact:`exp(-${ell}*h*log(2))`,interval:eps,strictlyLessThanOne:true,strictlyPositive:true,notRoundedToAnExactOne:true},Sstar:ell*ell,h,D,dr:{exact:'2*(1+h)*rho_g-h*10^-5',interval:dr},covering:{index:i0,indexInterval:indexBox,frozen:true,formula:'floor(((1+h)*ell*log(2)-2*log(ell))/log(T_g))'},ci:{exact:`(4+sqrt(2))^${i0}*2^(-${ell}*(1+h))`,interval:ci,logInterval:logCi},Mi:{exact:`(4-sqrt(2))^${i0}*2^(-${ell}*d_r/2)`,interval:Mi,logInterval:logMi},carrier:{k:2,reason:'The pinned strictly positive h gives 1/2<epsilon<1 on ell=8..900, hence 1<epsilon^(-1/2)<sqrt(2)<2 and ceil=2.',epsilonK2:[nextDown(4*eps[0]),4]},sourceGeometry:g};
++  return {ell,Q:2**(-ell),QExact:`2^(-${ell})`,epsilon:{exact:`exp(-${ell}*h*log(2))`,interval:eps,strictlyLessThanOne:true,strictlyPositive:true,notRoundedToAnExactOne:true},Sstar:ell*ell,h,D,dr:{exact:ORIGINAL_RADIAL_PHASE_SPECIFICATION.formula,kappaExact:ORIGINAL_RADIAL_PHASE_SPECIFICATION.kappa,interval:dr},covering:{index:i0,indexInterval:indexBox,frozen:true,formula:'floor(((1+h)*ell*log(2)-2*log(ell))/log(T_g))'},ci:{exact:`(4+sqrt(2))^${i0}*2^(-${ell}*(1+h))`,interval:ci,logInterval:logCi},Mi:{exact:`(4-sqrt(2))^${i0}*2^(-${ell}*d_r/2)`,interval:Mi,logInterval:logMi},carrier:{k:2,reason:'The pinned strictly positive h gives 1/2<epsilon<1 on ell=8..900, hence 1<epsilon^(-1/2)<sqrt(2)<2 and ceil=2.',epsilonK2:[nextDown(4*eps[0]),4]},sourceGeometry:g};
+ }
+ 
+ export function sourceDyadicObservation(input={},context={}){
+--- a/research-ide/mathscope-m2/navier/actual-covariance-source-certificate.mjs
++++ b/research-ide/mathscope-m2/navier/actual-covariance-source-certificate.mjs
+@@ -9,6 +9,7 @@
+ import {sourceSquaredProductPartition,assertSourceSquaredProductPartition,covarianceGlobalAssemblyRecipe} from './actual-covariance-global-assembly.mjs';
+ import {uniformSupportPalette} from './source-support.mjs';
+ import {torusExactIdentityAudit} from './source-geometry.mjs';
++import {originalSourceRadialPhase} from './source-radial-phase-exponent.mjs';
+ import {SOURCE_PROFILE_ID,assertSourceProfile} from './source-profile.mjs';
+ import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+ import {fail} from './actual-continuation-arithmetic.mjs';
+@@ -64,7 +65,7 @@
+     return {sign:family.sign,color:G.add(G.mul(q(2),color),q(i)),center:centers[i],copy,xi,eta,v,
+       chartJacobian:G.mul(g.Dgeom,g.ci),amplitudeDependsOnXi:false,translationChangesH:false};
+   });
+-  const power=(x,a)=>G.exp(G.mul(a,G.log(x))),Lambda=G.sub(q(4),G.sqrt(q(2))),rho=G.div(G.log(Lambda),G.log(g.Tg)),dr=G.sub(G.mul(q(2),G.add(G.one,c.h),rho),G.div(c.h,q(100000)));
++  const power=(x,a)=>G.exp(G.mul(a,G.log(x))),{Lambda,rho,dr}=originalSourceRadialPhase(G,{h:c.h,Tg:g.Tg});
+   const physicalR=G.mul(G.sqrt(g.Q),operator.coordinates.R),physicalZ=G.mul(power(g.Q,c.D),operator.coordinates.Z),physicalTau=G.mul(g.Q,operator.coordinates.T),physicalTime=G.sub(G.one,physicalTau);
+   const radialFast=G.mul(power(Lambda,g.paletteIndex),power(physicalR,dr)),timeFast=G.mul(power(g.Tg,g.paletteIndex),physicalTime);
+   const physicalYi=[0,1].map(j=>G.add(G.mul(g.rectangleBasis[0][j],radialFast),G.mul(g.rectangleBasis[1][j],timeFast)));
+--- a/research-ide/mathscope-m2/navier/actual-full-curl.mjs
++++ b/research-ide/mathscope-m2/navier/actual-full-curl.mjs
+@@ -8,6 +8,7 @@
+ import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
+ import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+ import {fail} from './actual-continuation-arithmetic.mjs';
++import {originalSourceRadialPhase} from './source-radial-phase-exponent.mjs';
+ 
+ const seals=new WeakMap();
+ const cross=(G,a,b)=>[G.sub(G.mul(a[1],b[2]),G.mul(a[2],b[1])),G.sub(G.mul(a[2],b[0]),G.mul(a[0],b[2])),G.sub(G.mul(a[0],b[1]),G.mul(a[1],b[0]))];
+@@ -95,10 +96,9 @@
+   const inverseR=covarianceInverseFirstDerivative(G,{matrix:H,target:target.components,parameter:R});
+   const inverseZ=covarianceInverseFirstDerivative(G,{matrix:H,target:target.components,parameter:Z});
+   if(inverseR.weights.some((x,j)=>x!==inverseZ.weights[j]))fail('INVALID_SOURCE_CONSTRUCTION','Both actual weight derivatives must use the same original H and full target.');
+-  const q=(n,d=1)=>G.q(n,d),power=(x,a)=>G.exp(G.mul(a,G.log(x))),sqrt2=G.sqrt(q(2));
+-  const rho=G.div(G.log(G.sub(q(4),sqrt2)),G.log(o.geometry.Tg));
+-  const dr=G.sub(G.mul(q(2),G.add(G.one,o.constants.h),rho),G.div(o.constants.h,q(100000)));
+-  const Mi=G.mul(power(G.sub(q(4),sqrt2),o.geometry.paletteIndex),power(o.geometry.Q,G.div(dr,q(2))));
++  const q=(n,d=1)=>G.q(n,d),power=(x,a)=>G.exp(G.mul(a,G.log(x)));
++  const {Lambda,rho,dr}=originalSourceRadialPhase(G,{h:o.constants.h,Tg:o.geometry.Tg});
++  const Mi=G.mul(power(Lambda,o.geometry.paletteIndex),power(o.geometry.Q,G.div(dr,q(2))));
+   const radialFast=G.mul(Mi,dr,power(R,G.sub(dr,G.one))),epsilon=o.geometry.epsilon,k=o.geometry.k;
+   const physicalPotentialScale=power(o.geometry.Q,G.sub(q(1,2),o.constants.A)),physicalVelocityScale=power(o.geometry.Q,G.neg(o.constants.A));
+   const rows=[];
+--- a/research-ide/mathscope-m2/navier/actual-terminal-physical-velocity-jets.mjs
++++ b/research-ide/mathscope-m2/navier/actual-terminal-physical-velocity-jets.mjs
+@@ -11,6 +11,7 @@
+ import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
+ import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+ import {fail} from './actual-continuation-arithmetic.mjs';
++import {originalSourceRadialPhase} from './source-radial-phase-exponent.mjs';
+ 
+ const seals=new WeakMap(),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),names=['R','Z','T','theta','xi','v'];
+ const metadata=p=>{const{nodes,...rest}=p;return canonicalStringify(rest);};
+@@ -37,8 +38,7 @@
+   const template=attachSourcePalette({G,geometry:{...g,rectangleBasis:basis},constants:c,coordinates:source.coordinates,families:source.families}),
+     grid=p.slowCutoff.meshLabels,label=root=>G.simultaneousSubstitute(root,template.grid,grid),
+     rectangles=template.rectangleRows.map(row=>({...row,color:label(row.color),center:row.center.map(label),copy:row.copy.map(label),xi:label(row.xi),eta:label(row.eta),v:label(row.v)})),
+-    physicalR=G.mul(G.sqrt(g.Q),coordinates.R),Lambda=G.sub(q(4),sqrt2),rho=G.div(G.log(Lambda),G.log(g.Tg)),
+-    dr=G.sub(G.mul(q(2),G.add(G.one,c.h),rho),G.div(c.h,q(100000))),
++    physicalR=G.mul(G.sqrt(g.Q),coordinates.R),{Lambda,rho,dr}=originalSourceRadialPhase(G,{h:c.h,Tg:g.Tg}),
+     radialPrimitive=G.mul(power(Lambda,g.paletteIndex),power(physicalR,dr)),timePrimitive=G.mul(power(g.Tg,g.paletteIndex),G.sub(G.one,G.mul(g.Q,coordinates.T))),
+     expectedYi=[0,1].map(j=>G.add(G.mul(basis[0][j],radialPrimitive),G.mul(basis[1][j],timePrimitive))),radialFast=G.derivative(radialPrimitive,coordinates.R),
+     radialFastFirst=G.derivative(radialFast,coordinates.R),radialFastSecond=G.derivative(radialFastFirst,coordinates.R),exponents=actualPhysicalWaveExponentAudit();
+--- a/research-ide/mathscope-m2/navier/actual-common-global-wave-bounds.mjs
++++ b/research-ide/mathscope-m2/navier/actual-common-global-wave-bounds.mjs
+@@ -16,6 +16,7 @@
+ import {sourceExponentContract} from './source-profile.mjs';
+ import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+ import {factorial,fail} from './actual-continuation-arithmetic.mjs';
++import {originalSourceRadialPhase} from './source-radial-phase-exponent.mjs';
+ 
+ const seals=new WeakMap(),same=(a,b)=>canonicalStringify(a)===canonicalStringify(b),
+   data=p=>canonicalStringify({request:p.request,sourceBinding:p.sourceBinding,coefficientConstants:p.coefficientConstants,
+@@ -57,8 +58,7 @@
+     // The number of set partitions is <=j!, and each mixed chain term
+     // has at most j factors. Four factors give the multinomial sum4^j.
+     slowCutoff=G.mul(q(4n**BigInt(n)*factorial(n)),G.pow(partitionMax,n+4),G.pow(logChartMax,n+4)),
+-    Lambda=G.sub(q(4),G.sqrt(q(2))),rho=G.div(G.log(Lambda),G.log(c.Tg)),kappa=q(1,100000),
+-    dr=G.sub(G.mul(q(2),G.add(G.one,c.h),rho),G.mul(c.h,kappa)),drAbs=G.sqrt(G.add(G.one,G.pow(dr,2))),
++    {Lambda,rho,kappa,dr}=originalSourceRadialPhase(G,{h:c.h,Tg:c.Tg}),drAbs=G.sqrt(G.add(G.one,G.pow(dr,2))),
+     Rlower=G.sqrt(G.div(c.Xa,q(2))),Rupper=G.sqrt(G.mul(q(8),c.Xb)),Rbase=G.add(q(2),Rlower,G.inv(Rlower),Rupper),
+     radiusRows=Array.from({length:n+1},(_,j)=>({order:j,
+       inverseRadius:G.mul(q(factorial(j)),G.pow(Rbase,j+1)),
+@@ -72,7 +72,7 @@
+     partition:'The exact fixed-label denominator is >=1/4 on its numerator support. Its guarded smooth function is defined on [-1,1] and has all fixed derivatives zero at the outer endpoints.',
+     slow:'Each fixed jth slow cutoff derivative is <=slowCutoff*S^(3j). The band-factor argument uses the displayed log(s) derivatives; every mesh factor has affine argument ell^6 times its own coordinate.',
+     transverseProof:'On either transition of the original chi(xi), |xi| is linear and its slope has magnitude1. The transition inner slope has magnitude2/r0; on the central plateau every positive derivative is zero.',
+-    fastRadialProof:'The actual palette i=floor(((1+h)*ell*log2-log S)/log Tg) gives Lambda^i*Q^(dr/2)<=epsilon^(-kappa_s/2)*S^(-rho)<=epsilon^(-kappa_s). Differentiate R^dr exactly; the displayed falling-product/radius bound controls every fixed derivative of a(R) after this single epsilon factor.',
++    fastRadialProof:'The actual palette i=floor(((1+h)*ell*log2-log S)/log Tg) gives Lambda^i*Q^(dr/2)<=epsilon^(-kappa_s)*S^(-rho)<=epsilon^(-kappa_s). Differentiate R^dr exactly; the displayed falling-product/radius bound controls every fixed derivative of a(R) after this single epsilon factor.',
+     materializedCoefficientBodies:true,sourceOnly:true};
+ }
+ 
+--- a/research-ide/mathscope-m2/navier/research/ACTUAL_LOCAL_FULL_CURL_KO.md
++++ b/research-ide/mathscope-m2/navier/research/ACTUAL_LOCAL_FULL_CURL_KO.md
+@@ -51,7 +51,9 @@
+ \qquad D_z=\varepsilon\partial_Z
+ \]
+ 
+-를 사용한다. `d_r=2(1+h)rho_g-h/100000`와 원래 palette의 `M_i`를 보존한다. 원래 auxiliary basis의 직교성으로 `D_r v=D_z v=0`이지만 transverse cutoff의 `chi_xi` 항은 남는다. 원통 기저의 `C_theta/R`도 남는다. 물리적 potential과 velocity 배율은 각각 `Q^(1/2-A)`와 `Q^(-A)`이다.
++를 사용한다. `d_r=2*((1+h)*rho_g-h/100000)`와 원래 palette의 `M_i`를 보존한다. 원래 auxiliary basis의 직교성으로 `D_r v=D_z v=0`이지만 transverse cutoff의 `chi_xi` 항은 남는다. 원통 기저의 `C_theta/R`도 남는다. 물리적 potential과 velocity 배율은 각각 `Q^(1/2-A)`와 `Q^(-A)`이다.
++
++원문 (6.2)의 바깥 계수 `2`는 괄호 안의 두 항 전체에 곱해진다. 2026-10-11 원문 페이지 63의 이미지 대조에서 이전 구현의 두 번째 항에 계수 `2`가 누락된 사실을 확인했다. 이전 실행 기록은 당시 식의 결과로 보존하며, 교정된 실제 물리 좌표의 실행 증거와 구분한다. 자세한 항등식과 영향 범위는 [radial exponent 교정 기록](ACTUAL_RADIAL_PHASE_EXPONENT_CORRECTION_KO.md)을 참조한다.
+ 
+ ## 발산 검사와 Lean의 역할
+ 

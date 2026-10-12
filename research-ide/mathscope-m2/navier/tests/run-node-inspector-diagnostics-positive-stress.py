@@ -1,0 +1,99 @@
+"""One small real Node test-worker/inspector/process-namespace fixture.
+
+This executes no MathScope mathematical constructor and no worker bundle.
+"""
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import selectors
+import signal
+import subprocess
+import sys
+import time
+
+from node_process_observer_positive_stress import ProcessTreeObserver
+
+BASE=Path(__file__).resolve().parents[1]
+ROOT=BASE.parents[2]
+OUT=BASE/'research/evidence/node-inspector-diagnostics-20261011'
+OUT.mkdir(parents=True,exist_ok=True)
+attempt=int(sys.argv[1]) if len(sys.argv)>1 else 1
+if attempt<1:raise ValueError('Use a new positive explicit attempt number.')
+stem='positive-stress-diagnostics-attempt'+str(attempt)
+receipt=OUT/(stem+'.json')
+if receipt.exists():
+    raise RuntimeError('Preserve the existing fixture receipt; use a new explicit attempt for a rerun.')
+fixture=OUT/('positive-stress-inspector-target-fixture-attempt'+str(attempt)+'.mjs')
+fixture.write_text("""import test from 'node:test';
+import assert from 'node:assert/strict';
+test('small read-only inspector target',async()=>{
+  const end=performance.now()+2500;let sum=0;
+  function diagnosticArithmeticBurst(){
+    const stop=performance.now()+4;
+    while(performance.now()<stop)sum+=Math.sqrt(1+sum%97);
+  }
+  while(performance.now()<end){diagnosticArithmeticBurst();await new Promise(resolve=>setTimeout(resolve,4));}
+  assert.ok(sum>0);
+});
+""")
+command=['node','--inspect=127.0.0.1:0','--max-old-space-size=128','--test','--test-reporter=tap',str(fixture)]
+client=BASE/'tests/node-inspector-diagnostics-positive-stress.mjs'
+clients=[];endpoints=[];lines=[];checks=[];timeout=False;started=time.monotonic()
+target=subprocess.Popen(command,cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,start_new_session=True)
+observer=ProcessTreeObserver(target.pid)
+poll=selectors.DefaultSelector();poll.register(target.stdout,selectors.EVENT_READ)
+try:
+    while target.poll() is None or poll.get_map():
+        observer.sample()
+        if time.monotonic()-started>30:
+            timeout=True;os.killpg(target.pid,signal.SIGTERM);break
+        for key,_ in poll.select(timeout=0.05):
+            raw=os.read(key.fileobj.fileno(),65536)
+            if not raw:
+                poll.unregister(key.fileobj);continue
+            text=raw.decode(errors='replace');lines.append(text)
+            joined=''.join(lines)
+            for endpoint in re.findall(r'ws://127\.0\.0\.1:\d+/[\w-]+',joined):
+                if endpoint in endpoints:
+                    continue
+                endpoints.append(endpoint);prefix=OUT/('positive-stress-inspector-client-attempt'+str(attempt)+'-'+str(len(endpoints)))
+                log=(Path(str(prefix)+'.log')).open('wb')
+                process=subprocess.Popen(['node','--max-old-space-size=128',str(client),endpoint,str(prefix),str(fixture),'0.5'],
+                                         cwd=ROOT,stdout=log,stderr=subprocess.STDOUT)
+                clients.append((process,log,prefix))
+    target.wait(timeout=5)
+finally:
+    if target.poll() is None:
+        os.killpg(target.pid,signal.SIGKILL);target.wait()
+    poll.close()
+results=[]
+for process,log,prefix in clients:
+    try:code=process.wait(timeout=15)
+    except subprocess.TimeoutExpired:process.terminate();code=process.wait(timeout=5)
+    log.close()
+    path=Path(str(prefix)+'.json')
+    results.append({'observedExitCode':code,'path':str(path.relative_to(ROOT)),
+                    'report':json.loads(path.read_text()) if path.exists() else None})
+log_path=OUT/('positive-stress-inspector-target-attempt'+str(attempt)+'.log');log_path.write_text(''.join(lines))
+captured=[r for r in results if r['report'] and r['report']['status']=='CAPTURED']
+checks=[{'id':'real-test-worker-exited-zero','pass':target.returncode==0 and not timeout},
+        {'id':'every-profile-belongs-to-child-v8-and-excludes-test-manager','pass':bool(captured) and all(r['report']['before']['testContext']=='child-v8' and '--test' not in r['report']['before']['execArgv'] for r in captured)},
+        {'id':'exactly-one-expected-test-worker-profiled','pass':len(captured)==1 and captured[0]['observedExitCode']==0},
+        {'id':'nonempty-cpu-profile-and-paused-stack','pass':len(captured)==1 and captured[0]['report']['profile']['sampleCount']>0 and bool(captured[0]['report']['pausedStack']['callFrames'])},
+        {'id':'paused-worker-resumed','pass':len(captured)==1 and captured[0]['report']['debuggerPauseResumed']},
+        {'id':'host-proc-tree-resolves-the-local-child','pass':observer.root_host_pid is not None and observer.successful_samples>0 and observer.maximum_process_count>=2 and observer.tree_peak_bytes>0},
+        {'id':'inspector-reports-local-and-host-pid-separately','pass':len(captured)==1 and int(captured[0]['report']['before']['hostPid'])>0 and captured[0]['report']['before']['pid']>0}]
+sha=lambda path:hashlib.sha256(Path(path).read_bytes()).hexdigest()
+files=[client,Path(__file__),BASE/'tests/node_process_observer_positive_stress.py',fixture,log_path]
+for _,_,prefix in clients:
+    files.extend(path for path in [Path(str(prefix)+suffix) for suffix in ['.json','.cpuprofile','.log']] if path.exists())
+record={'schema':'MathScope.RealNodeInspectorAndPIDFixture/1','command':command,'observedTargetExitCode':target.returncode,
+        'timedOut':timeout,'elapsedSeconds':time.monotonic()-started,'mathSourceExecuted':False,
+        'checks':checks,'pass':all(c['pass'] for c in checks),'memoryObserver':observer.receipt(),
+        'clients':results,'files':[{'path':str(path.relative_to(ROOT)),'sha256':sha(path)} for path in files]}
+receipt.write_text(json.dumps(record,indent=2)+'\n')
+print(json.dumps({'pass':record['pass'],'checks':len(checks),'exitCode':target.returncode,
+                  'elapsedSeconds':record['elapsedSeconds'],'path':str(receipt.relative_to(ROOT))}))
+raise SystemExit(0 if record['pass'] else 1)

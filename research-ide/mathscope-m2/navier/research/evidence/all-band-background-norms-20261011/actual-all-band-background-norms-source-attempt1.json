@@ -1,0 +1,457 @@
+{
+  "schema": "MathScope.ActualAllBandBackgroundNormSourceValidation/1",
+  "generatedAt": "2026-10-11T10:20:55.967Z",
+  "sourceCommit": "edb69fd4f7e5330333e8e4bb819d0e6780466e88",
+  "sourceManifest": {
+    "files": {
+      "research-ide/mathscope-m0/contracts.mjs": "cd32d97bdbfbbcf33375cd01f3fe98cd5a202ec63a01f145c9626d0995b3a111",
+      "research-ide/mathscope-m1/navier/numerics.mjs": "a406401c5a0e024e94d58cce0d7e6bdaa6b35488f22fd0ead4bf87222416c62c",
+      "research-ide/mathscope-m2/navier/actual-all-band-background-norm-kernel.mjs": "384daafdcb5cad2e57b4bbb0440bc4b2e4a5912b4835e2d7510c21301a44ff15",
+      "research-ide/mathscope-m2/navier/actual-all-band-background-norms.mjs": "f3e0fc5058173d9bd42e20b1fd3b57aba873610247ceb9ba71cf28fab6b397ce",
+      "research-ide/mathscope-m2/navier/actual-background-data.mjs": "f1d4d5da1b3489bd237c20deab6f2d5b05b7b47855cf9a1d1b071b7e1c57f112",
+      "research-ide/mathscope-m2/navier/actual-background-majorant.mjs": "e741d1cd144481c205874d05842b7961807c923f92155a662347dbcd48785b52",
+      "research-ide/mathscope-m2/navier/actual-background-physical-seminorms.mjs": "d3713e0a3f1cd17404e2afb23da20c4b32e9e840445eed53ce2849ecd200d240",
+      "research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs": "5b889de71fdb464e1ad0b1b17a4d5d0a7d6fb9a17a9a3e57379fd566cfd8fbea",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-b8-data.mjs": "733ecee70b95d39212d0a85bebbd7c46357cca308fbaf5f54b95564066c4bf1b",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-b8.mjs": "1e0d6586a60ee5aa3d5315c40f624ebb9e8a4925a00117818d41d6697fc67baf",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-core.mjs": "d657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-global.mjs": "497e18fc52c10b9eb482bdb6cc18b406c02f453dc19663ba5535c13a41ec015f",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-heat.mjs": "c999b45a6d1e18226c80fb9866b6743553f1859c67dffa39490cd25f7e13d172",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-identities.mjs": "bf7ba32a83fc5297de59cc620e24488d56a1e4c718e5b297373e78dbaf22b712",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-inner.mjs": "3deb02f1f7c9dfd0d0fc7936050eead9514f0e11e44ecb5bd4053073c2518ad8",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-linear.mjs": "0d6363d8df494e72d83d619c15548de43233e1f776c0a22a156635b46b0d4ff3",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-loop.mjs": "07ee5caa8ce45a9d8a910cab7243ae3e351965a8602a38030917f69114d8902d",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-order-one.mjs": "bdfa6fa313b09893850a567623135df699568d05f788c98c00fc9f31c6d41c72",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-order-two-source.mjs": "1ebf8b2b6f1df054a06309c5dc8695f2f3a867733544ab012f206bfed2969dd0",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-pregluing.mjs": "7fd65f8e2519e4bab3fe017e6349ae98d700592548bc0e5a28aee431080ff2c3",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-stress.mjs": "22d0fe9deae4dd7a5dca687758fb3b8b57a56cba7472c9fb23b76dd360f0bcc2",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-support.mjs": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+      "research-ide/mathscope-m2/navier/actual-continuation-exact-tail.mjs": "fa569df96f7950e4c1d908405d8a30bcb73088b1e2d3af7a0baa047d4b2a3df0",
+      "research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs": "cd0b5900bba330c5d960bddd84bb695dd275094302dd9bc3cc5fcfee533895a3",
+      "research-ide/mathscope-m2/navier/actual-global-source-outer.mjs": "5a46c11ebe8ba3ef26eaf6d632ed7bba03ab98cd5e4354b32f989ae6adb367e9",
+      "research-ide/mathscope-m2/navier/actual-leading-all-order-jets-arithmetic.mjs": "99c66508b58b46a3e22053bee1eb8f6963c46abde88bdcb54ada5a3f62ba4d7f",
+      "research-ide/mathscope-m2/navier/actual-leading-all-order-jets.mjs": "d3af156118671a3e582c19a82064aab884a09d6ce81f51a6b2d64d35444cd29d",
+      "research-ide/mathscope-m2/navier/actual-leading-enlarged-c2.mjs": "96d9ab3f064aff348ca9b1a489b56060b529827ab288b144358ff54438829529",
+      "research-ide/mathscope-m2/navier/actual-leading-high-jets-arithmetic.mjs": "fcd064c1d467f50bb98b1903f33ef139ca0ac3b895a80b12ea3a0b1b4b1e4a09",
+      "research-ide/mathscope-m2/navier/actual-leading-high-jets.mjs": "c1af950944adeecc10e4248da77cddc4970a7fede935b462aea1f4006be6fa2e",
+      "research-ide/mathscope-m2/navier/actual-mean-stress.mjs": "7dc194a8a33ff5a3882c1bedf82cf1d26efe3220f0bd66a1e550482369ccad71",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-background.mjs": "e04a02a8878168d673fd7deed45de6bbfb2591ec58f3abc9eb8f08e1d2770879",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-cutoffs.mjs": "be8c7dbe6a7bc78ace2e87dc5e205640a06237e3db0670f9388aab4c0c0772f5",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs": "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-kernels.mjs": "97f8bbc5927ee2b2ac5b41851ba5bc2c800fd4cad6b85c7a1039095c066f7fef",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-norms.mjs": "0387335a081650c4a6ffed6e213215d32a363350c2a156a7163e82f4c0234634",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-proof.mjs": "ca7149281d52e609664f90dea14c2ca2009ac982fc3087ec8714f0152de831f7",
+      "research-ide/mathscope-m2/navier/actual-residual-order-induction-source.mjs": "30e135309b5e0a5866917949d2ded96cce64828b1331400cb8e2260caabdc047",
+      "research-ide/mathscope-m2/navier/actual-stress-direction-bounds.mjs": "42a3870cb4cc177333d7fa5ae32be988b2fb43c00fe1cb89c8ee614f70ff23f4",
+      "research-ide/mathscope-m2/navier/actual-stress-direction-program.mjs": "b3567c39a9381ef16c3d94f0a24a88571a87dee7a61b9fe782d2076732b165f5",
+      "research-ide/mathscope-m2/navier/source-profile-data.mjs": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a",
+      "research-ide/mathscope-m2/navier/source-profile.mjs": "4578d632c3da8c6994557bcb4e78babf4dcede1e4893252c6a8ae2e342426133",
+      "research-ide/mathscope-m2/navier/tests/actual-all-band-background-norms-source.test.mjs": "e41683b14d2c42392ba07ace0c12b328135ef9bb31c0937916ac7c5b84bba0a4"
+    },
+    "fileCount": 44,
+    "sha256": "0b4f0196d1c806938acd92c811b72efeecfbb306e2df27fb15bbdadd896f2500",
+    "scope": "Literal local import closure; exact bytes before and after this source run."
+  },
+  "sourceManifestUnchangedAfterRun": true,
+  "mode": "DIRECT_NODE_SOURCE",
+  "progress": [
+    {
+      "stage": "all-band-full-leading-FTC",
+      "nodeCount": 217569,
+      "sourceJetCount": 12,
+      "elapsedMs": 11924.707697,
+      "rssBytes": 1024704512
+    },
+    {
+      "stage": "all-band-background-norms-sealed",
+      "nodeCount": 455842,
+      "sourceJetCount": 12,
+      "coefficientFTCCount": 158,
+      "derivativeOrder": 2,
+      "elapsedMs": 15760.588732,
+      "rssBytes": 1503072256
+    }
+  ],
+  "certificate": {
+    "schema": "MathScope.ActualAllBandBackgroundNormCertificate/1",
+    "request": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "derivativeOrder": 2,
+      "maxCoefficientJets": 20000,
+      "maxJetRequests": 100000
+    },
+    "sourceBinding": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+      "sourceCoefficientPrefix": 3,
+      "actualFullLeadingDefinition": true,
+      "originalSourceModulesChanged": false
+    },
+    "domain": {
+      "s": [
+        "1/2",
+        "2"
+      ],
+      "X": [
+        137007,
+        137008
+      ],
+      "eta": [
+        "-1",
+        "1"
+      ],
+      "q": [
+        "positive",
+        "<=1"
+      ],
+      "Q": [
+        "positive",
+        "<=1/2"
+      ],
+      "closedEtaIsOneSided": true
+    },
+    "rows": [
+      {
+        "derivativeOrder": 0,
+        "Cslow": 455531,
+        "normalizedTailCoefficient": 455519,
+        "errorConstant": 455532,
+        "derivatives": [
+          {
+            "slowOrders": [
+              0,
+              0,
+              0
+            ],
+            "leadingF": 455523,
+            "leadingG": 455524,
+            "FErrorConstant": 455526,
+            "GErrorConstant": 455528,
+            "FTotal": 455529,
+            "GTotal": 455530
+          }
+        ],
+        "estimate": "Every ordinary slow derivative of F and G of total order<=m has absolute value<=Cslow, for every original band Q<=1/2 and q=Q*s<=1.",
+        "proximity": "The corresponding completed-minus-leading derivative is <=errorConstant*epsilon^2; the fixed Q is not differentiated."
+      },
+      {
+        "derivativeOrder": 1,
+        "Cslow": 455592,
+        "normalizedTailCoefficient": 455521,
+        "errorConstant": 455593,
+        "derivatives": [
+          {
+            "slowOrders": [
+              0,
+              0,
+              0
+            ],
+            "leadingF": 455523,
+            "leadingG": 455524,
+            "FErrorConstant": 455534,
+            "GErrorConstant": 455536,
+            "FTotal": 455537,
+            "GTotal": 455538
+          },
+          {
+            "slowOrders": [
+              0,
+              0,
+              1
+            ],
+            "leadingF": 455543,
+            "leadingG": 455548,
+            "FErrorConstant": 455553,
+            "GErrorConstant": 455558,
+            "FTotal": 455559,
+            "GTotal": 455560
+          },
+          {
+            "slowOrders": [
+              0,
+              1,
+              0
+            ],
+            "leadingF": 455565,
+            "leadingG": 455570,
+            "FErrorConstant": 455575,
+            "GErrorConstant": 455580,
+            "FTotal": 455581,
+            "GTotal": 455582
+          },
+          {
+            "slowOrders": [
+              1,
+              0,
+              0
+            ],
+            "leadingF": 455583,
+            "leadingG": 455584,
+            "FErrorConstant": 455587,
+            "GErrorConstant": 455589,
+            "FTotal": 455590,
+            "GTotal": 455591
+          }
+        ],
+        "estimate": "Every ordinary slow derivative of F and G of total order<=m has absolute value<=Cslow, for every original band Q<=1/2 and q=Q*s<=1.",
+        "proximity": "The corresponding completed-minus-leading derivative is <=errorConstant*epsilon^2; the fixed Q is not differentiated."
+      },
+      {
+        "derivativeOrder": 2,
+        "Cslow": 455821,
+        "normalizedTailCoefficient": 215511,
+        "errorConstant": 455822,
+        "derivatives": [
+          {
+            "slowOrders": [
+              0,
+              0,
+              0
+            ],
+            "leadingF": 455523,
+            "leadingG": 455524,
+            "FErrorConstant": 455595,
+            "GErrorConstant": 455597,
+            "FTotal": 455598,
+            "GTotal": 455599
+          },
+          {
+            "slowOrders": [
+              0,
+              0,
+              1
+            ],
+            "leadingF": 455543,
+            "leadingG": 455548,
+            "FErrorConstant": 455601,
+            "GErrorConstant": 455603,
+            "FTotal": 455604,
+            "GTotal": 455605
+          },
+          {
+            "slowOrders": [
+              0,
+              1,
+              0
+            ],
+            "leadingF": 455565,
+            "leadingG": 455570,
+            "FErrorConstant": 455607,
+            "GErrorConstant": 455609,
+            "FTotal": 455610,
+            "GTotal": 455611
+          },
+          {
+            "slowOrders": [
+              1,
+              0,
+              0
+            ],
+            "leadingF": 455583,
+            "leadingG": 455584,
+            "FErrorConstant": 455613,
+            "GErrorConstant": 455615,
+            "FTotal": 455616,
+            "GTotal": 455617
+          },
+          {
+            "slowOrders": [
+              0,
+              0,
+              2
+            ],
+            "leadingF": 455628,
+            "leadingG": 455639,
+            "FErrorConstant": 455650,
+            "GErrorConstant": 455661,
+            "FTotal": 455662,
+            "GTotal": 455663
+          },
+          {
+            "slowOrders": [
+              0,
+              1,
+              1
+            ],
+            "leadingF": 455674,
+            "leadingG": 455685,
+            "FErrorConstant": 455696,
+            "GErrorConstant": 455707,
+            "FTotal": 455708,
+            "GTotal": 455709
+          },
+          {
+            "slowOrders": [
+              0,
+              2,
+              0
+            ],
+            "leadingF": 455720,
+            "leadingG": 455731,
+            "FErrorConstant": 455742,
+            "GErrorConstant": 455753,
+            "FTotal": 455754,
+            "GTotal": 455755
+          },
+          {
+            "slowOrders": [
+              1,
+              0,
+              1
+            ],
+            "leadingF": 455760,
+            "leadingG": 455765,
+            "FErrorConstant": 455773,
+            "GErrorConstant": 455778,
+            "FTotal": 455779,
+            "GTotal": 455780
+          },
+          {
+            "slowOrders": [
+              1,
+              1,
+              0
+            ],
+            "leadingF": 455785,
+            "leadingG": 455790,
+            "FErrorConstant": 455798,
+            "GErrorConstant": 455803,
+            "FTotal": 455804,
+            "GTotal": 455805
+          },
+          {
+            "slowOrders": [
+              2,
+              0,
+              0
+            ],
+            "leadingF": 455808,
+            "leadingG": 455811,
+            "FErrorConstant": 455815,
+            "GErrorConstant": 455818,
+            "FTotal": 455819,
+            "GTotal": 455820
+          }
+        ],
+        "estimate": "Every ordinary slow derivative of F and G of total order<=m has absolute value<=Cslow, for every original band Q<=1/2 and q=Q*s<=1.",
+        "proximity": "The corresponding completed-minus-leading derivative is <=errorConstant*epsilon^2; the fixed Q is not differentiated."
+      }
+    ],
+    "gaussianRows": [
+      {
+        "derivativeOrder": 0,
+        "backgroundDerivativeOrder": 2,
+        "B_m": 455836,
+        "Bnorm": 455831,
+        "C_mPlusTwo": 455821,
+        "Lmax": 455835,
+        "sourceMeaning": "A source-only base for the original all-order moving matrix/physical jet ledger; no matrix or Gaussian source binding is asserted here."
+      }
+    ],
+    "checks": [
+      {
+        "id": "authenticated-original-completed-background-and-canonical-induction",
+        "pass": true
+      },
+      {
+        "id": "full-leading-F0-including-I2-and-heat-retained",
+        "pass": true
+      },
+      {
+        "id": "full-leading-U0-retained",
+        "pass": true
+      },
+      {
+        "id": "same-enlarged-source-rectangle",
+        "pass": true
+      },
+      {
+        "id": "exact-inverse-slow-chart-and-commutators",
+        "pass": true
+      },
+      {
+        "id": "same-positive-source-h-and-real-heat-argument",
+        "pass": true
+      },
+      {
+        "id": "complete-full-leading-FTC-family",
+        "pass": true
+      },
+      {
+        "id": "all-coefficient-derivatives-and-FTC-faces-retained",
+        "pass": true
+      },
+      {
+        "id": "every-finite-block-keeps-the-original-n1-and-n2",
+        "pass": true
+      },
+      {
+        "id": "source-only-uniform-constants-have-no-free-coordinate",
+        "pass": true
+      },
+      {
+        "id": "original-source-prefix-and-definitions-unchanged",
+        "pass": true
+      }
+    ],
+    "scope": {
+      "actualAllBandFiniteSlowNormRecipe": true,
+      "actualGeneratedSlowOrder": 2,
+      "arbitraryFiniteOrderBySameAuthenticatedRecipe": true,
+      "independentOfEllAndMeshLabels": true,
+      "uniformUnderCanonicalCutoffEnlargement": true,
+      "fullLeadingHeatAndI2Included": true,
+      "allIntegerGraphsLiterallyExecuted": false,
+      "actualNumericalConstantsEnclosed": false,
+      "commonPhysicalSelectorAttached": false,
+      "actualAllBandHConstructed": false,
+      "allLabelCovariancePositivityAttached": false,
+      "wholeGPOSComplete": false,
+      "wholeGN5Complete": false,
+      "wholeM2Complete": false,
+      "M3Started": false
+    },
+    "graph": {
+      "sha256": "6c6e051b96e6c745b40c97bd9b4808baba96f959b7215f0e5c872c894a8f2b53",
+      "nodeCount": 455842,
+      "compilerBytes": 18148760
+    },
+    "pass": true
+  },
+  "executedChecks": [
+    {
+      "id": "the live full source and all eleven internal norm bindings authenticate",
+      "pass": true
+    },
+    {
+      "id": "the full F0 heat and I2 body and full U0 are actually retained",
+      "pass": true
+    },
+    {
+      "id": "all raw leading mixed FTC faces and exact chart coefficient faces are present",
+      "pass": true
+    },
+    {
+      "id": "each finite block keeps the actual first two orders and canonical all-order tail",
+      "pass": true
+    },
+    {
+      "id": "every C_m and emitted B_m is source only and no absent higher derivative is emitted",
+      "pass": true
+    },
+    {
+      "id": "copied claims and changed program metadata cannot authenticate while appends keep issued SHA fixed",
+      "pass": true
+    },
+    {
+      "id": "final-record",
+      "pass": true
+    }
+  ],
+  "executedTestGroupCount": 7,
+  "elapsedMs": 20341.70061,
+  "peakRSSBytes": 2399522816,
+  "pass": true,
+  "finiteSourceRegressionIsUniversalProof": false
+}

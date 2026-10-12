@@ -1,0 +1,144 @@
+/workspace/scratch/cf975e3da716/lean-runtime/audit/cylindrical-frame-term-must-fail.lean:147:45: warning: Variable name `ir` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _ir
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/workspace/scratch/cf975e3da716/lean-runtime/audit/cylindrical-frame-term-must-fail.lean:167:2: error: `grind` failed
+case grind
+K : Type u
+inst : CommRing K
+Dr Dz : Differential K
+w nr nt nz ir Cr Ct Cz : K
+hwR : Dr.apply w = 0
+hwZ : Dz.apply w = 0
+hntR : Dr.apply nt = -(ir * nt)
+hntZ : Dz.apply nt = 0
+hgradient : Dr.apply nz = Dz.apply nr
+hirZ : Dz.apply ir = 0
+hmixed : Dr.apply (Dz.apply Ct) = Dz.apply (Dr.apply Ct)
+h :
+  ¬0 + w * (-(ir * nt) * Cz + nt * Dr.apply Cz - (Dz.apply nr * Ct + nz * Dr.apply Ct)) - Dz.apply (Dr.apply Ct) +
+            ir * (w * (nt * Cz - nz * Ct) - Dz.apply Ct) +
+          (0 + w * (Dz.apply nr * Ct + nr * Dz.apply Ct - (0 + nt * Dz.apply Cr)) + Dz.apply (Dr.apply Ct)) +
+        w *
+          (nr * (w * (nt * Cz - nz * Ct) - Dz.apply Ct) + nt * (w * (nz * Cr - nr * Cz) + Dz.apply Cr - Dr.apply Cz) +
+            nz * (w * (nr * Ct - nt * Cr) + Dr.apply Ct)) =
+      0
+⊢ False
+[grind] Goal diagnostics
+  [facts] Asserted facts
+    [prop] Dr.apply w = 0
+    [prop] Dz.apply w = 0
+    [prop] Dr.apply nt = -(ir * nt)
+    [prop] Dz.apply nt = 0
+    [prop] Dr.apply nz = Dz.apply nr
+    [prop] Dz.apply ir = 0
+    [prop] Dr.apply (Dz.apply Ct) = Dz.apply (Dr.apply Ct)
+    [prop] ¬0 + w * (-(ir * nt) * Cz + nt * Dr.apply Cz - (Dz.apply nr * Ct + nz * Dr.apply Ct)) -
+                    Dz.apply (Dr.apply Ct) +
+                  ir * (w * (nt * Cz - nz * Ct) - Dz.apply Ct) +
+                (0 + w * (Dz.apply nr * Ct + nr * Dz.apply Ct - (0 + nt * Dz.apply Cr)) + Dz.apply (Dr.apply Ct)) +
+              w *
+                (nr * (w * (nt * Cz - nz * Ct) - Dz.apply Ct) +
+                    nt * (w * (nz * Cr - nr * Cz) + Dz.apply Cr - Dr.apply Cz) +
+                  nz * (w * (nr * Ct - nt * Cr) + Dr.apply Ct)) =
+            0
+  [eqc] False propositions
+    [prop] 0 + w * (-(ir * nt) * Cz + nt * Dr.apply Cz - (Dz.apply nr * Ct + nz * Dr.apply Ct)) -
+                  Dz.apply (Dr.apply Ct) +
+                ir * (w * (nt * Cz - nz * Ct) - Dz.apply Ct) +
+              (0 + w * (Dz.apply nr * Ct + nr * Dz.apply Ct - (0 + nt * Dz.apply Cr)) + Dz.apply (Dr.apply Ct)) +
+            w *
+              (nr * (w * (nt * Cz - nz * Ct) - Dz.apply Ct) +
+                  nt * (w * (nz * Cr - nr * Cz) + Dz.apply Cr - Dr.apply Cz) +
+                nz * (w * (nr * Ct - nt * Cr) + Dr.apply Ct)) =
+          0
+  [eqc] Equivalence classes
+    [eqc] {-(ir * nt), Dr.apply nt}
+    [eqc] {0, Dr.apply w, Dz.apply w, Dz.apply nt, Dz.apply ir}
+    [eqc] {Dr.apply nz, Dz.apply nr}
+    [eqc] {Dr.apply (Dz.apply Ct), Dz.apply (Dr.apply Ct)}
+  [ring] Ring `K`
+    [diseqs] Disequalities
+      [_] ¬-1 * (ir * w * Ct * nz) + -1 * (ir * Dz.apply Ct) = 0
+/workspace/scratch/cf975e3da716/lean-runtime/audit/cylindrical-frame-term-must-fail.lean:166:15: warning: This simp argument is unused:
+  hirZ
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [curlRadial, curlTheta, curlAxial, Dr.map_sub, Dr.map_mul, Dz.map_add, Dz.map_sub, Dz.map_mul, hwR,
+    hwZ, hntR, hntZ, hgradient, hmixed]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MathScope.M2.Navier.Differential.mixed_product.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D E : MathScope.M2.Navier.Differential K) (x y : K) :
+  D.apply (E.apply (x * y)) =
+    D.apply (E.apply x) * y + E.apply x * D.apply y + D.apply x * E.apply y + x * D.apply (E.apply y)
+'MathScope.M2.Navier.Differential.mixed_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.Differential.first_variation_rhs.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D : MathScope.M2.Navier.Differential K) (M w : K) : D.apply (M * w) = M * D.apply w + D.apply M * w
+'MathScope.M2.Navier.Differential.first_variation_rhs' does not depend on any axioms
+MathScope.M2.Navier.Differential.mixed_variation_rhs.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D E : MathScope.M2.Navier.Differential K) (M w : K) :
+  D.apply (E.apply (M * w)) =
+    M * D.apply (E.apply w) + D.apply M * E.apply w + E.apply M * D.apply w + D.apply (E.apply M) * w
+'MathScope.M2.Navier.Differential.mixed_variation_rhs' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.Differential.second_variation_rhs.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D : MathScope.M2.Navier.Differential K) (M w : K) :
+  D.apply (D.apply (M * w)) =
+    M * D.apply (D.apply w) + (D.apply M * D.apply w + D.apply M * D.apply w) + D.apply (D.apply M) * w
+'MathScope.M2.Navier.Differential.second_variation_rhs' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.Differential.inverse_first.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D : MathScope.M2.Navier.Differential K) (A B : K) (hAB : A * B = 1) (hBA : B * A = 1) :
+  D.apply B = -(B * D.apply A * B)
+'MathScope.M2.Navier.Differential.inverse_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.Differential.inverse_mixed.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D E : MathScope.M2.Navier.Differential K) (A B : K) (hAB : A * B = 1) (hBA : B * A = 1) :
+  D.apply (E.apply B) =
+    B * E.apply A * B * D.apply A * B + B * D.apply A * B * E.apply A * B - B * D.apply (E.apply A) * B
+'MathScope.M2.Navier.Differential.inverse_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.Differential.solve_first.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D : MathScope.M2.Navier.Differential K) (H J y target : K) (hJH : J * H = 1) (hsolve : H * y = target) :
+  D.apply y = J * (D.apply target - D.apply H * y)
+'MathScope.M2.Navier.Differential.solve_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.Differential.solve_mixed.{u} {K : Type u} [Lean.Grind.Ring K]
+  (D E : MathScope.M2.Navier.Differential K) (H J y target : K) (hJH : J * H = 1) (hsolve : H * y = target) :
+  D.apply (E.apply y) =
+    J * (D.apply (E.apply target) - D.apply (E.apply H) * y - E.apply H * D.apply y - D.apply H * E.apply y)
+'MathScope.M2.Navier.Differential.solve_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.covariance_density_mixed.{u} {K : Type u} [Lean.Grind.CommRing K]
+  (D E : MathScope.M2.Navier.Differential K) (radial tangent : K) :
+  D.apply (E.apply (radial * tangent)) =
+    D.apply (E.apply radial) * tangent + D.apply radial * E.apply tangent + E.apply radial * D.apply tangent +
+      radial * D.apply (E.apply tangent)
+'MathScope.M2.Navier.covariance_density_mixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.square_root_first_relation.{u} {K : Type u} [Lean.Grind.CommRing K]
+  (D : MathScope.M2.Navier.Differential K) (s y : K) (hs : s * s = y) : (s + s) * D.apply s = D.apply y
+'MathScope.M2.Navier.square_root_first_relation' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.square_root_mixed_relation.{u} {K : Type u} [Lean.Grind.CommRing K]
+  (D E : MathScope.M2.Navier.Differential K) (s y : K) (hs : s * s = y) :
+  (s + s) * D.apply (E.apply s) + (D.apply s * E.apply s + D.apply s * E.apply s) = D.apply (E.apply y)
+'MathScope.M2.Navier.square_root_mixed_relation' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.full_cylindrical_curl_divergence.{u} {K : Type u} [Lean.Grind.CommRing K]
+  (Dr Dz : MathScope.M2.Navier.Differential K) (w nr nt nz ir Cr Ct Cz : K) (hwR : Dr.apply w = 0)
+  (hwZ : Dz.apply w = 0) (hntR : Dr.apply nt = -(ir * nt)) (hntZ : Dz.apply nt = 0)
+  (hgradient : Dr.apply nz = Dz.apply nr) (hirZ : Dz.apply ir = 0)
+  (hmixed : Dr.apply (Dz.apply Ct) = Dz.apply (Dr.apply Ct)) :
+  Dr.apply (MathScope.M2.Navier.curlRadial Dz w nt nz Ct Cz) + ir * MathScope.M2.Navier.curlRadial Dz w nt nz Ct Cz +
+        Dz.apply (MathScope.M2.Navier.curlAxial Dr w nr nt ir Cr Ct) +
+      w *
+        (nr * MathScope.M2.Navier.curlRadial Dz w nt nz Ct Cz + nt * MathScope.M2.Navier.curlTheta Dr Dz w nr nz Cr Cz +
+          nz * MathScope.M2.Navier.curlAxial Dr w nr nt ir Cr Ct) =
+    0
+'MathScope.M2.Navier.full_cylindrical_curl_divergence' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+MathScope.M2.Navier.square_root_first.{u} {K : Type u} [Lean.Grind.Field K] (D : MathScope.M2.Navier.Differential K)
+  (s y : K) (hs : s * s = y) (hnonzero : s + s ≠ 0) : D.apply s = (s + s)⁻¹ * D.apply y
+'MathScope.M2.Navier.square_root_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M2.Navier.two_column_inverse.{u} {K : Type u} [Lean.Grind.Field K] (a b c d u v : K)
+  (hdet : a * d - b * c ≠ 0) :
+  a * ((d * u - b * v) / (a * d - b * c)) + b * ((-c * u + a * v) / (a * d - b * c)) = u ∧
+    c * ((d * u - b * v) / (a * d - b * c)) + d * ((-c * u + a * v) / (a * d - b * c)) = v
+'MathScope.M2.Navier.two_column_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]

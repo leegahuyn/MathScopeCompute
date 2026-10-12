@@ -1,0 +1,121 @@
+TAP version 13
+# \# SOURCE_PROGRESS {"stage":"historical-canonical-cutoffs-retained","nodeCount":160569,"rssBytes":841596928,"at":"2026-10-11T07:55:05.176Z"}
+# \# SOURCE_PROGRESS {"stage":"actual-physical-candidate-constraints","nodeCount":455953,"rssBytes":1254862848,"at":"2026-10-11T07:55:09.426Z"}
+# \# SOURCE_PROGRESS {"stage":"original-source-bindings","nodeCount":455962,"rssBytes":1280552960,"at":"2026-10-11T07:55:09.519Z"}
+# \# SOURCE_PROGRESS {"stage":"terminal-ftc-norms","nodeCount":456239,"rssBytes":1280684032,"at":"2026-10-11T07:55:09.525Z"}
+# \# SOURCE_PROGRESS {"stage":"interior-and-weighted-norms","nodeCount":457976,"rssBytes":1280815104,"at":"2026-10-11T07:55:09.552Z"}
+# \# SOURCE_PROGRESS {"stage":"unchanged-first-cutoff","nodeCount":457976,"rssBytes":1313439744,"at":"2026-10-11T07:55:10.015Z"}
+# \# SOURCE_PROGRESS {"stage":"sealed-actual-order-one-weighted-stress","nodeCount":458440,"rssBytes":1634959360,"at":"2026-10-11T07:55:10.980Z"}
+# \# SOURCE_PROGRESS {"stage":"actual-order-one-weighted-block","nodeCount":458440,"rssBytes":1634959360,"at":"2026-10-11T07:55:10.981Z"}
+# \# SOURCE_PROGRESS {"stage":"sealed-actual-strengthened-background","nodeCount":460282,"rssBytes":1988947968,"at":"2026-10-11T07:55:12.459Z"}
+# Subtest: a new actual background applies the strengthened scales and retains the historical source independently
+ok 1 - a new actual background applies the strengthened scales and retains the historical source independently
+  ---
+  duration_ms: 18970.819503
+  type: 'test'
+  ...
+# Subtest: the compact anchor band has the complete possible active prefix for every doubling continuation
+ok 2 - the compact anchor band has the complete possible active prefix for every doubling continuation
+  ---
+  duration_ms: 0.200675
+  type: 'test'
+  ...
+# Subtest: actual pressure and both signed stress components enter the full physical momentum
+ok 3 - actual pressure and both signed stress components enter the full physical momentum
+  ---
+  duration_ms: 4141.100124
+  type: 'test'
+  ...
+# Subtest: every actual positive stress primitive has its literal FTC derivative and original backward sign
+not ok 4 - every actual positive stress primitive has its literal FTC derivative and original backward sign
+  ---
+  duration_ms: 218.437003
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:61:1'
+  failureType: 'testCodeFailure'
+  error: 'Actual signed stress FTC failed at n=2, theta.'
+  code: 'INTERNAL_VALIDATION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    actualPositiveStressFTC (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-residual-bridge.mjs:71:7)
+    attachActualFiniteResidualBridge (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-residual-bridge.mjs:144:15)
+    residual (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:21:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:62:11)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: all actual finite residual coefficients are retained and the complete high-order tail has source FTC constants
+not ok 5 - all actual finite residual coefficients are retained and the complete high-order tail has source FTC constants
+  ---
+  duration_ms: 0.229398
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:72:1'
+  failureType: 'testCodeFailure'
+  error: 'Actual signed stress FTC failed at n=2, theta.'
+  code: 'INTERNAL_VALIDATION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    actualPositiveStressFTC (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-residual-bridge.mjs:71:7)
+    attachActualFiniteResidualBridge (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-residual-bridge.mjs:144:15)
+    residual (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:21:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:62:11)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: source seals reject changed scales, completion flags, a copied result and a supplied tail bound
+not ok 6 - source seals reject changed scales, completion flags, a copied result and a supplied tail bound
+  ---
+  duration_ms: 0.131303
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:82:1'
+  failureType: 'testCodeFailure'
+  error: 'Actual signed stress FTC failed at n=2, theta.'
+  code: 'INTERNAL_VALIDATION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    actualPositiveStressFTC (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-residual-bridge.mjs:71:7)
+    attachActualFiniteResidualBridge (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-residual-bridge.mjs:144:15)
+    residual (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:21:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:62:11)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: fixed graph hashes survive later source appends and neither receipt opens M3
+not ok 7 - fixed graph hashes survive later source appends and neither receipt opens M3
+  ---
+  duration_ms: 0.314172
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:95:1'
+  failureType: 'testCodeFailure'
+  error: 'Actual signed stress FTC failed at n=2, theta.'
+  code: 'INTERNAL_VALIDATION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    actualPositiveStressFTC (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-residual-bridge.mjs:71:7)
+    attachActualFiniteResidualBridge (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-residual-bridge.mjs:144:15)
+    residual (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:21:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-strengthened-background-source.test.mjs:62:11)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 3
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23600.466141

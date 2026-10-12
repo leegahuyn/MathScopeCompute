@@ -1,0 +1,7484 @@
+{
+  "schema": "MathScope.M2.ArithmeticResult/1",
+  "version": "0.2.0-m2",
+  "kind": "arithmetic.qDeRham",
+  "status": "COMPLETED",
+  "object": {
+    "kind": "Q_PD_SMALL_CECH_ALEXANDER_PROJECTIVE_LINE",
+    "p": "3",
+    "geometry": "P1 over Z_p via its two standard smooth affine charts"
+  },
+  "request": {
+    "budget": {},
+    "input": {
+      "deltaDepth": 1,
+      "nerveDegree": 3,
+      "operation": "cechP1",
+      "p": "3"
+    },
+    "kind": "arithmetic.qDeRham",
+    "precision": {}
+  },
+  "scope": {
+    "finite": true,
+    "displayedNerveDegrees": [
+      0,
+      3
+    ],
+    "displayedDeltaGeneratorDepth": 1,
+    "coefficientObservationDigits": 4,
+    "fullCompletedEnvelopeRetained": true,
+    "canonicalQPDDescent": true,
+    "multiplicativeEInfinityCertified": false,
+    "formalComplete": false
+  },
+  "results": {
+    "object": {
+      "kind": "Q_PD_SMALL_CECH_ALEXANDER_PROJECTIVE_LINE",
+      "p": "3",
+      "geometry": "P1 over Z_p via its two standard smooth affine charts"
+    },
+    "scope": {
+      "finite": true,
+      "displayedNerveDegrees": [
+        0,
+        3
+      ],
+      "displayedDeltaGeneratorDepth": 1,
+      "coefficientObservationDigits": 4,
+      "fullCompletedEnvelopeRetained": true,
+      "canonicalQPDDescent": true,
+      "multiplicativeEInfinityCertified": false,
+      "formalComplete": false
+    },
+    "base": {
+      "D": "Z_p[[q-1]]",
+      "I": "(q-1)",
+      "completion": "derived (p,[p]_q)-completion; equivalent base topology to (p,q-1)",
+      "delta": {
+        "q": "0",
+        "Tj": "0",
+        "Yjk": "Yj(k+1)"
+      },
+      "qInteger": [
+        {
+          "coefficient": "1",
+          "powers": {
+            "q": 1
+          }
+        },
+        {
+          "coefficient": "1",
+          "powers": {
+            "q": 2
+          }
+        },
+        {
+          "coefficient": "1",
+          "powers": {}
+        }
+      ]
+    },
+    "envelopeConstruction": {
+      "definition": "For every n>=0, freely adjoin Y_j,0=phi(T_j-T_0)/[p]_q in delta-D-algebras, retain all delta iterates and relations, and take derived (p,[p]_q)-completion.",
+      "presentation": "delta^k([p]_q Y_j,0-(T_j^p-T_0^p))=0 for every j=1..n and k>=0; delta(Y_j,k)=Y_j,k+1",
+      "kernel": "the completed gamma-stable ideal over (q-1,T_j-T_0), equivalently the augmentation kernel to the smooth chart",
+      "hypotheses": [
+        "D with (q-1) is the initial q-PD pair",
+        "each completed P^n is smooth and flat over D",
+        "the diagonal sequence is relatively regular by monic variable elimination"
+      ],
+      "theorem": {
+        "id": "S01",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "locators": [
+          "Lemma 16.10",
+          "Remark 16.15",
+          "Remark 16.16",
+          "Construction 16.20",
+          "Theorem 16.22 and its proof"
+        ],
+        "applied": "Lemma 16.10: this actual free completed delta presentation is discrete, flat, [p]_q-torsionfree and universal among q-PD envelopes; no unproved saturation is substituted."
+      },
+      "finiteObservation": "The displayed equations are exact integral polynomials in a selected finite generator set. Higher deltas and nerve degrees remain in the mathematical object and are never set to zero."
+    },
+    "envelopes": [
+      {
+        "nerveDegree": 0,
+        "polynomialLift": "D<T_0,...,T_0>",
+        "kernelGenerators": [
+          "q-1"
+        ],
+        "relativeRegularSequenceWitness": "Each T_j-T_0 is monic in a new variable; successive quotients eliminate that variable and remain flat over D. This remains true after the Laurent localizations for the overlap.",
+        "fullEnvelope": "D<T_0,...,T_0>{(T_j^p-T_0^p)/[p]_q, j=1..0}_delta^completed",
+        "generators": [
+          "q",
+          "T0"
+        ],
+        "relations": [],
+        "augmentation": {
+          "q": "1",
+          "eachTj": "T",
+          "eachDeltaY": "0",
+          "relationsVanish": true
+        },
+        "displayIsQuotientKillingHigherDelta": false
+      },
+      {
+        "nerveDegree": 1,
+        "polynomialLift": "D<T_0,...,T_1>",
+        "kernelGenerators": [
+          "q-1",
+          "T_1-T_0"
+        ],
+        "relativeRegularSequenceWitness": "Each T_j-T_0 is monic in a new variable; successive quotients eliminate that variable and remain flat over D. This remains true after the Laurent localizations for the overlap.",
+        "fullEnvelope": "D<T_0,...,T_1>{(T_j^p-T_0^p)/[p]_q, j=1..1}_delta^completed",
+        "generators": [
+          "q",
+          "T0",
+          "T1",
+          "Y1_0",
+          "Y1_1"
+        ],
+        "relations": [
+          {
+            "generator": "Y1_0",
+            "deltaOrder": 0,
+            "equation": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ],
+            "meaning": "delta^0([p]_q Y1_0 - (T_1^p-T_0^p))=0"
+          },
+          {
+            "generator": "Y1_1",
+            "deltaOrder": 1,
+            "equation": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-3",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 4,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 5,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "T1": 6
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "78",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 4,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 5,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "T1": 6
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ],
+            "meaning": "delta^1([p]_q Y1_0 - (T_1^p-T_0^p))=0"
+          }
+        ],
+        "augmentation": {
+          "q": "1",
+          "eachTj": "T",
+          "eachDeltaY": "0",
+          "relationsVanish": true
+        },
+        "displayIsQuotientKillingHigherDelta": false
+      },
+      {
+        "nerveDegree": 2,
+        "polynomialLift": "D<T_0,...,T_2>",
+        "kernelGenerators": [
+          "q-1",
+          "T_1-T_0",
+          "T_2-T_0"
+        ],
+        "relativeRegularSequenceWitness": "Each T_j-T_0 is monic in a new variable; successive quotients eliminate that variable and remain flat over D. This remains true after the Laurent localizations for the overlap.",
+        "fullEnvelope": "D<T_0,...,T_2>{(T_j^p-T_0^p)/[p]_q, j=1..2}_delta^completed",
+        "generators": [
+          "q",
+          "T0",
+          "T1",
+          "T2",
+          "Y1_0",
+          "Y1_1",
+          "Y2_0",
+          "Y2_1"
+        ],
+        "relations": [
+          {
+            "generator": "Y1_0",
+            "deltaOrder": 0,
+            "equation": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ],
+            "meaning": "delta^0([p]_q Y1_0 - (T_1^p-T_0^p))=0"
+          },
+          {
+            "generator": "Y1_1",
+            "deltaOrder": 1,
+            "equation": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-3",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 4,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 5,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "T1": 6
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "78",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 4,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 5,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "T1": 6
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ],
+            "meaning": "delta^1([p]_q Y1_0 - (T_1^p-T_0^p))=0"
+          },
+          {
+            "generator": "Y2_0",
+            "deltaOrder": 0,
+            "equation": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T2": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T2": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ],
+            "meaning": "delta^0([p]_q Y2_0 - (T_2^p-T_0^p))=0"
+          },
+          {
+            "generator": "Y2_1",
+            "deltaOrder": 1,
+            "equation": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-3",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 2,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y2_1": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 4,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 5,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y2_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "T2": 6
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T2": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "78",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 2,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y2_1": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 4,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 5,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y2_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "T2": 6
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T2": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ],
+            "meaning": "delta^1([p]_q Y2_0 - (T_2^p-T_0^p))=0"
+          }
+        ],
+        "augmentation": {
+          "q": "1",
+          "eachTj": "T",
+          "eachDeltaY": "0",
+          "relationsVanish": true
+        },
+        "displayIsQuotientKillingHigherDelta": false
+      },
+      {
+        "nerveDegree": 3,
+        "polynomialLift": "D<T_0,...,T_3>",
+        "kernelGenerators": [
+          "q-1",
+          "T_1-T_0",
+          "T_2-T_0",
+          "T_3-T_0"
+        ],
+        "relativeRegularSequenceWitness": "Each T_j-T_0 is monic in a new variable; successive quotients eliminate that variable and remain flat over D. This remains true after the Laurent localizations for the overlap.",
+        "fullEnvelope": "D<T_0,...,T_3>{(T_j^p-T_0^p)/[p]_q, j=1..3}_delta^completed",
+        "generators": [
+          "q",
+          "T0",
+          "T1",
+          "T2",
+          "T3",
+          "Y1_0",
+          "Y1_1",
+          "Y2_0",
+          "Y2_1",
+          "Y3_0",
+          "Y3_1"
+        ],
+        "relations": [
+          {
+            "generator": "Y1_0",
+            "deltaOrder": 0,
+            "equation": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ],
+            "meaning": "delta^0([p]_q Y1_0 - (T_1^p-T_0^p))=0"
+          },
+          {
+            "generator": "Y1_1",
+            "deltaOrder": 1,
+            "equation": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-3",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 4,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 5,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "T1": 6
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "78",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 2,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 4,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 5,
+                  "Y1_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T1": 3,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "T1": 6
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T1": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 3,
+                  "Y1_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T1": 6,
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ],
+            "meaning": "delta^1([p]_q Y1_0 - (T_1^p-T_0^p))=0"
+          },
+          {
+            "generator": "Y2_0",
+            "deltaOrder": 0,
+            "equation": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T2": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T2": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ],
+            "meaning": "delta^0([p]_q Y2_0 - (T_2^p-T_0^p))=0"
+          },
+          {
+            "generator": "Y2_1",
+            "deltaOrder": 1,
+            "equation": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-3",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 2,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y2_1": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 4,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 5,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y2_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "T2": 6
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T2": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "78",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 2,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y2_1": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 4,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 5,
+                  "Y2_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y2_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T2": 3,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "T2": 6
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T2": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 3,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T2": 6,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ],
+            "meaning": "delta^1([p]_q Y2_0 - (T_2^p-T_0^p))=0"
+          },
+          {
+            "generator": "Y3_0",
+            "deltaOrder": 0,
+            "equation": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T3": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_0": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 2,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T3": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_0": 1
+                }
+              }
+            ],
+            "meaning": "delta^0([p]_q Y3_0 - (T_3^p-T_0^p))=0"
+          },
+          {
+            "generator": "Y3_1",
+            "deltaOrder": 1,
+            "equation": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T3": 3,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "T3": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 1,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T3": 3,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "-3",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 2,
+                  "T3": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 2,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 3,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y3_1": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "-2",
+                "powers": {
+                  "q": 4,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "q": 5,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y3_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T3": 3,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "T3": 6
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T3": 3
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T0": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "T3": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_1": 1
+                }
+              }
+            ],
+            "coefficientResiduesModuloPpower": [
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "T3": 3,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 1,
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T0": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 1,
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "T3": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 1,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "T3": 3,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "78",
+                "powers": {
+                  "q": 2,
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T0": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "3",
+                "powers": {
+                  "q": 2,
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 2,
+                  "T3": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 2,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "q": 3,
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 3,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 3,
+                  "Y3_1": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 4,
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 4,
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "79",
+                "powers": {
+                  "q": 4,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "q": 5,
+                  "Y3_0": 3
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 6,
+                  "Y3_1": 1
+                }
+              },
+              {
+                "coefficient": "2",
+                "powers": {
+                  "T0": 3,
+                  "T3": 3,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "T3": 6
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 6,
+                  "T3": 3
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T0": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T3": 3,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "80",
+                "powers": {
+                  "T3": 6,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_1": 1
+                }
+              }
+            ],
+            "meaning": "delta^1([p]_q Y3_0 - (T_3^p-T_0^p))=0"
+          }
+        ],
+        "augmentation": {
+          "q": "1",
+          "eachTj": "T",
+          "eachDeltaY": "0",
+          "relationsVanish": true
+        },
+        "displayIsQuotientKillingHigherDelta": false
+      }
+    ],
+    "faceMaps": [
+      {
+        "sourceDegree": 0,
+        "targetDegree": 1,
+        "index": 0,
+        "indices": [
+          1
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 0,
+        "targetDegree": 1,
+        "index": 1,
+        "indices": [
+          0
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 1,
+        "targetDegree": 2,
+        "index": 0,
+        "indices": [
+          1,
+          2
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "Y1_0": 2,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 1,
+        "targetDegree": 2,
+        "index": 1,
+        "indices": [
+          0,
+          2
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 1,
+        "targetDegree": 2,
+        "index": 2,
+        "indices": [
+          0,
+          1
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 2,
+        "targetDegree": 3,
+        "index": 0,
+        "indices": [
+          1,
+          2,
+          3
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T2",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T3": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1,
+                  "Y2_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "Y1_0": 2,
+                  "Y2_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_0",
+            "image": [
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1,
+                  "Y3_0": 2
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "Y1_0": 2,
+                  "Y3_0": 1
+                }
+              },
+              {
+                "coefficient": "-1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              },
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 2,
+        "targetDegree": 3,
+        "index": 1,
+        "indices": [
+          0,
+          2,
+          3
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T2",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T3": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 2,
+        "targetDegree": 3,
+        "index": 2,
+        "indices": [
+          0,
+          1,
+          3
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T2",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T3": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y3_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 2,
+        "targetDegree": 3,
+        "index": 3,
+        "indices": [
+          0,
+          1,
+          2
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T2",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "degeneracyMaps": [
+      {
+        "sourceDegree": 1,
+        "targetDegree": 0,
+        "index": 0,
+        "indices": [
+          0,
+          0
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": []
+          },
+          {
+            "generator": "Y1_1",
+            "image": []
+          }
+        ]
+      },
+      {
+        "sourceDegree": 2,
+        "targetDegree": 1,
+        "index": 0,
+        "indices": [
+          0,
+          0,
+          1
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T2",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": []
+          },
+          {
+            "generator": "Y1_1",
+            "image": []
+          },
+          {
+            "generator": "Y2_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 2,
+        "targetDegree": 1,
+        "index": 1,
+        "indices": [
+          0,
+          1,
+          1
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T2",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 3,
+        "targetDegree": 2,
+        "index": 0,
+        "indices": [
+          0,
+          0,
+          1,
+          2
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T2",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T3",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": []
+          },
+          {
+            "generator": "Y1_1",
+            "image": []
+          },
+          {
+            "generator": "Y2_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y3_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y3_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 3,
+        "targetDegree": 2,
+        "index": 1,
+        "indices": [
+          0,
+          1,
+          1,
+          2
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T2",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T3",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y3_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y3_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sourceDegree": 3,
+        "targetDegree": 2,
+        "index": 2,
+        "indices": [
+          0,
+          1,
+          2,
+          2
+        ],
+        "images": [
+          {
+            "generator": "q",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "q": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T2",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "T3",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "T2": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y1_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y1_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y2_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y3_0",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_0": 1
+                }
+              }
+            ]
+          },
+          {
+            "generator": "Y3_1",
+            "image": [
+              {
+                "coefficient": "1",
+                "powers": {
+                  "Y2_1": 1
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "nerveChecks": [
+      {
+        "kind": "alternatingCechDifferentialSquared",
+        "sourceDegree": 0,
+        "generator": "q",
+        "zero": true
+      },
+      {
+        "kind": "alternatingCechDifferentialSquared",
+        "sourceDegree": 0,
+        "generator": "T0",
+        "zero": true
+      },
+      {
+        "kind": "alternatingCechDifferentialSquared",
+        "sourceDegree": 1,
+        "generator": "q",
+        "zero": true
+      },
+      {
+        "kind": "alternatingCechDifferentialSquared",
+        "sourceDegree": 1,
+        "generator": "T0",
+        "zero": true
+      },
+      {
+        "kind": "alternatingCechDifferentialSquared",
+        "sourceDegree": 1,
+        "generator": "T1",
+        "zero": true
+      },
+      {
+        "kind": "alternatingCechDifferentialSquared",
+        "sourceDegree": 1,
+        "generator": "Y1_0",
+        "zero": true
+      },
+      {
+        "kind": "alternatingCechDifferentialSquared",
+        "sourceDegree": 1,
+        "generator": "Y1_1",
+        "zero": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 1,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "T2",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "Y2_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 0,
+        "generator": "Y2_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "T2",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "Y2_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 1,
+        "generator": "Y2_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 2,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 2,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 2,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 2,
+        "generator": "T2",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 2,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 2,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 2,
+        "generator": "Y2_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 0,
+        "degeneracy": 2,
+        "generator": "Y2_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "T2",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "Y2_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 0,
+        "generator": "Y2_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "T2",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "Y2_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 1,
+        "generator": "Y2_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 2,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 2,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 2,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 2,
+        "generator": "T2",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 2,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 2,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 2,
+        "generator": "Y2_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 1,
+        "degeneracy": 2,
+        "generator": "Y2_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 0,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 0,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 0,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 0,
+        "generator": "T2",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 0,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 0,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 0,
+        "generator": "Y2_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 0,
+        "generator": "Y2_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 1,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 1,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 1,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 1,
+        "generator": "T2",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 1,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 1,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 1,
+        "generator": "Y2_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 1,
+        "generator": "Y2_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 2,
+        "generator": "q",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 2,
+        "generator": "T0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 2,
+        "generator": "T1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 2,
+        "generator": "T2",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 2,
+        "generator": "Y1_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 2,
+        "generator": "Y1_1",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 2,
+        "generator": "Y2_0",
+        "equal": true
+      },
+      {
+        "kind": "faceDegeneracyComposition",
+        "sourceDegree": 2,
+        "face": 2,
+        "degeneracy": 2,
+        "generator": "Y2_1",
+        "equal": true
+      }
+    ],
+    "twoAffineCover": {
+      "U0": "Spf Z_p<T>",
+      "U1": "Spf Z_p<S>",
+      "overlap": "Spf Z_p<T,T^-1>, S=T^-1",
+      "envelopesOnOverlap": "Laurent-localize the same standard diagonal presentations at every T_j, then complete.",
+      "restriction0": "T_j -> T_j; Y_j,k -> Y_j,k",
+      "restriction1": "S_j -> T_j^-1; Y_j,0 -> -Y_j,0/(T_j^p T_0^p); higher images are their exact delta iterates.",
+      "overlapMaps": [
+        {
+          "nerveDegree": 0,
+          "source": "U1 intersection U0, S coordinates",
+          "target": "U0 intersection U1, T coordinates",
+          "coordinateRule": "S_j -> T_j^-1",
+          "images": [
+            {
+              "generator": "q",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "q": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T0",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T0": -1
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nerveDegree": 1,
+          "source": "U1 intersection U0, S coordinates",
+          "target": "U0 intersection U1, T coordinates",
+          "coordinateRule": "S_j -> T_j^-1",
+          "images": [
+            {
+              "generator": "q",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "q": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T0",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T0": -1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T1",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T1": -1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y1_0",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -3,
+                    "T1": -3,
+                    "Y1_0": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y1_1",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -9,
+                    "T1": -9,
+                    "Y1_1": 1
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nerveDegree": 2,
+          "source": "U1 intersection U0, S coordinates",
+          "target": "U0 intersection U1, T coordinates",
+          "coordinateRule": "S_j -> T_j^-1",
+          "images": [
+            {
+              "generator": "q",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "q": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T0",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T0": -1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T1",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T1": -1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T2",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T2": -1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y1_0",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -3,
+                    "T1": -3,
+                    "Y1_0": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y1_1",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -9,
+                    "T1": -9,
+                    "Y1_1": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y2_0",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -3,
+                    "T2": -3,
+                    "Y2_0": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y2_1",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -9,
+                    "T2": -9,
+                    "Y2_1": 1
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nerveDegree": 3,
+          "source": "U1 intersection U0, S coordinates",
+          "target": "U0 intersection U1, T coordinates",
+          "coordinateRule": "S_j -> T_j^-1",
+          "images": [
+            {
+              "generator": "q",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "q": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T0",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T0": -1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T1",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T1": -1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T2",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T2": -1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "T3",
+              "image": [
+                {
+                  "coefficient": "1",
+                  "powers": {
+                    "T3": -1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y1_0",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -3,
+                    "T1": -3,
+                    "Y1_0": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y1_1",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -9,
+                    "T1": -9,
+                    "Y1_1": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y2_0",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -3,
+                    "T2": -3,
+                    "Y2_0": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y2_1",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -9,
+                    "T2": -9,
+                    "Y2_1": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y3_0",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -3,
+                    "T3": -3,
+                    "Y3_0": 1
+                  }
+                }
+              ]
+            },
+            {
+              "generator": "Y3_1",
+              "image": [
+                {
+                  "coefficient": "-1",
+                  "powers": {
+                    "T0": -9,
+                    "T3": -9,
+                    "Y3_1": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "overlapChecks": [
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 0,
+          "generator": "q",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 0,
+          "generator": "T0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 1,
+          "generator": "q",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 1,
+          "generator": "T0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 1,
+          "generator": "T1",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 1,
+          "generator": "Y1_0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 1,
+          "generator": "Y1_1",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 2,
+          "generator": "q",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 2,
+          "generator": "T0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 2,
+          "generator": "T1",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 2,
+          "generator": "T2",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 2,
+          "generator": "Y1_0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 2,
+          "generator": "Y1_1",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 2,
+          "generator": "Y2_0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 2,
+          "generator": "Y2_1",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "q",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "T0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "T1",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "T2",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "T3",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "Y1_0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "Y1_1",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "Y2_0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "Y2_1",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "Y3_0",
+          "pass": true
+        },
+        {
+          "kind": "inversionSquared",
+          "nerveDegree": 3,
+          "generator": "Y3_1",
+          "pass": true
+        }
+      ],
+      "naturalityWitnesses": [
+        {
+          "sourceDegree": 1,
+          "targetDegree": 2,
+          "indices": [
+            1,
+            2
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [
+            {
+              "coefficient": "-1",
+              "powers": {
+                "T0": -3,
+                "T1": -3,
+                "Y1_0": 1
+              }
+            },
+            {
+              "coefficient": "1",
+              "powers": {
+                "T0": -3,
+                "T2": -3,
+                "Y2_0": 1
+              }
+            },
+            {
+              "coefficient": "1",
+              "powers": {
+                "T1": -3,
+                "T2": -3,
+                "Y1_0": 1
+              }
+            },
+            {
+              "coefficient": "-1",
+              "powers": {
+                "T1": -3,
+                "T2": -3,
+                "Y2_0": 1
+              }
+            }
+          ],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 1,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            2
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 1,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            1
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 3,
+          "indices": [
+            1,
+            2,
+            3
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [
+            {
+              "coefficient": "-1",
+              "powers": {
+                "T0": -3,
+                "T1": -3,
+                "Y1_0": 1
+              }
+            },
+            {
+              "coefficient": "1",
+              "powers": {
+                "T0": -3,
+                "T2": -3,
+                "Y2_0": 1
+              }
+            },
+            {
+              "coefficient": "1",
+              "powers": {
+                "T1": -3,
+                "T2": -3,
+                "Y1_0": 1
+              }
+            },
+            {
+              "coefficient": "-1",
+              "powers": {
+                "T1": -3,
+                "T2": -3,
+                "Y2_0": 1
+              }
+            }
+          ],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 3,
+          "indices": [
+            1,
+            2,
+            3
+          ],
+          "generator": "Y2_0",
+          "differenceBeforeRelations": [
+            {
+              "coefficient": "-1",
+              "powers": {
+                "T0": -3,
+                "T1": -3,
+                "Y1_0": 1
+              }
+            },
+            {
+              "coefficient": "1",
+              "powers": {
+                "T0": -3,
+                "T3": -3,
+                "Y3_0": 1
+              }
+            },
+            {
+              "coefficient": "1",
+              "powers": {
+                "T1": -3,
+                "T3": -3,
+                "Y1_0": 1
+              }
+            },
+            {
+              "coefficient": "-1",
+              "powers": {
+                "T1": -3,
+                "T3": -3,
+                "Y3_0": 1
+              }
+            }
+          ],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 3,
+          "indices": [
+            0,
+            2,
+            3
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 3,
+          "indices": [
+            0,
+            2,
+            3
+          ],
+          "generator": "Y2_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 3,
+          "indices": [
+            0,
+            1,
+            3
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 3,
+          "indices": [
+            0,
+            1,
+            3
+          ],
+          "generator": "Y2_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 3,
+          "indices": [
+            0,
+            1,
+            2
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 3,
+          "indices": [
+            0,
+            1,
+            2
+          ],
+          "generator": "Y2_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 1,
+          "targetDegree": 0,
+          "indices": [
+            0,
+            0
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 1,
+          "indices": [
+            0,
+            0,
+            1
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 1,
+          "indices": [
+            0,
+            0,
+            1
+          ],
+          "generator": "Y2_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 1,
+          "indices": [
+            0,
+            1,
+            1
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 2,
+          "targetDegree": 1,
+          "indices": [
+            0,
+            1,
+            1
+          ],
+          "generator": "Y2_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 3,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            0,
+            1,
+            2
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 3,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            0,
+            1,
+            2
+          ],
+          "generator": "Y2_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 3,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            0,
+            1,
+            2
+          ],
+          "generator": "Y3_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 3,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            1,
+            1,
+            2
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 3,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            1,
+            1,
+            2
+          ],
+          "generator": "Y2_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 3,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            1,
+            1,
+            2
+          ],
+          "generator": "Y3_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 3,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            1,
+            2,
+            2
+          ],
+          "generator": "Y1_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 3,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            1,
+            2,
+            2
+          ],
+          "generator": "Y2_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        },
+        {
+          "sourceDegree": 3,
+          "targetDegree": 2,
+          "indices": [
+            0,
+            1,
+            2,
+            2
+          ],
+          "generator": "Y3_0",
+          "differenceBeforeRelations": [],
+          "afterMultiplicationByQIntegerAndDefiningRelations": [],
+          "pass": true,
+          "higherDeltas": "Apply delta to the equality in the delta-closed ideal; equivalently use uniqueness of the extension to the q-PD envelope.",
+          "torsionCancellation": "Only [p]_q-torsionfreeness from Lemma 16.10 is used; [p]_q is not made a unit in the object."
+        }
+      ],
+      "tripleCocycle": {
+        "coverIndices": [
+          0,
+          1
+        ],
+        "rule": "Identity maps on equal indices, inversion on unequal indices. Every repeated-index triple composition is identity or the same inversion.",
+        "verifiedBy": "Inversion squared and naturality on each actual envelope and all displayed delta generators; full generators follow by delta functoriality."
+      }
+    },
+    "totalComplex": {
+      "definition": "Totalize the Zariski two-affine Cech complex of the small diagonal q-PD Cech–Alexander cosimplicial rings.",
+      "rowZero": "E(U0)^bullet direct-sum E(U1)^bullet",
+      "rowOne": "E(U01)^bullet",
+      "horizontal": "restriction1-restriction0",
+      "vertical": "alternating sum of the displayed face maps, extended by the same all-degree rule",
+      "totalDifferential": "d_diagonal + (-1)^diagonalDegree d_Zariski",
+      "dSquaredProof": "Diagonal d^2=0 by exact cosimplicial identities; the two-chart Zariski differential squares to zero; mixed terms cancel by the checked restriction/face naturality."
+    },
+    "canonicalComparison": {
+      "from": "the full totalized q-PD envelope nerve just constructed",
+      "to": "R Gamma(P1, q-crystalline structure complex)",
+      "localStep": {
+        "source": "S01 Remark 16.16",
+        "sameInputs": "P=D<T> and P=D<S>, their genuine diagonal kernels, and Laurent localization on the intersection",
+        "comparison": "The limit of each actual small q-PD Cech–Alexander nerve computes qOmega of that affine."
+      },
+      "globalStep": {
+        "source": "S01 Remark 16.15",
+        "comparison": "Zariski descent for these affine q-crystalline complexes computes the global formal scheme."
+      },
+      "framedZigzag": {
+        "source": "S01 Theorem 16.22 proof, pp.115–116",
+        "middle": "Tot(qOmega_(D_(J^n),q(P^n))/D)",
+        "arrows": [
+          "Tot(M) -> E^bullet by projection to form degree zero",
+          "Tot(M) -> qOmega_(P/D) by projection to Cech degree zero"
+        ],
+        "quasiIsomorphismReason": "Higher form rows are contractible as cosimplicial modules and the canonical face maps are quasi-isomorphisms, as proved for exactly these framed q-PD data.",
+        "computedLowerLevelModuleModelIsNotUsedAsProof": true
+      },
+      "grade": "ACTUAL_QPD_PRESENTATIONS_AND_MAPS_WITH_APPLIED_CANONICAL_DESCENT_THEOREM",
+      "localKernelCheck": false,
+      "formalComplete": false
+    },
+    "checks": [
+      {
+        "name": "all displayed free delta relations have integral coefficients and augment to zero",
+        "pass": true
+      },
+      {
+        "name": "actual alternating diagonal nerve differential squares to zero",
+        "pass": true
+      },
+      {
+        "name": "the two-affine overlap inversion satisfies all triple cocycles",
+        "pass": true
+      },
+      {
+        "name": "overlap restrictions commute with diagonal faces/degeneracies in the q-PD envelope",
+        "pass": true
+      },
+      {
+        "name": "the canonical descent theorem has the actual same smooth lifts and diagonal ideals",
+        "pass": true
+      }
+    ],
+    "tables": [
+      {
+        "title": "Actual q-PD envelope nerve",
+        "columns": [
+          "nerveDegree",
+          "chartCount",
+          "overlapCount",
+          "displayedGenerators",
+          "displayedDeltaRelations",
+          "allHigherDeltaRelations"
+        ],
+        "rows": [
+          {
+            "nerveDegree": 0,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 2,
+            "displayedDeltaRelations": 0,
+            "allHigherDeltaRelations": "retained by the full presentation"
+          },
+          {
+            "nerveDegree": 1,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 5,
+            "displayedDeltaRelations": 2,
+            "allHigherDeltaRelations": "retained by the full presentation"
+          },
+          {
+            "nerveDegree": 2,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 8,
+            "displayedDeltaRelations": 4,
+            "allHigherDeltaRelations": "retained by the full presentation"
+          },
+          {
+            "nerveDegree": 3,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 11,
+            "displayedDeltaRelations": 6,
+            "allHigherDeltaRelations": "retained by the full presentation"
+          }
+        ]
+      }
+    ],
+    "visualization": {
+      "points": [
+        {
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "label": "U0: E^0, 0 delta relations displayed",
+          "value": {
+            "nerveDegree": 0,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 2,
+            "displayedDeltaRelations": 0,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U0"
+          }
+        },
+        {
+          "pos": [
+            0,
+            1,
+            0
+          ],
+          "label": "U1: E^0, 0 delta relations displayed",
+          "value": {
+            "nerveDegree": 0,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 2,
+            "displayedDeltaRelations": 0,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U1"
+          }
+        },
+        {
+          "pos": [
+            0,
+            2,
+            0
+          ],
+          "label": "overlap: E^0, 0 delta relations displayed",
+          "value": {
+            "nerveDegree": 0,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 2,
+            "displayedDeltaRelations": 0,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U01"
+          }
+        },
+        {
+          "pos": [
+            1,
+            0,
+            2
+          ],
+          "label": "U0: E^1, 2 delta relations displayed",
+          "value": {
+            "nerveDegree": 1,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 5,
+            "displayedDeltaRelations": 2,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U0"
+          }
+        },
+        {
+          "pos": [
+            1,
+            1,
+            2
+          ],
+          "label": "U1: E^1, 2 delta relations displayed",
+          "value": {
+            "nerveDegree": 1,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 5,
+            "displayedDeltaRelations": 2,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U1"
+          }
+        },
+        {
+          "pos": [
+            1,
+            2,
+            2
+          ],
+          "label": "overlap: E^1, 2 delta relations displayed",
+          "value": {
+            "nerveDegree": 1,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 5,
+            "displayedDeltaRelations": 2,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U01"
+          }
+        },
+        {
+          "pos": [
+            2,
+            0,
+            4
+          ],
+          "label": "U0: E^2, 4 delta relations displayed",
+          "value": {
+            "nerveDegree": 2,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 8,
+            "displayedDeltaRelations": 4,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U0"
+          }
+        },
+        {
+          "pos": [
+            2,
+            1,
+            4
+          ],
+          "label": "U1: E^2, 4 delta relations displayed",
+          "value": {
+            "nerveDegree": 2,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 8,
+            "displayedDeltaRelations": 4,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U1"
+          }
+        },
+        {
+          "pos": [
+            2,
+            2,
+            4
+          ],
+          "label": "overlap: E^2, 4 delta relations displayed",
+          "value": {
+            "nerveDegree": 2,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 8,
+            "displayedDeltaRelations": 4,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U01"
+          }
+        },
+        {
+          "pos": [
+            3,
+            0,
+            6
+          ],
+          "label": "U0: E^3, 6 delta relations displayed",
+          "value": {
+            "nerveDegree": 3,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 11,
+            "displayedDeltaRelations": 6,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U0"
+          }
+        },
+        {
+          "pos": [
+            3,
+            1,
+            6
+          ],
+          "label": "U1: E^3, 6 delta relations displayed",
+          "value": {
+            "nerveDegree": 3,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 11,
+            "displayedDeltaRelations": 6,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U1"
+          }
+        },
+        {
+          "pos": [
+            3,
+            2,
+            6
+          ],
+          "label": "overlap: E^3, 6 delta relations displayed",
+          "value": {
+            "nerveDegree": 3,
+            "chartCount": 2,
+            "overlapCount": 1,
+            "displayedGenerators": 11,
+            "displayedDeltaRelations": 6,
+            "allHigherDeltaRelations": "retained by the full presentation",
+            "chart": "U01"
+          }
+        }
+      ],
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ]
+          ],
+          "label": "actual localization restriction"
+        },
+        {
+          "points": [
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ]
+          ],
+          "label": "actual inversion restriction"
+        },
+        {
+          "points": [
+            [
+              1,
+              0,
+              2
+            ],
+            [
+              1,
+              2,
+              2
+            ]
+          ],
+          "label": "actual localization restriction"
+        },
+        {
+          "points": [
+            [
+              1,
+              1,
+              2
+            ],
+            [
+              1,
+              2,
+              2
+            ]
+          ],
+          "label": "actual inversion restriction"
+        },
+        {
+          "points": [
+            [
+              2,
+              0,
+              4
+            ],
+            [
+              2,
+              2,
+              4
+            ]
+          ],
+          "label": "actual localization restriction"
+        },
+        {
+          "points": [
+            [
+              2,
+              1,
+              4
+            ],
+            [
+              2,
+              2,
+              4
+            ]
+          ],
+          "label": "actual inversion restriction"
+        },
+        {
+          "points": [
+            [
+              3,
+              0,
+              6
+            ],
+            [
+              3,
+              2,
+              6
+            ]
+          ],
+          "label": "actual localization restriction"
+        },
+        {
+          "points": [
+            [
+              3,
+              1,
+              6
+            ],
+            [
+              3,
+              2,
+              6
+            ]
+          ],
+          "label": "actual inversion restriction"
+        }
+      ],
+      "axes": [
+        {
+          "label": "Diagonal nerve degree",
+          "type": "COCHAIN_DEGREE"
+        },
+        {
+          "label": "Affine chart / overlap",
+          "type": "CATEGORICAL"
+        },
+        {
+          "label": "Displayed exact delta relations",
+          "type": "CARDINALITY"
+        }
+      ],
+      "description": "Actual small q-PD Cech–Alexander envelopes, two-affine overlap maps and canonical descent",
+      "coordinateMeaning": "Nodes are source-bound envelope presentations. Finite diagram depth does not truncate the complete delta algebra or derived totalization.",
+      "lostInformation": [
+        "The table displays finite generators and nerve degrees; the all-degree completed presentation and theorem remain explicit.",
+        "Multiplicative/E-infinity and a new Lean kernel proof are not claimed."
+      ],
+      "sourceFields": [
+        "envelopes",
+        "faceMaps",
+        "degeneracyMaps",
+        "twoAffineCover",
+        "canonicalComparison"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "all displayed free delta relations have integral coefficients and augment to zero",
+      "pass": true
+    },
+    {
+      "name": "actual alternating diagonal nerve differential squares to zero",
+      "pass": true
+    },
+    {
+      "name": "the two-affine overlap inversion satisfies all triple cocycles",
+      "pass": true
+    },
+    {
+      "name": "overlap restrictions commute with diagonal faces/degeneracies in the q-PD envelope",
+      "pass": true
+    },
+    {
+      "name": "the canonical descent theorem has the actual same smooth lifts and diagonal ideals",
+      "pass": true
+    }
+  ],
+  "blockers": [],
+  "tables": [
+    {
+      "title": "Actual q-PD envelope nerve",
+      "columns": [
+        "nerveDegree",
+        "chartCount",
+        "overlapCount",
+        "displayedGenerators",
+        "displayedDeltaRelations",
+        "allHigherDeltaRelations"
+      ],
+      "rows": [
+        {
+          "nerveDegree": 0,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 2,
+          "displayedDeltaRelations": 0,
+          "allHigherDeltaRelations": "retained by the full presentation"
+        },
+        {
+          "nerveDegree": 1,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 5,
+          "displayedDeltaRelations": 2,
+          "allHigherDeltaRelations": "retained by the full presentation"
+        },
+        {
+          "nerveDegree": 2,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 8,
+          "displayedDeltaRelations": 4,
+          "allHigherDeltaRelations": "retained by the full presentation"
+        },
+        {
+          "nerveDegree": 3,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 11,
+          "displayedDeltaRelations": 6,
+          "allHigherDeltaRelations": "retained by the full presentation"
+        }
+      ]
+    }
+  ],
+  "precisionLedger": {
+    "requested": {},
+    "finiteScope": {
+      "finite": true,
+      "displayedNerveDegrees": [
+        0,
+        3
+      ],
+      "displayedDeltaGeneratorDepth": 1,
+      "coefficientObservationDigits": 4,
+      "fullCompletedEnvelopeRetained": true,
+      "canonicalQPDDescent": true,
+      "multiplicativeEInfinityCertified": false,
+      "formalComplete": false
+    },
+    "roundingError": "0 for exact integer, polynomial, finite-field and finite Witt operations; explicitly tagged complex roots are Float64 display only.",
+    "precisionAxesIndependent": true
+  },
+  "evidence": {
+    "calculation": "EXACT_FINITE_SCOPE",
+    "geometricComparison": "EXPLICIT_MODEL_PLUS_APPLIED_EXTERNAL_THEOREM_OR_MODEL_DEVELOPMENT_AS_DECLARED",
+    "lean": "NO_NEW_KERNEL_EXECUTION",
+    "formalComplete": false,
+    "universalConjectureSolved": false
+  },
+  "provenance": {
+    "sources": [
+      {
+        "id": "BLUEPRINT_P4_P6",
+        "kind": "USER_SUPPLIED_SPECIFICATION",
+        "pages": [
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          69,
+          70,
+          71,
+          72
+        ],
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      {
+        "id": "S01",
+        "title": "Prisms and Prismatic Cohomology",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S06",
+        "title": "Counting Points on Hyperelliptic Curves Using Monsky–Washnitzer Cohomology",
+        "url": "https://arxiv.org/abs/math/0105031",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "STACKS_PROJECTIVE",
+        "title": "Derived projective bundle formula",
+        "url": "https://stacks.math.columbia.edu/tag/0FUN",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S03",
+        "title": "Integral p-adic Hodge Theory",
+        "url": "https://people.mpim-bonn.mpg.de/scholze/integralpadicHodge.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S04",
+        "title": "Perfectoid Spaces",
+        "url": "https://www.math.uni-bonn.de/people/scholze/PerfectoidSpaces.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "S07",
+        "title": "La conjecture de Weil I",
+        "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      },
+      {
+        "id": "C01",
+        "title": "Lectures on Etale Cohomology",
+        "url": "https://www.jmilne.org/math/CourseNotes/LEC.pdf",
+        "grade": "THEOREM_REFERENCE",
+        "localKernelCheck": false
+      }
+    ],
+    "algorithmVersion": "0.2.0-m2",
+    "inputHash": "376f18b551e6be681328d5b7b113b26d1e1682459e28616607b9e4b8fce1a611",
+    "sourceHash": "14ddf69f016364614e6775d0e799dd11ddc0cdd0fa735f86b667268476af5154",
+    "operations": 5622
+  },
+  "visualization": {
+    "points": [
+      {
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "label": "U0: E^0, 0 delta relations displayed",
+        "value": {
+          "nerveDegree": 0,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 2,
+          "displayedDeltaRelations": 0,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U0"
+        }
+      },
+      {
+        "pos": [
+          0,
+          1,
+          0
+        ],
+        "label": "U1: E^0, 0 delta relations displayed",
+        "value": {
+          "nerveDegree": 0,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 2,
+          "displayedDeltaRelations": 0,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U1"
+        }
+      },
+      {
+        "pos": [
+          0,
+          2,
+          0
+        ],
+        "label": "overlap: E^0, 0 delta relations displayed",
+        "value": {
+          "nerveDegree": 0,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 2,
+          "displayedDeltaRelations": 0,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U01"
+        }
+      },
+      {
+        "pos": [
+          1,
+          0,
+          2
+        ],
+        "label": "U0: E^1, 2 delta relations displayed",
+        "value": {
+          "nerveDegree": 1,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 5,
+          "displayedDeltaRelations": 2,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U0"
+        }
+      },
+      {
+        "pos": [
+          1,
+          1,
+          2
+        ],
+        "label": "U1: E^1, 2 delta relations displayed",
+        "value": {
+          "nerveDegree": 1,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 5,
+          "displayedDeltaRelations": 2,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U1"
+        }
+      },
+      {
+        "pos": [
+          1,
+          2,
+          2
+        ],
+        "label": "overlap: E^1, 2 delta relations displayed",
+        "value": {
+          "nerveDegree": 1,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 5,
+          "displayedDeltaRelations": 2,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U01"
+        }
+      },
+      {
+        "pos": [
+          2,
+          0,
+          4
+        ],
+        "label": "U0: E^2, 4 delta relations displayed",
+        "value": {
+          "nerveDegree": 2,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 8,
+          "displayedDeltaRelations": 4,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U0"
+        }
+      },
+      {
+        "pos": [
+          2,
+          1,
+          4
+        ],
+        "label": "U1: E^2, 4 delta relations displayed",
+        "value": {
+          "nerveDegree": 2,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 8,
+          "displayedDeltaRelations": 4,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U1"
+        }
+      },
+      {
+        "pos": [
+          2,
+          2,
+          4
+        ],
+        "label": "overlap: E^2, 4 delta relations displayed",
+        "value": {
+          "nerveDegree": 2,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 8,
+          "displayedDeltaRelations": 4,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U01"
+        }
+      },
+      {
+        "pos": [
+          3,
+          0,
+          6
+        ],
+        "label": "U0: E^3, 6 delta relations displayed",
+        "value": {
+          "nerveDegree": 3,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 11,
+          "displayedDeltaRelations": 6,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U0"
+        }
+      },
+      {
+        "pos": [
+          3,
+          1,
+          6
+        ],
+        "label": "U1: E^3, 6 delta relations displayed",
+        "value": {
+          "nerveDegree": 3,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 11,
+          "displayedDeltaRelations": 6,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U1"
+        }
+      },
+      {
+        "pos": [
+          3,
+          2,
+          6
+        ],
+        "label": "overlap: E^3, 6 delta relations displayed",
+        "value": {
+          "nerveDegree": 3,
+          "chartCount": 2,
+          "overlapCount": 1,
+          "displayedGenerators": 11,
+          "displayedDeltaRelations": 6,
+          "allHigherDeltaRelations": "retained by the full presentation",
+          "chart": "U01"
+        }
+      }
+    ],
+    "lines": [
+      {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ],
+        "label": "actual localization restriction"
+      },
+      {
+        "points": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ],
+        "label": "actual inversion restriction"
+      },
+      {
+        "points": [
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            1,
+            2,
+            2
+          ]
+        ],
+        "label": "actual localization restriction"
+      },
+      {
+        "points": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            2
+          ]
+        ],
+        "label": "actual inversion restriction"
+      },
+      {
+        "points": [
+          [
+            2,
+            0,
+            4
+          ],
+          [
+            2,
+            2,
+            4
+          ]
+        ],
+        "label": "actual localization restriction"
+      },
+      {
+        "points": [
+          [
+            2,
+            1,
+            4
+          ],
+          [
+            2,
+            2,
+            4
+          ]
+        ],
+        "label": "actual inversion restriction"
+      },
+      {
+        "points": [
+          [
+            3,
+            0,
+            6
+          ],
+          [
+            3,
+            2,
+            6
+          ]
+        ],
+        "label": "actual localization restriction"
+      },
+      {
+        "points": [
+          [
+            3,
+            1,
+            6
+          ],
+          [
+            3,
+            2,
+            6
+          ]
+        ],
+        "label": "actual inversion restriction"
+      }
+    ],
+    "axes": [
+      {
+        "label": "Diagonal nerve degree",
+        "type": "COCHAIN_DEGREE"
+      },
+      {
+        "label": "Affine chart / overlap",
+        "type": "CATEGORICAL"
+      },
+      {
+        "label": "Displayed exact delta relations",
+        "type": "CARDINALITY"
+      }
+    ],
+    "description": "Actual small q-PD Cech–Alexander envelopes, two-affine overlap maps and canonical descent",
+    "coordinateMeaning": "Nodes are source-bound envelope presentations. Finite diagram depth does not truncate the complete delta algebra or derived totalization.",
+    "lostInformation": [
+      "The table displays finite generators and nerve degrees; the all-degree completed presentation and theorem remain explicit.",
+      "Multiplicative/E-infinity and a new Lean kernel proof are not claimed."
+    ],
+    "sourceFields": [
+      "envelopes",
+      "faceMaps",
+      "degeneracyMaps",
+      "twoAffineCover",
+      "canonicalComparison"
+    ],
+    "sourceHash": "14ddf69f016364614e6775d0e799dd11ddc0cdd0fa735f86b667268476af5154",
+    "sourceRevision": "14ddf69f016364614e6775d0e799dd11ddc0cdd0fa735f86b667268476af5154",
+    "grade": "EXACT_FINITE_ATTRIBUTES_WITH_DECLARED_REFERENCE_BOUNDARIES",
+    "sampling": {
+      "displayPoints": 12,
+      "originalSourceHash": "14ddf69f016364614e6775d0e799dd11ddc0cdd0fa735f86b667268476af5154"
+    },
+    "inference": "No geometric, p-adic or formal conclusion is inferred from the 3D layout."
+  },
+  "resultHash": "36490182b170be072330ccda4d412c7bd1c1fb0f9db6a486af75eb5db1fdb8a0"
+}

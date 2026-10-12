@@ -1,0 +1,242 @@
+/** One source-authenticated diagonal sequence for the complete background.
+ * Every fixed (n,m) norm has its original finite coefficient/body recipe.
+ * A finite query records a prefix; the recursive definition is independent
+ * of the query length. No finite sample is copied to another pulse label.
+ */
+import {prepareActualCompletedBackgroundC2,assertActualCompletedBackgroundC2,actualBackgroundChartBound} from './actual-residual-order-induction-background.mjs';
+import {attachActualAllBandBackgroundNorms,assertActualAllBandBackgroundNorms} from './actual-all-band-background-norms.mjs';
+import {attachActualGlobalPositivePrimitives,assertActualGlobalPositivePrimitives} from './actual-global-positive-primitives.mjs';
+import {attachActualLeadingStreamPrimitive} from './actual-leading-stream-primitive.mjs';
+import {attachActualGlobalPressureConvolution} from './actual-global-pressure-convolution.mjs';
+import {attachActualGlobalConservativeMoments} from './actual-global-conservative-moments.mjs';
+import {attachActualPositiveGlobalStress} from './actual-positive-global-stress.mjs';
+import {attachActualVelocityPhysicalSeminorms,assertActualVelocityPhysicalSeminorms} from './actual-velocity-all-order-tail.mjs';
+import {attachActualPressureStressPhysicalSeminorms,assertActualPressureStressPhysicalSeminorms} from './actual-pressure-stress-all-order-tail.mjs';
+import {actualLeadingTargetOnSensitivityGraph} from './actual-covariance-sensitivity.mjs';
+import {actualStressDirectionBounds} from './actual-stress-direction-bounds.mjs';
+import {positiveParameterRange,actualOperatorPowerAudit} from './actual-covariance-operator-bounds.mjs';
+import {covarianceConcentrationRecipe,covarianceConcentrationScalarAudit} from './actual-covariance-concentration.mjs';
+import {covarianceConePolynomialAudit} from './actual-covariance-uniform.mjs';
+import {annulusCovarianceAlgebraAudit} from './actual-annulus-covariance-kernel.mjs';
+import {oneActiveAdmissibleBandArithmetic,cutoffEulerScaleIdentityAudit} from './actual-admissible-annulus-background.mjs';
+import {actualCommonAdmissibleBand,assertActualCommonAdmissibleBand} from './actual-common-admissible-band.mjs';
+import {attachActualCommonTargetWeightedNorms} from './actual-common-target-weighted-norms.mjs';
+import {clearDisposableThirdJetCaches} from './actual-third-jet-ftc.mjs';
+import {SOURCE_PROFILE_ID,assertSourceProfile,sourceExponentContract} from './source-profile.mjs';
+import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+import {fail} from './actual-continuation-arithmetic.mjs';
+
+export {actualCommonAdmissibleBand,assertActualCommonAdmissibleBand};
+const seals=new WeakMap(),same=(a,b)=>canonicalStringify(a)===canonicalStringify(b),
+  data=p=>canonicalStringify({request:p.request,sourceBinding:p.sourceBinding,constants:p.constants,selector:p.selector,
+    leading:p.leading,uniformCovariance:p.uniformCovariance,norms:p.norms,roots:p.roots,checks:p.checks,scope:p.scope});
+const stage=(context,name,G)=>{context.checkCancelled?.();context.onProgress?.({stage:name,nodeCount:G.nodes.length});};
+
+/** Generic finite recurrence, NOT an actual source certificate. Each
+ * bound must be positive. Source callers authenticate every operand first.
+ */
+export function commonRecursiveSelector(G,{historicalRows,clauses,ellMinimum}){
+  if(!G||!Array.isArray(historicalRows)||!historicalRows.length||!Array.isArray(clauses)||clauses.length!==historicalRows.length||
+    !Number.isSafeInteger(ellMinimum)||!G.nodes[ellMinimum])fail('INVALID_INPUT','Use finite explicit coefficient bounds and the original band threshold.');
+  const q=(n,d=1)=>G.q(n,d),h=G.parameter('h'),log2=G.log(q(2)),rows=[];let previous=G.zero;
+  for(let n=1;n<=historicalRows.length;n++){
+    const old=historicalRows[n-1];
+    if(old.order!==n||!Number.isSafeInteger(old.logScale)||!G.nodes[old.logScale]||!Array.isArray(clauses[n-1])||!clauses[n-1].length)
+      fail('INVALID_INPUT','Do not omit a preceding scale or its actual norm clauses.');
+    const constraints=clauses[n-1].map(c=>{
+      if(!Number.isSafeInteger(c.derivativeOrder)||c.derivativeOrder<0||c.derivativeOrder>n||!Number.isSafeInteger(c.bound)||!G.nodes[c.bound])
+        fail('INVALID_INPUT','Every finite diagonal clause needs its own bound through m<=n.');
+      return {...c,requiredLog:G.div(G.add(G.mul(q(n),log2),G.log(c.bound)),G.mul(q(n),h))};
+    }),growth=G.add(previous,G.log(q(n===2?16:2))),smallBand=n===1?G.mul(G.add(ellMinimum,q(10)),log2):G.zero,
+      logScale=G.maximum(old.logScale,growth,smallBand,...constraints.map(c=>c.requiredLog)),scale=G.exp(logScale);
+    rows.push({order:n,historicalScale:old.scale,historicalLogScale:old.logScale,previousLogScale:previous,
+      sourceCoefficientRoots:old.sourceCoefficientRoots,growth,smallBand,constraints,logScale,scale});previous=logScale;
+  }
+  return {rows,sourceAuthenticated:false,recursiveDefinition:{
+    first:'log b1=max(log c1, log2, (ellMinimum+10)log2, (log2+log B_1m)/h for all source clauses m<=1)',
+    second:'log b2=max(log c2, log b1+log16, (2log2+log B_2m)/(2h) for all source clauses m<=2)',
+    later:'log b_n=max(log c_n, log b_(n-1)+log2, (nlog2+log B_nm)/(nh) for every source clause m<=n)',
+    requiredInequality:'B_nm*b_n^(-n*h)<=2^-n; on every nonzero cutoff derivative q<=1/b_n, so B_nm*q^(2*n*h)<=2^-n*q^(n*h).',
+    localFiniteness:'b_n>=2^n. For every compact subset of q>0 all sufficiently large cutoff terms and their derivatives are exactly zero.',
+    prefixIndependence:'Each B_nm is the same source function/FTC expression for fixed n,m. A larger finite query adds derivatives and orders; it does not change those mathematical constants. All predecessors are used in the displayed recursion.',
+    n1WeightedQualification:'The original first weighted stress retains its explicit endpoint pole. A diagonal bound on its constant does not remove that pole.',
+    noSimplePointwiseMaximumOfIndependentSequences:true,mathematicalOrderCap:null}};
+}
+
+function requestOf(input={}){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['sourceProfile','throughOrder','derivativeOrder','maxNodes','maxProfileJets','maxJetRequests'].includes(k)))
+    fail('INVALID_INPUT','Only the source profile and finite query/representation budgets may be chosen.');
+  const r={sourceProfile:input.sourceProfile??SOURCE_PROFILE_ID,throughOrder:input.throughOrder??2,derivativeOrder:input.derivativeOrder??2,
+    maxNodes:input.maxNodes??4000000,maxProfileJets:input.maxProfileJets??60000,maxJetRequests:input.maxJetRequests??600000};
+  assertSourceProfile(r.sourceProfile);
+  for(const [k,v]of Object.entries(r))if(k!=='sourceProfile'&&(!Number.isSafeInteger(v)||v<(k==='derivativeOrder'?0:1)))
+    fail('INVALID_INPUT','Use nonnegative finite derivative order and positive finite query budgets.');
+  if(r.throughOrder<2||r.derivativeOrder<2)fail('RESOURCE_LIMIT','The common covariance constructor requires the genuine n1/n2 and slow C2 prefixes.');
+  return r;
+}
+
+function thresholdFromOriginal(background,context){
+  assertActualCompletedBackgroundC2(background);const {G}=background,q=(n,d=1)=>G.q(n,d),
+    direction=actualStressDirectionBounds({sourceProfile:background.prepared.program.profileId},context),
+    chart=actualBackgroundChartBound(background.cutoffs,context),h=G.parameter('h'),Renv=G.parameter('C12EnvelopeR'),kappa=G.parameter('directionalMarginKappa'),u=G.div(q(2),kappa),
+    Bnorm=G.add(q(1n<<128n),G.pow(Renv,4096),...['FGErrorConstant','bTotalConstant','FTotalConstant','GTotalConstant'].map(k=>chart.roots[k]),chart.operatorA,chart.operatorB),
+    E=G.pow(Bnorm,256),r0=q(1,1n<<34n),Tg=G.add(q(4),G.sqrt(q(2))),absoluteC0=G.fresh('common_threshold_absolute_c0'),
+    input={h,kappa,u,lambdaLower:G.pow(Renv,-31),lambdaUpper:G.pow(Renv,83),absoluteC0,operatorError:E,dampingError:E,unitFrameError:E,slopeError:E,
+      lengthRatioLower:G.mul(q(2),r0),lengthRatioUpper:G.mul(q(2),r0,Tg)},recipe=covarianceConcentrationRecipe(G,input),
+    range=positiveParameterRange(G,recipe.selection.conditions.map(r=>r.lower),absoluteC0,G.pow(Renv,-6),G.pow(Renv,10)),
+    conditions=[...recipe.selection.conditions.map((r,j)=>({...r,lower:range.ranges[j][1],representativeRemovedByIntervalRule:true})),
+      {id:'actual-moving-frame-source-primitives',lower:G.pow(Bnorm,512)},
+      {id:'actual-flat-boundary-direction-neighbourhood',lower:G.pow(Renv,1024)}],
+    Sminimum=G.maximum(...conditions.map(r=>r.lower)),frequencyMinimum=G.pow(G.div(q(64),h),2),
+    ellMinimum=G.ceiling(G.maximum(q(8),Sminimum,frequencyMinimum)),ell0=G.add(ellMinimum,q(6)),
+    qStar=G.exp(G.neg(G.mul(G.add(ellMinimum,q(4)),G.log(q(2))))),
+    audits={power:actualOperatorPowerAudit(),concentration:covarianceConcentrationScalarAudit(),cone:covarianceConePolynomialAudit(),projection:annulusCovarianceAlgebraAudit()};
+  if(!same(chart.roots,background.roots)||!direction.pass||!direction.scope.actualClosedAnnulusDirectionModulusDerived||
+    direction.parameterExpressionSHA256!==background.prepared.program.parameterExpressionSHA256||Object.values(audits).some(a=>!a.pass)||
+    [Bnorm,E,ellMinimum,ell0,qStar,...conditions.map(r=>r.lower)].some(x=>G.freeCoordinates(x).size))
+    fail('INVALID_SOURCE_CONSTRUCTION','The same actual C2, leading direction and representative-independent bounds are required.');
+  return {constants:{h,Renv,kappa,u,Bnorm,E,r0,Tg},direction,input,recipe,range,conditions,Sminimum,frequencyMinimum,ellMinimum,ell0,qStar,audits,
+    sourceOnly:true,unknownHistoricalGammaMembership:'NOT_EVALUATED',
+    gamma:'Explicit sufficient choice qbig=qStar, ell0=ellMinimum+6. For each integer ell>=ell0, Q=2^-ell and q=Q*s, s in[1/2,2], imply q<=qStar/2<qStar. This chooses a permitted smaller domain; it does not infer the unknown historical numerical Gamma.'};
+}
+
+export function attachActualCommonAdmissibleFamily(inputs,options={},context={}){
+  if(!inputs||typeof inputs!=='object'||Object.keys(inputs).some(k=>!['backgroundNorms','velocitySeminorms','pressureStressSeminorms'].includes(k)))
+    fail('INVALID_INPUT','Use the three actual private norm families on one source graph.');
+  const {backgroundNorms,velocitySeminorms,pressureStressSeminorms}=inputs;
+  assertActualAllBandBackgroundNorms(backgroundNorms);assertActualVelocityPhysicalSeminorms(velocitySeminorms);assertActualPressureStressPhysicalSeminorms(pressureStressSeminorms);
+  const request=requestOf(options),{G,prepared,background,cutoffs}=backgroundNorms,primitives=velocitySeminorms.primitives,
+    otherPrimitives=pressureStressSeminorms.positiveStress.moments.pressure.primitives,n=request.throughOrder;
+  if(velocitySeminorms.G!==G||pressureStressSeminorms.G!==G||primitives!==otherPrimitives||primitives.prepared!==prepared||pressureStressSeminorms.orderOneSeed.prepared!==prepared||
+    prepared.program.profileId!==request.sourceProfile||velocitySeminorms.request.throughOrder<n||pressureStressSeminorms.request.throughOrder<n||
+    velocitySeminorms.request.derivativeOrder<n||pressureStressSeminorms.request.derivativeOrder<n||backgroundNorms.request.derivativeOrder<request.derivativeOrder)
+    fail('INVALID_SOURCE_CONSTRUCTION','Every diagonal m<=n clause and every requested C_m must come from the exact same original private source graph.');
+  const originalCount=G.nodes.length,originalPrefix=canonicalStringify(G.nodes),originalDefinitions=G.captureFunctionDefinitions(),
+    threshold=thresholdFromOriginal(background,context),q=(a,b=1)=>G.q(a,b),{A,D}=G.core,{X,eta}=prepared.bootstrap.constants,
+    qCoordinate=G.fresh('common_background_q'),clauses=[];
+  for(let order=1;order<=n;order++){
+    const rows=[];
+    for(let m=0;m<=order;m++){
+      rows.push({kind:'velocity-potential-physical',derivativeOrder:m,bound:velocitySeminorms.rows[order-1].bounds[m]},
+        {kind:'pressure-stress-physical',derivativeOrder:m,bound:pressureStressSeminorms.rows[order-1].bounds[m]},
+        {kind:'normalized-pressure',derivativeOrder:m,bound:pressureStressSeminorms.normalizedPressure[order-1].bounds[m]});
+      if(order===1)rows.push({kind:'first-stress-direct-zeta-with-endpoint-pole',derivativeOrder:m,bound:pressureStressSeminorms.n1Weighted.bounds[m],pole:pressureStressSeminorms.n1Weighted.poles[m]});
+      else{const w=pressureStressSeminorms.weightedStress.find(r=>r.order===order);
+        if(!w)fail('INVALID_SOURCE_CONSTRUCTION','An actual higher weighted stress row is missing.');
+        rows.push({kind:'higher-stress-quotient-by-zeta',derivativeOrder:m,bound:w.bounds[m]},
+          {kind:'higher-stress-direct-zeta',derivativeOrder:m,bound:w.directWeightedBounds[m]});}
+    }
+    if(rows.some(r=>!Number.isSafeInteger(r.bound)||G.freeCoordinates(r.bound).size))fail('INVALID_SOURCE_CONSTRUCTION','Actual norm bounds must be source-only constants.');
+    clauses.push(rows);
+  }
+  const selected=commonRecursiveSelector(G,{historicalRows:cutoffs.rows.slice(0,n),clauses,ellMinimum:threshold.ellMinimum}),
+    ellA=G.ceiling(G.div(G.add(G.log(q(4)),selected.rows[0].logScale),G.log(q(2)))),anchorArithmetic=oneActiveAdmissibleBandArithmetic(),
+    euler=cutoffEulerScaleIdentityAudit(G,{order:3}),leading=actualLeadingTargetOnSensitivityGraph(G,{background:{prepared},chart:{X,eta,s:G.one},constants:{A,D,h:threshold.constants.h}}),
+    {Renv,kappa,u,r0,Tg}=threshold.constants,recipe=threshold.recipe,Dgeom=G.sub(q(4),G.mul(q(2),G.sqrt(q(2)))),
+    massUpper=G.mul(q(2),Dgeom,G.pow(r0,2),G.pow(recipe.cone.amplitudeUpper,2)),
+    determinantScaleLower=G.div(G.mul(q(15,16),G.pow(Renv,-6),u,G.pow(Dgeom,2),r0,G.pow(G.div(r0,q(2)),2),G.pow(recipe.mass.massLowerCoefficient,2)),Tg),
+    entryUpper=G.mul(q(8),u,G.pow(Renv,10),massUpper),inverseScaleUpper=G.div(G.mul(q(2),entryUpper),determinantScaleLower),
+    targetScaleOverZetaLower=G.pow(Renv,-128),weightOverZetaLower=G.div(G.mul(kappa,targetScaleOverZetaLower),G.mul(q(64),massUpper)),
+    constants={...threshold.constants,A,D,Xa:G.parameter('Xa'),Xb:prepared.bootstrap.orderOne.Xb,t1:G.parameter('t1'),
+      ellMinimum:threshold.ellMinimum,ell0:threshold.ell0,qStar:threshold.qStar,Lmin:recipe.input.lengthRatioLower,Lmax:recipe.input.lengthRatioUpper},
+    selector={...selected,sourceAuthenticated:true,ellA,anchorArithmetic,ellMinimum:threshold.ellMinimum,ell0:threshold.ell0,qStar:threshold.qStar,
+      sourceNormalizedEulerIdentity:euler,positiveSourceH:sourceExponentContract(),gamma:threshold.gamma,
+      generatedPositivePrefix:n,allIntegerConstantsLiterallyEvaluated:false,originalCanonicalSequenceUnchanged:true},
+    uniformCovariance={threshold,sourceC2Roots:structuredClone(background.roots),sameCanonicalNormalizedBoundsUnderEnlargement:true,
+      completeSlowBackgroundNorms:backgroundNorms.rows.map(r=>({derivativeOrder:r.derivativeOrder,Cslow:r.Cslow,errorConstant:r.errorConstant})),
+      gaussianBases:backgroundNorms.gaussianRows,sourceDomain:{s:['1/2','2'],X:[constants.Xa,constants.Xb],eta:['-1','1'],
+        enlargedX:background.chart.domain.X,boxDiameter:'<=4/S^3',representative:'The original leading reference at the chosen point of that very same box.',closedEtaOneSided:true},
+      primitiveProof:{
+        C2:'The authenticated c_n finite block and diagonal induction are unchanged for b_n>=c_n, since the Euler cutoff derivative bounds do not depend on the scale. Every positive coefficient remains in the actual finite active sum.',
+        normal:'Same-box chart paths, full leading C2, and error<=C2*epsilon^2 give each completed-leading frozen jet error<=B^5/S^3. Rounding contributes at most1/k, n=(x0-v*H_R,p/R,pz-epsilon*v*H_Z), and n_prime=(-H_R,0,-epsilon*H_Z). With v<=Lmax*S all normal and slope errors are<=B^12/S.',
+        frame:'The actual source lower bounds Bs>B^-1, |n_tangent|>=B^-2 and the executed original FramePowerLedger give each operator, damping, unit-frame and slope error<=B^256/S. The full pressure term and B_prime are retained.',
+        logarithmicNorm:'wMatrix=diag(0,-2*lambda)+E_actual-(d-dref)I. Its infinity logarithmic norm is at most(2*E+Ed)/S, hence every forward propagator is bounded by exp((2*E+Ed)*Lmax), independently of S.',
+        allLabels:'Each label uses its own original representative, rounded carrier, actual completed fields, Volterra matrix and H. The proof depends only on these uniform source inequalities and the original same-box hypotheses, not on the default materialized band.'},
+      mass:{lower:'J*massLowerCoefficient*sqrt(Ls)',upper:'J*amplitudeUpper^2*Ls',massLowerCoefficient:recipe.mass.massLowerCoefficient,
+        amplitudeUpper:recipe.cone.amplitudeUpper,uniformUpper:massUpper,originalHaarMassNotNormalizedAway:true},
+      inverse:{determinantSign:'NEGATIVE',normalizedDeterminantBounds:['15/8','17/8'],determinantScaleLower,
+        determinantBound:'abs(det H)>=determinantScaleLower/S',entryUpper,inverseScaleUpper,inverseBound:'max abs(H^-1_ij)<=inverseScaleUpper*S'},
+      positivity:{targetScaleOverZetaLower,weightOverZetaLower,normalizedWeightBounds:[G.div(kappa,q(64)),q(2)],
+        derivation:'The original S14 lower |T0|>=min(C^-11,Renv^-8)*zeta, chart factor>=1/4, same-box -unit(T0) dot N>Renv^-33 and Ac<Renv^22 imply targetScale>=Renv^-128*zeta. The actual positive mass is at most uniformUpper.',
+        actualTargetSource:leading.raw,openRadialInteriorRequiredForStrictPositivity:true,endpointWeights:'zero with smooth flat extensions'},
+      targetWeightedJetNormRecipe:{producer:'constructTargetWeightedNorms({derivativeOrder}) on this private family',
+        sourceFactorProgram:threshold.direction.program,sourceInnerRoots:['innerTheta','innerZ'],sourceOuterRoots:['outerTheta','outerScaledZ'],
+        formula:'|D_slow^alpha Tbar|<=N_m*zeta*delta_*^(-(3+3*m)), delta_*=min(1,log(X/Xa),log(Xb/X)), |alpha|<=m.',
+        method:'Copy the original factor bodies with exact operation-by-operation provenance. On overlapping collars use the regular inner/outer factors and their anchored FTC norms; on the intervening compact rectangle use the original full target divided by positive zeta. Apply the exact slow coefficient recurrence and Gaussian derivative recurrence. No numerical division at a flat endpoint.',
+        finiteBoundRootsGeneratedHere:false,mathematicalDerivativeOrderCap:null},
+      smoothSquareRoot:{sourceInnerFactor:'sqrt(e_a)*sqrt(H^-1*bbar)=exp(-t1^2/(2*y^2))*sqrt(g_a*H^-1*bbar)',
+        sourceOuterFactor:'exp(-2/delta^2)*delta^(-3/2)*sqrt(H^-1*bbar), bbar includes delta^6 in its axial component and s^(-A-1/2)',
+        allFiniteJetProof:'C_m and the protected frame denominators give M_j,B_j polynomial in S. Stable Duhamel gives w_j and t_j/P polynomial in S. H_j follows by fixed-interval differentiation, exact Haar factor and Ls/S bounds. Differentiate H*y=T, then sigma^2=y after removing the actual edge scalar. det H>=d*/S and the regular positive inverse coefficient lower give polynomial S bounds at every fixed order. The original Gaussian scalar absorbs every finite endpoint pole.',
+        supports:'All positive Fn/Un end at the common interior Xplus, so the outer source agrees with the complete leading heat body. At the inner boundary every active positive correction is retained; the full C_m, not an order-one-only bound, controls its jets.',
+        fixedBandFixedLabelOnlyForDifferentiation:true,closedEtaIsOneSided:true,allIntegerGraphsLiterallyExecuted:false},
+      universalAnalyticRecipeSourceBound:true,finiteBandActualConstructor:'actual-common-admissible-band.mjs',
+      actualNewBandExecutedInThisFamilyConstructor:false,numericalHEntriesEnclosed:false,newAnalyticLeanProof:false},
+    norms={backgroundRows:backgroundNorms.rows,velocityRows:velocitySeminorms.rows,pressureStressRows:pressureStressSeminorms.rows,
+      normalizedPressure:pressureStressSeminorms.normalizedPressure,n1Weighted:pressureStressSeminorms.n1Weighted,weightedStress:pressureStressSeminorms.weightedStress},
+    roots={q:qCoordinate,X,eta,leadingF:leading.F,leadingU:leading.U,leadingM:leading.M,leadingPi:leading.Pi,leadingTarget:leading.raw,
+      zeta:pressureStressSeminorms.roots.sourceZeta,ellA,ell0:threshold.ell0,qStar:threshold.qStar,Bnorm:constants.Bnorm,
+      determinantScaleLower,weightOverZetaLower,...Object.fromEntries(selected.rows.map(r=>['b_'+r.order,r.scale]))},
+    checks=[{id:'same-private-full-leading-and-canonical-source',pass:assertActualCompletedBackgroundC2(background)&&backgroundNorms.prepared===prepared},
+      {id:'same-private-positive-primitive-and-pressure-stress-source',pass:assertActualGlobalPositivePrimitives(primitives)&&primitives===otherPrimitives},
+      {id:'every-diagonal-physical-and-weighted-clause-through-n',pass:selected.rows.every(r=>r.constraints.length===(r.order+1)*(r.order===1?4:5))},
+      {id:'every-new-scale-keeps-its-new-predecessor',pass:selected.rows.every((r,j)=>r.previousLogScale===(j?selected.rows[j-1].logScale:G.zero)&&G.nodes[r.logScale].args.includes(r.growth))},
+      {id:'new-second-scale-keeps-factor-sixteen',pass:selected.rows[1].growth===G.add(selected.rows[0].logScale,G.log(q(16)))},
+      {id:'original-Euler-scale-independence-with-extra-stream',pass:euler.pass&&euler.negativeControls.missingExtraStreamCutoffDerivativeRejected},
+      {id:'full-leading-pressure-and-stress-on-this-graph',pass:leading.F===prepared.records[0].global.F&&leading.M===prepared.bootstrap.finalM&&leading.Pi===G.add(G.core.P0,leading.Cp)&&leading.bothShearTermsRetained},
+      {id:'same-full-Cm-and-covariance-base',pass:backgroundNorms.roots.Bnorm===constants.Bnorm&&backgroundNorms.heatRegularity.fullPositiveHeatAndI2Preserved},
+      {id:'unchanged-original-source-prefix',pass:canonicalStringify(G.nodes.slice(0,originalCount))===originalPrefix&&G.functionDefinitionsUnchanged(originalDefinitions)}];
+  if(checks.some(r=>!r.pass))fail('INVALID_SOURCE_CONSTRUCTION','Common actual family binding failed: '+checks.filter(r=>!r.pass).map(r=>r.id).join(', '));
+  const result={G,prepared,source:{background,backgroundNorms,velocitySeminorms,pressureStressSeminorms},request,
+    sourceBinding:{profileId:request.sourceProfile,parameterExpressionSHA256:prepared.program.parameterExpressionSHA256,
+      oneSharedSourceGraph:true,originalCanonicalCoefficientsAndScalesUnchanged:true,distinctCommonEnlargedSequence:true,
+      sourceCoefficientPrefix:prepared.order,normPrefix:n,unknownHistoricalGammaMembership:'NOT_EVALUATED'},
+    constants,selector,norms,leading,uniformCovariance,roots,checks,
+    scope:{sameCommonAllOrderRecursiveSelectorDefined:true,actualGeneratedSelectorPrefix:n,allFixedDerivativeClausesBySameRecipe:true,
+      actualUniformAllBandC2AndFiniteCm:true,sourceBoundUniversalCovarianceArgument:true,
+      literalAllBandsExecuted:false,actualSelectedBandConstructed:false,weightedTargetFiniteNormsAttached:false,
+      allLabelFullPhysicalCurlAttached:false,allLabelGaussianPhysicalTailsAttached:false,fullBackgroundResidualAttached:false,
+      numericalCovarianceEnclosure:false,wholeGPOSComplete:false,wholeM2Complete:false,M3Started:false}};
+  result.constructBand=(input={},ctx={})=>actualCommonAdmissibleBand(result,input,ctx);
+  result.constructTargetWeightedNorms=(input={},ctx={})=>attachActualCommonTargetWeightedNorms(result,input,ctx);
+  const packed=G.pack(roots,{schema:'MathScope.ActualCommonAdmissibleFamilyProgram/1',request,sourceBinding:result.sourceBinding,
+    constants,selector,norms,leading,uniformCovariance,checks,scope:result.scope});
+  result.program=JSON.parse(canonicalStringify(packed));
+  seals.set(result,{G,prepared,backgroundNorms,velocitySeminorms,pressureStressSeminorms,
+    constructBand:result.constructBand,constructTargetWeightedNorms:result.constructTargetWeightedNorms,
+    count:G.nodes.length,prefix:canonicalStringify(G.nodes),definitions:G.captureFunctionDefinitions(),data:data(result),program:canonicalStringify(result.program)});
+  stage(context,'common-all-order-source-family-sealed',G);return result;
+}
+
+export function assertActualCommonAdmissibleFamily(p){
+  const s=seals.get(p);
+  if(!s||p.G!==s.G||p.prepared!==s.prepared||p.source.backgroundNorms!==s.backgroundNorms||p.source.velocitySeminorms!==s.velocitySeminorms||
+    p.source.pressureStressSeminorms!==s.pressureStressSeminorms||p.constructBand!==s.constructBand||p.constructTargetWeightedNorms!==s.constructTargetWeightedNorms||
+    data(p)!==s.data||canonicalStringify(p.program)!==s.program||canonicalStringify(p.G.nodes.slice(0,s.count))!==s.prefix||!p.G.functionDefinitionsUnchanged(s.definitions))
+    fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged private common family, source graph, diagonal sequence and constructors.');
+  assertActualAllBandBackgroundNorms(s.backgroundNorms);assertActualVelocityPhysicalSeminorms(s.velocitySeminorms);assertActualPressureStressPhysicalSeminorms(s.pressureStressSeminorms);return true;
+}
+
+export function prepareActualCommonAdmissibleFamily(input={},context={}){
+  const request=requestOf(input),N=Math.max(3,request.throughOrder,request.derivativeOrder),
+    background=prepareActualCompletedBackgroundC2({sourceProfile:request.sourceProfile,order:N,maxNodes:request.maxNodes,maxDerivativeOrder:Math.max(128,2*(N+4))},context),
+    G=background.G,backgroundNorms=attachActualAllBandBackgroundNorms(background,{sourceProfile:request.sourceProfile,derivativeOrder:request.derivativeOrder,
+      maxCoefficientJets:request.maxProfileJets,maxJetRequests:request.maxJetRequests},context);
+  clearDisposableThirdJetCaches(G);stage(context,'common-full-Cm-ready',G);
+  const primitives=attachActualGlobalPositivePrimitives(background.prepared,{throughOrder:request.throughOrder},context),
+    stream=attachActualLeadingStreamPrimitive(background.prepared.bootstrap.originalLeading,{},context),
+    pressure=attachActualGlobalPressureConvolution(primitives,stream,context),moments=attachActualGlobalConservativeMoments(pressure,context),positive=attachActualPositiveGlobalStress(moments,context);
+  clearDisposableThirdJetCaches(G);stage(context,'common-positive-source-identities-ready',G);
+  const query={throughOrder:request.throughOrder,derivativeOrder:request.throughOrder,maxProfileJets:request.maxProfileJets,maxJetRequests:request.maxJetRequests},
+    velocitySeminorms=attachActualVelocityPhysicalSeminorms(primitives,query,context);
+  clearDisposableThirdJetCaches(G);stage(context,'common-velocity-diagonal-norms-ready',G);
+  const pressureStressSeminorms=attachActualPressureStressPhysicalSeminorms(positive,query,context);
+  clearDisposableThirdJetCaches(G);stage(context,'common-pressure-stress-diagonal-norms-ready',G);
+  return attachActualCommonAdmissibleFamily({backgroundNorms,velocitySeminorms,pressureStressSeminorms},request,context);
+}
+
+export async function actualCommonAdmissibleFamilyCertificate(p){
+  assertActualCommonAdmissibleFamily(p);const s=seals.get(p);
+  return {schema:'MathScope.ActualCommonAdmissibleFamilyCertificate/1',request:p.request,sourceBinding:p.sourceBinding,
+    selector:p.selector,uniformCovariance:p.uniformCovariance,roots:p.roots,checks:p.checks,scope:p.scope,
+    graph:{sha256:await sha256(s.program),nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.program).length,fixedCompilerPrefix:true}};
+}

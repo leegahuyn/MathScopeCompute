@@ -1,0 +1,4218 @@
+{
+  "schema": "MathScope.ActualMomentRestorationEvidence/1",
+  "criterion": "N4-04",
+  "sourceProfile": "same-profile-2026-10-10.3",
+  "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "validation": {
+    "node": {
+      "tests": 49,
+      "passed": 49,
+      "failed": 0,
+      "report": "tests/actual-continuation-test-results.tap"
+    },
+    "independent": {
+      "identityChecks": 12,
+      "negativeControls": 12,
+      "pass": true,
+      "report": "tests/actual-continuation-conservation-independent.json"
+    },
+    "defaultExecution": {
+      "elapsedMs": 6309.689413,
+      "publicBytes": 88150,
+      "nodeCount": 138172,
+      "fullProgramBytes": 5476911,
+      "fullProgramSHA256": "8b79ba8db0b08acb8af742f91be9fa12d666832c38a6fdaeb58ed90a4f0f7776"
+    },
+    "maximumPublicInput": {
+      "request": {
+        "sourceProfile": "same-profile-2026-10-10.3",
+        "terms": 2,
+        "bits": 4096,
+        "etaOrder": 2,
+        "heatIterations": 2
+      },
+      "elapsedMs": 5848.374548,
+      "publicBytes": 88193,
+      "nodeCount": 144146,
+      "fullProgramBytes": 5722447,
+      "fullProgramSHA256": "24a65776d48ad31cc322ae4df185cb1ba9b01aca078674b04dbff1f00bea6661",
+      "pass": true
+    },
+    "runtime": {
+      "node": "v24.19.0",
+      "platform": "linux",
+      "architecture": "x64"
+    },
+    "browserValidationIncluded": false
+  },
+  "scope": {
+    "exactActualOrders": [
+      1,
+      2
+    ],
+    "originalFiniteN404CriterionVerified": true,
+    "allOrdersConstructed": false,
+    "signedGlobalMomentValuesNumericallyEnclosed": false,
+    "formalNSThereomProved": false
+  },
+  "certificate": {
+    "schema": "MathScope.ActualBackgroundMomentCertificate/1",
+    "profileId": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "request": {
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "terms": 0,
+      "bits": 128,
+      "etaOrder": 2,
+      "heatIterations": 0
+    },
+    "originalCriterion": {
+      "id": "N4-04",
+      "title": "차수별 radial cutoff와 모멘트 복구",
+      "sourcePage": 58,
+      "text": "Lemma5.2에 따라 En,Un을 확장하고 Vn, Πn을 재구성한 뒤 (5.10)-(5.12)의 다섯 total moments를 0으로 맞춘다. 합격:\nn차수의 moment correction 완료 전 n+1 source 생성 금지. n=1과 n≥2의 다른 Tn support를 각각 검사한다.",
+      "testedActualOrders": [
+        1,
+        2
+      ]
+    },
+    "momentIdentities": [
+      {
+        "order": 1,
+        "moment": 1,
+        "label": "n=1 ∫ R U₁ dR",
+        "rawDebtRoot": 28864,
+        "correctionRoot": 71390,
+        "correctedResidualRoot": 71414,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 71414,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            28864,
+            28878,
+            28985,
+            28943,
+            28986
+          ],
+          "actualAtomicOperandCount": 13,
+          "denominatorOperands": [
+            28990,
+            29177,
+            16,
+            29156,
+            403
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 3,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 21,
+        "sourcePath": "graph.roots.actualOrderOneMomentResidual0",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      },
+      {
+        "order": 1,
+        "moment": 2,
+        "label": "n=1 ∫ R² E₁ dR",
+        "rawDebtRoot": 28878,
+        "correctionRoot": 71396,
+        "correctedResidualRoot": 71415,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 71415,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            28864,
+            28878,
+            28985,
+            28943,
+            28986
+          ],
+          "actualAtomicOperandCount": 19,
+          "denominatorOperands": [
+            16,
+            29171,
+            29200,
+            29162,
+            29167
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 54,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 22,
+        "sourcePath": "graph.roots.actualOrderOneMomentResidual1",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      },
+      {
+        "order": 1,
+        "moment": 3,
+        "label": "n=1 ∫ (2E₀E₁−Ω₀)/R dR",
+        "rawDebtRoot": 28985,
+        "correctionRoot": 71402,
+        "correctedResidualRoot": 71416,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 71416,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            28864,
+            28878,
+            28985,
+            28943,
+            28986
+          ],
+          "actualAtomicOperandCount": 19,
+          "denominatorOperands": [
+            16,
+            29171,
+            29200,
+            29162,
+            29167
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 108,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 23,
+        "sourcePath": "graph.roots.actualOrderOneMomentResidual2",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      },
+      {
+        "order": 1,
+        "moment": 4,
+        "label": "n=1 ∫ R²(U₀E₁+U₁E₀) dR",
+        "rawDebtRoot": 28943,
+        "correctionRoot": 71406,
+        "correctedResidualRoot": 71417,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 71417,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            28864,
+            28878,
+            28985,
+            28943,
+            28986
+          ],
+          "actualAtomicOperandCount": 13,
+          "denominatorOperands": [
+            16,
+            28990,
+            29177,
+            29156,
+            403
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 6,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 24,
+        "sourcePath": "graph.roots.actualOrderOneMomentResidual3",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      },
+      {
+        "order": 1,
+        "moment": 5,
+        "label": "n=1 ∫ R(2U₀U₁−E₀E₁+Ω₀/2) dR",
+        "rawDebtRoot": 28986,
+        "correctionRoot": 71413,
+        "correctedResidualRoot": 71418,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 71418,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            28864,
+            28878,
+            28985,
+            28943,
+            28986
+          ],
+          "actualAtomicOperandCount": 19,
+          "denominatorOperands": [
+            16,
+            29171,
+            29200,
+            29162,
+            29167
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 108,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 25,
+        "sourcePath": "graph.roots.actualOrderOneMomentResidual4",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      },
+      {
+        "order": 2,
+        "moment": 1,
+        "label": "n=2 ∫ R U₂ dR",
+        "rawDebtRoot": 103933,
+        "correctionRoot": 104131,
+        "correctedResidualRoot": 104155,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 104155,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            103933,
+            103934,
+            103935,
+            103936,
+            103937
+          ],
+          "actualAtomicOperandCount": 13,
+          "denominatorOperands": [
+            29177,
+            28990,
+            403,
+            16,
+            29156
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 3,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 26,
+        "sourcePath": "graph.roots.actualOrderTwoMomentResidual0",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      },
+      {
+        "order": 2,
+        "moment": 2,
+        "label": "n=2 ∫ R² E₂ dR",
+        "rawDebtRoot": 103934,
+        "correctionRoot": 104137,
+        "correctedResidualRoot": 104156,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 104156,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            103933,
+            103934,
+            103935,
+            103936,
+            103937
+          ],
+          "actualAtomicOperandCount": 19,
+          "denominatorOperands": [
+            29200,
+            16,
+            29171,
+            29162,
+            29167
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 54,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 27,
+        "sourcePath": "graph.roots.actualOrderTwoMomentResidual1",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      },
+      {
+        "order": 2,
+        "moment": 3,
+        "label": "n=2 ∫ (2E₀E₂+E₁²−Ω₁)/R dR",
+        "rawDebtRoot": 103935,
+        "correctionRoot": 104143,
+        "correctedResidualRoot": 104157,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 104157,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            103933,
+            103934,
+            103935,
+            103936,
+            103937
+          ],
+          "actualAtomicOperandCount": 19,
+          "denominatorOperands": [
+            16,
+            29200,
+            29171,
+            29162,
+            29167
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 108,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 28,
+        "sourcePath": "graph.roots.actualOrderTwoMomentResidual2",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      },
+      {
+        "order": 2,
+        "moment": 4,
+        "label": "n=2 ∫ R²(U₀E₂+U₁E₁+U₂E₀) dR",
+        "rawDebtRoot": 103936,
+        "correctionRoot": 104147,
+        "correctedResidualRoot": 104158,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 104158,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            103933,
+            103934,
+            103935,
+            103936,
+            103937
+          ],
+          "actualAtomicOperandCount": 13,
+          "denominatorOperands": [
+            16,
+            29177,
+            28990,
+            403,
+            29156
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 6,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 29,
+        "sourcePath": "graph.roots.actualOrderTwoMomentResidual3",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      },
+      {
+        "order": 2,
+        "moment": 5,
+        "label": "n=2 ∫ R(2U₀U₂+U₁²−E₀E₂−E₁²/2+Ω₁/2) dR",
+        "rawDebtRoot": 103937,
+        "correctionRoot": 104154,
+        "correctedResidualRoot": 104159,
+        "exactResidual": "0",
+        "identityProof": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 104159,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            103933,
+            103934,
+            103935,
+            103936,
+            103937
+          ],
+          "actualAtomicOperandCount": 19,
+          "denominatorOperands": [
+            16,
+            29200,
+            29171,
+            29162,
+            29167
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 108,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "zeroFunctionSystem": 30,
+        "sourcePath": "graph.roots.actualOrderTwoMomentResidual4",
+        "valueMeaning": "Exact identity between the actual source functionals; no numerical debt magnitude is reported.",
+        "verified": true
+      }
+    ],
+    "supportRows": [
+      {
+        "order": 1,
+        "component": "theta",
+        "label": "T1θ",
+        "fromSymbol": "Xminus",
+        "toSymbol": "Xb",
+        "fromRoot": 28814,
+        "toRoot": 28826,
+        "fromRank": 0,
+        "toRank": 2,
+        "stressRoot": 137595,
+        "forwardRoot": 137581,
+        "backwardRoot": 137590,
+        "rawTotalResidualRoot": 137599,
+        "conservativeTotalRoot": 138064,
+        "exactTotalResidual": "0",
+        "evidence": {
+          "innerPDEOrder": 1,
+          "innerPDEVerified": true,
+          "sourceOrderVerified": true,
+          "exteriorTermChecks": [
+            {
+              "index": 0,
+              "expression": 123464,
+              "zero": true
+            },
+            {
+              "index": 1,
+              "expression": 123465,
+              "zero": true
+            },
+            {
+              "index": 2,
+              "expression": 123466,
+              "zero": true
+            },
+            {
+              "index": 3,
+              "expression": 123467,
+              "zero": true
+            },
+            {
+              "index": 4,
+              "expression": 123468,
+              "zero": true
+            },
+            {
+              "index": 5,
+              "expression": 123471,
+              "zero": true
+            }
+          ],
+          "conservativeReducedRoot": 0,
+          "heatIdentityRequired": true,
+          "heatIdentityVerified": true
+        },
+        "positionMeaning": "ORDER_RANK_ONLY; ranks are not physical X values or logarithmic distances.",
+        "verified": true
+      },
+      {
+        "order": 1,
+        "component": "z",
+        "label": "T1z",
+        "fromSymbol": "Xminus",
+        "toSymbol": "Xplus",
+        "fromRoot": 28814,
+        "toRoot": 28824,
+        "fromRank": 0,
+        "toRank": 1,
+        "stressRoot": 137596,
+        "forwardRoot": 137586,
+        "backwardRoot": 137594,
+        "rawTotalResidualRoot": 137602,
+        "conservativeTotalRoot": 138094,
+        "exactTotalResidual": "0",
+        "evidence": {
+          "innerPDEOrder": 1,
+          "innerPDEVerified": true,
+          "sourceOrderVerified": true,
+          "exteriorTermChecks": [
+            {
+              "index": 0,
+              "expression": 123476,
+              "zero": true
+            },
+            {
+              "index": 1,
+              "expression": 123477,
+              "zero": true
+            },
+            {
+              "index": 2,
+              "expression": 123478,
+              "zero": true
+            },
+            {
+              "index": 3,
+              "expression": 123479,
+              "zero": true
+            },
+            {
+              "index": 4,
+              "expression": 123480,
+              "zero": true
+            },
+            {
+              "index": 5,
+              "expression": 137557,
+              "zero": true
+            },
+            {
+              "index": 6,
+              "expression": 137558,
+              "zero": true
+            },
+            {
+              "index": 7,
+              "expression": 137559,
+              "zero": true
+            }
+          ],
+          "conservativeReducedRoot": 0,
+          "heatIdentityRequired": false,
+          "heatIdentityVerified": null
+        },
+        "positionMeaning": "ORDER_RANK_ONLY; ranks are not physical X values or logarithmic distances.",
+        "verified": true
+      },
+      {
+        "order": 2,
+        "component": "theta",
+        "label": "T2θ",
+        "fromSymbol": "Xminus",
+        "toSymbol": "Xplus",
+        "fromRoot": 28814,
+        "toRoot": 28824,
+        "fromRank": 0,
+        "toRank": 1,
+        "stressRoot": 121770,
+        "forwardRoot": 121756,
+        "backwardRoot": 121765,
+        "rawTotalResidualRoot": 121774,
+        "conservativeTotalRoot": 138133,
+        "exactTotalResidual": "0",
+        "evidence": {
+          "innerPDEOrder": 2,
+          "innerPDEVerified": true,
+          "sourceOrderVerified": true,
+          "exteriorTermChecks": [
+            {
+              "index": 0,
+              "expression": 105271,
+              "zero": true
+            },
+            {
+              "index": 1,
+              "expression": 105289,
+              "zero": true
+            },
+            {
+              "index": 2,
+              "expression": 105296,
+              "zero": true
+            },
+            {
+              "index": 3,
+              "expression": 105307,
+              "zero": true
+            },
+            {
+              "index": 4,
+              "expression": 105477,
+              "zero": true
+            },
+            {
+              "index": 5,
+              "expression": 105490,
+              "zero": true
+            },
+            {
+              "index": 6,
+              "expression": 106016,
+              "zero": true
+            },
+            {
+              "index": 7,
+              "expression": 121702,
+              "zero": true
+            },
+            {
+              "index": 8,
+              "expression": 121703,
+              "zero": true
+            }
+          ],
+          "conservativeReducedRoot": 0,
+          "heatIdentityRequired": false,
+          "heatIdentityVerified": null
+        },
+        "positionMeaning": "ORDER_RANK_ONLY; ranks are not physical X values or logarithmic distances.",
+        "verified": true
+      },
+      {
+        "order": 2,
+        "component": "z",
+        "label": "T2z",
+        "fromSymbol": "Xminus",
+        "toSymbol": "Xplus",
+        "fromRoot": 28814,
+        "toRoot": 28824,
+        "fromRank": 0,
+        "toRank": 1,
+        "stressRoot": 121771,
+        "forwardRoot": 121761,
+        "backwardRoot": 121769,
+        "rawTotalResidualRoot": 121777,
+        "conservativeTotalRoot": 138171,
+        "exactTotalResidual": "0",
+        "evidence": {
+          "innerPDEOrder": 2,
+          "innerPDEVerified": true,
+          "sourceOrderVerified": true,
+          "exteriorTermChecks": [
+            {
+              "index": 0,
+              "expression": 105287,
+              "zero": true
+            },
+            {
+              "index": 1,
+              "expression": 105297,
+              "zero": true
+            },
+            {
+              "index": 2,
+              "expression": 105304,
+              "zero": true
+            },
+            {
+              "index": 3,
+              "expression": 105478,
+              "zero": true
+            },
+            {
+              "index": 4,
+              "expression": 105487,
+              "zero": true
+            },
+            {
+              "index": 5,
+              "expression": 106017,
+              "zero": true
+            },
+            {
+              "index": 6,
+              "expression": 106026,
+              "zero": true
+            },
+            {
+              "index": 7,
+              "expression": 121712,
+              "zero": true
+            },
+            {
+              "index": 8,
+              "expression": 121729,
+              "zero": true
+            },
+            {
+              "index": 9,
+              "expression": 121730,
+              "zero": true
+            }
+          ],
+          "conservativeReducedRoot": 0,
+          "heatIdentityRequired": false,
+          "heatIdentityVerified": null
+        },
+        "positionMeaning": "ORDER_RANK_ONLY; ranks are not physical X values or logarithmic distances.",
+        "verified": true
+      }
+    ],
+    "sourceGates": [
+      {
+        "order": 1,
+        "nextOrder": 2,
+        "beforeCorrectionRejected": true,
+        "copiedReportRejected": true,
+        "afterCorrectionAccepted": true,
+        "actualNextSourceGenerated": true,
+        "authority": "PRIVATE_LIVE_MATHEMATICAL_CONSTRUCTION",
+        "name": "실제 1차 모멘트 복구 → 2차 소스 허용",
+        "sourcePath": "conservation.correctedMomentSourceProofs",
+        "pass": true
+      },
+      {
+        "order": 2,
+        "nextOrder": 3,
+        "beforeCorrectionRejected": true,
+        "copiedReportRejected": true,
+        "afterCorrectionAccepted": true,
+        "actualNextSourceGenerated": false,
+        "authority": "PRIVATE_LIVE_MATHEMATICAL_CONSTRUCTION",
+        "name": "실제 2차 모멘트 복구 → 3차 소스 허용",
+        "sourcePath": "conservation.correctedMomentSourceProofs",
+        "pass": true
+      }
+    ],
+    "continuousInverse": {
+      "U": {
+        "matrix": [
+          [
+            29023,
+            29044
+          ],
+          [
+            29036,
+            29057
+          ]
+        ],
+        "inverse": [
+          [
+            29179,
+            29180
+          ],
+          [
+            29182,
+            29183
+          ]
+        ],
+        "determinantRoot": 29177,
+        "weights": [
+          "x",
+          "x*integral_0^log(x) exp(-2*lambda*s) ds"
+        ],
+        "determinantLower": "1/32",
+        "adjugateInfinityUpper": "16",
+        "inverseInfinityUpper": "1024",
+        "proof": "For all supports 1<x<4, w_prime=x^(-1-2lambda)>1/8 and the two support gaps exceed 1/4. Thus x*y*(w(y)-w(x))>1/32. Entries are <8, hence each adjugate row sum <16. Integrate against the two positive unit-mass measures."
+      },
+      "E": {
+        "matrix": [
+          [
+            29066,
+            29096,
+            29125
+          ],
+          [
+            29077,
+            29106,
+            29135
+          ],
+          [
+            29087,
+            29116,
+            29145
+          ]
+        ],
+        "inverse": [
+          [
+            29202,
+            29208,
+            29212
+          ],
+          [
+            29214,
+            29218,
+            29223
+          ],
+          [
+            29224,
+            29229,
+            29233
+          ]
+        ],
+        "determinantRoot": 29200,
+        "weights": [
+          "x^2",
+          "x^(-2-2*lambda)",
+          "x^(-2*lambda)"
+        ],
+        "determinantAbsoluteLower": "1/131072",
+        "adjugateInfinityUpper": "96",
+        "inverseInfinityUpper": "16777216",
+        "proof": "Factor x^(-2-2lambda)>1/32 from each point column and set t=x^2. The remaining rows are t^(2+lambda), 1, t. Since the second divided difference of t^(2+lambda) on t>=1 is >=1, consecutive t gaps exceed 1/2 and the outer gap exceeds 1. The determinant magnitude exceeds 1/(4*32^3)=1/131072. Entries are at most 16,1,1; every cofactor is at most 32 and every adjugate row sum at most 96. Multilinearity preserves this bound for the positive bump integrals."
+      },
+      "proof": {
+        "schema": "MathScope.ActualIposContinuousInverseProof/1",
+        "sourceEquations": [
+          "5.14",
+          "5.15",
+          "5.16",
+          "Lemma A.1"
+        ],
+        "lambda": {
+          "samePinnedParameter": true,
+          "strictlyPositive": true,
+          "upper": "1/4",
+          "setToZero": false
+        },
+        "bumpDefinition": "beta_j(x)=sigma_prime((x-left_j)/(right_j-left_j))/(right_j-left_j); b_j(R)=beta_j(R/Rbase)/Rbase",
+        "centers": [
+          "3/2",
+          "2",
+          "5/2",
+          "3",
+          "7/2"
+        ],
+        "halfWidth": "1/4096",
+        "positiveUnitRMass": true,
+        "originalDefinitionAllowsThisChoice": "Lemma 5.2 fixes any five smooth positive unit-integral bumps with mutually disjoint ordered supports in Jpos, independently of the background order. These bumps are a positive-order choice; they do not change any leading N3 datum.",
+        "normalizedU": {
+          "weights": [
+            "x",
+            "x*integral_0^log(x) exp(-2*lambda*s) ds"
+          ],
+          "determinantLower": "1/32",
+          "adjugateInfinityUpper": "16",
+          "inverseInfinityUpper": "1024",
+          "proof": "For all supports 1<x<4, w_prime=x^(-1-2lambda)>1/8 and the two support gaps exceed 1/4. Thus x*y*(w(y)-w(x))>1/32. Entries are <8, hence each adjugate row sum <16. Integrate against the two positive unit-mass measures."
+        },
+        "normalizedE": {
+          "weights": [
+            "x^2",
+            "x^(-2-2*lambda)",
+            "x^(-2*lambda)"
+          ],
+          "determinantAbsoluteLower": "1/131072",
+          "adjugateInfinityUpper": "96",
+          "inverseInfinityUpper": "16777216",
+          "proof": "Factor x^(-2-2lambda)>1/32 from each point column and set t=x^2. The remaining rows are t^(2+lambda), 1, t. Since the second divided difference of t^(2+lambda) on t>=1 is >=1, consecutive t gaps exceed 1/2 and the outer gap exceeds 1. The determinant magnitude exceeds 1/(4*32^3)=1/131072. Entries are at most 16,1,1; every cofactor is at most 32 and every adjugate row sum at most 96. Multilinearity preserves this bound for the positive bump integrals."
+        },
+        "actualContinuousEntriesRetained": true,
+        "approximateInverseUsed": false,
+        "debtSmallnessRequired": false,
+        "checks": {
+          "positiveActualLambda": true,
+          "lambdaUpperQuarter": true,
+          "twoOrderedAxialSupports": true,
+          "threeOrderedAngularSupports": true,
+          "uInverseBound": true,
+          "eInverseBound": true
+        }
+      }
+    },
+    "innerProofs": [
+      {
+        "schema": "MathScope.ActualInnerPDEIdentity/1",
+        "order": 1,
+        "system": 0,
+        "commonASquared": 24805,
+        "checks": {
+          "FDerivative": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 0,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              26746,
+              26747,
+              26748,
+              26749,
+              26750,
+              26751,
+              28804,
+              28805,
+              137607,
+              28806,
+              137608,
+              137609,
+              25601,
+              25638,
+              25637,
+              25777,
+              25902,
+              25799,
+              25914,
+              26394,
+              26693,
+              26738
+            ],
+            "actualAtomicOperandCount": 0,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "UDerivative": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 0,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              26746,
+              26747,
+              26748,
+              26749,
+              26750,
+              26751,
+              28804,
+              28805,
+              137607,
+              28806,
+              137608,
+              137609,
+              25601,
+              25638,
+              25637,
+              25777,
+              25902,
+              25799,
+              25914,
+              26394,
+              26693,
+              26738
+            ],
+            "actualAtomicOperandCount": 0,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "average": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137729,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              26746,
+              26747,
+              26748,
+              26749,
+              26750,
+              26751,
+              28804,
+              28805,
+              137607,
+              28806,
+              137608,
+              137609,
+              25601,
+              25638,
+              25637,
+              25777,
+              25902,
+              25799,
+              25914,
+              26394,
+              26693,
+              26738
+            ],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              25516
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "pressure": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137732,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              26746,
+              26747,
+              26748,
+              26749,
+              26750,
+              26751,
+              28804,
+              28805,
+              137607,
+              28806,
+              137608,
+              137609,
+              25601,
+              25638,
+              25637,
+              25777,
+              25902,
+              25799,
+              25914,
+              26394,
+              26693,
+              26738
+            ],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "angular": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137680,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              26746,
+              26747,
+              26748,
+              26749,
+              26750,
+              26751,
+              28804,
+              28805,
+              137607,
+              28806,
+              137608,
+              137609,
+              25601,
+              25638,
+              25637,
+              25777,
+              25902,
+              25799,
+              25914,
+              26394,
+              26693,
+              26738
+            ],
+            "actualAtomicOperandCount": 15,
+            "denominatorOperands": [
+              28,
+              25577
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 5,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "axial": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137717,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              26746,
+              26747,
+              26748,
+              26749,
+              26750,
+              26751,
+              28804,
+              28805,
+              137607,
+              28806,
+              137608,
+              137609,
+              25601,
+              25638,
+              25637,
+              25777,
+              25902,
+              25799,
+              25914,
+              26394,
+              26693,
+              26738
+            ],
+            "actualAtomicOperandCount": 18,
+            "denominatorOperands": [
+              28,
+              25577
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 6,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          }
+        },
+        "sourceChecks": {
+          "systemOrder": true,
+          "sourceRhsPresent": true,
+          "sourceMatrixPresent": true,
+          "zeroAxisDatum": true,
+          "originalDiagonal": true,
+          "actualSourceBound": true,
+          "positiveConvergenceModulus": true,
+          "finiteDisplayedIterateNotUsed": true,
+          "sameCommonInterval": true,
+          "sourceLeadingF": true,
+          "sourceLeadingU": true,
+          "sourceLeadingV": true,
+          "missingKnownForceRejected": true
+        },
+        "stateRoots": [
+          26746,
+          26747,
+          26748,
+          26749,
+          26750,
+          26751
+        ],
+        "stateEtaRoots": [
+          28804,
+          28805,
+          137607,
+          28806,
+          137608,
+          137609
+        ],
+        "actualForcing": [
+          0,
+          0,
+          0,
+          26395,
+          26694,
+          26744
+        ],
+        "negativeControl": {
+          "omission": "actual known angular forcing",
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137734,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              26746,
+              26747,
+              26748,
+              26749,
+              26750,
+              26751,
+              28804,
+              28805,
+              137607,
+              28806,
+              137608,
+              137609,
+              25601,
+              25638,
+              25637,
+              25777,
+              25902,
+              25799,
+              25914,
+              26394,
+              26693,
+              26738
+            ],
+            "actualAtomicOperandCount": 15,
+            "denominatorOperands": [
+              28,
+              25577
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 5,
+            "denominatorMonomials": 5,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": false
+          },
+          "correctlyRejected": true
+        },
+        "meaning": "The original matrix rows, pressure reconstruction and streamfunction average imply the two actual tangential residuals are identically zero on the inner interval. The radial inverse is regular at xi=0; the axis extension is the implemented even-X profile kernel.",
+        "leftSupportUse": "Xminus<Xkeep<a^2. Both actual positive-order cutoffs equal one there and every Ipos correction is supported later. B8, C12, I1, I2 and the heat edit are outside this common source collar.",
+        "actualSourceValuesNumericallyEnclosed": false,
+        "finitePicardIterateCertifiedAsSolution": false,
+        "pass": true
+      },
+      {
+        "schema": "MathScope.ActualInnerPDEIdentity/1",
+        "order": 2,
+        "system": 1,
+        "commonASquared": 24805,
+        "checks": {
+          "FDerivative": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 0,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              73301,
+              73302,
+              73303,
+              73304,
+              73305,
+              73306,
+              137735,
+              137736,
+              137737,
+              137738,
+              137739,
+              137740,
+              71940,
+              71977,
+              71976,
+              72137,
+              72241,
+              72135,
+              72253,
+              73062,
+              73132,
+              73186
+            ],
+            "actualAtomicOperandCount": 0,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "UDerivative": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 0,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              73301,
+              73302,
+              73303,
+              73304,
+              73305,
+              73306,
+              137735,
+              137736,
+              137737,
+              137738,
+              137739,
+              137740,
+              71940,
+              71977,
+              71976,
+              72137,
+              72241,
+              72135,
+              72253,
+              73062,
+              73132,
+              73186
+            ],
+            "actualAtomicOperandCount": 0,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "average": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137860,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              73301,
+              73302,
+              73303,
+              73304,
+              73305,
+              73306,
+              137735,
+              137736,
+              137737,
+              137738,
+              137739,
+              137740,
+              71940,
+              71977,
+              71976,
+              72137,
+              72241,
+              72135,
+              72253,
+              73062,
+              73132,
+              73186
+            ],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              71881
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "pressure": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137863,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              73301,
+              73302,
+              73303,
+              73304,
+              73305,
+              73306,
+              137735,
+              137736,
+              137737,
+              137738,
+              137739,
+              137740,
+              71940,
+              71977,
+              71976,
+              72137,
+              72241,
+              72135,
+              72253,
+              73062,
+              73132,
+              73186
+            ],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "angular": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137811,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              73301,
+              73302,
+              73303,
+              73304,
+              73305,
+              73306,
+              137735,
+              137736,
+              137737,
+              137738,
+              137739,
+              137740,
+              71940,
+              71977,
+              71976,
+              72137,
+              72241,
+              72135,
+              72253,
+              73062,
+              73132,
+              73186
+            ],
+            "actualAtomicOperandCount": 15,
+            "denominatorOperands": [
+              28,
+              71917
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 5,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "axial": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137848,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              73301,
+              73302,
+              73303,
+              73304,
+              73305,
+              73306,
+              137735,
+              137736,
+              137737,
+              137738,
+              137739,
+              137740,
+              71940,
+              71977,
+              71976,
+              72137,
+              72241,
+              72135,
+              72253,
+              73062,
+              73132,
+              73186
+            ],
+            "actualAtomicOperandCount": 18,
+            "denominatorOperands": [
+              28,
+              71917
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 6,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          }
+        },
+        "sourceChecks": {
+          "systemOrder": true,
+          "sourceRhsPresent": true,
+          "sourceMatrixPresent": true,
+          "zeroAxisDatum": true,
+          "originalDiagonal": true,
+          "actualSourceBound": true,
+          "positiveConvergenceModulus": true,
+          "finiteDisplayedIterateNotUsed": true,
+          "sameCommonInterval": true,
+          "sourceLeadingF": true,
+          "sourceLeadingU": true,
+          "sourceLeadingV": true,
+          "missingKnownForceRejected": true
+        },
+        "stateRoots": [
+          73301,
+          73302,
+          73303,
+          73304,
+          73305,
+          73306
+        ],
+        "stateEtaRoots": [
+          137735,
+          137736,
+          137737,
+          137738,
+          137739,
+          137740
+        ],
+        "actualForcing": [
+          0,
+          0,
+          0,
+          73063,
+          73133,
+          73192
+        ],
+        "negativeControl": {
+          "omission": "actual known angular forcing",
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137865,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              73301,
+              73302,
+              73303,
+              73304,
+              73305,
+              73306,
+              137735,
+              137736,
+              137737,
+              137738,
+              137739,
+              137740,
+              71940,
+              71977,
+              71976,
+              72137,
+              72241,
+              72135,
+              72253,
+              73062,
+              73132,
+              73186
+            ],
+            "actualAtomicOperandCount": 15,
+            "denominatorOperands": [
+              28,
+              71917
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 5,
+            "denominatorMonomials": 5,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": false
+          },
+          "correctlyRejected": true
+        },
+        "meaning": "The original matrix rows, pressure reconstruction and streamfunction average imply the two actual tangential residuals are identically zero on the inner interval. The radial inverse is regular at xi=0; the axis extension is the implemented even-X profile kernel.",
+        "leftSupportUse": "Xminus<Xkeep<a^2. Both actual positive-order cutoffs equal one there and every Ipos correction is supported later. B8, C12, I1, I2 and the heat edit are outside this common source collar.",
+        "actualSourceValuesNumericallyEnclosed": false,
+        "finitePicardIterateCertifiedAsSolution": false,
+        "pass": true
+      }
+    ],
+    "conservation": {
+      "schema": "MathScope.ActualConservativeMomentProof/1",
+      "zeroFamilies": [
+        {
+          "name": "ActualCorrectedMoment_1_1",
+          "body": 71414,
+          "system": 21,
+          "value": 137866,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71414,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 13,
+            "denominatorOperands": [
+              28990,
+              29177,
+              16,
+              29156,
+              403
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 3,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 1,
+            "incoming": 28864,
+            "correction": 71390
+          }
+        },
+        {
+          "name": "ActualCorrectedMoment_1_2",
+          "body": 71415,
+          "system": 22,
+          "value": 137867,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71415,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29171,
+              29200,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 54,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 2,
+            "incoming": 28878,
+            "correction": 71396
+          }
+        },
+        {
+          "name": "ActualCorrectedMoment_1_3",
+          "body": 71416,
+          "system": 23,
+          "value": 137868,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71416,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29171,
+              29200,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 108,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 3,
+            "incoming": 28985,
+            "correction": 71402
+          }
+        },
+        {
+          "name": "ActualCorrectedMoment_1_4",
+          "body": 71417,
+          "system": 24,
+          "value": 137869,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71417,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 13,
+            "denominatorOperands": [
+              16,
+              28990,
+              29177,
+              29156,
+              403
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 6,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 4,
+            "incoming": 28943,
+            "correction": 71406
+          }
+        },
+        {
+          "name": "ActualCorrectedMoment_1_5",
+          "body": 71418,
+          "system": 25,
+          "value": 137870,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71418,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29171,
+              29200,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 108,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 5,
+            "incoming": 28986,
+            "correction": 71413
+          }
+        },
+        {
+          "name": "ActualCorrectedMoment_2_1",
+          "body": 104155,
+          "system": 26,
+          "value": 137871,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104155,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 13,
+            "denominatorOperands": [
+              29177,
+              28990,
+              403,
+              16,
+              29156
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 3,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 1,
+            "incoming": 103933,
+            "correction": 104131
+          }
+        },
+        {
+          "name": "ActualCorrectedMoment_2_2",
+          "body": 104156,
+          "system": 27,
+          "value": 137872,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104156,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              29200,
+              16,
+              29171,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 54,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 2,
+            "incoming": 103934,
+            "correction": 104137
+          }
+        },
+        {
+          "name": "ActualCorrectedMoment_2_3",
+          "body": 104157,
+          "system": 28,
+          "value": 137873,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104157,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29200,
+              29171,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 108,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 3,
+            "incoming": 103935,
+            "correction": 104143
+          }
+        },
+        {
+          "name": "ActualCorrectedMoment_2_4",
+          "body": 104158,
+          "system": 29,
+          "value": 137874,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104158,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 13,
+            "denominatorOperands": [
+              16,
+              29177,
+              28990,
+              403,
+              29156
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 6,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 4,
+            "incoming": 103936,
+            "correction": 104147
+          }
+        },
+        {
+          "name": "ActualCorrectedMoment_2_5",
+          "body": 104159,
+          "system": 30,
+          "value": 137875,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104159,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29200,
+              29171,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 108,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 5,
+            "incoming": 103937,
+            "correction": 104154
+          }
+        },
+        {
+          "name": "ActualLeadingAxialTotal",
+          "body": 137906,
+          "system": 31,
+          "value": 137907,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137906,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              4714,
+              8786,
+              953,
+              655,
+              667,
+              737,
+              799
+            ],
+            "actualAtomicOperandCount": 18,
+            "denominatorOperands": [
+              803,
+              16,
+              4724,
+              4723,
+              8806
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 6,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "source": "A.2 outer flux, B.8, C.12/I1; I2 and heat change E only."
+          }
+        },
+        {
+          "name": "ActualLeadingHeatSubtractedAngularTotal",
+          "body": 138008,
+          "system": 32,
+          "value": 138022,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 138020,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              4716,
+              8787,
+              484,
+              402,
+              259,
+              275,
+              137999,
+              104288,
+              104443
+            ],
+            "actualAtomicOperandCount": 21,
+            "denominatorOperands": [
+              104446,
+              16,
+              8820,
+              4733,
+              4723,
+              259,
+              417
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 3,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "source": "Actual A.11 angular reset, A.13 terminal primitive, B8/I1 angular corrections and H8-H14/I2; the complete original subtracted moment (5.19).",
+            "heatDebt": 104288,
+            "heatCorrectionRootSystem": 2
+          },
+          "analyticNormalization": {
+            "schema": "MathScope.ActualLeadingSubtractedAngularProof/1",
+            "originalRoot": 138008,
+            "normalizedRoot": 138020,
+            "beforeHeatBody": 138007,
+            "A2base": 138005,
+            "heatChangeAndI2": 137900,
+            "correctionHistories": {
+              "B8": {
+                "actualIncoming": 4716,
+                "actualRootSystem": 0,
+                "body": 137910,
+                "check": {
+                  "schema": "MathScope.ActualGraphRationalIdentity/1",
+                  "expression": 137910,
+                  "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                  "sourceAtomicNodes": [
+                    4716
+                  ],
+                  "actualAtomicOperandCount": 5,
+                  "denominatorOperands": [
+                    16,
+                    4733,
+                    4723
+                  ],
+                  "nonzeroDenominatorProofRequired": true,
+                  "numeratorMonomials": 0,
+                  "denominatorMonomials": 2,
+                  "analyticOperandsReplacedByNumericalValues": false,
+                  "pass": true
+                }
+              },
+              "I1": {
+                "actualIncoming": 8787,
+                "actualRootSystem": 1,
+                "body": 137912,
+                "check": {
+                  "schema": "MathScope.ActualGraphRationalIdentity/1",
+                  "expression": 137912,
+                  "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                  "sourceAtomicNodes": [
+                    8787
+                  ],
+                  "actualAtomicOperandCount": 6,
+                  "denominatorOperands": [
+                    16,
+                    8820
+                  ],
+                  "nonzeroDenominatorProofRequired": true,
+                  "numeratorMonomials": 0,
+                  "denominatorMonomials": 2,
+                  "analyticOperandsReplacedByNumericalValues": false,
+                  "pass": true
+                }
+              }
+            },
+            "angularReset": {
+              "actualTarget": 402,
+              "actualMatrixRow": [
+                417,
+                429
+              ],
+              "actualCoefficients": [
+                487,
+                484
+              ],
+              "residual": 137898,
+              "check": {
+                "schema": "MathScope.ActualGraphRationalIdentity/1",
+                "expression": 137898,
+                "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                "sourceAtomicNodes": [
+                  484,
+                  402
+                ],
+                "actualAtomicOperandCount": 4,
+                "denominatorOperands": [
+                  417
+                ],
+                "nonzeroDenominatorProofRequired": true,
+                "numeratorMonomials": 0,
+                "denominatorMonomials": 1,
+                "analyticOperandsReplacedByNumericalValues": false,
+                "pass": true
+              },
+              "rReleaseDeviation": 137917,
+              "QbDeviation": 137922,
+              "sourceIdentity": "r=I/(XH), H=sqrt(2X)E; r_prime=1-(3/2+alpha)r. The actual A.2 rInitial/rDecay/rEntry/rBefore/rAfter integrals form the retained target. At angular release r-1/(1-lambda)=exp(-(1-lambda)*(length-center0))*(actual row-target)."
+            },
+            "terminal": {
+              "Qb": 259,
+              "Qp": 275,
+              "wait": 280,
+              "waitFactor": 137925,
+              "waitRatio": 137927,
+              "waitArgument": 137928,
+              "waitCheck": {
+                "schema": "MathScope.ActualGraphRationalIdentity/1",
+                "expression": 137928,
+                "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                "sourceAtomicNodes": [
+                  278
+                ],
+                "actualAtomicOperandCount": 2,
+                "denominatorOperands": [
+                  207
+                ],
+                "nonzeroDenominatorProofRequired": true,
+                "numeratorMonomials": 0,
+                "denominatorMonomials": 2,
+                "analyticOperandsReplacedByNumericalValues": false,
+                "pass": true
+              },
+              "sourceChecks": {
+                "actualIntegralBounds": true,
+                "actualTerminalStage": true,
+                "actualDensity": true,
+                "actualTerminalODE": true,
+                "terminalEndZero": true,
+                "positiveFoAndJ": true,
+                "waitUsesPositiveActualQbQp": true
+              },
+              "density": 274,
+              "expectedDensity": 137932,
+              "terminalDensityCheck": {
+                "schema": "MathScope.ActualGraphRationalIdentity/1",
+                "expression": 137934,
+                "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                "sourceAtomicNodes": [],
+                "actualAtomicOperandCount": 4,
+                "denominatorOperands": [
+                  272,
+                  271
+                ],
+                "nonzeroDenominatorProofRequired": true,
+                "numeratorMonomials": 0,
+                "denominatorMonomials": 3,
+                "analyticOperandsReplacedByNumericalValues": false,
+                "pass": true
+              },
+              "coordinate": 137935,
+              "J": 137947,
+              "partial": 137957,
+              "Qmid": 137961,
+              "odeResidual": 137989,
+              "terminalODE": {
+                "schema": "MathScope.ActualGraphRationalIdentity/1",
+                "expression": 137989,
+                "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                "sourceAtomicNodes": [
+                  275,
+                  137957,
+                  137937
+                ],
+                "actualAtomicOperandCount": 7,
+                "denominatorOperands": [
+                  137945,
+                  271,
+                  137947,
+                  272
+                ],
+                "nonzeroDenominatorProofRequired": true,
+                "numeratorMonomials": 0,
+                "denominatorMonomials": 42,
+                "analyticOperandsReplacedByNumericalValues": false,
+                "pass": true
+              },
+              "terminalEndNumerator": 0,
+              "terminalEndCheck": {
+                "schema": "MathScope.ActualGraphRationalIdentity/1",
+                "expression": 0,
+                "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                "sourceAtomicNodes": [
+                  275
+                ],
+                "actualAtomicOperandCount": 0,
+                "denominatorOperands": [],
+                "nonzeroDenominatorProofRequired": true,
+                "numeratorMonomials": 0,
+                "denominatorMonomials": 1,
+                "analyticOperandsReplacedByNumericalValues": false,
+                "pass": true
+              },
+              "Xstart": 137991,
+              "Estart": 137993,
+              "physicalScale": 137999,
+              "sourceIdentity": "Q=(1-h)I/(XH)-1; (J Q)_s=-exp((1-h)s)*f_o_prime/(1-rho). Qb*exp(-(1-h)*wait)=Qp, and the actual Qp integral is the entire loss from s=1 to3. Therefore I-I_pow=0 after the terminal stage."
+            },
+            "analyticRewrite": {
+              "from": 137925,
+              "to": 137927,
+              "argumentIdentity": {
+                "schema": "MathScope.ActualGraphRationalIdentity/1",
+                "expression": 137928,
+                "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                "sourceAtomicNodes": [
+                  278
+                ],
+                "actualAtomicOperandCount": 2,
+                "denominatorOperands": [
+                  207
+                ],
+                "nonzeroDenominatorProofRequired": true,
+                "numeratorMonomials": 0,
+                "denominatorMonomials": 2,
+                "analyticOperandsReplacedByNumericalValues": false,
+                "pass": true
+              },
+              "positiveDomainSource": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+              "rule": "exp(-log(Qb/Qp))=Qp/Qb for the actual positive Qb,Qp",
+              "verified": true
+            },
+            "sourceOrderProof": {
+              "schema": "MathScope.ActualBackgroundSupportOrder/1",
+              "profileId": "same-profile-2026-10-10.3",
+              "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+              "parameterChecks": {
+                "samePinnedSource": true,
+                "actualH": true,
+                "actualLambda": true,
+                "actualT": true,
+                "actualTf": true,
+                "actualCo": true,
+                "actualXa": true,
+                "actualT1": true,
+                "actualLambdaScale": true,
+                "actualXR": true,
+                "actualIposLeft": true,
+                "actualIposRight": true
+              },
+              "expressionChecks": {
+                "pulseStart": true,
+                "pulseLength": true,
+                "axialEnd": true,
+                "plus": true,
+                "terminal": true,
+                "interpolationStartsAfterPulse": true,
+                "cutoff": true,
+                "commonInterval": true,
+                "stageOrder": true,
+                "consecutiveStages": true,
+                "allEndpointsIndependentOfEta": true
+              },
+              "arithmeticChecks": {
+                "TLower": true,
+                "hSmallerThanLambda": true,
+                "hDyadicSmall": true,
+                "QbGreaterThanOne": true,
+                "QpLessThanH": true,
+                "nextStageLongerThanOne": true,
+                "positivePulseLength": true,
+                "allIposBumpsBeforeRight": true,
+                "cutoffBelowOne": true,
+                "IposStartsAfterXR": true
+              },
+              "endpoints": {
+                "Xa": 3617,
+                "Xminus": 28814,
+                "Xkeep": 28819,
+                "Xcut": 28823,
+                "aSquared": 24805,
+                "IposLeft": 28987,
+                "IposRight": 28988,
+                "lastU": 29328,
+                "Xv": 3293,
+                "Xplus": 28824,
+                "Xb": 28826
+              },
+              "derivation": {
+                "inner": "0<t1<1; Xa=4/Lambda with Lambda>=2^16640. Hence Xa<Xminus<Xkeep<Xcut<a^2<1<XR<IposLeft.",
+                "bump": "Every normalized radial bump lies below 4. Its physical X endpoint is below 16*X0Ipos < exp(5)*X0Ipos.",
+                "middle": "IposRight/Xv=exp(-9-13/lambda)<1 and Xplus/Xv=exp(1).",
+                "wait": "lambda>h>0 makes Qsteep>0. Qb>(1/3)*(1/2)*4*2048>1, while 0<Qp<27*h/255<h<1. Thus log(Qb/Qp)/(1-h)>0.",
+                "final": "Immediately after the pulse lies an interval of length Tf=128, followed by positive stage lengths. Thus Xplus<Xv*exp(128)<Xb.",
+                "sourceStep": "sigma=exp(-1/s^2)/(exp(-1/s^2)+exp(-1/(1-s)^2)) on (0,1), with flat endpoint jets; integral sigma_prime=1."
+              },
+              "inequalities": [
+                "Xminus<Xkeep<Xcut<a^2<IposLeft<IposRight<Xv<Xplus<Xb",
+                "all five radial bump endpoints<IposRight",
+                "all endpoints are independent of eta"
+              ],
+              "numericalCoordinateComparisonUsed": false,
+              "pass": true,
+              "leadingExterior": {
+                "parameterChecks": {
+                  "loopRight": true,
+                  "I1Left": true,
+                  "I1Right": true,
+                  "logGapsPositive": true
+                },
+                "physicalRightEnds": [
+                  5089,
+                  5093,
+                  6258,
+                  7982
+                ],
+                "tailLogCoordinate": 5099,
+                "tailLogRight": 103,
+                "rootBumpStepArguments": [
+                  9198,
+                  9203,
+                  9211,
+                  9216,
+                  9221
+                ],
+                "derivation": "I1Right/IposLeft=exp(-6), decayEnd<IposLeft and loopIRight/IposLeft=exp(15-60000T)<1. X>=Xplus gives log(X/Xp)>=13/lambda+1. For I1 derivative bumps, X/X0I1>=exp(5)>32, beyond every support ending at 13.5."
+              }
+            },
+            "check": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 138020,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                4716,
+                8787,
+                484,
+                402,
+                259,
+                275,
+                137999,
+                104288,
+                104443
+              ],
+              "actualAtomicOperandCount": 21,
+              "denominatorOperands": [
+                104446,
+                16,
+                8820,
+                4733,
+                4723,
+                259,
+                417
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 3,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            },
+            "negativeControls": {
+              "waitOmitted": {
+                "schema": "MathScope.ActualGraphRationalIdentity/1",
+                "expression": 138021,
+                "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                "sourceAtomicNodes": [
+                  259,
+                  275
+                ],
+                "actualAtomicOperandCount": 2,
+                "denominatorOperands": [],
+                "nonzeroDenominatorProofRequired": true,
+                "numeratorMonomials": 2,
+                "denominatorMonomials": 1,
+                "analyticOperandsReplacedByNumericalValues": false,
+                "pass": false
+              },
+              "angularCorrectionOmitted": {
+                "schema": "MathScope.ActualGraphRationalIdentity/1",
+                "expression": 137897,
+                "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                "sourceAtomicNodes": [
+                  402
+                ],
+                "actualAtomicOperandCount": 1,
+                "denominatorOperands": [],
+                "nonzeroDenominatorProofRequired": true,
+                "numeratorMonomials": 1,
+                "denominatorMonomials": 1,
+                "analyticOperandsReplacedByNumericalValues": false,
+                "pass": false
+              },
+              "B8AngularCorrectionOmitted": {
+                "schema": "MathScope.ActualGraphRationalIdentity/1",
+                "expression": 4716,
+                "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+                "sourceAtomicNodes": [
+                  4716
+                ],
+                "actualAtomicOperandCount": 1,
+                "denominatorOperands": [],
+                "nonzeroDenominatorProofRequired": true,
+                "numeratorMonomials": 1,
+                "denominatorMonomials": 1,
+                "analyticOperandsReplacedByNumericalValues": false,
+                "pass": false
+              }
+            },
+            "source": "Original A.11, A.13, (5.19); B8/I1 restore the actual angular moment; H8-H14 change the same prescribed H_pow by the retained heat debt and I2 correction.",
+            "constantOfIntegrationIncluded": true,
+            "heatChangeAloneUsedAsWholeMoment": false,
+            "numericIntegralValuesUsed": false,
+            "pass": true
+          }
+        }
+      ],
+      "sourceRootChecks": {
+        "B8Contraction": true,
+        "I1Contraction": true,
+        "I2Contraction": true,
+        "actualB8MassCancellation": true,
+        "actualI1MassCancellation": true,
+        "actualOuterPulseMassAndMixedMoments": true,
+        "actualOuterAngularLinearMoment": true,
+        "actualTerminalWaitExpression": true,
+        "actualWholeHeatMomentCancellation": true,
+        "heatTailNotTruncated": true,
+        "actualHeatRootOperands": true,
+        "actualIposInverseNonzero": true
+      },
+      "leading": {
+        "B8Mass": {
+          "body": 137877,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137877,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              4714
+            ],
+            "actualAtomicOperandCount": 5,
+            "denominatorOperands": [
+              16,
+              4724,
+              4723
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 2,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          }
+        },
+        "I1Mass": {
+          "body": 137879,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137879,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              8786
+            ],
+            "actualAtomicOperandCount": 6,
+            "denominatorOperands": [
+              16,
+              8806
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 2,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          }
+        },
+        "outerPulse": [
+          {
+            "body": 137886,
+            "check": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 137886,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                953,
+                655,
+                667,
+                737,
+                799
+              ],
+              "actualAtomicOperandCount": 9,
+              "denominatorOperands": [
+                803
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 2,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            }
+          },
+          {
+            "body": 137893,
+            "check": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 137893,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                953,
+                655,
+                667,
+                737,
+                799
+              ],
+              "actualAtomicOperandCount": 9,
+              "denominatorOperands": [
+                803
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 2,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            }
+          }
+        ],
+        "outerAngular": {
+          "body": 137898,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137898,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              484,
+              402
+            ],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              417
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          }
+        },
+        "terminalWait": {
+          "actual": 280,
+          "expected": 280,
+          "pass": true
+        },
+        "heat": [
+          {
+            "body": 137900,
+            "actualDebt": 104288,
+            "check": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 137900,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                104288,
+                104443
+              ],
+              "actualAtomicOperandCount": 3,
+              "denominatorOperands": [
+                104446
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 1,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            }
+          },
+          {
+            "body": 137902,
+            "actualDebt": 104351,
+            "check": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 137902,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                104351,
+                104445
+              ],
+              "actualAtomicOperandCount": 3,
+              "denominatorOperands": [
+                104450
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 1,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            }
+          },
+          {
+            "body": 137904,
+            "actualDebt": 104412,
+            "check": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 137904,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                104412,
+                104444
+              ],
+              "actualAtomicOperandCount": 3,
+              "denominatorOperands": [
+                104454
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 1,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            }
+          }
+        ],
+        "actualI2RootSystem": 2,
+        "actualI2PolynomialResiduals": [
+          104754,
+          104756,
+          104758
+        ]
+      },
+      "leadingAngularProof": {
+        "schema": "MathScope.ActualLeadingSubtractedAngularProof/1",
+        "originalRoot": 138008,
+        "normalizedRoot": 138020,
+        "beforeHeatBody": 138007,
+        "A2base": 138005,
+        "heatChangeAndI2": 137900,
+        "correctionHistories": {
+          "B8": {
+            "actualIncoming": 4716,
+            "actualRootSystem": 0,
+            "body": 137910,
+            "check": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 137910,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                4716
+              ],
+              "actualAtomicOperandCount": 5,
+              "denominatorOperands": [
+                16,
+                4733,
+                4723
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 2,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            }
+          },
+          "I1": {
+            "actualIncoming": 8787,
+            "actualRootSystem": 1,
+            "body": 137912,
+            "check": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 137912,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                8787
+              ],
+              "actualAtomicOperandCount": 6,
+              "denominatorOperands": [
+                16,
+                8820
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 2,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            }
+          }
+        },
+        "angularReset": {
+          "actualTarget": 402,
+          "actualMatrixRow": [
+            417,
+            429
+          ],
+          "actualCoefficients": [
+            487,
+            484
+          ],
+          "residual": 137898,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137898,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              484,
+              402
+            ],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              417
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "rReleaseDeviation": 137917,
+          "QbDeviation": 137922,
+          "sourceIdentity": "r=I/(XH), H=sqrt(2X)E; r_prime=1-(3/2+alpha)r. The actual A.2 rInitial/rDecay/rEntry/rBefore/rAfter integrals form the retained target. At angular release r-1/(1-lambda)=exp(-(1-lambda)*(length-center0))*(actual row-target)."
+        },
+        "terminal": {
+          "Qb": 259,
+          "Qp": 275,
+          "wait": 280,
+          "waitFactor": 137925,
+          "waitRatio": 137927,
+          "waitArgument": 137928,
+          "waitCheck": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137928,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              278
+            ],
+            "actualAtomicOperandCount": 2,
+            "denominatorOperands": [
+              207
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 2,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "sourceChecks": {
+            "actualIntegralBounds": true,
+            "actualTerminalStage": true,
+            "actualDensity": true,
+            "actualTerminalODE": true,
+            "terminalEndZero": true,
+            "positiveFoAndJ": true,
+            "waitUsesPositiveActualQbQp": true
+          },
+          "density": 274,
+          "expectedDensity": 137932,
+          "terminalDensityCheck": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137934,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 4,
+            "denominatorOperands": [
+              272,
+              271
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 3,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "coordinate": 137935,
+          "J": 137947,
+          "partial": 137957,
+          "Qmid": 137961,
+          "odeResidual": 137989,
+          "terminalODE": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137989,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              275,
+              137957,
+              137937
+            ],
+            "actualAtomicOperandCount": 7,
+            "denominatorOperands": [
+              137945,
+              271,
+              137947,
+              272
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 42,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "terminalEndNumerator": 0,
+          "terminalEndCheck": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 0,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              275
+            ],
+            "actualAtomicOperandCount": 0,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "Xstart": 137991,
+          "Estart": 137993,
+          "physicalScale": 137999,
+          "sourceIdentity": "Q=(1-h)I/(XH)-1; (J Q)_s=-exp((1-h)s)*f_o_prime/(1-rho). Qb*exp(-(1-h)*wait)=Qp, and the actual Qp integral is the entire loss from s=1 to3. Therefore I-I_pow=0 after the terminal stage."
+        },
+        "analyticRewrite": {
+          "from": 137925,
+          "to": 137927,
+          "argumentIdentity": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137928,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              278
+            ],
+            "actualAtomicOperandCount": 2,
+            "denominatorOperands": [
+              207
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 2,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "positiveDomainSource": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+          "rule": "exp(-log(Qb/Qp))=Qp/Qb for the actual positive Qb,Qp",
+          "verified": true
+        },
+        "sourceOrderProof": {
+          "schema": "MathScope.ActualBackgroundSupportOrder/1",
+          "profileId": "same-profile-2026-10-10.3",
+          "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+          "parameterChecks": {
+            "samePinnedSource": true,
+            "actualH": true,
+            "actualLambda": true,
+            "actualT": true,
+            "actualTf": true,
+            "actualCo": true,
+            "actualXa": true,
+            "actualT1": true,
+            "actualLambdaScale": true,
+            "actualXR": true,
+            "actualIposLeft": true,
+            "actualIposRight": true
+          },
+          "expressionChecks": {
+            "pulseStart": true,
+            "pulseLength": true,
+            "axialEnd": true,
+            "plus": true,
+            "terminal": true,
+            "interpolationStartsAfterPulse": true,
+            "cutoff": true,
+            "commonInterval": true,
+            "stageOrder": true,
+            "consecutiveStages": true,
+            "allEndpointsIndependentOfEta": true
+          },
+          "arithmeticChecks": {
+            "TLower": true,
+            "hSmallerThanLambda": true,
+            "hDyadicSmall": true,
+            "QbGreaterThanOne": true,
+            "QpLessThanH": true,
+            "nextStageLongerThanOne": true,
+            "positivePulseLength": true,
+            "allIposBumpsBeforeRight": true,
+            "cutoffBelowOne": true,
+            "IposStartsAfterXR": true
+          },
+          "endpoints": {
+            "Xa": 3617,
+            "Xminus": 28814,
+            "Xkeep": 28819,
+            "Xcut": 28823,
+            "aSquared": 24805,
+            "IposLeft": 28987,
+            "IposRight": 28988,
+            "lastU": 29328,
+            "Xv": 3293,
+            "Xplus": 28824,
+            "Xb": 28826
+          },
+          "derivation": {
+            "inner": "0<t1<1; Xa=4/Lambda with Lambda>=2^16640. Hence Xa<Xminus<Xkeep<Xcut<a^2<1<XR<IposLeft.",
+            "bump": "Every normalized radial bump lies below 4. Its physical X endpoint is below 16*X0Ipos < exp(5)*X0Ipos.",
+            "middle": "IposRight/Xv=exp(-9-13/lambda)<1 and Xplus/Xv=exp(1).",
+            "wait": "lambda>h>0 makes Qsteep>0. Qb>(1/3)*(1/2)*4*2048>1, while 0<Qp<27*h/255<h<1. Thus log(Qb/Qp)/(1-h)>0.",
+            "final": "Immediately after the pulse lies an interval of length Tf=128, followed by positive stage lengths. Thus Xplus<Xv*exp(128)<Xb.",
+            "sourceStep": "sigma=exp(-1/s^2)/(exp(-1/s^2)+exp(-1/(1-s)^2)) on (0,1), with flat endpoint jets; integral sigma_prime=1."
+          },
+          "inequalities": [
+            "Xminus<Xkeep<Xcut<a^2<IposLeft<IposRight<Xv<Xplus<Xb",
+            "all five radial bump endpoints<IposRight",
+            "all endpoints are independent of eta"
+          ],
+          "numericalCoordinateComparisonUsed": false,
+          "pass": true,
+          "leadingExterior": {
+            "parameterChecks": {
+              "loopRight": true,
+              "I1Left": true,
+              "I1Right": true,
+              "logGapsPositive": true
+            },
+            "physicalRightEnds": [
+              5089,
+              5093,
+              6258,
+              7982
+            ],
+            "tailLogCoordinate": 5099,
+            "tailLogRight": 103,
+            "rootBumpStepArguments": [
+              9198,
+              9203,
+              9211,
+              9216,
+              9221
+            ],
+            "derivation": "I1Right/IposLeft=exp(-6), decayEnd<IposLeft and loopIRight/IposLeft=exp(15-60000T)<1. X>=Xplus gives log(X/Xp)>=13/lambda+1. For I1 derivative bumps, X/X0I1>=exp(5)>32, beyond every support ending at 13.5."
+          }
+        },
+        "check": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 138020,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            4716,
+            8787,
+            484,
+            402,
+            259,
+            275,
+            137999,
+            104288,
+            104443
+          ],
+          "actualAtomicOperandCount": 21,
+          "denominatorOperands": [
+            104446,
+            16,
+            8820,
+            4733,
+            4723,
+            259,
+            417
+          ],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 3,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "negativeControls": {
+          "waitOmitted": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 138021,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              259,
+              275
+            ],
+            "actualAtomicOperandCount": 2,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 2,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": false
+          },
+          "angularCorrectionOmitted": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 137897,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              402
+            ],
+            "actualAtomicOperandCount": 1,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 1,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": false
+          },
+          "B8AngularCorrectionOmitted": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 4716,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              4716
+            ],
+            "actualAtomicOperandCount": 1,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 1,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": false
+          }
+        },
+        "source": "Original A.11, A.13, (5.19); B8/I1 restore the actual angular moment; H8-H14 change the same prescribed H_pow by the retained heat debt and I2 correction.",
+        "constantOfIntegrationIncluded": true,
+        "heatChangeAloneUsedAsWholeMoment": false,
+        "numericIntegralValuesUsed": false,
+        "pass": true
+      },
+      "totals": [
+        {
+          "order": 1,
+          "theta": 138064,
+          "z": 138094,
+          "actualCurrentMomentResidualBodies": [
+            71414,
+            71415,
+            71416,
+            71417,
+            71418
+          ],
+          "lowerFamilies": [
+            138022,
+            137907
+          ],
+          "thetaReduced": 0,
+          "zReduced": 0
+        },
+        {
+          "order": 2,
+          "theta": 138133,
+          "z": 138171,
+          "actualCurrentMomentResidualBodies": [
+            104155,
+            104156,
+            104157,
+            104158,
+            104159
+          ],
+          "lowerFamilies": [
+            137867,
+            137866
+          ],
+          "thetaReduced": 0,
+          "zReduced": 0
+        }
+      ],
+      "rewriteTrace": [
+        {
+          "node": 137867,
+          "system": 22,
+          "body": 71415,
+          "etaOrder": 0,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138029,
+          "system": 22,
+          "body": 71415,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 137869,
+          "system": 24,
+          "body": 71417,
+          "etaOrder": 0,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138036,
+          "system": 24,
+          "body": 71417,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138022,
+          "system": 32,
+          "body": 138008,
+          "etaOrder": 0,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138044,
+          "system": 32,
+          "body": 138008,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138054,
+          "system": 32,
+          "body": 138008,
+          "etaOrder": 2,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 137866,
+          "system": 21,
+          "body": 71414,
+          "etaOrder": 0,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138067,
+          "system": 21,
+          "body": 71414,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138071,
+          "system": 25,
+          "body": 71418,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 137907,
+          "system": 31,
+          "body": 137906,
+          "etaOrder": 0,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138076,
+          "system": 31,
+          "body": 137906,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138085,
+          "system": 31,
+          "body": 137906,
+          "etaOrder": 2,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 137872,
+          "system": 27,
+          "body": 104156,
+          "etaOrder": 0,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138099,
+          "system": 27,
+          "body": 104156,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 137874,
+          "system": 29,
+          "body": 104158,
+          "etaOrder": 0,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138106,
+          "system": 29,
+          "body": 104158,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138123,
+          "system": 22,
+          "body": 71415,
+          "etaOrder": 2,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 137871,
+          "system": 26,
+          "body": 104155,
+          "etaOrder": 0,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138136,
+          "system": 26,
+          "body": 104155,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 137875,
+          "system": 30,
+          "body": 104159,
+          "etaOrder": 0,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138144,
+          "system": 30,
+          "body": 104159,
+          "etaOrder": 1,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        },
+        {
+          "node": 138161,
+          "system": 21,
+          "body": 71414,
+          "etaOrder": 2,
+          "rule": "derivative of the proved identical-zero actual moment function"
+        }
+      ],
+      "source": "Original (5.19)-(5.21), Lemma5.2; the conservative identities follow by radial integration by parts with the displayed compact support and the complete source heat-subtracted moment.",
+      "operators": {
+        "Tbar": "(-a*m+D*eta*d_eta m)/L",
+        "Zbar": "(2*a*eta*m+d*d_eta m)/L",
+        "theta": "Tbar_(1-h+nu_n)m_n2 + Zbar_(1/2-2h+nu_n)m_n4 - Zbar_(1/2-2h+nu_n) Zbar_(1-h+nu_(n-1))m_(n-1)2",
+        "z": "Tbar_(D+nu_n)m_n1 + Zbar_(nu_n-2h)m_n5 - Zbar_(nu_(n-1)) Zbar_(D+nu_(n-1))m_(n-1)1"
+      },
+      "correctedMomentSourceProofs": [
+        {
+          "key": "1:0",
+          "name": "ActualCorrectedMoment_1_1",
+          "body": 71414,
+          "system": 21,
+          "value": 137866,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71414,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 13,
+            "denominatorOperands": [
+              28990,
+              29177,
+              16,
+              29156,
+              403
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 3,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 1,
+            "incoming": 28864,
+            "correction": 71390
+          }
+        },
+        {
+          "key": "1:1",
+          "name": "ActualCorrectedMoment_1_2",
+          "body": 71415,
+          "system": 22,
+          "value": 137867,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71415,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29171,
+              29200,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 54,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 2,
+            "incoming": 28878,
+            "correction": 71396
+          }
+        },
+        {
+          "key": "1:2",
+          "name": "ActualCorrectedMoment_1_3",
+          "body": 71416,
+          "system": 23,
+          "value": 137868,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71416,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29171,
+              29200,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 108,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 3,
+            "incoming": 28985,
+            "correction": 71402
+          }
+        },
+        {
+          "key": "1:3",
+          "name": "ActualCorrectedMoment_1_4",
+          "body": 71417,
+          "system": 24,
+          "value": 137869,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71417,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 13,
+            "denominatorOperands": [
+              16,
+              28990,
+              29177,
+              29156,
+              403
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 6,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 4,
+            "incoming": 28943,
+            "correction": 71406
+          }
+        },
+        {
+          "key": "1:4",
+          "name": "ActualCorrectedMoment_1_5",
+          "body": 71418,
+          "system": 25,
+          "value": 137870,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 71418,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              28864,
+              28878,
+              28985,
+              28943,
+              28986
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29171,
+              29200,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 108,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 1,
+            "moment": 5,
+            "incoming": 28986,
+            "correction": 71413
+          }
+        },
+        {
+          "key": "2:0",
+          "name": "ActualCorrectedMoment_2_1",
+          "body": 104155,
+          "system": 26,
+          "value": 137871,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104155,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 13,
+            "denominatorOperands": [
+              29177,
+              28990,
+              403,
+              16,
+              29156
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 3,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 1,
+            "incoming": 103933,
+            "correction": 104131
+          }
+        },
+        {
+          "key": "2:1",
+          "name": "ActualCorrectedMoment_2_2",
+          "body": 104156,
+          "system": 27,
+          "value": 137872,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104156,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              29200,
+              16,
+              29171,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 54,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 2,
+            "incoming": 103934,
+            "correction": 104137
+          }
+        },
+        {
+          "key": "2:2",
+          "name": "ActualCorrectedMoment_2_3",
+          "body": 104157,
+          "system": 28,
+          "value": 137873,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104157,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29200,
+              29171,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 108,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 3,
+            "incoming": 103935,
+            "correction": 104143
+          }
+        },
+        {
+          "key": "2:3",
+          "name": "ActualCorrectedMoment_2_4",
+          "body": 104158,
+          "system": 29,
+          "value": 137874,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104158,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 13,
+            "denominatorOperands": [
+              16,
+              29177,
+              28990,
+              403,
+              29156
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 6,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 4,
+            "incoming": 103936,
+            "correction": 104147
+          }
+        },
+        {
+          "key": "2:4",
+          "name": "ActualCorrectedMoment_2_5",
+          "body": 104159,
+          "system": 30,
+          "value": 137875,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 104159,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              103933,
+              103934,
+              103935,
+              103936,
+              103937
+            ],
+            "actualAtomicOperandCount": 19,
+            "denominatorOperands": [
+              16,
+              29200,
+              29171,
+              29162,
+              29167
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 108,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "source": {
+            "order": 2,
+            "moment": 5,
+            "incoming": 103937,
+            "correction": 104154
+          }
+        }
+      ],
+      "denominatorObligations": {
+        "IposDeterminants": {
+          "schema": "MathScope.ActualIposContinuousInverseProof/1",
+          "sourceEquations": [
+            "5.14",
+            "5.15",
+            "5.16",
+            "Lemma A.1"
+          ],
+          "lambda": {
+            "samePinnedParameter": true,
+            "strictlyPositive": true,
+            "upper": "1/4",
+            "setToZero": false
+          },
+          "bumpDefinition": "beta_j(x)=sigma_prime((x-left_j)/(right_j-left_j))/(right_j-left_j); b_j(R)=beta_j(R/Rbase)/Rbase",
+          "centers": [
+            "3/2",
+            "2",
+            "5/2",
+            "3",
+            "7/2"
+          ],
+          "halfWidth": "1/4096",
+          "positiveUnitRMass": true,
+          "originalDefinitionAllowsThisChoice": "Lemma 5.2 fixes any five smooth positive unit-integral bumps with mutually disjoint ordered supports in Jpos, independently of the background order. These bumps are a positive-order choice; they do not change any leading N3 datum.",
+          "normalizedU": {
+            "weights": [
+              "x",
+              "x*integral_0^log(x) exp(-2*lambda*s) ds"
+            ],
+            "determinantLower": "1/32",
+            "adjugateInfinityUpper": "16",
+            "inverseInfinityUpper": "1024",
+            "proof": "For all supports 1<x<4, w_prime=x^(-1-2lambda)>1/8 and the two support gaps exceed 1/4. Thus x*y*(w(y)-w(x))>1/32. Entries are <8, hence each adjugate row sum <16. Integrate against the two positive unit-mass measures."
+          },
+          "normalizedE": {
+            "weights": [
+              "x^2",
+              "x^(-2-2*lambda)",
+              "x^(-2*lambda)"
+            ],
+            "determinantAbsoluteLower": "1/131072",
+            "adjugateInfinityUpper": "96",
+            "inverseInfinityUpper": "16777216",
+            "proof": "Factor x^(-2-2lambda)>1/32 from each point column and set t=x^2. The remaining rows are t^(2+lambda), 1, t. Since the second divided difference of t^(2+lambda) on t>=1 is >=1, consecutive t gaps exceed 1/2 and the outer gap exceeds 1. The determinant magnitude exceeds 1/(4*32^3)=1/131072. Entries are at most 16,1,1; every cofactor is at most 32 and every adjugate row sum at most 96. Multilinearity preserves this bound for the positive bump integrals."
+          },
+          "actualContinuousEntriesRetained": true,
+          "approximateInverseUsed": false,
+          "debtSmallnessRequired": false,
+          "checks": {
+            "positiveActualLambda": true,
+            "lambdaUpperQuarter": true,
+            "twoOrderedAxialSupports": true,
+            "threeOrderedAngularSupports": true,
+            "uInverseBound": true,
+            "eInverseBound": true
+          }
+        },
+        "otherScales": "Rbase>0, ef>0, lambda>0, L>=1-2h>0 on the real source eta interval; Qb,Qp>0 in the source-order proof. No denominator is proved nonzero merely by rational cancellation."
+      },
+      "numericQuadratureValuesUsed": false,
+      "finiteImplicitIteratesSubstituted": false,
+      "pass": true
+    },
+    "supportOrder": {
+      "schema": "MathScope.ActualBackgroundSupportOrder/1",
+      "profileId": "same-profile-2026-10-10.3",
+      "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+      "parameterChecks": {
+        "samePinnedSource": true,
+        "actualH": true,
+        "actualLambda": true,
+        "actualT": true,
+        "actualTf": true,
+        "actualCo": true,
+        "actualXa": true,
+        "actualT1": true,
+        "actualLambdaScale": true,
+        "actualXR": true,
+        "actualIposLeft": true,
+        "actualIposRight": true
+      },
+      "expressionChecks": {
+        "pulseStart": true,
+        "pulseLength": true,
+        "axialEnd": true,
+        "plus": true,
+        "terminal": true,
+        "interpolationStartsAfterPulse": true,
+        "cutoff": true,
+        "commonInterval": true,
+        "stageOrder": true,
+        "consecutiveStages": true,
+        "allEndpointsIndependentOfEta": true
+      },
+      "arithmeticChecks": {
+        "TLower": true,
+        "hSmallerThanLambda": true,
+        "hDyadicSmall": true,
+        "QbGreaterThanOne": true,
+        "QpLessThanH": true,
+        "nextStageLongerThanOne": true,
+        "positivePulseLength": true,
+        "allIposBumpsBeforeRight": true,
+        "cutoffBelowOne": true,
+        "IposStartsAfterXR": true
+      },
+      "endpoints": {
+        "Xa": 3617,
+        "Xminus": 28814,
+        "Xkeep": 28819,
+        "Xcut": 28823,
+        "aSquared": 24805,
+        "IposLeft": 28987,
+        "IposRight": 28988,
+        "lastU": 29328,
+        "Xv": 3293,
+        "Xplus": 28824,
+        "Xb": 28826
+      },
+      "derivation": {
+        "inner": "0<t1<1; Xa=4/Lambda with Lambda>=2^16640. Hence Xa<Xminus<Xkeep<Xcut<a^2<1<XR<IposLeft.",
+        "bump": "Every normalized radial bump lies below 4. Its physical X endpoint is below 16*X0Ipos < exp(5)*X0Ipos.",
+        "middle": "IposRight/Xv=exp(-9-13/lambda)<1 and Xplus/Xv=exp(1).",
+        "wait": "lambda>h>0 makes Qsteep>0. Qb>(1/3)*(1/2)*4*2048>1, while 0<Qp<27*h/255<h<1. Thus log(Qb/Qp)/(1-h)>0.",
+        "final": "Immediately after the pulse lies an interval of length Tf=128, followed by positive stage lengths. Thus Xplus<Xv*exp(128)<Xb.",
+        "sourceStep": "sigma=exp(-1/s^2)/(exp(-1/s^2)+exp(-1/(1-s)^2)) on (0,1), with flat endpoint jets; integral sigma_prime=1."
+      },
+      "inequalities": [
+        "Xminus<Xkeep<Xcut<a^2<IposLeft<IposRight<Xv<Xplus<Xb",
+        "all five radial bump endpoints<IposRight",
+        "all endpoints are independent of eta"
+      ],
+      "numericalCoordinateComparisonUsed": false,
+      "pass": true,
+      "leadingExterior": {
+        "parameterChecks": {
+          "loopRight": true,
+          "I1Left": true,
+          "I1Right": true,
+          "logGapsPositive": true
+        },
+        "physicalRightEnds": [
+          5089,
+          5093,
+          6258,
+          7982
+        ],
+        "tailLogCoordinate": 5099,
+        "tailLogRight": 103,
+        "rootBumpStepArguments": [
+          9198,
+          9203,
+          9211,
+          9216,
+          9221
+        ],
+        "derivation": "I1Right/IposLeft=exp(-6), decayEnd<IposLeft and loopIRight/IposLeft=exp(15-60000T)<1. X>=Xplus gives log(X/Xp)>=13/lambda+1. For I1 derivative bumps, X/X0I1>=exp(5)>32, beyond every support ending at 13.5."
+      }
+    },
+    "heatExterior": {
+      "schema": "MathScope.ActualExteriorHeatIdentity/1",
+      "argument": 104666,
+      "amplitude": 104707,
+      "exponent": 25246,
+      "amplitudeEtaDerivative": 0,
+      "quantity": "Z_b [C*X^b*H(zeta)]",
+      "heatFunctionAndDerivativeKeptSymbolic": true,
+      "identity": "2*eta*(b*F-X*F_X)+d*F_eta = C*X^b*H_prime(zeta)*[-2*eta*X*zeta_X+d*zeta_eta]",
+      "chainCoefficient": 137605,
+      "check": {
+        "schema": "MathScope.SourceGraphPolynomialIdentity/1",
+        "expression": 137605,
+        "arithmetic": "exact BigInt rational Laurent polynomials; every analytic/integral operand is a distinct indeterminate",
+        "remainingMonomials": 0,
+        "residual": [],
+        "atomicOperandCount": 2,
+        "analyticValuesReplaced": false,
+        "pass": true
+      },
+      "negativeControl": {
+        "omitted": "d*zeta_eta",
+        "check": {
+          "schema": "MathScope.SourceGraphPolynomialIdentity/1",
+          "expression": 137603,
+          "arithmetic": "exact BigInt rational Laurent polynomials; every analytic/integral operand is a distinct indeterminate",
+          "remainingMonomials": 2,
+          "residual": [
+            {
+              "monomial": "2:1,4756:-1",
+              "coefficient": "4"
+            },
+            {
+              "monomial": "2:3,4756:-1",
+              "coefficient": "-4"
+            }
+          ],
+          "atomicOperandCount": 2,
+          "analyticValuesReplaced": false,
+          "pass": false
+        },
+        "correctlyRejected": true
+      },
+      "pass": true
+    },
+    "graph": {
+      "sha256": "8b79ba8db0b08acb8af742f91be9fa12d666832c38a6fdaeb58ed90a4f0f7776",
+      "nodeCount": 138172,
+      "roots": {
+        "eta": 2,
+        "Y": 3452,
+        "h": 9,
+        "j0": 3453,
+        "Lambda": 3454,
+        "sigmaStar": 3455,
+        "CSelected": 3456,
+        "A": 23,
+        "D": 22,
+        "d": 30,
+        "L": 28,
+        "Ustar": 3459,
+        "Hstar": 3461,
+        "Wstar": 3467,
+        "Zstar": 3611,
+        "chi": 3472,
+        "zeta": 3475,
+        "psi": 3494,
+        "g": 3498,
+        "gSquared": 3499,
+        "P0": 3451,
+        "P0OverPstarSquared": 3449,
+        "Xa": 3617,
+        "Xb": 3619,
+        "Xi": 3618,
+        "Xsep": 3620,
+        "Xstart": 3624,
+        "Xend": 3627,
+        "restLeft": 4564,
+        "restRight": 4567,
+        "referenceF": 3813,
+        "referenceU": 3817,
+        "referenceP1": 4255,
+        "referenceNs": 4256,
+        "referencePi": 4182,
+        "B26F": 4783,
+        "B26U": 4789,
+        "B26Ei": 4479,
+        "B26Gi": 4481,
+        "ellI": 4561,
+        "B34E": 4778,
+        "restorationU": 4795,
+        "idealE": 4798,
+        "referenceM": 3943,
+        "incomingActualM": 4678,
+        "incomingIdealM": 4688,
+        "incomingDiscrepancyM": 4714,
+        "B8scaledDebt0": 4747,
+        "referenceI": 3944,
+        "incomingActualI": 4679,
+        "incomingIdealI": 4695,
+        "incomingDiscrepancyI": 4716,
+        "B8scaledDebt1": 4749,
+        "referenceJ": 3945,
+        "incomingActualJ": 4680,
+        "incomingIdealJ": 4696,
+        "incomingDiscrepancyJ": 4718,
+        "B8scaledDebt2": 4751,
+        "referenceS": 3946,
+        "incomingActualS": 4681,
+        "incomingIdealS": 4707,
+        "incomingDiscrepancyS": 4720,
+        "B8scaledDebt3": 4753,
+        "referenceCp": 3947,
+        "incomingActualCp": 4682,
+        "incomingIdealCp": 4712,
+        "incomingDiscrepancyCp": 4722,
+        "B8scaledDebt4": 4755,
+        "actualPreC12U": 5175,
+        "actualPreC12M": 5293,
+        "actualPreC12V": 6203,
+        "actualPreC12v": 6202,
+        "actualAxisVX": 5298,
+        "B8deltaU": 5072,
+        "B8deltaE": 5087,
+        "B8patchRight": 5089,
+        "B8rootTail": 5061,
+        "B8root0": 5025,
+        "B8iterate0": 5038,
+        "B8equationResidual0": 6248,
+        "B8root1": 5026,
+        "B8iterate1": 5042,
+        "B8equationResidual1": 6249,
+        "B8root2": 5027,
+        "B8iterate2": 5048,
+        "B8equationResidual2": 6250,
+        "B8root3": 5028,
+        "B8iterate3": 5054,
+        "B8equationResidual3": 6251,
+        "B8root4": 5029,
+        "B8iterate4": 5060,
+        "B8equationResidual4": 6252,
+        "actualPreLoopE": 6304,
+        "actualPreLoopU": 5175,
+        "actualPreLoopA": 7114,
+        "actualPreLoopBs": 7290,
+        "actualPreLoopP1": 6889,
+        "actualPreLoopP2": 7292,
+        "actualPreLoopVs": 7298,
+        "actualPreLoopCs": 7300,
+        "actualPreLoopJs": 7303,
+        "actualLoopMu": 7456,
+        "actualLoopTheta": 7549,
+        "actualLoopA": 7942,
+        "actualLoopB": 7943,
+        "actualLoopMeanA": 7680,
+        "actualLoopMeanB": 7870,
+        "actualC12DeltaU": 7961,
+        "actualC12DeltaE": 7965,
+        "actualC12U": 7966,
+        "actualC12E": 7967,
+        "actualC12Phase": 7944,
+        "actualMuIterate": 7972,
+        "actualMuIterationTail": 6256,
+        "actualThetaIterate": 7978,
+        "actualThetaIterationTail": 7980,
+        "actualI1K": 8799,
+        "actualI1Determinant": 9058,
+        "actualI1DeltaU": 9209,
+        "actualI1DeltaE": 9227,
+        "actualI1DeltaM": 9235,
+        "actualModulationDeltaM": 9229,
+        "actualI1RootTail": 5061,
+        "actualGlobalU0": 9236,
+        "actualGlobalM0": 9239,
+        "actualGlobalV0": 18779,
+        "actualGlobalV0OverX": 18778,
+        "actualGlobalAxisVX": 5298,
+        "actualGlobalSupportXv": 3293,
+        "actualGlobalOmegaPressureIntegral": 24733,
+        "actualGlobalOmegaFluxIntegral": 24744,
+        "actualC12Debt0": 8786,
+        "actualI1NormalizedDebt0": 8808,
+        "actualI1Root0": 9169,
+        "actualI1Iterate0": 9176,
+        "actualI1EquationResidual0": 24788,
+        "actualC12Debt1": 8787,
+        "actualI1NormalizedDebt1": 8818,
+        "actualI1Root1": 9170,
+        "actualI1Iterate1": 9179,
+        "actualI1EquationResidual1": 24790,
+        "actualC12Debt2": 8788,
+        "actualI1NormalizedDebt2": 8822,
+        "actualI1Root2": 9171,
+        "actualI1Iterate2": 9184,
+        "actualI1EquationResidual2": 24792,
+        "actualC12Debt3": 8789,
+        "actualI1NormalizedDebt3": 8826,
+        "actualI1Root3": 9172,
+        "actualI1Iterate3": 9189,
+        "actualI1EquationResidual3": 24794,
+        "actualC12Debt4": 8790,
+        "actualI1NormalizedDebt4": 8829,
+        "actualI1Root4": 9173,
+        "actualI1Iterate4": 9194,
+        "actualI1EquationResidual4": 24796,
+        "actualGlobalJminus1": 24710,
+        "actualGlobalJ0": 24711,
+        "actualGlobalHminus1": 24712,
+        "actualGlobalH0": 24713,
+        "actualGlobalKminus2": 24714,
+        "actualGlobalKminus1": 24715,
+        "actualInnerXi": 25516,
+        "actualInnerC1": 24818,
+        "actualInnerRadialBound": 24812,
+        "actualInnerDelta": 24801,
+        "actualInnerCommonASquared": 24805,
+        "actualInnerCertifiedK": 24835,
+        "actualInnerCertifiedEtaTail": 24842,
+        "actualInnerTargetError": 24843,
+        "actualInnerSolutionNorm": 24848,
+        "actualN1FaxisSlope": 28802,
+        "actualN1UaxisSlope": 28803,
+        "actualN1PiaxisSlope": 28800,
+        "actualInnerSolution0": 26746,
+        "actualInnerPartial0": 0,
+        "actualInnerSolution1": 26747,
+        "actualInnerPartial1": 0,
+        "actualInnerSolution2": 26748,
+        "actualInnerPartial2": 0,
+        "actualInnerSolution3": 26749,
+        "actualInnerPartial3": 0,
+        "actualInnerSolution4": 26750,
+        "actualInnerPartial4": 0,
+        "actualInnerSolution5": 26751,
+        "actualInnerPartial5": 0,
+        "actualInnerSolution0_eta1": 28804,
+        "actualInnerSolution1_eta1": 28805,
+        "actualInnerSolution3_eta1": 28806,
+        "actualInnerSolution0_eta2": 28807,
+        "actualInnerSolution1_eta2": 28808,
+        "actualInnerSolution3_eta2": 28809,
+        "actualOrderOneF": 29290,
+        "actualOrderOnePhi": 29292,
+        "actualOrderOneE": 29291,
+        "actualOrderOneU": 29289,
+        "actualOrderOneStream": 29334,
+        "actualOrderOneStreamOverX": 29336,
+        "actualOrderOneV": 29441,
+        "actualOrderOneVOverX": 29440,
+        "actualOrderOnePi": 50558,
+        "actualOrderOnePressureDerivative": 71380,
+        "actualOrderOneGlobalPressurePrefix": 50486,
+        "actualOrderOneXminus": 28814,
+        "actualOrderOneXkeep": 28819,
+        "actualOrderOneXcut": 28823,
+        "actualOrderOneXplus": 28824,
+        "actualOrderOneXb": 28826,
+        "actualIposRbase": 28990,
+        "actualIposAmplitude": 29002,
+        "actualOrderOneIncomingMoment0": 28864,
+        "actualOrderOneCorrectionMoment0": 71390,
+        "actualOrderOneMomentResidual0": 71414,
+        "actualOrderOneIncomingMoment1": 28878,
+        "actualOrderOneCorrectionMoment1": 71396,
+        "actualOrderOneMomentResidual1": 71415,
+        "actualOrderOneIncomingMoment2": 28985,
+        "actualOrderOneCorrectionMoment2": 71402,
+        "actualOrderOneMomentResidual2": 71416,
+        "actualOrderOneIncomingMoment3": 28943,
+        "actualOrderOneCorrectionMoment3": 71406,
+        "actualOrderOneMomentResidual3": 71417,
+        "actualOrderOneIncomingMoment4": 28986,
+        "actualOrderOneCorrectionMoment4": 71413,
+        "actualOrderOneMomentResidual4": 71418,
+        "actualOrderOneAlpha0": 29236,
+        "actualOrderOneAlpha1": 29239,
+        "actualOrderOneBeta0": 29244,
+        "actualOrderOneBeta1": 29249,
+        "actualOrderOneBeta2": 29254,
+        "actualOrderTwoOmegaOneOverXInner": 71749,
+        "actualOrderTwoPressureKnownInner": 71753,
+        "actualOrderTwoHthetaOne": 71823,
+        "actualOrderTwoHzOne": 71877,
+        "actualOrderTwoC2": 73273,
+        "actualOrderTwoCertifiedK": 73286,
+        "actualOrderTwoTail": 73294,
+        "actualOrderTwoSolutionNorm": 73300,
+        "actualOrderTwoInner0": 73301,
+        "actualOrderTwoPartial0": 0,
+        "actualOrderTwoInner1": 73302,
+        "actualOrderTwoPartial1": 0,
+        "actualOrderTwoInner2": 73303,
+        "actualOrderTwoPartial2": 0,
+        "actualOrderTwoInner3": 73304,
+        "actualOrderTwoPartial3": 0,
+        "actualOrderTwoInner4": 73305,
+        "actualOrderTwoPartial4": 0,
+        "actualOrderTwoInner5": 73306,
+        "actualOrderTwoPartial5": 0,
+        "actualOrderTwoF": 103984,
+        "actualOrderTwoPhi": 103985,
+        "actualOrderTwoE": 103986,
+        "actualOrderTwoU": 103983,
+        "actualOrderTwoStream": 104017,
+        "actualOrderTwoStreamOverX": 104019,
+        "actualOrderTwoV": 104066,
+        "actualOrderTwoVOverX": 104065,
+        "actualOrderTwoPi": 104119,
+        "actualOrderTwoPressureDerivative": 104127,
+        "actualOrderTwoGlobalOmegaOneOverX": 103901,
+        "actualOrderTwoGlobalOmegaOnePressure": 103905,
+        "actualOrderTwoGlobalOmegaOneFlux": 103910,
+        "actualOrderTwoIncomingMoment0": 103933,
+        "actualOrderTwoCorrectionMoment0": 104131,
+        "actualOrderTwoMomentResidual0": 104155,
+        "actualOrderTwoIncomingMoment1": 103934,
+        "actualOrderTwoCorrectionMoment1": 104137,
+        "actualOrderTwoMomentResidual1": 104156,
+        "actualOrderTwoIncomingMoment2": 103935,
+        "actualOrderTwoCorrectionMoment2": 104143,
+        "actualOrderTwoMomentResidual2": 104157,
+        "actualOrderTwoIncomingMoment3": 103936,
+        "actualOrderTwoCorrectionMoment3": 104147,
+        "actualOrderTwoMomentResidual3": 104158,
+        "actualOrderTwoIncomingMoment4": 103937,
+        "actualOrderTwoCorrectionMoment4": 104154,
+        "actualOrderTwoMomentResidual4": 104159,
+        "actualOrderTwoAlpha0": 103950,
+        "actualOrderTwoAlpha1": 103953,
+        "actualOrderTwoBeta0": 103958,
+        "actualOrderTwoBeta1": 103963,
+        "actualOrderTwoBeta2": 103968,
+        "actualHeatI": 104288,
+        "actualHeatS": 104351,
+        "actualHeatCp": 104412,
+        "actualHeatGamma": 104258,
+        "actualHeatTailStart": 104219,
+        "actualHeatStart": 104414,
+        "actualHeatReferenceE": 104665,
+        "actualHeatLoss": 104689,
+        "actualI2K": 104426,
+        "actualI2DeltaE": 104482,
+        "actualI2RootTail": 4991,
+        "actualHeatDeltaE": 104696,
+        "actualLeadingE0": 104698,
+        "actualLeadingF0": 104700,
+        "actualHeatExteriorAmplitude": 104707,
+        "actualHeatExteriorF": 104720,
+        "actualHeatExteriorStart": 28826,
+        "actualI2Root0": 104458,
+        "actualI2Iterate0": 0,
+        "actualI2EquationResidual0": 104754,
+        "actualI2Root1": 104459,
+        "actualI2Iterate1": 0,
+        "actualI2EquationResidual1": 104756,
+        "actualI2Root2": 104460,
+        "actualI2Iterate2": 0,
+        "actualI2EquationResidual2": 104758,
+        "actualOrderTwoAngularResidualDividedByR": 121738,
+        "actualOrderTwoAxialResidual": 121747,
+        "actualOrderTwoAngularLowerViscosity": 121584,
+        "actualOrderTwoAxialLowerViscosity": 121670,
+        "actualOrderTwoTtheta": 121770,
+        "actualOrderTwoTz": 121771,
+        "actualOrderTwoTthetaForward": 121756,
+        "actualOrderTwoTzForward": 121761,
+        "actualOrderTwoTthetaBackward": 121765,
+        "actualOrderTwoTzBackward": 121769,
+        "actualOrderTwoTotalR2Residual": 121774,
+        "actualOrderTwoTotalRResidual": 121777,
+        "actualOrderOneAngularResidualDividedByR": 137566,
+        "actualOrderOneAxialResidual": 137573,
+        "actualOrderOneAngularAxialViscosity": 123428,
+        "actualOrderOneAxialAxialViscosity": 123459,
+        "actualOrderOneTtheta": 137595,
+        "actualOrderOneTz": 137596,
+        "actualOrderOneTthetaForward": 137581,
+        "actualOrderOneTthetaBackward": 137590,
+        "actualOrderOneTzForward": 137586,
+        "actualOrderOneTzBackward": 137594,
+        "actualOrderOneTotalR2Residual": 137599,
+        "actualOrderOneTotalRResidual": 137602,
+        "actualOrder1ConservativeThetaTotal": 138064,
+        "actualOrder1ConservativeZTotal": 138094,
+        "actualOrder2ConservativeThetaTotal": 138133,
+        "actualOrder2ConservativeZTotal": 138171
+      },
+      "compiler": "actual-continuation-exact-certificate.mjs:compileActualBackgroundMomentProgram",
+      "input": {
+        "sourceProfile": "same-profile-2026-10-10.3",
+        "terms": 0,
+        "bits": 128,
+        "etaOrder": 2,
+        "heatIterations": 0
+      },
+      "hashScope": "Canonical JSON of one complete actual source function program, including every retained node, root, implicit/Picard/shared-function body and proof. This is a reproducible local construction digest, not a live HTML digest.",
+      "graphIncludedInReceipt": false,
+      "sourceNodeIdentifiersPreserved": true,
+      "serializedProgramBytes": 5476911
+    },
+    "arithmetic": {
+      "mode": "EXACT_CONSTRUCTIVE_FUNCTIONALS",
+      "finiteAlgebra": "BigInt rational numerator cancellation on the actual matrix/rhs graph",
+      "analyticOperations": "Source radial-series limit, six-component Picard limit, actual continuous integrals and uniquely isolated implicit roots with stated convergence tails.",
+      "observedNumericDebtValues": false,
+      "finiteIteratesUsedAsRoot": false,
+      "quadratureErrorEstimatedAsProof": false
+    },
+    "scope": {
+      "originalN404Complete": true,
+      "actualFirstAndSecondOrderConstructed": true,
+      "actualFiveMomentIdentitiesChecked": 10,
+      "actualInnerPDEIdentitiesChecked": 12,
+      "actualStressSupportComponentsChecked": 4,
+      "actualNextSourceRequiresPriorMomentCompletion": true,
+      "allOrdersConstructed": false,
+      "allOrderDerivativeNormsAndCutoffsConstructed": false,
+      "globalSignedMomentValuesNumericallyEnclosed": false,
+      "globalNumericStressResidualEvaluated": false,
+      "giantSourceParametersMaterialized": false,
+      "completeFormalNSTheoremClaimed": false,
+      "newLeanKernelProof": false
+    },
+    "checks": [
+      {
+        "id": "actual-source-profile",
+        "pass": true,
+        "detail": "Every retained source operation uses the pinned accepted N3 profile and its original parameters."
+      },
+      {
+        "id": "actual-first-and-second-five-moments",
+        "pass": true,
+        "detail": "Ten exact rational identities are executed on the actual incoming moment and continuous inverse operands."
+      },
+      {
+        "id": "actual-inner-pde-and-axis-datum",
+        "pass": true,
+        "detail": "Both original six-component systems and their convergent zero-axis solutions satisfy the six reconstructed inner equations."
+      },
+      {
+        "id": "actual-conservative-stress-totals",
+        "pass": true,
+        "detail": "The actual corrected moments and their eta derivatives reduce all four original conservative total identities to zero."
+      },
+      {
+        "id": "actual-component-supports",
+        "pass": true,
+        "detail": "Inner PDE, actual endpoint ordering, exterior zero expressions and conservative total identities justify each stress support."
+      },
+      {
+        "id": "actual-heat-tail-identity",
+        "pass": true,
+        "detail": "The source heat function and its derivative are retained in the n=1 angular exterior identity."
+      },
+      {
+        "id": "prior-correction-source-gates",
+        "pass": true,
+        "detail": "Uncorrected, copied or modified reports do not authorize a later source; actual n=2 is generated only from the finalized n=1 instance."
+      },
+      {
+        "id": "continuous-inverse-nonzero",
+        "pass": true,
+        "detail": "Source positive scales and continuous 2×2 and 3×3 determinant bounds justify the exact inverse; rational cancellation alone is not a nonvanishing proof."
+      },
+      {
+        "id": "exact-functional-scope",
+        "pass": true,
+        "detail": "The result verifies constructive function identities. It does not claim signed numerical quadrature, all-order construction or a completed formal NS theorem."
+      }
+    ],
+    "pass": true
+  },
+  "pass": true
+}

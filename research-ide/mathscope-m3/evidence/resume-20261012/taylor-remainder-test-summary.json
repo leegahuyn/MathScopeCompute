@@ -1,0 +1,67 @@
+{
+  "schema": "MathScope.P7.DedicatedTestSummary/1",
+  "assessedAtUTC": "2026-10-12T03:12:39.831601+00:00",
+  "module": "p7.taylor_remainder",
+  "command": "python -m unittest discover -s tests -p test_taylor_remainder.py -v",
+  "testCount": 12,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "exitCode": 0,
+  "actualResult": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.103s\n\nOK\n",
+  "sourceHashes": {
+    "p7/taylor_remainder.py": "31f40ce640f773e90ae14b90fa7954135f2525a6c779312fc343c7db18dceb7c",
+    "tests/test_taylor_remainder.py": "2e0bbba32950316749eaf49cf5b804ce09656fb33c3ad82c4d466f7f18f0e8d9"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.22621-SP0",
+    "pythonFlint": "0.9.0",
+    "FLINT": "3.6.0"
+  },
+  "example": {
+    "request": {
+      "operation": "zeta",
+      "center": {
+        "real": "2",
+        "imag": "0"
+      },
+      "displacement": {
+        "real": "1/100",
+        "imag": "0"
+      },
+      "radius": "1/4",
+      "displacementRadius": "1/100",
+      "order": 10,
+      "precisionBits": 192,
+      "tolerance": "1/1000000000000"
+    },
+    "status": "CERTIFIED_TAYLOR_ENCLOSURE",
+    "mathematicalResultSha256": "85a5915fc4f6472c2125cd5b1490cee572da576999c4bdac081d1c50f42a9aa6",
+    "certified": true,
+    "maxComponentWidthDecimalForDisplayOnly": "1.815929179757122e-15",
+    "exactRemainderUpper": {
+      "kind": "finite",
+      "lower": {
+        "mantissa": "3208469130623890867558250023933900992318020285934842281369",
+        "exponent": "-241"
+      },
+      "upper": {
+        "mantissa": "3208469130623890867558250023933900992318020285934842281369",
+        "exponent": "-241"
+      },
+      "width": {
+        "mantissa": "0",
+        "exponent": "0"
+      },
+      "exact": true,
+      "containsZero": false,
+      "toleranceMet": null
+    }
+  },
+  "scope": "Actual finite-displacement Cauchy remainder for supported zeta/Gamma/reciprocal-Gamma point requests, not whole P7 completion or a Lean proof.",
+  "remainingObligations": [
+    "Separate internal FLINT rounding and internal special-function truncation bounds remain unexposed; their combined enclosure is retained.",
+    "Other global-L/elliptic-L error contracts remain outside this operation."
+  ]
+}

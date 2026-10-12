@@ -1,0 +1,267 @@
+{
+  "schema": "MathScope.M2.GaugeOriginalCriterionCompletion/1",
+  "revision": "m2-gauge-1.1.0",
+  "generatedAt": "2026-10-10T05:35:02.449Z",
+  "sourceName": "MathScope_Research_IDE_Blueprint_v1_KO(1)(9).pdf",
+  "sourceSHA256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+  "originalTextPreserved": true,
+  "criteria": [
+    {
+      "id": "Y3-01",
+      "title": "격자와 단위를 명세",
+      "criteria": "Ns,Nt,as,at,공간·시간 경계, anisotropy, 저장 표현을 지정한다. 사이트 수와 연속 G link 자유도 수를 구별한다. 합격: 물리\n길이 L=Ns as, T=Nt at와 V=Ns³Nt를 계산한다. 격자 간격·부피·표현 차원이 없는 데이터의 continuum 비교를 거부한다.",
+      "sourcePage": 42,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Ns, Nt, spatial/Euclidean-time spacing and boundaries, anisotropy, representation, physical extents, site count and continuous group degrees of freedom are distinct.",
+      "evidencePaths": [
+        "tests/gauge.test.mjs",
+        "contracts.mjs"
+      ]
+    },
+    {
+      "id": "Y3-02",
+      "title": "링크 방향과 parallel transport를 통일",
+      "criteria": "Uxy는 y fibre에서 x fibre로의 사상으로 정하고 Uyx=Uxy⁻¹로 둔다. A로부터 만들 때 transport의 부호·path ordering을 고\n정한다. 합격: 역방향 경로 곱이 원래 곱의 역원이며 빈 경로는 1이다. midpoint exp 근사를 정확한 continuum holonomy\n로 표기하지 않는다.",
+      "sourcePage": 42,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Oriented group products, inverse and empty paths use U_xy:y→x. Classical links retain ordered-midpoint approximation and refinement diagnostics.",
+      "evidencePaths": [
+        "tests/gauge.test.mjs",
+        "tests/independent.py",
+        "lattice.mjs"
+      ]
+    },
+    {
+      "id": "Y3-03",
+      "title": "Plaquette와 Wilson loop 계산",
+      "criteria": "Up=Ux,x+μ Ux+μ,x+μ+ν Ux+ν,x+μ+ν⁻¹ Ux,x+ ν⁻¹을 고정된 orientation으로 만든다. 합격: 평탄 configuration에서\ncontractible plaquette가 1이다. identity links와 중심 holonomy fixture를 구분하고 비가환 곱 순서 오류를 잡는다.",
+      "sourcePage": 42,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Actual ordered plaquettes, arbitrary signed paths, identity, pure gauge and nontrivial central temporal holonomy fixtures.",
+      "evidencePaths": [
+        "tests/gauge.test.mjs",
+        "tests/independent.py",
+        "quaternion-oracle.mjs"
+      ]
+    },
+    {
+      "id": "Y3-04",
+      "title": "게이지 공변성과 불변성을 확인",
+      "criteria": "Uxy′=Ωx Uxy Ωy⁻¹를 적용한다. 닫힌 경로 holonomy는 기준점에서 conjugation되고 character는 불변이다. 합격: 일반\nGroup의 경로 telescoping을 정확히 증명한다. 임의 사이트 gauge transformation의 loop trace·총 작용 변화가 float64\n작은 fixture에서 정규화 잔차 10⁻¹ ⁰ 이하이다.",
+      "sourcePage": 42,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Site-wise transformation recomputes every plaquette and the total action. M1 lawful-group adjacent telescoping theorem is reused with its historical audit; no new browser kernel execution.",
+      "evidencePaths": [
+        "tests/gauge.test.mjs",
+        "README_KO.md",
+        "../../mathscope-m1/gauge/lean/MathScope/M1/Gauge/Transport.lean"
+      ]
+    },
+    {
+      "id": "Y3-05",
+      "title": "일반 G의 Wilson 작용 구성",
+      "criteria": "Sβ,R=βΣp[1−Re χR(Up)/dim R], β≥0를 사용한다. β↔g₀ 및 anisotropic 계수는 B_G와 trace index에서 유도한다. 합격:\nunitary R에 대해 각 항은 [0,2 β], 따라서 0≤S≤2 βNp이다. 작용 표현 변경 시 coupling 의미를 재산정하고 기존 scale 설정\n을 무효화한다.",
+      "sourcePage": 42,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Wilson real character for every shipped faithful group representation; basic invariant form determines bare coupling and anisotropic coefficients.",
+      "evidencePaths": [
+        "tests/gauge.test.mjs",
+        "tests/independent.py",
+        "lattice.mjs"
+      ]
+    },
+    {
+      "id": "Y3-06",
+      "title": "곡률·에너지·위상량의 이산화를 표시",
+      "criteria": "plaquette/clover 등 측정법과 a의 차수를 명시한다. 위상 전하 추정값과 정수 위상 인증을 분리한다. 합격: 매끄러운 장에서\nas,at를 줄이면 지정한 연속량에 수렴한다. 거친 격자의 실수 Q 값을 반올림만 하여 정확한 정수 불변량으로 선언하지 않는다.",
+      "sourcePage": 42,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Actual full-Lie plaquette/clover curvature, energy and real charge converge as both spacings shrink. Independent analytic-derivative local fixtures and a fixed physical 4D box integral retain every source link/cell and directed error budgets. Observed clover order two is distinguished from the conservative order-one bound; real Q is never rounded into an integer certificate.",
+      "evidencePaths": [
+        "refinement.mjs",
+        "volume.mjs",
+        "tests/certification.test.mjs",
+        "tests/independent-certification.py"
+      ]
+    },
+    {
+      "id": "Y3-07",
+      "title": "고전장→링크 변환의 오차 예산",
+      "criteria": "Y2 해를 path integration으로 격자화하고 미분 방식과 비교한다. 경계·사다리꼴 적분·행렬 exponential 오차를 따로 기록\n한다. 합격: ρ/a를 늘리는 refinement fixture에서 오차 감소를 확인한다. 다른 G·representation에 오차 기준을 근거 없이\n재사용하지 않는다.",
+      "sourcePage": 42,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Every classical M1 link has separate source-specific midpoint/trapezoidal integration, source evaluation, matrix exponential truncation/roundoff, product and boundary errors. Exact rational group data determine each of the fourteen representation bounds. Local rho/a and fixed-volume refinements are checked against independent BPST primitives/densities; finite-path/window bounds are not exported as arbitrary continuum theorems.",
+      "evidencePaths": [
+        "transport-certificates.mjs",
+        "enclosures.mjs",
+        "tests/certification.test.mjs",
+        "tests/independent-certification.py"
+      ]
+    },
+    {
+      "id": "Y3-08",
+      "title": "계산 크기와 데이터 전송 제어",
+      "criteria": "대략 4VdR² 복소수 저장량을 사전에 산정하고 sparse·chunk·LOD를 설계한다. 원본 링크와 화면용 축약본을 분리한다. 합\n격: 메모리 한도를 넘으면 크기를 제안하고 원본을 몰래 축소하지 않는다. 화면 LOD 변경은 ensemble·작용 값·proof source\nhash를 바꾸지 않는다.",
+      "sourcePage": 42,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Source allocation and JSON budgets checked before constructing arrays; raw links remain complete while x4 slice/stride changes only the observation hash.",
+      "evidencePaths": [
+        "tests/gauge.test.mjs",
+        "tests/visualization.test.mjs",
+        "tests/worker.test.mjs"
+      ]
+    },
+    {
+      "id": "Y4-01",
+      "title": "유한 격자 확률측도를 정의",
+      "criteria": "정규화된 Haar 곱측도와 연속 Wilson 작용으로 Z와 기대값을 정의한다. 수치 샘플이 이 측도의 근사임을 기록한다. 합격:\nβ≥0에서 e^(−2βNp)≤Z≤1이라는 유한 모델 경계를 도출한다. 이 유한 Z 존재를 R ⁴ 양자장 존재로 표기하지 않는다.",
+      "sourcePage": 44,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "The finite normalized Haar-product Gibbs measure has an explicit positive partition-function bound; underflow is recorded in log scale.",
+      "evidencePaths": [
+        "lattice.mjs",
+        "tests/gauge.test.mjs"
+      ]
+    },
+    {
+      "id": "Y4-02",
+      "title": "군별 갱신 알고리즘 지정",
+      "criteria": "SU(N)은 검증된 SU(2) 부분군 update를 검토하고, 일반 G는 대칭 Lie algebra exponential proposal 및 Metropolis를 설\n계한다. 합격: 수락비가 목표 작용 차이와 일치하고 proposal symmetry 또는 Hastings 비율을 확인한다. 모든 방향을 탐색\n한다는 근거가 없으면 ergodic 판정을 보류한다.",
+      "sourcePage": 44,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Full SU(2) Haar or symmetric full-basis Lie exponential random-scan Metropolis; target action difference and proposal symmetry are explicit.",
+      "evidencePaths": [
+        "ensemble.mjs",
+        "tests/gauge.test.mjs",
+        "tests/certification.test.mjs"
+      ]
+    },
+    {
+      "id": "Y4-03",
+      "title": "샘플러의 작은 사례 검사",
+      "criteria": "단일 링크·작은 격자의 독립 quadrature/긴 reference chain과 비교하고 pure gauge fixture를 재사용한다. 합격: 관측 평\n균이 사전 정의한 오차 구간에서 reference와 맞는다. 고정 seed 재현성만으로 올바른 분포 sampling을 승인하지 않는다.",
+      "sourcePage": 44,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Both real SU(2) proposal algorithms meet independent Bessel/Haar one-link references. A nonzero-beta full 2×2×2×2 open lattice is compared with separate quaternion product-Haar importance sampling, predeclared Bernstein/Hoeffding intervals and pure-gauge controls. Wrong distribution/action controls fail; other-group quantitative validation is not inferred from these fixtures.",
+      "evidencePaths": [
+        "reference.mjs",
+        "quaternion-oracle.mjs",
+        "enclosures.mjs",
+        "tests/certification.test.mjs",
+        "tests/independent-certification.py"
+      ]
+    },
+    {
+      "id": "Y4-04",
+      "title": "열평형과 독립 반복 확인",
+      "criteria": "hot/cold starts, burn-in, acceptance, action·loop·topology history를 기록한다. topology freezing을 별도 검사한다.\n합격: 초기 상태별 결과와 구간별 평균이 진단 기준을 통과한다. 표본 수가 커도 chain이 정체되면 연구용 정량 결과를 미완료\n로 표시한다.",
+      "sourcePage": 44,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Two starts pass recorded burn-in, acceptance, action/loop/real-topology, split-Rhat, segment/replica mean and ESS gates on the declared small reference fixture. Separate real-charge mobility diagnostics reject long stagnant histories. Inadequate short production examples remain PARTIAL; these finite diagnostic passes do not prove general thermal equilibrium or integer topological-sector mixing.",
+      "evidencePaths": [
+        "statistics.mjs",
+        "ensemble.mjs",
+        "tests/certification.test.mjs"
+      ]
+    },
+    {
+      "id": "Y4-05",
+      "title": "상관을 반영한 통계 오차",
+      "criteria": "관측량별 integrated autocorrelation time과 effective sample size를 계산하고 Γ-method 또는 적절한 binning/bootstrap\n을 사용한다. 합격: 오차 계산의 window·bin·replica 설정을 저장한다. raw sample 수를 독립 표본 수로 사용하거나 작은\nESS의 신뢰구간을 확정값으로 표시하지 않는다.",
+      "sourcePage": 44,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Per-observable autocorrelation window, tau_int, ESS and batch-mean cross-check; insufficient ESS and constant/stalled series do not receive a confidence interval.",
+      "evidencePaths": [
+        "statistics.mjs",
+        "tests/gauge.test.mjs",
+        "tests/certification.test.mjs"
+      ]
+    },
+    {
+      "id": "Y4-06",
+      "title": "Reflection positivity 적용 가능성 조사",
+      "criteria": "선택한 작용·시간 반사·경계·observable algebra를 알려진 정리의 가정에 매핑한다. 새로운 개선·비국소 항은 별도 검토한\n다. 합격: 출처 정리와 대응표가 있어야 외부 정리 적용 상태를 준다. 숫자로 만든 양의 상관행렬 몇 개는 전체 reflection\npositivity 증명이 아니다.",
+      "sourcePage": 44,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Six explicit model/action/Haar/boundary/algebra hypotheses map to Lüscher 1977, §II, Propositions 1–2. Direct SU(N) periodic isotropic application is distinguished from the displayed compact-group/anisotropic/open-boundary derivation. Negative beta, arbitrary measure, gauge-variant algebra and extra action terms cannot receive an application status. Finite numeric PSD matrices are not the proof.",
+      "evidencePaths": [
+        "reflection.mjs",
+        "tests/certification.test.mjs",
+        "README_KO.md"
+      ]
+    },
+    {
+      "id": "Y4-07",
+      "title": "전달 연산자와 유한 절단 구별",
+      "criteria": "유한 공간 격자도 연속 compact G이면 보통 gauge-invariant L²(G^edges) 공간이 무한차원이다. Peter-Weyl/표현 cutoff\n또는 cubature를 별도 선언한다. 합격: finite-matrix 표시는 cutoff·기저·Gauss 제약·오차가 있을 때만 허용한다. 절단이\npositivity·unitarity·게이지 대칭을 보존하는지 별도 확인한다.",
+      "sourcePage": 44,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "The infinite-dimensional gauge-invariant L² space is retained explicitly. The full SU(2) open spatial cube has an exhaustively enumerated total-spin-weight≤5 Gauss basis of seven states. Its positive Gram companion has separate deterministic omitted-spin, independent-Haar cubature and arithmetic errors; symmetry and finite real-time unitarity are checked. Unsupported graphs/cutoffs are rejected, and Euclidean transfer is not called unitary.",
+      "evidencePaths": [
+        "transfer.mjs",
+        "enclosures.mjs",
+        "tests/certification.test.mjs",
+        "tests/independent-certification.py"
+      ]
+    },
+    {
+      "id": "Y4-08",
+      "title": "앙상블과 관측 revision 봉인",
+      "criteria": "G·작용·β·a·부피·경계·seed·algorithm revision·flow 설정·샘플 목록을 manifest로 내보낸다. 합격: 설정 변경 시 재시뮬레\n이션 또는 명시된 재가중 오차 검증이 필요하다. 다른 Δ 표제 아래 같은 샘플을 새 양자 상태라고 조용히 재사용하지 않는다.",
+      "sourcePage": 44,
+      "status": "IMPLEMENTED_FINITE_SCOPE",
+      "detail": "Group/action/beta/spacing/volume/boundary, algorithm, seed, starts, flow=null, retained sample hashes and final raw configurations are sealed; source versus observation revisions are distinct.",
+      "evidencePaths": [
+        "ensemble.mjs",
+        "tests/gauge.test.mjs",
+        "tests/visualization.test.mjs",
+        "tests/worker.test.mjs"
+      ]
+    }
+  ],
+  "independentValidation": {
+    "path": "certification-independent-validation.json",
+    "passed": true,
+    "count": 171,
+    "negativeControls": 34
+  },
+  "registeredExamples": 14,
+  "successfulExamples": 13,
+  "partialExamples": [
+    "m2-su2-wilson-ensemble"
+  ],
+  "notClaimed": [
+    "A new theorem-prover kernel execution",
+    "Uniform equilibration or exact integer topological-sector mixing",
+    "Unsupported graphs, groups or cutoff weights",
+    "Continuum quantum Yang–Mills construction",
+    "A mass-gap proof"
+  ],
+  "scopeRule": "The original finite acceptance criteria remain verbatim. IMPLEMENTED_FINITE_SCOPE describes the available algorithms and validated finite/theorem-bound cases; it does not force COMPLETED on every numerical request.",
+  "bundledWorkerValidation": {
+    "workerSHA256": "278db3418c643a3978437388c634cbde9e7360c58bd223edc1d2e648e8620e40",
+    "examples": 14,
+    "localWorkerParity": true,
+    "tests": 3,
+    "passed": 3,
+    "sourceFreezeVerified": true,
+    "evidencePaths": [
+      "worker-validation.json",
+      "worker-tests.tap"
+    ]
+  },
+  "nodeValidation": {
+    "numericalAndVisualization": {
+      "tests": 42,
+      "passed": 42,
+      "evidence": "tests.tap"
+    },
+    "bundledWorker": {
+      "tests": 3,
+      "passed": 3,
+      "evidence": "worker-tests.tap"
+    },
+    "total": 45,
+    "passed": 45
+  }
+}

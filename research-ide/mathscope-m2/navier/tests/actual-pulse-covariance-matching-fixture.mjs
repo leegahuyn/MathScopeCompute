@@ -1,0 +1,11 @@
+import {writeFileSync} from 'node:fs';
+import {actualMeanPulseMatchedStress} from '../actual-pulse-covariance-matching.mjs';
+import {actualMeanPulsePointwiseAssembly,sourcePulseSquaredPartitionAtOffset} from '../actual-pulse-covariance-partition.mjs';
+
+const observations=[];
+for(const y of [.25,2.5,4.75])for(const cells of [64,128,256,512]){
+  const a=actualMeanPulseMatchedStress({y,cells,bits:512});
+  observations.push({y,cells,targetExact:{lower:a.meanStress.normalizedTarget.thetaExact.lower,upper:a.meanStress.normalizedTarget.thetaExact.upper},target:a.meanStress.normalizedTarget.theta,A:a.pulseCovariance.integrals.A,B:a.pulseCovariance.integrals.B,commonCoefficient:a.pulseCovariance.covariance.common.coefficientInterval,normalizedWeight:a.rows[0].normalizedSquaredAmplitude,normalizedAmplitude:a.rows[0].normalizedAmplitude,normalizedDeterminant:a.pulseCovariance.covariance.determinant.absoluteNormalizedByBaseScaleSquaredSqrtLambda,exactAlgebra:a.algebra,physicalScope:a.scope});
+}
+const assembly=actualMeanPulsePointwiseAssembly({cells:64,bits:128}),out={schema:'MathScope.ActualPulseCovarianceMatchingIndependentFixture/1',observations,partitionOffsets:Array.from({length:129},(_,i)=>{const x=(i-64)/128,r=sourcePulseSquaredPartitionAtOffset(x);return{offset:x,rows:r.rows.map(z=>({relativeIndex:z.relativeIndex,squaredWeight:z.squaredWeight})),exactSquaredSum:r.exactSquaredSum,complete:r.allActiveIndicesEnumerated};}),assembly:{activeBoxes:assembly.partition.activeBoxes,activeBands:assembly.partition.activeBands,band:assembly.partition.band,domain:assembly.partition.activeShellMembership,labels:{rectangleLabels:assembly.labels.rectangleLabels,slowBoxMultiplicity:assembly.labels.slowBoxMultiplicity,checks:assembly.labels.checks},identity:assembly.physicalIdentity,scope:assembly.scope},sourceRole:'Actual same-profile enclosures; separate exact rational matrix probes below are algebra diagnostics only.'};
+const path=new URL('./actual-pulse-covariance-matching-independent.json',import.meta.url);writeFileSync(path,JSON.stringify(out,null,2)+'\n');console.log(JSON.stringify({path:path.pathname,actualCases:observations.length,partitionOffsets:out.partitionOffsets.length}));

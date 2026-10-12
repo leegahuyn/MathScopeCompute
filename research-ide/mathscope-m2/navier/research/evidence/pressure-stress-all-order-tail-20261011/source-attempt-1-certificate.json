@@ -1,0 +1,7303 @@
+{
+  "certificate": {
+    "schema": "MathScope.ActualPressureStressPhysicalSeminormCertificate/1",
+    "request": {
+      "throughOrder": 2,
+      "derivativeOrder": 1,
+      "maxProfileJets": 20000,
+      "maxJetRequests": 200000
+    },
+    "source": {
+      "profileId": "same-profile-2026-10-10.3",
+      "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+      "originalConstructor": "actual-residual-order-induction-source.mjs:prepareActualOrderInduction / completeOrder",
+      "originalOrderOne": "actual-continuation-exact-order-one.mjs:attachActualFirstOrderExtension"
+    },
+    "domain": {
+      "q": "0<q<=1",
+      "eta": [
+        "-1",
+        "1"
+      ],
+      "cartesianProfileBox": {
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ]
+      },
+      "cartesianXRange": [
+        0,
+        135018
+      ],
+      "stressInterior": [
+        28814,
+        28824
+      ],
+      "originalZeta": 135036,
+      "sourceSupportsProved": true,
+      "sourceEndpointSmoothness": "The SAME actual pressure primitive and signed forward/backward stress proof give all fixed smooth endpoint jets. The stresses vanish on an axis neighbourhood; no radial denominator is evaluated at the axis.",
+      "sourceGeometryBound": "The original 0<h<2^-4096 implies |1-2h*z^2|>1/2 on every radius-1/2 complex disk centered at eta in [-1,1]; Cauchy gives |partial_eta^j(1/L)|<=2*j!*2^j<=2*j!*8^j."
+    },
+    "rows": [
+      {
+        "order": 1,
+        "components": [
+          {
+            "name": "pressure",
+            "sourceRoot": 117675,
+            "body": 135044,
+            "baseLoss": 5294,
+            "byOrder": [
+              135404,
+              136557
+            ]
+          },
+          {
+            "name": "stress_theta",
+            "sourceRoot": 117068,
+            "body": 135068,
+            "baseLoss": 25245,
+            "byOrder": [
+              137461,
+              141455
+            ]
+          },
+          {
+            "name": "stress_z",
+            "sourceRoot": 117069,
+            "body": 135093,
+            "baseLoss": 25245,
+            "byOrder": [
+              142535,
+              147664
+            ]
+          }
+        ],
+        "bounds": [
+          147667,
+          147670
+        ],
+        "weights": {
+          "schema": "MathScope.SourceNormalizedCutoffWeights/1",
+          "profileId": "same-profile-2026-10-10.3",
+          "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+          "order": 1,
+          "derivativeOrder": 1,
+          "weights": [
+            {
+              "eulerOrder": 0,
+              "polynomialInSourceH": [
+                "1"
+              ],
+              "extraPotentialCutoffPolynomialInSourceH": [
+                "4224"
+              ]
+            },
+            {
+              "eulerOrder": 1,
+              "polynomialInSourceH": [
+                "4224",
+                "2"
+              ],
+              "extraPotentialCutoffPolynomialInSourceH": [
+                "2821632",
+                "8448"
+              ]
+            }
+          ],
+          "sourceCutoff": "chi(s)=1-sigma_1(2s-1)",
+          "identity": "(q*d_q)^r[chi(c*q)*q^(2*n*h)]=q^(2*n*h)*sum_k binom(r,k)*(2*n*h)^(r-k)*(s*d_s)^k chi(s), s=c*q",
+          "extraPotentialIdentity": "Replace the k-th chi Euler derivative by its k+1 derivative for s*chi_prime(s).",
+          "pendingNorm": "B_(n,m) must be computed from the actual normalized coefficient/potential jets multiplied by these weights, through all mixed profile derivatives <=m.",
+          "selectorOnceNormExists": "log(c_n) >= max(log(c_(n-1))+log2, [n*log2+log(max(1,B_(n,m)))]/(n*h), for every m<=n, plus the actual (5.37) requirements.",
+          "allQProof": "For 0<q<=1/c_n, B_(n,m)*q^(n*h)<=2^-n; for q>=1/c_n the cutoff and every derivative are zero.",
+          "scope": {
+            "actualSourceCutoffWeightsComputed": true,
+            "allPositiveNExponentRetained": true,
+            "actualCoefficientNormMissing": true,
+            "completeScheduleSelected": false,
+            "backgroundC2TailCertified": false,
+            "sourceUniformQStarCertified": false,
+            "originalN506Complete": false
+          },
+          "pass": true
+        },
+        "gain": 25,
+        "losses": [
+          5294,
+          147671
+        ],
+        "sameActualStressRoots": [
+          117068,
+          117069
+        ],
+        "sameActualPressureRoot": 117675,
+        "statement": "Every physical Cartesian/time derivative through k of the actual cutoff pressure and signed stress pair is <=bounds[k]*q^(2*n*h-(2*A+k)). The loss is independent of n."
+      },
+      {
+        "order": 2,
+        "components": [
+          {
+            "name": "pressure",
+            "sourceRoot": 120551,
+            "body": 147828,
+            "baseLoss": 5294,
+            "byOrder": [
+              148183,
+              149334
+            ]
+          },
+          {
+            "name": "stress_theta",
+            "sourceRoot": 120800,
+            "body": 147854,
+            "baseLoss": 25245,
+            "byOrder": [
+              150512,
+              156179
+            ]
+          },
+          {
+            "name": "stress_z",
+            "sourceRoot": 120807,
+            "body": 147879,
+            "baseLoss": 25245,
+            "byOrder": [
+              157419,
+              163448
+            ]
+          }
+        ],
+        "bounds": [
+          163451,
+          163454
+        ],
+        "weights": {
+          "schema": "MathScope.SourceNormalizedCutoffWeights/1",
+          "profileId": "same-profile-2026-10-10.3",
+          "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+          "order": 2,
+          "derivativeOrder": 1,
+          "weights": [
+            {
+              "eulerOrder": 0,
+              "polynomialInSourceH": [
+                "1"
+              ],
+              "extraPotentialCutoffPolynomialInSourceH": [
+                "4224"
+              ]
+            },
+            {
+              "eulerOrder": 1,
+              "polynomialInSourceH": [
+                "4224",
+                "4"
+              ],
+              "extraPotentialCutoffPolynomialInSourceH": [
+                "2821632",
+                "16896"
+              ]
+            }
+          ],
+          "sourceCutoff": "chi(s)=1-sigma_1(2s-1)",
+          "identity": "(q*d_q)^r[chi(c*q)*q^(2*n*h)]=q^(2*n*h)*sum_k binom(r,k)*(2*n*h)^(r-k)*(s*d_s)^k chi(s), s=c*q",
+          "extraPotentialIdentity": "Replace the k-th chi Euler derivative by its k+1 derivative for s*chi_prime(s).",
+          "pendingNorm": "B_(n,m) must be computed from the actual normalized coefficient/potential jets multiplied by these weights, through all mixed profile derivatives <=m.",
+          "selectorOnceNormExists": "log(c_n) >= max(log(c_(n-1))+log2, [n*log2+log(max(1,B_(n,m)))]/(n*h), for every m<=n, plus the actual (5.37) requirements.",
+          "allQProof": "For 0<q<=1/c_n, B_(n,m)*q^(n*h)<=2^-n; for q>=1/c_n the cutoff and every derivative are zero.",
+          "scope": {
+            "actualSourceCutoffWeightsComputed": true,
+            "allPositiveNExponentRetained": true,
+            "actualCoefficientNormMissing": true,
+            "completeScheduleSelected": false,
+            "backgroundC2TailCertified": false,
+            "sourceUniformQStarCertified": false,
+            "originalN506Complete": false
+          },
+          "pass": true
+        },
+        "gain": 4240,
+        "losses": [
+          5294,
+          147671
+        ],
+        "sameActualStressRoots": [
+          120800,
+          120807
+        ],
+        "sameActualPressureRoot": 120551,
+        "statement": "Every physical Cartesian/time derivative through k of the actual cutoff pressure and signed stress pair is <=bounds[k]*q^(2*n*h-(2*A+k)). The loss is independent of n."
+      }
+    ],
+    "normalizedPressure": [
+      {
+        "order": 1,
+        "sourceRoot": 117675,
+        "jets": [
+          {
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "sourceRoot": 117675,
+            "sourceDerivative": 117675,
+            "body": 117675,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              0,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 117675,
+                "selectedCoordinates": [],
+                "upperBound": 147680
+              },
+              {
+                "mask": 1,
+                "derivative": 135012,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 147691
+              },
+              {
+                "mask": 2,
+                "derivative": 147692,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 147703
+              },
+              {
+                "mask": 3,
+                "derivative": 147704,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 147717
+              }
+            ],
+            "bound": 147720,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "sourceRoot": 117675,
+            "sourceDerivative": 147692,
+            "body": 147692,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              0,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 147692,
+                "selectedCoordinates": [],
+                "upperBound": 147730
+              },
+              {
+                "mask": 1,
+                "derivative": 147704,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 147741
+              },
+              {
+                "mask": 2,
+                "derivative": 147742,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 147753
+              },
+              {
+                "mask": 3,
+                "derivative": 147754,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 147767
+              }
+            ],
+            "bound": 147770,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "sourceRoot": 117675,
+            "sourceDerivative": 135012,
+            "body": 135012,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              0,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 135012,
+                "selectedCoordinates": [],
+                "upperBound": 147779
+              },
+              {
+                "mask": 1,
+                "derivative": 147780,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 147791
+              },
+              {
+                "mask": 2,
+                "derivative": 147704,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 147802
+              },
+              {
+                "mask": 3,
+                "derivative": 147803,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 147816
+              }
+            ],
+            "bound": 147819,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          }
+        ],
+        "normalizedRows": [
+          {
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 147720,
+            "cutoffWeight": 1,
+            "bound": 147720
+          },
+          {
+            "eulerOrder": 1,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 147720,
+            "cutoffWeight": 135038,
+            "bound": 147721
+          },
+          {
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "profileBound": 147770,
+            "cutoffWeight": 1,
+            "bound": 147770
+          },
+          {
+            "eulerOrder": 0,
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "profileBound": 147819,
+            "cutoffWeight": 1,
+            "bound": 147819
+          }
+        ],
+        "bounds": [
+          147820,
+          147821
+        ],
+        "compactSupport": [
+          0,
+          28824
+        ],
+        "zeroExtensionSuppliesEveryLargerFixedRadialRectangle": true
+      },
+      {
+        "order": 2,
+        "sourceRoot": 120551,
+        "jets": [
+          {
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "sourceRoot": 120551,
+            "sourceDerivative": 120551,
+            "body": 120551,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              0,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 120551,
+                "selectedCoordinates": [],
+                "upperBound": 163463
+              },
+              {
+                "mask": 1,
+                "derivative": 120722,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 163474
+              },
+              {
+                "mask": 2,
+                "derivative": 120727,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 163485
+              },
+              {
+                "mask": 3,
+                "derivative": 163486,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 163499
+              }
+            ],
+            "bound": 163502,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "sourceRoot": 120551,
+            "sourceDerivative": 120727,
+            "body": 120727,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              0,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 120727,
+                "selectedCoordinates": [],
+                "upperBound": 163512
+              },
+              {
+                "mask": 1,
+                "derivative": 163486,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 163523
+              },
+              {
+                "mask": 2,
+                "derivative": 163524,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 163535
+              },
+              {
+                "mask": 3,
+                "derivative": 163536,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 163549
+              }
+            ],
+            "bound": 163552,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "sourceRoot": 120551,
+            "sourceDerivative": 120722,
+            "body": 120722,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              0,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 120722,
+                "selectedCoordinates": [],
+                "upperBound": 163561
+              },
+              {
+                "mask": 1,
+                "derivative": 163562,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 163573
+              },
+              {
+                "mask": 2,
+                "derivative": 163486,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 163584
+              },
+              {
+                "mask": 3,
+                "derivative": 163585,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 163598
+              }
+            ],
+            "bound": 163601,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          }
+        ],
+        "normalizedRows": [
+          {
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 163502,
+            "cutoffWeight": 1,
+            "bound": 163502
+          },
+          {
+            "eulerOrder": 1,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 163502,
+            "cutoffWeight": 147822,
+            "bound": 163503
+          },
+          {
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "profileBound": 163552,
+            "cutoffWeight": 1,
+            "bound": 163552
+          },
+          {
+            "eulerOrder": 0,
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "profileBound": 163601,
+            "cutoffWeight": 1,
+            "bound": 163601
+          }
+        ],
+        "bounds": [
+          163602,
+          163603
+        ],
+        "compactSupport": [
+          0,
+          28824
+        ],
+        "zeroExtensionSuppliesEveryLargerFixedRadialRectangle": true
+      }
+    ],
+    "weightedStress": [
+      {
+        "order": 2,
+        "zeta": 135036,
+        "compactSupport": [
+          28814,
+          28824
+        ],
+        "quotientJets": [
+          {
+            "component": "Ttheta",
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "sourceRoot": 120800,
+            "quotient": 163605,
+            "body": 163605,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 163605,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 163676,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 163842
+              },
+              {
+                "mask": 2,
+                "derivative": 163850,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 163900,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 164071
+              }
+            ],
+            "bound": 164074,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Ttheta",
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "sourceRoot": 120800,
+            "quotient": 163605,
+            "body": 163850,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 163850,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 163900,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 164679
+              },
+              {
+                "mask": 2,
+                "derivative": 164687,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 164732,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 164903
+              }
+            ],
+            "bound": 164906,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Ttheta",
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "sourceRoot": 120800,
+            "quotient": 163605,
+            "body": 163676,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 163676,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 165481,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 165823
+              },
+              {
+                "mask": 2,
+                "derivative": 163900,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 165928,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 166275
+              }
+            ],
+            "bound": 166278,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Tz",
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "sourceRoot": 120807,
+            "quotient": 166832,
+            "body": 166832,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 166832,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 166867,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 167036
+              },
+              {
+                "mask": 2,
+                "derivative": 167043,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 167087,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 167260
+              }
+            ],
+            "bound": 167263,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Tz",
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "sourceRoot": 120807,
+            "quotient": 166832,
+            "body": 167043,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 167043,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 167087,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 167876
+              },
+              {
+                "mask": 2,
+                "derivative": 167883,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 167927,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 168100
+              }
+            ],
+            "bound": 168103,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Tz",
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "sourceRoot": 120807,
+            "quotient": 166832,
+            "body": 166867,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 166867,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 168615,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 168960
+              },
+              {
+                "mask": 2,
+                "derivative": 167087,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 169062,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 169411
+              }
+            ],
+            "bound": 169414,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          }
+        ],
+        "directWeightedJets": [
+          {
+            "component": "Ttheta",
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "sourceRoot": 120800,
+            "sourceDerivative": 120800,
+            "body": 163605,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 163605,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 163676,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 164272
+              },
+              {
+                "mask": 2,
+                "derivative": 163850,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 163900,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 164476
+              }
+            ],
+            "bound": 164479,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Ttheta",
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "sourceRoot": 120800,
+            "sourceDerivative": 163849,
+            "body": 163850,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 163850,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 163900,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 165104
+              },
+              {
+                "mask": 2,
+                "derivative": 164687,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 164732,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 165308
+              }
+            ],
+            "bound": 165311,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Ttheta",
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "sourceRoot": 120800,
+            "sourceDerivative": 134994,
+            "body": 163653,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 163653,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 165442,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 166550
+              },
+              {
+                "mask": 2,
+                "derivative": 163894,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 165924,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 166828
+              }
+            ],
+            "bound": 166831,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Tz",
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "sourceRoot": 120807,
+            "sourceDerivative": 120807,
+            "body": 166832,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 166832,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 166867,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 167464
+              },
+              {
+                "mask": 2,
+                "derivative": 167043,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 167087,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 167670
+              }
+            ],
+            "bound": 167673,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Tz",
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "sourceRoot": 120807,
+            "sourceDerivative": 167042,
+            "body": 167043,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 167043,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 167087,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 168304
+              },
+              {
+                "mask": 2,
+                "derivative": 167883,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 167927,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 168510
+              }
+            ],
+            "bound": 168513,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "component": "Tz",
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "sourceRoot": 120807,
+            "sourceDerivative": 135008,
+            "body": 166865,
+            "coordinates": [
+              4756,
+              2
+            ],
+            "lower": [
+              28814,
+              20
+            ],
+            "upper": [
+              28824,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 166865,
+                "selectedCoordinates": [],
+                "upperBound": 1
+              },
+              {
+                "mask": 1,
+                "derivative": 168612,
+                "selectedCoordinates": [
+                  4756
+                ],
+                "upperBound": 169690
+              },
+              {
+                "mask": 2,
+                "derivative": 167085,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 24
+              },
+              {
+                "mask": 3,
+                "derivative": 169059,
+                "selectedCoordinates": [
+                  4756,
+                  2
+                ],
+                "upperBound": 169971
+              }
+            ],
+            "bound": 169974,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          }
+        ],
+        "normalizedRows": [
+          {
+            "component": "Ttheta",
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 164074,
+            "cutoffWeight": 1,
+            "bound": 164074
+          },
+          {
+            "component": "Ttheta",
+            "eulerOrder": 1,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 164074,
+            "cutoffWeight": 147822,
+            "bound": 164480
+          },
+          {
+            "component": "Ttheta",
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "profileBound": 164906,
+            "cutoffWeight": 1,
+            "bound": 164906
+          },
+          {
+            "component": "Ttheta",
+            "eulerOrder": 0,
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "profileBound": 166278,
+            "cutoffWeight": 1,
+            "bound": 166278
+          },
+          {
+            "component": "Tz",
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 167263,
+            "cutoffWeight": 1,
+            "bound": 167263
+          },
+          {
+            "component": "Tz",
+            "eulerOrder": 1,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 167263,
+            "cutoffWeight": 147822,
+            "bound": 167674
+          },
+          {
+            "component": "Tz",
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "profileBound": 168103,
+            "cutoffWeight": 1,
+            "bound": 168103
+          },
+          {
+            "component": "Tz",
+            "eulerOrder": 0,
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "profileBound": 169414,
+            "cutoffWeight": 1,
+            "bound": 169414
+          }
+        ],
+        "directNormalizedRows": [
+          {
+            "component": "Ttheta",
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 164479,
+            "cutoffWeight": 1,
+            "bound": 164479
+          },
+          {
+            "component": "Ttheta",
+            "eulerOrder": 1,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 164479,
+            "cutoffWeight": 147822,
+            "bound": 164481
+          },
+          {
+            "component": "Ttheta",
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "profileBound": 165311,
+            "cutoffWeight": 1,
+            "bound": 165311
+          },
+          {
+            "component": "Ttheta",
+            "eulerOrder": 0,
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "profileBound": 166831,
+            "cutoffWeight": 1,
+            "bound": 166831
+          },
+          {
+            "component": "Tz",
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 167673,
+            "cutoffWeight": 1,
+            "bound": 167673
+          },
+          {
+            "component": "Tz",
+            "eulerOrder": 1,
+            "radialOrder": 0,
+            "etaOrder": 0,
+            "profileBound": 167673,
+            "cutoffWeight": 147822,
+            "bound": 167675
+          },
+          {
+            "component": "Tz",
+            "eulerOrder": 0,
+            "radialOrder": 0,
+            "etaOrder": 1,
+            "profileBound": 168513,
+            "cutoffWeight": 1,
+            "bound": 168513
+          },
+          {
+            "component": "Tz",
+            "eulerOrder": 0,
+            "radialOrder": 1,
+            "etaOrder": 0,
+            "profileBound": 169974,
+            "cutoffWeight": 1,
+            "bound": 169974
+          }
+        ],
+        "bounds": [
+          169975,
+          169976
+        ],
+        "directWeightedBounds": [
+          169977,
+          169978
+        ],
+        "positiveZetaOnWholeRectangle": true,
+        "actualZeroExtensionAtBothSupportEnds": true,
+        "statement": "The complete derivatives of T_n/zeta and the separate derivatives of T_n divided by zeta are bounded. Original all-order Euler cutoff weights are included; either family may enter the same selected scale."
+      }
+    ],
+    "n1Weighted": {
+      "order": 1,
+      "sourceChecks": {
+        "samePreparedGraph": true,
+        "sameActualAngularStress": true,
+        "sameActualAxialStress": true,
+        "actualGlobalBothEndpointGluing": true,
+        "actualCompleteAngularTotal": true,
+        "actualCompleteHeatFactor": true,
+        "literalTerminalProductRule": true,
+        "sameActiveAnnulus": true,
+        "sameOriginalResidual": true
+      },
+      "seedSchema": "MathScope.ActualOrderOneWeightedStressProgram/1",
+      "sourceBinding": {
+        "profileId": "same-profile-2026-10-10.3",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "originalRoots": {
+          "Ttheta": 117068,
+          "Tz": 117069,
+          "thetaForward": 117054,
+          "thetaBackward": 117063,
+          "zForward": 117059,
+          "zBackward": 117067,
+          "angularResidual": 117038,
+          "heatF": 71979,
+          "heatFullF": 71959,
+          "heatEcl": 71924,
+          "fo": 71918,
+          "heatArgument": 71925,
+          "gamma": 71517,
+          "heatLoss": 71948
+        },
+        "support": {
+          "schema": "MathScope.ActualBackgroundSupportOrder/1",
+          "profileId": "same-profile-2026-10-10.3",
+          "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+          "parameterChecks": {
+            "samePinnedSource": true,
+            "actualH": true,
+            "actualLambda": true,
+            "actualT": true,
+            "actualTf": true,
+            "actualCo": true,
+            "actualXa": true,
+            "actualT1": true,
+            "actualLambdaScale": true,
+            "actualXR": true,
+            "actualIposLeft": true,
+            "actualIposRight": true
+          },
+          "expressionChecks": {
+            "pulseStart": true,
+            "pulseLength": true,
+            "axialEnd": true,
+            "plus": true,
+            "terminal": true,
+            "interpolationStartsAfterPulse": true,
+            "cutoff": true,
+            "commonInterval": true,
+            "stageOrder": true,
+            "consecutiveStages": true,
+            "allEndpointsIndependentOfEta": true
+          },
+          "arithmeticChecks": {
+            "TLower": true,
+            "hSmallerThanLambda": true,
+            "hDyadicSmall": true,
+            "QbGreaterThanOne": true,
+            "QpLessThanH": true,
+            "nextStageLongerThanOne": true,
+            "positivePulseLength": true,
+            "allIposBumpsBeforeRight": true,
+            "cutoffBelowOne": true,
+            "IposStartsAfterXR": true
+          },
+          "endpoints": {
+            "Xa": 3617,
+            "Xminus": 28814,
+            "Xkeep": 28819,
+            "Xcut": 28823,
+            "aSquared": 24805,
+            "IposLeft": 28987,
+            "IposRight": 28988,
+            "lastU": 29328,
+            "Xv": 3293,
+            "Xplus": 28824,
+            "Xb": 28826
+          },
+          "derivation": {
+            "inner": "0<t1<1; Xa=4/Lambda with Lambda>=2^16640. Hence Xa<Xminus<Xkeep<Xcut<a^2<1<XR<IposLeft.",
+            "bump": "Every normalized radial bump lies below 4. Its physical X endpoint is below 16*X0Ipos < exp(5)*X0Ipos.",
+            "middle": "IposRight/Xv=exp(-9-13/lambda)<1 and Xplus/Xv=exp(1).",
+            "wait": "lambda>h>0 makes Qsteep>0. Qb>(1/3)*(1/2)*4*2048>1, while 0<Qp<27*h/255<h<1. Thus log(Qb/Qp)/(1-h)>0.",
+            "final": "Immediately after the pulse lies an interval of length Tf=128, followed by positive stage lengths. Thus Xplus<Xv*exp(128)<Xb.",
+            "sourceStep": "sigma=exp(-1/s^2)/(exp(-1/s^2)+exp(-1/(1-s)^2)) on (0,1), with flat endpoint jets; integral sigma_prime=1."
+          },
+          "inequalities": [
+            "Xminus<Xkeep<Xcut<a^2<IposLeft<IposRight<Xv<Xplus<Xb",
+            "all five radial bump endpoints<IposRight",
+            "all endpoints are independent of eta"
+          ],
+          "numericalCoordinateComparisonUsed": false,
+          "pass": true,
+          "leadingExterior": {
+            "parameterChecks": {
+              "loopRight": true,
+              "I1Left": true,
+              "I1Right": true,
+              "logGapsPositive": true
+            },
+            "physicalRightEnds": [
+              5089,
+              5093,
+              6258,
+              7982
+            ],
+            "tailLogCoordinate": 5099,
+            "tailLogRight": 103,
+            "rootBumpStepArguments": [
+              9198,
+              9203,
+              9211,
+              9216,
+              9221
+            ],
+            "derivation": "I1Right/IposLeft=exp(-6), decayEnd<IposLeft and loopIRight/IposLeft=exp(15-60000T)<1. X>=Xplus gives log(X/Xp)>=13/lambda+1. For I1 derivative bumps, X/X0I1>=exp(5)>32, beyond every support ending at 13.5."
+          }
+        },
+        "heatIdentity": {
+          "schema": "MathScope.ActualExteriorHeatIdentity/1",
+          "argument": 71925,
+          "amplitude": 71966,
+          "exponent": 25246,
+          "amplitudeEtaDerivative": 0,
+          "quantity": "Z_b [C*X^b*H(zeta)]",
+          "heatFunctionAndDerivativeKeptSymbolic": true,
+          "identity": "2*eta*(b*F-X*F_X)+d*F_eta = C*X^b*H_prime(zeta)*[-2*eta*X*zeta_X+d*zeta_eta]",
+          "chainCoefficient": 117078,
+          "check": {
+            "schema": "MathScope.SourceGraphPolynomialIdentity/1",
+            "expression": 117078,
+            "arithmetic": "exact BigInt rational Laurent polynomials; every analytic/integral operand is a distinct indeterminate",
+            "remainingMonomials": 0,
+            "residual": [],
+            "atomicOperandCount": 2,
+            "analyticValuesReplaced": false,
+            "pass": true
+          },
+          "negativeControl": {
+            "omitted": "d*zeta_eta",
+            "check": {
+              "schema": "MathScope.SourceGraphPolynomialIdentity/1",
+              "expression": 117076,
+              "arithmetic": "exact BigInt rational Laurent polynomials; every analytic/integral operand is a distinct indeterminate",
+              "remainingMonomials": 2,
+              "residual": [
+                {
+                  "monomial": "2:1,4756:-1",
+                  "coefficient": "4"
+                },
+                {
+                  "monomial": "2:3,4756:-1",
+                  "coefficient": "-4"
+                }
+              ],
+              "atomicOperandCount": 2,
+              "analyticValuesReplaced": false,
+              "pass": false
+            },
+            "correctlyRejected": true
+          },
+          "pass": true
+        },
+        "angularExterior": {
+          "schema": "MathScope.ActualExteriorZeroEvaluation/1",
+          "endpoint": 28824,
+          "checks": [
+            {
+              "index": 0,
+              "expression": 87448,
+              "zero": true
+            },
+            {
+              "index": 1,
+              "expression": 87450,
+              "zero": true
+            },
+            {
+              "index": 2,
+              "expression": 87457,
+              "zero": true
+            },
+            {
+              "index": 3,
+              "expression": 87459,
+              "zero": true
+            },
+            {
+              "index": 4,
+              "expression": 87460,
+              "zero": true
+            },
+            {
+              "index": 5,
+              "expression": 87464,
+              "zero": true
+            }
+          ],
+          "visitedNodes": 93,
+          "zeroBranchTrace": [
+            {
+              "node": 72026,
+              "rightEndpoint": 28823,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 72134,
+              "rightEndpoint": 28988,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 28837,
+              "rightEndpoint": 28823,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 29288,
+              "rightEndpoint": 28988,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 79052,
+              "rightEndpoint": 28823,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 87442,
+              "rightEndpoint": 28988,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 5128,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 5157,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 5128
+            },
+            {
+              "node": 5175,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 5157
+            },
+            {
+              "node": 5148,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 5173,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 5148
+            },
+            {
+              "node": 5293,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 5173
+            },
+            {
+              "node": 6180,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 6181,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 6180
+            },
+            {
+              "node": 6182,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 6181
+            },
+            {
+              "node": 6202,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 6193
+            },
+            {
+              "node": 18778,
+              "rightEndpoint": 7982,
+              "selected": "after",
+              "after": 6202
+            },
+            {
+              "node": 7959,
+              "rightEndpoint": 6258,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 9199,
+              "stepArgument": 9198,
+              "derivativeOrder": 1,
+              "rule": "flat step derivative outside the actual I1 bump support"
+            },
+            {
+              "node": 9204,
+              "stepArgument": 9203,
+              "derivativeOrder": 1,
+              "rule": "flat step derivative outside the actual I1 bump support"
+            },
+            {
+              "node": 28839,
+              "rightEndpoint": 28823,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 29268,
+              "rightEndpoint": 28988,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 29336,
+              "rightEndpoint": 29328,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 29436,
+              "rightEndpoint": 29328,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 72150,
+              "rightEndpoint": 28823,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 72255,
+              "rightEndpoint": 28988,
+              "selected": "after",
+              "after": 0
+            }
+          ],
+          "compactIntegrandMistakenForZeroPrimitive": false,
+          "pass": true
+        },
+        "axialExterior": {
+          "schema": "MathScope.ActualExteriorZeroEvaluation/1",
+          "endpoint": 28824,
+          "checks": [
+            {
+              "index": 0,
+              "expression": 87480,
+              "zero": true
+            },
+            {
+              "index": 1,
+              "expression": 87481,
+              "zero": true
+            },
+            {
+              "index": 2,
+              "expression": 87488,
+              "zero": true
+            },
+            {
+              "index": 3,
+              "expression": 87489,
+              "zero": true
+            },
+            {
+              "index": 4,
+              "expression": 87490,
+              "zero": true
+            },
+            {
+              "index": 5,
+              "expression": 117027,
+              "zero": true
+            },
+            {
+              "index": 6,
+              "expression": 117030,
+              "zero": true
+            },
+            {
+              "index": 7,
+              "expression": 117031,
+              "zero": true
+            }
+          ],
+          "visitedNodes": 291,
+          "zeroBranchTrace": [
+            {
+              "node": 72261,
+              "rightEndpoint": 28823,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 72308,
+              "rightEndpoint": 28988,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 28839,
+              "rightEndpoint": 28823,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 29268,
+              "rightEndpoint": 28988,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 87469,
+              "rightEndpoint": 28823,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 87474,
+              "rightEndpoint": 28988,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 5128,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 5157,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 5128
+            },
+            {
+              "node": 5175,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 5157
+            },
+            {
+              "node": 5148,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 5173,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 5148
+            },
+            {
+              "node": 5293,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 5173
+            },
+            {
+              "node": 6180,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 6181,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 6180
+            },
+            {
+              "node": 6182,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 6181
+            },
+            {
+              "node": 6202,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 6193
+            },
+            {
+              "node": 18778,
+              "rightEndpoint": 7982,
+              "selected": "after",
+              "after": 6202
+            },
+            {
+              "node": 7959,
+              "rightEndpoint": 6258,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 9199,
+              "stepArgument": 9198,
+              "derivativeOrder": 1,
+              "rule": "flat step derivative outside the actual I1 bump support"
+            },
+            {
+              "node": 9204,
+              "stepArgument": 9203,
+              "derivativeOrder": 1,
+              "rule": "flat step derivative outside the actual I1 bump support"
+            },
+            {
+              "node": 29336,
+              "rightEndpoint": 29328,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 29436,
+              "rightEndpoint": 29328,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 50558,
+              "rightEndpoint": 28824,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 96317,
+              "rightEndpoint": 28824,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 117024,
+              "rightEndpoint": 28824,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 72317,
+              "rightEndpoint": 28823,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 72375,
+              "rightEndpoint": 28988,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 7286,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 7287,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 7286
+            },
+            {
+              "node": 7288,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 7287
+            },
+            {
+              "node": 33202,
+              "rightEndpoint": 6258,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 19021,
+              "stepArgument": 9198,
+              "derivativeOrder": 2,
+              "rule": "flat step derivative outside the actual I1 bump support"
+            },
+            {
+              "node": 19023,
+              "stepArgument": 9203,
+              "derivativeOrder": 2,
+              "rule": "flat step derivative outside the actual I1 bump support"
+            },
+            {
+              "node": 11166,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 11167,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 11166
+            },
+            {
+              "node": 11168,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 11167
+            },
+            {
+              "node": 19017,
+              "rightEndpoint": 6258,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 32340,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 32341,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 32340
+            },
+            {
+              "node": 32342,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 32341
+            },
+            {
+              "node": 53445,
+              "rightEndpoint": 6258,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 53448,
+              "stepArgument": 9198,
+              "derivativeOrder": 3,
+              "rule": "flat step derivative outside the actual I1 bump support"
+            },
+            {
+              "node": 53453,
+              "stepArgument": 9203,
+              "derivativeOrder": 3,
+              "rule": "flat step derivative outside the actual I1 bump support"
+            },
+            {
+              "node": 74673,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 74674,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 74673
+            },
+            {
+              "node": 74675,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 74674
+            },
+            {
+              "node": 78381,
+              "rightEndpoint": 6258,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 11679,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 11680,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 11679
+            },
+            {
+              "node": 11681,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 11680
+            },
+            {
+              "node": 78706,
+              "rightEndpoint": 6258,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 77542,
+              "rightEndpoint": 103,
+              "selected": "after",
+              "after": 0
+            },
+            {
+              "node": 77543,
+              "rightEndpoint": 5093,
+              "selected": "after",
+              "after": 77542
+            },
+            {
+              "node": 77544,
+              "rightEndpoint": 5089,
+              "selected": "after",
+              "after": 77543
+            },
+            {
+              "node": 79027,
+              "rightEndpoint": 6258,
+              "selected": "after",
+              "after": 0
+            }
+          ],
+          "compactIntegrandMistakenForZeroPrimitive": false,
+          "pass": true
+        },
+        "analyticPremises": {
+          "totalStressMoments": "Original (5.19)-(5.21): the executed five-moment inverse and the complete I2 heat compensation give zero total residual integrals. Thus the retained forward stress equals its backward primitive; a compact integrand alone is never declared to have zero integral.",
+          "terminalReduction": "On X>=Xb*exp(-1/4), all earlier stages/repairs have ended and the heat cutoff is one. The matched terminal pressure density has positive square root Ecl. Therefore F0=Fheat*fo, with Fheat the same complete Laplace heat factor.",
+          "completeHeatSmoothness": "For every fixed j>=0 and Z>=0, (-1)^j H^(j)(Z)=(h)_j/Gamma(1+h)*Integral_0^infinity exp(-v)*v^(h+j)*(1+Zv)^(-h-j)dv. Positive gamma moments and integration by parts give |H^(j)|<=(h)_j*(1+h)_j<=j!*(j+1)!. This dominates all finite mixed derivatives on the closed compact X/eta rectangle, including eta=+/-1; the improper tail is retained.",
+          "endpointSmoothness": "The original square-seed cutoff is flat at both endpoints. Every fixed derivative of exp(-4/delta^2) times a finite inverse power tends to zero at delta=0.",
+          "noNewLeanTheorem": true
+        },
+        "provenance": "The privately authenticated original coefficient prefix, heat source, signed stress primitives and prefix-independent first normalized cutoff.",
+        "originalPDFSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "equationReferences": [
+          "5.19-5.22",
+          "5.43",
+          "5.46",
+          "A.9",
+          "A.12"
+        ]
+      },
+      "originalStress": {
+        "theta": 117068,
+        "z": 117069
+      },
+      "zeta": 135036,
+      "terminal": {
+        "delta": 169979,
+        "deltaMax": 847,
+        "Xedge": 169982,
+        "B": 170108,
+        "completeHeat": 170026,
+        "originalFactor": 169999,
+        "factorization": {
+          "schema": "MathScope.TerminalResidualFactorization/1",
+          "delta": 169979,
+          "factor": 169999,
+          "factorFirst": 170040,
+          "factorSecond": 170041,
+          "heat": 170026,
+          "az": 170027,
+          "bz": 170036,
+          "E": 169989,
+          "fo": 170039,
+          "foY": 170051,
+          "foYY": 170067,
+          "direct": 170073,
+          "coefficient": 170095,
+          "factored": 170098,
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 170100,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [
+              169999,
+              170040,
+              170041,
+              170026,
+              170027,
+              170036,
+              169989
+            ],
+            "actualAtomicOperandCount": 8,
+            "denominatorOperands": [
+              169979
+            ],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "negativeControl": {
+            "omitted": "bz*partial_y fo",
+            "check": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 170104,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                169999,
+                170040,
+                170041,
+                170026,
+                170027,
+                170036,
+                169989
+              ],
+              "actualAtomicOperandCount": 8,
+              "denominatorOperands": [
+                169979
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 2,
+              "denominatorMonomials": 1,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": false
+            }
+          },
+          "sourceAuthenticated": false,
+          "relation": "-Fheat*(az^2*fo_yy+bz*fo_y)=exp(-4/delta^2)*delta^-6*coefficient",
+          "pass": true
+        },
+        "terminalNorms": [
+          {
+            "deltaOrder": 0,
+            "etaOrder": 0,
+            "sourceBody": 170108,
+            "body": 170108,
+            "coordinates": [
+              169979,
+              2
+            ],
+            "lower": [
+              0,
+              20
+            ],
+            "upper": [
+              847,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 170108,
+                "selectedCoordinates": [],
+                "upperBound": 170117
+              },
+              {
+                "mask": 1,
+                "derivative": 170118,
+                "selectedCoordinates": [
+                  169979
+                ],
+                "upperBound": 184341
+              },
+              {
+                "mask": 2,
+                "derivative": 170130,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 184352
+              },
+              {
+                "mask": 3,
+                "derivative": 170142,
+                "selectedCoordinates": [
+                  169979,
+                  2
+                ],
+                "upperBound": 184365
+              }
+            ],
+            "bound": 184368,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "deltaOrder": 0,
+            "etaOrder": 1,
+            "sourceBody": 170108,
+            "body": 170130,
+            "coordinates": [
+              169979,
+              2
+            ],
+            "lower": [
+              0,
+              20
+            ],
+            "upper": [
+              847,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 170130,
+                "selectedCoordinates": [],
+                "upperBound": 184377
+              },
+              {
+                "mask": 1,
+                "derivative": 170142,
+                "selectedCoordinates": [
+                  169979
+                ],
+                "upperBound": 184388
+              },
+              {
+                "mask": 2,
+                "derivative": 184389,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 184400
+              },
+              {
+                "mask": 3,
+                "derivative": 184401,
+                "selectedCoordinates": [
+                  169979,
+                  2
+                ],
+                "upperBound": 184414
+              }
+            ],
+            "bound": 184417,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          },
+          {
+            "deltaOrder": 1,
+            "etaOrder": 0,
+            "sourceBody": 170108,
+            "body": 170118,
+            "coordinates": [
+              169979,
+              2
+            ],
+            "lower": [
+              0,
+              20
+            ],
+            "upper": [
+              847,
+              1
+            ],
+            "faces": [
+              {
+                "mask": 0,
+                "derivative": 170118,
+                "selectedCoordinates": [],
+                "upperBound": 184426
+              },
+              {
+                "mask": 1,
+                "derivative": 184427,
+                "selectedCoordinates": [
+                  169979
+                ],
+                "upperBound": 184438
+              },
+              {
+                "mask": 2,
+                "derivative": 170142,
+                "selectedCoordinates": [
+                  2
+                ],
+                "upperBound": 184449
+              },
+              {
+                "mask": 3,
+                "derivative": 184450,
+                "selectedCoordinates": [
+                  169979,
+                  2
+                ],
+                "upperBound": 184463
+              }
+            ],
+            "bound": 184466,
+            "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+            "finiteExactIntegral": true,
+            "decimalEvaluation": false,
+            "sourceAuthenticated": false
+          }
+        ],
+        "primitiveBounds": [
+          {
+            "deltaOrder": 0,
+            "etaOrder": 0,
+            "pole": 3,
+            "constant": 184467
+          },
+          {
+            "deltaOrder": 0,
+            "etaOrder": 1,
+            "pole": 3,
+            "constant": 184468
+          },
+          {
+            "deltaOrder": 1,
+            "etaOrder": 0,
+            "pole": 6,
+            "constant": 184368
+          }
+        ],
+        "stressDeltaBounds": [
+          {
+            "deltaOrder": 0,
+            "etaOrder": 0,
+            "pole": 3,
+            "constant": 184469
+          },
+          {
+            "deltaOrder": 0,
+            "etaOrder": 1,
+            "pole": 3,
+            "constant": 184470
+          },
+          {
+            "deltaOrder": 1,
+            "etaOrder": 0,
+            "pole": 6,
+            "constant": 184472
+          }
+        ],
+        "innerReciprocal": 170169,
+        "backwardRepresentation": "T1theta(Xb*exp(-delta),eta)=Xb*exp(delta)*Integral_0^delta exp(-4/u^2)*u^-6*B(u,eta) du",
+        "fullImproperHeatTailRetained": true
+      },
+      "rules": {
+        "schema": "MathScope.AllFiniteTerminalGaussianRules/1",
+        "derivativeOrder": 1,
+        "mathematicalDerivativeOrderCap": null,
+        "seed": "E(delta)=exp(-4/delta^2), with its actual flat extension at delta=0",
+        "deltaInterval": [
+          "0",
+          "1/4"
+        ],
+        "laurent": [
+          {
+            "derivativeOrder": 0,
+            "pole": 6,
+            "coefficients": [
+              [
+                -6,
+                "1"
+              ]
+            ],
+            "absoluteCoefficientSum": "1"
+          },
+          {
+            "derivativeOrder": 1,
+            "pole": 9,
+            "coefficients": [
+              [
+                -9,
+                "8"
+              ],
+              [
+                -7,
+                "-6"
+              ]
+            ],
+            "absoluteCoefficientSum": "14"
+          }
+        ],
+        "derivativeRule": "d_delta(E*Q)=E*(Q_prime+8*delta^-3*Q)",
+        "induction": "The Leibniz rule maps every finite Laurent polynomial Q to Q_prime+8*delta^-3*Q. Starting from Q=delta^-6 generates the exact derivative for every finite order. The highest pole grows by3, with coefficient8^j; no sampled list substitutes for this recurrence.",
+        "integration": {
+          "identity": "d_delta(E*delta^-3)=E*delta^-6*(8-3*delta^2)",
+          "positiveFactorLower": "125/16",
+          "integralUpperFactor": "16/125",
+          "inequality": "Integral_0^delta E(u)*u^-6 du <= (16/125)*E(delta)*delta^-3",
+          "endpoint": "For every fixed real p, exp(-4/delta^2)*delta^-p tends to0 at delta=0."
+        },
+        "ordinaryXConversion": {
+          "identity": "partial_X^r=(-1)^r*X^-r*sum_j unsignedStirlingFirst(r,j)*partial_delta^j",
+          "unsignedStirlingFirst": [
+            [
+              "1"
+            ],
+            [
+              "0",
+              "1"
+            ]
+          ],
+          "induction": "Differentiate X^-r once and use partial_X=-X^-1*partial_delta; the coefficient recurrence is c(r+1,j)=c(r,j-1)+r*c(r,j)."
+        },
+        "work": {
+          "requiredWork": 12,
+          "operations": 3,
+          "maxWork": 200000
+        },
+        "checks": {
+          "positiveIntegratingFactor": true,
+          "threePowersGained": true,
+          "fullHighestPole": true,
+          "fullCoordinateRows": true
+        },
+        "pass": true,
+        "sourceAuthenticated": false,
+        "numericalQuadrature": false,
+        "newLeanKernelProof": false
+      },
+      "domain": {
+        "activeAnnulus": [
+          3617,
+          28826
+        ],
+        "eta": [
+          "-1",
+          "1"
+        ],
+        "q": "0<q<=1",
+        "innerZero": [
+          0,
+          28814
+        ],
+        "interior": [
+          28814,
+          169982
+        ],
+        "terminal": [
+          169982,
+          28826
+        ],
+        "terminalDelta": [
+          "0",
+          "1/4"
+        ],
+        "terminalDeltaEqualsGlobalDelta": true,
+        "ordering": "log(Xb/Xplus)>127 implies log(Xedge/Xplus)>126.75>1; Xa<Xminus<Xplus<Xedge<Xb. Thus the terminal collar is after every positive-order source support and delta_global=delta_b there.",
+        "weightedInequalityOnlyOnOpenAnnulus": true,
+        "stressSmoothZeroExtensionAtBothEndpoints": true
+      },
+      "interior": [
+        {
+          "component": "theta",
+          "radialOrder": 0,
+          "etaOrder": 0,
+          "sourceRoot": 117068,
+          "sourceDerivative": 184473,
+          "body": 184475,
+          "coordinates": [
+            4756,
+            2
+          ],
+          "lower": [
+            28814,
+            20
+          ],
+          "upper": [
+            169982,
+            1
+          ],
+          "faces": [
+            {
+              "mask": 0,
+              "derivative": 184475,
+              "selectedCoordinates": [],
+              "upperBound": 184503
+            },
+            {
+              "mask": 1,
+              "derivative": 184507,
+              "selectedCoordinates": [
+                4756
+              ],
+              "upperBound": 184614
+            },
+            {
+              "mask": 2,
+              "derivative": 184616,
+              "selectedCoordinates": [
+                2
+              ],
+              "upperBound": 184646
+            },
+            {
+              "mask": 3,
+              "derivative": 184650,
+              "selectedCoordinates": [
+                4756,
+                2
+              ],
+              "upperBound": 184759
+            }
+          ],
+          "bound": 184762,
+          "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+          "finiteExactIntegral": true,
+          "decimalEvaluation": false,
+          "sourceAuthenticated": false
+        },
+        {
+          "component": "z",
+          "radialOrder": 0,
+          "etaOrder": 0,
+          "sourceRoot": 117069,
+          "sourceDerivative": 184474,
+          "body": 184763,
+          "coordinates": [
+            4756,
+            2
+          ],
+          "lower": [
+            28814,
+            20
+          ],
+          "upper": [
+            169982,
+            1
+          ],
+          "faces": [
+            {
+              "mask": 0,
+              "derivative": 184763,
+              "selectedCoordinates": [],
+              "upperBound": 184791
+            },
+            {
+              "mask": 1,
+              "derivative": 184795,
+              "selectedCoordinates": [
+                4756
+              ],
+              "upperBound": 184902
+            },
+            {
+              "mask": 2,
+              "derivative": 184904,
+              "selectedCoordinates": [
+                2
+              ],
+              "upperBound": 184934
+            },
+            {
+              "mask": 3,
+              "derivative": 184938,
+              "selectedCoordinates": [
+                4756,
+                2
+              ],
+              "upperBound": 185047
+            }
+          ],
+          "bound": 185050,
+          "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+          "finiteExactIntegral": true,
+          "decimalEvaluation": false,
+          "sourceAuthenticated": false
+        },
+        {
+          "component": "theta",
+          "radialOrder": 0,
+          "etaOrder": 1,
+          "sourceRoot": 117068,
+          "sourceDerivative": 184615,
+          "body": 184616,
+          "coordinates": [
+            4756,
+            2
+          ],
+          "lower": [
+            28814,
+            20
+          ],
+          "upper": [
+            169982,
+            1
+          ],
+          "faces": [
+            {
+              "mask": 0,
+              "derivative": 184616,
+              "selectedCoordinates": [],
+              "upperBound": 185080
+            },
+            {
+              "mask": 1,
+              "derivative": 184650,
+              "selectedCoordinates": [
+                4756
+              ],
+              "upperBound": 185187
+            },
+            {
+              "mask": 2,
+              "derivative": 185189,
+              "selectedCoordinates": [
+                2
+              ],
+              "upperBound": 185219
+            },
+            {
+              "mask": 3,
+              "derivative": 185223,
+              "selectedCoordinates": [
+                4756,
+                2
+              ],
+              "upperBound": 185332
+            }
+          ],
+          "bound": 185335,
+          "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+          "finiteExactIntegral": true,
+          "decimalEvaluation": false,
+          "sourceAuthenticated": false
+        },
+        {
+          "component": "z",
+          "radialOrder": 0,
+          "etaOrder": 1,
+          "sourceRoot": 117069,
+          "sourceDerivative": 184903,
+          "body": 184904,
+          "coordinates": [
+            4756,
+            2
+          ],
+          "lower": [
+            28814,
+            20
+          ],
+          "upper": [
+            169982,
+            1
+          ],
+          "faces": [
+            {
+              "mask": 0,
+              "derivative": 184904,
+              "selectedCoordinates": [],
+              "upperBound": 185363
+            },
+            {
+              "mask": 1,
+              "derivative": 184938,
+              "selectedCoordinates": [
+                4756
+              ],
+              "upperBound": 185470
+            },
+            {
+              "mask": 2,
+              "derivative": 185472,
+              "selectedCoordinates": [
+                2
+              ],
+              "upperBound": 185502
+            },
+            {
+              "mask": 3,
+              "derivative": 185506,
+              "selectedCoordinates": [
+                4756,
+                2
+              ],
+              "upperBound": 185615
+            }
+          ],
+          "bound": 185618,
+          "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+          "finiteExactIntegral": true,
+          "decimalEvaluation": false,
+          "sourceAuthenticated": false
+        },
+        {
+          "component": "theta",
+          "radialOrder": 1,
+          "etaOrder": 0,
+          "sourceRoot": 117068,
+          "sourceDerivative": 184505,
+          "body": 184506,
+          "coordinates": [
+            4756,
+            2
+          ],
+          "lower": [
+            28814,
+            20
+          ],
+          "upper": [
+            169982,
+            1
+          ],
+          "faces": [
+            {
+              "mask": 0,
+              "derivative": 184506,
+              "selectedCoordinates": [],
+              "upperBound": 185648
+            },
+            {
+              "mask": 1,
+              "derivative": 185652,
+              "selectedCoordinates": [
+                4756
+              ],
+              "upperBound": 185759
+            },
+            {
+              "mask": 2,
+              "derivative": 184649,
+              "selectedCoordinates": [
+                2
+              ],
+              "upperBound": 185789
+            },
+            {
+              "mask": 3,
+              "derivative": 185793,
+              "selectedCoordinates": [
+                4756,
+                2
+              ],
+              "upperBound": 185902
+            }
+          ],
+          "bound": 185905,
+          "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+          "finiteExactIntegral": true,
+          "decimalEvaluation": false,
+          "sourceAuthenticated": false
+        },
+        {
+          "component": "z",
+          "radialOrder": 1,
+          "etaOrder": 0,
+          "sourceRoot": 117069,
+          "sourceDerivative": 184793,
+          "body": 184794,
+          "coordinates": [
+            4756,
+            2
+          ],
+          "lower": [
+            28814,
+            20
+          ],
+          "upper": [
+            169982,
+            1
+          ],
+          "faces": [
+            {
+              "mask": 0,
+              "derivative": 184794,
+              "selectedCoordinates": [],
+              "upperBound": 185933
+            },
+            {
+              "mask": 1,
+              "derivative": 185937,
+              "selectedCoordinates": [
+                4756
+              ],
+              "upperBound": 186044
+            },
+            {
+              "mask": 2,
+              "derivative": 184937,
+              "selectedCoordinates": [
+                2
+              ],
+              "upperBound": 186074
+            },
+            {
+              "mask": 3,
+              "derivative": 186078,
+              "selectedCoordinates": [
+                4756,
+                2
+              ],
+              "upperBound": 186187
+            }
+          ],
+          "bound": 186190,
+          "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+          "finiteExactIntegral": true,
+          "decimalEvaluation": false,
+          "sourceAuthenticated": false
+        }
+      ],
+      "weightedRows": [
+        {
+          "radialOrder": 0,
+          "etaOrder": 0,
+          "pole": 3,
+          "components": [
+            {
+              "component": "theta",
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "sourceRoot": 117068,
+              "sourceDerivative": 184473,
+              "body": 184475,
+              "coordinates": [
+                4756,
+                2
+              ],
+              "lower": [
+                28814,
+                20
+              ],
+              "upper": [
+                169982,
+                1
+              ],
+              "faces": [
+                {
+                  "mask": 0,
+                  "derivative": 184475,
+                  "selectedCoordinates": [],
+                  "upperBound": 184503
+                },
+                {
+                  "mask": 1,
+                  "derivative": 184507,
+                  "selectedCoordinates": [
+                    4756
+                  ],
+                  "upperBound": 184614
+                },
+                {
+                  "mask": 2,
+                  "derivative": 184616,
+                  "selectedCoordinates": [
+                    2
+                  ],
+                  "upperBound": 184646
+                },
+                {
+                  "mask": 3,
+                  "derivative": 184650,
+                  "selectedCoordinates": [
+                    4756,
+                    2
+                  ],
+                  "upperBound": 184759
+                }
+              ],
+              "bound": 184762,
+              "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+              "finiteExactIntegral": true,
+              "decimalEvaluation": false,
+              "sourceAuthenticated": false
+            },
+            {
+              "component": "z",
+              "radialOrder": 0,
+              "etaOrder": 0,
+              "sourceRoot": 117069,
+              "sourceDerivative": 184474,
+              "body": 184763,
+              "coordinates": [
+                4756,
+                2
+              ],
+              "lower": [
+                28814,
+                20
+              ],
+              "upper": [
+                169982,
+                1
+              ],
+              "faces": [
+                {
+                  "mask": 0,
+                  "derivative": 184763,
+                  "selectedCoordinates": [],
+                  "upperBound": 184791
+                },
+                {
+                  "mask": 1,
+                  "derivative": 184795,
+                  "selectedCoordinates": [
+                    4756
+                  ],
+                  "upperBound": 184902
+                },
+                {
+                  "mask": 2,
+                  "derivative": 184904,
+                  "selectedCoordinates": [
+                    2
+                  ],
+                  "upperBound": 184934
+                },
+                {
+                  "mask": 3,
+                  "derivative": 184938,
+                  "selectedCoordinates": [
+                    4756,
+                    2
+                  ],
+                  "upperBound": 185047
+                }
+              ],
+              "bound": 185050,
+              "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+              "finiteExactIntegral": true,
+              "decimalEvaluation": false,
+              "sourceAuthenticated": false
+            }
+          ],
+          "terminalThetaConstant": 185051,
+          "terminalZIdenticallyZero": true,
+          "bound": 185052
+        },
+        {
+          "radialOrder": 0,
+          "etaOrder": 1,
+          "pole": 3,
+          "components": [
+            {
+              "component": "theta",
+              "radialOrder": 0,
+              "etaOrder": 1,
+              "sourceRoot": 117068,
+              "sourceDerivative": 184615,
+              "body": 184616,
+              "coordinates": [
+                4756,
+                2
+              ],
+              "lower": [
+                28814,
+                20
+              ],
+              "upper": [
+                169982,
+                1
+              ],
+              "faces": [
+                {
+                  "mask": 0,
+                  "derivative": 184616,
+                  "selectedCoordinates": [],
+                  "upperBound": 185080
+                },
+                {
+                  "mask": 1,
+                  "derivative": 184650,
+                  "selectedCoordinates": [
+                    4756
+                  ],
+                  "upperBound": 185187
+                },
+                {
+                  "mask": 2,
+                  "derivative": 185189,
+                  "selectedCoordinates": [
+                    2
+                  ],
+                  "upperBound": 185219
+                },
+                {
+                  "mask": 3,
+                  "derivative": 185223,
+                  "selectedCoordinates": [
+                    4756,
+                    2
+                  ],
+                  "upperBound": 185332
+                }
+              ],
+              "bound": 185335,
+              "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+              "finiteExactIntegral": true,
+              "decimalEvaluation": false,
+              "sourceAuthenticated": false
+            },
+            {
+              "component": "z",
+              "radialOrder": 0,
+              "etaOrder": 1,
+              "sourceRoot": 117069,
+              "sourceDerivative": 184903,
+              "body": 184904,
+              "coordinates": [
+                4756,
+                2
+              ],
+              "lower": [
+                28814,
+                20
+              ],
+              "upper": [
+                169982,
+                1
+              ],
+              "faces": [
+                {
+                  "mask": 0,
+                  "derivative": 184904,
+                  "selectedCoordinates": [],
+                  "upperBound": 185363
+                },
+                {
+                  "mask": 1,
+                  "derivative": 184938,
+                  "selectedCoordinates": [
+                    4756
+                  ],
+                  "upperBound": 185470
+                },
+                {
+                  "mask": 2,
+                  "derivative": 185472,
+                  "selectedCoordinates": [
+                    2
+                  ],
+                  "upperBound": 185502
+                },
+                {
+                  "mask": 3,
+                  "derivative": 185506,
+                  "selectedCoordinates": [
+                    4756,
+                    2
+                  ],
+                  "upperBound": 185615
+                }
+              ],
+              "bound": 185618,
+              "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+              "finiteExactIntegral": true,
+              "decimalEvaluation": false,
+              "sourceAuthenticated": false
+            }
+          ],
+          "terminalThetaConstant": 185619,
+          "terminalZIdenticallyZero": true,
+          "bound": 185620
+        },
+        {
+          "radialOrder": 1,
+          "etaOrder": 0,
+          "pole": 6,
+          "components": [
+            {
+              "component": "theta",
+              "radialOrder": 1,
+              "etaOrder": 0,
+              "sourceRoot": 117068,
+              "sourceDerivative": 184505,
+              "body": 184506,
+              "coordinates": [
+                4756,
+                2
+              ],
+              "lower": [
+                28814,
+                20
+              ],
+              "upper": [
+                169982,
+                1
+              ],
+              "faces": [
+                {
+                  "mask": 0,
+                  "derivative": 184506,
+                  "selectedCoordinates": [],
+                  "upperBound": 185648
+                },
+                {
+                  "mask": 1,
+                  "derivative": 185652,
+                  "selectedCoordinates": [
+                    4756
+                  ],
+                  "upperBound": 185759
+                },
+                {
+                  "mask": 2,
+                  "derivative": 184649,
+                  "selectedCoordinates": [
+                    2
+                  ],
+                  "upperBound": 185789
+                },
+                {
+                  "mask": 3,
+                  "derivative": 185793,
+                  "selectedCoordinates": [
+                    4756,
+                    2
+                  ],
+                  "upperBound": 185902
+                }
+              ],
+              "bound": 185905,
+              "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+              "finiteExactIntegral": true,
+              "decimalEvaluation": false,
+              "sourceAuthenticated": false
+            },
+            {
+              "component": "z",
+              "radialOrder": 1,
+              "etaOrder": 0,
+              "sourceRoot": 117069,
+              "sourceDerivative": 184793,
+              "body": 184794,
+              "coordinates": [
+                4756,
+                2
+              ],
+              "lower": [
+                28814,
+                20
+              ],
+              "upper": [
+                169982,
+                1
+              ],
+              "faces": [
+                {
+                  "mask": 0,
+                  "derivative": 184794,
+                  "selectedCoordinates": [],
+                  "upperBound": 185933
+                },
+                {
+                  "mask": 1,
+                  "derivative": 185937,
+                  "selectedCoordinates": [
+                    4756
+                  ],
+                  "upperBound": 186044
+                },
+                {
+                  "mask": 2,
+                  "derivative": 184937,
+                  "selectedCoordinates": [
+                    2
+                  ],
+                  "upperBound": 186074
+                },
+                {
+                  "mask": 3,
+                  "derivative": 186078,
+                  "selectedCoordinates": [
+                    4756,
+                    2
+                  ],
+                  "upperBound": 186187
+                }
+              ],
+              "bound": 186190,
+              "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+              "finiteExactIntegral": true,
+              "decimalEvaluation": false,
+              "sourceAuthenticated": false
+            }
+          ],
+          "terminalThetaConstant": 186193,
+          "terminalZIdenticallyZero": true,
+          "bound": 186194
+        }
+      ],
+      "weights": {
+        "schema": "MathScope.SourceNormalizedCutoffWeights/1",
+        "profileId": "same-profile-2026-10-10.3",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "order": 1,
+        "derivativeOrder": 1,
+        "weights": [
+          {
+            "eulerOrder": 0,
+            "polynomialInSourceH": [
+              "1"
+            ],
+            "extraPotentialCutoffPolynomialInSourceH": [
+              "4224"
+            ]
+          },
+          {
+            "eulerOrder": 1,
+            "polynomialInSourceH": [
+              "4224",
+              "2"
+            ],
+            "extraPotentialCutoffPolynomialInSourceH": [
+              "2821632",
+              "8448"
+            ]
+          }
+        ],
+        "sourceCutoff": "chi(s)=1-sigma_1(2s-1)",
+        "identity": "(q*d_q)^r[chi(c*q)*q^(2*n*h)]=q^(2*n*h)*sum_k binom(r,k)*(2*n*h)^(r-k)*(s*d_s)^k chi(s), s=c*q",
+        "extraPotentialIdentity": "Replace the k-th chi Euler derivative by its k+1 derivative for s*chi_prime(s).",
+        "pendingNorm": "B_(n,m) must be computed from the actual normalized coefficient/potential jets multiplied by these weights, through all mixed profile derivatives <=m.",
+        "selectorOnceNormExists": "log(c_n) >= max(log(c_(n-1))+log2, [n*log2+log(max(1,B_(n,m)))]/(n*h), for every m<=n, plus the actual (5.37) requirements.",
+        "allQProof": "For 0<q<=1/c_n, B_(n,m)*q^(n*h)<=2^-n; for q>=1/c_n the cutoff and every derivative are zero.",
+        "scope": {
+          "actualSourceCutoffWeightsComputed": true,
+          "allPositiveNExponentRetained": true,
+          "actualCoefficientNormMissing": true,
+          "completeScheduleSelected": false,
+          "backgroundC2TailCertified": false,
+          "sourceUniformQStarCertified": false,
+          "originalN506Complete": false
+        },
+        "pass": true
+      },
+      "normalizedRows": [
+        {
+          "eulerOrder": 0,
+          "radialOrder": 0,
+          "etaOrder": 0,
+          "pole": 3,
+          "profileBound": 185052,
+          "cutoffWeight": 1,
+          "bound": 185052
+        },
+        {
+          "eulerOrder": 0,
+          "radialOrder": 0,
+          "etaOrder": 1,
+          "pole": 3,
+          "profileBound": 185620,
+          "cutoffWeight": 1,
+          "bound": 185620
+        },
+        {
+          "eulerOrder": 0,
+          "radialOrder": 1,
+          "etaOrder": 0,
+          "pole": 6,
+          "profileBound": 186194,
+          "cutoffWeight": 1,
+          "bound": 186194
+        },
+        {
+          "eulerOrder": 1,
+          "radialOrder": 0,
+          "etaOrder": 0,
+          "pole": 3,
+          "profileBound": 185052,
+          "cutoffWeight": 135038,
+          "bound": 186195
+        }
+      ],
+      "bounds": [
+        186196,
+        186197
+      ],
+      "poles": [
+        3,
+        6
+      ],
+      "statement": "For each finite k and every word I in (q*d_q,d_X,d_eta), |I|<=k, the actual n=1 normalized cutoff stress is <=bounds[k]*q^(2h)*zeta*delta_global^(-poles[k]), for any positive cutoff scale.",
+      "induction": "Every finite derivative follows from the explicit Gaussian Laurent recurrence, full Leibniz rule, actual differentiated B FTC constants and Stirling coordinate recurrence. The seed packet supplies source identities only; no derivative above its requested zero order is asserted by that packet.",
+      "allFiniteRequestedDerivativesGenerated": true,
+      "mathematicalDerivativeOrderCap": null,
+      "originalFirstCutoffReplaced": false,
+      "pass": true
+    },
+    "ftcRows": [
+      {
+        "kind": "physical-cartesian",
+        "body": 135044,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 135044,
+            "selectedCoordinates": [],
+            "upperBound": 135116
+          },
+          {
+            "mask": 1,
+            "derivative": 135121,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 135156
+          },
+          {
+            "mask": 2,
+            "derivative": 135158,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 135193
+          },
+          {
+            "mask": 3,
+            "derivative": 135196,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 135244
+          },
+          {
+            "mask": 4,
+            "derivative": 135245,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 135267
+          },
+          {
+            "mask": 5,
+            "derivative": 135269,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 135306
+          },
+          {
+            "mask": 6,
+            "derivative": 135307,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 135344
+          },
+          {
+            "mask": 7,
+            "derivative": 135347,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 135397
+          }
+        ],
+        "bound": 135404,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 135121,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 135121,
+            "selectedCoordinates": [],
+            "upperBound": 135434
+          },
+          {
+            "mask": 1,
+            "derivative": 135437,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 135490
+          },
+          {
+            "mask": 2,
+            "derivative": 135196,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 135533
+          },
+          {
+            "mask": 3,
+            "derivative": 135538,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 135610
+          },
+          {
+            "mask": 4,
+            "derivative": 135269,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 135640
+          },
+          {
+            "mask": 5,
+            "derivative": 135643,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 135698
+          },
+          {
+            "mask": 6,
+            "derivative": 135347,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 135743
+          },
+          {
+            "mask": 7,
+            "derivative": 135748,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 135822
+          }
+        ],
+        "bound": 135829,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 135158,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 135158,
+            "selectedCoordinates": [],
+            "upperBound": 135434
+          },
+          {
+            "mask": 1,
+            "derivative": 135853,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 135896
+          },
+          {
+            "mask": 2,
+            "derivative": 135898,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 135951
+          },
+          {
+            "mask": 3,
+            "derivative": 135953,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 136025
+          },
+          {
+            "mask": 4,
+            "derivative": 135307,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 136055
+          },
+          {
+            "mask": 5,
+            "derivative": 136056,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 136101
+          },
+          {
+            "mask": 6,
+            "derivative": 136103,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 136158
+          },
+          {
+            "mask": 7,
+            "derivative": 136160,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 136234
+          }
+        ],
+        "bound": 136241,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 135245,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 135245,
+            "selectedCoordinates": [],
+            "upperBound": 136268
+          },
+          {
+            "mask": 1,
+            "derivative": 135269,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 136303
+          },
+          {
+            "mask": 2,
+            "derivative": 135307,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 136338
+          },
+          {
+            "mask": 3,
+            "derivative": 135347,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 136386
+          },
+          {
+            "mask": 4,
+            "derivative": 136387,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 136409
+          },
+          {
+            "mask": 5,
+            "derivative": 136411,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 136448
+          },
+          {
+            "mask": 6,
+            "derivative": 136449,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 136486
+          },
+          {
+            "mask": 7,
+            "derivative": 136489,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 136539
+          }
+        ],
+        "bound": 136546,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 135068,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 135068,
+            "selectedCoordinates": [],
+            "upperBound": 136605
+          },
+          {
+            "mask": 1,
+            "derivative": 136616,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 136710
+          },
+          {
+            "mask": 2,
+            "derivative": 136719,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 136813
+          },
+          {
+            "mask": 3,
+            "derivative": 136829,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 137004
+          },
+          {
+            "mask": 4,
+            "derivative": 137009,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 137057
+          },
+          {
+            "mask": 5,
+            "derivative": 137064,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 137161
+          },
+          {
+            "mask": 6,
+            "derivative": 137167,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 137264
+          },
+          {
+            "mask": 7,
+            "derivative": 137276,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 137454
+          }
+        ],
+        "bound": 137461,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 136616,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 136616,
+            "selectedCoordinates": [],
+            "upperBound": 137545
+          },
+          {
+            "mask": 1,
+            "derivative": 137561,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 137721
+          },
+          {
+            "mask": 2,
+            "derivative": 136829,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 137890
+          },
+          {
+            "mask": 3,
+            "derivative": 137917,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 138222
+          },
+          {
+            "mask": 4,
+            "derivative": 137064,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 138306
+          },
+          {
+            "mask": 5,
+            "derivative": 138317,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 138480
+          },
+          {
+            "mask": 6,
+            "derivative": 137276,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 138652
+          },
+          {
+            "mask": 7,
+            "derivative": 138671,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 138979
+          }
+        ],
+        "bound": 138986,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 136719,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 136719,
+            "selectedCoordinates": [],
+            "upperBound": 137545
+          },
+          {
+            "mask": 1,
+            "derivative": 139066,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 139235
+          },
+          {
+            "mask": 2,
+            "derivative": 139248,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 139408
+          },
+          {
+            "mask": 3,
+            "derivative": 139431,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 139768
+          },
+          {
+            "mask": 4,
+            "derivative": 137167,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 139852
+          },
+          {
+            "mask": 5,
+            "derivative": 139860,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 140032
+          },
+          {
+            "mask": 6,
+            "derivative": 140042,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 140205
+          },
+          {
+            "mask": 7,
+            "derivative": 140224,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 140564
+          }
+        ],
+        "bound": 140571,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 137009,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 137009,
+            "selectedCoordinates": [],
+            "upperBound": 140624
+          },
+          {
+            "mask": 1,
+            "derivative": 137064,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 140718
+          },
+          {
+            "mask": 2,
+            "derivative": 137167,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 140812
+          },
+          {
+            "mask": 3,
+            "derivative": 137276,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 140987
+          },
+          {
+            "mask": 4,
+            "derivative": 140992,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 141040
+          },
+          {
+            "mask": 5,
+            "derivative": 141047,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 141144
+          },
+          {
+            "mask": 6,
+            "derivative": 141150,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 141247
+          },
+          {
+            "mask": 7,
+            "derivative": 141259,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 141437
+          }
+        ],
+        "bound": 141444,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 135093,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 135093,
+            "selectedCoordinates": [],
+            "upperBound": 141506
+          },
+          {
+            "mask": 1,
+            "derivative": 141519,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 141629
+          },
+          {
+            "mask": 2,
+            "derivative": 141638,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 141748
+          },
+          {
+            "mask": 3,
+            "derivative": 141771,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 141994
+          },
+          {
+            "mask": 4,
+            "derivative": 141999,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 142050
+          },
+          {
+            "mask": 5,
+            "derivative": 142057,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 142170
+          },
+          {
+            "mask": 6,
+            "derivative": 142176,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 142289
+          },
+          {
+            "mask": 7,
+            "derivative": 142302,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 142528
+          }
+        ],
+        "bound": 142535,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 141519,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 141519,
+            "selectedCoordinates": [],
+            "upperBound": 142633
+          },
+          {
+            "mask": 1,
+            "derivative": 142654,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 142858
+          },
+          {
+            "mask": 2,
+            "derivative": 141771,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 143075
+          },
+          {
+            "mask": 3,
+            "derivative": 143115,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 143544
+          },
+          {
+            "mask": 4,
+            "derivative": 142057,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 143640
+          },
+          {
+            "mask": 5,
+            "derivative": 143651,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 143858
+          },
+          {
+            "mask": 6,
+            "derivative": 142302,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 144078
+          },
+          {
+            "mask": 7,
+            "derivative": 144097,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 144529
+          }
+        ],
+        "bound": 144536,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 141638,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 141638,
+            "selectedCoordinates": [],
+            "upperBound": 142633
+          },
+          {
+            "mask": 1,
+            "derivative": 144631,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 144848
+          },
+          {
+            "mask": 2,
+            "derivative": 144864,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 145068
+          },
+          {
+            "mask": 3,
+            "derivative": 145098,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 145571
+          },
+          {
+            "mask": 4,
+            "derivative": 142176,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 145667
+          },
+          {
+            "mask": 5,
+            "derivative": 145675,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 145895
+          },
+          {
+            "mask": 6,
+            "derivative": 145905,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 146112
+          },
+          {
+            "mask": 7,
+            "derivative": 146131,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 146607
+          }
+        ],
+        "bound": 146614,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 141999,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 141999,
+            "selectedCoordinates": [],
+            "upperBound": 146670
+          },
+          {
+            "mask": 1,
+            "derivative": 142057,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 146780
+          },
+          {
+            "mask": 2,
+            "derivative": 142176,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 146890
+          },
+          {
+            "mask": 3,
+            "derivative": 142302,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 147113
+          },
+          {
+            "mask": 4,
+            "derivative": 147118,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 147169
+          },
+          {
+            "mask": 5,
+            "derivative": 147176,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 147289
+          },
+          {
+            "mask": 6,
+            "derivative": 147295,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 147408
+          },
+          {
+            "mask": 7,
+            "derivative": 147420,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 147646
+          }
+        ],
+        "bound": 147653,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "normalized-pressure",
+        "body": 117675,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          0,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 117675,
+            "selectedCoordinates": [],
+            "upperBound": 147680
+          },
+          {
+            "mask": 1,
+            "derivative": 135012,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 147691
+          },
+          {
+            "mask": 2,
+            "derivative": 147692,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 147703
+          },
+          {
+            "mask": 3,
+            "derivative": 147704,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 147717
+          }
+        ],
+        "bound": 147720,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "normalized-pressure",
+        "body": 147692,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          0,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 147692,
+            "selectedCoordinates": [],
+            "upperBound": 147730
+          },
+          {
+            "mask": 1,
+            "derivative": 147704,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 147741
+          },
+          {
+            "mask": 2,
+            "derivative": 147742,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 147753
+          },
+          {
+            "mask": 3,
+            "derivative": 147754,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 147767
+          }
+        ],
+        "bound": 147770,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "normalized-pressure",
+        "body": 135012,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          0,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 135012,
+            "selectedCoordinates": [],
+            "upperBound": 147779
+          },
+          {
+            "mask": 1,
+            "derivative": 147780,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 147791
+          },
+          {
+            "mask": 2,
+            "derivative": 147704,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 147802
+          },
+          {
+            "mask": 3,
+            "derivative": 147803,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 147816
+          }
+        ],
+        "bound": 147819,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 147828,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 147828,
+            "selectedCoordinates": [],
+            "upperBound": 147899
+          },
+          {
+            "mask": 1,
+            "derivative": 147901,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 147936
+          },
+          {
+            "mask": 2,
+            "derivative": 147937,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 147972
+          },
+          {
+            "mask": 3,
+            "derivative": 147975,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 148023
+          },
+          {
+            "mask": 4,
+            "derivative": 148024,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 148046
+          },
+          {
+            "mask": 5,
+            "derivative": 148048,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 148085
+          },
+          {
+            "mask": 6,
+            "derivative": 148086,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 148123
+          },
+          {
+            "mask": 7,
+            "derivative": 148126,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 148176
+          }
+        ],
+        "bound": 148183,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 147901,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 147901,
+            "selectedCoordinates": [],
+            "upperBound": 148211
+          },
+          {
+            "mask": 1,
+            "derivative": 148214,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 148267
+          },
+          {
+            "mask": 2,
+            "derivative": 147975,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 148310
+          },
+          {
+            "mask": 3,
+            "derivative": 148315,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 148387
+          },
+          {
+            "mask": 4,
+            "derivative": 148048,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 148417
+          },
+          {
+            "mask": 5,
+            "derivative": 148420,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 148475
+          },
+          {
+            "mask": 6,
+            "derivative": 148126,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 148520
+          },
+          {
+            "mask": 7,
+            "derivative": 148525,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 148599
+          }
+        ],
+        "bound": 148606,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 147937,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 147937,
+            "selectedCoordinates": [],
+            "upperBound": 148211
+          },
+          {
+            "mask": 1,
+            "derivative": 148630,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 148673
+          },
+          {
+            "mask": 2,
+            "derivative": 148675,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 148728
+          },
+          {
+            "mask": 3,
+            "derivative": 148730,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 148802
+          },
+          {
+            "mask": 4,
+            "derivative": 148086,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 148832
+          },
+          {
+            "mask": 5,
+            "derivative": 148833,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 148878
+          },
+          {
+            "mask": 6,
+            "derivative": 148880,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 148935
+          },
+          {
+            "mask": 7,
+            "derivative": 148937,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 149011
+          }
+        ],
+        "bound": 149018,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 148024,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 148024,
+            "selectedCoordinates": [],
+            "upperBound": 149045
+          },
+          {
+            "mask": 1,
+            "derivative": 148048,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 149080
+          },
+          {
+            "mask": 2,
+            "derivative": 148086,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 149115
+          },
+          {
+            "mask": 3,
+            "derivative": 148126,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 149163
+          },
+          {
+            "mask": 4,
+            "derivative": 149164,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 149186
+          },
+          {
+            "mask": 5,
+            "derivative": 149188,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 149225
+          },
+          {
+            "mask": 6,
+            "derivative": 149226,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 149263
+          },
+          {
+            "mask": 7,
+            "derivative": 149266,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 149316
+          }
+        ],
+        "bound": 149323,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 147854,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 147854,
+            "selectedCoordinates": [],
+            "upperBound": 149384
+          },
+          {
+            "mask": 1,
+            "derivative": 149395,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 149513
+          },
+          {
+            "mask": 2,
+            "derivative": 149520,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 149638
+          },
+          {
+            "mask": 3,
+            "derivative": 149659,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 149910
+          },
+          {
+            "mask": 4,
+            "derivative": 149917,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 149969
+          },
+          {
+            "mask": 5,
+            "derivative": 149979,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 150102
+          },
+          {
+            "mask": 6,
+            "derivative": 150109,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 150232
+          },
+          {
+            "mask": 7,
+            "derivative": 150249,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 150505
+          }
+        ],
+        "bound": 150512,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 149395,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 149395,
+            "selectedCoordinates": [],
+            "upperBound": 150616
+          },
+          {
+            "mask": 1,
+            "derivative": 150634,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 150864
+          },
+          {
+            "mask": 2,
+            "derivative": 149659,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 151109
+          },
+          {
+            "mask": 3,
+            "derivative": 151139,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 151616
+          },
+          {
+            "mask": 4,
+            "derivative": 149979,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 151725
+          },
+          {
+            "mask": 5,
+            "derivative": 151741,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 151976
+          },
+          {
+            "mask": 6,
+            "derivative": 150249,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 152226
+          },
+          {
+            "mask": 7,
+            "derivative": 152252,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 152734
+          }
+        ],
+        "bound": 152741,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 149520,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 149520,
+            "selectedCoordinates": [],
+            "upperBound": 150616
+          },
+          {
+            "mask": 1,
+            "derivative": 152840,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 153085
+          },
+          {
+            "mask": 2,
+            "derivative": 153096,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 153326
+          },
+          {
+            "mask": 3,
+            "derivative": 153346,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 153861
+          },
+          {
+            "mask": 4,
+            "derivative": 150109,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 153970
+          },
+          {
+            "mask": 5,
+            "derivative": 153979,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 154229
+          },
+          {
+            "mask": 6,
+            "derivative": 154240,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 154475
+          },
+          {
+            "mask": 7,
+            "derivative": 154495,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 155015
+          }
+        ],
+        "bound": 155022,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 149917,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 149917,
+            "selectedCoordinates": [],
+            "upperBound": 155079
+          },
+          {
+            "mask": 1,
+            "derivative": 149979,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 155197
+          },
+          {
+            "mask": 2,
+            "derivative": 150109,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 155315
+          },
+          {
+            "mask": 3,
+            "derivative": 150249,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 155566
+          },
+          {
+            "mask": 4,
+            "derivative": 155573,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 155625
+          },
+          {
+            "mask": 5,
+            "derivative": 155635,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 155758
+          },
+          {
+            "mask": 6,
+            "derivative": 155765,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 155888
+          },
+          {
+            "mask": 7,
+            "derivative": 155905,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 156161
+          }
+        ],
+        "bound": 156168,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 147879,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 147879,
+            "selectedCoordinates": [],
+            "upperBound": 156230
+          },
+          {
+            "mask": 1,
+            "derivative": 156240,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 156367
+          },
+          {
+            "mask": 2,
+            "derivative": 156374,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 156501
+          },
+          {
+            "mask": 3,
+            "derivative": 156517,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 156787
+          },
+          {
+            "mask": 4,
+            "derivative": 156793,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 156846
+          },
+          {
+            "mask": 5,
+            "derivative": 156855,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 156986
+          },
+          {
+            "mask": 6,
+            "derivative": 156993,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 157124
+          },
+          {
+            "mask": 7,
+            "derivative": 157138,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 157412
+          }
+        ],
+        "bound": 157419,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 156240,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 156240,
+            "selectedCoordinates": [],
+            "upperBound": 157528
+          },
+          {
+            "mask": 1,
+            "derivative": 157543,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 157788
+          },
+          {
+            "mask": 2,
+            "derivative": 156517,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 158052
+          },
+          {
+            "mask": 3,
+            "derivative": 158074,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 158586
+          },
+          {
+            "mask": 4,
+            "derivative": 156855,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 158699
+          },
+          {
+            "mask": 5,
+            "derivative": 158712,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 158961
+          },
+          {
+            "mask": 6,
+            "derivative": 157138,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 159229
+          },
+          {
+            "mask": 7,
+            "derivative": 159250,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 159766
+          }
+        ],
+        "bound": 159773,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 156374,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 156374,
+            "selectedCoordinates": [],
+            "upperBound": 157528
+          },
+          {
+            "mask": 1,
+            "derivative": 159878,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 160142
+          },
+          {
+            "mask": 2,
+            "derivative": 160153,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 160398
+          },
+          {
+            "mask": 3,
+            "derivative": 160418,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 160980
+          },
+          {
+            "mask": 4,
+            "derivative": 156993,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 161093
+          },
+          {
+            "mask": 5,
+            "derivative": 161102,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 161370
+          },
+          {
+            "mask": 6,
+            "derivative": 161381,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 161630
+          },
+          {
+            "mask": 7,
+            "derivative": 161650,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 162216
+          }
+        ],
+        "bound": 162223,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "physical-cartesian",
+        "body": 156793,
+        "coordinates": [
+          135015,
+          135016,
+          135017
+        ],
+        "lower": [
+          135024,
+          135024,
+          20
+        ],
+        "upper": [
+          135019,
+          135019,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 156793,
+            "selectedCoordinates": [],
+            "upperBound": 162281
+          },
+          {
+            "mask": 1,
+            "derivative": 156855,
+            "selectedCoordinates": [
+              135015
+            ],
+            "upperBound": 162408
+          },
+          {
+            "mask": 2,
+            "derivative": 156993,
+            "selectedCoordinates": [
+              135016
+            ],
+            "upperBound": 162535
+          },
+          {
+            "mask": 3,
+            "derivative": 157138,
+            "selectedCoordinates": [
+              135015,
+              135016
+            ],
+            "upperBound": 162805
+          },
+          {
+            "mask": 4,
+            "derivative": 162811,
+            "selectedCoordinates": [
+              135017
+            ],
+            "upperBound": 162864
+          },
+          {
+            "mask": 5,
+            "derivative": 162873,
+            "selectedCoordinates": [
+              135015,
+              135017
+            ],
+            "upperBound": 163004
+          },
+          {
+            "mask": 6,
+            "derivative": 163011,
+            "selectedCoordinates": [
+              135016,
+              135017
+            ],
+            "upperBound": 163142
+          },
+          {
+            "mask": 7,
+            "derivative": 163156,
+            "selectedCoordinates": [
+              135015,
+              135016,
+              135017
+            ],
+            "upperBound": 163430
+          }
+        ],
+        "bound": 163437,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "normalized-pressure",
+        "body": 120551,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          0,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 120551,
+            "selectedCoordinates": [],
+            "upperBound": 163463
+          },
+          {
+            "mask": 1,
+            "derivative": 120722,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 163474
+          },
+          {
+            "mask": 2,
+            "derivative": 120727,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 163485
+          },
+          {
+            "mask": 3,
+            "derivative": 163486,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 163499
+          }
+        ],
+        "bound": 163502,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "normalized-pressure",
+        "body": 120727,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          0,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 120727,
+            "selectedCoordinates": [],
+            "upperBound": 163512
+          },
+          {
+            "mask": 1,
+            "derivative": 163486,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 163523
+          },
+          {
+            "mask": 2,
+            "derivative": 163524,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 163535
+          },
+          {
+            "mask": 3,
+            "derivative": 163536,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 163549
+          }
+        ],
+        "bound": 163552,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "normalized-pressure",
+        "body": 120722,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          0,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 120722,
+            "selectedCoordinates": [],
+            "upperBound": 163561
+          },
+          {
+            "mask": 1,
+            "derivative": 163562,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 163573
+          },
+          {
+            "mask": 2,
+            "derivative": 163486,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 163584
+          },
+          {
+            "mask": 3,
+            "derivative": 163585,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 163598
+          }
+        ],
+        "bound": 163601,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-quotient",
+        "body": 163605,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 163605,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 163676,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 163842
+          },
+          {
+            "mask": 2,
+            "derivative": 163850,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 163900,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 164071
+          }
+        ],
+        "bound": 164074,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-direct-weight",
+        "body": 163605,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 163605,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 163676,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 164272
+          },
+          {
+            "mask": 2,
+            "derivative": 163850,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 163900,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 164476
+          }
+        ],
+        "bound": 164479,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-quotient",
+        "body": 163850,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 163850,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 163900,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 164679
+          },
+          {
+            "mask": 2,
+            "derivative": 164687,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 164732,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 164903
+          }
+        ],
+        "bound": 164906,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-direct-weight",
+        "body": 163850,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 163850,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 163900,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 165104
+          },
+          {
+            "mask": 2,
+            "derivative": 164687,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 164732,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 165308
+          }
+        ],
+        "bound": 165311,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-quotient",
+        "body": 163676,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 163676,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 165481,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 165823
+          },
+          {
+            "mask": 2,
+            "derivative": 163900,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 165928,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 166275
+          }
+        ],
+        "bound": 166278,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-direct-weight",
+        "body": 163653,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 163653,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 165442,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 166550
+          },
+          {
+            "mask": 2,
+            "derivative": 163894,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 165924,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 166828
+          }
+        ],
+        "bound": 166831,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-quotient",
+        "body": 166832,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 166832,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 166867,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 167036
+          },
+          {
+            "mask": 2,
+            "derivative": 167043,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 167087,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 167260
+          }
+        ],
+        "bound": 167263,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-direct-weight",
+        "body": 166832,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 166832,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 166867,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 167464
+          },
+          {
+            "mask": 2,
+            "derivative": 167043,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 167087,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 167670
+          }
+        ],
+        "bound": 167673,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-quotient",
+        "body": 167043,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 167043,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 167087,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 167876
+          },
+          {
+            "mask": 2,
+            "derivative": 167883,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 167927,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 168100
+          }
+        ],
+        "bound": 168103,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-direct-weight",
+        "body": 167043,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 167043,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 167087,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 168304
+          },
+          {
+            "mask": 2,
+            "derivative": 167883,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 167927,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 168510
+          }
+        ],
+        "bound": 168513,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-quotient",
+        "body": 166867,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 166867,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 168615,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 168960
+          },
+          {
+            "mask": 2,
+            "derivative": 167087,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 169062,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 169411
+          }
+        ],
+        "bound": 169414,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "higher-stress-direct-weight",
+        "body": 166865,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          28824,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 166865,
+            "selectedCoordinates": [],
+            "upperBound": 1
+          },
+          {
+            "mask": 1,
+            "derivative": 168612,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 169690
+          },
+          {
+            "mask": 2,
+            "derivative": 167085,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 24
+          },
+          {
+            "mask": 3,
+            "derivative": 169059,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 169971
+          }
+        ],
+        "bound": 169974,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "order-one-terminal",
+        "body": 170108,
+        "coordinates": [
+          169979,
+          2
+        ],
+        "lower": [
+          0,
+          20
+        ],
+        "upper": [
+          847,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 170108,
+            "selectedCoordinates": [],
+            "upperBound": 170117
+          },
+          {
+            "mask": 1,
+            "derivative": 170118,
+            "selectedCoordinates": [
+              169979
+            ],
+            "upperBound": 184341
+          },
+          {
+            "mask": 2,
+            "derivative": 170130,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 184352
+          },
+          {
+            "mask": 3,
+            "derivative": 170142,
+            "selectedCoordinates": [
+              169979,
+              2
+            ],
+            "upperBound": 184365
+          }
+        ],
+        "bound": 184368,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "order-one-terminal",
+        "body": 170130,
+        "coordinates": [
+          169979,
+          2
+        ],
+        "lower": [
+          0,
+          20
+        ],
+        "upper": [
+          847,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 170130,
+            "selectedCoordinates": [],
+            "upperBound": 184377
+          },
+          {
+            "mask": 1,
+            "derivative": 170142,
+            "selectedCoordinates": [
+              169979
+            ],
+            "upperBound": 184388
+          },
+          {
+            "mask": 2,
+            "derivative": 184389,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 184400
+          },
+          {
+            "mask": 3,
+            "derivative": 184401,
+            "selectedCoordinates": [
+              169979,
+              2
+            ],
+            "upperBound": 184414
+          }
+        ],
+        "bound": 184417,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "order-one-terminal",
+        "body": 170118,
+        "coordinates": [
+          169979,
+          2
+        ],
+        "lower": [
+          0,
+          20
+        ],
+        "upper": [
+          847,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 170118,
+            "selectedCoordinates": [],
+            "upperBound": 184426
+          },
+          {
+            "mask": 1,
+            "derivative": 184427,
+            "selectedCoordinates": [
+              169979
+            ],
+            "upperBound": 184438
+          },
+          {
+            "mask": 2,
+            "derivative": 170142,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 184449
+          },
+          {
+            "mask": 3,
+            "derivative": 184450,
+            "selectedCoordinates": [
+              169979,
+              2
+            ],
+            "upperBound": 184463
+          }
+        ],
+        "bound": 184466,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "order-one-interior",
+        "body": 184475,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          169982,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 184475,
+            "selectedCoordinates": [],
+            "upperBound": 184503
+          },
+          {
+            "mask": 1,
+            "derivative": 184507,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 184614
+          },
+          {
+            "mask": 2,
+            "derivative": 184616,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 184646
+          },
+          {
+            "mask": 3,
+            "derivative": 184650,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 184759
+          }
+        ],
+        "bound": 184762,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "order-one-interior",
+        "body": 184763,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          169982,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 184763,
+            "selectedCoordinates": [],
+            "upperBound": 184791
+          },
+          {
+            "mask": 1,
+            "derivative": 184795,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 184902
+          },
+          {
+            "mask": 2,
+            "derivative": 184904,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 184934
+          },
+          {
+            "mask": 3,
+            "derivative": 184938,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 185047
+          }
+        ],
+        "bound": 185050,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "order-one-interior",
+        "body": 184616,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          169982,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 184616,
+            "selectedCoordinates": [],
+            "upperBound": 185080
+          },
+          {
+            "mask": 1,
+            "derivative": 184650,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 185187
+          },
+          {
+            "mask": 2,
+            "derivative": 185189,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 185219
+          },
+          {
+            "mask": 3,
+            "derivative": 185223,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 185332
+          }
+        ],
+        "bound": 185335,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "order-one-interior",
+        "body": 184904,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          169982,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 184904,
+            "selectedCoordinates": [],
+            "upperBound": 185363
+          },
+          {
+            "mask": 1,
+            "derivative": 184938,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 185470
+          },
+          {
+            "mask": 2,
+            "derivative": 185472,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 185502
+          },
+          {
+            "mask": 3,
+            "derivative": 185506,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 185615
+          }
+        ],
+        "bound": 185618,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "order-one-interior",
+        "body": 184506,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          169982,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 184506,
+            "selectedCoordinates": [],
+            "upperBound": 185648
+          },
+          {
+            "mask": 1,
+            "derivative": 185652,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 185759
+          },
+          {
+            "mask": 2,
+            "derivative": 184649,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 185789
+          },
+          {
+            "mask": 3,
+            "derivative": 185793,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 185902
+          }
+        ],
+        "bound": 185905,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      },
+      {
+        "kind": "order-one-interior",
+        "body": 184794,
+        "coordinates": [
+          4756,
+          2
+        ],
+        "lower": [
+          28814,
+          20
+        ],
+        "upper": [
+          169982,
+          1
+        ],
+        "faces": [
+          {
+            "mask": 0,
+            "derivative": 184794,
+            "selectedCoordinates": [],
+            "upperBound": 185933
+          },
+          {
+            "mask": 1,
+            "derivative": 185937,
+            "selectedCoordinates": [
+              4756
+            ],
+            "upperBound": 186044
+          },
+          {
+            "mask": 2,
+            "derivative": 184937,
+            "selectedCoordinates": [
+              2
+            ],
+            "upperBound": 186074
+          },
+          {
+            "mask": 3,
+            "derivative": 186078,
+            "selectedCoordinates": [
+              4756,
+              2
+            ],
+            "upperBound": 186187
+          }
+        ],
+        "bound": 186190,
+        "inequality": "sup_box |body| <= sum of all anchored FTC face integrals of sqrt(1+mixedDerivative^2)",
+        "finiteExactIntegral": true,
+        "decimalEvaluation": false,
+        "sourceAuthenticated": false
+      }
+    ],
+    "roots": {
+      "sourceZeta": 135036,
+      "actual_pressure_stress_B_1_0": 147667,
+      "actual_pressure_stress_B_1_1": 147670,
+      "actual_pressure_stress_B_2_0": 163451,
+      "actual_pressure_stress_B_2_1": 163454,
+      "actual_normalized_pressure_B_1_0": 147820,
+      "actual_normalized_pressure_B_1_1": 147821,
+      "actual_normalized_pressure_B_2_0": 163602,
+      "actual_normalized_pressure_B_2_1": 163603,
+      "actual_weighted_stress_B_2_0": 169975,
+      "actual_weighted_stress_B_2_1": 169976,
+      "actual_direct_weighted_stress_B_2_0": 169977,
+      "actual_direct_weighted_stress_B_2_1": 169978,
+      "actual_order_one_weighted_B_0": 186196,
+      "actual_order_one_weighted_B_1": 186197
+    },
+    "scope": {
+      "actualPressureStressPhysicalSeminorms": true,
+      "actualNormalizedPressureSeminorms": true,
+      "actualHigherWeightedStressSeminorms": true,
+      "actualOrderOneWeightedEndpointSeminorms": true,
+      "allRequestedOrdersExecuted": 1,
+      "mathematicalDerivativeOrderCap": null,
+      "arbitraryFiniteDerivativeAlgorithm": true,
+      "allSourceSmoothStressJoinsAuthenticated": true,
+      "completeOrderOneHeatRetained": true,
+      "sameOriginalZetaAtEveryOrder": true,
+      "finiteSourceGraphAndMaterializerBudgetsRetained": true,
+      "sourceConstantNumericalEvaluation": false,
+      "commonInfiniteCutoffsChosen": false,
+      "fullPhysicalResidualFlatness": false,
+      "wholeGN4Complete": false,
+      "newLeanKernelProof": false,
+      "m3MayStart": false
+    },
+    "work": {
+      "requiredProfileJets": 51,
+      "actualFTCRows": 51,
+      "sourceSeedDerivativeOrder": 0,
+      "sourceSeedFTCRows": 3,
+      "uniqueJetQueries": 305,
+      "maxJetRequests": 200000
+    },
+    "graph": {
+      "sha256": "531086fae99d2eddf3756edc0b064dc2db25926d3c605a8826fa1b9e7c5ad545",
+      "nodeCount": 186198,
+      "canonicalBytes": 7599846,
+      "fixedCompilerPrefix": true
+    }
+  },
+  "sourceConstructions": 1,
+  "actualExecutedPositiveOrders": [
+    1,
+    2
+  ],
+  "actualExecutedDerivativeOrder": 1,
+  "currentRSSBytes": 2140033024
+}

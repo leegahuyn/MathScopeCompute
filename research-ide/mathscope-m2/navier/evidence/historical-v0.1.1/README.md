@@ -1,0 +1,1 @@
+Historical pre-correction fixtures. The global 1/14 Haar factor in covariance/support was incorrect for the normalized source torus average. The old pulse ODE also transcribed source (7.2) B_s squared incorrectly as B_s=2*lambda0/denominator; current source code uses B_s=sqrt(lambda0/denominator). These files are retained only as history and are excluded from acceptance evidence.

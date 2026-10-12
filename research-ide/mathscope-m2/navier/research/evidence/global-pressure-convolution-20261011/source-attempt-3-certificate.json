@@ -1,0 +1,2057 @@
+{
+  "certificate": {
+    "schema": "MathScope.ActualGlobalPressureConvolutionCertificate/1",
+    "source": {
+      "profileId": "same-profile-2026-10-10.3",
+      "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+      "originalConstructor": "actual-residual-order-induction-source.mjs:prepareActualOrderInduction / completeOrder",
+      "originalOrderOne": "actual-continuation-exact-order-one.mjs:attachActualFirstOrderExtension"
+    },
+    "request": {
+      "throughOrder": 2
+    },
+    "sourceBinding": {
+      "commonOriginalNodeCount": 117100,
+      "commonCopiedExpressionDefinitions": 2,
+      "originalLeadingRoots": {
+        "M": 9239,
+        "U": 9236,
+        "v": 18778
+      },
+      "separateAppendOnlyAuditGraphs": true,
+      "newAuditNodeIdsInterchanged": false,
+      "sourceMassAndContinuityAuthenticated": true
+    },
+    "leadingRestrictions": {
+      "geometry": {
+        "checks": {
+          "sourceSupport": true,
+          "sameLoopStart": true,
+          "sameBOuter": true,
+          "sameI2Start": true,
+          "sameI2End": true,
+          "originalRestoration": true,
+          "originalPatchRight": true,
+          "originalHeatStart": true,
+          "reservedStageIsBeforePulse": true,
+          "originalReservedLength": true,
+          "originalSourceBounds": true,
+          "gapBeforeIpos": true,
+          "gapAfterIpos": true,
+          "commonCollarBeforeLoop": true
+        },
+        "heatTailRelation": {
+          "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+          "left": 71478,
+          "right": 121026,
+          "normalForms": [
+            93,
+            93
+          ],
+          "pass": true,
+          "visited": 158,
+          "canonicalNodeCount": 94,
+          "sharingNamesIgnored": true,
+          "boundNamesIgnored": true,
+          "sourceValuesReplaced": false,
+          "derivativeOrMomentIdentityAssumed": false
+        },
+        "inequalities": [
+          "0<Xa<aSquared<loopILeft<1<restLeft<restRight<B8patchRight<XR",
+          "I1Right<I2Right<IposLeft<IposRight<reservedPower.end in logarithmic radius",
+          "Ipos log radius lies strictly inside the original reservedPower stage",
+          "IposRight<Xv<Xplus<Xb and IposRight<Xtail<XK"
+        ],
+        "proof": "The pinned aSquared=Xa*exp(t1/16), loopILeft=Xa*exp(t1/8),0<t1<1,Lambda>=2^16640 give the inner gaps. XR=110*(CSelected*Pstar)^10, Pstar=exp(2T),T>128 give XR*exp(-8)>1 and place every B8 bump after1. The exact logarithmic patch offsets are -25,-20,-14, with widths5. The reserved stage has length60000T; later stages are positive and consecutive. No decimal coordinate comparison is used."
+      },
+      "cases": [
+        {
+          "kind": "natural",
+          "domain": [
+            0,
+            3617
+          ],
+          "rows": [
+            {
+              "name": "F",
+              "source": 117100,
+              "innerSource": 24857,
+              "reduced": {
+                "source": 117100,
+                "value": 4759,
+                "trace": [
+                  {
+                    "node": 71959,
+                    "selectedBranch": 3,
+                    "sourceBranch": 4759,
+                    "value": 4759
+                  }
+                ],
+                "visits": 4,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "expected": {
+                "source": 24857,
+                "value": 4759,
+                "trace": [
+                  {
+                    "node": 24857,
+                    "selectedBranch": 3,
+                    "sourceBranch": 4759,
+                    "value": 4759
+                  }
+                ],
+                "visits": 3,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "check": {
+                "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+                "left": 4759,
+                "right": 4759,
+                "normalForms": [
+                  4759,
+                  4759
+                ],
+                "pass": true,
+                "visited": 0,
+                "canonicalNodeCount": 0,
+                "identicalRetainedSourceNode": true,
+                "sharingNamesIgnored": true,
+                "boundNamesIgnored": true,
+                "sourceValuesReplaced": false,
+                "derivativeOrMomentIdentityAssumed": false
+              }
+            },
+            {
+              "name": "U",
+              "source": 117101,
+              "innerSource": 24858,
+              "reduced": {
+                "source": 117101,
+                "value": 4786,
+                "trace": [
+                  {
+                    "node": 4789,
+                    "selectedBranch": 3,
+                    "sourceBranch": 4786,
+                    "value": 4786
+                  },
+                  {
+                    "node": 5090,
+                    "selectedBranch": 3,
+                    "sourceBranch": 4789,
+                    "value": 4786
+                  },
+                  {
+                    "node": 5175,
+                    "selectedBranch": 3,
+                    "sourceBranch": 5090,
+                    "value": 4786
+                  },
+                  {
+                    "node": 7959,
+                    "selectedBranch": 3,
+                    "sourceBranch": 0,
+                    "value": 0
+                  },
+                  {
+                    "node": 9199,
+                    "selectedFlatStepValue": 0
+                  },
+                  {
+                    "node": 9204,
+                    "selectedFlatStepValue": 0
+                  }
+                ],
+                "visits": 19,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "expected": {
+                "source": 24858,
+                "value": 4786,
+                "trace": [
+                  {
+                    "node": 24858,
+                    "selectedBranch": 3,
+                    "sourceBranch": 4786,
+                    "value": 4786
+                  }
+                ],
+                "visits": 4,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "check": {
+                "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+                "left": 4786,
+                "right": 4786,
+                "normalForms": [
+                  4786,
+                  4786
+                ],
+                "pass": true,
+                "visited": 0,
+                "canonicalNodeCount": 0,
+                "identicalRetainedSourceNode": true,
+                "sharingNamesIgnored": true,
+                "boundNamesIgnored": true,
+                "sourceValuesReplaced": false,
+                "derivativeOrMomentIdentityAssumed": false
+              }
+            },
+            {
+              "name": "v",
+              "source": 117102,
+              "innerSource": 24914,
+              "reduced": {
+                "source": 117102,
+                "value": 6201,
+                "trace": [
+                  {
+                    "node": 6202,
+                    "selectedBranch": 3,
+                    "sourceBranch": 6201,
+                    "value": 6201
+                  },
+                  {
+                    "node": 18778,
+                    "selectedBranch": 3,
+                    "sourceBranch": 6202,
+                    "value": 6201
+                  }
+                ],
+                "visits": 20,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "expected": {
+                "source": 24914,
+                "value": 6201,
+                "trace": [
+                  {
+                    "node": 24914,
+                    "selectedBranch": 3,
+                    "sourceBranch": 6201,
+                    "value": 6201
+                  }
+                ],
+                "visits": 18,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "check": {
+                "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+                "left": 6201,
+                "right": 6201,
+                "normalForms": [
+                  6201,
+                  6201
+                ],
+                "pass": true,
+                "visited": 0,
+                "canonicalNodeCount": 0,
+                "identicalRetainedSourceNode": true,
+                "sharingNamesIgnored": true,
+                "boundNamesIgnored": true,
+                "sourceValuesReplaced": false,
+                "derivativeOrMomentIdentityAssumed": false
+              }
+            }
+          ]
+        },
+        {
+          "kind": "collar",
+          "domain": [
+            3617,
+            24805
+          ],
+          "rows": [
+            {
+              "name": "F",
+              "source": 117100,
+              "innerSource": 24857,
+              "reduced": {
+                "source": 117100,
+                "value": 24856,
+                "trace": [
+                  {
+                    "node": 71955,
+                    "selectedBranch": 3,
+                    "sourceBranch": 0,
+                    "value": 0
+                  },
+                  {
+                    "node": 71741,
+                    "selectedBranch": 3,
+                    "sourceBranch": 0,
+                    "value": 0
+                  },
+                  {
+                    "node": 71905,
+                    "selectedBranch": 3,
+                    "sourceBranch": 0,
+                    "value": 0
+                  },
+                  {
+                    "node": 5083,
+                    "selectedFlatStepValue": 0
+                  },
+                  {
+                    "node": 5075,
+                    "selectedFlatStepValue": 0
+                  },
+                  {
+                    "node": 5079,
+                    "selectedFlatStepValue": 0
+                  },
+                  {
+                    "node": 6302,
+                    "selectedBranch": 4,
+                    "sourceBranch": 6301,
+                    "value": 6301
+                  },
+                  {
+                    "node": 6304,
+                    "selectedBranch": 3,
+                    "sourceBranch": 6303,
+                    "value": 6301
+                  },
+                  {
+                    "node": 71903,
+                    "selectedBranch": 3,
+                    "sourceBranch": 6304,
+                    "value": 6301
+                  },
+                  {
+                    "node": 71904,
+                    "selectedBranch": 3,
+                    "sourceBranch": 0,
+                    "value": 0
+                  },
+                  {
+                    "node": 71959,
+                    "selectedBranch": 4,
+                    "sourceBranch": 71958,
+                    "value": 24856
+                  }
+                ],
+                "visits": 33,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "expected": {
+                "source": 24857,
+                "value": 24856,
+                "trace": [
+                  {
+                    "node": 24857,
+                    "selectedBranch": 4,
+                    "sourceBranch": 24856,
+                    "value": 24856
+                  }
+                ],
+                "visits": 11,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "check": {
+                "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+                "left": 24856,
+                "right": 24856,
+                "normalForms": [
+                  24856,
+                  24856
+                ],
+                "pass": true,
+                "visited": 0,
+                "canonicalNodeCount": 0,
+                "identicalRetainedSourceNode": true,
+                "sharingNamesIgnored": true,
+                "boundNamesIgnored": true,
+                "sourceValuesReplaced": false,
+                "derivativeOrMomentIdentityAssumed": false
+              }
+            },
+            {
+              "name": "U",
+              "source": 117101,
+              "innerSource": 24858,
+              "reduced": {
+                "source": 117101,
+                "value": 4788,
+                "trace": [
+                  {
+                    "node": 4789,
+                    "selectedBranch": 4,
+                    "sourceBranch": 4788,
+                    "value": 4788
+                  },
+                  {
+                    "node": 5090,
+                    "selectedBranch": 3,
+                    "sourceBranch": 4789,
+                    "value": 4788
+                  },
+                  {
+                    "node": 5175,
+                    "selectedBranch": 3,
+                    "sourceBranch": 5090,
+                    "value": 4788
+                  },
+                  {
+                    "node": 7959,
+                    "selectedBranch": 3,
+                    "sourceBranch": 0,
+                    "value": 0
+                  },
+                  {
+                    "node": 9199,
+                    "selectedFlatStepValue": 0
+                  },
+                  {
+                    "node": 9204,
+                    "selectedFlatStepValue": 0
+                  }
+                ],
+                "visits": 18,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "expected": {
+                "source": 24858,
+                "value": 4788,
+                "trace": [
+                  {
+                    "node": 24858,
+                    "selectedBranch": 4,
+                    "sourceBranch": 4788,
+                    "value": 4788
+                  }
+                ],
+                "visits": 3,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "check": {
+                "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+                "left": 4788,
+                "right": 4788,
+                "normalForms": [
+                  4788,
+                  4788
+                ],
+                "pass": true,
+                "visited": 0,
+                "canonicalNodeCount": 0,
+                "identicalRetainedSourceNode": true,
+                "sharingNamesIgnored": true,
+                "boundNamesIgnored": true,
+                "sourceValuesReplaced": false,
+                "derivativeOrMomentIdentityAssumed": false
+              }
+            },
+            {
+              "name": "v",
+              "source": 117102,
+              "innerSource": 24914,
+              "reduced": {
+                "source": 117102,
+                "value": 121045,
+                "trace": [
+                  {
+                    "node": 4789,
+                    "selectedBranch": 4,
+                    "sourceBranch": 4788,
+                    "value": 4788
+                  },
+                  {
+                    "node": 5090,
+                    "selectedBranch": 3,
+                    "sourceBranch": 4789,
+                    "value": 4788
+                  },
+                  {
+                    "node": 5175,
+                    "selectedBranch": 3,
+                    "sourceBranch": 5090,
+                    "value": 4788
+                  },
+                  {
+                    "node": 5260,
+                    "selectedBranch": 4,
+                    "sourceBranch": 5255,
+                    "value": 5255
+                  },
+                  {
+                    "node": 5270,
+                    "selectedBranch": 3,
+                    "sourceBranch": 5260,
+                    "value": 5255
+                  },
+                  {
+                    "node": 5293,
+                    "selectedBranch": 3,
+                    "sourceBranch": 5270,
+                    "value": 5255
+                  },
+                  {
+                    "node": 5675,
+                    "selectedBranch": 4,
+                    "sourceBranch": 5665,
+                    "value": 5665
+                  },
+                  {
+                    "node": 5696,
+                    "selectedBranch": 3,
+                    "sourceBranch": 5675,
+                    "value": 5665
+                  },
+                  {
+                    "node": 6182,
+                    "selectedBranch": 3,
+                    "sourceBranch": 5696,
+                    "value": 5665
+                  },
+                  {
+                    "node": 6202,
+                    "selectedBranch": 4,
+                    "sourceBranch": 6193,
+                    "value": 121045
+                  },
+                  {
+                    "node": 18778,
+                    "selectedBranch": 3,
+                    "sourceBranch": 6202,
+                    "value": 121045
+                  }
+                ],
+                "visits": 30,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "expected": {
+                "source": 24914,
+                "value": 24913,
+                "trace": [
+                  {
+                    "node": 24914,
+                    "selectedBranch": 4,
+                    "sourceBranch": 24913,
+                    "value": 24913
+                  }
+                ],
+                "visits": 19,
+                "literalIntegralBodiesPreserved": true,
+                "branchInequalitiesAuthenticated": false,
+                "sourceAuthenticated": false
+              },
+              "check": {
+                "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+                "left": 121045,
+                "right": 24913,
+                "normalForms": [
+                  1543,
+                  1543
+                ],
+                "pass": true,
+                "visited": 2430,
+                "canonicalNodeCount": 1546,
+                "sharingNamesIgnored": true,
+                "boundNamesIgnored": true,
+                "sourceValuesReplaced": false,
+                "derivativeOrMomentIdentityAssumed": false
+              }
+            }
+          ]
+        }
+      ],
+      "ipos": {
+        "domain": [
+          28987,
+          28988
+        ],
+        "source": 117100,
+        "reduced": {
+          "source": 117100,
+          "value": 121046,
+          "trace": [
+            {
+              "node": 71955,
+              "selectedBranch": 3,
+              "sourceBranch": 0,
+              "value": 0
+            },
+            {
+              "node": 71741,
+              "selectedBranch": 5,
+              "sourceBranch": 0,
+              "value": 0
+            },
+            {
+              "node": 71905,
+              "selectedBranch": 5,
+              "sourceBranch": 0,
+              "value": 0
+            },
+            {
+              "node": 71875,
+              "selectedBranch": 4,
+              "sourceBranch": 71874,
+              "value": 71874
+            },
+            {
+              "node": 71886,
+              "selectedBranch": 5,
+              "sourceBranch": 71875,
+              "value": 71874
+            },
+            {
+              "node": 71892,
+              "selectedBranch": 5,
+              "sourceBranch": 71886,
+              "value": 71874
+            },
+            {
+              "node": 71902,
+              "selectedBranch": 5,
+              "sourceBranch": 71892,
+              "value": 71874
+            },
+            {
+              "node": 71903,
+              "selectedBranch": 5,
+              "sourceBranch": 71902,
+              "value": 71874
+            },
+            {
+              "node": 71904,
+              "selectedBranch": 5,
+              "sourceBranch": 0,
+              "value": 0
+            },
+            {
+              "node": 71959,
+              "selectedBranch": 4,
+              "sourceBranch": 71958,
+              "value": 121046
+            }
+          ],
+          "visits": 30,
+          "literalIntegralBodiesPreserved": true,
+          "branchInequalitiesAuthenticated": false,
+          "sourceAuthenticated": false
+        },
+        "selectedCheck": {
+          "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+          "left": 121046,
+          "right": 121046,
+          "normalForms": [
+            121046,
+            121046
+          ],
+          "pass": true,
+          "visited": 0,
+          "canonicalNodeCount": 0,
+          "identicalRetainedSourceNode": true,
+          "sharingNamesIgnored": true,
+          "boundNamesIgnored": true,
+          "sourceValuesReplaced": false,
+          "derivativeOrMomentIdentityAssumed": false
+        },
+        "densityCheck": {
+          "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+          "left": 71874,
+          "right": 71874,
+          "normalForms": [
+            71874,
+            71874
+          ],
+          "pass": true,
+          "visited": 0,
+          "canonicalNodeCount": 0,
+          "identicalRetainedSourceNode": true,
+          "sharingNamesIgnored": true,
+          "boundNamesIgnored": true,
+          "sourceValuesReplaced": false,
+          "derivativeOrMomentIdentityAssumed": false
+        },
+        "amplitudeCheck": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 121051,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [],
+          "actualAtomicOperandCount": 3,
+          "denominatorOperands": [],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 1,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "sourceAmplitudeCheck": {
+          "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+          "left": 29002,
+          "right": 29002,
+          "normalForms": [
+            29002,
+            29002
+          ],
+          "pass": true,
+          "visited": 0,
+          "canonicalNodeCount": 0,
+          "identicalRetainedSourceNode": true,
+          "sharingNamesIgnored": true,
+          "boundNamesIgnored": true,
+          "sourceValuesReplaced": false,
+          "derivativeOrMomentIdentityAssumed": false
+        },
+        "radiusCheck": {
+          "originalRbase": true,
+          "originalX0": true,
+          "originalX": true
+        },
+        "actualPositiveStageDensity": 71874,
+        "stageExponent": 71870,
+        "sourceY": 4791,
+        "sourceY0": 121027,
+        "sourceRbase": 28990,
+        "reservedF": 50562,
+        "generic": {
+          "schema": "MathScope.OriginalReservedPowerLogIdentity/1",
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3642,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 9,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "identity": "P*f*exp(stageLogAmplitude-(1/2+lambda)*(y-stageStart))/R = Kpos*Rbase^(1+2lambda)*R^(-2-2lambda)",
+          "Kpos": "P*f*exp(stageLogAmplitude-(1/2+lambda)*(y0-stageStart))",
+          "positiveRealRules": [
+            "sqrt(exp(2*t))=exp(t) for real t",
+            "log sqrt(2X)=(log2+logX)/2 for X>0",
+            "exp(a+b)=exp(a)exp(b)"
+          ],
+          "negativeControls": {
+            "omittedRadiusDivision": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 3644,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [],
+              "actualAtomicOperandCount": 9,
+              "denominatorOperands": [],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 3,
+              "denominatorMonomials": 1,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": false
+            },
+            "omittedLambda": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 3649,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [],
+              "actualAtomicOperandCount": 9,
+              "denominatorOperands": [],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 2,
+              "denominatorMonomials": 1,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": false
+            }
+          },
+          "sourceAuthenticated": false,
+          "pass": true
+        },
+        "theorem": "The actual complete leading F0 equals the original ef*R^(-2-2lambda) throughout Ipos, by its selected actual stage and the checked positive-real exponent identity.",
+        "fullHeatAndAllCorrectionRootsRetained": true,
+        "positiveCovarianceWeightsAssumed": false,
+        "pass": true
+      },
+      "commonCore": {
+        "domain": [
+          0,
+          24805
+        ],
+        "F0": 24857,
+        "U0": 24858,
+        "v0": 24914,
+        "sourceMassIdentityUsed": true,
+        "derivatives": "Both actual source representatives are smooth on the original common collar. Their equality on the two open subintervals and the original smooth join gives equality of every fixed jet there.",
+        "pass": true
+      },
+      "pass": true
+    },
+    "commonTuples": [
+      {
+        "order": 1,
+        "domain": [
+          0,
+          24805
+        ],
+        "localChecks": {
+          "F": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 28837,
+            "right": 28837,
+            "normalForms": [
+              28837,
+              28837
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "U": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 28839,
+            "right": 28839,
+            "normalForms": [
+              28839,
+              28839
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          }
+        },
+        "F": {
+          "source": 117670,
+          "value": 28837,
+          "trace": [
+            {
+              "node": 29288,
+              "selectedBranch": 3,
+              "sourceBranch": 0,
+              "value": 0
+            }
+          ],
+          "visits": 3,
+          "literalIntegralBodiesPreserved": true,
+          "branchInequalitiesAuthenticated": false,
+          "sourceAuthenticated": false
+        },
+        "U": {
+          "source": 117671,
+          "value": 28839,
+          "trace": [
+            {
+              "node": 29268,
+              "selectedBranch": 3,
+              "sourceBranch": 0,
+              "value": 0
+            }
+          ],
+          "visits": 3,
+          "literalIntegralBodiesPreserved": true,
+          "branchInequalitiesAuthenticated": false,
+          "sourceAuthenticated": false
+        },
+        "fieldChecks": {
+          "F": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 28837,
+            "right": 28837,
+            "normalForms": [
+              28837,
+              28837
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "U": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 28839,
+            "right": 28839,
+            "normalForms": [
+              28839,
+              28839
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          }
+        },
+        "averageLiteralCheck": {
+          "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+          "left": 117656,
+          "right": 121091,
+          "normalForms": [
+            30,
+            30
+          ],
+          "pass": true,
+          "visited": 46,
+          "canonicalNodeCount": 31,
+          "sharingNamesIgnored": true,
+          "boundNamesIgnored": true,
+          "sourceValuesReplaced": false,
+          "derivativeOrMomentIdentityAssumed": false
+        },
+        "averageBranches": {
+          "core": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 29333,
+            "right": 29333,
+            "normalForms": [
+              29333,
+              29333
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "middle": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 29335,
+            "right": 29335,
+            "normalForms": [
+              29335,
+              29335
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          }
+        },
+        "reconstructionChecks": {
+          "global": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 117672,
+            "right": 29440,
+            "normalForms": [
+              1573,
+              1573
+            ],
+            "pass": true,
+            "visited": 3666,
+            "canonicalNodeCount": 1574,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "local": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 117669,
+            "right": 117669,
+            "normalForms": [
+              117669,
+              117669
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          }
+        },
+        "actualRoots": {
+          "globalF": 117670,
+          "globalU": 117671,
+          "globalAverage": 117674,
+          "globalv": 117672,
+          "globalM": 117673,
+          "localF": 28837,
+          "localU": 28839,
+          "localAverage": 117656,
+          "localv": 117669
+        },
+        "sourceMassPrimitive": 117673,
+        "originalKappa": 28833,
+        "originalRawLambda": 25,
+        "proof": {
+          "mass": "The live actual mass proof gives M_n(X)=integral_0^X U_n(s)ds, including zero axis data and every cutoff join. All Ipos bumps start after aSquared; the actual U_n equals its retained cutoff local U on [0,aSquared].",
+          "average": "For X>0 change variables s=tX in the retained literal local average. Both actual averages equal integral_0^1 U_local(tX)dt; their continuous regular limits agree at X=0. On Xcut<X<aSquared the accumulated local mass is retained, even though U_local(X)=0.",
+          "velocity": "The two checked original stream reconstructions use the same U, average, eta derivative and D+2*n*h. Therefore global and cutoff-local v agree on the entire common collar, as do all fixed jets by the original smooth joins."
+        },
+        "localMassAfterCutoffDiscarded": false,
+        "uncutRawTupleUsedAcrossActivation": false,
+        "pass": true
+      }
+    ],
+    "rows": [
+      {
+        "order": 1,
+        "leadingProduct": {
+          "source": 50568,
+          "fullProduct": 120883,
+          "actualCorrection": 29288,
+          "actualLocal": 28837,
+          "fieldCheck": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 117670,
+            "right": 29290,
+            "normalForms": [
+              80098,
+              80098
+            ],
+            "pass": true,
+            "visited": 205972,
+            "canonicalNodeCount": 80099,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "splitCheck": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 50568,
+            "right": 50568,
+            "normalForms": [
+              50568,
+              50568
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "domain": [
+            0,
+            "infinity"
+          ],
+          "proof": "On [0,Xcut], the full F0 is the checked common-core F0; the literal kappa local Fn is retained on Xkeep..Xcut. On Ipos, the full F0 is the checked original reserved power. Outside these disjoint supports Fn is the literal zero branch. Thus the original split equals the product of the complete global fields everywhere, with matching flat jets.",
+          "replacementUsesAuthenticatedSourceEquality": true,
+          "fullLeadingHeatAndPatchesRetained": true,
+          "pass": true
+        },
+        "omega": {
+          "source": 71377,
+          "global": 120882,
+          "local": 121059,
+          "fullSourceCheck": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 120882,
+            "right": 120882,
+            "normalForms": [
+              120882,
+              120882
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "coreCheck": {
+            "originalFormula": {
+              "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+              "left": 25244,
+              "right": 25244,
+              "normalForms": [
+                25244,
+                25244
+              ],
+              "pass": true,
+              "visited": 0,
+              "canonicalNodeCount": 0,
+              "identicalRetainedSourceNode": true,
+              "sharingNamesIgnored": true,
+              "boundNamesIgnored": true,
+              "sourceValuesReplaced": false,
+              "derivativeOrMomentIdentityAssumed": false
+            },
+            "operatorIdentity": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 121073,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                24858,
+                24914,
+                24950,
+                25201,
+                25223
+              ],
+              "actualAtomicOperandCount": 8,
+              "denominatorOperands": [
+                28
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 2,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            }
+          },
+          "middleCheck": {
+            "sourceFormula": 71375,
+            "expandedSharing": {
+              "source": 120882,
+              "value": 121071,
+              "trace": [],
+              "visits": 49,
+              "sourceAuthenticated": false,
+              "integralBodiesAndBranchesUnchanged": true,
+              "callerEqualitiesAssumedByGenericKernel": true
+            },
+            "operatorIdentity": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 121075,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [
+                9236,
+                18778,
+                37941,
+                71355,
+                24702
+              ],
+              "actualAtomicOperandCount": 8,
+              "denominatorOperands": [
+                28
+              ],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 0,
+              "denominatorMonomials": 2,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": true
+            }
+          },
+          "exterior": [
+            {
+              "order": 0,
+              "U": {
+                "root": 117101,
+                "endpoint": 3293,
+                "reduced": {
+                  "source": 117101,
+                  "value": 0,
+                  "trace": [
+                    {
+                      "node": 5128,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 5157,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5128,
+                      "value": 0
+                    },
+                    {
+                      "node": 5175,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5157,
+                      "value": 0
+                    },
+                    {
+                      "node": 7959,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 9199,
+                      "selectedFlatStepValue": 0
+                    },
+                    {
+                      "node": 9204,
+                      "selectedFlatStepValue": 0
+                    }
+                  ],
+                  "visits": 16,
+                  "literalIntegralBodiesPreserved": true,
+                  "branchInequalitiesAuthenticated": false,
+                  "sourceAuthenticated": false
+                },
+                "zero": {
+                  "original": 0,
+                  "value": 0,
+                  "trace": [],
+                  "nonzeroCompactPrimitiveReplaced": false
+                },
+                "reason": "Every selected endpoint is earlier by the live original support proof; accumulated primitives are retained unless their original moment-closed branch is zero.",
+                "allFixedJetsZero": "The actual field is smooth through its source joins and is identically zero on this exterior, hence each fixed derivative is zero there.",
+                "pass": true
+              },
+              "v": {
+                "root": 117102,
+                "endpoint": 3293,
+                "reduced": {
+                  "source": 117102,
+                  "value": 0,
+                  "trace": [
+                    {
+                      "node": 5128,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 5157,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5128,
+                      "value": 0
+                    },
+                    {
+                      "node": 5175,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5157,
+                      "value": 0
+                    },
+                    {
+                      "node": 5148,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 5173,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5148,
+                      "value": 0
+                    },
+                    {
+                      "node": 5293,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5173,
+                      "value": 0
+                    },
+                    {
+                      "node": 6180,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 6181,
+                      "selectedBranch": 5,
+                      "sourceBranch": 6180,
+                      "value": 0
+                    },
+                    {
+                      "node": 6182,
+                      "selectedBranch": 5,
+                      "sourceBranch": 6181,
+                      "value": 0
+                    },
+                    {
+                      "node": 6202,
+                      "selectedBranch": 5,
+                      "sourceBranch": 6193,
+                      "value": 0
+                    },
+                    {
+                      "node": 18778,
+                      "selectedBranch": 5,
+                      "sourceBranch": 6202,
+                      "value": 0
+                    }
+                  ],
+                  "visits": 24,
+                  "literalIntegralBodiesPreserved": true,
+                  "branchInequalitiesAuthenticated": false,
+                  "sourceAuthenticated": false
+                },
+                "zero": {
+                  "original": 0,
+                  "value": 0,
+                  "trace": [],
+                  "nonzeroCompactPrimitiveReplaced": false
+                },
+                "reason": "Every selected endpoint is earlier by the live original support proof; accumulated primitives are retained unless their original moment-closed branch is zero.",
+                "allFixedJetsZero": "The actual field is smooth through its source joins and is identically zero on this exterior, hence each fixed derivative is zero there.",
+                "pass": true
+              }
+            }
+          ],
+          "sourceOrders": [
+            0
+          ],
+          "actualDerivativeOrder": 2,
+          "axialViscosityShift": null,
+          "proof": "The original Omega builder is the same finite differential polynomial of every U_i and v_i through n-1, including its preceding-order axial viscosity term. The checked actual leading and positive cutoff-local tuples agree with their global fields on the entire common interval, including all fixed jets. The middle branch is the full global polynomial. All U_i/v_i and their fixed jets vanish on the selected original exterior; hence that polynomial also equals the original zero branch. Smooth joins close the endpoint equalities.",
+          "noRawTupleSubstitutionAcrossKappa": true,
+          "remainingDifferenceAssignedZero": false,
+          "pass": true
+        },
+        "originalDerivativeCheck": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 0,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            50568,
+            71377,
+            117100,
+            117670,
+            120457
+          ],
+          "actualAtomicOperandCount": 0,
+          "denominatorOperands": [],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 1,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "rewritten": {
+          "source": 71380,
+          "value": 121077,
+          "trace": [
+            {
+              "source": 50568,
+              "value": 120883,
+              "rule": "exact caller-listed operand equality; authority is external to this generic kernel"
+            },
+            {
+              "source": 71377,
+              "value": 120882,
+              "rule": "exact caller-listed operand equality; authority is external to this generic kernel"
+            }
+          ],
+          "visits": 7,
+          "sourceAuthenticated": false,
+          "integralBodiesAndBranchesUnchanged": true,
+          "callerEqualitiesAssumedByGenericKernel": true
+        },
+        "independent": {
+          "sourcePressureDerivative": 71380,
+          "pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "fullCentrifugal": 120884,
+          "globalOmega": 120882,
+          "fullRadialDensity": 120887,
+          "remainingDifference": 120889,
+          "identified": false,
+          "remaining": [
+            "Bind full leading F0 to its original common-core representative and reserved-power Ipos representative.",
+            "Bind full leading M0_X=U0 and global/core v0; then transfer the raw/core Omega branch to the same global Omega."
+          ],
+          "allOrderedPairsIncluded": true,
+          "differenceSetToZero": false
+        },
+        "finalIdentity": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 121078,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            117100,
+            117670,
+            120457,
+            120882
+          ],
+          "actualAtomicOperandCount": 3,
+          "denominatorOperands": [],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 1,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "generic": {
+          "schema": "MathScope.OriginalPressurePairConvolutionIdentity/1",
+          "order": 1,
+          "pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "middle": [],
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3619,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 2,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "identity": "sum_(i+j=n,0<=i,j<=n) F_i*F_j=2*F0*Fn+sum_(i+j=n,1<=i,j<n) F_i*F_j",
+          "negativeControls": {
+            "omittedLeadingPair": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 3623,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [],
+              "actualAtomicOperandCount": 2,
+              "denominatorOperands": [],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 1,
+              "denominatorMonomials": 1,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": false
+            },
+            "omittedInterior": null
+          },
+          "sourceAuthenticated": false,
+          "pass": true
+        },
+        "identity": "Pi_n,X = sum_(i+j=n) F_i*F_j - Omega_(n-1)/(2X)",
+        "pressureDerivativeIdentity": true,
+        "pressurePrimitiveProved": false,
+        "originalUnrewrittenDifference": 120889,
+        "exactSourceRewrites": [
+          {
+            "source": 50568,
+            "value": 120883,
+            "proof": "this row.leadingProduct"
+          },
+          {
+            "source": 71377,
+            "value": 120882,
+            "proof": "this row.omega"
+          }
+        ],
+        "actualAllOrderedPairs": 2,
+        "assumedResidualZero": false,
+        "pass": true
+      },
+      {
+        "order": 2,
+        "leadingProduct": {
+          "source": 120557,
+          "fullProduct": 121017,
+          "actualCorrection": 120453,
+          "actualLocal": 120237,
+          "fieldCheck": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 120457,
+            "right": 120456,
+            "normalForms": [
+              91685,
+              91685
+            ],
+            "pass": true,
+            "visited": 131340,
+            "canonicalNodeCount": 91686,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "splitCheck": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 120557,
+            "right": 120557,
+            "normalForms": [
+              120557,
+              120557
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "domain": [
+            0,
+            "infinity"
+          ],
+          "proof": "On [0,Xcut], the full F0 is the checked common-core F0; the literal kappa local Fn is retained on Xkeep..Xcut. On Ipos, the full F0 is the checked original reserved power. Outside these disjoint supports Fn is the literal zero branch. Thus the original split equals the product of the complete global fields everywhere, with matching flat jets.",
+          "replacementUsesAuthenticatedSourceEquality": true,
+          "fullLeadingHeatAndPatchesRetained": true,
+          "pass": true
+        },
+        "omega": {
+          "source": 120375,
+          "global": 120374,
+          "local": 118808,
+          "fullSourceCheck": {
+            "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+            "left": 120374,
+            "right": 120374,
+            "normalForms": [
+              120374,
+              120374
+            ],
+            "pass": true,
+            "visited": 0,
+            "canonicalNodeCount": 0,
+            "identicalRetainedSourceNode": true,
+            "sharingNamesIgnored": true,
+            "boundNamesIgnored": true,
+            "sourceValuesReplaced": false,
+            "derivativeOrMomentIdentityAssumed": false
+          },
+          "coreCheck": {
+            "originalFormula": {
+              "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+              "left": 118808,
+              "right": 118808,
+              "normalForms": [
+                118808,
+                118808
+              ],
+              "pass": true,
+              "visited": 0,
+              "canonicalNodeCount": 0,
+              "identicalRetainedSourceNode": true,
+              "sharingNamesIgnored": true,
+              "boundNamesIgnored": true,
+              "sourceValuesReplaced": false,
+              "derivativeOrMomentIdentityAssumed": false
+            }
+          },
+          "middleCheck": {
+            "sourceFormula": 120374,
+            "operatorIdentity": {
+              "schema": "MathScope.ExplicitPrimitiveBodyIdentity/1",
+              "left": 120374,
+              "right": 120374,
+              "normalForms": [
+                120374,
+                120374
+              ],
+              "pass": true,
+              "visited": 0,
+              "canonicalNodeCount": 0,
+              "identicalRetainedSourceNode": true,
+              "sharingNamesIgnored": true,
+              "boundNamesIgnored": true,
+              "sourceValuesReplaced": false,
+              "derivativeOrMomentIdentityAssumed": false
+            }
+          },
+          "exterior": [
+            {
+              "order": 0,
+              "U": {
+                "root": 117101,
+                "endpoint": 28824,
+                "reduced": {
+                  "source": 117101,
+                  "value": 0,
+                  "trace": [
+                    {
+                      "node": 5128,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 5157,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5128,
+                      "value": 0
+                    },
+                    {
+                      "node": 5175,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5157,
+                      "value": 0
+                    },
+                    {
+                      "node": 7959,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 9199,
+                      "selectedFlatStepValue": 0
+                    },
+                    {
+                      "node": 9204,
+                      "selectedFlatStepValue": 0
+                    }
+                  ],
+                  "visits": 16,
+                  "literalIntegralBodiesPreserved": true,
+                  "branchInequalitiesAuthenticated": false,
+                  "sourceAuthenticated": false
+                },
+                "zero": {
+                  "original": 0,
+                  "value": 0,
+                  "trace": [],
+                  "nonzeroCompactPrimitiveReplaced": false
+                },
+                "reason": "Every selected endpoint is earlier by the live original support proof; accumulated primitives are retained unless their original moment-closed branch is zero.",
+                "allFixedJetsZero": "The actual field is smooth through its source joins and is identically zero on this exterior, hence each fixed derivative is zero there.",
+                "pass": true
+              },
+              "v": {
+                "root": 117102,
+                "endpoint": 28824,
+                "reduced": {
+                  "source": 117102,
+                  "value": 0,
+                  "trace": [
+                    {
+                      "node": 5128,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 5157,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5128,
+                      "value": 0
+                    },
+                    {
+                      "node": 5175,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5157,
+                      "value": 0
+                    },
+                    {
+                      "node": 5148,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 5173,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5148,
+                      "value": 0
+                    },
+                    {
+                      "node": 5293,
+                      "selectedBranch": 5,
+                      "sourceBranch": 5173,
+                      "value": 0
+                    },
+                    {
+                      "node": 6180,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 6181,
+                      "selectedBranch": 5,
+                      "sourceBranch": 6180,
+                      "value": 0
+                    },
+                    {
+                      "node": 6182,
+                      "selectedBranch": 5,
+                      "sourceBranch": 6181,
+                      "value": 0
+                    },
+                    {
+                      "node": 6202,
+                      "selectedBranch": 5,
+                      "sourceBranch": 6193,
+                      "value": 0
+                    },
+                    {
+                      "node": 18778,
+                      "selectedBranch": 5,
+                      "sourceBranch": 6202,
+                      "value": 0
+                    }
+                  ],
+                  "visits": 24,
+                  "literalIntegralBodiesPreserved": true,
+                  "branchInequalitiesAuthenticated": false,
+                  "sourceAuthenticated": false
+                },
+                "zero": {
+                  "original": 0,
+                  "value": 0,
+                  "trace": [],
+                  "nonzeroCompactPrimitiveReplaced": false
+                },
+                "reason": "Every selected endpoint is earlier by the live original support proof; accumulated primitives are retained unless their original moment-closed branch is zero.",
+                "allFixedJetsZero": "The actual field is smooth through its source joins and is identically zero on this exterior, hence each fixed derivative is zero there.",
+                "pass": true
+              }
+            },
+            {
+              "order": 1,
+              "U": {
+                "root": 117671,
+                "endpoint": 28824,
+                "reduced": {
+                  "source": 117671,
+                  "value": 0,
+                  "trace": [
+                    {
+                      "node": 28839,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 29268,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    }
+                  ],
+                  "visits": 4,
+                  "literalIntegralBodiesPreserved": true,
+                  "branchInequalitiesAuthenticated": false,
+                  "sourceAuthenticated": false
+                },
+                "zero": {
+                  "original": 0,
+                  "value": 0,
+                  "trace": [],
+                  "nonzeroCompactPrimitiveReplaced": false
+                },
+                "reason": "Every selected endpoint is earlier by the live original support proof; accumulated primitives are retained unless their original moment-closed branch is zero.",
+                "allFixedJetsZero": "The actual field is smooth through its source joins and is identically zero on this exterior, hence each fixed derivative is zero there.",
+                "pass": true
+              },
+              "v": {
+                "root": 117672,
+                "endpoint": 28824,
+                "reduced": {
+                  "source": 117672,
+                  "value": 0,
+                  "trace": [
+                    {
+                      "node": 28839,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 29268,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 29336,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    },
+                    {
+                      "node": 29436,
+                      "selectedBranch": 5,
+                      "sourceBranch": 0,
+                      "value": 0
+                    }
+                  ],
+                  "visits": 14,
+                  "literalIntegralBodiesPreserved": true,
+                  "branchInequalitiesAuthenticated": false,
+                  "sourceAuthenticated": false
+                },
+                "zero": {
+                  "original": 0,
+                  "value": 0,
+                  "trace": [],
+                  "nonzeroCompactPrimitiveReplaced": false
+                },
+                "reason": "Every selected endpoint is earlier by the live original support proof; accumulated primitives are retained unless their original moment-closed branch is zero.",
+                "allFixedJetsZero": "The actual field is smooth through its source joins and is identically zero on this exterior, hence each fixed derivative is zero there.",
+                "pass": true
+              }
+            }
+          ],
+          "sourceOrders": [
+            0,
+            1
+          ],
+          "actualDerivativeOrder": 2,
+          "axialViscosityShift": 0,
+          "proof": "The original Omega builder is the same finite differential polynomial of every U_i and v_i through n-1, including its preceding-order axial viscosity term. The checked actual leading and positive cutoff-local tuples agree with their global fields on the entire common interval, including all fixed jets. The middle branch is the full global polynomial. All U_i/v_i and their fixed jets vanish on the selected original exterior; hence that polynomial also equals the original zero branch. Smooth joins close the endpoint equalities.",
+          "noRawTupleSubstitutionAcrossKappa": true,
+          "remainingDifferenceAssignedZero": false,
+          "pass": true
+        },
+        "originalDerivativeCheck": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 121095,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            120557,
+            120375,
+            117100,
+            117670,
+            120457
+          ],
+          "actualAtomicOperandCount": 3,
+          "denominatorOperands": [],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 1,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "rewritten": {
+          "source": 120559,
+          "value": 121098,
+          "trace": [
+            {
+              "source": 120375,
+              "value": 120374,
+              "rule": "exact caller-listed operand equality; authority is external to this generic kernel"
+            },
+            {
+              "source": 120557,
+              "value": 121017,
+              "rule": "exact caller-listed operand equality; authority is external to this generic kernel"
+            }
+          ],
+          "visits": 9,
+          "sourceAuthenticated": false,
+          "integralBodiesAndBranchesUnchanged": true,
+          "callerEqualitiesAssumedByGenericKernel": true
+        },
+        "independent": {
+          "sourcePressureDerivative": 120559,
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "fullCentrifugal": 121019,
+          "globalOmega": 120374,
+          "fullRadialDensity": 121022,
+          "remainingDifference": 121024,
+          "identified": false,
+          "remaining": [
+            "Bind full leading F0 to its original common-core representative and reserved-power Ipos representative.",
+            "Bind full leading M0_X=U0 and global/core v0; then transfer the raw/core Omega branch to the same global Omega."
+          ],
+          "allOrderedPairsIncluded": true,
+          "differenceSetToZero": false
+        },
+        "finalIdentity": {
+          "schema": "MathScope.ActualGraphRationalIdentity/1",
+          "expression": 121099,
+          "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+          "sourceAtomicNodes": [
+            117100,
+            117670,
+            120457,
+            120374
+          ],
+          "actualAtomicOperandCount": 4,
+          "denominatorOperands": [],
+          "nonzeroDenominatorProofRequired": true,
+          "numeratorMonomials": 0,
+          "denominatorMonomials": 1,
+          "analyticOperandsReplacedByNumericalValues": false,
+          "pass": true
+        },
+        "generic": {
+          "schema": "MathScope.OriginalPressurePairConvolutionIdentity/1",
+          "order": 2,
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "middle": [
+            [
+              1,
+              1
+            ]
+          ],
+          "check": {
+            "schema": "MathScope.ActualGraphRationalIdentity/1",
+            "expression": 3623,
+            "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+            "sourceAtomicNodes": [],
+            "actualAtomicOperandCount": 3,
+            "denominatorOperands": [],
+            "nonzeroDenominatorProofRequired": true,
+            "numeratorMonomials": 0,
+            "denominatorMonomials": 1,
+            "analyticOperandsReplacedByNumericalValues": false,
+            "pass": true
+          },
+          "identity": "sum_(i+j=n,0<=i,j<=n) F_i*F_j=2*F0*Fn+sum_(i+j=n,1<=i,j<n) F_i*F_j",
+          "negativeControls": {
+            "omittedLeadingPair": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 3627,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [],
+              "actualAtomicOperandCount": 3,
+              "denominatorOperands": [],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 1,
+              "denominatorMonomials": 1,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": false
+            },
+            "omittedInterior": {
+              "schema": "MathScope.ActualGraphRationalIdentity/1",
+              "expression": 3631,
+              "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+              "sourceAtomicNodes": [],
+              "actualAtomicOperandCount": 3,
+              "denominatorOperands": [],
+              "nonzeroDenominatorProofRequired": true,
+              "numeratorMonomials": 1,
+              "denominatorMonomials": 1,
+              "analyticOperandsReplacedByNumericalValues": false,
+              "pass": false
+            }
+          },
+          "sourceAuthenticated": false,
+          "pass": true
+        },
+        "identity": "Pi_n,X = sum_(i+j=n) F_i*F_j - Omega_(n-1)/(2X)",
+        "pressureDerivativeIdentity": true,
+        "pressurePrimitiveProved": true,
+        "originalUnrewrittenDifference": 121024,
+        "exactSourceRewrites": [
+          {
+            "source": 120557,
+            "value": 121017,
+            "proof": "this row.leadingProduct"
+          },
+          {
+            "source": 120375,
+            "value": 120374,
+            "proof": "this row.omega"
+          }
+        ],
+        "actualAllOrderedPairs": 3,
+        "assumedResidualZero": false,
+        "pass": true
+      }
+    ],
+    "roots": {
+      "actualFullLeadingF": 117100,
+      "actualReservedLeadingF": 50562,
+      "n1_originalPressureDerivative": 71380,
+      "n1_fullRadialDensity": 120887,
+      "n1_rewrittenPressureDerivative": 121077,
+      "n2_originalPressureDerivative": 120559,
+      "n2_fullRadialDensity": 121022,
+      "n2_rewrittenPressureDerivative": 121098
+    },
+    "checks": [
+      {
+        "id": "actual-leading-core-and-Ipos-restrictions",
+        "pass": true
+      },
+      {
+        "id": "actual-full-global-pressure-convolution-n1",
+        "pass": true
+      },
+      {
+        "id": "actual-full-global-pressure-convolution-n2",
+        "pass": true
+      }
+    ],
+    "scope": {
+      "actualLeadingCoreAndReservedPressureRestrictions": true,
+      "actualGlobalFullPressureConvolutionIdentity": true,
+      "actualOrderOneOmegaPrefixPrimitive": false,
+      "actualOrderOnePressurePrimitive": false,
+      "allOrderPhysicalResidualFlatness": false,
+      "wholeGN4Complete": false,
+      "newLeanKernelProof": false,
+      "m3MayStart": false
+    },
+    "remaining": [
+      "Bind the actual order-one Omega prefix and every pressure primitive join.",
+      "Tangential stress cancellation and all-order full physical residual flatness remain separate."
+    ],
+    "graph": {
+      "sha256": "4854ed71fed05986bad8041c19e0a9c5556c9721c91b687d3e359c3658cde340",
+      "nodeCount": 121100,
+      "canonicalBytes": 4785744,
+      "fixedCompilerPrefix": true
+    }
+  },
+  "sourceConstructions": 1,
+  "actualExecutedPositiveOrders": [
+    1,
+    2
+  ],
+  "currentRSSBytes": 1227993088
+}

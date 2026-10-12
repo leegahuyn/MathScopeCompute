@@ -1,0 +1,201 @@
+TAP version 13
+# \# SOURCE_PROGRESS {"phase":"actual-conservative-constructor-start","at":"2026-10-11T09:36:04.332Z","rssBytes":48791552}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-start","order":1,"nodes":120820,"at":"2026-10-11T09:36:10.324Z","rssBytes":691245056}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-picard-bound","order":1,"nodes":120822,"at":"2026-10-11T09:36:10.325Z","rssBytes":691245056}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-mass-bound","order":1,"nodes":120870,"at":"2026-10-11T09:36:10.329Z","rssBytes":691376128}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-complete","order":1,"nodes":120890,"at":"2026-10-11T09:36:10.329Z","rssBytes":691376128}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-start","order":2,"nodes":120890,"at":"2026-10-11T09:36:10.329Z","rssBytes":691376128}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-picard-bound","order":2,"nodes":120892,"at":"2026-10-11T09:36:10.329Z","rssBytes":691376128}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-mass-bound","order":2,"nodes":120930,"at":"2026-10-11T09:36:10.331Z","rssBytes":691507200}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-pressure-body-bound","order":2,"nodes":120980,"at":"2026-10-11T09:36:10.333Z","rssBytes":691507200}
+# \# SOURCE_PROGRESS {"phase":"positive-primitive-complete","order":2,"nodes":121025,"at":"2026-10-11T09:36:10.850Z","rssBytes":730439680}
+# \# SOURCE_PROGRESS {"phase":"leading-stream-pre-C12-complete","nodes":117277,"at":"2026-10-11T09:36:11.167Z","rssBytes":813912064}
+# \# SOURCE_PROGRESS {"phase":"leading-stream-outer-bodies","nodes":117427,"at":"2026-10-11T09:36:11.169Z","rssBytes":813912064}
+# \# SOURCE_PROGRESS {"phase":"pressure-leading-natural-restriction","nodes":121037,"at":"2026-10-11T09:36:12.195Z","rssBytes":1113010176}
+# \# SOURCE_PROGRESS {"phase":"pressure-leading-collar-restriction","nodes":121046,"at":"2026-10-11T09:36:12.200Z","rssBytes":1113141248}
+# \# SOURCE_PROGRESS {"phase":"pressure-leading-Ipos-restriction","nodes":121052,"at":"2026-10-11T09:36:12.218Z","rssBytes":1113403392}
+# \# SOURCE_PROGRESS {"phase":"pressure-full-Omega-representative","order":1,"nodes":121076,"at":"2026-10-11T09:36:12.865Z","rssBytes":1175547904}
+# \# SOURCE_PROGRESS {"phase":"pressure-positive-common-tuple","order":1,"nodes":121092,"at":"2026-10-11T09:36:12.894Z","rssBytes":1176989696}
+# \# SOURCE_PROGRESS {"phase":"pressure-full-Omega-representative","order":2,"nodes":121092,"at":"2026-10-11T09:36:13.464Z","rssBytes":1039466496}
+# \# SOURCE_PROGRESS {"phase":"pressure-n1-original-Omega-prefix-start","nodes":121100,"at":"2026-10-11T09:36:13.493Z","rssBytes":1042087936}
+# \# SOURCE_PROGRESS {"phase":"pressure-n1-Omega-prefix-FTC-and-continuity","nodes":121121,"at":"2026-10-11T09:36:13.554Z","rssBytes":1043922944}
+# \# SOURCE_PROGRESS {"phase":"pressure-n1-Omega-axis-and-whole-history","nodes":121134,"at":"2026-10-11T09:36:14.571Z","rssBytes":1087229952}
+# \# SOURCE_PROGRESS {"phase":"pressure-n1-full-pressure-primitive-and-joins","nodes":121160,"at":"2026-10-11T09:36:14.609Z","rssBytes":1087229952}
+# \# SOURCE_PROGRESS {"phase":"conservative-leading-Omega-flux-start","nodes":121161,"at":"2026-10-11T09:36:15.826Z","rssBytes":1122254848}
+# Subtest: one genuine constructor supplies all global pressure, leading stream and positive moment operands
+not ok 1 - one genuine constructor supplies all global pressure, leading stream and positive moment operands
+  ---
+  duration_ms: 11750.082151
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:13:1'
+  failureType: 'testCodeFailure'
+  error: 'The original conservative moment body changed.'
+  code: 'INVALID_SOURCE_CONSTRUCTION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:18:42)
+    equal (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:22:3)
+    file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:56:115
+    Array.map (<anonymous>)
+    actualOmegaFlux (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:51:61)
+    attachActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:261:56)
+    prepareActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:287:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:10:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:14:11)
+  ...
+# Subtest: Ipos original U0 is zero while the accumulated stream is retained
+not ok 2 - Ipos original U0 is zero while the accumulated stream is retained
+  ---
+  duration_ms: 0.260353
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:19:1'
+  failureType: 'testCodeFailure'
+  error: 'The original conservative moment body changed.'
+  code: 'INVALID_SOURCE_CONSTRUCTION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:18:42)
+    equal (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:22:3)
+    file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:56:115
+    Array.map (<anonymous>)
+    actualOmegaFlux (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:51:61)
+    attachActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:261:56)
+    prepareActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:287:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:10:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:14:11)
+  ...
+# Subtest: weighted Omega flux binds five original complete literal histories and actual FTC derivatives
+not ok 3 - weighted Omega flux binds five original complete literal histories and actual FTC derivatives
+  ---
+  duration_ms: 0.13538
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: 'The original conservative moment body changed.'
+  code: 'INVALID_SOURCE_CONSTRUCTION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:18:42)
+    equal (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:22:3)
+    file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:56:115
+    Array.map (<anonymous>)
+    actualOmegaFlux (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:51:61)
+    attachActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:261:56)
+    prepareActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:287:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:10:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:14:11)
+  ...
+# Subtest: all thirteen actual continuous matrix entries use the full original radial supports and densities
+not ok 4 - all thirteen actual continuous matrix entries use the full original radial supports and densities
+  ---
+  duration_ms: 0.112446
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:34:1'
+  failureType: 'testCodeFailure'
+  error: 'The original conservative moment body changed.'
+  code: 'INVALID_SOURCE_CONSTRUCTION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:18:42)
+    equal (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:22:3)
+    file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:56:115
+    Array.map (<anonymous>)
+    actualOmegaFlux (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:51:61)
+    attachActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:261:56)
+    prepareActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:287:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:10:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:14:11)
+  ...
+# Subtest: original local moment bodies keep the genuine kappa cutoff and complete lower integrals
+not ok 5 - original local moment bodies keep the genuine kappa cutoff and complete lower integrals
+  ---
+  duration_ms: 0.202488
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:41:1'
+  failureType: 'testCodeFailure'
+  error: 'The original conservative moment body changed.'
+  code: 'INVALID_SOURCE_CONSTRUCTION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:18:42)
+    equal (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:22:3)
+    file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:56:115
+    Array.map (<anonymous>)
+    actualOmegaFlux (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:51:61)
+    attachActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:261:56)
+    prepareActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:287:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:10:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:14:11)
+  ...
+# Subtest: each full global moment includes every ordered pair and its original continuous correction
+not ok 6 - each full global moment includes every ordered pair and its original continuous correction
+  ---
+  duration_ms: 0.140758
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:48:1'
+  failureType: 'testCodeFailure'
+  error: 'The original conservative moment body changed.'
+  code: 'INVALID_SOURCE_CONSTRUCTION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:18:42)
+    equal (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:22:3)
+    file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:56:115
+    Array.map (<anonymous>)
+    actualOmegaFlux (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:51:61)
+    attachActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:261:56)
+    prepareActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:287:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:10:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:14:11)
+  ...
+# Subtest: actual positive mass primitives supply continuity without dropping accumulated local mass or nu
+not ok 7 - actual positive mass primitives supply continuity without dropping accumulated local mass or nu
+  ---
+  duration_ms: 0.147938
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:56:1'
+  failureType: 'testCodeFailure'
+  error: 'The original conservative moment body changed.'
+  code: 'INVALID_SOURCE_CONSTRUCTION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:18:42)
+    equal (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:22:3)
+    file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:56:115
+    Array.map (<anonymous>)
+    actualOmegaFlux (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:51:61)
+    attachActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:261:56)
+    prepareActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:287:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:10:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:14:11)
+  ...
+# Subtest: source proof seals reject fabricated completion and retain frozen original program semantics
+not ok 8 - source proof seals reject fabricated completion and retain frozen original program semantics
+  ---
+  duration_ms: 0.363335
+  type: 'test'
+  location: '/workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:62:1'
+  failureType: 'testCodeFailure'
+  error: 'The original conservative moment body changed.'
+  code: 'INVALID_SOURCE_CONSTRUCTION'
+  stack: |-
+    fail (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs:4:56)
+    requirePass (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:18:42)
+    equal (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:22:3)
+    file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:56:115
+    Array.map (<anonymous>)
+    actualOmegaFlux (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:51:61)
+    attachActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:261:56)
+    prepareActualGlobalConservativeMoments (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-conservative-moments.mjs:287:10)
+    source (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:10:21)
+    TestContext.<anonymous> (file:///workspace/scratch/cf975e3da716/MathScopeCompute/research-ide/mathscope-m2/navier/tests/actual-global-conservative-moments-source.test.mjs:14:11)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 0
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11906.460039

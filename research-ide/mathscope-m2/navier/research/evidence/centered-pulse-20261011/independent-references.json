@@ -1,0 +1,46 @@
+{
+  "schema": "MathScope.CenteredPulseIndependentReference/1",
+  "purpose": "Independent representable sanity reference only. The actual directed bounds are produced by exact BigInt rational arithmetic.",
+  "lookup": {
+    "provider": "Exa",
+    "tools": [
+      "web_search_exa",
+      "web_fetch_exa"
+    ],
+    "date": "2026-10-11",
+    "primarySources": [
+      {
+        "url": "https://dlmf.nist.gov/7.2",
+        "formulas": [
+          "7.2.1",
+          "7.2.2"
+        ],
+        "usedFor": "Gaussian integral normalization; at z=0, the half-line Gaussian integral is sqrt(pi)/2."
+      },
+      {
+        "url": "https://dlmf.nist.gov/4.24",
+        "formula": "4.24.3",
+        "usedFor": "The arctangent power series for reciprocal arguments in (0,1)."
+      }
+    ]
+  },
+  "specialFunction": {
+    "provider": "Precise Special Functions",
+    "tool": "gamma",
+    "input": {
+      "z": 0.5,
+      "precision_dps": 80
+    },
+    "observedResult": "1.7724538509055160272981674833411451827975494561223871282138077898529112845910322",
+    "argumentExactlyRepresentableInBinary64": true,
+    "inputIsActualSourceH": false,
+    "certifiedOutwardErrorProvided": false,
+    "usedAsIntervalEvidence": false,
+    "actualSourceHSetToZero": false
+  },
+  "numericalProof": {
+    "pi": "16 atan(1/5)-4 atan(1/239), exact signed alternating remainders",
+    "sqrt": "outward integer square-root rounding",
+    "externalDecimalUsedInArithmetic": false
+  }
+}

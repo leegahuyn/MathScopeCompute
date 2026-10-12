@@ -1,0 +1,270 @@
+{
+  "id": "ns-m2-covariance",
+  "request": {
+    "kind": "ns.pulse-covariance",
+    "input": {
+      "target": [
+        -1,
+        0
+      ],
+      "amplitude": 1,
+      "liftedArea": 1,
+      "epsilon": 0.1
+    }
+  },
+  "inputHash": "0774b5ed1ace0e6692a0e20e70f803ee416bc44fb68e03b4fd02d8eba2bd10f1",
+  "result": {
+    "blockers": [
+      "N5-06/07 full original pulse covariance, interval positivity and curl-remainder contract are pending."
+    ],
+    "checks": [
+      {
+        "detail": "",
+        "id": "transverse-polarizations",
+        "pass": true
+      },
+      {
+        "detail": "Cone failure is retained if either weight is nonpositive.",
+        "id": "positive-two-family-weights",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "covariance-matching",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "angular-half-factor",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "negative-missing-half",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "FINITE_NUMERICAL_COMPONENT",
+    "kind": "ns.pulse-covariance",
+    "moduleVersion": "m2-ns-0.1.1",
+    "object": {
+      "datumRole": "EXPLICIT_LOCAL_POLARIZATION_FIXTURE",
+      "kind": "TWO_FAMILY_FINITE_COVARIANCE"
+    },
+    "precisionLedger": {
+      "arithmetic": "FLOAT64_WITH_EXACT_INDEX_AND_SOURCE_EXPRESSIONS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 12000,
+      "outputItemsEstimate": 4,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "5d92ffd34d43e21302bdb431b4c0140623fd1091d612e7df39786a741626155a",
+    "results": {
+      "Hcov": [
+        [
+          -0.03571428571428571,
+          -0.03571428571428571
+        ],
+        [
+          0.03571428571428571,
+          -0.03571428571428571
+        ]
+      ],
+      "angularAverage": {
+        "discreteQuadrature": 0.49999999999999994,
+        "exact": "1/2"
+      },
+      "cosineHalfFactor": 0.5,
+      "determinant": 0.002551020408163265,
+      "epsilonScaledStress": [
+        -0.1,
+        0
+      ],
+      "families": [
+        {
+          "covariance": [
+            -0.03571428571428571,
+            0.03571428571428571
+          ],
+          "family": "+",
+          "polarization": [
+            1,
+            -1,
+            1
+          ],
+          "weight": 14
+        },
+        {
+          "covariance": [
+            -0.03571428571428571,
+            -0.03571428571428571
+          ],
+          "family": "-",
+          "polarization": [
+            1,
+            -1,
+            -1
+          ],
+          "weight": 14
+        }
+      ],
+      "globalProfileMatching": false,
+      "haar": {
+        "Jg": [
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "det": 14,
+        "jacobian": "1/14",
+        "liftedArea": 1
+      },
+      "normal": [
+        1,
+        1,
+        0
+      ],
+      "reconstructed": [
+        -1,
+        0
+      ],
+      "sameLabelHarmonicsRetained": true,
+      "target": [
+        -1,
+        0
+      ],
+      "weights": [
+        14,
+        14
+      ]
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "stress r-theta",
+          "name": "stress r-theta",
+          "scale": "LINEAR",
+          "sourceField": "stress r-theta",
+          "unit": "stress"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "stress r-z",
+          "name": "stress r-z",
+          "scale": "LINEAR",
+          "sourceField": "stress r-z",
+          "unit": "stress"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "family index",
+          "name": "family index",
+          "scale": "LINEAR",
+          "sourceField": "family index",
+          "unit": "1"
+        }
+      ],
+      "description": "Two actual polarization covariance columns, their weights and the supplied target.",
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              -0.03571428571428571,
+              0.03571428571428571,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              -0.03571428571428571,
+              -0.03571428571428571,
+              1
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "Finite constant-polarization fixture; no matching to the archived nonconstant N3 stress has been proved.",
+        "Original pulse cutoff/curl remainders must be added before global residual use."
+      ],
+      "points": [
+        {
+          "label": "family +, weight 14",
+          "pos": [
+            -0.03571428571428571,
+            0.03571428571428571,
+            0
+          ],
+          "value": 14
+        },
+        {
+          "label": "family -, weight 14",
+          "pos": [
+            -0.03571428571428571,
+            -0.03571428571428571,
+            1
+          ],
+          "value": 14
+        },
+        {
+          "label": "target",
+          "pos": [
+            -1,
+            0,
+            2
+          ],
+          "value": 0
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "43de04a1ca87281603637763e8b5e61b066e263201ee686ad80db7ce0189fefc"
+}

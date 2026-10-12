@@ -1,0 +1,90 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {ActualConvergentExpressions} from '../actual-continuation-exact-functions.mjs';
+import {ActualCovarianceExpressions} from '../actual-covariance-volterra.mjs';
+import {ActualInnerCovarianceExpressions} from '../actual-inner-covariance-flat-extension.mjs';
+import {ActualPhysicalCenterExpressions} from '../actual-common-physical-center-enclosure.mjs';
+import {actualMovingPulseFrame} from '../actual-covariance-matrix.mjs';
+import {sourceGraphRationalIdentity} from '../actual-continuation-exact-identities.mjs';
+import {adiabaticReplaceExactOperands,adiabaticExactBranchNormalizer} from '../actual-adiabatic-pulse-center-kernel.mjs';
+import {physicalCenterCutoffPlateauAudit} from '../actual-physical-center-kernel.mjs';
+
+const base=()=>new ActualCovarianceExpressions(new ActualConvergentExpressions());
+const graph=()=>new ActualPhysicalCenterExpressions(base());
+
+test('the new point graph preserves coordinate substitution and bound-variable capture rules',()=>{
+  for(const Constructor of [ActualInnerCovarianceExpressions,ActualPhysicalCenterExpressions]){
+    const G=new Constructor(base()),x=G.fresh('point_x'),z=G.fresh('point_z'),v=G.fresh('bound_v'),
+      body=G.integral(G.exp(G.mul(x,v)),v,G.zero,z),at=G.substitute(body,x,v),node=G.nodes[at];
+    assert.notEqual(node.args[1],v);assert.equal(node.args[0],G.exp(G.mul(v,node.args[1])));
+    assert.deepEqual([...G.freeCoordinates(at)].sort((a,b)=>a-b),[z,v].sort((a,b)=>a-b));
+    assert.equal(G.substitute(body,v,G.q(7)),body);
+    assert.equal(G.nodes[G.substitute(body,z,x)].args[3],x);
+    const compound=G.add(x,z);assert.equal(G.substitute(G.pow(compound,2),compound,G.q(3)),G.q(9));
+  }
+});
+
+test('independent endpoint coordinates do not allocate a product-size substitution cache',()=>{
+  const G=graph(),x=G.fresh('retained_point');let body=x;
+  for(let j=1;j<=128;j++)body=G.mul(G.add(G.sine(body),G.q(j)),G.add(x,G.q(j+1)));
+  const before=G.substitutions.size;
+  for(let j=0;j<256;j++){const v=G.fresh('independent_endpoint_'+j);assert.equal(G.substitute(body,v,G.one),body);}
+  assert.equal(G.substitutions.size,before);assert.notEqual(G.substitute(body,x,G.q(2)),body);
+});
+
+test('both actual moving-frame columns retain their exact normal constraint before the positive root rule',()=>{
+  const G=graph(),q=(n,d=1)=>G.q(n,d),p=Object.fromEntries(['F','FR','GR','R','epsilon','k','p','pz','x0','v','Ls','u','c0','lambda0','HR','HZ'].map(n=>[n,G.fresh('frame_'+n)]));
+  for(const sign of [1,-1]){
+    const frame=actualMovingPulseFrame(G,{...p,sign}),center=x=>G.substitute(x,p.v,G.div(p.Ls,q(2))),n=frame.n.map(center),nt=center(frame.nt),B=frame.B.map(row=>row.map(center)),
+      argument=G.add(G.pow(n[1],2),G.pow(n[2],2)),defect=G.div(G.mul(n[0],G.sub(G.pow(nt,2),argument)),G.pow(nt,2));
+    assert.equal(G.nodes[nt].op,'sqrt_positive');assert.equal(G.nodes[nt].args[0],argument);
+    for(const j of [0,1]){
+      const dot=G.add(...n.map((x,i)=>G.mul(x,B[i][j]))),check=sourceGraphRationalIdentity(G,G.sub(dot,defect),{atomicNodes:[...n,nt,center(frame.J[1][0])],maxTerms:30000});
+      assert.equal(check.pass,true);
+      assert.equal(sourceGraphRationalIdentity(G,G.add(G.sub(dot,defect),G.one),{atomicNodes:[...n,nt,center(frame.J[1][0])],maxTerms:30000}).pass,false);
+    }
+  }
+});
+
+test('the source angular phase choice and shared coefficient curl retain all variable dependencies',()=>{
+  const G=graph(),q=(n,d=1)=>G.q(n,d),coords=Object.fromEntries(['R','Z','T','Xrep','etaRep','sRep','xi','v','theta'].map(n=>[n,G.fresh('source_'+n)])),
+    parameters=['R','Z','T','Xrep','etaRep','sRep'].map(n=>coords[n]),p=G.add(G.one,G.pow(coords.Xrep,2)),pz=G.neg(G.exp(coords.etaRep)),x0=G.exp(coords.sRep),
+    F=G.add(G.pow(coords.R,2),coords.T),H=G.add(G.mul(p,F),G.mul(pz,coords.Z)),
+    phase=G.sub(G.add(G.mul(p,coords.theta),G.mul(pz,coords.Z),G.mul(x0,coords.R)),G.mul(coords.v,H)),
+    values=[q(3),G.zero,q(2),q(4),G.zero,q(2)],at=x=>G.simultaneousSubstitute(x,parameters,values),v0=q(1,2),
+    angle=G.div(G.sub(G.mul(v0,at(H)),G.mul(at(x0),values[0])),at(p)),
+    atCenter=x=>G.simultaneousSubstitute(x,[...parameters,coords.xi,coords.v,coords.theta],[...values,G.zero,v0,angle]),phaseAt=atCenter(phase);
+  assert.equal(sourceGraphRationalIdentity(G,phaseAt,{atomicNodes:[at(p),at(x0),at(H)]}).pass,true);
+  const body=G.mul(G.exp(coords.Xrep),G.add(G.pow(coords.R,2),G.mul(coords.Z,coords.T),G.sine(coords.xi),G.pow(coords.v,2))),
+    shared=G.share(body,[...parameters,coords.xi,coords.v],'ActualPhysicalCenterFixture'),node=G.nodes[shared],materialized=G.materializeExpressionFunction(...node.args);
+  assert.equal(materialized,body);assert.equal(G.expressionSystems[node.args[0]].body,body);
+  const radial=G.add(G.derivative(shared,coords.R),G.mul(coords.R,G.derivative(shared,coords.xi))),
+    expected=G.add(G.derivative(body,coords.R),G.mul(coords.R,G.derivative(body,coords.xi))),
+    radialNode=G.nodes[G.derivative(shared,coords.R)],fastNode=G.nodes[G.derivative(shared,coords.xi)],
+    materializedRadial=G.add(G.materializeExpressionFunction(...radialNode.args),G.mul(coords.R,G.materializeExpressionFunction(...fastNode.args)));
+  assert.equal(sourceGraphRationalIdentity(G,G.sub(materializedRadial,expected)).pass,true);
+  const sine=G.sine(phaseAt),cosine=G.cosine(phaseAt),leading=atCenter(body),curlCoefficient=atCenter(radial),
+    full=G.sub(G.mul(leading,cosine),G.mul(curlCoefficient,sine)),value=adiabaticReplaceExactOperands(G,full,[[cosine,G.one],[sine,G.zero]]);
+  assert.equal(sourceGraphRationalIdentity(G,G.sub(value,leading)).pass,true);
+  assert.notEqual(curlCoefficient,G.zero);assert.equal(G.freeCoordinates(leading).size,0);
+});
+
+test('carrier derivative normalization collapses equal branches and retains an active nonzero branch',()=>{
+  const G=graph(),x=G.fresh('frozen_label'),v=G.fresh('pulse_coordinate'),zeroBranch=G.choose(x,G.zero,G.one,G.zero,G.zero,G.zero),
+    active=G.choose(x,G.zero,G.one,G.zero,G.one,G.zero),normal=adiabaticExactBranchNormalizer(G);
+  assert.equal(normal.normalize(zeroBranch),G.zero);assert.notEqual(normal.normalize(active),G.zero);
+  assert.equal(G.substitute(active,v,G.q(7)),active);
+});
+
+test('the original unevaluated sigma center values have an exact plateau proof, with changed bodies rejected',()=>{
+  const G=graph(),q=(n,d=1)=>G.q(n,d),v=G.fresh('original_fast_time'),xi=G.fresh('original_transverse'),Ls=G.exp(G.fresh('positive_original_length')),
+    r0=q(1,1n<<34n),a=G.sqrt(G.pow(G.div(xi,r0),2)),chi=G.choose(a,q(1,4),q(3,4),G.one,G.step(G.sub(q(3,2),G.mul(q(2),a))),G.zero),
+    first=G.step(G.sub(G.div(G.mul(q(20),v),Ls),q(4))),second=G.step(G.sub(q(16),G.div(G.mul(q(20),v),Ls))),psi=G.mul(first,second),
+    p=physicalCenterCutoffPlateauAudit(G,{chi,psi,xi,v,Ls,r0});
+  assert.equal(p.pass,true);assert.equal(p.chiAt,G.one);assert.notEqual(p.psiAt,G.one);
+  assert.ok(p.argumentChecks.every(x=>x.pass));assert.equal(p.originalPsiValueReplaced,false);
+  assert.throws(()=>physicalCenterCutoffPlateauAudit(G,{chi,psi:first,xi,v,Ls,r0}),/literal-original-cutoff-bodies/);
+  const shifted=G.substitute(psi,v,G.add(v,Ls));
+  assert.throws(()=>physicalCenterCutoffPlateauAudit(G,{chi,psi:shifted,xi,v,Ls,r0}),/literal-original-cutoff-bodies/);
+  assert.throws(()=>physicalCenterCutoffPlateauAudit(G,{chi:G.zero,psi,xi,v,Ls,r0}),/literal-original-cutoff-bodies/);
+});

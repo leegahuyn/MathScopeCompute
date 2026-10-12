@@ -1,0 +1,312 @@
+"""Independent finite checks for the general Weierstrass arithmetic branch."""
+
+from copy import deepcopy
+from fractions import Fraction
+import json
+from math import gcd
+from pathlib import Path
+import sys
+import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from p7.elliptic_local import (
+    ComputationLimits, EllipticLocalError, WeierstrassCurve, as_curve,
+    coefficients, count_good_prime, curve_certificate, dirichlet_coefficients,
+    local_reduction, point_add, point_multiply, point_negate,
+    point_nontorsion_certificate, point_order_certificate,
+    semistable_minimal_certificate, torsion_reduction_bound, weierstrass_invariants,
+)
+
+
+def brute_projective_count(ainvs, prime):
+    """Independent O(p^2) equation enumeration, no discriminant/Legendre code."""
+    a1, a2, a3, a4, a6 = [int(value) % prime for value in ainvs]
+    return 1 + sum(
+        (y*y + a1*x*y + a3*y - x*x*x - a2*x*x - a4*x - a6) % prime == 0
+        for x in range(prime) for y in range(prime)
+    )
+
+
+def elementary_primes(limit):
+    return [n for n in range(2, limit + 1) if all(n % d for d in range(2, n))]
+
+
+def formal_euler_product(model, limit, *, omitted=()):
+    """Independent finite formal series inversion and polynomial multiplication.
+
+    This solves polynomial * power_series = 1 coefficient by coefficient,
+    then multiplies the local series by their actual integer n indices.
+    """
+    result = [0] * (limit + 1)
+    result[1] = 1
+    for prime in elementary_primes(limit):
+        if prime in omitted:
+            continue
+        local = local_reduction(model, prime)["eulerPolynomial"]
+        local_series = [1]
+        powers = [1]
+        while powers[-1]*prime <= limit:
+            degree = len(local_series)
+            value = -sum(local[j]*local_series[degree-j] for j in range(1, min(len(local)-1, degree)+1))
+            local_series.append(value)
+            powers.append(powers[-1]*prime)
+        product = [0] * (limit + 1)
+        for index, value in enumerate(result):
+            if index == 0 or not value:
+                continue
+            for power, coefficient in zip(powers, local_series):
+                if index*power <= limit:
+                    product[index*power] += value*coefficient
+        result = product
+    return tuple(result[1:])
+
+
+class EllipticLocalTests(unittest.TestCase):
+    def assert_error(self, code, operation):
+        with self.assertRaises(EllipticLocalError) as raised:
+            operation()
+        self.assertEqual(raised.exception.code, code)
+
+    def test_exact_invariants_11a1(self):
+        actual = weierstrass_invariants("11a1")
+        self.assertEqual({k: actual[k] for k in ("b2", "b4", "b6", "b8", "c4", "c6", "Delta")},
+                         dict(b2=-4, b4=-20, b6=-79, b8=-21, c4=496, c6=20008, Delta=-11**5))
+        self.assertEqual(actual["j"], Fraction(-122023936, 161051))
+
+    def test_exact_invariants_37a1_and_independent_identity(self):
+        actual = weierstrass_invariants("37a1")
+        self.assertEqual(actual["Delta"], 37)
+        self.assertEqual(actual["c4"], 48)
+        self.assertEqual(actual["c6"], -216)
+        for model in ("11a1", "37a1", [2, 5, 7, 4, -6], [1, 2, 3, 4, 5]):
+            values = weierstrass_invariants(model)
+            self.assertEqual((values["c4"]**3 - values["c6"]**2) / 1728, values["Delta"])
+
+    def test_rational_scaling_weights_and_j(self):
+        original = as_curve("37a1")
+        scaled = [coefficient / 2**weight for coefficient, weight in zip(original.ainvs, (1, 2, 3, 4, 6))]
+        a, b = weierstrass_invariants(original), weierstrass_invariants(scaled)
+        self.assertEqual(a["c4"], 2**4*b["c4"])
+        self.assertEqual(a["c6"], 2**6*b["c6"])
+        self.assertEqual(a["Delta"], 2**12*b["Delta"])
+        self.assertEqual(a["j"], b["j"])
+        self.assertEqual(count_good_prime(scaled, 5)["projectivePointCount"], count_good_prime(original, 5)["projectivePointCount"])
+        self.assert_error("NONINTEGRAL_MODEL_AT_PRIME", lambda: count_good_prime(scaled, 2))
+        self.assertEqual(semistable_minimal_certificate(scaled)["status"], "unsupported")
+
+    def test_exact_input_validation_rejects_float_bool_singular_and_wrong_shape(self):
+        for bad in ([0, 0, 1.0, -1, 0], [False, 0, 1, -1, 0], [0, 0, "0.25", -1, 0], [0, 0, "1/0", -1, 0]):
+            self.assert_error("INVALID_EXACT_RATIONAL", lambda bad=bad: as_curve(bad))
+        self.assert_error("SINGULAR_MODEL", lambda: as_curve([0, 0, 0, 0, 0]))
+        self.assert_error("INVALID_MODEL", lambda: as_curve([0, 0, 1, -1]))
+        self.assert_error("UNKNOWN_MODEL_ALIAS", lambda: as_curve("11a2"))
+        self.assertEqual(as_curve(["0", "0", "2/2", "-1", "0"]).model_hash, as_curve("37a1").model_hash)
+
+    def test_general_five_coefficient_group_law_under_coordinate_change(self):
+        # old x=new x+2, old y=new y+new x+3; all five new coefficients are nonzero.
+        transformed = [2, 5, 7, 4, -6]
+        point = (Fraction(-2), Fraction(-1))
+        for invariant in ("c4", "c6", "Delta", "j"):
+            self.assertEqual(weierstrass_invariants(transformed)[invariant], weierstrass_invariants("37a1")[invariant])
+        for scalar in range(-8, 9):
+            new_point = point_multiply(transformed, scalar, point)
+            old_point = None if new_point is None else (new_point[0] + 2, new_point[1] + new_point[0] + 3)
+            self.assertEqual(old_point, point_multiply("37a1", scalar, (0, 0)))
+
+    def test_11a1_exact_order_five_and_all_proper_multiples(self):
+        point = (5, 5)
+        expected = [(5, 5), (16, -61), (16, 60), (5, -6), None]
+        actual = [point_multiply("11a1", scalar, point) for scalar in range(1, 6)]
+        self.assertEqual(actual, expected)
+        proof = point_order_certificate("11a1", point, 5)
+        self.assertEqual(proof["exactOrder"], 5)
+        self.assertEqual(proof["properPrimeDivisorMultiples"][0]["point"], ["5", "5"])
+        self.assert_error("POINT_ORDER_MISMATCH", lambda: point_order_certificate("11a1", point, 10))
+        self.assert_error("POINT_ORDER_MISMATCH", lambda: point_order_certificate("11a1", point, 4))
+
+    def test_group_identity_inverse_vertical_tangent_and_negative_scalar(self):
+        for model, point in (("11a1", (5, 5)), ("37a1", (0, 0)), ([0, 0, 0, -1, 0], (0, 0))):
+            self.assertEqual(point_add(model, None, point), point)
+            self.assertEqual(point_add(model, point, None), point)
+            self.assertIsNone(point_add(model, point, point_negate(model, point)))
+            self.assertEqual(point_multiply(model, -3, point), point_negate(model, point_multiply(model, 3, point)))
+        self.assertIsNone(point_multiply([0, 0, 0, -1, 0], 2, (0, 0)))
+        self.assertEqual(point_order_certificate([0, 0, 0, -1, 0], (0, 0), 2)["exactOrder"], 2)
+        self.assertEqual(point_order_certificate("37a1", None, 1)["exactOrder"], 1)
+
+    def test_points_are_validated_even_in_identity_and_zero_scalar_branches(self):
+        self.assert_error("POINT_NOT_ON_CURVE", lambda: point_add("37a1", None, (1, 1)))
+        self.assert_error("POINT_NOT_ON_CURVE", lambda: point_multiply("37a1", 0, (1, 1)))
+        self.assert_error("INVALID_SCALAR", lambda: point_multiply("37a1", True, (0, 0)))
+
+    def test_good_prime_character_counts_match_independent_exhaustive_equation(self):
+        for model in ("11a1", "37a1", [2, 5, 7, 4, -6], [1, 2, 3, 4, 5]):
+            curve = as_curve(model)
+            delta = int(weierstrass_invariants(curve)["Delta"])
+            for prime in (2, 3, 5, 7, 11, 13, 17, 19, 23):
+                if delta % prime == 0:
+                    continue
+                with self.subTest(model=str(model), prime=prime):
+                    row = count_good_prime(curve, prime)
+                    self.assertEqual(row["projectivePointCount"], brute_projective_count(curve.ainvs, prime))
+                    self.assertEqual(row["eulerPolynomial"], [1, -(prime + 1 - row["projectivePointCount"]), prime])
+                    self.assertLessEqual(row["a_p"]**2, 4*prime)
+
+    def test_bad_primes_composites_and_float_primes_are_not_good_inputs(self):
+        self.assert_error("NOT_GOOD_REDUCTION", lambda: count_good_prime("11a1", 11))
+        for prime in (4, 9, 15, 25, 341):
+            self.assert_error("COMPOSITE_PRIME_INPUT", lambda prime=prime: count_good_prime("37a1", prime))
+        for prime in (True, 2.0, "2", 0, -7):
+            self.assert_error("INVALID_PRIME", lambda prime=prime: count_good_prime("37a1", prime))
+
+    def test_11a1_minimal_split_i5_conductor_root_number_tamagawa(self):
+        global_data = semistable_minimal_certificate("11a1")
+        self.assertTrue(global_data["minimalAtEveryPrime"])
+        self.assertTrue(global_data["allBadFactorsCertified"])
+        self.assertEqual(global_data["conductor"], 11)
+        self.assertEqual(global_data["globalRootNumber"], 1)
+        local = global_data["badPrimeRows"][0]
+        self.assertEqual((local["prime"], local["valuationC4"], local["valuationDelta"], local["kodaira"]), (11, 0, 5, "I5"))
+        self.assertTrue(local["split"])
+        self.assertEqual(local["node"]["legendreMinusC6"], 1)
+        self.assertEqual(len(local["node"]["rationalProjectiveTangentDirections"]), 2)
+        self.assertEqual((local["a_p"], local["tamagawaNumber"], local["localRootNumber"]), (1, 5, -1))
+        self.assertEqual(local["singularProjectivePointCount"], brute_projective_count(as_curve("11a1").ainvs, 11))
+
+    def test_37a1_minimal_nonsplit_i1_conductor_root_number_tamagawa(self):
+        global_data = semistable_minimal_certificate("37a1")
+        self.assertEqual(global_data["conductor"], 37)
+        self.assertEqual(global_data["globalRootNumber"], -1)
+        local = global_data["badPrimeRows"][0]
+        self.assertEqual((local["valuationC4"], local["valuationDelta"], local["kodaira"]), (0, 1, "I1"))
+        self.assertFalse(local["split"])
+        self.assertEqual(local["node"]["legendreMinusC6"], -1)
+        self.assertEqual(local["node"]["rationalProjectiveTangentDirections"], [])
+        self.assertEqual((local["a_p"], local["tamagawaNumber"], local["localRootNumber"]), (-1, 1, 1))
+        self.assertEqual(local["singularProjectivePointCount"], brute_projective_count(as_curve("37a1").ainvs, 37))
+
+    def test_small_bad_prime_uses_actual_tangent_cone(self):
+        # Unit c4 at 2, and at 3 in the second equation; no division by 2 or 3.
+        for model, prime in (([1, 0, 0, 0, 2], 2), ([0, 1, 0, 0, 3], 3)):
+            row = local_reduction(model, prime)
+            self.assertEqual(row["reduction"], "multiplicative")
+            self.assertEqual(row["valuationC4"], 0)
+            self.assertIsNone(row["node"]["legendreMinusC6"])
+            self.assertEqual(row["node"]["splittingMethod"], "explicit-node-tangent-cone-in-small-characteristic")
+            self.assertEqual(row["singularProjectivePointCount"], brute_projective_count(model, prime))
+
+    def test_nonsplit_even_multiplicative_component_group_has_order_two(self):
+        row = local_reduction([0, 2, 0, 0, 25], 5)
+        self.assertEqual(row["kodaira"], "I2")
+        self.assertFalse(row["split"])
+        self.assertEqual(row["tamagawaNumber"], 2)
+
+    def test_additive_or_nonminimal_branches_remain_unsupported(self):
+        additive = [0, 0, 0, -1, 0]
+        row = local_reduction(additive, 2)
+        self.assertEqual(row["status"], "unsupported")
+        for field in ("a_p", "eulerPolynomial", "conductorExponent", "localRootNumber", "tamagawaNumber"):
+            self.assertIsNone(row[field])
+        global_data = semistable_minimal_certificate(additive)
+        self.assertFalse(global_data["allBadFactorsCertified"])
+        self.assertIsNone(global_data["conductor"])
+        self.assertIsNone(global_data["globalRootNumber"])
+        self.assert_error("UNSUPPORTED_COMPLETE_L_FACTORS", lambda: coefficients(additive, 5))
+        # The isomorphic 37a1 equation inflated by u=2 is not silently minimized.
+        inflated = [0, 0, 8, -16, 0]
+        self.assertEqual(local_reduction(inflated, 2)["status"], "unsupported")
+        self.assertFalse(semistable_minimal_certificate(inflated)["allBadFactorsCertified"])
+
+    def test_torsion_bound_respects_prime_to_p_qualification(self):
+        proof = torsion_reduction_bound("11a1", (2, 3))
+        self.assertEqual(proof["orderDivides"], 5)
+        self.assertFalse(proof["allTorsionInjectiveAtP2Assumed"])
+        for constraint in proof["primePowerConstraints"]:
+            for source in constraint["applicablePrimeToPReductions"]:
+                self.assertNotEqual(constraint["torsionPrime"], source["reductionPrime"])
+        self.assert_error("INVALID_TORSION_PRIMES", lambda: torsion_reduction_bound("11a1", (2,)))
+        self.assert_error("INVALID_TORSION_PRIMES", lambda: torsion_reduction_bound("11a1", (2, 2)))
+        self.assert_error("NOT_GOOD_REDUCTION", lambda: torsion_reduction_bound("11a1", (2, 11)))
+
+    def test_37a1_non_torsion_from_actual_good_reductions_not_a_database_rank(self):
+        proof = point_nontorsion_certificate("37a1", (0, 0), (2, 3))
+        self.assertEqual([row["cardinality"] for row in proof["torsionBound"]["reductions"]], [5, 7])
+        self.assertEqual(proof["torsionBound"]["orderDivides"], 1)
+        self.assertEqual(proof["boundMultiple"], ["0", "0"])
+        self.assertTrue(proof["nonTorsionProved"])
+        self.assertEqual(proof["arithmeticRankLowerBound"], 1)
+        self.assertIsNone(proof["arithmeticRankUpperBound"])
+        self.assertFalse(proof["descentPerformed"])
+        self.assertFalse(point_nontorsion_certificate("37a1", None)["nonTorsionProved"])
+
+    def test_coefficients_agree_with_independent_formal_euler_product(self):
+        for model in ("11a1", "37a1"):
+            actual = coefficients(model, 80)
+            self.assertEqual(actual, formal_euler_product(model, 80))
+            self.assertEqual(actual[0], 1)
+            for m in range(1, 10):
+                for n in range(1, 9):
+                    if gcd(m, n) == 1 and m*n <= 80:
+                        self.assertEqual(actual[m*n-1], actual[m-1]*actual[n-1])
+
+    def test_prime_powers_keep_good_quadratic_term_and_bad_linear_term(self):
+        for label, bad_prime, bad_ap in (("11a1", 11, 1), ("37a1", 37, -1)):
+            values = coefficients(label, bad_prime**2)
+            self.assertEqual(values[bad_prime-1], bad_ap)
+            self.assertEqual(values[bad_prime**2-1], 1)
+            self.assertEqual(values[2**2-1], values[1]**2 - 2)
+            self.assertEqual(values[2**3-1], values[1]*values[3] - 2*values[1])
+
+    def test_good_only_is_explicit_omission_not_an_additive_bad_factor(self):
+        model = [0, 0, 0, -1, 0]
+        result = dirichlet_coefficients(model, 40, good_only=True)
+        self.assertEqual(result["function"], "L^S(E,s)")
+        self.assertEqual(result["omittedPrimes"], [2])
+        self.assertFalse(result["completeBadFactorsIncluded"])
+        self.assertEqual(tuple(map(int, result["coefficients"])), formal_euler_product(model, 40, omitted=(2,)))
+        for n in range(2, 41, 2):
+            self.assertEqual(result["coefficients"][n-1], "0")
+        full11 = coefficients("11a1", 40)
+        good11 = coefficients("11a1", 40, good_only=True)
+        self.assertEqual(full11[10], 1)
+        self.assertEqual(good11[10], 0)
+
+    def test_coefficient_api_exact_index_and_boundary_validation(self):
+        self.assertEqual(coefficients("11a1", 1), (1,))
+        record = dirichlet_coefficients("37a1", 12)
+        self.assertEqual(record["firstIndex"], 1)
+        self.assertEqual(record["limit"], 12)
+        self.assertEqual(tuple(map(int, record["coefficients"])), coefficients("37a1", 12))
+        for limit in (True, 0, -2, 2.0):
+            self.assert_error("INVALID_COEFFICIENT_LIMIT", lambda limit=limit: coefficients("11a1", limit))
+        self.assert_error("INVALID_GOOD_ONLY_FLAG", lambda: coefficients("11a1", 2, good_only=1))
+
+    def test_resource_exhaustion_is_a_closed_failure_not_partial_certification(self):
+        self.assert_error("RESOURCE_LIMIT", lambda: curve_certificate("11a1", limits=ComputationLimits(max_trial_divisions=1)))
+        self.assert_error("RESOURCE_LIMIT", lambda: count_good_prime("37a1", 43, limits=ComputationLimits(max_prime=41)))
+        self.assert_error("RESOURCE_LIMIT", lambda: count_good_prime("37a1", 13, limits=ComputationLimits(max_point_count_steps=12)))
+        self.assert_error("RESOURCE_LIMIT", lambda: coefficients("11a1", 11, limits=ComputationLimits(max_coefficient_limit=10)))
+        self.assert_error("RESOURCE_LIMIT", lambda: point_multiply("37a1", 16, (0, 0), limits=ComputationLimits(max_scalar_bits=4)))
+
+    def test_certificate_is_deterministic_json_input_preserving_and_scope_limited(self):
+        model, primes = [0, 0, 1, -1, 0], [2, 3, 5, 7, 37]
+        before = deepcopy((model, primes))
+        first = curve_certificate(model, primes, coefficient_limit=32)
+        second = curve_certificate("37a1", tuple(primes), coefficient_limit=32)
+        self.assertEqual(first, second)
+        self.assertEqual((model, primes), before)
+        encoded = json.dumps(first, sort_keys=True, allow_nan=False)
+        self.assertEqual(json.loads(encoded), first)
+        self.assertNotIn("timestamp", encoded.lower())
+        self.assertEqual(first["arithmeticRank"]["lowerBound"], 1)
+        self.assertIsNone(first["arithmeticRank"]["upperBound"])
+        self.assertIsNone(first["arithmeticRank"]["exactRank"])
+        for field in ("allP7CriteriaComplete", "universalRHProved", "universalBSDProved", "leanProofExecuted", "infiniteTailComputed", "arithmeticRankUpperBoundComputed"):
+            self.assertFalse(first["scope"][field])
+        self.assert_error("INVALID_PRIME_LIST", lambda: curve_certificate("37a1", (2, 2)))
+        self.assert_error("INVALID_PRIME_LIST", lambda: curve_certificate("37a1", (2, True)))
+
+
+if __name__ == "__main__":
+    unittest.main()

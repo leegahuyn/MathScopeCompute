@@ -1,0 +1,283 @@
+{
+  "id": "ns-m2-covariance",
+  "request": {
+    "kind": "ns.pulse-covariance",
+    "input": {
+      "target": [
+        -1,
+        0
+      ],
+      "amplitude": 1,
+      "liftedArea": 0.015625,
+      "epsilon": 0.1
+    }
+  },
+  "inputHash": "46ab5710f44a7cffcd9ed5cc3be03e574a1cd10a0bb74297f07fa5b3a01e4f6a",
+  "result": {
+    "blockers": [
+      "N5-06 requires the actual two pulse covariances and source-stress assembly; the generic N5-07 curl operator is verified separately."
+    ],
+    "checks": [
+      {
+        "detail": "",
+        "id": "transverse-polarizations",
+        "pass": true
+      },
+      {
+        "detail": "Cone failure is retained if either weight is nonpositive.",
+        "id": "positive-two-family-weights",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "covariance-matching",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "angular-half-factor",
+        "pass": true
+      },
+      {
+        "detail": "",
+        "id": "negative-missing-half",
+        "pass": true
+      }
+    ],
+    "evidenceGrade": "FINITE_NUMERICAL_COMPONENT",
+    "kind": "ns.pulse-covariance",
+    "moduleVersion": "m2-ns-0.3.6",
+    "object": {
+      "datumRole": "EXPLICIT_LOCAL_POLARIZATION_FIXTURE",
+      "kind": "TWO_FAMILY_FINITE_COVARIANCE"
+    },
+    "precisionLedger": {
+      "arithmetic": "FLOAT64_WITH_EXACT_INDEX_AND_SOURCE_EXPRESSIONS",
+      "arithmeticBits": 53,
+      "formalPass": false,
+      "fullResultExact": false,
+      "requested": {},
+      "rigorousOdeSolutionErrorBound": null
+    },
+    "resourceEstimate": {
+      "algorithmicOperationsEstimate": 12000,
+      "outputItemsEstimate": 4,
+      "policy": "STATIC_PREFLIGHT_ESTIMATE; NOT_A_MEASURED_OR_CERTIFIED_OPERATION_COUNT; RUNTIME_TIME_AND_BYTE_LIMITS_ENFORCED_BY_ENGINE"
+    },
+    "resultHash": "10c3e0acf92a4b7dbd605d82a2141560555627fa0cb54dc10e5081dc517f9e7c",
+    "results": {
+      "Hcov": [
+        [
+          -0.009152913087920388,
+          -0.009152913087920388
+        ],
+        [
+          0.009152913087920388,
+          -0.009152913087920388
+        ]
+      ],
+      "angularAverage": {
+        "discreteQuadrature": 0.49999999999999994,
+        "exact": "1/2"
+      },
+      "cosineHalfFactor": 0.5,
+      "determinant": 0.00016755163599004868,
+      "epsilonScaledStress": [
+        -0.09999999999999999,
+        0
+      ],
+      "families": [
+        {
+          "covariance": [
+            -0.009152913087920388,
+            0.009152913087920388
+          ],
+          "family": "+",
+          "polarization": [
+            1,
+            -1,
+            1
+          ],
+          "weight": 54.627416997969526
+        },
+        {
+          "covariance": [
+            -0.009152913087920388,
+            -0.009152913087920388
+          ],
+          "family": "-",
+          "polarization": [
+            1,
+            -1,
+            -1
+          ],
+          "weight": 54.627416997969526
+        }
+      ],
+      "globalProfileMatching": false,
+      "haar": {
+        "Jg": [
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "cancellation": "14^Delta * 14^(-Delta)=1",
+        "covarianceFactor": "(4-2*sqrt(2))*c_i/2",
+        "det": 14,
+        "jacobian": "4-2*sqrt(2)",
+        "liftedArea": 0.015625,
+        "liftedAreaMeaning": "integral chi(xi)^2*psi(eta)^2 dxi deta on one injective band rectangle; all covering lifts are included globally",
+        "normalizedCoveringFactor": "1",
+        "notGlobalOneFourteenth": true,
+        "perInverseLiftJacobian": "14^(-Delta)",
+        "preimageCount": "14^Delta",
+        "rectangleJacobianExact": "4-2*sqrt(2)",
+        "rectangleJacobianInterval": [
+          1.1715728752538086,
+          1.1715728752538113
+        ],
+        "sourceEquations": [
+          "6.19",
+          "7.27"
+        ]
+      },
+      "normal": [
+        1,
+        1,
+        0
+      ],
+      "reconstructed": [
+        -0.9999999999999999,
+        0
+      ],
+      "sameLabelHarmonicsRetained": true,
+      "target": [
+        -1,
+        0
+      ],
+      "weights": [
+        54.627416997969526,
+        54.627416997969526
+      ]
+    },
+    "scope": {
+      "finite": true,
+      "formalPass": false,
+      "fullSameProfileN4": false,
+      "fullSameProfileN5": false,
+      "globalNavierStokesConstruction": false
+    },
+    "sourceLedger": {
+      "n3Profile": {
+        "assessmentSha256": "e57681b7bb751967b406ad440942728ecfd8fe47eb9672129ff19c8a7eb6634c",
+        "commit": "55dacb898f8c204bf0c5925ea901d75d6c2d0f46",
+        "description": "Archived N3 same-profile result. This identity is retained; the finite M2 component fixtures below do not substitute new numeric parameters into that profile.",
+        "globalEvaluator": false,
+        "id": "same-profile-2026-10-10.3",
+        "role": "ACCEPTED_N3_ARCHIVE_REFERENCE"
+      },
+      "paper": {
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "title": "Finite Time Blowup for Navier–Stokes",
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+      }
+    },
+    "status": "PARTIAL",
+    "visualization": {
+      "axes": [
+        {
+          "kind": "CATEGORICAL",
+          "label": "stress r-theta",
+          "name": "stress r-theta",
+          "scale": "LINEAR",
+          "unit": "stress"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "stress r-z",
+          "name": "stress r-z",
+          "scale": "LINEAR",
+          "unit": "stress"
+        },
+        {
+          "kind": "CATEGORICAL",
+          "label": "family index",
+          "name": "family index",
+          "scale": "LINEAR",
+          "unit": "1"
+        }
+      ],
+      "description": "Two actual polarization covariance columns, their weights and the supplied target.",
+      "lines": [
+        {
+          "points": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              -0.009152913087920388,
+              0.009152913087920388,
+              0
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              -0.009152913087920388,
+              -0.009152913087920388,
+              1
+            ]
+          ]
+        }
+      ],
+      "lostInformation": [
+        "Finite constant-polarization fixture; no matching to the archived nonconstant N3 stress has been proved.",
+        "Original pulse cutoff/curl remainders must be added before global residual use."
+      ],
+      "points": [
+        {
+          "label": "family +, weight 54.627416997969526",
+          "pos": [
+            -0.009152913087920388,
+            0.009152913087920388,
+            0
+          ],
+          "value": 54.627416997969526
+        },
+        {
+          "label": "family -, weight 54.627416997969526",
+          "pos": [
+            -0.009152913087920388,
+            -0.009152913087920388,
+            1
+          ],
+          "value": 54.627416997969526
+        },
+        {
+          "label": "target",
+          "pos": [
+            -1,
+            0,
+            2
+          ],
+          "value": 0
+        }
+      ]
+    }
+  },
+  "status": "PARTIAL",
+  "resultHash": "55b01f2085297d79a08e05620b22ea1bef74714cbdef94c3a1bcb35437cf93c9"
+}

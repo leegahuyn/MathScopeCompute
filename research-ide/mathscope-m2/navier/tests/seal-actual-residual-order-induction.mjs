@@ -1,0 +1,63 @@
+/** Rebuild the actual induction evidence from its executable sources. */
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {resolve,dirname,relative} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {prepareActualCompletedBackgroundC2,actualBackgroundSymbolicPrefix,actualBackgroundDyadicPrefix} from '../actual-residual-order-induction-background.mjs';
+import {canonicalStringify} from '../../../mathscope-m0/contracts.mjs';
+
+const here=dirname(fileURLToPath(import.meta.url)),navier=resolve(here,'..'),repo=resolve(navier,'../../..'),evidence=resolve(navier,'evidence');
+mkdirSync(evidence,{recursive:true});
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const local=path=>resolve(navier,path);
+const pathRecord=path=>{const bytes=readFileSync(path);return{path:relative(repo,path),bytes:bytes.length,sha256:sha(bytes)};};
+const run=(command,args,options={})=>{
+  const r=spawnSync(command,args,{cwd:repo,encoding:'utf8',timeout:240000,maxBuffer:128*1024*1024,...options});
+  if(r.error||r.status!==0)throw Error('Evidence command failed: '+command+' '+args.join(' ')+'\n'+(r.error?.message??'')+'\n'+r.stdout+'\n'+r.stderr);
+  return r;
+};
+const nodeCommand=['--test','--test-reporter=tap',local('tests/actual-residual-order-induction.test.mjs'),local('tests/actual-residual-order-induction-background.test.mjs')];
+const tests=run(process.execPath,nodeCommand),count=key=>Number(tests.stdout.match(new RegExp('^# '+key+' (\\d+)','m'))?.[1]);
+if(!(count('tests')>0)||count('pass')!==count('tests')||count('fail')!==0)throw Error('The actual source Node tests did not complete successfully.');
+writeFileSync(local('evidence/actual-residual-order-induction-tests.tap'),tests.stdout);
+const fixture=run(process.execPath,[local('tests/actual-residual-order-induction-fixture.mjs')]);
+const independent=run('python3',[local('tests/actual-residual-order-induction-independent.py')],{input:fixture.stdout}),audit=JSON.parse(independent.stdout);
+if(!audit.pass||!Number.isInteger(audit.checks)||audit.checks<=0)throw Error('Independent exact arithmetic checks did not pass.');
+writeFileSync(local('evidence/actual-residual-order-induction-independent.json'),JSON.stringify(audit,null,2)+'\n');
+
+const result=prepareActualCompletedBackgroundC2({order:4}),G=result.G,programNodeCount=G.nodes.length,
+  programCanonicalSHA256=sha(canonicalStringify(result.program)),functionCounts={picard:G.picardSystems.length,shared:G.expressionSystems.length,quadratic:G.quadraticSystems.length,monotone:G.monotoneSystems.length};
+const dyadic=actualBackgroundSymbolicPrefix(result,{anchorOrder:1,dyadicBand:true,derivativeOrder:2}),arbitrary=actualBackgroundDyadicPrefix(result,{ellExact:'4',derivativeOrder:2});
+const receipt={schema:'MathScope.ActualResidualOrderInductionExecuted/1',input:{order:4},profileId:result.program.profileId,parameterExpressionSHA256:result.program.parameterExpressionSHA256,
+  programCanonicalSHA256,programNodeCount,functionCounts,positiveNormRoots:result.roots,
+  proofs:{checks:result.checks,pass:result.pass,parametricPDE:result.parametricPDE,
+    actualAndAuxiliary:result.systems.map(s=>({order:s.order,kind:s.kind,system:s.system,checks:s.checks,bindings:s.bindings,negative:s.negative,pass:s.pass})),
+    actualMoments:result.moments,potential:result.potential,support:{pass:result.support.pass,rows:result.support.rows,sourceOrder:result.support.sourceOrder,bareLocalizedIntegralProvedZero:result.support.bareLocalizedIntegralProvedZero}},
+  allOrderInduction:result.induction,canonicalPrefix:result.cutoffs.rows.map(row=>({order:row.order,logScale:row.logScale,scale:row.scale,canonicalNormRequest:row.canonicalNormRequest,selectedByLaterPrefix:row.selectedByLaterPrefix,sourceCoefficientRoots:row.sourceCoefficientRoots})),
+  chart:{domain:result.chart.domain,chart:result.chart.chart,exactFields:result.chart.exactFields,roots:result.chart.roots,bounds:result.chart.bounds,derivation:result.chart.derivation,scope:result.chart.scope},
+  observations:{anchor:{kind:dyadic.bandSelection.kind,ell:dyadic.ell,Q:dyadic.Q,rows:dyadic.rows.map(row=>row.order),derivativeOrder:dyadic.derivativeOrder,jetCounts:Object.fromEntries(Object.entries(dyadic.jets).map(([k,v])=>[k,v.length])),inactiveTail:dyadic.exactInactiveTail,plateau:dyadic.exactPlateau,
+      qDerivativePreserved:dyadic.qDerivativePreserved,thisFiniteBandEqualsAllBands:dyadic.thisFiniteBandEqualsAllBands},
+    arbitraryInteger:{ellExact:arbitrary.ellExact,rows:arbitrary.rows.map(row=>row.order),inactiveTail:arbitrary.exactInactiveTail,algorithmDefinedForEveryFiniteIntegerEll:arbitrary.algorithmDefinedForEveryFiniteIntegerEll,sameCanonicalSequenceAsAnchorFamily:arbitrary.sameCanonicalSequenceAsAnchorFamily}},
+  graphInterpretation:'Node identifiers are bindings in the replayable source program identified by programCanonicalSHA256. The complete program is generated by the attached source code; this small evidence file is not a replacement program or numeric interval evaluator.',
+  scope:result.program.scope};
+const executedPath=local('evidence/actual-residual-order-induction-executed.json');writeFileSync(executedPath,JSON.stringify(receipt,null,2)+'\n');
+
+const runtime=['kernels','expressions','source','proof','norms','cutoffs','background'].map(n=>local('actual-residual-order-induction-'+n+'.mjs'));
+const deps=new Set();
+function visit(path){if(deps.has(path))return;deps.add(path);const body=readFileSync(path,'utf8');for(const match of body.matchAll(/\bfrom\s+['"]([^'"]+)['"]/g))if(match[1].startsWith('.'))visit(resolve(dirname(path),match[1]));}
+runtime.forEach(visit);
+const own=[...runtime,local('tests/actual-residual-order-induction.test.mjs'),local('tests/actual-residual-order-induction-background.test.mjs'),local('tests/actual-residual-order-induction-fixture.mjs'),local('tests/actual-residual-order-induction-independent.py'),fileURLToPath(import.meta.url),local('research/ACTUAL_RESIDUAL_ORDER_INDUCTION_KO.md')];
+const manifest={schema:'MathScope.ActualResidualOrderInductionEvidence/1',profileId:receipt.profileId,parameterExpressionSHA256:receipt.parameterExpressionSHA256,
+  pass:true,nodeTests:{tests:count('tests'),pass:count('pass'),fail:count('fail')},independentChecks:audit,
+  programCanonicalSHA256,programNodeCount,executedReceiptCanonicalSHA256:sha(canonicalStringify(receipt)),
+  commands:{node:'node --test research-ide/mathscope-m2/navier/tests/actual-residual-order-induction.test.mjs research-ide/mathscope-m2/navier/tests/actual-residual-order-induction-background.test.mjs',
+    independent:'node research-ide/mathscope-m2/navier/tests/actual-residual-order-induction-fixture.mjs | python3 research-ide/mathscope-m2/navier/tests/actual-residual-order-induction-independent.py',
+    seal:'node research-ide/mathscope-m2/navier/tests/seal-actual-residual-order-induction.mjs'},
+  files:own.map(pathRecord),runtimeDependencies:[...deps].sort().map(pathRecord),
+  evidenceFiles:[executedPath,local('evidence/actual-residual-order-induction-tests.tap'),local('evidence/actual-residual-order-induction-independent.json')].map(pathRecord),
+  dependencies:{arbitraryLeadingJets:pathRecord(local('evidence/actual-leading-all-order-jets.json')),enlargedLeadingC2:pathRecord(local('evidence/actual-leading-enlarged-c2.json'))},
+  independentReview:{reviewer:'blueprint_review',scope:'Read-only source/norm/canonical/chart review, separate universal-nu and actual n1/n2 exact executions, then enlarged leading F and both dyadic rules. Written proof plus executed exact reductions; not a new Lean kernel certificate.',additionalMathChangesRequested:false},
+  scope:receipt.scope};
+const manifestPath=local('evidence/actual-residual-order-induction.json');writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n');
+process.stdout.write(JSON.stringify({pass:true,nodeTests:manifest.nodeTests,independentChecks:audit.checks,programNodeCount,programCanonicalSHA256,manifest:pathRecord(manifestPath),runtime:runtime.map(pathRecord),executed:pathRecord(executedPath)},null,2)+'\n');

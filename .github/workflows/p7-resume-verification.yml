@@ -1,0 +1,35 @@
+name: M3 P7 continuation verification
+on:
+  workflow_dispatch:
+  push:
+    branches: [mathscope-m3-p7-20261011, main]
+    paths:
+      - 'research-ide/mathscope-m3/**'
+      - 'app/**'
+      - 'tests/test_p7_api.py'
+      - 'requirements.txt'
+      - '.github/workflows/p7-resume-verification.yml'
+  pull_request:
+    paths: ['research-ide/mathscope-m3/**', 'app/p7_api.py', 'tests/test_p7_api.py']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: API and existing compute regression tests
+        run: python -m pytest -q tests
+      - name: Source-bound P7 numerical and replay tests
+        working-directory: research-ide/mathscope-m3
+        env:
+          PYTHONPATH: .
+        run: python -m pytest -q tests p7/tests
+      - name: Browser bundle syntax
+        run: node --check research-ide/mathscope-m3/web/workspace.js
