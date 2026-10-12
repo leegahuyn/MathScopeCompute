@@ -47,20 +47,24 @@ const dispose=(...graphs)=>{for(const G of new Set(graphs))if(G)clearDisposableT
 const getPrimary=()=>primaryTask??=Promise.resolve().then(async()=>{
   const family=prepareActualCommonAdmissibleFamily({throughOrder:2,derivativeOrder:4,maxNodes:5000000,
     maxProfileJets:60000,maxJetRequests:600000},context);
+  dispose(family.G);
   certificates.family=await actualCommonAdmissibleFamilyCertificate(family);
   await save('actual-common-C4-family.json',certificates.family);
   dispose(family.G);observe({stage:'actual-coherent-C4-family-saved',nodes:family.G.nodes.length});
   const band=attachGlobalSourceBand(family,{coefficientOrder:1,maxNodes:4000000},context),
     current=attachGlobalCurrentState(attachGlobalFixedRepresentative(band,context),context);
+  dispose(current.G,family.G);
   certificates.current=await globalCurrentStateCertificate(current);
   await save('actual-primary-current.json',certificates.current);
   dispose(current.G,family.G);observe({stage:'actual-coherent-current-saved',nodes:current.G.nodes.length});
   const target=family.constructTargetWeightedNorms({derivativeOrder:2,maxNodes:6000000,maxJetRequests:600000},context);
+  dispose(target.G,current.G,family.G);
   certificates.target=await actualCommonTargetWeightedNormCertificate(target);
   await save('actual-target-weighted-norm-program.json',target.program,true);
   await save('actual-target-weighted-norm-certificate.json',certificates.target);
   dispose(target.G);observe({stage:'actual-coherent-target-C2-saved',nodes:target.G.nodes.length});
   const p=attachGlobalPrimaryClassOperator(current,target,{order:1,maxWork:200000},context);
+  dispose(p.G,current.G,family.G);
   certificates.primary=await globalPrimaryClassOperatorCertificate(p);
   await save('actual-primary-class.json',certificates.primary);
   dispose(p.G,current.G);observe({stage:'actual-coherent-primary-C1-saved',normNodes:p.G.nodes.length,sourceNodes:current.G.nodes.length});
@@ -69,10 +73,12 @@ const getPrimary=()=>primaryTask??=Promise.resolve().then(async()=>{
 
 const getCommon=()=>commonTask??=Promise.resolve().then(async()=>{
   const p=await getPrimary(),pressure=attachGlobalCurrentPressure(p.current,context);
+  dispose(pressure.G,p.G,p.current.band.family.G);
   certificates.fullPressure=await globalCurrentPressureCertificate(pressure);
   await save('actual-pre-haar-pressure.json',certificates.fullPressure);
   dispose(pressure.G,p.G);observe({stage:'actual-coherent-pre-Haar-pressure-saved',nodes:pressure.G.nodes.length});
   const y=attachGlobalCommonYCovarianceClass(p,pressure,{maxWork:200000},context);
+  dispose(y.G,pressure.G,p.current.band.family.G);
   certificates.commonY=await globalCommonYCovarianceClassCertificate(y);
   await save('actual-common-Y-covariance-class.json',certificates.commonY);
   dispose(y.G,pressure.G);observe({stage:'actual-coherent-common-Y-C1-saved',normNodes:y.G.nodes.length});
@@ -81,6 +87,11 @@ const getCommon=()=>commonTask??=Promise.resolve().then(async()=>{
 
 const getBackground=()=>backgroundTask??=Promise.resolve().then(async()=>{
   const y=await getCommon(),b=attachGlobalBackgroundClass(y.primary,{order:1,maxWork:200000},context);
+  // Keep disposable derivative memo tables and GC garbage from overlapping
+  // the recursive exact certificate checks/serialization. Source nodes,
+  // function bodies, private seals and all mathematical orders remain.
+  dispose(b.G,b.current.G,b.current.band.family.G);
+  observe({stage:'actual-background-before-certificate-disposable-caches-cleared',normNodes:b.G.nodes.length});
   certificates.background=await globalBackgroundClassCertificate(b);
   await save('actual-complete-background-class.json',certificates.background);
   dispose(b.G,b.current.G);observe({stage:'actual-full-background-C1-saved',normNodes:b.G.nodes.length});return b;
@@ -90,10 +101,12 @@ const getPressure=()=>pressureTask??=Promise.resolve().then(async()=>{
   const y=await getCommon();await getBackground();
   const pole=Math.max(...y.bounds.rows.slice(0,2).map(r=>r.fields.fullCovariance.pole)),
     radial=await prepareOriginalRadialClassMajorants({order:0,pole,ibpOrder:1,maxNodes:1000000,maxWork:200000},context);
+  dispose(radial.G,y.G,y.pressure.G,y.primary.current.band.family.G);
   certificates.fixedRadial=await originalRadialClassMajorantCertificate(radial);
   await save('actual-fixed-radial-class-operator.json',certificates.fixedRadial);
   observe({stage:'actual-fixed-radial-operator-saved-before-composition',nodes:radial.G.nodes.length,pole});
   const p=attachGlobalRadialPressureClass(y,radial,{order:0,ibpOrder:0,maxWork:200000},context);
+  dispose(p.G,p.pressure.G,radial.G,p.commonY.primary.current.band.family.G);
   certificates.radial=await globalRadialPressureClassCertificate(p);
   await save('actual-full-radial-pressure-class.json',certificates.radial);
   dispose(p.G,p.pressure.G,radial.G);observe({stage:'actual-full-gr-P-T0-class-packet-saved',normNodes:p.G.nodes.length});return p;
