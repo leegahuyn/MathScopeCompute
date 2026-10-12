@@ -153,7 +153,7 @@ theorem TransferEnclosure.nonvacuum_exp_envelope {model : FiniteSpectralModel}
     _ = Real.exp (-certificate.gap * time) * ∑ j ∈ certificate.excited, weight j :=
       mul_comm _ _
 
-def fourStateModel : FiniteSpectralModel :=
+abbrev fourStateModel : FiniteSpectralModel :=
   ⟨"Y7-exact-diagonal-four-state",
     "complete finite four-state diagonal model; no uncut lattice or continuum identification", 4⟩
 
