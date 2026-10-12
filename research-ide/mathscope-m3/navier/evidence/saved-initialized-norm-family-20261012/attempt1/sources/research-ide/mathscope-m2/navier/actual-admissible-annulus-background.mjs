@@ -1,0 +1,268 @@
+/** A distinct enlarged cutoff sequence and a complete one-active-order
+ * dyadic band on the WHOLE enlarged annulus. The original c_n, coefficient
+ * bodies, C2 norm constants and time cutoff are preserved. This file does
+ * not yet assemble a new H or claim the complete physical selector.
+ */
+import {prepareActualCompletedBackgroundC2,assertActualCompletedBackgroundC2,actualBackgroundChartBound} from './actual-residual-order-induction-background.mjs';
+import {assertActualNormalizedCutoffs} from './actual-residual-order-induction-cutoffs.mjs';
+import {attachActualBackgroundPhysicalSeminorms,assertActualBackgroundPhysicalSeminorms} from './actual-background-physical-seminorms.mjs';
+import {sourceAllOrderCutoffJets,sourceNormalizedCutoffWeights} from './actual-residual-order-induction-kernels.mjs';
+import {actualStressDirectionBounds} from './actual-stress-direction-bounds.mjs';
+import {covarianceConcentrationRecipe,covarianceConcentrationScalarAudit} from './actual-covariance-concentration.mjs';
+import {positiveParameterRange,actualOperatorPowerAudit} from './actual-covariance-operator-bounds.mjs';
+import {covarianceConePolynomialAudit} from './actual-covariance-uniform.mjs';
+import {sourceGraphRationalIdentity} from './actual-continuation-exact-identities.mjs';
+import {SOURCE_PROFILE_ID,assertSourceProfile} from './source-profile.mjs';
+import {rational as Q,qmul,qdiv,qcompare,qtext,readRational,factorial,fail} from './actual-continuation-arithmetic.mjs';
+import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
+
+const seals=new WeakMap(),binomial=(n,k)=>factorial(n)/(factorial(k)*factorial(n-k));
+const data=p=>canonicalStringify({request:p.request,sourceBinding:p.sourceBinding,selection:p.selection,band:p.band,transfer:p.transfer,
+  coordinates:p.coordinates,roots:p.roots,slow:p.slow,checks:p.checks,scope:p.scope});
+const metadata=p=>{const{nodes,...rest}=p;return canonicalStringify(rest);};
+
+/** Generic serialization of explicit source slots. Optional implementation
+ * metadata is not a mathematical coefficient. The actual adapter separately
+ * authenticates the originating record and retains all graph definitions.
+ */
+export function explicitAnnulusCoefficientRoots(G,record){
+  const names=['F','U','M','average','Pi','v'];
+  if(!record||names.some(name=>!Number.isSafeInteger(record[name])||record[name]<0||!G?.nodes?.[record[name]]))
+    fail('INVALID_INPUT','All six actual coefficient roots must be explicit graph nodes.');
+  return Object.fromEntries(names.map(name=>[name,record[name]]));
+}
+
+function originalTimeCutoff(G,name){
+  const x=G.fresh(name+'_argument'),z=G.sub(G.mul(G.q(2),x),G.one),a=G.exp(G.neg(G.inv(z))),b=G.exp(G.neg(G.inv(G.sub(G.one,z)))),
+    body=G.choose(x,G.q(1,2),G.one,G.one,G.div(b,G.add(a,b)),G.zero),
+    system=G.defineExpressionFunction({name,parameters:[x],body,derivativeLimits:[G.maxDerivativeOrder??12],
+      source:'Original chi(x)=1-sigma_1(2*x-1), sigma_1 from exp(-1/x); equal one for x<=1/2 and zero for x>=1.'});
+  return {x,body,system};
+}
+
+/** GENERIC exact calculus identity. Scale is an independent constant.
+ * Function partials retain the actual original cutoff body; the identity
+ * uses the product/chain rules, not evaluation at samples of x.
+ */
+export function cutoffEulerScaleIdentityAudit(G,{order=4}={}){
+  if(!G||typeof G.defineExpressionFunction!=='function'||!Number.isSafeInteger(order)||order<1||order>8)
+    fail('INVALID_INPUT','Use an expression-function graph and one through eight Euler derivatives.');
+  const qv=G.fresh('enlargement_audit_q'),scale=G.fresh('enlargement_audit_scale'),nu=G.fresh('enlargement_audit_nu'),
+    cutoff=originalTimeCutoff(G,'OriginalTimeCutoffScaleAudit'),x=G.mul(scale,qv),power=G.exp(G.mul(nu,G.log(qv))),
+    chi=G.expressionValue(cutoff.system,[x]),extra=G.mul(x,G.expressionValue(cutoff.system,[x],[1])),
+    eulerChi=[chi],rows=[];
+  for(let j=1;j<=order+1;j++)eulerChi.push(G.mul(qv,G.derivative(eulerChi.at(-1),qv)));
+  let direct=G.mul(power,chi),directExtra=G.mul(power,extra);
+  for(let j=0;j<=order;j++){
+    if(j){direct=G.mul(qv,G.derivative(direct,qv));directExtra=G.mul(qv,G.derivative(directExtra,qv));}
+    const expected=G.mul(power,G.add(...Array.from({length:j+1},(_,k)=>G.mul(G.q(binomial(j,k)),G.pow(nu,j-k),eulerChi[k])))),
+      expectedExtra=G.mul(power,G.add(...Array.from({length:j+1},(_,k)=>G.mul(G.q(binomial(j,k)),G.pow(nu,j-k),eulerChi[k+1]))));
+    rows.push({order:j,direct,expected,identity:sourceGraphRationalIdentity(G,G.sub(direct,expected),{atomicNodes:[power],maxTerms:50000}),
+      directExtra,expectedExtra,extraIdentity:sourceGraphRationalIdentity(G,G.sub(directExtra,expectedExtra),{atomicNodes:[power],maxTerms:50000})});
+  }
+  const missingExponent=sourceGraphRationalIdentity(G,G.sub(rows[1].direct,G.mul(power,eulerChi[1])),{atomicNodes:[power]}),
+    missingExtraJet=sourceGraphRationalIdentity(G,G.sub(rows[1].directExtra,G.mul(power,G.add(G.mul(nu,eulerChi[1]),eulerChi[1]))),{atomicNodes:[power]});
+  if(!rows.every(r=>r.identity.pass&&r.extraIdentity.pass)||missingExponent.pass||missingExtraJet.pass)
+    fail('INTERNAL_VALIDATION','The original scale-independent cutoff jet identity failed.');
+  return {schema:'MathScope.CutoffEulerScaleIdentityAudit/1',order,coordinates:{q:qv,scale,nu},cutoff,rows,pass:true,
+    negativeControls:{missingPositiveSourceExponentRejected:!missingExponent.pass,missingExtraStreamCutoffDerivativeRejected:!missingExtraJet.pass},
+    proof:'E_q^m[q^nu chi(aq)]=q^nu sum_(j=0)^m binom(m,j) nu^(m-j) E_x^j chi(x), x=aq. For x chi_prime replace j by j+1. E_q(a)=0.',
+    noScaleFactorInEulerBound:true,ordinaryQDerivativeClaimedScaleIndependent:false,sourceAuthenticated:false};
+}
+
+/** Exact inequalities for the full dyadic band. This is a GENERIC
+ * arithmetic lemma; a caller-supplied rational scale gives no authority.
+ */
+export function oneActiveAdmissibleBandArithmetic({firstDyadicBuffer=10,secondScaleFactor='16'}={}){
+  if(!Number.isSafeInteger(firstDyadicBuffer)||firstDyadicBuffer<0||firstDyadicBuffer>128||typeof secondScaleFactor!=='string')
+    fail('INVALID_INPUT','Use a finite nonnegative buffer and an exact rational ratio.');
+  const ratio=readRational(secondScaleFactor);if(qcompare(ratio,Q(0))<=0)fail('INVALID_INPUT','The second scale ratio must be positive.');
+  const firstArgumentLower=Q(1,16),firstArgumentUpper=Q(1,2),secondArgumentLower=qmul(ratio,firstArgumentLower),
+    selectedEllBuffer=firstDyadicBuffer+2,qStarRatioUpper=selectedEllBuffer>=5?Q(1,1n<<BigInt(selectedEllBuffer-5)):Q(1n<<BigInt(5-selectedEllBuffer));
+  return {schema:'MathScope.OneActiveAdmissibleBandArithmetic/1',firstDyadicBuffer,secondScaleFactor:qtext(ratio),
+    firstScaleTimesQBounds:['1/8','1/4'],firstScaleTimesPhysicalQBounds:[qtext(firstArgumentLower),qtext(firstArgumentUpper)],
+    secondScaleTimesPhysicalQLower:qtext(secondArgumentLower),selectedEllBuffer,qStarRatioUpper:qtext(qStarRatioUpper),
+    firstCutoffPlateau:qcompare(firstArgumentUpper,Q(1,2))<=0,allOrdersFromTwoOff:qcompare(secondArgumentLower,Q(1))>=0,
+    wholeBandBelowSourceQStar:qcompare(qStarRatioUpper,Q(1))<0,
+    pass:qcompare(secondArgumentLower,Q(1))>=0&&qcompare(qStarRatioUpper,Q(1))<0,
+    hypotheses:'ellMin is an integer; log b1 >= (ellMin+buffer)log2; b2>=ratio*b1; later b_n>=2*b_(n-1). ellA=ceil(log(4*b1)/log2), Q=2^-ellA, q=Q*s, s in [1/2,2].',
+    analyticRule:'Positive exponential monotonicity and x<=ceil(x)<x+1. Equality at a flat cutoff endpoint keeps every positive derivative zero.',sourceAuthenticated:false};
+}
+
+/** Bound construction from the private full C2 background and the private
+ * fixed leading direction producer. No actual pulse matrix is inferred
+ * merely from this threshold: that is the next source assembly step.
+ */
+function sourceCovarianceThreshold(G,background,context){
+  const sourceProfile=background.prepared.program.profileId,direction=actualStressDirectionBounds({sourceProfile},context),
+    q=(n,d=1)=>G.q(n,d),h=G.parameter('h'),Renv=G.parameter('C12EnvelopeR'),kappa=G.parameter('directionalMarginKappa'),u=G.div(q(2),kappa),
+    rebuiltChart=actualBackgroundChartBound(background.cutoffs,context);
+  if(!direction.pass||!direction.scope.actualClosedAnnulusDirectionModulusDerived||direction.parameterExpressionSHA256!==background.program.parameterExpressionSHA256||
+    canonicalStringify(rebuiltChart.roots)!==canonicalStringify(background.roots))fail('INVALID_SOURCE_CONSTRUCTION','The original complete C2 constants and fixed source direction must match their independent producers.');
+  const Bnorm=G.add(q(1n<<128n),G.pow(Renv,4096),...['FGErrorConstant','bTotalConstant','FTotalConstant','GTotalConstant'].map(name=>rebuiltChart.roots[name]),rebuiltChart.operatorA,rebuiltChart.operatorB),
+    E=G.pow(Bnorm,256),absC0=G.fresh('annulus_threshold_range_absolute_c0'),r0=q(1,1n<<34n),Tg=G.add(q(4),G.sqrt(q(2))),
+    input={h,kappa,u,lambdaLower:G.pow(Renv,-31),lambdaUpper:G.pow(Renv,83),absoluteC0:absC0,operatorError:E,dampingError:E,unitFrameError:E,slopeError:E,
+      lengthRatioLower:G.mul(q(2),r0),lengthRatioUpper:G.mul(q(2),r0,Tg)},recipe=covarianceConcentrationRecipe(G,input),
+    range=positiveParameterRange(G,recipe.selection.conditions.map(r=>r.lower),absC0,G.pow(Renv,-6),G.pow(Renv,10)),
+    conditions=[...recipe.selection.conditions.map((r,j)=>({...r,lower:range.ranges[j][1],frozenRepresentativeRemoved:true})),
+      {id:'actual-moving-frame-denominators-and-primitive-budget',lower:G.pow(Bnorm,512),inequality:'S>=Bnorm^512'},
+      {id:'actual-flat-edge-direction-box',lower:G.pow(Renv,1024),inequality:'S>=Renv^1024'}],
+    Sminimum=G.maximum(...conditions.map(r=>r.lower)),frequencyMinimum=G.pow(G.div(q(64),h),2),ellMinimum=G.ceiling(G.maximum(q(8),Sminimum,frequencyMinimum)),
+    qStar=G.exp(G.neg(G.mul(G.add(ellMinimum,q(4)),G.log(q(2))))),matrixAudit=actualOperatorPowerAudit(),concentrationAudit=covarianceConcentrationScalarAudit(),inverseAudit=covarianceConePolynomialAudit();
+  if([Bnorm,E,ellMinimum,qStar,...conditions.map(r=>r.lower)].some(x=>G.freeCoordinates(x).size)||!matrixAudit.pass||!concentrationAudit.pass||!inverseAudit.pass)
+    fail('INVALID_SOURCE_CONSTRUCTION','The actual source-only covariance conditions retained a free representative or failed an arithmetic lemma.');
+  return {sourceProfile,direction,rebuiltChart,constants:{h,Renv,kappa,u,Bnorm,E,r0,Tg},input,recipe,range,
+    conditions,Sminimum,frequencyMinimum,ellMinimum,qStar,matrixAudit,concentrationAudit,inverseAudit,
+    producer:'The same fixed source constants and condition formula as actual-covariance-operator-bounds.mjs. Its actual operator assembly is not replaced by this threshold calculation.',
+    sourceOnly:true,actualNewPulseOperatorChecked:false,unknownPaperGammaParametersChosen:false};
+}
+
+/** Only the first two physical rows are needed for the chosen exact band.
+ * These are actual finite norms, not an all-n physical induction claim.
+ */
+function firstTwoPhysicalConstraints(prepared,context){
+  const {G}=prepared,q=(n,d=1)=>G.q(n,d),h=G.parameter('h'),log2=G.log(q(2)),rows=[],norms=[];
+  for(let n=1;n<=2;n++){
+    context.checkCancelled?.();const norm=attachActualBackgroundPhysicalSeminorms(prepared,{throughOrder:n,derivativeOrder:n},context),
+      physical=norm.rows[n-1],weighted=norm.weightedStress.find(r=>r.order===n),weights=sourceNormalizedCutoffWeights({order:n,derivativeOrder:n}),
+      W=weights.weights.map(w=>G.add(...w.polynomialInSourceH.map((v,k)=>G.mul(q(BigInt(v)),G.pow(h,k))))),constraints=[];
+    for(let m=0;m<=n;m++){
+      constraints.push({kind:'physical-Cartesian-time',derivativeOrder:m,bound:physical.bounds[m]});
+      if(weighted)constraints.push({kind:'normalized-higher-stress-over-zeta',derivativeOrder:m,
+        bound:G.maximum(...Array.from({length:m+1},(_,e)=>G.mul(W[e],weighted.bounds[m-e])))});
+    }
+    for(const row of constraints)row.requiredLog=G.div(G.add(G.mul(q(n),log2),G.log(row.bound)),G.mul(q(n),h));
+    rows.push({order:n,constraints,request:{throughOrder:n,derivativeOrder:n},ftcCount:norm.ftcRows.length});norms.push(norm);
+    context.onProgress?.({stage:'annulus-actual-physical-prefix-'+n,nodeCount:G.nodes.length});
+  }
+  return {rows,norms,allNPhysicalDiagonalCertified:false,n1WeightedEndpointTheoremConsumed:false};
+}
+
+function validateInput(input){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['sourceProfile','derivativeOrder'].includes(k)))
+    fail('INVALID_INPUT','Only the original source profile and requested slow derivative order are accepted.');
+  const sourceProfile=input.sourceProfile??SOURCE_PROFILE_ID,derivativeOrder=input.derivativeOrder??2;assertSourceProfile(sourceProfile);
+  if(!Number.isSafeInteger(derivativeOrder)||derivativeOrder<0||derivativeOrder>2)fail('RESOURCE_LIMIT','This source-bound C2 background exposes value and slow derivatives through two.');
+  return {sourceProfile,derivativeOrder};
+}
+
+export function attachActualAdmissibleAnnulusBackground(background,input={},context={}){
+  assertActualCompletedBackgroundC2(background);assertActualNormalizedCutoffs(background.cutoffs);const request=validateInput(input),{G,prepared,cutoffs}=background;
+  if(prepared.program.profileId!==request.sourceProfile||prepared.order<3)fail('INVALID_SOURCE_CONSTRUCTION','Use the actual complete n1/n2 block and its verified later-order recurrence.');
+  const sourceThreshold=sourceCovarianceThreshold(G,background,context),physical=firstTwoPhysicalConstraints(prepared,context),
+    q=(n,d=1)=>G.q(n,d),h=G.parameter('h'),{A,D,L}=G.core,log2=G.log(q(2)),arithmetic=oneActiveAdmissibleBandArithmetic(),
+    q0=G.fresh('actual_admissible_annulus_q'),{X,eta}=prepared.bootstrap.constants,rows=[];let previous=G.zero;
+  for(let n=1;n<=2;n++){
+    const old=cutoffs.rows[n-1],physicalRow=physical.rows[n-1],growth=G.add(previous,G.log(q(n===2?16:2))),
+      smallBand=n===1?G.mul(G.add(sourceThreshold.ellMinimum,q(10)),log2):G.zero,
+      logScale=G.maximum(old.logScale,growth,smallBand,...physicalRow.constraints.map(x=>x.requiredLog)),scale=G.exp(logScale);
+    rows.push({order:n,historicalLogScale:old.logScale,historicalScale:old.scale,sourceCoefficientRoots:old.sourceCoefficientRoots,
+      normalizedConstraints:old.coefficientBounds,physicalConstraints:physicalRow.constraints,growth,smallBand,logScale,scale});previous=logScale;
+  }
+  const ell=G.ceiling(G.div(G.add(G.log(q(4)),rows[0].logScale),log2)),Qband=G.exp(G.neg(G.mul(ell,log2))),S=G.pow(ell,2),
+    epsilon=G.exp(G.mul(h,G.log(Qband))),cutoff=originalTimeCutoff(G,'ActualAdmissibleAnnulusTimeCutoff'),sqrt2X=G.sqrt(G.mul(q(2),X)),
+    weight=G.exp(G.mul(q(2),h,G.log(q0))),r0=prepared.records[0],r1=prepared.records[1],
+    rawRows=rows.map(row=>{const x=G.mul(row.scale,q0);return {order:row.order,argument:x,chi:G.expressionValue(cutoff.system,[x]),extra:G.mul(x,G.expressionValue(cutoff.system,[x],[1])),
+      reducedChi:row.order===1?G.one:G.zero,reducedExtra:G.zero,actualCoefficient:explicitAnnulusCoefficientRoots(G,prepared.records[row.order].global)};}),
+    Fprofile=G.add(r0.global.F,G.mul(weight,r1.global.F)),Gprofile=G.add(r0.global.U,G.mul(weight,r1.global.U)),
+    radial=G.div(G.add(G.mul(X,r0.global.v),G.mul(weight,X,r1.global.v)),sqrt2X),profileStream=G.add(prepared.bootstrap.finalM,G.mul(weight,r1.global.M)),
+    share=(body,name)=>G.share(body,[q0,X,eta],'AdmissibleAnnulus_'+name),profile={F:share(Fprofile,'ProfileF'),G:share(Gprofile,'ProfileG'),b:share(radial,'ProfileRadial'),
+      stream:share(profileStream,'ProfileStream'),physicalStream:share(G.mul(G.exp(G.mul(G.sub(G.one,A),G.log(q0))),profileStream),'PhysicalStream')};
+  const R=G.fresh('actual_admissible_annulus_slow_R'),Z=G.fresh('actual_admissible_annulus_slow_Z'),T=G.fresh('actual_admissible_annulus_slow_T'),sVariable=G.fresh('actual_admissible_annulus_chart_s'),pow=(x,a)=>G.exp(G.mul(a,G.log(x))),
+    chartBody=G.sub(G.sub(sVariable,G.mul(G.pow(Z,2),pow(sVariable,G.mul(q(2),h)))),T),
+    system=G.defineMonotoneSystem({name:'ActualAdmissibleAnnulusChartInverse',variable:sVariable,parameters:[Z,T],body:chartBody,left:q(1,2),right:q(2),derivativeLower:q(1,2),derivativeUpper:G.one,
+      endpointProof:'Same original image Z=s^D*eta,T=s*(1-eta^2), s in[1/2,2],eta in[-1,1]; source 0<h<1/16 gives derivative>=1-8h>1/2.',numericOracle:false}),
+    s=G.monotoneRoot(system,[Z,T]),slowX=G.div(G.pow(R,2),G.mul(q(2),s)),slowEta=G.div(Z,pow(s,D)),physicalQ=G.mul(Qband,s),
+    at=body=>G.simultaneousSubstitute(body,[q0,X,eta],[physicalQ,slowX,slowEta]),slowCoordinates=[R,Z,T],
+    multipliers={F:pow(s,G.neg(G.add(A,q(1,2)))),G:pow(s,G.neg(A)),b:G.mul(epsilon,pow(s,q(-1,2)))},
+    bodies=Object.fromEntries(['F','G','b'].map(name=>[name,G.mul(multipliers[name],at(profile[name]))])),
+    fields=Object.fromEntries(Object.entries(bodies).map(([name,body])=>[name,G.share(body,slowCoordinates,'ActualAdmissibleAnnulusSlow_'+name)])),
+    leadingFields={F:G.share(G.mul(multipliers.F,G.simultaneousSubstitute(r0.global.F,[X,eta],[slowX,slowEta])),slowCoordinates,'ActualAdmissibleAnnulusLeading_F'),
+      G:G.share(G.mul(multipliers.G,G.simultaneousSubstitute(r0.global.U,[X,eta],[slowX,slowEta])),slowCoordinates,'ActualAdmissibleAnnulusLeading_G')},jets={};
+  for(const [name,field]of Object.entries(fields)){
+    jets[name]=[];for(let i=0;i<=request.derivativeOrder;i++)for(let j=0;i+j<=request.derivativeOrder;j++)for(let k=0;i+j+k<=request.derivativeOrder;k++){
+      let root=field;for(const [variable,count]of [[R,i],[Z,j],[T,k]])for(let t=0;t<count;t++)root=G.derivative(root,variable);
+      jets[name].push({orders:[i,j,k],root});
+    }
+  }
+  const primitive=sourceAllOrderCutoffJets({order:Math.max(3,request.derivativeOrder)}),eulerAudit=cutoffEulerScaleIdentityAudit(G,{order:3}),
+    sourceBinding={sourceProfile:request.sourceProfile,parameterExpressionSHA256:prepared.program.parameterExpressionSHA256,
+      coefficientProducer:'The same privately constructed actual order-induction records n=0,1,2 and later recurrence; no coefficient or norm is caller supplied.',
+      historicalSequence:'Canonical c_n stays unchanged. This is a distinct b_n enlargement.',
+      selectedPhysicalConstraints:'Actual n=1,m<=1 and n=2,m<=2 physical Cartesian/time norms; actual n=2 weighted stress norms. Unbounded physical diagonal and n1 weighted endpoint theorem are separate.',
+      oldBackgroundReplaced:false,oldSourceModulesChanged:false,sourceTimeSeed:'exp(-1/x), not the radial square seed'},
+    selection={rows,ell,Q:Qband,S,epsilon,sourceEllMinimum:sourceThreshold.ellMinimum,sourceQStar:sourceThreshold.qStar,
+      definition:'b1=exp(max(log c1,log2,(ellMin+10)log2,actual physical required logs)); b2=exp(max(log c2,log(16*b1),actual physical required logs)); later b_n>=max(c_n,2*b_(n-1)).',
+      continuation:'Every such doubling continuation has the same exact background body on this whole band. Further original physical constraints may enlarge later scales without changing that body.',
+      originalCanonicalScalesRetained:true,distinctBackground:true,arithmetic,
+      sourceThreshold:{constants:sourceThreshold.constants,conditions:sourceThreshold.conditions,Sminimum:sourceThreshold.Sminimum,frequencyMinimum:sourceThreshold.frequencyMinimum,
+        producer:sourceThreshold.producer,representativeRange:sourceThreshold.range,sourceOnly:true,actualNewPulseOperatorChecked:false}},
+    band={kind:'ORIGINAL_DYADIC_LABEL_FOR_DISTINCT_STRENGTHENED_BACKGROUND',ell,Q:Qband,physicalQ:[G.div(Qband,q(2)),G.mul(q(2),Qband)],
+      qBoundsRelativeToFirstScale:[G.div(q(1,16),rows[0].scale),G.div(q(1,2),rows[0].scale)],
+      X:background.chart.domain.X,eta:['-1','1'],s:['1/2','2'],firstOrderPlateau:true,allOrdersFromTwoInactive:true,
+      actualActiveOrderOneRetained:true,wholeEnlargedAnnulus:true,completeForEveryDoublingContinuation:true,
+      sourceQStarRatioUpper:q(1,128),sameAsHistoricalCanonicalField:false,allDyadicBandsCovered:false,unknownOriginalGammaMembership:'NOT_EVALUATED'},
+    transfer={proofKind:'Source-bound normalized cutoff enlargement, finite block and all-n normalized induction.',
+      originalCutoffWeights:primitive.timeCutoff,eulerAudit,
+      diagonal:'For b_n>=c_n and 0<q<=1/b_n, B_nm*q^(n*h)<=B_nm*c_n^(-n*h)<=2^-n. Multiply by q^(n*h). For q>=1/b_n every cutoff jet is zero.',
+      finiteBlock:'The actual n1/n2 C2 coefficient norms and the fixed Euler cutoff shape bounds are unchanged. They do not contain c_n. The sum of n>=3 diagonal bounds is at most (1/4)*q^(3h)<= (1/4)*q^(2h).',
+      allFiniteNormalizedTail:'For each fixed m, preserve the finite actual n<max(3,m) block and the same all-n diagonal inequality beyond it. Local finiteness follows b_n>=c_n>=2^n.',
+      oldC2Roots:structuredClone(background.roots),newC2Roots:structuredClone(sourceThreshold.rebuiltChart.roots),
+      bounds:structuredClone(background.chart.bounds),originalPotentialIdentity:structuredClone(background.potential),
+      potentialExplanation:'E_x chi=x*chi_prime, so the extra radial stream term is controlled by the next Euler jet for every enlarged scale. On this band n1 is plateau and n>=2 is flat zero, hence every such extra term vanishes exactly.',
+      c2ConstantsUnchanged:true,completeNormalizedInductionConsumed:background.induction.allIntegerOrdersBySameWellFoundedRecipe,
+      actualCoefficientBodiesUnchanged:true,cutoffTransitionMoved:true,sameFieldValuesAsCanonicalClaimed:false,
+      allNPhysicalDiagonalCertified:false,actualNewTwoSignMatrixAndHChecked:false},
+    slow={coordinates:{R,Z,T},chart:{system,s,X:slowX,eta:slowEta,q:physicalQ},multipliers,bodies,fields,leadingFields,jets,
+      sourceNormalization:'F=s^(-A-1/2)*Fprofile, G=s^-A*Gprofile, b=epsilon*s^-1/2*radialProfile. These factors are retained before differentiation.',
+      domain:'The image of X in[Xa/2,2Xb], eta in[-1,1],s in[1/2,2]. At eta=+/-1 use the original one-sided heat jets; no negative-time extension.'},
+    roots={...profile,...Object.fromEntries(Object.entries(fields).map(([k,v])=>['slow_'+k,v])),ell,Q:Qband,S,epsilon,b1:rows[0].scale,b2:rows[1].scale,
+      sourceEllMinimum:sourceThreshold.ellMinimum,sourceQStar:sourceThreshold.qStar,sourceNorm:sourceThreshold.constants.Bnorm,firstOrderPower:weight},
+    checks=[{id:'private-actual-full-C2-and-canonical-induction',pass:background.pass&&background.induction.allIntegerOrdersBySameWellFoundedRecipe&&background.program.scope.actualSlowC2FGProximity},
+      {id:'unchanged-actual-C2-roots-recomputed',pass:canonicalStringify(transfer.oldC2Roots)===canonicalStringify(transfer.newC2Roots)},
+      {id:'actual-source-only-covariance-threshold',pass:sourceThreshold.sourceOnly&&[sourceThreshold.ellMinimum,sourceThreshold.qStar,sourceThreshold.constants.Bnorm].every(x=>G.freeCoordinates(x).size===0)},
+      {id:'actual-fixed-leading-direction',pass:sourceThreshold.direction.pass&&sourceThreshold.direction.scope.actualClosedAnnulusDirectionModulusDerived},
+      {id:'actual-n1-n2-source-physical-constraints',pass:physical.rows.every((row,i)=>row.order===i+1&&row.constraints.length>0&&row.constraints.every(x=>G.nodes[x.bound]&&G.freeCoordinates(x.bound).size===0))},
+      {id:'new-scales-retain-canonical-and-physical-max-constraints',pass:rows.every((row,i)=>row.historicalScale===cutoffs.rows[i].scale&&row.physicalConstraints===physical.rows[i].constraints&&G.nodes[row.logScale].op==='maximum'&&G.nodes[row.logScale].args.includes(row.historicalLogScale)&&G.nodes[row.logScale].args.includes(row.growth))},
+      {id:'whole-dyadic-band-one-active-order',pass:arithmetic.pass&&arithmetic.qStarRatioUpper==='1/128'&&rows[1].growth===G.add(rows[0].logScale,G.log(q(16)))},
+      {id:'original-time-cutoff-and-extra-Euler-jet',pass:primitive.pass&&eulerAudit.pass&&G.nodes[cutoff.body].op==='smooth_piecewise'&&G.nodes[cutoff.body].args[3]===G.one&&G.nodes[cutoff.body].args[5]===G.zero},
+      {id:'actual-order-one-field-and-stream-bodies-retained',pass:Fprofile===G.add(r0.global.F,G.mul(weight,r1.global.F))&&profileStream===G.add(prepared.bootstrap.finalM,G.mul(weight,r1.global.M))&&r1.global.F!==G.zero},
+      {id:'actual-slow-normalization-before-AD',pass:bodies.F===G.mul(pow(s,G.neg(G.add(A,q(1,2)))),at(profile.F))&&Object.values(jets).every(x=>x.length===(request.derivativeOrder+1)*(request.derivativeOrder+2)*(request.derivativeOrder+3)/6)},
+      {id:'all-later-zero-uses-cutoff-support-not-missing-coefficients',pass:background.induction.allIntegerOrdersBySameWellFoundedRecipe&&rows.length===2&&prepared.order>=3&&band.completeForEveryDoublingContinuation}];
+  if(!checks.every(x=>x.pass))fail('INVALID_SOURCE_CONSTRUCTION','The actual annulus enlargement failed: '+checks.filter(x=>!x.pass).map(x=>x.id).join(', '));
+  const scope={actualNormalizedCutoffEnlargementCertified:true,actualC2ConstantsTransferredUnchanged:true,actualFinitePhysicalConstraintsRetained:true,
+    actualWholeAnnulusOneActiveOrderBandConstructed:true,actualSourceSlowJetsThrough:request.derivativeOrder,actualN1TermNotDropped:true,
+    canonicalBackgroundIdentifiedWithNewBackground:false,allDyadicBandsConstructed:false,allOrderPhysicalCutoffClausesComplete:false,
+    actualNewCovarianceHConstructed:false,actualNewPositiveWeightsProved:false,innerFlatSquareRootExtension:false,wholeGPOSComplete:false,
+    wholePhysicalResidualAndFlatErrorComplete:false,newAnalyticLeanKernelProof:false,m3MayStart:false},
+    p={G,background,physical,sourceThreshold,request,sourceBinding,selection,band,transfer,coordinates:{q:q0,X,eta},profile,rawRows,cutoff,roots,slow,checks,scope},
+    packed=G.pack(roots,{schema:'MathScope.ActualAdmissibleAnnulusBackgroundProgram/1',compiler:'actual-admissible-annulus-background.mjs:attachActualAdmissibleAnnulusBackground',
+      compilerInput:request,sourceBinding,selection,band,transfer,coordinates:p.coordinates,profile,rawRows,cutoff,slow,checks,scope}),{nodes,...rest}=packed;
+  p.program={...structuredClone(rest),nodes:nodes.slice()};
+  seals.set(p,{G,background,physical,physicalNorms:[...physical.norms],sourceThreshold,thresholdData:canonicalStringify(sourceThreshold),
+    backgroundRoots:canonicalStringify(background.roots),count:G.nodes.length,nodes:JSON.stringify(G.nodes),definitions:G.captureFunctionDefinitions(),program:p.program,
+    programNodes:p.program.nodes,metadata:metadata(p.program),data:data(p),rawData:canonicalStringify({profile,rawRows,cutoff}),serialized:canonicalStringify(p.program)});
+  return p;
+}
+
+export function assertActualAdmissibleAnnulusBackground(p){
+  const s=seals.get(p);if(!s||p.G!==s.G||p.background!==s.background||p.physical!==s.physical||p.sourceThreshold!==s.sourceThreshold||p.program!==s.program||p.program.nodes!==s.programNodes||
+    metadata(p.program)!==s.metadata||data(p)!==s.data||canonicalStringify(p.sourceThreshold)!==s.thresholdData||canonicalStringify(p.background.roots)!==s.backgroundRoots||
+    p.physical.norms.length!==s.physicalNorms.length||p.physical.norms.some((x,j)=>x!==s.physicalNorms[j])||canonicalStringify({profile:p.profile,rawRows:p.rawRows,cutoff:p.cutoff})!==s.rawData||JSON.stringify(p.program.nodes)!==s.nodes||
+    JSON.stringify(p.G.nodes.slice(0,s.count))!==s.nodes||!p.G.functionDefinitionsUnchanged(s.definitions))fail('INVALID_SOURCE_CONSTRUCTION','Use the unchanged privately built actual annulus enlargement and fixed source program.');
+  assertActualCompletedBackgroundC2(s.background);for(const norm of s.physical.norms)assertActualBackgroundPhysicalSeminorms(norm);return true;
+}
+
+export function prepareActualAdmissibleAnnulusBackground(input={},context={}){
+  const request=validateInput(input),background=prepareActualCompletedBackgroundC2({sourceProfile:request.sourceProfile,order:3,maxNodes:3000000,maxDerivativeOrder:128},context);
+  context.onProgress?.({stage:'annulus-original-C2-source-ready',nodeCount:background.G.nodes.length});
+  return attachActualAdmissibleAnnulusBackground(background,request,context);
+}
+
+export async function actualAdmissibleAnnulusBackgroundCertificateFromProgram(p,context={}){
+  assertActualAdmissibleAnnulusBackground(p);const s=seals.get(p);context.checkCancelled?.();
+  return {schema:'MathScope.ActualAdmissibleAnnulusBackgroundCertificate/1',status:'SOURCE_BOUND_CUTOFF_ENLARGEMENT_AND_COMPLETE_BAND',pass:true,
+    request:p.request,sourceBinding:p.sourceBinding,selection:p.selection,band:p.band,transfer:p.transfer,roots:p.roots,checks:p.checks,scope:p.scope,
+    graph:{sha256:await sha256(s.serialized),nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.serialized).length,compiler:p.program.compiler,
+      fixedCompilerPrefix:true,laterAppendsExcluded:true,graphIncluded:false}};
+}
