@@ -166,9 +166,9 @@ noncomputable def fourStateEnclosure : TransferEnclosure fourStateModel where
   groundValue := 8
   groundPositive := by norm_num
   eigenvalue := fourStateEigenvalue
-  vacuum := {0}
-  vacuumNonempty := ⟨0, by simp⟩
-  excitedNonempty := ⟨1, by norm_num⟩
+  vacuum := {(0 : Fin 4)}
+  vacuumNonempty := ⟨(0 : Fin 4), by simp⟩
+  excitedNonempty := ⟨(1 : Fin 4), by norm_num⟩
   vacuumExact j := by
     fin_cases j <;> norm_num [fourStateEigenvalue]
   ratio := 1 / 2
