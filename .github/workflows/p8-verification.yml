@@ -1,0 +1,59 @@
+name: M3 P8 finite certificate verification
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research-ide/mathscope-m3/p8/**'
+      - 'research-ide/mathscope-m3/tests/p8-*.test.mjs'
+      - 'research-ide/mathscope-m3/web/p8-*'
+      - '.github/workflows/p8-verification.yml'
+permissions:
+  contents: read
+jobs:
+  exact-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: node --test research-ide/mathscope-m3/tests/p8-*.test.mjs research-ide/mathscope-m3/p8/tests/*.test.mjs
+      - run: python -m unittest discover -s research-ide/mathscope-m3/p8/tools -p 'test_*.py'
+      - run: python research-ide/mathscope-m3/p8/tools/audit_lean.py --check-static
+  lean-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      LEAN_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean and fetch mathlib build cache
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: research-ide/mathscope-m3/p8/lean
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'true'
+      - name: Compile exact consumers and reject all semantic mutations
+        working-directory: research-ide/mathscope-m3/p8/lean
+        run: python ../tools/audit_lean.py --output ../evidence/lean-audit
+      - name: Preserve successful or failed audit and full compiler diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p8-lean-audit-${{ github.sha }}
+          path: research-ide/mathscope-m3/p8/evidence/lean-audit/
+          if-no-files-found: warn
+          retention-days: 90
