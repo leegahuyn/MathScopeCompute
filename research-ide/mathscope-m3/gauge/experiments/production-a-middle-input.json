@@ -1,0 +1,72 @@
+{
+  "seed": "m3-fixed-scale-production-v1",
+  "models": [
+    {
+      "id": "a-beta236",
+      "role": "A_SWEEP",
+      "targetDelta": 1.25,
+      "beta": 2.36,
+      "Ns": 7,
+      "Nt": 14,
+      "referenceScaleId": "reference-beta236"
+    }
+  ],
+  "references": [
+    {
+      "id": "reference-beta236",
+      "beta": 2.36,
+      "Ns": 7,
+      "Nt": 14
+    }
+  ],
+  "scaleSampler": {
+    "burnIn": 256,
+    "samples": 64,
+    "thin": 8,
+    "overrelaxation": 1
+  },
+  "channelSampler": {
+    "burnIn": 256,
+    "samples": 768,
+    "thin": 1,
+    "overrelaxation": 1
+  },
+  "flow": {
+    "maxTime": 1.44,
+    "step": 0.08,
+    "measureEvery": 1
+  },
+  "bootstrap": {
+    "replicates": 128,
+    "scaleBlock": 8,
+    "channelBlock": 16
+  },
+  "operators": {
+    "smearSteps": [
+      0,
+      4,
+      8
+    ],
+    "alpha": 0.5
+  },
+  "fitWindows": [
+    [
+      1,
+      3
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      1,
+      4
+    ]
+  ],
+  "selectedOperator": 2,
+  "matching": {
+    "referenceL": 8,
+    "referenceT": 16,
+    "matchingRelativeTolerance": 0.08
+  }
+}

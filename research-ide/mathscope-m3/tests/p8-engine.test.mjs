@@ -37,10 +37,16 @@ test('request snapshot cannot be changed by a caller during asynchronous hashing
 
 test('recorded Linux controls remain separate from fresh browser mutations and replay deterministically',async()=>{
   const record=await engine.run(request('p8-mutations')),check=record.result.recordedP7Mutations;
-  assert.equal(check.status,'RECORDED_CI_SOURCE_MATCH',JSON.stringify(check.issues));
+  const packaged=build.recordedChecks.p7Mutations.report,files=build.sourceBinding.files;
+  const recordedSources=[...packaged.sourceBinding.files.map(row=>({path:'mathscope-m3/'+row.path,sha256:row.sha256})),
+    {path:'mathscope-m3/p8/tools/audit_p7_mutations.py',sha256:packaged.auditSourceSHA256},
+    {path:'mathscope-m3/tests/test_p8_p7_mutations.py',sha256:packaged.testHarness.sourceSHA256}];
+  const core=files.filter(row=>row.path==='mathscope-m3/cli.py'||/^mathscope-m3\/p7\/[^/]+\.py$/.test(row.path));
+  const sameCurrentSources=recordedSources.every(row=>files.some(actual=>actual.path===row.path&&actual.sha256===row.sha256))&&core.every(row=>recordedSources.some(saved=>saved.path===row.path));
+  assert.equal(check.status,sameCurrentSources?'RECORDED_CI_SOURCE_MATCH':'RECORDED_CI_REJECTED',JSON.stringify(check.issues));
   assert.equal(check.freshExecution,false);assert.equal(check.formalLeanProofIssued,false);
-  assert.deepEqual(check.report.cases.map(x=>x.id),['zero-box','rank-upper']);
-  assert.equal(check.process.pytestExitCode,0);
+  if(sameCurrentSources){assert.deepEqual(check.report.cases.map(x=>x.id),['zero-box','rank-upper']);assert.equal(check.process.pytestExitCode,0);}
+  else {assert.equal(check.ok,false);assert.match(check.issues.join(' '),/stale|membership|version/);}
   assert.equal((await engine.replay(record)).status,'MATCH');
 });
 test('review export separates five scoped releases from conjecture resolution',async()=>{

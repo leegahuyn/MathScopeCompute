@@ -83,12 +83,12 @@ def build(check=False):
   extras+=[p for p in [ROOT/folder/'original-criteria.json',ROOT/folder/'evidence/lean-audit.json',ROOT/folder/'evidence/acceptance.json'] if p.exists()]
  files=[{'path':p.relative_to(RESEARCH).as_posix(),'bytes':len(p.read_bytes()),'sha256':sha(p.read_bytes())} for p in sorted(set(closure+view_closure+extras),key=str)]
  source={'schema':'MathScope.M3.ExtendedSourceBinding/1','manifestSHA256':sha(canonical(files)),'files':files,'repository':'https://github.com/leegahuyn/MathScopeCompute','branch':'mathscope-m3-except-p7-20261012','p7SourceChanged':False}
- metadata={'schema':'MathScope.M3.ExtendedBuild/1','version':'0.3.13-m3','sourceBinding':source,'environment':{'worker':'STATIC_LOCAL_ESM_CLOSURE','hash':'SHA-256_WEBCRYPTO','numericalArithmetic':'IEEE754_FLOAT64_FINITE_MODEL','exactArithmetic':'BIGINT_RATIONAL_WHERE_DECLARED','formalAuthority':'RECORDED_PINNED_KERNEL_AUDIT_ONLY','requestBudgetBytes':131072,'outputBudgetBytes':25165824},'examples':examples,'criteria':criteria,'wholeM3Complete':False}
+ metadata={'schema':'MathScope.M3.ExtendedBuild/1','version':'0.3.14-m3','sourceBinding':source,'environment':{'worker':'STATIC_LOCAL_ESM_CLOSURE','hash':'SHA-256_WEBCRYPTO','numericalArithmetic':'IEEE754_FLOAT64_FINITE_MODEL','exactArithmetic':'BIGINT_RATIONAL_WHERE_DECLARED','formalAuthority':'RECORDED_PINNED_KERNEL_AUDIT_ONLY','requestBudgetBytes':131072,'outputBudgetBytes':25165824},'examples':examples,'criteria':criteria,'wholeM3Complete':False}
  worker='globalThis.__MATHSCOPE_M3_EXTENDED_BUILD__='+canonical(metadata)+';\n'+worker
  template=read(WEB/'extended-client.js')
  for token in ['__M3_EXTENDED_STATIC_WORKER_SOURCE__','__M3_EXTENDED_BUILD_METADATA__']:
   if template.count(token)!=1:raise ValueError('Expected exactly one build token '+token)
- client=(view_bundle+'\n'+template.replace('__M3_EXTENDED_STATIC_WORKER_SOURCE__',json.dumps(worker,ensure_ascii=False)).replace('__M3_EXTENDED_BUILD_METADATA__',canonical(metadata))).replace('</script','<\\/script')
+ client=(view_bundle+'\n'+template.replace('__M3_EXTENDED_STATIC_WORKER_SOURCE__',BUNDLER.worker_source_expression(worker)).replace('__M3_EXTENDED_BUILD_METADATA__',canonical(metadata))).replace('</script','<\\/script')
  outputs={WEB/'extended-engine.bundle.js':client,WEB/'extended-build-data.json':json.dumps(metadata,ensure_ascii=False,indent=2)+'\n'}
  for p,s in outputs.items():
   if check:

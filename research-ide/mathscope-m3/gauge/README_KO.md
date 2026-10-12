@@ -4,9 +4,9 @@
 
 원본 설계도의 24개 항목과 전체 합격 문구는 [original-criteria.json](original-criteria.json)에 보존했다. 최신 첨부 설계도 `20261012-061419.pdf`의 SHA-256은 `f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac`이다. 24개 ID·제목·문구·페이지는 저장소의 이전 원문 목록과 모두 일치한다. 항목별 완료 여부, 실행 근거와 남은 조건은 [GAUGE_PROGRESS.json](../GAUGE_PROGRESS.json)이 기준이다. 예제가 실행된 사실만으로 원래 항목 전체를 완료 처리하지 않는다.
 
-게시 v85–v89의 실제 계산·선택·재열기·키보드·공통 scale·상태 label·proof 원문 일치와 기존 수치/Lean 증거를 검토하여 **24개 중 21개를 명시한 범위에서 완료**했다. Y6는 8개 모두 완료했다. [독립 기준별 검토](evidence/ui-criterion-assessment.json)와 [변경하지 않은 관련 UI 증거 11개](evidence/live-ui-v85-v89-gauge.json)에 그 판단을 연결했다. 검토 중 발견한 ensemble 곡선의 ESTIMATED label 누락도 실제 v89 새 chain 실행에서 수정·확인했다.
+이전 체크포인트인 게시 v85–v89의 실제 계산·선택·재열기·키보드·공통 scale·상태 label·proof 원문 일치와 기존 수치/Lean 증거를 검토하여 **24개 중 21개를 명시한 범위에서 완료**했다. Y6는 8개 모두 완료했다. [독립 기준별 검토](evidence/ui-criterion-assessment.json)와 [변경하지 않은 관련 UI 증거 11개](evidence/live-ui-v85-v89-gauge.json)에 그 판단을 연결했다. 검토 중 발견한 ensemble 곡선의 ESTIMATED label 누락도 실제 v89 새 chain 실행에서 수정·확인했다.
 
-Y5-05의 독립 물리 scale-setting과 target calibration, Y5-06의 독립 진공 제거 근거·finite-T/overlap 제어, Y5-08의 고정 물리 조건에서 맞춘 a/L/T 비교는 PARTIAL이다. 유한 모형의 완료와 양자 Yang–Mills continuum 문제의 해결을 구별하며 `OPEN_CONTINUUM`을 유지한다.
+확장 작업에서는 Y5-05/06/08에 실제 표준 SU(2) t₀ 측정, 독립 scale/channel chain, 유한 pure-gauge 진공 논증과 전체 영에너지 차분, 맞춘 a/L/T 비교를 추가했다. [새 구현·수학적 범위](SCALE_STUDY_KO.md)와 [8개 실제 실행의 검토](evidence/scale-expansion/matched-study-review-attempt1/review.json.gz), [독립 Python 수치 검산](evidence/scale-expansion/independent-numerical-review-attempt1.json)에 연결한다. 새 공개 화면의 합격 조건을 확인하기 전에는 해당 세 항목의 게시 완료를 앞당겨 표시하지 않는다. 유한 연구 구현과 양자 Yang–Mills continuum 문제의 해결을 구별하며 `OPEN_CONTINUUM`을 유지한다.
 
 ## 실행 인터페이스
 
@@ -46,11 +46,12 @@ const replay = await replayGaugeSession(bundle);
 | `finite-spectrum` | 명시 유한 지수합·상관행렬·GEVP·유효질량 | `samples[].correlationMatrix`, `gevp`, `effectiveMass` |
 | `finite-transfer` | BigInt 유리수로 전체 유한 진공·비진공 공간의 ratio 검사 | `source`, `excited`, `gap`, `checks`, `scope` |
 | `ensemble-family` | Δ별 독립 cold/hot Wilson chain·연결 상관함수·오차 | `calibration[].replicas`, `correlator`, `targetComparison`, `limitComparison` |
+| `ensemble-study` | 새 실제 SU(2) t₀·channel chain, 또는 `recordId`로 저장한 실제 생산 실행의 출처 검사 | `calibration`, `scaleStudy.references`, `limitComparison`, `newExecution`, `archiveAudit` |
 | `lattice-observation` | 실제 저장된 links의 시간 절단·적분·평균·표본평균 | `states[].points`, `source.records`, `inspectLatticeSelection` |
 | `wilson-flow` | 비정상 finite Wilson gradient flow·step refinement·gauge covariance | original/flowed `states`, `flow.history`, `flow.error` |
 | `proof-audit` | 정확 source hash 대조·가정 registry·투영 반례·열린 의무 | `audit`, `assumptions`, `projectionCounterexample`, `continuumObligations` |
 
-`getExamples()`는 실행 가능한 13개 입력을 제공한다. [runtime-audit.json](evidence/runtime-audit.json)은 그 입력들을 실제 실행하고, 원본 선택·session replay·긴 chain의 원자료 재계산까지 검사한 source-bound 기록이다. [examples](evidence/examples/)에는 당시의 완전한 수치 결과가 있다.
+`getExamples()`는 기존 13개와 새 study 3개를 포함한 16개 입력을 제공한다. `y5-independent-t0`와 `y5-matched-reference-study`는 실제 새 계산이며, `y5-production-reference-record`는 8개 실제 장시간 실행 기록을 출처 검증해 연다. 저장 기록에는 `newExecution:false`가 붙으며 replay도 새 chain 계산을 주장하지 않는다. 아래 기존 receipt는 처음 13개 입력에 대한 역사적 실행이다. [runtime-audit.json](evidence/runtime-audit.json)은 그 입력들을 실제 실행하고, 원본 선택·session replay·긴 chain의 원자료 재계산까지 검사한 source-bound 기록이다. [examples](evidence/examples/)에는 당시의 완전한 수치 결과가 있다.
 
 ## Y5: Δ의 네 가지 뜻
 
@@ -105,7 +106,7 @@ C_\Delta(t)=\sum_j w_j e^{-(\Delta+\epsilon_j)t}
 
 두 행은 유한 channel 통계 진단을 통과했으나 **target를 맞춘 결과가 아니며 plateau도 아니다**. 더 긴 lag에서는 음의 C나 불가능 cosh 입력이 실제로 나타나고 그대로 남는다. β=2.2의 두 번째 lag 질량 4.11684에도 충분한 유효 bootstrap 표본이 없어 구간을 부여하지 않았다. 이전 짧은/더 낮은 ESS 실행도 삭제하지 않고 [ensemble-family-run.json](evidence/ensemble-family-run.json), [ensemble-production-run.json](evidence/ensemble-production-run.json), [source-attempt1/manifest.json](evidence/source-attempt1/manifest.json)에 보존했다.
 
-통계 오차, operator overlap, finite T, finite L, lattice spacing, 표현 cutoff를 독립 항목으로 내보낸다. 물리량을 맞춘 a/L/T sweep과 scale 설정이 없으므로 외삽 fit은 `null`이다. 양의 spectral 가정 아래의 방향은 `gap_global ≤ E_channel ≤ zero-temperature log-effective mass`이며, 양의 channel 질량은 전체 gap의 양의 하한이 아니다.
+통계 오차, operator overlap, finite T, finite L, lattice spacing, 표현 cutoff를 독립 항목으로 내보낸다. 기존 `ensemble-family` 실행에는 물리량을 맞춘 a/L/T sweep과 scale 설정이 없으므로 외삽 fit은 `null`이다. 새 `ensemble-study`의 실제 독립 척도와 조건부 비교는 [확장 설명](SCALE_STUDY_KO.md)에 별도로 기록했다. 양의 spectral 가정 아래의 방향은 `gap_global ≤ E_channel ≤ zero-temperature log-effective mass`이며, 양의 channel 질량은 전체 gap의 양의 하한이 아니다.
 
 ## Y6: 관측에서 원본으로 돌아가기
 
@@ -191,3 +192,25 @@ python research-ide/mathscope-m3/gauge/package_lean.py
 - [Wolff, Monte Carlo errors with less errors](https://arxiv.org/abs/hep-lat/0306017): autocorrelation-aware 오차 분석의 배경.
 - [Blossier et al., generalized eigenvalue method](https://arxiv.org/abs/0902.1265): GEVP와 excited-state contamination의 배경.
 - [Lüscher, Wilson flow](https://arxiv.org/abs/1006.4518): flow time과 gauge-invariant flowed observables의 배경. 현재 일반 flow solver의 실행 근거로 대신하지 않는다.
+
+
+## 추가 study 검증과 기록 열기
+
+새 kernel·분석·archive 검증을 포함한 [42개 회귀검사](evidence/scale-expansion/gauge-expansion-tests-attempt3.tap)가 통과했다. [독립 수치 검산](evidence/scale-expansion/independent-numerical-review-attempt1.json)은 모든 원본 configuration에서 C·전체 영에너지 차분·128회 bootstrap·fit·독립 t₀·환산 질량 구간을 NumPy/SciPy로 다시 계산한다. 원래 chain을 다시 실행한 검사는 [짧은 live study와 replay](evidence/scale-expansion/live-scale-replay-attempt1.json)에, 기본 60초 제한 안의 세 격자 새 계산은 [37.56초 실행](evidence/scale-expansion/matched-public-example-attempt2.json)에 따로 저장했다.
+
+```js
+const stored = await runGaugeM3({
+  kind: "ensemble-study",
+  recordId: "su2-production-v1"
+});
+// stored.newExecution === false
+// stored.archiveAudit.status === "ARCHIVE_BODY_AND_DISPLAYED_ROWS_MATCH"
+```
+
+```bash
+node research-ide/mathscope-m3/gauge/experiments/package-study-record.mjs --check
+python research-ide/mathscope-m3/gauge/experiments/verify-study-numerics.py \
+  /tmp/another-new-numerical-review.json
+```
+
+원본 raw file·result·실행 당시 source snapshot SHA는 packaging에서 실제 확인한다. 브라우저는 UTF-8 archive body와 표시 행을 다시 hash한다. `rawFilesRefetchedInBrowser:false`는 원본 파일을 브라우저가 새로 내려받았다고 주장하지 않는다는 뜻이다. full configuration vectors와 bootstrap replicate는 연결된 저장소 원본 파일에 보존한다. byte 검증은 수치 평형이나 새 Lean 증명이 아니다.

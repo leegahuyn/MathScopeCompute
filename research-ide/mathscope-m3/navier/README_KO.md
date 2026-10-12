@@ -4,6 +4,8 @@
 
 이 디렉터리는 M3의 유체역학 항목에 대한 **실행 가능한 일부 구현**이다. 실제 원문 해의 완전한 N6 반복이나 N7 전역장을 완성했다고 선언하지 않는다. 원래 24개 체크리스트 중 독립 Fourier–Galerkin 분기의 N8-01, N8-02, N8-03을 충족한다. 나머지 21개 기준의 남은 의무는 상위 `N6_PROGRESS.json`, `N7_PROGRESS.json`, `N8_PROGRESS.json`에 보존한다.
 
+새 단계에서는 같은 common6 원본 생성자를 실제로 실행하여 전체 선택-member curl·공분산·현재 P/J·auxiliary pressure를 복원하고, 두 원래 pulse의 C4/C5 및 실제 signed curl update를 연결했다. 이 무거운 실행은 897.813초, **7/7 PASS**다. 새 N8 관측·source summary·재생·미분 규칙의 빠른 검사는 **18/18 PASS**다. 새 관측 UI의 실제 확인 전에는 원기준 완료를 추가 승격하지 않는다. 자세한 수식·artifact hash·한계는 [SOURCE_RECONSTRUCTION_KO.md](SOURCE_RECONSTRUCTION_KO.md)에 있다.
+
 최신 첨부 `MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf`의 SHA256은 `f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac`이다. 저장소가 앞서 사용한 `005314` 파일의 기록된 SHA256과 같다. pp62,64,66의 24개 제목과 요구사항은 공백을 제외하고 모두 일치한다. 원문 대조 기록은 `evidence/blueprint-source-review.json`에 있다.
 
 원전은 [OpenAI Navier–Stokes PDF](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf), 166쪽, SHA256 `0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f`이다. 새 코드는 그 PDF의 §7–10을 직접 확인한 뒤 작성했다. 아래 수식 번호는 이 판본을 가리킨다.
@@ -41,6 +43,7 @@ const replay = await replayNavierM3(finiteRun);
 
 | 패키지 | 연산 | 실제 실행 범위 |
 |---|---|---|
+| N6 | `source-reconstruction` | 저장된 원본 pressure/C5/signed curl 실제 실행 자료와 출처 검증. 브라우저에서 원래 수 GB 계산을 새로 실행하지 않는다. |
 | N6 | `source-mean-map` | 수정하지 않은 원래 M2 mean patch와 극소 양의 λ를 사용한 다섯 profile의 고정 inverse 연결 |
 | N6 | `harmonic-response` | 주어진 유한 계수 보간 모델에 대한 (7.13) projected ODE |
 | N6 | `signed-covariance` | 고정 양의 두 amplitude에서 signed 2×2 inverse와 quadratic 항 |
@@ -85,7 +88,7 @@ axial block은 원래 λ가 극도로 작아 보통 부동소수점에서 두 �
 
 로 두고 `2*d-2*d*d*lambda <= theta <= 2*d`를 사용한다. λ를 곱한 axial coefficient를 유한 구간으로 계산하고, 원래 coefficient를 복원하는 정확한 `1/lambda` 인자를 명시한다. 이 방식은 조건 불량을 없애거나 λ와 무관한 상수를 주장하지 않는다. 원래 theorem이 허용하는 **고정 λ에 의존하는 상수**를 보존한다.
 
-이로써 실제 원래 배경에서 사용할 **고정된 다섯 moment inverse**의 지원집합·양성·가역성 연결을 확보했다. 현재 full-curl state의 `gr,P,Jtheta,Jz`를 계산하고 그 값에 inverse를 적용한 것은 아니다. 따라서 N6-06 전체는 PARTIAL이다. `five-moments`의 기본 λ=.2 계산은 이 원래 매개변수를 대신하지 않는 별도 유한 계산이다.
+이로써 실제 원래 배경에서 사용할 **고정된 다섯 moment inverse**의 지원집합·양성·가역성 연결을 확보했다. 새 source 실행은 선택한 실제 full-curl state의 `gr,P,Jtheta,Jz`와 pressure를 계산하고 signed wave update 뒤 mean 값들을 다시 계산했다. 그 현재 결함에 다섯 moment inverse를 적용하고 전체 nonlinear remainder를 확인하는 의무는 남아 있어 N6-06 전체는 PARTIAL이다. `five-moments`의 기본 λ=.2 계산은 별도의 유한 예제다.
 
 ### 다른 보정 연산
 
@@ -95,7 +98,7 @@ axial block은 원래 λ가 극도로 작아 보통 부동소수점에서 두 �
 
 `temporal-inverse`는 원래 `vt=(sqrt(2)-1,1)`에 대해 `(k2-k1)^2-2*k1^2`가 0이 아닌 정수임을 이용해 divisor를 계산한다. 유한 real Fourier polynomial의 cancellation을 검증한다. 일반 smooth source의 tail에는 실제 `C^(m+4)` 도함수 상계가 필요하며, 입력된 상계가 검증되지 않았으면 조건부로 표시한다. axial potential의 radial cutoff remainder와 압력 재구성은 후속 의무다.
 
-원래 N6가 다음에 필요로 하는 첫 단계는 **수정하지 않은 실제 primary full curl을 시작점으로 각 평균을 위상 대입 전에 취한 후 `gr`와 압력을 만들고, 그 동일한 state에 temporal·moment 보정을 적용하는 것**이다. 현재 source certificate만으로 Haar 평균이나 반경 전체 적분을 계산했다고 간주할 수 없다. 실제 네 단계 반복, all-order class 상수, 최종 shrinking cutoff sum과 Lemma5.4 tail 비교도 미완료다.
+새 `source-current-state.mjs`, `source-pressure.mjs`, `source-higher-jets.mjs`, `source-signed-stress.mjs`는 위 generic 예제들과 별도로 실제 원래 생성자에 연결된다. 위상 대입 전 angular/Haar 평균, 현재 전체 radial 적분, 원래 shifted-torus pressure, C5 변분계, 현재 residual로 만든 signed target과 full curl을 구성했다. 전체 label 합, 동일 상태의 temporal·moment 초기화, 매 substep 뒤 전체 physical PDE 재계산, all-order class 상수, 최종 shrinking cutoff sum과 Lemma5.4 tail 비교는 남는다.
 
 ## N7: 전역장과 force
 
@@ -111,19 +114,18 @@ finite force-jet bound를 입력하면 증가하는 bj를 선택하여 요청된
 
 압력은 forcing의 longitudinal component도 포함해 복원한다. diffusion에는 Crank–Nicolson, convection에는 explicit Heun을 사용한다. 큰 한 step과 작은 두 step의 차이, Fourier l1 기반 CFL, 에너지 balance defect가 모두 승인 조건이다. overflow·최대 step 수·최소 dt 등 예산을 넘으면 마지막으로 해결한 시점과 이유를 보고한다.
 
-실제 관측 자료는 final Fourier field에서 직접 평가한 81개 위치·속도와 accepted-step 에너지 곡선이다. domain은 고정된 주기 상자이며 vector scale은 1이다. core energy나 각속도, particle trajectory로 다른 이름을 붙이지 않는다. 현재 81개 표본은 순간 벡터이며 유체 입자 적분이 아니다.
+실제 관측 자료에는 final Fourier field의 81개 위치·속도와 별도 각속도, 고정 시각 유선, accepted coefficient history를 보간한 입자 경로, 전체 주기 영역 및 고정 core box 에너지가 있다. domain은 고정된 `[0,2π]^3`이며 vector scale은 0.3이다. periodic box 좌표 view는 위치와 속도를 함께 `1/(2π)`로 변환한다. 원문의 q-normalized coordinates와 구별한다. `parameters.observation`의 사용자 설정과 생성한 경로는 run/input hash에 연결되며, 각 관측의 원문·수치검사·미완료 analytic/Lean 증거는 `observations.claims`에 분리한다.
 
 `positiveTau`는 십진 mantissa와 exponent를 먼저 처리한다. `1e-1000`처럼 Number로 변환하면 0이 되는 입력도 정확한 양의 값과 logτ를 유지한다. 실제 source-admissible qbig 확인과 원문 속도 재구성이 아직 없으므로 이 좌표 계약만으로 near-terminal approximation을 인증하지 않는다.
 
 ## 검증과 재현
 
 ```bash
-python research-ide/mathscope-m3/navier/tests/build-source-inheritance.py
-node research-ide/mathscope-m3/navier/tests/run.mjs
-python research-ide/mathscope-m3/navier/tests/independent_numpy.py
+python research-ide/mathscope-m3/navier/tests/build-source-current-evidence.py --check
+node --test research-ide/mathscope-m3/navier/tests/flow-interface.test.mjs research-ide/mathscope-m3/navier/tests/flow-observations.test.mjs research-ide/mathscope-m3/navier/tests/source-pressure-calculus.test.mjs research-ide/mathscope-m3/navier/tests/source-parametric-body.test.mjs research-ide/mathscope-m3/navier/tests/source-current-summary.test.mjs
 ```
 
-첫 명령은 기존 M2의 원천 hash를 검증하고 현재 구현 pin을 생성한다. 구현을 고쳤다면 실행·번들 전에 다시 실행한다. 두 번째는 36개 선택 검사와 11개 예제 재실행을 저장한다. 세 번째는 NumPy의 독립 FFT로 JS 결과를 비교한다. 최신 첨부 PDF에 접근할 수 있을 때 `tests/build-progress.py`는 원래 criterion 대조와 진행표를 재생성한다.
+첫 명령은 저장된 실제 source 실행의 capture 및 artifact 바이트와 생성된 browser summary를 비교한다. source 생성자를 재실행하지 않는다. 두 번째는 빠른 18개 관측·재생·독립 미분 회귀검사다. 무거운 source 실행 명령은 `evidence/source-current-20261012/source-current-execution.json`에 정확히 보존되어 있다. 새 구현 pin은 `tests/build-source-inheritance.py`로 만들며 현재 12개 구현 파일을 묶는다. 기존 `tests/run.mjs` 및 `tests/independent_numpy.py`는 CI의 새 fixture 재생과 독립 NumPy 비교에 사용한다. 아래 유한 수치값과 기존 evidence는 이전 선택 입력의 기록이다.
 
 | 검사 | 관측 |
 |---|---:|
@@ -137,4 +139,4 @@ python research-ide/mathscope-m3/navier/tests/independent_numpy.py
 
 이 값들은 선택된 유한 입력의 산술·알고리즘 검증이다. 전역 PDE의 오차 enclosure, 원문의 all-order 해석적 명제, 또는 새 Lean 증명을 대신하지 않는다. `evidence/acceptance.json`, `evidence/independent-numpy.json`과 개별 예제 JSON에 정확한 입력·측정값·재실행 결과가 있다.
 
-P7과 M2의 코드·근거 파일은 수정하지 않는다.
+이 source 확장에서는 원래 M2 코드·근거의 byte identity를 보존한다. 전체 M3 완료 판정은 각 원래 기준의 최신 진행표와 실제 배포/CI 증거를 따른다.

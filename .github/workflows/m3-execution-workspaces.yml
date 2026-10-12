@@ -87,7 +87,7 @@ jobs:
           import {inheritedSource} from './research-ide/mathscope-m3/navier/source-inheritance.mjs';
           const sha=value=>createHash('sha256').update(value).digest('hex');
           const stable=value=>Array.isArray(value)?'['+value.map(stable).join(',')+']':value&&typeof value==='object'?'{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+stable(value[key])).join(',')+'}':JSON.stringify(value);
-          const expected=['galerkin.mjs','corrections.mjs','localization.mjs','index.mjs','source-mean-map.mjs','source-inheritance.mjs'];
+          const expected=['galerkin.mjs','corrections.mjs','localization.mjs','index.mjs','source-mean-map.mjs','source-inheritance.mjs','flow-observations.mjs','source-current-state.mjs','source-pressure.mjs','source-higher-jets.mjs','source-signed-stress.mjs','source-current-evidence.mjs'];
           assert.deepEqual(implementationPin.files.map(row=>row.path),expected.map(name=>'research-ide/mathscope-m3/navier/'+name));
           for(const row of implementationPin.files){const raw=fs.readFileSync(row.path);assert.equal(raw.length,row.bytes,row.path);assert.equal(sha(raw),row.sha256,row.path);}
           assert.equal(sha(stable(implementationPin.files)),implementationPin.sha256);
@@ -104,12 +104,27 @@ jobs:
         run: python -B research-ide/mathscope-m3/web/tests/test_extended_build.py 2>&1 | tee "$M3_CI_OUTPUT/builder-tests.log"
       - name: Execute the actual static Worker and reject forged replay and display records
         run: node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/extended-worker.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/worker-tests.tap"
+      - name: Verify flow coordinates, angular velocity, path semantics and view invariance
+        run: node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/extended-flow-view.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/flow-view-tests.tap"
+      - name: Check lossless production packaging and graph provenance
+        run: |
+          node research-ide/mathscope-m3/gauge/experiments/package-study-record.mjs --check 2>&1 | tee "$M3_CI_OUTPUT/gauge-study-package.json"
+          node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/gauge-study-view.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/gauge-study-view.tap"
       - name: Test gauge models, independent chains, lattice observations and Wilson flow
         run: node --test --test-reporter=tap research-ide/mathscope-m3/gauge/tests/*.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/gauge-tests.tap"
       - name: Run every public gauge example and independently recompute saved correlations
         run: node research-ide/mathscope-m3/gauge/verify_runtime.mjs 2>&1 | tee "$M3_CI_OUTPUT/gauge-runtime.log"
       - name: Execute Navier source guards, Galerkin acceptance checks and every replay example
         run: node research-ide/mathscope-m3/navier/tests/run.mjs 2>&1 | tee "$M3_CI_OUTPUT/navier-acceptance.json"
+      - name: Compare stored-state paths with independent exact flow and energy identities
+        run: |
+          node --test --test-reporter=tap \
+            research-ide/mathscope-m3/navier/tests/flow-observations.test.mjs \
+            research-ide/mathscope-m3/navier/tests/flow-interface.test.mjs \
+            research-ide/mathscope-m3/navier/tests/source-pressure-calculus.test.mjs \
+            research-ide/mathscope-m3/navier/tests/source-parametric-body.test.mjs \
+            research-ide/mathscope-m3/navier/tests/source-current-summary.test.mjs \
+            2>&1 | tee "$M3_CI_OUTPUT/navier-current-state-tests.tap"
       - name: Compare newly generated JS Fourier data against NumPy and exact Taylor-Green energy
         run: python -B research-ide/mathscope-m3/navier/tests/independent_numpy.py 2>&1 | tee "$M3_CI_OUTPUT/independent-numpy.json"
       - name: Preserve the newly executed examples and source receipts

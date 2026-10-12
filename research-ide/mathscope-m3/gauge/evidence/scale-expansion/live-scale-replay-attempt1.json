@@ -1,0 +1,60 @@
+{
+  "schema": "MathScope.M3.GaugeLiveScaleReplay/1",
+  "example": "y5-independent-t0",
+  "request": {
+    "kind": "ensemble-study",
+    "scaleSampler": {
+      "samples": 8,
+      "burnIn": 32
+    },
+    "channelSampler": {
+      "samples": 128,
+      "burnIn": 32
+    },
+    "flow": {
+      "maxTime": 0.8,
+      "step": 0.04
+    },
+    "bootstrap": {
+      "replicates": 32,
+      "scaleBlock": 2,
+      "channelBlock": 8
+    }
+  },
+  "status": "COMPLETED",
+  "newNumericalExecution": true,
+  "replayStatus": "MATCH",
+  "replayNewExecution": true,
+  "sourceHash": "6717fcfa1937567c0bffc8f0c807401140dd731fb9de0fc71022138c2bc44541",
+  "resultHash": "2d04efe96adb46335a3a4ef2c096c1539a0c96c2d2b7028c6a9de9741cbcdd86",
+  "expectedHash": "2d04efe96adb46335a3a4ef2c096c1539a0c96c2d2b7028c6a9de9741cbcdd86",
+  "actualHash": "2d04efe96adb46335a3a4ef2c096c1539a0c96c2d2b7028c6a9de9741cbcdd86",
+  "seconds": 5.99,
+  "scales": [
+    {
+      "id": "calibration-beta2.1",
+      "t0": 0.34964066151616674,
+      "status": "INDEPENDENT_REFERENCE_SCALE_MEASURED",
+      "quantitativeStatus": "PROVISIONAL_REFERENCE_DIAGNOSTICS",
+      "channelMass": {
+        "value": null,
+        "unit": "1/sqrt(t0)",
+        "uncertainty": {
+          "valid": 0,
+          "total": 32,
+          "required": 26,
+          "status": "INSUFFICIENT_VALID_BOOTSTRAPS",
+          "lower": null,
+          "upper": null,
+          "standardError": null,
+          "rigorous": false
+        },
+        "status": "UNRESOLVED_CHANNEL_MASS",
+        "source": "Predeclared operator and first fit window; no post-hoc best-window selection",
+        "jointError": "Independent scale and channel block-bootstrap draws are paired without target mass input.",
+        "globalGapLowerBound": false
+      }
+    }
+  ],
+  "continuumGap": "OPEN_CONTINUUM"
+}

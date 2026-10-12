@@ -21,14 +21,14 @@ if str(M3_ROOT) not in sys.path:
     sys.path.insert(0, str(M3_ROOT))
 import cli
 
-SCHEMA = "MathScope.M3.P8.P7MutationAudit/1"
+SCHEMA = "MathScope.M3.P8.P7MutationAudit/2"
 REQUESTS = {
     "zero-box": {"kind": "p7.zeta_zeros", "input": {
         "height": "20", "precisionBits": 128, "tolerance": "1e-12",
         "maxCells": 16384, "maxDepth": 24, "maxEvaluations": 100000,
         "timeoutSeconds": 45}},
-    "rank-upper": {"kind": "p7.elliptic_local", "input": {
-        "model": "37a1", "primes": [2, 3, 5, 7, 37], "coefficientLimit": 16}},
+    "rank-upper": {"kind": "p7.elliptic_arithmetic", "input": {
+        "model": "37a1", "coefficientLimit": 16, "precisionBits": 192, "heightIterations": 7}},
 }
 # These are an explicit audit fixture, not a claim to enumerate the whole app.
 DEPENDENCY_EDGES = (
@@ -96,14 +96,13 @@ def forge_record(actual, case):
         changes = [{"fieldPath": "result.hardyRoots[0]", "before": before, "after": after}]
     elif case == "rank-upper":
         rank = forged["result"]["arithmeticRank"]
-        before = deepcopy(rank)
-        rank.update({"upperBound": 1, "exactRank": 1, "descentPerformed": True,
-                     "selmerBoundComputed": True,
-                     "upperBoundCertificate": {"kind": "FORGED_SELMER_UPPER_BOUND",
-                                                "bound": 1, "verified": True}})
-        forged["result"]["scope"]["arithmeticRankUpperBoundComputed"] = True
-        changes = [{"fieldPath": "result.arithmeticRank", "before": before, "after": deepcopy(rank)},
-                   {"fieldPath": "result.scope.arithmeticRankUpperBoundComputed", "before": False, "after": True}]
+        certificate = rank.pop("rankUpperCertificate")
+        # Keep the actual exact-rank and descent flags. The retained conclusion
+        # must lose its badge when its valid arithmetic prerequisite is removed.
+        changes = [{"fieldPath": "result.arithmeticRank.rankUpperCertificate",
+                    "operation": "DELETE_VALID_CERTIFICATE",
+                    "before": deepcopy(certificate), "after": None,
+                    "rankIntervalPreserved": {key: rank[key] for key in ("lowerBound", "upperBound", "exactRank")}}]
     else:
         raise ValueError("unsupported fixed mutation")
     return reseal_record(forged), changes
@@ -141,6 +140,9 @@ def binding_rejections(actual):
         variants.append(("precision", precision))
     else:
         inputs["request"]["input"]["coefficientLimit"] = 17
+        precision = deepcopy(actual)
+        precision["request"]["input"]["precisionBits"] = 256
+        variants.append(("precision", precision))
     variants.append(("input", inputs))
     for name, altered in variants:
         # Keep the old input digest deliberately: a saved result cannot borrow
@@ -168,9 +170,12 @@ def run_case(case, *, max_seconds=90, memory_mib=768):
     if case == "zero-box" and not (result["status"] == "FINITE_RH_TO_T" and result["pass"] is True):
         raise RuntimeError("zero baseline did not produce its finite-height certificate")
     if case == "rank-upper" and not (result["arithmeticRank"]["lowerBound"] == 1
-                                     and result["arithmeticRank"]["upperBound"] is None
-                                     and result["scope"]["arithmeticRankUpperBoundComputed"] is False):
-        raise RuntimeError("rank baseline no longer has the expected explicit open upper bound")
+                                     and result["arithmeticRank"]["upperBound"] == 1
+                                     and result["arithmeticRank"]["exactRank"] == 1
+                                     and result["scope"]["arithmeticRankUpperBoundComputed"] is True
+                                     and result["arithmeticRank"]["rankUpperCertificate"]["freshProcessExecuted"] is True
+                                     and result["arithmeticRank"]["rankUpperCertificate"]["status"] == "CERTIFIED_ARITHMETIC_UPPER"):
+        raise RuntimeError("rank baseline lacks an actual valid arithmetic upper certificate")
     original_bytes = cli.canonical(actual)
     positive = cli.replay(actual, max_seconds=max_seconds, memory_mib=memory_mib)
     forged, changes = forge_record(actual, case)
@@ -206,7 +211,8 @@ def run_case(case, *, max_seconds=90, memory_mib=768):
             "originalRecordUnchanged": unchanged,
             "downstream": dependency_invalidation(case),
             "mathematicalScope": {"mutationDetection": "FRESH_P7_RESULT_COMPARISON",
-                                  "rankUpperBoundComputed": False, "rankUpperBoundStatus": "OPEN",
+                                  "rankUpperBoundComputed": case == "rank-upper",
+                                  "rankUpperBoundStatus": "CERTIFIED_ARITHMETIC_UPPER" if case == "rank-upper" else "NOT_APPLICABLE",
                                   "globalRHProved": False, "globalBSDProved": False,
                                   "finiteHeightOnly": case == "zero-box"},
             "certificateIssued": False}
@@ -225,7 +231,9 @@ def run_audit(*, max_seconds=90, memory_mib=768):
               "receiptMeaning": "Recorded execution of two finite negative controls; loading this JSON never reruns a validator.",
               "originalP8CriterionComplete": False, "wholeP8Complete": False, "wholeM3Complete": False,
               "formalLeanProofIssued": False, "globalRHProved": False, "globalBSDProved": False,
-              "arithmeticRankUpperBoundComputed": False, "certificateIssued": False}
+              "arithmeticRankUpperBoundComputed": True,
+              "validRankUpperCertificateDeletionExecuted": True,
+              "certificateIssued": False}
     report["reportSHA256"] = cli.digest(report)
     return report
 

@@ -1,0 +1,59 @@
+{
+  "schema": "MathScope.P7.PARI.Build/1",
+  "pariVersion": "2.19.0",
+  "source": {
+    "url": "https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.19.0.tar.gz",
+    "sha256": "f317b9722eb5d9094a60303774f066f3a83e3ec1f170be8546c44d7583f30b6d",
+    "bytes": 5508075,
+    "officialHashSource": "https://pari.math.u-bordeaux.fr/download.html",
+    "sha256VerifiedBeforeExtraction": true,
+    "transport": "local_build_cache",
+    "tlsVerifiedDuringThisBuild": false
+  },
+  "recipe": {
+    "commands": [
+      [
+        "sh",
+        "Configure",
+        "--static",
+        "--without-gmp",
+        "--without-readline",
+        "--graphic=none",
+        "--prefix=/opt/mathscope/pari-2.19.0"
+      ],
+      [
+        "make",
+        "-j2",
+        "gp"
+      ]
+    ],
+    "makeJobs": 2,
+    "processTimeBudgetSeconds": 600,
+    "downloadSoftDeadlineSeconds": 180,
+    "downloadSocketTimeoutSeconds": 30,
+    "downloadMaximumSeconds": 210,
+    "sourceDateEpoch": "1790553600",
+    "CFLAGS": "-O2 -ffile-prefix-map=<source>=/usr/src/pari-2.19.0",
+    "databasesDownloaded": false,
+    "gmpRequired": false,
+    "readlineRequired": false,
+    "pariLibraryStatic": true
+  },
+  "platform": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "compiler": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+  },
+  "binary": {
+    "name": "gp",
+    "bytes": 11208080,
+    "sha256": "2f2e505b0fdee4faa4e5461ef7e10f16de2989f2d82caf4e304cd72122c7e42b",
+    "versionOutput": "                  GP/PARI CALCULATOR Version 2.19.0 (released)\n               amd64 running linux (x86-64 kernel) 64-bit version\n    compiled: Sep 28 2026, gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04)\n                            threading engine: single\n               (readline not compiled in, extended help enabled)\n"
+  },
+  "logsSha256": {
+    "compile.log": "46bfd6200536559bc423d49fe937e7482efb5831bb4423eb479003eefdb3e5d0",
+    "configure.log": "0161c09931ad0bd3dc28047035f42950888b060b640f8fe94b266f85012df52d",
+    "version.log": "f1c77a4e67d1bf9f576a095e9ecd78ab7520ac0b56339990660c39fcd26ddd31"
+  },
+  "buildSourceSha256": "b4007aea96703232e8916edbc77a0be912d4fffadca7f09ac91536df9d3345fb"
+}

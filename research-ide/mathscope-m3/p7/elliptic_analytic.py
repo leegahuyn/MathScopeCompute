@@ -16,6 +16,7 @@ from pathlib import Path
 
 from . import ball_backend as balls
 from .elliptic_local import as_curve, dirichlet_coefficients, semistable_minimal_certificate
+from .normalization import elliptic_normalization_ledger
 
 
 SCHEMA = "MathScope.M3.P7.EllipticCentralCertificate/1"
@@ -73,7 +74,7 @@ def _digest(value) -> str:
 def _source_manifest() -> dict:
     here = Path(__file__).resolve().parent
     return {name: sha256((here / name).read_bytes()).hexdigest()
-            for name in ("elliptic_analytic.py", "elliptic_local.py", "ball_backend.py")}
+            for name in ("elliptic_analytic.py", "elliptic_local.py", "ball_backend.py", "normalization.py")}
 
 
 def _request(model, precision_bits, coefficient_limit, tolerance):
@@ -215,6 +216,8 @@ def elliptic_central_certificate(
             "LPrimeConversion": "L'(E,1)=c*(Lambda'(E,1)+(log(c)+EulerGamma)*Lambda(E,1))",
             "c": "2*pi/sqrt(N)", "conductor": conductor, "rootNumber": root_number,
         },
+        "normalizationLedger": elliptic_normalization_ledger(
+            {"real": "1", "imag": "0"}, conductor=conductor, root_number=root_number),
         "constants": constants, "localCertificate": local, "coefficientData": coefficient_data,
         "coefficientDataSha256": _digest(coefficient_data),
         "method": {

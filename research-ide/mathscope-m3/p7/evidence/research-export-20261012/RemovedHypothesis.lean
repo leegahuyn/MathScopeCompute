@@ -1,0 +1,14 @@
+import Init
+namespace MathScope.P7.ExportedResearch
+-- This theorem bundles user hypotheses; mathematical prose has not been translated.
+-- No conclusion about RH, BSD, an operator domain or a spectral bridge follows.
+-- assumption ledger: {"formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER", "id": "symmetric-integer-research:operatorDomain", "leanType": "P0", "mathematicalStatementProved": false, "proofBinder": "h0", "propositionParameter": "P0", "role": "ASSUMPTION", "statement": "Dom(D) consists of sequences with sum k^2(|a_(k,+)|^2+|a_(k,-)|^2)<infinity; its adjoint domain is the same."}
+-- assumption ledger: {"formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER", "id": "symmetric-integer-research:zeroSpectrum", "leanType": "P1", "mathematicalStatementProved": false, "proofBinder": "h1", "propositionParameter": "P1", "role": "ASSUMPTION", "statement": "The zeros of the det2 candidate are the signed integer spectrum with multiplicity. They are not asserted to be Riemann zeros."}
+-- assumption ledger: {"formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER", "id": "symmetric-integer-research:regularizedDeterminant", "leanType": "P2", "mathematicalStatementProved": false, "proofBinder": "h2", "propositionParameter": "P2", "role": "ASSUMPTION", "statement": "Use det2(I-z D^-1), normalized by F(0)=1 and F'(0)=0, with no extra trivial-zero factor."}
+-- assumption ledger: {"formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER", "id": "symmetric-integer-research:trace", "leanType": "P3", "mathematicalStatementProved": false, "proofBinder": "h3", "propositionParameter": "P3", "role": "ASSUMPTION", "statement": "The inverse-square trace is the sum of squared reciprocal eigenvalues; finite cutoffs need separate tails."}
+-- assumption ledger: {"formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER", "id": "symmetric-integer-research:duality", "leanType": "P4", "mathematicalStatementProved": false, "proofBinder": "h4", "propositionParameter": "P4", "role": "ASSUMPTION", "statement": "The paired signed spectrum proposes F(z)=F(-z). A relation to xi requires a further unproved bridge."}
+-- assumption ledger: {"formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER", "id": "symmetric-integer-research:positivity", "leanType": "P5", "mathematicalStatementProved": false, "proofBinder": "h5", "propositionParameter": "P5", "role": "ASSUMPTION", "statement": "The supplied identity quadratic form is positive; it does not identify any Riemann Weil-positivity form."}
+theorem exportedHypotheses (P0 P1 P2 P3 P4 P5 : Prop) (h0 : P0) (h1 : P1) (h3 : P3) (h4 : P4) (h5 : P5) : P0 ∧ P1 ∧ P2 ∧ P3 ∧ P4 ∧ P5 := And.intro h0 (And.intro h1 (And.intro h2 (And.intro h3 (And.intro h4 (h5)))))
+#print exportedHypotheses
+#print axioms exportedHypotheses
+end MathScope.P7.ExportedResearch

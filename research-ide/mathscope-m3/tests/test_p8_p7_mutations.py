@@ -87,21 +87,25 @@ class FreshP7MutationTests(unittest.TestCase):
         self.assertEqual(negative["fresh"]["mathematicalSHA256"], row["baseline"]["mathematicalSHA256"])
         self.assertNotEqual(negative["fresh"]["mathematicalSHA256"], negative["forged"]["mathematicalSHA256"])
 
-    def test_forged_rank_certificate_is_rejected_without_computing_an_upper_bound(self):
+    def test_deleting_an_actual_valid_rank_upper_certificate_revokes_the_conclusion(self):
         row = self.rows["rank-upper"]
         negative = row["negativeControl"]
         rank = negative["mutations"][0]
-        self.assertIsNone(rank["before"]["upperBound"])
-        self.assertIsNone(rank["before"]["exactRank"])
-        self.assertFalse(rank["before"]["selmerBoundComputed"])
-        self.assertEqual(rank["after"]["upperBound"], 1)
-        self.assertTrue(rank["after"]["selmerBoundComputed"])
-        self.assertTrue(rank["after"]["upperBoundCertificate"]["verified"])
+        self.assertEqual(rank["operation"], "DELETE_VALID_CERTIFICATE")
+        self.assertEqual(rank["fieldPath"], "result.arithmeticRank.rankUpperCertificate")
+        self.assertEqual(rank["before"]["upperBound"], 1)
+        self.assertEqual(rank["before"]["status"], "CERTIFIED_ARITHMETIC_UPPER")
+        self.assertTrue(rank["before"]["freshProcessExecuted"])
+        self.assertFalse(rank["before"]["analyticRankUsed"])
+        self.assertFalse(rank["before"]["databaseLookupUsed"])
+        self.assertIsNone(rank["after"])
+        self.assertEqual(rank["rankIntervalPreserved"], {"lowerBound": 1, "upperBound": 1, "exactRank": 1})
         self.assertTrue(negative["passed"])
         self.assertEqual(negative["status"], "MISMATCH_OR_UNRESOLVED")
         self.assertEqual(negative["fresh"]["execution"]["status"], "COMPLETED")
-        self.assertEqual(row["mathematicalScope"]["rankUpperBoundStatus"], "OPEN")
-        self.assertFalse(row["mathematicalScope"]["rankUpperBoundComputed"])
+        self.assertEqual(row["mathematicalScope"]["rankUpperBoundStatus"], "CERTIFIED_ARITHMETIC_UPPER")
+        self.assertTrue(row["mathematicalScope"]["rankUpperBoundComputed"])
+        self.assertTrue(self.report["validRankUpperCertificateDeletionExecuted"])
 
     def test_source_input_precision_and_predecessor_remain_bound(self):
         for row in self.rows.values():
@@ -130,8 +134,9 @@ class FreshP7MutationTests(unittest.TestCase):
     def test_receipt_never_adopts_import_authority_or_closes_mathematical_gates(self):
         self.assertEqual(self.report["serializedAuthority"], "UNTRUSTED_REQUIRES_REEXECUTION")
         for field in ("wholeP8Complete", "originalP8CriterionComplete", "wholeM3Complete", "formalLeanProofIssued",
-                      "globalRHProved", "globalBSDProved", "arithmeticRankUpperBoundComputed", "certificateIssued"):
+                      "globalRHProved", "globalBSDProved", "certificateIssued"):
             self.assertIs(self.report[field], False)
+        self.assertTrue(self.report["arithmeticRankUpperBoundComputed"])
         for row in self.rows.values():
             for control in ("positiveControl", "negativeControl"):
                 self.assertIs(row[control]["importedProofStatusAdopted"], False)

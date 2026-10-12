@@ -1,0 +1,81 @@
+{
+  "schema": "MathScope.M3.P7.ResearchBinderKernelAudit/1",
+  "observedAt": "2026-10-12T09:29:32.565189+00:00",
+  "expectedVersion": "Lean 4.34.1",
+  "driverSHA256": "e73e78ed1ea088280437a8f04d28a3bf317e7f8c51b8c7c786ec7033ec8a66f5",
+  "driverMeaning": "Existing unchanged frontend embedding required by this environment; official Lean libraries/kernel unchanged.",
+  "results": [
+    {
+      "id": "version",
+      "arguments": [
+        "--version"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.08033757399971364,
+      "stdout": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)\n",
+      "stderr": ""
+    },
+    {
+      "id": "positive",
+      "arguments": [
+        "/workspace/scratch/5a8728de776c/MathScopeCompute/research-ide/mathscope-m3/p7/evidence/research-export-20261012/ResearchHypotheses.lean"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 1.124417496001115,
+      "stdout": "theorem MathScope.P7.ExportedResearch.exportedHypotheses : ∀ (P0 P1 P2 P3 P4 P5 : Prop),\n  P0 → P1 → P2 → P3 → P4 → P5 → P0 ∧ P1 ∧ P2 ∧ P3 ∧ P4 ∧ P5 :=\nfun P0 P1 P2 P3 P4 P5 h0 h1 h2 h3 h4 h5 => ⟨h0, ⟨h1, ⟨h2, ⟨h3, ⟨h4, h5⟩⟩⟩⟩⟩\n'MathScope.P7.ExportedResearch.exportedHypotheses' does not depend on any axioms\n",
+      "stderr": ""
+    },
+    {
+      "id": "removed",
+      "arguments": [
+        "/workspace/scratch/5a8728de776c/MathScopeCompute/research-ide/mathscope-m3/p7/evidence/research-export-20261012/RemovedHypothesis.lean"
+      ],
+      "exitCode": 1,
+      "durationSeconds": 0.2116939000043203,
+      "stdout": "/workspace/scratch/5a8728de776c/MathScopeCompute/research-ide/mathscope-m3/p7/evidence/research-export-20261012/RemovedHypothesis.lean:11:175: error(lean.unknownIdentifier): Unknown identifier `h2`\ntheorem MathScope.P7.ExportedResearch.exportedHypotheses : ∀ (P0 P1 P2 P3 P4 P5 : Prop),\n  P0 → P1 → P3 → P4 → P5 → P0 ∧ P1 ∧ P2 ∧ P3 ∧ P4 ∧ P5 :=\nfun P0 P1 P2 P3 P4 P5 h0 h1 h3 h4 h5 => ⟨h0, ⟨h1, ⟨sorry, ⟨h3, ⟨h4, h5⟩⟩⟩⟩⟩\n'MathScope.P7.ExportedResearch.exportedHypotheses' depends on axioms: [sorryAx]\n",
+      "stderr": ""
+    }
+  ],
+  "files": {
+    "RemovedHypothesis.lean": {
+      "bytes": 2845,
+      "sha256": "3655293c86f193eaeb64ad7bcca2e559306abcc59c76c7638c90d735b17c36b8"
+    },
+    "ResearchHypotheses.lean": {
+      "bytes": 2855,
+      "sha256": "412383d2eecc5504c9c9580c9eab8af447a28179e7c7005e731b360e6004b134"
+    },
+    "positive.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "positive.stdout": {
+      "bytes": 353,
+      "sha256": "dde4fb84d9f54a4edc8d5d9114094eb42a7e715408e55d89783e965b33999d2b"
+    },
+    "removed.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "removed.stdout": {
+      "bytes": 543,
+      "sha256": "afdd7216297f27a9586a9a5e30264cbb6ac0f4e6abfbbc6ae178abc0d7ecbd22"
+    },
+    "research-export.json": {
+      "bytes": 6552,
+      "sha256": "3bf4b940c8e24f020d1ea8470ac9a3141538bbe1895ad6a7041beed14bd1d7a6"
+    },
+    "version.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "version.stdout": {
+      "bytes": 106,
+      "sha256": "355a9a028f81641782d75d6e6b58dec70f29d2f61238a9e271690259d9bf5680"
+    }
+  },
+  "proofScope": "The kernel checks the conjunction of opaque proposition assumptions and the deletion failure only. It does not translate or prove the registered operator/domain/trace research statements.",
+  "newMathematicalClaimProved": false,
+  "parametersAreNotAxiomDeclarations": true,
+  "printAxiomsReceiptCannotSubstituteForBinderList": true
+}

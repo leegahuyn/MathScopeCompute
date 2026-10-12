@@ -75,6 +75,9 @@ def main():
     worker,closure=bundle(ROOT/'worker-entry.mjs')
     extra=[ROOT/'browser-client.js',Path(__file__).resolve(),ROOT.parent/'P7_PROGRESS.json',ROOT.parent/'P8_PROGRESS.json',ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json',ROOT/'review-fixture-evidence.json',ROOT/'tools/build_review_fixtures.py',ROOT/'tools/audit_conditional_lean.py',ROOT/'tools/audit_p7_mutations.py',ROOT.parent/'cli.py']
     extra+=list((ROOT.parent/'p7').glob('*.py'))
+    pari=ROOT.parent/'p7/pari_runtime'
+    extra += [pari/name for name in ('pyproject.toml','setup.py','MANIFEST.in')]
+    extra += list((pari/'src/mathscope_p7_pari').glob('*.py'))
     extra+=[ROOT.parent/'tests/test_p8_p7_mutations.py']
     extra+=[p for p in [ROOT/'evidence/lean-release.json',ROOT/'evidence/p7-mutation-release.json',ROOT/'evidence/conditional-lean-release.json'] if p.exists()]
     extra+=[p for p in (ROOT/'lean').rglob('*.lean') if '.lake' not in p.relative_to(ROOT).parts]+[ROOT/'lean/lean-toolchain',ROOT/'lean/pins.json',ROOT/'lean/finite-input.json',ROOT/'tools/audit_lean.py',ROOT/'tools/generate_finite.mjs']

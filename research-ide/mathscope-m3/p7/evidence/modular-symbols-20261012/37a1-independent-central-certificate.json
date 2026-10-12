@@ -1,0 +1,1083 @@
+{
+  "schema": "MathScope.M3.P7.EllipticCentralCertificate/1",
+  "request": {
+    "model": "37a1",
+    "precisionBits": 192,
+    "coefficientLimit": 128,
+    "tolerance": "1/10000000000000000000000000000000000000000"
+  },
+  "center": "1",
+  "derivativeOrders": [
+    0,
+    1
+  ],
+  "model": {
+    "label": "37a1",
+    "ainvs": [
+      "0",
+      "0",
+      "1",
+      "-1",
+      "0"
+    ],
+    "hash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512"
+  },
+  "normalization": {
+    "L": "L(E,s)=sum_(n>=1) a_n*n^(-s), arithmetic center s=1",
+    "Lambda": "Lambda(E,s)=N^(s/2)*(2*pi)^(-s)*Gamma(s)*L(E,s)=c^(-s)*Gamma(s)*L(E,s)",
+    "functionalEquation": "Lambda(E,s)=w*Lambda(E,2-s)",
+    "LPrimeConversion": "L'(E,1)=c*(Lambda'(E,1)+(log(c)+EulerGamma)*Lambda(E,1))",
+    "c": "2*pi/sqrt(N)",
+    "conductor": 37,
+    "rootNumber": -1
+  },
+  "normalizationLedger": {
+    "schema": "MathScope.P7.CompletedNormalizationLedger/1",
+    "sourceFunction": "L(E,s)",
+    "targetFunction": "Lambda(E,s)",
+    "input": {
+      "real": "1",
+      "imag": "0"
+    },
+    "conductor": 37,
+    "rootNumber": -1,
+    "allBadFactorsIncluded": true,
+    "forward": "Lambda(E,s)=N^(s/2)*(2*pi)^(-s)*Gamma(s)*L(E,s)=c^(-s)*Gamma(s)*L(E,s)",
+    "inverse": "L(E,s)=c^s*rgamma(s)*Lambda(E,s), c=2*pi/sqrt(N)",
+    "completedFunctionalEquation": "Lambda(E,s)=w*Lambda(E,2-s)",
+    "zeroPoleRules": [
+      {
+        "locus": "s outside nonpositive integers",
+        "rule": "The normalizer is finite and nonzero; L and Lambda zero multiplicities agree."
+      },
+      {
+        "locus": "s=0,-1,-2,...",
+        "rule": "Simple trivial L zeros cancel simple Gamma(s) poles. Lambda is nonzero there by the functional equation and the nonvanishing Euler product at s=2,3,4,..."
+      },
+      {
+        "locus": "all finite s",
+        "rule": "The complete weight-two newform Lambda is entire; L has no finite pole."
+      }
+    ],
+    "pointConversion": {
+      "classification": "REGULAR_COMPLETED_CONVERSION",
+      "reciprocalGammaUsedToAvoidPoleDivision": true,
+      "trivialLZeroForcedExactly": false
+    },
+    "goodOnlySeriesWouldBe": "L^S(E,s); its removed bad factors must be restored before using this completed functional equation",
+    "theoremDependencies": [
+      "modularity over Q",
+      "complete local Euler factors",
+      "weight-two Mellin transform",
+      "Euler-product nonvanishing in Re(s)>3/2"
+    ],
+    "primarySource": "https://www.jmilne.org/math/Books/EC2.pdf"
+  },
+  "constants": {
+    "c": {
+      "kind": "finite",
+      "lower": {
+        "mantissa": "1620981963334981703488959130632254455770250630842441228171",
+        "exponent": "-190"
+      },
+      "upper": {
+        "mantissa": "810490981667490851744479565316127227885125315421220614087",
+        "exponent": "-189"
+      },
+      "width": {
+        "mantissa": "3",
+        "exponent": "-190"
+      },
+      "exact": false,
+      "containsZero": false,
+      "toleranceMet": null
+    },
+    "logCPlusEulerGamma": {
+      "kind": "finite",
+      "lower": {
+        "mantissa": "1913366613466158541791119725743165132226052385590244706483",
+        "exponent": "-191"
+      },
+      "upper": {
+        "mantissa": "1913366613466158541791119725743165132226052385590244706489",
+        "exponent": "-191"
+      },
+      "width": {
+        "mantissa": "3",
+        "exponent": "-190"
+      },
+      "exact": false,
+      "containsZero": false,
+      "toleranceMet": null
+    }
+  },
+  "localCertificate": {
+    "modelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+    "status": "certified-semistable-minimal",
+    "integralDisplayedModel": true,
+    "minimalAtEveryPrime": true,
+    "semistableAtEveryPrime": true,
+    "allBadFactorsCertified": true,
+    "discriminantFactorization": {
+      "sign": 1,
+      "absoluteValue": 37,
+      "factors": [
+        {
+          "prime": 37,
+          "exponent": 1
+        }
+      ],
+      "complete": true,
+      "method": "bounded-exact-trial-division-and-product-identity"
+    },
+    "badPrimeRows": [
+      {
+        "prime": 37,
+        "primeCertificate": {
+          "method": "exact-trial-division",
+          "through": 6,
+          "probablePrimeOnly": false
+        },
+        "modelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+        "reducedAinvs": [
+          0,
+          0,
+          1,
+          36,
+          0
+        ],
+        "valuationDelta": 1,
+        "valuationC4": 0,
+        "status": "certified",
+        "reduction": "multiplicative",
+        "kodaira": "I1",
+        "minimality": {
+          "certified": true,
+          "reason": "unit-c4",
+          "proof": "A lower integral discriminant would require v_p(u)>0 and c4_min=c4/u^4 of negative valuation.",
+          "scalingWeights": {
+            "c4": 4,
+            "Delta": 12
+          }
+        },
+        "node": {
+          "singularPoint": [
+            5,
+            18
+          ],
+          "tangentConeCoefficients": {
+            "X2": 22,
+            "XY": 0,
+            "Y2": 1
+          },
+          "rationalProjectiveTangentDirections": [],
+          "verticalDirectionValue": 1,
+          "split": false,
+          "minusC6Residue": 31,
+          "legendreMinusC6": -1,
+          "splittingMethod": "node-and-Legendre-minus-c6"
+        },
+        "split": false,
+        "singularProjectivePointCount": 39,
+        "pointCountProof": {
+          "method": "direct-character-count",
+          "xCoordinatesExhausted": 37,
+          "infinityCount": 1,
+          "numberOfXWithZeroOneTwoY": [
+            17,
+            2,
+            18
+          ],
+          "quadraticDiscriminant": "(a1*x+a3)^2+4*(x^3+a2*x^2+a4*x+a6)"
+        },
+        "a_p": -1,
+        "eulerPolynomial": [
+          1,
+          1
+        ],
+        "eulerDegree": 1,
+        "conductorExponent": 1,
+        "localRootNumber": 1,
+        "tamagawaNumber": 1,
+        "tamagawaRule": "n for split I_n; 1 for non-split odd n; 2 for non-split even n",
+        "theorem": "multiplicative-local-data"
+      }
+    ],
+    "outsideDisplayedDiscriminantPrimes": "The displayed integral model has unit discriminant and good minimal reduction.",
+    "conductor": 37,
+    "archimedeanRootNumber": -1,
+    "globalRootNumber": -1,
+    "rootNumberConvention": "Lambda(E,s)=w(E)*Lambda(E,2-s)",
+    "globalMinimalModelTransformation": "identity",
+    "generalTateAlgorithmImplemented": false,
+    "arithmetic": {
+      "trialDivisions": 6,
+      "pointCountSteps": 111,
+      "limits": {
+        "max_prime": 100003,
+        "max_coefficient_limit": 10000,
+        "max_trial_divisions": 1000000,
+        "max_point_count_steps": 10000000,
+        "max_input_bits": 4096,
+        "max_coordinate_bits": 100000,
+        "max_scalar_bits": 64,
+        "max_requested_primes": 4096
+      }
+    }
+  },
+  "coefficientData": {
+    "schema": "mathscope.p7.dirichlet-coefficients.v1",
+    "modelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+    "firstIndex": 1,
+    "limit": 128,
+    "coefficients": [
+      "1",
+      "-2",
+      "-3",
+      "2",
+      "-2",
+      "6",
+      "-1",
+      "0",
+      "6",
+      "4",
+      "-5",
+      "-6",
+      "-2",
+      "2",
+      "6",
+      "-4",
+      "0",
+      "-12",
+      "0",
+      "-4",
+      "3",
+      "10",
+      "2",
+      "0",
+      "-1",
+      "4",
+      "-9",
+      "-2",
+      "6",
+      "-12",
+      "-4",
+      "8",
+      "15",
+      "0",
+      "2",
+      "12",
+      "-1",
+      "0",
+      "6",
+      "0",
+      "-9",
+      "-6",
+      "2",
+      "-10",
+      "-12",
+      "-4",
+      "-9",
+      "12",
+      "-6",
+      "2",
+      "0",
+      "-4",
+      "1",
+      "18",
+      "10",
+      "0",
+      "0",
+      "-12",
+      "8",
+      "12",
+      "-8",
+      "8",
+      "-6",
+      "-8",
+      "4",
+      "-30",
+      "8",
+      "0",
+      "-6",
+      "-4",
+      "9",
+      "0",
+      "-1",
+      "2",
+      "3",
+      "0",
+      "5",
+      "-12",
+      "4",
+      "8",
+      "9",
+      "18",
+      "-15",
+      "6",
+      "0",
+      "-4",
+      "-18",
+      "0",
+      "4",
+      "24",
+      "2",
+      "4",
+      "12",
+      "18",
+      "0",
+      "-24",
+      "4",
+      "12",
+      "-30",
+      "-2",
+      "3",
+      "0",
+      "18",
+      "0",
+      "-6",
+      "-2",
+      "-12",
+      "-18",
+      "-16",
+      "-20",
+      "3",
+      "4",
+      "-18",
+      "0",
+      "-4",
+      "12",
+      "-12",
+      "-16",
+      "0",
+      "0",
+      "14",
+      "16",
+      "27",
+      "-8",
+      "12",
+      "12",
+      "1",
+      "0"
+    ],
+    "function": "L(E,s)",
+    "omittedPrimes": [],
+    "omittedPrimeDefinition": null,
+    "completeBadFactorsIncluded": true,
+    "localPrimeRecurrences": [
+      {
+        "prime": 2,
+        "factorStatus": "good",
+        "a_p": -2,
+        "eulerPolynomial": [
+          1,
+          2,
+          2
+        ],
+        "primeSquareTerm": 2,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 3,
+        "factorStatus": "good",
+        "a_p": -3,
+        "eulerPolynomial": [
+          1,
+          3,
+          3
+        ],
+        "primeSquareTerm": 3,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 5,
+        "factorStatus": "good",
+        "a_p": -2,
+        "eulerPolynomial": [
+          1,
+          2,
+          5
+        ],
+        "primeSquareTerm": 5,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 7,
+        "factorStatus": "good",
+        "a_p": -1,
+        "eulerPolynomial": [
+          1,
+          1,
+          7
+        ],
+        "primeSquareTerm": 7,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 11,
+        "factorStatus": "good",
+        "a_p": -5,
+        "eulerPolynomial": [
+          1,
+          5,
+          11
+        ],
+        "primeSquareTerm": 11,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 13,
+        "factorStatus": "good",
+        "a_p": -2,
+        "eulerPolynomial": [
+          1,
+          2,
+          13
+        ],
+        "primeSquareTerm": 13,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 17,
+        "factorStatus": "good",
+        "a_p": 0,
+        "eulerPolynomial": [
+          1,
+          0,
+          17
+        ],
+        "primeSquareTerm": 17,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 19,
+        "factorStatus": "good",
+        "a_p": 0,
+        "eulerPolynomial": [
+          1,
+          0,
+          19
+        ],
+        "primeSquareTerm": 19,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 23,
+        "factorStatus": "good",
+        "a_p": 2,
+        "eulerPolynomial": [
+          1,
+          -2,
+          23
+        ],
+        "primeSquareTerm": 23,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 29,
+        "factorStatus": "good",
+        "a_p": 6,
+        "eulerPolynomial": [
+          1,
+          -6,
+          29
+        ],
+        "primeSquareTerm": 29,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 31,
+        "factorStatus": "good",
+        "a_p": -4,
+        "eulerPolynomial": [
+          1,
+          4,
+          31
+        ],
+        "primeSquareTerm": 31,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 37,
+        "factorStatus": "multiplicative",
+        "a_p": -1,
+        "eulerPolynomial": [
+          1,
+          1
+        ],
+        "primeSquareTerm": 0,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 41,
+        "factorStatus": "good",
+        "a_p": -9,
+        "eulerPolynomial": [
+          1,
+          9,
+          41
+        ],
+        "primeSquareTerm": 41,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 43,
+        "factorStatus": "good",
+        "a_p": 2,
+        "eulerPolynomial": [
+          1,
+          -2,
+          43
+        ],
+        "primeSquareTerm": 43,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 47,
+        "factorStatus": "good",
+        "a_p": -9,
+        "eulerPolynomial": [
+          1,
+          9,
+          47
+        ],
+        "primeSquareTerm": 47,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 53,
+        "factorStatus": "good",
+        "a_p": 1,
+        "eulerPolynomial": [
+          1,
+          -1,
+          53
+        ],
+        "primeSquareTerm": 53,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 59,
+        "factorStatus": "good",
+        "a_p": 8,
+        "eulerPolynomial": [
+          1,
+          -8,
+          59
+        ],
+        "primeSquareTerm": 59,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 61,
+        "factorStatus": "good",
+        "a_p": -8,
+        "eulerPolynomial": [
+          1,
+          8,
+          61
+        ],
+        "primeSquareTerm": 61,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 67,
+        "factorStatus": "good",
+        "a_p": 8,
+        "eulerPolynomial": [
+          1,
+          -8,
+          67
+        ],
+        "primeSquareTerm": 67,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 71,
+        "factorStatus": "good",
+        "a_p": 9,
+        "eulerPolynomial": [
+          1,
+          -9,
+          71
+        ],
+        "primeSquareTerm": 71,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 73,
+        "factorStatus": "good",
+        "a_p": -1,
+        "eulerPolynomial": [
+          1,
+          1,
+          73
+        ],
+        "primeSquareTerm": 73,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 79,
+        "factorStatus": "good",
+        "a_p": 4,
+        "eulerPolynomial": [
+          1,
+          -4,
+          79
+        ],
+        "primeSquareTerm": 79,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 83,
+        "factorStatus": "good",
+        "a_p": -15,
+        "eulerPolynomial": [
+          1,
+          15,
+          83
+        ],
+        "primeSquareTerm": 83,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 89,
+        "factorStatus": "good",
+        "a_p": 4,
+        "eulerPolynomial": [
+          1,
+          -4,
+          89
+        ],
+        "primeSquareTerm": 89,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 97,
+        "factorStatus": "good",
+        "a_p": 4,
+        "eulerPolynomial": [
+          1,
+          -4,
+          97
+        ],
+        "primeSquareTerm": 97,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 101,
+        "factorStatus": "good",
+        "a_p": 3,
+        "eulerPolynomial": [
+          1,
+          -3,
+          101
+        ],
+        "primeSquareTerm": 101,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 103,
+        "factorStatus": "good",
+        "a_p": 18,
+        "eulerPolynomial": [
+          1,
+          -18,
+          103
+        ],
+        "primeSquareTerm": 103,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 107,
+        "factorStatus": "good",
+        "a_p": -12,
+        "eulerPolynomial": [
+          1,
+          12,
+          107
+        ],
+        "primeSquareTerm": 107,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 109,
+        "factorStatus": "good",
+        "a_p": -16,
+        "eulerPolynomial": [
+          1,
+          16,
+          109
+        ],
+        "primeSquareTerm": 109,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 113,
+        "factorStatus": "good",
+        "a_p": -18,
+        "eulerPolynomial": [
+          1,
+          18,
+          113
+        ],
+        "primeSquareTerm": 113,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      },
+      {
+        "prime": 127,
+        "factorStatus": "good",
+        "a_p": 1,
+        "eulerPolynomial": [
+          1,
+          -1,
+          127
+        ],
+        "primeSquareTerm": 127,
+        "recurrence": "a_(p^r)=a_p*a_(p^(r-1))-primeSquareTerm*a_(p^(r-2)); a_(p^0)=1"
+      }
+    ],
+    "coprimeMultiplicativity": "a_(mn)=a_m*a_n when gcd(m,n)=1",
+    "normalization": "Arithmetic a_n; L(E,s)=sum_(n>=1) a_n*n^(-s), center s=1; no n^(-1/2) renormalization.",
+    "scope": {
+      "exactFiniteCoefficients": true,
+      "infiniteTailComputed": false,
+      "analyticContinuationComputed": false,
+      "schemeZetaFunction": false,
+      "eulerAbsoluteConvergenceHalfPlane": "Re(s)>3/2, with an independent infinite-tail bound required for numerical certification"
+    },
+    "arithmetic": {
+      "trialDivisions": 107,
+      "pointCountSteps": 1794,
+      "limits": {
+        "max_prime": 100003,
+        "max_coefficient_limit": 10000,
+        "max_trial_divisions": 1000000,
+        "max_point_count_steps": 10000000,
+        "max_input_bits": 4096,
+        "max_coordinate_bits": 100000,
+        "max_scalar_bits": 64,
+        "max_requested_primes": 4096
+      }
+    }
+  },
+  "coefficientDataSha256": "93a9c047b7f5cda567b2ea09bb3db483bd27b5ce7e092e28e59f72d5e5c850f3",
+  "method": {
+    "name": "central-split-Mellin-exponential-and-E1",
+    "LambdaCentral": "(1+w)*sum_(n>=1) a_n*exp(-c*n)/(c*n)",
+    "LambdaPrimeCentral": "(1-w)*sum_(n>=1) a_n*E1(c*n)/(c*n)",
+    "E1": "E1(x)=integral_x^infinity exp(-t)/t dt=Gamma(0,x), x>0",
+    "coefficientMajorant": "|a_n|<=d(n)*sqrt(n)<=2*n for all n>=1",
+    "tailLambda": "2*abs(1+w)/c * q^(K+1)/(1-q)",
+    "tailLambdaPrime": "2*abs(1-w)/(c^2*(K+1)) * q^(K+1)/(1-q)",
+    "q": "exp(-c)",
+    "K": 128,
+    "exactParity": {
+      "LambdaCentralZero": true,
+      "LambdaPrimeCentralZero": false
+    }
+  },
+  "errorBudget": {
+    "finiteSumBalls": {
+      "L": {
+        "kind": "finite",
+        "lower": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "upper": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "width": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "exact": true,
+        "containsZero": true,
+        "toleranceMet": null
+      },
+      "LPrime": {
+        "kind": "finite",
+        "lower": {
+          "mantissa": "1920791711361661532117831941041975828041824818972186910639",
+          "exponent": "-192"
+        },
+        "upper": {
+          "mantissa": "1920791711361661532117831941041975828041824889640275943343",
+          "exponent": "-192"
+        },
+        "width": {
+          "mantissa": "134788683",
+          "exponent": "-173"
+        },
+        "exact": false,
+        "containsZero": false,
+        "toleranceMet": null
+      },
+      "Lambda": {
+        "kind": "finite",
+        "lower": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "upper": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "width": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "exact": true,
+        "containsZero": true,
+        "toleranceMet": null
+      },
+      "LambdaPrime": {
+        "kind": "finite",
+        "lower": {
+          "mantissa": "3719043535777151316744761893153525866377494614634019952997",
+          "exponent": "-193"
+        },
+        "upper": {
+          "mantissa": "3719043535777151316744761893153525866377494751461816670565",
+          "exponent": "-193"
+        },
+        "width": {
+          "mantissa": "260978311",
+          "exponent": "-174"
+        },
+        "exact": false,
+        "containsZero": false,
+        "toleranceMet": null
+      }
+    },
+    "analyticTailUpperBounds": {
+      "L": {
+        "kind": "finite",
+        "lower": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "upper": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "width": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "exact": true,
+        "containsZero": true,
+        "toleranceMet": null
+      },
+      "LPrime": {
+        "kind": "finite",
+        "lower": {
+          "mantissa": "30971651382841511895144685412717243106012885275810715325",
+          "exponent": "-381"
+        },
+        "upper": {
+          "mantissa": "30971651382841511895144685412717243106012885275810715325",
+          "exponent": "-381"
+        },
+        "width": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "exact": true,
+        "containsZero": false,
+        "toleranceMet": null
+      },
+      "Lambda": {
+        "kind": "finite",
+        "lower": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "upper": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "width": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "exact": true,
+        "containsZero": true,
+        "toleranceMet": null
+      },
+      "LambdaPrime": {
+        "kind": "finite",
+        "lower": {
+          "mantissa": "3837914766045544595228117579600580554219044117797562535919",
+          "exponent": "-388"
+        },
+        "upper": {
+          "mantissa": "3837914766045544595228117579600580554219044117797562535919",
+          "exponent": "-388"
+        },
+        "width": {
+          "mantissa": "0",
+          "exponent": "0"
+        },
+        "exact": true,
+        "containsZero": false,
+        "toleranceMet": null
+      }
+    },
+    "tailUpperBoundsAreExactOutwardDyadics": true,
+    "separatelyRecordedAnalyticTail": true,
+    "finiteSumEnclosureIncludes": "Input conversion, finite arithmetic, and internal special-function rounding/truncation together",
+    "internalRoundingAndSpecialFunctionTruncationSeparated": false,
+    "tailAddition": "Each completed finite sum receives the symmetric interval [-tail.upper(),+tail.upper()] before conversion to L.",
+    "infiniteTailTermsIndividuallyComputed": false
+  },
+  "values": {
+    "L": {
+      "kind": "finite",
+      "lower": {
+        "mantissa": "0",
+        "exponent": "0"
+      },
+      "upper": {
+        "mantissa": "0",
+        "exponent": "0"
+      },
+      "width": {
+        "mantissa": "0",
+        "exponent": "0"
+      },
+      "exact": true,
+      "containsZero": true,
+      "toleranceMet": true
+    },
+    "LPrime": {
+      "kind": "finite",
+      "lower": {
+        "mantissa": "1920791711361661532117831941041975828041824818972186845103",
+        "exponent": "-192"
+      },
+      "upper": {
+        "mantissa": "1920791711361661532117831941041975828041824889640276008879",
+        "exponent": "-192"
+      },
+      "width": {
+        "mantissa": "539154733",
+        "exponent": "-175"
+      },
+      "exact": false,
+      "containsZero": false,
+      "toleranceMet": true
+    },
+    "Lambda": {
+      "kind": "finite",
+      "lower": {
+        "mantissa": "0",
+        "exponent": "0"
+      },
+      "upper": {
+        "mantissa": "0",
+        "exponent": "0"
+      },
+      "width": {
+        "mantissa": "0",
+        "exponent": "0"
+      },
+      "exact": true,
+      "containsZero": true,
+      "toleranceMet": true
+    },
+    "LambdaPrime": {
+      "kind": "finite",
+      "lower": {
+        "mantissa": "3719043535777151316744761893153525866377494614634019887461",
+        "exponent": "-193"
+      },
+      "upper": {
+        "mantissa": "3719043535777151316744761893153525866377494751461816736101",
+        "exponent": "-193"
+      },
+      "width": {
+        "mantissa": "1043913245",
+        "exponent": "-176"
+      },
+      "exact": false,
+      "containsZero": false,
+      "toleranceMet": true
+    }
+  },
+  "toleranceMet": true,
+  "analyticRank": {
+    "status": "CERTIFIED_WITH_THEOREM_DEPENDENCIES",
+    "exactRank": 1,
+    "centralValueExactZero": true,
+    "centralValueExcludesZero": false,
+    "firstDerivativeExcludesZero": true,
+    "rootNumber": -1,
+    "paritySource": "Lambda(s)=w*Lambda(2-s)",
+    "reason": "The functional equation forces L(E,1)=0 exactly and the certified L'(E,1) interval excludes zero.",
+    "modularSymbolsExecuted": false,
+    "arithmeticRankEqualityClaimed": false,
+    "bsdLeadingTermClaimed": false
+  },
+  "backend": {
+    "pythonFlint": "0.9.0",
+    "FLINT": "3.6.0",
+    "workingPrecisionBits": 192
+  },
+  "sourceSha256": {
+    "elliptic_analytic.py": "b77ce56be3ee9ace1f76ec10ea088bccb9a7f1d583b9164542f9816a3ddb007f",
+    "elliptic_local.py": "85b2a163a76dbb7cd8bee367f66bea0824ab385e164161b4a1f0d2d3da8e03da",
+    "ball_backend.py": "33d99161c9f3f5bdb2482e538906a50df80e2f221e8f71da5f4d6d86e410cb7e",
+    "normalization.py": "86d8f8dd32fa4cb02926c410b1eca56af8ab75dd0738360659efe2eeb5f50770"
+  },
+  "theoremDependencies": {
+    "semistable-modularity": {
+      "source": "A. Wiles, Modular elliptic curves and Fermat's Last Theorem, Theorem 0.4 (1995)",
+      "url": "https://annals.math.princeton.edu/1995/141-3/p01",
+      "use": "The supported semistable curves have a weight-two modular L-function.",
+      "proofExecuted": false
+    },
+    "mellin-continuation": {
+      "source": "Weight-two newform Mellin transform and functional equation; central sums documented by SageMath",
+      "url": "https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/lseries_ell.html",
+      "use": "Lambda(s)=integral_1^infinity f(it/sqrt(N))*(t^(s-1)+w*t^(1-s)) dt.",
+      "proofExecuted": false
+    },
+    "hasse-euler-bound": {
+      "source": "Hasse bound and good/multiplicative Euler recurrences; elementary divisor pairing",
+      "url": "https://www.jmilne.org/math/Books/EC2.pdf",
+      "use": "|a_n|<=d(n)*sqrt(n)<=2*n for every positive n, including all bad factors.",
+      "proofExecuted": false
+    },
+    "ball-special-functions": {
+      "source": "python-flint 0.9.0 arb exp, expint, and directed endpoint interface",
+      "url": "https://python-flint.readthedocs.io/en/latest/arb.html",
+      "use": "Outward enclosures; E1(x)=x.expint(1)=Gamma(0,x) for x>0.",
+      "proofExecuted": false
+    }
+  },
+  "scope": {
+    "supportedExactModels": [
+      "11a1",
+      "37a1"
+    ],
+    "centralAnalyticValuesCertified": true,
+    "explicitInfiniteTailBound": true,
+    "generalComplexArgumentEvaluation": false,
+    "finiteDisplacementTaylorRemainder": false,
+    "modularSymbolsExecuted": false,
+    "modularityProofExecuted": false,
+    "leanProofExecuted": false,
+    "arithmeticRankUpperBoundComputed": false,
+    "arithmeticRankEqualityClaimed": false,
+    "periodRegulatorShaComputed": false,
+    "bsdLeadingTermClaimed": false,
+    "allP7CriteriaComplete": false,
+    "universalRHProved": false,
+    "universalBSDProved": false,
+    "evidenceKind": "ball-enclosure-with-explicit-tail-and-standard-theorem-dependencies"
+  },
+  "computationSha256": "2a1174e9a6a098ac952ea1c6fe8621ef5a9e0a9f33a252418ba3b0225fc70ecd"
+}

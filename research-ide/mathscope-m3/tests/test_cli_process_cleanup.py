@@ -2,9 +2,12 @@
 
 from copy import deepcopy
 import math
+import os
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
+import time
 import unittest
 from unittest.mock import MagicMock, patch
 
@@ -49,6 +52,7 @@ class CLIProcessCleanupTests(unittest.TestCase):
 
     def _mock_child(self):
         child = MagicMock()
+        child.pid = 424242
         child.returncode = None
         child.poll.side_effect = lambda: child.returncode
         child.kill.side_effect = lambda: setattr(child, "returncode", -9)
@@ -57,6 +61,7 @@ class CLIProcessCleanupTests(unittest.TestCase):
 
     def _execute_mock(self, child):
         with patch.object(cli.subprocess, "Popen", return_value=child), \
+                patch.object(cli.os, "killpg"), \
                 patch.object(cli, "source_binding", return_value={}), \
                 patch.object(cli, "environment", return_value={}), \
                 patch.object(cli, "predecessor", return_value={}):
@@ -115,7 +120,8 @@ class CLIProcessCleanupTests(unittest.TestCase):
         observed = []
         def factory(*args, **kwargs):
             child = real_popen([sys.executable, "-c", "import sys; sys.stdin.buffer.read()"],
-                               stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                               stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                               start_new_session=kwargs["start_new_session"])
             observed.append(child)
             def fail(*args, **kwargs):
                 raise OSError("injected after actual spawn")
@@ -136,6 +142,45 @@ class CLIProcessCleanupTests(unittest.TestCase):
                 if child.poll() is None:
                     child.kill()
                 child.wait()
+
+    def test_timeout_stops_an_actual_arithmetic_grandchild(self):
+        real_popen = subprocess.Popen
+        with tempfile.TemporaryDirectory() as directory:
+            pid_file = Path(directory) / "arithmetic-child.pid"
+            heartbeat = Path(directory) / "arithmetic-child-heartbeat.txt"
+            grandchild_script = ("from pathlib import Path\nimport sys,time\n"
+                                 "for i in range(400):\n"
+                                 " Path(sys.argv[1]).write_text(str(i))\n time.sleep(.05)\n")
+            script = ("import pathlib,subprocess,sys,time\n"
+                      f"p=subprocess.Popen([sys.executable,'-c',{grandchild_script!r},{str(heartbeat)!r}])\n"
+                      f"pathlib.Path({str(pid_file)!r}).write_text(str(p.pid))\n"
+                      "time.sleep(20)\n")
+            def factory(*args, **kwargs):
+                return real_popen([sys.executable, "-c", script], stdin=subprocess.PIPE,
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                  start_new_session=kwargs["start_new_session"])
+            try:
+                with patch.object(cli.subprocess, "Popen", side_effect=factory), \
+                        patch.object(cli, "source_binding", return_value={}), \
+                        patch.object(cli, "environment", return_value={}), \
+                        patch.object(cli, "predecessor", return_value={}):
+                    started = time.monotonic()
+                    record = cli.execute(deepcopy(REQUEST), max_seconds=1, memory_mib=128)
+                self.assertLess(time.monotonic()-started, 5)
+                self.assertEqual(record["execution"]["status"], "UNRESOLVED")
+                self.assertTrue(record["execution"]["timedOut"])
+                self.assertTrue(heartbeat.exists())
+                last = heartbeat.read_text()
+                # Use an observable heartbeat instead of /proc: some execution
+                # environments expose a different PID namespace through /proc.
+                time.sleep(.2)
+                self.assertEqual(heartbeat.read_text(), last)
+            finally:
+                if pid_file.exists():
+                    try:
+                        os.kill(int(pid_file.read_text()), cli.signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
 
 
 if __name__ == "__main__":

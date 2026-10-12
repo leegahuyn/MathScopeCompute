@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mathscope-p7-pari"
+version = "2.19.0.1"
+description = "Pinned official PARI/GP runtime for MathScope P7 arithmetic certificates"
+requires-python = ">=3.11"
+license = "GPL-2.0-or-later"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+mathscope_p7_pari = ["bin/*", "bin/build-logs/*"]

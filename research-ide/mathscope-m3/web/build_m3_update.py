@@ -38,6 +38,20 @@ def build(observed, group='all'):
         replace(r'<style id="' + re.escape(element) + r'">.*?</style>',
                 '<style id="' + element + '">\n' + (WEB / filename).read_text() + '\n</style>', filename)
 
+    if group in ('p7', 'all'):
+        style('mathscope-m3-css', 'workspace.css')
+        for element, filename in [
+            ('mathscope-m3-js', 'workspace.js'),
+            ('p7-visual-models-js', 'p7-visual-models.js'),
+            ('p7-visualization-js', 'p7-visualization.js'),
+            ('p7-visual-controller-js', 'p7-visual-controller.js'),
+        ]:
+            script(element, filename)
+        seed_content = (WEB / 'p7-visual-seeds.json').read_text().replace('</', '<\\/')
+        replace(r'<script id="p7-visual-seeds" type="application/json">.*?</script>',
+                '<script id="p7-visual-seeds" type="application/json">' + seed_content + '</script>',
+                'p7-visual-seeds.json')
+
     if group in ('extended', 'all'):
         html = (WEB / 'extended-workspace.html').read_text()
         for workspace in ('g3', 'n3'):
@@ -74,7 +88,8 @@ def build(observed, group='all'):
         'observedSHA256': sha(observed), 'candidateSHA256': sha(candidate),
         'group': group, 'changedBlocks': changed, 'patchCount': len(patches),
         'newAssets': 0, 'newPages': 0, 'unrelatedBytesPreserved': True,
-        'P7MathematicalSourceChanged': False, 'wholeM3Complete': False,
+        'pagePatchChangesMathematicalSource': False, 'requestedM3Scope': 'ALL_64_INCLUDING_P7',
+        'wholeM3Complete': False,
     }
 
 
@@ -82,7 +97,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--observed', required=True, type=Path)
     parser.add_argument('--out', required=True, type=Path)
-    parser.add_argument('--group', choices=['extended', 'p8', 'all'], default='all')
+    parser.add_argument('--group', choices=['p7', 'extended', 'p8', 'all'], default='all')
     args = parser.parse_args()
     patches, page, manifest = build(args.observed.read_text(), args.group)
     args.out.mkdir(parents=True, exist_ok=True)

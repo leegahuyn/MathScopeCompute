@@ -18,6 +18,8 @@ import re
 from threading import RLock
 from typing import Any
 
+from .normalization import zeta_normalization_ledger
+
 try:
     import flint
     from flint import acb, acb_series, arb, ctx, fmpq
@@ -372,6 +374,9 @@ def evaluate(request: dict[str, Any]) -> dict[str, Any]:
                   "normalizedRiemannXi": parsed["family"] == "xi", "zeroCounting": False,
                   "allP7Complete": False, "RiemannHypothesisProof": False, "BSDProof": False},
     }
+    if parsed["family"] in {"zeta", "xi"}:
+        result["normalizationLedger"] = zeta_normalization_ledger(
+            parsed["canonical"]["s"], evaluated_function=parsed["family"])
     status, reason = _domain_check(parsed)
     if status is not None:
         result.update(status=status, reason=reason)

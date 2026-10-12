@@ -1,6 +1,6 @@
 {
   "schema": "MathScope.M3.GaugeProgress/1",
-  "revision": "m3-gauge-original-criteria-live-v89-reviewed-20261012",
+  "revision": "m3-gauge-y5-scale-expansion-reviewed-awaiting-ui-20261012",
   "source": {
     "file": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
     "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
@@ -12,7 +12,7 @@
   "originalCriteriaComplete": 21,
   "originalCriteriaIncomplete": 3,
   "allOriginalCriteriaComplete": false,
-  "releaseMeaning": "Executed finite and conditional implementations with explicit original-criterion gaps; publishing does not make unfinished research complete.",
+  "releaseMeaning": "Original finite implementation criteria, actual source-bound observations and remaining published UI checks are assessed separately from open continuum research.",
   "criteria": [
     {
       "id": "Y5-01",
@@ -94,20 +94,35 @@
       "page": 46,
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "sourceSha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_PENDING_LIVE_UI",
       "originalCriterionComplete": false,
-      "implemented": "각 target/beta에서 새 cold·Haar-hot Wilson chain, 독립 source hash, target와 실제 channel estimate를 계산했다. 두 β의 긴 실행과 통계 진단을 저장했다.",
+      "implemented": "전체 연속 SU(2) Wilson heatbath·overrelaxation을 실제 실행하고, target·channel과 분리된 표준 Wilson flow t₀²E=0.1을 β=2.16/2.3/2.4의 별도 cold/hot chain에서 측정했다. β·실측 a·L·T calibration, 7개 표시 행의 실제 channel configuration 12,288개와 독립 scale 384개를 보존한다. pilot 뒤 선택한 Δ=.9/1의 별도 새 validation chain에서 m√t₀와 오차를 병기하고 중심값과 target를 강제로 맞추지 않았다. 원래 target1.25 미달·coarse 첫 미해결 실행도 숨기지 않는다. 짧은 새 실행과 저장된 실제 8개 실행 archive(newExecution:false)를 구별한다.",
       "evidence": [
-        "research-ide/mathscope-m3/gauge/ensemble-family.mjs",
-        "research-ide/mathscope-m3/gauge/evidence/ensemble-production-attempt2.json",
-        "research-ide/mathscope-m3/gauge/evidence/source-production2/manifest.json"
+        "research-ide/mathscope-m3/gauge/SCALE_STUDY_KO.md",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/matched-study-review-attempt1/review.json.gz",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/independent-numerical-review-attempt1.json",
+        "research-ide/mathscope-m3/gauge/experiments/verify-study-numerics.py",
+        "research-ide/mathscope-m3/gauge/study-record.mjs",
+        "research-ide/mathscope-m3/gauge/su2-kernel.mjs",
+        "research-ide/mathscope-m3/gauge/scale-study.mjs",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/live-scale-replay-attempt1.json",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/matched-public-example-attempt2.json"
       ],
       "remaining": [
-        "물리 척도를 target와 독립적으로 실제 측정하여 목표 Δ를 찾은 calibration은 아직 없다.",
-        "현재 실측 실행은 연속 SU(2) defining links이며 다른 G의 생산 ensemble adapter를 동일 결과로 대신하지 않는다."
+        "새 공개 UI에서 β/a/L/T와 target·측정값·오차, 독립 척도, 원래 실패 및 현재 archive 열람/새 실행의 구별이 실제 표시되는지 확인한다."
       ],
       "continuumClaim": "OPEN_CONTINUUM",
-      "clayProblemSolved": false
+      "clayProblemSolved": false,
+      "scopeLimits": [
+        "실측 앙상블은 full-Haar pure SU(2) 유한 Wilson 모형이다. 다른 G로 확대하거나 외부 fm/MeV anchor를 사용했다고 주장하지 않는다.",
+        "기준 단위 √t₀는 target와 독립이지만 통계 구간은 stationarity와 bootstrap 모형에 조건부다. β2.3 scale cold ESS15.7138<16 상태를 유지한다.",
+        "목표 .9/1은 pilot 후 고르고 별도 새 chain으로 평가했다. 구간에 들어가는 것과 정확한 목표 달성은 다르다."
+      ],
+      "implementationAssessment": {
+        "coreOriginalConditionsSatisfiedWithinStatedFiniteScope": true,
+        "publishedAcceptanceVerified": false,
+        "readOnlyIndependentReview": "/root/p8_m3: 원문·설명·7개 실제 원본을 대조해 추가 구현 blocker 없음. 숫자 재계산/코드 실행을 했다는 주장은 아님."
+      }
     },
     {
       "id": "Y5-06",
@@ -116,20 +131,35 @@
       "page": 46,
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "sourceSha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_PENDING_LIVE_UI",
       "originalCriterionComplete": false,
-      "implemented": "실제 gauge-invariant 2채널 connected C, periodic cosh, block bootstrap, GEVP를 계산한다. C≤0·불가능 acosh는 null과 사유를 보존한다.",
+      "implemented": "공간 time-local gauge-invariant APE 3채널의 raw/connected C와 periodic cosh·GEVP·block bootstrap을 전체 실제 표본에서 계산했다. 유한 pure-gauge full-Haar kernel의 positivity-improving 논증으로 전체 진공의 유일성을 별도로 밝히고, 평균 제거의 유한T 한계를 명시했다. bounded 벡터 w=(I−T̄)Oψ₀, P₀w=0 및 C_D(t)=〈w,T̄^(t−1)w〉로 전체 영에너지 차분 관측을 연결한다. 유한T의 비영 열적 전이는 남기며 C≤0/acosh 불가능 입력을 보존하고, gapglobal≤Echannel≤meff는 양의 vacuum spectral 조건 아래에만 표시한다.",
       "evidence": [
-        "research-ide/mathscope-m3/gauge/ensemble-family.mjs",
-        "research-ide/mathscope-m3/gauge/spectral.mjs",
-        "research-ide/mathscope-m3/gauge/evidence/ensemble-production-attempt2.json"
+        "research-ide/mathscope-m3/gauge/SCALE_STUDY_KO.md",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/matched-study-review-attempt1/review.json.gz",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/independent-numerical-review-attempt1.json",
+        "research-ide/mathscope-m3/gauge/experiments/verify-study-numerics.py",
+        "research-ide/mathscope-m3/gauge/study-record.mjs",
+        "research-ide/mathscope-m3/gauge/vacuum.mjs",
+        "research-ide/mathscope-m3/gauge/scale-analysis.mjs",
+        "research-ide/mathscope-m3/gauge/tests/scale-analysis.test.mjs",
+        "research-ide/mathscope-m3/gauge/tests/su2-study-kernel.test.mjs"
       ],
       "remaining": [
-        "새 chain의 평균 제거는 명시한 unique-vacuum 가정에 조건부이며 독립 vacuum theorem이나 일반 degenerate-vacuum projector는 없다.",
-        "유한 T와 operator overlap을 제어한 질량 plateau·전체 스펙트럼 복원은 남아 있다."
+        "새 공개 UI에서 실제 음의 C·불가능 acosh·fit 실패, full-vacuum 차분의 정의, finite-T/cosh 채널 조건과 올바른 부등식 방향을 확인한다."
       ],
       "continuumClaim": "OPEN_CONTINUUM",
-      "clayProblemSolved": false
+      "clayProblemSolved": false,
+      "scopeLimits": [
+        "유일성은 명시한 full-Haar pure SU(2) 유한 모형의 해석적 논증이며 새 Lean receipt가 아니다. 추가 action·fermion·sector/cutoff 변경은 적용을 거부한다.",
+        "유한T 표본평균을 정확한 진공 평균이라고 부르지 않는다. C_D의 열적 excited-to-excited 전이를 vacuum-only spectrum으로 해석하지 않는다.",
+        "늦은 시간과 일부 fit window/GEVP는 미해결이다. 원문은 전체 스펙트럼 복원이나 성공 plateau를 별도 합격조건으로 요구하지 않으며 이를 완료 결과로 주장하지 않는다."
+      ],
+      "implementationAssessment": {
+        "coreOriginalConditionsSatisfiedWithinStatedFiniteScope": true,
+        "publishedAcceptanceVerified": false,
+        "readOnlyIndependentReview": "/root/p8_m3: 원문·설명·7개 실제 원본을 대조해 추가 구현 blocker 없음. 숫자 재계산/코드 실행을 했다는 주장은 아님."
+      }
     },
     {
       "id": "Y5-07",
@@ -164,18 +194,36 @@
       "page": 46,
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "sourceSha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_PENDING_LIVE_UI",
       "originalCriterionComplete": false,
-      "implemented": "통계·overlap·T·L·a·cutoff를 개별 오류 채널로 저장하고 limit 순서와 raw calibration rows를 내보낸다. 정당화되지 않은 extrapolation은 만들지 않는다.",
+      "implemented": "세 실제 β/t₀의 a 감소 행을 기준 L/√t₀=8,T/√t₀=16에 맞춰 비교하고 실제 최대 편차2.002%와 지정 허용치8%를 공개했다. 고정 β와 동일 독립 reference에서 Ns6→8, Nt12→24를 따로 실행하여 a와 반대편 길이를 고정했다. 통계·overlap·T·L·a·표현 cutoff(NONE)·척도 수치/격자화 오차를 구분하며, 조건부 a² fit의 원래 데이터·window·가정을 반환한다. continuum 양의 하한은 null/OPEN_CONTINUUM으로 유지한다.",
       "evidence": [
-        "research-ide/mathscope-m3/gauge/ensemble-family.mjs",
-        "research-ide/mathscope-m3/gauge/evidence/ensemble-production-attempt2.json"
+        "research-ide/mathscope-m3/gauge/SCALE_STUDY_KO.md",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/matched-study-review-attempt1/review.json.gz",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/independent-numerical-review-attempt1.json",
+        "research-ide/mathscope-m3/gauge/experiments/verify-study-numerics.py",
+        "research-ide/mathscope-m3/gauge/study-record.mjs",
+        "research-ide/mathscope-m3/gauge/scale-analysis.mjs",
+        "research-ide/mathscope-m3/gauge/study-review.mjs",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/production-L8-attempt1/result.json",
+        "research-ide/mathscope-m3/gauge/evidence/scale-expansion/production-T24-attempt1/result.json"
       ],
       "remaining": [
-        "같은 물리량을 맞춘 독립 scale-setting 및 a/L/T sweep, 공개 fit window를 가진 정당한 extrapolation 자료는 아직 없다."
+        "새 공개 UI의 별도 a²/L/T/척도 그래프에 실제 데이터·오차, fit window·가정·matching 편차와 주요 계통 한계가 함께 표시되는지 확인한다."
       ],
       "continuumClaim": "OPEN_CONTINUUM",
-      "clayProblemSolved": false
+      "clayProblemSolved": false,
+      "scopeLimits": [
+        "a/√t₀≈1.00–1.63의 유한 세 점에서 조건부 외삽을 비교한다. continuum/무한부피 극한의 존재나 asymptotic scaling 영역을 증명하지 않는다.",
+        "clover−plaquette t₀ 차이0.21458/0.34583/0.40067은 큰 격자계통효과이며 작은 RK3 step 차이로 상쇄되지 않는다.",
+        "base 공유 scale은 중복 독립표본으로 세지 않는다. L/T 차이 bootstrap 유효98/102는 기준103 미달이므로 차이 구간은 null이다.",
+        "단일 채널 질량·유한 lattice gap·조건부 fit 절편을 continuum gap 하한으로 승격하지 않는다."
+      ],
+      "implementationAssessment": {
+        "coreOriginalConditionsSatisfiedWithinStatedFiniteScope": true,
+        "publishedAcceptanceVerified": false,
+        "readOnlyIndependentReview": "/root/p8_m3: 원문·설명·7개 실제 원본을 대조해 추가 구현 blocker 없음. 숫자 재계산/코드 실행을 했다는 주장은 아님."
+      }
     },
     {
       "id": "Y6-01",

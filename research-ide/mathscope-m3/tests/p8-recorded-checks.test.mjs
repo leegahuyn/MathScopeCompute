@@ -9,18 +9,31 @@ const bytesHash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const pkg=JSON.parse(await readFile(new URL('../p8/evidence/p7-mutation-release.json',import.meta.url)));
 const expected='90337c7b958b069bfc62916998aa7ea67426be7a415c5d640e2d10f2576b8fd3';
 const paths=[...pkg.report.sourceBinding.files.map(r=>r.path),'p8/tools/audit_p7_mutations.py','tests/test_p8_p7_mutations.py'];
-const current={files:await Promise.all(paths.map(async path=>({path:'mathscope-m3/'+path,sha256:bytesHash(await readFile(new URL('../'+path,import.meta.url)))})))};
+const liveCurrent={files:await Promise.all(paths.map(async path=>({path:'mathscope-m3/'+path,sha256:bytesHash(await readFile(new URL('../'+path,import.meta.url)))})))};
+// This immutable CI archive predates the arithmetic runtime. Its original
+// manifest can exercise the consistency parser; current bytes must separately
+// reject it as stale until a new actually observed CI archive is packaged.
+const current={files:[...pkg.report.sourceBinding.files.map(row=>({path:'mathscope-m3/'+row.path,sha256:row.sha256})),
+  {path:'mathscope-m3/p8/tools/audit_p7_mutations.py',sha256:pkg.report.auditSourceSHA256},
+  {path:'mathscope-m3/tests/test_p8_p7_mutations.py',sha256:pkg.report.testHarness.sourceSHA256}]};
 const clone=structuredClone;
 async function reseal(value){const body={...value.report};delete body.reportSHA256;value.report.reportSHA256=await sha256(body);return await sha256(value);}
 async function rejectMutation(change,pattern){const value=clone(pkg);change(value);const result=await validateRecordedChecks(value,current,await reseal(value));assert.equal(result.status,'RECORDED_CI_REJECTED');assert.equal(result.ok,false);if(pattern)assert.match(result.issues.join(' '),pattern);assert.equal(result.freshExecution,false);}
 
-test('actual independently successful CI package matches current source bytes without fresh execution',async()=>{
+test('historical independently successful CI package is consistent with its recorded manifest without fresh execution',async()=>{
   assert.equal(await sha256(pkg),expected);
   const original=JSON.stringify(pkg),result=await validateRecordedChecks(pkg,current,expected);
   assert.equal(result.ok,true,result.issues?.join(' '));assert.equal(result.status,'RECORDED_CI_SOURCE_MATCH');
   assert.equal(result.ci.commit,'dd37b6a8953dd5de3d85451d88b888022cd66fa6');
   for(const key of ['freshExecution','formalLeanProofIssued','wholeP8Complete','wholeM3Complete','certificateIssued','archiveBytesVerifiedInBrowser','rawP7RecordHashesRecomputed'])assert.equal(result[key],false);
   assert.equal(result.process.pytestExitCode,0);assert.equal(JSON.stringify(pkg),original);assert.equal(Object.isFrozen(pkg),false);assert.equal(Object.isFrozen(result.report),true);
+});
+
+test('historical CI observations are rejected against changed current source bytes',async()=>{
+  const changed=JSON.stringify(liveCurrent)!==JSON.stringify(current);
+  const result=await validateRecordedChecks(pkg,liveCurrent,expected);
+  assert.equal(result.ok,!changed);assert.equal(result.freshExecution,false);
+  if(changed)assert.match(result.issues.join(' '),/stale|membership|version/);
 });
 
 test('missing evidence is NOT_RECORDED while false and corrupt objects are rejected',async()=>{

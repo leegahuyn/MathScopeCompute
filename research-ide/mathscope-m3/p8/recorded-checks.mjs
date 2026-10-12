@@ -10,6 +10,7 @@ function flags(value,keys){for(const key of keys)need(value?.[key]===false,'Unsu
 function timestamp(value){const n=typeof value==='string'?Date.parse(value):NaN;need(Number.isFinite(n),'Invalid process timestamp.');return n;}
 const EDGES=[['zero-box','finite-height-record'],['finite-height-record','zero-coverage-comparison'],['zero-coverage-comparison','conditional-rh-review'],['rank-upper','rank-bound-record'],['rank-bound-record','curve-rank-equality'],['curve-rank-equality','bsd-review']];
 const CONDITIONAL_SOURCES=['lean/conditional/ConditionalTarget.lean','lean/conditional/Audit.lean','tools/audit_conditional_lean.py','tools/audit_lean.py','lean/pins.json','lean/lean-toolchain','lean/lakefile.lean'];
+const PARI_SOURCES=['p7/pari_runtime/pyproject.toml','p7/pari_runtime/setup.py','p7/pari_runtime/MANIFEST.in','p7/pari_runtime/src/mathscope_p7_pari/__init__.py','p7/pari_runtime/src/mathscope_p7_pari/build.py'];
 function receipt(value,audit){
   need(value?.schema==='MathScope.M3.P7Execution/1'&&value.serializedAuthority==='UNTRUSTED_REQUIRES_REEXECUTION','Invalid compact P7 receipt.');flags(value,['formalLeanProofIssued','wholeP7Complete','wholeM3Complete']);
   for(const key of ['recordSHA256','mathematicalSHA256','inputSHA256','environmentSHA256','sourceBindingSHA256','predecessorSHA256'])need(HASH.test(value[key]),'Invalid P7 receipt hash.');
@@ -29,7 +30,7 @@ function dependency(row){
 function rational(value){need(typeof value==='string'&&value.length<=256&&/^-?\d+(?:\/[1-9]\d*)?$/.test(value),'Invalid exact endpoint.');const [n,d='1']=value.split('/');return [BigInt(n),BigInt(d)];}
 function translated(a,b){const [an,ad]=rational(a),[bn,bd]=rational(b);return bn*ad===(an+ad)*bd;}
 async function p7Details(data,current){
-  const r=data.report;need(r.schema==='MathScope.M3.P8.P7MutationAudit/1'&&r.criterion==='P8-06','Wrong P7 audit schema.');flags(r,['originalP8CriterionComplete','certificateIssued']);
+  const r=data.report,rankDeletion=r.schema==='MathScope.M3.P8.P7MutationAudit/2';need((rankDeletion||r.schema==='MathScope.M3.P8.P7MutationAudit/1')&&r.criterion==='P8-06','Wrong P7 audit schema.');flags(r,['originalP8CriterionComplete','certificateIssued']);
   const body={...r};delete body.reportSHA256;need(HASH.test(r.reportSHA256)&&await sha256(body)===r.reportSHA256,'P7 report digest differs.');
   shape(data.process,['schema','pytestExitCode','commit','runId'],[],'test process');need(data.process.schema==='MathScope.P8.TestProcessReceipt/1','Wrong process schema.');
   const h=r.testHarness;need(h?.sourceFile==='tests/test_p8_p7_mutations.py'&&h.auditStatus==='PASS'&&h.testProcessStatus==='NOT_YET_OBSERVED_AT_CLASS_TEARDOWN'&&h.testProcessExitCode===null&&h.allTestsPassed===null&&h.requiresIndependentCIProcessReceipt===true&&h.failureIsNotConvertedToSuccess===true,'The pre-exit hook has claimed test-process success.');
@@ -39,19 +40,30 @@ async function p7Details(data,current){
   for(const row of r.cases){
     const p=row.positiveControl,n=row.negativeControl;need(p.importedProofStatusAdopted===false&&n.unresolvedCountsAsRejection===false&&n.allPresentComputationHashesResealed===true&&n.mathematicalAndRecordHashesResealed===true&&row.originalRecordUnchanged===true,'Incomplete replay controls.');
     need(same(row.bindingPreserved,Object.fromEntries(['request','inputSHA256','sourceBinding','environment','environmentSHA256','predecessor'].map(k=>[k,true]))),'Missing replay binding.');
-    need(row.request?.kind===(row.id==='zero-box'?'p7.zeta_zeros':'p7.elliptic_local'),'Wrong request kind.');
+    need(row.request?.kind===(row.id==='zero-box'?'p7.zeta_zeros':rankDeletion?'p7.elliptic_arithmetic':'p7.elliptic_local'),'Wrong request kind.');
     if(row.id==='zero-box')need(row.request.input?.height==='20'&&row.request.input.precisionBits===128,'Wrong finite height/precision.');else need(row.request.input?.model==='37a1','Wrong rank fixture.');
     const inputHash=await sha256(row.request),receipts=[row.baseline,p.fresh,n.fresh,n.forged];
     for(const item of receipts){receipt(item,e);need(item.inputSHA256===inputHash&&item.sourceBindingSHA256===sourceHash&&item.environmentSHA256===row.baseline.environmentSHA256&&item.predecessorSHA256===row.baseline.predecessorSHA256,'Actual input/source/backend/predecessor binding differs.');}
     for(const item of receipts.slice(0,3)){need(!seen.has(item.recordSHA256),'Fresh child receipt reused.');seen.add(item.recordSHA256);}
     predecessor??=row.baseline.predecessorSHA256;need(predecessor===row.baseline.predecessorSHA256,'The cases use different predecessor gates.');
     need(p.fresh.mathematicalSHA256===row.baseline.mathematicalSHA256&&n.fresh.mathematicalSHA256===row.baseline.mathematicalSHA256&&n.forged.mathematicalSHA256!==row.baseline.mathematicalSHA256&&n.forged.recordSHA256!==row.baseline.recordSHA256,'The negative replay did not distinguish changed mathematics.');
-    const axes=row.id==='zero-box'?['source','precision','input']:['source','input'];need(Array.isArray(row.bindingRejectionControls)&&same(row.bindingRejectionControls.map(x=>x.axis),axes),'Missing source/input/precision rejection controls.');
+    const axes=row.id==='zero-box'||rankDeletion?['source','precision','input']:['source','input'];need(Array.isArray(row.bindingRejectionControls)&&same(row.bindingRejectionControls.map(x=>x.axis),axes),'Missing source/input/precision rejection controls.');
     for(const c of row.bindingRejectionControls)need(c.status==='REJECTED'&&c.stage==='P7_VALIDATE_RECORD_BEFORE_REPLAY'&&c.outerAndMathematicalHashesResealed===true&&c.originalInputHashPreserved===true&&c.proofStatusAdopted===false&&typeof c.reason==='string'&&c.reason.length>0,'Invalid binding rejection control.');
-    flags(row,['certificateIssued']);flags(row.mathematicalScope,['rankUpperBoundComputed','globalRHProved','globalBSDProved']);need(row.mathematicalScope.rankUpperBoundStatus==='OPEN'&&row.mathematicalScope.mutationDetection==='FRESH_P7_RESULT_COMPARISON'&&row.mathematicalScope.finiteHeightOnly===(row.id==='zero-box'),'P7 mathematical scope was promoted.');
+    flags(row,['certificateIssued']);flags(row.mathematicalScope,['globalRHProved','globalBSDProved']);
+    if(rankDeletion)need(row.mathematicalScope.rankUpperBoundComputed===(row.id==='rank-upper')&&row.mathematicalScope.rankUpperBoundStatus===(row.id==='rank-upper'?'CERTIFIED_ARITHMETIC_UPPER':'NOT_APPLICABLE'),'The actual arithmetic bound scope differs.');
+    else {flags(row.mathematicalScope,['rankUpperBoundComputed']);need(row.mathematicalScope.rankUpperBoundStatus==='OPEN','Legacy open rank scope changed.');}
+    need(row.mathematicalScope.mutationDetection==='FRESH_P7_RESULT_COMPARISON'&&row.mathematicalScope.finiteHeightOnly===(row.id==='zero-box'),'P7 mathematical scope was promoted.');
     const changes=n.mutations;
     if(row.id==='zero-box'){need(changes?.length===1&&changes[0].fieldPath==='result.hardyRoots[0]','Missing box mutation.');const {before,after}=changes[0];need(translated(before.lower,after.lower)&&translated(before.upper,after.upper)&&before.bracketWidth===after.bracketWidth,'Box translation or width changed.');}
-    else {need(changes?.length===2&&changes[0].fieldPath==='result.arithmeticRank'&&changes[1].fieldPath==='result.scope.arithmeticRankUpperBoundComputed','Missing rank mutation.');const {before,after}=changes[0];need(before.lowerBound===1&&before.upperBound===null&&before.exactRank===null&&before.descentPerformed===false&&before.selmerBoundComputed===false&&after.upperBound===1&&after.exactRank===1&&after.descentPerformed===true&&after.selmerBoundComputed===true&&same(after.upperBoundCertificate,{kind:'FORGED_SELMER_UPPER_BOUND',bound:1,verified:true})&&changes[1].before===false&&changes[1].after===true,'Missing open baseline or forged rank certificate.');}
+    else if(rankDeletion){
+      need(changes?.length===1&&changes[0].fieldPath==='result.arithmeticRank.rankUpperCertificate'&&changes[0].operation==='DELETE_VALID_CERTIFICATE'&&changes[0].after===null&&same(changes[0].rankIntervalPreserved,{lowerBound:1,upperBound:1,exactRank:1}),'Missing deletion of an actual valid rank upper certificate.');
+      const c=changes[0].before;need(c?.schema==='MathScope.M3.P7.ArithmeticRankUpperCertificate/1'&&c.status==='CERTIFIED_ARITHMETIC_UPPER'&&c.upperBound===1&&c.twoSelmerRank===1&&c.rationalTwoTorsionRank===0&&c.casselsPairingRank===0&&c.freshProcessExecuted===true,'The removed prerequisite was not a valid arithmetic rank bound.');
+      flags(c,['databaseLookupUsed','analyticRankUsed','BSDOrParityConjectureAssumed','formalLeanProofIssued']);
+      for(const key of ['modelHash','originalModelHash','certificateSHA256','pariReceiptSHA256','executionScriptSHA256','executionStdoutSHA256'])need(HASH.test(c[key]),'Missing removed rank certificate binding.');
+      need(c.modelHash===c.originalModelHash&&c.backend?.version==='2.19.0'&&c.backend.sourceArchiveSHA256==='f317b9722eb5d9094a60303774f066f3a83e3ec1f170be8546c44d7583f30b6d'&&HASH.test(c.backend.binarySHA256)&&HASH.test(c.backend.buildProvenanceSHA256)&&c.backend.databasesUsed===false&&c.backend.observedVersionMatchesBuild===true,'Wrong arithmetic runtime or model binding.');
+      need(c.exactTwoCovers?.length===1&&c.coverMapChecks?.length===1&&c.coverMapChecks[0].exactRationalMapIdentityChecked===true&&HASH.test(c.coverMapChecks[0].coverSHA256)&&await sha256(c.exactTwoCovers[0])===c.coverMapChecks[0].coverSHA256,'Incomplete checked 2-cover map.');
+      const certificateBody={...c};delete certificateBody.certificateSHA256;need(await sha256(certificateBody)===c.certificateSHA256,'Removed rank certificate digest differs.');
+    }else {need(changes?.length===2&&changes[0].fieldPath==='result.arithmeticRank'&&changes[1].fieldPath==='result.scope.arithmeticRankUpperBoundComputed','Missing rank mutation.');const {before,after}=changes[0];need(before.lowerBound===1&&before.upperBound===null&&before.exactRank===null&&before.descentPerformed===false&&before.selmerBoundComputed===false&&after.upperBound===1&&after.exactRank===1&&after.descentPerformed===true&&after.selmerBoundComputed===true&&same(after.upperBoundCertificate,{kind:'FORGED_SELMER_UPPER_BOUND',bound:1,verified:true})&&changes[1].before===false&&changes[1].after===true,'Missing open baseline or forged rank certificate.');}
     dependency(row);
   }
 }
@@ -77,11 +89,13 @@ export async function validateRecordedChecks(data,current,expected){
     if(data.kind==='P7_MUTATIONS'){
       need(r.status==='PASS'&&r.cases?.length===2&&same(r.cases.map(x=>x.id),['zero-box','rank-upper']),'Expected both actual P7 mutation controls.');
       need(data.process.pytestExitCode===0&&data.process.commit===data.ci.commit&&String(data.process.runId)===String(data.ci.runId),'Independent test process failed or belongs to another run.');
-      const expectedP7=current.files.map(x=>x.path).filter(p=>p==='mathscope-m3/cli.py'||/^mathscope-m3\/p7\/[^/]+\.py$/.test(p)).map(p=>p.slice('mathscope-m3/'.length));
-      need(expectedP7.includes('cli.py')&&expectedP7.includes('p7/zero_certificate.py')&&expectedP7.includes('p7/elliptic_local.py')&&r.sourceBinding?.version==='0.2.0','Missing current P7 source core/version.');
+      const rankDeletion=r.schema==='MathScope.M3.P8.P7MutationAudit/2';
+      const expectedP7=current.files.map(x=>x.path).filter(p=>p==='mathscope-m3/cli.py'||/^mathscope-m3\/p7\/[^/]+\.py$/.test(p)||(rankDeletion&&PARI_SOURCES.some(source=>p==='mathscope-m3/'+source))).map(p=>p.slice('mathscope-m3/'.length));
+      need(expectedP7.includes('cli.py')&&expectedP7.includes('p7/zero_certificate.py')&&expectedP7.includes('p7/elliptic_local.py')&&r.sourceBinding?.version===(rankDeletion?'0.3.0':'0.2.0'),'Missing current P7 source core/version.');
+      if(rankDeletion)need(PARI_SOURCES.every(path=>expectedP7.includes(path))&&['p7/elliptic_arithmetic.py','p7/pari_backend.py','p7/height_certificate.py','p7/period_certificate.py'].every(path=>expectedP7.includes(path)),'Missing pinned arithmetic runtime/source membership.');
       sources(r.sourceBinding?.files,current,'mathscope-m3/',expectedP7);
       need(current.files.some(x=>x.path==='mathscope-m3/p8/tools/audit_p7_mutations.py'&&x.sha256===r.auditSourceSHA256),'P7 mutation audit source is stale.');
-      need(r.execution.freshP7ChildExecutions===6&&r.arithmeticRankUpperBoundComputed===false&&r.globalRHProved===false&&r.globalBSDProved===false,'Incorrect P7 replay count or scope.');
+      need(r.execution.freshP7ChildExecutions===6&&r.arithmeticRankUpperBoundComputed===rankDeletion&&(!rankDeletion||r.validRankUpperCertificateDeletionExecuted===true)&&r.globalRHProved===false&&r.globalBSDProved===false,'Incorrect P7 replay count or scope.');
       for(const row of r.cases){need(row.status==='PASS'&&row.positiveControl.status==='MATCH'&&row.positiveControl.passed===true&&row.negativeControl.status==='MISMATCH_OR_UNRESOLVED'&&row.negativeControl.passed===true,'P7 control did not pass.');need(row.negativeControl.freshCompletedRequired===true&&row.negativeControl.structuralValidationPassedBeforeReplay===true&&row.negativeControl.importedProofStatusAdopted===false&&Object.values(row.bindingPreserved).every(x=>x===true),'Incomplete fresh P7 replay or changed binding.');}
       await p7Details(data,current);
     }else if(data.kind==='CONDITIONAL_LEAN'){

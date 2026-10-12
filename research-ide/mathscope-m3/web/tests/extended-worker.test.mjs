@@ -11,7 +11,7 @@ function browserClient(){
  const blobs=new Map();let seq=0;
  class Blob{constructor(parts){this.source=parts.join('');}}
  class Worker{constructor(url){const source=blobs.get(url),bridge="const {parentPort}=require('node:worker_threads');globalThis.crypto=require('node:crypto').webcrypto;globalThis.self=globalThis;self.postMessage=x=>parentPort.postMessage(x);parentPort.on('message',x=>self.onmessage({data:x}));\n";this.worker=new NodeWorker(bridge+source,{eval:true});this.worker.on('message',data=>this.onmessage?.({data}));this.worker.on('error',error=>this.onerror?.({message:error.message}));}postMessage(x){this.worker.postMessage(x);}terminate(){this.worker.terminate();}}
- const context={window:{},Blob,Worker,URL:{createObjectURL(blob){const id='testblob:'+(++seq);blobs.set(id,blob.source);return id;},revokeObjectURL(id){blobs.delete(id);}},crypto:webcrypto,setTimeout,clearTimeout};
+ const context={window:{},Blob,Worker,TextDecoder,atob,URL:{createObjectURL(blob){const id='testblob:'+(++seq);blobs.set(id,blob.source);return id;},revokeObjectURL(id){blobs.delete(id);}},crypto:webcrypto,setTimeout,clearTimeout};
  vm.runInNewContext(fs.readFileSync(new URL('../extended-engine.bundle.js',import.meta.url),'utf8'),context);
  return context.window.MathScopeM3ExtendedEngine;
 }

@@ -25,16 +25,17 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PASS",
       "originalCriterionComplete": true,
-      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
-      "assessedBy": "MathScope M3 Navier implementation review",
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/galerkin.mjs",
         "navier/evidence/N8-acceptance.json",
-        "navier/evidence/N8-TG.json"
+        "navier/evidence/N8-TG.json",
+        "navier/tests/flow-observations.test.mjs"
       ],
       "remaining": [],
       "remainingObligations": [],
-      "acceptanceScope": "The independent 2pi-periodic Galerkin branch validates divergence and conjugate symmetry initially and at every accepted step, treats the zero mode separately and recovers pressure with div f.",
+      "acceptanceScope": "The independent 2pi-periodic Fourier Galerkin branch still validates divergence, conjugate symmetry and zero mode initially and at each accepted step, with div f in pressure recovery. The new bounded accepted-state history is independently checked to leave the final integrator coefficients bit-for-bit unchanged. This domain is explicitly separate from the paper whole-space field.",
       "genericBranchOnly": true,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
@@ -50,8 +51,8 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PASS",
       "originalCriterionComplete": true,
-      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
-      "assessedBy": "MathScope M3 Navier implementation review",
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/galerkin.mjs",
         "navier/evidence/acceptance.json",
@@ -59,7 +60,7 @@
       ],
       "remaining": [],
       "remainingObligations": [],
-      "acceptanceScope": "Every retained direct convolution interaction is included. Independently implemented padded 3D FFT agrees below 1e-11; an aliased high-mode negative control fails as intended, with an independent NumPy comparison.",
+      "acceptanceScope": "All retained direct convolution interactions and the separately implemented padded FFT remain compared below1e-11. The high-mode aliasing omission is rejected, and independent NumPy output is preserved. The observation changes do not alter this numerical kernel.",
       "genericBranchOnly": true,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
@@ -75,16 +76,17 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PASS",
       "originalCriterionComplete": true,
-      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
-      "assessedBy": "MathScope M3 Navier implementation review",
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/galerkin.mjs",
         "navier/evidence/N8-acceptance.json",
-        "navier/evidence/independent-numpy.json"
+        "navier/evidence/independent-numpy.json",
+        "navier/flow-observations.mjs"
       ],
       "remaining": [],
       "remainingObligations": [],
-      "acceptanceScope": "The IMEX method uses diffusion stability, advection CFL, embedded step-doubling and an energy-defect acceptance gate. Taylor-Green amplitude and energy converge at order two under timestep halving.",
+      "acceptanceScope": "The existing IMEX method retains advection CFL, embedded step doubling and energy-defect acceptance. Taylor-Green amplitude and energy show the intended second-order time refinement, independently checked with NumPy. New path integration has its own distinct error estimate and does not substitute for the solver acceptance gate.",
       "genericBranchOnly": true,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
@@ -100,21 +102,23 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PARTIAL",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
-      "assessedBy": "MathScope M3 Navier implementation review",
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/localization.mjs",
-        "navier/evidence/N8-nearT.json"
+        "navier/evidence/N8-nearT.json",
+        "navier/flow-observations.mjs",
+        "navier/SOURCE_RECONSTRUCTION_KO.md"
       ],
       "remaining": [
-        "Evaluate the actual reconstructed normalized velocity and physical scaling at these source-admissible points.",
-        "Supply a precision mode with source interval/tail bounds, not coordinates alone."
+        "Evaluate the reconstructed source velocity in the original normalized coordinates and apply its physical scaling.",
+        "Supply interval/tail-controlled precision modes at the original source-admissible tau examples."
       ],
       "remainingObligations": [
-        "Evaluate the actual reconstructed normalized velocity and physical scaling at these source-admissible points.",
-        "Supply a precision mode with source interval/tail bounds, not coordinates alone."
+        "Evaluate the reconstructed source velocity in the original normalized coordinates and apply its physical scaling.",
+        "Supply interval/tail-controlled precision modes at the original source-admissible tau examples."
       ],
-      "acceptanceScope": "Exact decimal positive tau is preserved independently of rounded t, including 1e-2,1e-4,1e-8,1e-12,1e-40,1e-1000. Source normalized scales are carried symbolically.",
+      "acceptanceScope": "Exact positive decimal tau and log coordinates remain preserved down to1e-1000 even when displayed t rounds to1. The new normalized periodic box coordinates are explicitly x/(2pi), not the original q-scaled source coordinates. Actual near-terminal source velocity and precision enclosures remain unavailable.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
@@ -130,22 +134,24 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PARTIAL",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
-      "assessedBy": "MathScope M3 Navier implementation review",
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/galerkin.mjs",
         "navier/evidence/acceptance.json",
-        "navier/evidence/independent-numpy.json"
+        "navier/evidence/independent-numpy.json",
+        "navier/flow-observations.mjs",
+        "navier/SOURCE_RECONSTRUCTION_KO.md"
       ],
       "remaining": [
-        "Create independent source grid, Fourier cutoff, coefficient order and arithmetic precision comparisons.",
-        "Record the actual core/axial/pulse scales, active cutoffs, rigorous tail bound and last resolved positive tau."
+        "Resolve actual source core/axial/pulse scales and active cutoffs with independent grid, Fourier, coefficient and arithmetic-precision refinements.",
+        "Attach rigorous source tail bounds and a last-resolved positive tau with an explicit failure reason."
       ],
       "remainingObligations": [
-        "Create independent source grid, Fourier cutoff, coefficient order and arithmetic precision comparisons.",
-        "Record the actual core/axial/pulse scales, active cutoffs, rigorous tail bound and last resolved positive tau."
+        "Resolve actual source core/axial/pulse scales and active cutoffs with independent grid, Fourier, coefficient and arithmetic-precision refinements.",
+        "Attach rigorous source tail bounds and a last-resolved positive tau with an explicit failure reason."
       ],
-      "acceptanceScope": "Finite Galerkin runtime budgets and last resolved time are reported. Independent FFT, time and NumPy checks execute, but the original pulse/coefficient precision refinement is absent.",
+      "acceptanceScope": "The finite solver reports its numerical resource limits; the new observation layer separately compares midpoint core quadrature and coarse/fine RK4 paths and bounds stored coefficient history with explicit decimation. These finite diagnostics do not provide the original independent grid/Fourier/coefficient/precision source refinement table or a rigorous omitted tail.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
@@ -161,22 +167,29 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PARTIAL",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T07:49:59.516316+00:00",
-      "assessedBy": "MathScope M3 Navier implementation and observed public UI review",
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/index.mjs",
         "navier/evidence/N8-TG.json",
         "evidence/live-ui/acceptance.json",
         "web/extended-view-contract.mjs",
-        "web/tests/extended-worker.test.mjs"
+        "web/tests/extended-worker.test.mjs",
+        "navier/flow-observations.mjs",
+        "navier/tests/flow-interface.test.mjs",
+        "navier/tests/flow-observations.test.mjs",
+        "navier/evidence/source-current-20261012/fast-tests.log",
+        "navier/SOURCE_RECONSTRUCTION_KO.md"
       ],
       "remaining": [
-        "Provide complete normalized/source views and explicit streamlines/particle, velocity/angular-velocity, core/whole-energy distinctions on the reconstruction path."
+        "Verify every new physical/normalized, streamline/pathline, velocity/angular-velocity and core/global UI control on the published version.",
+        "Confirm actual scene positions, units, color range and fixed vector scale remain bound during import, selection and replay without automatic vector normalization or spatial fitting."
       ],
       "remainingObligations": [
-        "Provide complete normalized/source views and explicit streamlines/particle, velocity/angular-velocity, core/whole-energy distinctions on the reconstruction path."
+        "Verify every new physical/normalized, streamline/pathline, velocity/angular-velocity and core/global UI control on the published version.",
+        "Confirm actual scene positions, units, color range and fixed vector scale remain bound during import, selection and replay without automatic vector normalization or spatial fitting."
       ],
-      "acceptanceScope": "The actual finite Fourier run exports 81 positions/vectors, whole periodic energy curves, fixed bounds, units, color range, vector scale and linked hashes. The observed public N8 scene matches these 81 source samples, the z=0 slice, separate full periodic domain, common color range and actual vector multiplier 0.3. Keyboard/LOD preserve the mathematical digest. Complete paper-source observations remain unavailable.",
+      "acceptanceScope": "New actual finite-run observations preserve81 sample positions/vectors, fixed physical bounds and a separately declared normalized periodic view. They distinguish instantaneous final-time streamlines from coefficient-history particle paths, velocity from origin-dependent axial angular velocity (undefined on axis), and whole-box Parseval energy from fixed-core midpoint energy. Original settings and output are input/run-hash bound; independent Taylor-Green trajectory, periodic seam, axis, quadrature and tamper tests pass. Public UI verification of these newly added controls is still pending; the earlier81-point UI receipt remains historical.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
@@ -206,21 +219,26 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PARTIAL",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
-      "assessedBy": "MathScope M3 Navier implementation review",
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/index.mjs",
-        "navier/evidence/acceptance.json"
+        "navier/evidence/acceptance.json",
+        "navier/flow-observations.mjs",
+        "navier/source-current-evidence.mjs",
+        "navier/tests/flow-interface.test.mjs",
+        "navier/evidence/source-current-20261012/source-current-execution.json",
+        "navier/SOURCE_RECONSTRUCTION_KO.md"
       ],
       "remaining": [
-        "Complete per-observation links across the source reconstruction and current UI.",
-        "Provide the actual interval-specific error enclosures and refinement proof before any certified-approximation label."
+        "Finish per-observation reference, numerical-test, analytic-certificate and Lean links throughout the published reconstruction UI.",
+        "Require interval-specific error enclosures and hypotheses before using any certified-approximation label."
       ],
       "remainingObligations": [
-        "Complete per-observation links across the source reconstruction and current UI.",
-        "Provide the actual interval-specific error enclosures and refinement proof before any certified-approximation label."
+        "Finish per-observation reference, numerical-test, analytic-certificate and Lean links throughout the published reconstruction UI.",
+        "Require interval-specific error enclosures and hypotheses before using any certified-approximation label."
       ],
-      "acceptanceScope": "The result distinguishes source lineage, finite numerical execution, analytic certificate and Lean theorem. Missing analytic/Lean evidence remains null; forged formal authority and view mutations are rejected.",
+      "acceptanceScope": "Each new flow observation carries source-definition/finite-test metadata and explicit null analytic/Lean proof fields. Error indicators are not called certified enclosures. The N6 source summary separately exposes the actual recorded heavy execution, original hashes and remaining proof duties; browser replay only recreates this summary. Mutating paths, settings or claim authority is rejected.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
@@ -236,8 +254,8 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PARTIAL",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T07:49:59.519084+00:00",
-      "assessedBy": "MathScope M3 Navier implementation and observed public UI review",
+      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/tests/build-source-inheritance.py",
         "navier/tests/run.mjs",
@@ -250,17 +268,22 @@
         "web/tests/extended-worker.test.mjs",
         "web/build_extended.py",
         "web/tests/test_extended_build.py",
-        "CI_EXECUTION_WORKSPACES.md"
+        "CI_EXECUTION_WORKSPACES.md",
+        "navier/tests/build-source-current-evidence.py",
+        "navier/tests/flow-interface.test.mjs",
+        "navier/evidence/independent-numpy.json",
+        "navier/evidence/source-current-20261012/source-current-execution.json",
+        "navier/SOURCE_RECONSTRUCTION_KO.md"
       ],
       "remaining": [
-        "Add all source constants, precision/coefficient cutoffs, rigorously controlled tails and actual reconstruction runs.",
-        "Do not inherit the blueprint drafting-turn note as a claim about this implementation session."
+        "Bind all remaining source constants, coefficient/precision cutoffs and rigorously controlled tails to actual complete reconstruction runs.",
+        "Verify the final newly published UI and its exported camera/scene contracts, then attach the actual new CI result without treating historical runs as the new commit."
       ],
       "remainingObligations": [
-        "Add all source constants, precision/coefficient cutoffs, rigorously controlled tails and actual reconstruction runs.",
-        "Do not inherit the blueprint drafting-turn note as a claim about this implementation session."
+        "Bind all remaining source constants, coefficient/precision cutoffs and rigorously controlled tails to actual complete reconstruction runs.",
+        "Verify the final newly published UI and its exported camera/scene contracts, then attach the actual new CI result without treating historical runs as the new commit."
       ],
-      "acceptanceScope": "Source bytes, implementation hash, inputs, bases, domain, schedules, pressure/energy, scene contract and replay are exported. Public browser import freshly recomputes to MATCH and restores the selected source, camera and LOD; direct reload preserves the N8 route, and edited input blocks stale-result reuse. Independent local builder tests and NumPy checks validate the finite branch. A full paper reconstruction package is unavailable; no new hosted CI result is claimed here.",
+      "acceptanceScope": "The new source gate preserves original source dependency bytes, actual command/log, exact graph/artifact hashes and finite scope. The N8 flow record includes integrator and observation settings, accepted coefficient history/decimation, trajectory integration/refinement, coordinates and core quadrature. Hash-bound local replay rejects edits. Existing cross-environment NumPy and historical public import evidence remain distinct from a new hosted source execution; the complete paper reconstruction package still does not exist.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
@@ -285,5 +308,12 @@
     }
   ],
   "allOriginalCriteriaComplete": false,
-  "wholeM3Complete": false
+  "wholeM3Complete": false,
+  "assessmentRevision": "m3-navier-actual-source-and-flow-20261012",
+  "actualSourceExecution": {
+    "receipt": "navier/evidence/source-current-20261012/source-current-execution.json",
+    "sha256": "3c24c84c3356b458d4866cf2008047ff809dfb0a51524caed1044c5c73334b21",
+    "browserSummaryIsRecordedOnly": true,
+    "completeN6": false
+  }
 }

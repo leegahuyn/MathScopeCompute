@@ -1,0 +1,178 @@
+Making gp in Olinux-x86_64
+make[1]: Entering directory '/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0/Olinux-x86_64'
+../config/genkernel ../src ../src/kernel/x86_64/asm0.h > parilvl0.h
+if test -r ./tune.h; then d=.; else d=../src/kernel/none; fi;          cat $d/tune.h ../src/kernel/none/int.h ../src/kernel/none/level1.h > parilvl1.h
+cat ../src/mt/single.h > parimt.h
+cat ../src/kernel/none/mp.c ../src/kernel/none/cmp.c ../src/kernel/none/gcdll.c ../src/kernel/none/halfgcd.c ../src/kernel/none/ratlift.c  ../src/kernel/none/invmod.c ../src/kernel/none/gcd.c ../src/kernel/none/gcdext.c ../src/kernel/none/mp_indep.c ../src/kernel/none/add.c > mpker.c
+cat parilvl0.h parilvl1.h > mpinl.h
+f=funclist-$$-linux-x86_64.tmp; (cd ../src/desc && /usr/bin/perl merge_822 ../../src/funclist > $f) && mv ../src/desc/$f ../src/desc/pari.desc
+gcc  -c -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -funroll-loops -fPIC -I. -I../src/headers -o mpker.o mpker.c
+gcc  -c -I. -I../src/headers -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -fPIC -o mpinl.o ../src/kernel/none/mpinl.c
+gcc  -c -I. -I../src/headers -fPIC -funroll-loops -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o F2v.o ../src/basemath/F2v.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o F2x.o ../src/basemath/F2x.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o F2xqE.o ../src/basemath/F2xqE.c
+gcc  -c -I. -I../src/headers -fPIC -funroll-loops -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o F3v.o ../src/basemath/F3v.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o FF.o ../src/basemath/FF.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o Fle.o ../src/basemath/Fle.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o Flv.o ../src/basemath/Flv.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o Flx.o ../src/basemath/Flx.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o FlxX.o ../src/basemath/FlxX.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o FlxqE.o ../src/basemath/FlxqE.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o Flxq_log.o ../src/basemath/Flxq_log.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o FpE.o ../src/basemath/FpE.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o FpV.o ../src/basemath/FpV.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o FpX.o ../src/basemath/FpX.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o FpXQX_factor.o ../src/basemath/FpXQX_factor.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o FpXX.o ../src/basemath/FpXX.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o FpX_factor.o ../src/basemath/FpX_factor.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o QX_factor.o ../src/basemath/QX_factor.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o Qfb.o ../src/basemath/Qfb.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o RgV.o ../src/basemath/RgV.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o RgX.o ../src/basemath/RgX.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o Ser.o ../src/basemath/Ser.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ZG.o ../src/basemath/ZG.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ZV.o ../src/basemath/ZV.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ZX.o ../src/basemath/ZX.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o Zp.o ../src/basemath/Zp.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o alglin1.o ../src/basemath/alglin1.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o alglin2.o ../src/basemath/alglin2.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o alglin3.o ../src/basemath/alglin3.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o aprcl.o ../src/basemath/aprcl.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o arith1.o ../src/basemath/arith1.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o arith2.o ../src/basemath/arith2.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o base1.o ../src/basemath/base1.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o base2.o ../src/basemath/base2.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o base3.o ../src/basemath/base3.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o base4.o ../src/basemath/base4.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o base5.o ../src/basemath/base5.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o bb_group.o ../src/basemath/bb_group.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o bb_hnf.o ../src/basemath/bb_hnf.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o bern.o ../src/basemath/bern.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o bibli1.o ../src/basemath/bibli1.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o bibli2.o ../src/basemath/bibli2.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o bit.o ../src/basemath/bit.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o bnflog.o ../src/basemath/bnflog.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o bnfunits.o ../src/basemath/bnfunits.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o buch1.o ../src/basemath/buch1.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o buch2.o ../src/basemath/buch2.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o buch3.o ../src/basemath/buch3.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o buch4.o ../src/basemath/buch4.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o char.o ../src/basemath/char.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o concat.o ../src/basemath/concat.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o crvwtors.o ../src/basemath/crvwtors.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o digits.o ../src/basemath/digits.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o dirichlet.o ../src/basemath/dirichlet.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ecpp.o ../src/basemath/ecpp.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ellanal.o ../src/basemath/ellanal.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o elliptic.o ../src/basemath/elliptic.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ellisog.o ../src/basemath/ellisog.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ellpadic.o ../src/basemath/ellpadic.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ellpadiclambdamu.o ../src/basemath/ellpadiclambdamu.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ellrank.o ../src/basemath/ellrank.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ellsea.o ../src/basemath/ellsea.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o elltors.o ../src/basemath/elltors.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o elltrans.o ../src/basemath/elltrans.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o factcyclo.o ../src/basemath/factcyclo.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o galconj.o ../src/basemath/galconj.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o gen1.o ../src/basemath/gen1.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o gen2.o ../src/basemath/gen2.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o gen3.o ../src/basemath/gen3.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o grossenchar.o ../src/basemath/grossenchar.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o hgm.o ../src/basemath/hgm.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o hnf_snf.o ../src/basemath/hnf_snf.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o hyperell.o ../src/basemath/hyperell.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o hyperellperiods.o ../src/basemath/hyperellperiods.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o hypergeom.o ../src/basemath/hypergeom.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ifactor1.o ../src/basemath/ifactor1.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ispower.o ../src/basemath/ispower.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o kummer.o ../src/basemath/kummer.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o lambert.o ../src/basemath/lambert.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o lerch.o ../src/basemath/lerch.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o lfun.o ../src/basemath/lfun.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o lfunlarge.o ../src/basemath/lfunlarge.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o lfunquad.o ../src/basemath/lfunquad.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o lfunutils.o ../src/basemath/lfunutils.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o lll.o ../src/basemath/lll.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o map.o ../src/basemath/map.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o matperm.o ../src/basemath/matperm.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o mellininv.o ../src/basemath/mellininv.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o mftrace.o ../src/basemath/mftrace.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o modsym.o ../src/basemath/modsym.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o mpqs.o ../src/basemath/mpqs.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o msfarey.o ../src/basemath/msfarey.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o nffactor.o ../src/basemath/nffactor.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o nflist.o ../src/basemath/nflist.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o nflistQT.o ../src/basemath/nflistQT.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o pclgp.o ../src/basemath/pclgp.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o perm.o ../src/basemath/perm.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o polarit1.o ../src/basemath/polarit1.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o polarit2.o ../src/basemath/polarit2.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o polarit3.o ../src/basemath/polarit3.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o polclass.o ../src/basemath/polclass.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o polmodular.o ../src/basemath/polmodular.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o prime.o ../src/basemath/prime.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o qfisom.o ../src/basemath/qfisom.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o qfsolve.o ../src/basemath/qfsolve.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o quad.o ../src/basemath/quad.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ramanujantau.o ../src/basemath/ramanujantau.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o random.o ../src/basemath/random.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o rootpol.o ../src/basemath/rootpol.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o subcyclo.o ../src/basemath/subcyclo.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o subfield.o ../src/basemath/subfield.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o subgroup.o ../src/basemath/subgroup.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o trans1.o ../src/basemath/trans1.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o trans2.o ../src/basemath/trans2.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o trans3.o ../src/basemath/trans3.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o volcano.o ../src/basemath/volcano.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o zetamult.o ../src/basemath/zetamult.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o anal.o ../src/language/anal.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o compile.o ../src/language/compile.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o default.o ../src/language/default.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o es.o ../src/language/es.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o eval.o ../src/language/eval.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o forprime.o ../src/language/forprime.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o gplib.o ../src/language/gplib.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o hash.o ../src/language/hash.c
+f=init-$$-linux-x86_64.tmp; (cd ../src/desc && /usr/bin/perl gen_proto basic pari.desc > $f) && mv ../src/desc/$f ../src/language/init.h
+f=default-$$-linux-x86_64.tmp; (cd ../src/desc && /usr/bin/perl gen_proto default pari.desc > $f) && mv ../src/desc/$f ../src/language/default.h
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o intnum.o ../src/language/intnum.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o members.o ../src/language/members.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o paricfg.o ../src/language/paricfg.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o pariinl.o ../src/language/pariinl.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o parse.o ../src/language/parse.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o readline.o ../src/language/readline.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o str.o ../src/language/str.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o sumiter.o ../src/language/sumiter.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o algebras.o ../src/modules/algebras.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o elldata.o ../src/modules/elldata.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ellfromeqn.o ../src/modules/ellfromeqn.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ellmanin.o ../src/modules/ellmanin.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o forperm.o ../src/modules/forperm.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o forsubset.o ../src/modules/forsubset.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o galois.o ../src/modules/galois.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o galpol.o ../src/modules/galpol.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o genus2red.o ../src/modules/genus2red.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o groupid.o ../src/modules/groupid.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o krasner.o ../src/modules/krasner.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o part.o ../src/modules/part.c
+gcc  -c -I. -I../src/headers -fPIC -funroll-loops -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o ratpoints.o ../src/modules/ratpoints.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o stark.o ../src/modules/stark.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o thue.o ../src/modules/thue.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o mt.o ../src/mt/mt.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o single.o ../src/mt/single.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o plotport.o ../src/graph/plotport.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o plottty.o ../src/graph/plottty.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o emacs.o ../src/gp/emacs.c
+f=gp_init-$$-linux-x86_64.tmp; (cd ../src/desc && /usr/bin/perl gen_proto gp pari.desc > $f) && mv ../src/desc/$f ../src/gp/gp_init.h
+gcc  -c -I. -I../src/headers -I../src/language  -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o gp_rl.o ../src/gp/gp_rl.c
+gcc  -c -I. -I../src/headers -I../src/language  -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o texmacs.o ../src/gp/texmacs.c
+gcc  -c -I. -I../src/headers -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o whatnow.o ../src/gp/whatnow.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o plotnone.o ../src/graph/plotnone.c
+gcc  -c -I. -I../src/headers -fPIC -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o init.o ../src/language/init.c
+gcc  -c -I. -I../src/headers -I../src/language -DDL_DFLT_NAME=NULL -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -o gp.o ../src/gp/gp.c
+rm -f gp-sta
+gcc  -o gp-sta -O3 -Wall -fno-strict-aliasing  -O2 -ffile-prefix-map=/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0=/usr/src/pari-2.19.0  -Wl,--export-dynamic  mpker.o mpinl.o F2v.o F2x.o F2xqE.o F3v.o FF.o Fle.o Flv.o Flx.o FlxX.o FlxqE.o Flxq_log.o FpE.o FpV.o FpX.o FpXQX_factor.o FpXX.o FpX_factor.o QX_factor.o Qfb.o RgV.o RgX.o Ser.o ZG.o ZV.o ZX.o Zp.o alglin1.o alglin2.o alglin3.o aprcl.o arith1.o arith2.o base1.o base2.o base3.o base4.o base5.o bb_group.o bb_hnf.o bern.o bibli1.o bibli2.o bit.o bnflog.o bnfunits.o buch1.o buch2.o buch3.o buch4.o char.o concat.o crvwtors.o digits.o dirichlet.o ecpp.o ellanal.o elliptic.o ellisog.o ellpadic.o ellpadiclambdamu.o ellrank.o ellsea.o elltors.o elltrans.o factcyclo.o galconj.o gen1.o gen2.o gen3.o grossenchar.o hgm.o hnf_snf.o hyperell.o hyperellperiods.o hypergeom.o ifactor1.o ispower.o kummer.o lambert.o lerch.o lfun.o lfunlarge.o lfunquad.o lfunutils.o lll.o map.o matperm.o mellininv.o mftrace.o modsym.o mpqs.o msfarey.o nffactor.o nflist.o nflistQT.o pclgp.o perm.o polarit1.o polarit2.o polarit3.o polclass.o polmodular.o prime.o qfisom.o qfsolve.o quad.o ramanujantau.o random.o rootpol.o subcyclo.o subfield.o subgroup.o trans1.o trans2.o trans3.o volcano.o zetamult.o anal.o compile.o default.o es.o eval.o forprime.o gplib.o hash.o init.o intnum.o members.o paricfg.o pariinl.o parse.o readline.o str.o sumiter.o algebras.o elldata.o ellfromeqn.o ellmanin.o forperm.o forsubset.o galois.o galpol.o genus2red.o groupid.o krasner.o part.o ratpoints.o stark.o thue.o mt.o single.o plotport.o plottty.o emacs.o gp.o gp_rl.o texmacs.o whatnow.o plotnone.o -Wl,-rpath,"/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0"/Olinux-x86_64:"/opt/mathscope/pari-2.19.0/lib"       -lm 
+: gp-sta
+rm -f ../gp
+ln -s Olinux-x86_64/gp-sta ../gp
+make[1]: Leaving directory '/tmp/mathscope-pari-hzf5s8ag/pari-2.19.0/Olinux-x86_64'

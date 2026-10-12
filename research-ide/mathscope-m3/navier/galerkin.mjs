@@ -139,19 +139,23 @@ function imexStep(S,u,dt,nu,forceAt,t){
 }
 
 export function integrateGalerkin(input={}){
-  const allowed=['cutoff','viscosity','endTime','initialStep','rtol','atol','energyTolerance','cfl','maxSteps','initial','seed','forceAt','fixedStep'];
+  const allowed=['cutoff','viscosity','endTime','initialStep','rtol','atol','energyTolerance','cfl','maxSteps','initial','seed','forceAt','fixedStep','storeStates','maxStateFrames'];
   if(Object.keys(input).some(k=>!allowed.includes(k)))bad('INVALID_INPUT','Unknown Galerkin input field.');
   const S=fourierSpace(input.cutoff??2),nu=input.viscosity??1,T=input.endTime??.5,rtol=input.rtol??1e-6,atol=input.atol??1e-9,
     energyTolerance=input.energyTolerance??2e-5,cfl=input.cfl??.5,maxSteps=input.maxSteps??2000,forceAt=input.forceAt??(()=>S.zero());
   for(const [k,v]of Object.entries({nu,T,rtol,atol,energyTolerance,cfl}))if(!(finite(v,k)>0))bad('INVALID_INPUT',`${k} must be positive.`);
   if(!Number.isSafeInteger(maxSteps)||maxSteps<1||maxSteps>20000)bad('RESOURCE_LIMIT','maxSteps must be between 1 and 20000.');
+  const storeStates=input.storeStates??true,requestedFrames=input.maxStateFrames??64;
+  if(typeof storeStates!=='boolean'||!Number.isSafeInteger(requestedFrames)||requestedFrames<4||requestedFrames>128)bad('INVALID_INPUT','storeStates must be boolean and maxStateFrames must be between 4 and 128.');
+  const frameLimit=Math.min(requestedFrames,Math.floor(131072/(S.modes.length*6)));
   if(T>20||nu>1e4)bad('UNSUPPORTED','The interactive solver supports endTime <= 20 and viscosity <= 10000.');
   let u=input.initial?Float64Array.from(input.initial):input.seed===undefined?taylorGreen(S,0,nu):randomSolenoidal(S,input.seed),t=0,dt=input.initialStep??.05,rejected=0,attempts=0;
   if(!(finite(dt,'initialStep')>0))bad('INVALID_INPUT','initialStep must be positive.');
   if(!validateVelocity(S,u).pass)bad('INVALID_INITIAL_CONSTRAINTS','Initial data must be divergence-free and Hermitian.');
   const initial=Float64Array.from(u),history=[{time:0,...invariants(S,u,forceAt(0))}],steps=[];
+  let stateFrames=storeStates?[{time:0,acceptedIndex:0,coefficients:[...u]}]:[],discardedFrames=0;
   while(t<T&&attempts++<maxSteps){
-    if(T-t<=32*Number.EPSILON*Math.max(1,T)){t=T;history[history.length-1].time=T;break;}
+    if(T-t<=32*Number.EPSILON*Math.max(1,T)){t=T;history[history.length-1].time=T;if(stateFrames.length)stateFrames[stateFrames.length-1].time=T;break;}
     // The Fourier l1 bound is conservative and avoids using a sampled vmax.
     let velocityBound=0;for(let i=0;i<S.modes.length;i++)velocityBound+=norm(u.slice(6*i,6*i+6));
     const cflStep=velocityBound===0?Infinity:cfl/(Math.sqrt(3)*S.cutoff*velocityBound);
@@ -164,14 +168,19 @@ export function integrateGalerkin(input={}){
     const energyDefect=after.energy-before.energy+diss-work,normalizedEnergyDefect=Math.abs(energyDefect)/Math.max(1e-14,before.energy,after.energy,Math.abs(work),diss);
     const accepted=after.pass&&(input.fixedStep||localError<=errorScale&&normalizedEnergyDefect<=energyTolerance);
     steps.push({time:t,dt,cflStep:Number.isFinite(cflStep)?cflStep:null,localError,errorScale,energyDefect,normalizedEnergyDefect,accepted,divergence:after.normalizedDivergence,conjugacy:after.normalizedConjugacy});
-    if(accepted){t+=dt;u=candidate;history.push({time:t,...after});}else rejected++;
+    if(accepted){t+=dt;u=candidate;history.push({time:t,...after});
+      if(storeStates){stateFrames.push({time:t,acceptedIndex:history.length-1,coefficients:[...u]});
+        if(stateFrames.length>frameLimit){const kept=stateFrames.filter((_,i)=>i===0||i===stateFrames.length-1||i%2===0);discardedFrames+=stateFrames.length-kept.length;stateFrames=kept;}
+      }
+    }else rejected++;
     if(!input.fixedStep){const errRatio=Math.max(localError/errorScale,normalizedEnergyDefect/energyTolerance,1e-8);dt*=Math.min(2,Math.max(.2,.9*errRatio**(-1/3)));}
   }
   const done=t>=T;
   return {schema:'MathScope.N8.GalerkinRun/1',branch:'GENERIC_FOURIER_GALERKIN',status:done?'FINITE_RUN_COMPLETE':'RESOURCE_LIMIT',
-    input:{cutoff:S.cutoff,viscosity:nu,endTime:T,initialStep:input.initialStep??.05,rtol,atol,energyTolerance,cfl,maxSteps,fixture:input.initial?'custom':input.seed===undefined?'Taylor-Green':`random-solenoidal-${input.seed}`,fixedStep:!!input.fixedStep},
+    input:{cutoff:S.cutoff,viscosity:nu,endTime:T,initialStep:input.initialStep??.05,rtol,atol,energyTolerance,cfl,maxSteps,fixture:input.initial?'custom':input.seed===undefined?'Taylor-Green':`random-solenoidal-${input.seed}`,fixedStep:!!input.fixedStep,storeStates,maxStateFrames:requestedFrames},
     domain:S.domain,method:'IMEX Crank-Nicolson diffusion / explicit Heun convection; adaptive step doubling',designOrder:2,
     initial:[...initial],final:[...u],modes:S.modes,history,steps,acceptedSteps:history.length-1,rejectedSteps:rejected,lastResolvedTime:t,
+    stateHistory:{schema:'MathScope.N8.AcceptedCoefficientStates/1',status:!storeStates?'NOT_REQUESTED':discardedFrames?'DECIMATED_ACCEPTED_STATES':'ALL_ACCEPTED_STATES',frames:stateFrames,frameLimit,coefficientBudget:131072,discardedFrames,maximumTimeGap:stateFrames.slice(1).reduce((m,f,i)=>Math.max(m,f.time-stateFrames[i].time),0),interpolation:'Piecewise linear between stored accepted coefficient states; numerical time interpolation, not a rigorous solution enclosure.'},
     precision:{arithmetic:'IEEE-754 binary64',errorControl:'embedded local error and observed energy defect',rigorousErrorEnclosure:false},
     evidence:{finiteDimensionalModel:true,numericalRun:true,analyticCertificate:null,leanTheorem:null,paperReconstruction:false,continuumBlowupProof:false}};
 }

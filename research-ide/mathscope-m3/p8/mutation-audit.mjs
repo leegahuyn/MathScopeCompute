@@ -52,9 +52,21 @@ export function inspectP7ZeroStructure(record) {
 
 export function inspectRankUpperEvidence(record) {
   try{
-    p7Envelope(record);if(record.request?.kind!=='p7.elliptic_local')fail('P7_RANK_KIND','Use the arithmetic-rank record, not a central analytic derivative.');
+    p7Envelope(record);if(!['p7.elliptic_local','p7.elliptic_arithmetic'].includes(record.request?.kind))fail('P7_RANK_KIND','Use the arithmetic-rank record, not a central analytic derivative.');
     const rank=record.result?.arithmeticRank;if(!rank||typeof rank!=='object'||!Number.isSafeInteger(rank.lowerBound)||rank.lowerBound<0)fail('INVALID_RANK_RECORD','An explicit arithmetic-rank interval is required.');
     if(rank.upperBound===null&&rank.exactRank===null&&rank.selmerBoundComputed===false&&rank.descentPerformed===false)return freeze({ok:true,status:'OPEN_NO_ARITHMETIC_RANK_UPPER_CERTIFICATE',archivedRecordSHA256:record.recordSHA256,lowerBound:rank.lowerBound,upperBound:null,exactRank:null,arithmeticRankProved:false,...NO_AUTHORITY});
+    if(record.request.kind==='p7.elliptic_arithmetic'){
+      const certificate=rank.rankUpperCertificate;
+      if(!certificate)fail('RANK_UPPER_CERTIFICATE_MISSING','The retained arithmetic-rank conclusion has lost its required descent certificate.');
+      if(certificate.schema!=='MathScope.M3.P7.ArithmeticRankUpperCertificate/1'||certificate.status!=='CERTIFIED_ARITHMETIC_UPPER'||rank.descentPerformed!==true||rank.selmerBoundComputed!==true||!Number.isSafeInteger(rank.upperBound)||rank.upperBound<rank.lowerBound||certificate.upperBound!==rank.upperBound||rank.exactRank!==(rank.lowerBound===rank.upperBound?rank.lowerBound:null))fail('RANK_UPPER_INCONSISTENT','The exact arithmetic-rank interval and descent certificate disagree.');
+      for(const name of ['twoSelmerRank','rationalTwoTorsionRank','casselsPairingRank'])if(!Number.isSafeInteger(certificate[name])||certificate[name]<0||certificate[name]>64)fail('RANK_UPPER_INCONSISTENT','Bounded exact Selmer and Cassels ranks are required.');
+      if(certificate.rationalTwoTorsionRank>2||certificate.casselsPairingRank%2!==0||certificate.upperBound!==certificate.twoSelmerRank-certificate.rationalTwoTorsionRank-certificate.casselsPairingRank||certificate.freshProcessExecuted!==true||certificate.databaseLookupUsed!==false||certificate.analyticRankUsed!==false||certificate.BSDOrParityConjectureAssumed!==false||certificate.formalLeanProofIssued!==false)fail('RANK_UPPER_INCONSISTENT','The unconditional arithmetic certificate contract is inconsistent.');
+      if(certificate.modelHash!==record.result.model?.minimalHash||certificate.originalModelHash!==record.result.model?.hash||!Array.isArray(certificate.exactTwoCovers)||certificate.exactTwoCovers.length!==certificate.twoSelmerRank||!Array.isArray(certificate.coverMapChecks)||certificate.coverMapChecks.length!==certificate.twoSelmerRank||certificate.coverMapChecks.some(c=>c.exactRationalMapIdentityChecked!==true))fail('RANK_UPPER_INCONSISTENT','The same-model complete 2-cover receipt is missing.');
+      for(const key of ['certificateSHA256','pariReceiptSHA256','executionScriptSHA256','executionStdoutSHA256'])hashString(certificate[key],key);
+      if(certificate.backend?.version!=='2.19.0'||certificate.backend.sourceArchiveSHA256!=='f317b9722eb5d9094a60303774f066f3a83e3ec1f170be8546c44d7583f30b6d')fail('RANK_UPPER_BACKEND','The arithmetic certificate has a different PARI source pin.');
+      hashString(certificate.backend.binarySHA256,'observed PARI executable');
+      return freeze({ok:true,status:'STRUCTURALLY_CONSISTENT_UNTRUSTED',archivedRecordSHA256:record.recordSHA256,lowerBound:rank.lowerBound,upperBound:rank.upperBound,exactRank:rank.exactRank,rankUpperCertificateSHA256:certificate.certificateSHA256,arithmeticReplay:'OPEN_REQUIRES_FRESH_P7_PARI_RUNNER',hashIntegrityVerified:false,descentRecomputed:false,arithmeticRankProved:false,...NO_AUTHORITY});
+    }
     if(rank.upperBound!==null&&!record.result.rankUpperCertificate)fail('RANK_UPPER_CERTIFICATE_MISSING','An asserted arithmetic rank upper bound has no verifiable rank-upper certificate.');
     return freeze({ok:false,status:'OPEN_UNSUPPORTED_RANK_UPPER_VERIFIER',issues:[{code:'FRESH_RANK_UPPER_VERIFIER_REQUIRED',message:'An imported rank certificate cannot replace a implemented fresh descent/Selmer verifier.'}],arithmeticRankProved:false,...NO_AUTHORITY});
   }catch(error){return freeze({ok:false,status:'RANK_STRUCTURE_REJECTED',issues:[issue(error)],arithmeticRankProved:false,...NO_AUTHORITY});}
@@ -103,8 +115,13 @@ export async function runMutationAudit(input={}) {
       const check=inspectP7ZeroStructure(altered);
       cases.push({id,negativeControlStatus:!check.ok?'REJECTED_STRUCTURAL_TAMPER_ONLY':'FAILED',negativeControlPassed:!check.ok,mathematicalReplayStatus:'OPEN_REQUIRES_FRESH_P7_FLINT_RUNNER',baseline,mutation:check,invalidated:invalidateMutationDependents(DEFAULT_GRAPH,[id])});
     }else{
-      if(!input.p7RankRecord){cases.push(openCase(id,'The supported P7 curves currently have no certified arithmetic-rank upper bound. No rank-upper theorem is fabricated.'));continue;}
-      const baseline=inspectRankUpperEvidence(input.p7RankRecord);if(!baseline.ok||baseline.upperBound!==null){cases.push({id,negativeControlStatus:'BASELINE_REJECTED',negativeControlPassed:null,mathematicalReplayStatus:'OPEN',baseline,invalidated:invalidateMutationDependents(DEFAULT_GRAPH,[id])});continue;}
+      if(!input.p7RankRecord){cases.push(openCase(id,'Load a source-bound P7 arithmetic record with a valid descent upper certificate; actual mathematical replay requires the fresh Python/PARI runner.'));continue;}
+      const baseline=inspectRankUpperEvidence(input.p7RankRecord);if(!baseline.ok){cases.push({id,negativeControlStatus:'BASELINE_REJECTED',negativeControlPassed:null,mathematicalReplayStatus:'OPEN',baseline,invalidated:invalidateMutationDependents(DEFAULT_GRAPH,[id])});continue;}
+      if(baseline.upperBound!==null){
+        const altered=cloneJSON(input.p7RankRecord);delete altered.result.arithmeticRank.rankUpperCertificate;
+        const check=inspectRankUpperEvidence(altered);
+        cases.push({id,negativeControlStatus:!check.ok?'REJECTED_MISSING_VALID_UPPER_CERTIFICATE':'FAILED',negativeControlPassed:!check.ok,mathematicalReplayStatus:'OPEN_REQUIRES_FRESH_P7_PARI_RUNNER',baseline,mutation:check,field:'result.arithmeticRank.rankUpperCertificate',operation:'DELETE_VALID_CERTIFICATE',invalidated:invalidateMutationDependents(DEFAULT_GRAPH,[id])});continue;
+      }
       const altered=cloneJSON(input.p7RankRecord);altered.result.arithmeticRank.upperBound=baseline.lowerBound;altered.result.arithmeticRank.exactRank=baseline.lowerBound;
       const check=inspectRankUpperEvidence(altered);
       cases.push({id,negativeControlStatus:!check.ok?'REJECTED_MISSING_UPPER_CERTIFICATE':'FAILED',negativeControlPassed:!check.ok,mathematicalReplayStatus:'OPEN_NO_ARITHMETIC_RANK_UPPER_CERTIFICATE',baseline,mutation:check,invalidated:invalidateMutationDependents(DEFAULT_GRAPH,[id])});
