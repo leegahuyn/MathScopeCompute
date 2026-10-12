@@ -1,0 +1,850 @@
+{
+  "schema": "MathScope.NavierM3.Result/1",
+  "version": "0.1.0",
+  "package": "N7",
+  "operation": "workbench",
+  "input": {
+    "package": "N7",
+    "operation": "workbench",
+    "parameters": {}
+  },
+  "inputHash": "5eb8d56536c0ffc8aefac89ab182f44096fc0a41c7e3a65149e3325987cb737c",
+  "runHash": "30b33551da04e286abd405ef6b24489713863e1fd860bd7fc319a0289c652d7a",
+  "status": "BLOCKED_BY_N6_LOCAL_FIELD",
+  "executionStatus": "FINITE_CHECKS_PASSED",
+  "source": {
+    "implementation": {
+      "schema": "MathScope.NavierM3.ImplementationPin/1",
+      "files": [
+        {
+          "path": "research-ide/mathscope-m3/navier/galerkin.mjs",
+          "sha256": "e0a04a0a5363a7d72dec89fe3b157499669db317bc064d9922ccedf3599239aa",
+          "bytes": 17825
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/corrections.mjs",
+          "sha256": "120c595312afb232138a4e23b26ae7a7de987aa15729af8fe9f50f5bccea2c8f",
+          "bytes": 22955
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/localization.mjs",
+          "sha256": "1754c965e6cc977d1e304d16b8eb20578ff27e6158801ea426a4e94f29b090fb",
+          "bytes": 9727
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/index.mjs",
+          "sha256": "d6b98110ee1644279478ac193fd1dd25cb973b74d08f21d23cf0bcf3e85dc89b",
+          "bytes": 10281
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-mean-map.mjs",
+          "sha256": "072f9cbaa7fedab6ea2cdb64158a7d5af3c3916685dfefeef65e977219ef09b7",
+          "bytes": 11303
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-inheritance.mjs",
+          "sha256": "f3189a00c35fdb1d925650f52edfcb19839d4f751db91aa916a9494b0b49faa8",
+          "bytes": 4835
+        }
+      ],
+      "sha256": "afda0e1039016e2a3553e58aae9d9ccba5f1ef5dedb36b66540bd9de3b81cdb0"
+    },
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "pages": 166
+    },
+    "profile": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "common6": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json",
+      "sha256": "ac98143158c9e7abc6bd656e687269f183bb803ecdc036edb8a3937edc24bc01",
+      "bytes": 4495330
+    },
+    "source4": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt4.json",
+      "sha256": "88f7cf6fe5af934d6b3bcacc8ad975e86bd0b37fee2110b9db8c73e72acb129e",
+      "bytes": 161629
+    },
+    "physicalGraph": {
+      "namespace": "physical",
+      "sha256": "79d2ffc302ab2db900b8432dcc5d23d7c85f12d996da244ed421b904dfbdb3cf",
+      "nodeCount": 720452,
+      "canonicalBytes": 31814841,
+      "fixedCompilerPrefix": true
+    },
+    "inheritedM2Assessment": "COMPLETE_IN_DECLARED_SOURCE_BOUND_M2_SCOPE"
+  },
+  "sourceBoundaries": {
+    "M2Preserved": true,
+    "P7Changed": false,
+    "fullUncorrectedResidualAssumedFlat": false,
+    "completeN6": false,
+    "completeN7": false,
+    "completeN8": false,
+    "wholeM3Complete": false
+  },
+  "results": {
+    "schema": "MathScope.N7.LocalizationAcceptance/1",
+    "checks": [
+      {
+        "id": "N7-01-cutoff-domain-margin",
+        "pass": true
+      },
+      {
+        "id": "N7-05-finite-extension-tail-constraints",
+        "pass": true
+      },
+      {
+        "id": "N7-08-periodization-overlap-negative",
+        "pass": true
+      },
+      {
+        "id": "N8-04-positive-tau-underflow",
+        "pass": true
+      },
+      {
+        "id": "N8-04-terminal-time-rejected",
+        "pass": true
+      }
+    ],
+    "pass": true,
+    "domain": {
+      "schema": "MathScope.N7.LocalizationContract/1",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "reference": "Proposition10.1, (10.3)-(10.5)",
+      "status": "FINITE_DOMAIN_CHOICE_EXECUTED",
+      "selected": {
+        "D": 0.495,
+        "C0": 2.014052108766998,
+        "tau0": 0.00006206393541452358,
+        "z0": 0.008269046965857611,
+        "r0": 1,
+        "domainMargin": 0.00024999999999999995,
+        "requiredUpper": 0.0005,
+        "pass": true
+      },
+      "symbolic": {
+        "D": "1/2-h",
+        "C0": "max(2,2^(1/(2D)))",
+        "tau0": "min(1/4,qstar/(8 C0))",
+        "z0": "(qstar/(8 C0))^D",
+        "margin": "C0*(tau0+z0^(1/D)) <= qstar/4 < qstar/2",
+        "spatialCutoff": "chi_x = eta(r^2; r0^2/4,9r0^2/16)*eta(z^2; z0^2/4,9z0^2/16), eta=1 below its first threshold and 0 above its second, smooth.",
+        "temporalCutoff": "chi_t=eta(tau;tau0/2,tau0), tau=1-t",
+        "compactSet": "{r<=3r0/4, |z|<=3z0/4}",
+        "velocity": "curl(c A)+c B e_theta = c u_local + grad(c) cross A",
+        "pressure": "c p_local",
+        "force": "partial_t u + (u dot grad)u - nu Delta u + grad p",
+        "pressurePoisson": "-Delta p = partial_i partial_j(u_i u_j) - div f"
+      },
+      "fixedCompactSupport": true,
+      "cutoffOnSquaredRadius": true,
+      "curlCommutatorRetained": true,
+      "forceNeedNotBeDivergenceFree": true,
+      "inheritedLocalFieldAvailable": false,
+      "actualForceEvaluated": false,
+      "allOrderSmoothForceEstablished": false,
+      "requirements": [
+        "Same N6 final potentials A,B and pressure p_local.",
+        "Source-bound qstar and endpoint/tail bounds of Proposition9.9.",
+        "All cutoff derivatives in actual force evaluation."
+      ]
+    },
+    "extension": {
+      "schema": "MathScope.N7.ForceExtensionSchedule/1",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "reference": "(10.11)-(10.12)",
+      "status": "CONDITIONAL_FINITE_JET_SCHEDULE",
+      "rows": [
+        {
+          "j": 0,
+          "b": 1,
+          "checks": [],
+          "activeSigmaUpper": 1
+        },
+        {
+          "j": 1,
+          "b": 8,
+          "checks": [
+            {
+              "a": 0,
+              "m": 0,
+              "Cjm": 2,
+              "jetNorm": 2,
+              "value": 0.5,
+              "upper": 0.5,
+              "pass": true
+            }
+          ],
+          "activeSigmaUpper": 0.125
+        },
+        {
+          "j": 2,
+          "b": 48,
+          "checks": [
+            {
+              "a": 0,
+              "m": 0,
+              "Cjm": 4,
+              "jetNorm": 3,
+              "value": 0.005208333333333333,
+              "upper": 0.25,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 1,
+              "Cjm": 4,
+              "jetNorm": 3,
+              "value": 0.25,
+              "upper": 0.25,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 0,
+              "Cjm": 4,
+              "jetNorm": 3,
+              "value": 0.005208333333333333,
+              "upper": 0.25,
+              "pass": true
+            }
+          ],
+          "activeSigmaUpper": 0.020833333333333332
+        },
+        {
+          "j": 3,
+          "b": 49,
+          "checks": [
+            {
+              "a": 0,
+              "m": 0,
+              "Cjm": 8,
+              "jetNorm": 4,
+              "value": 0.0002719955120740508,
+              "upper": 0.125,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 1,
+              "Cjm": 8,
+              "jetNorm": 4,
+              "value": 0.013327780091628489,
+              "upper": 0.125,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 0,
+              "Cjm": 8,
+              "jetNorm": 4,
+              "value": 0.0002719955120740508,
+              "upper": 0.125,
+              "pass": true
+            }
+          ],
+          "activeSigmaUpper": 0.02040816326530612
+        },
+        {
+          "j": 4,
+          "b": 50,
+          "checks": [
+            {
+              "a": 0,
+              "m": 0,
+              "Cjm": 16,
+              "jetNorm": 5,
+              "value": 0.0000128,
+              "upper": 0.0625,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 1,
+              "Cjm": 16,
+              "jetNorm": 5,
+              "value": 0.0006399999999999999,
+              "upper": 0.0625,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 2,
+              "Cjm": 16,
+              "jetNorm": 5,
+              "value": 0.032,
+              "upper": 0.0625,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 0,
+              "Cjm": 16,
+              "jetNorm": 5,
+              "value": 0.0000128,
+              "upper": 0.0625,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 1,
+              "Cjm": 16,
+              "jetNorm": 5,
+              "value": 0.0006399999999999999,
+              "upper": 0.0625,
+              "pass": true
+            },
+            {
+              "a": 2,
+              "m": 0,
+              "Cjm": 16,
+              "jetNorm": 5,
+              "value": 0.0000128,
+              "upper": 0.0625,
+              "pass": true
+            }
+          ],
+          "activeSigmaUpper": 0.02
+        },
+        {
+          "j": 5,
+          "b": 51,
+          "checks": [
+            {
+              "a": 0,
+              "m": 0,
+              "Cjm": 32,
+              "jetNorm": 6,
+              "value": 5.564810095595003e-7,
+              "upper": 0.03125,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 1,
+              "Cjm": 32,
+              "jetNorm": 6,
+              "value": 0.000028380531487534518,
+              "upper": 0.03125,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 2,
+              "Cjm": 32,
+              "jetNorm": 6,
+              "value": 0.0014474071058642602,
+              "upper": 0.03125,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 0,
+              "Cjm": 32,
+              "jetNorm": 6,
+              "value": 5.564810095595003e-7,
+              "upper": 0.03125,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 1,
+              "Cjm": 32,
+              "jetNorm": 6,
+              "value": 0.000028380531487534518,
+              "upper": 0.03125,
+              "pass": true
+            },
+            {
+              "a": 2,
+              "m": 0,
+              "Cjm": 32,
+              "jetNorm": 6,
+              "value": 5.564810095595003e-7,
+              "upper": 0.03125,
+              "pass": true
+            }
+          ],
+          "activeSigmaUpper": 0.0196078431372549
+        },
+        {
+          "j": 6,
+          "b": 52,
+          "checks": [
+            {
+              "a": 0,
+              "m": 0,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 2.2659898081734742e-8,
+              "upper": 0.015625,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 1,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 0.0000011783147002502067,
+              "upper": 0.015625,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 2,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 0.00006127236441301075,
+              "upper": 0.015625,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 3,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 0.003186162949476559,
+              "upper": 0.015625,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 0,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 2.2659898081734742e-8,
+              "upper": 0.015625,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 1,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 0.0000011783147002502067,
+              "upper": 0.015625,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 2,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 0.00006127236441301075,
+              "upper": 0.015625,
+              "pass": true
+            },
+            {
+              "a": 2,
+              "m": 0,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 2.2659898081734742e-8,
+              "upper": 0.015625,
+              "pass": true
+            },
+            {
+              "a": 2,
+              "m": 1,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 0.0000011783147002502067,
+              "upper": 0.015625,
+              "pass": true
+            },
+            {
+              "a": 3,
+              "m": 0,
+              "Cjm": 64,
+              "jetNorm": 7,
+              "value": 2.2659898081734742e-8,
+              "upper": 0.015625,
+              "pass": true
+            }
+          ],
+          "activeSigmaUpper": 0.019230769230769232
+        },
+        {
+          "j": 7,
+          "b": 53,
+          "checks": [
+            {
+              "a": 0,
+              "m": 0,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 8.717036599670688e-10,
+              "upper": 0.0078125,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 1,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 4.6200293978254644e-8,
+              "upper": 0.0078125,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 2,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 0.000002448615580847496,
+              "upper": 0.0078125,
+              "pass": true
+            },
+            {
+              "a": 0,
+              "m": 3,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 0.0001297766257849173,
+              "upper": 0.0078125,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 0,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 8.717036599670688e-10,
+              "upper": 0.0078125,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 1,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 4.6200293978254644e-8,
+              "upper": 0.0078125,
+              "pass": true
+            },
+            {
+              "a": 1,
+              "m": 2,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 0.000002448615580847496,
+              "upper": 0.0078125,
+              "pass": true
+            },
+            {
+              "a": 2,
+              "m": 0,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 8.717036599670688e-10,
+              "upper": 0.0078125,
+              "pass": true
+            },
+            {
+              "a": 2,
+              "m": 1,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 4.6200293978254644e-8,
+              "upper": 0.0078125,
+              "pass": true
+            },
+            {
+              "a": 3,
+              "m": 0,
+              "Cjm": 128,
+              "jetNorm": 8,
+              "value": 8.717036599670688e-10,
+              "upper": 0.0078125,
+              "pass": true
+            }
+          ],
+          "activeSigmaUpper": 0.018867924528301886
+        }
+      ],
+      "formula": "sum_j chi0(b_j sigma) sigma^j F_j/j!, sigma=t-1 >=0",
+      "cutoffSupport": "0<=sigma<1, hence t<=2",
+      "finiteJetOrder": 7,
+      "allSpecifiedConstraintsPass": true,
+      "jetNormBoundsAreAssumptions": true,
+      "terminalJetCompatibilityVerified": false,
+      "allOrderCompletion": false,
+      "velocityExtendedPastOne": false,
+      "requiresForInfiniteExtension": "Consecutive source-derived jet bounds for every j and uniform differentiated convergence. For order d, the tail from j>=max(J,2d) is bounded by sum 2^-j once every required source clause is proved."
+    },
+    "period": {
+      "schema": "MathScope.N7.PeriodizationGate/1",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "reference": "(10.22)-(10.23), Corollary10.6",
+      "gaps": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "disjoint": true,
+      "sameForcing": true,
+      "periodicPressure": true,
+      "zeroInitialData": true,
+      "status": "FINITE_SUPPORT_CONTRACT_ACCEPTED",
+      "nonlinearCrossTermsVanishFromDisjointSupport": true,
+      "sourcePDEVerified": false,
+      "continuumClaim": false,
+      "missing": [],
+      "viscosityRescaling": {
+        "velocity": "sqrt(nu) u(x/sqrt(nu),t)",
+        "pressure": "nu p(x/sqrt(nu),t)",
+        "force": "sqrt(nu) f(x/sqrt(nu),t)",
+        "energyFactor": 1
+      }
+    },
+    "overlap": {
+      "schema": "MathScope.N7.PeriodizationGate/1",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "reference": "(10.22)-(10.23), Corollary10.6",
+      "gaps": [
+        -0.19999999999999996,
+        0.6,
+        0.6
+      ],
+      "disjoint": false,
+      "sameForcing": true,
+      "periodicPressure": true,
+      "zeroInitialData": true,
+      "status": "CONTRACT_REJECTED",
+      "nonlinearCrossTermsVanishFromDisjointSupport": false,
+      "sourcePDEVerified": false,
+      "continuumClaim": false,
+      "missing": [
+        "Overlapping or touching translated supports"
+      ],
+      "viscosityRescaling": {
+        "velocity": "sqrt(nu) u(x/sqrt(nu),t)",
+        "pressure": "nu p(x/sqrt(nu),t)",
+        "force": "sqrt(nu) f(x/sqrt(nu),t)",
+        "energyFactor": 1
+      }
+    },
+    "near": {
+      "schema": "MathScope.N8.PositiveTauSchedule/1",
+      "status": "POSITIVE_TAU_COORDINATES_EXECUTED",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "reference": "(3.2), (9.19), (10.20)",
+      "rows": [
+        {
+          "input": "1e-2",
+          "exactSign": "POSITIVE",
+          "integerDigits": "1",
+          "powerOfTen": -2,
+          "scientificExponent": -2,
+          "mantissa": 1,
+          "logTau": -4.605170185988092,
+          "s": 4.605170185988092,
+          "binary64Value": 0.01,
+          "displayTime": 0.99,
+          "displayTimeRoundedToOne": false,
+          "internalTauNeverReconstructedFromT": true,
+          "radialLogScale": -2.302585092994046,
+          "axialLogScaleFormula": "(1/2-h)*log(tau)",
+          "velocityLogScaleFormula": "-(1/2+h)*log(tau)",
+          "coreEnergyLogScaleFormula": "(1/2-3h)*log(tau)",
+          "radialScaleMantissa": 1,
+          "radialScaleExponent": -1,
+          "sourceH": "exp(-8002*(exp(1048576)+10))",
+          "sourceHReplacedByZero": false
+        },
+        {
+          "input": "1e-4",
+          "exactSign": "POSITIVE",
+          "integerDigits": "1",
+          "powerOfTen": -4,
+          "scientificExponent": -4,
+          "mantissa": 1,
+          "logTau": -9.210340371976184,
+          "s": 9.210340371976184,
+          "binary64Value": 0.0001,
+          "displayTime": 0.9999,
+          "displayTimeRoundedToOne": false,
+          "internalTauNeverReconstructedFromT": true,
+          "radialLogScale": -4.605170185988092,
+          "axialLogScaleFormula": "(1/2-h)*log(tau)",
+          "velocityLogScaleFormula": "-(1/2+h)*log(tau)",
+          "coreEnergyLogScaleFormula": "(1/2-3h)*log(tau)",
+          "radialScaleMantissa": 1,
+          "radialScaleExponent": -2,
+          "sourceH": "exp(-8002*(exp(1048576)+10))",
+          "sourceHReplacedByZero": false
+        },
+        {
+          "input": "1e-8",
+          "exactSign": "POSITIVE",
+          "integerDigits": "1",
+          "powerOfTen": -8,
+          "scientificExponent": -8,
+          "mantissa": 1,
+          "logTau": -18.420680743952367,
+          "s": 18.420680743952367,
+          "binary64Value": 1e-8,
+          "displayTime": 0.99999999,
+          "displayTimeRoundedToOne": false,
+          "internalTauNeverReconstructedFromT": true,
+          "radialLogScale": -9.210340371976184,
+          "axialLogScaleFormula": "(1/2-h)*log(tau)",
+          "velocityLogScaleFormula": "-(1/2+h)*log(tau)",
+          "coreEnergyLogScaleFormula": "(1/2-3h)*log(tau)",
+          "radialScaleMantissa": 1,
+          "radialScaleExponent": -4,
+          "sourceH": "exp(-8002*(exp(1048576)+10))",
+          "sourceHReplacedByZero": false
+        },
+        {
+          "input": "1e-12",
+          "exactSign": "POSITIVE",
+          "integerDigits": "1",
+          "powerOfTen": -12,
+          "scientificExponent": -12,
+          "mantissa": 1,
+          "logTau": -27.63102111592855,
+          "s": 27.63102111592855,
+          "binary64Value": 1e-12,
+          "displayTime": 0.999999999999,
+          "displayTimeRoundedToOne": false,
+          "internalTauNeverReconstructedFromT": true,
+          "radialLogScale": -13.815510557964275,
+          "axialLogScaleFormula": "(1/2-h)*log(tau)",
+          "velocityLogScaleFormula": "-(1/2+h)*log(tau)",
+          "coreEnergyLogScaleFormula": "(1/2-3h)*log(tau)",
+          "radialScaleMantissa": 1,
+          "radialScaleExponent": -6,
+          "sourceH": "exp(-8002*(exp(1048576)+10))",
+          "sourceHReplacedByZero": false
+        },
+        {
+          "input": "1e-40",
+          "exactSign": "POSITIVE",
+          "integerDigits": "1",
+          "powerOfTen": -40,
+          "scientificExponent": -40,
+          "mantissa": 1,
+          "logTau": -92.10340371976184,
+          "s": 92.10340371976184,
+          "binary64Value": 1e-40,
+          "displayTime": 1,
+          "displayTimeRoundedToOne": true,
+          "internalTauNeverReconstructedFromT": true,
+          "radialLogScale": -46.05170185988092,
+          "axialLogScaleFormula": "(1/2-h)*log(tau)",
+          "velocityLogScaleFormula": "-(1/2+h)*log(tau)",
+          "coreEnergyLogScaleFormula": "(1/2-3h)*log(tau)",
+          "radialScaleMantissa": 1,
+          "radialScaleExponent": -20,
+          "sourceH": "exp(-8002*(exp(1048576)+10))",
+          "sourceHReplacedByZero": false
+        },
+        {
+          "input": "1e-1000",
+          "exactSign": "POSITIVE",
+          "integerDigits": "1",
+          "powerOfTen": -1000,
+          "scientificExponent": -1000,
+          "mantissa": 1,
+          "logTau": -2302.5850929940457,
+          "s": 2302.5850929940457,
+          "binary64Value": 0,
+          "displayTime": 1,
+          "displayTimeRoundedToOne": true,
+          "internalTauNeverReconstructedFromT": true,
+          "radialLogScale": -1151.2925464970228,
+          "axialLogScaleFormula": "(1/2-h)*log(tau)",
+          "velocityLogScaleFormula": "-(1/2+h)*log(tau)",
+          "coreEnergyLogScaleFormula": "(1/2-3h)*log(tau)",
+          "radialScaleMantissa": 1,
+          "radialScaleExponent": -500,
+          "sourceH": "exp(-8002*(exp(1048576)+10))",
+          "sourceHReplacedByZero": false
+        }
+      ],
+      "coordinatePrecision": "Exact integer decimal sign/exponent; logarithms and display mantissas are binary64 observations.",
+      "sourceDomainMembership": "NOT_ESTABLISHED: qbig is source-defined and may be far below these sample values.",
+      "physicalFieldEvaluated": false,
+      "finiteValueUsedAsBlowupProof": false,
+      "actualReconstructionCertified": false
+    },
+    "scope": "Finite contract and parameter operations; the source final field, terminal jets, global energy and growth certificates remain prerequisites."
+  },
+  "checks": [
+    {
+      "id": "N7-01-cutoff-domain-margin",
+      "pass": true
+    },
+    {
+      "id": "N7-05-finite-extension-tail-constraints",
+      "pass": true
+    },
+    {
+      "id": "N7-08-periodization-overlap-negative",
+      "pass": true
+    },
+    {
+      "id": "N8-04-positive-tau-underflow",
+      "pass": true
+    },
+    {
+      "id": "N8-04-terminal-time-rejected",
+      "pass": true
+    }
+  ],
+  "observations": {
+    "kind": "CONTRACT_TABLE",
+    "samples": [],
+    "curves": [],
+    "contract": {
+      "runHash": "30b33551da04e286abd405ef6b24489713863e1fd860bd7fc319a0289c652d7a",
+      "inputHash": "5eb8d56536c0ffc8aefac89ab182f44096fc0a41c7e3a65149e3325987cb737c"
+    }
+  },
+  "progress": {
+    "status": "BLOCKED_BY_N6_LOCAL_FIELD",
+    "complete": false,
+    "implemented": [
+      "qstar 내부 localization cutoff 선택",
+      "div f를 포함한 pressure contract",
+      "유한 terminal-jet cutoff schedule",
+      "지지 분리·same-force·periodic-pressure 관문"
+    ],
+    "remaining": [
+      "N6 최종 A,B,p의 실제 localization",
+      "동일 force의 terminal 모든 차수 jets",
+      "전체 compact K의 energy balance",
+      "source e0 양의 하한과 remainder"
+    ]
+  },
+  "evidence": {
+    "numericOrAlgebraicFiniteExecution": true,
+    "analyticCertificate": null,
+    "leanTheorem": null,
+    "formalComplete": false,
+    "sourceReconstructionComplete": false
+  }
+}

@@ -1,0 +1,56 @@
+name: M3 Y7 real finite spectral verification
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research-ide/mathscope-m3/gauge/lean/RealSpectralBridge.lean'
+      - 'research-ide/mathscope-m3/gauge/lean/lakefile.lean'
+      - 'research-ide/mathscope-m3/gauge/lean/lean-toolchain'
+      - 'research-ide/mathscope-m3/gauge/lean/real-pins.json'
+      - 'research-ide/mathscope-m3/gauge/verify_real_lean.py'
+      - 'research-ide/mathscope-m3/p8/tools/audit_lean.py'
+      - '.github/workflows/gauge-real-spectral-verification.yml'
+permissions:
+  contents: read
+jobs:
+  real-spectral-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      LEAN_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check preserved pins and source restrictions
+        run: python research-ide/mathscope-m3/gauge/verify_real_lean.py --check-static
+      - name: Resolve the pinned Lake manifest
+        working-directory: research-ide/mathscope-m3/gauge/lean
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o "$RUNNER_TEMP/y7-real-elan-init.sh"
+          sh "$RUNNER_TEMP/y7-real-elan-init.sh" -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lake" update
+      - name: Install pinned Lean and fetch mathlib build cache
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: research-ide/mathscope-m3/gauge/lean
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'true'
+      - name: Compile real bounds and reject missing mandatory hypotheses
+        run: python research-ide/mathscope-m3/gauge/verify_real_lean.py
+      - name: Preserve success or failure with full compiler diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: y7-real-spectral-audit-${{ github.sha }}
+          path: |
+            research-ide/mathscope-m3/gauge/evidence/real-lean-audit/
+            research-ide/mathscope-m3/gauge/lean/lake-manifest.json
+          if-no-files-found: warn
+          retention-days: 90

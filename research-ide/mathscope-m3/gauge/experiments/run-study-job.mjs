@@ -1,0 +1,19 @@
+/** A source-bound production component. Each reference/channel has its own declared
+ * 180 s execution budget. Multi-component studies are assembled without lowering it. */
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {performance} from 'node:perf_hooks';
+import {normalizeStudy,collectReference,collectChannel,summarizeStudy} from '../scale-study.mjs';
+import {sha256,runtimeContext} from '../contracts.mjs';
+const [inputPath,outputName,referencePath]=process.argv.slice(2);if(!inputPath||!/^[A-Za-z0-9._-]+$/.test(outputName??''))throw new Error('Usage: node run-study-job.mjs input.json NEW_JOB_ID [prior-source-bound-job.json]');
+const input=JSON.parse(await readFile(inputPath,'utf8')),study=normalizeStudy(input),directory=new URL('../evidence/scale-expansion/'+outputName+'/',import.meta.url);await mkdir(directory,{recursive:false});
+const sourceFiles=['../su2-kernel.mjs','../scale-analysis.mjs','../scale-study.mjs','../vacuum.mjs','../spectral.mjs','../contracts.mjs','../../../mathscope-m2/gauge/statistics.mjs','../../../mathscope-m2/gauge/contracts.mjs','../../../mathscope-m1/gauge/fields.mjs','../../../mathscope-m1/gauge/family.mjs'],sources=[];
+await mkdir(new URL('source/',directory));for(const [i,file] of sourceFiles.entries()){const content=await readFile(new URL(file,import.meta.url),'utf8'),name=String(i).padStart(2,'0')+'-'+file.split('/').at(-1);await writeFile(new URL('source/'+name,directory),content);sources.push({sourcePath:file,sha256:await sha256(content),snapshot:'source/'+name});}
+const started=performance.now(),references=[],rows=[],context=component=>runtimeContext({maxMillis:180000,onProgress:p=>{if(p.completed===p.total||p.completed%128===0)console.log(JSON.stringify({component,...p,seconds:(performance.now()-started)/1000}));}});
+let imported=null;if(referencePath){imported=JSON.parse(await readFile(referencePath,'utf8'));for(const source of sources){const previous=imported.sourceFiles.find(s=>s.sourcePath===source.sourcePath);if(previous?.sha256!==source.sha256)throw new Error('Reused independent reference has changed source: '+source.sourcePath);}if(await sha256(imported.result)!==imported.resultHash)throw new Error('Reused reference result hash mismatch');}
+for(const ref of study.references){
+ let measured=imported?.result.scaleStudy.references.find(r=>r.id===ref.id&&r.model.beta===ref.beta&&r.model.Ns===ref.Ns&&r.model.Nt===ref.Nt);
+ if(measured){console.log(JSON.stringify({component:ref.id,phase:'REUSE_EXACT_INDEPENDENT_REFERENCE',sourceHash:measured.sourceHash,sourceJob:referencePath}));}else measured=await collectReference(ref,study,context('reference:'+ref.id));references.push(measured);
+ await writeFile(new URL('checkpoint.json',directory),JSON.stringify({phase:'REFERENCES',input,sourceFiles:sources,references,rows})+'\n');
+}
+for(const row of study.models){rows.push(await collectChannel(row,references.find(r=>r.id===row.referenceScaleId),study,context('channel:'+row.id)));await writeFile(new URL('checkpoint.json',directory),JSON.stringify({phase:'CHANNELS',input,sourceFiles:sources,references,rows})+'\n');console.log(JSON.stringify({component:row.id,phase:'RESULT',scale:rows.at(-1).scale.t0OverA2,mass:rows.at(-1).channel.referenceMass,fit:rows.at(-1).channel.primaryFit.status,seconds:(performance.now()-started)/1000}));}
+const result=summarizeStudy(study,references,rows),receipt={schema:'MathScope.M3.SU2StudyProduction/1',jobId:outputName,input,sourceFiles:sources,reusedIndependentReference:referencePath??null,result,resultHash:await sha256(result),execution:{status:'EXECUTED',seconds:(performance.now()-started)/1000,perComponentBudgetMilliseconds:180000}};await writeFile(new URL('result.json',directory),JSON.stringify(receipt)+'\n',{flag:'wx'});console.log(JSON.stringify({phase:'COMPLETE',job:outputName,resultHash:receipt.resultHash,seconds:receipt.execution.seconds}));

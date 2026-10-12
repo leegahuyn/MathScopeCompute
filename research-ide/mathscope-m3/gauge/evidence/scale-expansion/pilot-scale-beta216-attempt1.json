@@ -1,0 +1,3565 @@
+{
+  "schema": "MathScope.M3.IndependentScalePilot/1",
+  "phase": "EXPLORATORY_SCALE_ONLY_NO_MASS_TARGET",
+  "normalization": {
+    "group": "SU(2), defining representation; full continuous normalized Haar measure",
+    "quaternion": "q=(w,x,y,z) -> [[w+iz,x+iy],[-x+iy,w-iz]]",
+    "action": "S_W=beta sum_p(1-Re Tr U_p/2), beta=4/g0^2, isotropic a_s=a_t",
+    "standardFlow": "dV/d(t/a^2)=-(g0^2/2) grad_B(S_W)(V) V, B(X,Y)=-Tr(XY)",
+    "standardForce": "For staple S_e, Z_e=-Im_quaternion(U_e S_e); Vdot_e=Z_e V_e",
+    "existingY6Conversion": "t_standard=2*t_existing_Y6 for identical initial links; Y6 keeps its explicitly declared dV/dtau=-g0^2 grad_B S_W convention.",
+    "energy": "E_clover=sum_mu<nu -Tr(F_mu_nu^2), F=(Q-Qdagger)/8 in lattice units; no beta or g0 factor",
+    "alternateEnergy": "E_plaquette=4 sum_mu<nu(1-Re Tr U_mu_nu/2) per site",
+    "threshold": 0.1,
+    "thresholdSource": "https://arxiv.org/abs/1811.02800, equation (3.1)",
+    "integrator": "Third-order group Runge-Kutta, Luscher 1006.4518 Appendix C; full simultaneous link force"
+  },
+  "rows": [
+    {
+      "beta": 2.16,
+      "Ns": 5,
+      "Nt": 10,
+      "samples": [
+        {
+          "sample": 0,
+          "sourceHash": "fbb35b5118512723213c41850ea325d9e829765e4aee6f950a31b6c3b570e277",
+          "curve": [
+            {
+              "step": 0,
+              "t": 0,
+              "cloverEnergy": 1.6627230776147972,
+              "plaquetteEnergy": 10.80721892819349,
+              "t2E": 0,
+              "t2EPlaquette": 0,
+              "meanPlaquette": 0.549699211325271,
+              "unroundedCloverCharge": 0.22040087268277828
+            },
+            {
+              "step": 2,
+              "t": 0.08,
+              "cloverEnergy": 1.4002242927888082,
+              "plaquetteEnergy": 6.317376518383235,
+              "t2E": 0.008961435473848372,
+              "t2EPlaquette": 0.040431209717652704,
+              "meanPlaquette": 0.7367759784006955,
+              "unroundedCloverCharge": 0.01674016416839795
+            },
+            {
+              "step": 4,
+              "t": 0.16,
+              "cloverEnergy": 1.172921980307834,
+              "plaquetteEnergy": 3.983942326410383,
+              "t2E": 0.03002680269588055,
+              "t2EPlaquette": 0.10198892355610582,
+              "meanPlaquette": 0.8340024030662326,
+              "unroundedCloverCharge": -0.12910933243916117
+            },
+            {
+              "step": 6,
+              "t": 0.24,
+              "cloverEnergy": 1.0005839053838306,
+              "plaquetteEnergy": 2.7635664964212494,
+              "t2E": 0.05763363295010864,
+              "t2EPlaquette": 0.15918143019386397,
+              "meanPlaquette": 0.88485139598245,
+              "unroundedCloverCharge": -0.18457014362593363
+            },
+            {
+              "step": 8,
+              "t": 0.32,
+              "cloverEnergy": 0.8739023276780156,
+              "plaquetteEnergy": 2.078326839197637,
+              "t2E": 0.0894875983542288,
+              "t2EPlaquette": 0.212820668333838,
+              "meanPlaquette": 0.9134030483667658,
+              "unroundedCloverCharge": -0.18308578753941973
+            },
+            {
+              "step": 10,
+              "t": 0.4,
+              "cloverEnergy": 0.7790962731560062,
+              "plaquetteEnergy": 1.6622019104009498,
+              "t2E": 0.124655403704961,
+              "t2EPlaquette": 0.265952305664152,
+              "meanPlaquette": 0.9307415870666284,
+              "unroundedCloverCharge": -0.14438834224442082
+            },
+            {
+              "step": 12,
+              "t": 0.48,
+              "cloverEnergy": 0.7059975733497733,
+              "plaquetteEnergy": 1.3916949352827184,
+              "t2E": 0.16266184089978777,
+              "t2EPlaquette": 0.32064651308913833,
+              "meanPlaquette": 0.9420127110298849,
+              "unroundedCloverCharge": -0.0725840468984737
+            },
+            {
+              "step": 14,
+              "t": 0.56,
+              "cloverEnergy": 0.648174544827474,
+              "plaquetteEnergy": 1.2056035085592984,
+              "t2E": 0.2032675372578959,
+              "t2EPlaquette": 0.3780772602841961,
+              "meanPlaquette": 0.9497665204766992,
+              "unroundedCloverCharge": 0.02892176459044067
+            },
+            {
+              "step": 16,
+              "t": 0.64,
+              "cloverEnergy": 0.6014311313687882,
+              "plaquetteEnergy": 1.0709652235929619,
+              "t2E": 0.24634619140865566,
+              "t2EPlaquette": 0.4386673555836772,
+              "meanPlaquette": 0.9553764490169592,
+              "unroundedCloverCharge": 0.1498544603555707
+            },
+            {
+              "step": 18,
+              "t": 0.72,
+              "cloverEnergy": 0.5628008533765109,
+              "plaquetteEnergy": 0.9689054916733039,
+              "t2E": 0.2917559623903832,
+              "t2EPlaquette": 0.5022806068834408,
+              "meanPlaquette": 0.9596289378469434,
+              "unroundedCloverCharge": 0.2736602653961575
+            },
+            {
+              "step": 20,
+              "t": 0.8,
+              "cloverEnergy": 0.5300845310202824,
+              "plaquetteEnergy": 0.8884361916888694,
+              "t2E": 0.33925409985298083,
+              "t2EPlaquette": 0.5685991626808765,
+              "meanPlaquette": 0.9629818253462977,
+              "unroundedCloverCharge": 0.3840352665173743
+            },
+            {
+              "step": 22,
+              "t": 0.88,
+              "cloverEnergy": 0.5016688057364971,
+              "plaquetteEnergy": 0.8230070060289499,
+              "t2E": 0.38849232316234333,
+              "t2EPlaquette": 0.6373366254688188,
+              "meanPlaquette": 0.9657080414154644,
+              "unroundedCloverCharge": 0.47128297927221696
+            },
+            {
+              "step": 24,
+              "t": 0.96,
+              "cloverEnergy": 0.47639454381544183,
+              "plaquetteEnergy": 0.7683222725885065,
+              "t2E": 0.4390452115803112,
+              "t2EPlaquette": 0.7080858064175676,
+              "meanPlaquette": 0.9679865719754828,
+              "unroundedCloverCharge": 0.5332783074669835
+            },
+            {
+              "step": 26,
+              "t": 1.04,
+              "cloverEnergy": 0.4534151377075759,
+              "plaquetteEnergy": 0.7212387609481556,
+              "t2E": 0.49041381294451414,
+              "t2EPlaquette": 0.7800918438415251,
+              "meanPlaquette": 0.9699483849604968,
+              "unroundedCloverCharge": 0.5722676600891645
+            },
+            {
+              "step": 28,
+              "t": 1.12,
+              "cloverEnergy": 0.4321039021434288,
+              "plaquetteEnergy": 0.6793707832111919,
+              "t2E": 0.5420311348487171,
+              "t2EPlaquette": 0.8522027104601193,
+              "meanPlaquette": 0.9716928840328688,
+              "unroundedCloverCharge": 0.5919327689537317
+            },
+            {
+              "step": 30,
+              "t": 1.2,
+              "cloverEnergy": 0.41201948240734265,
+              "plaquetteEnergy": 0.6409423329912731,
+              "t2E": 0.5933080546665734,
+              "t2EPlaquette": 0.9229569595074332,
+              "meanPlaquette": 0.9732940694586947,
+              "unroundedCloverCharge": 0.5964640210512026
+            },
+            {
+              "step": 32,
+              "t": 1.28,
+              "cloverEnergy": 0.392895184506389,
+              "plaquetteEnergy": 0.604695779679288,
+              "t2E": 0.6437194702952678,
+              "t2EPlaquette": 0.9907335654265454,
+              "meanPlaquette": 0.9748043425133666,
+              "unroundedCloverCharge": 0.5908906769732383
+            },
+            {
+              "step": 34,
+              "t": 1.36,
+              "cloverEnergy": 0.3746229792133342,
+              "plaquetteEnergy": 0.5698696415741592,
+              "t2E": 0.692902662352983,
+              "t2EPlaquette": 1.054030889055565,
+              "meanPlaquette": 0.9762554316010763,
+              "unroundedCloverCharge": 0.5813796137862252
+            },
+            {
+              "step": 36,
+              "t": 1.44,
+              "cloverEnergy": 0.3572133204413829,
+              "plaquetteEnergy": 0.5362621001709047,
+              "t2E": 0.7407175412672515,
+              "t2EPlaquette": 1.1119930909143878,
+              "meanPlaquette": 0.9776557458262191,
+              "unroundedCloverCharge": 0.5742690547917108
+            },
+            {
+              "step": 38,
+              "t": 1.52,
+              "cloverEnergy": 0.3407391264443392,
+              "plaquetteEnergy": 0.5042363916959761,
+              "t2E": 0.7872436777370012,
+              "t2EPlaquette": 1.1649877593743831,
+              "meanPlaquette": 0.9789901503459988,
+              "unroundedCloverCharge": 0.5734878034530727
+            },
+            {
+              "step": 40,
+              "t": 1.6,
+              "cloverEnergy": 0.3252939778420982,
+              "plaquetteEnergy": 0.4744264313486703,
+              "t2E": 0.8327525832757715,
+              "t2EPlaquette": 1.2145316642525963,
+              "meanPlaquette": 0.9802322320271369,
+              "unroundedCloverCharge": 0.578360505221526
+            },
+            {
+              "step": 42,
+              "t": 1.68,
+              "cloverEnergy": 0.31095293171736027,
+              "plaquetteEnergy": 0.44724678980152593,
+              "t2E": 0.8776335544790775,
+              "t2EPlaquette": 1.2623093395358267,
+              "meanPlaquette": 0.9813647170916019,
+              "unroundedCloverCharge": 0.584558098505185
+            },
+            {
+              "step": 44,
+              "t": 1.76,
+              "cloverEnergy": 0.297725703721586,
+              "plaquetteEnergy": 0.42267441163724634,
+              "t2E": 0.9222351398479849,
+              "t2EPlaquette": 1.309276257487534,
+              "meanPlaquette": 0.982388566181784,
+              "unroundedCloverCharge": 0.5873784384390196
+            },
+            {
+              "step": 46,
+              "t": 1.84,
+              "cloverEnergy": 0.2855467124229776,
+              "plaquetteEnergy": 0.400412502155523,
+              "t2E": 0.9667469495792329,
+              "t2EPlaquette": 1.3556365672977386,
+              "meanPlaquette": 0.9833161457435231,
+              "unroundedCloverCharge": 0.5842274273899923
+            },
+            {
+              "step": 48,
+              "t": 1.92,
+              "cloverEnergy": 0.27430780888295636,
+              "plaquetteEnergy": 0.38012528935323364,
+              "t2E": 1.0112083066661304,
+              "t2EPlaquette": 1.4012938666717605,
+              "meanPlaquette": 0.9841614462769485,
+              "unroundedCloverCharge": 0.5751616271094987
+            },
+            {
+              "step": 50,
+              "t": 2,
+              "cloverEnergy": 0.2638945521245693,
+              "plaquetteEnergy": 0.36154681623120904,
+              "t2E": 1.0555782084982772,
+              "t2EPlaquette": 1.4461872649248362,
+              "meanPlaquette": 0.9849355493237021,
+              "unroundedCloverCharge": 0.562150112881649
+            },
+            {
+              "step": 52,
+              "t": 2.08,
+              "cloverEnergy": 0.25420503321531257,
+              "plaquetteEnergy": 0.34448596434087964,
+              "t2E": 1.0997926557027284,
+              "t2EPlaquette": 1.4903840761243818,
+              "meanPlaquette": 0.9856464181524647,
+              "unroundedCloverCharge": 0.5478856137624346
+            },
+            {
+              "step": 54,
+              "t": 2.16,
+              "cloverEnergy": 0.2451543210294671,
+              "plaquetteEnergy": 0.32879718141929926,
+              "t2E": 1.1437920001950819,
+              "t2EPlaquette": 1.5340361296298826,
+              "meanPlaquette": 0.9863001174408637,
+              "unroundedCloverCharge": 0.5347644708915889
+            },
+            {
+              "step": 56,
+              "t": 2.24,
+              "cloverEnergy": 0.2366726816070754,
+              "plaquetteEnergy": 0.3143545498081104,
+              "t2E": 1.1875288472316619,
+              "t2EPlaquette": 1.577305389117175,
+              "meanPlaquette": 0.9869018937579972,
+              "unroundedCloverCharge": 0.5243655200447335
+            },
+            {
+              "step": 58,
+              "t": 2.32,
+              "cloverEnergy": 0.2287024695124806,
+              "plaquetteEnergy": 0.3010396722326657,
+              "t2E": 1.2309681719039756,
+              "t2EPlaquette": 1.6203159318250997,
+              "meanPlaquette": 0.9874566803236424,
+              "unroundedCloverCharge": 0.5174067213715902
+            },
+            {
+              "step": 60,
+              "t": 2.4,
+              "cloverEnergy": 0.2211956632865613,
+              "plaquetteEnergy": 0.28874103720992506,
+              "t2E": 1.274087020530593,
+              "t2EPlaquette": 1.6631483743291684,
+              "meanPlaquette": 0.9879691234495918,
+              "unroundedCloverCharge": 0.5139515835222889
+            },
+            {
+              "step": 62,
+              "t": 2.48,
+              "cloverEnergy": 0.21411247892327515,
+              "plaquetteEnergy": 0.27735804031615696,
+              "t2E": 1.3168773903697115,
+              "t2EPlaquette": 1.7058628911604918,
+              "meanPlaquette": 0.9884434149868272,
+              "unroundedCloverCharge": 0.5136547371214389
+            },
+            {
+              "step": 64,
+              "t": 2.56,
+              "cloverEnergy": 0.20742061344788304,
+              "plaquetteEnergy": 0.2668040612658233,
+              "t2E": 1.3593517322920463,
+              "t2EPlaquette": 1.7485270959116994,
+              "meanPlaquette": 0.9888831641139237,
+              "unroundedCloverCharge": 0.5159539860812128
+            },
+            {
+              "step": 66,
+              "t": 2.64,
+              "cloverEnergy": 0.20109446171906842,
+              "plaquetteEnergy": 0.25700666969204206,
+              "t2E": 1.4015479603972194,
+              "t2EPlaquette": 1.7912336850856565,
+              "meanPlaquette": 0.9892913887628284,
+              "unroundedCloverCharge": 0.5202017921483577
+            },
+            {
+              "step": 68,
+              "t": 2.72,
+              "cloverEnergy": 0.19511398472920688,
+              "plaquetteEnergy": 0.24790569137394305,
+              "t2E": 1.4435313046205644,
+              "t2EPlaquette": 1.8341054670609807,
+              "meanPlaquette": 0.9896705961927525,
+              "unroundedCloverCharge": 0.5257533212593419
+            },
+            {
+              "step": 70,
+              "t": 2.8000000000000003,
+              "cloverEnergy": 0.18946330008914322,
+              "plaquetteEnergy": 0.23945050521296413,
+              "t2E": 1.485392272698883,
+              "t2EPlaquette": 1.877291960869639,
+              "meanPlaquette": 0.9900228956161276,
+              "unroundedCloverCharge": 0.5320232297774912
+            },
+            {
+              "step": 72,
+              "t": 2.88,
+              "cloverEnergy": 0.1841292254125018,
+              "plaquetteEnergy": 0.23159746338882095,
+              "t2E": 1.5272414472614548,
+              "t2EPlaquette": 1.9209620003322365,
+              "meanPlaquette": 0.9903501056921307,
+              "unroundedCloverCharge": 0.5385171609466078
+            },
+            {
+              "step": 74,
+              "t": 2.96,
+              "cloverEnergy": 0.17909996966920172,
+              "plaquetteEnergy": 0.224307750307605,
+              "t2E": 1.5692022942536776,
+              "t2EPlaquette": 1.9652947850951121,
+              "meanPlaquette": 0.9906538437371829,
+              "unroundedCloverCharge": 0.5448429365675016
+            },
+            {
+              "step": 76,
+              "t": 3.04,
+              "cloverEnergy": 0.17436407457212358,
+              "plaquetteEnergy": 0.2175457020920765,
+              "t2E": 1.6114030315657373,
+              "t2EPlaquette": 2.010470360454134,
+              "meanPlaquette": 0.9909355957461662,
+              "unroundedCloverCharge": 0.550707362876057
+            },
+            {
+              "step": 78,
+              "t": 3.12,
+              "cloverEnergy": 0.1699096372345128,
+              "plaquetteEnergy": 0.21127753888982992,
+              "t2E": 1.6539683726956416,
+              "t2EPlaquette": 2.0566600745691606,
+              "meanPlaquette": 0.9911967692129254,
+              "unroundedCloverCharge": 0.5559045914819785
+            },
+            {
+              "step": 80,
+              "t": 3.2,
+              "cloverEnergy": 0.1657238070873275,
+              "plaquetteEnergy": 0.20547046965821641,
+              "t2E": 1.697011784574234,
+              "t2EPlaquette": 2.104017609300137,
+              "meanPlaquette": 0.9914387304309037,
+              "unroundedCloverCharge": 0.5603007936023022
+            }
+          ]
+        },
+        {
+          "sample": 1,
+          "sourceHash": "22ff06e57b6ecdc8a19146bd83a94b98241887280b4c4d70ed69b0fb62669cda",
+          "curve": [
+            {
+              "step": 0,
+              "t": 0,
+              "cloverEnergy": 1.6314900406637298,
+              "plaquetteEnergy": 10.608702384106124,
+              "t2E": 0,
+              "t2EPlaquette": 0,
+              "meanPlaquette": 0.5579707339955786,
+              "unroundedCloverCharge": -0.5023652556551077
+            },
+            {
+              "step": 2,
+              "t": 0.08,
+              "cloverEnergy": 1.347728763444841,
+              "plaquetteEnergy": 6.079442960747974,
+              "t2E": 0.008625464086046983,
+              "t2EPlaquette": 0.038908434948787034,
+              "meanPlaquette": 0.746689876635505,
+              "unroundedCloverCharge": -0.3710995185369606
+            },
+            {
+              "step": 4,
+              "t": 0.16,
+              "cloverEnergy": 1.0934768527197454,
+              "plaquetteEnergy": 3.7085828325752628,
+              "t2E": 0.02799300742962548,
+              "t2EPlaquette": 0.09493972051392673,
+              "meanPlaquette": 0.8454757153093619,
+              "unroundedCloverCharge": -0.19741948303281237
+            },
+            {
+              "step": 6,
+              "t": 0.24,
+              "cloverEnergy": 0.8954289504141155,
+              "plaquetteEnergy": 2.461126021380868,
+              "t2E": 0.05157670754385305,
+              "t2EPlaquette": 0.141760858831538,
+              "meanPlaquette": 0.8974530824424645,
+              "unroundedCloverCharge": -0.10423888445308634
+            },
+            {
+              "step": 8,
+              "t": 0.32,
+              "cloverEnergy": 0.7485553153664949,
+              "plaquetteEnergy": 1.7599402663520967,
+              "t2E": 0.07665206429352908,
+              "t2EPlaquette": 0.1802178832744547,
+              "meanPlaquette": 0.9266691555686659,
+              "unroundedCloverCharge": -0.10440025278761852
+            },
+            {
+              "step": 10,
+              "t": 0.4,
+              "cloverEnergy": 0.6395051392667266,
+              "plaquetteEnergy": 1.335614123750622,
+              "t2E": 0.10232082228267628,
+              "t2EPlaquette": 0.2136982598000996,
+              "meanPlaquette": 0.9443494115103888,
+              "unroundedCloverCharge": -0.1738907020098586
+            },
+            {
+              "step": 12,
+              "t": 0.48,
+              "cloverEnergy": 0.5566704136169834,
+              "plaquetteEnergy": 1.061136127094606,
+              "t2E": 0.12825686329735297,
+              "t2EPlaquette": 0.2444857636825972,
+              "meanPlaquette": 0.9557859947043942,
+              "unroundedCloverCharge": -0.2854023610072972
+            },
+            {
+              "step": 14,
+              "t": 0.56,
+              "cloverEnergy": 0.4921295031853274,
+              "plaquetteEnergy": 0.8728723826206666,
+              "t2E": 0.1543318121989187,
+              "t2EPlaquette": 0.27373277918984107,
+              "meanPlaquette": 0.9636303173908068,
+              "unroundedCloverCharge": -0.41675361879748873
+            },
+            {
+              "step": 16,
+              "t": 0.64,
+              "cloverEnergy": 0.4405946726668646,
+              "plaquetteEnergy": 0.7369106368056156,
+              "t2E": 0.18046757792434776,
+              "t2EPlaquette": 0.3018385968355802,
+              "meanPlaquette": 0.9692953901331023,
+              "unroundedCloverCharge": -0.5532364904738962
+            },
+            {
+              "step": 18,
+              "t": 0.72,
+              "cloverEnergy": 0.39839846119360994,
+              "plaquetteEnergy": 0.6345317285876539,
+              "t2E": 0.20652976228276737,
+              "t2EPlaquette": 0.32894124809983977,
+              "meanPlaquette": 0.9735611779755108,
+              "unroundedCloverCharge": -0.6870519885500516
+            },
+            {
+              "step": 20,
+              "t": 0.8,
+              "cloverEnergy": 0.36305595815575803,
+              "plaquetteEnergy": 0.5550031504099381,
+              "t2E": 0.23235581321968518,
+              "t2EPlaquette": 0.3552020162623604,
+              "meanPlaquette": 0.9768748687329208,
+              "unroundedCloverCharge": -0.8137411334190914
+            },
+            {
+              "step": 22,
+              "t": 0.88,
+              "cloverEnergy": 0.3330344994971904,
+              "plaquetteEnergy": 0.4916386620363295,
+              "t2E": 0.2579019164106242,
+              "t2EPlaquette": 0.38072497988093357,
+              "meanPlaquette": 0.9795150557484861,
+              "unroundedCloverCharge": -0.9287984596017242
+            },
+            {
+              "step": 24,
+              "t": 0.96,
+              "cloverEnergy": 0.30740125060854145,
+              "plaquetteEnergy": 0.44007967761740585,
+              "t2E": 0.2833009925608318,
+              "t2EPlaquette": 0.4055774308922012,
+              "meanPlaquette": 0.9816633467659412,
+              "unroundedCloverCharge": -1.0262141269716751
+            },
+            {
+              "step": 26,
+              "t": 1.04,
+              "cloverEnergy": 0.28550970455318303,
+              "plaquetteEnergy": 0.3977454301035372,
+              "t2E": 0.3088072964447228,
+              "t2EPlaquette": 0.4302014571999859,
+              "meanPlaquette": 0.9834272737456808,
+              "unroundedCloverCharge": -1.1008061929644568
+            },
+            {
+              "step": 28,
+              "t": 1.12,
+              "cloverEnergy": 0.2668413432503744,
+              "plaquetteEnergy": 0.3631611270909693,
+              "t2E": 0.3347257809732697,
+              "t2EPlaquette": 0.45554931782291197,
+              "meanPlaquette": 0.9848682863712074,
+              "unroundedCloverCharge": -1.1524207543011362
+            },
+            {
+              "step": 30,
+              "t": 1.2,
+              "cloverEnergy": 0.2509206222488716,
+              "plaquetteEnergy": 0.33509411581613274,
+              "t2E": 0.3613256960383751,
+              "t2EPlaquette": 0.4825355267752311,
+              "meanPlaquette": 0.9860377451743317,
+              "unroundedCloverCharge": -1.1857172702356793
+            },
+            {
+              "step": 32,
+              "t": 1.28,
+              "cloverEnergy": 0.2372755040977358,
+              "plaquetteEnergy": 0.312236312723049,
+              "t2E": 0.38875218591373034,
+              "t2EPlaquette": 0.5115679747654436,
+              "meanPlaquette": 0.9869901536365411,
+              "unroundedCloverCharge": -1.206233381735263
+            },
+            {
+              "step": 34,
+              "t": 1.36,
+              "cloverEnergy": 0.22546362951030505,
+              "plaquetteEnergy": 0.29336998801587005,
+              "t2E": 0.4170175291422603,
+              "t2EPlaquette": 0.5426171298341533,
+              "meanPlaquette": 0.9877762504993391,
+              "unroundedCloverCharge": -1.2179863209282826
+            },
+            {
+              "step": 36,
+              "t": 1.44,
+              "cloverEnergy": 0.21511021888603327,
+              "plaquetteEnergy": 0.2775218609754858,
+              "t2E": 0.44605254988207854,
+              "t2EPlaquette": 0.5754693309187673,
+              "meanPlaquette": 0.9884365891260195,
+              "unroundedCloverCharge": -1.2233656087078615
+            },
+            {
+              "step": 38,
+              "t": 1.52,
+              "cloverEnergy": 0.20591769391437045,
+              "plaquetteEnergy": 0.2639718888213334,
+              "t2E": 0.4757522400197615,
+              "t2EPlaquette": 0.6098806519328086,
+              "meanPlaquette": 0.9890011712991126,
+              "unroundedCloverCharge": -1.2236968931447467
+            },
+            {
+              "step": 40,
+              "t": 1.6,
+              "cloverEnergy": 0.19765492041830768,
+              "plaquetteEnergy": 0.2521967140064951,
+              "t2E": 0.5059965962708678,
+              "t2EPlaquette": 0.6456235878566277,
+              "meanPlaquette": 0.9894918035830601,
+              "unroundedCloverCharge": -1.2196807507992662
+            },
+            {
+              "step": 42,
+              "t": 1.68,
+              "cloverEnergy": 0.19014129001489696,
+              "plaquetteEnergy": 0.24180969637269994,
+              "t2E": 0.5366547769380451,
+              "t2EPlaquette": 0.6824836870423082,
+              "meanPlaquette": 0.989924595984473,
+              "unroundedCloverCharge": -1.2116301650366588
+            },
+            {
+              "step": 44,
+              "t": 1.76,
+              "cloverEnergy": 0.18323261871403435,
+              "plaquetteEnergy": 0.2325151076808746,
+              "t2E": 0.5675813597285928,
+              "t2EPlaquette": 0.7202387975522772,
+              "meanPlaquette": 0.9903118705132948,
+              "unroundedCloverCharge": -1.199588069369171
+            },
+            {
+              "step": 46,
+              "t": 1.84,
+              "cloverEnergy": 0.17681046174948223,
+              "plaquetteEnergy": 0.22407578260502406,
+              "t2E": 0.598609499299047,
+              "t2EPlaquette": 0.7586309695875695,
+              "meanPlaquette": 0.9906635090581236,
+              "unroundedCloverCharge": -1.1833892877246963
+            },
+            {
+              "step": 48,
+              "t": 1.92,
+              "cloverEnergy": 0.1707747180892435,
+              "plaquetteEnergy": 0.2162899626527435,
+              "t2E": 0.6295439207641872,
+              "t2EPlaquette": 0.7973313183230736,
+              "meanPlaquette": 0.9909879182228001,
+              "unroundedCloverCharge": -1.162705222640167
+            },
+            {
+              "step": 50,
+              "t": 2,
+              "cloverEnergy": 0.1650392626696632,
+              "plaquetteEnergy": 0.20897390412778713,
+              "t2E": 0.6601570506786528,
+              "t2EPlaquette": 0.8358956165111485,
+              "meanPlaquette": 0.991292753994673,
+              "unroundedCloverCharge": -1.1371015469756152
+            },
+            {
+              "step": 52,
+              "t": 2.08,
+              "cloverEnergy": 0.15953068467085638,
+              "plaquetteEnergy": 0.2019486772775093,
+              "t2E": 0.6901935541599931,
+              "t2EPlaquette": 0.8737107573734163,
+              "meanPlaquette": 0.9915854717801075,
+              "unroundedCloverCharge": -1.106146567644915
+            },
+            {
+              "step": 54,
+              "t": 2.16,
+              "cloverEnergy": 0.15419047022459198,
+              "plaquetteEnergy": 0.19503235189522944,
+              "t2E": 0.7193910578798564,
+              "t2EPlaquette": 0.9099429410023826,
+              "meanPlaquette": 0.9918736520043678,
+              "unroundedCloverCharge": -1.0696240300447344
+            },
+            {
+              "step": 56,
+              "t": 2.24,
+              "cloverEnergy": 0.1489804740707383,
+              "plaquetteEnergy": 0.1880434002549999,
+              "t2E": 0.7475244266973367,
+              "t2EPlaquette": 0.9435265651194877,
+              "meanPlaquette": 0.9921648583227101,
+              "unroundedCloverCharge": -1.0279072918914751
+            },
+            {
+              "step": 58,
+              "t": 2.32,
+              "cloverEnergy": 0.1438893943758136,
+              "plaquetteEnergy": 0.18082722339899054,
+              "t2E": 0.7744702762883791,
+              "t2EPlaquette": 0.9732844472227267,
+              "meanPlaquette": 0.9924655323583768,
+              "unroundedCloverCharge": -0.9824790443838722
+            },
+            {
+              "step": 60,
+              "t": 2.4,
+              "cloverEnergy": 0.138934861043056,
+              "plaquetteEnergy": 0.1733172024184919,
+              "t2E": 0.8002647996080025,
+              "t2EPlaquette": 0.9983070859305133,
+              "meanPlaquette": 0.9927784498992336,
+              "unroundedCloverCharge": -0.9363351408065126
+            },
+            {
+              "step": 62,
+              "t": 2.48,
+              "cloverEnergy": 0.13415689585092105,
+              "plaquetteEnergy": 0.16561405834033335,
+              "t2E": 0.8251185722415049,
+              "t2EPlaquette": 1.0185927044163863,
+              "meanPlaquette": 0.9930994142358185,
+              "unroundedCloverCharge": -0.8936678977976348
+            },
+            {
+              "step": 64,
+              "t": 2.56,
+              "cloverEnergy": 0.1296072121006972,
+              "plaquetteEnergy": 0.1580100796340945,
+              "t2E": 0.8493938252231292,
+              "t2EPlaquette": 1.0355348578900017,
+              "meanPlaquette": 0.9934162466819114,
+              "unroundedCloverCharge": -0.8584025183467037
+            },
+            {
+              "step": 66,
+              "t": 2.64,
+              "cloverEnergy": 0.12534041314293384,
+              "plaquetteEnergy": 0.15088224661457886,
+              "t2E": 0.8735725434409918,
+              "t2EPlaquette": 1.0515889060049688,
+              "meanPlaquette": 0.9937132397243916,
+              "unroundedCloverCharge": -0.8323967388172206
+            },
+            {
+              "step": 68,
+              "t": 2.72,
+              "cloverEnergy": 0.12140130327693319,
+              "plaquetteEnergy": 0.14451141954446192,
+              "t2E": 0.8981754021640627,
+              "t2EPlaquette": 1.069153286357747,
+              "meanPlaquette": 0.9939786908523139,
+              "unroundedCloverCharge": -0.8149540210751754
+            },
+            {
+              "step": 70,
+              "t": 2.8000000000000003,
+              "cloverEnergy": 0.11780839307177528,
+              "plaquetteEnergy": 0.13898614798583833,
+              "t2E": 0.9236178016827183,
+              "t2EPlaquette": 1.0896514002089728,
+              "meanPlaquette": 0.9942089105005926,
+              "unroundedCloverCharge": -0.8039293572890589
+            },
+            {
+              "step": 72,
+              "t": 2.88,
+              "cloverEnergy": 0.11454873785865134,
+              "plaquetteEnergy": 0.13424089209529683,
+              "t2E": 0.9501130512947976,
+              "t2EPlaquette": 1.1134476553952297,
+              "meanPlaquette": 0.9944066294960281,
+              "unroundedCloverCharge": -0.7970858219802983
+            },
+            {
+              "step": 74,
+              "t": 2.96,
+              "cloverEnergy": 0.11158776862540087,
+              "plaquetteEnergy": 0.13014384839124504,
+              "t2E": 0.9776873935883122,
+              "t2EPlaquette": 1.1402683420647326,
+              "meanPlaquette": 0.9945773396503605,
+              "unroundedCloverCharge": -0.7927490861883731
+            },
+            {
+              "step": 76,
+              "t": 3.04,
+              "cloverEnergy": 0.10888295525351137,
+              "plaquetteEnergy": 0.12655949352273035,
+              "t2E": 1.0062527192708506,
+              "t2EPlaquette": 1.1696122153396646,
+              "meanPlaquette": 0.9947266877698834,
+              "unroundedCloverCharge": -0.7898552647910161
+            },
+            {
+              "step": 78,
+              "t": 3.12,
+              "cloverEnergy": 0.10639305754699249,
+              "plaquetteEnergy": 0.12337417127568977,
+              "t2E": 1.0356725793854438,
+              "t2EPlaquette": 1.2009735328660744,
+              "meanPlaquette": 0.9948594095301805,
+              "unroundedCloverCharge": -0.7877815847744871
+            },
+            {
+              "step": 80,
+              "t": 3.2,
+              "cloverEnergy": 0.10408218783239748,
+              "plaquetteEnergy": 0.1205001790515829,
+              "t2E": 1.0658016034037503,
+              "t2EPlaquette": 1.2339218334882092,
+              "meanPlaquette": 0.9949791592061773,
+              "unroundedCloverCharge": -0.7861764608245971
+            }
+          ]
+        },
+        {
+          "sample": 2,
+          "sourceHash": "48d8d9c6e992803bb48a954a30249b0823395c59311736501a66def693f40636",
+          "curve": [
+            {
+              "step": 0,
+              "t": 0,
+              "cloverEnergy": 1.648314520153237,
+              "plaquetteEnergy": 10.68387075152396,
+              "t2E": 0,
+              "t2EPlaquette": 0,
+              "meanPlaquette": 0.5548387186865021,
+              "unroundedCloverCharge": -0.1743086626151611
+            },
+            {
+              "step": 2,
+              "t": 0.08,
+              "cloverEnergy": 1.3790959165069163,
+              "plaquetteEnergy": 6.184469406180611,
+              "t2E": 0.008826213865644264,
+              "t2EPlaquette": 0.03958060419955592,
+              "meanPlaquette": 0.7423137747424732,
+              "unroundedCloverCharge": -0.138059296998622
+            },
+            {
+              "step": 4,
+              "t": 0.16,
+              "cloverEnergy": 1.1271105734570706,
+              "plaquetteEnergy": 3.8351837311155257,
+              "t2E": 0.02885403068050101,
+              "t2EPlaquette": 0.09818070351655747,
+              "meanPlaquette": 0.8402006778701863,
+              "unroundedCloverCharge": -0.17771600350883413
+            },
+            {
+              "step": 6,
+              "t": 0.24,
+              "cloverEnergy": 0.92303757591266,
+              "plaquetteEnergy": 2.5803582146101154,
+              "t2E": 0.053166964372569216,
+              "t2EPlaquette": 0.14862863316154265,
+              "meanPlaquette": 0.8924850743912449,
+              "unroundedCloverCharge": -0.2807831078633387
+            },
+            {
+              "step": 8,
+              "t": 0.32,
+              "cloverEnergy": 0.7664375778533133,
+              "plaquetteEnergy": 1.8572539863813013,
+              "t2E": 0.0784832079721793,
+              "t2EPlaquette": 0.19018280820544525,
+              "meanPlaquette": 0.9226144172341146,
+              "unroundedCloverCharge": -0.40260812643365007
+            },
+            {
+              "step": 10,
+              "t": 0.4,
+              "cloverEnergy": 0.6468027513464203,
+              "plaquetteEnergy": 1.407632245884403,
+              "t2E": 0.10348844021542726,
+              "t2EPlaquette": 0.22522115934150452,
+              "meanPlaquette": 0.9413486564214828,
+              "unroundedCloverCharge": -0.51652391941919
+            },
+            {
+              "step": 12,
+              "t": 0.48,
+              "cloverEnergy": 0.5542157180691258,
+              "plaquetteEnergy": 1.1095248676365128,
+              "t2E": 0.1276913014431266,
+              "t2EPlaquette": 0.25563452950345256,
+              "meanPlaquette": 0.9537697971818113,
+              "unroundedCloverCharge": -0.6162052630065064
+            },
+            {
+              "step": 14,
+              "t": 0.56,
+              "cloverEnergy": 0.4817077934951534,
+              "plaquetteEnergy": 0.9015447088732561,
+              "t2E": 0.15106356404008014,
+              "t2EPlaquette": 0.28272442070265313,
+              "meanPlaquette": 0.962435637130282,
+              "unroundedCloverCharge": -0.6972969500030111
+            },
+            {
+              "step": 16,
+              "t": 0.64,
+              "cloverEnergy": 0.4244802344072661,
+              "plaquetteEnergy": 0.7510923918887498,
+              "t2E": 0.1738671040132162,
+              "t2EPlaquette": 0.307647443717632,
+              "meanPlaquette": 0.9687044836712985,
+              "unroundedCloverCharge": -0.7557868677068275
+            },
+            {
+              "step": 18,
+              "t": 0.72,
+              "cloverEnergy": 0.37894716079756346,
+              "plaquetteEnergy": 0.6399178409664965,
+              "t2E": 0.1964462081574569,
+              "t2EPlaquette": 0.3317334087570318,
+              "meanPlaquette": 0.9733367566263997,
+              "unroundedCloverCharge": -0.7914540089808365
+            },
+            {
+              "step": 20,
+              "t": 0.8,
+              "cloverEnergy": 0.3424089946994148,
+              "plaquetteEnergy": 0.5565290484900485,
+              "t2E": 0.21914175660762553,
+              "t2EPlaquette": 0.3561785910336311,
+              "meanPlaquette": 0.9768112896462463,
+              "unroundedCloverCharge": -0.8081664075586655
+            },
+            {
+              "step": 22,
+              "t": 0.88,
+              "cloverEnergy": 0.31282406046535627,
+              "plaquetteEnergy": 0.4928734295972139,
+              "t2E": 0.2422509524243719,
+              "t2EPlaquette": 0.38168118388008243,
+              "meanPlaquette": 0.9794636071001148,
+              "unroundedCloverCharge": -0.8120430647045729
+            },
+            {
+              "step": 24,
+              "t": 0.96,
+              "cloverEnergy": 0.2886116284627951,
+              "plaquetteEnergy": 0.44330588401538734,
+              "t2E": 0.26598447679131193,
+              "t2EPlaquette": 0.40855070270858096,
+              "meanPlaquette": 0.9815289214993598,
+              "unroundedCloverCharge": -0.8085678204301737
+            },
+            {
+              "step": 26,
+              "t": 1.04,
+              "cloverEnergy": 0.26853836716785173,
+              "plaquetteEnergy": 0.4039126101242778,
+              "t2E": 0.29045109792874846,
+              "t2EPlaquette": 0.4368718791104189,
+              "meanPlaquette": 0.9831703079114867,
+              "unroundedCloverCharge": -0.8010371256201319
+            },
+            {
+              "step": 28,
+              "t": 1.12,
+              "cloverEnergy": 0.2516344783699011,
+              "plaquetteEnergy": 0.3719184417412202,
+              "t2E": 0.315650289667204,
+              "t2EPlaquette": 0.4665344933201867,
+              "meanPlaquette": 0.9845033982607821,
+              "unroundedCloverCharge": -0.7908957363072274
+            },
+            {
+              "step": 30,
+              "t": 1.2,
+              "cloverEnergy": 0.23713989424463125,
+              "plaquetteEnergy": 0.34531035103716,
+              "t2E": 0.34148144771226896,
+              "t2EPlaquette": 0.49724690549351036,
+              "meanPlaquette": 0.9856120687067861,
+              "unroundedCloverCharge": -0.7788205098377317
+            },
+            {
+              "step": 32,
+              "t": 1.28,
+              "cloverEnergy": 0.2244716494737083,
+              "plaquetteEnergy": 0.3226317450005724,
+              "t2E": 0.36777435049772367,
+              "t2EPlaquette": 0.5285998510089378,
+              "meanPlaquette": 0.9865570106249764,
+              "unroundedCloverCharge": -0.7655008539361692
+            },
+            {
+              "step": 34,
+              "t": 1.36,
+              "cloverEnergy": 0.2131985870664015,
+              "plaquetteEnergy": 0.30285553363839024,
+              "t2E": 0.39433210663801627,
+              "t2EPlaquette": 0.5601615950175667,
+              "meanPlaquette": 0.9873810194317306,
+              "unroundedCloverCharge": -0.75181208123812
+            },
+            {
+              "step": 36,
+              "t": 1.44,
+              "cloverEnergy": 0.2030156659759815,
+              "plaquetteEnergy": 0.2852820260056129,
+              "t2E": 0.42097328496779524,
+              "t2EPlaquette": 0.5915608091252389,
+              "meanPlaquette": 0.988113248916429,
+              "unroundedCloverCharge": -0.7386021043178934
+            },
+            {
+              "step": 38,
+              "t": 1.52,
+              "cloverEnergy": 0.19371574340994388,
+              "plaquetteEnergy": 0.26944523642443985,
+              "t2E": 0.44756085357433434,
+              "t2EPlaquette": 0.6225262742350258,
+              "meanPlaquette": 0.9887731151489839,
+              "unroundedCloverCharge": -0.726427698820879
+            },
+            {
+              "step": 40,
+              "t": 1.6,
+              "cloverEnergy": 0.18516043643503832,
+              "plaquetteEnergy": 0.25503038062425515,
+              "t2E": 0.4740107172736982,
+              "t2EPlaquette": 0.6528777743980934,
+              "meanPlaquette": 0.9893737341406569,
+              "unroundedCloverCharge": -0.7154571697289016
+            },
+            {
+              "step": 42,
+              "t": 1.68,
+              "cloverEnergy": 0.17725365976243937,
+              "plaquetteEnergy": 0.24181096045756595,
+              "t2E": 0.5002807293135088,
+              "t2EPlaquette": 0.682487254795434,
+              "meanPlaquette": 0.9899245433142684,
+              "unroundedCloverCharge": -0.7055747932605043
+            },
+            {
+              "step": 44,
+              "t": 1.76,
+              "cloverEnergy": 0.16992153028032386,
+              "plaquetteEnergy": 0.2296107583255583,
+              "t2E": 0.5263489321963312,
+              "t2EPlaquette": 0.7112422849892494,
+              "meanPlaquette": 0.9904328850697695,
+              "unroundedCloverCharge": -0.6965905001596129
+            },
+            {
+              "step": 46,
+              "t": 1.84,
+              "cloverEnergy": 0.1631005451527841,
+              "plaquetteEnergy": 0.2182887549330832,
+              "t2E": 0.5521932056692659,
+              "t2EPlaquette": 0.7390384087014465,
+              "meanPlaquette": 0.990904635211123,
+              "unroundedCloverCharge": -0.6884221047235143
+            },
+            {
+              "step": 48,
+              "t": 1.92,
+              "cloverEnergy": 0.1567333970406982,
+              "plaquetteEnergy": 0.20773833093112803,
+              "t2E": 0.5777819948508298,
+              "t2EPlaquette": 0.7658065831445103,
+              "meanPlaquette": 0.9913442362112039,
+              "unroundedCloverCharge": -0.6811585142254586
+            },
+            {
+              "step": 50,
+              "t": 2,
+              "cloverEnergy": 0.1507698323409626,
+              "plaquetteEnergy": 0.1978895020192449,
+              "t2E": 0.6030793293638504,
+              "t2EPlaquette": 0.7915580080769796,
+              "meanPlaquette": 0.9917546040825299,
+              "unroundedCloverCharge": -0.6749895304646185
+            },
+            {
+              "step": 52,
+              "t": 2.08,
+              "cloverEnergy": 0.14516915291982493,
+              "plaquetteEnergy": 0.18870553810740412,
+              "t2E": 0.6280598231923307,
+              "t2EPlaquette": 0.8164156400678733,
+              "meanPlaquette": 0.9921372692455267,
+              "unroundedCloverCharge": -0.6700641893822792
+            },
+            {
+              "step": 54,
+              "t": 2.16,
+              "cloverEnergy": 0.13990141999807243,
+              "plaquetteEnergy": 0.1801718282137068,
+              "t2E": 0.6527240651430067,
+              "t2EPlaquette": 0.8406096817138706,
+              "meanPlaquette": 0.9924928404910962,
+              "unroundedCloverCharge": -0.6663749973385308
+            },
+            {
+              "step": 56,
+              "t": 2.24,
+              "cloverEnergy": 0.13494604148577818,
+              "plaquetteEnergy": 0.17228119664755198,
+              "t2E": 0.6771052577590407,
+              "t2EPlaquette": 0.8644381322987569,
+              "meanPlaquette": 0.9928216168063545,
+              "unroundedCloverCharge": -0.6637334096725713
+            },
+            {
+              "step": 58,
+              "t": 2.32,
+              "cloverEnergy": 0.13028837640296975,
+              "plaquetteEnergy": 0.16502179872100922,
+              "t2E": 0.7012641571513444,
+              "t2EPlaquette": 0.8882133294359599,
+              "meanPlaquette": 0.9931240917199574,
+              "unroundedCloverCharge": -0.6618299840421267
+            },
+            {
+              "step": 60,
+              "t": 2.4,
+              "cloverEnergy": 0.12591599923347263,
+              "plaquetteEnergy": 0.15837100069831983,
+              "t2E": 0.7252761555848023,
+              "t2EPlaquette": 0.9122169640223223,
+              "meanPlaquette": 0.9934012083042368,
+              "unroundedCloverCharge": -0.6603244282037609
+            },
+            {
+              "step": 62,
+              "t": 2.48,
+              "cloverEnergy": 0.12181594393135192,
+              "plaquetteEnergy": 0.15229484123057827,
+              "t2E": 0.7492167815553868,
+              "t2EPlaquette": 0.9366741915045487,
+              "meanPlaquette": 0.9936543816153927,
+              "unroundedCloverCharge": -0.6589154660958838
+            },
+            {
+              "step": 64,
+              "t": 2.56,
+              "cloverEnergy": 0.11797334499048726,
+              "plaquetteEnergy": 0.14675074413362785,
+              "t2E": 0.7731501137296574,
+              "t2EPlaquette": 0.9617456767541437,
+              "meanPlaquette": 0.9938853856611006,
+              "unroundedCloverCharge": -0.6573728398568761
+            },
+            {
+              "step": 66,
+              "t": 2.64,
+              "cloverEnergy": 0.11437122980094953,
+              "plaquetteEnergy": 0.14169125360350063,
+              "t2E": 0.797121723220698,
+              "t2EPlaquette": 0.9875313611149581,
+              "meanPlaquette": 0.99409619776652,
+              "unroundedCloverCharge": -0.6555390736000344
+            },
+            {
+              "step": 68,
+              "t": 2.72,
+              "cloverEnergy": 0.11099100061202748,
+              "plaquetteEnergy": 0.13706746195770225,
+              "t2E": 0.8211558189280243,
+              "t2EPlaquette": 1.0140799105478646,
+              "meanPlaquette": 0.9942888557517638,
+              "unroundedCloverCharge": -0.6533160023696535
+            },
+            {
+              "step": 70,
+              "t": 2.8000000000000003,
+              "cloverEnergy": 0.10781320005544724,
+              "plaquetteEnergy": 0.13283160225446178,
+              "t2E": 0.8452554884347065,
+              "t2EPlaquette": 1.0413997616749806,
+              "meanPlaquette": 0.9944653499060641,
+              "unroundedCloverCharge": -0.6506475679105289
+            },
+            {
+              "step": 72,
+              "t": 2.88,
+              "cloverEnergy": 0.10481829090082809,
+              "plaquetteEnergy": 0.128938745550879,
+              "t2E": 0.8694048320478285,
+              "t2EPlaquette": 1.0694695310972107,
+              "meanPlaquette": 0.9946275522687136,
+              "unroundedCloverCharge": -0.6475046554461975
+            },
+            {
+              "step": 74,
+              "t": 2.96,
+              "cloverEnergy": 0.10198730647083883,
+              "plaquetteEnergy": 0.1253477458486678,
+              "t2E": 0.8935719843749014,
+              "t2EPlaquette": 1.0982468100276879,
+              "meanPlaquette": 0.9947771772563044,
+              "unroundedCloverCharge": -0.6438737002162597
+            },
+            {
+              "step": 76,
+              "t": 3.04,
+              "cloverEnergy": 0.0993023174492322,
+              "plaquetteEnergy": 0.12202162968791838,
+              "t2E": 0.9177122969388243,
+              "t2EPlaquette": 1.1276750929238666,
+              "meanPlaquette": 0.9949157654296672,
+              "unroundedCloverCharge": -0.6397488289059523
+            },
+            {
+              "step": 78,
+              "t": 3.12,
+              "cloverEnergy": 0.09674671455302758,
+              "plaquetteEnergy": 0.11892761212224129,
+              "t2E": 0.9417712181449918,
+              "t2EPlaquette": 1.1576889474427456,
+              "meanPlaquette": 0.9950446828282419,
+              "unroundedCloverCharge": -0.6351266692674408
+            },
+            {
+              "step": 80,
+              "t": 3.2,
+              "cloverEnergy": 0.09430533322637796,
+              "plaquetteEnergy": 0.11603688149273053,
+              "t2E": 0.9656866122381105,
+              "t2EPlaquette": 1.1882176664855608,
+              "meanPlaquette": 0.9951651299378032,
+              "unroundedCloverCharge": -0.6300029453542136
+            }
+          ]
+        },
+        {
+          "sample": 3,
+          "sourceHash": "7e27fab7bde2f18425443c991bf1e065b24440a3276332df3122c953cd273649",
+          "curve": [
+            {
+              "step": 0,
+              "t": 0,
+              "cloverEnergy": 1.627158410801229,
+              "plaquetteEnergy": 10.505549598753731,
+              "t2E": 0,
+              "t2EPlaquette": 0,
+              "meanPlaquette": 0.5622687667185952,
+              "unroundedCloverCharge": 0.2157032505053296
+            },
+            {
+              "step": 2,
+              "t": 0.08,
+              "cloverEnergy": 1.340254059497243,
+              "plaquetteEnergy": 5.997307780414999,
+              "t2E": 0.008577625980782355,
+              "t2EPlaquette": 0.03838276979465599,
+              "meanPlaquette": 0.7501121758160415,
+              "unroundedCloverCharge": 0.29512412421671647
+            },
+            {
+              "step": 4,
+              "t": 0.16,
+              "cloverEnergy": 1.091477222705047,
+              "plaquetteEnergy": 3.679740300567312,
+              "t2E": 0.02794181690124921,
+              "t2EPlaquette": 0.09420135169452319,
+              "meanPlaquette": 0.8466774874763654,
+              "unroundedCloverCharge": 0.29755031622366673
+            },
+            {
+              "step": 6,
+              "t": 0.24,
+              "cloverEnergy": 0.9003422144621575,
+              "plaquetteEnergy": 2.4646059041949586,
+              "t2E": 0.05185971155302027,
+              "t2EPlaquette": 0.1419613000816296,
+              "meanPlaquette": 0.8973080873252097,
+              "unroundedCloverCharge": 0.24042723496216284
+            },
+            {
+              "step": 8,
+              "t": 0.32,
+              "cloverEnergy": 0.7574702294284097,
+              "plaquetteEnergy": 1.7758636163774904,
+              "t2E": 0.07756495149346916,
+              "t2EPlaquette": 0.18184843431705502,
+              "meanPlaquette": 0.9260056826509401,
+              "unroundedCloverCharge": 0.16378800059656395
+            },
+            {
+              "step": 10,
+              "t": 0.4,
+              "cloverEnergy": 0.6505205519926623,
+              "plaquetteEnergy": 1.35459327275315,
+              "t2E": 0.10408328831882599,
+              "t2EPlaquette": 0.21673492364050406,
+              "meanPlaquette": 0.943558613635285,
+              "unroundedCloverCharge": 0.09792533794720301
+            },
+            {
+              "step": 12,
+              "t": 0.48,
+              "cloverEnergy": 0.569337363493681,
+              "plaquetteEnergy": 1.0806449662640145,
+              "t2E": 0.1311753285489441,
+              "t2EPlaquette": 0.24898060022722893,
+              "meanPlaquette": 0.9549731264056636,
+              "unroundedCloverCharge": 0.04769530704185021
+            },
+            {
+              "step": 14,
+              "t": 0.56,
+              "cloverEnergy": 0.506470882699177,
+              "plaquetteEnergy": 0.8936592162407072,
+              "t2E": 0.1588292688144619,
+              "t2EPlaquette": 0.28025153021308585,
+              "meanPlaquette": 0.9627641993233009,
+              "unroundedCloverCharge": 0.001400002173507709
+            },
+            {
+              "step": 16,
+              "t": 0.64,
+              "cloverEnergy": 0.4566736126905499,
+              "plaquetteEnergy": 0.7607638440215,
+              "t2E": 0.18705351175804924,
+              "t2EPlaquette": 0.3116088705112064,
+              "meanPlaquette": 0.9683015064991052,
+              "unroundedCloverCharge": -0.0492890630662875
+            },
+            {
+              "step": 18,
+              "t": 0.72,
+              "cloverEnergy": 0.41632709422984515,
+              "plaquetteEnergy": 0.6631656960891149,
+              "t2E": 0.21582396564875173,
+              "t2EPlaquette": 0.3437850968525971,
+              "meanPlaquette": 0.97236809599629,
+              "unroundedCloverCharge": -0.103944793727832
+            },
+            {
+              "step": 20,
+              "t": 0.8,
+              "cloverEnergy": 0.3829933806130531,
+              "plaquetteEnergy": 0.5896237511650344,
+              "t2E": 0.24511576359235404,
+              "t2EPlaquette": 0.3773592007456221,
+              "meanPlaquette": 0.975432343701459,
+              "unroundedCloverCharge": -0.15891945095134719
+            },
+            {
+              "step": 22,
+              "t": 0.88,
+              "cloverEnergy": 0.35499269726727506,
+              "plaquetteEnergy": 0.5328415751439385,
+              "t2E": 0.2749063447637778,
+              "t2EPlaquette": 0.4126325157914659,
+              "meanPlaquette": 0.9777982677023371,
+              "unroundedCloverCharge": -0.21221598068867423
+            },
+            {
+              "step": 24,
+              "t": 0.96,
+              "cloverEnergy": 0.33107073952031607,
+              "plaquetteEnergy": 0.4877525440323084,
+              "t2E": 0.3051147935419233,
+              "t2EPlaquette": 0.4495127445801754,
+              "meanPlaquette": 0.9796769773319852,
+              "unroundedCloverCharge": -0.2643825101662723
+            },
+            {
+              "step": 26,
+              "t": 1.04,
+              "cloverEnergy": 0.31024102781271856,
+              "plaquetteEnergy": 0.45078130595654337,
+              "t2E": 0.33555669568223645,
+              "t2EPlaquette": 0.4875650605225974,
+              "meanPlaquette": 0.9812174455851419,
+              "unroundedCloverCharge": -0.31754409062471883
+            },
+            {
+              "step": 28,
+              "t": 1.12,
+              "cloverEnergy": 0.29173096227105605,
+              "plaquetteEnergy": 0.41941075747932155,
+              "t2E": 0.36594731907281275,
+              "t2EPlaquette": 0.526108854182061,
+              "meanPlaquette": 0.982524551771689,
+              "unroundedCloverCharge": -0.3743211056496653
+            },
+            {
+              "step": 30,
+              "t": 1.2,
+              "cloverEnergy": 0.27495219025009815,
+              "plaquetteEnergy": 0.39186027082276836,
+              "t2E": 0.39593115396014134,
+              "t2EPlaquette": 0.5642787899847864,
+              "meanPlaquette": 0.9836724887157191,
+              "unroundedCloverCharge": -0.4368703410839559
+            },
+            {
+              "step": 32,
+              "t": 1.28,
+              "cloverEnergy": 0.25947363975339827,
+              "plaquetteEnergy": 0.3668650782299951,
+              "t2E": 0.42512161137196774,
+              "t2EPlaquette": 0.601071744172024,
+              "meanPlaquette": 0.9847139550737498,
+              "unroundedCloverCharge": -0.5059301657230996
+            },
+            {
+              "step": 34,
+              "t": 1.36,
+              "cloverEnergy": 0.2449980470828379,
+              "plaquetteEnergy": 0.34355785792881466,
+              "t2E": 0.4531483878844171,
+              "t2EPlaquette": 0.6354446140251357,
+              "meanPlaquette": 0.9856850892529675,
+              "unroundedCloverCharge": -0.5799522501990397
+            },
+            {
+              "step": 36,
+              "t": 1.44,
+              "cloverEnergy": 0.23134464343318706,
+              "plaquetteEnergy": 0.3214319257173226,
+              "t2E": 0.47971625262305667,
+              "t2EPlaquette": 0.6665212411674402,
+              "meanPlaquette": 0.9866070030951133,
+              "unroundedCloverCharge": -0.654734920675748
+            },
+            {
+              "step": 38,
+              "t": 1.52,
+              "cloverEnergy": 0.2184376635164404,
+              "plaquetteEnergy": 0.30033240582758824,
+              "t2E": 0.5046783777883839,
+              "t2EPlaquette": 0.6938879904240599,
+              "meanPlaquette": 0.9874861497571851,
+              "unroundedCloverCharge": -0.7241492642803506
+            },
+            {
+              "step": 40,
+              "t": 1.6,
+              "cloverEnergy": 0.20629111783577536,
+              "plaquetteEnergy": 0.2804008561292851,
+              "t2E": 0.528105261659585,
+              "t2EPlaquette": 0.71782619169097,
+              "meanPlaquette": 0.988316630994612,
+              "unroundedCloverCharge": -0.7820823255561709
+            },
+            {
+              "step": 42,
+              "t": 1.68,
+              "cloverEnergy": 0.1949756870402628,
+              "plaquetteEnergy": 0.2619354835727379,
+              "t2E": 0.5502993791024376,
+              "t2EPlaquette": 0.7392867088356952,
+              "meanPlaquette": 0.9890860215178012,
+              "unroundedCloverCharge": -0.8246772190894239
+            },
+            {
+              "step": 44,
+              "t": 1.76,
+              "cloverEnergy": 0.18457047046112213,
+              "plaquetteEnergy": 0.24521053302346998,
+              "t2E": 0.5717254893003719,
+              "t2EPlaquette": 0.7595641470935006,
+              "meanPlaquette": 0.9897828944573517,
+              "unroundedCloverCharge": -0.8514293084624324
+            },
+            {
+              "step": 46,
+              "t": 1.84,
+              "cloverEnergy": 0.17512146054511,
+              "plaquetteEnergy": 0.23034534108848614,
+              "t2E": 0.5928912168215245,
+              "t2EPlaquette": 0.7798571867891787,
+              "meanPlaquette": 0.9904022774546442,
+              "unroundedCloverCharge": -0.8645491504745616
+            },
+            {
+              "step": 48,
+              "t": 1.92,
+              "cloverEnergy": 0.16662390679207803,
+              "plaquetteEnergy": 0.21727748053486676,
+              "t2E": 0.6142423699983164,
+              "t2EPlaquette": 0.8009717042437328,
+              "meanPlaquette": 0.9909467716443832,
+              "unroundedCloverCharge": -0.8674046196030941
+            },
+            {
+              "step": 50,
+              "t": 2,
+              "cloverEnergy": 0.1590275816808939,
+              "plaquetteEnergy": 0.20581694131843664,
+              "t2E": 0.6361103267235756,
+              "t2EPlaquette": 0.8232677652737466,
+              "meanPlaquette": 0.9914242941117305,
+              "unroundedCloverCharge": -0.8632456733832005
+            },
+            {
+              "step": 52,
+              "t": 2.08,
+              "cloverEnergy": 0.15225283093849773,
+              "plaquetteEnergy": 0.19572072222024445,
+              "t2E": 0.6587066477723167,
+              "t2EPlaquette": 0.8467661326136656,
+              "meanPlaquette": 0.9918449699074873,
+              "unroundedCloverCharge": -0.8546871647995496
+            },
+            {
+              "step": 54,
+              "t": 2.16,
+              "cloverEnergy": 0.14620640689114128,
+              "plaquetteEnergy": 0.1867475616655886,
+              "t2E": 0.6821406119913088,
+              "t2EPlaquette": 0.8712894237069703,
+              "meanPlaquette": 0.9922188515972723,
+              "unroundedCloverCharge": -0.8437219034548987
+            },
+            {
+              "step": 56,
+              "t": 2.24,
+              "cloverEnergy": 0.14079259944796055,
+              "plaquetteEnergy": 0.1786860154176427,
+              "t2E": 0.706440946990087,
+              "t2EPlaquette": 0.8965749509595642,
+              "meanPlaquette": 0.9925547493575982,
+              "unroundedCloverCharge": -0.8319001642711603
+            },
+            {
+              "step": 58,
+              "t": 2.32,
+              "cloverEnergy": 0.13591994137786437,
+              "plaquetteEnergy": 0.17136464386389008,
+              "t2E": 0.7315754924722171,
+              "t2EPlaquette": 0.9223530591330018,
+              "meanPlaquette": 0.9928598065056723,
+              "unroundedCloverCharge": -0.8204681856380497
+            },
+            {
+              "step": 60,
+              "t": 2.4,
+              "cloverEnergy": 0.1315051626209716,
+              "plaquetteEnergy": 0.16465306645673192,
+              "t2E": 0.7574697366967963,
+              "t2EPlaquette": 0.9484016627907759,
+              "meanPlaquette": 0.9931394555643006,
+              "unroundedCloverCharge": -0.810410382832702
+            },
+            {
+              "step": 62,
+              "t": 2.48,
+              "cloverEnergy": 0.12747560920748754,
+              "plaquetteEnergy": 0.1584582664629338,
+              "t2E": 0.7840259868697315,
+              "t2EPlaquette": 0.974581722053628,
+              "meanPlaquette": 0.9933975722307148,
+              "unroundedCloverCharge": -0.8024205938296693
+            },
+            {
+              "step": 64,
+              "t": 2.56,
+              "cloverEnergy": 0.12377051644595552,
+              "plaquetteEnergy": 0.15271770974115786,
+              "t2E": 0.8111424565802141,
+              "t2EPlaquette": 1.0008507825596522,
+              "meanPlaquette": 0.9936367620941199,
+              "unroundedCloverCharge": -0.7968585626736076
+            },
+            {
+              "step": 66,
+              "t": 2.64,
+              "cloverEnergy": 0.12034106413464017,
+              "plaquetteEnergy": 0.14739042781424505,
+              "t2E": 0.8387290805927882,
+              "t2EPlaquette": 1.0272523256941624,
+              "meanPlaquette": 0.9938587321744071,
+              "unroundedCloverCharge": -0.7937447534859736
+            },
+            {
+              "step": 68,
+              "t": 2.72,
+              "cloverEnergy": 0.11714921028068039,
+              "plaquetteEnergy": 0.14244787019988076,
+              "t2E": 0.866716717340586,
+              "t2EPlaquette": 1.053886322886798,
+              "meanPlaquette": 0.9940646720750018,
+              "unroundedCloverCharge": -0.7928172328322631
+            },
+            {
+              "step": 70,
+              "t": 2.8000000000000003,
+              "cloverEnergy": 0.11416566380056102,
+              "plaquetteEnergy": 0.13786650976751122,
+              "t2E": 0.8950588041963986,
+              "t2EPlaquette": 1.0808734365772883,
+              "meanPlaquette": 0.9942555620930211,
+              "unroundedCloverCharge": -0.7936365234989329
+            },
+            {
+              "step": 72,
+              "t": 2.88,
+              "cloverEnergy": 0.11136761312413872,
+              "plaquetteEnergy": 0.13362334793476768,
+              "t2E": 0.9237275302968562,
+              "t2EPlaquette": 1.108325497110137,
+              "meanPlaquette": 0.9944323605027187,
+              "unroundedCloverCharge": -0.7957015518931236
+            },
+            {
+              "step": 74,
+              "t": 2.96,
+              "cloverEnergy": 0.10873675661010403,
+              "plaquetteEnergy": 0.12969420822528344,
+              "t2E": 0.9527079667150874,
+              "t2EPlaquette": 1.1363287747866433,
+              "meanPlaquette": 0.9945960746572785,
+              "unroundedCloverCharge": -0.798542327231703
+            },
+            {
+              "step": 76,
+              "t": 3.04,
+              "cloverEnergy": 0.10625788659741679,
+              "plaquetteEnergy": 0.12605387566860485,
+              "t2E": 0.9819928847786871,
+              "t2EPlaquette": 1.1649394973789786,
+              "meanPlaquette": 0.9947477551804751,
+              "unroundedCloverCharge": -0.8017735128128576
+            },
+            {
+              "step": 78,
+              "t": 3.12,
+              "cloverEnergy": 0.10391799961343008,
+              "plaquetteEnergy": 0.12267702600853352,
+              "t2E": 1.011579375436974,
+              "t2EPlaquette": 1.1941872419774686,
+              "meanPlaquette": 0.9948884572496458,
+              "unroundedCloverCharge": -0.8051115325413267
+            },
+            {
+              "step": 80,
+              "t": 3.2,
+              "cloverEnergy": 0.10170577365499962,
+              "plaquetteEnergy": 0.11953922111487421,
+              "t2E": 1.0414671222271963,
+              "t2EPlaquette": 1.224081624216312,
+              "meanPlaquette": 0.9950191991202102,
+              "unroundedCloverCharge": -0.8083673099152066
+            }
+          ]
+        },
+        {
+          "sample": 4,
+          "sourceHash": "017a8bdecfe075fa0afd4bee3c2c15ad5e5ed2d27e23ea7a5b50e17fe1873218",
+          "curve": [
+            {
+              "step": 0,
+              "t": 0,
+              "cloverEnergy": 1.6089428908672587,
+              "plaquetteEnergy": 10.425755611959858,
+              "t2E": 0,
+              "t2EPlaquette": 0,
+              "meanPlaquette": 0.5655935161683383,
+              "unroundedCloverCharge": 0.4655499790916762
+            },
+            {
+              "step": 2,
+              "t": 0.08,
+              "cloverEnergy": 1.3043522063034891,
+              "plaquetteEnergy": 5.860147765619027,
+              "t2E": 0.008347854120342332,
+              "t2EPlaquette": 0.037504945699961774,
+              "meanPlaquette": 0.7558271764325424,
+              "unroundedCloverCharge": 0.5328566307396077
+            },
+            {
+              "step": 4,
+              "t": 0.16,
+              "cloverEnergy": 1.0309835152226097,
+              "plaquetteEnergy": 3.4970439104846793,
+              "t2E": 0.02639317798969881,
+              "t2EPlaquette": 0.0895243241084078,
+              "meanPlaquette": 0.8542898370631393,
+              "unroundedCloverCharge": 0.5254415031804254
+            },
+            {
+              "step": 6,
+              "t": 0.24,
+              "cloverEnergy": 0.8211752508600854,
+              "plaquetteEnergy": 2.267038933850078,
+              "t2E": 0.047299694449540915,
+              "t2EPlaquette": 0.13058144258976448,
+              "meanPlaquette": 0.9055400444229135,
+              "unroundedCloverCharge": 0.5095784445637319
+            },
+            {
+              "step": 8,
+              "t": 0.32,
+              "cloverEnergy": 0.6698492183864418,
+              "plaquetteEnergy": 1.5849165486781935,
+              "t2E": 0.06859255996277165,
+              "t2EPlaquette": 0.16229545458464703,
+              "meanPlaquette": 0.9339618104717382,
+              "unroundedCloverCharge": 0.5415001609333877
+            },
+            {
+              "step": 10,
+              "t": 0.4,
+              "cloverEnergy": 0.5620354629417499,
+              "plaquetteEnergy": 1.1807511966337025,
+              "t2E": 0.08992567407068,
+              "t2EPlaquette": 0.18892019146139247,
+              "meanPlaquette": 0.950802033473594,
+              "unroundedCloverCharge": 0.6316995567194602
+            },
+            {
+              "step": 12,
+              "t": 0.48,
+              "cloverEnergy": 0.4845890860009201,
+              "plaquetteEnergy": 0.9279474181604197,
+              "t2E": 0.11164932541461199,
+              "t2EPlaquette": 0.2137990851441607,
+              "meanPlaquette": 0.9613355242433151,
+              "unroundedCloverCharge": 0.7616442058118454
+            },
+            {
+              "step": 14,
+              "t": 0.56,
+              "cloverEnergy": 0.42788170794668784,
+              "plaquetteEnergy": 0.761799993910142,
+              "t2E": 0.13418370361208132,
+              "t2EPlaquette": 0.23890047809022058,
+              "meanPlaquette": 0.9682583335870757,
+              "unroundedCloverCharge": 0.9114018896912035
+            },
+            {
+              "step": 16,
+              "t": 0.64,
+              "cloverEnergy": 0.3851648131007436,
+              "plaquetteEnergy": 0.6468339198166801,
+              "t2E": 0.15776350744606457,
+              "t2EPlaquette": 0.2649431735569122,
+              "meanPlaquette": 0.9730485866743042,
+              "unroundedCloverCharge": 1.0674620505095311
+            },
+            {
+              "step": 18,
+              "t": 0.72,
+              "cloverEnergy": 0.35194779388758946,
+              "plaquetteEnergy": 0.5632370693057829,
+              "t2E": 0.18244973635132636,
+              "t2EPlaquette": 0.2919820967281178,
+              "meanPlaquette": 0.9765317887789292,
+              "unroundedCloverCharge": 1.2199648969040735
+            },
+            {
+              "step": 20,
+              "t": 0.8,
+              "cloverEnergy": 0.3253910582592799,
+              "plaquetteEnergy": 0.500079507537025,
+              "t2E": 0.20825027728593917,
+              "t2EPlaquette": 0.32005088482369604,
+              "meanPlaquette": 0.9791633538526237,
+              "unroundedCloverCharge": 1.361592533972588
+            },
+            {
+              "step": 22,
+              "t": 0.88,
+              "cloverEnergy": 0.3037360542769902,
+              "plaquetteEnergy": 0.4511449479531373,
+              "t2E": 0.2352132004321012,
+              "t2EPlaquette": 0.34936664769490955,
+              "meanPlaquette": 0.9812022938352837,
+              "unroundedCloverCharge": 1.4892093816001377
+            },
+            {
+              "step": 24,
+              "t": 0.96,
+              "cloverEnergy": 0.2857899586289487,
+              "plaquetteEnergy": 0.4123991316217029,
+              "t2E": 0.2633840258724391,
+              "t2EPlaquette": 0.38006703970256134,
+              "meanPlaquette": 0.9828167028490932,
+              "unroundedCloverCharge": 1.603087867967125
+            },
+            {
+              "step": 26,
+              "t": 1.04,
+              "cloverEnergy": 0.2706254870238101,
+              "plaquetteEnergy": 0.3809660726069507,
+              "t2E": 0.29270852676495307,
+              "t2EPlaquette": 0.41205290413167783,
+              "meanPlaquette": 0.984126413641373,
+              "unroundedCloverCharge": 1.7037663301954933
+            },
+            {
+              "step": 28,
+              "t": 1.12,
+              "cloverEnergy": 0.2575280423402188,
+              "plaquetteEnergy": 0.3548653130249928,
+              "t2E": 0.32304317631157053,
+              "t2EPlaquette": 0.44514304865855103,
+              "meanPlaquette": 0.9852139452906247,
+              "unroundedCloverCharge": 1.7906487204094539
+            },
+            {
+              "step": 30,
+              "t": 1.2,
+              "cloverEnergy": 0.24600644489025986,
+              "plaquetteEnergy": 0.33282791096972625,
+              "t2E": 0.3542492806419742,
+              "t2EPlaquette": 0.4792721917964058,
+              "meanPlaquette": 0.9861321703762623,
+              "unroundedCloverCharge": 1.862935548037861
+            },
+            {
+              "step": 32,
+              "t": 1.28,
+              "cloverEnergy": 0.23575509668928313,
+              "plaquetteEnergy": 0.31404907332661364,
+              "t2E": 0.3862611504157215,
+              "t2EPlaquette": 0.5145380017383238,
+              "meanPlaquette": 0.9869146219447272,
+              "unroundedCloverCharge": 1.9209210092918647
+            },
+            {
+              "step": 34,
+              "t": 1.36,
+              "cloverEnergy": 0.22658388059084394,
+              "plaquetteEnergy": 0.2979663135071074,
+              "t2E": 0.41908954554082506,
+              "t2EPlaquette": 0.5511184934627459,
+              "meanPlaquette": 0.9875847369372056,
+              "unroundedCloverCharge": 1.966277450324796
+            },
+            {
+              "step": 36,
+              "t": 1.44,
+              "cloverEnergy": 0.2183598636147067,
+              "plaquetteEnergy": 0.2841306838495092,
+              "t2E": 0.45279101319145576,
+              "t2EPlaquette": 0.5891733860303422,
+              "meanPlaquette": 0.9881612215062716,
+              "unroundedCloverCharge": 2.0014318904526873
+            },
+            {
+              "step": 38,
+              "t": 1.52,
+              "cloverEnergy": 0.2109763299495862,
+              "plaquetteEnergy": 0.27216233320658006,
+              "t2E": 0.487439712715524,
+              "t2EPlaquette": 0.6288038546404826,
+              "meanPlaquette": 0.9886599027830618,
+              "unroundedCloverCharge": 2.028810426108999
+            },
+            {
+              "step": 40,
+              "t": 1.6,
+              "cloverEnergy": 0.20434130779389642,
+              "plaquetteEnergy": 0.2617444399443608,
+              "t2E": 0.523113747952375,
+              "t2EPlaquette": 0.6700657662575639,
+              "meanPlaquette": 0.9890939816689847,
+              "unroundedCloverCharge": 2.0504155794041967
+            },
+            {
+              "step": 42,
+              "t": 1.68,
+              "cloverEnergy": 0.19837401126687237,
+              "plaquetteEnergy": 0.25262131934164744,
+              "t2E": 0.5598908093996205,
+              "t2EPlaquette": 0.7129984117098657,
+              "meanPlaquette": 0.9894741116940977,
+              "unroundedCloverCharge": 2.0677341005705645
+            },
+            {
+              "step": 44,
+              "t": 1.76,
+              "cloverEnergy": 0.1930030211738922,
+              "plaquetteEnergy": 0.24459064370889072,
+              "t2E": 0.5978461583882485,
+              "t2EPlaquette": 0.7576439779526598,
+              "meanPlaquette": 0.9898087231787991,
+              "unroundedCloverCharge": 2.0818095831870327
+            },
+            {
+              "step": 46,
+              "t": 1.84,
+              "cloverEnergy": 0.1881646463836543,
+              "plaquetteEnergy": 0.2374921708875941,
+              "t2E": 0.6370502267965,
+              "t2EPlaquette": 0.8040534937570386,
+              "meanPlaquette": 0.9901044928796837,
+              "unroundedCloverCharge": 2.0933555490031086
+            },
+            {
+              "step": 48,
+              "t": 1.92,
+              "cloverEnergy": 0.18380154333376691,
+              "plaquetteEnergy": 0.23119693325954055,
+              "t2E": 0.6775660093455983,
+              "t2EPlaquette": 0.8522843747679703,
+              "meanPlaquette": 0.9903667944475156,
+              "unroundedCloverCharge": 2.1028555350318103
+            },
+            {
+              "step": 50,
+              "t": 2,
+              "cloverEnergy": 0.1798617547370457,
+              "plaquetteEnergy": 0.22559880173420696,
+              "t2E": 0.7194470189481827,
+              "t2EPlaquette": 0.9023952069368278,
+              "meanPlaquette": 0.9906000499277415,
+              "unroundedCloverCharge": 2.11063752592682
+            },
+            {
+              "step": 52,
+              "t": 2.08,
+              "cloverEnergy": 0.17629811541726897,
+              "plaquetteEnergy": 0.22060859183015247,
+              "t2E": 0.7627361665412725,
+              "t2EPlaquette": 0.9544410116939717,
+              "meanPlaquette": 0.9908079753404126,
+              "unroundedCloverCharge": 2.1169252520164488
+            },
+            {
+              "step": 54,
+              "t": 2.16,
+              "cloverEnergy": 0.17306787349697061,
+              "plaquetteEnergy": 0.21615013876224812,
+              "t2E": 0.8074654705874662,
+              "t2EPlaquette": 1.008470087409145,
+              "meanPlaquette": 0.9909937442182382,
+              "unroundedCloverCharge": 2.1218721838193564
+            },
+            {
+              "step": 56,
+              "t": 2.24,
+              "cloverEnergy": 0.170132390448369,
+              "plaquetteEnergy": 0.21215767478044908,
+              "t2E": 0.8536562823137365,
+              "t2EPlaquette": 1.0645223489783815,
+              "meanPlaquette": 0.9911600968841486,
+              "unroundedCloverCharge": 2.1255834816782357
+            },
+            {
+              "step": 58,
+              "t": 2.32,
+              "cloverEnergy": 0.16745683901898595,
+              "plaquetteEnergy": 0.20857399434760773,
+              "t2E": 0.90131969033579,
+              "t2EPlaquette": 1.1226286671765637,
+              "meanPlaquette": 0.991309416902183,
+              "unroundedCloverCharge": 2.128129810205501
+            },
+            {
+              "step": 60,
+              "t": 2.4,
+              "cloverEnergy": 0.16500986755930425,
+              "plaquetteEnergy": 0.2053490762380713,
+              "t2E": 0.9504568371415925,
+              "t2EPlaquette": 1.1828106791312907,
+              "meanPlaquette": 0.9914437884900793,
+              "unroundedCloverCharge": 2.12955571025917
+            },
+            {
+              "step": 62,
+              "t": 2.48,
+              "cloverEnergy": 0.1627632291593208,
+              "plaquetteEnergy": 0.20243897142756706,
+              "t2E": 1.0010589646214867,
+              "t2EPlaquette": 1.2450806498681084,
+              "meanPlaquette": 0.9915650428571834,
+              "unroundedCloverCharge": 2.1298843028427723
+            },
+            {
+              "step": 64,
+              "t": 2.56,
+              "cloverEnergy": 0.16069138657408222,
+              "plaquetteEnergy": 0.19980485300908013,
+              "t2E": 1.0531070710519053,
+              "t2EPlaquette": 1.3094410846803075,
+              "meanPlaquette": 0.9916747977912886,
+              "unroundedCloverCharge": 2.129119448274313
+            },
+            {
+              "step": 66,
+              "t": 2.64,
+              "cloverEnergy": 0.15877110562478144,
+              "plaquetteEnergy": 0.19741217182168297,
+              "t2E": 1.106571097762477,
+              "t2EPlaquette": 1.3758838727284017,
+              "meanPlaquette": 0.9917744928407601,
+              "unroundedCloverCharge": 2.127246033566265
+            },
+            {
+              "step": 68,
+              "t": 2.72,
+              "cloverEnergy": 0.15698104613832214,
+              "plaquetteEnergy": 0.1952298834794366,
+              "t2E": 1.1614085717497629,
+              "t2EPlaquette": 1.4443887699342641,
+              "meanPlaquette": 0.9918654215216909,
+              "unroundedCloverCharge": 2.1242287500804724
+            },
+            {
+              "step": 70,
+              "t": 2.8000000000000003,
+              "cloverEnergy": 0.15530135405737136,
+              "plaquetteEnergy": 0.1932297196558251,
+              "t2E": 1.2175626158097916,
+              "t2EPlaquette": 1.5149210021016695,
+              "meanPlaquette": 0.9919487616810124,
+              "unroundedCloverCharge": 2.1200095048457803
+            },
+            {
+              "step": 72,
+              "t": 2.88,
+              "cloverEnergy": 0.15371325299353866,
+              "plaquetteEnergy": 0.19138547514538304,
+              "t2E": 1.274959205629607,
+              "t2EPlaquette": 1.587427685045865,
+              "meanPlaquette": 0.9920256052022755,
+              "unroundedCloverCharge": 2.1145034499818247
+            },
+            {
+              "step": 74,
+              "t": 2.96,
+              "cloverEnergy": 0.1521986291319699,
+              "plaquetteEnergy": 0.18967227544980267,
+              "t2E": 1.3335035090026675,
+              "t2EPlaquette": 1.661832608580991,
+              "meanPlaquette": 0.9920969885229259,
+              "unroundedCloverCharge": 2.107593498541605
+            },
+            {
+              "step": 76,
+              "t": 3.04,
+              "cloverEnergy": 0.1507396006376337,
+              "plaquetteEnergy": 0.18806577831299015,
+              "t2E": 1.3930750932527556,
+              "t2EPlaquette": 1.7380286968573297,
+              "meanPlaquette": 0.9921639259036259,
+              "unroundedCloverCharge": 2.099123124123659
+            },
+            {
+              "step": 78,
+              "t": 3.12,
+              "cloverEnergy": 0.14931806246097803,
+              "plaquetteEnergy": 0.18654124639098613,
+              "t2E": 1.4535217472201447,
+              "t2EPlaquette": 1.8158671088684157,
+              "meanPlaquette": 0.9922274480670417,
+              "unroundedCloverCharge": 2.088887248262235
+            },
+            {
+              "step": 80,
+              "t": 3.2,
+              "cloverEnergy": 0.14791520158310315,
+              "plaquetteEnergy": 0.18507240644584458,
+              "t2E": 1.5146516642109764,
+              "t2EPlaquette": 1.8951414420054487,
+              "meanPlaquette": 0.9922886497314246,
+              "unroundedCloverCharge": 2.0766211912245733
+            }
+          ]
+        },
+        {
+          "sample": 5,
+          "sourceHash": "12ae641808318545c2e8b3f59fc13ce807a5156138acbddcd9f9fb5cc3dab3a1",
+          "curve": [
+            {
+              "step": 0,
+              "t": 0,
+              "cloverEnergy": 1.6258130683403558,
+              "plaquetteEnergy": 10.440700452404979,
+              "t2E": 0,
+              "t2EPlaquette": 0,
+              "meanPlaquette": 0.5649708144831265,
+              "unroundedCloverCharge": -0.31617185802666287
+            },
+            {
+              "step": 2,
+              "t": 0.08,
+              "cloverEnergy": 1.3368705239818446,
+              "plaquetteEnergy": 5.895323933172786,
+              "t2E": 0.008555971353483805,
+              "t2EPlaquette": 0.037730073172305825,
+              "meanPlaquette": 0.7543615027844648,
+              "unroundedCloverCharge": -0.42475011594736745
+            },
+            {
+              "step": 4,
+              "t": 0.16,
+              "cloverEnergy": 1.0800542562853086,
+              "plaquetteEnergy": 3.5579012133779635,
+              "t2E": 0.027649388960903902,
+              "t2EPlaquette": 0.09108227106247588,
+              "meanPlaquette": 0.8517541161092507,
+              "unroundedCloverCharge": -0.5107294742218237
+            },
+            {
+              "step": 6,
+              "t": 0.24,
+              "cloverEnergy": 0.8811251575105311,
+              "plaquetteEnergy": 2.344602956261286,
+              "t2E": 0.05075280907260659,
+              "t2EPlaquette": 0.13504913028065005,
+              "meanPlaquette": 0.90230821015578,
+              "unroundedCloverCharge": -0.6097568089247841
+            },
+            {
+              "step": 8,
+              "t": 0.32,
+              "cloverEnergy": 0.7330446685695204,
+              "plaquetteEnergy": 1.6668238899185708,
+              "t2E": 0.0750637740615189,
+              "t2EPlaquette": 0.17068276632766166,
+              "meanPlaquette": 0.930549004586725,
+              "unroundedCloverCharge": -0.7252015322878727
+            },
+            {
+              "step": 10,
+              "t": 0.4,
+              "cloverEnergy": 0.622185758483327,
+              "plaquetteEnergy": 1.2580853769237144,
+              "t2E": 0.09954972135733234,
+              "t2EPlaquette": 0.20129366030779433,
+              "meanPlaquette": 0.9475797759615159,
+              "unroundedCloverCharge": -0.8447668949727192
+            },
+            {
+              "step": 12,
+              "t": 0.48,
+              "cloverEnergy": 0.5378133013977766,
+              "plaquetteEnergy": 0.9949672641554975,
+              "t2E": 0.12391218464204773,
+              "t2EPlaquette": 0.22924045766142662,
+              "meanPlaquette": 0.9585430306601862,
+              "unroundedCloverCharge": -0.9574896431342491
+            },
+            {
+              "step": 14,
+              "t": 0.56,
+              "cloverEnergy": 0.4724611240284962,
+              "plaquetteEnergy": 0.8158471048798506,
+              "t2E": 0.14816380849533645,
+              "t2EPlaquette": 0.2558496520903212,
+              "meanPlaquette": 0.9660063706300088,
+              "unroundedCloverCharge": -1.0568817627764255
+            },
+            {
+              "step": 16,
+              "t": 0.64,
+              "cloverEnergy": 0.42086115649987843,
+              "plaquetteEnergy": 0.6875615822369026,
+              "t2E": 0.17238472970235022,
+              "t2EPlaquette": 0.2816252240842353,
+              "meanPlaquette": 0.9713516007401333,
+              "unroundedCloverCharge": -1.1399031087072196
+            },
+            {
+              "step": 18,
+              "t": 0.72,
+              "cloverEnergy": 0.3792846617681208,
+              "plaquetteEnergy": 0.5915336824748839,
+              "t2E": 0.19662116866059381,
+              "t2EPlaquette": 0.3066510609949798,
+              "meanPlaquette": 0.9753527632302154,
+              "unroundedCloverCharge": -1.2065594101421033
+            },
+            {
+              "step": 20,
+              "t": 0.8,
+              "cloverEnergy": 0.34517088476580604,
+              "plaquetteEnergy": 0.5171398383522697,
+              "t2E": 0.2209093662501159,
+              "t2EPlaquette": 0.3309694965454527,
+              "meanPlaquette": 0.9784525067353195,
+              "unroundedCloverCharge": -1.2582677063230399
+            },
+            {
+              "step": 22,
+              "t": 0.88,
+              "cloverEnergy": 0.3167670662495477,
+              "plaquetteEnergy": 0.45812861897257373,
+              "t2E": 0.24530441610364973,
+              "t2EPlaquette": 0.3547748025323611,
+              "meanPlaquette": 0.9809113075428076,
+              "unroundedCloverCharge": -1.2971759207274678
+            },
+            {
+              "step": 24,
+              "t": 0.96,
+              "cloverEnergy": 0.2928440541093366,
+              "plaquetteEnergy": 0.41064498134462235,
+              "t2E": 0.2698850802671646,
+              "t2EPlaquette": 0.378450414807204,
+              "meanPlaquette": 0.9828897924439707,
+              "unroundedCloverCharge": -1.3262844495946569
+            },
+            {
+              "step": 26,
+              "t": 1.04,
+              "cloverEnergy": 0.2725155547335457,
+              "plaquetteEnergy": 0.3721189419308172,
+              "t2E": 0.29475282399980307,
+              "t2EPlaquette": 0.40248384759237193,
+              "meanPlaquette": 0.984495044086217,
+              "unroundedCloverCharge": -1.348875889610465
+            },
+            {
+              "step": 28,
+              "t": 1.12,
+              "cloverEnergy": 0.2551175980435482,
+              "plaquetteEnergy": 0.34065807727495373,
+              "t2E": 0.3200195149858269,
+              "t2EPlaquette": 0.427321492133702,
+              "meanPlaquette": 0.9858059134468803,
+              "unroundedCloverCharge": -1.3675093328319126
+            },
+            {
+              "step": 30,
+              "t": 1.2,
+              "cloverEnergy": 0.24012694652892738,
+              "plaquetteEnergy": 0.3147639291899145,
+              "t2E": 0.3457828030016554,
+              "t2EPlaquette": 0.45326005803347696,
+              "meanPlaquette": 0.9868848362837541,
+              "unroundedCloverCharge": -1.38362164456009
+            },
+            {
+              "step": 32,
+              "t": 1.28,
+              "cloverEnergy": 0.22711559617822563,
+              "plaquetteEnergy": 0.2932287043105548,
+              "t2E": 0.3721061927784049,
+              "t2EPlaquette": 0.480425909142413,
+              "meanPlaquette": 0.9877821373203926,
+              "unroundedCloverCharge": -1.3978134297006244
+            },
+            {
+              "step": 34,
+              "t": 1.36,
+              "cloverEnergy": 0.21573088619625677,
+              "plaquetteEnergy": 0.275097121360601,
+              "t2E": 0.3990158471085966,
+              "t2EPlaquette": 0.5088196356685677,
+              "meanPlaquette": 0.988537619943309,
+              "unroundedCloverCharge": -1.4102826283252308
+            },
+            {
+              "step": 36,
+              "t": 1.44,
+              "cloverEnergy": 0.20568618800643884,
+              "plaquetteEnergy": 0.25963426405894297,
+              "t2E": 0.42651087945015154,
+              "t2EPlaquette": 0.5383776099526242,
+              "meanPlaquette": 0.9891819056642093,
+              "unroundedCloverCharge": -1.4210990292377221
+            },
+            {
+              "step": 38,
+              "t": 1.52,
+              "cloverEnergy": 0.19675293930426163,
+              "plaquetteEnergy": 0.24628665874121283,
+              "t2E": 0.45457799096856605,
+              "t2EPlaquette": 0.5690206963556982,
+              "meanPlaquette": 0.9897380558857831,
+              "unroundedCloverCharge": -1.4303172180775021
+            },
+            {
+              "step": 40,
+              "t": 1.6,
+              "cloverEnergy": 0.18875156877562765,
+              "plaquetteEnergy": 0.2346418627446117,
+              "t2E": 0.48320401606560687,
+              "t2EPlaquette": 0.6006831686262062,
+              "meanPlaquette": 0.9902232557189738,
+              "unroundedCloverCharge": -1.438006406602031
+            },
+            {
+              "step": 42,
+              "t": 1.68,
+              "cloverEnergy": 0.18154192138392838,
+              "plaquetteEnergy": 0.22439256069818703,
+              "t2E": 0.5123839189139994,
+              "t2EPlaquette": 0.633325563314563,
+              "meanPlaquette": 0.9906503099709096,
+              "unroundedCloverCharge": -1.444250453426459
+            },
+            {
+              "step": 44,
+              "t": 1.76,
+              "cloverEnergy": 0.17501425428766856,
+              "plaquetteEnergy": 0.2153076794666982,
+              "t2E": 0.5421241540814822,
+              "t2EPlaquette": 0.6669370679160443,
+              "meanPlaquette": 0.9910288466888824,
+              "unroundedCloverCharge": -1.4491407740068218
+            },
+            {
+              "step": 46,
+              "t": 1.84,
+              "cloverEnergy": 0.16908149772326064,
+              "plaquetteEnergy": 0.2072105198579348,
+              "t2E": 0.5724423186918712,
+              "t2EPlaquette": 0.701531936031024,
+              "meanPlaquette": 0.9913662283392524,
+              "unroundedCloverCharge": -1.4527694929622048
+            },
+            {
+              "step": 48,
+              "t": 1.92,
+              "cloverEnergy": 0.16367305255637882,
+              "plaquetteEnergy": 0.19996284454780483,
+              "t2E": 0.6033643409438348,
+              "t2EPlaquette": 0.7371430301410277,
+              "meanPlaquette": 0.9916682148105085,
+              "unroundedCloverCharge": -1.455224547206593
+            },
+            {
+              "step": 50,
+              "t": 2,
+              "cloverEnergy": 0.15873010519787537,
+              "plaquetteEnergy": 0.19345363264737983,
+              "t2E": 0.6349204207915015,
+              "t2EPlaquette": 0.7738145305895193,
+              "meanPlaquette": 0.991939431973024,
+              "unroundedCloverCharge": -1.4565866882941243
+            },
+            {
+              "step": 52,
+              "t": 2.08,
+              "cloverEnergy": 0.15420227416997484,
+              "plaquetteEnergy": 0.18759131896540604,
+              "t2E": 0.6671407189689792,
+              "t2EPlaquette": 0.8115950823719327,
+              "meanPlaquette": 0.9921836950431083,
+              "unroundedCloverCharge": -1.4569278715898006
+            },
+            {
+              "step": 54,
+              "t": 2.16,
+              "cloverEnergy": 0.15004532749680327,
+              "plaquetteEnergy": 0.18229854235381507,
+              "t2E": 0.7000514799690855,
+              "t2EPlaquette": 0.8505320792059596,
+              "meanPlaquette": 0.9924042274019296,
+              "unroundedCloverCharge": -1.4563104914594307
+            },
+            {
+              "step": 56,
+              "t": 2.24,
+              "cloverEnergy": 0.1462196978125423,
+              "plaquetteEnergy": 0.1775086411972389,
+              "t2E": 0.7336719557442123,
+              "t2EPlaquette": 0.8906673580712658,
+              "meanPlaquette": 0.9926038066167819,
+              "unroundedCloverCharge": -1.454787041367106
+            },
+            {
+              "step": 58,
+              "t": 2.32,
+              "cloverEnergy": 0.14268954917060317,
+              "plaquetteEnergy": 0.17316332489401465,
+              "t2E": 0.7680122294558545,
+              "t2EPlaquette": 0.9320342799095445,
+              "meanPlaquette": 0.9927848614627511,
+              "unroundedCloverCharge": -1.4523999262849823
+            },
+            {
+              "step": 60,
+              "t": 2.4,
+              "cloverEnergy": 0.13942219643354964,
+              "plaquetteEnergy": 0.16921110934091552,
+              "t2E": 0.8030718514572459,
+              "t2EPlaquette": 0.9746559898036732,
+              "meanPlaquette": 0.9929495371107944,
+              "unroundedCloverCharge": -1.4491812747530175
+            },
+            {
+              "step": 62,
+              "t": 2.48,
+              "cloverEnergy": 0.13638772990283116,
+              "plaquetteEnergy": 0.1656062307160147,
+              "t2E": 0.8388390939943727,
+              "t2EPlaquette": 1.0185445613957769,
+              "meanPlaquette": 0.9930997403868288,
+              "unroundedCloverCharge": -1.4451526705362683
+            },
+            {
+              "step": 64,
+              "t": 2.56,
+              "cloverEnergy": 0.13355874489678743,
+              "plaquetteEnergy": 0.16230784734489453,
+              "t2E": 0.8752905905555861,
+              "t2EPlaquette": 1.063700708359501,
+              "meanPlaquette": 0.9932371730272965,
+              "unroundedCloverCharge": -1.4403247539875803
+            },
+            {
+              "step": 66,
+              "t": 2.64,
+              "cloverEnergy": 0.1309101135901712,
+              "plaquetteEnergy": 0.1592794081461215,
+              "t2E": 0.9123911276780574,
+              "t2EPlaquette": 1.1101137630152085,
+              "meanPlaquette": 0.9933633579939121,
+              "unroundedCloverCharge": -1.4346966448575058
+            },
+            {
+              "step": 68,
+              "t": 2.72,
+              "cloverEnergy": 0.12841876350743772,
+              "plaquetteEnergy": 0.1564881130264234,
+              "t2E": 0.9500933799334275,
+              "t2EPlaquette": 1.1577616554146912,
+              "meanPlaquette": 0.9934796619572348,
+              "unroundedCloverCharge": -1.428255124503041
+            },
+            {
+              "step": 70,
+              "t": 2.8000000000000003,
+              "cloverEnergy": 0.1260634446844499,
+              "plaquetteEnergy": 0.15390442064183468,
+              "t2E": 0.9883374063260875,
+              "t2EPlaquette": 1.2066106578319842,
+              "meanPlaquette": 0.9935873158065868,
+              "unroundedCloverCharge": -1.42097349446676
+            },
+            {
+              "step": 72,
+              "t": 2.88,
+              "cloverEnergy": 0.12382447766491905,
+              "plaquetteEnergy": 0.15150157659614147,
+              "t2E": 1.0270497475439044,
+              "t2EPlaquette": 1.2566146769190356,
+              "meanPlaquette": 0.9936874343084926,
+              "unroundedCloverCharge": -1.412810003511685
+            },
+            {
+              "step": 74,
+              "t": 2.96,
+              "cloverEnergy": 0.12168347927718964,
+              "plaquetteEnergy": 0.14925514393504521,
+              "t2E": 1.0661419720350247,
+              "t2EPlaquette": 1.3077138691012922,
+              "meanPlaquette": 0.9937810356693747,
+              "unroundedCloverCharge": -1.4037057063194087
+            },
+            {
+              "step": 76,
+              "t": 3.04,
+              "cloverEnergy": 0.11962306434886787,
+              "plaquetteEnergy": 0.14714252020911764,
+              "t2E": 1.1055085114864973,
+              "t2EPlaquette": 1.3598323147645817,
+              "meanPlaquette": 0.993869061657953,
+              "unroundedCloverCharge": -1.3935815826194409
+            },
+            {
+              "step": 78,
+              "t": 3.12,
+              "cloverEnergy": 0.11762652055695182,
+              "plaquetteEnergy": 0.1451424229068695,
+              "t2E": 1.1450236017095918,
+              "t2EPlaquette": 1.4128744015446304,
+              "meanPlaquette": 0.9939523990455396,
+              "unroundedCloverCharge": -1.3823347043232024
+            },
+            {
+              "step": 80,
+              "t": 3.2,
+              "cloverEnergy": 0.11567745153783332,
+              "plaquetteEnergy": 0.14323431823486346,
+              "t2E": 1.1845371037474135,
+              "t2EPlaquette": 1.466719418725002,
+              "meanPlaquette": 0.9940319034068777,
+              "unroundedCloverCharge": -1.369833191876799
+            }
+          ]
+        },
+        {
+          "sample": 6,
+          "sourceHash": "64cafef0da983bf98ec5332b6dabda092522e70535310f02d9aa38d64e267fb8",
+          "curve": [
+            {
+              "step": 0,
+              "t": 0,
+              "cloverEnergy": 1.653933839037917,
+              "plaquetteEnergy": 10.703235981158782,
+              "t2E": 0,
+              "t2EPlaquette": 0,
+              "meanPlaquette": 0.554031834118383,
+              "unroundedCloverCharge": -0.4114154622009916
+            },
+            {
+              "step": 2,
+              "t": 0.08,
+              "cloverEnergy": 1.387420710060786,
+              "plaquetteEnergy": 6.230159858446955,
+              "t2E": 0.008879492544389031,
+              "t2EPlaquette": 0.03987302309406051,
+              "meanPlaquette": 0.7404100058980423,
+              "unroundedCloverCharge": -0.40630699280802607
+            },
+            {
+              "step": 4,
+              "t": 0.16,
+              "cloverEnergy": 1.1405062984422345,
+              "plaquetteEnergy": 3.850791590079915,
+              "t2E": 0.029196961240121205,
+              "t2EPlaquette": 0.09858026470604582,
+              "meanPlaquette": 0.8395503504133356,
+              "unroundedCloverCharge": -0.4675104527513596
+            },
+            {
+              "step": 6,
+              "t": 0.24,
+              "cloverEnergy": 0.943051694069773,
+              "plaquetteEnergy": 2.5826444401846036,
+              "t2E": 0.054319777578418924,
+              "t2EPlaquette": 0.1487603197546332,
+              "meanPlaquette": 0.8923898149923047,
+              "unroundedCloverCharge": -0.5165673941309645
+            },
+            {
+              "step": 8,
+              "t": 0.32,
+              "cloverEnergy": 0.7944610658018423,
+              "plaquetteEnergy": 1.8647373957000888,
+              "t2E": 0.08135281313810866,
+              "t2EPlaquette": 0.1909491093196891,
+              "meanPlaquette": 0.9223026085124978,
+              "unroundedCloverCharge": -0.5326970538920204
+            },
+            {
+              "step": 10,
+              "t": 0.4,
+              "cloverEnergy": 0.6840424628680636,
+              "plaquetteEnergy": 1.4286319210706688,
+              "t2E": 0.1094467940588902,
+              "t2EPlaquette": 0.22858110737130705,
+              "meanPlaquette": 0.9404736699553884,
+              "unroundedCloverCharge": -0.5168414495874383
+            },
+            {
+              "step": 12,
+              "t": 0.48,
+              "cloverEnergy": 0.6012741297473477,
+              "plaquetteEnergy": 1.1465912419190747,
+              "t2E": 0.13853355949378893,
+              "t2EPlaquette": 0.2641746221381548,
+              "meanPlaquette": 0.9522253649200422,
+              "unroundedCloverCharge": -0.4762327226272849
+            },
+            {
+              "step": 14,
+              "t": 0.56,
+              "cloverEnergy": 0.5379241435450094,
+              "plaquetteEnergy": 0.95485433975825,
+              "t2E": 0.16869301141571497,
+              "t2EPlaquette": 0.29944232094818723,
+              "meanPlaquette": 0.9602144025100727,
+              "unroundedCloverCharge": -0.42405730569096145
+            },
+            {
+              "step": 16,
+              "t": 0.64,
+              "cloverEnergy": 0.48817794344534143,
+              "plaquetteEnergy": 0.8194076466867931,
+              "t2E": 0.19995768563521185,
+              "t2EPlaquette": 0.33562937208291044,
+              "meanPlaquette": 0.9658580147213784,
+              "unroundedCloverCharge": -0.3726439724665147
+            },
+            {
+              "step": 18,
+              "t": 0.72,
+              "cloverEnergy": 0.44807235033258813,
+              "plaquetteEnergy": 0.7201513162301207,
+              "t2E": 0.23228070641241366,
+              "t2EPlaquette": 0.37332644233369455,
+              "meanPlaquette": 0.9699936951570803,
+              "unroundedCloverCharge": -0.3280236947480561
+            },
+            {
+              "step": 20,
+              "t": 0.8,
+              "cloverEnergy": 0.4148347014270783,
+              "plaquetteEnergy": 0.6443611105894984,
+              "t2E": 0.26549420891333014,
+              "t2EPlaquette": 0.41239111077727914,
+              "meanPlaquette": 0.9731516203921036,
+              "unroundedCloverCharge": -0.2909884971466689
+            },
+            {
+              "step": 22,
+              "t": 0.88,
+              "cloverEnergy": 0.38654546427005687,
+              "plaquetteEnergy": 0.5839230873604587,
+              "t2E": 0.29934080753073206,
+              "t2EPlaquette": 0.45219003885193926,
+              "meanPlaquette": 0.9756698713599816,
+              "unroundedCloverCharge": -0.2604106164625696
+            },
+            {
+              "step": 24,
+              "t": 0.96,
+              "cloverEnergy": 0.3619068832899708,
+              "plaquetteEnergy": 0.5337622419395524,
+              "t2E": 0.33353338364003704,
+              "t2EPlaquette": 0.49191528217149155,
+              "meanPlaquette": 0.9777599065858489,
+              "unroundedCloverCharge": -0.2353211924007474
+            },
+            {
+              "step": 26,
+              "t": 1.04,
+              "cloverEnergy": 0.3400534755240166,
+              "plaquetteEnergy": 0.49086701077505757,
+              "t2E": 0.3678018391267764,
+              "t2EPlaquette": 0.5309217588543024,
+              "meanPlaquette": 0.9795472078843739,
+              "unroundedCloverCharge": -0.21520661480567066
+            },
+            {
+              "step": 28,
+              "t": 1.12,
+              "cloverEnergy": 0.3204260326506267,
+              "plaquetteEnergy": 0.45359201155430184,
+              "t2E": 0.4019424153569462,
+              "t2EPlaquette": 0.5689858192937163,
+              "meanPlaquette": 0.9811003328519075,
+              "unroundedCloverCharge": -0.1992282080422272
+            },
+            {
+              "step": 30,
+              "t": 1.2,
+              "cloverEnergy": 0.30267840549728015,
+              "plaquetteEnergy": 0.42104531913892607,
+              "t2E": 0.4358569039160834,
+              "t2EPlaquette": 0.6063052595600535,
+              "meanPlaquette": 0.9824564450358769,
+              "unroundedCloverCharge": -0.18581693152252576
+            },
+            {
+              "step": 32,
+              "t": 1.28,
+              "cloverEnergy": 0.2865846459403372,
+              "plaquetteEnergy": 0.3926205852256828,
+              "t2E": 0.46954028390864855,
+              "t2EPlaquette": 0.6432695668337588,
+              "meanPlaquette": 0.9836408089489331,
+              "unroundedCloverCharge": -0.17331006332763357
+            },
+            {
+              "step": 34,
+              "t": 1.36,
+              "cloverEnergy": 0.2719639202666005,
+              "plaquetteEnergy": 0.36777144864594286,
+              "t2E": 0.5030244669251044,
+              "t2EPlaquette": 0.6802300714155359,
+              "meanPlaquette": 0.9846761896397497,
+              "unroundedCloverCharge": -0.16073085349061625
+            },
+            {
+              "step": 36,
+              "t": 1.44,
+              "cloverEnergy": 0.2586453623523633,
+              "plaquetteEnergy": 0.34597014824840455,
+              "t2E": 0.5363270233738605,
+              "t2EPlaquette": 0.7174036994078916,
+              "meanPlaquette": 0.9855845771563179,
+              "unroundedCloverCharge": -0.14791387555150864
+            },
+            {
+              "step": 38,
+              "t": 1.52,
+              "cloverEnergy": 0.2464632094222598,
+              "plaquetteEnergy": 0.3267309654381021,
+              "t2E": 0.5694285990491891,
+              "t2EPlaquette": 0.7548792225481912,
+              "meanPlaquette": 0.9863862097734141,
+              "unroundedCloverCharge": -0.13517224391615107
+            },
+            {
+              "step": 40,
+              "t": 1.6,
+              "cloverEnergy": 0.23526256545673133,
+              "plaquetteEnergy": 0.30963186335155846,
+              "t2E": 0.6022721675692323,
+              "t2EPlaquette": 0.7926575701799898,
+              "meanPlaquette": 0.9870986723603506,
+              "unroundedCloverCharge": -0.1229466849593539
+            },
+            {
+              "step": 42,
+              "t": 1.68,
+              "cloverEnergy": 0.22490485125415857,
+              "plaquetteEnergy": 0.29432018289736395,
+              "t2E": 0.6347714521797371,
+              "t2EPlaquette": 0.8306892842095198,
+              "meanPlaquette": 0.9877366590459442,
+              "unroundedCloverCharge": -0.11160849193577595
+            },
+            {
+              "step": 44,
+              "t": 1.76,
+              "cloverEnergy": 0.21527004088366603,
+              "plaquetteEnergy": 0.2805072187064924,
+              "t2E": 0.6668204786412438,
+              "t2EPlaquette": 0.8688991606652309,
+              "meanPlaquette": 0.9883121992205605,
+              "unroundedCloverCharge": -0.10139599935589264
+            },
+            {
+              "step": 46,
+              "t": 1.84,
+              "cloverEnergy": 0.2062560551880744,
+              "plaquetteEnergy": 0.26795800001643494,
+              "t2E": 0.6983005004447448,
+              "t2EPlaquette": 0.9071986048556421,
+              "meanPlaquette": 0.9888350833326496,
+              "unroundedCloverCharge": -0.09242317312936713
+            },
+            {
+              "step": 48,
+              "t": 1.92,
+              "cloverEnergy": 0.1977764004826267,
+              "plaquetteEnergy": 0.25648012538759063,
+              "t2E": 0.7290829227391551,
+              "t2EPlaquette": 0.945488334228814,
+              "meanPlaquette": 0.9893133281088476,
+              "unroundedCloverCharge": -0.08471498141540845
+            },
+            {
+              "step": 50,
+              "t": 2,
+              "cloverEnergy": 0.18975702290678034,
+              "plaquetteEnergy": 0.24591340797609051,
+              "t2E": 0.7590280916271214,
+              "t2EPlaquette": 0.9836536319043621,
+              "meanPlaquette": 0.9897536080009943,
+              "unroundedCloverCharge": -0.07824548781744965
+            },
+            {
+              "step": 52,
+              "t": 2.08,
+              "cloverEnergy": 0.18213305060353588,
+              "plaquetteEnergy": 0.23612089951055867,
+              "t2E": 0.7879804301311377,
+              "t2EPlaquette": 1.0215534596424811,
+              "meanPlaquette": 0.9901616291870637,
+              "unroundedCloverCharge": -0.07296885470210433
+            },
+            {
+              "step": 54,
+              "t": 2.16,
+              "cloverEnergy": 0.17484581699616344,
+              "plaquetteEnergy": 0.22698127583985006,
+              "t2E": 0.8157606437773003,
+              "t2EPlaquette": 1.0590038405584046,
+              "meanPlaquette": 0.9905424468400046,
+              "unroundedCloverCharge": -0.06884084820241557
+            },
+            {
+              "step": 56,
+              "t": 2.24,
+              "cloverEnergy": 0.1678403581106951,
+              "plaquetteEnergy": 0.21838230527220845,
+              "t2E": 0.8421557808562238,
+              "t2EPlaquette": 1.095755054933833,
+              "meanPlaquette": 0.9909007372803231,
+              "unroundedCloverCharge": -0.06583120836521046
+            },
+            {
+              "step": 58,
+              "t": 2.32,
+              "cloverEnergy": 0.16106346744263864,
+              "plaquetteEnergy": 0.2102150339858562,
+              "t2E": 0.8669080071632581,
+              "t2EPlaquette": 1.1314613989254723,
+              "meanPlaquette": 0.9912410402505871,
+              "unroundedCloverCharge": -0.0639272205854933
+            },
+            {
+              "step": 60,
+              "t": 2.4,
+              "cloverEnergy": 0.15446236914331948,
+              "plaquetteEnergy": 0.20236836466682456,
+              "t2E": 0.8897032462655202,
+              "t2EPlaquette": 1.1656417804809094,
+              "meanPlaquette": 0.9915679848055519,
+              "unroundedCloverCharge": -0.06312706311454583
+            },
+            {
+              "step": 62,
+              "t": 2.48,
+              "cloverEnergy": 0.1479841258354557,
+              "plaquetteEnergy": 0.19472391148955334,
+              "t2E": 0.9101615675383867,
+              "t2EPlaquette": 1.197629945225349,
+              "meanPlaquette": 0.9918865036879346,
+              "unroundedCloverCharge": -0.06341852363165229
+            },
+            {
+              "step": 64,
+              "t": 2.56,
+              "cloverEnergy": 0.14157601564114786,
+              "plaquetteEnergy": 0.1871515090316353,
+              "t2E": 0.9278325761058266,
+              "t2EPlaquette": 1.2265161295897253,
+              "meanPlaquette": 0.9922020204570154,
+              "unroundedCloverCharge": -0.06473518567855852
+            },
+            {
+              "step": 66,
+              "t": 2.64,
+              "cloverEnergy": 0.13518725143834348,
+              "plaquetteEnergy": 0.1795067402415647,
+              "t2E": 0.9422010676246788,
+              "t2EPlaquette": 1.2510901767876095,
+              "meanPlaquette": 0.9925205524899331,
+              "unroundedCloverCharge": -0.06688074271309512
+            },
+            {
+              "step": 68,
+              "t": 2.72,
+              "cloverEnergy": 0.12877247041661652,
+              "plaquetteEnergy": 0.17163349722756133,
+              "t2E": 0.9527102451302958,
+              "t2EPlaquette": 1.26981326588839,
+              "meanPlaquette": 0.9928486042821815,
+              "unroundedCloverCharge": -0.06941997429445686
+            },
+            {
+              "step": 70,
+              "t": 2.8000000000000003,
+              "cloverEnergy": 0.12229721549740757,
+              "plaquetteEnergy": 0.1633765522164113,
+              "t2E": 0.9588101694996756,
+              "t2EPlaquette": 1.280872169376665,
+              "meanPlaquette": 0.9931926436576534,
+              "unroundedCloverCharge": -0.0715658844423809
+            },
+            {
+              "step": 72,
+              "t": 2.88,
+              "cloverEnergy": 0.11574500011326543,
+              "plaquetteEnergy": 0.1546095221219104,
+              "t2E": 0.9600353289394687,
+              "t2EPlaquette": 1.2823932202879733,
+              "meanPlaquette": 0.9935579365782562,
+              "unroundedCloverCharge": -0.07215657810570213
+            },
+            {
+              "step": 74,
+              "t": 2.96,
+              "cloverEnergy": 0.10912456678564468,
+              "plaquetteEnergy": 0.14527844539929116,
+              "t2E": 0.9561058043491044,
+              "t2EPlaquette": 1.2728716272104295,
+              "meanPlaquette": 0.9939467314416975,
+              "unroundedCloverCharge": -0.06987783481819539
+            },
+            {
+              "step": 76,
+              "t": 3.04,
+              "cloverEnergy": 0.10247497734237254,
+              "plaquetteEnergy": 0.13544756249448509,
+              "t2E": 0.9470327506072701,
+              "t2EPlaquette": 1.2517521935490332,
+              "meanPlaquette": 0.9943563515627311,
+              "unroundedCloverCharge": -0.06382005706457693
+            },
+            {
+              "step": 78,
+              "t": 3.12,
+              "cloverEnergy": 0.09586554832262224,
+              "plaquetteEnergy": 0.12531911053249847,
+              "t2E": 0.933193593591734,
+              "t2EPlaquette": 1.219906349567553,
+              "meanPlaquette": 0.9947783703944821,
+              "unroundedCloverCharge": -0.05414122696519694
+            },
+            {
+              "step": 80,
+              "t": 3.2,
+              "cloverEnergy": 0.08938801376110667,
+              "plaquetteEnergy": 0.11520244237867508,
+              "t2E": 0.9153332609137325,
+              "t2EPlaquette": 1.179673009957633,
+              "meanPlaquette": 0.9951998982342204,
+              "unroundedCloverCharge": -0.042269801917876985
+            }
+          ]
+        },
+        {
+          "sample": 7,
+          "sourceHash": "1b11f1b275fb3161906705a9def111a8d06addf34f991fbb657fa98e460260e3",
+          "curve": [
+            {
+              "step": 0,
+              "t": 0,
+              "cloverEnergy": 1.583013229398648,
+              "plaquetteEnergy": 10.529953188232202,
+              "t2E": 0,
+              "t2EPlaquette": 0,
+              "meanPlaquette": 0.5612519504903267,
+              "unroundedCloverCharge": -0.030245941129238344
+            },
+            {
+              "step": 2,
+              "t": 0.08,
+              "cloverEnergy": 1.3052806685288614,
+              "plaquetteEnergy": 6.035392838683213,
+              "t2E": 0.008353796278584713,
+              "t2EPlaquette": 0.038626514167572575,
+              "meanPlaquette": 0.7485252983881979,
+              "unroundedCloverCharge": 0.1217355488746947
+            },
+            {
+              "step": 4,
+              "t": 0.16,
+              "cloverEnergy": 1.0552660482916723,
+              "plaquetteEnergy": 3.661879703956803,
+              "t2E": 0.02701481083626681,
+              "t2EPlaquette": 0.09374412042129417,
+              "meanPlaquette": 0.8474216790018024,
+              "unroundedCloverCharge": 0.2824658649731985
+            },
+            {
+              "step": 6,
+              "t": 0.24,
+              "cloverEnergy": 0.8590388876300498,
+              "plaquetteEnergy": 2.4097362834857123,
+              "t2E": 0.04948063992749086,
+              "t2EPlaquette": 0.13880080992877702,
+              "meanPlaquette": 0.8995943215214309,
+              "unroundedCloverCharge": 0.3908233106208361
+            },
+            {
+              "step": 8,
+              "t": 0.32,
+              "cloverEnergy": 0.7134530900783602,
+              "plaquetteEnergy": 1.71294233136752,
+              "t2E": 0.0730575964240241,
+              "t2EPlaquette": 0.1754052947320341,
+              "meanPlaquette": 0.9286274028596907,
+              "unroundedCloverCharge": 0.42759882692933554
+            },
+            {
+              "step": 10,
+              "t": 0.4,
+              "cloverEnergy": 0.6064012047200024,
+              "plaquetteEnergy": 1.2975393468165326,
+              "t2E": 0.0970241927552004,
+              "t2EPlaquette": 0.20760629549064524,
+              "meanPlaquette": 0.9459358605493099,
+              "unroundedCloverCharge": 0.4097930823215839
+            },
+            {
+              "step": 12,
+              "t": 0.48,
+              "cloverEnergy": 0.5265759337825995,
+              "plaquetteEnergy": 1.0315712825517378,
+              "t2E": 0.12132309514351092,
+              "t2EPlaquette": 0.23767402349992034,
+              "meanPlaquette": 0.9570178632270127,
+              "unroundedCloverCharge": 0.3672576323546772
+            },
+            {
+              "step": 14,
+              "t": 0.56,
+              "cloverEnergy": 0.4655895504048556,
+              "plaquetteEnergy": 0.8503434657703345,
+              "t2E": 0.14600888300696274,
+              "t2EPlaquette": 0.26666771086557695,
+              "meanPlaquette": 0.964569022259569,
+              "unroundedCloverCharge": 0.32462593655373523
+            },
+            {
+              "step": 16,
+              "t": 0.64,
+              "cloverEnergy": 0.41786875062448425,
+              "plaquetteEnergy": 0.7208869464450262,
+              "t2E": 0.17115904025578876,
+              "t2EPlaquette": 0.29527529326388274,
+              "meanPlaquette": 0.9699630438981235,
+              "unroundedCloverCharge": 0.2963318420110725
+            },
+            {
+              "step": 18,
+              "t": 0.72,
+              "cloverEnergy": 0.37979567488369564,
+              "plaquetteEnergy": 0.6252020544245345,
+              "t2E": 0.1968860778597078,
+              "t2EPlaquette": 0.32410474501367864,
+              "meanPlaquette": 0.9739499143989764,
+              "unroundedCloverCharge": 0.28879923666160473
+            },
+            {
+              "step": 20,
+              "t": 0.8,
+              "cloverEnergy": 0.348927969049235,
+              "plaquetteEnergy": 0.5527754126467166,
+              "t2E": 0.22331390019151046,
+              "t2EPlaquette": 0.35377626409389873,
+              "meanPlaquette": 0.9769676911397207,
+              "unroundedCloverCharge": 0.3011848394550253
+            },
+            {
+              "step": 22,
+              "t": 0.88,
+              "cloverEnergy": 0.32354956908927235,
+              "plaquetteEnergy": 0.4969100135150492,
+              "t2E": 0.2505567863027325,
+              "t2EPlaquette": 0.3848071144660541,
+              "meanPlaquette": 0.9792954161035368,
+              "unroundedCloverCharge": 0.32648391373804164
+            },
+            {
+              "step": 24,
+              "t": 0.96,
+              "cloverEnergy": 0.3024022204936004,
+              "plaquetteEnergy": 0.45293238418733633,
+              "t2E": 0.2786938864069021,
+              "t2EPlaquette": 0.41742248526704917,
+              "meanPlaquette": 0.9811278173255237,
+              "unroundedCloverCharge": 0.3557323863725638
+            },
+            {
+              "step": 26,
+              "t": 1.04,
+              "cloverEnergy": 0.28453320285735023,
+              "plaquetteEnergy": 0.4175087762498425,
+              "t2E": 0.30775111221051005,
+              "t2EPlaquette": 0.45157749239182965,
+              "meanPlaquette": 0.9826038009895891,
+              "unroundedCloverCharge": 0.3815738409986733
+            },
+            {
+              "step": 28,
+              "t": 1.12,
+              "cloverEnergy": 0.2692170906548278,
+              "plaquetteEnergy": 0.38832022185537407,
+              "t2E": 0.33770591851741605,
+              "t2EPlaquette": 0.4871088862953813,
+              "meanPlaquette": 0.9838199907560253,
+              "unroundedCloverCharge": 0.3993271908642092
+            },
+            {
+              "step": 30,
+              "t": 1.2,
+              "cloverEnergy": 0.255900393922532,
+              "plaquetteEnergy": 0.363772682188535,
+              "t2E": 0.36849656724844604,
+              "t2EPlaquette": 0.5238326623514903,
+              "meanPlaquette": 0.9848428049088103,
+              "unroundedCloverCharge": 0.406724959645559
+            },
+            {
+              "step": 32,
+              "t": 1.28,
+              "cloverEnergy": 0.2441535792764304,
+              "plaquetteEnergy": 0.342742688079145,
+              "t2E": 0.40002122428650355,
+              "t2EPlaquette": 0.5615496201488712,
+              "meanPlaquette": 0.9857190546633681,
+              "unroundedCloverCharge": 0.4032907464301513
+            },
+            {
+              "step": 34,
+              "t": 1.36,
+              "cloverEnergy": 0.23363326450775831,
+              "plaquetteEnergy": 0.3243973484527949,
+              "t2E": 0.43212808603354985,
+              "t2EPlaquette": 0.6000053356982896,
+              "meanPlaquette": 0.9864834438144675,
+              "unroundedCloverCharge": 0.38969896038328605
+            },
+            {
+              "step": 36,
+              "t": 1.44,
+              "cloverEnergy": 0.22405762384766212,
+              "plaquetteEnergy": 0.3080881195733547,
+              "t2E": 0.4646058888105121,
+              "t2EPlaquette": 0.6388515247473083,
+              "meanPlaquette": 0.9871629950177813,
+              "unroundedCloverCharge": 0.36728311419103254
+            },
+            {
+              "step": 38,
+              "t": 1.52,
+              "cloverEnergy": 0.21519322279626318,
+              "plaquetteEnergy": 0.2932966000633057,
+              "t2E": 0.49718242194848644,
+              "t2EPlaquette": 0.6776324647862614,
+              "meanPlaquette": 0.9877793083306964,
+              "unroundedCloverCharge": 0.33777172496182556
+            },
+            {
+              "step": 40,
+              "t": 1.6,
+              "cloverEnergy": 0.20684864135096517,
+              "plaquetteEnergy": 0.2796122203598677,
+              "t2E": 0.529532521858471,
+              "t2EPlaquette": 0.7158072841212615,
+              "meanPlaquette": 0.9883494908183401,
+              "unroundedCloverCharge": 0.303209824745958
+            },
+            {
+              "step": 42,
+              "t": 1.68,
+              "cloverEnergy": 0.198872040045216,
+              "plaquetteEnergy": 0.26672815492778545,
+              "t2E": 0.5612964458236176,
+              "t2EPlaquette": 0.7528135444681816,
+              "meanPlaquette": 0.9888863268780116,
+              "unroundedCloverCharge": 0.2659274396705895
+            },
+            {
+              "step": 44,
+              "t": 1.76,
+              "cloverEnergy": 0.19115220658377308,
+              "plaquetteEnergy": 0.25444317373497755,
+              "t2E": 0.5921130751138954,
+              "t2EPlaquette": 0.7881631749614665,
+              "meanPlaquette": 0.9893982010943736,
+              "unroundedCloverCharge": 0.22840442318119836
+            },
+            {
+              "step": 46,
+              "t": 1.84,
+              "cloverEnergy": 0.1836215664373519,
+              "plaquetteEnergy": 0.242656797605578,
+              "t2E": 0.6216691753302986,
+              "t2EPlaquette": 0.821538853973445,
+              "meanPlaquette": 0.989889300099766,
+              "unroundedCloverCharge": 0.19297454312094173
+            },
+            {
+              "step": 48,
+              "t": 1.92,
+              "cloverEnergy": 0.17625674645699407,
+              "plaquetteEnergy": 0.2313499419667037,
+              "t2E": 0.6497528701390629,
+              "t2EPlaquette": 0.8528484260660564,
+              "meanPlaquette": 0.9903604190847207,
+              "unroundedCloverCharge": 0.16146182886642182
+            },
+            {
+              "step": 50,
+              "t": 2,
+              "cloverEnergy": 0.16907225765568845,
+              "plaquetteEnergy": 0.2205535941422476,
+              "t2E": 0.6762890306227538,
+              "t2EPlaquette": 0.8822143765689904,
+              "meanPlaquette": 0.9908102669107416,
+              "unroundedCloverCharge": 0.1349295062464036
+            },
+            {
+              "step": 52,
+              "t": 2.08,
+              "cloverEnergy": 0.16210725189461786,
+              "plaquetteEnergy": 0.21031627852525545,
+              "t2E": 0.7013408145968748,
+              "t2EPlaquette": 0.9099123474116652,
+              "meanPlaquette": 0.9912368217281105,
+              "unroundedCloverCharge": 0.11366059483478137
+            },
+            {
+              "step": 54,
+              "t": 2.16,
+              "cloverEnergy": 0.1554099783626319,
+              "plaquetteEnergy": 0.20068046333318013,
+              "t2E": 0.7250807950486955,
+              "t2EPlaquette": 0.9362947697272853,
+              "meanPlaquette": 0.991638314027783,
+              "unroundedCloverCharge": 0.0973404311480205
+            },
+            {
+              "step": 56,
+              "t": 2.24,
+              "cloverEnergy": 0.14902513419587796,
+              "plaquetteEnergy": 0.19167111939475245,
+              "t2E": 0.7477485133412374,
+              "t2EPlaquette": 0.96172900867511,
+              "meanPlaquette": 0.9920137033585472,
+              "unroundedCloverCharge": 0.08531568544723825
+            },
+            {
+              "step": 58,
+              "t": 2.32,
+              "cloverEnergy": 0.14298645321657602,
+              "plaquetteEnergy": 0.1832935717257654,
+              "t2E": 0.7696102857928987,
+              "t2EPlaquette": 0.9865593204567596,
+              "meanPlaquette": 0.9923627678447599,
+              "unroundedCloverCharge": 0.07681731353598203
+            },
+            {
+              "step": 60,
+              "t": 2.4,
+              "cloverEnergy": 0.13731400916304753,
+              "plaquetteEnergy": 0.17553605441079886,
+              "t2E": 0.7909286927791538,
+              "t2EPlaquette": 1.0110876734062015,
+              "meanPlaquette": 0.9926859977328827,
+              "unroundedCloverCharge": 0.07110140633787643
+            },
+            {
+              "step": 62,
+              "t": 2.48,
+              "cloverEnergy": 0.13201455204060264,
+              "plaquetteEnergy": 0.16837361619928606,
+              "t2E": 0.8119423008705225,
+              "t2EPlaquette": 1.0355650890720889,
+              "meanPlaquette": 0.9929844326583647,
+              "unroundedCloverCharge": 0.06751509646612373
+            },
+            {
+              "step": 64,
+              "t": 2.56,
+              "cloverEnergy": 0.12708334240828006,
+              "plaquetteEnergy": 0.16177180492038934,
+              "t2E": 0.8328533928069043,
+              "t2EPlaquette": 1.0601877007262637,
+              "meanPlaquette": 0.9932595081283181,
+              "unroundedCloverCharge": 0.06551418750834717
+            },
+            {
+              "step": 66,
+              "t": 2.64,
+              "cloverEnergy": 0.12250649766836398,
+              "plaquetteEnergy": 0.1556897024987338,
+              "t2E": 0.8538212861494296,
+              "t2EPlaquette": 1.085094950535175,
+              "meanPlaquette": 0.9935129290625527,
+              "unroundedCloverCharge": 0.06465676303280575
+            },
+            {
+              "step": 68,
+              "t": 2.72,
+              "cloverEnergy": 0.11826332683907649,
+              "plaquetteEnergy": 0.15008233827225406,
+              "t2E": 0.8749593972862236,
+              "t2EPlaquette": 1.1103691714734447,
+              "meanPlaquette": 0.9937465692386561,
+              "unroundedCloverCharge": 0.0645880625042751
+            },
+            {
+              "step": 70,
+              "t": 2.8000000000000003,
+              "cloverEnergy": 0.11432840854645963,
+              "plaquetteEnergy": 0.1449025941018069,
+              "t2E": 0.8963347230042438,
+              "t2EPlaquette": 1.1360363377581661,
+              "meanPlaquette": 0.993962391912425,
+              "unroundedCloverCharge": 0.06502423670395727
+            },
+            {
+              "step": 72,
+              "t": 2.88,
+              "cloverEnergy": 0.11067331358687252,
+              "plaquetteEnergy": 0.14010268535800627,
+              "t2E": 0.9179687322149553,
+              "t2EPlaquette": 1.162067713433447,
+              "meanPlaquette": 0.9941623881100858,
+              "unroundedCloverCharge": 0.06573797389261082
+            },
+            {
+              "step": 74,
+              "t": 2.96,
+              "cloverEnergy": 0.10726795023368181,
+              "plaquetteEnergy": 0.13563527003730413,
+              "t2E": 0.9398388727674265,
+              "t2EPlaquette": 1.1883819819588437,
+              "meanPlaquette": 0.9943485304151127,
+              "unroundedCloverCharge": 0.06654674066825768
+            },
+            {
+              "step": 76,
+              "t": 3.04,
+              "cloverEnergy": 0.1040815531873352,
+              "plaquetteEnergy": 0.1314542280704626,
+              "t2E": 0.961880081936077,
+              "t2EPlaquette": 1.2148473941359872,
+              "meanPlaquette": 0.9945227404970637,
+              "unroundedCloverCharge": 0.06730349006138263
+            },
+            {
+              "step": 78,
+              "t": 3.12,
+              "cloverEnergy": 0.10108336121002034,
+              "plaquetteEnergy": 0.12751515653590598,
+              "t2E": 0.9839858713628221,
+              "t2EPlaquette": 1.2412835397831232,
+              "meanPlaquette": 0.9946868684776702,
+              "unroundedCloverCharge": 0.06788944395047652
+            },
+            {
+              "step": 80,
+              "t": 3.2,
+              "cloverEnergy": 0.09824304047551108,
+              "plaquetteEnergy": 0.12377563309267671,
+              "t2E": 1.0060087344692337,
+              "t2EPlaquette": 1.2674624828690098,
+              "meanPlaquette": 0.994842681954473,
+              "unroundedCloverCharge": 0.06820857494830193
+            }
+          ]
+        }
+      ],
+      "curve": [
+        {
+          "t": 0,
+          "t2E": 0,
+          "t2EPlaquette": 0
+        },
+        {
+          "t": 0.08,
+          "t2E": 0.008640981712890232,
+          "t2EPlaquette": 0.03887969684931904
+        },
+        {
+          "t": 0.16,
+          "t2E": 0.02813374959178087,
+          "t2EPlaquette": 0.09528020994741712
+        },
+        {
+          "t": 0.24,
+          "t2E": 0.05201124218095106,
+          "t2EPlaquette": 0.14309049060279985
+        },
+        {
+          "t": 0.32,
+          "t2E": 0.07753182071247869,
+          "t2EPlaquette": 0.1830503023868531
+        },
+        {
+          "t": 0.4,
+          "t2E": 0.10381179209549918,
+          "t2EPlaquette": 0.21850098788467492
+        },
+        {
+          "t": 0.48,
+          "t2E": 0.13065043736039636,
+          "t2EPlaquette": 0.25182944936825996
+        },
+        {
+          "t": 0.56,
+          "t2E": 0.15806769860518152,
+          "t2EPlaquette": 0.2844557690480103
+        },
+        {
+          "t": 0.64,
+          "t2E": 0.18612491851796054,
+          "t2EPlaquette": 0.3171544162045046
+        },
+        {
+          "t": 0.72,
+          "t2E": 0.2148491984704251,
+          "t2EPlaquette": 0.35035058820792253
+        },
+        {
+          "t": 0.8,
+          "t2E": 0.24422939823919262,
+          "t2EPlaquette": 0.3843158408703521
+        },
+        {
+          "t": 0.88,
+          "t2E": 0.2742458433912916,
+          "t2EPlaquette": 0.4191892385708206
+        },
+        {
+          "t": 0.96,
+          "t2E": 0.30486773133261513,
+          "t2EPlaquette": 0.4549477383183539
+        },
+        {
+          "t": 1.04,
+          "t2E": 0.33603040063778306,
+          "t2EPlaquette": 0.49147078045558856
+        },
+        {
+          "t": 1.12,
+          "t2E": 0.3676331937167204,
+          "t2EPlaquette": 0.5286193277708287
+        },
+        {
+          "t": 1.2,
+          "t2E": 0.3995539883981898,
+          "t2EPlaquette": 0.5662110441877984
+        },
+        {
+          "t": 1.28,
+          "t2E": 0.43166205868349605,
+          "t2EPlaquette": 0.6039695291545397
+        },
+        {
+          "t": 1.36,
+          "t2E": 0.4638323289532191,
+          "t2EPlaquette": 0.641553470522195
+        },
+        {
+          "t": 1.44,
+          "t2E": 0.49596180419577024,
+          "t2EPlaquette": 0.6786688365330001
+        },
+        {
+          "t": 1.52,
+          "t2E": 0.5279829842251559,
+          "t2EPlaquette": 0.7152023642871138
+        },
+        {
+          "t": 1.6,
+          "t2E": 0.559873451490701,
+          "t2EPlaquette": 0.7512591259229136
+        },
+        {
+          "t": 1.68,
+          "t2E": 0.5916513832687554,
+          "t2EPlaquette": 0.7870492242389243
+        },
+        {
+          "t": 1.76,
+          "t2E": 0.6233493484122687,
+          "t2EPlaquette": 0.8227456085772454
+        },
+        {
+          "t": 1.84,
+          "t2E": 0.6549878865790606,
+          "t2EPlaquette": 0.8584357526241354
+        },
+        {
+          "t": 1.92,
+          "t2E": 0.6865678419308894,
+          "t2EPlaquette": 0.8941459546983681
+        },
+        {
+          "t": 2,
+          "t2E": 0.7180761846567395,
+          "t2EPlaquette": 0.9298733000983014
+        },
+        {
+          "t": 2.08,
+          "t2E": 0.7494938513832041,
+          "t2EPlaquette": 0.9655973134124234
+        },
+        {
+          "t": 2.16,
+          "t2E": 0.780800765573975,
+          "t2EPlaquette": 1.0012723691192376
+        },
+        {
+          "t": 2.24,
+          "t2E": 0.8119790013666921,
+          "t2EPlaquette": 1.0368148510191968
+        },
+        {
+          "t": 2.32,
+          "t2E": 0.8430160388204647,
+          "t2EPlaquette": 1.072106304260641
+        },
+        {
+          "t": 2.4,
+          "t2E": 0.8739072925079634,
+          "t2EPlaquette": 1.1070337762368567
+        },
+        {
+          "t": 2.48,
+          "t2E": 0.9046550822576378,
+          "t2EPlaquette": 1.1415664693370473
+        },
+        {
+          "t": 2.56,
+          "t2E": 0.9352652197931588,
+          "t2EPlaquette": 1.175813004558912
+        },
+        {
+          "t": 2.64,
+          "t2E": 0.9657444858582925,
+          "t2EPlaquette": 1.2099736301207675
+        },
+        {
+          "t": 2.72,
+          "t2E": 0.9960938546441185,
+          "t2EPlaquette": 1.2441947311955226
+        },
+        {
+          "t": 2.8000000000000003,
+          "t2E": 1.0262961602065632,
+          "t2EPlaquette": 1.2784570907999204
+        },
+        {
+          "t": 2.88,
+          "t2E": 1.056312484403609,
+          "t2EPlaquette": 1.312588497452642
+        },
+        {
+          "t": 2.96,
+          "t2E": 1.0860949746357753,
+          "t2EPlaquette": 1.3463673498532165
+        },
+        {
+          "t": 3.04,
+          "t2E": 1.1156071712295872,
+          "t2EPlaquette": 1.3796447206754467
+        },
+        {
+          "t": 3.12,
+          "t2E": 1.1448395449434179,
+          "t2EPlaquette": 1.4124301495773963
+        },
+        {
+          "t": 3.2,
+          "t2E": 1.173812235723081,
+          "t2EPlaquette": 1.444904385880914
+        }
+      ],
+      "crossing": 0.38839635845886206,
+      "status": "BRACKETED_EXPLORATORY",
+      "aOverSqrtT0": 1.6045838816201607,
+      "LOverSqrtT0": 8.022919408100805
+    }
+  ]
+}

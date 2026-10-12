@@ -1,0 +1,26 @@
+MathScope.M1.Gauge.su3_shapes : MathScope.M1.Gauge.su3Basis.all (MathScope.M1.Gauge.squareShape 3) = Bool.true
+'MathScope.M1.Gauge.su3_shapes' does not depend on any axioms
+MathScope.M1.Gauge.su3_compact_form : MathScope.M1.Gauge.su3Basis.all MathScope.M1.Gauge.antiHermitian = Bool.true
+'MathScope.M1.Gauge.su3_compact_form' depends on axioms: [propext]
+MathScope.M1.Gauge.su3_complete_bracket_table :
+  MathScope.M1.Gauge.checkBracketRows 3 MathScope.M1.Gauge.su3Basis MathScope.M1.Gauge.su3BracketRows = Bool.true
+'MathScope.M1.Gauge.su3_complete_bracket_table' depends on axioms: [propext]
+MathScope.M1.Gauge.su3_embedding_brackets :
+  MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.su3L0 MathScope.M1.Gauge.su3L1 =
+      MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.su3L2 ∧
+    MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.su3L1 MathScope.M1.Gauge.su3L2 =
+        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.su3L0 ∧
+      MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.su3L2 MathScope.M1.Gauge.su3L0 =
+        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.su3L1
+'MathScope.M1.Gauge.su3_embedding_brackets' depends on axioms: [propext]
+MathScope.M1.Gauge.su3_embedding_metric :
+  MathScope.M1.Gauge.gramTrace MathScope.M1.Gauge.su3EmbeddingScaled = [[2, 0, 0], [0, 2, 0], [0, 0, 2]]
+'MathScope.M1.Gauge.su3_embedding_metric' depends on axioms: [propext]
+MathScope.M1.Gauge.su3_jacobi_fixture :
+  MathScope.M1.Gauge.bracketJacobi MathScope.M1.Gauge.su3B0 MathScope.M1.Gauge.su3B1 MathScope.M1.Gauge.su3B2 =
+    MathScope.M1.Gauge.matZero 3
+'MathScope.M1.Gauge.su3_jacobi_fixture' depends on axioms: [propext]
+MathScope.M1.Gauge.su3_link_unitary :
+  MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.su3U0) MathScope.M1.Gauge.su3U0 =
+    MathScope.M1.Gauge.matId 3
+'MathScope.M1.Gauge.su3_link_unitary' depends on axioms: [propext]

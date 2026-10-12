@@ -1,0 +1,642 @@
+{
+  "status": "RECORDED_CI_AUDIT",
+  "ci": {
+    "repository": "leegahuyn/MathScopeCompute",
+    "commit": "4410aa76760a0665f709e82f3422604a66c4056f",
+    "runId": "38213076249",
+    "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38213076249"
+  },
+  "input": {
+    "prime": "5",
+    "traceLength": 7
+  },
+  "generatedSourceSHA256": "f449fd38d54def9e37a8659415b041c7183019546cd053575ea0122bf415b036",
+  "audit": {
+    "schema": "MathScope.M3.P8.LeanAudit/1",
+    "status": "KERNEL_CHECKED_FINITE_SCOPES",
+    "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+    "checkedAt": "2026-10-12T06:36:02.712012+00:00",
+    "wholeP8Complete": false,
+    "wholeM3Complete": false,
+    "globalRHProved": false,
+    "globalBSDProved": false,
+    "formalScope": "Only the exact printed consumer declarations; no geometric comparison or infinite conjecture bridge.",
+    "targets": [
+      {
+        "name": "MathScope.P8.inherited_d_squared",
+        "type": "MathScope.P8.inherited_d_squared (v : MathScope.M1.Arithmetic.C0 ℤ) :\n  MathScope.M1.Arithmetic.d1 (MathScope.M1.Arithmetic.d0 v) = { a := 0, b := 0, c := 0 }",
+        "typeSha256": "b54e3fe93930849a9ffab33cc7ecf5cb5e44fe26488922f989070bebfc7c6ff2",
+        "axioms": {
+          "all": [
+            "propext"
+          ],
+          "standard": [
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.FINITE_CHAIN_D_SQUARED",
+        "scope": "UNIVERSAL_INTEGER_CHAIN_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean",
+        "sourceSha256": "d236be9b97c0faf73cacb3d509d85311e4129f9460525790b6dc39748234ee6d"
+      },
+      {
+        "name": "MathScope.P8.inherited_unit_contraction",
+        "type": "MathScope.P8.inherited_unit_contraction (k x u v w : ℤ) :\n  MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.posA k x) = 0 ∧\n    MathScope.M1.Arithmetic.posH1 (MathScope.M1.Arithmetic.posA k x) = x ∧\n      MathScope.M1.Arithmetic.posA k (MathScope.M1.Arithmetic.posH1 (u, v)) +\n            MathScope.M1.Arithmetic.weightH2 (MathScope.M1.Arithmetic.weightB k (u, v)) =\n          (u, v) ∧\n        MathScope.M1.Arithmetic.weightB k (MathScope.M1.Arithmetic.weightH2 w) = w",
+        "typeSha256": "372c6a5c3118b73c123fd01fee1e9458613205642be780a22ba1574a93a2b65f",
+        "axioms": {
+          "all": [
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.FINITE_UNIT_CONTRACTION",
+        "scope": "UNIVERSAL_INTEGER_CHAIN_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean",
+        "sourceSha256": "d236be9b97c0faf73cacb3d509d85311e4129f9460525790b6dc39748234ee6d"
+      },
+      {
+        "name": "MathScope.P8.inherited_precision_reduction",
+        "type": "MathScope.P8.inherited_precision_reduction (p a : ℤ) (N M : ℕ) (h : N ≤ M) : a % p ^ M % p ^ N = a % p ^ N",
+        "typeSha256": "13afe15a11fe420f0db2484d89f6d425e3fde079de18db47c25cfbaf3d18d2a5",
+        "axioms": {
+          "all": [
+            "propext"
+          ],
+          "standard": [
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.PRECISION_REDUCTION",
+        "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES",
+        "sourceFile": "lean/MathScope/P8/Finite.lean",
+        "sourceSha256": "d236be9b97c0faf73cacb3d509d85311e4129f9460525790b6dc39748234ee6d"
+      },
+      {
+        "name": "MathScope.P8.trace_cayley_hamilton",
+        "type": "MathScope.P8.trace_cayley_hamilton (A B : MathScope.P8.Mat2) :\n  MathScope.P8.mtrace (MathScope.P8.mmul A (MathScope.P8.mmul A B)) =\n    MathScope.P8.mtrace A * MathScope.P8.mtrace (MathScope.P8.mmul A B) - MathScope.P8.mdet A * MathScope.P8.mtrace B",
+        "typeSha256": "8f1d729ce67706d5689f0765cdd8c13d718fbd2a490538677d56ce826c264b72",
+        "axioms": {
+          "all": [
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.TRACE_CAYLEY_HAMILTON",
+        "scope": "UNIVERSAL_INTEGER_MATRIX_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean",
+        "sourceSha256": "d236be9b97c0faf73cacb3d509d85311e4129f9460525790b6dc39748234ee6d"
+      },
+      {
+        "name": "MathScope.P8.matrix_trace_recurrence",
+        "type": "MathScope.P8.matrix_trace_recurrence (A : MathScope.P8.Mat2) (n : ℕ) :\n  MathScope.P8.mtrace (MathScope.P8.mpow A (n + 2)) =\n    MathScope.P8.mtrace A * MathScope.P8.mtrace (MathScope.P8.mpow A (n + 1)) -\n      MathScope.P8.mdet A * MathScope.P8.mtrace (MathScope.P8.mpow A n)",
+        "typeSha256": "f75fbc4e4f15322aa64df9d789699ffeb3ec246bcfa09a5e79cd33fa416c6e19",
+        "axioms": {
+          "all": [
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.TRACE_RECURRENCE",
+        "scope": "UNIVERSAL_INTEGER_MATRIX_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean",
+        "sourceSha256": "d236be9b97c0faf73cacb3d509d85311e4129f9460525790b6dc39748234ee6d"
+      },
+      {
+        "name": "MathScope.P8.residue_625_unique",
+        "type": "MathScope.P8.residue_625_unique (x y : ℤ) (hx : -5 ≤ x ∧ x ≤ 5) (hy : -5 ≤ y ∧ y ≤ 5) (h : x % 625 = y % 625) : x = y",
+        "typeSha256": "cbf0fedc93dfdeb824ab0271b627ba444a94549b7460aac99edaca61fe9224c8",
+        "axioms": {
+          "all": [
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.BOUNDED_RECONSTRUCTION",
+        "scope": "FIXED_MODULUS_WITH_PRINTED_BOUND_HYPOTHESES",
+        "sourceFile": "lean/MathScope/P8/Finite.lean",
+        "sourceSha256": "d236be9b97c0faf73cacb3d509d85311e4129f9460525790b6dc39748234ee6d"
+      },
+      {
+        "name": "MathScope.P8.finite_euler_regrouping",
+        "type": "MathScope.P8.finite_euler_regrouping.{u_1} {R : Type u_1} [CommRing R] (p q Tp Tq : R) :\n  (1 - Tp) * (1 - p * Tp) * ((1 - Tq) * (1 - q * Tq)) = (1 - Tp) * (1 - Tq) * ((1 - p * Tp) * (1 - q * Tq))",
+        "typeSha256": "e8b6bf57360102f9492743b6daf13a0d796d47a7bfd4ef9fccfc76bcbc922818",
+        "axioms": {
+          "all": [
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.FINITE_EULER_REGROUPING",
+        "scope": "UNIVERSAL_FINITE_RING_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean",
+        "sourceSha256": "d236be9b97c0faf73cacb3d509d85311e4129f9460525790b6dc39748234ee6d"
+      },
+      {
+        "name": "MathScope.P8.Generated.point_count_certificate",
+        "type": "MathScope.P8.Generated.point_count_certificate :\n  MathScope.P8.affinePoints MathScope.P8.Generated.prime = MathScope.P8.Generated.expectedAffine ∧\n    (MathScope.P8.affinePoints MathScope.P8.Generated.prime).Nodup ∧\n      MathScope.P8.pointCount MathScope.P8.Generated.prime = 8",
+        "typeSha256": "3538355ee6547c84e8e45fc3fa9fb5c3419d6ababba2c4f2dd38c1a24b1e2fbb",
+        "axioms": {
+          "all": [
+            "propext"
+          ],
+          "standard": [
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.ELLIPTIC_F5_COUNT",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean",
+        "sourceSha256": "f449fd38d54def9e37a8659415b041c7183019546cd053575ea0122bf415b036"
+      },
+      {
+        "name": "MathScope.P8.Generated.prime_and_smooth_fixture",
+        "type": "MathScope.P8.Generated.prime_and_smooth_fixture :\n  Nat.Prime MathScope.P8.Generated.prime ∧ 64 % ↑MathScope.P8.Generated.prime ≠ 0",
+        "typeSha256": "6ec1391c73c3a5dceab1b1e84f4d9f7a44b043fe5b424df4fed41fef38f0d63d",
+        "axioms": {
+          "all": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.ELLIPTIC_F5_PRIME_SMOOTH_RESIDUE",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean",
+        "sourceSha256": "f449fd38d54def9e37a8659415b041c7183019546cd053575ea0122bf415b036"
+      },
+      {
+        "name": "MathScope.P8.Generated.trace_matrix_certificate",
+        "type": "MathScope.P8.Generated.trace_matrix_certificate :\n  MathScope.P8.tracePrefix MathScope.P8.Generated.companion 7 = [2, -2, -6, 22, -14, -82, 234] ∧\n    MathScope.P8.mtrace MathScope.P8.Generated.companion = -2 ∧\n      MathScope.P8.mdet MathScope.P8.Generated.companion = 5 ∧\n        MathScope.P8.mtrace MathScope.P8.Generated.companion =\n          ↑MathScope.P8.Generated.prime + 1 - ↑(MathScope.P8.pointCount MathScope.P8.Generated.prime)",
+        "typeSha256": "abce361e81c8d8c721cb4ce90b2cbf91faee61c6d612d3e09e9a49c69cf6a399",
+        "axioms": {
+          "all": [
+            "propext"
+          ],
+          "standard": [
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.COMPANION_TRACE_PREFIX",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean",
+        "sourceSha256": "f449fd38d54def9e37a8659415b041c7183019546cd053575ea0122bf415b036"
+      },
+      {
+        "name": "MathScope.P8.Generated.reconstruction_certificate",
+        "type": "MathScope.P8.Generated.reconstruction_certificate :\n  MathScope.P8.boundedResidues 625 5 5 = [5] ∧\n    MathScope.P8.boundedResidues 625 2 4 = [2] ∧ MathScope.P8.boundedResidues 625 1 1 = [1]",
+        "typeSha256": "67fc696c46d3840d333f952420fda18cc79adcf5f9baf5df31c308af80598892",
+        "axioms": {
+          "all": [],
+          "standard": [],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.FINITE_RESIDUE_CANDIDATE_LIST",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean",
+        "sourceSha256": "f449fd38d54def9e37a8659415b041c7183019546cd053575ea0122bf415b036"
+      },
+      {
+        "name": "MathScope.P8.Generated.finite_euler_certificate",
+        "type": "MathScope.P8.Generated.finite_euler_certificate :\n  MathScope.P8.truncatedProduct [1, 2, 5] [1, -2, -1, 12, -19, -22, 139] 7 = [1, 0, 0, 0, 0, 0, 0]",
+        "typeSha256": "7ae1bbe9b6e1dbc11ac318262f70e4fd70532010bd67c48a985fa5962699c470",
+        "axioms": {
+          "all": [
+            "propext"
+          ],
+          "standard": [
+            "propext"
+          ],
+          "custom": []
+        },
+        "propositionId": "P8.FINITE.FINITE_EULER_PREFIX",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean",
+        "sourceSha256": "f449fd38d54def9e37a8659415b041c7183019546cd053575ea0122bf415b036"
+      }
+    ],
+    "negativeControls": [
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "NegativePointCount.lean"
+        ],
+        "exitCode": 1,
+        "seconds": 2.361551,
+        "logFile": "NegativePointCount.log",
+        "logSha256": "474d2e4a8918619e7052b7698a4063712685206f94ae12cf29c122ad193692d6",
+        "name": "NegativePointCount",
+        "expectedRejected": true,
+        "rejected": true,
+        "sourceSha256": "36792923adc087f9351c8835692e23edd1f67592357f2f44187ea95b5f39062a"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "NegativeTrace.lean"
+        ],
+        "exitCode": 1,
+        "seconds": 2.289684,
+        "logFile": "NegativeTrace.log",
+        "logSha256": "c9ed6d0628ef516243eb58096959348919f950d62a81182b099e2f61e4384288",
+        "name": "NegativeTrace",
+        "expectedRejected": true,
+        "rejected": true,
+        "sourceSha256": "ba6b107d0a769c83e1ccb3522bea48a3b9ae5d49d088c9fd5b12b138bda762f8"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "NegativeResidue.lean"
+        ],
+        "exitCode": 1,
+        "seconds": 2.345588,
+        "logFile": "NegativeResidue.log",
+        "logSha256": "56f0f1332832e22164bc30664a6bd8904e85a3a901f14bdcc4cea71ca0ec38df",
+        "name": "NegativeResidue",
+        "expectedRejected": true,
+        "rejected": true,
+        "sourceSha256": "a592b618468e57ab1fd88b797e75511fc3aed38f6818315085fc6f6f28b15cb6"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "NegativeEuler.lean"
+        ],
+        "exitCode": 1,
+        "seconds": 2.362328,
+        "logFile": "NegativeEuler.log",
+        "logSha256": "7660da9bff0d42b4557ff282beee96ebd68b39b692ea5280d722e05eb5afd8f2",
+        "name": "NegativeEuler",
+        "expectedRejected": true,
+        "rejected": true,
+        "sourceSha256": "42d7bedd1eb7d8b02adf6bfd5081a1a9fc77dda20fb7102cce72f863c00929b5"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "NegativeContraction.lean"
+        ],
+        "exitCode": 1,
+        "seconds": 2.341175,
+        "logFile": "NegativeContraction.log",
+        "logSha256": "83a48b151f88f995965da92889dc6868797deefad3e4d25af2ae50b070d49000",
+        "name": "NegativeContraction",
+        "expectedRejected": true,
+        "rejected": true,
+        "sourceSha256": "795c270491310e8407f10af7d38bb91bae4fd0f63f04ee54ab0f7bfba9a22482"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "NegativeDifferential.lean"
+        ],
+        "exitCode": 1,
+        "seconds": 2.312782,
+        "logFile": "NegativeDifferential.log",
+        "logSha256": "e19a810bcad9ed6e816281f3bf626d264787d53cb7f03250be4a506b8ff45b77",
+        "name": "NegativeDifferential",
+        "expectedRejected": true,
+        "rejected": true,
+        "sourceSha256": "759364a2958ac1d8a494c34e23496535efc0400a68789727a7389462838661f3"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "NegativePrecision.lean"
+        ],
+        "exitCode": 1,
+        "seconds": 2.285124,
+        "logFile": "NegativePrecision.log",
+        "logSha256": "0a64fc16243a87b9f21cee317beb6d081e4977a4ef268de0d2a7bee341e561aa",
+        "name": "NegativePrecision",
+        "expectedRejected": true,
+        "rejected": true,
+        "sourceSha256": "36235e45760258c05b4a72547e406968c7eb03d09e5e64e591ae03cba2dfd8c2"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "NegativeFalse.lean"
+        ],
+        "exitCode": 1,
+        "seconds": 2.267643,
+        "logFile": "NegativeFalse.log",
+        "logSha256": "826152f3e2d92a203e54273db7668f03b0e11b59b4c598b2447ca530fe36d6e2",
+        "name": "NegativeFalse",
+        "expectedRejected": true,
+        "rejected": true,
+        "sourceSha256": "f8ffb3bb8bb7a18d0717dffc6b07242dfd6a6676300a031ed7b288927694a553"
+      }
+    ],
+    "builds": [
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/MathScope/M1/Arithmetic/Algebra.olean",
+          "MathScope/M1/Arithmetic/Algebra.lean"
+        ],
+        "exitCode": 0,
+        "seconds": 2.763434,
+        "logFile": "build-MathScope.M1.Arithmetic.Algebra.log",
+        "logSha256": "060c5eaeed4aa9b1a269112e65e077c011e524014f914be03d5375f0e15c5cf0",
+        "module": "MathScope.M1.Arithmetic.Algebra",
+        "sourceFile": "MathScope/M1/Arithmetic/Algebra.lean",
+        "sourceSha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1",
+        "oleanSha256": "a66c4e0288b55447ec3e1d4fab322955d792656805cd36dc7a7c9201ae2a2b38"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/MathScope/M1/Arithmetic/Precision.olean",
+          "MathScope/M1/Arithmetic/Precision.lean"
+        ],
+        "exitCode": 0,
+        "seconds": 2.487769,
+        "logFile": "build-MathScope.M1.Arithmetic.Precision.log",
+        "logSha256": "460fbdd410d57003d52cee5474fea141c24d5207797bfcc9241d1eeaf93a7ce4",
+        "module": "MathScope.M1.Arithmetic.Precision",
+        "sourceFile": "MathScope/M1/Arithmetic/Precision.lean",
+        "sourceSha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a",
+        "oleanSha256": "0550bfbe30f232b3f98c12d7f15e054bf66c01da69400b762df3ec1d700c5a39"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/MathScope/P8/Finite.olean",
+          "MathScope/P8/Finite.lean"
+        ],
+        "exitCode": 0,
+        "seconds": 2.630745,
+        "logFile": "build-MathScope.P8.Finite.log",
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "module": "MathScope.P8.Finite",
+        "sourceFile": "MathScope/P8/Finite.lean",
+        "sourceSha256": "d236be9b97c0faf73cacb3d509d85311e4129f9460525790b6dc39748234ee6d",
+        "oleanSha256": "ff3ab2e60ae23ef4dc6f660e2106d93b77910bea40576386b4239707bcb528d7"
+      },
+      {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-o",
+          ".lake/build/lib/lean/MathScope/P8/Generated.olean",
+          "MathScope/P8/Generated.lean"
+        ],
+        "exitCode": 0,
+        "seconds": 2.480655,
+        "logFile": "build-MathScope.P8.Generated.log",
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "module": "MathScope.P8.Generated",
+        "sourceFile": "MathScope/P8/Generated.lean",
+        "sourceSha256": "f449fd38d54def9e37a8659415b041c7183019546cd053575ea0122bf415b036",
+        "oleanSha256": "29e688b3a64e8b1b270e7eefa1f57bac9bd48b3bcb89a4a4ae29df1af4600caa"
+      }
+    ],
+    "consumerAudit": {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "Audit.lean"
+      ],
+      "exitCode": 0,
+      "seconds": 2.748019,
+      "logFile": "fresh-consumer-audit.log",
+      "logSha256": "4e97825a3167c3346f4865d607ac6aecfe7f7e7a1f991742dfd7fae38a158aea"
+    },
+    "sourceFiles": [
+      {
+        "path": "finite-certificates.mjs",
+        "sha256": "7ea5e3554b9edf3831232e0ef4b7f2b68a83fb57653dbe5c0e7b631b1e48d69d"
+      },
+      {
+        "path": "lean/Audit.lean",
+        "sha256": "9e63a1781c8bc9b838e6153699484fc2e479eb6660ce2dc2d2c40ac5498b2103"
+      },
+      {
+        "path": "lean/MathScope/M1/Arithmetic/Algebra.lean",
+        "sha256": "7ee2fae337174d5781d49a1c97277c82bea874b96ce218312dcebf59c0c963a1"
+      },
+      {
+        "path": "lean/MathScope/M1/Arithmetic/Precision.lean",
+        "sha256": "623277a0996b667cdaad59347539cbb37259dd8d4b60cf2d5402160268d5137a"
+      },
+      {
+        "path": "lean/MathScope/P8/Finite.lean",
+        "sha256": "d236be9b97c0faf73cacb3d509d85311e4129f9460525790b6dc39748234ee6d"
+      },
+      {
+        "path": "lean/MathScope/P8/Generated.lean",
+        "sha256": "f449fd38d54def9e37a8659415b041c7183019546cd053575ea0122bf415b036"
+      },
+      {
+        "path": "lean/NegativeContraction.lean",
+        "sha256": "795c270491310e8407f10af7d38bb91bae4fd0f63f04ee54ab0f7bfba9a22482"
+      },
+      {
+        "path": "lean/NegativeDifferential.lean",
+        "sha256": "759364a2958ac1d8a494c34e23496535efc0400a68789727a7389462838661f3"
+      },
+      {
+        "path": "lean/NegativeEuler.lean",
+        "sha256": "42d7bedd1eb7d8b02adf6bfd5081a1a9fc77dda20fb7102cce72f863c00929b5"
+      },
+      {
+        "path": "lean/NegativeFalse.lean",
+        "sha256": "f8ffb3bb8bb7a18d0717dffc6b07242dfd6a6676300a031ed7b288927694a553"
+      },
+      {
+        "path": "lean/NegativePointCount.lean",
+        "sha256": "36792923adc087f9351c8835692e23edd1f67592357f2f44187ea95b5f39062a"
+      },
+      {
+        "path": "lean/NegativePrecision.lean",
+        "sha256": "36235e45760258c05b4a72547e406968c7eb03d09e5e64e591ae03cba2dfd8c2"
+      },
+      {
+        "path": "lean/NegativeResidue.lean",
+        "sha256": "a592b618468e57ab1fd88b797e75511fc3aed38f6818315085fc6f6f28b15cb6"
+      },
+      {
+        "path": "lean/NegativeTrace.lean",
+        "sha256": "ba6b107d0a769c83e1ccb3522bea48a3b9ae5d49d088c9fd5b12b138bda762f8"
+      },
+      {
+        "path": "lean/finite-input.json",
+        "sha256": "a44343512c2f342d7fb9f84688a1f40de516a84ddebcbc775ab42f67ae4cfde4"
+      },
+      {
+        "path": "lean/lakefile.lean",
+        "sha256": "2d94c84322ebd1a47d1474811e4d6d5f3d9df23c50188cba5d76ac9474a994b4"
+      },
+      {
+        "path": "lean/lean-toolchain",
+        "sha256": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b"
+      },
+      {
+        "path": "lean/pins.json",
+        "sha256": "801b642096d18739c1ad63a7a9783e59203f460a1c058bf4c985338d027ba228"
+      },
+      {
+        "path": "tools/audit_lean.py",
+        "sha256": "df9b236d0f3fbd2f9c81ba5273945a500cffcf4514e51d971d8f439aafe07d33"
+      },
+      {
+        "path": "tools/generate_finite.mjs",
+        "sha256": "d8e03b4408918b103400a8573ed4e4403f142193e8ad18248906860b7edfc9f4"
+      }
+    ],
+    "sourceManifestSha256": "e62e61ffeed030907d141fd7b333beab9e341704d2c1c8bef246af4a49afc1cd",
+    "inputManifestSha256": "a44343512c2f342d7fb9f84688a1f40de516a84ddebcbc775ab42f67ae4cfde4",
+    "consumerManifest": [
+      {
+        "name": "MathScope.P8.inherited_d_squared",
+        "propositionId": "P8.FINITE.FINITE_CHAIN_D_SQUARED",
+        "scope": "UNIVERSAL_INTEGER_CHAIN_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean"
+      },
+      {
+        "name": "MathScope.P8.inherited_unit_contraction",
+        "propositionId": "P8.FINITE.FINITE_UNIT_CONTRACTION",
+        "scope": "UNIVERSAL_INTEGER_CHAIN_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean"
+      },
+      {
+        "name": "MathScope.P8.inherited_precision_reduction",
+        "propositionId": "P8.FINITE.PRECISION_REDUCTION",
+        "scope": "UNIVERSAL_WITH_PRINTED_HYPOTHESES",
+        "sourceFile": "lean/MathScope/P8/Finite.lean"
+      },
+      {
+        "name": "MathScope.P8.trace_cayley_hamilton",
+        "propositionId": "P8.FINITE.TRACE_CAYLEY_HAMILTON",
+        "scope": "UNIVERSAL_INTEGER_MATRIX_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean"
+      },
+      {
+        "name": "MathScope.P8.matrix_trace_recurrence",
+        "propositionId": "P8.FINITE.TRACE_RECURRENCE",
+        "scope": "UNIVERSAL_INTEGER_MATRIX_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean"
+      },
+      {
+        "name": "MathScope.P8.residue_625_unique",
+        "propositionId": "P8.FINITE.BOUNDED_RECONSTRUCTION",
+        "scope": "FIXED_MODULUS_WITH_PRINTED_BOUND_HYPOTHESES",
+        "sourceFile": "lean/MathScope/P8/Finite.lean"
+      },
+      {
+        "name": "MathScope.P8.finite_euler_regrouping",
+        "propositionId": "P8.FINITE.FINITE_EULER_REGROUPING",
+        "scope": "UNIVERSAL_FINITE_RING_IDENTITY",
+        "sourceFile": "lean/MathScope/P8/Finite.lean"
+      },
+      {
+        "name": "MathScope.P8.Generated.point_count_certificate",
+        "propositionId": "P8.FINITE.ELLIPTIC_F5_COUNT",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean"
+      },
+      {
+        "name": "MathScope.P8.Generated.prime_and_smooth_fixture",
+        "propositionId": "P8.FINITE.ELLIPTIC_F5_PRIME_SMOOTH_RESIDUE",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean"
+      },
+      {
+        "name": "MathScope.P8.Generated.trace_matrix_certificate",
+        "propositionId": "P8.FINITE.COMPANION_TRACE_PREFIX",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean"
+      },
+      {
+        "name": "MathScope.P8.Generated.reconstruction_certificate",
+        "propositionId": "P8.FINITE.FINITE_RESIDUE_CANDIDATE_LIST",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean"
+      },
+      {
+        "name": "MathScope.P8.Generated.finite_euler_certificate",
+        "propositionId": "P8.FINITE.FINITE_EULER_PREFIX",
+        "scope": "FINITE_FIXTURE",
+        "sourceFile": "lean/MathScope/P8/Generated.lean"
+      }
+    ],
+    "consumerManifestSha256": "e4bdd844faa76c01e387288cd24b3da0b03b26ed8ace4f64227a0b20104921fe",
+    "environment": {
+      "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+      "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+      "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+      "leanBinarySha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+      "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+      "lakeManifestSha256": "e57409dba33c2d9fbc7e70c8b3784b1594f6a3696e973f21e316a56ca7225cd7",
+      "importClosureSha256": "ce3d0a34cafca0efe663e7ea49509853d128f391a59894a5a5430d935c5a997a",
+      "importedModuleCount": 2308,
+      "kernelModified": false,
+      "runtimeModified": false
+    },
+    "absenceOfSorry": true,
+    "customAxioms": []
+  }
+}

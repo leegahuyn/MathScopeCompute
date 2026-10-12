@@ -27,12 +27,28 @@ jobs:
       - name: API and existing compute regression tests
         run: python -m pytest -q tests
       - name: Source-bound P7 numerical and replay tests
+        id: p7-tests
         working-directory: research-ide/mathscope-m3
         env:
           PYTHONPATH: .
-        run: python -m pytest -q tests p7/tests
+          P8_MUTATION_OUTPUT: p8/evidence/p7-mutation-ci/report.json
+        run: |
+          mkdir -p p8/evidence/p7-mutation-ci
+          set +e
+          python -m pytest -q tests p7/tests
+          result=$?
+          printf '{"schema":"MathScope.P8.TestProcessReceipt/1","pytestExitCode":%s,"commit":"%s","runId":"%s"}\n' "$result" "$GITHUB_SHA" "$GITHUB_RUN_ID" > p8/evidence/p7-mutation-ci/process.json
+          exit "$result"
       - name: Browser bundle syntax
         run: |
           for file in research-ide/mathscope-m3/web/*.js; do node --check "$file"; done
       - name: P7 3D evidence semantics
         run: node --test research-ide/mathscope-m3/tests/*.test.mjs
+      - name: Preserve actual P8 to P7 mutation audit and independent pytest exit status
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p8-p7-mutation-${{ github.sha }}
+          path: research-ide/mathscope-m3/p8/evidence/p7-mutation-ci/
+          if-no-files-found: warn
+          retention-days: 90

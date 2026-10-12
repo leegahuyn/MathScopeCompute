@@ -1,0 +1,14 @@
+MathScope.M1.Gauge.GroupLaw.inverse_cancellation.{u_1} {G : Type u_1} (L : MathScope.M1.Gauge.GroupLaw G) (a b : G) :
+  L.mul (L.inv a) (L.mul a b) = b
+'MathScope.M1.Gauge.GroupLaw.inverse_cancellation' does not depend on any axioms
+MathScope.M1.Gauge.GroupLaw.adjacent_transport_covariance.{u_1} {G : Type u_1} (L : MathScope.M1.Gauge.GroupLaw G)
+  (gx gy gz u v : G) : L.mul (L.link gx u gy) (L.link gy v gz) = L.link gx (L.mul u v) gz
+'MathScope.M1.Gauge.GroupLaw.adjacent_transport_covariance' depends on axioms: [propext]
+MathScope.M1.Gauge.GroupLaw.closed_holonomy_covariance.{u_1} {G : Type u_1} (L : MathScope.M1.Gauge.GroupLaw G)
+  (gx gy gz u v w : G) :
+  L.mul (L.mul (L.link gx u gy) (L.link gy v gz)) (L.link gz w gx) = L.link gx (L.mul (L.mul u v) w) gx
+'MathScope.M1.Gauge.GroupLaw.closed_holonomy_covariance' depends on axioms: [propext]
+MathScope.M1.Gauge.GroupLaw.closed_character_invariant.{u_1, u_2} {G : Type u_1} {V : Sort u_2}
+  (L : MathScope.M1.Gauge.GroupLaw G) (χ : G → V) (classFunction : ∀ (gx h : G), χ (L.link gx h gx) = χ h)
+  (gx gy gz u v w : G) : χ (L.mul (L.mul (L.link gx u gy) (L.link gy v gz)) (L.link gz w gx)) = χ (L.mul (L.mul u v) w)
+'MathScope.M1.Gauge.GroupLaw.closed_character_invariant' depends on axioms: [propext]

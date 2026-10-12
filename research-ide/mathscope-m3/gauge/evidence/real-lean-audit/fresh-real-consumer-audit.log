@@ -1,0 +1,67 @@
+Y7_REAL_AUDIT_BEGIN MathScope.M3.Gauge.RealSpectral.finite_weighted_exp_envelope
+MathScope.M3.Gauge.RealSpectral.finite_weighted_exp_envelope
+  (model : MathScope.M3.Gauge.RealSpectral.FiniteSpectralModel) (weight excess : Fin model.dimension → ℝ)
+  (delta time : ℝ) (hDelta : 0 < delta) (hTime : 0 ≤ time) (hWeight : ∀ (j : Fin model.dimension), 0 ≤ weight j)
+  (hExcess : ∀ (j : Fin model.dimension), 0 ≤ excess j) :
+  0 < delta ∧
+    MathScope.M3.Gauge.RealSpectral.spectralSum model weight excess delta time ≤
+      Real.exp (-delta * time) * ∑ j, weight j
+'MathScope.M3.Gauge.RealSpectral.finite_weighted_exp_envelope' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Y7_REAL_AUDIT_END MathScope.M3.Gauge.RealSpectral.finite_weighted_exp_envelope
+Y7_REAL_AUDIT_BEGIN MathScope.M3.Gauge.RealSpectral.log_ratio_lower_bound
+MathScope.M3.Gauge.RealSpectral.log_ratio_lower_bound (spacing ratio r : ℝ) (hAt : 0 < spacing) (hRatio : 0 < ratio)
+  (hUpper : ratio ≤ r) : -Real.log r / spacing ≤ -Real.log ratio / spacing
+'MathScope.M3.Gauge.RealSpectral.log_ratio_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Y7_REAL_AUDIT_END MathScope.M3.Gauge.RealSpectral.log_ratio_lower_bound
+Y7_REAL_AUDIT_BEGIN MathScope.M3.Gauge.RealSpectral.log_gap_positive
+MathScope.M3.Gauge.RealSpectral.log_gap_positive (spacing r : ℝ) (hAt : 0 < spacing) (hRatioPositive : 0 < r)
+  (hRatioBelowOne : r < 1) : 0 < -Real.log r / spacing
+'MathScope.M3.Gauge.RealSpectral.log_gap_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+Y7_REAL_AUDIT_END MathScope.M3.Gauge.RealSpectral.log_gap_positive
+Y7_REAL_AUDIT_BEGIN MathScope.M3.Gauge.RealSpectral.conservative_log_lower_bound
+MathScope.M3.Gauge.RealSpectral.conservative_log_lower_bound (spacing r : ℝ) (hAt : 0 < spacing)
+  (hRatioPositive : 0 < r) : (1 - r) / spacing ≤ -Real.log r / spacing
+'MathScope.M3.Gauge.RealSpectral.conservative_log_lower_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Y7_REAL_AUDIT_END MathScope.M3.Gauge.RealSpectral.conservative_log_lower_bound
+Y7_REAL_AUDIT_BEGIN MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_lower_bound
+MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_lower_bound
+  {model : MathScope.M3.Gauge.RealSpectral.FiniteSpectralModel}
+  (certificate : MathScope.M3.Gauge.RealSpectral.TransferEnclosure model) (j : Fin model.dimension)
+  (hNonvacuum : j ∈ certificate.excited) :
+  0 < certificate.gap ∧
+    (1 - certificate.ratio) / certificate.timeStep ≤ certificate.gap ∧ certificate.gap ≤ certificate.energy j
+'MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_lower_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Y7_REAL_AUDIT_END MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_lower_bound
+Y7_REAL_AUDIT_BEGIN MathScope.M3.Gauge.RealSpectral.TransferEnclosure.certified_gap
+MathScope.M3.Gauge.RealSpectral.TransferEnclosure.certified_gap
+  (model : MathScope.M3.Gauge.RealSpectral.FiniteSpectralModel)
+  (certificate : MathScope.M3.Gauge.RealSpectral.TransferEnclosure model) :
+  MathScope.M3.Gauge.RealSpectral.CertifiedFiniteGap model certificate
+'MathScope.M3.Gauge.RealSpectral.TransferEnclosure.certified_gap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Y7_REAL_AUDIT_END MathScope.M3.Gauge.RealSpectral.TransferEnclosure.certified_gap
+Y7_REAL_AUDIT_BEGIN MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_exp_envelope
+MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_exp_envelope
+  {model : MathScope.M3.Gauge.RealSpectral.FiniteSpectralModel}
+  (certificate : MathScope.M3.Gauge.RealSpectral.TransferEnclosure model) (weight : Fin model.dimension → ℝ) (time : ℝ)
+  (hTime : 0 ≤ time) (hWeight : ∀ j ∈ certificate.excited, 0 ≤ weight j) :
+  0 < certificate.gap ∧
+    ∑ j ∈ certificate.excited, weight j * Real.exp (-certificate.energy j * time) ≤
+      Real.exp (-certificate.gap * time) * ∑ j ∈ certificate.excited, weight j
+'MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_exp_envelope' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Y7_REAL_AUDIT_END MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_exp_envelope
+Y7_REAL_AUDIT_BEGIN MathScope.M3.Gauge.RealSpectral.four_state_certified_gap
+MathScope.M3.Gauge.RealSpectral.four_state_certified_gap :
+  MathScope.M3.Gauge.RealSpectral.CertifiedFiniteGap MathScope.M3.Gauge.RealSpectral.fourStateModel
+    MathScope.M3.Gauge.RealSpectral.fourStateEnclosure
+'MathScope.M3.Gauge.RealSpectral.four_state_certified_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+Y7_REAL_AUDIT_END MathScope.M3.Gauge.RealSpectral.four_state_certified_gap

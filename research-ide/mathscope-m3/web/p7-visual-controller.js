@@ -9,11 +9,11 @@
   try{archive=JSON.parse(document.getElementById('p7-visual-seeds').textContent);if(!Array.isArray(archive.records))throw Error('invalid archive');}
   catch(error){$('source-state').textContent='저장 예제를 읽지 못했습니다. 현재 서버 계산 결과를 기다립니다.';archive={records:[]};}
   const kinds={
-    'P7-01':['p7.elliptic_local','p7.elliptic_analytic'],
-    'P7-02':['p7.special_function','p7.taylor_remainder'],
+    'P7-01':['p7.special_function','p7.zeta_em','p7.elliptic_local','p7.elliptic_analytic','p7.elliptic_arithmetic','p7.elliptic_complex'],
+    'P7-02':['p7.special_function','p7.zeta_em','p7.euler_product','p7.elliptic_complex','p7.taylor_remainder'],
     'P7-03':['p7.zeta_zeros','p7.explicit_formula'],
     'P7-04':['p7.explicit_formula'], 'P7-05':['p7.operator_audit'],
-    'P7-06':['p7.elliptic_analytic'], 'P7-07':['p7.elliptic_local']
+    'P7-06':['p7.elliptic_analytic','p7.modular_symbols'], 'P7-07':['p7.elliptic_local','p7.elliptic_arithmetic']
   };
   const validCriterion=id=>/^P7-0[1-8]$/.test(id||'');
   const stable=value=>value===null||typeof value!=='object'?JSON.stringify(value):Array.isArray(value)?'['+value.map(stable).join(',')+']':'{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+stable(value[key])).join(',')+'}';

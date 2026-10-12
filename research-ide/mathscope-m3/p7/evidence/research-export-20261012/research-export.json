@@ -1,0 +1,83 @@
+{
+  "schema": "MathScope.M3.P7.ResearchHypothesisExport/1",
+  "status": "RESEARCH_HYPOTHESES_ONLY",
+  "assumptionList": [
+    {
+      "id": "symmetric-integer-research:operatorDomain",
+      "statement": "Dom(D) consists of sequences with sum k^2(|a_(k,+)|^2+|a_(k,-)|^2)<infinity; its adjoint domain is the same.",
+      "role": "ASSUMPTION",
+      "propositionParameter": "P0",
+      "proofBinder": "h0",
+      "leanType": "P0",
+      "formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER",
+      "mathematicalStatementProved": false
+    },
+    {
+      "id": "symmetric-integer-research:zeroSpectrum",
+      "statement": "The zeros of the det2 candidate are the signed integer spectrum with multiplicity. They are not asserted to be Riemann zeros.",
+      "role": "ASSUMPTION",
+      "propositionParameter": "P1",
+      "proofBinder": "h1",
+      "leanType": "P1",
+      "formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER",
+      "mathematicalStatementProved": false
+    },
+    {
+      "id": "symmetric-integer-research:regularizedDeterminant",
+      "statement": "Use det2(I-z D^-1), normalized by F(0)=1 and F'(0)=0, with no extra trivial-zero factor.",
+      "role": "ASSUMPTION",
+      "propositionParameter": "P2",
+      "proofBinder": "h2",
+      "leanType": "P2",
+      "formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER",
+      "mathematicalStatementProved": false
+    },
+    {
+      "id": "symmetric-integer-research:trace",
+      "statement": "The inverse-square trace is the sum of squared reciprocal eigenvalues; finite cutoffs need separate tails.",
+      "role": "ASSUMPTION",
+      "propositionParameter": "P3",
+      "proofBinder": "h3",
+      "leanType": "P3",
+      "formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER",
+      "mathematicalStatementProved": false
+    },
+    {
+      "id": "symmetric-integer-research:duality",
+      "statement": "The paired signed spectrum proposes F(z)=F(-z). A relation to xi requires a further unproved bridge.",
+      "role": "ASSUMPTION",
+      "propositionParameter": "P4",
+      "proofBinder": "h4",
+      "leanType": "P4",
+      "formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER",
+      "mathematicalStatementProved": false
+    },
+    {
+      "id": "symmetric-integer-research:positivity",
+      "statement": "The supplied identity quadratic form is positive; it does not identify any Riemann Weil-positivity form.",
+      "role": "ASSUMPTION",
+      "propositionParameter": "P5",
+      "proofBinder": "h5",
+      "leanType": "P5",
+      "formalizationStatus": "UNINTERPRETED_PROPOSITION_PARAMETER",
+      "mathematicalStatementProved": false
+    }
+  ],
+  "leanSource": "import Init\nnamespace MathScope.P7.ExportedResearch\n-- This theorem bundles user hypotheses; mathematical prose has not been translated.\n-- No conclusion about RH, BSD, an operator domain or a spectral bridge follows.\n-- assumption ledger: {\"formalizationStatus\": \"UNINTERPRETED_PROPOSITION_PARAMETER\", \"id\": \"symmetric-integer-research:operatorDomain\", \"leanType\": \"P0\", \"mathematicalStatementProved\": false, \"proofBinder\": \"h0\", \"propositionParameter\": \"P0\", \"role\": \"ASSUMPTION\", \"statement\": \"Dom(D) consists of sequences with sum k^2(|a_(k,+)|^2+|a_(k,-)|^2)<infinity; its adjoint domain is the same.\"}\n-- assumption ledger: {\"formalizationStatus\": \"UNINTERPRETED_PROPOSITION_PARAMETER\", \"id\": \"symmetric-integer-research:zeroSpectrum\", \"leanType\": \"P1\", \"mathematicalStatementProved\": false, \"proofBinder\": \"h1\", \"propositionParameter\": \"P1\", \"role\": \"ASSUMPTION\", \"statement\": \"The zeros of the det2 candidate are the signed integer spectrum with multiplicity. They are not asserted to be Riemann zeros.\"}\n-- assumption ledger: {\"formalizationStatus\": \"UNINTERPRETED_PROPOSITION_PARAMETER\", \"id\": \"symmetric-integer-research:regularizedDeterminant\", \"leanType\": \"P2\", \"mathematicalStatementProved\": false, \"proofBinder\": \"h2\", \"propositionParameter\": \"P2\", \"role\": \"ASSUMPTION\", \"statement\": \"Use det2(I-z D^-1), normalized by F(0)=1 and F'(0)=0, with no extra trivial-zero factor.\"}\n-- assumption ledger: {\"formalizationStatus\": \"UNINTERPRETED_PROPOSITION_PARAMETER\", \"id\": \"symmetric-integer-research:trace\", \"leanType\": \"P3\", \"mathematicalStatementProved\": false, \"proofBinder\": \"h3\", \"propositionParameter\": \"P3\", \"role\": \"ASSUMPTION\", \"statement\": \"The inverse-square trace is the sum of squared reciprocal eigenvalues; finite cutoffs need separate tails.\"}\n-- assumption ledger: {\"formalizationStatus\": \"UNINTERPRETED_PROPOSITION_PARAMETER\", \"id\": \"symmetric-integer-research:duality\", \"leanType\": \"P4\", \"mathematicalStatementProved\": false, \"proofBinder\": \"h4\", \"propositionParameter\": \"P4\", \"role\": \"ASSUMPTION\", \"statement\": \"The paired signed spectrum proposes F(z)=F(-z). A relation to xi requires a further unproved bridge.\"}\n-- assumption ledger: {\"formalizationStatus\": \"UNINTERPRETED_PROPOSITION_PARAMETER\", \"id\": \"symmetric-integer-research:positivity\", \"leanType\": \"P5\", \"mathematicalStatementProved\": false, \"proofBinder\": \"h5\", \"propositionParameter\": \"P5\", \"role\": \"ASSUMPTION\", \"statement\": \"The supplied identity quadratic form is positive; it does not identify any Riemann Weil-positivity form.\"}\ntheorem exportedHypotheses (P0 P1 P2 P3 P4 P5 : Prop) (h0 : P0) (h1 : P1) (h2 : P2) (h3 : P3) (h4 : P4) (h5 : P5) : P0 ∧ P1 ∧ P2 ∧ P3 ∧ P4 ∧ P5 := And.intro h0 (And.intro h1 (And.intro h2 (And.intro h3 (And.intro h4 (h5)))))\n#print exportedHypotheses\n#print axioms exportedHypotheses\nend MathScope.P7.ExportedResearch\n",
+  "leanSourceSHA256": "412383d2eecc5504c9c9580c9eab8af447a28179e7c7005e731b360e6004b134",
+  "theoremName": "MathScope.P7.ExportedResearch.exportedHypotheses",
+  "theoremMeaning": "Conjunction of the explicitly supplied proposition assumptions; no independent mathematical conclusion.",
+  "semanticTranslationPerformed": false,
+  "proseToFormalDefinitionAndBridgeObligations": [
+    "symmetric-integer-research:operatorDomain",
+    "symmetric-integer-research:zeroSpectrum",
+    "symmetric-integer-research:regularizedDeterminant",
+    "symmetric-integer-research:trace",
+    "symmetric-integer-research:duality",
+    "symmetric-integer-research:positivity"
+  ],
+  "axiomDeclarationsAdded": [],
+  "kernelCompilationExecutedForThisExport": false,
+  "binderListIsNotAPrintAxiomsReceipt": true,
+  "formalMathProofIssued": false
+}

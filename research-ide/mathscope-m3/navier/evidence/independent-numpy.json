@@ -1,0 +1,36 @@
+{
+  "schema": "MathScope.NavierM3.IndependentNumpy/1",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5"
+  },
+  "checks": [
+    {
+      "id": "numpy-vs-JS-direct-convolution",
+      "pass": true
+    },
+    {
+      "id": "numpy-vs-JS-padded-FFT",
+      "pass": true
+    },
+    {
+      "id": "numpy-finite-convection-energy-cancellation",
+      "pass": true
+    },
+    {
+      "id": "Taylor-Green-independent-exact-energy",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "measurements": {
+    "directError": 1.3456032805853004e-16,
+    "fftError": 1.7939889374840302e-16,
+    "initialMeanEnergy": 0.22378817208596546,
+    "energyCancellation": 3.469446951953614e-18,
+    "TGExactEnergy": 0.033833820809153176,
+    "TGObservedEnergy": 0.03383228702499939,
+    "TGEnergyError": 1.53378415378852e-06
+  },
+  "scope": "Independent binary64 selected finite calculation; no rigorous PDE error enclosure."
+}

@@ -14,7 +14,7 @@
     'P7-01':'국소 인자와 전역 정규화', 'P7-02':'해석적 함수와 보장 구간',
     'P7-03':'유한 높이 영점과 전체 개수', 'P7-04':'명시적 공식과 독립 소수측',
     'P7-05':'연산자 기준 예제와 반증 검사', 'P7-06':'중심값·도함수와 해석적 rank',
-    'P7-07':'유리점 배수와 남은 산술 인증', 'P7-08':'계산·가정·미해결 조건 연결'
+    'P7-07':'유리점·높이·랭크와 산술 인증', 'P7-08':'계산·가정·미해결 조건 연결'
   };
   const clone = value => value === undefined ? null : JSON.parse(JSON.stringify(value));
   const arr = value => Array.isArray(value) ? value : [];
@@ -109,9 +109,10 @@
   function compactRecord(record) {
     if (!validEnvelope(record)) throw Error('지원되는 P7 실행 기록이 필요합니다.');
     const r = record.result;
-    let result = r === null || r === undefined ? null : clone({...r, zeroCertificate:undefined, contour:undefined});
+    let result = r === null || r === undefined ? null : clone({...r, zeroCertificate:undefined, contour:undefined, evidence:obj(r.evidence)?{...r.evidence,zeros:undefined}:r.evidence});
     if (obj(r?.zeroCertificate)) result.zeroCertificate = compactZero(r.zeroCertificate);
     if (obj(r?.contour)) result = compactZero(r);
+    if (obj(r?.evidence?.zeros)) result.evidence.zeros = compactZero(r.evidence.zeros);
     const copy = clone({...record, result:undefined});
     copy.result = result;
     copy.visualRecordSchema = COMPACT;
@@ -194,7 +195,7 @@
 
   function localFactors(model, records) {
     model.axes = [numericAxis('소수 p','정수'),numericAxis('Frobenius 계수 a_p','정수'),numericAxis('국소 Euler 다항식 차수','차수')];
-    model.summary = '실제로 계산한 소수별 a_p와 국소 인자의 차수입니다. 차수 1의 나쁜 소수도 분리해 표시합니다.';
+    model.summary = '실제로 계산한 소수별 a_p와 국소 인자의 차수, 완성함수의 영점·극 변환 기록입니다. 환원 종류와 실행한 국소 알고리즘은 원본 상태를 따릅니다.';
     const seen = new Set();
     for (const record of records) {
       const r = record.result;
@@ -209,12 +210,14 @@
         row(model,curveName(record)+' / p='+item.prime,{a_p:item.a_p,eulerPolynomial:item.eulerPolynomial,kodaira:item.kodaira,localRootNumber:item.localRootNumber},item.status);
       });
       if (r.normalization || r.completedFunctionConvention) row(model,curveName(record)+' 정규화',r.normalization || r.completedFunctionConvention,'기록된 L↔Λ 계약');
+      if (r.normalizationLedger) row(model,r.normalizationLedger.sourceFunction+' → '+r.normalizationLedger.targetFunction,r.normalizationLedger,'영점·극·자명영점 변환 기록');
+      if (r.minimalModelCertificate) row(model,'최소 모델 변환과 검증',r.minimalModelCertificate,'원래 모델과 최소 모델을 함께 보존');
       if (r.global || r.localCertificate) {
         const g = r.global || r.localCertificate;
-        row(model,curveName(record)+' 전역 데이터',{conductor:g.conductor,rootNumber:g.globalRootNumber,allBadFactorsCertified:g.allBadFactorsCertified,generalTateAlgorithmImplemented:g.generalTateAlgorithmImplemented},g.status);
+        row(model,curveName(record)+' 전역 데이터',{conductor:g.conductor,rootNumber:g.rootNumber??g.globalRootNumber,allBadFactorsCertified:g.allBadFactorsCertified,generalTateAlgorithmImplemented:g.generalTateAlgorithmImplemented},g.status);
       }
     }
-    omit(model,'일반 additive reduction에 대한 전체 Tate 알고리즘과 임의 곡선의 일반 복소 L 평가는 이 화면이 제공하지 않습니다.');
+    omit(model,'국소 인자, 완성함수 값, 영점 개수는 각 실행이 인증한 범위를 따릅니다. 유한 Euler 곱은 완성함수 값과 별개입니다.');
   }
 
   function analyticValues(model, records) {
@@ -240,8 +243,20 @@
       row(model,'유한 변위 결과',r.value,r.status);
       row(model,'명시적 Taylor 나머지',r.remainderCertificate,'수치 residual로 대체하지 않음');
     }
+    for (const record of records.filter(r=>['p7.zeta_em','p7.euler_product','p7.elliptic_complex'].includes(r.request.kind))) {
+      const r=record.result, values=r.values||{[r.function??'finite Euler product']:r.value};
+      for(const [name,value]of Object.entries(values)){
+        complexBand(model,0,value,name+' at '+JSON.stringify(r.request?.s??record.request.input?.s),record,r.values?'result.values.'+name:'result.value');
+        row(model,name,value,r.status);
+      }
+      row(model,'복소 입력과 계산 제어',r.request,r.status);
+      if(r.errorAccounting)row(model,'실행한 오차 분해',r.errorAccounting,'유한 계산·급수 오차·무한 꼬리의 실제 범위를 보존');
+      if(r.completeness)row(model,'유한 Euler 곱의 누락 목록',r.completeness,'완전한 ζ 또는 L 값으로 승격하지 않음');
+      if(r.normalizationLedger)row(model,'완성함수 변환',r.normalizationLedger,'영점과 Gamma 극의 상쇄를 구분');
+      if(r.functionalEquationCheck)row(model,'함수방정식 대조',r.functionalEquationCheck,'같은 Mellin 식의 대수적 일관성 검사');
+    }
     omit(model,'이산 기록 사이를 연속 함수나 인증 surface로 보간하지 않습니다.');
-    omit(model,'일반 E의 복소 L(s) surface는 아직 지원되지 않습니다. Stage 8 ζ surface는 별도 수치 지표입니다.');
+    omit(model,'각 복소값의 보장 구간은 기록된 입력 점에 적용됩니다. Stage 8 ζ surface는 별도 수치 지표입니다.');
   }
 
   function zeroRecords(records) {
@@ -295,7 +310,7 @@
 
   function operators(model, records) {
     model.axes=[numericAxis('고유값·probe z·검사 번호 (채널별)','기록된 값'),categoryAxis('연산자 감사 채널',['정수 spectrum','det₂ 유한값','det₂ 꼬리 구간','Gamma 기준','음성대조']),numericAxis('중복도 / determinant / 거부 여부','채널별 단위')];
-    model.summary='D eₙ=n eₙ의 유한 압축, det₂ 꼬리와 실제 음성대조 결과입니다. 정수 spectrum은 Riemann 영점 spectrum이 아닙니다.';
+    model.summary='등록된 연산자·정의역·가설과 실제 유한 절단의 다항식, trace, 양성, 정규화, 반증 결과를 연결합니다.';
     for(const record of only(records,'p7.operator_audit')) {
       const r=record.result;
       arr(r.fixture?.claims?.spectrum).forEach((item,i)=>point(model,[approximate(item.value),0,approximate(item.multiplicity)],'λ='+item.value,item,record,'result.fixture.claims.spectrum.'+i));
@@ -309,7 +324,16 @@
         if(typeof control.rejected === 'boolean') point(model,[i+1,4,control.rejected?1:0],control.id,control,record,'result.negativeControls.'+i,control.rejected?'comparison':'negative');
         row(model,control.id,control,control.rejected===true?'실제 음성대조 거부':'대조 결과 확인 필요');
       });
-      row(model,'operator와 domain',r.reference || r.candidateDefinition,r.researchStatus);
+      if(r.registration){
+        row(model,'사용자 operator와 Hilbert space',{operator:r.registration.operator,hilbertSpace:r.registration.hilbertSpace},r.researchStatus);
+        row(model,'등록된 전역 가설',r.registeredHypotheses,'가설과 실행된 유한 검사를 구분');
+        arr(r.truncationValidations).forEach((check,i)=>{
+          const truncation=r.registration.truncations[i];row(model,check.id,check,check.status);
+          if(check.pass)arr(truncation?.spectrum).forEach((item,j)=>point(model,[approximate(item.value),0,approximate(item.multiplicity)],check.id+' λ='+item.value,item,record,'result.registration.truncations.'+i+'.spectrum.'+j));
+        });
+        row(model,'유한 절단 사이의 비교',r.truncationComparisons,r.finitePassMeaning);
+      }
+      row(model,'operator와 domain',r.reference || r.candidateDefinition || r.registration,r.researchStatus);
       row(model,'유한 계약 검사',r.finiteValidation?.checks,r.finiteValidation?.status);
       row(model,'trace D⁻²',r.analyticReferenceChecks?.traceInverseSquare,'유한합과 무한 꼬리 분리');
       row(model,'spectrum≠비자명 영점 증거',r.analyticReferenceChecks?.spectralZetaDoesNotDetermineNontrivialZeroSpectrum,'별도 반례');
@@ -334,6 +358,7 @@
       row(model,'L↔Λ 변환',r.normalization,'Λ′=0이어도 L′=0으로 바꾸지 않음');
       row(model,'유한 합과 명시적 tail',r.errorBudget,'서로 다른 오차 항 유지');
     }
+    for(const record of only(records,'p7.modular_symbols')){const r=record.result;row(model,curveName(record)+' 정확한 중앙 symbol',r.exactCentralSymbol,'임의 비영 유리 배율 · Néron 주기로 정규화한 값 아님');row(model,'실제 modular-symbol 연산과 별도 경로',r.proofChannels,'parity와 도함수는 이 계산에서 실행하지 않음');row(model,'유리수 선형대수·Sturm 식별',r.exactChecks,'PINNED PARI + 독립 Fraction 검사');row(model,'이 결과의 해석적 귀결',r.analyticConclusion,'중앙값 0만으로 exact rank1을 주장하지 않음');}
     omit(model,'0을 포함하는 작은 ball은 vanishing 증명이 아닙니다.');
     omit(model,'해석적 rank 결과에서 산술 rank·refined BSD·universal BSD를 추론하지 않습니다.');
   }
@@ -341,7 +366,7 @@
   function arithmetic(model, records) {
     model.axes=[numericAxis('x(nP)','유리수의 표시 근사'),numericAxis('y(nP)','유리수의 표시 근사'),numericAxis('정확히 계산한 배수 n','정수')];
     model.summary='서버에서 정확히 계산한 유리점 nP의 좌표와 배수입니다. 선은 배수의 순서만 연결하며 곡선 위의 연속 경로가 아닙니다.';
-    for(const record of only(records,'p7.elliptic_local')) {
+    for(const record of records.filter(r=>['p7.elliptic_local','p7.elliptic_arithmetic'].includes(r.request.kind))) {
       const r=record.result,pe=r.pointEvidence;
       let previous=null;
       arr(pe?.firstFiveMultiples).forEach((item,i)=>{
@@ -359,7 +384,8 @@
       row(model,'독립 산술 rank 범위',r.arithmeticRank,'upperBound=null은 미계산이며 0이 아님');
       row(model,'torsion',r.rationalTorsion,'정확한 reduction 근거');
       const a=r.arithmeticRank || {};
-      for(const key of ['canonicalHeight','realPeriod','regulator','saturation','sha'])row(model,key,a[key]??null,a[key]==='not-computed'?'NOT_COMPUTED':'원본 상태 유지');
+      for(const key of ['canonicalHeight','realPeriod','regulator','saturation','sha']){const value=r[key]??a[key]??null;row(model,key,value,value?.status??(value==='not-computed'?'NOT_COMPUTED':'원본 상태 유지'));}
+      if(r.bsdLedger)row(model,'BSD 항별 알려짐·조건부·미해결',r.bsdLedger,'rank equality와 leading term을 구분');
       if(a.upperBound===null || a.upperBound===undefined)omit(model,'산술 rank 상계는 알려진 숫자로 채우지 않습니다. descent/Selmer 인증이 남아 있습니다.');
     }
     omit(model,'높이·regulator·period·saturation·Sha의 빈 값은 원본 OPEN/NOT_COMPUTED 상태입니다.');
@@ -385,6 +411,17 @@
         point(model,[4,i,-1-j],dep.id,dep,record,'result.unresolvedRHBridges.'+j,'open');
         line(model,[[2,i,0],[4,i,-1-j]],'미해결 연구 연결',dep,record,'result.unresolvedRHBridges.'+j,'open');
       });
+      if(r.resultType){
+        row(model,'결과 유형',r.resultType,r.typeMeanings?.[r.resultType]??'서로 다른 결과 범위');
+        row(model,'정확한 대상의 결론',r.claim,'이 곡선 또는 유한 높이에 한정');
+        row(model,'계수·소수·영점 목록',r.completeness,'새 계산과 대조한 누락 검사');
+        row(model,'결과 승격 검사',r.promotionAudit,'유한체·특정 곡선 결과는 보편 추측을 증명하지 않음');
+        arr(r.researchExport?.assumptionList).forEach((dep,j)=>{
+          point(model,[4,i,1+j],dep.id+' · '+dep.role,dep,record,'result.researchExport.assumptionList.'+j,'open');
+          line(model,[[2,i,0],[4,i,1+j]],'명시된 연구 가정',dep,record,'result.researchExport.assumptionList.'+j,'open');
+        });
+        row(model,'Lean 연구 내보내기',r.researchExport,'임의 문장은 해석되지 않은 Prop 매개변수로 남으며 RH/BSD의 새 증명이 아님');
+      }
       row(model,record.request.kind,{recordSHA256:record.recordSHA256,scope:r.scope,analyticRank:r.analyticRank,arithmeticRank:r.arithmeticRank},'원본 scope의 false/null을 그대로 보존');
     });
     const criteria=arr(capabilities?.progress?.criteria || capabilities?.criteria);
@@ -406,9 +443,9 @@
     }
     if(supplied.length>32)omit(model,'최근 32개 기록만 표시합니다.');
     const relevant={
-      'P7-01':['p7.elliptic_local','p7.elliptic_analytic'], 'P7-02':['p7.special_function','p7.taylor_remainder'],
+      'P7-01':['p7.special_function','p7.zeta_em','p7.elliptic_local','p7.elliptic_analytic','p7.elliptic_arithmetic','p7.elliptic_complex'], 'P7-02':['p7.special_function','p7.zeta_em','p7.euler_product','p7.elliptic_complex','p7.taylor_remainder'],
       'P7-03':['p7.zeta_zeros','p7.explicit_formula'], 'P7-04':['p7.explicit_formula'],
-      'P7-05':['p7.operator_audit'], 'P7-06':['p7.elliptic_analytic'], 'P7-07':['p7.elliptic_local']
+      'P7-05':['p7.operator_audit'], 'P7-06':['p7.elliptic_analytic','p7.modular_symbols'], 'P7-07':['p7.elliptic_local','p7.elliptic_arithmetic']
     }[criterion];
     const selected=relevant?valid.filter(r=>relevant.includes(r.request.kind)):valid;
     for(const record of selected)model.provenance.push(source(record,'result'));

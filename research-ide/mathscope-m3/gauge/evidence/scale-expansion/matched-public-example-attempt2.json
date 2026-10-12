@@ -1,0 +1,224 @@
+{
+  "schema": "MathScope.M3.GaugeFreshStudyExample/1",
+  "example": "y5-matched-reference-study",
+  "request": {
+    "kind": "ensemble-study",
+    "seed": "m3-matched-browser-study-v1",
+    "references": [
+      {
+        "id": "s216",
+        "beta": 2.16,
+        "Ns": 5,
+        "Nt": 10
+      },
+      {
+        "id": "s230",
+        "beta": 2.3,
+        "Ns": 6,
+        "Nt": 12
+      },
+      {
+        "id": "s240",
+        "beta": 2.4,
+        "Ns": 8,
+        "Nt": 16
+      }
+    ],
+    "models": [
+      {
+        "id": "a216",
+        "role": "A_SWEEP",
+        "targetDelta": 1.25,
+        "beta": 2.16,
+        "Ns": 5,
+        "Nt": 10,
+        "referenceScaleId": "s216"
+      },
+      {
+        "id": "a230",
+        "role": "A_SWEEP",
+        "targetDelta": 1.25,
+        "beta": 2.3,
+        "Ns": 6,
+        "Nt": 12,
+        "referenceScaleId": "s230"
+      },
+      {
+        "id": "a240",
+        "role": "A_SWEEP",
+        "targetDelta": 1.25,
+        "beta": 2.4,
+        "Ns": 8,
+        "Nt": 16,
+        "referenceScaleId": "s240"
+      }
+    ],
+    "scaleSampler": {
+      "samples": 8,
+      "burnIn": 16
+    },
+    "channelSampler": {
+      "samples": 64,
+      "burnIn": 16
+    },
+    "flow": {
+      "maxTime": 1.28,
+      "step": 0.08
+    },
+    "bootstrap": {
+      "replicates": 32,
+      "scaleBlock": 2,
+      "channelBlock": 8
+    },
+    "operators": {
+      "smearSteps": [
+        0,
+        2,
+        4
+      ],
+      "alpha": 0.5
+    },
+    "matching": {
+      "referenceL": 8,
+      "referenceT": 16,
+      "matchingRelativeTolerance": 0.1
+    }
+  },
+  "status": "COMPLETED",
+  "seconds": 37.559,
+  "sourceHash": "2432dd5e23f8f75ad886c95c0a470bd835e41823758fd423d3aa98a130d7e7a0",
+  "resultHash": "52c37783cde38fc10af8d16222087f0c27f6eea5912545cb782921b9a4bfc2a7",
+  "newExecution": true,
+  "rows": [
+    {
+      "id": "a216",
+      "scaleStatus": "INDEPENDENT_REFERENCE_SCALE_MEASURED",
+      "scaleDiagnostics": "PROVISIONAL_REFERENCE_DIAGNOSTICS",
+      "mass": {
+        "value": 1.0479931684115358,
+        "unit": "1/sqrt(t0)",
+        "uncertainty": {
+          "valid": 15,
+          "total": 32,
+          "required": 26,
+          "status": "INSUFFICIENT_VALID_BOOTSTRAPS",
+          "lower": null,
+          "upper": null,
+          "standardError": null,
+          "rigorous": false
+        },
+        "status": "UNRESOLVED_CHANNEL_MASS",
+        "source": "Predeclared operator and first fit window; no post-hoc best-window selection",
+        "jointError": "Independent scale and channel block-bootstrap draws are paired without target mass input.",
+        "globalGapLowerBound": false
+      },
+      "target": {
+        "targetDelta": 1.25,
+        "measuredChannelMass": 1.0479931684115358,
+        "unit": "1/sqrt(t0)",
+        "uncertainty": {
+          "valid": 15,
+          "total": 32,
+          "required": 26,
+          "status": "INSUFFICIENT_VALID_BOOTSTRAPS",
+          "lower": null,
+          "upper": null,
+          "standardError": null,
+          "rigorous": false
+        },
+        "status": "TARGET_UNRESOLVED",
+        "equalityForced": false,
+        "reweightingUsed": false,
+        "newActualChainExecuted": true,
+        "warning": "Interval compatibility is a finite-data calibration outcome; it is not exact equality, a gap theorem, or validation of continuum scaling."
+      }
+    },
+    {
+      "id": "a230",
+      "scaleStatus": "INDEPENDENT_REFERENCE_SCALE_MEASURED",
+      "scaleDiagnostics": "PROVISIONAL_REFERENCE_DIAGNOSTICS",
+      "mass": {
+        "value": null,
+        "unit": "1/sqrt(t0)",
+        "uncertainty": {
+          "valid": 19,
+          "total": 32,
+          "required": 26,
+          "status": "INSUFFICIENT_VALID_BOOTSTRAPS",
+          "lower": null,
+          "upper": null,
+          "standardError": null,
+          "rigorous": false
+        },
+        "status": "UNRESOLVED_CHANNEL_MASS",
+        "source": "Predeclared operator and first fit window; no post-hoc best-window selection",
+        "jointError": "Independent scale and channel block-bootstrap draws are paired without target mass input.",
+        "globalGapLowerBound": false
+      },
+      "target": {
+        "targetDelta": 1.25,
+        "measuredChannelMass": null,
+        "unit": "1/sqrt(t0)",
+        "uncertainty": {
+          "valid": 19,
+          "total": 32,
+          "required": 26,
+          "status": "INSUFFICIENT_VALID_BOOTSTRAPS",
+          "lower": null,
+          "upper": null,
+          "standardError": null,
+          "rigorous": false
+        },
+        "status": "TARGET_UNRESOLVED",
+        "equalityForced": false,
+        "reweightingUsed": false,
+        "newActualChainExecuted": true,
+        "warning": "Interval compatibility is a finite-data calibration outcome; it is not exact equality, a gap theorem, or validation of continuum scaling."
+      }
+    },
+    {
+      "id": "a240",
+      "scaleStatus": "INDEPENDENT_REFERENCE_SCALE_MEASURED",
+      "scaleDiagnostics": "PROVISIONAL_REFERENCE_DIAGNOSTICS",
+      "mass": {
+        "value": 1.0224287013905782,
+        "unit": "1/sqrt(t0)",
+        "uncertainty": {
+          "valid": 23,
+          "total": 32,
+          "required": 26,
+          "status": "INSUFFICIENT_VALID_BOOTSTRAPS",
+          "lower": null,
+          "upper": null,
+          "standardError": null,
+          "rigorous": false
+        },
+        "status": "UNRESOLVED_CHANNEL_MASS",
+        "source": "Predeclared operator and first fit window; no post-hoc best-window selection",
+        "jointError": "Independent scale and channel block-bootstrap draws are paired without target mass input.",
+        "globalGapLowerBound": false
+      },
+      "target": {
+        "targetDelta": 1.25,
+        "measuredChannelMass": 1.0224287013905782,
+        "unit": "1/sqrt(t0)",
+        "uncertainty": {
+          "valid": 23,
+          "total": 32,
+          "required": 26,
+          "status": "INSUFFICIENT_VALID_BOOTSTRAPS",
+          "lower": null,
+          "upper": null,
+          "standardError": null,
+          "rigorous": false
+        },
+        "status": "TARGET_UNRESOLVED",
+        "equalityForced": false,
+        "reweightingUsed": false,
+        "newActualChainExecuted": true,
+        "warning": "Interval compatibility is a finite-data calibration outcome; it is not exact equality, a gap theorem, or validation of continuum scaling."
+      }
+    }
+  ],
+  "limitStatus": "EXTRAPOLATION_WITHHELD"
+}

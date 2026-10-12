@@ -1,0 +1,127 @@
+{
+  "schema": "MathScope.M3.GaugeResult/1",
+  "version": "m3-gauge-1.0.0",
+  "request": {
+    "kind": "finite-transfer",
+    "diagonal": [
+      "1",
+      "1/2",
+      "1/4",
+      "1/8"
+    ],
+    "vacuumIndices": [
+      0
+    ],
+    "ratioUpper": "1/2",
+    "at": "1",
+    "modelId": "m3-four-state-diagonal-transfer",
+    "cutoff": "Complete finite C^4 model; no uncut lattice or continuum claim"
+  },
+  "status": "EXACT_RATIONAL_FINITE_CERTIFICATE",
+  "source": {
+    "diagonal": [
+      "1",
+      "1/2",
+      "1/4",
+      "1/8"
+    ],
+    "vacuumIndices": [
+      0
+    ],
+    "ratioUpper": "1/2",
+    "at": "1/1",
+    "modelId": "m3-four-state-diagonal-transfer",
+    "cutoff": "Complete finite C^4 model; no uncut lattice or continuum claim",
+    "modelSourceHash": null
+  },
+  "sourceHash": "c200503f15d5e78c700addeb0a0f8ca88efd75af620856261682ce50162494f4",
+  "dimension": 4,
+  "fullNonvacuumSpaceControlled": true,
+  "vacuumDimension": 1,
+  "checks": {
+    "positive": true,
+    "selfAdjoint": "EXACT_DIAGONAL",
+    "fullBasisEnumerated": true,
+    "fullVacuumRemoved": true,
+    "allExcitedRatiosBounded": true
+  },
+  "excited": [
+    {
+      "index": 1,
+      "exactRatio": "1/2",
+      "energyEstimate": 0.6931471805599453
+    },
+    {
+      "index": 2,
+      "exactRatio": "1/4",
+      "energyEstimate": 1.3862943611198906
+    },
+    {
+      "index": 3,
+      "exactRatio": "1/8",
+      "energyEstimate": 2.0794415416798357
+    }
+  ],
+  "gap": {
+    "symbolicLowerBound": "-log(1/2)/(1/1)",
+    "floatDisplay": 0.6931471805599453,
+    "floatDisplayIsCertified": false,
+    "conservativeExactRationalLower": "1/2",
+    "conservativeExactRationalValue": 0.5,
+    "elementaryBridge": "-log r >= 1-r for 0<r<1. The rational certificate verifies (1-r)/at exactly; the logarithmic bridge is a mathematical theorem, not a Float64 enclosure."
+  },
+  "proofStatus": "EXACT_ARITHMETIC_CHECK; NEW_LEAN_KERNEL_RECEIPT_REQUIRED",
+  "scope": "Complete finite C^4 model; no uncut lattice or continuum claim",
+  "continuumGap": "OPEN_CONTINUUM",
+  "kind": "finite-transfer",
+  "references": [
+    {
+      "id": "YM-R06",
+      "url": "https://arxiv.org/abs/0802.1862",
+      "title": "Vandoren and van Nieuwenhuizen, Lectures on instantons",
+      "use": "BPST connection and curvature conventions; marginal integrals are derived from the displayed density"
+    },
+    {
+      "id": "YM-R07",
+      "url": "https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf",
+      "title": "David Tong, Lattice Gauge Theory",
+      "use": "Finite Wilson model, Haar links and path conventions inherited from M2"
+    },
+    {
+      "id": "YM-R08",
+      "url": "https://doi.org/10.1007/BF01614090",
+      "title": "Lüscher, Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories",
+      "use": "Model-specific external hypotheses remain in the inherited M2 reflection audit"
+    },
+    {
+      "id": "YM-R10",
+      "url": "https://arxiv.org/abs/hep-lat/0306017",
+      "title": "Wolff, Monte Carlo errors with less errors",
+      "use": "Autocorrelation-aware statistical analysis; no rigorous confidence claim for a finite PRNG chain"
+    },
+    {
+      "id": "YM-R11",
+      "url": "https://arxiv.org/abs/0902.1265",
+      "title": "Blossier et al., On the generalized eigenvalue method for energies and matrix elements in lattice field theory",
+      "use": "Observable-basis GEVP and excited-state contamination"
+    },
+    {
+      "id": "YM-R12",
+      "url": "https://arxiv.org/abs/1006.4518",
+      "title": "Lüscher, Properties and uses of the Wilson flow in lattice QCD",
+      "use": "Flow time is an independent observation parameter; exact stationary BPST flow is distinguished from a general flow solver"
+    },
+    {
+      "id": "BLUEPRINT",
+      "title": "MathScope Research IDE Blueprint v1, pages 45–50 and 74–76",
+      "use": "The original 24 Y5/Y6/Y7 criteria, without weakening the acceptance conditions"
+    }
+  ],
+  "proofBoundary": {
+    "finite": "The model and exact kernel scope are explicitly listed per result.",
+    "conditional": "Every reconstruction, existence and full-spectrum premise remains visible.",
+    "numerical": "Float64 fields and correlated finite-chain estimates do not issue new kernel certificates.",
+    "continuum": "OPEN_CONTINUUM",
+    "clayProblemSolved": false
+  }
+}

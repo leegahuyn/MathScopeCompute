@@ -1,0 +1,4 @@
+J(v)={my(t=type(v));if(t=="t_VEC"||t=="t_COL",return(Str("[",strjoin(vector(#v,i,J(v[i])),","),"]")));if(t=="t_INT"||t=="t_FRAC",return(Str("\"",v,"\"")));error("unsupported_json_type");};
+B(N)={my(d=if(N==0,0,poldegree(N,x)));if(d>64,error("map_degree_budget"));vector(d+1,i,my(c=polcoef(N,i-1,x),e=if(c==0,0,poldegree(c,y)));if(e>64,error("map_degree_budget"));vector(e+1,j,polcoef(c,j-1,y)));};
+M(P)={my(D=1);for(i=0,poldegree(P,x),D=lcm(D,denominator(polcoef(P,i,x))));[B(P*D),B(D)];};
+iferr({default(realprecision,80);setrand(1);A=[(0),(0),(1),(-1),(0)];E0=ellinit(A);v=0;E=ellminimalmodel(E0,&v);Q0=[];Q=vector(#Q0,i,ellchangepoint(Q0[i],v));G=ellglobalred(E);F=factor(abs(E.disc));L=vector(matsize(F)[1],i,my(p=F[i,1]);[p,F[i,2],elllocalred(E,p),ellrootno(E,p),ellap(E,p)]);R=[];D=[];T=[];OUT=[version(),A,[E.a1,E.a2,E.a3,E.a4,E.a6],v,[G[1],G[3],ellrootno(E)],L,ellan(E,2),R,D,T,Q];print("MATHSCOPE_P7_EXACT_V1=",J(OUT));},err,print("MATHSCOPE_P7_ERROR");quit(1));quit(0);

@@ -1,0 +1,157 @@
+name: M3 gauge and fluid execution workspaces
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research-ide/**'
+      - '.github/workflows/m3-execution-workspaces.yml'
+      - '.github/workflows/gauge-real-spectral-verification.yml'
+  pull_request:
+    paths:
+      - 'research-ide/**'
+      - '.github/workflows/m3-execution-workspaces.yml'
+      - '.github/workflows/gauge-real-spectral-verification.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  finite-execution-contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record the actual runtime
+        run: |
+          M3_CI_OUTPUT="$RUNNER_TEMP/m3-execution-evidence"
+          printf '%s\n' "M3_CI_OUTPUT=$M3_CI_OUTPUT" >> "$GITHUB_ENV"
+          mkdir -p "$M3_CI_OUTPUT"
+          node --version | tee "$M3_CI_OUTPUT/node-version.txt"
+          python --version | tee "$M3_CI_OUTPUT/python-version.txt"
+      - name: Install the independent Fourier reference dependency
+        run: python -m pip install numpy==2.3.5
+
+      # Check committed evidence before runtime tests write fresh local receipts.
+      # A stale release must fail here; CI must not silently rebuild it to pass.
+      - name: Verify the shipped Worker and display contract build
+        run: python -B research-ide/mathscope-m3/web/build_extended.py --check 2>&1 | tee "$M3_CI_OUTPUT/bundle-check.log"
+      - name: Recheck frozen M2 input bytes without executing M2 graphs
+        run: |
+          python -B - <<'PY' 2>&1 | tee "$M3_CI_OUTPUT/navier-inheritance-check.json"
+          from pathlib import Path
+          import hashlib, json, runpy
+          root = Path.cwd()
+          definitions = runpy.run_path('research-ide/mathscope-m3/navier/tests/build-source-inheritance.py')
+          record = json.loads(Path('research-ide/mathscope-m3/navier/source-inheritance.json').read_text())
+          values = {}
+          for name, relative in definitions['PATHS'].items():
+              raw = (root / relative).read_bytes()
+              digest = hashlib.sha256(raw).hexdigest()
+              assert digest == definitions['EXPECTED'][name], f'Frozen M2 receipt changed: {relative}'
+              assert record['files'][name] == {'path': relative, 'sha256': digest, 'bytes': len(raw)}
+              values[name] = json.loads(raw)
+          checks = []
+          for name in ('initialManifest', 'lateImportManifest'):
+              for relative, expected in values['source4'][name]['files'].items():
+                  actual = hashlib.sha256((root / relative).read_bytes()).hexdigest()
+                  assert actual == expected, f'Frozen M2 execution source changed: {relative}'
+                  checks.append({'path': relative, 'expected': expected, 'actual': actual, 'pass': True})
+          assert checks and record['sourceFileChecks'] == checks
+          assert record['allReferencedSourceFilesMatch'] is True
+          assert record['actualN6CorrectionApplied'] is False
+          assert record['sourceReconstructionComplete'] is False
+          print(json.dumps({'status': 'PASS', 'frozenReceipts': len(values), 'sourceFileChecks': len(checks), 'oldM2ComputationsRerun': False}))
+          PY
+      - name: Check the current Navier implementation pin and exported inheritance
+        run: |
+          node --input-type=module - <<'JS' 2>&1 | tee "$M3_CI_OUTPUT/navier-implementation-check.json"
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import {createHash} from 'node:crypto';
+          import {implementationPin} from './research-ide/mathscope-m3/navier/implementation-pin.mjs';
+          import {inheritedSource} from './research-ide/mathscope-m3/navier/source-inheritance.mjs';
+          const sha=value=>createHash('sha256').update(value).digest('hex');
+          const stable=value=>Array.isArray(value)?'['+value.map(stable).join(',')+']':value&&typeof value==='object'?'{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+stable(value[key])).join(',')+'}':JSON.stringify(value);
+          const expected=['galerkin.mjs','corrections.mjs','localization.mjs','index.mjs','source-mean-map.mjs','source-inheritance.mjs','flow-observations.mjs','source-current-state.mjs','source-pressure.mjs','source-higher-jets.mjs','source-signed-stress.mjs','source-current-evidence.mjs'];
+          assert.deepEqual(implementationPin.files.map(row=>row.path),expected.map(name=>'research-ide/mathscope-m3/navier/'+name));
+          for(const row of implementationPin.files){const raw=fs.readFileSync(row.path);assert.equal(raw.length,row.bytes,row.path);assert.equal(sha(raw),row.sha256,row.path);}
+          assert.equal(sha(stable(implementationPin.files)),implementationPin.sha256);
+          const {sourceFileChecks,...small}=JSON.parse(fs.readFileSync('research-ide/mathscope-m3/navier/source-inheritance.json','utf8'));
+          small.sourceFileCheckCount=sourceFileChecks.length;
+          assert.deepEqual(inheritedSource,small);
+          console.log(JSON.stringify({status:'PASS',implementationFiles:implementationPin.files.length,implementationSHA256:implementationPin.sha256}));
+          JS
+      - name: Reproduce the publisher escape mutation and preserve exact proof source bytes
+        run: node research-ide/mathscope-m3/gauge/tests/verify_transport.mjs 2>&1 | tee "$M3_CI_OUTPUT/gauge-source-transport.log"
+      - name: Reject changed Lean sources, compiler logs and import closures during packaging
+        run: python -B research-ide/mathscope-m3/gauge/tests/verify_package_guards.py 2>&1 | tee "$M3_CI_OUTPUT/gauge-package-guards.log"
+      - name: Reject changed original criteria, pages, SHA bindings and completion claims
+        run: python -B research-ide/mathscope-m3/web/tests/test_extended_build.py 2>&1 | tee "$M3_CI_OUTPUT/builder-tests.log"
+      - name: Execute the actual static Worker and reject forged replay and display records
+        run: node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/extended-worker.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/worker-tests.tap"
+      - name: Verify flow coordinates, angular velocity, path semantics and view invariance
+        run: node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/extended-flow-view.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/flow-view-tests.tap"
+      - name: Check lossless production packaging and graph provenance
+        run: |
+          node research-ide/mathscope-m3/gauge/experiments/package-study-record.mjs --check 2>&1 | tee "$M3_CI_OUTPUT/gauge-study-package.json"
+          node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/gauge-study-view.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/gauge-study-view.tap"
+      - name: Test gauge models, independent chains, lattice observations and Wilson flow
+        run: node --test --test-reporter=tap research-ide/mathscope-m3/gauge/tests/*.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/gauge-tests.tap"
+      - name: Run every public gauge example and independently recompute saved correlations
+        run: node research-ide/mathscope-m3/gauge/verify_runtime.mjs 2>&1 | tee "$M3_CI_OUTPUT/gauge-runtime.log"
+      - name: Execute Navier source guards, Galerkin acceptance checks and every replay example
+        run: node research-ide/mathscope-m3/navier/tests/run.mjs 2>&1 | tee "$M3_CI_OUTPUT/navier-acceptance.json"
+      - name: Compare stored-state paths with independent exact flow and energy identities
+        run: |
+          node --test --test-reporter=tap \
+            research-ide/mathscope-m3/navier/tests/flow-observations.test.mjs \
+            research-ide/mathscope-m3/navier/tests/flow-interface.test.mjs \
+            research-ide/mathscope-m3/navier/tests/source-pressure-calculus.test.mjs \
+            research-ide/mathscope-m3/navier/tests/source-parametric-body.test.mjs \
+            research-ide/mathscope-m3/navier/tests/source-current-summary.test.mjs \
+            2>&1 | tee "$M3_CI_OUTPUT/navier-current-state-tests.tap"
+      - name: Compare newly generated JS Fourier data against NumPy and exact Taylor-Green energy
+        run: python -B research-ide/mathscope-m3/navier/tests/independent_numpy.py 2>&1 | tee "$M3_CI_OUTPUT/independent-numpy.json"
+      - name: Preserve the newly executed examples and source receipts
+        run: |
+          python -B - <<'PY'
+          from pathlib import Path
+          import os, shutil
+          root = Path('research-ide/mathscope-m3')
+          output = Path(os.environ['M3_CI_OUTPUT'])
+          for package, names in {
+              'gauge': ['runtime-audit.json', 'field-session.json', 'lattice-chain-marginal-mean.json', 'wilson-flow-su2.json', 'wilson-flow-g2.json', 'source-transport-audit.json', 'package-guard-audit.json'],
+              'navier': ['acceptance.json', 'numpy-input.json', 'independent-numpy.json'],
+          }.items():
+              target = output / package
+              target.mkdir(parents=True, exist_ok=True)
+              evidence = root / package / 'evidence'
+              for name in names:
+                  shutil.copy2(evidence / name, target / name)
+              examples = sorted((evidence / 'examples').glob('*.json')) if package == 'gauge' else sorted(evidence.glob('N[678]-*.json'))
+              for example in examples:
+                  shutil.copy2(example, target / example.name)
+          PY
+      - name: Preserve success or failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-execution-workspaces-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ env.M3_CI_OUTPUT }}/
+          if-no-files-found: warn
+          retention-days: 30

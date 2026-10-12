@@ -24,9 +24,40 @@ REQUEST = {"kind": "p7.special_function", "input": {
 def test_capabilities_bind_source_and_keep_milestone_open():
     data = client.get("/v1/p7/capabilities").json()
     assert "p7.elliptic_analytic" in data["kinds"]
+    assert "p7.elliptic_arithmetic" in data["kinds"]
+    assert {"p7.zeta_em", "p7.euler_product", "p7.elliptic_complex", "p7.result_claim"} <= set(data["kinds"])
+    assert {"arithmetic-11a1", "arithmetic-37a1"} <= {row["id"] for row in data["examples"]}
+    assert {"complex-11a1", "complex-37a1", "complex-additive", "zeta-em-critical", "operator-registered"} <= {row["id"] for row in data["examples"]}
+    assert data["arithmeticBackend"]["status"] in {"AVAILABLE", "UNAVAILABLE"}
+    assert "p7/pari_runtime/src/mathscope_p7_pari/build.py" in {row["path"] for row in data["sourceBinding"]["files"]}
     assert len(data["sourceBinding"]["files"]) >= 4
     assert data["predecessor"]["M2Commit"] == "90e977ba9225bfaa20fd3dcc97db7f794c5ed4c9"
     assert not data["wholeP7Complete"] and not data["wholeM3Complete"]
+
+
+def test_missing_arithmetic_runtime_is_explicit_and_releases_admission(monkeypatch, tmp_path):
+    monkeypatch.setenv("MATHSCOPE_PARI_GP", str(tmp_path / "missing-gp"))
+    data = client.get("/v1/p7/capabilities").json()
+    assert data["arithmeticBackend"]["status"] == "UNAVAILABLE"
+    response = client.post("/v1/p7/run", json={"kind": "p7.elliptic_arithmetic", "input": {"model": "11a1"}})
+    assert response.status_code == 503
+    assert response.json()["detail"]["code"] == "PARI_BACKEND_UNAVAILABLE"
+    assert not p7_api._admission.locked()
+
+
+@pytest.mark.parametrize("model,rank", [("11a1", 0), ("37a1", 1)])
+def test_actual_arithmetic_under_production_resource_limits(model, rank):
+    response = client.post("/v1/p7/run", json={"kind": "p7.elliptic_arithmetic", "input": {"model": model}})
+    assert response.status_code == 200, response.text
+    record = response.json()
+    assert record["execution"]["status"] == "COMPLETED", record["execution"]
+    assert record["result"]["arithmeticRank"]["exactRank"] == rank
+    assert record["environment"]["arithmeticBackend"]["observedVersionMatchesBuild"] is True
+    assert record["execution"]["observedChildResourceLimits"]["addressSpaceBytes"] == [384 * 1024**2] * 2
+    if model == "37a1":
+        replayed = client.post("/v1/p7/replay", json=record)
+        assert replayed.status_code == 200, replayed.text
+        assert replayed.json()["status"] == "MATCH"
 
 
 def test_actual_run_replay_and_forged_result():
@@ -49,6 +80,48 @@ def test_actual_run_replay_and_forged_result():
     assert result.json()["status"] == "MISMATCH_OR_UNRESOLVED"
 
 
+@pytest.mark.parametrize("kind", ["p7.zeta_em", "p7.euler_product", "p7.elliptic_complex"])
+def test_new_continuation_contracts_execute_and_replay_with_production_limits(kind):
+    response = client.post("/v1/p7/run", json={"kind": kind, "input": {}})
+    assert response.status_code == 200, response.text
+    record = response.json()
+    assert record["execution"]["status"] == "COMPLETED", record["execution"]
+    assert record["execution"]["observedChildResourceLimits"]["addressSpaceBytes"] == [384 * 1024**2] * 2
+    if kind == "p7.elliptic_complex":
+        assert record["environment"]["arithmeticBackend"]["observedVersionMatchesBuild"]
+    replay = client.post("/v1/p7/replay", json=record)
+    assert replay.status_code == 200, replay.text
+    assert replay.json()["status"] == "MATCH"
+
+
+def test_critical_strip_finite_euler_request_is_a_recorded_rejection():
+    response = client.post("/v1/p7/run", json={"kind": "p7.euler_product", "input": {"s": {"real": "1/2", "imag": "14"}}})
+    assert response.status_code == 200
+    record = response.json()
+    assert record["execution"]["status"] == "REJECTED"
+    assert record["result"] is None
+
+
+@pytest.mark.parametrize("example,expected", [
+    ("specific-rank-37a1", "SPECIFIC_CURVE_RANK_EQUALITY_CERTIFIED_WITH_DEPENDENCIES"),
+    ("refined-37a1-conditional", "INCOMPLETE_INDEPENDENT_SHA_INFORMATION"),
+    ("reject-omitted-coefficient-and-prime", "REJECTED_INCOMPLETE_OR_ALTERED_INVENTORY"),
+])
+def test_typed_claims_preserve_distinct_results_and_missing_data_at_http_boundary(example, expected):
+    request = p7_api.runtime().read_json_file(p7_api.ROOT / "p7" / "examples" / (example + ".json"))
+    response = client.post("/v1/p7/run", json=request)
+    assert response.status_code == 200, response.text
+    record = response.json()
+    assert record["execution"]["status"] == "COMPLETED", record["execution"]
+    assert record["result"]["status"] == expected
+    assert record["result"]["scope"]["universalBSDProved"] is False
+    assert record["result"]["scope"]["refinedLeadingTermIdentityProved"] is False
+    assert record["execution"]["observedChildResourceLimits"]["addressSpaceBytes"] == [384 * 1024**2] * 2
+    replay = client.post("/v1/p7/replay", json=record)
+    assert replay.status_code == 200, replay.text
+    assert replay.json()["status"] == "MATCH"
+
+
 @pytest.mark.parametrize("model,rank", [("11a1", 0), ("37a1", 1)])
 def test_analytic_rank_endpoint(model, rank):
     response = client.post("/v1/p7/run", json={"kind": "p7.elliptic_analytic", "input": {"model": model}})
@@ -57,6 +130,21 @@ def test_analytic_rank_endpoint(model, rank):
     assert record["execution"]["status"] == "COMPLETED", record["execution"]
     assert record["result"]["analyticRank"]["exactRank"] == rank
     assert record["wholeP7Complete"] is False
+
+
+@pytest.mark.parametrize("model,symbol", [("11a1", "1"), ("37a1", "0")])
+def test_modular_symbol_endpoint_runs_exact_path_without_rank_one_promotion(model, symbol):
+    response = client.post("/v1/p7/run", json={"kind": "p7.modular_symbols", "input": {"model": model}})
+    assert response.status_code == 200, response.text
+    record = response.json()
+    assert record["execution"]["status"] == "COMPLETED", record["execution"]
+    assert record["result"]["exactCentralSymbol"]["value"] == symbol
+    assert record["result"]["analyticConclusion"]["exactRankOneClaimed"] is False
+    assert record["environment"]["arithmeticBackend"]["observedVersionMatchesBuild"]
+    assert record["execution"]["observedChildResourceLimits"]["addressSpaceBytes"] == [384 * 1024**2] * 2
+    replay = client.post("/v1/p7/replay", json=record)
+    assert replay.status_code == 200, replay.text
+    assert replay.json()["status"] == "MATCH"
 
 
 @pytest.mark.parametrize("kind,status", [

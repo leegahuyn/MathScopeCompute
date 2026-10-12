@@ -1,0 +1,565 @@
+{
+  "schema": "MathScope.M3.GaugeRealCIRelease/1",
+  "status": "RECORDED_CI_SOURCE_MATCH",
+  "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+  "packagedAt": "2026-10-12T07:11:24.389328+00:00",
+  "archive": "y7-real-attempt3-38215697672.zip",
+  "ci": {
+    "repository": "leegahuyn/MathScopeCompute",
+    "headCommit": "7e5378bbaafdd9188e1362724dd06475e29a3a05",
+    "commit": "9436d58903d0f9caf1206a386893244a7f3b7dc3",
+    "runId": "38215697672",
+    "jobId": "114699785792",
+    "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38215697672",
+    "artifactId": 11732147847,
+    "artifactSHA256": "d8df568fd283ea7126907e53016a3733bec5f8dea848d263a847af698656308d"
+  },
+  "report": {
+    "schema": "MathScope.M3.GaugeRealLeanAudit/1",
+    "status": "KERNEL_CHECKED_REAL_FINITE_SCOPES",
+    "checkedAt": "2026-10-12T07:07:38.910105+00:00",
+    "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+    "scope": "Printed real finite spectral declarations for the declared model/cutoff; no continuum or infinite-volume reconstruction.",
+    "wholeY7Complete": false,
+    "wholeM3Complete": false,
+    "continuumMassGapProved": false,
+    "targets": [
+      {
+        "name": "MathScope.M3.Gauge.RealSpectral.finite_weighted_exp_envelope",
+        "type": "MathScope.M3.Gauge.RealSpectral.finite_weighted_exp_envelope\n  (model : MathScope.M3.Gauge.RealSpectral.FiniteSpectralModel) (weight excess : Fin model.dimension → ℝ)\n  (delta time : ℝ) (hDelta : 0 < delta) (hTime : 0 ≤ time) (hWeight : ∀ (j : Fin model.dimension), 0 ≤ weight j)\n  (hExcess : ∀ (j : Fin model.dimension), 0 ≤ excess j) :\n  0 < delta ∧\n    MathScope.M3.Gauge.RealSpectral.spectralSum model weight excess delta time ≤\n      Real.exp (-delta * time) * ∑ j, weight j",
+        "typeSha256": "ec57e7d5ba2c708e71973ebe4beec3e490609928c46780205fd53116dd9effe1",
+        "axioms": {
+          "all": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        }
+      },
+      {
+        "name": "MathScope.M3.Gauge.RealSpectral.log_ratio_lower_bound",
+        "type": "MathScope.M3.Gauge.RealSpectral.log_ratio_lower_bound (spacing ratio r : ℝ) (hAt : 0 < spacing) (hRatio : 0 < ratio)\n  (hUpper : ratio ≤ r) : -Real.log r / spacing ≤ -Real.log ratio / spacing",
+        "typeSha256": "0635d576bd024417c1ded86c67e5d35d589986b628df59aae4f90506925717f1",
+        "axioms": {
+          "all": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        }
+      },
+      {
+        "name": "MathScope.M3.Gauge.RealSpectral.log_gap_positive",
+        "type": "MathScope.M3.Gauge.RealSpectral.log_gap_positive (spacing r : ℝ) (hAt : 0 < spacing) (hRatioPositive : 0 < r)\n  (hRatioBelowOne : r < 1) : 0 < -Real.log r / spacing",
+        "typeSha256": "eb629d1676771bec9bea98a65a02157f509348e88eb763434f615c1d83441d96",
+        "axioms": {
+          "all": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        }
+      },
+      {
+        "name": "MathScope.M3.Gauge.RealSpectral.conservative_log_lower_bound",
+        "type": "MathScope.M3.Gauge.RealSpectral.conservative_log_lower_bound (spacing r : ℝ) (hAt : 0 < spacing)\n  (hRatioPositive : 0 < r) : (1 - r) / spacing ≤ -Real.log r / spacing",
+        "typeSha256": "ffaf34f2c8b9617168d7131005a47466d91a6bcfc2ce367288a83631e5d07fe6",
+        "axioms": {
+          "all": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        }
+      },
+      {
+        "name": "MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_lower_bound",
+        "type": "MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_lower_bound\n  {model : MathScope.M3.Gauge.RealSpectral.FiniteSpectralModel}\n  (certificate : MathScope.M3.Gauge.RealSpectral.TransferEnclosure model) (j : Fin model.dimension)\n  (hNonvacuum : j ∈ certificate.excited) :\n  0 < certificate.gap ∧\n    (1 - certificate.ratio) / certificate.timeStep ≤ certificate.gap ∧ certificate.gap ≤ certificate.energy j",
+        "typeSha256": "e379f16789e14dce0c8854be58c6ebb2b4ff0ace90dc52ebc81077765175256d",
+        "axioms": {
+          "all": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        }
+      },
+      {
+        "name": "MathScope.M3.Gauge.RealSpectral.TransferEnclosure.certified_gap",
+        "type": "MathScope.M3.Gauge.RealSpectral.TransferEnclosure.certified_gap\n  (model : MathScope.M3.Gauge.RealSpectral.FiniteSpectralModel)\n  (certificate : MathScope.M3.Gauge.RealSpectral.TransferEnclosure model) :\n  MathScope.M3.Gauge.RealSpectral.CertifiedFiniteGap model certificate",
+        "typeSha256": "724c904abb5cb35f6b26f00953f2ed8f62a2c401c439ac761e7697bd1ce48216",
+        "axioms": {
+          "all": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        }
+      },
+      {
+        "name": "MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_exp_envelope",
+        "type": "MathScope.M3.Gauge.RealSpectral.TransferEnclosure.nonvacuum_exp_envelope\n  {model : MathScope.M3.Gauge.RealSpectral.FiniteSpectralModel}\n  (certificate : MathScope.M3.Gauge.RealSpectral.TransferEnclosure model) (weight : Fin model.dimension → ℝ) (time : ℝ)\n  (hTime : 0 ≤ time) (hWeight : ∀ j ∈ certificate.excited, 0 ≤ weight j) :\n  0 < certificate.gap ∧\n    ∑ j ∈ certificate.excited, weight j * Real.exp (-certificate.energy j * time) ≤\n      Real.exp (-certificate.gap * time) * ∑ j ∈ certificate.excited, weight j",
+        "typeSha256": "0e415231ee2832b365da4c43167044bc8c3f0a2c71a0260f3f7a9cb6fca2f0a1",
+        "axioms": {
+          "all": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        }
+      },
+      {
+        "name": "MathScope.M3.Gauge.RealSpectral.four_state_certified_gap",
+        "type": "MathScope.M3.Gauge.RealSpectral.four_state_certified_gap :\n  MathScope.M3.Gauge.RealSpectral.CertifiedFiniteGap MathScope.M3.Gauge.RealSpectral.fourStateModel\n    MathScope.M3.Gauge.RealSpectral.fourStateEnclosure",
+        "typeSha256": "a785ffa94bd57b82392eb1e3375fbce7a28ea17941583f70588a1d91f5747691",
+        "axioms": {
+          "all": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "standard": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "custom": []
+        }
+      }
+    ],
+    "hypothesisRemovalControls": [
+      {
+        "id": "Delta",
+        "hypothesis": "hDelta",
+        "positiveSourceSha256": "75cd30043f1f52f0a00bfb27ff4c8907732fb3f9c88b25abed1e0b1209b80dfe",
+        "negativeSourceSha256": "843df0f0a5d6bfcd15bc2768566e2dcf1c715bca6e48ad728b5c0aafda2d6716",
+        "removedBinder": "  (hDelta : 0 < delta)\n",
+        "sourceRegenerated": true,
+        "positiveControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Consumer_Delta.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 2.200644,
+          "logFile": "Consumer_Delta.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "negativeControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Removed_Delta.lean"
+          ],
+          "exitCode": 1,
+          "seconds": 2.131368,
+          "logFile": "Removed_Delta.log",
+          "logSha256": "fda3e6f6c9d339d9d56ffe92b39507c2e707a9be6330d24a198409536d1748e1"
+        },
+        "expectedDiagnostic": "Unknown identifier hDelta",
+        "expectedRejectionObserved": true
+      },
+      {
+        "id": "Weight",
+        "hypothesis": "hWeight",
+        "positiveSourceSha256": "75cd30043f1f52f0a00bfb27ff4c8907732fb3f9c88b25abed1e0b1209b80dfe",
+        "negativeSourceSha256": "a062b330239d99f0f3b42dba5fb792d705145b1cf874e51a1261890cb7135f64",
+        "removedBinder": "  (hWeight : ∀ j, 0 ≤ weight j)\n",
+        "sourceRegenerated": true,
+        "positiveControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Consumer_Weight.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 2.17703,
+          "logFile": "Consumer_Weight.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "negativeControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Removed_Weight.lean"
+          ],
+          "exitCode": 1,
+          "seconds": 2.196694,
+          "logFile": "Removed_Weight.log",
+          "logSha256": "c76c37ed600d115fff07a295ef82e2cd11ab85dd69fed7c86bf5c52240195757"
+        },
+        "expectedDiagnostic": "Unknown identifier hWeight",
+        "expectedRejectionObserved": true
+      },
+      {
+        "id": "Excess",
+        "hypothesis": "hExcess",
+        "positiveSourceSha256": "75cd30043f1f52f0a00bfb27ff4c8907732fb3f9c88b25abed1e0b1209b80dfe",
+        "negativeSourceSha256": "7d57b1af6177531876db6ebcbb45c59d01ea849a2bdb559bd4230131e9c27964",
+        "removedBinder": "  (hExcess : ∀ j, 0 ≤ excess j)\n",
+        "sourceRegenerated": true,
+        "positiveControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Consumer_Excess.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 2.189097,
+          "logFile": "Consumer_Excess.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "negativeControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Removed_Excess.lean"
+          ],
+          "exitCode": 1,
+          "seconds": 2.21275,
+          "logFile": "Removed_Excess.log",
+          "logSha256": "1c8ede45c261ab35c46fc4b7631db4377d5f09c419e0e6bb891514d950dbfb57"
+        },
+        "expectedDiagnostic": "Unknown identifier hExcess",
+        "expectedRejectionObserved": true
+      },
+      {
+        "id": "ForwardTime",
+        "hypothesis": "hTime",
+        "positiveSourceSha256": "75cd30043f1f52f0a00bfb27ff4c8907732fb3f9c88b25abed1e0b1209b80dfe",
+        "negativeSourceSha256": "11bd3027addcaad9b03dd5608de0080dfe5af88b966c599124a45a0c5e0e67ab",
+        "removedBinder": "  (hTime : 0 ≤ time)\n",
+        "sourceRegenerated": true,
+        "positiveControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Consumer_ForwardTime.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 2.190578,
+          "logFile": "Consumer_ForwardTime.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "negativeControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Removed_ForwardTime.lean"
+          ],
+          "exitCode": 1,
+          "seconds": 2.183806,
+          "logFile": "Removed_ForwardTime.log",
+          "logSha256": "9d7804af7796ee94be6b878db9e8dce52414b11575f7277277de29324a423bf1"
+        },
+        "expectedDiagnostic": "Unknown identifier hTime",
+        "expectedRejectionObserved": true
+      },
+      {
+        "id": "TimeSpacing",
+        "hypothesis": "hAt",
+        "positiveSourceSha256": "bb9d8ab8c86c5d0e6a990b88a6341464f7ee2d5c3f66d128fbfebe20b4b30dd2",
+        "negativeSourceSha256": "05d64bc611f3c8b9843974c040ef8faa0f839a85fb45d7a6c73ca1c4b142d265",
+        "removedBinder": "  (hAt : 0 < spacing)\n",
+        "sourceRegenerated": true,
+        "positiveControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Consumer_TimeSpacing.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 2.159015,
+          "logFile": "Consumer_TimeSpacing.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "negativeControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Removed_TimeSpacing.lean"
+          ],
+          "exitCode": 1,
+          "seconds": 2.203758,
+          "logFile": "Removed_TimeSpacing.log",
+          "logSha256": "9ec458f7bf7ed0af7a317dbcbab0fa43d84143a63aeca14d00590c20b5b87044"
+        },
+        "expectedDiagnostic": "Unknown identifier hAt",
+        "expectedRejectionObserved": true
+      },
+      {
+        "id": "PositiveRatio",
+        "hypothesis": "hRatio",
+        "positiveSourceSha256": "bb9d8ab8c86c5d0e6a990b88a6341464f7ee2d5c3f66d128fbfebe20b4b30dd2",
+        "negativeSourceSha256": "8fac0508ab5eaa6033eb09bdccac5a3a77a09593a76485bf747e457859109ced",
+        "removedBinder": "  (hRatio : 0 < ratio)\n",
+        "sourceRegenerated": true,
+        "positiveControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Consumer_PositiveRatio.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 2.211101,
+          "logFile": "Consumer_PositiveRatio.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "negativeControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Removed_PositiveRatio.lean"
+          ],
+          "exitCode": 1,
+          "seconds": 2.193921,
+          "logFile": "Removed_PositiveRatio.log",
+          "logSha256": "ced83f0107f876b82a17e309b1ef89337821b69d3da95f549f98563e57d93eb1"
+        },
+        "expectedDiagnostic": "Unknown identifier hRatio",
+        "expectedRejectionObserved": true
+      },
+      {
+        "id": "RatioEnclosure",
+        "hypothesis": "hUpper",
+        "positiveSourceSha256": "bb9d8ab8c86c5d0e6a990b88a6341464f7ee2d5c3f66d128fbfebe20b4b30dd2",
+        "negativeSourceSha256": "a296d328869dbfe21d3b4caf362d2dee7bfe30ad48fee2e18e0d864d8bd8aab6",
+        "removedBinder": "  (hUpper : ratio ≤ r)\n",
+        "sourceRegenerated": true,
+        "positiveControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Consumer_RatioEnclosure.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 2.178302,
+          "logFile": "Consumer_RatioEnclosure.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "negativeControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Removed_RatioEnclosure.lean"
+          ],
+          "exitCode": 1,
+          "seconds": 2.208417,
+          "logFile": "Removed_RatioEnclosure.log",
+          "logSha256": "56d4a597cc89d0d3d3536bfce69f1c35bca6900a3cdf4d2f1ba51e47d8cbc8d7"
+        },
+        "expectedDiagnostic": "Unknown identifier hUpper",
+        "expectedRejectionObserved": true
+      },
+      {
+        "id": "RatioBelowOne",
+        "hypothesis": "hRatioBelowOne",
+        "positiveSourceSha256": "1e13e0670036d7fbde715391455a454c752a69b04658d98e027cccde4c2ad808",
+        "negativeSourceSha256": "34fe85fe77cb373c368841188ff3f6a93ae4a22a7d21ccb03eb2a71ad1811a9b",
+        "removedBinder": "  (hRatioBelowOne : r < 1)\n",
+        "sourceRegenerated": true,
+        "positiveControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Consumer_RatioBelowOne.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 2.186669,
+          "logFile": "Consumer_RatioBelowOne.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "negativeControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Removed_RatioBelowOne.lean"
+          ],
+          "exitCode": 1,
+          "seconds": 2.219348,
+          "logFile": "Removed_RatioBelowOne.log",
+          "logSha256": "bb43f28efcb516df78165ea202a72bf79da590f014ec234f5373c87694c3039b"
+        },
+        "expectedDiagnostic": "Unknown identifier hRatioBelowOne",
+        "expectedRejectionObserved": true
+      },
+      {
+        "id": "Nonvacuum",
+        "hypothesis": "hNonvacuum",
+        "positiveSourceSha256": "6cc9a0619d48c9336d61001952faf8b2bd79f3f159ef5ae069f69cb147e00947",
+        "negativeSourceSha256": "fb73dedb0c441cd6cb091b94409be0060af82f045b10218ff864d4a5d13365b7",
+        "removedBinder": "  (hNonvacuum : j ∈ certificate.excited)\n",
+        "sourceRegenerated": true,
+        "positiveControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Consumer_Nonvacuum.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 2.202872,
+          "logFile": "Consumer_Nonvacuum.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "negativeControl": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/Removed_Nonvacuum.lean"
+          ],
+          "exitCode": 1,
+          "seconds": 2.182655,
+          "logFile": "Removed_Nonvacuum.log",
+          "logSha256": "80e39a0ff7cd7c4f0a53bbb672bf25586f223a7d1ab7092396874eca0d1c5b0d"
+        },
+        "expectedDiagnostic": "Unknown identifier hNonvacuum",
+        "expectedRejectionObserved": true
+      }
+    ],
+    "build": {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "-o",
+        "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/lean/.lake/build/lib/lean/RealSpectralBridge.olean",
+        "RealSpectralBridge.lean"
+      ],
+      "exitCode": 0,
+      "seconds": 4.903998,
+      "logFile": "build-real-spectral.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "consumerAudit": {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/gauge/evidence/real-lean-audit/AuditReal.lean"
+      ],
+      "exitCode": 0,
+      "seconds": 2.331883,
+      "logFile": "fresh-real-consumer-audit.log",
+      "logSha256": "625240dec191e3105916554158f4ac007c7b755f8cda994c8ea5b24cf3d71eec"
+    },
+    "positiveOleanSha256": "ac85d02ea64fd2f147dd6707ba0befb7a9704e9187d69b069f40614285af1a50",
+    "sourceFiles": [
+      {
+        "path": ".github/workflows/gauge-real-spectral-verification.yml",
+        "sha256": "c85ed08e33adad3370193d175e9a55632c354481c4cad1d5426f9b964784363d"
+      },
+      {
+        "path": "research-ide/mathscope-m3/gauge/lean/RealSpectralBridge.lean",
+        "sha256": "6361ae4a03fc003e0e3cccc21eb5af38dba37a40ed148a5b76d89dcfad886d53"
+      },
+      {
+        "path": "research-ide/mathscope-m3/gauge/lean/lakefile.lean",
+        "sha256": "c7ba84f48bb1b1c4e79f050b65826cd74c2cbc4ae7fc0f6bc30779a828b38605"
+      },
+      {
+        "path": "research-ide/mathscope-m3/gauge/lean/lean-toolchain",
+        "sha256": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b"
+      },
+      {
+        "path": "research-ide/mathscope-m3/gauge/lean/real-pins.json",
+        "sha256": "d0d31adc64de4d1768508a2ab017e1648d0f1ebdc9b8b7a8cad625e6605da824"
+      },
+      {
+        "path": "research-ide/mathscope-m3/gauge/verify_real_lean.py",
+        "sha256": "5116567220fba46bffe8c9bff354aa8f6d6fd65654cc0cc807b093dd996e9793"
+      },
+      {
+        "path": "research-ide/mathscope-m3/p8/tools/audit_lean.py",
+        "sha256": "df9b236d0f3fbd2f9c81ba5273945a500cffcf4514e51d971d8f439aafe07d33"
+      }
+    ],
+    "sourceManifestSha256": "2be057cb31597eafa52f4d1226a1feb05a916a7d7e864d2a3e4bfb8bae652810",
+    "customAxioms": [],
+    "absenceOfSorry": true,
+    "environment": {
+      "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+      "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+      "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+      "leanBinarySha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+      "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+      "lakeManifestSha256": "a2a8f648e787645fb51a3c40e138854d24af49aa56128cf23bdff7b6dcf38684",
+      "importClosureSha256": "00ef2cb6663d37f94e3de36a7046c27da7537e1ebb9688c7f3c7626098b931ff",
+      "importedModuleCount": 3439,
+      "kernelModified": false,
+      "runtimeModified": false
+    }
+  },
+  "localPackagingVerification": {
+    "currentAuditedSourceFilesMatched": 7,
+    "rawCompilerLogsMatched": 20,
+    "actualTargetTypesAndAxiomsReparsed": 8,
+    "positiveAndRemovedHypothesisSourcePairsMatched": 9,
+    "importClosureManifestDigestMatched": true,
+    "importedModuleCountRecordedByCI": 3439,
+    "officialLocalRuntimeMatchesCI": true,
+    "compiledOleansLocallyRebuilt": false,
+    "freshLocalKernelExecuted": false,
+    "rawAuditSHA256": "bcc6a0d60c9b39f11fcf8b854af9b42dfb50f77f789b7dc4f3228f505ef03413"
+  }
+}

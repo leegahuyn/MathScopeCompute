@@ -1,0 +1,905 @@
+{
+  "schema": "MathScope.M3.P8.P7MutationAudit/2",
+  "status": "PASS",
+  "criterion": "P8-06",
+  "cases": [
+    {
+      "id": "zero-box",
+      "status": "PASS",
+      "request": {
+        "kind": "p7.zeta_zeros",
+        "input": {
+          "height": "20",
+          "precisionBits": 128,
+          "tolerance": "1e-12",
+          "maxCells": 16384,
+          "maxDepth": 24,
+          "maxEvaluations": 100000,
+          "timeoutSeconds": 45
+        }
+      },
+      "baseline": {
+        "schema": "MathScope.M3.P7Execution/1",
+        "recordSHA256": "6b17e5f0ba94081ea5757320cd448dff9ee2d98ba04a77eeee190f737ec43d1d",
+        "mathematicalSHA256": "d8f62cb05c062f11a38de2d926653c15c921937fb4dfefeef5f57bd26c02ce7f",
+        "inputSHA256": "f33b346f8858dacb9b7d4e8e47f897f59d45a2149a316c04c0801ecac204a380",
+        "environmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
+        "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+        "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
+        "execution": {
+          "status": "COMPLETED",
+          "startedAt": "2026-10-12T10:26:02.591889+00:00",
+          "finishedAt": "2026-10-12T10:26:03.585222+00:00",
+          "elapsedSeconds": 0.9933340239999779,
+          "observedExitCode": 0,
+          "timedOut": false,
+          "maxSeconds": 90,
+          "memoryLimitMiB": 768,
+          "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
+          "observedChildResourceLimits": {
+            "addressSpaceBytes": [
+              805306368,
+              805306368
+            ],
+            "cpuSeconds": [
+              90,
+              91
+            ]
+          },
+          "observedChildEnvironmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
+          "failure": null,
+          "stderr": ""
+        },
+        "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+        "formalLeanProofIssued": false,
+        "wholeP7Complete": false,
+        "wholeM3Complete": false
+      },
+      "positiveControl": {
+        "status": "MATCH",
+        "passed": true,
+        "importedProofStatusAdopted": false,
+        "fresh": {
+          "schema": "MathScope.M3.P7Execution/1",
+          "recordSHA256": "699ef1fbaddcb4d7e76e7dca61a9296fb86c752316c32eca9b8ed3d6667163eb",
+          "mathematicalSHA256": "d8f62cb05c062f11a38de2d926653c15c921937fb4dfefeef5f57bd26c02ce7f",
+          "inputSHA256": "f33b346f8858dacb9b7d4e8e47f897f59d45a2149a316c04c0801ecac204a380",
+          "environmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
+          "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+          "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
+          "execution": {
+            "status": "COMPLETED",
+            "startedAt": "2026-10-12T10:26:03.897590+00:00",
+            "finishedAt": "2026-10-12T10:26:04.925315+00:00",
+            "elapsedSeconds": 1.0277252310000051,
+            "observedExitCode": 0,
+            "timedOut": false,
+            "maxSeconds": 90,
+            "memoryLimitMiB": 768,
+            "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
+            "observedChildResourceLimits": {
+              "addressSpaceBytes": [
+                805306368,
+                805306368
+              ],
+              "cpuSeconds": [
+                90,
+                91
+              ]
+            },
+            "observedChildEnvironmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
+            "failure": null,
+            "stderr": ""
+          },
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+          "formalLeanProofIssued": false,
+          "wholeP7Complete": false,
+          "wholeM3Complete": false
+        }
+      },
+      "negativeControl": {
+        "status": "MISMATCH_OR_UNRESOLVED",
+        "passed": true,
+        "freshCompletedRequired": true,
+        "unresolvedCountsAsRejection": false,
+        "allPresentComputationHashesResealed": true,
+        "mathematicalAndRecordHashesResealed": true,
+        "structuralValidationPassedBeforeReplay": true,
+        "importedProofStatusAdopted": false,
+        "mutations": [
+          {
+            "fieldPath": "result.hardyRoots[0]",
+            "before": {
+              "lower": "15541294648755/1099511627776",
+              "upper": "62165178595021/4398046511104",
+              "bracketWidth": "1/4398046511104"
+            },
+            "after": {
+              "lower": "16640806276531/1099511627776",
+              "upper": "66563225106125/4398046511104",
+              "bracketWidth": "1/4398046511104"
+            }
+          }
+        ],
+        "forged": {
+          "schema": "MathScope.M3.P7Execution/1",
+          "recordSHA256": "7dcafb6ba7573e623cac38aaf0eb02599ef11f570ddc82601c3144224b5e5dc0",
+          "mathematicalSHA256": "dc1db332c8ca3e996e81363e45565ecae8f07c32959fb66c9ef84df655878caa",
+          "inputSHA256": "f33b346f8858dacb9b7d4e8e47f897f59d45a2149a316c04c0801ecac204a380",
+          "environmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
+          "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+          "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
+          "execution": {
+            "status": "COMPLETED",
+            "startedAt": "2026-10-12T10:26:02.591889+00:00",
+            "finishedAt": "2026-10-12T10:26:03.585222+00:00",
+            "elapsedSeconds": 0.9933340239999779,
+            "observedExitCode": 0,
+            "timedOut": false,
+            "maxSeconds": 90,
+            "memoryLimitMiB": 768,
+            "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
+            "observedChildResourceLimits": {
+              "addressSpaceBytes": [
+                805306368,
+                805306368
+              ],
+              "cpuSeconds": [
+                90,
+                91
+              ]
+            },
+            "observedChildEnvironmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
+            "failure": null,
+            "stderr": ""
+          },
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+          "formalLeanProofIssued": false,
+          "wholeP7Complete": false,
+          "wholeM3Complete": false
+        },
+        "fresh": {
+          "schema": "MathScope.M3.P7Execution/1",
+          "recordSHA256": "2f33449b96cd95b2fc8966451e856cc1124bf3b98fc7e013cd4c93a433c7a186",
+          "mathematicalSHA256": "d8f62cb05c062f11a38de2d926653c15c921937fb4dfefeef5f57bd26c02ce7f",
+          "inputSHA256": "f33b346f8858dacb9b7d4e8e47f897f59d45a2149a316c04c0801ecac204a380",
+          "environmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
+          "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+          "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
+          "execution": {
+            "status": "COMPLETED",
+            "startedAt": "2026-10-12T10:26:05.620258+00:00",
+            "finishedAt": "2026-10-12T10:26:06.667251+00:00",
+            "elapsedSeconds": 1.0469939289999957,
+            "observedExitCode": 0,
+            "timedOut": false,
+            "maxSeconds": 90,
+            "memoryLimitMiB": 768,
+            "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
+            "observedChildResourceLimits": {
+              "addressSpaceBytes": [
+                805306368,
+                805306368
+              ],
+              "cpuSeconds": [
+                90,
+                91
+              ]
+            },
+            "observedChildEnvironmentSHA256": "0eebd56d96646670dc85a80005cd9dbbfeab70ccd36e5bb01bd89bbf8000d05e",
+            "failure": null,
+            "stderr": ""
+          },
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+          "formalLeanProofIssued": false,
+          "wholeP7Complete": false,
+          "wholeM3Complete": false
+        }
+      },
+      "bindingPreserved": {
+        "request": true,
+        "inputSHA256": true,
+        "sourceBinding": true,
+        "environment": true,
+        "environmentSHA256": true,
+        "predecessor": true
+      },
+      "bindingRejectionControls": [
+        {
+          "axis": "source",
+          "status": "REJECTED",
+          "stage": "P7_VALIDATE_RECORD_BEFORE_REPLAY",
+          "reason": "replay requires the same source and backend; run the original input separately for a new environment",
+          "outerAndMathematicalHashesResealed": true,
+          "originalInputHashPreserved": true,
+          "proofStatusAdopted": false
+        },
+        {
+          "axis": "precision",
+          "status": "REJECTED",
+          "stage": "P7_VALIDATE_RECORD_BEFORE_REPLAY",
+          "reason": "input hash mismatch",
+          "outerAndMathematicalHashesResealed": true,
+          "originalInputHashPreserved": true,
+          "proofStatusAdopted": false
+        },
+        {
+          "axis": "input",
+          "status": "REJECTED",
+          "stage": "P7_VALIDATE_RECORD_BEFORE_REPLAY",
+          "reason": "input hash mismatch",
+          "outerAndMathematicalHashesResealed": true,
+          "originalInputHashPreserved": true,
+          "proofStatusAdopted": false
+        }
+      ],
+      "originalRecordUnchanged": true,
+      "downstream": {
+        "scope": "DECLARED_AUDIT_DEPENDENCY_FIXTURE",
+        "direction": "PREREQUISITE_TO_DEPENDENT",
+        "edges": [
+          {
+            "from": "zero-box",
+            "to": "finite-height-record"
+          },
+          {
+            "from": "finite-height-record",
+            "to": "zero-coverage-comparison"
+          },
+          {
+            "from": "zero-coverage-comparison",
+            "to": "conditional-rh-review"
+          },
+          {
+            "from": "rank-upper",
+            "to": "rank-bound-record"
+          },
+          {
+            "from": "rank-bound-record",
+            "to": "curve-rank-equality"
+          },
+          {
+            "from": "curve-rank-equality",
+            "to": "bsd-review"
+          }
+        ],
+        "changedNode": "zero-box",
+        "revokedNodeIds": [
+          "conditional-rh-review",
+          "finite-height-record",
+          "zero-box",
+          "zero-coverage-comparison"
+        ],
+        "badges": [
+          {
+            "id": "bsd-review",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          },
+          {
+            "id": "conditional-rh-review",
+            "status": "REVOKED",
+            "proofAuthority": false
+          },
+          {
+            "id": "curve-rank-equality",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          },
+          {
+            "id": "finite-height-record",
+            "status": "REVOKED",
+            "proofAuthority": false
+          },
+          {
+            "id": "rank-bound-record",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          },
+          {
+            "id": "rank-upper",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          },
+          {
+            "id": "unrelated-observation",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          },
+          {
+            "id": "zero-box",
+            "status": "REVOKED",
+            "proofAuthority": false
+          },
+          {
+            "id": "zero-coverage-comparison",
+            "status": "REVOKED",
+            "proofAuthority": false
+          }
+        ],
+        "wholeApplicationGraphAudited": false,
+        "certificateIssued": false
+      },
+      "mathematicalScope": {
+        "mutationDetection": "FRESH_P7_RESULT_COMPARISON",
+        "rankUpperBoundComputed": false,
+        "rankUpperBoundStatus": "NOT_APPLICABLE",
+        "globalRHProved": false,
+        "globalBSDProved": false,
+        "finiteHeightOnly": true
+      },
+      "certificateIssued": false
+    },
+    {
+      "id": "rank-upper",
+      "status": "PASS",
+      "request": {
+        "kind": "p7.elliptic_arithmetic",
+        "input": {
+          "model": "37a1",
+          "coefficientLimit": 16,
+          "precisionBits": 192,
+          "heightIterations": 7
+        }
+      },
+      "baseline": {
+        "schema": "MathScope.M3.P7Execution/1",
+        "recordSHA256": "883061bf3ebfd991941698cfb07b26c30fc4c57f390a479e8b4e29d69b426240",
+        "mathematicalSHA256": "794348089c498e2ff2d778b1573b9f5bf45ce2ae1c7762d7b6bf2e844ab7f5df",
+        "inputSHA256": "d014821927ca1d8d3344f8390320e013f45d8416f78efa5b14c4e14669f28d08",
+        "environmentSHA256": "1e5230a874af19fefc8af76771a06bf03c03303d9e36a2e0bff17146ea0d2944",
+        "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+        "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
+        "execution": {
+          "status": "COMPLETED",
+          "startedAt": "2026-10-12T10:26:08.076092+00:00",
+          "finishedAt": "2026-10-12T10:26:08.400624+00:00",
+          "elapsedSeconds": 0.32453161299997646,
+          "observedExitCode": 0,
+          "timedOut": false,
+          "maxSeconds": 90,
+          "memoryLimitMiB": 768,
+          "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
+          "observedChildResourceLimits": {
+            "addressSpaceBytes": [
+              805306368,
+              805306368
+            ],
+            "cpuSeconds": [
+              90,
+              91
+            ]
+          },
+          "observedChildEnvironmentSHA256": "1e5230a874af19fefc8af76771a06bf03c03303d9e36a2e0bff17146ea0d2944",
+          "failure": null,
+          "stderr": ""
+        },
+        "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+        "formalLeanProofIssued": false,
+        "wholeP7Complete": false,
+        "wholeM3Complete": false
+      },
+      "positiveControl": {
+        "status": "MATCH",
+        "passed": true,
+        "importedProofStatusAdopted": false,
+        "fresh": {
+          "schema": "MathScope.M3.P7Execution/1",
+          "recordSHA256": "c88e5558cc4e963c3cab01e4e9f83b11019f9ad7c32983f57c484a59c7eaa13a",
+          "mathematicalSHA256": "794348089c498e2ff2d778b1573b9f5bf45ce2ae1c7762d7b6bf2e844ab7f5df",
+          "inputSHA256": "d014821927ca1d8d3344f8390320e013f45d8416f78efa5b14c4e14669f28d08",
+          "environmentSHA256": "1e5230a874af19fefc8af76771a06bf03c03303d9e36a2e0bff17146ea0d2944",
+          "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+          "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
+          "execution": {
+            "status": "COMPLETED",
+            "startedAt": "2026-10-12T10:26:08.504646+00:00",
+            "finishedAt": "2026-10-12T10:26:08.832783+00:00",
+            "elapsedSeconds": 0.3281384290000062,
+            "observedExitCode": 0,
+            "timedOut": false,
+            "maxSeconds": 90,
+            "memoryLimitMiB": 768,
+            "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
+            "observedChildResourceLimits": {
+              "addressSpaceBytes": [
+                805306368,
+                805306368
+              ],
+              "cpuSeconds": [
+                90,
+                91
+              ]
+            },
+            "observedChildEnvironmentSHA256": "1e5230a874af19fefc8af76771a06bf03c03303d9e36a2e0bff17146ea0d2944",
+            "failure": null,
+            "stderr": ""
+          },
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+          "formalLeanProofIssued": false,
+          "wholeP7Complete": false,
+          "wholeM3Complete": false
+        }
+      },
+      "negativeControl": {
+        "status": "MISMATCH_OR_UNRESOLVED",
+        "passed": true,
+        "freshCompletedRequired": true,
+        "unresolvedCountsAsRejection": false,
+        "allPresentComputationHashesResealed": true,
+        "mathematicalAndRecordHashesResealed": true,
+        "structuralValidationPassedBeforeReplay": true,
+        "importedProofStatusAdopted": false,
+        "mutations": [
+          {
+            "fieldPath": "result.arithmeticRank.rankUpperCertificate",
+            "operation": "DELETE_VALID_CERTIFICATE",
+            "before": {
+              "BSDOrParityConjectureAssumed": false,
+              "analyticRankUsed": false,
+              "backend": {
+                "binaryBytes": 11208080,
+                "binarySHA256": "f45ff2b5fc6d44b70c4ccfd8eda2c092b5085003bf77dbc142d9fd50c254bd91",
+                "buildProvenanceSHA256": "0677e0cc11be6871a75ff79d671a1d25a9360141d9e047531173245d1c233623",
+                "databasesUsed": false,
+                "name": "PARI/GP",
+                "observedVersionMatchesBuild": true,
+                "sourceArchiveSHA256": "f317b9722eb5d9094a60303774f066f3a83e3ec1f170be8546c44d7583f30b6d",
+                "sourceVerifiedBeforeBuild": true,
+                "trustBoundary": "pinned compiled PARI algorithms; exact exported witnesses are checked separately; no formal Lean proof",
+                "version": "2.19.0",
+                "versionOutput": "                  GP/PARI CALCULATOR Version 2.19.0 (released)\n               amd64 running linux (x86-64 kernel) 64-bit version\n   compiled: Sep 28 2026, gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1)\n                            threading engine: single\n               (readline not compiled in, extended help enabled)\n"
+              },
+              "casselsPairingRank": 0,
+              "certificateSHA256": "dd762e263bc050bcbe655628cfe5759f033f544b9e72b1076a7fe973d7809045",
+              "coverMapChecks": [
+                {
+                  "coverSHA256": "41dc2d98da263670b99c6656812111623a944b825624a871ad254ed032da5736",
+                  "exactRationalMapIdentityChecked": true,
+                  "localSolubilityAndBasisCompleteness": "trusted pinned PARI ell2cover algorithm, recomputed in the same fresh process",
+                  "mapCoefficientOrder": "outer index is x degree; inner index is y degree",
+                  "quarticCoefficientOrder": "ascending powers of x",
+                  "quotientRing": "Q[x,y]/(y^2-R(x))"
+                }
+              ],
+              "databaseLookupUsed": false,
+              "exactTwoCovers": [
+                [
+                  [
+                    "1",
+                    "0",
+                    "6",
+                    "-4",
+                    "1"
+                  ],
+                  [
+                    [
+                      [
+                        "-1"
+                      ],
+                      [
+                        "2"
+                      ],
+                      [
+                        "2"
+                      ],
+                      [
+                        "-2"
+                      ]
+                    ],
+                    [
+                      [
+                        "0",
+                        "0",
+                        "1"
+                      ]
+                    ]
+                  ],
+                  [
+                    [
+                      [
+                        "1",
+                        "0",
+                        "0",
+                        "-1"
+                      ],
+                      [
+                        "8"
+                      ],
+                      [
+                        "-15"
+                      ],
+                      [
+                        "10"
+                      ],
+                      [
+                        "-5"
+                      ],
+                      [
+                        "-2"
+                      ],
+                      [
+                        "1"
+                      ]
+                    ],
+                    [
+                      [
+                        "0",
+                        "0",
+                        "0",
+                        "2"
+                      ]
+                    ]
+                  ],
+                  "1"
+                ]
+              ],
+              "executionScriptSHA256": "d84160430addf16c4a0b2af61106f159ba8edded8bb592eac6e90b37e696270f",
+              "executionStdoutSHA256": "855037ec95b93c8cb4458e7c6a979703c2f7ddb9cdd56125c9510502aec46e99",
+              "formalLeanProofIssued": false,
+              "freshProcessExecuted": true,
+              "identity": "upperBound=twoSelmerRank-rationalTwoTorsionRank-casselsPairingRank",
+              "method": "fresh pinned PARI/GP 2-descent and Cassels pairing",
+              "modelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+              "originalModelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+              "pariReceiptSHA256": "b179b05aa2a87f43cca1d48aaa0065933717124ec669d183fb09d22960db3c4a",
+              "rationalTwoTorsionRank": 0,
+              "schema": "MathScope.M3.P7.ArithmeticRankUpperCertificate/1",
+              "status": "CERTIFIED_ARITHMETIC_UPPER",
+              "twoSelmerRank": 1,
+              "upperBound": 1
+            },
+            "after": null,
+            "rankIntervalPreserved": {
+              "lowerBound": 1,
+              "upperBound": 1,
+              "exactRank": 1
+            }
+          }
+        ],
+        "forged": {
+          "schema": "MathScope.M3.P7Execution/1",
+          "recordSHA256": "f66bac409b59e1725c4440e61e9eaeec9d2cf557f9cf9c0519fe87004012c4f2",
+          "mathematicalSHA256": "33309e55fc75e6a9bffd72fd2e3fd23b21ae25316c393073115d16afdb550697",
+          "inputSHA256": "d014821927ca1d8d3344f8390320e013f45d8416f78efa5b14c4e14669f28d08",
+          "environmentSHA256": "1e5230a874af19fefc8af76771a06bf03c03303d9e36a2e0bff17146ea0d2944",
+          "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+          "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
+          "execution": {
+            "status": "COMPLETED",
+            "startedAt": "2026-10-12T10:26:08.076092+00:00",
+            "finishedAt": "2026-10-12T10:26:08.400624+00:00",
+            "elapsedSeconds": 0.32453161299997646,
+            "observedExitCode": 0,
+            "timedOut": false,
+            "maxSeconds": 90,
+            "memoryLimitMiB": 768,
+            "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
+            "observedChildResourceLimits": {
+              "addressSpaceBytes": [
+                805306368,
+                805306368
+              ],
+              "cpuSeconds": [
+                90,
+                91
+              ]
+            },
+            "observedChildEnvironmentSHA256": "1e5230a874af19fefc8af76771a06bf03c03303d9e36a2e0bff17146ea0d2944",
+            "failure": null,
+            "stderr": ""
+          },
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+          "formalLeanProofIssued": false,
+          "wholeP7Complete": false,
+          "wholeM3Complete": false
+        },
+        "fresh": {
+          "schema": "MathScope.M3.P7Execution/1",
+          "recordSHA256": "60b1c4ba06468a4d8bd96af895f8c3e8c7300e5c0723a0798bc1cf1ff8d4f124",
+          "mathematicalSHA256": "794348089c498e2ff2d778b1573b9f5bf45ce2ae1c7762d7b6bf2e844ab7f5df",
+          "inputSHA256": "d014821927ca1d8d3344f8390320e013f45d8416f78efa5b14c4e14669f28d08",
+          "environmentSHA256": "1e5230a874af19fefc8af76771a06bf03c03303d9e36a2e0bff17146ea0d2944",
+          "sourceBindingSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+          "predecessorSHA256": "0e5588ab63feafdff20a6a1d82e0f9fce26f3120b6286197c0e0915f4503e305",
+          "execution": {
+            "status": "COMPLETED",
+            "startedAt": "2026-10-12T10:26:08.997737+00:00",
+            "finishedAt": "2026-10-12T10:26:09.323952+00:00",
+            "elapsedSeconds": 0.3262408650000168,
+            "observedExitCode": 0,
+            "timedOut": false,
+            "maxSeconds": 90,
+            "memoryLimitMiB": 768,
+            "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
+            "observedChildResourceLimits": {
+              "addressSpaceBytes": [
+                805306368,
+                805306368
+              ],
+              "cpuSeconds": [
+                90,
+                91
+              ]
+            },
+            "observedChildEnvironmentSHA256": "1e5230a874af19fefc8af76771a06bf03c03303d9e36a2e0bff17146ea0d2944",
+            "failure": null,
+            "stderr": ""
+          },
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+          "formalLeanProofIssued": false,
+          "wholeP7Complete": false,
+          "wholeM3Complete": false
+        }
+      },
+      "bindingPreserved": {
+        "request": true,
+        "inputSHA256": true,
+        "sourceBinding": true,
+        "environment": true,
+        "environmentSHA256": true,
+        "predecessor": true
+      },
+      "bindingRejectionControls": [
+        {
+          "axis": "source",
+          "status": "REJECTED",
+          "stage": "P7_VALIDATE_RECORD_BEFORE_REPLAY",
+          "reason": "replay requires the same source and backend; run the original input separately for a new environment",
+          "outerAndMathematicalHashesResealed": true,
+          "originalInputHashPreserved": true,
+          "proofStatusAdopted": false
+        },
+        {
+          "axis": "precision",
+          "status": "REJECTED",
+          "stage": "P7_VALIDATE_RECORD_BEFORE_REPLAY",
+          "reason": "input hash mismatch",
+          "outerAndMathematicalHashesResealed": true,
+          "originalInputHashPreserved": true,
+          "proofStatusAdopted": false
+        },
+        {
+          "axis": "input",
+          "status": "REJECTED",
+          "stage": "P7_VALIDATE_RECORD_BEFORE_REPLAY",
+          "reason": "input hash mismatch",
+          "outerAndMathematicalHashesResealed": true,
+          "originalInputHashPreserved": true,
+          "proofStatusAdopted": false
+        }
+      ],
+      "originalRecordUnchanged": true,
+      "downstream": {
+        "scope": "DECLARED_AUDIT_DEPENDENCY_FIXTURE",
+        "direction": "PREREQUISITE_TO_DEPENDENT",
+        "edges": [
+          {
+            "from": "zero-box",
+            "to": "finite-height-record"
+          },
+          {
+            "from": "finite-height-record",
+            "to": "zero-coverage-comparison"
+          },
+          {
+            "from": "zero-coverage-comparison",
+            "to": "conditional-rh-review"
+          },
+          {
+            "from": "rank-upper",
+            "to": "rank-bound-record"
+          },
+          {
+            "from": "rank-bound-record",
+            "to": "curve-rank-equality"
+          },
+          {
+            "from": "curve-rank-equality",
+            "to": "bsd-review"
+          }
+        ],
+        "changedNode": "rank-upper",
+        "revokedNodeIds": [
+          "bsd-review",
+          "curve-rank-equality",
+          "rank-bound-record",
+          "rank-upper"
+        ],
+        "badges": [
+          {
+            "id": "bsd-review",
+            "status": "REVOKED",
+            "proofAuthority": false
+          },
+          {
+            "id": "conditional-rh-review",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          },
+          {
+            "id": "curve-rank-equality",
+            "status": "REVOKED",
+            "proofAuthority": false
+          },
+          {
+            "id": "finite-height-record",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          },
+          {
+            "id": "rank-bound-record",
+            "status": "REVOKED",
+            "proofAuthority": false
+          },
+          {
+            "id": "rank-upper",
+            "status": "REVOKED",
+            "proofAuthority": false
+          },
+          {
+            "id": "unrelated-observation",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          },
+          {
+            "id": "zero-box",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          },
+          {
+            "id": "zero-coverage-comparison",
+            "status": "UNCHANGED_UNVERIFIED_METADATA",
+            "proofAuthority": false
+          }
+        ],
+        "wholeApplicationGraphAudited": false,
+        "certificateIssued": false
+      },
+      "mathematicalScope": {
+        "mutationDetection": "FRESH_P7_RESULT_COMPARISON",
+        "rankUpperBoundComputed": true,
+        "rankUpperBoundStatus": "CERTIFIED_ARITHMETIC_UPPER",
+        "globalRHProved": false,
+        "globalBSDProved": false,
+        "finiteHeightOnly": false
+      },
+      "certificateIssued": false
+    }
+  ],
+  "execution": {
+    "startedAt": "2026-10-12T10:26:02.550298+00:00",
+    "finishedAt": "2026-10-12T10:26:09.365438+00:00",
+    "freshP7ChildExecutions": 6,
+    "maxSecondsPerChild": 90,
+    "memoryLimitMiB": 768
+  },
+  "auditSourceSHA256": "b84dc4abea84c109fed164d266c8d5ec197a28e6384409dae9b6c990a62bbb40",
+  "sourceBinding": {
+    "version": "0.3.0",
+    "files": [
+      {
+        "path": "cli.py",
+        "sha256": "ae992122e1bd26faef09f14524be7e5988aaff027a8342d48b0409fcd806a53f"
+      },
+      {
+        "path": "p7/__init__.py",
+        "sha256": "1b6337c04bbc7110e52727b3d2f6139626f0befdfda67a13fd14113203fcd551"
+      },
+      {
+        "path": "p7/ball_backend.py",
+        "sha256": "33d99161c9f3f5bdb2482e538906a50df80e2f221e8f71da5f4d6d86e410cb7e"
+      },
+      {
+        "path": "p7/elliptic_analytic.py",
+        "sha256": "b77ce56be3ee9ace1f76ec10ea088bccb9a7f1d583b9164542f9816a3ddb007f"
+      },
+      {
+        "path": "p7/elliptic_arithmetic.py",
+        "sha256": "ac29e261acca0ec671cfa0286e201d23b46623671cda6ea735f8e6a27e06e154"
+      },
+      {
+        "path": "p7/elliptic_complex.py",
+        "sha256": "70bd068de7a8a54808be70f85700fc7fdc0f326276477cc49346b94467a06535"
+      },
+      {
+        "path": "p7/elliptic_local.py",
+        "sha256": "85b2a163a76dbb7cd8bee367f66bea0824ab385e164161b4a1f0d2d3da8e03da"
+      },
+      {
+        "path": "p7/euler_product.py",
+        "sha256": "531dadf3e3c06144de66473d0e5c204840e5adc76ebb05f70ae911f456bd051d"
+      },
+      {
+        "path": "p7/explicit_formula.py",
+        "sha256": "a3c7f5a6056156ad3094a54f0000a04e08ee316bf302f445c2b1ee6327216961"
+      },
+      {
+        "path": "p7/height_certificate.py",
+        "sha256": "c02e78fa1fdef0832e062b0e097eda2debf0c20ab833eafbed92b41a222d0aa9"
+      },
+      {
+        "path": "p7/modular_symbols.py",
+        "sha256": "01c810b86ccd6daa496264536af0fd6a61966c4c6d5a56ff4234c855c1ebb7b9"
+      },
+      {
+        "path": "p7/normalization.py",
+        "sha256": "86d8f8dd32fa4cb02926c410b1eca56af8ab75dd0738360659efe2eeb5f50770"
+      },
+      {
+        "path": "p7/operator_candidates.py",
+        "sha256": "7a1b8a8786b726fbf7ac94b2b78d6ca163f45750ac6e465be8a742027ba731c5"
+      },
+      {
+        "path": "p7/operator_registry.py",
+        "sha256": "c7d6bbbc1f46ca1bc3765147b57a3f3e8c13d193fc250a9a0011b2d67ed73026"
+      },
+      {
+        "path": "p7/pari_backend.py",
+        "sha256": "5a446e441830650c792d3ce779cf78b58c2ea0355427003fd991978cc857bac8"
+      },
+      {
+        "path": "p7/period_certificate.py",
+        "sha256": "30da2f2a41a49756b948f9c282a08de0c2d35278ef9b9d2411b424db49d731e8"
+      },
+      {
+        "path": "p7/result_claims.py",
+        "sha256": "808fb7746a579a9ff522d8e17bba30fcf2c92eae5009ce703a3fe6fe3121d4f5"
+      },
+      {
+        "path": "p7/taylor_remainder.py",
+        "sha256": "31f40ce640f773e90ae14b90fa7954135f2525a6c779312fc343c7db18dceb7c"
+      },
+      {
+        "path": "p7/zero_certificate.py",
+        "sha256": "3d0355994605d7203b5f9b35d22ffe3ae97aadd26e65c8b6eb6c20c0a929a1ba"
+      },
+      {
+        "path": "p7/zeta_em.py",
+        "sha256": "1e6c73cda3aedf94e6db4962199d001511782bab2e1ea8ebccf041b6084452d8"
+      },
+      {
+        "path": "p7/pari_runtime/setup.py",
+        "sha256": "f2138107fd1412e7c8937cef10b61915166a5137da08ad1a932a3d35c9a00428"
+      },
+      {
+        "path": "p7/pari_runtime/pyproject.toml",
+        "sha256": "06f8c964337d3f5ee97f50a1425e7cf5ff206b0b5c19022dc45d1eb3e9cc7650"
+      },
+      {
+        "path": "p7/pari_runtime/MANIFEST.in",
+        "sha256": "50596052d86e67a74e9d32a45838809bf628bd7fe46455dbc34dd784dc42bd5b"
+      },
+      {
+        "path": "p7/pari_runtime/src/mathscope_p7_pari/__init__.py",
+        "sha256": "9169b41f67cfc35a345ff5c33fa698a93047c3cc723968725561f563d26ed80a"
+      },
+      {
+        "path": "p7/pari_runtime/src/mathscope_p7_pari/build.py",
+        "sha256": "b4007aea96703232e8916edbc77a0be912d4fffadca7f09ac91536df9d3345fb"
+      }
+    ]
+  },
+  "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+  "receiptMeaning": "Recorded execution of two finite negative controls; loading this JSON never reruns a validator.",
+  "originalP8CriterionComplete": false,
+  "wholeP8Complete": false,
+  "wholeM3Complete": false,
+  "formalLeanProofIssued": false,
+  "globalRHProved": false,
+  "globalBSDProved": false,
+  "arithmeticRankUpperBoundComputed": true,
+  "validRankUpperCertificateDeletionExecuted": true,
+  "certificateIssued": false,
+  "testHarness": {
+    "sourceFile": "tests/test_p8_p7_mutations.py",
+    "sourceSHA256": "cce4a0377098d32154eab27067e1fe7790ff6e13f66df5fb8e630378aeebdc03",
+    "auditStatus": "PASS",
+    "testProcessStatus": "NOT_YET_OBSERVED_AT_CLASS_TEARDOWN",
+    "testProcessExitCode": null,
+    "allTestsPassed": null,
+    "requiresIndependentCIProcessReceipt": true,
+    "failureIsNotConvertedToSuccess": true
+  },
+  "reportSHA256": "5664c0c81d7a1dc1479d68bde3049231a69c4ae637810c7b5c404a50ead723f9"
+}

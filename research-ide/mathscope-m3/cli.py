@@ -8,17 +8,19 @@ import hashlib
 import importlib.metadata
 import json
 import math
+import os
 from pathlib import Path
 import platform
 import resource
+import signal
 import subprocess
 import sys
 import time
 from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent
-VERSION = "0.2.0"
-KINDS = {"p7.special_function", "p7.zeta_zeros", "p7.elliptic_local", "p7.elliptic_analytic", "p7.explicit_formula", "p7.taylor_remainder", "p7.operator_audit"}
+VERSION = "0.3.0"
+KINDS = {"p7.special_function", "p7.zeta_em", "p7.euler_product", "p7.zeta_zeros", "p7.elliptic_local", "p7.elliptic_analytic", "p7.elliptic_complex", "p7.elliptic_arithmetic", "p7.explicit_formula", "p7.taylor_remainder", "p7.operator_audit", "p7.result_claim", "p7.modular_symbols"}
 MAX_JSON_BYTES = 32 * 1024 * 1024
 
 
@@ -73,6 +75,10 @@ def validate_request(request):
 
 def source_binding():
     paths = [ROOT / "cli.py", *sorted((ROOT / "p7").glob("*.py"))]
+    runtime_recipe = ROOT / "p7" / "pari_runtime"
+    paths.extend(runtime_recipe / name for name in (
+        "setup.py", "pyproject.toml", "MANIFEST.in",
+        "src/mathscope_p7_pari/__init__.py", "src/mathscope_p7_pari/build.py"))
     return {"version": VERSION, "files": [{"path": str(p.relative_to(ROOT)), "sha256": file_hash(p)} for p in paths]}
 
 
@@ -118,15 +124,33 @@ def environment(kind):
                                     "runtimeFileCount": len(files), "licenseExpression": dist.metadata.get("License-Expression"),
                                     "importedPackageMatchesDistribution": True, "observedModuleOriginsChecked": True,
                                     "fingerprintScope": "Python modules and dynamic binaries; excludes installer bookkeeping and local paths"}
+    if kind in {"p7.elliptic_arithmetic", "p7.elliptic_complex", "p7.result_claim", "p7.modular_symbols"}:
+        from p7.pari_backend import backend_fingerprint
+        result["arithmeticBackend"] = backend_fingerprint()
     return result
 
 
 def dispatch(request):
     validate_request(request)
     kind, data = request["kind"], request["input"]
+    if kind == "p7.modular_symbols":
+        from p7.modular_symbols import evaluate_modular_symbols
+        return evaluate_modular_symbols(data)
+    if kind == "p7.result_claim":
+        from p7.result_claims import evaluate_result_claim
+        return evaluate_result_claim(data)
     if kind == "p7.special_function":
         from p7.ball_backend import evaluate
         return evaluate(data)
+    if kind == "p7.zeta_em":
+        from p7.zeta_em import evaluate_zeta_em
+        return evaluate_zeta_em(data)
+    if kind == "p7.euler_product":
+        from p7.euler_product import evaluate_euler_product
+        return evaluate_euler_product(data)
+    if kind == "p7.elliptic_complex":
+        from p7.elliptic_complex import evaluate_elliptic_complex
+        return evaluate_elliptic_complex(data)
     if kind == "p7.zeta_zeros":
         from p7.zero_certificate import certify_zeros
         return certify_zeros(data)
@@ -139,6 +163,9 @@ def dispatch(request):
     if kind == "p7.operator_audit":
         from p7.operator_registry import audit_operator
         return audit_operator(data)
+    if kind == "p7.elliptic_arithmetic":
+        from p7.elliptic_arithmetic import evaluate_elliptic_arithmetic
+        return evaluate_elliptic_arithmetic(data)
     if kind == "p7.elliptic_analytic":
         from p7.elliptic_analytic import elliptic_central_certificate
         if set(data) - {"model", "precisionBits", "coefficientLimit", "tolerance"} or "model" not in data:
@@ -153,6 +180,16 @@ def dispatch(request):
     if not isinstance(primes, list) or len(primes) > 64:
         raise ValueError("primes must be a list of at most 64 entries")
     return curve_certificate(data["model"], tuple(primes), coefficient_limit=data.get("coefficientLimit"))
+
+
+def _stop_execution_group(child, *, kill_leader=False):
+    """Bound the CLI and its arithmetic subprocesses to one execution lease."""
+    if kill_leader:
+        child.kill()
+    try:
+        os.killpg(child.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
 
 
 def execute(request, max_seconds=90, memory_mib=1536):
@@ -171,12 +208,12 @@ def execute(request, max_seconds=90, memory_mib=1536):
     child = None
     timeout = False
     try:
-        child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=str(ROOT))
+        child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=str(ROOT), start_new_session=True)
         try:
             stdout, stderr = child.communicate(payload, timeout=max_seconds)
         except subprocess.TimeoutExpired:
             timeout = True
-            child.kill()
+            _stop_execution_group(child, kill_leader=True)
             stdout, stderr = child.communicate()
     finally:
         if child is not None:
@@ -184,11 +221,12 @@ def execute(request, max_seconds=90, memory_mib=1536):
             # raises an unexpected exception or a BaseException interruption.
             try:
                 if child.poll() is None:
-                    child.kill()
+                    _stop_execution_group(child, kill_leader=True)
             finally:
                 try:
                     child.wait()
                 finally:
+                    _stop_execution_group(child)
                     for stream in (child.stdin, child.stdout, child.stderr):
                         if stream is not None:
                             stream.close()
@@ -225,6 +263,7 @@ def execute(request, max_seconds=90, memory_mib=1536):
               "execution": {"status": status, "startedAt": started, "finishedAt": datetime.now(timezone.utc).isoformat(),
                             "elapsedSeconds": time.monotonic() - begin, "observedExitCode": child.returncode,
                             "timedOut": timeout, "maxSeconds": max_seconds, "memoryLimitMiB": memory_mib,
+                            "processIsolation": "NEW_SESSION_WITH_EXECUTION_GROUP_CLEANUP",
                             "observedChildResourceLimits": observed_limits,
                             "observedChildEnvironmentSHA256": observed_environment_sha,
                             "failure": failure, "stderr": stderr.decode(errors="replace")},

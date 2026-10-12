@@ -47,9 +47,30 @@ def capabilities():
     for name, title in titles.items():
         examples.append({"id": name, "title": title, "request": cli.read_json_file(ROOT / "examples" / (name + ".json"))})
     for model in ("11a1", "37a1"):
+        examples.append({"id": "modular-symbol-" + model, "title": model + " exact central modular symbol, independent of parity",
+                         "request": {"kind": "p7.modular_symbols", "input": {"model": model}}})
+        examples.append({"id": "complex-" + model, "title": model + " complex L and completed Lambda at 1+3i",
+                         "request": {"kind": "p7.elliptic_complex", "input": {"model": model,
+                         "s": {"real": "1", "imag": "3"}, "precisionBits": 192,
+                         "coefficientLimit": 128, "tolerance": "1e-25"}}})
+        examples.append({"id": "arithmetic-" + model, "title": model + " exact descent, heights and saturation",
+                         "request": {"kind": "p7.elliptic_arithmetic", "input": {"model": model,
+                         "precisionBits": 192, "coefficientLimit": 64, "heightIterations": 7}}})
         examples.append({"id": "central-" + model, "title": model + " analytic central values",
                          "request": {"kind": "p7.elliptic_analytic", "input": {"model": model,
                          "precisionBits": 192, "coefficientLimit": 128, "tolerance": "1e-40"}}})
+    examples.extend([
+        {"id": "zeta-em-critical", "title": "ζ(1/2+14i): rounding, finite-series error and infinite tail",
+         "request": {"kind": "p7.zeta_em", "input": {"s": {"real": "1/2", "imag": "14"},
+         "precisionBits": 192, "sumCutoff": 32, "bernoulliOrder": 16, "integralEnd": 64,
+         "integralSeriesTerms": 16, "tolerance": "1e-25"}}},
+        {"id": "euler-zeta-2", "title": "Finite Euler product at s=2, with omitted-prime ledger",
+         "request": {"kind": "p7.euler_product", "input": {"function": "zeta", "s": {"real": "2", "imag": "0"},
+         "primes": [2, 3, 5, 7, 11, 13], "precisionBits": 192}}},
+        {"id": "complex-additive", "title": "Additive reduction: y²=x³−x, complex L(1+2i)",
+         "request": {"kind": "p7.elliptic_complex", "input": {"model": [0, 0, 0, -1, 0],
+         "s": {"real": "1", "imag": "2"}, "precisionBits": 192, "coefficientLimit": 128, "tolerance": "1e-25"}}},
+    ])
     examples.append({"id": "explicit-psi", "title": "ψ(10.5): integrated explicit formula",
                      "request": {"kind": "p7.explicit_formula", "input": {"x": "21/2", "height": "30",
                      "precisionBits": 192, "tolerance": "16", "zeroTolerance": "1e-20"}}})
@@ -61,8 +82,30 @@ def capabilities():
     examples.append({"id": "operator-reference", "title": "Operator reference and falsification controls",
                      "request": {"kind": "p7.operator_audit", "input": {"candidate": "diagonal-integers",
                      "dimension": 8, "precisionBits": 192, "tolerance": "1e-35"}}})
+    from p7.operator_candidates import reference_registration
+    examples.append({"id": "operator-registered", "title": "User operator, domain, hypotheses and exact finite truncations",
+                     "request": {"kind": "p7.operator_audit", "input": {"candidate": "registered",
+                     "registration": reference_registration(), "precisionBits": 192}}})
+    claim_titles = {
+        "finite-zero-20": "Typed result: finite-height zero certificate to T=20",
+        "specific-rank-37a1": "Typed result: specific-curve rank equality for 37a1",
+        "refined-37a1-conditional": "Typed result: conditional leading-term comparison for 37a1",
+        "universal-bsd-research": "Typed research export: universal BSD remains open",
+        "reject-finite-field-rh-copy": "Negative control: reject finite-field to classical RH promotion",
+        "reject-omitted-coefficient-and-prime": "Negative control: missing coefficient 17 and prime 37",
+        "reject-omitted-zero": "Negative control: missing the certified positive zero below T=20",
+    }
+    for name, title in claim_titles.items():
+        examples.append({"id": name, "title": title,
+                         "request": cli.read_json_file(ROOT / "p7" / "examples" / (name + ".json"))})
+    from p7.pari_backend import backend_fingerprint, PariBackendUnavailable
+    try:
+        arithmetic_backend = {"status": "AVAILABLE", "fingerprint": backend_fingerprint()}
+    except PariBackendUnavailable as exc:
+        arithmetic_backend = {"status": "UNAVAILABLE", "code": exc.code, "detail": str(exc)}
     return {"schema": "MathScope.M3.P7Capabilities/1", "status": "IN_PROGRESS", "kinds": sorted(cli.KINDS),
             "examples": examples, "sourceBinding": cli.source_binding(), "predecessor": cli.predecessor(),
+            "arithmeticBackend": arithmetic_backend,
             "progress": cli.read_json_file(ROOT / "P7_PROGRESS.json"),
             "limits": {"maxSeconds": MAX_SECONDS, "memoryMiB": MEMORY_MIB, "maxConcurrent": 1,
                        "maxRunBytes": MAX_RUN_BYTES, "maxReplayBytes": MAX_BODY_BYTES,
@@ -112,6 +155,10 @@ def _execute(value, replay):
         return result
     except (ValueError, TypeError, KeyError) as exc:
         raise HTTPException(422, str(exc)) from exc
+    except RuntimeError as exc:
+        if getattr(exc, "code", None) == "PARI_BACKEND_UNAVAILABLE":
+            raise HTTPException(503, {"code": exc.code, "detail": str(exc)}) from exc
+        raise
     finally:
         if lease is not None:
             lease.close()

@@ -1,0 +1,318 @@
+{
+  "schema": "MathScope.NavierM3.SelectedAcceptance/1",
+  "checks": [
+    {
+      "id": "actual-original-parameter-DAG",
+      "pass": true
+    },
+    {
+      "id": "actual-mean-field-power-law-overlap",
+      "pass": true
+    },
+    {
+      "id": "all-five-bump-supports-and-potential-hull-in-Imean",
+      "pass": true
+    },
+    {
+      "id": "positive-source-normalized-a-for-entire-eta-domain",
+      "pass": true
+    },
+    {
+      "id": "five-positive-enclosed-power-integrals",
+      "pass": true
+    },
+    {
+      "id": "actual-lambda-angular-inverse-separated",
+      "pass": true
+    },
+    {
+      "id": "angular-inverse-times-original-power-matrix",
+      "pass": true
+    },
+    {
+      "id": "positive-lambda-factored-axial-inverse",
+      "pass": true
+    },
+    {
+      "id": "source-uniform-third-jet-bound-on-entire-potential-support",
+      "pass": true
+    },
+    {
+      "id": "N8-01-solenoidal-Hermitian",
+      "pass": true
+    },
+    {
+      "id": "N8-01-pressure-includes-div-f",
+      "pass": true
+    },
+    {
+      "id": "N8-02-direct-versus-padded-FFT",
+      "pass": true
+    },
+    {
+      "id": "N8-02-high-mode-alias-mutation",
+      "pass": true
+    },
+    {
+      "id": "N8-03-Taylor-Green-order-two",
+      "pass": true
+    },
+    {
+      "id": "N8-03-exact-Taylor-Green-energy",
+      "pass": true
+    },
+    {
+      "id": "N8-03-finite-convection-energy-cancellation",
+      "pass": true
+    },
+    {
+      "id": "N8-03-adaptive-step-gates",
+      "pass": true
+    },
+    {
+      "id": "N6-02-quadratic-residual-negative-control",
+      "pass": true
+    },
+    {
+      "id": "N6-05-zero-mean-Fourier-cancellation",
+      "pass": true
+    },
+    {
+      "id": "N6-03-projected-response-versus-exact-ODE",
+      "pass": true
+    },
+    {
+      "id": "N6-04-signed-target-fixed-amplitudes-square-kept",
+      "pass": true
+    },
+    {
+      "id": "N6-05-nonzero-mean-mutation",
+      "pass": true
+    },
+    {
+      "id": "N6-06-five-independent-radial-integrals",
+      "pass": true
+    },
+    {
+      "id": "N6-06-source-patch-disjoint-bumps",
+      "pass": true
+    },
+    {
+      "id": "N6-07-exact-rational-order-margins",
+      "pass": true
+    },
+    {
+      "id": "N6-03-generated-harmonics-retained",
+      "pass": true
+    },
+    {
+      "id": "N6-03-truncation-without-bound-held",
+      "pass": true
+    },
+    {
+      "id": "N7-01-cutoff-domain-margin",
+      "pass": true
+    },
+    {
+      "id": "N7-05-finite-extension-tail-constraints",
+      "pass": true
+    },
+    {
+      "id": "N7-08-periodization-overlap-negative",
+      "pass": true
+    },
+    {
+      "id": "N8-04-positive-tau-underflow",
+      "pass": true
+    },
+    {
+      "id": "N8-04-terminal-time-rejected",
+      "pass": true
+    },
+    {
+      "id": "tampered-replay-rejected",
+      "pass": true
+    },
+    {
+      "id": "forged-formal-badge-rejected",
+      "pass": true
+    },
+    {
+      "id": "forged-observation-rejected",
+      "pass": true
+    },
+    {
+      "id": "examples-run-and-replay",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "counts": {
+    "checks": 36,
+    "examples": 11
+  },
+  "examples": [
+    {
+      "id": "N6-workbench",
+      "input": {
+        "package": "N6",
+        "operation": "workbench"
+      },
+      "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+      "executionStatus": "FINITE_CHECKS_PASSED",
+      "runHash": "a5dca964af4137adcdf8b8a97563c7d60c17309d1e6455ee68b21e85cab1f32c",
+      "replay": true
+    },
+    {
+      "id": "N6-source-mean",
+      "input": {
+        "package": "N6",
+        "operation": "source-mean-map"
+      },
+      "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+      "executionStatus": "ACTUAL_SOURCE_INVERSE_DEPENDENCY_EXECUTED",
+      "runHash": "34b053ca3905dfc75fd58f860a3eee786a28aff590a5640ac758fb1d2d18556c",
+      "replay": true
+    },
+    {
+      "id": "N6-harmonic",
+      "input": {
+        "package": "N6",
+        "operation": "harmonic-response"
+      },
+      "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+      "executionStatus": "FINITE_SAMPLED_AMPLITUDE_MODEL_EXECUTED",
+      "runHash": "8eb8933cdc9f155ef23b9d6dfe16317b7ccc9b091e2b12c80a390fc65ca15bc6",
+      "replay": true
+    },
+    {
+      "id": "N6-signed",
+      "input": {
+        "package": "N6",
+        "operation": "signed-covariance",
+        "parameters": {
+          "target": [
+            -0.003,
+            0.002
+          ]
+        }
+      },
+      "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+      "executionStatus": "FINITE_SIGNED_INVERSE_EXECUTED",
+      "runHash": "ac529ad8d8ce6904e1ca4d354c8dd18c6b274bb9168b304356d0a1c788667611",
+      "replay": true
+    },
+    {
+      "id": "N6-moments",
+      "input": {
+        "package": "N6",
+        "operation": "five-moments",
+        "parameters": {
+          "lambda": 0.2,
+          "a": 1,
+          "d": 0.2
+        }
+      },
+      "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+      "executionStatus": "FINITE_MOMENT_MAP_EXECUTED",
+      "runHash": "5a2e209452c40b81b6364630bd6266981fc46efd91d362801c2860bad3c9ae05",
+      "replay": true
+    },
+    {
+      "id": "N7-workbench",
+      "input": {
+        "package": "N7",
+        "operation": "workbench"
+      },
+      "status": "BLOCKED_BY_N6_LOCAL_FIELD",
+      "executionStatus": "FINITE_CHECKS_PASSED",
+      "runHash": "30b33551da04e286abd405ef6b24489713863e1fd860bd7fc319a0289c652d7a",
+      "replay": true
+    },
+    {
+      "id": "N7-periodic",
+      "input": {
+        "package": "N7",
+        "operation": "periodization",
+        "parameters": {
+          "sameForcing": true,
+          "periodicPressure": true,
+          "zeroInitialData": true
+        }
+      },
+      "status": "BLOCKED_BY_N6_LOCAL_FIELD",
+      "executionStatus": "FINITE_SUPPORT_CONTRACT_ACCEPTED",
+      "runHash": "fe2e1497c5029a56ca321b16fa913d70770fbe90224a6c6f850723f5c0023eda",
+      "replay": true
+    },
+    {
+      "id": "N8-TG",
+      "input": {
+        "package": "N8",
+        "operation": "galerkin",
+        "parameters": {
+          "cutoff": 2,
+          "viscosity": 1,
+          "endTime": 0.5,
+          "initialStep": 0.1
+        }
+      },
+      "status": "GENERIC_GALERKIN_EXECUTED_RECONSTRUCTION_PARTIAL",
+      "executionStatus": "FINITE_RUN_COMPLETE",
+      "runHash": "8bdf584da5121931d1fb7d79416d568c698f5a8211c22d7d600648ea23015b6f",
+      "replay": true
+    },
+    {
+      "id": "N8-nonlinear",
+      "input": {
+        "package": "N8",
+        "operation": "galerkin",
+        "parameters": {
+          "cutoff": 2,
+          "seed": 103,
+          "endTime": 0.08,
+          "rtol": 0.00001
+        }
+      },
+      "status": "GENERIC_GALERKIN_EXECUTED_RECONSTRUCTION_PARTIAL",
+      "executionStatus": "FINITE_RUN_COMPLETE",
+      "runHash": "4a6a6eae63c55d206a45944dd2748fe74e8a69a959792431cd142fb6298ba49e",
+      "replay": true
+    },
+    {
+      "id": "N8-nearT",
+      "input": {
+        "package": "N8",
+        "operation": "near-terminal"
+      },
+      "status": "GENERIC_GALERKIN_EXECUTED_RECONSTRUCTION_PARTIAL",
+      "executionStatus": "POSITIVE_TAU_COORDINATES_EXECUTED",
+      "runHash": "2154ceb505c47ecc81628ac32390d9519bfa370445c4c1c32599e1269e36f35b",
+      "replay": true
+    },
+    {
+      "id": "N8-acceptance",
+      "input": {
+        "package": "N8",
+        "operation": "acceptance"
+      },
+      "status": "GENERIC_GALERKIN_EXECUTED_RECONSTRUCTION_PARTIAL",
+      "executionStatus": "FINITE_CHECKS_PASSED",
+      "runHash": "aa301e68bf526e0fab44fbadd5dd64a4ca7e70f17c24199d64a070e14319beee",
+      "replay": true
+    }
+  ],
+  "measurements": {
+    "FFTDirect": 1.6676063408374899e-16,
+    "aliasMutation": 0.9388897310150965,
+    "TGOrders": [
+      2.0047095974008435,
+      2.001173486615001
+    ],
+    "fiveMomentNormalizedError": 3.841595873608032e-15,
+    "projectedODEExactError": 9.237377529558444e-11
+  },
+  "scope": "Finite implementations and source-bound construction/guard checks. N6/N7 source reconstruction and the original 24 criteria are not all complete.",
+  "fullM3Complete": false,
+  "paperReconstructionComplete": false
+}

@@ -1,0 +1,285 @@
+{
+  "schema": "MathScope.M3.GaugeExpansionReadyForUI/1",
+  "status": "MATHEMATICAL_SOURCE_AND_NUMERICAL_EVIDENCE_FROZEN_UI_PENDING",
+  "exampleCount": 16,
+  "newExamples": [
+    {
+      "id": "y5-independent-t0",
+      "label": "Y5 · 독립 t₀ 척도 · 새 실제 SU(2) chain",
+      "request": {
+        "kind": "ensemble-study",
+        "scaleSampler": {
+          "samples": 8,
+          "burnIn": 32
+        },
+        "channelSampler": {
+          "samples": 128,
+          "burnIn": 32
+        },
+        "flow": {
+          "maxTime": 0.8,
+          "step": 0.04
+        },
+        "bootstrap": {
+          "replicates": 32,
+          "scaleBlock": 2,
+          "channelBlock": 8
+        }
+      }
+    },
+    {
+      "id": "y5-matched-reference-study",
+      "label": "Y5 · 실측 척도에 맞춘 세 격자 · 짧은 실행",
+      "request": {
+        "kind": "ensemble-study",
+        "seed": "m3-matched-browser-study-v1",
+        "references": [
+          {
+            "id": "s216",
+            "beta": 2.16,
+            "Ns": 5,
+            "Nt": 10
+          },
+          {
+            "id": "s230",
+            "beta": 2.3,
+            "Ns": 6,
+            "Nt": 12
+          },
+          {
+            "id": "s240",
+            "beta": 2.4,
+            "Ns": 8,
+            "Nt": 16
+          }
+        ],
+        "models": [
+          {
+            "id": "a216",
+            "role": "A_SWEEP",
+            "targetDelta": 1.25,
+            "beta": 2.16,
+            "Ns": 5,
+            "Nt": 10,
+            "referenceScaleId": "s216"
+          },
+          {
+            "id": "a230",
+            "role": "A_SWEEP",
+            "targetDelta": 1.25,
+            "beta": 2.3,
+            "Ns": 6,
+            "Nt": 12,
+            "referenceScaleId": "s230"
+          },
+          {
+            "id": "a240",
+            "role": "A_SWEEP",
+            "targetDelta": 1.25,
+            "beta": 2.4,
+            "Ns": 8,
+            "Nt": 16,
+            "referenceScaleId": "s240"
+          }
+        ],
+        "scaleSampler": {
+          "samples": 8,
+          "burnIn": 16
+        },
+        "channelSampler": {
+          "samples": 64,
+          "burnIn": 16
+        },
+        "flow": {
+          "maxTime": 1.28,
+          "step": 0.08
+        },
+        "bootstrap": {
+          "replicates": 32,
+          "scaleBlock": 2,
+          "channelBlock": 8
+        },
+        "operators": {
+          "smearSteps": [
+            0,
+            2,
+            4
+          ],
+          "alpha": 0.5
+        },
+        "matching": {
+          "referenceL": 8,
+          "referenceT": 16,
+          "matchingRelativeTolerance": 0.1
+        }
+      }
+    },
+    {
+      "id": "y5-production-reference-record",
+      "label": "Y5 · 실제 장시간 8개 실행 기록 · 출처 검증",
+      "request": {
+        "kind": "ensemble-study",
+        "recordId": "su2-production-v1"
+      }
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "research-ide/mathscope-m3/gauge/index.mjs",
+      "sha256": "5c47d1624939d6e7207283d6d1b6a0fce977c81b8a22705d3d3fc602eb31b863"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/su2-kernel.mjs",
+      "sha256": "dc7a29773017ba52428c46755737940d8d07d50985f362624bf07a28108eabb2"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/scale-analysis.mjs",
+      "sha256": "eb88ac63f866fae784cf26b8dd814b3bf50da5a8a5f3704044230d71a56603a0"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/scale-study.mjs",
+      "sha256": "da60447cd7555fad97115891c1ab0e4679fc1f663d84da4bb67a3269fd26dc21"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/vacuum.mjs",
+      "sha256": "6ed27df08fd69d05c14df632b4100c2bcdb132037a69759adcfb662d4377a407"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/study-review.mjs",
+      "sha256": "9ed1f1c1549d0cd7a54254827355934d3fbb7a0d86b4bbb5f784b5898cfef96b"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/study-record.mjs",
+      "sha256": "260f79ee5f3b52c500abb858cdf2e84126b815ec86962c4b309dfd7b5dd4ba51"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/study-record-data.mjs",
+      "sha256": "ec65f211ce89961cd30d33e59e7d1068d836b2fd7e3db978c915f46f10f71562"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/experiments/run-study-job.mjs",
+      "sha256": "ed05114fb063e9f165067752003793eec65054d6ea2c439655289c04421a80b3"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/experiments/assemble-study-evidence.mjs",
+      "sha256": "3d64919a1cb54e85cb19dc03400dbc5918e21c14653e7018d60c153ae83031d4"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/experiments/package-study-record.mjs",
+      "sha256": "68db2a97861b6a518325083cfe82aa0e97995e05852d53f90408c655416a7de3"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/experiments/verify-study-numerics.py",
+      "sha256": "c7d48bb5b4b8c4a44eb7ef664535cf265b2f56a88b34ad83768c860ca4a44fa0"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/tests/su2-study-kernel.test.mjs",
+      "sha256": "a4d5317801638bb7cdd30babde96b2e1764ec691b18bfc135422c6a2c468a4e9"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/tests/scale-analysis.test.mjs",
+      "sha256": "897e33022ff9e1515b270c30fd1211b3994e08080039592fa87f9db148e68dbc"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/tests/study-record.test.mjs",
+      "sha256": "05ea26da1688eacc196ee88a28c0b0627fa221a6d6301f779a03a3be519b81e5"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "research-ide/mathscope-m3/gauge/evidence/scale-expansion/gauge-expansion-tests-final.tap",
+      "sha256": "1dd02fc6cf6d113e3ea82caf8a4aaeceea7dd07128ffa15fea32d5882d2d4bd3"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/evidence/scale-expansion/independent-numerical-review-attempt1.json",
+      "sha256": "915d5731aedbb2b13517d4755bbe19008326bcec4f3151f9b08975047a94271c"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/evidence/scale-expansion/live-scale-replay-attempt1.json",
+      "sha256": "fe6656362972f4473185faceb3b70a80644a6a64c064d662e047b2d15b7226ed"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/evidence/scale-expansion/matched-public-example-attempt2.json",
+      "sha256": "783cecabe1b27bd691f7e0066bee6b80f14fb1055007cb75f6cf204f35722cc7"
+    },
+    {
+      "path": "research-ide/mathscope-m3/gauge/evidence/scale-expansion/y5-criterion-assessment-attempt1.json",
+      "sha256": "02e11552e90c2e96a2604aeff924d68927f600f45b6f71b6219073c203280363"
+    }
+  ],
+  "archive": {
+    "bodySha256": "a86559fdad3e88bf7a0b9740290bd87961cc7463c05d69c968c90d049beec1d6",
+    "resultSha256": "dc15996d9fa1e5b2f8f9898e38e63098e8d6d710a2091f9c6246a441129f1609",
+    "displayedRowChecks": [
+      {
+        "id": "a-beta216",
+        "status": "MATCH",
+        "displayedRowSha256": "6584c8bc7d073f65f0d412d2c01c6baae54e43a46d303478f6f11cd2b14ac72e",
+        "originalRowSha256": "3523ad439df0d6b34ef350e848c8e61205b0a1c519440616ec7db1bbba72bc8e",
+        "originalFileSha256": "df1701c8590b0c49794ec2b264a52beebcf5fc02ea2318caf4ecb22c2e2d1760"
+      },
+      {
+        "id": "a-beta230",
+        "status": "MATCH",
+        "displayedRowSha256": "e1685567c1b589fda6d0a8a6c338a9c5d9b3b6d1b1889344ce950b9ce8cef098",
+        "originalRowSha256": "ada081333b918c47aafd2f4f5e0ca025f855055fe5170321583f374a1edeb154",
+        "originalFileSha256": "57bec49d9a44608b59eb93e7aab098ff5f851f3de7e29cbe471357ff0d82642a"
+      },
+      {
+        "id": "a-beta240",
+        "status": "MATCH",
+        "displayedRowSha256": "c3567b182f30fdb1f67c2af3d28ff9b40a6d8549b1e8365187da6c1a11c1c873",
+        "originalRowSha256": "af4711420af770046c160ed260407179c4a6b03373e578c7978bb6f302dbb155",
+        "originalFileSha256": "f4c6806e7b931368179ace9b1183b26ee94ba8a05ac3a1c1164979412aedf69b"
+      },
+      {
+        "id": "L8-beta230",
+        "status": "MATCH",
+        "displayedRowSha256": "24aa9d1ab272e32ec9294f9a2e1997c59a59272dcdc2dcf180e32d32e25443de",
+        "originalRowSha256": "a7186344fd7602b3262e4bc6871d563aa5785ca70a93ab220c7571be108400eb",
+        "originalFileSha256": "284f659a9a163c77fcccc08dd954e0f01741b8495d02833ba82f41242c608947"
+      },
+      {
+        "id": "T24-beta230",
+        "status": "MATCH",
+        "displayedRowSha256": "d904a18cbfde5a0add3a90d91be61cbff3c45bf61e899e37e3f6c191e79bea72",
+        "originalRowSha256": "d9ab7829b847cf0ad4b59f3a72cafd59161cd9ab415f6fac66399812009f6400",
+        "originalFileSha256": "bd9eff40bd9b4676939ca0dc321e1750a3f37ac212fb135ae4c03c64e7cb8f3c"
+      },
+      {
+        "id": "validation-delta090",
+        "status": "MATCH",
+        "displayedRowSha256": "c3899a9e57f02051ba7713b4339f648bcac1273fd9fc4f300dfb8437e3efbf11",
+        "originalRowSha256": "c5316292f48aa6ad01b73e1da0d36d910021530c341bdfcac4b0650f13570340",
+        "originalFileSha256": "4c85cde12ceea61d2d167a97d488ec7528c6b78ff3ca03e1c1b281f54c15085a"
+      },
+      {
+        "id": "validation-delta100",
+        "status": "MATCH",
+        "displayedRowSha256": "4f202befe14e5f84f079ff46a2a794ac2b9e8ba7500024588bf2b792aa53b2f2",
+        "originalRowSha256": "e581376259b3857857f8fc2746b3185ba67c79a043d88d6fd94d791e7bba7abd",
+        "originalFileSha256": "f40f81ffa0a04c48f418a4cd296b205057a136f90c38e1496e25a5c682d90f70"
+      }
+    ],
+    "originalAttempts": 8,
+    "sourceSnapshots": 80,
+    "newExecution": false,
+    "rawFilesRefetchedInBrowser": false
+  },
+  "existingY7": {
+    "status": "PINNED_KERNEL_AUDIT_MATCH",
+    "realStatus": "KERNEL_CHECKED_REAL_FINITE_SCOPES",
+    "sourceChecks": 45,
+    "targets": 8,
+    "customAxioms": [],
+    "newKernelExecution": false
+  },
+  "uiPending": [
+    "Y5-05",
+    "Y5-06",
+    "Y5-08"
+  ],
+  "scientificScope": "Full-Haar finite SU2 reference-unit study; all failed statistical gates and large lattice systematics remain visible.",
+  "continuumClaim": "OPEN_CONTINUUM",
+  "clayProblemSolved": false
+}

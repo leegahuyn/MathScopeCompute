@@ -1,0 +1,51 @@
+MathScope.M1.Gauge.g2_shapes : MathScope.M1.Gauge.g2Basis.all (MathScope.M1.Gauge.squareShape 7) = Bool.true
+'MathScope.M1.Gauge.g2_shapes' does not depend on any axioms
+MathScope.M1.Gauge.g2_compact_form : MathScope.M1.Gauge.g2Basis.all MathScope.M1.Gauge.antiHermitian = Bool.true
+'MathScope.M1.Gauge.g2_compact_form' depends on axioms: [propext]
+MathScope.M1.Gauge.g2_complete_bracket_table :
+  MathScope.M1.Gauge.checkBracketRows 7 MathScope.M1.Gauge.g2Basis MathScope.M1.Gauge.g2BracketRows = Bool.true
+'MathScope.M1.Gauge.g2_complete_bracket_table' depends on axioms: [propext]
+MathScope.M1.Gauge.g2_embedding_brackets :
+  MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.g2L0 MathScope.M1.Gauge.g2L1 =
+      MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.g2L2 ∧
+    MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.g2L1 MathScope.M1.Gauge.g2L2 =
+        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.g2L0 ∧
+      MathScope.M1.Gauge.matBracket MathScope.M1.Gauge.g2L2 MathScope.M1.Gauge.g2L0 =
+        MathScope.M1.Gauge.matScale 2 MathScope.M1.Gauge.g2L1
+'MathScope.M1.Gauge.g2_embedding_brackets' depends on axioms: [propext]
+MathScope.M1.Gauge.g2_embedding_metric :
+  MathScope.M1.Gauge.gramTrace MathScope.M1.Gauge.g2EmbeddingScaled = [[4, 0, 0], [0, 4, 0], [0, 0, 4]]
+'MathScope.M1.Gauge.g2_embedding_metric' depends on axioms: [propext]
+MathScope.M1.Gauge.g2_jacobi_fixture :
+  MathScope.M1.Gauge.bracketJacobi MathScope.M1.Gauge.g2B0 MathScope.M1.Gauge.g2B1 MathScope.M1.Gauge.g2B2 =
+    MathScope.M1.Gauge.matZero 7
+'MathScope.M1.Gauge.g2_jacobi_fixture' depends on axioms: [propext]
+MathScope.M1.Gauge.g2_link_unitary :
+  MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.g2U0) MathScope.M1.Gauge.g2U0 =
+    MathScope.M1.Gauge.matId 7
+'MathScope.M1.Gauge.g2_link_unitary' depends on axioms: [propext]
+MathScope.M1.Gauge.g2_nonconstant_site_frames :
+  MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.g2Omega0) MathScope.M1.Gauge.g2Omega0 =
+      MathScope.M1.Gauge.matId 7 ∧
+    MathScope.M1.Gauge.matMul (MathScope.M1.Gauge.matDagger MathScope.M1.Gauge.g2Omega1) MathScope.M1.Gauge.g2Omega1 =
+      MathScope.M1.Gauge.matId 7
+'MathScope.M1.Gauge.g2_nonconstant_site_frames' depends on axioms: [propext]
+MathScope.M1.Gauge.g2_holonomy_covariance :
+  MathScope.M1.Gauge.holonomy3
+      (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega0 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2Omega1)
+      (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega1 MathScope.M1.Gauge.g2U1 (MathScope.M1.Gauge.matId 7))
+      (MathScope.M1.Gauge.gaugeLink (MathScope.M1.Gauge.matId 7) MathScope.M1.Gauge.g2U2 MathScope.M1.Gauge.g2Omega0) =
+    MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega0
+      (MathScope.M1.Gauge.holonomy3 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2U1 MathScope.M1.Gauge.g2U2)
+      MathScope.M1.Gauge.g2Omega0
+'MathScope.M1.Gauge.g2_holonomy_covariance' depends on axioms: [propext]
+MathScope.M1.Gauge.g2_wilson_trace :
+  MathScope.M1.Gauge.matTrace
+      (MathScope.M1.Gauge.holonomy3
+        (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega0 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2Omega1)
+        (MathScope.M1.Gauge.gaugeLink MathScope.M1.Gauge.g2Omega1 MathScope.M1.Gauge.g2U1 (MathScope.M1.Gauge.matId 7))
+        (MathScope.M1.Gauge.gaugeLink (MathScope.M1.Gauge.matId 7) MathScope.M1.Gauge.g2U2
+          MathScope.M1.Gauge.g2Omega0)) =
+    MathScope.M1.Gauge.matTrace
+      (MathScope.M1.Gauge.holonomy3 MathScope.M1.Gauge.g2U0 MathScope.M1.Gauge.g2U1 MathScope.M1.Gauge.g2U2)
+'MathScope.M1.Gauge.g2_wilson_trace' depends on axioms: [propext]

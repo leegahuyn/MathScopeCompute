@@ -61,23 +61,42 @@
     $('metrics').replaceChildren();
     for(const [label,item]of [['실행',value.execution.status],['계산 범위',value.request.kind],['실행 시간',Number.isFinite(value.execution.elapsedSeconds)?value.execution.elapsedSeconds.toFixed(3)+' s':'—']]){const div=document.createElement('div');div.className='m1-metric';const strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=item;small.textContent=label;div.append(strong,small);$('metrics').append(div);}
     $('results').replaceChildren();
+    if(r.resultType){
+      const labels={FINITE_HEIGHT_ZERO_CERTIFICATE:'유한 높이 영점 인증',SPECIFIC_CURVE_RANK_EQUALITY:'특정 곡선의 랭크 일치',REFINED_LEADING_TERM_CHECK:'정제된 선도항 비교',UNIVERSAL_CONJECTURE:'보편 추측 · 연구 상태'};
+      table('서로 다른 네 가지 결과 유형',['유형','이번 요청','의미'],Object.entries(r.typeMeanings).map(([k,v])=>[labels[k]??k,k===r.resultType?'선택됨':'별도 유형',v]));
+      table('이 입력에서 성립하는 결론과 남은 조건',['항목','계산 결과'],Object.entries(r.claim??{}));
+      table('계수·소수·영점의 누락 검사',['항목','새 계산과 대조한 목록·결과'],Object.entries(r.completeness??{}));
+      table('적용 대상과 전칭 주장으로의 승격 검사',['항목','검사 결과'],Object.entries(r.promotionAudit??{}));
+      const a=r.evidence?.arithmetic,z=r.evidence?.zeros,b=r.evidence?.analytic;
+      if(a)table('특정 곡선의 독립 산술 근거',['항목','원본 계산'],[['model',a.model],['rank',a.arithmeticRank],['torsion',a.rationalTorsion],['saturation',a.saturation],['period',a.realPeriod],['Sha',a.sha]]);
+      if(b)table('특정 곡선의 해석적 근거',['항목','원본 계산'],[['analyticRank',b.analyticRank],['values',b.values],['dependencies',b.analyticDependencies??b.mathematicalDependencies]]);
+      if(z)table('유한 높이의 독립 영점 계수',['항목','원본 계산'],[['개수',z.positiveZeroCount],['Hardy Z 분리 구간',z.hardyRoots],['전체 사각형의 계수 포화',z.countSaturation],['범위',z.scope]]);
+      if(r.researchExport){table('Lean 연구 내보내기 · 명시적으로 남긴 가정',['ID','역할','원래 문장','Prop·증명 매개변수'],(r.researchExport.assumptionList??[]).map(x=>[x.id,x.role,x.statement,{proposition:x.propositionParameter,binder:x.proofBinder,status:x.formalizationStatus}]));table('연구 내보내기의 실제 범위',['항목','값'],Object.entries(r.researchExport).filter(([k])=>k!=='assumptionList'));}
+    }
     if(Array.isArray(r.derivatives))table('특수함수와 미분 · 정확한 외향 구간',['차수','실수 구간','허수 구간','최대 성분 폭'],r.derivatives.map(x=>[x.order,interval(x.ball?.real),interval(x.ball?.imag),dyadic(x.ball?.maxComponentWidth)]));
     if(r.positiveZeroCount!==undefined)table('유한 높이 영점 계수',['높이','양의 영점 개수','상태'],[[value.request.input.height,r.positiveZeroCount,r.status]]);
     if(r.hardyRoots)table('Hardy Z 분리 구간 · 원본 기록',['항목','정확한 데이터'],Object.entries(r.hardyRoots).slice(0,100).map(([k,v])=>[k,v]));
     if(Array.isArray(r.localRows))table('타원곡선 · 소수별 국소 인자',['행','정확한 데이터'],r.localRows.map((x,i)=>[x.p??x.prime??i,x]));
     if(r.global)table('전역 국소 데이터',['항목','값'],Object.entries(r.global));
     if(r.dirichletCoefficients)table('Dirichlet 계수 · 유한 데이터',['항목','값'],Object.entries(r.dirichletCoefficients));
-    if(r.values)table('타원곡선 중심값과 1차 미분 · 외향 구간',['함수','정확한 구간','폭','요청 오차폭 충족'],Object.entries(r.values).map(([name,b])=>[name,interval(b),dyadic(b.width),b.toleranceMet]));
+    if(r.values)table('타원곡선 함수값과 미분 · 외향 구간',['함수','실수 구간','허수 구간','최대 성분 폭','요청 오차폭 충족'],Object.entries(r.values).map(([name,b])=>[name,interval(b.real??b),b.imag?interval(b.imag):'실수값',dyadic(b.maxComponentWidth??b.width),b.toleranceMet]));
+    if(r.value?.real&&!r.derivatives&&!r.values&&!r.remainderCertificate)table('요청한 복소값 · 외향 구간',['함수·범위','실수 구간','허수 구간','최대 성분 폭','요청 오차폭 충족'],[[r.function??r.status,interval(r.value.real),interval(r.value.imag),dyadic(r.value.maxComponentWidth),r.toleranceMet]]);
+    if(r.normalizationLedger)table('완성함수 정규화 · 영점·극·자명영점 변환',['항목','정확한 규약과 적용 상태'],Object.entries(r.normalizationLedger));
+    if(r.exactCentralSymbol){table('중앙 modular symbol · 정확한 0/비영 검사',['항목','값'],Object.entries(r.exactCentralSymbol));table('세 가지 증명 경로의 실행 상태',['경로','실제 검사'],Object.entries(r.proofChannels));table('정확한 유리수 검사와 해석적 귀결',['항목','범위'],[['checks',r.exactChecks],['analyticConclusion',r.analyticConclusion],['theoremDependencies',r.theoremDependencies]]);}
     if(r.analyticRank)table('해석적 랭크 · 가정과 범위',['항목','값'],Object.entries(r.analyticRank));
+    for(const [key,title]of [['arithmeticRank','산술 랭크 · 독립 점과 descent 상계'],['rationalTorsion','정확한 유리 torsion'],['canonicalHeight','표준 높이 · 명시적 상하계'],['saturation','생성점 포화 검사'],['regulator','Regulator · 기저와 적용 조건'],['realPeriod','실수 주기 · 모든 실수 성분'],['sha','Sha · 알려짐·조건부·미해결'],['bsdLedger','BSD 항별 상태와 적용 범위']])if(r[key])table(title,['항목','값'],Object.entries(r[key]));
     if(r.psiEnclosure)table('명시적 공식 · 독립 소수측 비교',['항목','정확한 구간 또는 값'],[['영점측 ψ(x) 보장 구간',interval(r.psiEnclosure)],['영점측 구간 폭',dyadic(r.psiEnclosure.width)],['소수측 정확식',r.primeSide?.exactExpression],['소수측 구간',interval(r.primeSide?.value)],['소수측이 영점측 구간에 포함됨',r.primeSide?.containedInZeroSideBand]]);
     if(r.remainderCertificate)table('유한 변위 Taylor · 다항식과 나머지',['항목','정확한 구간 또는 값'],[['결과 실수부',interval(r.value?.real)],['결과 허수부',interval(r.value?.imag)],['나머지 공식',r.remainderCertificate.formula],['나머지 절대 상계',interval(r.remainderCertificate.absoluteUpperBound)]]);
     if(r.reference)table('연산자 기준 예제 · 정의역과 적용 범위',['항목','값'],Object.entries(r.reference));
+    if(r.registration)table('사용자가 등록한 연산자·정의역',['항목','값'],[['operator',r.registration.operator],['Hilbert space',r.registration.hilbertSpace],['가설',r.registeredHypotheses]]);
+    if(r.truncationValidations)table('실제 유한 절단 · 다항식·trace·양성·함수방정식',['절단','차원','상태','실패한 조건','정확한 검사'],r.truncationValidations.map(x=>[x.id,x.dimension,x.status,x.failedChecks,x]));
+    if(r.truncationComparisons)table('유한 절단 사이의 비교',['번호','원본 결과'],r.truncationComparisons.map((x,i)=>[i+1,x]));
     if(r.finiteValidation)table('유한 연산자 계약 · 검사 결과',['항목','값'],Object.entries(r.finiteValidation.checks||{}));
     if(Array.isArray(r.negativeControls))table('연산자 반증 대조군',['변형','거부됨','실패한 검사'],r.negativeControls.map(x=>[x.id,x.rejected,x.failedChecks]));
     if(Array.isArray(r.unresolvedRHBridges))table('남은 RH 연구 조건',['조건','상태','증명 실행'],r.unresolvedRHBridges.map(x=>[x.id,x.status,x.proofExecuted]));
     const known=['derivatives','positiveZeroCount','hardyRoots','localRows','global','dirichletCoefficients','backend','computationSha256','scope','errorAccounting','mathematicalDependencies','theoremDependencies','primarySources'];
-    if(!r.derivatives&&!r.localRows&&!r.values&&!r.psiEnclosure&&!r.remainderCertificate&&!r.unresolvedRHBridges&&r.positiveZeroCount===undefined)table('계산값 · 서버의 원본 필드',['항목','값'],Object.entries(r).filter(([k])=>!known.includes(k)));
-    set('scope',{resultStatus:resultState,toleranceMet:r.toleranceMet,passMeaning:r.passMeaning,researchStatus:r.researchStatus,candidateDefinition:r.candidateDefinition,scope:r.scope,errorAccounting:r.errorAccounting,errorBudget:r.errorBudget,normalization:r.normalization,endpointConvention:r.endpointConvention,tailCertificate:r.tailCertificate,remainderCertificate:r.remainderCertificate,domainCertificate:r.domainCertificate,analyticDependencies:r.analyticDependencies,mathematicalDependencies:r.mathematicalDependencies,theoremDependencies:r.theoremDependencies,primarySources:r.primarySources,resultFailure:r.failure,executionFailure:value.execution.failure,wholeP7Complete:false,wholeM3Complete:false,formalLeanProofIssued:false});
+    if(!r.resultType&&!r.exactCentralSymbol&&!r.registration&&!r.derivatives&&!r.localRows&&!r.values&&!r.psiEnclosure&&!r.remainderCertificate&&!r.unresolvedRHBridges&&r.positiveZeroCount===undefined)table('계산값 · 서버의 원본 필드',['항목','값'],Object.entries(r).filter(([k])=>!known.includes(k)));
+    set('scope',{resultStatus:resultState,toleranceMet:r.toleranceMet,passMeaning:r.passMeaning??r.finitePassMeaning,researchStatus:r.researchStatus,candidateDefinition:r.candidateDefinition,scope:r.scope,errorAccounting:r.errorAccounting,errorBudget:r.errorBudget,normalization:r.normalization,normalizationLedger:r.normalizationLedger,completeness:r.completeness,endpointConvention:r.endpointConvention,tailCertificate:r.tailCertificate,remainderCertificate:r.remainderCertificate,domainCertificate:r.domainCertificate,analyticDependencies:r.analyticDependencies,mathematicalDependencies:r.mathematicalDependencies,theoremDependencies:r.theoremDependencies,primarySources:r.primarySources,resultFailure:r.failure,executionFailure:value.execution.failure,wholeP7Complete:false,wholeM3Complete:false,formalLeanProofIssued:false});
     set('provenance',{inputSHA256:value.inputSHA256,mathematicalSHA256:value.mathematicalSHA256,recordSHA256:value.recordSHA256,sourceBinding:value.sourceBinding,environment:value.environment,environmentSHA256:value.environmentSHA256,predecessor:value.predecessor,execution:value.execution});
     const json=pretty(value);set('result-json',json.length>160000?json.slice(0,160000)+'\n…':json);set('json-note',json.length>160000?'표시는 처음 160,000자로 제한합니다. 내보내기에는 전체 원본을 포함합니다.':'전체 원본을 표시하고 있습니다.');controls();
   }
@@ -99,7 +118,7 @@
   function loadExample(){const example=capabilities?.examples?.find(x=>x.id===$('example').value);if(!example)return;clearResult();$('input').value=pretty(example.request);editorDirty=false;status('실행 예제를 불러왔습니다. 새 계산을 실행하세요.');}
   function renderProgress(){
     $('progress').replaceChildren();const criteria=capabilities.progress?.criteria||capabilities.criteria;
-    if(Array.isArray(criteria)){for(const c of criteria){const row=document.createElement('div');row.className='m3-progress-row';for(const value of [c.id,c.status,(c.remaining||[]).join(' · ')]){const span=document.createElement('span');span.textContent=value;row.append(span);}$('progress').append(row);}}
+    if(Array.isArray(criteria)){for(const c of criteria){const row=document.createElement('details'),heading=document.createElement('summary');heading.textContent=c.id+' · '+c.status+' · '+(c.title??'');row.append(heading);for(const [label,value]of [['원문',c.text],['구현과 검증',c.implemented??c.assessment],['근거',c.evidence],['남은 조건',c.remaining],['적용 범위',c.scopeLimits],['원문 출처',{file:c.source,page:c.page,sha256:c.sourceSha256,originalCriterionComplete:c.originalCriterionComplete}]]){if(value===undefined)continue;const p=document.createElement('p'),b=document.createElement('b');b.textContent=label+': ';p.append(b,document.createTextNode(typeof value==='string'?value:pretty(value)));row.append(p);}$('progress').append(row);}}
     else{const p=document.createElement('p');p.className='m1-muted';p.textContent='서버 상태: '+(capabilities.status||'IN_PROGRESS')+' · P7 전체 완료: false · M3 전체 완료: false';$('progress').append(p);}
   }
   async function connect(){
@@ -125,7 +144,7 @@
   $('import-replay').addEventListener('click',async()=>{if(!pendingRecord)return;const value=pendingRecord;$('input').value=pretty(value.request);editorDirty=false;const outcome=await run(value,pendingJSON);set('import-status',outcome.ok?'서버에서 검사하고 새로 계산했습니다. 비교 결과: '+outcome.status+' · 가져온 기록의 증명 권한을 채택하지 않습니다.':'기록 검사 또는 새 계산을 완료하지 못했습니다. '+(outcome.message||outcome.status));});
   $('import-input').addEventListener('click',()=>{try{const request=readRequest(JSON.stringify(pendingRecord.request));clearResult();$('input').value=pretty(request);status('저장 기록의 입력만 불러왔습니다. 현재 서버에서 새 계산을 실행하세요.');}catch(error){set('import-status',error.message);}});
   $('export').addEventListener('click',()=>{if(!record)return;if(downloadURL)URL.revokeObjectURL(downloadURL);downloadURL=URL.createObjectURL(new Blob([pretty(record)+'\n'],{type:'application/json'}));$('download').href=downloadURL;$('download').download='mathscope-p7-'+record.request.kind.replaceAll('.','-')+'-'+record.inputSHA256.slice(0,12)+'.json';$('download-panel').hidden=false;$('download-panel').open=true;$('download').click();});
-  function route(){if(!location.hash.startsWith('#research-m3'))return;for(const view of document.querySelectorAll('.view[data-view]'))view.classList.toggle('active',view===ROOT);for(const button of document.querySelectorAll('[data-view-target]'))button.classList.toggle('active',button.dataset.viewTarget==='research-m3');}
+  function route(){if(!location.hash.startsWith('#research-m3')||location.hash.startsWith('#research-m3-p8'))return;for(const view of document.querySelectorAll('.view[data-view]'))view.classList.toggle('active',view===ROOT);for(const button of document.querySelectorAll('[data-view-target]'))button.classList.toggle('active',button.dataset.viewTarget==='research-m3');}
   async function registerTools(){
     registration?.abort();registration=new AbortController();
     if(typeof document.modelContext?.registerTool!=='function'){set('webmcp','P7 브라우저 도구 미지원 · 위의 일반 화면으로 실행할 수 있습니다.');return;}

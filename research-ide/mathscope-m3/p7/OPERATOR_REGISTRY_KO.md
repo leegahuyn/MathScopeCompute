@@ -79,3 +79,27 @@ reference audit가 PASS여도 이 bridge들은 미해결 상태를 유지한다.
 [DLMF 25.2.1 zeta series](https://dlmf.nist.gov/25.2.E1),
 [DLMF 25.8 zeta/Gamma series](https://dlmf.nist.gov/25.8).
 형식 커널 증명이나 P7/M3 전체 완료는 주장하지 않는다.
+
+## 사용자가 등록하는 가설과 유한 cutoffs
+
+`candidate="registered"`는 `operator`, `hilbertSpace`와 여섯 가설
+`operatorDomain`, `zeroSpectrum`, `regularizedDeterminant`, `trace`,
+`duality`, `positivity`를 원문과 고유 ID로 받는다. 예제 전체 입력은
+`examples/registered-operator.json`이다. 제시한 l² 연산자가 Riemann 영점과
+연결된다는 주장은 하지 않는다. 사용자가 바꾼 문장도 증명되지 않은 연구
+가설로 남으며, exact finite 행렬 검증의 성공으로 global domain을 승인하지 않는다.
+
+두 개에서 네 개의 cutoff를 함께 입력한다. 각 cutoff는 2..16차 정확한
+유리수 행렬, 유한 정의역, 전체 유리 고유값과 중복도, determinant의
+영점·극점·trivial factor, 상수와 선형 exponential 정규화, 두 trace,
+functional-equation center/sign 및 검사할 quadratic form을 명시한다.
+특성다항식·역행렬 trace·정규화·reflection을 정확히 검사하며, 별도 FLINT
+det2 residual 구간도 남긴다. 인접 cutoff의 compression 일치 여부와
+spectrum/pole 자료를 비교한다. 서로 다른 유한 cutoff의 통과는 그 무한
+극한의 존재나 RH를 뜻하지 않는다.
+
+누락 영점, 잘못된 trivial factor, 추가 극점, 상수/선형 exponential 변경,
+중복도, functional-equation sign, 정의역, 양의 형식, trace를 변조한
+10개 counterexample 입력과 실제 실패 검사를 저장한다. 원래 cutoff 자체가
+실패한 경우에는 이를 변조한 결과를 성공 negative control로 세지 않는다.
+`NOT_EXECUTED_BASELINE_REJECTED`와 빈 control 목록을 반환한다.

@@ -1,0 +1,2785 @@
+{
+  "schema": "MathScope.NavierM3.Result/1",
+  "version": "0.1.0",
+  "package": "N6",
+  "operation": "workbench",
+  "input": {
+    "package": "N6",
+    "operation": "workbench",
+    "parameters": {}
+  },
+  "inputHash": "361ba9bd3df85ed3a7b99984008db94f827e4da69643ac8475ccaff53f4bb040",
+  "runHash": "a5dca964af4137adcdf8b8a97563c7d60c17309d1e6455ee68b21e85cab1f32c",
+  "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+  "executionStatus": "FINITE_CHECKS_PASSED",
+  "source": {
+    "implementation": {
+      "schema": "MathScope.NavierM3.ImplementationPin/1",
+      "files": [
+        {
+          "path": "research-ide/mathscope-m3/navier/galerkin.mjs",
+          "sha256": "e0a04a0a5363a7d72dec89fe3b157499669db317bc064d9922ccedf3599239aa",
+          "bytes": 17825
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/corrections.mjs",
+          "sha256": "120c595312afb232138a4e23b26ae7a7de987aa15729af8fe9f50f5bccea2c8f",
+          "bytes": 22955
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/localization.mjs",
+          "sha256": "1754c965e6cc977d1e304d16b8eb20578ff27e6158801ea426a4e94f29b090fb",
+          "bytes": 9727
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/index.mjs",
+          "sha256": "d6b98110ee1644279478ac193fd1dd25cb973b74d08f21d23cf0bcf3e85dc89b",
+          "bytes": 10281
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-mean-map.mjs",
+          "sha256": "072f9cbaa7fedab6ea2cdb64158a7d5af3c3916685dfefeef65e977219ef09b7",
+          "bytes": 11303
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-inheritance.mjs",
+          "sha256": "f3189a00c35fdb1d925650f52edfcb19839d4f751db91aa916a9494b0b49faa8",
+          "bytes": 4835
+        }
+      ],
+      "sha256": "afda0e1039016e2a3553e58aae9d9ccba5f1ef5dedb36b66540bd9de3b81cdb0"
+    },
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "pages": 166
+    },
+    "profile": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "common6": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json",
+      "sha256": "ac98143158c9e7abc6bd656e687269f183bb803ecdc036edb8a3937edc24bc01",
+      "bytes": 4495330
+    },
+    "source4": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt4.json",
+      "sha256": "88f7cf6fe5af934d6b3bcacc8ad975e86bd0b37fee2110b9db8c73e72acb129e",
+      "bytes": 161629
+    },
+    "physicalGraph": {
+      "namespace": "physical",
+      "sha256": "79d2ffc302ab2db900b8432dcc5d23d7c85f12d996da244ed421b904dfbdb3cf",
+      "nodeCount": 720452,
+      "canonicalBytes": 31814841,
+      "fixedCompilerPrefix": true
+    },
+    "inheritedM2Assessment": "COMPLETE_IN_DECLARED_SOURCE_BOUND_M2_SCOPE"
+  },
+  "sourceBoundaries": {
+    "M2Preserved": true,
+    "P7Changed": false,
+    "fullUncorrectedResidualAssumedFlat": false,
+    "completeN6": false,
+    "completeN7": false,
+    "completeN8": false,
+    "wholeM3Complete": false
+  },
+  "results": {
+    "schema": "MathScope.N6.CorrectionAcceptance/1",
+    "checks": [
+      {
+        "id": "N6-05-zero-mean-Fourier-cancellation",
+        "pass": true
+      },
+      {
+        "id": "N6-03-projected-response-versus-exact-ODE",
+        "pass": true
+      },
+      {
+        "id": "N6-04-signed-target-fixed-amplitudes-square-kept",
+        "pass": true
+      },
+      {
+        "id": "N6-05-nonzero-mean-mutation",
+        "pass": true
+      },
+      {
+        "id": "N6-06-five-independent-radial-integrals",
+        "pass": true
+      },
+      {
+        "id": "N6-06-source-patch-disjoint-bumps",
+        "pass": true
+      },
+      {
+        "id": "N6-07-exact-rational-order-margins",
+        "pass": true
+      },
+      {
+        "id": "N6-03-generated-harmonics-retained",
+        "pass": true
+      },
+      {
+        "id": "N6-03-truncation-without-bound-held",
+        "pass": true
+      }
+    ],
+    "pass": true,
+    "temporal": {
+      "schema": "MathScope.N6.TemporalMeanInverse/1",
+      "reference": "(6.2), (6.7), (8.19)-(8.23)",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "status": "FINITE_POLYNOMIAL_EXECUTED",
+      "c": 0.7,
+      "vt": [
+        0.41421356237309515,
+        1
+      ],
+      "zeroMode": [
+        0,
+        0
+      ],
+      "rows": [
+        {
+          "k": [
+            1,
+            0
+          ],
+          "source": [
+            0.3,
+            0.2
+          ],
+          "increment": [
+            -0.10978114918033482,
+            0.1646717237705022
+          ],
+          "divisor": {
+            "mode": [
+              1,
+              0
+            ],
+            "vt": [
+              0.41421356237309515,
+              1
+            ],
+            "exactDot": {
+              "rational": -1,
+              "sqrt2": 1
+            },
+            "integerNorm": "-1",
+            "inverse": 2.414213562373095,
+            "inverseUpper": 2.414213562373095,
+            "normLower": 1,
+            "expression": "1/(vt dot k) = ((k2-k1)-sqrt(2)*k1)/((k2-k1)^2-2*k1^2)"
+          },
+          "recoveredFastDerivative": [
+            -0.3,
+            -0.2
+          ]
+        },
+        {
+          "k": [
+            -1,
+            0
+          ],
+          "source": [
+            0.3,
+            -0.2
+          ],
+          "increment": [
+            -0.10978114918033482,
+            -0.1646717237705022
+          ],
+          "divisor": {
+            "mode": [
+              -1,
+              0
+            ],
+            "vt": [
+              0.41421356237309515,
+              1
+            ],
+            "exactDot": {
+              "rational": 1,
+              "sqrt2": -1
+            },
+            "integerNorm": "-1",
+            "inverse": -2.414213562373095,
+            "inverseUpper": 2.414213562373095,
+            "normLower": 1,
+            "expression": "1/(vt dot k) = ((k2-k1)-sqrt(2)*k1)/((k2-k1)^2-2*k1^2)"
+          },
+          "recoveredFastDerivative": [
+            -0.3,
+            0.2
+          ]
+        },
+        {
+          "k": [
+            12,
+            -5
+          ],
+          "source": [
+            0.02,
+            0.01
+          ],
+          "increment": [
+            0.07723689972905057,
+            -0.15447379945810114
+          ],
+          "divisor": {
+            "mode": [
+              12,
+              -5
+            ],
+            "vt": [
+              0.41421356237309515,
+              1
+            ],
+            "exactDot": {
+              "rational": -17,
+              "sqrt2": 12
+            },
+            "integerNorm": "1",
+            "inverse": -33.97056274847714,
+            "inverseUpper": 33.97056274847714,
+            "normLower": 1,
+            "expression": "1/(vt dot k) = ((k2-k1)-sqrt(2)*k1)/((k2-k1)^2-2*k1^2)"
+          },
+          "recoveredFastDerivative": [
+            -0.02,
+            -0.01
+          ]
+        },
+        {
+          "k": [
+            -12,
+            5
+          ],
+          "source": [
+            0.02,
+            -0.01
+          ],
+          "increment": [
+            0.07723689972905057,
+            0.15447379945810114
+          ],
+          "divisor": {
+            "mode": [
+              -12,
+              5
+            ],
+            "vt": [
+              0.41421356237309515,
+              1
+            ],
+            "exactDot": {
+              "rational": 17,
+              "sqrt2": -12
+            },
+            "integerNorm": "1",
+            "inverse": 33.97056274847714,
+            "inverseUpper": 33.97056274847714,
+            "normLower": 1,
+            "expression": "1/(vt dot k) = ((k2-k1)-sqrt(2)*k1)/((k2-k1)^2-2*k1^2)"
+          },
+          "recoveredFastDerivative": [
+            -0.02,
+            0.01
+          ]
+        }
+      ],
+      "maxCancellationError": 0,
+      "conjugacyError": 0,
+      "tail": {
+        "kind": "EXACT_FINITE_SUPPORT",
+        "omittedCoefficientBound": 0,
+        "validFor": "The supplied list defines a finite torus polynomial, not the complete paper source."
+      },
+      "axialRealization": {
+        "desiredGamma": "-c^-1 N^-1 E_z^circ",
+        "potential": "T1 gammaDesired",
+        "radial": "-epsilon partial_Z potential",
+        "actualGamma": "gammaDesired-A1 gammaDesired",
+        "cutoffRemainderRetained": true,
+        "appliedToPhysicalField": false
+      },
+      "pressureMustBeRecomputed": true,
+      "slowTimeResidualRetained": "-epsilon partial_T delta",
+      "actualSourceMembershipVerified": false,
+      "completeN6Criterion": false
+    },
+    "moments": {
+      "schema": "MathScope.N6.FiveMomentCorrection/1",
+      "reference": "(8.24)-(8.27)",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "parameterMode": "EXPLICIT_FINITE_NORMALIZED_PATCH",
+      "status": "FINITE_MOMENT_MAP_EXECUTED",
+      "input": {
+        "lambda": 0.2,
+        "a": 1,
+        "d": 0.2,
+        "targets": {
+          "P": 0.001,
+          "Jtheta": 0.0002,
+          "Jz": -0.0004
+        },
+        "quadratureIntervals": 256
+      },
+      "bump": {
+        "definition": "exp(-0.01/((x-1)(1.1-x))) on (1,1.1), otherwise zero",
+        "copies": "eta_j(x)=exp(-j*d) eta_0(x exp(-j*d))",
+        "supports": [
+          [
+            1,
+            1.1
+          ],
+          [
+            1.2214027581601699,
+            1.343543033976187
+          ],
+          [
+            1.4918246976412703,
+            1.6410071674053974
+          ]
+        ]
+      },
+      "powers": [
+        2,
+        -2.4,
+        -0.4,
+        1,
+        0.6
+      ],
+      "moments": [
+        0.0007751763299578542,
+        0.0006257484305510544,
+        0.0006894328250064741,
+        0.00073813513269402,
+        0.0007238542287762326
+      ],
+      "momentRefinementErrors": [
+        1.0842021724855044e-19,
+        0,
+        3.2526065174565133e-19,
+        6.505213034913027e-19,
+        6.505213034913027e-19
+      ],
+      "angularCoefficients": [
+        -1.0470616637416406,
+        0.18744183571703577,
+        0.3448291127890375
+      ],
+      "axialCoefficients": [
+        -3.593725211125261,
+        2.942293348459914
+      ],
+      "axialScaledCoefficients": {
+        "scale": "1-exp(-2*d*lambda)",
+        "values": [
+          -0.2762987243137688,
+          0.22621426263189762
+        ]
+      },
+      "condition": {
+        "positiveAxialGap": 0.07688365361336423,
+        "inverseGap": 13.006665955663896,
+        "lambdaUniform": false,
+        "conditionWarning": false,
+        "requiredPrecisionExplanation": "The axial inverse grows as lambda^-1. Fixed positive lambda is permitted; uniformity as lambda tends to zero is not asserted."
+      },
+      "rows": [
+        {
+          "name": "angular momentum",
+          "expected": 0,
+          "measured": -9.556172624899397e-20,
+          "absoluteError": 9.556172624899397e-20
+        },
+        {
+          "name": "axial flux",
+          "expected": 0,
+          "measured": 3.841595873608032e-18,
+          "absoluteError": 3.841595873608032e-18
+        },
+        {
+          "name": "pressure defect",
+          "expected": -0.001,
+          "measured": -0.001000000000000002,
+          "absoluteError": 1.951563910473908e-18
+        },
+        {
+          "name": "angular flux defect",
+          "expected": -0.0002,
+          "measured": -0.00020000000000000193,
+          "absoluteError": 1.9244588561617704e-18
+        },
+        {
+          "name": "axial flux defect",
+          "expected": 0.0004,
+          "measured": 0.000400000000000001,
+          "absoluteError": 9.75781955236954e-19
+        }
+      ],
+      "normalizedFiveEquationError": 3.841595873608032e-15,
+      "pass": true,
+      "nonlinearRemainder": {
+        "scope": "Additional increment-only products. Old-mean and radial derivative terms must also be added for an actual state.",
+        "Pnew": 0.000010838878423106281,
+        "JthetaNew": 0.000047443174398971995,
+        "JzNew": 0.00021331338206033708,
+        "notSetToZero": true
+      },
+      "physicalNormalization": {
+        "azimuthal": "q^-A sum u_j eta_j(r/sqrt(q))",
+        "axial": "q^-A sum s_j eta_j(r/sqrt(q))",
+        "targetRows": [
+          "q^(2A) P_phys",
+          "q^(2A-3/2) Jtheta_phys",
+          "q^(2A-1) Jz_phys"
+        ]
+      },
+      "actualPinnedLambdaReplaced": false,
+      "appliedToPinnedPhysicalField": false,
+      "rigorousQuadratureEnclosure": false
+    },
+    "orders": [
+      {
+        "schema": "MathScope.N6.CorrectionOrderLedger/1",
+        "reference": "Definition9.4, Proposition9.6, Lemmas9.7-9.8",
+        "stage": 0,
+        "sigma": {
+          "numerator": 20000,
+          "denominator": 100000
+        },
+        "B": 0.7,
+        "C": 1.2,
+        "H": 1.19998,
+        "nextB": 0.8,
+        "nextC": 1.3,
+        "rows": [
+          {
+            "name": "waveParticular",
+            "numerators": [
+              119997,
+              119999,
+              139999,
+              110000
+            ],
+            "denominator": 100000,
+            "values": [
+              1.19997,
+              1.19999,
+              1.39999,
+              1.1
+            ],
+            "minimum": 1.1,
+            "target": 0.8,
+            "margin": 0.3,
+            "pass": true
+          },
+          {
+            "name": "waveSigned",
+            "numerators": [
+              119996,
+              109999,
+              119998,
+              139997
+            ],
+            "denominator": 100000,
+            "values": [
+              1.19996,
+              1.09999,
+              1.19998,
+              1.39997
+            ],
+            "minimum": 1.09999,
+            "target": 0.8,
+            "margin": 0.29999,
+            "pass": true
+          },
+          {
+            "name": "waveMean",
+            "numerators": [
+              119998
+            ],
+            "denominator": 100000,
+            "values": [
+              1.19998
+            ],
+            "minimum": 1.19998,
+            "target": 0.8,
+            "margin": 0.39998,
+            "pass": true
+          },
+          {
+            "name": "tangentialMean",
+            "numerators": [
+              137000,
+              219996
+            ],
+            "denominator": 100000,
+            "values": [
+              1.37,
+              2.19996
+            ],
+            "minimum": 1.37,
+            "target": 1.3,
+            "margin": 0.07,
+            "pass": true
+          },
+          {
+            "name": "defects",
+            "numerators": [
+              209996
+            ],
+            "denominator": 100000,
+            "values": [
+              2.09996
+            ],
+            "minimum": 2.09996,
+            "target": 1.3,
+            "margin": 0.79996,
+            "pass": true
+          }
+        ],
+        "pass": true,
+        "commonDomain": "the same 0<q<qbig, qbig<=qstar fixed before stage0",
+        "classMembershipVerified": false,
+        "physicalGain": "h*0/10",
+        "physicalDerivativeLoss": "ell_m=2A+(m+1)(1+3h/2)",
+        "constants": "C_(j,m), K_m, P_(j,m), flat-tail C_(j,m,N) are required; exponent arithmetic alone supplies none.",
+        "observedResidualDecrease": null,
+        "finiteStateConstructed": false
+      },
+      {
+        "schema": "MathScope.N6.CorrectionOrderLedger/1",
+        "reference": "Definition9.4, Proposition9.6, Lemmas9.7-9.8",
+        "stage": 1,
+        "sigma": {
+          "numerator": 30000,
+          "denominator": 100000
+        },
+        "B": 0.8,
+        "C": 1.3,
+        "H": 1.29998,
+        "nextB": 0.9,
+        "nextC": 1.4,
+        "rows": [
+          {
+            "name": "waveParticular",
+            "numerators": [
+              129997,
+              129999,
+              159999,
+              120000
+            ],
+            "denominator": 100000,
+            "values": [
+              1.29997,
+              1.29999,
+              1.59999,
+              1.2
+            ],
+            "minimum": 1.2,
+            "target": 0.9,
+            "margin": 0.3,
+            "pass": true
+          },
+          {
+            "name": "waveSigned",
+            "numerators": [
+              129996,
+              119999,
+              129998,
+              159997
+            ],
+            "denominator": 100000,
+            "values": [
+              1.29996,
+              1.19999,
+              1.29998,
+              1.59997
+            ],
+            "minimum": 1.19999,
+            "target": 0.9,
+            "margin": 0.29999,
+            "pass": true
+          },
+          {
+            "name": "waveMean",
+            "numerators": [
+              129998
+            ],
+            "denominator": 100000,
+            "values": [
+              1.29998
+            ],
+            "minimum": 1.29998,
+            "target": 0.9,
+            "margin": 0.39998,
+            "pass": true
+          },
+          {
+            "name": "tangentialMean",
+            "numerators": [
+              147000,
+              229996
+            ],
+            "denominator": 100000,
+            "values": [
+              1.47,
+              2.29996
+            ],
+            "minimum": 1.47,
+            "target": 1.4,
+            "margin": 0.07,
+            "pass": true
+          },
+          {
+            "name": "defects",
+            "numerators": [
+              219996
+            ],
+            "denominator": 100000,
+            "values": [
+              2.19996
+            ],
+            "minimum": 2.19996,
+            "target": 1.4,
+            "margin": 0.79996,
+            "pass": true
+          }
+        ],
+        "pass": true,
+        "commonDomain": "the same 0<q<qbig, qbig<=qstar fixed before stage0",
+        "classMembershipVerified": false,
+        "physicalGain": "h*1/10",
+        "physicalDerivativeLoss": "ell_m=2A+(m+1)(1+3h/2)",
+        "constants": "C_(j,m), K_m, P_(j,m), flat-tail C_(j,m,N) are required; exponent arithmetic alone supplies none.",
+        "observedResidualDecrease": null,
+        "finiteStateConstructed": false
+      },
+      {
+        "schema": "MathScope.N6.CorrectionOrderLedger/1",
+        "reference": "Definition9.4, Proposition9.6, Lemmas9.7-9.8",
+        "stage": 10,
+        "sigma": {
+          "numerator": 120000,
+          "denominator": 100000
+        },
+        "B": 1.7,
+        "C": 2.2,
+        "H": 2.19998,
+        "nextB": 1.8,
+        "nextC": 2.3,
+        "rows": [
+          {
+            "name": "waveParticular",
+            "numerators": [
+              219997,
+              219999,
+              339999,
+              210000
+            ],
+            "denominator": 100000,
+            "values": [
+              2.19997,
+              2.19999,
+              3.39999,
+              2.1
+            ],
+            "minimum": 2.1,
+            "target": 1.8,
+            "margin": 0.3,
+            "pass": true
+          },
+          {
+            "name": "waveSigned",
+            "numerators": [
+              219996,
+              209999,
+              219998,
+              339997
+            ],
+            "denominator": 100000,
+            "values": [
+              2.19996,
+              2.09999,
+              2.19998,
+              3.39997
+            ],
+            "minimum": 2.09999,
+            "target": 1.8,
+            "margin": 0.29999,
+            "pass": true
+          },
+          {
+            "name": "waveMean",
+            "numerators": [
+              219998
+            ],
+            "denominator": 100000,
+            "values": [
+              2.19998
+            ],
+            "minimum": 2.19998,
+            "target": 1.8,
+            "margin": 0.39998,
+            "pass": true
+          },
+          {
+            "name": "tangentialMean",
+            "numerators": [
+              237000,
+              319996
+            ],
+            "denominator": 100000,
+            "values": [
+              2.37,
+              3.19996
+            ],
+            "minimum": 2.37,
+            "target": 2.3,
+            "margin": 0.07,
+            "pass": true
+          },
+          {
+            "name": "defects",
+            "numerators": [
+              309996
+            ],
+            "denominator": 100000,
+            "values": [
+              3.09996
+            ],
+            "minimum": 3.09996,
+            "target": 2.3,
+            "margin": 0.79996,
+            "pass": true
+          }
+        ],
+        "pass": true,
+        "commonDomain": "the same 0<q<qbig, qbig<=qstar fixed before stage0",
+        "classMembershipVerified": false,
+        "physicalGain": "h*10/10",
+        "physicalDerivativeLoss": "ell_m=2A+(m+1)(1+3h/2)",
+        "constants": "C_(j,m), K_m, P_(j,m), flat-tail C_(j,m,N) are required; exponent arithmetic alone supplies none.",
+        "observedResidualDecrease": null,
+        "finiteStateConstructed": false
+      }
+    ],
+    "harmonics": {
+      "schema": "MathScope.N6.HarmonicLedger/1",
+      "input": [
+        -1,
+        1
+      ],
+      "products": [
+        {
+          "left": -1,
+          "right": -1,
+          "generated": -2
+        },
+        {
+          "left": -1,
+          "right": 1,
+          "generated": 0
+        },
+        {
+          "left": 1,
+          "right": -1,
+          "generated": 0
+        },
+        {
+          "left": 1,
+          "right": 1,
+          "generated": 2
+        }
+      ],
+      "generated": [
+        -2,
+        0,
+        2
+      ],
+      "angularMean": true,
+      "nonzero": [
+        -2,
+        2
+      ],
+      "retained": [
+        -2,
+        0,
+        2
+      ],
+      "discarded": [],
+      "maximumInput": 1,
+      "maximumGenerated": 2,
+      "status": "COMPLETE_FINITE_PRODUCT_SET",
+      "discardedModeBound": 0,
+      "sameLabelProductsRetained": true,
+      "differentLabelProductsMayVanishOnlyWithSupportCertificate": true
+    },
+    "symbolic": {
+      "schema": "MathScope.N6.SourceMomentMapSpecification/1",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "reference": "Lemma8.7 and (8.24)-(8.25)",
+      "sourceProfile": "same-profile-2026-10-10.3",
+      "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+      "originalPositiveLambdaPreserved": true,
+      "actualMeanPatch": "X=X0Imean exp(y), 0<y<5",
+      "chosenProfiles": {
+        "x0": "sqrt(2 X0Imean)*exp(1/2)",
+        "d": "1/5",
+        "base": "eta0(x)=x0^-1 b(x/x0); b(s)=exp(-.01/((s-1)(11/10-s))) for 1<s<11/10",
+        "copies": "eta_j(x)=exp(-j/5) eta0(x exp(-j/5)), j=0,1,2",
+        "supportContainment": "log(X/X0Imean) in (1, 1+4/5+2 log(11/10)) subset (0,5)",
+        "supportMaximumLog": 1.9906203596086498,
+        "disjointness": "log(11/10)<1/5",
+        "disjoint": true
+      },
+      "moments": "mu_p=integral x^p eta0(x) dx > 0",
+      "a": "Kmean*(2 X0Imean)^(1/2+lambda)/(1+eta^2)",
+      "angular": {
+        "powers": [
+          "2",
+          "-2-2lambda",
+          "-2lambda"
+        ],
+        "nodes": [
+          "exp(2d)",
+          "exp((-2-2lambda)d)",
+          "exp(-2lambda d)"
+        ],
+        "rowDivisors": [
+          "mu_2",
+          "2 a mu_-2-2lambda",
+          "-a mu_-2lambda"
+        ],
+        "rowTargets": [
+          "0",
+          "-Pq",
+          "-Jzq"
+        ],
+        "inverse": "For r_i=target_i/rowDivisor_i, u_2=sum_i r_i/((z_i-z_j)(z_i-z_k)); u_1=-sum_i r_i(z_j+z_k)/den_i; u_0=sum_i r_i z_j z_k/den_i.",
+        "determinantNonzeroReason": "All mu are positive, a>0, and powers 2 > -2lambda > -2-2lambda are distinct for lambda>0."
+      },
+      "axial": {
+        "powers": [
+          "1",
+          "1-2lambda"
+        ],
+        "rowDivisors": [
+          "mu_1",
+          "a mu_1-2lambda"
+        ],
+        "r": "-Jthetaq/(a mu_1-2lambda)",
+        "delta": "1-exp(-2d lambda)>0",
+        "scaledCoefficients": [
+          "delta*s0=r",
+          "delta*s1=-r exp(-d)"
+        ],
+        "twoRowVerification": [
+          "delta*(s0+exp(d)*s1)=0",
+          "delta*(s0+exp(d-2d lambda)*s1)=r*delta"
+        ],
+        "condition": "For 0<2d lambda<=1: d lambda <= delta <= 2d lambda; 1/delta <= 1/(d lambda).",
+        "sourceDeltaRoundedToZero": false
+      },
+      "evidenceLevel": "SOURCE_BOUND_EXPLICIT_CONSTRUCTION_WITH_SYMBOLIC_POSITIVE_FACTORS",
+      "currentDefectsApplied": false,
+      "sourceDerivativeBoundsInstantiated": false,
+      "completeN6Criterion": false,
+      "remaining": [
+        "Bind P,Jtheta,Jz from the same updated full-curl state.",
+        "Evaluate or enclose the positive source-scaled moments and target ratios.",
+        "Realize gamma with T1 and recompute all (8.3), (8.12), (8.15) quantities."
+      ]
+    },
+    "signed": {
+      "schema": "MathScope.N6.SignedCovarianceIncrement/1",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "reference": "(7.31), (7.41), (9.13)",
+      "status": "FINITE_SIGNED_INVERSE_EXECUTED",
+      "H": [
+        [
+          2,
+          0.3
+        ],
+        [
+          0.4,
+          1.5
+        ]
+      ],
+      "amplitudes": [
+        0.8,
+        1.2
+      ],
+      "epsilon": 0.01,
+      "target": [
+        -0.003,
+        0.002
+      ],
+      "determinant": 2.88,
+      "deltaAmplitude": [
+        -0.11067708333333333,
+        0.0752314814814815
+      ],
+      "crossCovariance": [
+        -0.003,
+        0.002
+      ],
+      "squareCovariance": [
+        0.00026196766292116766,
+        0.00013389430418917186
+      ],
+      "maxLinearError": 0,
+      "fixedAmplitudesReselected": false,
+      "remainingRemainders": [
+        "B(oldWave-fixedPrimary,transverseIncrement)",
+        "B(oldWave,curlIncrementRemainder)",
+        "C(fullIncrement)"
+      ],
+      "fullIncrementSquareDiscarded": false,
+      "targetMembershipVerified": false,
+      "physicalCorrectionApplied": false,
+      "sourceMeaning": "H must already contain the angular factor 1/2 and normalized Haar/cutoff weights; this finite input is not automatically the pinned source H."
+    },
+    "response": {
+      "schema": "MathScope.N6.HarmonicResponse/1",
+      "paper": {
+        "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "pages": 166
+      },
+      "reference": "(7.13), Proposition7.2, Proposition9.6 step1",
+      "status": "FINITE_SAMPLED_AMPLITUDE_MODEL_EXECUTED",
+      "input": {
+        "harmonic": 2,
+        "carrier": 3,
+        "steps": 64,
+        "samples": [
+          {
+            "v": 0,
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "K": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "damping": 0.2,
+            "source": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "v": 1,
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "K": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "damping": 0.2,
+            "source": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "rows": [
+        {
+          "v": 0,
+          "amplitude": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.015625,
+          "amplitude": [
+            -0.01552774937947591,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.01552774937947591,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.0025879582299126514,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.03125,
+          "amplitude": [
+            -0.03086260995831837,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.03086260995831837,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.005143768326386394,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.046875,
+          "amplitude": [
+            -0.04600697783969085,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.04600697783969085,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.0076678296399484746,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.0625,
+          "amplitude": [
+            -0.060963219361885305,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.060963219361885305,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.010160536560314218,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.078125,
+          "amplitude": [
+            -0.07573367146806732,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.07573367146806732,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.012622278578011221,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.09375,
+          "amplitude": [
+            -0.09032064207142826,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.09032064207142826,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.015053440345238043,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.109375,
+          "amplitude": [
+            -0.10472641041580139,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.10472641041580139,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.017454401735966896,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.125,
+          "amplitude": [
+            -0.11895322743179834,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.11895322743179834,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.019825537905299725,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.140625,
+          "amplitude": [
+            -0.13300331608852164,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.13300331608852164,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.02216721934808694,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.15625,
+          "amplitude": [
+            -0.14687887174090813,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.14687887174090813,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.02447981195681802,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.171875,
+          "amplitude": [
+            -0.16058206247275764,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.16058206247275764,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.02676367707879294,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.1875,
+          "amplitude": [
+            -0.1741150294355005,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.1741150294355005,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.029019171572583418,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.203125,
+          "amplitude": [
+            -0.1874798871827568,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.1874798871827568,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.0312466478637928,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.21875,
+          "amplitude": [
+            -0.2006787240007397,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.2006787240007397,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.033446454000123284,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.234375,
+          "amplitude": [
+            -0.2137136022345544,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.2137136022345544,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.03561893370575907,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.25,
+          "amplitude": [
+            -0.2265865586104438,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.2265865586104438,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.03776442643507397,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.265625,
+          "amplitude": [
+            -0.239299604554031,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.239299604554031,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.03988326742567183,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.28125,
+          "amplitude": [
+            -0.2518547265046088,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.2518547265046088,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.04197578775076813,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.296875,
+          "amplitude": [
+            -0.26425388622552465,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.26425388622552465,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.04404231437092077,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.3125,
+          "amplitude": [
+            -0.27649902111071056,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.27649902111071056,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.04608317018511843,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.328125,
+          "amplitude": [
+            -0.28859204448740444,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.28859204448740444,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.048098674081234076,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.34375,
+          "amplitude": [
+            -0.3005348459151116,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.3005348459151116,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.05008914098585193,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.359375,
+          "amplitude": [
+            -0.3123292914808521,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.3123292914808521,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.05205488191347535,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.375,
+          "amplitude": [
+            -0.3239772240907408,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.3239772240907408,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.05399620401512347,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.390625,
+          "amplitude": [
+            -0.33548046375794527,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.33548046375794527,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.05591341062632421,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.40625,
+          "amplitude": [
+            -0.34684080788706617,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.34684080788706617,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.057806801314511026,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.421875,
+          "amplitude": [
+            -0.35806003155498584,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.35806003155498584,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.059676671925830975,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.4375,
+          "amplitude": [
+            -0.3691398877882273,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.3691398877882273,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.06152331463137122,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.453125,
+          "amplitude": [
+            -0.38008210783686847,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.38008210783686847,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.0633470179728114,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.46875,
+          "amplitude": [
+            -0.3908884014450533,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.3908884014450533,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.06514806690750889,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.484375,
+          "amplitude": [
+            -0.40156045711814303,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.40156045711814303,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.06692674285302384,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.5,
+          "amplitude": [
+            -0.4120999423865483,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.4120999423865483,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.06868332373109139,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.515625,
+          "amplitude": [
+            -0.4225085040662844,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.4225085040662844,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.07041808401104739,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.53125,
+          "amplitude": [
+            -0.4327877685162895,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.4327877685162895,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.07213129475271492,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.546875,
+          "amplitude": [
+            -0.4429393418925465,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.4429393418925465,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.07382322364875775,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.5625,
+          "amplitude": [
+            -0.45296481039904846,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.45296481039904846,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.07549413506650808,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.578125,
+          "amplitude": [
+            -0.4628657405356458,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.4628657405356458,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.0771442900892743,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.59375,
+          "amplitude": [
+            -0.47264367934281526,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.47264367934281526,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.07877394655713588,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.609375,
+          "amplitude": [
+            -0.48230015464338827,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.48230015464338827,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.08038335910723138,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.625,
+          "amplitude": [
+            -0.49183667528127617,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.49183667528127617,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.08197277921354602,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.640625,
+          "amplitude": [
+            -0.5012547313572302,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5012547313572302,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.08354245522620503,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.65625,
+          "amplitude": [
+            -0.5105557944616729,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5105557944616729,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.08509263241027881,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.671875,
+          "amplitude": [
+            -0.5197413179046367,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5197413179046367,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.08662355298410612,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.6875,
+          "amplitude": [
+            -0.5288127369428473,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5288127369428473,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.0881354561571412,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.703125,
+          "amplitude": [
+            -0.5377714690039845,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5377714690039845,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.08962857816733076,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.71875,
+          "amplitude": [
+            -0.5466189139081593,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5466189139081593,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.09110315231802656,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.734375,
+          "amplitude": [
+            -0.5553564540866375,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5553564540866375,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.09255940901443958,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.75,
+          "amplitude": [
+            -0.563985454797848,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.563985454797848,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.09399757579964134,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.765625,
+          "amplitude": [
+            -0.5725072643407073,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5725072643407073,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.09541787739011788,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.78125,
+          "amplitude": [
+            -0.5809232142652937,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5809232142652937,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.09682053571088228,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.796875,
+          "amplitude": [
+            -0.5892346195809047,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5892346195809047,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.09820576993015079,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.8125,
+          "amplitude": [
+            -0.5974427789615302,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.5974427789615302,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.09957379649358837,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.828125,
+          "amplitude": [
+            -0.6055489749487722,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6055489749487722,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.10092482915812871,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.84375,
+          "amplitude": [
+            -0.6135544741522457,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6135544741522457,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.10225907902537429,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.859375,
+          "amplitude": [
+            -0.6214605274474879,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6214605274474879,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.10357675457458132,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.875,
+          "amplitude": [
+            -0.6292683701714106,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6292683701714106,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.1048780616952351,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.890625,
+          "amplitude": [
+            -0.6369792223153241,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6369792223153241,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.10616320371922068,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.90625,
+          "amplitude": [
+            -0.6445942887155633,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6445942887155633,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.10743238145259389,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.921875,
+          "amplitude": [
+            -0.6521147592417458,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6521147592417458,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.10868579320695763,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.9375,
+          "amplitude": [
+            -0.6595418089826912,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6595418089826912,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.10992363483044854,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.953125,
+          "amplitude": [
+            -0.6668765984300316,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6668765984300316,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.1111460997383386,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.96875,
+          "amplitude": [
+            -0.6741202736595403,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6741202736595403,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.11235337894325671,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 0.984375,
+          "amplitude": [
+            -0.681273966510209,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.681273966510209,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.11354566108503483,
+            0,
+            0
+          ]
+        },
+        {
+          "v": 1,
+          "amplitude": [
+            -0.6883387947610993,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "norm": 0.6883387947610993,
+          "normalError": 0,
+          "pressure": [
+            0,
+            0
+          ],
+          "potential": [
+            0,
+            0,
+            0,
+            -0.11472313246018322,
+            0,
+            0
+          ]
+        }
+      ],
+      "refinement": {
+        "steps": 128,
+        "endpointDifference": 8.663025852229111e-11,
+        "rigorousErrorBound": false
+      },
+      "maximumNormalError": 0,
+      "zeroInitialData": true,
+      "normalDerivativeFromSameInterpolation": true,
+      "pressureRecovered": true,
+      "sourceProfileMemberVerified": false,
+      "sourceSupportedPotentialFormula": "psi(v) * i(n cross t)/(k*m*|n|^2) * exp(i*k*m*Phi)",
+      "fullPhysicalCurlApplied": false,
+      "missing": [
+        "Smooth source with complete slow and transverse derivative bounds.",
+        "Actual same-source phase/carrier and supported physical curl derivatives.",
+        "Temporal cutoff commutators and all new PDE products."
+      ],
+      "exactEndpoint": -0.688338794853473,
+      "endpointError": 9.237377529558444e-11
+    },
+    "actualFiniteStateConstructed": false,
+    "scope": "Executed finite operations and explicit source-bound construction. Initialization, four-stage source iteration, and local-field synthesis remain separate obligations.",
+    "residual": {
+      "schema": "MathScope.N6.FiniteResidualIdentityFixture/1",
+      "scope": "independent periodic finite-mode numerical algebra fixture",
+      "sourceReconstruction": false,
+      "normalizedIdentityError": 1.9008225949275365e-16,
+      "omittedQuadraticError": 0.07713840628062761,
+      "pressureRecomputed": true,
+      "allCrossTermsRetained": true,
+      "pass": true,
+      "fullPaperN6Complete": false
+    }
+  },
+  "checks": [
+    {
+      "id": "N6-05-zero-mean-Fourier-cancellation",
+      "pass": true
+    },
+    {
+      "id": "N6-03-projected-response-versus-exact-ODE",
+      "pass": true
+    },
+    {
+      "id": "N6-04-signed-target-fixed-amplitudes-square-kept",
+      "pass": true
+    },
+    {
+      "id": "N6-05-nonzero-mean-mutation",
+      "pass": true
+    },
+    {
+      "id": "N6-06-five-independent-radial-integrals",
+      "pass": true
+    },
+    {
+      "id": "N6-06-source-patch-disjoint-bumps",
+      "pass": true
+    },
+    {
+      "id": "N6-07-exact-rational-order-margins",
+      "pass": true
+    },
+    {
+      "id": "N6-03-generated-harmonics-retained",
+      "pass": true
+    },
+    {
+      "id": "N6-03-truncation-without-bound-held",
+      "pass": true
+    },
+    {
+      "id": "N6-02-full-quadratic-residual",
+      "pass": true
+    }
+  ],
+  "observations": {
+    "kind": "CONTRACT_TABLE",
+    "samples": [],
+    "curves": [],
+    "contract": {
+      "runHash": "a5dca964af4137adcdf8b8a97563c7d60c17309d1e6455ee68b21e85cab1f32c",
+      "inputHash": "361ba9bd3df85ed3a7b99984008db94f827e4da69643ac8475ccaff53f4bb040"
+    }
+  },
+  "progress": {
+    "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+    "complete": false,
+    "implemented": [
+      "source4/common6 hash·root 상속",
+      "전체 비선형 residual 항등식",
+      "비영 harmonic projected ODE",
+      "signed covariance inverse",
+      "정확 대수적 divisor Fourier inverse",
+      "원래 M2 mean-patch의 양의 λ·a와 5 moment inverse 구간",
+      "고정 domain의 유리수 차수 장부"
+    ],
+    "remaining": [
+      "실제 primary-curl state의 temporal+moment 초기화",
+      "모든 현재 조화항과 실제 curl을 연결한 네 단계 반복",
+      "각 단계의 압력·전체 residual·정밀도 상계",
+      "동일 최종 cutoff sum과 Lemma5.4 tail"
+    ]
+  },
+  "evidence": {
+    "numericOrAlgebraicFiniteExecution": true,
+    "analyticCertificate": null,
+    "leanTheorem": null,
+    "formalComplete": false,
+    "sourceReconstructionComplete": false
+  }
+}

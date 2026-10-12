@@ -306,6 +306,9 @@ def _negative_controls(fixture, precision_bits, tolerance):
 def audit_operator(request: dict | None = None) -> dict:
     """Audit a bounded reference or report an unresolved RH research candidate."""
     request = {} if request is None else request
+    if isinstance(request, dict) and request.get("candidate") == "registered":
+        from .operator_candidates import audit_registered_operator
+        return audit_registered_operator(request)
     keys = {"candidate", "dimension", "precisionBits", "tolerance"}
     if not isinstance(request, dict) or set(request) - keys:
         raise balls.BallRequestError("operator audit request contains unsupported fields")

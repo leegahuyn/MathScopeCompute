@@ -1,0 +1,200 @@
+{
+  "schema": "MathScope.M3.GaugeUIOriginalCriterionAssessment/1",
+  "status": "ALL_EIGHT_ORIGINAL_Y6_CRITERIA_COMPLETE_WITHIN_STATED_SCOPE",
+  "assessedBy": "Gauge implementation agent, independently reviewing root observed browser receipts and unchanged numeric tests",
+  "sourceBlueprint": {
+    "file": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+    "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+    "originalCriteriaCopiedExactly": true,
+    "comparedWith": "research-ide/mathscope-m3/ORIGINAL_M3_M4_CRITERIA.json",
+    "all24TitleTextPageEqual": true
+  },
+  "browserSnapshot": {
+    "path": "research-ide/mathscope-m3/gauge/evidence/live-ui-v85-v89-gauge.json",
+    "sha256": "9729ad0f3a4af8d04b578319eaf79b19e0efe590f14289dc747d64c574531bbf",
+    "exactCheckCount": 11
+  },
+  "basis": "Compare every unchanged original Y6 condition with its actual finite calculation tests and observed UI actions. Browser source matching is not a new kernel run.",
+  "discoveredAndClosedIssue": {
+    "id": "Y6-06",
+    "problem": "Ensemble curves originally omitted ESTIMATED from their labels.",
+    "resolution": "Root changed each curve label and executed both fresh chains in public v89; exact SVG text is in the final browser snapshot."
+  },
+  "criteria": [
+    {
+      "id": "Y6-01",
+      "title": "원본·표현·근거를 연결",
+      "text": "Original에는 A/F 또는 links/ensemble, Representation에는 slice·marginal·LOD, Evidence에는 source·오차·proof를 보\n관한다. 합격: 3D selection은 원본 4D 좌표·configuration·관측 연산자로 이동한다. 화면 mesh나 색상으로 원본의 새 물리\n상태를 생성하지 않는다.",
+      "page": 48,
+      "status": "COMPLETE_WITHIN_STATED_SCOPE",
+      "originalCriterionComplete": true,
+      "reasoning": "게시 화면에서 점 선택이 실제 원본 4D 좌표·A/F·저장 links와 configuration fibre 및 source hash로 연결되었다.",
+      "exactBrowserChecks": [
+        "Y6-field-comparison-original-selection",
+        "Y6-nonstationary-Wilson-flow-source-and-curve",
+        "Y6-lattice-marginal-ensemble-source-fibre"
+      ],
+      "implementationEvidence": [
+        "research-ide/mathscope-m3/gauge/field-family.mjs",
+        "research-ide/mathscope-m3/gauge/index.mjs",
+        "research-ide/mathscope-m3/gauge/tests/gauge-m3.test.mjs"
+      ],
+      "scopeLimits": []
+    },
+    {
+      "id": "Y6-02",
+      "title": "x ₄=c 절단",
+      "text": "q(y,c), energy density, 선택된 invariant observable을 3D에 표시하고 c를 연속/격자 index로 조절한다. 합격: 기존 SU(2)\nBPST slice의 해석식을 회귀검사한다. interpolated slice는 보간 방식과 오차를 표시하고 실제 격자면과 구별한다.",
+      "page": 48,
+      "status": "COMPLETE_WITHIN_STATED_SCOPE",
+      "originalCriterionComplete": true,
+      "reasoning": "연속 c 변경이 실제 새 관측 hash와 4D 좌표를 만들고 격자 index는 저장된 면/시간 좌표에 연결된다. BPST slice 회귀와 정수 index guards의 실행 증거를 함께 검토했다.",
+      "exactBrowserChecks": [
+        "Y6-actual-continuous-slice",
+        "Y6-lattice-marginal-ensemble-source-fibre"
+      ],
+      "implementationEvidence": [
+        "research-ide/mathscope-m3/gauge/field-family.mjs",
+        "research-ide/mathscope-m3/gauge/tests/gauge-m3.test.mjs"
+      ],
+      "scopeLimits": [
+        "연속 원본 관측과 정확 격자면을 제공한다. 보간 결과를 실제 격자면으로 표시하지 않는다."
+      ]
+    },
+    {
+      "id": "Y6-03",
+      "title": "x ₄ 방향 적분·평균 구별",
+      "text": "marginal at Σn q(y,n at), 평균 (1/Nt) Σn q, 한 표본과 ensemble 평균을 서로 다른 연산자로 둔다. 합격: marginal의 단위\n가 q×length로 바뀐다. BPST 무한 방향 해석식과 finite window tail을 확인하고 at 누락·합/평균 혼동을 잡는다.",
+      "page": 48,
+      "status": "COMPLETE_WITHIN_STATED_SCOPE",
+      "originalCriterionComplete": true,
+      "reasoning": "게시 marginal ensemble 관측의 ell0^-3 단위, at 가중 연산자, 2개 configuration×4개 시간의 8개 원본 fibre를 확인했다. 독립 합/평균·BPST 무한 marginal·finite tail 회귀가 연산 의미를 검증한다.",
+      "exactBrowserChecks": [
+        "Y6-lattice-marginal-ensemble-source-fibre"
+      ],
+      "implementationEvidence": [
+        "research-ide/mathscope-m3/gauge/field-family.mjs",
+        "research-ide/mathscope-m3/gauge/lattice-observation.mjs",
+        "research-ide/mathscope-m3/gauge/tests/lattice-observation-flow.test.mjs",
+        "research-ide/mathscope-m3/gauge/evidence/lattice-flow-tests.tap",
+        "research-ide/mathscope-m3/gauge/evidence/lattice-chain-marginal-mean.json"
+      ],
+      "scopeLimits": [
+        "표시된 수치 적분과 step refinement는 directed interval 또는 전역 오차 인증이 아니다."
+      ]
+    },
+    {
+      "id": "Y6-04",
+      "title": "안전한 게이지 불변 기본 화면",
+      "text": "plaquette energy·Wilson character·정규화된 density·correlation을 기본 채널로 둔다. A/F 성분은 gauge를 고정한 진단\n모드에 둔다. 합격: gauge transformation 전후 기본 채널은 같고 성분 채널에는 gauge ID가 보인다. gauge-dependent\narrow의 형태에서 질량 간극을 추론하지 않는다.",
+      "page": 48,
+      "status": "COMPLETE_WITHIN_STATED_SCOPE",
+      "originalCriterionComplete": true,
+      "reasoning": "기본 invariant density 화면과 원본 source inspector의 gauge ID·좌표·곡률/links 연결을 확인했다. 비상수 gauge transform의 불변량 보존 및 성분 변화는 실제 수치 회귀 결과로 검증했다.",
+      "exactBrowserChecks": [
+        "Y6-field-comparison-original-selection",
+        "Y6-nonstationary-Wilson-flow-source-and-curve"
+      ],
+      "implementationEvidence": [
+        "research-ide/mathscope-m3/gauge/field-family.mjs",
+        "research-ide/mathscope-m3/gauge/tests/gauge-m3.test.mjs"
+      ],
+      "scopeLimits": []
+    },
+    {
+      "id": "Y6-05",
+      "title": "Flow와 투영된 loop의 의미 보존",
+      "text": "gradient flow time을 독립 매개변수로 둔다. 4D loop를 3D에 그릴 때 원래 경로와 x ₄ 이동을 함께 보관한다. 합격: flowed\ndensity를 원본 density로 덮어쓰지 않는다. 원래 loop holonomy와 projected path에서 다시 계산한 holonomy를 동일시\n하지 않는다.",
+      "page": 48,
+      "status": "COMPLETE_WITHIN_STATED_SCOPE",
+      "originalCriterionComplete": true,
+      "reasoning": "게시 화면에서 독립 flow time, 실제 Wilson action 감소 곡선, 서로 다른 원본/flowed hash, flowed 원본 선택과 재열기를 확인했다. 별도 실제 4D loop/평탄화 holonomy 회귀는 원래 경로의 의미를 보존한다.",
+      "exactBrowserChecks": [
+        "Y6-nonstationary-Wilson-flow-source-and-curve",
+        "Y6-source-view-session-reopen"
+      ],
+      "implementationEvidence": [
+        "research-ide/mathscope-m3/gauge/wilson-flow.mjs",
+        "research-ide/mathscope-m3/gauge/field-family.mjs",
+        "research-ide/mathscope-m3/gauge/tests/lattice-observation-flow.test.mjs",
+        "research-ide/mathscope-m3/gauge/evidence/lattice-flow-tests.tap",
+        "research-ide/mathscope-m3/gauge/evidence/wilson-flow-su2.json",
+        "research-ide/mathscope-m3/gauge/evidence/wilson-flow-g2.json"
+      ],
+      "scopeLimits": [
+        "Wilson flow는 명시 유한 격자 모형의 수치 solver다. Continuum flow 정리 또는 rigorous global error를 주장하지 않는다."
+      ]
+    },
+    {
+      "id": "Y6-06",
+      "title": "Δ별 상태 비교",
+      "text": "같은 좌표 범위·단위·color scale로 Δ₁,Δ₂의 field family와 상관함수를 비교한다. 독립 정규화는 선택적으로 표시한다. 합격:\n색상 auto-normalization으로 가려지는 밀도 크기 차이를 확인할 수 있다. assumed/effective/estimated 상태가 모든 비교\n패널에 나타난다.",
+      "page": 48,
+      "status": "COMPLETE_WITHIN_STATED_SCOPE",
+      "originalCriterionComplete": true,
+      "reasoning": "같은 물리 좌표·단위·공통 색 범위와 각 field 패널의 EFFECTIVE 표기를 확인했다. ASSUMED/EFFECTIVE 모드 mapping과 실제 ensemble 각 곡선의 목표 Δ·C00·ESTIMATED 표시를 제공하며 마지막 누락은 v89의 두 새 chain 실행과 정확 SVG label로 확인했다.",
+      "exactBrowserChecks": [
+        "Y6-effective-label-common-scale-keyboard-LOD",
+        "Y6-06-ensemble-comparison-each-curve-estimated"
+      ],
+      "implementationEvidence": [
+        "research-ide/mathscope-m3/gauge/field-family.mjs",
+        "research-ide/mathscope-m3/gauge/spectral.mjs",
+        "research-ide/mathscope-m3/gauge/ensemble-family.mjs",
+        "research-ide/mathscope-m3/gauge/tests/gauge-m3.test.mjs"
+      ],
+      "scopeLimits": [
+        "상태 표시는 목표 Δ의 독립 물리적 calibration을 완료했다는 뜻이 아니며 Y5-05는 PARTIAL이다."
+      ]
+    },
+    {
+      "id": "Y6-07",
+      "title": "그림에서 Lean 명제로 연결",
+      "text": "관측을 선택하면 정확한 observable·domain·projection·claim type을 내보낸다. proof 후보는 fibre 조건과 reconstruction\ncertificate를 요구한다. 합격: 같은 3D 투영을 가진 다른 4D source를 반례 fixture로 제공한다. projection 그림의 동일성\n만으로 4D 성질·spectral gap을 복원하는 명제를 거부한다.",
+      "page": 48,
+      "status": "COMPLETE_WITHIN_STATED_SCOPE",
+      "originalCriterionComplete": true,
+      "reasoning": "원래 반례·fibre/reconstruction/spectrum 방향 거부 검사를 유지하고 게시된 45개 proof source 및 실제 finite/Real receipt의 byte 일치를 확인했다.",
+      "exactBrowserChecks": [
+        "Y7-published-byte-exact-kernel-receipt"
+      ],
+      "implementationEvidence": [
+        "research-ide/mathscope-m3/gauge/proof.mjs",
+        "research-ide/mathscope-m3/gauge/lean/FiniteSpectral.lean",
+        "research-ide/mathscope-m3/gauge/evidence/lean-audit.json",
+        "research-ide/mathscope-m3/gauge/tests/gauge-m3.test.mjs"
+      ],
+      "scopeLimits": []
+    },
+    {
+      "id": "Y6-08",
+      "title": "세션 재현·접근성·stale 확인",
+      "text": "수치 테이블·키보드·색각 독립 표식과 원본 데이터를 제공한다. scene/model/proof revision을 분리하여 저장한다. 합격: 재\n열기 시 같은 source·관측·가정을 복원한다. G· Δ 모형·경계·proof source 변경은 관련 결과를 stale로 만들고 단순 카메라 이\n동은 만들지 않는다.",
+      "page": 48,
+      "status": "COMPLETE_WITHIN_STATED_SCOPE",
+      "originalCriterionComplete": true,
+      "reasoning": "게시 수치 표·키보드/숫자/선택 표식·원본 기록을 확인했다. 실제 재계산 MATCH가 선택·관측·view를 복원하고 camera/LOD 변경은 결과 hash를 보존한다. 수학 입력·proof source 변경 및 오래된 source 기록은 stale/unverified이며 이전 권한을 채택하지 않는다.",
+      "exactBrowserChecks": [
+        "Y6-source-view-session-reopen",
+        "Y6-effective-label-common-scale-keyboard-LOD",
+        "Y6-old-source-record-cannot-adopt-replay-authority",
+        "edited-input-and-stale-result-protection"
+      ],
+      "implementationEvidence": [
+        "research-ide/mathscope-m3/gauge/index.mjs",
+        "research-ide/mathscope-m3/gauge/proof.mjs",
+        "research-ide/mathscope-m3/gauge/tests/gauge-m3.test.mjs"
+      ],
+      "scopeLimits": [
+        "Source 또는 환경이 바뀐 가져온 기록은 입력만 복원할 수 있으며 과거 receipt를 새 실행의 proof authority로 채택하지 않는다."
+      ]
+    }
+  ],
+  "remainingGaugeCriteria": [
+    "Y5-05",
+    "Y5-06",
+    "Y5-08"
+  ],
+  "continuumGap": "OPEN_CONTINUUM",
+  "clayProblemSolved": false
+}
