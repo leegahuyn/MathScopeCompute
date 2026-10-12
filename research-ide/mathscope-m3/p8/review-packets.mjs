@@ -6,7 +6,25 @@ import {canonicalJSON,cloneJSON,freeze,sha256} from './contracts.mjs';
 export async function exportReviewPackets(snapshot,sourceBinding) {
   const m1=m1Capabilities(),m2=m2Capabilities();
   const examples1=m1Examples(),examples2=m2Examples();
-  const make=(id,title,supported,fixtures,remaining,questions)=>({schema:'MathScope.M3.P8.ReviewPacket/1',id,title,sourceBinding:cloneJSON(sourceBinding),supportedScope:supported,fixtures,remainingProofs:remaining,researchQuestions:questions,releaseAcceptance:{status:id==='P7'?'VISUALIZATION_PUBLISHED_MATH_CRITERIA_PARTIAL':id==='P8'?'IN_PROGRESS':'INHERITED_SCOPED_IMPLEMENTATION',allOriginalCriteriaComplete:false},conjectureResolution:{globalRH:false,globalBSD:false,globalYangMillsMassGap:false,universalNavierStokesRegularity:false},importedAuthorityAccepted:false});
+  const recorded=snapshot.fixtureEvidence,groups=new Map();
+  if(recorded!==undefined){
+    if(recorded.schema!=='MathScope.M3.P8.ReviewFixtureEvidence/1'||recorded.freshExecutionPerformed!==false||recorded.proofStatusPromoted!==false||recorded.wholeP8Complete!==false||recorded.wholeM3Complete!==false||!Array.isArray(recorded.groups)||!/^[a-f0-9]{40}$/.test(recorded.sourceCommit))throw Error('Invalid recorded fixture evidence boundary.');
+    for(const group of recorded.groups){
+      if(!['P1-P3','P4','P5-P6','P7','P8'].includes(group.id)||groups.has(group.id)||!Array.isArray(group.fixtures))throw Error('Invalid recorded fixture group.');
+      for(const result of group.fixtures)if(result.freshExecutionPerformed!==false||result.proofStatusPromoted!==false||result.source?.commit!==recorded.sourceCommit||!/^[a-f0-9]{64}$/.test(result.source?.fileSHA256||''))throw Error('Recorded fixture source or execution scope mismatch.');
+      groups.set(group.id,group);
+    }
+  }
+  const make=(id,title,supported,fixtures,remaining,questions)=>{
+    const group=groups.get(id),inheritedM2=(id==='P4'||id==='P5-P6')?group?.summary?.inheritedM2Assessment:null;
+    return {schema:'MathScope.M3.P8.ReviewPacket/1',id,title,sourceBinding:cloneJSON(sourceBinding),supportedScope:supported,fixtures,
+      recordedFixtureResults:cloneJSON(group?.fixtures||[]),recordedFixtureSummary:cloneJSON(group?.summary||{}),
+      recordedFixtureScope:{status:group?'RECORDED_RESULTS_ATTACHED':'NO_RECORDED_RESULTS_PROVIDED',sourceCommit:recorded?.sourceCommit||null,authority:'HISTORICAL_RECORDS_NOT_CURRENT_EXECUTION',freshExecutionPerformed:false,currentSourceReexecutionClaimed:false},
+      remainingProofs:remaining,researchQuestions:questions,
+      releaseAcceptance:{status:inheritedM2?'INHERITED_COMPLETED_M2_SCOPED_CRITERIA':id==='P7'?'VISUALIZATION_PUBLISHED_MATH_CRITERIA_PARTIAL':id==='P8'?'IN_PROGRESS':'INHERITED_SCOPED_IMPLEMENTATION',allOriginalCriteriaComplete:false,allOriginalCriteriaCompleteAppliesTo:'CURRENT_M3_REVIEW_PACKET',
+        ...(inheritedM2?{inheritedM2Acceptance:cloneJSON(inheritedM2),inheritedM2AcceptanceSource:cloneJSON(group.summary.acceptanceSource),boundary:'The recorded completed M2 acceptance is inherited. This packet does not reopen M2 or infer completion of M3.'}:{})},
+      conjectureResolution:{globalRH:false,globalBSD:false,globalYangMillsMassGap:false,universalNavierStokesRegularity:false},importedAuthorityAccepted:false};
+  };
   const fixture=e=>({id:e.id,title:e.title||e.label||e.id,request:e.request,executionStatus:'AVAILABLE_FOR_INDEPENDENT_REPLAY_NOT_EXECUTED_BY_PACKET_EXPORT'});
   const packets=[
     make('P1-P3','P1–P3 · 유한 소수·p-adic·복합체',m1.supported,examples1.map(fixture),m1.unsupported,['How far do the current explicit comparison models extend to new native prismatic inputs without adding hypotheses?']),

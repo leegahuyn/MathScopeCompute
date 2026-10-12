@@ -33,6 +33,15 @@ test('unsupported math returns failed execution with no certificate; failed runs
 test('request snapshot cannot be changed by a caller during asynchronous hashing',async()=>{
   const input=cloneJSON(request('p8-finite')),promise=engine.run(input);input.input.prime='7';const result=await promise;assert.equal(result.request.input.prime,'5');assert.equal(result.result.certificate.data.curve.prime,'5');
 });
+
+test('recorded Linux controls remain separate from fresh browser mutations and replay deterministically',async()=>{
+  const record=await engine.run(request('p8-mutations')),check=record.result.recordedP7Mutations;
+  assert.equal(check.status,'RECORDED_CI_SOURCE_MATCH',JSON.stringify(check.issues));
+  assert.equal(check.freshExecution,false);assert.equal(check.formalLeanProofIssued,false);
+  assert.deepEqual(check.report.cases.map(x=>x.id),['zero-box','rank-upper']);
+  assert.equal(check.process.pytestExitCode,0);
+  assert.equal((await engine.replay(record)).status,'MATCH');
+});
 test('review export separates five scoped releases from conjecture resolution',async()=>{
   const result=await engine.exportReviewPackets();assert.deepEqual(result.packets.map(p=>p.id),['P1-P3','P4','P5-P6','P7','P8']);
   for(const packet of result.packets){assert.ok(packet.remainingProofs.length);assert.ok(packet.fixtures.length);assert.equal(packet.releaseAcceptance.allOriginalCriteriaComplete,false);assert.ok(Object.values(packet.conjectureResolution).every(x=>x===false));const {packetSHA256,...body}=packet;assert.equal(packetSHA256,await sha256(body));}

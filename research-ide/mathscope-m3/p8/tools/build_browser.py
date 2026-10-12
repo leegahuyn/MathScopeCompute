@@ -56,7 +56,10 @@ def bundle(entry):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');args=parser.parse_args()
     worker,closure=bundle(ROOT/'worker-entry.mjs')
-    extra=[ROOT/'browser-client.js',Path(__file__).resolve(),ROOT.parent/'P7_PROGRESS.json',ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json']
+    extra=[ROOT/'browser-client.js',Path(__file__).resolve(),ROOT.parent/'P7_PROGRESS.json',ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json',ROOT/'review-fixture-evidence.json',ROOT/'tools/build_review_fixtures.py',ROOT/'tools/audit_conditional_lean.py',ROOT/'tools/audit_p7_mutations.py',ROOT.parent/'cli.py']
+    extra+=list((ROOT.parent/'p7').glob('*.py'))
+    extra+=[ROOT.parent/'tests/test_p8_p7_mutations.py']
+    extra+=[p for p in [ROOT/'evidence/lean-release.json',ROOT/'evidence/p7-mutation-release.json',ROOT/'evidence/conditional-lean-release.json'] if p.exists()]
     extra+=[p for p in (ROOT/'lean').rglob('*.lean') if '.lake' not in p.relative_to(ROOT).parts]+[ROOT/'lean/lean-toolchain',ROOT/'lean/pins.json',ROOT/'lean/finite-input.json',ROOT/'tools/audit_lean.py',ROOT/'tools/generate_finite.mjs']
     files=[{'path':p.relative_to(RESEARCH).as_posix(),'bytes':len(p.read_bytes()),'sha256':sha(p.read_bytes())} for p in sorted(set(closure+extra),key=lambda p:p.relative_to(RESEARCH).as_posix())]
     source={'schema':'MathScope.M3.P8.SourceBinding/1','version':'0.1.0-p8','files':files,'manifestSHA256':sha(canonical(files)),'environment':{'arithmetic':'ECMASCRIPT_EXACT_BIGINT_AND_RATIONAL','hash':'SHA-256_WEBCRYPTO','externalMathImports':'STATIC_INHERITED_M0_M1_M2','kernelExecution':'SEPARATE_PINNED_GITHUB_LEAN_JOB'},'repository':'https://github.com/leegahuyn/MathScopeCompute'}
@@ -64,6 +67,7 @@ def main():
     criteria=[dict(c,status='IN_PROGRESS',originalCriterionComplete=False) for c in original['criteria'] if c['id'].startswith('P8-')]
     snapshot={'originalCriteriaSource':{'sha256':original['sha256'],'source':original['source'],'criteriaFileSHA256':sha((ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json').read_bytes())},'p7':{'supported':[item for c in progress['criteria'] for item in c.get('implemented',[])],'criteria':progress['criteria'],'fixtures':[{'id':c['id'],'status':c['status'],'source':'research-ide/mathscope-m3/P7_PROGRESS.json','sourceSHA256':sha((ROOT.parent/'P7_PROGRESS.json').read_bytes()),'execution':'RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT'} for c in progress['criteria']]},'p8':{'criteria':criteria,'fixtures':[{'id':'finite-F5','input':{'prime':'5','traceLength':7},'leanExport':'p8/lean/MathScope/P8/Generated.lean','status':'EXACT_WITNESS_REQUIRES_FRESH_EXECUTION'},{'id':'M2-four-coordinate-views','engine':'p8.visual_structure','status':'ON_DEMAND_REPLAY'},{'id':'finite-candidate-compare','engine':'p8.candidate_compare','status':'ON_DEMAND_REPLAY'}]}}
     evidence_file=ROOT/'evidence/lean-release.json'
+    snapshot['fixtureEvidence']=json.loads(read(ROOT/'review-fixture-evidence.json'))
     evidence=json.loads(read(evidence_file)) if evidence_file.exists() else {'status':'NOT_YET_RECORDED'}
     expected=None
     if evidence['status']=='RECORDED_CI_AUDIT':
@@ -73,7 +77,13 @@ def main():
         # audited JS canonicalizer as the consuming registry for the audit body.
         audit_digest=subprocess.check_output(['node','--input-type=module','-e',"import fs from 'node:fs'; import {sha256} from './common.mjs'; console.log(await sha256(JSON.parse(fs.readFileSync(process.argv[1],'utf8')).audit));",str(evidence_file)],cwd=ROOT,text=True).strip()
         expected={'schema':'MathScope.M3.P8.ExpectedLeanContract/1','sourceFiles':auditor.source_manifest(ROOT),'targets':auditor.target_manifest(),'pins':pins,'negativeNames':auditor.NEGATIVES,'input':json.loads(read(ROOT/'lean/finite-input.json'))['input'],'inputManifestSha256':sha((ROOT/'lean/finite-input.json').read_bytes()),'generatedSourceSHA256':sha((ROOT/'lean/MathScope/P8/Generated.lean').read_bytes()),'ci':evidence['ci'],'auditSHA256':audit_digest}
-    build={'schema':'MathScope.M3.P8.Build/1','sourceBinding':source,'reviewSnapshot':snapshot,'leanEvidence':evidence,'leanContract':expected}
+    recorded={};digests={}
+    for key,name in [('p7Mutations','p7-mutation-release.json'),('conditionalLean','conditional-lean-release.json')]:
+        path=ROOT/'evidence'/name
+        if path.exists():
+            recorded[key]=json.loads(read(path))
+            digests[key]=subprocess.check_output(['node','--input-type=module','-e',"import fs from 'node:fs'; import {sha256} from './common.mjs'; console.log(await sha256(JSON.parse(fs.readFileSync(process.argv[1],'utf8'))));",str(path)],cwd=ROOT,text=True).strip()
+    build={'schema':'MathScope.M3.P8.Build/1','sourceBinding':source,'reviewSnapshot':snapshot,'leanEvidence':evidence,'leanContract':expected,'recordedChecks':recorded,'expectedChecks':digests}
     worker='globalThis.__MATHSCOPE_P8_BUILD__='+canonical(build)+';\n'+worker
     client=read(ROOT/'browser-client.js').replace('__P8_STATIC_WORKER_SOURCE__',json.dumps(worker,ensure_ascii=False)).replace('</script','<\\/script')
     outputs={WEB/'p8-engine.bundle.js':client,ROOT/'build-data.json':json.dumps(build,ensure_ascii=False,indent=2)+'\n'}

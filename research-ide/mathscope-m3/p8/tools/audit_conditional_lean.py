@@ -57,7 +57,9 @@ def closure(lean,lean_root):
         source=next(((p/rel).with_suffix('.lean') for p in source_roots if (p/rel).with_suffix('.lean').is_file()),None)
         artifact=next(((p/rel).with_suffix('.olean') for p in artifact_roots if (p/rel).with_suffix('.olean').is_file()),None)
         if not source or not artifact:raise ValueError("Conditional import closure unresolved: "+name)
-        imported=imports(source.read_text(encoding='utf-8'));compiled=[]
+        try:imported=imports(source.read_text(encoding='utf-8'))
+        except ValueError as exc:raise ValueError(f'Conditional import header parse failed for {name} ({source}): {exc}') from exc
+        compiled=[]
         for ext in ['.olean','.olean.private','.ir']:
             file=artifact.with_suffix(ext)
             if file.is_file():compiled.append({'kind':ext,'sha256':sha(file.read_bytes())})

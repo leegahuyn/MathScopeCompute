@@ -8,6 +8,7 @@ import {getP8Examples} from './examples.mjs';
 import {exportReviewPackets} from './review-packets.mjs';
 import {runMutationAudit} from './mutation-audit.mjs';
 import {validateRecordedLean} from './lean-registry.mjs';
+import {validateRecordedChecks,conditionalLedger} from './recorded-checks.mjs';
 
 const VERSION='0.1.0-p8';
 const KINDS=['p8.object_contract','p8.visual_structure','p8.comparison','p8.finite_certificate','p8.assumption_audit','p8.candidate_compare','p8.mutation_audit','p8.review_packets'];
@@ -19,14 +20,18 @@ const empty=input=>shape(input,[],[],'empty input');
 
 export async function createP8Engine(build) {
   assertJSON(build,8*1024*1024);build=cloneJSON(build);
-  shape(build,['schema','sourceBinding','reviewSnapshot','leanEvidence','leanContract'],[],'P8 build');
+  shape(build,['schema','sourceBinding','reviewSnapshot','leanEvidence','leanContract'],['recordedChecks','expectedChecks'],'P8 build');
   if(build.schema!=='MathScope.M3.P8.Build/1')throw Error('Unsupported P8 build.');
   const source=build.sourceBinding;
   if(source.schema!=='MathScope.M3.P8.SourceBinding/1'||!Array.isArray(source.files)||source.files.length===0||source.manifestSHA256!==await sha256(source.files))throw Error('Source manifest does not match the bundled build.');
   for(const row of source.files)if(!/^[a-f0-9]{64}$/.test(row.sha256)||typeof row.path!=='string'||!Number.isSafeInteger(row.bytes))throw Error('Invalid source file binding.');
   const frozenSource=freeze(cloneJSON(source));
   const leanRegistry=await validateRecordedLean(build.leanEvidence,frozenSource,build.leanContract);
+  const recordedP7Mutations=await validateRecordedChecks(build.recordedChecks?.p7Mutations,frozenSource,build.expectedChecks?.p7Mutations);
+  const recordedConditionalAudit=await validateRecordedChecks(build.recordedChecks?.conditionalLean,frozenSource,build.expectedChecks?.conditionalLean);
   const examples=await getP8Examples();
+  const compiledLedger=recordedConditionalAudit.ok?conditionalLedger(recordedConditionalAudit.report):null;
+  if(compiledLedger)examples.push({id:'p8-conditional-ci',title:'실제 Lean 조건부 목표 · 가정 제거 거절 기록',criterion:'P8-05',request:{kind:'p8.assumption_audit',input:{ledger:compiledLedger,removeAssumptionId:'assumption:conditional-ci'}}});
   const packets=()=>exportReviewPackets(build.reviewSnapshot,frozenSource);
   async function leanStatus(certificate,generated) {
     const evidence=build.leanEvidence;
@@ -68,10 +73,11 @@ export async function createP8Engine(build) {
         shape(input,['ledger'],['kernelAudit','removeAssumptionId'],'assumption input');
         const audit=auditAssumptionLedger(input.ledger,{kernelAudit:input.kernelAudit}),result={...audit,ledger:cloneJSON(input.ledger),importedProofStatusAdopted:false};
         if(input.removeAssumptionId)result.removal=prepareAssumptionRemoval(input.ledger,input.removeAssumptionId);
+        if(compiledLedger&&same(input.ledger,compiledLedger))result.recordedConditionalAudit=recordedConditionalAudit;
         return result;
       }
       case 'p8.candidate_compare':return compareFiniteCandidates(input);
-      case 'p8.mutation_audit':empty(input);return runMutationAudit();
+      case 'p8.mutation_audit':empty(input);return {...await runMutationAudit(),recordedP7Mutations};
       case 'p8.review_packets':empty(input);return packets();
       default:throw Error('Unsupported P8 operation.');
     }

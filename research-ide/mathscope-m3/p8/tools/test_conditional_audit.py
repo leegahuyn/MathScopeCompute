@@ -1,10 +1,14 @@
 import unittest
-from audit_conditional_lean import AXIOM,TARGET,AXIOM_LINE,remove_assumption,parse_conditional,expected_removal_rejection
+from audit_conditional_lean import AXIOM,TARGET,AXIOM_LINE,remove_assumption,parse_conditional,expected_removal_rejection,imports
 
 def block(name,custom=AXIOM,proposition='2 + 2 = 4'):
     return f"P8_CONDITIONAL_BEGIN {name}\n{name} : {proposition}\n'{name}' depends on axioms: [{custom}]\nP8_CONDITIONAL_END {name}\n"
 
 class ConditionalAuditTests(unittest.TestCase):
+    def test_conditional_closure_uses_header_only_parser(self):
+        self.assertEqual(imports('module\nprelude\npublic import Init.Prelude\npublic section\ndef commentMarker := "/-"'),['Init.Prelude'])
+        with self.assertRaises(ValueError):imports('import /- broken header')
+
     def test_literal_target_axiom_set(self):
         targets=parse_conditional(block(AXIOM)+block(TARGET))
         self.assertEqual(targets[1]['axioms']['custom'],[AXIOM])

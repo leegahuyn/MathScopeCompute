@@ -42,9 +42,31 @@ def canonical(value):
     return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode("utf-8")
 
 def strip_comments(source):
+    """Strip actual comments, preserving quoted strings in our bounded audit sources.
+
+    Import discovery deliberately does not use this whole-file scanner: Lean
+    command syntax is extensible, whereas its module header has a fixed grammar.
+    """
     out, i, depth = [], 0, 0
     while i < len(source):
-        if source.startswith("/-", i): depth += 1; i += 2
+        character = re.match(r"'(?:[^'\\\n]|\\(?:[nrt0\\\"']|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}))'",source[i:]) if not depth and source[i]=="'" else None
+        if character:
+            out.append(character[0]);i+=character.end()
+        elif not depth and (source[i] == '"' or re.match(r'r#*"', source[i:])):
+            start=i; raw=re.match(r'r(#*)"',source[i:])
+            if raw:
+                i+=raw.end(); end=source.find('"'+raw[1],i)
+                if end<0: raise ValueError("Unterminated raw source string")
+                i=end+1+len(raw[1])
+            else:
+                i+=1
+                while i<len(source):
+                    if source[i]=='\\': i+=2
+                    elif source[i]=='"': i+=1;break
+                    else:i+=1
+                else:raise ValueError("Unterminated source string")
+            out.append(source[start:i])
+        elif source.startswith("/-", i): depth += 1; out.append(" "); i += 2
         elif depth and source.startswith("-/", i): depth -= 1; i += 2
         elif depth:
             if source[i] == "\n": out.append("\n")
@@ -56,14 +78,47 @@ def strip_comments(source):
     return "".join(out)
 
 def imports(source):
-    source = strip_comments(source)
-    result = [] if re.search(r"^\s*prelude\b", source, re.M) else ["Init"]
-    for line in source.splitlines():
-        line = line.strip()
-        if not line or line in {"module", "prelude"}: continue
-        match = re.fullmatch(r"(?:(?:public|private|meta)\s+)*import\s+(.+)", line)
-        if not match: break
-        result.extend(x for x in match[1].split() if x != "all" and re.fullmatch(r"[A-Za-z_][\w.]*", x))
+    """Read only the fixed Lean module header, never arbitrary command bodies.
+
+    Pinned Lean.Parser.Module.Syntax grammar: module? prelude?
+    (public? meta? import all? ident)*. Module names in this pinned dependency
+    closure are ASCII dotted identifiers; an unsupported import name is an error,
+    not a silently omitted dependency. Comments can nest and span header lines.
+    """
+    i=0
+    def token():
+        nonlocal i
+        while i<len(source):
+            if source[i].isspace() or (i==0 and source[i]=='\ufeff'):i+=1;continue
+            if source.startswith('--',i):
+                end=source.find('\n',i);i=len(source) if end<0 else end;continue
+            if source.startswith('/-',i):
+                i+=2;depth=1
+                while i<len(source) and depth:
+                    if source.startswith('/-',i):depth+=1;i+=2
+                    elif source.startswith('-/',i):depth-=1;i+=2
+                    else:i+=1
+                if depth:raise ValueError('Unterminated module header comment')
+                continue
+            match=re.match(r"[A-Za-z_][A-Za-z0-9_'.]*",source[i:])
+            if match:i+=match.end();return match[0]
+            value=source[i];i+=1;return value
+        return None
+    current=token()
+    if current=='module':current=token()
+    result=[] if current=='prelude' else ['Init']
+    if current=='prelude':current=token()
+    while current is not None:
+        if current=='public':current=token()
+        if current=='meta':current=token()
+        if current!='import':break
+        name=token()
+        if name=='all':name=token()
+        if name is None or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*",name) or name in {'import','module','prelude','public','meta','all'}:
+            raise ValueError('Missing or unsupported module import: '+repr(name))
+        if i<len(source) and not source[i].isspace() and not source.startswith(('/-','--'),i):
+            raise ValueError('Unsupported character in module import: '+repr(source[i]))
+        result.append(name);current=token()
     return sorted(set(result))
 
 def target_manifest():
@@ -144,7 +199,9 @@ def closure_manifest(lean,lean_root):
         source=next(((r/rel).with_suffix(".lean") for r in sources if (r/rel).with_suffix(".lean").is_file()),None)
         artifact=next(((r/rel).with_suffix(".olean") for r in artifacts if (r/rel).with_suffix(".olean").is_file()),None)
         if source is None or artifact is None: raise ValueError("Unresolved source/compiled import: "+module)
-        imported=imports(source.read_text(encoding="utf-8"));compiled=[]
+        try:imported=imports(source.read_text(encoding="utf-8"))
+        except ValueError as exc:raise ValueError(f"Import header parse failed for {module} ({source}): {exc}") from exc
+        compiled=[]
         for ext in [".olean",".olean.private",".ir"]:
             path=artifact.with_suffix(ext)
             if path.exists():compiled.append({"kind":ext,"sha256":sha(path.read_bytes())})
