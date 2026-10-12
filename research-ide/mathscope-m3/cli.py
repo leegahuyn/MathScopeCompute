@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent
 VERSION = "0.2.0"
-KINDS = {"p7.special_function", "p7.zeta_zeros", "p7.elliptic_local", "p7.elliptic_analytic", "p7.explicit_formula"}
+KINDS = {"p7.special_function", "p7.zeta_zeros", "p7.elliptic_local", "p7.elliptic_analytic", "p7.explicit_formula", "p7.taylor_remainder", "p7.operator_audit"}
 MAX_JSON_BYTES = 32 * 1024 * 1024
 
 
@@ -48,8 +48,17 @@ def parse_json(data):
         raise ValueError("JSON exceeds the 32 MiB input limit")
     def reject(value):
         raise ValueError(f"nonfinite JSON constant: {value}")
+    def finite_float(value):
+        number = float(value)
+        if not math.isfinite(number):
+            reject(value)
+        return number
     try:
-        return json.loads(data, object_pairs_hook=_pairs, parse_constant=reject)
+        value = json.loads(data, object_pairs_hook=_pairs, parse_constant=reject, parse_float=finite_float)
+        # Escaped isolated surrogates are accepted by json.loads, but cannot
+        # travel in the canonical UTF-8 subprocess/replay representation.
+        canonical(value)
+        return value
     except RecursionError as exc:
         raise ValueError("JSON nesting exceeds the parser limit") from exc
 
@@ -124,6 +133,12 @@ def dispatch(request):
     if kind == "p7.explicit_formula":
         from p7.explicit_formula import evaluate_explicit_formula
         return evaluate_explicit_formula(data)
+    if kind == "p7.taylor_remainder":
+        from p7.taylor_remainder import evaluate_taylor_remainder
+        return evaluate_taylor_remainder(data)
+    if kind == "p7.operator_audit":
+        from p7.operator_registry import audit_operator
+        return audit_operator(data)
     if kind == "p7.elliptic_analytic":
         from p7.elliptic_analytic import elliptic_central_certificate
         if set(data) - {"model", "precisionBits", "coefficientLimit", "tolerance"} or "model" not in data:
@@ -144,18 +159,39 @@ def execute(request, max_seconds=90, memory_mib=1536):
     request = validate_request(request)
     if type(max_seconds) is not int or type(memory_mib) is not int or not 1 <= max_seconds <= 300 or not 128 <= memory_mib <= 4096:
         raise ValueError("resource limits must be 1..300 seconds and 128..4096 MiB")
+    # Serialization can reject nonfinite Python floats, isolated surrogates,
+    # cycles, or unsupported objects. It must complete before a child exists.
+    payload = canonical(request)
+    if len(payload) > MAX_JSON_BYTES:
+        raise ValueError("JSON exceeds the 32 MiB input limit")
     source, env, before = source_binding(), environment(request["kind"]), predecessor()
     started = datetime.now(timezone.utc).isoformat()
     begin = time.monotonic()
     command = [sys.executable, str(ROOT / "cli.py"), "_compute", str(memory_mib), str(math.ceil(max_seconds))]
-    child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=str(ROOT))
+    child = None
     timeout = False
     try:
-        stdout, stderr = child.communicate(canonical(request), timeout=max_seconds)
-    except subprocess.TimeoutExpired:
-        timeout = True
-        child.kill()
-        stdout, stderr = child.communicate()
+        child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=str(ROOT))
+        try:
+            stdout, stderr = child.communicate(payload, timeout=max_seconds)
+        except subprocess.TimeoutExpired:
+            timeout = True
+            child.kill()
+            stdout, stderr = child.communicate()
+    finally:
+        if child is not None:
+            # Keep ownership until the child has exited even when communicate
+            # raises an unexpected exception or a BaseException interruption.
+            try:
+                if child.poll() is None:
+                    child.kill()
+            finally:
+                try:
+                    child.wait()
+                finally:
+                    for stream in (child.stdin, child.stdout, child.stderr):
+                        if stream is not None:
+                            stream.close()
     result = None
     failure = None
     observed_limits = None

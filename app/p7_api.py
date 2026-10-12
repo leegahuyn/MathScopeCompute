@@ -53,6 +53,14 @@ def capabilities():
     examples.append({"id": "explicit-psi", "title": "ψ(10.5): integrated explicit formula",
                      "request": {"kind": "p7.explicit_formula", "input": {"x": "21/2", "height": "30",
                      "precisionBits": 192, "tolerance": "16", "zeroTolerance": "1e-20"}}})
+    examples.append({"id": "taylor-zeta", "title": "ζ(2+0.01): Taylor polynomial and rigorous remainder",
+                     "request": {"kind": "p7.taylor_remainder", "input": {"operation": "zeta",
+                     "center": {"real": "2", "imag": "0"}, "displacement": {"real": "1/100", "imag": "0"},
+                     "radius": "1/4", "displacementRadius": "1/100", "order": 10,
+                     "precisionBits": 192, "tolerance": "1e-12"}}})
+    examples.append({"id": "operator-reference", "title": "Operator reference and falsification controls",
+                     "request": {"kind": "p7.operator_audit", "input": {"candidate": "diagonal-integers",
+                     "dimension": 8, "precisionBits": 192, "tolerance": "1e-35"}}})
     return {"schema": "MathScope.M3.P7Capabilities/1", "status": "IN_PROGRESS", "kinds": sorted(cli.KINDS),
             "examples": examples, "sourceBinding": cli.source_binding(), "predecessor": cli.predecessor(),
             "progress": cli.read_json_file(ROOT / "P7_PROGRESS.json"),
@@ -70,9 +78,16 @@ async def _body(request, limit):
             raise HTTPException(413, "P7 request exceeds the declared byte limit")
         data.extend(part)
     try:
-        return runtime().parse_json(bytes(data))
-    except (ValueError, UnicodeDecodeError) as exc:
-        raise HTTPException(400, str(exc)) from exc
+        cli = runtime()
+        value = cli.parse_json(bytes(data))
+        # JSON exponents can overflow to infinity, and escaped lone surrogates
+        # can parse successfully but fail UTF-8 encoding. Reject either before
+        # dispatching a worker or acquiring the calculation admission lease.
+        cli.canonical(value)
+        return value
+    except (ValueError, UnicodeDecodeError, RecursionError) as exc:
+        detail = str(exc).encode("utf-8", errors="backslashreplace").decode("utf-8")
+        raise HTTPException(400, detail) from exc
 
 
 def _execute(value, replay):

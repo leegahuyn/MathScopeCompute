@@ -6,7 +6,7 @@
   const $=id=>document.getElementById('m3-'+id),pretty=v=>JSON.stringify(v,null,2);
   const set=(id,value)=>{$(id).textContent=typeof value==='string'?value:pretty(value);};
   const stable=v=>v===null||typeof v!=='object'?JSON.stringify(v):Array.isArray(v)?'['+v.map(stable).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+stable(v[k])).join(',')+'}';
-  let capabilities=null,record=null,pendingRecord=null,pendingJSON=null,busy=false,revision=0,downloadURL=null,editorDirty=false,registration=null;
+  let capabilities=null,record=null,pendingRecord=null,pendingJSON=null,busy=false,revision=0,importRevision=0,downloadURL=null,editorDirty=false,registration=null;
   function status(message,error=false){set('status',message);$('status').dataset.error=String(error);}
   function controls(){
     for(const id of ['run','check','load','input','example'])$(id).disabled=busy||!capabilities;
@@ -54,7 +54,8 @@
     if(stable(value.request)!==stable(request))throw Error('서버 결과가 제출한 입력과 다릅니다. 결과 연결을 거부했습니다.');
     if(capabilities.sourceBinding&&stable(value.sourceBinding)!==stable(capabilities.sourceBinding))throw Error('확인한 서버 소스가 실행 중 바뀌었습니다. 환경을 다시 확인하세요.');
     record=value;const r=value.result||{};$('result-content').hidden=false;
-    set('result-status',value.execution.status+(r.status?' / '+r.status:''));
+    const resultState=r.status||(r.toleranceMet===true?'TOLERANCE_MET':r.toleranceMet===false?'WIDTH_UNRESOLVED':'SCOPED_RESULT');
+    set('result-status',value.execution.status+(value.result?' / '+resultState:''));
     set('result-description',value.execution.status==='COMPLETED'?'아래 값은 방금 서버에서 실행한 이 입력의 결과입니다. 구간·가정·적용 범위를 함께 확인하세요.':'실행이 완료되지 않았습니다. 실행 상태와 원인을 기록하며 수학적 결론을 발급하지 않습니다.');
     $('metrics').replaceChildren();
     for(const [label,item]of [['실행',value.execution.status],['계산 범위',value.request.kind],['실행 시간',Number.isFinite(value.execution.elapsedSeconds)?value.execution.elapsedSeconds.toFixed(3)+' s':'—']]){const div=document.createElement('div');div.className='m1-metric';const strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=item;small.textContent=label;div.append(strong,small);$('metrics').append(div);}
@@ -65,9 +66,17 @@
     if(Array.isArray(r.localRows))table('타원곡선 · 소수별 국소 인자',['행','정확한 데이터'],r.localRows.map((x,i)=>[x.p??x.prime??i,x]));
     if(r.global)table('전역 국소 데이터',['항목','값'],Object.entries(r.global));
     if(r.dirichletCoefficients)table('Dirichlet 계수 · 유한 데이터',['항목','값'],Object.entries(r.dirichletCoefficients));
+    if(r.values)table('타원곡선 중심값과 1차 미분 · 외향 구간',['함수','정확한 구간','폭','요청 오차폭 충족'],Object.entries(r.values).map(([name,b])=>[name,interval(b),dyadic(b.width),b.toleranceMet]));
+    if(r.analyticRank)table('해석적 랭크 · 가정과 범위',['항목','값'],Object.entries(r.analyticRank));
+    if(r.psiEnclosure)table('명시적 공식 · 독립 소수측 비교',['항목','정확한 구간 또는 값'],[['영점측 ψ(x) 보장 구간',interval(r.psiEnclosure)],['영점측 구간 폭',dyadic(r.psiEnclosure.width)],['소수측 정확식',r.primeSide?.exactExpression],['소수측 구간',interval(r.primeSide?.value)],['소수측이 영점측 구간에 포함됨',r.primeSide?.containedInZeroSideBand]]);
+    if(r.remainderCertificate)table('유한 변위 Taylor · 다항식과 나머지',['항목','정확한 구간 또는 값'],[['결과 실수부',interval(r.value?.real)],['결과 허수부',interval(r.value?.imag)],['나머지 공식',r.remainderCertificate.formula],['나머지 절대 상계',interval(r.remainderCertificate.absoluteUpperBound)]]);
+    if(r.reference)table('연산자 기준 예제 · 정의역과 적용 범위',['항목','값'],Object.entries(r.reference));
+    if(r.finiteValidation)table('유한 연산자 계약 · 검사 결과',['항목','값'],Object.entries(r.finiteValidation.checks||{}));
+    if(Array.isArray(r.negativeControls))table('연산자 반증 대조군',['변형','거부됨','실패한 검사'],r.negativeControls.map(x=>[x.id,x.rejected,x.failedChecks]));
+    if(Array.isArray(r.unresolvedRHBridges))table('남은 RH 연구 조건',['조건','상태','증명 실행'],r.unresolvedRHBridges.map(x=>[x.id,x.status,x.proofExecuted]));
     const known=['derivatives','positiveZeroCount','hardyRoots','localRows','global','dirichletCoefficients','backend','computationSha256','scope','errorAccounting','mathematicalDependencies','theoremDependencies','primarySources'];
-    if(!r.derivatives&&!r.localRows&&r.positiveZeroCount===undefined)table('계산값 · 서버의 원본 필드',['항목','값'],Object.entries(r).filter(([k])=>!known.includes(k)));
-    set('scope',{resultStatus:r.status,scope:r.scope,errorAccounting:r.errorAccounting,mathematicalDependencies:r.mathematicalDependencies,theoremDependencies:r.theoremDependencies,primarySources:r.primarySources,executionFailure:value.execution.failure,wholeP7Complete:false,wholeM3Complete:false,formalLeanProofIssued:false});
+    if(!r.derivatives&&!r.localRows&&!r.values&&!r.psiEnclosure&&!r.remainderCertificate&&!r.unresolvedRHBridges&&r.positiveZeroCount===undefined)table('계산값 · 서버의 원본 필드',['항목','값'],Object.entries(r).filter(([k])=>!known.includes(k)));
+    set('scope',{resultStatus:resultState,toleranceMet:r.toleranceMet,passMeaning:r.passMeaning,researchStatus:r.researchStatus,candidateDefinition:r.candidateDefinition,scope:r.scope,errorAccounting:r.errorAccounting,errorBudget:r.errorBudget,normalization:r.normalization,endpointConvention:r.endpointConvention,tailCertificate:r.tailCertificate,remainderCertificate:r.remainderCertificate,domainCertificate:r.domainCertificate,analyticDependencies:r.analyticDependencies,mathematicalDependencies:r.mathematicalDependencies,theoremDependencies:r.theoremDependencies,primarySources:r.primarySources,resultFailure:r.failure,executionFailure:value.execution.failure,wholeP7Complete:false,wholeM3Complete:false,formalLeanProofIssued:false});
     set('provenance',{inputSHA256:value.inputSHA256,mathematicalSHA256:value.mathematicalSHA256,recordSHA256:value.recordSHA256,sourceBinding:value.sourceBinding,environment:value.environment,environmentSHA256:value.environmentSHA256,predecessor:value.predecessor,execution:value.execution});
     const json=pretty(value);set('result-json',json.length>160000?json.slice(0,160000)+'\n…':json);set('json-note',json.length>160000?'표시는 처음 160,000자로 제한합니다. 내보내기에는 전체 원본을 포함합니다.':'전체 원본을 표시하고 있습니다.');controls();
   }
@@ -109,9 +118,9 @@
   $('input').addEventListener('input',()=>{editorDirty=true;clearResult();});$('load').addEventListener('click',loadExample);$('run').addEventListener('click',()=>run());$('reconnect').addEventListener('click',connect);
   $('check').addEventListener('click',()=>{try{readRequest();status('요청 형식이 올바릅니다. 수학적 정의역·정밀도 검사는 서버 실행 시 확인합니다.');}catch(error){status(error.message,true);}});
   $('replay').addEventListener('click',()=>{const previous=record;run(previous);});
-  $('import').addEventListener('click',()=>{pendingRecord=null;pendingJSON=null;try{stageImport($('import-text').value);}catch(error){set('import-status',error.message);controls();}});
-  $('import-text').addEventListener('input',()=>{pendingRecord=null;pendingJSON=null;set('import-status','붙여넣은 내용이 바뀌었습니다. 기록 읽기를 실행하세요.');controls();});
-  $('import-file').addEventListener('change',async()=>{pendingRecord=null;pendingJSON=null;try{const file=$('import-file').files[0];if(!file)return;if(file.size>MAX_BYTES)throw Error('파일이 32 MiB 상한을 넘었습니다.');const text=await file.text();$('import-text').value=text;stageImport(text);}catch(error){set('import-status',error.message);controls();}});
+  $('import').addEventListener('click',()=>{importRevision++;pendingRecord=null;pendingJSON=null;try{stageImport($('import-text').value);}catch(error){set('import-status',error.message);controls();}});
+  $('import-text').addEventListener('input',()=>{importRevision++;pendingRecord=null;pendingJSON=null;set('import-status','붙여넣은 내용이 바뀌었습니다. 기록 읽기를 실행하세요.');controls();});
+  $('import-file').addEventListener('change',async()=>{const expectedImport=++importRevision;pendingRecord=null;pendingJSON=null;controls();try{const file=$('import-file').files[0];if(!file)return;if(file.size>MAX_BYTES)throw Error('파일이 32 MiB 상한을 넘었습니다.');const text=await file.text();if(importRevision!==expectedImport)return;$('import-text').value=text.length<=160000?text:'';$('import-text').placeholder=text.length>160000?'큰 파일을 읽었습니다. 전체 원본은 재현 검사에 그대로 전달합니다.':'';stageImport(text);}catch(error){if(importRevision===expectedImport){set('import-status',error.message);controls();}}});
   $('import-replay').addEventListener('click',()=>{if(!pendingRecord)return;const value=pendingRecord;$('input').value=pretty(value.request);editorDirty=false;run(value,pendingJSON);});
   $('import-input').addEventListener('click',()=>{try{const request=readRequest(JSON.stringify(pendingRecord.request));clearResult();$('input').value=pretty(request);status('저장 기록의 입력만 불러왔습니다. 현재 서버에서 새 계산을 실행하세요.');}catch(error){set('import-status',error.message);}});
   $('export').addEventListener('click',()=>{if(!record)return;if(downloadURL)URL.revokeObjectURL(downloadURL);downloadURL=URL.createObjectURL(new Blob([pretty(record)+'\n'],{type:'application/json'}));$('download').href=downloadURL;$('download').download='mathscope-p7-'+record.request.kind.replaceAll('.','-')+'-'+record.inputSHA256.slice(0,12)+'.json';$('download-panel').hidden=false;$('download-panel').open=true;$('download').click();});

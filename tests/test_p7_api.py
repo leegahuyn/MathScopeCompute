@@ -59,10 +59,39 @@ def test_analytic_rank_endpoint(model, rank):
     assert record["wholeP7Complete"] is False
 
 
+@pytest.mark.parametrize("kind,status", [
+    ("p7.explicit_formula", "CERTIFIED_ENCLOSURE"),
+    ("p7.taylor_remainder", "CERTIFIED_TAYLOR_ENCLOSURE"),
+    ("p7.operator_audit", "REFERENCE_CONTRACT_AUDITED"),
+])
+def test_new_certified_contract_endpoints(kind, status):
+    response = client.post("/v1/p7/run", json={"kind": kind, "input": {}})
+    assert response.status_code == 200
+    record = response.json()
+    assert record["execution"]["status"] == "COMPLETED", record["execution"]
+    assert record["result"]["status"] == status
+    assert record["wholeP7Complete"] is False
+
+
 @pytest.mark.parametrize("body", ['{"kind":"a","kind":"b","input":{}}', '{"x":NaN}', '[]'])
 def test_malformed_requests_do_not_execute(body):
     response = client.post("/v1/p7/run", content=body, headers={"Content-Type": "application/json"})
     assert response.status_code in (400, 422)
+
+
+@pytest.mark.parametrize("route", ["run", "replay"])
+@pytest.mark.parametrize("body", [
+    b'{"kind":"p7.special_function","input":{"x":1e309}}',
+    b'{"kind":"p7.special_function","input":{"x":-1e309}}',
+    b'{"kind":"p7.special_function","input":{"x":"\\ud800"}}',
+    b'{"kind":"p7.special_function","input":{"\\ud800":1,"\\ud800":2}}',
+])
+def test_noncanonical_json_rejected_before_worker_dispatch(route, body):
+    with patch.object(p7_api, "_execute") as execute:
+        response = client.post("/v1/p7/" + route, content=body,
+                               headers={"Content-Type": "application/json"})
+    assert response.status_code == 400
+    execute.assert_not_called()
 
 
 def test_streamed_input_limit_before_parse():

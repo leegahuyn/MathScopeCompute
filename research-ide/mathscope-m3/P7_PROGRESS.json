@@ -1,6 +1,6 @@
 {
   "schema": "MathScope.M3.P7.OriginalRequirementsProgress/1",
-  "assessedAt": "2026-10-11T16:43:39.371179+00:00",
+  "assessedAt": "2026-10-12T03:27:43.698900+00:00",
   "milestone": "M3",
   "currentPackage": "P7",
   "status": "IN_PROGRESS",
@@ -57,11 +57,12 @@
         "Distinct zeta, deflated zeta, normalized xi and Gamma-family operations",
         "Exact five-coefficient Weierstrass invariants and good/multiplicative minimal branches including small-characteristic tangent checks",
         "11a1 and 37a1 complete semistable bad factors, conductor, root number and completed-L normalization",
-        "Full L coefficients distinguished from explicitly incomplete L^S"
+        "Full L coefficients distinguished from explicitly incomplete L^S",
+        "11a1/37a1 central L, L-prime, completed Lambda and Lambda-prime with complete local coefficients and explicit infinite Mellin tails"
       ],
       "remaining": [
         "General minimal-model/Tate additive branches",
-        "Certified elliptic L and completed Lambda analytic values beyond finite coefficient data"
+        "Certified general complex-argument elliptic analytic L beyond the two central examples"
       ]
     },
     {
@@ -70,11 +71,13 @@
       "implemented": [
         "Actual pinned FLINT complex balls and derivatives 0..16 at exact rational/rectangle inputs",
         "Exact outward dyadic endpoints and actual requested component widths",
-        "Zeta analytic continuation through FLINT; xi removable singularities and reflection with derivative signs"
+        "Zeta analytic continuation through FLINT; xi removable singularities and reflection with derivative signs",
+        "External elliptic coefficient tail separated from finite FLINT enclosure",
+        "Finite-displacement zeta/Gamma/reciprocal-Gamma Cauchy remainder using a whole pole-free bounding-square ball"
       ],
       "remaining": [
-        "Separately exposed numerical internal rounding/truncation bounds; current pinned API only returns the combined enclosure",
-        "Explicit finite-displacement Taylor remainder and all required L-function tail contracts"
+        "Separately exposed primitive backend rounding and internal special-function truncation bounds; FLINT returns their combined enclosure",
+        "General elliptic complex-argument and all remaining L-function tail contracts"
       ]
     },
     {
@@ -93,31 +96,43 @@
     },
     {
       "id": "P7-04",
-      "status": "OPEN",
-      "implemented": [],
+      "status": "SUPPORTED_FINITE_CASES_EXECUTED",
+      "implemented": [
+        "Half-integer psi via the absolutely convergent integrated explicit formula unit secant",
+        "Fresh complete T=20/30 zero certificate, symmetric sum, endpoint convention and explicit trivial/nontrivial tails",
+        "Independent prime side psi(10.5)=log(2520) lies in the theoretical band; no residual fitted tail or RH assumption"
+      ],
       "remaining": [
-        "Chosen explicit formula with all constants, assumptions, endpoint convention and finite error",
-        "Prime-side psi(10.5)=log(2520) linked to certified zero-side truncation"
+        "The T=30 x=10.5 band is coarse (about width 12.60); higher-accuracy or other-height requests need stronger tails/counts",
+        "Unsmoothed partial-sum diagnostic is not assigned the smoothed tail"
       ]
     },
     {
       "id": "P7-05",
-      "status": "OPEN",
-      "implemented": [],
+      "status": "PARTIAL",
+      "implemented": [
+        "Explicit l2 diagonal-integer reference domain and assumption/bridge IDs",
+        "Executed finite spectrum, multiplicity, characteristic polynomial, trace, det2, adjoint and positivity checks with analytic tail comparisons",
+        "Nine executed mutation controls; spectral-zeta equality is rejected as a zero-spectrum bridge"
+      ],
       "remaining": [
-        "Research operator/domain and spectrum-zero assumption IDs",
-        "Regularized determinant, trace, duality and positivity contracts with normalization/multiplicity negative controls"
+        "User-defined global operator/domain candidate registration and complete bridge validation",
+        "All original trivial-zero factor, constant/linear exponential normalization and functional-equation controls for arbitrary candidates",
+        "RH operator existence and spectrum-zero correspondence remain RESEARCH_OPEN"
       ]
     },
     {
       "id": "P7-06",
-      "status": "OPEN",
+      "status": "SUPPORTED_FINITE_CASES_EXECUTED",
       "implemented": [
-        "Exact global root numbers for the two supported curves as prerequisites"
+        "11a1 central L ball excludes zero, certifying analytic rank 0 with stated theorem dependencies",
+        "37a1 root-number parity forces exact central zero; rigorous completed first derivative excludes zero, certifying analytic rank 1",
+        "Parity-exact vanishing, nonzero balls and unexecuted modular symbols are separately recorded"
       ],
       "remaining": [
-        "Actual elliptic analytic continuation and completed central derivative balls",
-        "Modular-symbol exact zero and parity links sufficient to certify analytic rank"
+        "General curves and higher analytic ranks",
+        "Independent exact modular-symbol computations are not implemented or claimed",
+        "No new Lean modularity or analytic-continuation proof was executed"
       ]
     },
     {
@@ -140,7 +155,9 @@
       "implemented": [
         "Finite-height claim flags separated from global RH/BSD and full milestone completion",
         "Source/environment/M2 predecessor bound execution records and fresh replay",
-        "Rehashed numerical result and unsupported proof-authority promotions rejected"
+        "Rehashed numerical result and unsupported proof-authority promotions rejected",
+        "Arithmetic rank equality and BSD leading-term flags remain false despite analytic rank 0/1 examples",
+        "New analytic-tail, normalization, multiplicity, missing-zero and source-change controls recorded separately"
       ],
       "remaining": [
         "Specific-curve rank equality and refined leading-term claim packages",
@@ -159,10 +176,27 @@
     "N7": false,
     "N8": false
   },
-  "nextWork": "Close the remaining original P7 analytic L, error/remainder, explicit-formula, operator and rank obligations before advancing to P8. Preserve the requested track order.",
+  "nextWork": "Continue remaining P7 general local/analytic contracts, primitive error split, arbitrary operator registration, arithmetic rank upper bounds and leading-term claims before P8; preserve other track order.",
   "original64PASSPromotedToFullM3Proof": false,
   "universalRHProved": false,
   "universalBSDProved": false,
   "newM3LeanKernelProofExecuted": false,
-  "browserP7RuntimePublished": false
+  "browserP7RuntimePublished": false,
+  "previousAssessment": {
+    "commit": "6256547a92f099dd63a12e90b471625656b690b0",
+    "assessedAt": "2026-10-11T16:43:39.371179+00:00",
+    "status": "IN_PROGRESS"
+  },
+  "continuationGuide": {
+    "path": "CONTINUATION_2026-10-12_KO.md",
+    "bytes": 5380,
+    "sha256": "1a5b0f64661d3edde16fe7699ed6c05dedad05d047158d73b36a676a74e3d165"
+  },
+  "continuationEvidence": {
+    "path": "evidence/resume-20261012/attempt2/manifest.json",
+    "historicalReleasePreserved": true,
+    "historicalAttempts": [
+      "evidence/resume-20261012/attempt1/manifest.json"
+    ]
+  }
 }

@@ -1,0 +1,20 @@
+{
+  "schema": "MathScope.M3.P7IndependentSafetyReview/1",
+  "observedAt": "2026-10-12",
+  "issue": "Serialization failure after child spawn could leave a waiting process",
+  "fix": [
+    "Reject nonfinite float exponent overflow and invalid UTF-8 before spawn",
+    "Canonicalize payload before source/environment processing and Popen",
+    "Always kill if still running, wait and close pipes on communication errors"
+  ],
+  "cliSHA256": "2ff67b4730dc17a9dafb4f48146ca191ea1bce101e509dd1221bcb093f8f2040",
+  "observedTests": {
+    "newProcessCleanupTests": 9,
+    "existingCLIAndReplayTests": 13,
+    "allPassed": true,
+    "includesActualWaitingChildFailureInjection": true
+  },
+  "APIRegressionCasesAdded": 8,
+  "APIRegressionCasesAwaitCloudValidation": true,
+  "wholeP7Complete": false
+}

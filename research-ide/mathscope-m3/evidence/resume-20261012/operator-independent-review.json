@@ -1,0 +1,63 @@
+{
+  "schema": "MathScope.P7.IndependentReview/1",
+  "assessedAtUTC": "2026-10-12T03:16:53.603768+00:00",
+  "module": "p7.operator_registry",
+  "reviewer": "requirements_audit independent of operator implementation",
+  "command": "python -m unittest discover -s tests -p test_operator_registry.py",
+  "testCount": 15,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "exitCode": 0,
+  "actualResult": "...............\n----------------------------------------------------------------------\nRan 15 tests in 0.184s\n\nOK\n",
+  "sourceHashesBefore": {
+    "p7/operator_registry.py": "b56cacdd001aa3288ae34cec1c9446af8bceb9f8f7a08b08c51c2d7a56160976",
+    "p7/OPERATOR_REGISTRY_KO.md": "b91c176b79254c98eee155cd137dd2e3f1390710475d47cf39ece80c8c1fbb17",
+    "tests/test_operator_registry.py": "48c3831feb7d4d4046a723afd8354595971b9562ec0c43a64f6d6e1acbe2cc92",
+    "p7/ball_backend.py": "ff0d3c467d02ee5de99c85215ea129468a35308aec25c664e0e3783ac9102ea5"
+  },
+  "sourceHashesAfter": {
+    "p7/operator_registry.py": "b56cacdd001aa3288ae34cec1c9446af8bceb9f8f7a08b08c51c2d7a56160976",
+    "p7/OPERATOR_REGISTRY_KO.md": "b91c176b79254c98eee155cd137dd2e3f1390710475d47cf39ece80c8c1fbb17",
+    "tests/test_operator_registry.py": "48c3831feb7d4d4046a723afd8354595971b9562ec0c43a64f6d6e1acbe2cc92",
+    "p7/ball_backend.py": "ff0d3c467d02ee5de99c85215ea129468a35308aec25c664e0e3783ac9102ea5"
+  },
+  "sourcesStableDuringReview": true,
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.22621-SP0",
+    "pythonFlint": "0.9.0",
+    "FLINT": "3.6.0"
+  },
+  "mathematicalReview": {
+    "finding": "No actionable mathematical defect found in the supported fixed reference contract.",
+    "domain": "The maximal diagonal domain sum n^2*abs(a_n)^2 < infinity is dense and equals the adjoint domain; positivity and compact Hilbert-Schmidt inverse follow directly.",
+    "det2Identity": "The reciprocal-Gamma Weierstrass product gives det2(I-z D^-1)=exp(EulerGamma*z)/Gamma(1-z).",
+    "logProductTail": "For abs(z)<=r<1, the omitted log-product is bounded by r^2/[2*N*(1-r/(N+1))], using the k>=2 logarithm series and sum_(n>N) 1/n^2 <= 1/N.",
+    "traceSquareTail": "Integral comparison gives 1/(N+1) <= sum_(n>N) 1/n^2 <= 1/N.",
+    "finiteContracts": "Exact rational characteristic polynomial, spectrum with multiplicity, inverse traces, regularization counterterm, positivity and adjoint checks are independently enforced.",
+    "negativeControls": "All nine mutated fixture controls are actually rejected. The eigenvalue-2 determinant zero is separated from xi(1/2+2i).",
+    "primarySources": [
+      "https://dlmf.nist.gov/5.8.E2",
+      "https://dlmf.nist.gov/25.2.E1"
+    ]
+  },
+  "observedSummary": {
+    "referenceStatus": "REFERENCE_CONTRACT_AUDITED",
+    "referencePass": true,
+    "researchStatus": "RESEARCH_OPEN",
+    "negativeControlCount": 9,
+    "allNegativeControlsRejected": true,
+    "openCandidatePass": false,
+    "unresolvedBridgeCount": 7,
+    "insufficientWidthStatus": "REFERENCE_CHECK_UNRESOLVED",
+    "allGlobalPromotionFlagsFalse": true,
+    "referenceResultSha256": "e2fb1267c699dadb29b581a6b9220a5357a49907458ddb24a7e7d745c7b65ffc"
+  },
+  "milestoneAssessment": "P7-05 remains PARTIAL; no promotion to whole-P7 or RH PASS.",
+  "remainingOriginalScope": [
+    "Only the fixed integer-diagonal reference is implemented; arbitrary candidate operator/domain registration and corresponding analytic bridges remain open.",
+    "General constant normalization, trivial-zero factor and xi functional-equation candidate comparisons are not supplied by this reference audit.",
+    "Finite matrix fixtures and spectral-zeta equality do not establish a nontrivial-zeta-zero spectrum or an RH operator."
+  ]
+}
