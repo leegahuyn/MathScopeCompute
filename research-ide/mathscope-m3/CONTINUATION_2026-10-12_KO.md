@@ -48,4 +48,4 @@ P7 전체와 M3 전체는 미완료다. P7-07의 descent/Selmer·height/regulato
 
 저장 예제는 attempt2 원본 7개에서 생성한 약 146KB의 표시용 발췌이며, 전체 `.json.gz` 증거는 정확한 GitHub commit 링크로 연결한다. 브라우저 확대·회전·선택은 수학적 원본을 변경하지 않는다. WebGL을 사용할 수 없어도 동일 데이터 표를 읽을 수 있다. `node --test research-ide/mathscope-m3/tests/*.test.mjs`가 데이터 의미와 현재 결과 연결의 회귀를 검사한다.
 
-설계 계약은 `web/visualization-contract.json`, 검증 기록은 `evidence/resume-20261012/visualization-3d/`에 있다. 배포 완료는 해당 폴더의 공개 publication 및 browser receipt로 확인한다. 이 3D 구현은 수치 커널·CLI·M2 gate의 바이트를 변경하지 않는다. 남은 M3 56개 원문 기준은 `evidence/resume-20261012/m3-remaining-acceptance.json`에 별도로 정리했다.
+설계 계약은 `web/visualization-contract.json`, 검증 기록은 `evidence/resume-20261012/visualization-3d/`에 있다. 공개 페이지 v83 (`f052cafd`)에 게시했고 8개 GPU 프레임·새 계산·재현 MATCH·원본 조회를 확인했다. 해당 폴더의 `publication.json`, `public-http-integrity.json`, `publicQA.json`이 배포 증거다. 로컬 실제 390px 검증과 공개 브라우저 실제 520px 검증을 구분하며, 공개 좁은 화면 스크린샷 제한도 기록했다. 이 3D 구현은 수치 커널·CLI·M2 gate의 바이트를 변경하지 않는다. 남은 M3 56개 원문 기준은 `evidence/resume-20261012/m3-remaining-acceptance.json`에 별도로 정리했다.
