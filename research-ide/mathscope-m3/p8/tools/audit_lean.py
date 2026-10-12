@@ -107,7 +107,7 @@ def parse_targets(log, expected=None):
 def source_manifest(base):
     paths = sorted((base/"lean").glob("*.lean")) + sorted((base/"lean/MathScope").rglob("*.lean"))
     paths += [base/"lean/lean-toolchain",base/"lean/pins.json",base/"lean/finite-input.json",base/"finite-certificates.mjs",base/"tools/generate_finite.mjs",Path(__file__).resolve()]
-    return [{"path":str(p.relative_to(base)).replace("\\","/"),"sha256":sha(p.read_bytes())} for p in sorted(set(paths))]
+    return [{"path":p.relative_to(base).as_posix(),"sha256":sha(p.read_bytes())} for p in sorted(set(paths),key=lambda p:p.relative_to(base).as_posix())]
 
 def check_static(base):
     pins=json.loads((base/"lean/pins.json").read_text(encoding="utf-8"))

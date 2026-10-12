@@ -58,7 +58,7 @@ def main():
     worker,closure=bundle(ROOT/'worker-entry.mjs')
     extra=[ROOT/'browser-client.js',Path(__file__).resolve(),ROOT.parent/'P7_PROGRESS.json',ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json']
     extra+=[p for p in (ROOT/'lean').rglob('*.lean') if '.lake' not in p.relative_to(ROOT).parts]+[ROOT/'lean/lean-toolchain',ROOT/'lean/pins.json',ROOT/'lean/finite-input.json',ROOT/'tools/audit_lean.py',ROOT/'tools/generate_finite.mjs']
-    files=[{'path':p.relative_to(RESEARCH).as_posix(),'bytes':len(p.read_bytes()),'sha256':sha(p.read_bytes())} for p in sorted(set(closure+extra))]
+    files=[{'path':p.relative_to(RESEARCH).as_posix(),'bytes':len(p.read_bytes()),'sha256':sha(p.read_bytes())} for p in sorted(set(closure+extra),key=lambda p:p.relative_to(RESEARCH).as_posix())]
     source={'schema':'MathScope.M3.P8.SourceBinding/1','version':'0.1.0-p8','files':files,'manifestSHA256':sha(canonical(files)),'environment':{'arithmetic':'ECMASCRIPT_EXACT_BIGINT_AND_RATIONAL','hash':'SHA-256_WEBCRYPTO','externalMathImports':'STATIC_INHERITED_M0_M1_M2','kernelExecution':'SEPARATE_PINNED_GITHUB_LEAN_JOB'},'repository':'https://github.com/leegahuyn/MathScopeCompute'}
     original=json.loads(read(ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json'));progress=json.loads(read(ROOT.parent/'P7_PROGRESS.json'))
     criteria=[dict(c,status='IN_PROGRESS',originalCriterionComplete=False) for c in original['criteria'] if c['id'].startswith('P8-')]
