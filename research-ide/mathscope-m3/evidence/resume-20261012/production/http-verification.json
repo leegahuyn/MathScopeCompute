@@ -1,0 +1,84 @@
+{
+  "schema": "MathScope.M3.P7PublicHTTPVerification/1",
+  "observedAt": "2026-10-12T03:38:54.485142+00:00",
+  "base": "https://mathscope-compute.onrender.com",
+  "origin": "https://project29770.websitepublisher.ai",
+  "wholeP7Complete": false,
+  "wholeM3Complete": false,
+  "capabilities": {
+    "path": "capabilities.json.gz",
+    "bytes": 4599,
+    "sha256": "81b0cf70c23851fd322c20abe9f47ccc52c7d8417e6f7331283fa5cd8b0e70c2"
+  },
+  "sourceMatchesAttempt2": true,
+  "CORSOriginMatches": true,
+  "run": {
+    "path": "zeta-2.json.gz",
+    "bytes": 2460,
+    "sha256": "d8b0def4e6d30421890ffcab3acb9690f017fa3eaf23dfdd61f9302a51962e66"
+  },
+  "replay": {
+    "path": "zeta-2-replay.json.gz",
+    "bytes": 2548,
+    "sha256": "6cb57e8af0a924180cdd39fa096ad1bfe12ef8676bae972880c4d05eb247ed90"
+  },
+  "freshReplayStatus": "MATCH",
+  "invalidInputsRejected": [
+    {
+      "request": "{\"kind\":\"p7.special_function\",\"input\":{\"x\":1e309}}",
+      "HTTPStatus": 400,
+      "detail": "nonfinite JSON constant: 1e309"
+    },
+    {
+      "request": "{\"kind\":\"p7.special_function\",\"input\":{\"x\":\"\\ud800\"}}",
+      "HTTPStatus": 400,
+      "detail": "'utf-8' codec can't encode character '\\ud800' in position 15: surrogates not allowed"
+    }
+  ],
+  "environment": {
+    "python": "3.14.3",
+    "implementation": "CPython",
+    "system": "Linux",
+    "machine": "x86_64",
+    "numericBackend": {
+      "pythonFlint": "0.9.0",
+      "FLINT": "3.6.0",
+      "FLINTRelease": 30600,
+      "runtimeFilesSHA256": "a55ab4579edc4b16d9add9ede404b76f693420a7d491173f3fe6a39e67e741b5",
+      "runtimeFileCount": 66,
+      "licenseExpression": "MIT AND LGPL-3.0-or-later",
+      "importedPackageMatchesDistribution": true,
+      "observedModuleOriginsChecked": true,
+      "fingerprintScope": "Python modules and dynamic binaries; excludes installer bookkeeping and local paths"
+    }
+  },
+  "predecessor": {
+    "entrySHA256": "95061e777ed55cb0b59b496990b10c081f09bcc533c363da80cffb2b75e99576",
+    "M2Commit": "90e977ba9225bfaa20fd3dcc97db7f794c5ed4c9",
+    "M2AssessmentSHA256": "37d7c5228e6e96ea7a03037d184c8e67492f6e33b3568c200e20969fe8677178"
+  },
+  "execution": {
+    "status": "COMPLETED",
+    "startedAt": "2026-10-12T03:38:55.809075+00:00",
+    "finishedAt": "2026-10-12T03:38:57.012781+00:00",
+    "elapsedSeconds": 1.2037088251672685,
+    "observedExitCode": 0,
+    "timedOut": false,
+    "maxSeconds": 90,
+    "memoryLimitMiB": 384,
+    "observedChildResourceLimits": {
+      "addressSpaceBytes": [
+        402653184,
+        402653184
+      ],
+      "cpuSeconds": [
+        90,
+        91
+      ]
+    },
+    "observedChildEnvironmentSHA256": "85298780623faff455e03e891867ea80615692c1a4e7071131a54771f3ebc76d",
+    "failure": null,
+    "stderr": ""
+  },
+  "allChecksPassed": true
+}
