@@ -10,6 +10,18 @@ REEXPORT=re.compile(r"^export\s+(\{[^}]+\}|\*)\s+from\s+['\"]([^'\"]+)['\"];?\s*
 def sha(value):return hashlib.sha256(value.encode() if isinstance(value,str) else value).hexdigest()
 def canonical(value):return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
 def read(path):return path.read_text(encoding='utf-8')
+def p8_criteria(original,progress):
+    """Retain the exact blueprint text while binding assessed P8 progress."""
+    if progress.get('schema')!='MathScope.M3.P8.Progress/1':raise ValueError('Invalid P8 progress schema')
+    expected=[c for c in original['criteria'] if c['id'].startswith('P8-')]
+    rows=progress.get('criteria',[])
+    if [c.get('id') for c in rows]!=[c['id'] for c in expected]:raise ValueError('P8 criteria missing, reordered, or duplicated')
+    for row,criterion in zip(rows,expected):
+        for key in ['id','title','text','page','source']:
+            if row.get(key)!=criterion.get(key):raise ValueError('Original P8 criterion changed: '+criterion['id']+'/'+key)
+        if not isinstance(row.get('status'),str) or not row['status'] or type(row.get('originalCriterionComplete')) is not bool:raise ValueError('P8 assessment status is malformed')
+        if row['originalCriterionComplete'] and (row['status']!='PASS' or not row.get('evidence')):raise ValueError('Completed P8 criterion needs PASS and concrete evidence')
+    return rows
 def target(path,value):
     if not value.startswith('.'):raise ValueError('Only static local imports: '+value)
     resolved=(path.parent/value).resolve()
@@ -56,7 +68,7 @@ def bundle(entry):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');args=parser.parse_args()
     worker,closure=bundle(ROOT/'worker-entry.mjs')
-    extra=[ROOT/'browser-client.js',Path(__file__).resolve(),ROOT.parent/'P7_PROGRESS.json',ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json',ROOT/'review-fixture-evidence.json',ROOT/'tools/build_review_fixtures.py',ROOT/'tools/audit_conditional_lean.py',ROOT/'tools/audit_p7_mutations.py',ROOT.parent/'cli.py']
+    extra=[ROOT/'browser-client.js',Path(__file__).resolve(),ROOT.parent/'P7_PROGRESS.json',ROOT.parent/'P8_PROGRESS.json',ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json',ROOT/'review-fixture-evidence.json',ROOT/'tools/build_review_fixtures.py',ROOT/'tools/audit_conditional_lean.py',ROOT/'tools/audit_p7_mutations.py',ROOT.parent/'cli.py']
     extra+=list((ROOT.parent/'p7').glob('*.py'))
     extra+=[ROOT.parent/'tests/test_p8_p7_mutations.py']
     extra+=[p for p in [ROOT/'evidence/lean-release.json',ROOT/'evidence/p7-mutation-release.json',ROOT/'evidence/conditional-lean-release.json'] if p.exists()]
@@ -64,7 +76,7 @@ def main():
     files=[{'path':p.relative_to(RESEARCH).as_posix(),'bytes':len(p.read_bytes()),'sha256':sha(p.read_bytes())} for p in sorted(set(closure+extra),key=lambda p:p.relative_to(RESEARCH).as_posix())]
     source={'schema':'MathScope.M3.P8.SourceBinding/1','version':'0.1.0-p8','files':files,'manifestSHA256':sha(canonical(files)),'environment':{'arithmetic':'ECMASCRIPT_EXACT_BIGINT_AND_RATIONAL','hash':'SHA-256_WEBCRYPTO','externalMathImports':'STATIC_INHERITED_M0_M1_M2','kernelExecution':'SEPARATE_PINNED_GITHUB_LEAN_JOB'},'repository':'https://github.com/leegahuyn/MathScopeCompute'}
     original=json.loads(read(ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json'));progress=json.loads(read(ROOT.parent/'P7_PROGRESS.json'))
-    criteria=[dict(c,status='IN_PROGRESS',originalCriterionComplete=False) for c in original['criteria'] if c['id'].startswith('P8-')]
+    criteria=p8_criteria(original,json.loads(read(ROOT.parent/'P8_PROGRESS.json')))
     snapshot={'originalCriteriaSource':{'sha256':original['sha256'],'source':original['source'],'criteriaFileSHA256':sha((ROOT.parent/'ORIGINAL_M3_M4_CRITERIA.json').read_bytes())},'p7':{'supported':[item for c in progress['criteria'] for item in c.get('implemented',[])],'criteria':progress['criteria'],'fixtures':[{'id':c['id'],'status':c['status'],'source':'research-ide/mathscope-m3/P7_PROGRESS.json','sourceSHA256':sha((ROOT.parent/'P7_PROGRESS.json').read_bytes()),'execution':'RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT'} for c in progress['criteria']]},'p8':{'criteria':criteria,'fixtures':[{'id':'finite-F5','input':{'prime':'5','traceLength':7},'leanExport':'p8/lean/MathScope/P8/Generated.lean','status':'EXACT_WITNESS_REQUIRES_FRESH_EXECUTION'},{'id':'M2-four-coordinate-views','engine':'p8.visual_structure','status':'ON_DEMAND_REPLAY'},{'id':'finite-candidate-compare','engine':'p8.candidate_compare','status':'ON_DEMAND_REPLAY'}]}}
     evidence_file=ROOT/'evidence/lean-release.json'
     snapshot['fixtureEvidence']=json.loads(read(ROOT/'review-fixture-evidence.json'))

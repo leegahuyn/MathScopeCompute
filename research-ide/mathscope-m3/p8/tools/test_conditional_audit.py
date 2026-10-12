@@ -30,4 +30,11 @@ class ConditionalAuditTests(unittest.TestCase):
         self.assertTrue(expected_removal_rejection(good,1))
         for log,code in [(good,0),('RemovedAssumption.lean:1:0: error: object file missing',1),('segmentation fault',-11),(good+'RemovedAssumption.lean:9:0: error: other\n',1),('Other.lean:1:0: error: Unknown identifier `assumedTarget`',1)]:self.assertFalse(expected_removal_rejection(log,code))
 
+    def test_pinned_lean_coded_diagnostic_and_other_error_categories(self):
+        # Observed in the actual pinned Lean 4.34.1 CI artifact 11728501909.
+        good='/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/p8/evidence/conditional-lean-audit/RemovedAssumption.lean:9:50: error(lean.unknownIdentifier): Unknown identifier `assumedTarget`\n'
+        self.assertTrue(expected_removal_rejection(good,1))
+        for log in [good+'Other.lean:1:0: error(lean.parser): bad syntax\n',good.replace('lean.unknownIdentifier','lean.parser'),good.replace('assumedTarget','otherTarget'),good.replace('RemovedAssumption.lean','WrongFile.lean'),good+'RemovedAssumption.lean:10:0: error: missing import\n']:
+            with self.subTest(log=log):self.assertFalse(expected_removal_rejection(log,1))
+
 if __name__=='__main__':unittest.main()

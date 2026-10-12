@@ -43,8 +43,12 @@ def parse_conditional(log):
 
 def expected_removal_rejection(log,exit_code):
     # A failed process or missing import cannot masquerade as assumption removal.
-    errors=[line for line in log.splitlines() if ": error:" in line]
-    return exit_code>0 and len(errors)==1 and "RemovedAssumption.lean:" in errors[0] and bool(re.search(r"error: Unknown (?:identifier|constant) [`'](?:MathScope\.P8\.Conditional\.)?assumedTarget[`']",errors[0]))
+    # Lean 4.34.1 emits a diagnostic code: error(lean.unknownIdentifier).
+    # Count every error category first so an unrelated second failure cannot be
+    # hidden by accepting only the expected category.
+    errors=[line.strip() for line in log.splitlines() if re.search(r": error(?:\([^)]*\))?:",line)]
+    expected=r"(?:.*[/\\])?RemovedAssumption\.lean:\d+:\d+: error(?:\(lean\.unknown(?:Identifier|Constant)\))?: Unknown (?:identifier|constant) [`'](?:MathScope\.P8\.Conditional\.)?assumedTarget[`']"
+    return exit_code>0 and len(errors)==1 and bool(re.fullmatch(expected,errors[0]))
 
 def closure(lean,lean_root):
     source_roots=[lean/"conditional",lean_root/"src/lean"]

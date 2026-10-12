@@ -9,6 +9,7 @@ import {exportReviewPackets} from './review-packets.mjs';
 import {runMutationAudit} from './mutation-audit.mjs';
 import {validateRecordedLean} from './lean-registry.mjs';
 import {validateRecordedChecks,conditionalLedger} from './recorded-checks.mjs';
+import {buildTheoremBacklog} from './theorem-backlog.mjs';
 
 const VERSION='0.1.0-p8';
 const KINDS=['p8.object_contract','p8.visual_structure','p8.comparison','p8.finite_certificate','p8.assumption_audit','p8.candidate_compare','p8.mutation_audit','p8.review_packets'];
@@ -66,8 +67,8 @@ export async function createP8Engine(build) {
         return result;
       }
       case 'p8.finite_certificate': {
-        const certificate=makeFiniteCertificate(input),generated=exportLeanCertificate(certificate);
-        return {status:'EXACT_FINITE_RECOMPUTED',accuracy:'EXACT',certificate,validation:validateFiniteCertificate(certificate),leanSource:generated,lean:await leanStatus(certificate,generated)};
+        const certificate=makeFiniteCertificate(input),generated=exportLeanCertificate(certificate),lean=await leanStatus(certificate,generated);
+        return {status:'EXACT_FINITE_RECOMPUTED',accuracy:'EXACT',certificate,validation:validateFiniteCertificate(certificate),leanSource:generated,lean,theoremBacklog:buildTheoremBacklog(lean)};
       }
       case 'p8.assumption_audit': {
         shape(input,['ledger'],['kernelAudit','removeAssumptionId'],'assumption input');
