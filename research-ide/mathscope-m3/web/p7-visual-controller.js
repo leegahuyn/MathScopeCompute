@@ -42,6 +42,9 @@
   }
   function sourceState(){
     const selected=records.filter(relevant),live=selected.filter(r=>r.visualSource?.current).length,saved=selected.length-live;
+    const criteria=snapshot.capabilities?.progress?.criteria||snapshot.capabilities?.criteria;
+    const exactInventory=Array.isArray(criteria)&&criteria.length===8&&new Set(criteria.map(c=>c.id)).size===8&&criteria.every(c=>/^P7-0[1-8]$/.test(c.id));
+    host.querySelector('.p7v-boundary').textContent=exactInventory?'P7 원문 기준 '+criteria.filter(c=>c.originalCriterionComplete===true).length+'/8 수용 · 각 결과의 범위 확인':'P7 원문 기준 확인 중';
     $('source-state').textContent=(live?'현재 입력의 서버 계산 '+live+'개':'현재 입력의 새 계산 결과 없음')+' · 저장된 실행 예제 '+saved+'개. 저장 예제는 현재 서버에서 재검증한 결과가 아닙니다.'+(snapshot.busy?' 서버 작업 중입니다.':!snapshot.capabilities?' 서버 연결 확인이 필요합니다.':'');
     $('load-request').disabled=snapshot.busy||!snapshot.capabilities||!choices.length;
   }

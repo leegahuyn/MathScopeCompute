@@ -1,0 +1,209 @@
+{
+  "archiveSHA256": "96917f7652f865a24bfcb566c2cf0fce6d2070716a4e249ae373c72b137d4e36",
+  "completeN6": false,
+  "depth": 4,
+  "exactFormulas": {
+    "leading": "e0=2*Phi(2,0)/(CSelected*sqrt(Lambda)) > 1/(CSelected*sqrt(Lambda)) >0",
+    "physicalVelocity": "u_theta=eScale*tau_d^(-A)*intervalMultiplier",
+    "point": "Xin=Xa/2=2/Lambda, x_tau=(sqrt(2*Xin*tau),0,0), eta=0, q=tau",
+    "remainder": "|tau^A*u_theta-e0|<=C*tau^(2h) on the original inner restriction. Identification with the final localized field uses the listed external source theorems.",
+    "scaledVelocity": "(CSelected*sqrt(Lambda)/2)*tau^A*u_theta(x_tau,1-tau)",
+    "tau": "tau_d=plateau*exp(-(log(1+4*C/eScale)+d*log(2))/(2*h))"
+  },
+  "exactSourceRow": {
+    "cutoffArguments": {
+      "axial": 0,
+      "radial": 622868,
+      "time": 622867
+    },
+    "depth": 4,
+    "displayEnclosure": [
+      0.5610998959653624,
+      0.5923498959653626
+    ],
+    "enclosureMethod": "FRESH_ACTUAL_CORE_INTERVAL_PLUS_SOURCE_ALL_ORDER_CUTOFF_TAIL",
+    "exactPlateau": {
+      "axial": "0",
+      "product": "1",
+      "radial": "2*r_tau^2=4*Xin*tau<1/8<1/2",
+      "time": "tau/tau0<1/4<1/2"
+    },
+    "externalSourceTheoremBridgeRequired": true,
+    "finiteSumMidpointUsed": false,
+    "interval": {
+      "lower": "64970929224670090218450501738058415235364309395229002618007304492254539690719/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+      "upper": "68589432013336221325437095019579912355778996416030270244277247480649244103391/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+    },
+    "leadingInterval": {
+      "lower": "66780180619003155771943798378819163795571652905629636431123829242378182341343/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+      "upper": "66780180619003155771943798378819163795571652905629636431160722730525601452767/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+    },
+    "logTau": 622857,
+    "normalizedQuantity": "(CSelected*sqrt(Lambda)/2)*tau^A*u_theta(x_tau,1-tau)",
+    "originalFinalN6InstanceNumericallyEvaluated": false,
+    "physicalVelocity": {
+      "binary64": null,
+      "intervalMultiplier": {
+        "lower": "64970929224670090218450501738058415235364309395229002618007304492254539690719/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+        "upper": "68589432013336221325437095019579912355778996416030270244277247480649244103391/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+      },
+      "positiveScale": 622866
+    },
+    "position": [
+      622862,
+      0,
+      0
+    ],
+    "remainderAbsUpper": "1/64",
+    "sourceProfilePoint": {
+      "X": 3985,
+      "Y": 24,
+      "eta": 0
+    },
+    "tau": 622858,
+    "time": 622860
+  },
+  "externalFinalFieldIdentification": {
+    "dependencies": [
+      "Proposition9.9: actual final (9.21), annular support, on the smaller same-source complete partition domain",
+      "Proposition10.1: localized field agrees on the fixed cutoff plateau"
+    ],
+    "samePhysicalPointAndScale": true,
+    "status": "CONDITIONAL_ON_EXTERNAL_SOURCE_THEOREM_IDENTIFICATION"
+  },
+  "freshSourceConstructorExecuted": false,
+  "newLeanExecuted": false,
+  "observationClaimIds": [
+    "N7-O-inner-growth"
+  ],
+  "observationClaims": [
+    {
+      "completeN6": false,
+      "equation": "|tau^A*u_theta-e0|<=C*tau^(2h) on the original inner restriction. Identification with the final localized field uses the listed external source theorems.",
+      "externalFinalFieldIdentification": {
+        "dependencies": [
+          "Proposition9.9: actual final (9.21), annular support, on the smaller same-source complete partition domain",
+          "Proposition10.1: localized field agrees on the fixed cutoff plateau"
+        ],
+        "samePhysicalPointAndScale": true,
+        "status": "CONDITIONAL_ON_EXTERNAL_SOURCE_THEOREM_IDENTIFICATION"
+      },
+      "id": "N7-O-inner-growth",
+      "inputHash": "5f7ea9b515fcaf7b1c760e9ec7b75f02604b06075eceed8d6f18086b7c8d2dd1",
+      "leanTheorem": null,
+      "meaning": "The displayed intervals follow from the original positive core enclosure and explicit all-order remainder. The final localized field is identified by the listed source theorems; the browser revalidates the archive and does not reconstruct the whole N6 field.",
+      "newLeanExecuted": false,
+      "observable": "Original inner-path scaled azimuthal velocity",
+      "recordedSourceGate": {
+        "command": [
+          "node",
+          "--max-old-space-size=6144",
+          "--test",
+          "--test-reporter=tap",
+          "research-ide/mathscope-m3/navier/tests/source-inner-growth.test.mjs"
+        ],
+        "elapsedSeconds": 158.96518460900552,
+        "environment": {
+          "M3_N7_INNER_EVIDENCE": "research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt2/inner-growth.json"
+        },
+        "exitCode": 0,
+        "finishedAt": "2026-10-12T11:23:59.405976+00:00",
+        "freshlyExecutedByArchiveConsumer": false,
+        "independentFractionChecks": 9,
+        "nodeTests": {
+          "failed": 0,
+          "passed": 8
+        },
+        "observedPeakRSSBytes": 4434853888,
+        "startedAt": "2026-10-12T11:21:20.404660+00:00",
+        "workingDirectory": "repository root"
+      },
+      "reference": {
+        "blueprint": {
+          "criteria": [
+            "N7-07"
+          ],
+          "page": 64,
+          "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+          "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf"
+        },
+        "paper": {
+          "pages": 166,
+          "pagesUsed": [
+            116,
+            118,
+            124
+          ],
+          "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+          "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+        }
+      },
+      "runHash": "c219d500d283bb0a9066f314095a28397e7ffeeacc432578b02bb3b53fa2ee8f",
+      "scope": "SOURCE_BOUND_INNER_PATH_WITH_EXTERNAL_FINAL_LOCALIZATION_BRIDGE",
+      "sourceAnalyticCertificate": {
+        "kind": "ORIGINAL_BACKGROUND_INNER_RESTRICTION",
+        "leadingPositiveLower": "e0=2*Phi(2,0)/(CSelected*sqrt(Lambda)) > 1/(CSelected*sqrt(Lambda)) >0",
+        "remainder": "|tau^A*u_theta-e0|<=C*tau^(2h) on the original inner restriction. Identification with the final localized field uses the listed external source theorems.",
+        "sourceAllOrderTailRetained": true
+      },
+      "wholeM3Complete": false
+    }
+  ],
+  "physicalTimeOrVelocityRoundedToBinary64": false,
+  "recordedOnly": true,
+  "runDigest": "9c3c82529a1bc865b60eb83676f6279c49d928bec4ae4d348c0b51f9a669e497",
+  "scalarProgram": {
+    "fullProgramExportPath": "result.results.certificate.formulaProgram",
+    "roots": {
+      "A": 4,
+      "C": 24825,
+      "CSelected": 1,
+      "D": 7,
+      "Lambda": 0,
+      "Xin": 11,
+      "eLower": 14,
+      "eScale": 15,
+      "h": 2,
+      "logTau_4": 28907,
+      "normalizedRemainder": 24827,
+      "plateau": 28866,
+      "radialCutoffArgument_4": 28918,
+      "radius_4": 28912,
+      "shrinkLog": 28869,
+      "tau_4": 28908,
+      "timeCutoffArgument_4": 28917,
+      "time_4": 28910,
+      "velocityScale_4": 28916
+    },
+    "sha256": "907acb6f5a875a473efc28efeb2537409928188a5be1098bda4cbb9ded75afb1",
+    "sourceNodeIds": {
+      "A": 23,
+      "C": 299053,
+      "CSelected": 3456,
+      "D": 22,
+      "Lambda": 3454,
+      "Xin": 3985,
+      "eLower": 622783,
+      "eScale": 622784,
+      "h": 9,
+      "logTau_4": 622857,
+      "normalizedRemainder": 622803,
+      "plateau": 622801,
+      "radialCutoffArgument_4": 622868,
+      "radius_4": 622862,
+      "shrinkLog": 622806,
+      "tau_4": 622858,
+      "timeCutoffArgument_4": 622867,
+      "time_4": 622860,
+      "velocityScale_4": 622866
+    }
+  },
+  "schema": "MathScope.N7.InnerGrowthSelection/1",
+  "selectionPersistence": "PAGE_LOCAL_ONLY; all exact rows and the complete formula program remain in every export",
+  "sourceArtifact": {
+    "bytes": 3436293,
+    "path": "research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt2/inner-growth.json",
+    "sha256": "7a72e1ca1293ba2542ed4ed2612ad67b95df7cb31eb49cf91be004f6ae16a5fe"
+  },
+  "sourceChangedBySelection": false
+}

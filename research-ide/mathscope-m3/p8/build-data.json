@@ -131,13 +131,13 @@
       },
       {
         "path": "mathscope-m3/P7_PROGRESS.json",
-        "bytes": 36271,
-        "sha256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d"
+        "bytes": 57828,
+        "sha256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b"
       },
       {
         "path": "mathscope-m3/P8_PROGRESS.json",
-        "bytes": 17666,
-        "sha256": "77416cc9ba5cf0fada2a13e8acf3d8459f0f17f0a8f8b70e35e2970e35d68142"
+        "bytes": 19352,
+        "sha256": "42248ed057895fb9f37142ffbdc6c3e0a3d1b3d00025c707751ff49a858b4ca1"
       },
       {
         "path": "mathscope-m3/cli.py",
@@ -490,7 +490,7 @@
         "sha256": "cce4a0377098d32154eab27067e1fe7790ff6e13f66df5fb8e630378aeebdc03"
       }
     ],
-    "manifestSHA256": "f1fe9f58db36ff317c56b645f2c53655b5a3318ac1324ec92534788a23a44d65",
+    "manifestSHA256": "d8b43276455eb34651a16ee4db876e9b9ea065b80af725902b1b58d06209dd77",
     "environment": {
       "arithmetic": "ECMASCRIPT_EXACT_BIGINT_AND_RATIONAL",
       "hash": "SHA-256_WEBCRYPTO",
@@ -547,10 +547,10 @@
           "text": "ζ의 completed ξ와 E의 Λ_E=N_E^{s/2}(2 π)^{-s}Γ(s)L(E,s)를 각각 명세한다. minimum model/Tate reduction, root\nnumber, bad factors의 certificate를 묶는다. 합격: good-only product는 L^S라고 표시한다. ζ↔ξ 또는 L↔ Λ의 영점·극\n점·trivial zero 차이가 자동 변환 기록에 남는다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Fresh official PARI 2.19.0 global minimal model and Tate reduction, including additive examples; independently checked five-coefficient transform and all discriminant factors.",
             "All good/bad Euler data, Tamagawa/conductor/root-number products and all finite coefficients checked against independent exact prime counts and Euler recurrence.",
@@ -570,16 +570,64 @@
             "p7/evidence/final-all64-20261012/attempt1/arithmetic-37a1.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/complex-additive-32.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/euler-finite.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/zeta-2.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/zeta-2.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Exact supported rational models, pinned CAS Tate/minimal algorithms and independently checked exported arithmetic; no rank database or hidden Manin constant.",
           "researchLimitations": [
             "The CAS minimality/local-solubility algorithms are external computational dependencies, not newly formalized Lean theorems."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "실제 공개 최소모형·Tate·good/bad factor·root number와 normalization ledger, 실행·fresh replay 및 원본 선택/내보내기를 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-02",
@@ -587,10 +635,10 @@
           "text": "유한 Euler product는 ζ에서 Re(s)>1, E good-factor product에서 Re(s)>3/2의 탐색으로 제한한다. critical strip 계산은\ncertified analytic continuation과 complex balls를 사용한다. 합격: s=1/2+it에서 finite Euler product를 ζ의 인증값으로\n반환하면 실패한다. 반올림·series truncation·tail error를 각각 포함한 ball을 내보낸다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Explicit zeta Euler-Maclaurin evaluation with finite arithmetic balls, integrated unit-cell binomial-series truncation, and separate infinite [B,infinity) tail.",
             "Strict finite Euler-product domains Re(s)>1 for zeta and Re(s)>3/2 for elliptic good factors; critical-strip substitution is rejected.",
@@ -610,16 +658,64 @@
             "p7/evidence/final-all64-20261012/attempt1/zeta-em-critical.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/euler-finite.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/complex-37a1.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/complex-additive-32.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/complex-additive-32.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Certified analytic continuation with explicit finite truncation and infinite tail ledgers, distinct from finite Euler exploration.",
           "researchLimitations": [
             "Primitive FLINT special-function enclosures include their internal numerical approximation; the explicit higher-level series and infinite tails are separate. No claim of a new proof of modularity is made."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "실제 complex continuation의 ball·명시적 급수/무한 tail과 strict finite Euler domain 거부를 API/UI에서 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-03",
@@ -627,10 +723,10 @@
           "text": "N(T)는 0<Imρ≤T인 strip 전체 영점의 중복도 포함 개수로 정의한다. Hardy Z의 실수 영점 고립으로 Re ρ=1/2를 인증하고 독\n립 zero counter와 비교한다. T=20,30의 endpoint exclusion도 확인한다. 합격: N(20)=1, N(30)=3을 count certificate\n로 재확인한다. 임계선에서 찾은 영점 수와 전체 strip의 count가 다르면 RH_VERIFIED_TO_T를 주지 않는다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Whole-strip argument-principle count with multiplicity and pole correction is independent as an algorithm from Hardy-Z critical-line isolation.",
             "Fresh current-source T=20 and T=30 acceptance runs have complete boundary exclusion and count saturation: N(20)=1 and N(30)=3; both separate CLI replays matched.",
@@ -644,16 +740,64 @@
             "evidence/p7-release-20261011/attempt3/zeros-to-30.json",
             "p7/evidence/final-all64-20261012/attempt1/manifest.json",
             "p7/evidence/final-all64-20261012/attempt1/zeros-20.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/zeros-30.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/zeros-30.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "The two original finite heights and algorithmic independence; a common FLINT arithmetic backend is disclosed.",
           "researchLimitations": [
             "Other requested heights, a second independent arithmetic implementation, and a new Lean argument-principle proof are not claimed or required by these two original acceptance examples."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "유한 높이 T20/T30의 strip count·Hardy 고립·endpoint와 RH_VERIFIED_TO_T 범위가 공개 실행·표시·내보내기에 보존됐다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-04",
@@ -661,10 +805,10 @@
           "text": "우선 x를 half-integer로 제한한 ψ(x)와 symmetric zero sum을 제공한다. 숫자 오차 밴드는 선택한 truncated/smoothed\nformula의 명시 상수·가정·tail bound가 있을 때만 인증한다. 합격: x=10.5의 prime side=log2520. ψ 또는 ψ₀ endpoint\nconvention을 기록한다. 이름만 있는 O(·)나 수치 residual을 rigorous tail bound로 쓰면 실패한다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Half-integer psi uses the absolutely convergent integrated explicit formula and unit secant, with symmetric zero data, explicit constants and standard theorem dependencies.",
             "The actual independent prime side at x=10.5 is log(2520); psi versus psi0 endpoint conventions are recorded.",
@@ -674,16 +818,64 @@
             "p7/explicit_formula.py",
             "evidence/resume-20261012/attempt2/explicit-psi.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/manifest.json",
-            "p7/evidence/final-all64-20261012/attempt1/explicit-psi.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/explicit-psi.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "The original half-integer finite acceptance case with a rigorous but coarse smoothed band.",
           "researchLimitations": [
             "The finite T=30 band is coarse; a narrow error band or arbitrary-height extension is not asserted. The unsmoothed diagnostic does not borrow the smoothed tail."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "half-integer x=10.5의 prime side, smoothed 규약·상수·tail과 coarse band, 별도 unsmoothed 진단을 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-05",
@@ -691,10 +883,10 @@
           "text": "사용자가 operator/domain, spectrum-zero 대응, regularized determinant, trace formula, duality/positivity 가설을 등\n록하게 한다. truncation별 spectrum·극점·중복도·정규화·functional-equation residual을 비교한다. 합격: 누락 영점, 잘못\n된 trivial-zero factor, determinant의 상수/선형 exponential normalization 차이, multiplicity 불일치는 counterexample\n후보로 저장한다. 유한 통과가 전체 operator의 존재나 RH 증명이 되지 않는다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "User registrations preserve unique IDs and exact operator/domain, zero-spectrum, determinant, trace, duality and positivity hypothesis text.",
             "Two to four editable rational-matrix cutoffs carry complete spectrum/poles/multiplicities and constant/linear exponential normalization, exact trace/reflection checks and rigorous finite residual probes.",
@@ -710,16 +902,64 @@
             "p7/OPERATOR_REGISTRY_KO.md",
             "p7/evidence/final-all64-20261012/attempt1/manifest.json",
             "p7/evidence/final-all64-20261012/attempt1/operator-reference.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/operator-registered.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/operator-registered.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Editable research registration and falsifiable finite comparisons; finite matrix success is never a global existence theorem.",
           "researchLimitations": [
             "No operator with the classical zeta zero spectrum is constructed or proved to exist. Rational finite spectra and bounded dimensions are the implemented comparison domain."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "사용자 operator/domain/assumption 등록, 유한 비교와 반례, 입력 보존/replay 및 global/RH 미승격을 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-06",
@@ -727,10 +967,10 @@
           "text": "root-number 대칭으로 강제되는 vanishing과 exact modular-symbol vanishing, 도함수의 rigorous nonzero ball을 구분\n한다. completed Λ의 Taylor parity를 사용한다. 합격: w=−1이면 Λ(1)=0의 정확한 이유를 기록하고 0∉ Λ′(1)의 인증구간\n이 있어야 rank=1. 0을 포함하는 작은 interval은 vanishing 증명이 아니다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Exact root-number parity forces the central completed Lambda zero for 37a1; the rigorous first derivative interval excludes zero and certifies analytic rank 1.",
             "11a1 has a certified central L interval excluding zero, hence analytic rank 0 with stated analytic theorem dependencies.",
@@ -751,17 +991,65 @@
             "p7/evidence/final-all64-20261012/attempt1/central-11a1.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/central-37a1.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/modular-11a1.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/modular-37a1.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/modular-37a1.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "The original root-number -1 acceptance condition and rigorous central derivative, with exact vanishing mechanisms distinguished.",
           "researchLimitations": [
             "The central parity/derivative producer correctly records modularSymbolsExecuted=false because the independently executed exact modular-symbol route is a separate result. Its 37a1 zero alone gives analytic rank at least one, not exact rank one.",
             "General higher analytic rank and new Lean modularity/analytic-continuation proofs are not claimed."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "central parity/derivative와 독립 modular-symbol 두 경로를 실행·표시했다. 37a1 symbol zero 단독의 rank≥1과 별도 derivative의 rank1을 구분했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-07",
@@ -769,10 +1057,10 @@
           "text": "독 립 유 리 점 ·height/ regulator 로 lower bound, descent/ Selmer certificate 로 upper bound 를 얻 는 다. tor-\nsion·saturation·Tamagawa·period·Sha 의 known/ conditional/ unknown 을 각 각 저 장 한 다. 합 격: rank interval\n[r_min,r_max]가 한 점일 때만 해당 곡선 rank 확정. Sage L_ratio() 등의 숨은 Manin-constant 가정이 충족되지 않으면 조\n건부로 표시한다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Independent exact rational points, explicit canonical-height duplication bounds and positive Gram determinants supply arithmetic rank lower bounds.",
             "Fresh pinned PARI 2-descent/Cassels data supplies upper=C-T-s; exact rational maps of every exported 2-cover are independently checked.",
@@ -791,17 +1079,65 @@
             "p7/ARITHMETIC_CERTIFICATES_KO.md",
             "p7/evidence/final-all64-20261012/attempt1/manifest.json",
             "p7/evidence/final-all64-20261012/attempt1/arithmetic-11a1.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/arithmetic-37a1.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/arithmetic-37a1.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Exact supported arithmetic computations plus standard height theorems and pinned CAS descent dependencies; the full finite witness and raw GP output remain inspectable.",
           "researchLimitations": [
             "Selmer local-solubility/basis completeness and CAS Tate algorithms remain explicit external algorithm dependencies.",
             "Full Sha order, universal BSD and an arbitrary-rank saturated Mordell-Weil basis are not inferred."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "실제 descent lower/upper·산술 rank, height/saturation/period/Sha 상태와 외부 의존성을 공개 실행·replay·원본 선택에서 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         },
         {
           "id": "P7-08",
@@ -809,10 +1145,10 @@
           "text": "finite-height zero certificate, 특정 curve의 rank equality, refined leading-term 검증, universal conjecture를 별도 결\n과 타입으로 제공한다. coefficient/prime/zero completeness의 빠진 항을 자동 목록화한다. 합격: 한 E에서 두 rank가 같\n다고 universal BSD를 표시하지 않는다. finite-field RH theorem을 classical RH axiom으로 복사하는 요청은 거부한다. 연\n구가설은 Lean 가정 목록과 함께 내보낸다.",
           "page": 34,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T09:57:28.854279+00:00",
-          "implementationStatus": "IMPLEMENTED_WITH_EXECUTED_LOCAL_OR_PRESERVED_FINITE_EVIDENCE",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+          "implementationStatus": "IMPLEMENTED_AND_VERIFIED_IN_CURRENT_CI_API_AND_PUBLIC_UI",
           "implemented": [
             "Four distinct result types execute fresh underlying finite zero, arithmetic and analytic producers; one-curve rank equality is separate from refined leading terms and universal conjectures.",
             "Missing/extra/duplicate coefficient, prime and zero inventories are automatically listed against fresh exact expected data.",
@@ -834,74 +1170,122 @@
             "p7/evidence/final-all64-20261012/attempt1/typed-universal-open.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/typed-omitted-coefficient-prime.json.gz",
             "p7/evidence/final-all64-20261012/attempt1/typed-omitted-zero.json.gz",
-            "p7/evidence/final-all64-20261012/attempt1/typed-finite-field-copy.json.gz"
+            "p7/evidence/final-all64-20261012/attempt1/typed-finite-field-copy.json.gz",
+            "evidence/all64-20261012/public-p7-execution-acceptance.json",
+            "evidence/all64-20261012/public-api-semantic-review/review.json",
+            "evidence/all64-20261012/ci-c971/receipt.json",
+            "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+            "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+            "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+            "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json"
           ],
           "acceptanceScope": "Typed finite/research results, complete finite inventories, scope rejection and transparent assumption export; no natural-language-to-Lean mathematical formalization is claimed.",
           "researchLimitations": [
             "The research export theorem bundles opaque proposition assumptions only. A formal mathematical operator/trace/RH bridge still needs explicit definitions and a proof.",
             "Independent Sha information remains missing in the refined example; this is an open dependency inside a implemented result type, not a universal BSD proof."
           ],
-          "remainingObligations": [
-            "Observe the final source-bound combined unit/API gate (fresh CLI runs and all 25 fresh replays already passed).",
-            "Verify the corresponding new public UI result, exact scope labels and exported evidence after publication."
-          ]
+          "remainingObligations": [],
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "네 result type, 누락 inventory와 finite-field→RH 거부, universal RESEARCH_OPEN 및 opaque 가정 export 범위를 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-p7-execution-acceptance.json",
+                "bytes": 1571,
+                "sha256": "fcfce6149a837f947900c7b4deadf54da924fbd66bb7f94036e8416dfc106917"
+              },
+              {
+                "path": "evidence/all64-20261012/public-api-semantic-review/review.json",
+                "bytes": 117180,
+                "sha256": "67cb721e9aae134e2eaf6b9628718f125c28d4fb569bb250157829cfbc9ff2a0"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/p7-job-114802713677.log",
+                "bytes": 104302,
+                "sha256": "a69e891bbebb4b74daed668bfb505a1ef7dbef9e348393115438c7cb3f41ccc9"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v95/p7-ui-cases.json",
+                "bytes": 188325,
+                "sha256": "3cd641df074b2822f58b603c20e355c022977a6e49371b8ee74ffd2763ebc002"
+              },
+              {
+                "path": "evidence/all64-20261012/public-v96/p7-ui-acceptance.json",
+                "bytes": 30296,
+                "sha256": "26e81693ce853beeed64947e2adee9b7fba344c1ccf1f454cb280a764978036d"
+              },
+              {
+                "path": "evidence/all64-20261012/p7-final-gate-attempt3/receipt.json",
+                "bytes": 8266,
+                "sha256": "afa010c665894260960e7da2198e67ab43f820faa476c117e60a74cd36102b34"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          }
         }
       ],
       "fixtures": [
         {
           "id": "P7-01",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-02",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-03",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-04",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-05",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-06",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-07",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         },
         {
           "id": "P7-08",
-          "status": "PARTIAL",
+          "status": "PASS",
           "source": "research-ide/mathscope-m3/P7_PROGRESS.json",
-          "sourceSHA256": "e594d61b982342436200fe2ced619f7cf8130e12c8d60eecd5b5fc4f38542f9d",
+          "sourceSHA256": "c06cb182f7dac442ff7bfcc678745f167e6d3714ddf39d75b31a71aac498a59b",
           "execution": "RECORDED_P7_RELEASE_NOT_EXECUTED_BY_PACKET_EXPORT"
         }
       ]
@@ -1016,9 +1400,9 @@
           "text": "bad prime 하나, Frobenius coefficient 하나, truncation bound 하나, zero box 하나, rank upper certificate 하나를 제\n거·변조하여 관문을 다시 실행한다. 합격: 변조된 입력은 해당 단계에서 실패하고 후속 theorem badge가 취소된다. session\n저장은 입력 해시·정밀도·비교 근거를 보존하며 재계산 결과와 일치한다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T10:45:21.892299+00:00",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T12:39:03.635099+00:00",
           "evidence": [
             "tests/p8-mutation-audit.test.mjs",
             "p8/evidence/p7-mutation-release.json",
@@ -1034,12 +1418,12 @@
             "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/process.json",
             "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/consumer-validation.json",
             "tests/p8-recorded-arithmetic.test.mjs",
-            "p8/evidence/p7-mutation-release-historical-v1.json"
+            "p8/evidence/p7-mutation-release-historical-v1.json",
+            "evidence/all64-20261012/public-v95/p8-acceptance.json",
+            "evidence/all64-20261012/ci-c971/receipt.json"
           ],
-          "remainingObligations": [
-            "Verify the published current-source /2 mutation result and revoked downstream badges using the byte-verified successful CI package. Browser receipt validation remains distinct from a fresh P7 execution."
-          ],
-          "acceptanceScope": "Existing bad-prime, Frobenius, truncation and comparison mutation gates remain. The actual current-source P7 audit deleted a valid arithmetic descent upper certificate and corrupted a zero box, with all six fresh child executions completing. The successful GitHub P7 run had an independent pytest exit 0; its exact artifact bytes and current source hashes were verified and the /2 package passed the consumer. Published current-source result and downstream-badge verification remain pending. The older /1 fabricated-certificate audit and failed first /2 CI process remain historical evidence.",
+          "remainingObligations": [],
+          "acceptanceScope": "Bad-prime, Frobenius, truncation and comparison mutations execute in the current browser. The separate source-bound /2 CI receipt contains actual fresh P7 child runs deleting a valid arithmetic descent upper certificate and corrupting a zero box. Successful CI artifact bytes/current source hashes and public downstream badge revocation, replay/import and forged-import rejection are verified. The /1 audit, failed first /2 CI and the packaging-time publishedResultVerified=false remain historical; currentReleaseAcceptance supplies the later positive public gate. Browser replay does not claim fresh P7 execution or a whole-application claim graph.",
           "currentArithmeticMutationEvidence": {
             "audit": "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/report.json",
             "process": "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/process.json",
@@ -1075,6 +1459,42 @@
             "consumerStatus": "RECORDED_CI_SOURCE_MATCH",
             "freshBrowserP7Execution": false,
             "publishedResultVerified": false
+          },
+          "currentReleaseAcceptance": {
+            "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+            "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+            "reason": "실제 유효 descent upper 삭제·zero-box 변조의 source-bound CI /2와 네 browser mutation, 후속 badge 취소, 공개 replay/import·변조 거부를 확인했다.",
+            "evidence": [
+              {
+                "path": "evidence/all64-20261012/public-v95/p8-acceptance.json",
+                "bytes": 2733,
+                "sha256": "fd3ac05e09edd99ef8d1b3aa6c9e5e37d7a76ad77476b374c38516281dfa87ab"
+              },
+              {
+                "path": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+                "bytes": 10035,
+                "sha256": "e812c0d18b3f292ffc82823cd968eddcdb51050da09205677ffe4f6285713893"
+              },
+              {
+                "path": "evidence/all64-20261012/ci-c971/receipt.json",
+                "bytes": 10500,
+                "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+              }
+            ],
+            "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+            "historicalEvidenceUnchanged": true
+          },
+          "currentPublicMutationAcceptance": {
+            "receipt": {
+              "path": "evidence/all64-20261012/public-v95/p8-acceptance.json",
+              "bytes": 2733,
+              "sha256": "fd3ac05e09edd99ef8d1b3aa6c9e5e37d7a76ad77476b374c38516281dfa87ab"
+            },
+            "browserCases": 4,
+            "recordedCICases": 2,
+            "actualP7FreshBrowserExecution": false,
+            "wholeApplicationGraphAudited": false,
+            "publishedResultVerified": true
           }
         },
         {

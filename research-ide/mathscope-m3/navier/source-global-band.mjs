@@ -8,11 +8,10 @@
  * private authenticators remain unchanged; this module issues its own seal.
  */
 import {assertActualCommonAdmissibleFamily,actualCommonAdmissibleFamilyCertificate,prepareActualCommonAdmissibleFamily} from '../../mathscope-m2/navier/actual-common-admissible-family.mjs';
-import {ActualCommonPhysicalJetExpressions} from '../../mathscope-m2/navier/actual-common-physical-jet-kernel.mjs';
+import {GlobalSourceExpressions} from './source-global-expressions.mjs';
 import {actualMovingPulseFrame,covarianceMatrixAlgebra} from '../../mathscope-m2/navier/actual-covariance-matrix.mjs';
 import {covarianceConcentrationRecipe} from '../../mathscope-m2/navier/actual-covariance-concentration.mjs';
 import {sourceGraphRationalIdentity} from '../../mathscope-m2/navier/actual-continuation-exact-identities.mjs';
-import {disposableThirdJetCacheCopy} from '../../mathscope-m2/navier/actual-third-jet-ftc.mjs';
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 import {originalBandWindowExpressions} from './global-source-index.mjs';
 
@@ -29,16 +28,7 @@ const metadata=p=>({schema:p.schema,request:p.request,sourceBinding:p.sourceBind
  * This avoids a second deep clone of hundreds of thousands of immutable
  * scalar nodes before any actual new mathematical expression is appended.
  */
-export class SharedGlobalSourceExpressions extends ActualCommonPhysicalJetExpressions {
-  constructor(base,options={}){
-    const view=disposableThirdJetCacheCopy(base),sourceNodes=base.nodes,sourceLookup=base.lookup;
-    view.nodes=[];view.lookup=new Map();
-    super(view,{...options,compactFTC:true});
-    this.nodes=sourceNodes.slice();this.lookup=new Map(sourceLookup);
-    this.baseNodeCount=sourceNodes.length;
-    this.globalSharedPrefixLength=sourceNodes.length;
-  }
-}
+export class SharedGlobalSourceExpressions extends GlobalSourceExpressions {}
 
 function requestOf(input={}){
   if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['coefficientOrder','maxNodes'].includes(k)))

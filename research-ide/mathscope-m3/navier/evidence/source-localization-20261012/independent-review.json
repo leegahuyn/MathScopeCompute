@@ -1,0 +1,67 @@
+{
+  "schema": "MathScope.M3.IndependentSourceReview/1",
+  "recordedAt": "2026-10-12T12:46:31.060174+00:00",
+  "reviewer": "root",
+  "method": "Read-only source and exact-artifact review, independent of the author. No heavy source process was rerun.",
+  "receipt": {
+    "path": "research-ide/mathscope-m3/navier/evidence/source-localization-20261012/attempt1/receipt.json",
+    "bytes": 2869,
+    "sha256": "3615d710aca623f02a3be4a8052c72997c94bd184d58fba79698e9e368dac42f"
+  },
+  "reviewedSources": [
+    {
+      "path": "research-ide/mathscope-m3/navier/source-localization.mjs",
+      "bytes": 20988,
+      "sha256": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036"
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/source-inner-growth.mjs",
+      "bytes": 21923,
+      "sha256": "4a6b9ade65d9280e44871d3e707b9bb0d086b2c53e0e0f311b908dd34103b3a8"
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/tests/source-localization.test.mjs",
+      "bytes": 9796,
+      "sha256": "e07f9061f27581f8ba06f474b6915672f9ba970b0033406155dcdf9bf674bf9a"
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/tests/run-localization-source.py",
+      "bytes": 18518,
+      "sha256": "c4ddcdf43af198ccc0aa0dd33c87dd984f07432208835567d56e469347fbff0c"
+    }
+  ],
+  "sourceFileCount": 116,
+  "allSourceBytesStillMatchObservedExecution": true,
+  "allReceiptArtifactBytesMatch": true,
+  "findings": [
+    {
+      "topic": "Actual source cutoff and domain",
+      "finding": "The private original inner source provides qStar=2^(-(ellMinimum+10)), tau0=qStar/32, z0=tau0^D, r0=1 and1/4<D<1/2. Splitting the eta cases gives q<=4(tau+abs(z)^(1/D)); on the entire cutoff support this is at mostqStar/4<qStar/2. The guard is uniform in r and does not extrapolate an unavailable local field."
+    },
+    {
+      "topic": "Cartesian regularity",
+      "finding": "The cutoff composes the original flat primitive with squared Cartesian radius and squared axial coordinate, so its support and axis regularity do not depend on differentiating abs(r). Gradients, Hessians, Laplacian and the minus sign in physical-time differentiation are actual source-graph operations."
+    },
+    {
+      "topic": "Curl and pressure operator",
+      "finding": "Each of the three velocity rows retains two c*partial A terms, two partial c*A terms, and the direct c*B_e_theta term with the correct alternating signs. The same scalar multiplies source pressure. The final source fields remain named unresolved inputs and are not replaced by free samples or arbitrary functions."
+    },
+    {
+      "topic": "Positive decimal tau",
+      "finding": "For the requested finite decimal exponents, ellMinimum>2^8204 and 10^K<2^(4K) prove tau exceeds the microscopic cutoff support. Returning the initial zero extension is correct and occurs before evaluating an undefined unlocalized field. This is distinct from numerical underflow or a nonzero near-terminal sample."
+    },
+    {
+      "topic": "Inner path and evidence",
+      "finding": "The five positive-tau source inner intervals, strictly positive leading lower bound and exact scalar program are retained. Source/receipt bytes match the observed10 Node tests and12 independent Fraction/Decimal checks. The final localized field identification still cites explicit external Propositions9.9/10.1."
+    }
+  ],
+  "limits": [
+    "The complete final N6 potentials, nonzero cutoff-transition field values and the same localized force are not constructed by this cutoff module.",
+    "The source all-order flat cutoff argument is stated from its definition; finite derivative checks are not a new Lean proof.",
+    "Original N7-01 and the full N8 reconstruction remain incomplete until their whole-field dependencies are constructed."
+  ],
+  "blockerWithinDeclaredScope": false,
+  "originalCriterionPromotedByThisReview": false,
+  "newLeanExecuted": false,
+  "pass": true
+}

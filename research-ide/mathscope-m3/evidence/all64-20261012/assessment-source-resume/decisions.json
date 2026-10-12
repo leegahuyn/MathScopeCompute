@@ -1,0 +1,302 @@
+{
+  "schema": "MathScope.M3.ReviewedSourceCriterionDecisions/1",
+  "reviewedAt": "2026-10-12T14:42:19.692291+00:00",
+  "approvedPromotions": [
+    "N6-04",
+    "N7-01",
+    "N6-06",
+    "N7-07",
+    "N8-04",
+    "N7-02",
+    "N7-03",
+    "N7-08",
+    "N6-05"
+  ],
+  "criterionDecisions": {
+    "N6-04": {
+      "reason": "고정 H/a와 전체 81개 label의 B(W0,LΣ)=Σ, 세 종류 remainder를 실제 source에서 검증했다. j=0 초기화·모든 차수 class는 별도 N6-01/07 요구다. 과거 receipt의 false 판정은 그대로 남겼다.",
+      "gates": [
+        "global-signed"
+      ]
+    },
+    "N7-01": {
+      "reason": "원래 공통 초기 조건·양의 mean map·고정 역연산자를 실행한 뒤 같은 qBig에 원문 domain 정리를 적용했다. support, 초기 zero interval, 고정 K와 unit plateau를 확인했다.",
+      "gates": [
+        "domain-exterior"
+      ]
+    },
+    "N6-06": {
+      "reason": "같은 원래 source에서 다섯 적분·두 보존량을 보정한 뒤 전체 보조 토러스 압력과 비선형(8.26)/(8.27)을 재계산했다. 원래 작은 양의 λ의 조건수 배율도 유지했다.",
+      "gates": [
+        "global-moment-full-pressure"
+      ]
+    },
+    "N7-07": {
+      "reason": "같은 열린 내부 영역에서 모든 원문 보정 연산의 지지가 사라지는 증명을 새로 실행해 실제 경로를 식별했다. 양의 e0 하한과 전체 Cτ^(2h) 꼬리를 모든 충분히 작은 양의 τ에 연결했다.",
+      "gates": [
+        "core-restriction",
+        "domain-exterior"
+      ]
+    },
+    "N8-04": {
+      "reason": "같은 최종 장의 내부 경로에 세 성분 구간을 연결하고, 정확한 양의 τ·s=-logτ·물리 배율·요청한 소수 예시와 더 작은 시간의 재현을 확인했다.",
+      "gates": [
+        "core-restriction",
+        "near-terminal"
+      ]
+    },
+    "N7-02": {
+      "reason": "원문 cutoff와 계수에 연결한 전체 curl·10개 교차항을 직접 residual 계산과 대조했다. 모든 다항식 계수가 일치하고 div u=0을 구조적으로 확인했다.",
+      "gates": [
+        "localization-operator",
+        "domain-exterior"
+      ]
+    },
+    "N7-03": {
+      "reason": "같은 원문의 압력과 전체 force로 Poisson 항등식을 검증했다. 실제 외부 영역의 비영 div f를 유지하고 Leray projection 없이 cutoff·압력 조건을 보존했다.",
+      "gates": [
+        "localization-operator",
+        "domain-exterior"
+      ]
+    },
+    "N7-08": {
+      "reason": "원문은 비교·배율·지지 분리 주기화를 검토하고 같은 force/data·주기적 압력·에너지 가정을 유지하도록 요구한다. 실제 source cutoff의 정확한 배율·미분·전체 PDE와 간격을 검증했으며 미완료 전역 가정을 보존한다. 별도 N7-06 계산이나 무조건 C/D 발급을 추가 조건으로 붙이지 않는다.",
+      "gates": [
+        "periodization-review",
+        "localization-operator",
+        "domain-exterior"
+      ]
+    },
+    "N6-05": {
+      "reason": "전체 원문 current/pressure의 실제 zero-mean Fourier 역연산과 N 항등식, m+4 도함수·전체 꼬리·각 느린 도함수별 bound를 구성했다. 원래 ci·T1·A1·느린 시간 항을 유지한다. 이후 pressure/moment/j0는 별도 N6-01 조건이다.",
+      "gates": [
+        "global-temporal"
+      ]
+    }
+  },
+  "observedGates": [
+    {
+      "id": "global-signed",
+      "receipt": {
+        "path": "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+        "bytes": 2185,
+        "sha256": "0db5178978e2587d142032b606b7c1e59e2c6d66dc078c884d26618745ed4232"
+      },
+      "archiveBuilder": "navier/tests/build-global-signed-evidence.py",
+      "requiredReceiptFields": {
+        "pass": true,
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 13,
+          "failed": 0
+        },
+        "sourceFilesUnchanged": true,
+        "sourceFileCount": 230,
+        "originalN604Complete": false,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false
+      }
+    },
+    {
+      "id": "domain-exterior",
+      "receipt": {
+        "path": "navier/evidence/source-exterior-force-jets-20261012/attempt2/receipt.json",
+        "bytes": 2962,
+        "sha256": "90300bc80176119ab93e1613aeb7071702f7724244f14eb21e8078c18129a0c7"
+      },
+      "archiveBuilder": "navier/tests/build-exterior-force-evidence.py",
+      "requiredReceiptFields": {
+        "pass": true,
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 11,
+          "failed": 0,
+          "skipped": 0
+        },
+        "sourceFilesUnchanged": true,
+        "sourceFileCount": 101,
+        "independentCheckCount": 52,
+        "sourceDomainPrerequisitesExecuted": true,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false
+      }
+    },
+    {
+      "id": "global-moment",
+      "receipt": {
+        "path": "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+        "bytes": 3754,
+        "sha256": "62aa3f5d411e833fac4b52848b2564e9e8630974ed041e3d4614bbe9379a8724"
+      },
+      "archiveBuilder": "navier/tests/build-global-moment-evidence.py",
+      "requiredReceiptFields": {
+        "pass": true,
+        "exitCode": 0,
+        "sourceFilesUnchanged": true,
+        "sourceFileCount": 117,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false
+      }
+    },
+    {
+      "id": "near-terminal",
+      "receipt": {
+        "path": "navier/evidence/source-near-terminal-20261012/attempt2/receipt.json",
+        "bytes": 2874,
+        "sha256": "e7fdec60f4ef086212dac752ccdb6419c8898b7cb91945a617b3704c676253bc"
+      },
+      "archiveBuilder": "navier/tests/build-near-terminal-evidence.py",
+      "requiredReceiptFields": {
+        "pass": true,
+        "exitCode": 0,
+        "sourceFilesUnchanged": true,
+        "sourceFileCount": 117,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false
+      }
+    },
+    {
+      "id": "global-moment-full-pressure",
+      "receipt": {
+        "path": "navier/evidence/global-moment-pressure-20261012/attempt1/receipt.json",
+        "bytes": 4262,
+        "sha256": "631faa13604e69d07dea0cd0f217355ec4970fe8565e31b940f55f92b24b6bb2"
+      },
+      "archiveBuilder": "navier/tests/build-global-moment-pressure-evidence.py",
+      "requiredReceiptFields": {
+        "pass": true,
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 10,
+          "failed": 0,
+          "skipped": 0
+        },
+        "sourceFilesUnchanged": true,
+        "sourceFileCount": 121,
+        "individualN606OperatorCriteriaSatisfied": true,
+        "temporalMeanInverseApplied": false,
+        "initializedJ0": false,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false
+      }
+    },
+    {
+      "id": "core-restriction",
+      "receipt": {
+        "path": "navier/evidence/source-core-restriction-20261012/attempt1/receipt.json",
+        "bytes": 2889,
+        "sha256": "7c344632700bc9f168bfc5a8b722864e9416fbfc42cff2ad2c042e7c923928b5"
+      },
+      "archiveBuilder": "navier/tests/build-core-restriction-evidence.py",
+      "requiredReceiptFields": {
+        "pass": true,
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 16,
+          "failed": 0,
+          "skipped": 0
+        },
+        "sourceFilesUnchanged": true,
+        "sourceFileCount": 156,
+        "independentCheckCount": 41,
+        "newSupportProofExecuted": true,
+        "freshSourceConstructorExecuted": false,
+        "fullFinalN6FieldConstructed": false,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false
+      }
+    },
+    {
+      "id": "localization-operator",
+      "receipt": {
+        "path": "navier/evidence/source-localization-operator-20261012/attempt1/receipt.json",
+        "bytes": 2932,
+        "sha256": "5795edbba6a0ef7db696699f717eba90120c485daf1ebed6adf8f51cfc67c16f"
+      },
+      "archiveBuilder": "navier/tests/build-localization-operator-evidence.py",
+      "requiredReceiptFields": {
+        "pass": true,
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 10,
+          "failed": 0,
+          "skipped": 0
+        },
+        "independentStatus": "PASS",
+        "independentCheckCount": 55,
+        "sourceFilesUnchanged": true,
+        "sourceFileCount": 13,
+        "inheritedNearTerminalAndDomainArchivesReverified": true,
+        "freshFullSourceConstructorExecuted": false,
+        "newLeanExecuted": false
+      }
+    },
+    {
+      "id": "periodization-review",
+      "receipt": {
+        "path": "navier/evidence/source-periodization-review-20261012/attempt2/receipt.json",
+        "bytes": 3216,
+        "sha256": "1b94d82a1b65368c541af0c5ad73bedfcb4cf09d46c0fc41d5dddf60df8718dc"
+      },
+      "archiveBuilder": "navier/tests/build-periodization-review-evidence.py",
+      "requiredReceiptFields": {
+        "attempt": 2,
+        "pass": true,
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0
+        },
+        "independentStatus": "PASS",
+        "independentCheckCount": 33,
+        "sourceFilesUnchanged": true,
+        "sourceFileCount": 17,
+        "freshFullSourceConstructorExecuted": false,
+        "wholeKEnergyComputed": false,
+        "completeGlobalForceConstructed": false,
+        "unconditionalCConclusionIssued": false,
+        "unconditionalDConclusionIssued": false,
+        "wholeM3Complete": false,
+        "newLeanExecuted": false
+      }
+    },
+    {
+      "id": "global-temporal",
+      "receipt": {
+        "path": "navier/evidence/global-temporal-20261012/attempt3/receipt.json",
+        "bytes": 4984,
+        "sha256": "6acab3d43f99043545e715db2e2260b373ac317103773667b5fbd328d7cc8663"
+      },
+      "archiveBuilder": "navier/tests/build-global-temporal-evidence.py",
+      "requiredReceiptFields": {
+        "attempt": 3,
+        "pass": true,
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 15,
+          "failed": 0,
+          "skipped": 0
+        },
+        "sourceFilesUnchanged": true,
+        "sourceFileCount": 123,
+        "actualSourceAuxiliaryTemporalInverseConstructed": true,
+        "actualOriginalAxialPotentialRealized": true,
+        "individualN605OperatorCriteriaSatisfied": true,
+        "temporalMeanInverseApplied": true,
+        "postTemporalNonlinearPressureReconstructed": false,
+        "initializedJ0": false,
+        "completeN6": false,
+        "wholeM3Complete": false,
+        "newLeanExecuted": false
+      }
+    }
+  ],
+  "scopeNotes": [
+    "원래 전체 공통 cover, fixed signed covariance, 전체 보조 토러스의 pressure, 실제 다섯 radial moment, 고정 localization domain과 세 성분 near-terminal 구간을 소스에서 계산했다. 공개 UI의 기록 소비자는 그 생성자를 새로 실행했다고 표시하지 않는다.",
+    "새 내부 경로 지지 증명은 기록된 초기 소스·정의역·양의 core 구간에 결속되어 있다. 원래 연산자별 열린 zero 영역과 전체 cutoff curl을 확인해 실제 최종 장의 내부 경로를 식별했다. 비영 보정항의 값을 모두 계산하거나 새 Lean 정리를 발급했다는 뜻은 아니다.",
+    "원문 국소화 연산 증명은 같은 cutoff·계수에 전체 직접 PDE와 모든 교차항·압력 항등식을 대조한다. 미완료인 비영 영역의 모든 수치값을 이 개별 연산 항등식의 추가 전제로 붙이지 않는다. 전역 force jets·extension·에너지 완료와는 구분한다.",
+    "현재 빠진 비영 angular 보정·temporal 이후 pressure/moment 연결·순서 있는 j=0 초기화·모든 finite stage의 class와 shrinking cutoff 합은 그대로 남아 있다. 전체 공간 force jets/extension 및 활동 구간의 전체 K 에너지를 core 계산이나 manufactured fixture로 대신하지 않는다.",
+    "원래 논문의 연산자·정리를 실제 검증된 소스 조건에 적용한 분석적 범위와, 새 Lean kernel 증명·독립 수치 enclosure·화면 관찰은 서로 다른 증거 층이다. universal RH/BSD, continuum Yang–Mills 및 전체 원문 Navier 재구성의 완료를 주장하지 않는다."
+  ]
+}

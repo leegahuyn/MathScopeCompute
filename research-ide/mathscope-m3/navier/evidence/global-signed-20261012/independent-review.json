@@ -1,0 +1,77 @@
+{
+  "schema": "MathScope.M3.IndependentSourceReview/1",
+  "recordedAt": "2026-10-12T12:46:31.045675+00:00",
+  "reviewer": "root",
+  "method": "Read-only source and exact-artifact review, independent of the author. No heavy source process was rerun.",
+  "receipt": {
+    "path": "research-ide/mathscope-m3/navier/evidence/global-signed-20261012/attempt1/receipt.json",
+    "bytes": 2185,
+    "sha256": "0db5178978e2587d142032b606b7c1e59e2c6d66dc078c884d26618745ed4232"
+  },
+  "reviewedSources": [
+    {
+      "path": "research-ide/mathscope-m3/navier/source-global-signed.mjs",
+      "bytes": 29583,
+      "sha256": "4078e65989da153d57a36672645bad13ac0b4f2894c5c77b88208fc1fc25ceb1"
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/source-global-current.mjs",
+      "bytes": 30522,
+      "sha256": "93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760"
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/source-global-expressions.mjs",
+      "bytes": 28201,
+      "sha256": "89904bd7441a57cf634ff7b4c579e9ee7688868d14eafd999e44f41f74f0c2d1"
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/tests/global-source-signed-kernel.test.mjs",
+      "bytes": 3738,
+      "sha256": "18a4ba545a549daa03ed9e9d9b732e9f8eeda22b0f6db12a1dc6ae246ffa04cc"
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/tests/global-source-signed.test.mjs",
+      "bytes": 7190,
+      "sha256": "bb9458b5d47ece789ec0474cfb8516806811b5c2b034ef84a971bafbcc329a60"
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/tests/run-global-signed.py",
+      "bytes": 8084,
+      "sha256": "c2ecc72a263cc533152f7d7aced0ca02231d9976639a943910d4185feb1855ba"
+    }
+  ],
+  "sourceFileCount": 230,
+  "allSourceBytesStillMatchObservedExecution": true,
+  "allReceiptArtifactBytesMatch": true,
+  "findings": [
+    {
+      "topic": "Same original signed inverse",
+      "finding": "The private current state supplies Sigma, the original literal H integrals and the unchanged positive square-root amplitudes. The code accepts no caller-supplied target or replacement positive amplitude. Delta a equals H inverse of Sigma/epsilon divided by 2a."
+    },
+    {
+      "topic": "Leading covariance and angular averaging",
+      "finding": "All six harmonic covariances retain the cosine/sine half factor. The two original H columns are checked as the same actual integrals, not merely equal labels. Positivity definitions a^2=y and sqrt(epsilon)^2=epsilon remain explicit. The complete original squared partition and exact physical exponent identity connect all81 contributions."
+    },
+    {
+      "topic": "Three remainder terms",
+      "finding": "The actual full curls are retained before angular and auxiliary integration. With U=W+E and V=L+R, C(U+V)-C(U)=B(W,L)+B(E,L)+B(U,R)+C(V). Each of the last three terms has a complete guarded81-label indexed system; the increment square and both signs are retained. Generic omission tests make every component fail for nonzero independent vectors."
+    },
+    {
+      "topic": "Physical chart law",
+      "finding": "The current covariance is a complete physical field, differentiated with each physical label fixed. The full radial primitives are not evaluated from a point inventory. Under a reference-chart change, the radial measure, rho normalization and entire c_rho*P pressure product give the same exponent2A for both components of Sigma. Reindexing nearest-label lists does not differentiate floors."
+    },
+    {
+      "topic": "Updated pressure and derivative closure",
+      "finding": "All six updated auxiliary means feed the same compact pressure, P/J moments and weighted radial residual constructor. The exported derivative audit follows both original variational systems and retains all81 candidates and complete coefficient/time derivative bodies. Every original-current source-prefix byte and private seal remains unchanged."
+    }
+  ],
+  "limits": [
+    "Uniform all-order class bounds are not supplied by the generic variational exp(KL) tail or by these finite derivatives.",
+    "The original initialized j=0 state, full nonzero auxiliary pressure and every finite correction stage remain outstanding.",
+    "This verifies actual function-expression construction and algebra. It does not compute numerical values of the full field, complete original N6-04, prove the full Navier construction, or run a new Lean theorem."
+  ],
+  "blockerWithinDeclaredScope": false,
+  "originalCriterionPromotedByThisReview": false,
+  "newLeanExecuted": false,
+  "pass": true
+}

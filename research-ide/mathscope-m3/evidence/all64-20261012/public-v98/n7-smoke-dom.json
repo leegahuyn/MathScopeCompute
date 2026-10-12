@@ -1,0 +1,246 @@
+{
+  "bars": 5,
+  "criteria": [
+    {
+      "summary": "N7-01 · PARTIAL · 시간·공간 cutoff 선택",
+      "text": "N7-01 · PARTIAL · 시간·공간 cutoff 선택q≤C0(τ+|z|^(1/D))로support를q<q*/2 안에놓고c=χxχt를선택한다. χx는r²,z에smooth하게둔다. 합격: u=p=0인\n초기시간구간과고정compact K가존재한다. t가1에가까울때원점근방에서cutoff가정확히1이어야한다.[\n  \"navier/localization.mjs\",\n  \"navier/evidence/N7-workbench.json\",\n  \"navier/evidence/source-current-20261012/source-current-execution.json\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Complete N6 local A,B,p and its original qstar. · Apply the fixed compact cutoff and verify the initial zero interval and exact unit cutoff near the origin with actual source constants.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.64 · 전체 조건 완료: false"
+    },
+    {
+      "summary": "N7-02 · PARTIAL · Localization 교차항 보존",
+      "text": "N7-02 · PARTIAL · Localization 교차항 보존(10.4)의curl(cA), 특히∇c×A를포함하고f를전체PDE residual로정의한다. 합격: 직접계산된f와cutoff 전residual+모\n든commutator 전개의일치여부를검사한다. ∇·u=0은구조적으로유지한다.[\n  \"navier/localization.mjs\",\n  \"navier/evidence/source-current-20261012/source-current-execution.json\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Localize the complete actual N6 potentials and pressure. · Evaluate full f and all cutoff commutators independently on the same source, preserving structural divergence freedom and explicit error budgets.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.64 · 전체 조건 완료: false"
+    },
+    {
+      "summary": "N7-03 · PARTIAL · Force의 발산과 압력 계약",
+      "text": "N7-03 · PARTIAL · Force의 발산과 압력 계약원문p118에따라f는divergence-free일필요가없다. −Δp=∂i∂j(uiuj)−div f를검사한다. 합격: div f≠0을실패로처리하\n지않는다. 임의Leray projection으로f를바꿔compact support/pressure 조건을훼손하지않는다.[\n  \"navier/localization.mjs\",\n  \"navier/galerkin.mjs\",\n  \"navier/evidence/N8-acceptance.json\",\n  \"navier/evidence/source-current-20261012/full-pressure.json\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Verify the pressure identity for the exact same localized actual force and full source velocity. · Retain its forcing, support and pressure assumptions without applying an arbitrary force projection.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.64 · 전체 조건 완료: false"
+    },
+    {
+      "summary": "N7-04 · OPEN · Terminal force jets",
+      "text": "N7-04 · OPEN · Terminal force jetsFj(x)=lim(t↑1)∂t^j f(x,t), ∂x^αFj(0)=0을(10.6)-(10.10)에맞춰구축한다. 합격: 유한jet order M의수치근사와∀order\nsmooth-extension 정리의의존성을분리한다. 몇개finite differences가작다는이유로C∞force라표시하지않는다.[\n  \"navier/localization.mjs\",\n  \"navier/evidence/N7-workbench.json\",\n  \"navier/evidence/source-current-20261012/higher-pulse-jets.json\",\n  \"navier/evidence/source-current-20261012/source-current-execution.json\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Construct Fj from the complete actual localized residual as t approaches1. · Prove the original differentiated terminal limits and origin flatness for every required spatial/time order.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.64 · 전체 조건 완료: false"
+    },
+    {
+      "summary": "N7-05 · PARTIAL · t>1 force extension",
+      "text": "N7-05 · PARTIAL · t>1 force extension(10.11)의Σχ0(bjσ)σ^jFj/j!, σ=t−1≥0를사용하며(10.12)의differentiated tail constraints로bj를선택한다. 합격:\nforce는t≤2에서compact support를갖고모든인증된jets가접합된다. 이는velocity를t=1 이후smooth하게연장하는\n알고리즘이아니다.[\n  \"navier/localization.mjs\",\n  \"navier/evidence/N7-workbench.json\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Supply the actual terminal jets and certified derivative constants. · Bind the complete differentiated infinite tail, compact support and all certified jet joins through t=2.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.64 · 전체 조건 완료: false"
+    },
+    {
+      "summary": "N7-06 · OPEN · 전역 에너지 balance",
+      "text": "N7-06 · OPEN · 전역 에너지 balanced(∥u∥²₂/2)/dt+ν∥∇u∥²₂=⟨f,u⟩를전체K에서적분한다. core만의에너지와구분한다. 합격: 정규화energy defect가\n독립space/time refinement에서감소한다. ν=1에서(10.13)의∥u(t)∥²₂+2∫∥∇u∥²₂≤(∫∥f∥₂)² 상계와모순없어야\n한다.[\n  \"navier/galerkin.mjs\",\n  \"navier/evidence/N8-TG.json\",\n  \"navier/flow-observations.mjs\",\n  \"navier/tests/flow-observations.test.mjs\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Evaluate energy and force work for the actual localized source on all of K. · Refine its space and time independently and establish consistency with the original nu=1 force-norm bound (10.13).원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.64 · 전체 조건 완료: false"
+    },
+    {
+      "summary": "N7-07 · PARTIAL · 실제 blowup 경로와 오차",
+      "text": "N7-07 · PARTIAL · 실제 blowup 경로와 오차xτ=(√(2Xinτ),0,0), η=0에서τ^A uθ=e0+O(τ^(2h)), e0>0를측정한다. 합격: e0의양의하한과remainder의explicit\nbound가있어야해석적성장certificate로연결한다. 유한값plot의증가만으로τ→0의무한대를증명하지않는다.[\n  \"navier/localization.mjs\",\n  \"navier/evidence/N8-nearT.json\",\n  \"navier/evidence/source-current-20261012/source-current-execution.json\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\",\n  \"navier/source-inner-growth.mjs\",\n  \"navier/source-inner-growth-evidence.mjs\",\n  \"web/navier-inner-growth-view.mjs\",\n  \"evidence/all64-20261012/public-v97/n7-ui-acceptance.json\",\n  \"navier/evidence/inner-growth-20261012/attempt2/receipt.json\",\n  \"navier/evidence/inner-growth-20261012/attempt2/inner-growth.json\",\n  \"evidence/all64-20261012/public-v97/n7-exported-execution-record.json.gz\",\n  \"evidence/all64-20261012/ci-c971/receipt.json\",\n  \"evidence/all64-20261012/ci-c971/inner-growth-job-114802714578.log\"\n]남은 조건: Construct/apply the complete original final N6 instance and its same-source annular-support/domain identity at the Xin path; do not replace this with arbitrary sampled data. · Discharge the explicit Proposition9.9/10.1 final-localized-field identification bridge before promoting the original N7-07 criterion or an unconditional final-field growth certificate.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.64 · 전체 조건 완료: false"
+    },
+    {
+      "summary": "N7-08 · PARTIAL · 비교 정리·주기화· ν 확인",
+      "text": "N7-08 · PARTIAL · 비교 정리·주기화· ν 확인Lemma10.5의동일force/data 비교, (10.22)의ν rescaling, Corollary10.6의지지축소후disjoint translate를검토한다.\n합격: C/D 결론에필요한energy·periodic pressure·same forcing가모두남는다. periodization을arbitrary overlapping\ncopies의합으로대체하면nonlinear cross terms 때문에실패다.[\n  \"navier/localization.mjs\",\n  \"navier/evidence/N7-periodic.json\",\n  \"navier/SOURCE_RECONSTRUCTION_KO.md\"\n]남은 조건: Apply comparison and viscosity rescaling to the same complete actual field, force, pressure and energy hypotheses. · Construct the shrunken disjoint source translates and retain every original assumption.원문 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf · p.64 · 전체 조건 완료: false"
+    }
+  ],
+  "selected": {
+    "archiveSHA256": "96917f7652f865a24bfcb566c2cf0fce6d2070716a4e249ae373c72b137d4e36",
+    "completeN6": false,
+    "depth": 0,
+    "exactFormulas": {
+      "leading": "e0=2*Phi(2,0)/(CSelected*sqrt(Lambda)) > 1/(CSelected*sqrt(Lambda)) >0",
+      "physicalVelocity": "u_theta=eScale*tau_d^(-A)*intervalMultiplier",
+      "point": "Xin=Xa/2=2/Lambda, x_tau=(sqrt(2*Xin*tau),0,0), eta=0, q=tau",
+      "remainder": "|tau^A*u_theta-e0|<=C*tau^(2h) on the original inner restriction. Identification with the final localized field uses the listed external source theorems.",
+      "scaledVelocity": "(CSelected*sqrt(Lambda)/2)*tau^A*u_theta(x_tau,1-tau)",
+      "tau": "tau_d=plateau*exp(-(log(1+4*C/eScale)+d*log(2))/(2*h))"
+    },
+    "exactSourceRow": {
+      "cutoffArguments": {
+        "axial": 0,
+        "radial": 622837,
+        "time": 622836
+      },
+      "depth": 0,
+      "displayEnclosure": [
+        0.32672489596536247,
+        0.8267248959653626
+      ],
+      "enclosureMethod": "FRESH_ACTUAL_CORE_INTERVAL_PLUS_SOURCE_ALL_ORDER_CUTOFF_TAIL",
+      "exactPlateau": {
+        "axial": "0",
+        "product": "1",
+        "radial": "2*r_tau^2=4*Xin*tau<1/8<1/2",
+        "time": "tau/tau0<1/4<1/2"
+      },
+      "externalSourceTheoremBridgeRequired": true,
+      "finiteSumMidpointUsed": false,
+      "interval": {
+        "lower": "37832158309674106916051052126647186832254156739219495421259433240399899931359/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+        "upper": "95728202928332204627836544630991140758889149072039777441025118732503883862751/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+      },
+      "leadingInterval": {
+        "lower": "66780180619003155771943798378819163795571652905629636431123829242378182341343/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+        "upper": "66780180619003155771943798378819163795571652905629636431160722730525601452767/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+      },
+      "logTau": 622825,
+      "normalizedQuantity": "(CSelected*sqrt(Lambda)/2)*tau^A*u_theta(x_tau,1-tau)",
+      "originalFinalN6InstanceNumericallyEvaluated": false,
+      "physicalVelocity": {
+        "binary64": null,
+        "intervalMultiplier": {
+          "lower": "37832158309674106916051052126647186832254156739219495421259433240399899931359/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+          "upper": "95728202928332204627836544630991140758889149072039777441025118732503883862751/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+        },
+        "positiveScale": 622835
+      },
+      "position": [
+        622831,
+        0,
+        0
+      ],
+      "remainderAbsUpper": "1/4",
+      "sourceProfilePoint": {
+        "X": 3985,
+        "Y": 24,
+        "eta": 0
+      },
+      "tau": 622826,
+      "time": 622828
+    },
+    "externalFinalFieldIdentification": {
+      "dependencies": [
+        "Proposition9.9: actual final (9.21), annular support, on the smaller same-source complete partition domain",
+        "Proposition10.1: localized field agrees on the fixed cutoff plateau"
+      ],
+      "samePhysicalPointAndScale": true,
+      "status": "CONDITIONAL_ON_EXTERNAL_SOURCE_THEOREM_IDENTIFICATION"
+    },
+    "freshSourceConstructorExecuted": false,
+    "newLeanExecuted": false,
+    "observationClaimIds": [
+      "N7-O-inner-growth"
+    ],
+    "observationClaims": [
+      {
+        "completeN6": false,
+        "equation": "|tau^A*u_theta-e0|<=C*tau^(2h) on the original inner restriction. Identification with the final localized field uses the listed external source theorems.",
+        "externalFinalFieldIdentification": {
+          "dependencies": [
+            "Proposition9.9: actual final (9.21), annular support, on the smaller same-source complete partition domain",
+            "Proposition10.1: localized field agrees on the fixed cutoff plateau"
+          ],
+          "samePhysicalPointAndScale": true,
+          "status": "CONDITIONAL_ON_EXTERNAL_SOURCE_THEOREM_IDENTIFICATION"
+        },
+        "id": "N7-O-inner-growth",
+        "inputHash": "5f7ea9b515fcaf7b1c760e9ec7b75f02604b06075eceed8d6f18086b7c8d2dd1",
+        "leanTheorem": null,
+        "meaning": "The displayed intervals follow from the original positive core enclosure and explicit all-order remainder. The final localized field is identified by the listed source theorems; the browser revalidates the archive and does not reconstruct the whole N6 field.",
+        "newLeanExecuted": false,
+        "observable": "Original inner-path scaled azimuthal velocity",
+        "recordedSourceGate": {
+          "command": [
+            "node",
+            "--max-old-space-size=6144",
+            "--test",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m3/navier/tests/source-inner-growth.test.mjs"
+          ],
+          "elapsedSeconds": 158.96518460900552,
+          "environment": {
+            "M3_N7_INNER_EVIDENCE": "research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt2/inner-growth.json"
+          },
+          "exitCode": 0,
+          "finishedAt": "2026-10-12T11:23:59.405976+00:00",
+          "freshlyExecutedByArchiveConsumer": false,
+          "independentFractionChecks": 9,
+          "nodeTests": {
+            "failed": 0,
+            "passed": 8
+          },
+          "observedPeakRSSBytes": 4434853888,
+          "startedAt": "2026-10-12T11:21:20.404660+00:00",
+          "workingDirectory": "repository root"
+        },
+        "reference": {
+          "blueprint": {
+            "criteria": [
+              "N7-07"
+            ],
+            "page": 64,
+            "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+            "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf"
+          },
+          "paper": {
+            "pages": 166,
+            "pagesUsed": [
+              116,
+              118,
+              124
+            ],
+            "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+            "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+          }
+        },
+        "runHash": "c219d500d283bb0a9066f314095a28397e7ffeeacc432578b02bb3b53fa2ee8f",
+        "scope": "SOURCE_BOUND_INNER_PATH_WITH_EXTERNAL_FINAL_LOCALIZATION_BRIDGE",
+        "sourceAnalyticCertificate": {
+          "kind": "ORIGINAL_BACKGROUND_INNER_RESTRICTION",
+          "leadingPositiveLower": "e0=2*Phi(2,0)/(CSelected*sqrt(Lambda)) > 1/(CSelected*sqrt(Lambda)) >0",
+          "remainder": "|tau^A*u_theta-e0|<=C*tau^(2h) on the original inner restriction. Identification with the final localized field uses the listed external source theorems.",
+          "sourceAllOrderTailRetained": true
+        },
+        "wholeM3Complete": false
+      }
+    ],
+    "physicalTimeOrVelocityRoundedToBinary64": false,
+    "recordedOnly": true,
+    "runDigest": "9c3c82529a1bc865b60eb83676f6279c49d928bec4ae4d348c0b51f9a669e497",
+    "scalarProgram": {
+      "fullProgramExportPath": "result.results.certificate.formulaProgram",
+      "roots": {
+        "A": 4,
+        "C": 24825,
+        "CSelected": 1,
+        "D": 7,
+        "Lambda": 0,
+        "Xin": 11,
+        "eLower": 14,
+        "eScale": 15,
+        "h": 2,
+        "logTau_0": 28874,
+        "normalizedRemainder": 24827,
+        "plateau": 28866,
+        "radialCutoffArgument_0": 28886,
+        "radius_0": 28880,
+        "shrinkLog": 28869,
+        "tau_0": 28875,
+        "timeCutoffArgument_0": 28885,
+        "time_0": 28877,
+        "velocityScale_0": 28884
+      },
+      "sha256": "907acb6f5a875a473efc28efeb2537409928188a5be1098bda4cbb9ded75afb1",
+      "sourceNodeIds": {
+        "A": 23,
+        "C": 299053,
+        "CSelected": 3456,
+        "D": 22,
+        "Lambda": 3454,
+        "Xin": 3985,
+        "eLower": 622783,
+        "eScale": 622784,
+        "h": 9,
+        "logTau_0": 622825,
+        "normalizedRemainder": 622803,
+        "plateau": 622801,
+        "radialCutoffArgument_0": 622837,
+        "radius_0": 622831,
+        "shrinkLog": 622806,
+        "tau_0": 622826,
+        "timeCutoffArgument_0": 622836,
+        "time_0": 622828,
+        "velocityScale_0": 622835
+      }
+    },
+    "schema": "MathScope.N7.InnerGrowthSelection/1",
+    "selectionPersistence": "PAGE_LOCAL_ONLY; all exact rows and the complete formula program remain in every export",
+    "sourceArtifact": {
+      "bytes": 3436293,
+      "path": "research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt2/inner-growth.json",
+      "sha256": "7a72e1ca1293ba2542ed4ed2612ad67b95df7cb31eb49cf91be004f6ae16a5fe"
+    },
+    "sourceChangedBySelection": false
+  }
+}

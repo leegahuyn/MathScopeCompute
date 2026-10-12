@@ -1,6 +1,12 @@
 import {validateExtendedView,deriveExtendedViewContract,deriveExtendedScene} from './extended-view-contract.mjs';
 import {buildGaugeStudyPanels} from './gauge-study-view.mjs';
 import {buildInnerGrowthPanel,innerGrowthSummary,innerGrowthSelection,renderInnerGrowthChart} from './navier-inner-growth-view.mjs';
+import {buildSourceRefinementPanel,sourceRefinementSummary,sourceRefinementSelection} from './navier-source-refinement-view.mjs';
+import {buildNearTerminalPanel,nearTerminalSummary,nearTerminalSelection,renderNearTerminalChart} from './navier-near-terminal-view.mjs';
+import {buildSourceDomainExteriorPanel,sourceDomainExteriorSummary,sourceDomainExteriorSelection,renderSourceDomainExterior} from './navier-source-domain-exterior-view.mjs';
 globalThis.MathScopeM3ViewContract=Object.freeze({validate:validateExtendedView,derive:deriveExtendedViewContract,scene:deriveExtendedScene});
 globalThis.MathScopeM3GaugeStudyView=Object.freeze({panels:buildGaugeStudyPanels});
 globalThis.MathScopeM3InnerGrowthView=Object.freeze({panel:buildInnerGrowthPanel,summary:innerGrowthSummary,selection:innerGrowthSelection,renderChart:renderInnerGrowthChart});
+globalThis.MathScopeM3SourceRefinementView=Object.freeze({panel:buildSourceRefinementPanel,summary:sourceRefinementSummary,selection:sourceRefinementSelection});
+globalThis.MathScopeM3NearTerminalView=Object.freeze({panel:buildNearTerminalPanel,summary:nearTerminalSummary,selection:nearTerminalSelection,renderChart:renderNearTerminalChart});
+globalThis.MathScopeM3SourceDomainExteriorView=Object.freeze({panel:buildSourceDomainExteriorPanel,summary:sourceDomainExteriorSummary,selection:sourceDomainExteriorSelection,render:renderSourceDomainExterior});

@@ -2,6 +2,24 @@
 
 Hybrid numerical, computational-topology and structural elliptic/index service for MathScope v0.3.1.
 
+## MathScope M3 research workspaces
+
+The current M3 work is in [`research-ide/mathscope-m3`](research-ide/mathscope-m3).
+Its 64 original acceptance criteria cover P7–P8, Y5–Y7 and N6–N8. The
+[current criterion review](research-ide/mathscope-m3/M3_ALL64_REVIEW_KO.md)
+separates accepted tools, actual source executions and the remaining original
+field construction and error bounds. A passing finite calculation is not a
+claim that all M3 criteria or an unrestricted mathematical problem are solved.
+
+Use the [published MathScope workspace](https://project29770.websitepublisher.ai/v0.3.1.html)
+for the P7, P8, gauge and fluid interfaces. Source records, exact interval
+tables, separate fresh computations and recorded executions can be exported
+and replayed with their source bindings. Large raw evidence is preserved with
+[lossless packing and exact checksum verification](research-ide/mathscope-m3/navier/evidence/PACKED_EVIDENCE.md).
+
+The [M3 execution guide](research-ide/mathscope-m3/CI_EXECUTION_WORKSPACES.md)
+lists the release checks and the independently recorded constructor jobs.
+
 The Python service is separate from the full upstream Lean projects. The research edition below includes scoped Lean components, pinned source references, and their audit records.
 
 ## M0/M1 research IDE — English edition

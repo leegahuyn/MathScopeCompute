@@ -41,6 +41,14 @@ def build(observed, group='all'):
                 '<style id="' + element + '">\n' + content + '\n</style>', ' + '.join(filenames))
 
     if group in ('p7', 'all'):
+        workspace_html = (WEB / 'workspace.html').read_text()
+        boundary_pattern = r'<div class="m3-boundary">.*?</div>'
+        replace(boundary_pattern, re.search(boundary_pattern, workspace_html, re.S).group(0), 'workspace.html:criterion-summary')
+        progress_pattern = r'<article class="m1-card"><h2>03 / P7[^<]*</h2>.*?<div id="m3-progress"></div></article>'
+        replace(progress_pattern, re.search(progress_pattern, workspace_html, re.S).group(0), 'workspace.html:progress')
+        visual_html = (WEB / 'p7-visualization.html').read_text()
+        visual_boundary_pattern = r'<span class="p7v-boundary">.*?</span>'
+        replace(visual_boundary_pattern, re.search(visual_boundary_pattern, visual_html, re.S).group(0), 'p7-visualization.html:criterion-summary')
         style('mathscope-m3-css', 'workspace.css', 'p7-visualization.css')
         for element, filename in [
             ('mathscope-m3-js', 'workspace.js'),

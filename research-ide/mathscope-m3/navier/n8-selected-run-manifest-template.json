@@ -1,0 +1,46 @@
+{
+  "schema": "MathScope.N8.SelectedRunMetadataTemplate/1",
+  "templateOnly": true,
+  "criterionSatisfied": false,
+  "release": {
+    "edition": "v0.3.1",
+    "commit": {"status": "PENDING_RELEASE_COMMIT"},
+    "buildLogs": {"status": "PENDING_OBSERVED_FINAL_BUILD"},
+    "camera": {"status": "PENDING_ACTUAL_CAMERA_STATE"},
+    "otherEnvironment": {"status": "PENDING_OBSERVED_FIXTURE_AND_SELECTED_RUN_REPLAY"}
+  },
+  "runs": [
+    {
+      "id": "original-final-localized-core-ray",
+      "model": "original-source-core-restriction",
+      "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "supportProofSHA256": "19f0b3976e9a616372ea6f515c0cdeefcc65946a2afb48e69cd4cf1898d25839",
+      "constants": {"status": "AUTHENTIC_RECORDED_PROGRAM", "requiredAttachment": "source parameter expression DAG and hash"},
+      "basis": {"coordinates": "cylindrical (r,theta,z)", "cartesianRay": "theta=0", "componentOrder": ["r", "theta", "z"]},
+      "domain": {"status": "AUTHENTIC_RECORDED_DOMAIN", "ray": "Xin=2/Lambda; eta=0", "requiredAttachment": "same qStar, collar and localization plateau roots"},
+      "timeSchedule": {"status": "AUTHENTIC_RECORDED_PROGRAM", "variable": "s=-log(tau)", "activeDepths": [0, 2, 4, 8, 12], "decimalTaus": ["1e-2", "1e-4", "1e-8", "1e-12", "1e-40", "1e-1000"]},
+      "quadrature": {"kind": "source analytic point enclosures", "spatialIntegralExecuted": false},
+      "truncations": {"finiteSourceOrders": [1, 2], "completeTailFromOrder": 3, "omittedTailSetToZero": false},
+      "precision": {"bits": 256, "degree": 64, "requiredAttachment": "component enclosures and exact error budgets"},
+      "tails": {"status": "AUTHENTIC_RECORDED_ALL_ORDER_BOUND", "requiredAttachment": "actual C/Cstar and component powers"},
+      "residual": {"status": "MISSING_SELECTED_SOURCE_PHYSICAL_RESIDUAL", "baseFlatResidualRetained": true, "zeroAssumed": false},
+      "energy": {"status": "MISSING_SELECTED_SOURCE_ENERGY_INTEGRAL", "pointwiseKineticDensityPossibleSeparately": true, "densityIsSpatialIntegral": false},
+      "reproduction": {"status": "PENDING_SAME_TOLERANCE_EXTERNAL_RUN", "mustMatchOwnModelAndSourcePins": true}
+    },
+    {
+      "id": "finite-periodic-galerkin",
+      "model": "finite-periodic-Fourier-Galerkin",
+      "domain": {"kind": "periodic-3-torus", "sideLengths": ["2*pi", "2*pi", "2*pi"]},
+      "basis": {"kind": "exp(i*k dot x)", "cutoff": 2, "complexStorage": "[real,imaginary] per component"},
+      "constants": {"viscosity": 1},
+      "timeSchedule": {"endTime": 0.2, "initialStep": 0.025, "requiredAttachment": "actual accepted and rejected steps"},
+      "quadrature": {"status": "ATTACH_OWN_EXECUTED_PARSEVAL_AND_INDEPENDENT_GRID_RECORD"},
+      "truncations": {"status": "ATTACH_COMPLETE_FINITE_MODE_LIST", "originalSourceSeries": false},
+      "precision": {"kind": "IEEE754-binary64", "rigorousError": false},
+      "tails": {"status": "FINITE_MODEL_NO_ORIGINAL_SOURCE_TAIL_AUTHORITY"},
+      "residual": {"status": "ATTACH_OWN_DISCRETE_STEP_DEFECT_AND_PDE_ASSEMBLY", "fillsOriginalCoreResidual": false},
+      "energy": {"status": "ATTACH_OWN_PERIODIC_DOMAIN_ENERGY", "fillsOriginalCoreEnergy": false},
+      "reproduction": {"status": "PENDING_SAME_TOLERANCE_EXTERNAL_RUN", "mustMatchOwnModelAndSourcePins": true}
+    }
+  ]
+}

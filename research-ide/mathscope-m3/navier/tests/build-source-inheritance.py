@@ -17,13 +17,10 @@ EXPECTED = {
     'common6': 'ac98143158c9e7abc6bd656e687269f183bb803ecdc036edb8a3937edc24bc01',
     'source4': '88f7cf6fe5af934d6b3bcacc8ad975e86bd0b37fee2110b9db8c73e72acb129e',
 }
-IMPLEMENTATION_FILES = (
-    'galerkin.mjs', 'corrections.mjs', 'localization.mjs', 'index.mjs',
-    'source-mean-map.mjs', 'source-inheritance.mjs', 'flow-observations.mjs',
-    'source-current-state.mjs', 'source-pressure.mjs', 'source-higher-jets.mjs',
-    'source-signed-stress.mjs', 'source-current-evidence.mjs',
-    'source-inner-growth.mjs', 'source-inner-growth-evidence.mjs',
-)
+# Bind every shipped Navier module, including source constructors and their
+# recorded data. The generated pin cannot include itself recursively.
+IMPLEMENTATION_FILES = tuple(sorted(path.name for path in OUT.glob('*.mjs')
+                                    if path.name != 'implementation-pin.mjs'))
 
 
 def update_implementation_pin():

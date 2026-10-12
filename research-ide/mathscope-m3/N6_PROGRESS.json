@@ -15,7 +15,7 @@
   "P7Changed": false,
   "M2Changed": false,
   "originalCriterionCount": 8,
-  "completedOriginalCriteria": 0,
+  "completedOriginalCriteria": 3,
   "criteria": [
     {
       "id": "N6-01",
@@ -25,7 +25,7 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "OPEN",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedAt": "2026-10-12T13:33:58.646483+00:00",
       "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/source-inheritance.json",
@@ -34,23 +34,31 @@
         "navier/evidence/source-current-20261012/current-state.json",
         "navier/evidence/source-current-20261012/full-pressure.json",
         "navier/evidence/source-current-20261012/higher-pulse-jets.json",
-        "navier/SOURCE_RECONSTRUCTION_KO.md"
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-global-current.mjs",
+        "navier/source-global-signed.mjs",
+        "navier/source-global-moment.mjs",
+        "navier/evidence/global-current-20261012/attempt1/receipt.json",
+        "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+        "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md"
       ],
       "remaining": [
-        "Assemble the required original bands and labels, then apply the actual temporal-mean and five-moment updates.",
-        "Recompute full pressure after both updates and establish the exact B0=0.7, C0*=1.2 and (9.9)-(9.10) class constants."
+        "Apply the actual full-torus temporal mean inverse, then apply the five original moments to that updated current.",
+        "Recompute full pressure after each ordered update and establish B0=0.7, C0*=1.2 and the exact(9.9)-(9.10) classes."
       ],
       "remainingObligations": [
-        "Assemble the required original bands and labels, then apply the actual temporal-mean and five-moment updates.",
-        "Recompute full pressure after both updates and establish the exact B0=0.7, C0*=1.2 and (9.9)-(9.10) class constants."
+        "Apply the actual full-torus temporal mean inverse, then apply the five original moments to that updated current.",
+        "Recompute full pressure after each ordered update and establish B0=0.7, C0*=1.2 and the exact(9.9)-(9.10) classes."
       ],
-      "acceptanceScope": "The unchanged common6 source constructor has actually run. Its selected original band/member full curl, all six angular/Haar covariances, current P/J, and full auxiliary-torus pressure are reconstructed. Both original pulse systems have finite C4/C5 variations. This is still the pre-initialization state; Proposition9.5 j=0 has not been constructed.",
+      "acceptanceScope": "All original bands/labels now contribute to the actual current; a separate passing12-test source gate applies the original five moments and recomputes nonlinear mean pressure. That gate is PRE-temporal and is not j0. The ordered temporal-then-moment construction and B0=0.7/C0*=1.2 remain required.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
         "sameTitleIgnoringWhitespace": true,
         "sameTextIgnoringWhitespace": true
-      }
+      },
+      "previousSourceScope": "The unchanged common6 source constructor has actually run. Its selected original band/member full curl, all six angular/Haar covariances, current P/J, and full auxiliary-torus pressure are reconstructed. Both original pulse systems have finite C4/C5 variations. This is still the pre-initialization state; Proposition9.5 j=0 has not been constructed."
     },
     {
       "id": "N6-02",
@@ -60,7 +68,7 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PARTIAL",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedAt": "2026-10-12T13:33:58.646483+00:00",
       "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/galerkin.mjs",
@@ -68,7 +76,14 @@
         "navier/evidence/source-current-20261012/source-current-execution.json",
         "navier/evidence/source-current-20261012/full-pressure.json",
         "navier/evidence/source-current-20261012/current-signed-stress.json",
-        "navier/SOURCE_RECONSTRUCTION_KO.md"
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-global-current.mjs",
+        "navier/source-global-signed.mjs",
+        "navier/source-global-moment.mjs",
+        "navier/evidence/global-current-20261012/attempt1/receipt.json",
+        "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+        "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md"
       ],
       "remaining": [
         "Construct full auxiliary pressure after the actual signed update and after every later correction substep.",
@@ -78,13 +93,14 @@
         "Construct full auxiliary pressure after the actual signed update and after every later correction substep.",
         "Compare independent complete physical PDE evaluation with the full decomposed source residual, including the old flat tail, every quadratic product and explicit error budgets."
       ],
-      "acceptanceScope": "The generic finite Fourier quadratic residual identity and omitted-square control remain passing evidence. The actual selected source now has complete initial auxiliary pressure with A0 retained; its signed wave update retains previous-curl, new-curl and square terms, recalculates all six mean covariances and reconstructs the updated mean pressure before Etheta/Ez. An independent complete physical PDE jet comparison after every source substep is not present.",
+      "acceptanceScope": "The full all-label current, signed update and separate five-moment update now recompute all six Haar covariances, full nonlinear mean residual and pressure. This does not yet compare the complete auxiliary/physical PDE after every ordered stage.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
         "sameTitleIgnoringWhitespace": true,
         "sameTextIgnoringWhitespace": true
-      }
+      },
+      "previousSourceScope": "The generic finite Fourier quadratic residual identity and omitted-square control remain passing evidence. The actual selected source now has complete initial auxiliary pressure with A0 retained; its signed wave update retains previous-curl, new-curl and square terms, recalculates all six mean covariances and reconstructs the updated mean pressure before Etheta/Ez. An independent complete physical PDE jet comparison after every source substep is not present."
     },
     {
       "id": "N6-03",
@@ -94,7 +110,7 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PARTIAL",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedAt": "2026-10-12T13:33:58.646483+00:00",
       "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/corrections.mjs",
@@ -102,7 +118,14 @@
         "navier/evidence/source-current-20261012/source-current-execution.json",
         "navier/evidence/source-current-20261012/higher-pulse-jets.json",
         "navier/source-higher-jets.mjs",
-        "navier/SOURCE_RECONSTRUCTION_KO.md"
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-global-current.mjs",
+        "navier/source-global-signed.mjs",
+        "navier/source-global-moment.mjs",
+        "navier/evidence/global-current-20261012/attempt1/receipt.json",
+        "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+        "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md"
       ],
       "remaining": [
         "Derive the complete same-label current harmonic coefficients from the updated source field.",
@@ -112,13 +135,14 @@
         "Derive the complete same-label current harmonic coefficients from the updated source field.",
         "Solve their actual projected transport equations and realize supported physical curls with commutators and justified mode tails."
       ],
-      "acceptanceScope": "The finite harmonic ledger and independent projected ODE example remain separate from source reconstruction. Both authentic original pulse matrices now generate C4/C5 slow jets, their coefficient/time derivative FTC bodies, noncommuting 112-component variational systems and retained factorial ordered-integral tails. This closes the derivative-kernel dependency for the selected signed curl, not the actual complete current nonzero-harmonic correction.",
+      "acceptanceScope": "All-label source assembly is available, but the current complete nonzero angular harmonic inverses and supported curl realization are still unexecuted.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
         "sameTitleIgnoringWhitespace": true,
         "sameTextIgnoringWhitespace": true
-      }
+      },
+      "previousSourceScope": "The finite harmonic ledger and independent projected ODE example remain separate from source reconstruction. Both authentic original pulse matrices now generate C4/C5 slow jets, their coefficient/time derivative FTC bodies, noncommuting 112-component variational systems and retained factorial ordered-integral tails. This closes the derivative-kernel dependency for the selected signed curl, not the actual complete current nonzero-harmonic correction."
     },
     {
       "id": "N6-04",
@@ -126,9 +150,9 @@
       "text": "고정positive a±에대해δa=(Hcov^−1(Σ/ε))/(2a)를사용한다. 새Σ는signed일수있다. 합격: B(W0,LΣ)=Σ와(7.41)의\n세remainder를모두검사한다. 앞단계a±를새residual에맞춰몰래재선택하지않는다.",
       "page": 62,
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
-      "status": "PARTIAL",
-      "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T13:39:39.155550+00:00",
       "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/corrections.mjs",
@@ -137,22 +161,53 @@
         "navier/evidence/source-current-20261012/source-current-execution.json",
         "navier/evidence/source-current-20261012/current-signed-stress.json",
         "navier/source-signed-stress.mjs",
-        "navier/SOURCE_RECONSTRUCTION_KO.md"
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-global-current.mjs",
+        "navier/source-global-signed.mjs",
+        "navier/source-global-moment.mjs",
+        "navier/evidence/global-current-20261012/attempt1/receipt.json",
+        "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+        "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md",
+        "navier/tests/build-global-signed-evidence.py",
+        "navier/source-global-signed-evidence.mjs",
+        "navier/tests/global-signed-archive.test.mjs",
+        "navier/evidence/PACKED_EVIDENCE.md"
       ],
-      "remaining": [
-        "Assemble the complete source partition and verify the global averaged B(W0,L Sigma)=Sigma identity.",
-        "Apply this update to the initialized current stage with full pressure after the substep, and prove its original support/edge and all-order derivative-class bounds."
-      ],
-      "remainingObligations": [
-        "Assemble the complete source partition and verify the global averaged B(W0,L Sigma)=Sigma identity.",
-        "Apply this update to the initialized current stage with full pressure after the substep, and prove its original support/edge and all-order derivative-class bounds."
-      ],
-      "acceptanceScope": "A target is now derived from the actual current Etheta/Ez and P/J using retained Corollary8.5 radial inverses. The original H and positive a remain fixed. Both source-signed potential curls and their shared derivative bodies are constructed, all three (7.41) remainder families and new squares are retained, and updated full mean covariances/P/J are formed. The selected member has the correct eta_beta^2*Sigma principal identity; the global Sigma identity is not claimed for one member.",
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "The actual all-cover current U=W0+E supplies its own signed Sigma. The original H and positive a remain fixed; the exact complete81-label partition and chart law give B(W0,L Sigma)=Sigma. All six covariance components retain and check each of the three(7.41) remainder families. The observed13-test source gate and230 unchanged source dependencies establish this original operator criterion. The historical receipt retains originalN604Complete=false; this separate later assessment corrects its overly broad requirement for initializedj0 and all-stage(7.42) class bounds, which belong to N6-01/07 and package completion. No j0, all-stage class bound, numerical field enclosure or full N6 is claimed.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
         "sameTitleIgnoringWhitespace": true,
         "sameTextIgnoringWhitespace": true
+      },
+      "previousSourceScope": "A target is now derived from the actual current Etheta/Ez and P/J using retained Corollary8.5 radial inverses. The original H and positive a remain fixed. Both source-signed potential curls and their shared derivative bodies are constructed, all three (7.41) remainder families and new squares are retained, and updated full mean covariances/P/J are formed. The selected member has the correct eta_beta^2*Sigma principal identity; the global Sigma identity is not claimed for one member.",
+      "criterionDependencyReview": {
+        "sourcePages": [
+          85,
+          86,
+          87
+        ],
+        "blueprintPages": [
+          61,
+          62
+        ],
+        "actualInput": "Authenticated original full primary/curl current U=W0+E with its own source-derived signed target.",
+        "requiredAndVerified": [
+          "Original fixed H and positive a",
+          "Actual signed target, never a new positive amplitude",
+          "All81 original partition contributions in global bilinear identity",
+          "Allsix components of allthree(7.41) remainders"
+        ],
+        "separateRequirements": [
+          "N6-01 ordered initialization and B0/C0*",
+          "N6-07 all-stage weighted class estimates(7.42)/(9.17)/(9.18)",
+          "N6-08 final local summation"
+        ],
+        "historicalReceiptNotEdited": true,
+        "historicalOriginalN604Complete": false
       }
     },
     {
@@ -161,32 +216,77 @@
       "text": "(8.19)의1/(2πi vt·k) multiplier로(8.20)을풀고axial increment는(8.14)의potential로실현한다. 합격: zero mode가\n0이고Nφ=F가맞는다. |vt·k|^−1≤C(1+|k|) 및4개추가도함수를포함한Fourier tail를기록한다.",
       "page": 62,
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
-      "status": "PARTIAL",
-      "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
-      "assessedBy": "MathScope actual source and finite observation review",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T14:42:19.692291+00:00",
+      "assessedBy": "Root review of actual full-source Fourier limit, independent kernel and observed temporal gate",
       "evidence": [
         "navier/corrections.mjs",
         "navier/evidence/N6-workbench.json",
         "navier/evidence/source-current-20261012/source-current-execution.json",
         "navier/evidence/source-current-20261012/full-pressure.json",
         "navier/evidence/source-current-20261012/higher-pulse-jets.json",
-        "navier/SOURCE_RECONSTRUCTION_KO.md"
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-global-current.mjs",
+        "navier/source-global-signed.mjs",
+        "navier/source-global-moment.mjs",
+        "navier/evidence/global-current-20261012/attempt1/receipt.json",
+        "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+        "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md",
+        "navier/source-global-temporal.mjs",
+        "navier/source-temporal-potential.mjs",
+        "navier/source-auxiliary-derivative-closure.mjs",
+        "navier/source-global-temporal-evidence.mjs",
+        "navier/tests/global-source-temporal.test.mjs",
+        "navier/tests/global-temporal-archive.test.mjs",
+        "navier/tests/build-global-temporal-evidence.py",
+        "navier/evidence/global-temporal-20261012/attempt3/receipt.json",
+        "navier/evidence/global-temporal-20261012/attempt3/global-temporal.json.gz",
+        "navier/evidence/global-temporal-20261012/attempt3/source-bytes.json",
+        "navier/evidence/auxiliary-fourier-kernel-20261012/attempt1/receipt.json"
       ],
-      "remaining": [
-        "Compute the actual zero-mean source coefficients and the original divisor/extra-four-derivative bounds for each required order.",
-        "Realize the axial potential and divergence-compatible radial update with A1 and all cutoff remainders retained in the next actual pressure/residual."
-      ],
-      "remainingObligations": [
-        "Compute the actual zero-mean source coefficients and the original divisor/extra-four-derivative bounds for each required order.",
-        "Realize the axial potential and divergence-compatible radial update with A1 and all cutoff remainders retained in the next actual pressure/residual."
-      ],
-      "acceptanceScope": "The exact algebraic divisor for vt=(sqrt(2)-1,1) and a declared finite Fourier inverse remain implemented. The actual full-torus initial pressure and residual expressions are now available as source inputs, and C5 pulse slow derivatives are retained. Neither those slow jets nor a finite Fourier fixture supply the required complete auxiliary Fourier coefficients and C^(m+4) tail constants.",
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "The zero-auxiliary-mean Fourier inverse is now constructed from the same authenticated complete original current and full auxiliary pressure on all81 boxes and both signs. Actual Fourier coefficients use the original direction (sqrt(2)-1,1), retain the exact nonzero quadratic integer divisor norm, remove rather than divide the zero mode, and satisfy the directly differentiated N identity. The infinite inverse remains an exact limit: C0/C1 tails include four extra source derivatives, and each requested slow/torus derivative has its own actual differentiated source bound. All466 indexed derivative programs retain162 rows and materialize their genuine local derivatives. The original T1 meridional potential retains ci^-1, the axial A1 remainder and slow-time derivatives while preserving incompressibility. Actual attempt3 passed15 tests with123 source files unchanged; independent kernel5 tests plus662 exact checks and both prior resource failures are preserved. The complete24,527,857-byte artifact is distributed by verified lossless gzip. The individual temporal operator is complete; post-temporal nonlinear pressure, new five moments, j0 and all-order class bounds remain separate pending requirements.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
         "sameTitleIgnoringWhitespace": true,
         "sameTextIgnoringWhitespace": true
+      },
+      "previousSourceScope": "The exact algebraic divisor for vt=(sqrt(2)-1,1) and a declared finite Fourier inverse remain implemented. The actual full-torus initial pressure and residual expressions are now available as source inputs, and C5 pulse slow derivatives are retained. Neither those slow jets nor a finite Fourier fixture supply the required complete auxiliary Fourier coefficients and C^(m+4) tail constants.",
+      "previousSourceResumeAssessments": [
+        {
+          "status": "PARTIAL",
+          "originalCriterionComplete": false,
+          "assessedAt": "2026-10-12T13:33:58.646483+00:00",
+          "assessedBy": "MathScope actual source and finite observation review",
+          "acceptanceScope": "The exact auxiliary inverse kernel now has5 passing Node tests and662 independent Fraction/Fourier checks, including genuine quadratic divisors and an explicit1/K tail from derivative envelopes. Its sourceAuthenticated flag is false until attached to the actual residual and axial potential; a generic kernel test alone does not close this row.",
+          "remaining": [
+            "Compute the actual zero-mean source coefficients and the original divisor/extra-four-derivative bounds for each required order.",
+            "Realize the axial potential and divergence-compatible radial update with A1 and all cutoff remainders retained in the next actual pressure/residual."
+          ],
+          "remainingObligations": [
+            "Compute the actual zero-mean source coefficients and the original divisor/extra-four-derivative bounds for each required order.",
+            "Realize the axial potential and divergence-compatible radial update with A1 and all cutoff remainders retained in the next actual pressure/residual."
+          ]
+        }
+      ],
+      "criterionDependencyReview": {
+        "requiredAndVerified": [
+          "Same complete actual source residual and original torus direction",
+          "Exact zero mode, actual Fourier coefficients and N identity",
+          "Full omitted-mode bounds with four extra source derivatives",
+          "Every requested slow inverse derivative assigned its own actual bound",
+          "Original axial T1 potential with ci, A1 and slow-time remainders"
+        ],
+        "separateUncompletedObligations": [
+          "N6-01 ordered post-temporal pressure/new5moments/j0",
+          "N6-03 nonzero angular source correction",
+          "N6-07 all-order target classes",
+          "N6-08 final cutoff assembly"
+        ]
       }
     },
     {
@@ -195,10 +295,10 @@
       "text": "(8.25)로두보존모멘트와P,Jθ,Jz를보정하고(8.12)로pressure를다시계산한다. 합격: 두보존적분은0으로유지되고새\n결함은(8.26),(8.27)의nonlinear remainder와일치한다. λ의작은값에따른condition number를통제한다.",
       "page": 62,
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
-      "status": "PARTIAL",
-      "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
-      "assessedBy": "MathScope actual source and finite observation review",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T14:01:32.114508+00:00",
+      "assessedBy": "Root original-criterion review of actual source gates and exact support proof",
       "evidence": [
         "navier/source-mean-map.mjs",
         "navier/evidence/N6-source-mean.json",
@@ -206,22 +306,66 @@
         "navier/evidence/source-current-20261012/source-current-execution.json",
         "navier/evidence/source-current-20261012/current-state.json",
         "navier/evidence/source-current-20261012/current-signed-stress.json",
-        "navier/SOURCE_RECONSTRUCTION_KO.md"
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-global-current.mjs",
+        "navier/source-global-signed.mjs",
+        "navier/source-global-moment.mjs",
+        "navier/evidence/global-current-20261012/attempt1/receipt.json",
+        "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+        "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md",
+        "navier/evidence/global-moment-pressure-20261012/attempt1/receipt.json",
+        "navier/source-global-moment-pressure.mjs",
+        "navier/source-full-mean-equations.mjs",
+        "navier/source-global-moment-pressure-evidence.mjs",
+        "navier/tests/build-global-moment-pressure-evidence.py",
+        "navier/tests/global-moment-pressure-archive.test.mjs",
+        "navier/evidence/global-moment-pressure-20261012/attempt1/global-moment-pressure.json.gz",
+        "navier/evidence/packed-evidence.json"
       ],
-      "remaining": [
-        "Apply the authentic fixed mean map to these current defects after the temporal update.",
-        "Recompute the complete updated pressure and both conservation integrals, then verify (8.26)-(8.27) with all nonlinear current means and the original lambda-conditioned derivative bounds."
-      ],
-      "remainingObligations": [
-        "Apply the authentic fixed mean map to these current defects after the temporal update.",
-        "Recompute the complete updated pressure and both conservation integrals, then verify (8.26)-(8.27) with all nonlinear current means and the original lambda-conditioned derivative bounds."
-      ],
-      "acceptanceScope": "The original positive-lambda five-moment inverse was already connected to unchanged M2 helpers. Current P,Jtheta,Jz are now reconstructed from the selected complete primary curl, and recalculated after the actual signed update; full initial pressure and updated mean pressure are present. The five-moment inverse has not yet been applied to these current defects, so the two conservation equations and nonlinear (8.26)-(8.27) result are not asserted for a corrected stage.",
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "The original all-label current is supplied to the five authentic radial equations. Both conserved integrals remain exactly zero; P/Jtheta/Jz targets are corrected using the fixed original five-profile map. Full auxiliary pressure(8.12) is restored after the actual update, including every nonzero auxiliary mode, and independent complete angular-mean PDE checks agree with the full nonlinear(8.26)/(8.27) remainder. The lambda-scaled and logarithmic inverse bounds retain the original tiny positive lambda and all positive row factors. The actual10-test gate has17 source checks and121 unchanged source files. This completes the individual operator criterion; the separate temporal ordering, initializedj0, B0/C0*, all-order classes and full N6 remain incomplete.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
         "sameTitleIgnoringWhitespace": true,
         "sameTextIgnoringWhitespace": true
+      },
+      "previousSourceScope": "The original positive-lambda five-moment inverse was already connected to unchanged M2 helpers. Current P,Jtheta,Jz are now reconstructed from the selected complete primary curl, and recalculated after the actual signed update; full initial pressure and updated mean pressure are present. The five-moment inverse has not yet been applied to these current defects, so the two conservation equations and nonlinear (8.26)-(8.27) result are not asserted for a corrected stage.",
+      "previousSourceResumeAssessments": [
+        {
+          "status": "PARTIAL",
+          "originalCriterionComplete": false,
+          "assessedAt": "2026-10-12T13:33:58.646483+00:00",
+          "assessedBy": "MathScope actual source and finite observation review",
+          "acceptanceScope": "The passing global-moment gate now applies the actual current P/J from all bands/labels to the five original bumps, preserves both conservation moments, and recomputes actual nonlinear mean pressure/remainders(8.26)-(8.27). The original strictly positive lambda is retained symbolically. This pre-temporal operation is not yet the ordered finite-state update or a full auxiliary pressure/class-bound certificate.",
+          "remaining": [
+            "Apply the five-moment operator to the actual post-temporal current.",
+            "Carry complete updated auxiliary pressure and the lambda-conditioned source derivative bounds into the finite correction state."
+          ],
+          "remainingObligations": [
+            "Apply the five-moment operator to the actual post-temporal current.",
+            "Carry complete updated auxiliary pressure and the lambda-conditioned source derivative bounds into the finite correction state."
+          ]
+        }
+      ],
+      "criterionDependencyReview": {
+        "requiredAndVerified": [
+          "Five original equations and both zero conserved integrals",
+          "Complete auxiliary pressure8.12 after the actual update",
+          "Full nonlinear8.26/8.27 identities from independent exact PDE algebra",
+          "Original-lambda conditioned inverse with positive source intervals"
+        ],
+        "separateUncompletedObligations": [
+          "N6-01 ordered temporal initialization and B0/C0*",
+          "N6-02 pressure/residual after the other correction operators",
+          "N6-07 all-stage classes",
+          "N6-08 final local sum"
+        ],
+        "historicalReceiptsAndSourceBytesUnchanged": true,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false
       }
     },
     {
@@ -232,7 +376,7 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "PARTIAL",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedAt": "2026-10-12T13:33:58.646483+00:00",
       "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/corrections.mjs",
@@ -240,23 +384,31 @@
         "navier/evidence/source-current-20261012/source-current-execution.json",
         "navier/evidence/source-current-20261012/higher-pulse-jets.json",
         "navier/evidence/source-current-20261012/current-signed-stress.json",
-        "navier/SOURCE_RECONSTRUCTION_KO.md"
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-global-current.mjs",
+        "navier/source-global-signed.mjs",
+        "navier/source-global-moment.mjs",
+        "navier/evidence/global-current-20261012/attempt1/receipt.json",
+        "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+        "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md"
       ],
       "remaining": [
-        "Establish one common original qbig and all required constants for the complete initialized correction stages.",
-        "Carry every physical derivative loss and differentiated tail on that fixed domain; do not infer the order theorem from sample residual changes."
+        "Establish all-stage Km,ell_m/log-power constants on the now justified fixed original qBig.",
+        "Carry every physical derivative loss and differentiated tail; sample residual slopes are not the order theorem."
       ],
       "remainingObligations": [
-        "Establish one common original qbig and all required constants for the complete initialized correction stages.",
-        "Carry every physical derivative loss and differentiated tail on that fixed domain; do not infer the order theorem from sample residual changes."
+        "Establish all-stage Km,ell_m/log-power constants on the now justified fixed original qBig.",
+        "Carry every physical derivative loss and differentiated tail; sample residual slopes are not the order theorem."
       ],
-      "acceptanceScope": "The rational exponent ledger remains exact. The actual source execution retains the original positive lambda/h, original first admissible band/member, fixed radial integration envelope, coefficient FTC norms and explicit Volterra tails. These are finite selected-chart constructions; no common all-stage qbig or all-order Km,ell_m and logarithmic constants have been proved.",
+      "acceptanceScope": "The separate successful original domain bridge establishes one permitted common qBig from executed initial source conditions and Lemma9.7. It does not supply all-stage Km,ell_m/log-power bounds, differentiated tails or the order improvement for a complete iteration.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
         "sameTitleIgnoringWhitespace": true,
         "sameTextIgnoringWhitespace": true
-      }
+      },
+      "previousSourceScope": "The rational exponent ledger remains exact. The actual source execution retains the original positive lambda/h, original first admissible band/member, fixed radial integration envelope, coefficient FTC norms and explicit Volterra tails. These are finite selected-chart constructions; no common all-stage qbig or all-order Km,ell_m and logarithmic constants have been proved."
     },
     {
       "id": "N6-08",
@@ -266,7 +418,7 @@
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
       "status": "OPEN",
       "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T09:50:22.955579+00:00",
+      "assessedAt": "2026-10-12T13:33:58.646483+00:00",
       "assessedBy": "MathScope actual source and finite observation review",
       "evidence": [
         "navier/index.mjs",
@@ -274,7 +426,14 @@
         "navier/evidence/source-current-20261012/source-current-execution.json",
         "navier/evidence/source-current-20261012/current-signed-stress.json",
         "navier/source-current-evidence.mjs",
-        "navier/SOURCE_RECONSTRUCTION_KO.md"
+        "navier/SOURCE_RECONSTRUCTION_KO.md",
+        "navier/source-global-current.mjs",
+        "navier/source-global-signed.mjs",
+        "navier/source-global-moment.mjs",
+        "navier/evidence/global-current-20261012/attempt1/receipt.json",
+        "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+        "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md"
       ],
       "remaining": [
         "Construct the complete finite correction sequence from the actual j=0 state.",
@@ -286,22 +445,40 @@
         "Choose and differentiate the shrinking cutoffs, prove their summable tails and perform the fixed-stage Lemma5.4 comparison.",
         "Store the actual active indices and rigorously omitted tail for every evaluation domain."
       ],
-      "acceptanceScope": "A genuine selected source signed update now exists, but the initialized correction sequence and shrinking-cutoff local sum are still absent. The browser summary records the exact heavy execution and its limitations; it is not a new constructor execution or a Lemma5.4 certificate.",
+      "acceptanceScope": "Actual all-cover current/signed/moment expressions are retained, but the full ordered finite correction sequence and shrinking-cutoff final sum with Lemma5.4 tail are not yet constructed.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
         "sameTitleIgnoringWhitespace": true,
         "sameTextIgnoringWhitespace": true
-      }
+      },
+      "previousSourceScope": "A genuine selected source signed update now exists, but the initialized correction sequence and shrinking-cutoff local sum are still absent. The browser summary records the exact heavy execution and its limitations; it is not a new constructor execution or a Lemma5.4 certificate."
     }
   ],
   "allOriginalCriteriaComplete": false,
   "wholeM3Complete": false,
-  "assessmentRevision": "m3-navier-actual-source-and-flow-20261012",
+  "assessmentRevision": "m3-original-source-operators-temporal-and-support-review-20261012",
   "actualSourceExecution": {
     "receipt": "navier/evidence/source-current-20261012/source-current-execution.json",
     "sha256": "3c24c84c3356b458d4866cf2008047ff809dfb0a51524caed1044c5c73334b21",
     "browserSummaryIsRecordedOnly": true,
     "completeN6": false
+  },
+  "actualGlobalSourceExecutions": {
+    "allLabelCurrent": {
+      "path": "navier/evidence/global-current-20261012/attempt1/receipt.json",
+      "sha256": "701ac7782ab7550f0554e22677e4b29924a85b58c9dcf6f9bf2ea5042041e463",
+      "bytes": 2107
+    },
+    "allLabelSigned": {
+      "path": "navier/evidence/global-signed-20261012/attempt1/receipt.json",
+      "sha256": "0db5178978e2587d142032b606b7c1e59e2c6d66dc078c884d26618745ed4232",
+      "bytes": 2185
+    },
+    "actualFiveMoments": {
+      "path": "navier/evidence/global-moment-20261012/attempt1/receipt.json",
+      "sha256": "62aa3f5d411e833fac4b52848b2564e9e8630974ed041e3d4614bbe9379a8724",
+      "bytes": 3754
+    }
   }
 }

@@ -118,6 +118,9 @@
   function loadExample(){const example=capabilities?.examples?.find(x=>x.id===$('example').value);if(!example)return;clearResult();$('input').value=pretty(example.request);editorDirty=false;status('실행 예제를 불러왔습니다. 새 계산을 실행하세요.');}
   function renderProgress(){
     $('progress').replaceChildren();const criteria=capabilities.progress?.criteria||capabilities.criteria;
+    const exactInventory=Array.isArray(criteria)&&criteria.length===8&&new Set(criteria.map(c=>c.id)).size===8&&criteria.every(c=>/^P7-0[1-8]$/.test(c.id));
+    const accepted=exactInventory?criteria.filter(c=>c.originalCriterionComplete===true).length:null;
+    ROOT.querySelector('.m3-boundary strong').textContent=accepted===null?'P7 원문 기준 확인 필요':'P7 원문 기준 '+accepted+'/8 수용';
     if(Array.isArray(criteria)){for(const c of criteria){const row=document.createElement('details'),heading=document.createElement('summary');heading.textContent=c.id+' · '+c.status+' · '+(c.title??'');row.append(heading);for(const [label,value]of [['원문',c.text],['구현과 검증',c.implemented??c.assessment],['근거',c.evidence],['남은 조건',c.remainingObligations??c.remaining],['적용 범위',c.acceptanceScope??c.scopeLimits],['연구 한계',c.researchLimitations],['원문 출처',{file:c.source??capabilities.progress?.originalBlueprint?.filename,page:c.page,sha256:c.sourceSha256??capabilities.progress?.originalBlueprint?.sha256,originalCriterionComplete:c.originalCriterionComplete}]]){if(value===undefined)continue;const p=document.createElement('p'),b=document.createElement('b');b.textContent=label+': ';p.append(b,document.createTextNode(typeof value==='string'?value:pretty(value)));row.append(p);}$('progress').append(row);}}
     else{const p=document.createElement('p');p.className='m1-muted';p.textContent='서버 상태: '+(capabilities.status||'IN_PROGRESS')+' · P7 전체 완료: false · M3 전체 완료: false';$('progress').append(p);}
   }
