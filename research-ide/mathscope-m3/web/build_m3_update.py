@@ -34,12 +34,14 @@ def build(observed, group='all'):
         replace(r'<script id="' + re.escape(element) + r'">.*?</script>',
                 '<script id="' + element + '">\n' + content + '\n</script>', filename)
 
-    def style(element, filename):
+    def style(element, filename, *additional_files):
+        filenames = (filename, *additional_files)
+        content = '\n'.join((WEB / name).read_text() for name in filenames)
         replace(r'<style id="' + re.escape(element) + r'">.*?</style>',
-                '<style id="' + element + '">\n' + (WEB / filename).read_text() + '\n</style>', filename)
+                '<style id="' + element + '">\n' + content + '\n</style>', ' + '.join(filenames))
 
     if group in ('p7', 'all'):
-        style('mathscope-m3-css', 'workspace.css')
+        style('mathscope-m3-css', 'workspace.css', 'p7-visualization.css')
         for element, filename in [
             ('mathscope-m3-js', 'workspace.js'),
             ('p7-visual-models-js', 'p7-visual-models.js'),

@@ -6,13 +6,14 @@ import {validateRecordedChecks,conditionalLedger} from '../p8/recorded-checks.mj
 import {sha256} from '../p8/common.mjs';
 
 const bytesHash=bytes=>createHash('sha256').update(bytes).digest('hex');
-const pkg=JSON.parse(await readFile(new URL('../p8/evidence/p7-mutation-release.json',import.meta.url)));
+const pkg=JSON.parse(await readFile(new URL('../p8/evidence/p7-mutation-release-historical-v1.json',import.meta.url)));
 const expected='90337c7b958b069bfc62916998aa7ea67426be7a415c5d640e2d10f2576b8fd3';
 const paths=[...pkg.report.sourceBinding.files.map(r=>r.path),'p8/tools/audit_p7_mutations.py','tests/test_p8_p7_mutations.py'];
 const liveCurrent={files:await Promise.all(paths.map(async path=>({path:'mathscope-m3/'+path,sha256:bytesHash(await readFile(new URL('../'+path,import.meta.url)))})))};
 // This immutable CI archive predates the arithmetic runtime. Its original
 // manifest can exercise the consistency parser; current bytes must separately
-// reject it as stale until a new actually observed CI archive is packaged.
+// reject it as stale. The actual arithmetic /2 release has a separate test
+// using the current sources; this historical artifact is never relabelled.
 const current={files:[...pkg.report.sourceBinding.files.map(row=>({path:'mathscope-m3/'+row.path,sha256:row.sha256})),
   {path:'mathscope-m3/p8/tools/audit_p7_mutations.py',sha256:pkg.report.auditSourceSHA256},
   {path:'mathscope-m3/tests/test_p8_p7_mutations.py',sha256:pkg.report.testHarness.sourceSHA256}]};

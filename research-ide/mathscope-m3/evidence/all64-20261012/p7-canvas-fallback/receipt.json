@@ -1,0 +1,136 @@
+{
+  "schema": "MathScope.M3.P7.CanvasFallbackVerification/1",
+  "status": "LOCAL_FROZEN_SOURCE_TESTS_PASS",
+  "createdAt": "2026-10-12T11:17:13.936977+00:00",
+  "headAtVerification": "529e864c8b2ed19399bab8bbc53a08721873d5d4",
+  "rendererVersion": "1.1.0",
+  "changedSourceFiles": [
+    "web/p7-visualization.js",
+    "tests/p7-visualization.canvas.test.mjs"
+  ],
+  "files": [
+    {
+      "path": "web/p7-visualization.js",
+      "bytes": 40395,
+      "sha256": "5c7b39bfab5709834b148fdadc39cddd55c42cc33b999fadae03511d5fa1e7db"
+    },
+    {
+      "path": "tests/p7-visualization.canvas.test.mjs",
+      "bytes": 20479,
+      "sha256": "bc6e3dc6aa244bec5f39a235085ff69a9fbe15a4d7747441c947c7d7c9b38e55"
+    },
+    {
+      "path": "web/p7-visual-models.js",
+      "bytes": 39191,
+      "sha256": "188411818de1b29eed999b80f02f14ee530468293544a664f5b6543d239d1829"
+    },
+    {
+      "path": "web/p7-visual-controller.js",
+      "bytes": 6452,
+      "sha256": "73fa9c5338fcc50210d1b97d86ded58c8af4ea8b42aed43868a4b85502dec228"
+    },
+    {
+      "path": "web/p7-visualization.css",
+      "bytes": 6317,
+      "sha256": "f6fadae965e0dce0666d3c151bebc1339d5bd31eef227d448a0f24097582b1e4"
+    },
+    {
+      "path": "web/p7-visual-seeds.json",
+      "bytes": 2742708,
+      "sha256": "971974e980a352abd7a0e12bae943727d3412329dd48b4ee0719eb7270fd44ec"
+    }
+  ],
+  "fileHashesUnchangedDuringTests": true,
+  "prepareFunctionByteUnchanged": true,
+  "unchangedComparedWithHead": {
+    "web/p7-visual-models.js": true,
+    "web/p7-visual-controller.js": true,
+    "web/p7-visualization.css": true,
+    "web/p7-visual-seeds.json": true
+  },
+  "processes": [
+    {
+      "command": [
+        "node",
+        "--check",
+        "research-ide/mathscope-m3/web/p7-visualization.js"
+      ],
+      "startedAt": "2026-10-12T11:17:13.409297+00:00",
+      "endedAt": "2026-10-12T11:17:13.469971+00:00",
+      "exitCode": 0,
+      "stdout": {
+        "path": "evidence/all64-20261012/p7-canvas-fallback/syntax.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "evidence/all64-20261012/p7-canvas-fallback/syntax.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "research-ide/mathscope-m3/tests/p7-visualization.canvas.test.mjs",
+        "research-ide/mathscope-m3/tests/p7-visual-models.semantic.test.mjs",
+        "research-ide/mathscope-m3/tests/p7-visual-controller.test.mjs"
+      ],
+      "startedAt": "2026-10-12T11:17:13.470130+00:00",
+      "endedAt": "2026-10-12T11:17:13.897665+00:00",
+      "exitCode": 0,
+      "stdout": {
+        "path": "evidence/all64-20261012/p7-canvas-fallback/renderer-and-existing-tests.tap",
+        "bytes": 8023,
+        "sha256": "6be34d2836739c7bc0c2e71afde1866f52e7916401e948879bb7210a37a380be"
+      },
+      "stderr": {
+        "path": "evidence/all64-20261012/p7-canvas-fallback/renderer-and-existing-tests.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "observedTestCounts": {
+    "tests": 33,
+    "pass": 33,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "testScope": {
+    "newMountedCanvasTests": 8,
+    "existingModelSemanticTests": 17,
+    "existingControllerTests": 8,
+    "separatePublicBrowserAcceptance": false,
+    "testsUseRecordingCanvasContext": true,
+    "actualWebGLConstructorExceptionExercised": true,
+    "hardwareWebGLExecutionTested": false,
+    "allEightActualArchivedViewsPainted": true,
+    "archiveCommit": "759d1a0b35a6e1952663ee6486e8de534d7fcb66",
+    "archiveSourceEpochSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+    "newMathematicalExecutionPerformed": false,
+    "rendererGeometryMayPromoteProof": false,
+    "wholeP7Complete": false,
+    "wholeM3Complete": false
+  },
+  "observedBehavior": [
+    "Canvas2D orthographic projection of unchanged prepared 3D points, disconnected line segments, enclosure edges and triangle faces",
+    "Independent yaw/pitch projection and CSS-scaled pointer coordinates agree with recorded draw operations",
+    "Same exact source and coordinates available through pointer and native HTML selection",
+    "Camera rotation, pan, zoom, reset, front/top preserve mathematical model bytes",
+    "DPR cap 1.5; browser vertical scroll and pinch zoom retained; no wheel listener",
+    "Demand rendering only while active and visible; cancellation, route restore and stale ResizeObserver guarded",
+    "Explicit GL_RENDERER=Disabled dependency constructor falls back to one Canvas2D canvas; audit never claims WebGL rendered"
+  ],
+  "limitations": [
+    "Recording Canvas2D test context is not a GPU or browser pixel receipt",
+    "Canvas mesh occlusion uses disclosed painter depth ordering",
+    "Public browser interaction and current execution linkage require root acceptance after publication"
+  ],
+  "originalExecutionRecordsModified": false,
+  "priorEvidenceModified": false,
+  "gitIndexOrRefsModified": false
+}

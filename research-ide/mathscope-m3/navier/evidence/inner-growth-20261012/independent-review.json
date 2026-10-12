@@ -1,0 +1,122 @@
+{
+  "schema": "MathScope.N7.InnerGrowthIndependentSourceReview/1",
+  "reviewedAt": "2026-10-12T11:47:10.034481+00:00",
+  "reviewer": "gauge_m3 independent of the source-inner-growth implementation",
+  "method": "Read-only comparison of actual source, original criterion, execution receipt, retained numerical/error expressions, and paper pages116/124. No new source execution, HTTP call, figure fit or Lean run.",
+  "originalCriterion": {
+    "id": "N7-07",
+    "title": "실제 blowup 경로와 오차",
+    "text": "xτ=(√(2Xinτ),0,0), η=0에서 τ^A u θ=e0+O(τ^(2h)), e0>0를 측정한다. 합격: e0의 양의 하한과 remainder의 explicit\nbound가 있어야 해석적 성장 certificate로 연결한다. 유한 값 plot의 증가만으로 τ→0의 무한대를 증명하지 않는다.",
+    "page": 64,
+    "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+  },
+  "originalBlueprintSHA256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+  "sourcePaper": {
+    "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "pages": [
+      116,
+      124
+    ],
+    "references": [
+      "Step5 of Proposition9.9",
+      "(10.20)-(10.21)",
+      "Proposition10.1 exact localization plateau"
+    ]
+  },
+  "bindings": [
+    {
+      "path": "research-ide/mathscope-m3/navier/source-inner-growth.mjs",
+      "sha256": "4a6b9ade65d9280e44871d3e707b9bb0d086b2c53e0e0f311b908dd34103b3a8",
+      "bytes": 21923
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt2/receipt.json",
+      "sha256": "019bd3babe83d6af74dccd28bde6eb734393a454a7af60f114778f20c556ff28",
+      "bytes": 1725
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt2/inner-growth.json",
+      "sha256": "7a72e1ca1293ba2542ed4ed2612ad67b95df7cb31eb49cf91be004f6ae16a5fe",
+      "bytes": 3436293
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/tests/source-inner-growth.test.mjs",
+      "sha256": "67f83520e2628b096f3ef841550885ca91b06b060e561db947bb1ec1e57a2b1e",
+      "bytes": 9595
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt2/independent-fraction.json",
+      "sha256": "641c0dbcbf20de141d04d9549fc4b62b107ad92f331350ccfd5276f51ee43c5d",
+      "bytes": 1183
+    },
+    {
+      "path": "research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt2/source-bytes.json",
+      "sha256": "97cfdf5467c2b16818db33b2d5a7a72cff0127ac65485b0698587c20389181fe",
+      "bytes": 19886
+    }
+  ],
+  "checks": [
+    {
+      "id": "exact-original-path-and-leading-factor",
+      "status": "PASS",
+      "finding": "Xa=4/Lambda, Xin=Xa/2=2/Lambda, Y=2, eta=0. E0=sqrt(2Xin)*F0=2Phi(2,0)/(CSelected sqrtLambda), with g(0)=1/CSelected. The original azimuthal prefactor is retained."
+    },
+    {
+      "id": "fresh-original-nonlinear-core-positive",
+      "status": "PASS",
+      "finding": "Fresh actual Phi interval has lower>1/2 and overlaps the previous accepted original interval; its positive Banach/core analytic errors remain. Therefore e0>1/(CSelected sqrtLambda)>0.",
+      "actualPhiInterval": {
+        "lower": "66780180619003155771943798378819163795571652905629636431123829242378182341343/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+        "upper": "66780180619003155771943798378819163795571652905629636431160722730525601452767/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+        "denominatorPowerOfTwo": 256,
+        "displayEnclosure": [
+          0.5767248959653624,
+          0.5767248959653626
+        ]
+      }
+    },
+    {
+      "id": "same-common-sequence-and-unbounded-source-tail",
+      "status": "PASS",
+      "finding": "Same genuine common6 family and all-order source induction; actual common b_n>=canonical c_n. Derivative-order0 finite block retains E,U,Pi and stream/radial bounds for BOTH n1 and n2. n>=3 sums to at most q^(3h)/4<=q^(2h)/4. C=B1+B2+1/4 is an exact source-norm expression, not an assumed finite constant or zero."
+    },
+    {
+      "id": "explicit-time-and-remainder-inequality",
+      "status": "PASS",
+      "finding": "With eScale=2/(CSelected sqrtLambda), delta=1/(4+4/tau0+32Xin), tau_d=delta exp(-(log(1+4C/eScale)+d log2)/(2h)), (C/eScale)tau_d^(2h)<2^(-d-2). Exact positive exponential expressions and two-sided rational intervals are retained."
+    },
+    {
+      "id": "correct-smaller-global-partition-support",
+      "status": "PASS_AFTER_CONCRETE_CORRECTION",
+      "finding": "The earlier family threshold was64 times larger than the common complete-partition threshold. Current attempt2 uses qGlobalStar=2^(-(ell0+4))=family.qStar/64, tau0=qGlobalStar/32 and z0=tau0^D. With C0=4, the WHOLE cutoff support has q<=qGlobalStar/4<qGlobalStar/2, not merely the displayed points."
+    },
+    {
+      "id": "annular-zero-and-localization-plateau",
+      "status": "PASS_WITH_EXPLICIT_EXTERNAL_SOURCE_THEOREMS",
+      "finding": "Paper p116 Step5 states that all annular corrections vanish in X<Xa; p124 retains summation cutoffs in the relative tail. The fixed Xin=Xa/2 lies in that open region. Source cutoffs equal1 on a neighborhood of the exact path samples. The program records Proposition9.9/10.1 as external dependencies for identification with the original final localized field."
+    },
+    {
+      "id": "execution-and-error-controls-actually-recorded",
+      "status": "PASS",
+      "finding": "Immutable attempt2 records Node8/8, independent Fraction9/9,97 unchanged source files, exit0 and peak4,434,853,888 bytes. Read-only review does not mislabel these as new reviewer executions."
+    },
+    {
+      "id": "no-finite-plot-proof-or-completion-propagation",
+      "status": "PASS",
+      "finding": "Positive eLower, explicit C tau^(2h), h>0 and A>0 supply the analytic implication. A plot/regression is not the proof. This does not construct all N6 iterates, the full global sum, the localized force, the energy identity, or a new Lean/global Navier-Stokes theorem."
+    }
+  ],
+  "assessment": {
+    "recommendation": "ACCEPT_N7_07_AS_ORIGINAL_SOURCE_ANALYTIC_INNER_PATH_CRITERION_WITH_DECLARED_EXTERNAL_THEOREM_DEPENDENCIES",
+    "originalTextWeakened": false,
+    "reason": "The original N7-07 asks for this path, positive e0 lower bound and an explicit remainder. It does not require numerical construction of the field at every spatial point. The exact support restriction plus actual source core/whole-tail calculation meets that path-specific implementation objective while retaining its final-field identification dependencies.",
+    "requiredPublicScope": "Original paper model internal-path source analytic certificate. Final-field identification uses external Proposition9.9/10.1; whole N6 construction has not been executed by this module.",
+    "forbiddenPromotion": "Unconditional newly constructed full N6/NS solution, independently verified paper existence theorem, or completion of any other criterion.",
+    "progressFilesChangedByReviewer": false,
+    "historicalAttemptFilesChanged": false,
+    "rootFinalAcceptancePending": true,
+    "otherN6CriteriaCompleted": false,
+    "wholeM3Complete": false
+  }
+}

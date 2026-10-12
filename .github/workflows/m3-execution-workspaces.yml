@@ -87,7 +87,7 @@ jobs:
           import {inheritedSource} from './research-ide/mathscope-m3/navier/source-inheritance.mjs';
           const sha=value=>createHash('sha256').update(value).digest('hex');
           const stable=value=>Array.isArray(value)?'['+value.map(stable).join(',')+']':value&&typeof value==='object'?'{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+stable(value[key])).join(',')+'}':JSON.stringify(value);
-          const expected=['galerkin.mjs','corrections.mjs','localization.mjs','index.mjs','source-mean-map.mjs','source-inheritance.mjs','flow-observations.mjs','source-current-state.mjs','source-pressure.mjs','source-higher-jets.mjs','source-signed-stress.mjs','source-current-evidence.mjs'];
+          const expected=['galerkin.mjs','corrections.mjs','localization.mjs','index.mjs','source-mean-map.mjs','source-inheritance.mjs','flow-observations.mjs','source-current-state.mjs','source-pressure.mjs','source-higher-jets.mjs','source-signed-stress.mjs','source-current-evidence.mjs','source-inner-growth.mjs','source-inner-growth-evidence.mjs'];
           assert.deepEqual(implementationPin.files.map(row=>row.path),expected.map(name=>'research-ide/mathscope-m3/navier/'+name));
           for(const row of implementationPin.files){const raw=fs.readFileSync(row.path);assert.equal(raw.length,row.bytes,row.path);assert.equal(sha(raw),row.sha256,row.path);}
           assert.equal(sha(stable(implementationPin.files)),implementationPin.sha256);
@@ -106,6 +106,14 @@ jobs:
         run: node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/extended-worker.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/worker-tests.tap"
       - name: Verify flow coordinates, angular velocity, path semantics and view invariance
         run: node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/extended-flow-view.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/flow-view-tests.tap"
+      - name: Verify the original inner-path archive and its exact interval display
+        run: |
+          python -B research-ide/mathscope-m3/navier/tests/build-inner-growth-evidence.py --check 2>&1 | tee "$M3_CI_OUTPUT/inner-growth-package.json"
+          python -B research-ide/mathscope-m3/navier/tests/test_inner_growth_archive.py 2>&1 | tee "$M3_CI_OUTPUT/inner-growth-archive-python.log"
+          node --test --test-reporter=tap \
+            research-ide/mathscope-m3/navier/tests/inner-growth-archive.test.mjs \
+            research-ide/mathscope-m3/web/tests/navier-inner-growth-view.test.mjs \
+            2>&1 | tee "$M3_CI_OUTPUT/inner-growth-archive-view.tap"
       - name: Check lossless production packaging and graph provenance
         run: |
           node research-ide/mathscope-m3/gauge/experiments/package-study-record.mjs --check 2>&1 | tee "$M3_CI_OUTPUT/gauge-study-package.json"
@@ -153,5 +161,37 @@ jobs:
         with:
           name: m3-execution-workspaces-${{ github.sha }}-${{ github.run_attempt }}
           path: ${{ env.M3_CI_OUTPUT }}/
+          if-no-files-found: warn
+          retention-days: 30
+
+  original-inner-path-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reconstruct the original common family and verify the nonlinear inner-path interval
+        run: |
+          node --version
+          python --version
+          python -B research-ide/mathscope-m3/navier/tests/run-inner-growth-source.py "$GITHUB_RUN_ID"
+      - name: Preserve the fresh source construction and independent Fraction checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-inner-growth-source-${{ github.sha }}-${{ github.run_attempt }}
+          path: research-ide/mathscope-m3/navier/evidence/inner-growth-20261012/attempt${{ github.run_id }}/
           if-no-files-found: warn
           retention-days: 30

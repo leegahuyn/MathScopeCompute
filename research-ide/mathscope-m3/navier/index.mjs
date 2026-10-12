@@ -6,6 +6,7 @@ import {sourceMeanMomentBridge} from './source-mean-map.mjs';
 import {implementationPin} from './implementation-pin.mjs';
 import {buildFlowObservations,validateFlowObservationOptions} from './flow-observations.mjs';
 import {recordedSourceReconstruction} from './source-current-evidence.mjs';
+import {recordedInnerGrowth,innerGrowthObservations} from './source-inner-growth-evidence.mjs';
 
 const bad=(code,message)=>{throw Object.assign(new Error(message),{code});};
 const canonical=x=>x===null||typeof x!=='object'?JSON.stringify(x):Array.isArray(x)?'['+x.map(canonical).join(',')+']':'{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canonical(x[k])).join(',')+'}';
@@ -20,6 +21,7 @@ export const NAVIER_M3_EXAMPLES=[
   {id:'N6-signed',title:'N6 signed covariance increment',input:{package:'N6',operation:'signed-covariance',parameters:{target:[-.003,.002]}}},
   {id:'N6-moments',title:'N6 다섯 radial moment',input:{package:'N6',operation:'five-moments',parameters:{lambda:.2,a:1,d:.2}}},
   {id:'N7-workbench',title:'N7 localization·force 관문',input:{package:'N7',operation:'workbench'}},
+  {id:'N7-inner-growth-record',title:'N7 원래 내부 경로 · 양의 하한과 엄밀 구간',input:{package:'N7',operation:'inner-growth-record'}},
   {id:'N7-periodic',title:'N7 지지 분리와 주기화',input:{package:'N7',operation:'periodization',parameters:{sameForcing:true,periodicPressure:true,zeroInitialData:true}}},
   {id:'N8-TG',title:'N8 Taylor–Green 적응 계산',input:{package:'N8',operation:'galerkin',parameters:{cutoff:2,viscosity:1,endTime:.5,initialStep:.1}}},
   {id:'N8-nonlinear',title:'N8 비선형 Fourier 흐름',input:{package:'N8',operation:'galerkin',parameters:{cutoff:2,seed:103,endTime:.08,rtol:1e-5}}},
@@ -107,6 +109,7 @@ export async function runNavierM3(input={}){
     else bad('UNSUPPORTED','Unknown N6 operation.');
   }else if(pack==='N7'){
     if(operation==='workbench'){results=localizationAcceptance();checks=results.checks;}
+    else if(operation==='inner-growth-record'){results=await recordedInnerGrowth(parameters);checks=results.checks;observations=innerGrowthObservations(results);}
     else if(operation==='localization')results=localizationContract(parameters);
     else if(operation==='force-extension')results=forceExtensionSchedule(parameters);
     else if(operation==='periodization')results=verifyPeriodization(parameters);

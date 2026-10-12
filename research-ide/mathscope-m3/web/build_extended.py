@@ -6,6 +6,8 @@ WEB=ROOT/'web'
 RESEARCH=ROOT.parent
 SPEC=importlib.util.spec_from_file_location('p8_static_bundler',ROOT/'p8/tools/build_browser.py')
 BUNDLER=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(BUNDLER)
+INNER_SPEC=importlib.util.spec_from_file_location('n7_inner_growth_archive',ROOT/'navier/tests/build-inner-growth-evidence.py')
+INNER_ARCHIVE=importlib.util.module_from_spec(INNER_SPEC);INNER_SPEC.loader.exec_module(INNER_ARCHIVE)
 def sha(x):return hashlib.sha256(x if isinstance(x,bytes) else x.encode()).hexdigest()
 def canonical(x):return json.dumps(x,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
 def read(p):return p.read_text(encoding='utf-8')
@@ -66,6 +68,9 @@ def validate_extended_criteria(original,documents):
  return [assessed[r['id']] for package in PACKAGES for r in expected[package]]
 
 def build(check=False):
+ # A browser bundle may consume only the fixed archive with every captured
+ # source/artifact byte still matching. This is not the heavy source gate.
+ INNER_ARCHIVE.build(check=True)
  worker,closure=BUNDLER.bundle(WEB/'extended-worker.mjs')
  view_bundle,view_closure=BUNDLER.bundle(WEB/'extended-view-entry.mjs')
  example_code="""import {getExamples} from './gauge/index.mjs';import {NAVIER_M3_EXAMPLES} from './navier/index.mjs';console.log(JSON.stringify({gauge:getExamples().map(e=>({id:e.id,label:e.label,input:e.request,packages:e.id.startsWith('y7')?['Y7']:e.id.startsWith('y6')?['Y6']:['Y5',...(e.request.kind==='field-family'?['Y6']:[])]})),navier:NAVIER_M3_EXAMPLES.map(e=>({...e,packages:[e.input.package]}))}));"""
@@ -78,6 +83,7 @@ def build(check=False):
    progress_paths.append(path);documents.append((name,json.loads(read(path))))
  criteria=validate_extended_criteria(original,documents)
  extras=[WEB/'extended-client.js',WEB/'extended-workspace.js',WEB/'extended-workspace.css',WEB/'extended-workspace.html',Path(__file__).resolve(),WEB/'tests/test_extended_build.py',ROOT/'ORIGINAL_M3_M4_CRITERIA.json']+progress_paths
+ extras+=INNER_ARCHIVE.source_paths()+[ROOT/'navier/tests/build-inner-growth-evidence.py',ROOT/'navier/tests/inner-growth-archive.test.mjs',ROOT/'navier/tests/test_inner_growth_archive.py',WEB/'tests/navier-inner-growth-view.test.mjs']
  for folder in ['gauge','navier']:
   extras+=list((ROOT/folder/'lean').glob('*.lean'))
   extras+=[p for p in [ROOT/folder/'original-criteria.json',ROOT/folder/'evidence/lean-audit.json',ROOT/folder/'evidence/acceptance.json'] if p.exists()]

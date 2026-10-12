@@ -6,7 +6,7 @@
   const $=id=>document.getElementById('m3-'+id),pretty=v=>JSON.stringify(v,null,2);
   const set=(id,value)=>{$(id).textContent=typeof value==='string'?value:pretty(value);};
   const stable=v=>v===null||typeof v!=='object'?JSON.stringify(v):Array.isArray(v)?'['+v.map(stable).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+stable(v[k])).join(',')+'}';
-  let capabilities=null,record=null,pendingRecord=null,pendingJSON=null,busy=false,revision=0,importRevision=0,downloadURL=null,editorDirty=false,registration=null;
+  let capabilities=null,record=null,pendingRecord=null,pendingJSON=null,busy=false,revision=0,importRevision=0,downloadURL=null,editorDirty=false,registration=null,activeStart=null,startSequence=0;
   function status(message,error=false){set('status',message);$('status').dataset.error=String(error);}
   function controls(){
     for(const id of ['run','check','load','input','example'])$(id).disabled=busy||!capabilities;
@@ -118,7 +118,7 @@
   function loadExample(){const example=capabilities?.examples?.find(x=>x.id===$('example').value);if(!example)return;clearResult();$('input').value=pretty(example.request);editorDirty=false;status('실행 예제를 불러왔습니다. 새 계산을 실행하세요.');}
   function renderProgress(){
     $('progress').replaceChildren();const criteria=capabilities.progress?.criteria||capabilities.criteria;
-    if(Array.isArray(criteria)){for(const c of criteria){const row=document.createElement('details'),heading=document.createElement('summary');heading.textContent=c.id+' · '+c.status+' · '+(c.title??'');row.append(heading);for(const [label,value]of [['원문',c.text],['구현과 검증',c.implemented??c.assessment],['근거',c.evidence],['남은 조건',c.remaining],['적용 범위',c.scopeLimits],['원문 출처',{file:c.source,page:c.page,sha256:c.sourceSha256,originalCriterionComplete:c.originalCriterionComplete}]]){if(value===undefined)continue;const p=document.createElement('p'),b=document.createElement('b');b.textContent=label+': ';p.append(b,document.createTextNode(typeof value==='string'?value:pretty(value)));row.append(p);}$('progress').append(row);}}
+    if(Array.isArray(criteria)){for(const c of criteria){const row=document.createElement('details'),heading=document.createElement('summary');heading.textContent=c.id+' · '+c.status+' · '+(c.title??'');row.append(heading);for(const [label,value]of [['원문',c.text],['구현과 검증',c.implemented??c.assessment],['근거',c.evidence],['남은 조건',c.remainingObligations??c.remaining],['적용 범위',c.acceptanceScope??c.scopeLimits],['연구 한계',c.researchLimitations],['원문 출처',{file:c.source??capabilities.progress?.originalBlueprint?.filename,page:c.page,sha256:c.sourceSha256??capabilities.progress?.originalBlueprint?.sha256,originalCriterionComplete:c.originalCriterionComplete}]]){if(value===undefined)continue;const p=document.createElement('p'),b=document.createElement('b');b.textContent=label+': ';p.append(b,document.createTextNode(typeof value==='string'?value:pretty(value)));row.append(p);}$('progress').append(row);}}
     else{const p=document.createElement('p');p.className='m1-muted';p.textContent='서버 상태: '+(capabilities.status||'IN_PROGRESS')+' · P7 전체 완료: false · M3 전체 완료: false';$('progress').append(p);}
   }
   async function connect(){
@@ -145,6 +145,7 @@
   $('import-input').addEventListener('click',()=>{try{const request=readRequest(JSON.stringify(pendingRecord.request));clearResult();$('input').value=pretty(request);status('저장 기록의 입력만 불러왔습니다. 현재 서버에서 새 계산을 실행하세요.');}catch(error){set('import-status',error.message);}});
   $('export').addEventListener('click',()=>{if(!record)return;if(downloadURL)URL.revokeObjectURL(downloadURL);downloadURL=URL.createObjectURL(new Blob([pretty(record)+'\n'],{type:'application/json'}));$('download').href=downloadURL;$('download').download='mathscope-p7-'+record.request.kind.replaceAll('.','-')+'-'+record.inputSHA256.slice(0,12)+'.json';$('download-panel').hidden=false;$('download-panel').open=true;$('download').click();});
   function route(){if(!location.hash.startsWith('#research-m3')||location.hash.startsWith('#research-m3-p8'))return;for(const view of document.querySelectorAll('.view[data-view]'))view.classList.toggle('active',view===ROOT);for(const button of document.querySelectorAll('[data-view-target]'))button.classList.toggle('active',button.dataset.viewTarget==='research-m3');}
+  function startSnapshot(){return activeStart?{...activeStart,outcome:activeStart.outcome?{...activeStart.outcome}:null,currentRecordMatchesTicket:!!activeStart.outcome?.recordSHA256&&record?.recordSHA256===activeStart.outcome.recordSHA256}:null;}
   async function registerTools(){
     registration?.abort();registration=new AbortController();
     if(typeof document.modelContext?.registerTool!=='function'){set('webmcp','P7 브라우저 도구 미지원 · 위의 일반 화면으로 실행할 수 있습니다.');return;}
@@ -156,17 +157,32 @@
     }catch(error){return {ok:false,status:'FAILED',message:String(error.message).slice(0,900)};}};
     const make=(name,description,schema,readOnlyHint,keys,fn)=>({name:'mathscope.research_m3.'+name,description,inputSchema:schema,annotations:{readOnlyHint,untrustedContentHint:true},execute:wrap(keys,fn)});
     const tools=[
-      make('status','Read P7 server capabilities, installed example identifiers and current execution summary. No request is submitted and no proof status is issued.',empty,true,[],()=>({ok:true,busy,editorHasUnsavedEdits:editorDirty,capabilities,current:record?{request:record.request,execution:record.execution,recordSHA256:record.recordSHA256,mathematicalSHA256:record.mathematicalSHA256}:null,wholeP7Complete:false,wholeM3Complete:false})),
+      make('status','Read P7 server capabilities, installed example identifiers and current execution summary. No request is submitted and no proof status is issued.',empty,true,[],()=>({ok:true,busy,editorHasUnsavedEdits:editorDirty,capabilities,current:record?{request:record.request,execution:record.execution,recordSHA256:record.recordSHA256,mathematicalSHA256:record.mathematicalSHA256}:null,activeStart:startSnapshot(),wholeP7Complete:false,wholeM3Complete:false})),
       make('run_example','Load a named installed P7 example and execute it on the bounded compute server. Refuses to replace edited input or overlap a running job. Displays actual server output without issuing a proof.',{type:'object',properties:{exampleId:{type:'string',minLength:1,maxLength:160}},required:['exampleId'],additionalProperties:false},false,['exampleId'],async({exampleId})=>{
         if(typeof exampleId!=='string'||exampleId.length<1||exampleId.length>160)return {ok:false,status:'INVALID_INPUT'};
         if(busy||editorDirty)return {ok:false,status:busy?'BUSY':'UNSAVED_INPUT_PRESERVED'};
         if(!capabilities?.examples.some(e=>e.id===exampleId))return {ok:false,status:'UNKNOWN_EXAMPLE'};
         $('example').value=exampleId;loadExample();history.replaceState(null,'','#research-m3');route();return run();
       }),
+      make('start_example','Start one installed P7 example on the bounded server and immediately return RUNNING with a page-local execution ticket. Poll status.activeStart for this ticket and the actual outcome. Refuses edited input and overlapping work; the ticket is not a durable server job or proof. Leaving this document may lose the ticket without cancelling server work.',{type:'object',properties:{exampleId:{type:'string',minLength:1,maxLength:160}},required:['exampleId'],additionalProperties:false},false,['exampleId'],({exampleId})=>{
+        if(typeof exampleId!=='string'||exampleId.length<1||exampleId.length>160)return {ok:false,status:'INVALID_INPUT'};
+        if(busy||editorDirty)return {ok:false,status:busy?'BUSY':'UNSAVED_INPUT_PRESERVED'};
+        if(!capabilities?.examples.some(e=>e.id===exampleId))return {ok:false,status:'UNKNOWN_EXAMPLE'};
+        $('example').value=exampleId;loadExample();history.replaceState(null,'','#research-m3');route();
+        const task=run();if(!busy)return task;
+        const ticket=activeStart={executionTicket:'p7-start-'+(++startSequence),ticketScope:'CURRENT_DOCUMENT_NOT_SERVER_JOB',exampleId,requestRevision:revision,status:'RUNNING',startedAt:new Date().toISOString(),finishedAt:null,outcome:null};
+        // run() already owns validation, HTTP, stale-result checks and visible
+        // completion. Only its real settled outcome changes this local ticket.
+        task.then(outcome=>{ticket.status=outcome.status;ticket.outcome={...outcome};ticket.finishedAt=new Date().toISOString();}).catch(error=>{
+          const message=String(error?.message||error).slice(0,900);ticket.status='FAILED';ticket.outcome={ok:false,status:'FAILED',message};ticket.finishedAt=new Date().toISOString();busy=false;
+          try{clearResult('결과를 연결하지 못했습니다. 입력과 서버 상태를 확인하세요.');status(message,true);controls();}catch{}
+        });
+        return {ok:true,status:'RUNNING',executionTicket:ticket.executionTicket,ticketScope:ticket.ticketScope,pollTool:'mathscope.research_m3.status',wholeP7Complete:false,wholeM3Complete:false};
+      }),
       make('replay_current','Recompute the current completed P7 result on the server and compare source, environment, predecessor and mathematical hashes. No imported proof authority is adopted.',empty,false,[],()=>{if(!record||record.execution.status!=='COMPLETED')return {ok:false,status:'NO_COMPLETED_RECORD'};return run(record);}),
       make('export_record','Read the current server execution envelope up to 280,000 characters. Larger results remain available through the visible JSON download. This does not create proof authority.',empty,true,[],()=>{if(!record)return {ok:false,status:'NO_RECORD'};const json=pretty(record);return json.length<=280000?{ok:true,json}:{ok:false,status:'USE_VISIBLE_DOWNLOAD',characters:json.length};})
     ];
-    try{for(const tool of tools)await document.modelContext.registerTool(tool,{signal:registration.signal});set('webmcp','P7 브라우저 도구 4개 등록 · 상태 / 예제 실행 / 재현 / 기록 읽기');}catch(error){registration.abort();set('webmcp','P7 브라우저 도구 등록 실패 · 일반 실행 화면은 사용할 수 있습니다.');}
+    try{for(const tool of tools)await document.modelContext.registerTool(tool,{signal:registration.signal});set('webmcp','P7 브라우저 도구 5개 등록 · 상태 / 예제 실행 / 비동기 시작 / 재현 / 기록 읽기');}catch(error){registration.abort();set('webmcp','P7 브라우저 도구 등록 실패 · 일반 실행 화면은 사용할 수 있습니다.');}
   }
   window.MathScopeP7Workspace=Object.freeze({
     snapshot:()=>({revision,busy,capabilities,record}),

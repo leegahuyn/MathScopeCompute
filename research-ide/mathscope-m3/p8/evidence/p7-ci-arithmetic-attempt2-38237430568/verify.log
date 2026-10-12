@@ -1,0 +1,1198 @@
+﻿2026-10-12T10:36:56.9493979Z Current runner version: '2.337.0'
+2026-10-12T10:36:56.9515702Z ##[group]Runner Image Provisioner
+2026-10-12T10:36:56.9516397Z Hosted Compute Agent
+2026-10-12T10:36:56.9516934Z Version: 20261002.596
+2026-10-12T10:36:56.9517456Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-12T10:36:56.9518041Z Build Date: 2026-10-02T22:28:27Z
+2026-10-12T10:36:56.9518674Z Worker ID: {3e21fdd9-12e6-4a50-8071-e449be69b934}
+2026-10-12T10:36:56.9519251Z Region: westus3
+2026-10-12T10:36:56.9519686Z Cloud: Azure
+2026-10-12T10:36:56.9520192Z ##[endgroup]
+2026-10-12T10:36:56.9521607Z ##[group]Operating System
+2026-10-12T10:36:56.9522233Z Ubuntu
+2026-10-12T10:36:56.9522687Z 24.04.5
+2026-10-12T10:36:56.9523094Z LTS
+2026-10-12T10:36:56.9523572Z ##[endgroup]
+2026-10-12T10:36:56.9524025Z ##[group]Runner Image
+2026-10-12T10:36:56.9524554Z Image: ubuntu-24.04
+2026-10-12T10:36:56.9525065Z Version: 20261004.327.1
+2026-10-12T10:36:56.9526158Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-12T10:36:56.9527364Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-12T10:36:56.9528198Z ##[endgroup]
+2026-10-12T10:36:56.9529116Z ##[group]GITHUB_TOKEN Permissions
+2026-10-12T10:36:56.9530670Z Contents: read
+2026-10-12T10:36:56.9531339Z Metadata: read
+2026-10-12T10:36:56.9531816Z ##[endgroup]
+2026-10-12T10:36:56.9533633Z Secret source: Actions
+2026-10-12T10:36:56.9534374Z Cache mode: write
+2026-10-12T10:36:56.9535022Z Prepare workflow directory
+2026-10-12T10:36:56.9947614Z Prepare all required actions
+2026-10-12T10:36:56.9986000Z Getting action download info
+2026-10-12T10:36:57.3140717Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-12T10:36:58.1272441Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-12T10:36:58.9847766Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-12T10:36:59.2268208Z Complete job name: verify
+2026-10-12T10:36:59.2903509Z ##[group]Run actions/checkout@v4
+2026-10-12T10:36:59.2903994Z with:
+2026-10-12T10:36:59.2904232Z   repository: leegahuyn/MathScopeCompute
+2026-10-12T10:36:59.2906332Z   token: ***
+2026-10-12T10:36:59.2906552Z   ssh-strict: true
+2026-10-12T10:36:59.2906768Z   ssh-user: git
+2026-10-12T10:36:59.2906989Z   persist-credentials: true
+2026-10-12T10:36:59.2907221Z   clean: true
+2026-10-12T10:36:59.2907504Z   sparse-checkout-cone-mode: true
+2026-10-12T10:36:59.2907752Z   fetch-depth: 1
+2026-10-12T10:36:59.2907965Z   fetch-tags: false
+2026-10-12T10:36:59.2908190Z   show-progress: true
+2026-10-12T10:36:59.2908427Z   lfs: false
+2026-10-12T10:36:59.2908634Z   submodules: false
+2026-10-12T10:36:59.2908855Z   set-safe-directory: true
+2026-10-12T10:36:59.2909105Z   allow-unsafe-pr-checkout: false
+2026-10-12T10:36:59.2909487Z ##[endgroup]
+2026-10-12T10:36:59.3764722Z Syncing repository: leegahuyn/MathScopeCompute
+2026-10-12T10:36:59.3766070Z ##[group]Getting Git version info
+2026-10-12T10:36:59.3766556Z Working directory is '/home/runner/work/MathScopeCompute/MathScopeCompute'
+2026-10-12T10:36:59.3767130Z [command]/usr/bin/git version
+2026-10-12T10:36:59.3968969Z git version 2.55.0
+2026-10-12T10:36:59.3987424Z ##[endgroup]
+2026-10-12T10:36:59.4001458Z Temporarily overriding HOME='/home/runner/work/_temp/3db3102e-be9f-48bb-8fd4-0c39c58983d2' before making global git config changes
+2026-10-12T10:36:59.4002357Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T10:36:59.4006571Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-12T10:36:59.4054159Z Deleting the contents of '/home/runner/work/MathScopeCompute/MathScopeCompute'
+2026-10-12T10:36:59.4058825Z ##[group]Initializing the repository
+2026-10-12T10:36:59.4062557Z [command]/usr/bin/git init /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-12T10:36:59.4154429Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-12T10:36:59.4155272Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-12T10:36:59.4155990Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-12T10:36:59.4156551Z hint: call:
+2026-10-12T10:36:59.4157025Z hint:
+2026-10-12T10:36:59.4157446Z hint: 	git config --global init.defaultBranch <name>
+2026-10-12T10:36:59.4157880Z hint:
+2026-10-12T10:36:59.4158297Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-12T10:36:59.4158982Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-12T10:36:59.4159550Z hint:
+2026-10-12T10:36:59.4159862Z hint: 	git branch -m <name>
+2026-10-12T10:36:59.4160207Z hint:
+2026-10-12T10:36:59.4160680Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-12T10:36:59.4165895Z Initialized empty Git repository in /home/runner/work/MathScopeCompute/MathScopeCompute/.git/
+2026-10-12T10:36:59.4174080Z [command]/usr/bin/git remote add origin https://github.com/leegahuyn/MathScopeCompute
+2026-10-12T10:36:59.4219565Z ##[endgroup]
+2026-10-12T10:36:59.4220293Z ##[group]Disabling automatic garbage collection
+2026-10-12T10:36:59.4222274Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-12T10:36:59.4252105Z ##[endgroup]
+2026-10-12T10:36:59.4252662Z ##[group]Setting up auth
+2026-10-12T10:36:59.4257777Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T10:36:59.4287840Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T10:36:59.4587049Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T10:36:59.4618491Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T10:36:59.4811291Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T10:36:59.4842795Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T10:36:59.5032832Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-12T10:36:59.5068442Z ##[endgroup]
+2026-10-12T10:36:59.5069043Z ##[group]Fetching the repository
+2026-10-12T10:36:59.5076513Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +eb2bc3a4a14d05a88248e85167286bb4f46a6ef5:refs/remotes/pull/15/merge
+2026-10-12T10:37:16.7145488Z From https://github.com/leegahuyn/MathScopeCompute
+2026-10-12T10:37:16.7146000Z  * [new ref]         eb2bc3a4a14d05a88248e85167286bb4f46a6ef5 -> pull/15/merge
+2026-10-12T10:37:16.7148838Z ##[endgroup]
+2026-10-12T10:37:16.7149388Z ##[group]Determining the checkout info
+2026-10-12T10:37:16.7153761Z ##[endgroup]
+2026-10-12T10:37:16.7157291Z [command]/usr/bin/git sparse-checkout disable
+2026-10-12T10:37:16.7205753Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-12T10:37:16.7241654Z ##[group]Checking out the ref
+2026-10-12T10:37:16.7245303Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/15/merge
+2026-10-12T10:37:17.7701422Z Updating files:  67% (4281/6373)
+2026-10-12T10:37:17.7754204Z Updating files:  68% (4334/6373)
+2026-10-12T10:37:17.7847816Z Updating files:  69% (4398/6373)
+2026-10-12T10:37:17.7878262Z Updating files:  70% (4462/6373)
+2026-10-12T10:37:17.8083004Z Updating files:  71% (4525/6373)
+2026-10-12T10:37:17.8122730Z Updating files:  72% (4589/6373)
+2026-10-12T10:37:17.8173000Z Updating files:  73% (4653/6373)
+2026-10-12T10:37:17.8251069Z Updating files:  74% (4717/6373)
+2026-10-12T10:37:17.8292186Z Updating files:  75% (4780/6373)
+2026-10-12T10:37:17.8324230Z Updating files:  76% (4844/6373)
+2026-10-12T10:37:17.8359658Z Updating files:  77% (4908/6373)
+2026-10-12T10:37:17.8391087Z Updating files:  78% (4971/6373)
+2026-10-12T10:37:17.8662704Z Updating files:  79% (5035/6373)
+2026-10-12T10:37:17.8943658Z Updating files:  80% (5099/6373)
+2026-10-12T10:37:17.9065572Z Updating files:  81% (5163/6373)
+2026-10-12T10:37:17.9136236Z Updating files:  82% (5226/6373)
+2026-10-12T10:37:17.9280154Z Updating files:  83% (5290/6373)
+2026-10-12T10:37:18.0217276Z Updating files:  84% (5354/6373)
+2026-10-12T10:37:18.0362677Z Updating files:  85% (5418/6373)
+2026-10-12T10:37:18.0775578Z Updating files:  86% (5481/6373)
+2026-10-12T10:37:18.0925204Z Updating files:  87% (5545/6373)
+2026-10-12T10:37:18.1598099Z Updating files:  88% (5609/6373)
+2026-10-12T10:37:18.2302094Z Updating files:  89% (5672/6373)
+2026-10-12T10:37:18.2356675Z Updating files:  90% (5736/6373)
+2026-10-12T10:37:18.2511643Z Updating files:  91% (5800/6373)
+2026-10-12T10:37:18.2552517Z Updating files:  92% (5864/6373)
+2026-10-12T10:37:18.2631646Z Updating files:  93% (5927/6373)
+2026-10-12T10:37:18.2734341Z Updating files:  94% (5991/6373)
+2026-10-12T10:37:18.2808569Z Updating files:  95% (6055/6373)
+2026-10-12T10:37:18.2845963Z Updating files:  96% (6119/6373)
+2026-10-12T10:37:18.2897094Z Updating files:  97% (6182/6373)
+2026-10-12T10:37:18.3125301Z Updating files:  98% (6246/6373)
+2026-10-12T10:37:18.3166247Z Updating files:  99% (6310/6373)
+2026-10-12T10:37:18.3166573Z Updating files: 100% (6373/6373)
+2026-10-12T10:37:18.3166877Z Updating files: 100% (6373/6373), done.
+2026-10-12T10:37:18.3229069Z Note: switching to 'refs/remotes/pull/15/merge'.
+2026-10-12T10:37:18.3229379Z 
+2026-10-12T10:37:18.3229601Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-12T10:37:18.3230117Z changes and commit them, and you can discard any commits you make in this
+2026-10-12T10:37:18.3230626Z state without impacting any branches by switching back to a branch.
+2026-10-12T10:37:18.3231162Z 
+2026-10-12T10:37:18.3231682Z If you want to create a new branch to retain commits you create, you may
+2026-10-12T10:37:18.3232218Z do so (now or later) by using -c with the switch command. Example:
+2026-10-12T10:37:18.3232534Z 
+2026-10-12T10:37:18.3232662Z   git switch -c <new-branch-name>
+2026-10-12T10:37:18.3232875Z 
+2026-10-12T10:37:18.3233019Z Or undo this operation with:
+2026-10-12T10:37:18.3233219Z 
+2026-10-12T10:37:18.3233320Z   git switch -
+2026-10-12T10:37:18.3233477Z 
+2026-10-12T10:37:18.3233738Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-12T10:37:18.3234070Z 
+2026-10-12T10:37:18.3234497Z HEAD is now at eb2bc3a Merge 529e864c8b2ed19399bab8bbc53a08721873d5d4 into f809d70cb8d5352f0d0aed4a8b3987f5f5fff681
+2026-10-12T10:37:18.3294173Z ##[endgroup]
+2026-10-12T10:37:18.3338229Z [command]/usr/bin/git log -1 --format=%H
+2026-10-12T10:37:18.3364535Z eb2bc3a4a14d05a88248e85167286bb4f46a6ef5
+2026-10-12T10:37:18.3600666Z ##[group]Run actions/setup-python@v5
+2026-10-12T10:37:18.3601125Z with:
+2026-10-12T10:37:18.3601308Z   python-version: 3.12
+2026-10-12T10:37:18.3601491Z   cache: pip
+2026-10-12T10:37:18.3601651Z   check-latest: false
+2026-10-12T10:37:18.3603574Z   token: ***
+2026-10-12T10:37:18.3603747Z   update-environment: true
+2026-10-12T10:37:18.3603943Z   allow-prereleases: false
+2026-10-12T10:37:18.3604125Z   freethreaded: false
+2026-10-12T10:37:18.3604300Z ##[endgroup]
+2026-10-12T10:37:18.4666309Z ##[group]Installed versions
+2026-10-12T10:37:18.4781507Z Successfully set up CPython (3.12.15)
+2026-10-12T10:37:18.4782337Z ##[endgroup]
+2026-10-12T10:37:18.4791985Z (node:2118) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T10:37:18.4799165Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T10:37:18.8952473Z [command]/opt/hostedtoolcache/Python/3.12.15/x64/bin/pip cache dir
+2026-10-12T10:37:20.7280581Z /home/runner/.cache/pip
+2026-10-12T10:37:20.9604238Z Cache hit for: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-7a2d13a8fd75d247652679a85320d2900f9338df371bcc6b84c1468460a0d00d
+2026-10-12T10:37:20.9678070Z (node:2118) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-12T10:37:22.1883987Z Received 33554432 of 126648972 (26.5%), 32.0 MBs/sec
+2026-10-12T10:37:22.7253599Z Received 126648972 of 126648972 (100.0%), 78.5 MBs/sec
+2026-10-12T10:37:22.7254438Z Cache Size: ~121 MB (126648972 B)
+2026-10-12T10:37:22.7283646Z [command]/usr/bin/tar -xf /home/runner/work/_temp/88b9fe3e-cd1c-4d4c-9646-3010aa6fd73c/cache.tzst -P -C /home/runner/work/MathScopeCompute/MathScopeCompute --use-compress-program unzstd
+2026-10-12T10:37:22.9011766Z Cache restored successfully
+2026-10-12T10:37:22.9072131Z Cache restored from key: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-7a2d13a8fd75d247652679a85320d2900f9338df371bcc6b84c1468460a0d00d
+2026-10-12T10:37:22.9257761Z ##[group]Run pip install -r requirements.txt
+2026-10-12T10:37:22.9258115Z [36;1mpip install -r requirements.txt[0m
+2026-10-12T10:37:22.9457915Z shell: /usr/bin/bash -e {0}
+2026-10-12T10:37:22.9458168Z env:
+2026-10-12T10:37:22.9458408Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:37:22.9458776Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T10:37:22.9459122Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:37:22.9459441Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:37:22.9459740Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:37:22.9460042Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T10:37:22.9460303Z ##[endgroup]
+2026-10-12T10:37:24.6137452Z Processing ./research-ide/mathscope-m3/p7/pari_runtime
+2026-10-12T10:37:24.6150779Z   Installing build dependencies: started
+2026-10-12T10:37:25.4500832Z   Installing build dependencies: finished with status 'done'
+2026-10-12T10:37:25.4505512Z   Getting requirements to build wheel: started
+2026-10-12T10:37:26.0728603Z   Getting requirements to build wheel: finished with status 'done'
+2026-10-12T10:37:26.0736809Z   Preparing metadata (pyproject.toml): started
+2026-10-12T10:37:26.2333025Z   Preparing metadata (pyproject.toml): finished with status 'done'
+2026-10-12T10:37:26.3019344Z Collecting fastapi<1,>=0.115 (from -r requirements.txt (line 1))
+2026-10-12T10:37:26.3031349Z   Using cached fastapi-0.143.0-py3-none-any.whl.metadata (26 kB)
+2026-10-12T10:37:26.3222926Z Collecting uvicorn<1,>=0.32 (from uvicorn[standard]<1,>=0.32->-r requirements.txt (line 2))
+2026-10-12T10:37:26.3232602Z   Using cached uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+2026-10-12T10:37:26.4724016Z Collecting numpy<3,>=2.1 (from -r requirements.txt (line 3))
+2026-10-12T10:37:26.4735655Z   Using cached numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+2026-10-12T10:37:26.5585164Z Collecting scipy<2,>=1.14 (from -r requirements.txt (line 4))
+2026-10-12T10:37:26.5596902Z   Using cached scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+2026-10-12T10:37:26.6386994Z Collecting pydantic<3,>=2.9 (from -r requirements.txt (line 5))
+2026-10-12T10:37:26.6398894Z   Using cached pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+2026-10-12T10:37:26.6605892Z Collecting pytest<9,>=8.3 (from -r requirements.txt (line 6))
+2026-10-12T10:37:26.6616579Z   Using cached pytest-8.4.2-py3-none-any.whl.metadata (7.7 kB)
+2026-10-12T10:37:26.6731705Z Collecting httpx<1,>=0.27 (from -r requirements.txt (line 7))
+2026-10-12T10:37:26.6741386Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2026-10-12T10:37:26.6929958Z Collecting gudhi<4,>=3.13 (from -r requirements.txt (line 8))
+2026-10-12T10:37:26.6940175Z   Using cached gudhi-3.13.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (2.3 kB)
+2026-10-12T10:37:26.7123778Z Collecting ripser<1,>=0.6.15 (from -r requirements.txt (line 9))
+2026-10-12T10:37:26.7133988Z   Using cached ripser-0.6.15-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (9.0 kB)
+2026-10-12T10:37:26.7226510Z Collecting mpmath<2,>=1.3 (from -r requirements.txt (line 10))
+2026-10-12T10:37:26.7235811Z   Using cached mpmath-1.4.1-py3-none-any.whl.metadata (9.1 kB)
+2026-10-12T10:37:26.7416188Z Collecting python-flint==0.9.0 (from -r requirements.txt (line 11))
+2026-10-12T10:37:26.7426520Z   Using cached python_flint-0.9.0-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (23 kB)
+2026-10-12T10:37:26.7600758Z Collecting starlette>=0.46.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-10-12T10:37:26.7611026Z   Using cached starlette-1.7.0-py3-none-any.whl.metadata (6.6 kB)
+2026-10-12T10:37:26.7725525Z Collecting typing-extensions>=4.8.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-10-12T10:37:26.7735193Z   Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-10-12T10:37:26.7807893Z Collecting typing-inspection>=0.4.2 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-10-12T10:37:26.7817100Z   Using cached typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+2026-10-12T10:37:26.7881037Z Collecting annotated-doc>=0.0.2 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-10-12T10:37:26.7890382Z   Using cached annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+2026-10-12T10:37:26.8008044Z Collecting opentelemetry-api>=1.44.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-10-12T10:37:26.8018505Z   Using cached opentelemetry_api-1.45.1-py3-none-any.whl.metadata (1.4 kB)
+2026-10-12T10:37:26.8130510Z Collecting click>=7.0 (from uvicorn<1,>=0.32->uvicorn[standard]<1,>=0.32->-r requirements.txt (line 2))
+2026-10-12T10:37:26.8139984Z   Using cached click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+2026-10-12T10:37:26.8402118Z Collecting h11>=0.8 (from uvicorn<1,>=0.32->uvicorn[standard]<1,>=0.32->-r requirements.txt (line 2))
+2026-10-12T10:37:26.8412170Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2026-10-12T10:37:26.8514092Z Collecting annotated-types>=0.6.0 (from pydantic<3,>=2.9->-r requirements.txt (line 5))
+2026-10-12T10:37:26.8523560Z   Using cached annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-10-12T10:37:27.3454405Z Collecting pydantic-core==2.50.1 (from pydantic<3,>=2.9->-r requirements.txt (line 5))
+2026-10-12T10:37:27.3465865Z   Using cached pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+2026-10-12T10:37:27.3557016Z Collecting iniconfig>=1 (from pytest<9,>=8.3->-r requirements.txt (line 6))
+2026-10-12T10:37:27.3566505Z   Using cached iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+2026-10-12T10:37:27.3665561Z Collecting packaging>=20 (from pytest<9,>=8.3->-r requirements.txt (line 6))
+2026-10-12T10:37:27.3674925Z   Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+2026-10-12T10:37:27.3751693Z Collecting pluggy<2,>=1.5 (from pytest<9,>=8.3->-r requirements.txt (line 6))
+2026-10-12T10:37:27.3760796Z   Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+2026-10-12T10:37:27.3876252Z Collecting pygments>=2.7.2 (from pytest<9,>=8.3->-r requirements.txt (line 6))
+2026-10-12T10:37:27.3885775Z   Using cached pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+2026-10-12T10:37:27.4009723Z Collecting anyio (from httpx<1,>=0.27->-r requirements.txt (line 7))
+2026-10-12T10:37:27.4019188Z   Using cached anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+2026-10-12T10:37:27.4212982Z Collecting certifi (from httpx<1,>=0.27->-r requirements.txt (line 7))
+2026-10-12T10:37:27.4223179Z   Using cached certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+2026-10-12T10:37:27.4329921Z Collecting httpcore==1.* (from httpx<1,>=0.27->-r requirements.txt (line 7))
+2026-10-12T10:37:27.4340001Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2026-10-12T10:37:27.4442549Z Collecting idna (from httpx<1,>=0.27->-r requirements.txt (line 7))
+2026-10-12T10:37:27.4451881Z   Using cached idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+2026-10-12T10:37:27.7828160Z Collecting Cython (from ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:27.7839846Z   Using cached cython-3.3.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (28 kB)
+2026-10-12T10:37:27.9700832Z Collecting persim (from ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:27.9711055Z   Using cached persim-0.3.8-py3-none-any.whl.metadata (3.8 kB)
+2026-10-12T10:37:28.1217057Z Collecting scikit-learn (from ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:28.1228359Z   Using cached scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.3 kB)
+2026-10-12T10:37:28.3635057Z Collecting httptools>=0.8.0 (from uvicorn[standard]<1,>=0.32->-r requirements.txt (line 2))
+2026-10-12T10:37:28.3646570Z   Using cached httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+2026-10-12T10:37:28.5533339Z Collecting python-dotenv>=0.13 (from uvicorn[standard]<1,>=0.32->-r requirements.txt (line 2))
+2026-10-12T10:37:28.5544732Z   Using cached python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+2026-10-12T10:37:28.7957414Z Collecting pyyaml>=5.1 (from uvicorn[standard]<1,>=0.32->-r requirements.txt (line 2))
+2026-10-12T10:37:28.7968523Z   Using cached pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2026-10-12T10:37:28.8970873Z Collecting uvloop>=0.15.1 (from uvicorn[standard]<1,>=0.32->-r requirements.txt (line 2))
+2026-10-12T10:37:28.8982123Z   Using cached uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)
+2026-10-12T10:37:29.1638993Z Collecting watchfiles>=0.20 (from uvicorn[standard]<1,>=0.32->-r requirements.txt (line 2))
+2026-10-12T10:37:29.1650537Z   Using cached watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+2026-10-12T10:37:29.3015744Z Collecting websockets>=13.0 (from uvicorn[standard]<1,>=0.32->-r requirements.txt (line 2))
+2026-10-12T10:37:29.3028134Z   Using cached websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+2026-10-12T10:37:29.3818856Z Collecting deprecated (from persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:29.3829332Z   Using cached deprecated-3.0.0-py3-none-any.whl.metadata (6.5 kB)
+2026-10-12T10:37:29.5817381Z Collecting hopcroftkarp (from persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:29.5818218Z   Using cached hopcroftkarp-1.2.5-py2.py3-none-any.whl
+2026-10-12T10:37:29.6268628Z Collecting joblib (from persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:29.6279405Z   Using cached joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+2026-10-12T10:37:29.7928964Z Collecting matplotlib (from persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:29.7940353Z   Using cached matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (80 kB)
+2026-10-12T10:37:30.2369861Z Collecting wrapt<3,>=1.16 (from deprecated->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:30.2381766Z   Using cached wrapt-2.5.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (7.6 kB)
+2026-10-12T10:37:30.3431947Z Collecting cloudpickle>=3.0 (from joblib->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:30.3443565Z   Using cached cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+2026-10-12T10:37:30.4838228Z Collecting contourpy>=1.0.1 (from matplotlib->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:30.4850251Z   Using cached contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+2026-10-12T10:37:30.5379781Z Collecting cycler>=0.10 (from matplotlib->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:30.5391319Z   Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+2026-10-12T10:37:30.6593151Z Collecting fonttools>=4.28.2 (from matplotlib->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:30.6605137Z   Using cached fonttools-4.66.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (130 kB)
+2026-10-12T10:37:30.9256350Z Collecting kiwisolver>=1.3.1 (from matplotlib->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:30.9268899Z   Using cached kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.2 kB)
+2026-10-12T10:37:31.2862296Z Collecting pillow>=9 (from matplotlib->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:31.2875016Z   Using cached pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+2026-10-12T10:37:31.4545430Z Collecting pyparsing>=3 (from matplotlib->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:31.4555431Z   Using cached pyparsing-3.3.3-py3-none-any.whl.metadata (5.9 kB)
+2026-10-12T10:37:31.5436265Z Collecting python-dateutil>=2.7 (from matplotlib->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:31.5446709Z   Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+2026-10-12T10:37:31.5851558Z Collecting six>=1.5 (from python-dateutil>=2.7->matplotlib->persim->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:31.5861600Z   Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+2026-10-12T10:37:31.7043671Z Collecting narwhals>=2.0.1 (from scikit-learn->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:31.7054535Z   Using cached narwhals-2.27.1-py3-none-any.whl.metadata (15 kB)
+2026-10-12T10:37:31.7318241Z Collecting threadpoolctl>=3.5.0 (from scikit-learn->ripser<1,>=0.6.15->-r requirements.txt (line 9))
+2026-10-12T10:37:31.7328118Z   Using cached threadpoolctl-3.7.0-py3-none-any.whl.metadata (24 kB)
+2026-10-12T10:37:31.7375828Z Using cached python_flint-0.9.0-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (10.1 MB)
+2026-10-12T10:37:31.7412262Z Using cached fastapi-0.143.0-py3-none-any.whl (144 kB)
+2026-10-12T10:37:31.7421488Z Using cached uvicorn-0.54.0-py3-none-any.whl (87 kB)
+2026-10-12T10:37:31.7431550Z Using cached numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
+2026-10-12T10:37:31.7485427Z Using cached scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+2026-10-12T10:37:31.7603866Z Using cached pydantic-2.14.1-py3-none-any.whl (488 kB)
+2026-10-12T10:37:31.7613896Z Using cached pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+2026-10-12T10:37:31.7628524Z Using cached pytest-8.4.2-py3-none-any.whl (365 kB)
+2026-10-12T10:37:31.7637972Z Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+2026-10-12T10:37:31.7646946Z Using cached gudhi-3.13.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)
+2026-10-12T10:37:31.7667291Z Using cached ripser-0.6.15-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (843 kB)
+2026-10-12T10:37:31.7677794Z Using cached mpmath-1.4.1-py3-none-any.whl (567 kB)
+2026-10-12T10:37:31.7687784Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2026-10-12T10:37:31.7698916Z Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+2026-10-12T10:37:31.7707592Z Using cached annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+2026-10-12T10:37:31.7716161Z Using cached annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-12T10:37:31.7724516Z Using cached click-8.5.0-py3-none-any.whl (125 kB)
+2026-10-12T10:37:31.7733338Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2026-10-12T10:37:31.7742219Z Using cached httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (552 kB)
+2026-10-12T10:37:31.7751871Z Using cached iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+2026-10-12T10:37:31.7760068Z Using cached opentelemetry_api-1.45.1-py3-none-any.whl (60 kB)
+2026-10-12T10:37:31.7768407Z Using cached packaging-26.3-py3-none-any.whl (129 kB)
+2026-10-12T10:37:31.7777195Z Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-10-12T10:37:31.7788957Z Using cached python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+2026-10-12T10:37:31.7797949Z Using cached pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+2026-10-12T10:37:31.7808319Z Using cached starlette-1.7.0-py3-none-any.whl (78 kB)
+2026-10-12T10:37:31.7816841Z Using cached anyio-4.15.1-py3-none-any.whl (132 kB)
+2026-10-12T10:37:31.7825463Z Using cached idna-3.20-py3-none-any.whl (69 kB)
+2026-10-12T10:37:31.7834091Z Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-12T10:37:31.7842537Z Using cached typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-12T10:37:31.7851619Z Using cached uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)
+2026-10-12T10:37:31.7873490Z Using cached watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+2026-10-12T10:37:31.7883723Z Using cached websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (225 kB)
+2026-10-12T10:37:31.7892542Z Using cached certifi-2026.7.22-py3-none-any.whl (136 kB)
+2026-10-12T10:37:31.7901703Z Using cached cython-3.3.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
+2026-10-12T10:37:31.7918814Z Using cached persim-0.3.8-py3-none-any.whl (48 kB)
+2026-10-12T10:37:31.7927438Z Using cached deprecated-3.0.0-py3-none-any.whl (21 kB)
+2026-10-12T10:37:31.7936278Z Using cached wrapt-2.5.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (250 kB)
+2026-10-12T10:37:31.7945450Z Using cached joblib-1.6.0-py3-none-any.whl (306 kB)
+2026-10-12T10:37:31.7954992Z Using cached cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+2026-10-12T10:37:31.7963701Z Using cached matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (9.9 MB)
+2026-10-12T10:37:31.7998602Z Using cached contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (383 kB)
+2026-10-12T10:37:31.8007927Z Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
+2026-10-12T10:37:31.8016712Z Using cached fonttools-4.66.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.4 MB)
+2026-10-12T10:37:31.8040020Z Using cached kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.5 MB)
+2026-10-12T10:37:31.8052983Z Using cached pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
+2026-10-12T10:37:31.8079761Z Using cached pyparsing-3.3.3-py3-none-any.whl (126 kB)
+2026-10-12T10:37:31.8088599Z Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2026-10-12T10:37:31.8097491Z Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+2026-10-12T10:37:31.8106081Z Using cached scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (9.2 MB)
+2026-10-12T10:37:31.8142259Z Using cached narwhals-2.27.1-py3-none-any.whl (483 kB)
+2026-10-12T10:37:31.8151972Z Using cached threadpoolctl-3.7.0-py3-none-any.whl (26 kB)
+2026-10-12T10:37:32.0308957Z Building wheels for collected packages: mathscope-p7-pari
+2026-10-12T10:37:32.0315932Z   Building wheel for mathscope-p7-pari (pyproject.toml): started
+2026-10-12T10:38:55.7480082Z   Building wheel for mathscope-p7-pari (pyproject.toml): still running...
+2026-10-12T10:38:56.4104782Z   Building wheel for mathscope-p7-pari (pyproject.toml): finished with status 'done'
+2026-10-12T10:38:56.4143748Z   Created wheel for mathscope-p7-pari: filename=mathscope_p7_pari-2.19.0.1-cp312-cp312-linux_x86_64.whl size=5179419 sha256=ce9f3ca8a3e44d45b4a756c5c09488402d7c59c49c8c70f61c1855ccf9927695
+2026-10-12T10:38:56.4144930Z   Stored in directory: /tmp/pip-ephem-wheel-cache-k9t0rqwd/wheels/5c/b1/d4/531d7f4d56a41490a90a290fb27a197bd215a8f507b924de95
+2026-10-12T10:38:56.4156917Z Successfully built mathscope-p7-pari
+2026-10-12T10:38:56.5233094Z Installing collected packages: hopcroftkarp, wrapt, websockets, uvloop, typing-extensions, threadpoolctl, six, pyyaml, python-flint, python-dotenv, pyparsing, pygments, pluggy, pillow, packaging, numpy, narwhals, mpmath, mathscope-p7-pari, kiwisolver, iniconfig, idna, httptools, h11, gudhi, fonttools, Cython, cycler, cloudpickle, click, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, scipy, python-dateutil, pytest, pydantic-core, opentelemetry-api, joblib, httpcore, deprecated, contourpy, anyio, watchfiles, starlette, scikit-learn, pydantic, matplotlib, httpx, persim, fastapi, ripser
+2026-10-12T10:39:11.4273922Z 
+2026-10-12T10:39:11.4310745Z Successfully installed Cython-3.3.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 certifi-2026.7.22 click-8.5.0 cloudpickle-3.1.2 contourpy-1.4.0 cycler-0.12.1 deprecated-3.0.0 fastapi-0.143.0 fonttools-4.66.1 gudhi-3.13.0 h11-0.16.0 hopcroftkarp-1.2.5 httpcore-1.0.9 httptools-0.9.0 httpx-0.28.1 idna-3.20 iniconfig-2.3.1 joblib-1.6.0 kiwisolver-1.5.1 mathscope-p7-pari-2.19.0.1 matplotlib-3.11.2 mpmath-1.4.1 narwhals-2.27.1 numpy-2.5.4 opentelemetry-api-1.45.1 packaging-26.3 persim-0.3.8 pillow-12.3.0 pluggy-1.6.0 pydantic-2.14.1 pydantic-core-2.50.1 pygments-2.21.0 pyparsing-3.3.3 pytest-8.4.2 python-dateutil-2.9.0.post0 python-dotenv-1.2.4 python-flint-0.9.0 pyyaml-6.0.3 ripser-0.6.15 scikit-learn-1.9.1 scipy-1.18.1 six-1.17.0 starlette-1.7.0 threadpoolctl-3.7.0 typing-extensions-4.16.0 typing-inspection-0.4.4 uvicorn-0.54.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.2 wrapt-2.5.0
+2026-10-12T10:39:11.7721909Z ##[group]Run python -m pytest -q tests
+2026-10-12T10:39:11.7722206Z [36;1mpython -m pytest -q tests[0m
+2026-10-12T10:39:11.7779724Z shell: /usr/bin/bash -e {0}
+2026-10-12T10:39:11.7779935Z env:
+2026-10-12T10:39:11.7780163Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:11.7780527Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T10:39:11.7780872Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:11.7781276Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:11.7781572Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:11.7781868Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T10:39:11.7782133Z ##[endgroup]
+2026-10-12T10:39:17.6082720Z ........................................................................ [ 44%]
+2026-10-12T10:39:36.2997029Z ........................................................................ [ 89%]
+2026-10-12T10:39:36.8681810Z .................                                                        [100%]
+2026-10-12T10:39:36.8682209Z =============================== warnings summary ===============================
+2026-10-12T10:39:36.8682653Z ../../../../../opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-12T10:39:36.8683515Z   /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-12T10:39:36.8684230Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-12T10:39:36.8684452Z 
+2026-10-12T10:39:36.8684638Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-12T10:39:36.8684976Z 161 passed, 1 warning in 22.68s
+2026-10-12T10:39:37.0950348Z ##[group]Run mkdir -p p8/evidence/p7-mutation-ci
+2026-10-12T10:39:37.0950701Z [36;1mmkdir -p p8/evidence/p7-mutation-ci[0m
+2026-10-12T10:39:37.0951144Z [36;1mset +e[0m
+2026-10-12T10:39:37.0951338Z [36;1mpython -m pytest -q tests p7/tests[0m
+2026-10-12T10:39:37.0951565Z [36;1mresult=$?[0m
+2026-10-12T10:39:37.0952124Z [36;1mprintf '{"schema":"MathScope.P8.TestProcessReceipt/1","pytestExitCode":%s,"commit":"%s","runId":"%s"}\n' "$result" "$GITHUB_SHA" "$GITHUB_RUN_ID" > p8/evidence/p7-mutation-ci/process.json[0m
+2026-10-12T10:39:37.0952890Z [36;1mexit "$result"[0m
+2026-10-12T10:39:37.1009767Z shell: /usr/bin/bash -e {0}
+2026-10-12T10:39:37.1009973Z env:
+2026-10-12T10:39:37.1010191Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:37.1010534Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T10:39:37.1010867Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:37.1011381Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:37.1011671Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:37.1011963Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T10:39:37.1012222Z   PYTHONPATH: .
+2026-10-12T10:39:37.1012450Z   P8_MUTATION_OUTPUT: p8/evidence/p7-mutation-ci/report.json
+2026-10-12T10:39:37.1012701Z ##[endgroup]
+2026-10-12T10:39:44.9607351Z ........................................................................ [ 30%]
+2026-10-12T10:39:54.0076840Z ........................................................................ [ 61%]
+2026-10-12T10:39:58.1567966Z ........................................................................ [ 92%]
+2026-10-12T10:39:58.4477967Z .................                                                        [100%]
+2026-10-12T10:39:58.4478420Z 233 passed in 20.90s
+2026-10-12T10:39:58.6283344Z ##[group]Run for file in research-ide/mathscope-m3/web/*.js; do node --check "$file"; done
+2026-10-12T10:39:58.6283847Z [36;1mfor file in research-ide/mathscope-m3/web/*.js; do node --check "$file"; done[0m
+2026-10-12T10:39:58.6340547Z shell: /usr/bin/bash -e {0}
+2026-10-12T10:39:58.6340748Z env:
+2026-10-12T10:39:58.6341063Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:58.6341415Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T10:39:58.6341746Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:58.6342057Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:58.6342351Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:58.6342653Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T10:39:58.6342908Z ##[endgroup]
+2026-10-12T10:39:58.8856650Z ##[group]Run node --test research-ide/mathscope-m3/tests/*.test.mjs
+2026-10-12T10:39:58.8857050Z [36;1mnode --test research-ide/mathscope-m3/tests/*.test.mjs[0m
+2026-10-12T10:39:58.8914255Z shell: /usr/bin/bash -e {0}
+2026-10-12T10:39:58.8914462Z env:
+2026-10-12T10:39:58.8914700Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:58.8915062Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T10:39:58.8915394Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:58.8915696Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:58.8915986Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:39:58.8916288Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T10:39:58.8916560Z ##[endgroup]
+2026-10-12T10:39:58.9614348Z TAP version 13
+2026-10-12T10:39:59.0082181Z # Subtest: current 37a1 replaces only its archived analytic record; archived 11a1 and local data remain
+2026-10-12T10:39:59.0111720Z ok 1 - current 37a1 replaces only its archived analytic record; archived 11a1 and local data remain
+2026-10-12T10:39:59.0141389Z   ---
+2026-10-12T10:39:59.0141865Z   duration_ms: 5.564534
+2026-10-12T10:39:59.0171416Z   type: 'test'
+2026-10-12T10:39:59.0196491Z   ...
+2026-10-12T10:39:59.0221610Z # Subtest: disconnect and source change both remove current authority and restore the archived record
+2026-10-12T10:39:59.0238711Z ok 2 - disconnect and source change both remove current authority and restore the archived record
+2026-10-12T10:39:59.0251408Z   ---
+2026-10-12T10:39:59.0281322Z   duration_ms: 1.648611
+2026-10-12T10:39:59.0311320Z   type: 'test'
+2026-10-12T10:39:59.0329536Z   ...
+2026-10-12T10:39:59.0361666Z # Subtest: equal source bindings compare canonically; object insertion order does not reject a current record
+2026-10-12T10:39:59.0362639Z ok 3 - equal source bindings compare canonically; object insertion order does not reject a current record
+2026-10-12T10:39:59.0363288Z   ---
+2026-10-12T10:39:59.0363459Z   duration_ms: 2.0862
+2026-10-12T10:39:59.0363639Z   type: 'test'
+2026-10-12T10:39:59.0363797Z   ...
+2026-10-12T10:39:59.0364106Z # Subtest: edited input clears the current record without deleting or relabelling saved examples
+2026-10-12T10:39:59.0364754Z ok 4 - edited input clears the current record without deleting or relabelling saved examples
+2026-10-12T10:39:59.0365299Z   ---
+2026-10-12T10:39:59.0365549Z   duration_ms: 2.225439
+2026-10-12T10:39:59.0365827Z   type: 'test'
+2026-10-12T10:39:59.0366067Z   ...
+2026-10-12T10:39:59.0366500Z # Subtest: failed or in-progress execution cannot replace a completed archive example
+2026-10-12T10:39:59.0367240Z ok 5 - failed or in-progress execution cannot replace a completed archive example
+2026-10-12T10:39:59.0367718Z   ---
+2026-10-12T10:39:59.0367937Z   duration_ms: 5.810063
+2026-10-12T10:39:59.0368189Z   type: 'test'
+2026-10-12T10:39:59.0368421Z   ...
+2026-10-12T10:39:59.0368918Z # Subtest: tab navigation is display-only; request loading happens only after an explicit button click
+2026-10-12T10:39:59.0369760Z ok 6 - tab navigation is display-only; request loading happens only after an explicit button click
+2026-10-12T10:39:59.0370323Z   ---
+2026-10-12T10:39:59.0370557Z   duration_ms: 3.183471
+2026-10-12T10:39:59.0370836Z   type: 'test'
+2026-10-12T10:39:59.0371226Z   ...
+2026-10-12T10:39:59.0371732Z # Subtest: standalone zero results and explicit-formula zero archives both remain selectable in P7-03
+2026-10-12T10:39:59.0372588Z ok 7 - standalone zero results and explicit-formula zero archives both remain selectable in P7-03
+2026-10-12T10:39:59.0373160Z   ---
+2026-10-12T10:39:59.0373403Z   duration_ms: 1.264122
+2026-10-12T10:39:59.0373675Z   type: 'test'
+2026-10-12T10:39:59.0373895Z   ...
+2026-10-12T10:39:59.0374353Z # Subtest: original-record links use the archived GitHub reference and reject unrelated URLs
+2026-10-12T10:39:59.0375448Z ok 8 - original-record links use the archived GitHub reference and reject unrelated URLs
+2026-10-12T10:39:59.0375976Z   ---
+2026-10-12T10:39:59.0376199Z   duration_ms: 2.071307
+2026-10-12T10:39:59.0376471Z   type: 'test'
+2026-10-12T10:39:59.0376705Z   ...
+2026-10-12T10:39:59.2458087Z # Subtest: all eight original P7 criteria produce sourced display data from actual executions
+2026-10-12T10:39:59.2459219Z ok 9 - all eight original P7 criteria produce sourced display data from actual executions
+2026-10-12T10:39:59.2459991Z   ---
+2026-10-12T10:39:59.2460392Z   duration_ms: 11.701619
+2026-10-12T10:39:59.2460815Z   type: 'test'
+2026-10-12T10:39:59.2461376Z   ...
+2026-10-12T10:39:59.2461932Z # Subtest: no-data scenes remain NOT_RUN and do not synthesize measurements
+2026-10-12T10:39:59.2463094Z ok 10 - no-data scenes remain NOT_RUN and do not synthesize measurements
+2026-10-12T10:39:59.2463670Z   ---
+2026-10-12T10:39:59.2464038Z   duration_ms: 0.469377
+2026-10-12T10:39:59.2464462Z   type: 'test'
+2026-10-12T10:39:59.2464826Z   ...
+2026-10-12T10:39:59.2465523Z # Subtest: display building and renderer preparation leave exact records and capabilities unchanged
+2026-10-12T10:39:59.2466586Z ok 11 - display building and renderer preparation leave exact records and capabilities unchanged
+2026-10-12T10:39:59.2467323Z   ---
+2026-10-12T10:39:59.2467709Z   duration_ms: 23.981559
+2026-10-12T10:39:59.2468126Z   type: 'test'
+2026-10-12T10:39:59.2468515Z   ...
+2026-10-12T10:39:59.2469193Z # Subtest: compacting a full zero certificate discloses omitted cells without altering the original
+2026-10-12T10:39:59.2470231Z ok 12 - compacting a full zero certificate discloses omitted cells without altering the original
+2026-10-12T10:39:59.2471144Z   ---
+2026-10-12T10:39:59.2491348Z   duration_ms: 42.875081
+2026-10-12T10:39:59.2499838Z   type: 'test'
+2026-10-12T10:39:59.2508309Z   ...
+2026-10-12T10:39:59.2509874Z # Subtest: envelope authority promotions and incomplete executions cannot become geometry
+2026-10-12T10:39:59.2554021Z ok 13 - envelope authority promotions and incomplete executions cannot become geometry
+2026-10-12T10:39:59.2567595Z   ---
+2026-10-12T10:39:59.2567857Z   duration_ms: 1.476572
+2026-10-12T10:39:59.2568150Z   type: 'test'
+2026-10-12T10:39:59.2568403Z   ...
+2026-10-12T10:39:59.2568827Z # Subtest: null, booleans, nonfinite values and blank strings are not plotted as zero
+2026-10-12T10:39:59.2569541Z ok 14 - null, booleans, nonfinite values and blank strings are not plotted as zero
+2026-10-12T10:39:59.2570036Z   ---
+2026-10-12T10:39:59.2570249Z   duration_ms: 0.728667
+2026-10-12T10:39:59.2570540Z   type: 'test'
+2026-10-12T10:39:59.2570783Z   ...
+2026-10-12T10:39:59.2571377Z # Subtest: huge dyadic mantissas with balancing exponents retain finite display coordinates
+2026-10-12T10:39:59.2572173Z ok 15 - huge dyadic mantissas with balancing exponents retain finite display coordinates
+2026-10-12T10:39:59.2572720Z   ---
+2026-10-12T10:39:59.2572958Z   duration_ms: 0.459591
+2026-10-12T10:39:59.2573226Z   type: 'test'
+2026-10-12T10:39:59.2573446Z   ...
+2026-10-12T10:39:59.2573918Z # Subtest: a tiny zero-containing ball keeps exact nonzero width when its display collapses
+2026-10-12T10:39:59.2574671Z ok 16 - a tiny zero-containing ball keeps exact nonzero width when its display collapses
+2026-10-12T10:39:59.2575165Z   ---
+2026-10-12T10:39:59.2575399Z   duration_ms: 1.011932
+2026-10-12T10:39:59.2575672Z   type: 'test'
+2026-10-12T10:39:59.2575914Z   ...
+2026-10-12T10:39:59.2576337Z # Subtest: actual zero boxes retain finite-height count and multiplicity context
+2026-10-12T10:39:59.2577028Z ok 17 - actual zero boxes retain finite-height count and multiplicity context
+2026-10-12T10:39:59.2577792Z   ---
+2026-10-12T10:39:59.2579962Z   duration_ms: 1.745687
+2026-10-12T10:39:59.2580225Z   type: 'test'
+2026-10-12T10:39:59.2580501Z   ...
+2026-10-12T10:39:59.2581273Z # Subtest: explicit formula keeps prime side, uninflated conjugate contributions and original tail band separate
+2026-10-12T10:39:59.2582459Z ok 18 - explicit formula keeps prime side, uninflated conjugate contributions and original tail band separate
+2026-10-12T10:39:59.2592071Z   ---
+2026-10-12T10:39:59.2592849Z   duration_ms: 1.621921
+2026-10-12T10:39:59.2611692Z   type: 'test'
+2026-10-12T10:39:59.2612067Z   ...
+2026-10-12T10:39:59.2612712Z # Subtest: operator reference audit retains all nine rejections and seven open RH bridges
+2026-10-12T10:39:59.2613636Z ok 19 - operator reference audit retains all nine rejections and seven open RH bridges
+2026-10-12T10:39:59.2614358Z   ---
+2026-10-12T10:39:59.2614729Z   duration_ms: 1.269621
+2026-10-12T10:39:59.2615139Z   type: 'test'
+2026-10-12T10:39:59.2615702Z   ...
+2026-10-12T10:39:59.2616361Z # Subtest: analytic rank view preserves exact parity and L versus Lambda derivative distinctions
+2026-10-12T10:39:59.2617352Z ok 20 - analytic rank view preserves exact parity and L versus Lambda derivative distinctions
+2026-10-12T10:39:59.2618040Z   ---
+2026-10-12T10:39:59.2618408Z   duration_ms: 2.018908
+2026-10-12T10:39:59.2618816Z   type: 'test'
+2026-10-12T10:39:59.2619187Z   ...
+2026-10-12T10:39:59.2619775Z # Subtest: rational point coordinates retain fractions and unknown arithmetic rank bounds
+2026-10-12T10:39:59.2620655Z ok 21 - rational point coordinates retain fractions and unknown arithmetic rank bounds
+2026-10-12T10:39:59.2621475Z   ---
+2026-10-12T10:39:59.2621853Z   duration_ms: 0.869478
+2026-10-12T10:39:59.2622251Z   type: 'test'
+2026-10-12T10:39:59.2622615Z   ...
+2026-10-12T10:39:59.2623232Z # Subtest: the point at infinity remains an explicit row and breaks the affine guide line
+2026-10-12T10:39:59.2624080Z ok 22 - the point at infinity remains an explicit row and breaks the affine guide line
+2026-10-12T10:39:59.2624737Z   ---
+2026-10-12T10:39:59.2625109Z   duration_ms: 0.57783
+2026-10-12T10:39:59.2625763Z   type: 'test'
+2026-10-12T10:39:59.2626125Z   ...
+2026-10-12T10:39:59.2626743Z # Subtest: dependency layout is explicitly schematic and cannot numerically rank proof authority
+2026-10-12T10:39:59.2627721Z ok 23 - dependency layout is explicitly schematic and cannot numerically rank proof authority
+2026-10-12T10:39:59.2628414Z   ---
+2026-10-12T10:39:59.2628762Z   duration_ms: 2.037336
+2026-10-12T10:39:59.2629175Z   type: 'test'
+2026-10-12T10:39:59.2629540Z   ...
+2026-10-12T10:39:59.2630098Z # Subtest: renderer rejects nonfinite coordinates and never bridges missing line vertices
+2026-10-12T10:39:59.2631119Z ok 24 - renderer rejects nonfinite coordinates and never bridges missing line vertices
+2026-10-12T10:39:59.2631780Z   ---
+2026-10-12T10:39:59.2632137Z   duration_ms: 0.49856
+2026-10-12T10:39:59.2632533Z   type: 'test'
+2026-10-12T10:39:59.2632885Z   ...
+2026-10-12T10:39:59.2633495Z # Subtest: Stage 8 uses supplied log1p heights, clipping and mask holes without certifying zeros
+2026-10-12T10:39:59.2634444Z ok 25 - Stage 8 uses supplied log1p heights, clipping and mask holes without certifying zeros
+2026-10-12T10:39:59.2635109Z   ---
+2026-10-12T10:39:59.2635452Z   duration_ms: 0.752312
+2026-10-12T10:39:59.2635852Z   type: 'test'
+2026-10-12T10:39:59.2636219Z   ...
+2026-10-12T10:39:59.2701690Z # Subtest: same diagonal projection still distinguishes nilpotent rank from zero matrix
+2026-10-12T10:39:59.2702500Z ok 26 - same diagonal projection still distinguishes nilpotent rank from zero matrix
+2026-10-12T10:39:59.2703036Z   ---
+2026-10-12T10:39:59.2703271Z   duration_ms: 7.885296
+2026-10-12T10:39:59.2703546Z   type: 'test'
+2026-10-12T10:39:59.2703784Z   ...
+2026-10-12T10:39:59.2704300Z # Subtest: diagonal and rational similarity have identical finite invariants without proving operator equality
+2026-10-12T10:39:59.2705193Z ok 27 - diagonal and rational similarity have identical finite invariants without proving operator equality
+2026-10-12T10:39:59.2705798Z   ---
+2026-10-12T10:39:59.2706027Z   duration_ms: 4.737459
+2026-10-12T10:39:59.2706306Z   type: 'test'
+2026-10-12T10:39:59.2706537Z   ...
+2026-10-12T10:39:59.2707019Z # Subtest: rational matrix invariants and repeated exact eigenvalue multiplicities remain exact
+2026-10-12T10:39:59.2708056Z ok 28 - rational matrix invariants and repeated exact eigenvalue multiplicities remain exact
+2026-10-12T10:39:59.2708587Z   ---
+2026-10-12T10:39:59.2708821Z   duration_ms: 4.980455
+2026-10-12T10:39:59.2709099Z   type: 'test'
+2026-10-12T10:39:59.2709337Z   ...
+2026-10-12T10:39:59.2709734Z # Subtest: complex eigenvalues are not silently filled by real rational targets
+2026-10-12T10:39:59.2710354Z ok 29 - complex eigenvalues are not silently filled by real rational targets
+2026-10-12T10:39:59.2710811Z   ---
+2026-10-12T10:39:59.2711382Z   duration_ms: 1.086145
+2026-10-12T10:39:59.2711648Z   type: 'test'
+2026-10-12T10:39:59.2711876Z   ...
+2026-10-12T10:39:59.2712318Z # Subtest: reflection compares exact polynomial identity including its sign and center
+2026-10-12T10:39:59.2713050Z ok 30 - reflection compares exact polynomial identity including its sign and center
+2026-10-12T10:39:59.2713614Z   ---
+2026-10-12T10:39:59.2713837Z   duration_ms: 4.431128
+2026-10-12T10:39:59.2714101Z   type: 'test'
+2026-10-12T10:39:59.2714320Z   ...
+2026-10-12T10:39:59.2714768Z # Subtest: normalization-only differences produce exact constant or linear formal witnesses
+2026-10-12T10:39:59.2715529Z ok 31 - normalization-only differences produce exact constant or linear formal witnesses
+2026-10-12T10:39:59.2716061Z   ---
+2026-10-12T10:39:59.2716284Z   duration_ms: 1.56114
+2026-10-12T10:39:59.2716547Z   type: 'test'
+2026-10-12T10:39:59.2716774Z   ...
+2026-10-12T10:39:59.2717287Z # Subtest: normalization-only whole-matrix difference cannot become an unrelated compressed trace witness
+2026-10-12T10:39:59.2718172Z ok 32 - normalization-only whole-matrix difference cannot become an unrelated compressed trace witness
+2026-10-12T10:39:59.2718747Z   ---
+2026-10-12T10:39:59.2718961Z   duration_ms: 1.065694
+2026-10-12T10:39:59.2719406Z   type: 'test'
+2026-10-12T10:39:59.2719626Z   ...
+2026-10-12T10:39:59.2719975Z # Subtest: principal minimization preserves an original failure predicate
+2026-10-12T10:39:59.2720557Z ok 33 - principal minimization preserves an original failure predicate
+2026-10-12T10:39:59.2721267Z   ---
+2026-10-12T10:39:59.2721523Z   duration_ms: 6.981777
+2026-10-12T10:39:59.2721793Z   type: 'test'
+2026-10-12T10:39:59.2722223Z   ...
+2026-10-12T10:39:59.2722808Z # Subtest: normalization trace compensation is reported as a parameter contract without a false coefficient witness
+2026-10-12T10:39:59.2723811Z ok 34 - normalization trace compensation is reported as a parameter contract without a false coefficient witness
+2026-10-12T10:39:59.2724470Z   ---
+2026-10-12T10:39:59.2724704Z   duration_ms: 0.780154
+2026-10-12T10:39:59.2724972Z   type: 'test'
+2026-10-12T10:39:59.2725218Z   ...
+2026-10-12T10:39:59.2725653Z # Subtest: determinant quotient preserves poles and formal exponential normalization
+2026-10-12T10:39:59.2726365Z ok 35 - determinant quotient preserves poles and formal exponential normalization
+2026-10-12T10:39:59.2726860Z   ---
+2026-10-12T10:39:59.2727094Z   duration_ms: 0.855397
+2026-10-12T10:39:59.2727524Z   type: 'test'
+2026-10-12T10:39:59.2727754Z   ...
+2026-10-12T10:39:59.2728202Z # Subtest: minimal witness replays and its stated principal-compression search is bounded
+2026-10-12T10:39:59.2757254Z ok 36 - minimal witness replays and its stated principal-compression search is bounded
+2026-10-12T10:39:59.2758025Z   ---
+2026-10-12T10:39:59.2758413Z   duration_ms: 11.627508
+2026-10-12T10:39:59.2758795Z   type: 'test'
+2026-10-12T10:39:59.2759153Z   ...
+2026-10-12T10:39:59.2759726Z # Subtest: malformed, floating-point, oversized and authority-bearing input is rejected
+2026-10-12T10:39:59.2760588Z ok 37 - malformed, floating-point, oversized and authority-bearing input is rejected
+2026-10-12T10:39:59.2761385Z   ---
+2026-10-12T10:39:59.2761750Z   duration_ms: 0.80394
+2026-10-12T10:39:59.2762144Z   type: 'test'
+2026-10-12T10:39:59.2762470Z   ...
+2026-10-12T10:39:59.2763026Z # Subtest: records bind deterministic exact results without mutating input or closing research bridges
+2026-10-12T10:39:59.2769217Z ok 38 - records bind deterministic exact results without mutating input or closing research bridges
+2026-10-12T10:39:59.2791338Z   ---
+2026-10-12T10:39:59.2791821Z   duration_ms: 29.516689
+2026-10-12T10:39:59.2792264Z   type: 'test'
+2026-10-12T10:39:59.2792805Z   ...
+2026-10-12T10:39:59.2982212Z # Subtest: object identity, arithmetic mode and proof method are independent string enums
+2026-10-12T10:39:59.2984018Z ok 39 - object identity, arithmetic mode and proof method are independent string enums
+2026-10-12T10:39:59.2997210Z   ---
+2026-10-12T10:39:59.2997645Z   duration_ms: 10.177731
+2026-10-12T10:39:59.2998089Z   type: 'test'
+2026-10-12T10:39:59.2998477Z   ...
+2026-10-12T10:39:59.2999159Z # Subtest: strict JSON preserves exact strings and rejects nonfinite, unsafe, sparse and executable input
+2026-10-12T10:39:59.3000235Z ok 40 - strict JSON preserves exact strings and rejects nonfinite, unsafe, sparse and executable input
+2026-10-12T10:39:59.3001112Z   ---
+2026-10-12T10:39:59.3001485Z   duration_ms: 0.927625
+2026-10-12T10:39:59.3001897Z   type: 'test'
+2026-10-12T10:39:59.3002278Z   ...
+2026-10-12T10:39:59.3002858Z # Subtest: binding snapshots all inputs and remains unverified after consistent replay
+2026-10-12T10:39:59.3003766Z ok 41 - binding snapshots all inputs and remains unverified after consistent replay
+2026-10-12T10:39:59.3004394Z   ---
+2026-10-12T10:39:59.3004756Z   duration_ms: 28.692338
+2026-10-12T10:39:59.3005165Z   type: 'test'
+2026-10-12T10:39:59.3005523Z   ...
+2026-10-12T10:39:59.3006130Z # Subtest: source, environment, input, precision, base, ring and exact target changes stale the binding
+2026-10-12T10:39:59.3007083Z ok 42 - source, environment, input, precision, base, ring and exact target changes stale the binding
+2026-10-12T10:39:59.3007766Z   ---
+2026-10-12T10:39:59.3008118Z   duration_ms: 62.998264
+2026-10-12T10:39:59.3008860Z   type: 'test'
+2026-10-12T10:39:59.3009221Z   ...
+2026-10-12T10:39:59.3009842Z # Subtest: source path traversal, changed assumption refs and promoted serialized records fail closed
+2026-10-12T10:39:59.3010832Z ok 43 - source path traversal, changed assumption refs and promoted serialized records fail closed
+2026-10-12T10:39:59.3011679Z   ---
+2026-10-12T10:39:59.3012038Z   duration_ms: 9.97482
+2026-10-12T10:39:59.3012427Z   type: 'test'
+2026-10-12T10:39:59.3012790Z   ...
+2026-10-12T10:39:59.3013410Z # Subtest: full Lean audit runtime metadata remains bound and modified runtimes are rejected
+2026-10-12T10:39:59.3014327Z ok 44 - full Lean audit runtime metadata remains bound and modified runtimes are rejected
+2026-10-12T10:39:59.3015003Z   ---
+2026-10-12T10:39:59.3015374Z   duration_ms: 11.701158
+2026-10-12T10:39:59.3015783Z   type: 'test'
+2026-10-12T10:39:59.3016150Z   ...
+2026-10-12T10:39:59.3016710Z # Subtest: a caller edit during async hashing cannot create a mixed binding revision
+2026-10-12T10:39:59.3017547Z ok 45 - a caller edit during async hashing cannot create a mixed binding revision
+2026-10-12T10:39:59.3018175Z   ---
+2026-10-12T10:39:59.3018552Z   duration_ms: 18.435447
+2026-10-12T10:39:59.3018959Z   type: 'test'
+2026-10-12T10:39:59.3019317Z   ...
+2026-10-12T10:39:59.3019943Z # Subtest: actual axiom names must match the target ledger in both directions; hypotheses are separate
+2026-10-12T10:39:59.3021095Z ok 46 - actual axiom names must match the target ledger in both directions; hypotheses are separate
+2026-10-12T10:39:59.3021843Z   ---
+2026-10-12T10:39:59.3022214Z   duration_ms: 1.902744
+2026-10-12T10:39:59.3022627Z   type: 'test'
+2026-10-12T10:39:59.3023019Z   ...
+2026-10-12T10:39:59.3023583Z # Subtest: kernel target/type, axiom partition and sorryAx mutations are rejected
+2026-10-12T10:39:59.3024422Z ok 47 - kernel target/type, axiom partition and sorryAx mutations are rejected
+2026-10-12T10:39:59.3025076Z   ---
+2026-10-12T10:39:59.3025590Z   duration_ms: 1.377252
+2026-10-12T10:39:59.3026160Z   type: 'test'
+2026-10-12T10:39:59.3026798Z   ...
+2026-10-12T10:39:59.3027702Z # Subtest: assuming the target is explicitly conditional and syntactic matching claims no semantic decision
+2026-10-12T10:39:59.3041591Z ok 48 - assuming the target is explicitly conditional and syntactic matching claims no semantic decision
+2026-10-12T10:39:59.3042540Z   ---
+2026-10-12T10:39:59.3042968Z   duration_ms: 0.808507
+2026-10-12T10:39:59.3043411Z   type: 'test'
+2026-10-12T10:39:59.3043798Z   ...
+2026-10-12T10:39:59.3044446Z # Subtest: external references and open obligations cannot silently become imported Lean theorems
+2026-10-12T10:39:59.3045471Z ok 49 - external references and open obligations cannot silently become imported Lean theorems
+2026-10-12T10:39:59.3046211Z   ---
+2026-10-12T10:39:59.3046605Z   duration_ms: 0.687234
+2026-10-12T10:39:59.3047041Z   type: 'test'
+2026-10-12T10:39:59.3047433Z   ...
+2026-10-12T10:39:59.3048132Z # Subtest: duplicate IDs, undeclared axioms, wrong directions, unknown endpoints and disconnected cycles fail
+2026-10-12T10:39:59.3049251Z ok 50 - duplicate IDs, undeclared axioms, wrong directions, unknown endpoints and disconnected cycles fail
+2026-10-12T10:39:59.3050034Z   ---
+2026-10-12T10:39:59.3050419Z   duration_ms: 0.860184
+2026-10-12T10:39:59.3050841Z   type: 'test'
+2026-10-12T10:39:59.3051404Z   ...
+2026-10-12T10:39:59.3052109Z # Subtest: proof-to-session reversal selectively invalidates dependents and requires actual recompilation
+2026-10-12T10:39:59.3053240Z ok 51 - proof-to-session reversal selectively invalidates dependents and requires actual recompilation
+2026-10-12T10:39:59.3054007Z   ---
+2026-10-12T10:39:59.3054392Z   duration_ms: 0.853414
+2026-10-12T10:39:59.3054798Z   type: 'test'
+2026-10-12T10:39:59.3055164Z   ...
+2026-10-12T10:39:59.3055795Z # Subtest: all four actual perfect-prism routes preserve typed operations and external theorem scope
+2026-10-12T10:39:59.3106150Z ok 52 - all four actual perfect-prism routes preserve typed operations and external theorem scope
+2026-10-12T10:39:59.3107283Z   ---
+2026-10-12T10:39:59.3107683Z   duration_ms: 52.395343
+2026-10-12T10:39:59.3108100Z   type: 'test'
+2026-10-12T10:39:59.3108468Z   ...
+2026-10-12T10:39:59.5862243Z # Subtest: actual projective and q-PD diagrams use their source maps; module-only q-PD proxy is rejected
+2026-10-12T10:39:59.5881255Z ok 53 - actual projective and q-PD diagrams use their source maps; module-only q-PD proxy is rejected
+2026-10-12T10:39:59.5883207Z   ---
+2026-10-12T10:39:59.5883461Z   duration_ms: 287.888182
+2026-10-12T10:39:59.5883768Z   type: 'test'
+2026-10-12T10:39:59.5884011Z   ...
+2026-10-12T10:39:59.5884465Z # Subtest: original M2 rejects deleted or reordered inversion and derived fixed points
+2026-10-12T10:39:59.5885214Z ok 54 - original M2 rejects deleted or reordered inversion and derived fixed points
+2026-10-12T10:39:59.5885737Z   ---
+2026-10-12T10:39:59.5885980Z   duration_ms: 2.936259
+2026-10-12T10:39:59.5886259Z   type: 'test'
+2026-10-12T10:39:59.5886497Z   ...
+2026-10-12T10:39:59.6580204Z # Subtest: deleting assumptions, edges or changing ring/base maps rejects the affected comparison
+2026-10-12T10:39:59.6581503Z ok 55 - deleting assumptions, edges or changing ring/base maps rejects the affected comparison
+2026-10-12T10:39:59.6582276Z   ---
+2026-10-12T10:39:59.6582660Z   duration_ms: 73.346427
+2026-10-12T10:39:59.6583124Z   type: 'test'
+2026-10-12T10:39:59.6583502Z   ...
+2026-10-12T10:39:59.6918868Z # Subtest: rehashing forged diagrams does not evade the fresh route comparison
+2026-10-12T10:39:59.6934456Z ok 56 - rehashing forged diagrams does not evade the fresh route comparison
+2026-10-12T10:39:59.6953057Z   ---
+2026-10-12T10:39:59.6953489Z   duration_ms: 33.401505
+2026-10-12T10:39:59.6953971Z   type: 'test'
+2026-10-12T10:39:59.6954368Z   ...
+2026-10-12T10:39:59.7091883Z # Subtest: supplied M2 records are recomputed without mutation; forged source results cannot be imported
+2026-10-12T10:39:59.7119901Z ok 57 - supplied M2 records are recomputed without mutation; forged source results cannot be imported
+2026-10-12T10:39:59.7124559Z   ---
+2026-10-12T10:39:59.7141654Z   duration_ms: 16.658209
+2026-10-12T10:39:59.7142084Z   type: 'test'
+2026-10-12T10:39:59.7142427Z   ...
+2026-10-12T10:39:59.7143611Z # Subtest: comparison condition changes revoke affected downstream edges without mutating the original diagram
+2026-10-12T10:39:59.7144719Z ok 58 - comparison condition changes revoke affected downstream edges without mutating the original diagram
+2026-10-12T10:39:59.7145456Z   ---
+2026-10-12T10:39:59.7145793Z   duration_ms: 4.89035
+2026-10-12T10:39:59.7146159Z   type: 'test'
+2026-10-12T10:39:59.7146487Z   ...
+2026-10-12T10:39:59.9714696Z # Subtest: all advertised P8 examples execute; no whole milestone or browser kernel promotion
+2026-10-12T10:39:59.9715672Z ok 59 - all advertised P8 examples execute; no whole milestone or browser kernel promotion
+2026-10-12T10:39:59.9716811Z   ---
+2026-10-12T10:39:59.9717060Z   duration_ms: 744.845695
+2026-10-12T10:39:59.9717348Z   type: 'test'
+2026-10-12T10:39:59.9717611Z   ...
+2026-10-12T10:40:00.0245272Z # Subtest: fresh replay matches exact results while rehashed false finite witnesses fail
+2026-10-12T10:40:00.0246354Z ok 60 - fresh replay matches exact results while rehashed false finite witnesses fail
+2026-10-12T10:40:00.0247027Z   ---
+2026-10-12T10:40:00.0247471Z   duration_ms: 51.110584
+2026-10-12T10:40:00.0247909Z   type: 'test'
+2026-10-12T10:40:00.0248291Z   ...
+2026-10-12T10:40:00.0841953Z # Subtest: stale sources, request tampering and imported completion claims cannot survive replay
+2026-10-12T10:40:00.0847337Z ok 61 - stale sources, request tampering and imported completion claims cannot survive replay
+2026-10-12T10:40:00.0871435Z   ---
+2026-10-12T10:40:00.0872436Z   duration_ms: 61.592753
+2026-10-12T10:40:00.0874206Z   type: 'test'
+2026-10-12T10:40:00.0905070Z   ...
+2026-10-12T10:40:00.0941926Z # Subtest: unsupported math returns failed execution with no certificate; failed runs never replay MATCH
+2026-10-12T10:40:00.0948719Z ok 62 - unsupported math returns failed execution with no certificate; failed runs never replay MATCH
+2026-10-12T10:40:00.0959871Z   ---
+2026-10-12T10:40:00.0960286Z   duration_ms: 6.291968
+2026-10-12T10:40:00.0961085Z   type: 'test'
+2026-10-12T10:40:00.0985734Z   ...
+2026-10-12T10:40:00.0986249Z # Subtest: request snapshot cannot be changed by a caller during asynchronous hashing
+2026-10-12T10:40:00.0991840Z ok 63 - request snapshot cannot be changed by a caller during asynchronous hashing
+2026-10-12T10:40:00.0992383Z   ---
+2026-10-12T10:40:00.0992630Z   duration_ms: 7.922913
+2026-10-12T10:40:00.0992916Z   type: 'test'
+2026-10-12T10:40:00.0993158Z   ...
+2026-10-12T10:40:00.5007254Z # Subtest: recorded Linux controls remain separate from fresh browser mutations and replay deterministically
+2026-10-12T10:40:00.5008200Z ok 64 - recorded Linux controls remain separate from fresh browser mutations and replay deterministically
+2026-10-12T10:40:00.5008790Z   ---
+2026-10-12T10:40:00.5009096Z   duration_ms: 395.822679
+2026-10-12T10:40:00.5009464Z   type: 'test'
+2026-10-12T10:40:00.5009744Z   ...
+2026-10-12T10:40:00.5289316Z # Subtest: review export separates five scoped releases from conjecture resolution
+2026-10-12T10:40:00.5290407Z ok 65 - review export separates five scoped releases from conjecture resolution
+2026-10-12T10:40:00.5291057Z   ---
+2026-10-12T10:40:00.5291340Z   duration_ms: 34.196351
+2026-10-12T10:40:00.5291626Z   type: 'test'
+2026-10-12T10:40:00.5291848Z   ...
+2026-10-12T10:40:00.6932263Z # Subtest: the published static worker survives Publisher escape rewriting and agrees with Node source
+2026-10-12T10:40:00.6933361Z ok 66 - the published static worker survives Publisher escape rewriting and agrees with Node source
+2026-10-12T10:40:00.6933929Z   ---
+2026-10-12T10:40:00.6934164Z   duration_ms: 164.297015
+2026-10-12T10:40:00.6934441Z   type: 'test'
+2026-10-12T10:40:00.6934673Z   ...
+2026-10-12T10:40:00.7077589Z # Subtest: default suite executes original M2 gates and leaves unsupported P7 mathematics OPEN
+2026-10-12T10:40:00.7078485Z ok 67 - default suite executes original M2 gates and leaves unsupported P7 mathematics OPEN
+2026-10-12T10:40:00.7078994Z   ---
+2026-10-12T10:40:00.7079233Z   duration_ms: 353.513469
+2026-10-12T10:40:00.7079514Z   type: 'test'
+2026-10-12T10:40:00.7079713Z   ...
+2026-10-12T10:40:00.7080499Z # Subtest: negative controls invalidate only their exact downstream dependency closure
+2026-10-12T10:40:00.7081365Z ok 68 - negative controls invalidate only their exact downstream dependency closure
+2026-10-12T10:40:00.7084473Z   ---
+2026-10-12T10:40:00.7084905Z   duration_ms: 0.788436
+2026-10-12T10:40:00.7085340Z   type: 'test'
+2026-10-12T10:40:00.7085724Z   ...
+2026-10-12T10:40:00.7086388Z # Subtest: actual archived P7 zero brackets are structurally inspected without claiming analytic replay
+2026-10-12T10:40:00.7087423Z ok 69 - actual archived P7 zero brackets are structurally inspected without claiming analytic replay
+2026-10-12T10:40:00.7088153Z   ---
+2026-10-12T10:40:00.7088547Z   duration_ms: 369.572691
+2026-10-12T10:40:00.7088993Z   type: 'test'
+2026-10-12T10:40:00.7089389Z   ...
+2026-10-12T10:40:00.7090064Z # Subtest: coherent imported zero metadata still cannot establish zeta values or whole-contour nonvanishing
+2026-10-12T10:40:00.7091324Z ok 70 - coherent imported zero metadata still cannot establish zeta values or whole-contour nonvanishing
+2026-10-12T10:40:00.7092140Z   ---
+2026-10-12T10:40:00.7092414Z   duration_ms: 69.527369
+2026-10-12T10:40:00.7092722Z   type: 'test'
+2026-10-12T10:40:00.7092972Z   ...
+2026-10-12T10:40:00.7093542Z # Subtest: arithmetic rank upper null stays OPEN; fabricated exact rank or imported certificate has no authority
+2026-10-12T10:40:00.7094512Z ok 71 - arithmetic rank upper null stays OPEN; fabricated exact rank or imported certificate has no authority
+2026-10-12T10:40:00.7095119Z   ---
+2026-10-12T10:40:00.7095366Z   duration_ms: 0.837971
+2026-10-12T10:40:00.7095642Z   type: 'test'
+2026-10-12T10:40:00.7095876Z   ...
+2026-10-12T10:40:00.7096383Z # Subtest: small archived projections execute structural mutations but keep mathematical gates OPEN
+2026-10-12T10:40:00.7097526Z ok 72 - small archived projections execute structural mutations but keep mathematical gates OPEN
+2026-10-12T10:40:00.7098104Z   ---
+2026-10-12T10:40:00.7098338Z   duration_ms: 3.111963
+2026-10-12T10:40:00.7098608Z   type: 'test'
+2026-10-12T10:40:00.7098877Z   ...
+2026-10-12T10:40:00.7099468Z # Subtest: source/environment/input/precision/base/ring mutations revoke a current binding without issuing proof
+2026-10-12T10:40:00.7100468Z ok 73 - source/environment/input/precision/base/ring mutations revoke a current binding without issuing proof
+2026-10-12T10:40:00.7101379Z   ---
+2026-10-12T10:40:00.7101626Z   duration_ms: 44.178953
+2026-10-12T10:40:00.7101912Z   type: 'test'
+2026-10-12T10:40:00.7102149Z   ...
+2026-10-12T10:40:00.7102650Z # Subtest: suite selectors and imported execution flags cannot request authority or unsupported code
+2026-10-12T10:40:00.7103510Z ok 74 - suite selectors and imported execution flags cannot request authority or unsupported code
+2026-10-12T10:40:00.7104090Z   ---
+2026-10-12T10:40:00.7104321Z   duration_ms: 0.528285
+2026-10-12T10:40:00.7104587Z   type: 'test'
+2026-10-12T10:40:00.7104822Z   ...
+2026-10-12T10:40:00.7105437Z # Subtest: historical independently successful CI package is consistent with its recorded manifest without fresh execution
+2026-10-12T10:40:00.7106516Z ok 75 - historical independently successful CI package is consistent with its recorded manifest without fresh execution
+2026-10-12T10:40:00.7107185Z   ---
+2026-10-12T10:40:00.7107431Z   duration_ms: 25.339563
+2026-10-12T10:40:00.7107702Z   type: 'test'
+2026-10-12T10:40:00.7107934Z   ...
+2026-10-12T10:40:00.7108368Z # Subtest: historical CI observations are rejected against changed current source bytes
+2026-10-12T10:40:00.7109102Z ok 76 - historical CI observations are rejected against changed current source bytes
+2026-10-12T10:40:00.7109625Z   ---
+2026-10-12T10:40:00.7109854Z   duration_ms: 10.214662
+2026-10-12T10:40:00.7110140Z   type: 'test'
+2026-10-12T10:40:00.7110370Z   ...
+2026-10-12T10:40:00.7110802Z # Subtest: missing evidence is NOT_RECORDED while false and corrupt objects are rejected
+2026-10-12T10:40:00.7111801Z ok 77 - missing evidence is NOT_RECORDED while false and corrupt objects are rejected
+2026-10-12T10:40:00.7112305Z   ---
+2026-10-12T10:40:00.7112731Z   duration_ms: 3.957455
+2026-10-12T10:40:00.7113027Z   type: 'test'
+2026-10-12T10:40:00.7113257Z   ...
+2026-10-12T10:40:00.7117279Z # Subtest: independent pytest failure or another commit/run cannot be hidden by report PASS
+2026-10-12T10:40:00.7118140Z ok 78 - independent pytest failure or another commit/run cannot be hidden by report PASS
+2026-10-12T10:40:00.7118686Z   ---
+2026-10-12T10:40:00.7118930Z   duration_ms: 40.926459
+2026-10-12T10:40:00.7119211Z   type: 'test'
+2026-10-12T10:40:00.7119461Z   ...
+2026-10-12T10:40:00.7119861Z # Subtest: pre-exit receipt cannot claim an already successful test process
+2026-10-12T10:40:00.7120494Z ok 79 - pre-exit receipt cannot claim an already successful test process
+2026-10-12T10:40:00.7121222Z   ---
+2026-10-12T10:40:00.7121488Z   duration_ms: 31.504916
+2026-10-12T10:40:00.7121770Z   type: 'test'
+2026-10-12T10:40:00.7122012Z   ...
+2026-10-12T10:40:00.7122472Z # Subtest: source deletion, duplication and stale bytes fail even after package resealing
+2026-10-12T10:40:00.7123228Z ok 80 - source deletion, duplication and stale bytes fail even after package resealing
+2026-10-12T10:40:00.7123747Z   ---
+2026-10-12T10:40:00.7123981Z   duration_ms: 21.246983
+2026-10-12T10:40:00.7124259Z   type: 'test'
+2026-10-12T10:40:00.7124492Z   ...
+2026-10-12T10:40:00.7124919Z # Subtest: inner report digest is checked separately from the outer packaged digest
+2026-10-12T10:40:00.7125619Z ok 81 - inner report digest is checked separately from the outer packaged digest
+2026-10-12T10:40:00.7126126Z   ---
+2026-10-12T10:40:00.7126368Z   duration_ms: 5.347528
+2026-10-12T10:40:00.7126653Z   type: 'test'
+2026-10-12T10:40:00.7126890Z   ...
+2026-10-12T10:40:00.7127897Z # Subtest: a negative replay timeout or failed process is not a successful rejection
+2026-10-12T10:40:00.7128609Z ok 82 - a negative replay timeout or failed process is not a successful rejection
+2026-10-12T10:40:00.7129108Z   ---
+2026-10-12T10:40:00.7129344Z   duration_ms: 34.432336
+2026-10-12T10:40:00.7129626Z   type: 'test'
+2026-10-12T10:40:00.7129862Z   ...
+2026-10-12T10:40:00.7130222Z # Subtest: actual child environment and imposed limits are checked
+2026-10-12T10:40:00.7130779Z ok 83 - actual child environment and imposed limits are checked
+2026-10-12T10:40:00.7131366Z   ---
+2026-10-12T10:40:00.7131599Z   duration_ms: 22.112647
+2026-10-12T10:40:00.7131886Z   type: 'test'
+2026-10-12T10:40:00.7132123Z   ...
+2026-10-12T10:40:00.7132495Z # Subtest: vacuous binding flags and missing precision controls fail
+2026-10-12T10:40:00.7133063Z ok 84 - vacuous binding flags and missing precision controls fail
+2026-10-12T10:40:00.7133492Z   ---
+2026-10-12T10:40:00.7133721Z   duration_ms: 16.701573
+2026-10-12T10:40:00.7134000Z   type: 'test'
+2026-10-12T10:40:00.7134228Z   ...
+2026-10-12T10:40:00.7134601Z # Subtest: explicit binding keys and rejection controls cannot be omitted
+2026-10-12T10:40:00.7135217Z ok 85 - explicit binding keys and rejection controls cannot be omitted
+2026-10-12T10:40:00.7135673Z   ---
+2026-10-12T10:40:00.7135906Z   duration_ms: 21.724763
+2026-10-12T10:40:00.7136178Z   type: 'test'
+2026-10-12T10:40:00.7136420Z   ...
+2026-10-12T10:40:00.7136899Z # Subtest: changed negative mathematics must differ from forged but match fresh positive baseline
+2026-10-12T10:40:00.7137745Z ok 86 - changed negative mathematics must differ from forged but match fresh positive baseline
+2026-10-12T10:40:00.7138303Z   ---
+2026-10-12T10:40:00.7138539Z   duration_ms: 13.448208
+2026-10-12T10:40:00.7138808Z   type: 'test'
+2026-10-12T10:40:00.7139045Z   ...
+2026-10-12T10:40:00.7139482Z # Subtest: box translation and forged upper-bound evidence are the actual fixed controls
+2026-10-12T10:40:00.7140227Z ok 87 - box translation and forged upper-bound evidence are the actual fixed controls
+2026-10-12T10:40:00.7140746Z   ---
+2026-10-12T10:40:00.7141115Z   duration_ms: 14.274341
+2026-10-12T10:40:00.7141386Z   type: 'test'
+2026-10-12T10:40:00.7141623Z   ...
+2026-10-12T10:40:00.7142167Z # Subtest: downstream graph closure revokes exactly the dependent badges
+2026-10-12T10:40:00.7142818Z ok 88 - downstream graph closure revokes exactly the dependent badges
+2026-10-12T10:40:00.7143258Z   ---
+2026-10-12T10:40:00.7143488Z   duration_ms: 17.033994
+2026-10-12T10:40:00.7143762Z   type: 'test'
+2026-10-12T10:40:00.7143995Z   ...
+2026-10-12T10:40:00.7144402Z # Subtest: nested authority and mathematical completion promotions are rejected
+2026-10-12T10:40:00.7145050Z ok 89 - nested authority and mathematical completion promotions are rejected
+2026-10-12T10:40:00.7145534Z   ---
+2026-10-12T10:40:00.7145759Z   duration_ms: 24.049111
+2026-10-12T10:40:00.7146025Z   type: 'test'
+2026-10-12T10:40:00.7146252Z   ...
+2026-10-12T10:40:00.7146679Z # Subtest: CI identity, artifact metadata and duplicated current paths are bounded
+2026-10-12T10:40:00.7147361Z ok 90 - CI identity, artifact metadata and duplicated current paths are bounded
+2026-10-12T10:40:00.7147838Z   ---
+2026-10-12T10:40:00.7148069Z   duration_ms: 9.399224
+2026-10-12T10:40:00.7148348Z   type: 'test'
+2026-10-12T10:40:00.7148579Z   ...
+2026-10-12T10:40:00.7148978Z # Subtest: asynchronous digest validation snapshots both caller-owned inputs
+2026-10-12T10:40:00.7149625Z ok 91 - asynchronous digest validation snapshots both caller-owned inputs
+2026-10-12T10:40:00.7150114Z   ---
+2026-10-12T10:40:00.7150357Z   duration_ms: 6.718811
+2026-10-12T10:40:00.7150638Z   type: 'test'
+2026-10-12T10:40:00.7155485Z   ...
+2026-10-12T10:40:00.7161411Z # Subtest: conditional success is not invented from absent or failed evidence
+2026-10-12T10:40:00.7162166Z ok 92 - conditional success is not invented from absent or failed evidence
+2026-10-12T10:40:00.7162670Z   ---
+2026-10-12T10:40:00.7162916Z   duration_ms: 1.182369
+2026-10-12T10:40:00.7163409Z   type: 'test'
+2026-10-12T10:40:00.7163637Z   ...
+2026-10-12T10:40:00.7164125Z # Subtest: actual historical fixture groups stay separate from available replay requests and current source
+2026-10-12T10:40:00.7165020Z ok 93 - actual historical fixture groups stay separate from available replay requests and current source
+2026-10-12T10:40:00.7165626Z   ---
+2026-10-12T10:40:00.7165886Z   duration_ms: 62.112902
+2026-10-12T10:40:00.7166169Z   type: 'test'
+2026-10-12T10:40:00.7166404Z   ...
+2026-10-12T10:40:00.7166885Z # Subtest: historical evidence rejects promoted execution scope and mismatched source commits
+2026-10-12T10:40:00.7167694Z ok 94 - historical evidence rejects promoted execution scope and mismatched source commits
+2026-10-12T10:40:00.7168245Z   ---
+2026-10-12T10:40:00.7168479Z   duration_ms: 2.58459
+2026-10-12T10:40:00.7168748Z   type: 'test'
+2026-10-12T10:40:00.7168989Z   ...
+2026-10-12T10:40:00.7169502Z # Subtest: missing recorded evidence is explicitly absent instead of inventing fixture results
+2026-10-12T10:40:00.7170314Z ok 95 - missing recorded evidence is explicitly absent instead of inventing fixture results
+2026-10-12T10:40:00.7170872Z   ---
+2026-10-12T10:40:00.7171268Z   duration_ms: 21.944153
+2026-10-12T10:40:00.7171547Z   type: 'test'
+2026-10-12T10:40:00.7171782Z   ...
+2026-10-12T10:40:00.7172268Z # Subtest: all four structural views use actual inherited outputs and preserve them byte for byte
+2026-10-12T10:40:00.7173067Z ok 96 - all four structural views use actual inherited outputs and preserve them byte for byte
+2026-10-12T10:40:00.7173609Z   ---
+2026-10-12T10:40:00.7173836Z   duration_ms: 3.517693
+2026-10-12T10:40:00.7174112Z   type: 'test'
+2026-10-12T10:40:00.7174343Z   ...
+2026-10-12T10:40:00.7174817Z # Subtest: projective degree/basis/valuation retains actual matrix column and external theorem
+2026-10-12T10:40:00.7175617Z ok 97 - projective degree/basis/valuation retains actual matrix column and external theorem
+2026-10-12T10:40:00.7176175Z   ---
+2026-10-12T10:40:00.7176407Z   duration_ms: 0.994687
+2026-10-12T10:40:00.7176671Z   type: 'test'
+2026-10-12T10:40:00.7176903Z   ...
+2026-10-12T10:40:00.7177359Z # Subtest: ordinary and supersingular Newton slopes differ without changing Hodge polygon
+2026-10-12T10:40:00.7178328Z ok 98 - ordinary and supersingular Newton slopes differ without changing Hodge polygon
+2026-10-12T10:40:00.7178868Z   ---
+2026-10-12T10:40:00.7179099Z   duration_ms: 0.443447
+2026-10-12T10:40:00.7179375Z   type: 'test'
+2026-10-12T10:40:00.7179601Z   ...
+2026-10-12T10:40:00.7179998Z # Subtest: Frobenius weight is restricted to supplied projective Tate factors
+2026-10-12T10:40:00.7180644Z ok 99 - Frobenius weight is restricted to supplied projective Tate factors
+2026-10-12T10:40:00.7181357Z   ---
+2026-10-12T10:40:00.7181591Z   duration_ms: 0.302585
+2026-10-12T10:40:00.7181866Z   type: 'test'
+2026-10-12T10:40:00.7182156Z   ...
+2026-10-12T10:40:00.7182586Z # Subtest: finite root prefix retains exact fractions and no invented infinite points
+2026-10-12T10:40:00.7183336Z ok 100 - finite root prefix retains exact fractions and no invented infinite points
+2026-10-12T10:40:00.7183859Z   ---
+2026-10-12T10:40:00.7184089Z   duration_ms: 0.370788
+2026-10-12T10:40:00.7184361Z   type: 'test'
+2026-10-12T10:40:00.7184606Z   ...
+2026-10-12T10:40:00.7185043Z # Subtest: missing, zero, nonfinite and malformed data do not create fake measurements
+2026-10-12T10:40:00.7185760Z ok 101 - missing, zero, nonfinite and malformed data do not create fake measurements
+2026-10-12T10:40:00.7186264Z   ---
+2026-10-12T10:40:00.7186501Z   duration_ms: 0.751591
+2026-10-12T10:40:00.7186778Z   type: 'test'
+2026-10-12T10:40:00.7187019Z   ...
+2026-10-12T10:40:00.7187384Z # Subtest: authority promotion and unfinished executions are rejected
+2026-10-12T10:40:00.7188007Z ok 102 - authority promotion and unfinished executions are rejected
+2026-10-12T10:40:00.7188453Z   ---
+2026-10-12T10:40:00.7188689Z   duration_ms: 0.370538
+2026-10-12T10:40:00.7188959Z   type: 'test'
+2026-10-12T10:40:00.7189378Z   ...
+2026-10-12T10:40:00.7189881Z # Subtest: actual comparison diagram exposes source operations and assumptions as schematic data
+2026-10-12T10:40:00.7190702Z ok 103 - actual comparison diagram exposes source operations and assumptions as schematic data
+2026-10-12T10:40:00.7191401Z   ---
+2026-10-12T10:40:00.7191646Z   duration_ms: 14.379469
+2026-10-12T10:40:00.7191925Z   type: 'test'
+2026-10-12T10:40:00.7192154Z   ...
+2026-10-12T10:40:00.7192592Z # Subtest: changed assumptions are shown as stale edges without rewriting original diagram
+2026-10-12T10:40:00.7193342Z ok 104 - changed assumptions are shown as stale edges without rewriting original diagram
+2026-10-12T10:40:00.7193859Z   ---
+2026-10-12T10:40:00.7194096Z   duration_ms: 23.939215
+2026-10-12T10:40:00.7194371Z   type: 'test'
+2026-10-12T10:40:00.7194592Z   ...
+2026-10-12T10:40:00.7195136Z # Subtest: actual inherited data for all four views and the typed diagram render without WebGL and retain exact sources
+2026-10-12T10:40:00.7196083Z ok 105 - actual inherited data for all four views and the typed diagram render without WebGL and retain exact sources
+2026-10-12T10:40:00.7196735Z   ---
+2026-10-12T10:40:00.7196967Z   duration_ms: 45.595189
+2026-10-12T10:40:00.7197245Z   type: 'test'
+2026-10-12T10:40:00.7197473Z   ...
+2026-10-12T10:40:00.7198018Z # Subtest: per-axis normalization, orthographic projection and hit coordinates agree with the drawn source point
+2026-10-12T10:40:00.7198941Z ok 106 - per-axis normalization, orthographic projection and hit coordinates agree with the drawn source point
+2026-10-12T10:40:00.7199576Z   ---
+2026-10-12T10:40:00.7199804Z   duration_ms: 4.291248
+2026-10-12T10:40:00.7200079Z   type: 'test'
+2026-10-12T10:40:00.7200308Z   ...
+2026-10-12T10:40:00.7200815Z # Subtest: directed and open edges use actual segment topology, dashed display and source-bound picking
+2026-10-12T10:40:00.7201863Z ok 107 - directed and open edges use actual segment topology, dashed display and source-bound picking
+2026-10-12T10:40:00.7202439Z   ---
+2026-10-12T10:40:00.7202672Z   duration_ms: 3.005042
+2026-10-12T10:40:00.7202937Z   type: 'test'
+2026-10-12T10:40:00.7203159Z   ...
+2026-10-12T10:40:00.7203605Z # Subtest: 200/1000 point and 200 line limits do not remove hidden entries or promote display authority
+2026-10-12T10:40:00.7204583Z ok 108 - 200/1000 point and 200 line limits do not remove hidden entries or promote display authority
+2026-10-12T10:40:00.7205132Z   ---
+2026-10-12T10:40:00.7205350Z   duration_ms: 57.2147
+2026-10-12T10:40:00.7205609Z   type: 'test'
+2026-10-12T10:40:00.7205880Z   ...
+2026-10-12T10:40:00.7206386Z # Subtest: keyboard, drag, cancellation and reset change camera only and coalesce rendering into one frame
+2026-10-12T10:40:00.7207180Z ok 109 - keyboard, drag, cancellation and reset change camera only and coalesce rendering into one frame
+2026-10-12T10:40:00.7207723Z   ---
+2026-10-12T10:40:00.7207938Z   duration_ms: 15.58948
+2026-10-12T10:40:00.7208209Z   type: 'test'
+2026-10-12T10:40:00.7208428Z   ...
+2026-10-12T10:40:00.7208911Z # Subtest: inactive routes release the single canvas and restore camera without claiming an unpainted frame
+2026-10-12T10:40:00.7209765Z ok 110 - inactive routes release the single canvas and restore camera without claiming an unpainted frame
+2026-10-12T10:40:00.7210336Z   ---
+2026-10-12T10:40:00.7210560Z   duration_ms: 3.378133
+2026-10-12T10:40:00.7210826Z   type: 'test'
+2026-10-12T10:40:00.7211208Z   ...
+2026-10-12T10:40:00.7211764Z # Subtest: unavailable Canvas2D and empty or invalid display inputs keep exact HTML data without false readiness
+2026-10-12T10:40:00.7212721Z ok 111 - unavailable Canvas2D and empty or invalid display inputs keep exact HTML data without false readiness
+2026-10-12T10:40:00.7213344Z   ---
+2026-10-12T10:40:00.7213570Z   duration_ms: 2.758231
+2026-10-12T10:40:00.7213831Z   type: 'test'
+2026-10-12T10:40:00.7214046Z   ...
+2026-10-12T10:40:00.7214402Z # Subtest: worker creation failure revokes URL and allows a clean retry
+2026-10-12T10:40:00.7214988Z ok 112 - worker creation failure revokes URL and allows a clean retry
+2026-10-12T10:40:00.7215583Z   ---
+2026-10-12T10:40:00.7215812Z   duration_ms: 3.287668
+2026-10-12T10:40:00.7216070Z   type: 'test'
+2026-10-12T10:40:00.7216275Z   ...
+2026-10-12T10:40:00.7216693Z # Subtest: uncloneable request rejects and releases the worker, timer and busy guard
+2026-10-12T10:40:00.7217401Z ok 113 - uncloneable request rejects and releases the worker, timer and busy guard
+2026-10-12T10:40:00.7217887Z   ---
+2026-10-12T10:40:00.7218106Z   duration_ms: 2.133391
+2026-10-12T10:40:00.7218368Z   type: 'test'
+2026-10-12T10:40:00.7218606Z   ...
+2026-10-12T10:40:00.7219017Z # Subtest: 90 second limit terminates an unresolved calculation; no result is issued
+2026-10-12T10:40:00.7219685Z ok 114 - 90 second limit terminates an unresolved calculation; no result is issued
+2026-10-12T10:40:00.7220168Z   ---
+2026-10-12T10:40:00.7220417Z   duration_ms: 0.933444
+2026-10-12T10:40:00.7220696Z   type: 'test'
+2026-10-12T10:40:00.7221073Z   ...
+2026-10-12T10:40:00.7784459Z # Subtest: the observed Publisher mutation breaks legacy JSON but leaves the complete UTF-8 Worker byte-exact
+2026-10-12T10:40:00.7793390Z ok 115 - the observed Publisher mutation breaks legacy JSON but leaves the complete UTF-8 Worker byte-exact
+2026-10-12T10:40:00.7794267Z   ---
+2026-10-12T10:40:00.7794706Z   duration_ms: 196.931395
+2026-10-12T10:40:00.7795146Z   type: 'test'
+2026-10-12T10:40:00.7795531Z   ...
+2026-10-12T10:40:00.7796186Z # Subtest: UTF-8 transport preserves BOM, Korean, astral Unicode, NUL, script tags and literal escapes
+2026-10-12T10:40:00.7799445Z ok 116 - UTF-8 transport preserves BOM, Korean, astral Unicode, NUL, script tags and literal escapes
+2026-10-12T10:40:00.7800762Z   ---
+2026-10-12T10:40:00.7801360Z   duration_ms: 53.737994
+2026-10-12T10:40:00.7801800Z   type: 'test'
+2026-10-12T10:40:00.7802173Z   ...
+2026-10-12T10:40:00.7802740Z # Subtest: malformed base64 and invalid UTF-8 fail decoding without replacement text
+2026-10-12T10:40:00.7803608Z ok 117 - malformed base64 and invalid UTF-8 fail decoding without replacement text
+2026-10-12T10:40:00.7804269Z   ---
+2026-10-12T10:40:00.7804635Z   duration_ms: 41.071156
+2026-10-12T10:40:00.7805037Z   type: 'test'
+2026-10-12T10:40:00.7805392Z   ...
+2026-10-12T10:40:00.7906973Z 1..117
+2026-10-12T10:40:00.7907285Z # tests 117
+2026-10-12T10:40:00.7907936Z # suites 0
+2026-10-12T10:40:00.7908104Z # pass 117
+2026-10-12T10:40:00.7908257Z # fail 0
+2026-10-12T10:40:00.7908408Z # cancelled 0
+2026-10-12T10:40:00.7908593Z # skipped 0
+2026-10-12T10:40:00.7908748Z # todo 0
+2026-10-12T10:40:00.7908911Z # duration_ms 1864.903424
+2026-10-12T10:40:00.8040439Z ##[group]Run actions/upload-artifact@v4
+2026-10-12T10:40:00.8040689Z with:
+2026-10-12T10:40:00.8041143Z   name: p8-p7-mutation-eb2bc3a4a14d05a88248e85167286bb4f46a6ef5
+2026-10-12T10:40:00.8041488Z   path: research-ide/mathscope-m3/p8/evidence/p7-mutation-ci/
+2026-10-12T10:40:00.8041755Z   if-no-files-found: warn
+2026-10-12T10:40:00.8041942Z   retention-days: 90
+2026-10-12T10:40:00.8042116Z   compression-level: 6
+2026-10-12T10:40:00.8042309Z   overwrite: false
+2026-10-12T10:40:00.8042491Z   include-hidden-files: false
+2026-10-12T10:40:00.8042677Z env:
+2026-10-12T10:40:00.8042875Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:40:00.8043216Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T10:40:00.8043557Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:40:00.8043851Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:40:00.8044168Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T10:40:00.8044460Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T10:40:00.8044712Z ##[endgroup]
+2026-10-12T10:40:00.9345017Z (node:4364) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T10:40:00.9345595Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T10:40:00.9412109Z With the provided path, there will be 2 files uploaded
+2026-10-12T10:40:00.9420840Z Artifact name is valid!
+2026-10-12T10:40:00.9421521Z Root directory input is valid!
+2026-10-12T10:40:01.2811246Z Beginning upload of artifact content to blob storage
+2026-10-12T10:40:01.2984924Z (node:4364) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-12T10:40:01.5265062Z Uploaded bytes 6814
+2026-10-12T10:40:01.5892763Z Finished uploading artifact content to blob storage!
+2026-10-12T10:40:01.5893347Z SHA256 digest of uploaded artifact zip is 067e231cfaefde97e165121f87bffafa7d7bf963eb01ee8ece859d885961a596
+2026-10-12T10:40:01.5894788Z Finalizing artifact upload
+2026-10-12T10:40:01.9266713Z Artifact p8-p7-mutation-eb2bc3a4a14d05a88248e85167286bb4f46a6ef5.zip successfully finalized. Artifact ID 11741622609
+2026-10-12T10:40:01.9268147Z Artifact p8-p7-mutation-eb2bc3a4a14d05a88248e85167286bb4f46a6ef5 has been successfully uploaded! Final size is 6814 bytes. Artifact ID is 11741622609
+2026-10-12T10:40:01.9273454Z Artifact download URL: https://github.com/leegahuyn/MathScopeCompute/actions/runs/38237430568/artifacts/11741622609
+2026-10-12T10:40:01.9423282Z Post job cleanup.
+2026-10-12T10:40:02.0388545Z Cache hit occurred on the primary key setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-7a2d13a8fd75d247652679a85320d2900f9338df371bcc6b84c1468460a0d00d, not saving cache.
+2026-10-12T10:40:02.0389930Z (node:4378) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T10:40:02.0390717Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T10:40:02.0499379Z Post job cleanup.
+2026-10-12T10:40:02.1198258Z [command]/usr/bin/git version
+2026-10-12T10:40:02.1233577Z git version 2.55.0
+2026-10-12T10:40:02.1263534Z Temporarily overriding HOME='/home/runner/work/_temp/fd67fd1e-b1e6-49ed-bab5-d772f06f59a9' before making global git config changes
+2026-10-12T10:40:02.1264603Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T10:40:02.1268358Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-12T10:40:02.1299979Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T10:40:02.1328420Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T10:40:02.1601886Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T10:40:02.1641581Z http.https://github.com/.extraheader
+2026-10-12T10:40:02.1654784Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-12T10:40:02.1707918Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T10:40:02.2013087Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T10:40:02.2045482Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T10:40:02.2404522Z Cleaning up orphan processes
+2026-10-12T10:40:02.2690773Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
