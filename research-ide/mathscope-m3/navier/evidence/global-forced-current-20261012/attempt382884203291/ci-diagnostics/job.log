@@ -1,0 +1,371 @@
+﻿2026-10-12T18:04:11.3194826Z Current runner version: '2.337.0'
+2026-10-12T18:04:11.3222289Z ##[group]Runner Image Provisioner
+2026-10-12T18:04:11.3223999Z Hosted Compute Agent
+2026-10-12T18:04:11.3224938Z Version: 20261002.596
+2026-10-12T18:04:11.3225911Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-12T18:04:11.3227191Z Build Date: 2026-10-02T22:28:27Z
+2026-10-12T18:04:11.3228321Z Worker ID: {3afbaa8b-a411-4d1d-ac46-5cb928be5098}
+2026-10-12T18:04:11.3229673Z Region: southcentralus
+2026-10-12T18:04:11.3230547Z Cloud: Azure
+2026-10-12T18:04:11.3231407Z ##[endgroup]
+2026-10-12T18:04:11.3233643Z ##[group]Operating System
+2026-10-12T18:04:11.3234637Z Ubuntu
+2026-10-12T18:04:11.3235596Z 24.04.5
+2026-10-12T18:04:11.3236482Z LTS
+2026-10-12T18:04:11.3237302Z ##[endgroup]
+2026-10-12T18:04:11.3238833Z ##[group]Runner Image
+2026-10-12T18:04:11.3239784Z Image: ubuntu-24.04
+2026-10-12T18:04:11.3241016Z Version: 20261004.327.1
+2026-10-12T18:04:11.3243266Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-12T18:04:11.3245892Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-12T18:04:11.3247625Z ##[endgroup]
+2026-10-12T18:04:11.3249367Z ##[group]GITHUB_TOKEN Permissions
+2026-10-12T18:04:11.3252313Z Contents: read
+2026-10-12T18:04:11.3253514Z Metadata: read
+2026-10-12T18:04:11.3254398Z ##[endgroup]
+2026-10-12T18:04:11.3257063Z Secret source: Actions
+2026-10-12T18:04:11.3258601Z Cache mode: write
+2026-10-12T18:04:11.3259720Z Prepare workflow directory
+2026-10-12T18:04:11.3911280Z Prepare all required actions
+2026-10-12T18:04:11.3980198Z Getting action download info
+2026-10-12T18:04:11.6613712Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-12T18:04:11.7383108Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-12T18:04:11.8322029Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-12T18:04:11.9125706Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-12T18:04:12.1275675Z Complete job name: original-source-forced-current
+2026-10-12T18:04:12.1991141Z ##[group]Run actions/checkout@v4
+2026-10-12T18:04:12.1991975Z with:
+2026-10-12T18:04:12.1992429Z   persist-credentials: false
+2026-10-12T18:04:12.1993388Z   repository: leegahuyn/MathScopeCompute
+2026-10-12T18:04:12.1997365Z   token: ***
+2026-10-12T18:04:12.1997809Z   ssh-strict: true
+2026-10-12T18:04:12.1998252Z   ssh-user: git
+2026-10-12T18:04:12.1998681Z   clean: true
+2026-10-12T18:04:12.1999124Z   sparse-checkout-cone-mode: true
+2026-10-12T18:04:12.1999648Z   fetch-depth: 1
+2026-10-12T18:04:12.2000079Z   fetch-tags: false
+2026-10-12T18:04:12.2000520Z   show-progress: true
+2026-10-12T18:04:12.2000964Z   lfs: false
+2026-10-12T18:04:12.2001383Z   submodules: false
+2026-10-12T18:04:12.2001836Z   set-safe-directory: true
+2026-10-12T18:04:12.2002342Z   allow-unsafe-pr-checkout: false
+2026-10-12T18:04:12.2003264Z env:
+2026-10-12T18:04:12.2003696Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T18:04:12.2004207Z   M3_FORCED_CI_ATTEMPT: 382884203291
+2026-10-12T18:04:12.2004724Z ##[endgroup]
+2026-10-12T18:04:12.3071004Z Syncing repository: leegahuyn/MathScopeCompute
+2026-10-12T18:04:12.3073107Z ##[group]Getting Git version info
+2026-10-12T18:04:12.3073955Z Working directory is '/home/runner/work/MathScopeCompute/MathScopeCompute'
+2026-10-12T18:04:12.3075099Z [command]/usr/bin/git version
+2026-10-12T18:04:12.3280243Z git version 2.55.0
+2026-10-12T18:04:12.3296396Z ##[endgroup]
+2026-10-12T18:04:12.3316536Z Temporarily overriding HOME='/home/runner/work/_temp/c20ce7d0-e03f-4ac5-8a4b-38dffbd9164c' before making global git config changes
+2026-10-12T18:04:12.3319180Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T18:04:12.3321311Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-12T18:04:12.3655057Z Deleting the contents of '/home/runner/work/MathScopeCompute/MathScopeCompute'
+2026-10-12T18:04:12.3668512Z ##[group]Initializing the repository
+2026-10-12T18:04:12.3673927Z [command]/usr/bin/git init /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-12T18:04:12.4148268Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-12T18:04:12.4149406Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-12T18:04:12.4150362Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-12T18:04:12.4151111Z hint: call:
+2026-10-12T18:04:12.4151530Z hint:
+2026-10-12T18:04:12.4152079Z hint: 	git config --global init.defaultBranch <name>
+2026-10-12T18:04:12.4152987Z hint:
+2026-10-12T18:04:12.4153578Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-12T18:04:12.4154935Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-12T18:04:12.4155901Z hint:
+2026-10-12T18:04:12.4156530Z hint: 	git branch -m <name>
+2026-10-12T18:04:12.4157290Z hint:
+2026-10-12T18:04:12.4158299Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-12T18:04:12.4160049Z Initialized empty Git repository in /home/runner/work/MathScopeCompute/MathScopeCompute/.git/
+2026-10-12T18:04:12.4168054Z [command]/usr/bin/git remote add origin https://github.com/leegahuyn/MathScopeCompute
+2026-10-12T18:04:12.4239817Z ##[endgroup]
+2026-10-12T18:04:12.4241408Z ##[group]Disabling automatic garbage collection
+2026-10-12T18:04:12.4242652Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-12T18:04:12.4273603Z ##[endgroup]
+2026-10-12T18:04:12.4274900Z ##[group]Setting up auth
+2026-10-12T18:04:12.4279774Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T18:04:12.4318274Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T18:04:12.5484369Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T18:04:12.5527345Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T18:04:12.5781020Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T18:04:12.5823167Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T18:04:12.6064002Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-12T18:04:13.0170593Z ##[endgroup]
+2026-10-12T18:04:13.0172748Z ##[group]Fetching the repository
+2026-10-12T18:04:13.0180108Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2b56ae8cf103c255b40e1a09c4108ab2b03c45a9:refs/remotes/origin/mathscope-m3-continuation55-20261012
+2026-10-12T18:04:38.4292753Z From https://github.com/leegahuyn/MathScopeCompute
+2026-10-12T18:04:38.4293993Z  * [new ref]         2b56ae8cf103c255b40e1a09c4108ab2b03c45a9 -> origin/mathscope-m3-continuation55-20261012
+2026-10-12T18:04:38.4296180Z ##[endgroup]
+2026-10-12T18:04:38.4297108Z ##[group]Determining the checkout info
+2026-10-12T18:04:38.4298014Z ##[endgroup]
+2026-10-12T18:04:38.4304979Z [command]/usr/bin/git sparse-checkout disable
+2026-10-12T18:04:38.4361180Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-12T18:04:38.4398657Z ##[group]Checking out the ref
+2026-10-12T18:04:38.4439558Z [command]/usr/bin/git checkout --progress --force -B mathscope-m3-continuation55-20261012 refs/remotes/origin/mathscope-m3-continuation55-20261012
+2026-10-12T18:04:39.4628343Z Updating files:  28% (2687/9317)
+2026-10-12T18:04:39.4852168Z Updating files:  29% (2702/9317)
+2026-10-12T18:04:39.4955027Z Updating files:  30% (2796/9317)
+2026-10-12T18:04:39.5078836Z Updating files:  31% (2889/9317)
+2026-10-12T18:04:39.5539759Z Updating files:  32% (2982/9317)
+2026-10-12T18:04:39.5674491Z Updating files:  33% (3075/9317)
+2026-10-12T18:04:39.5824513Z Updating files:  34% (3168/9317)
+2026-10-12T18:04:39.5959180Z Updating files:  35% (3261/9317)
+2026-10-12T18:04:39.6258693Z Updating files:  36% (3355/9317)
+2026-10-12T18:04:39.6365616Z Updating files:  37% (3448/9317)
+2026-10-12T18:04:39.6476403Z Updating files:  38% (3541/9317)
+2026-10-12T18:04:39.6540403Z Updating files:  39% (3634/9317)
+2026-10-12T18:04:39.6613967Z Updating files:  40% (3727/9317)
+2026-10-12T18:04:39.6676068Z Updating files:  41% (3820/9317)
+2026-10-12T18:04:39.6755013Z Updating files:  42% (3914/9317)
+2026-10-12T18:04:39.6818621Z Updating files:  43% (4007/9317)
+2026-10-12T18:04:39.7159501Z Updating files:  44% (4100/9317)
+2026-10-12T18:04:39.7682372Z Updating files:  45% (4193/9317)
+2026-10-12T18:04:39.8141860Z Updating files:  46% (4286/9317)
+2026-10-12T18:04:39.8247143Z Updating files:  47% (4379/9317)
+2026-10-12T18:04:39.8344138Z Updating files:  48% (4473/9317)
+2026-10-12T18:04:39.8627506Z Updating files:  49% (4566/9317)
+2026-10-12T18:04:39.8762066Z Updating files:  50% (4659/9317)
+2026-10-12T18:04:39.8836102Z Updating files:  51% (4752/9317)
+2026-10-12T18:04:39.8896270Z Updating files:  52% (4845/9317)
+2026-10-12T18:04:39.8960355Z Updating files:  53% (4939/9317)
+2026-10-12T18:04:39.9631340Z Updating files:  54% (5032/9317)
+2026-10-12T18:04:39.9796391Z Updating files:  55% (5125/9317)
+2026-10-12T18:04:39.9896208Z Updating files:  56% (5218/9317)
+2026-10-12T18:04:40.0140720Z Updating files:  57% (5311/9317)
+2026-10-12T18:04:40.0420427Z Updating files:  58% (5404/9317)
+2026-10-12T18:04:40.1044537Z Updating files:  59% (5498/9317)
+2026-10-12T18:04:40.1829566Z Updating files:  60% (5591/9317)
+2026-10-12T18:04:40.2593667Z Updating files:  61% (5684/9317)
+2026-10-12T18:04:40.3019738Z Updating files:  62% (5777/9317)
+2026-10-12T18:04:40.3802858Z Updating files:  63% (5870/9317)
+2026-10-12T18:04:40.4652727Z Updating files:  64% (5963/9317)
+2026-10-12T18:04:40.5013170Z Updating files:  64% (6009/9317)
+2026-10-12T18:04:40.5174464Z Updating files:  65% (6057/9317)
+2026-10-12T18:04:40.5343712Z Updating files:  66% (6150/9317)
+2026-10-12T18:04:40.5693182Z Updating files:  67% (6243/9317)
+2026-10-12T18:04:40.5791683Z Updating files:  68% (6336/9317)
+2026-10-12T18:04:40.5979705Z Updating files:  69% (6429/9317)
+2026-10-12T18:04:40.6080713Z Updating files:  70% (6522/9317)
+2026-10-12T18:04:40.6285532Z Updating files:  71% (6616/9317)
+2026-10-12T18:04:40.6388194Z Updating files:  72% (6709/9317)
+2026-10-12T18:04:40.6489299Z Updating files:  73% (6802/9317)
+2026-10-12T18:04:40.6581855Z Updating files:  74% (6895/9317)
+2026-10-12T18:04:40.6705782Z Updating files:  75% (6988/9317)
+2026-10-12T18:04:40.7399663Z Updating files:  76% (7081/9317)
+2026-10-12T18:04:40.7975543Z Updating files:  77% (7175/9317)
+2026-10-12T18:04:40.8227266Z Updating files:  78% (7268/9317)
+2026-10-12T18:04:40.8409657Z Updating files:  79% (7361/9317)
+2026-10-12T18:04:40.8722944Z Updating files:  80% (7454/9317)
+2026-10-12T18:04:40.9227853Z Updating files:  81% (7547/9317)
+2026-10-12T18:04:40.9384025Z Updating files:  82% (7640/9317)
+2026-10-12T18:04:40.9507132Z Updating files:  83% (7734/9317)
+2026-10-12T18:04:40.9607064Z Updating files:  84% (7827/9317)
+2026-10-12T18:04:40.9732344Z Updating files:  85% (7920/9317)
+2026-10-12T18:04:40.9828707Z Updating files:  86% (8013/9317)
+2026-10-12T18:04:40.9931752Z Updating files:  87% (8106/9317)
+2026-10-12T18:04:41.0212266Z Updating files:  88% (8199/9317)
+2026-10-12T18:04:41.0309031Z Updating files:  89% (8293/9317)
+2026-10-12T18:04:41.0408101Z Updating files:  90% (8386/9317)
+2026-10-12T18:04:41.0542214Z Updating files:  91% (8479/9317)
+2026-10-12T18:04:41.0654247Z Updating files:  92% (8572/9317)
+2026-10-12T18:04:41.0719723Z Updating files:  93% (8665/9317)
+2026-10-12T18:04:41.0781906Z Updating files:  94% (8758/9317)
+2026-10-12T18:04:41.0956480Z Updating files:  95% (8852/9317)
+2026-10-12T18:04:41.1107660Z Updating files:  96% (8945/9317)
+2026-10-12T18:04:41.1190284Z Updating files:  97% (9038/9317)
+2026-10-12T18:04:41.1252635Z Updating files:  98% (9131/9317)
+2026-10-12T18:04:41.1818223Z Updating files:  99% (9224/9317)
+2026-10-12T18:04:41.1818977Z Updating files: 100% (9317/9317)
+2026-10-12T18:04:41.1819404Z Updating files: 100% (9317/9317), done.
+2026-10-12T18:04:41.1941738Z Switched to a new branch 'mathscope-m3-continuation55-20261012'
+2026-10-12T18:04:41.1946811Z branch 'mathscope-m3-continuation55-20261012' set up to track 'origin/mathscope-m3-continuation55-20261012'.
+2026-10-12T18:04:41.2088406Z ##[endgroup]
+2026-10-12T18:04:41.2092151Z [command]/usr/bin/git log -1 --format=%H
+2026-10-12T18:04:41.2123043Z 2b56ae8cf103c255b40e1a09c4108ab2b03c45a9
+2026-10-12T18:04:41.2132857Z ##[group]Removing auth
+2026-10-12T18:04:41.2138102Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T18:04:41.2177287Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T18:04:41.2436743Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T18:04:41.2466221Z http.https://github.com/.extraheader
+2026-10-12T18:04:41.2473491Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-12T18:04:41.2510385Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T18:04:41.2764393Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T18:04:41.2803455Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T18:04:41.3060090Z ##[endgroup]
+2026-10-12T18:04:41.3315584Z ##[group]Run actions/setup-node@v4
+2026-10-12T18:04:41.3315875Z with:
+2026-10-12T18:04:41.3316085Z   node-version: 24
+2026-10-12T18:04:41.3316313Z   always-auth: false
+2026-10-12T18:04:41.3316530Z   check-latest: false
+2026-10-12T18:04:41.3318893Z   token: ***
+2026-10-12T18:04:41.3319094Z env:
+2026-10-12T18:04:41.3319302Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T18:04:41.3319564Z   M3_FORCED_CI_ATTEMPT: 382884203291
+2026-10-12T18:04:41.3319823Z ##[endgroup]
+2026-10-12T18:04:41.4812753Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-12T18:04:41.4818751Z (node:2402) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T18:04:41.4819617Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T18:04:41.4822363Z ##[group]Environment details
+2026-10-12T18:04:41.8289147Z node: v24.21.0
+2026-10-12T18:04:41.8289479Z npm: 11.19.0
+2026-10-12T18:04:41.8289706Z yarn: 1.22.22
+2026-10-12T18:04:41.8291113Z ##[endgroup]
+2026-10-12T18:04:41.8466767Z ##[group]Run actions/setup-python@v5
+2026-10-12T18:04:41.8467063Z with:
+2026-10-12T18:04:41.8467277Z   python-version: 3.12
+2026-10-12T18:04:41.8467530Z   check-latest: false
+2026-10-12T18:04:41.8469914Z   token: ***
+2026-10-12T18:04:41.8470151Z   update-environment: true
+2026-10-12T18:04:41.8470403Z   allow-prereleases: false
+2026-10-12T18:04:41.8470640Z   freethreaded: false
+2026-10-12T18:04:41.8470856Z env:
+2026-10-12T18:04:41.8471070Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T18:04:41.8471335Z   M3_FORCED_CI_ATTEMPT: 382884203291
+2026-10-12T18:04:41.8471600Z ##[endgroup]
+2026-10-12T18:04:41.9846164Z ##[group]Installed versions
+2026-10-12T18:04:41.9952449Z (node:2433) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T18:04:41.9953741Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T18:04:41.9954637Z Successfully set up CPython (3.12.15)
+2026-10-12T18:04:41.9955240Z ##[endgroup]
+2026-10-12T18:04:42.0108158Z ##[group]Run M3_FORCED_CI_DIAGNOSTICS="$RUNNER_TEMP/m3-forced-current-diagnostics"
+2026-10-12T18:04:42.0108832Z [36;1mM3_FORCED_CI_DIAGNOSTICS="$RUNNER_TEMP/m3-forced-current-diagnostics"[0m
+2026-10-12T18:04:42.0109307Z [36;1mmkdir -p "$M3_FORCED_CI_DIAGNOSTICS"[0m
+2026-10-12T18:04:42.0109773Z [36;1mprintf '%s\n' "M3_FORCED_CI_DIAGNOSTICS=$M3_FORCED_CI_DIAGNOSTICS" >> "$GITHUB_ENV"[0m
+2026-10-12T18:04:42.0110308Z [36;1mnode --version | tee "$M3_FORCED_CI_DIAGNOSTICS/node-version.txt"[0m
+2026-10-12T18:04:42.0110795Z [36;1mpython --version | tee "$M3_FORCED_CI_DIAGNOSTICS/python-version.txt"[0m
+2026-10-12T18:04:42.0111308Z [36;1mpython -B - <<'PY' | tee "$M3_FORCED_CI_DIAGNOSTICS/frozen-source-inputs.json"[0m
+2026-10-12T18:04:42.0111740Z [36;1mfrom pathlib import Path[0m
+2026-10-12T18:04:42.0112025Z [36;1mimport hashlib, json, os[0m
+2026-10-12T18:04:42.0112972Z [36;1mpath = Path('research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt4/source-bytes-before.json')[0m
+2026-10-12T18:04:42.0113671Z [36;1mraw = path.read_bytes()[0m
+2026-10-12T18:04:42.0114182Z [36;1massert hashlib.sha256(raw).hexdigest() == '37960fe03a79493d12b6b9051b8a69a88ab71cc3505cc8cd62c6f2fc4bc0daeb'[0m
+2026-10-12T18:04:42.0114708Z [36;1mrows = json.loads(raw)['files'][0m
+2026-10-12T18:04:42.0114989Z [36;1massert len(rows) == 155[0m
+2026-10-12T18:04:42.0115261Z [36;1mfor row in rows:[0m
+2026-10-12T18:04:42.0115540Z [36;1m    actual = Path(row['path']).read_bytes()[0m
+2026-10-12T18:04:42.0115893Z [36;1m    assert len(actual) == row['bytes'], row['path'][0m
+2026-10-12T18:04:42.0116331Z [36;1m    assert hashlib.sha256(actual).hexdigest() == row['sha256'], row['path'][0m
+2026-10-12T18:04:42.0117919Z [36;1mprint(json.dumps({'status': 'PASS', 'commit': os.environ['GITHUB_SHA'], 'runId': os.environ['GITHUB_RUN_ID'], 'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'], 'sourceFileCount': len(rows), 'sourceBeforeSHA256': hashlib.sha256(raw).hexdigest(), 'sameFixedLimits': {'seconds': 2100, 'workerRSSBytes': 13*1024**3//2, 'addressSpaceBytes': 7*1024**3, 'v8MiB': 5120}, 'earlierDisconnectedExecutionOutcomeInferred': False}, indent=2))[0m
+2026-10-12T18:04:42.0119323Z [36;1mPY[0m
+2026-10-12T18:04:42.0397888Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-12T18:04:42.0398270Z env:
+2026-10-12T18:04:42.0398508Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T18:04:42.0398785Z   M3_FORCED_CI_ATTEMPT: 382884203291
+2026-10-12T18:04:42.0399121Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:04:42.0399574Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T18:04:42.0400012Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:04:42.0400412Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:04:42.0400941Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:04:42.0401390Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T18:04:42.0401732Z ##[endgroup]
+2026-10-12T18:04:42.0579507Z v24.21.0
+2026-10-12T18:04:42.0674377Z Python 3.12.15
+2026-10-12T18:04:42.1168167Z {
+2026-10-12T18:04:42.1168624Z   "status": "PASS",
+2026-10-12T18:04:42.1169178Z   "commit": "2b56ae8cf103c255b40e1a09c4108ab2b03c45a9",
+2026-10-12T18:04:42.1169705Z   "runId": "38288420329",
+2026-10-12T18:04:42.1170055Z   "runAttempt": "1",
+2026-10-12T18:04:42.1170418Z   "sourceFileCount": 155,
+2026-10-12T18:04:42.1171147Z   "sourceBeforeSHA256": "37960fe03a79493d12b6b9051b8a69a88ab71cc3505cc8cd62c6f2fc4bc0daeb",
+2026-10-12T18:04:42.1171842Z   "sameFixedLimits": {
+2026-10-12T18:04:42.1172190Z     "seconds": 2100,
+2026-10-12T18:04:42.1172839Z     "workerRSSBytes": 6979321856,
+2026-10-12T18:04:42.1173370Z     "addressSpaceBytes": 7516192768,
+2026-10-12T18:04:42.1173812Z     "v8MiB": 5120
+2026-10-12T18:04:42.1174138Z   },
+2026-10-12T18:04:42.1174938Z   "earlierDisconnectedExecutionOutcomeInferred": false
+2026-10-12T18:04:42.1175486Z }
+2026-10-12T18:04:42.1259784Z ##[group]Run python -B research-ide/mathscope-m3/navier/tests/run-global-forced-current.py "$M3_FORCED_CI_ATTEMPT" \
+2026-10-12T18:04:42.1260627Z [36;1mpython -B research-ide/mathscope-m3/navier/tests/run-global-forced-current.py "$M3_FORCED_CI_ATTEMPT" \[0m
+2026-10-12T18:04:42.1261224Z [36;1m  2>&1 | tee "$M3_FORCED_CI_DIAGNOSTICS/driver.log"[0m
+2026-10-12T18:04:42.1335788Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-12T18:04:42.1336144Z env:
+2026-10-12T18:04:42.1336365Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T18:04:42.1336634Z   M3_FORCED_CI_ATTEMPT: 382884203291
+2026-10-12T18:04:42.1336974Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:04:42.1337410Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T18:04:42.1337829Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:04:42.1338215Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:04:42.1338670Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:04:42.1339058Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T18:04:42.1339526Z   M3_FORCED_CI_DIAGNOSTICS: /home/runner/work/_temp/m3-forced-current-diagnostics
+2026-10-12T18:04:42.1339926Z ##[endgroup]
+2026-10-12T18:39:42.7257974Z {
+2026-10-12T18:39:42.7258499Z   "receipt": {
+2026-10-12T18:39:42.7259553Z     "path": "research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/receipt.json",
+2026-10-12T18:39:42.7260864Z     "sha256": "d17bc42fcfaf8000d014977d4725f325dbdb73849a43c71c36d20ea63ef14684",
+2026-10-12T18:39:42.7261542Z     "bytes": 17193
+2026-10-12T18:39:42.7261920Z   },
+2026-10-12T18:39:42.7262214Z   "nodeTests": {
+2026-10-12T18:39:42.7262693Z     "passed": null,
+2026-10-12T18:39:42.7263037Z     "failed": null,
+2026-10-12T18:39:42.7263365Z     "skipped": null,
+2026-10-12T18:39:42.7263752Z     "required": 58
+2026-10-12T18:39:42.7264063Z   },
+2026-10-12T18:39:42.7264397Z   "independentChecks": 90,
+2026-10-12T18:39:42.7264835Z   "sourceFilesUnchanged": true,
+2026-10-12T18:39:42.7265319Z   "elapsedSeconds": 2100.1860638430003,
+2026-10-12T18:39:42.7265749Z   "pass": false
+2026-10-12T18:39:42.7266047Z }
+2026-10-12T18:39:42.7362816Z ##[error]Process completed with exit code 1.
+2026-10-12T18:39:42.7457094Z ##[group]Run actions/upload-artifact@v4
+2026-10-12T18:39:42.7457666Z with:
+2026-10-12T18:39:42.7458190Z   name: m3-forced-current-ci38288420329-1-2b56ae8cf103c255b40e1a09c4108ab2b03c45a9
+2026-10-12T18:39:42.7459182Z   path: /home/runner/work/_temp/m3-forced-current-diagnostics/
+research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/
+
+2026-10-12T18:39:42.7460121Z   if-no-files-found: warn
+2026-10-12T18:39:42.7460628Z   retention-days: 30
+2026-10-12T18:39:42.7461266Z   compression-level: 0
+2026-10-12T18:39:42.7461853Z   overwrite: false
+2026-10-12T18:39:42.7474631Z   include-hidden-files: false
+2026-10-12T18:39:42.7474986Z env:
+2026-10-12T18:39:42.7475264Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-12T18:39:42.7475644Z   M3_FORCED_CI_ATTEMPT: 382884203291
+2026-10-12T18:39:42.7476135Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:39:42.7476816Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-12T18:39:42.7477323Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:39:42.7477699Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:39:42.7478064Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-12T18:39:42.7478427Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-12T18:39:42.7478893Z   M3_FORCED_CI_DIAGNOSTICS: /home/runner/work/_temp/m3-forced-current-diagnostics
+2026-10-12T18:39:42.7479291Z ##[endgroup]
+2026-10-12T18:39:42.9225119Z (node:2946) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T18:39:42.9227193Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T18:39:42.9739382Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-12T18:39:42.9742710Z The least common ancestor is /home/runner/work. This will be the root directory of the artifact
+2026-10-12T18:39:42.9743797Z With the provided path, there will be 207 files uploaded
+2026-10-12T18:39:42.9748483Z Artifact name is valid!
+2026-10-12T18:39:42.9749030Z Root directory input is valid!
+2026-10-12T18:39:43.2597029Z Beginning upload of artifact content to blob storage
+2026-10-12T18:39:43.3263954Z (node:2946) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-12T18:39:43.8317932Z Uploaded bytes 8388608
+2026-10-12T18:39:43.9279322Z Uploaded bytes 16777216
+2026-10-12T18:39:43.9351461Z Uploaded bytes 25165824
+2026-10-12T18:39:44.0549462Z Uploaded bytes 33554432
+2026-10-12T18:39:44.0685215Z Uploaded bytes 41943040
+2026-10-12T18:39:44.0788443Z Uploaded bytes 50331648
+2026-10-12T18:39:44.2282862Z Uploaded bytes 54802264
+2026-10-12T18:39:44.2753594Z Finished uploading artifact content to blob storage!
+2026-10-12T18:39:44.2754861Z SHA256 digest of uploaded artifact zip is 00766acd35574719c635c27eeba8368f40f23b3d4aff101314dfcb16ff6c20a7
+2026-10-12T18:39:44.2756298Z Finalizing artifact upload
+2026-10-12T18:39:44.5301493Z Artifact m3-forced-current-ci38288420329-1-2b56ae8cf103c255b40e1a09c4108ab2b03c45a9.zip successfully finalized. Artifact ID 11766167822
+2026-10-12T18:39:44.5303979Z Artifact m3-forced-current-ci38288420329-1-2b56ae8cf103c255b40e1a09c4108ab2b03c45a9 has been successfully uploaded! Final size is 54802264 bytes. Artifact ID is 11766167822
+2026-10-12T18:39:44.5309080Z Artifact download URL: https://github.com/leegahuyn/MathScopeCompute/actions/runs/38288420329/artifacts/11766167822
+2026-10-12T18:39:44.5560201Z Post job cleanup.
+2026-10-12T18:39:44.6426855Z [command]/usr/bin/git version
+2026-10-12T18:39:44.6475042Z git version 2.55.0
+2026-10-12T18:39:44.6516693Z Temporarily overriding HOME='/home/runner/work/_temp/852015d5-cd9e-4074-91d5-2d1b35689600' before making global git config changes
+2026-10-12T18:39:44.6518192Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T18:39:44.6523734Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/MathScopeCompute/MathScopeCompute
+2026-10-12T18:39:44.6566098Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T18:39:44.6602025Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T18:39:44.6886389Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T18:39:44.6934662Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T18:39:44.7227886Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T18:39:44.7267595Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T18:39:44.7735676Z Cleaning up orphan processes
+2026-10-12T18:39:44.7999059Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+
