@@ -1,0 +1,42 @@
+<section id="m3-p7-visualization" class="p7v" aria-labelledby="p7v-heading" data-p7v-ready="idle">
+  <header class="p7v-header"><div><p class="p7v-eyebrow">P7 / EIGHT RESEARCH CONDITIONS</p><h2 id="p7v-heading">8개 조건을 원본 데이터로 살펴보기</h2><p>3D 좌표는 원본 값의 표시용 근사입니다. 정확한 수·구간·출처와 아직 열린 조건을 함께 확인하세요.</p></div><span class="p7v-boundary">P7 진행 중 · 증명 상태 승격 없음</span></header>
+  <div class="p7v-tabs" role="tablist" aria-label="P7 원문 조건 선택">
+    <button id="p7v-tab-01" role="tab" aria-selected="true" aria-controls="p7v-panel" tabindex="0" data-p7v-criterion="P7-01"><b>P7-01</b><span>함수와 국소 인자</span></button>
+    <button id="p7v-tab-02" role="tab" aria-selected="false" aria-controls="p7v-panel" tabindex="-1" data-p7v-criterion="P7-02"><b>P7-02</b><span>오차와 나머지</span></button>
+    <button id="p7v-tab-03" role="tab" aria-selected="false" aria-controls="p7v-panel" tabindex="-1" data-p7v-criterion="P7-03"><b>P7-03</b><span>유한 영점 계수</span></button>
+    <button id="p7v-tab-04" role="tab" aria-selected="false" aria-controls="p7v-panel" tabindex="-1" data-p7v-criterion="P7-04"><b>P7-04</b><span>명시적 공식</span></button>
+    <button id="p7v-tab-05" role="tab" aria-selected="false" aria-controls="p7v-panel" tabindex="-1" data-p7v-criterion="P7-05"><b>P7-05</b><span>연산자와 정의역</span></button>
+    <button id="p7v-tab-06" role="tab" aria-selected="false" aria-controls="p7v-panel" tabindex="-1" data-p7v-criterion="P7-06"><b>P7-06</b><span>중심값과 해석적 랭크</span></button>
+    <button id="p7v-tab-07" role="tab" aria-selected="false" aria-controls="p7v-panel" tabindex="-1" data-p7v-criterion="P7-07"><b>P7-07</b><span>산술 데이터의 남은 조건</span></button>
+    <button id="p7v-tab-08" role="tab" aria-selected="false" aria-controls="p7v-panel" tabindex="-1" data-p7v-criterion="P7-08"><b>P7-08</b><span>주장과 근거의 연결</span></button>
+  </div>
+  <div id="p7v-panel" role="tabpanel" aria-labelledby="p7v-tab-01">
+    <div class="p7v-title-row"><h3 data-p7v="title">P7-01 · 실행 데이터를 기다립니다</h3><span data-p7v="status" class="p7v-status">NOT_RUN</span></div>
+    <p data-p7v="summary" class="p7v-summary">선택한 조건의 검증된 실행 결과가 연결되면 표시합니다.</p>
+    <p data-p7v="notice" class="p7v-notice" role="status" aria-live="polite">아직 3D 좌표를 만들지 않았습니다.</p>
+    <div class="p7v-main">
+      <div class="p7v-scene-column">
+        <div class="p7v-scene" data-p7v="scene" aria-describedby="p7v-navigation-help p7v-scale-note">
+          <div class="p7v-canvas-host" data-p7v="canvas-host"></div>
+          <div class="p7v-label-layer" data-p7v="labels" aria-hidden="true"></div>
+          <div class="p7v-fallback" data-p7v="fallback" role="status">실행 데이터가 연결되면 3D를 준비합니다. 원본 표는 아래에서 확인할 수 있습니다.</div>
+        </div>
+        <div class="p7v-controls" role="group" aria-label="3D 시점 조작">
+          <button type="button" data-p7v-action="reset">시점 초기화</button><button type="button" data-p7v-action="front">정면</button><button type="button" data-p7v-action="top">위에서</button><button type="button" data-p7v-action="zoom-in" aria-label="3D 확대">＋ 확대</button><button type="button" data-p7v-action="zoom-out" aria-label="3D 축소">− 축소</button><button type="button" data-p7v-action="retry">3D 다시 열기</button>
+        </div>
+        <p class="p7v-help" id="p7v-navigation-help">드래그: 회전 · Shift+드래그: 이동 · 방향키: 회전 · +/−: 확대·축소 · Home: 초기화 · [ / ]: 항목 선택. 휠은 페이지 스크롤에 사용합니다. 자동 회전은 없습니다.</p>
+        <div class="p7v-axes" data-p7v="axes" aria-label="3D 축과 표시 범위"></div>
+        <p class="p7v-help" id="p7v-scale-note">각 축은 별도로 선형 정규화합니다. 화면 길이·각도는 서로 다른 단위의 원본 거리·각도를 뜻하지 않습니다. 범주 좌표와 도식은 수치 측정과 구분해 표시합니다.</p>
+      </div>
+      <aside class="p7v-inspector" aria-label="선택한 표시 항목">
+        <h4>선택 항목 · 원본과 출처</h4><label for="p7v-item">점·선·구간 선택</label><select id="p7v-item" data-p7v="selection"><option value="">아직 표시 항목 없음</option></select>
+        <div class="p7v-controls"><button type="button" data-p7v-action="previous">이전 항목</button><button type="button" data-p7v-action="next">다음 항목</button></div>
+        <p data-p7v="selection-summary" role="status" aria-live="polite">선택한 항목이 없습니다.</p><pre data-p7v="selection-detail" translate="no"></pre>
+        <h4>표시 범위와 남은 조건</h4><ul data-p7v="omissions"><li>실행되지 않은 값은 0으로 채우지 않습니다.</li></ul>
+      </aside>
+    </div>
+    <details class="p7v-table-panel" open><summary>동일 데이터 · 접근 가능한 원본 표</summary><p data-p7v="table-note" class="p7v-help"></p><div class="p7v-table-wrap"><table><caption data-p7v="table-caption">P7 실행 데이터</caption><thead data-p7v="table-head"></thead><tbody data-p7v="table-body"></tbody></table></div><div class="p7v-controls"><button type="button" data-p7v-action="table-previous">표 이전</button><span data-p7v="table-page" aria-live="polite">0개 항목</span><button type="button" data-p7v-action="table-next">표 다음</button></div></details>
+    <details class="p7v-provenance"><summary>연결한 실행 기록 · 소스 고정값</summary><pre data-p7v="provenance" translate="no"></pre></details>
+    <output data-p7v="audit" hidden></output>
+  </div>
+</section>

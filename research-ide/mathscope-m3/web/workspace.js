@@ -16,6 +16,7 @@
     $('import-replay').disabled=busy||!pendingRecord||!capabilities;
     $('import-input').disabled=busy||!pendingRecord||!capabilities;
     ROOT.setAttribute('aria-busy',String(busy));
+    window.dispatchEvent(new CustomEvent('mathscope:p7-state',{detail:{revision,busy,capabilities,record}}));
   }
   function clearResult(message='입력이 바뀌었습니다. 새 계산을 실행하세요.'){
     revision++;record=null;$('result-content').hidden=true;$('download-panel').hidden=true;
@@ -105,7 +106,7 @@
     if(busy)return;busy=true;controls();status('서버 지원 범위와 소스 고정값을 확인하고 있습니다.');
     try{
       const value=await api('capabilities');if(!Array.isArray(value.kinds)||!Array.isArray(value.examples)||value.wholeP7Complete!==false)throw Error('P7 지원 범위 응답을 확인할 수 없습니다.');
-      if(capabilities&&stable(capabilities.sourceBinding)!==stable(value.sourceBinding))clearResult('서버 소스가 바뀌었습니다. 새 계산을 실행하세요.');capabilities=value;
+      if((capabilities&&stable(capabilities.sourceBinding)!==stable(value.sourceBinding))||(record&&stable(record.sourceBinding)!==stable(value.sourceBinding)))clearResult('서버 소스가 바뀌었습니다. 새 계산을 실행하세요.');capabilities=value;
       set('runtime','P7 연결됨 · '+value.kinds.length+'개 계산 종류');set('capabilities',value);set('limits','동시 실행 1개 · 최대 90초 · 메모리 384 MiB. 서버 자원 상한에 도달하면 미해결 상태를 보존합니다.');
       $('example').replaceChildren();for(const e of value.examples){const option=document.createElement('option');option.value=e.id;option.textContent=e.title||e.id;$('example').append(option);}
       if(!$('input').value)loadExample();renderProgress();status('P7 준비 완료 · 입력·결과·재현 기록을 연결할 수 있습니다.');
@@ -121,7 +122,7 @@
   $('import').addEventListener('click',()=>{importRevision++;pendingRecord=null;pendingJSON=null;try{stageImport($('import-text').value);}catch(error){set('import-status',error.message);controls();}});
   $('import-text').addEventListener('input',()=>{importRevision++;pendingRecord=null;pendingJSON=null;set('import-status','붙여넣은 내용이 바뀌었습니다. 기록 읽기를 실행하세요.');controls();});
   $('import-file').addEventListener('change',async()=>{const expectedImport=++importRevision;pendingRecord=null;pendingJSON=null;controls();try{const file=$('import-file').files[0];if(!file)return;if(file.size>MAX_BYTES)throw Error('파일이 32 MiB 상한을 넘었습니다.');const text=await file.text();if(importRevision!==expectedImport)return;$('import-text').value=text.length<=160000?text:'';$('import-text').placeholder=text.length>160000?'큰 파일을 읽었습니다. 전체 원본은 재현 검사에 그대로 전달합니다.':'';stageImport(text);}catch(error){if(importRevision===expectedImport){set('import-status',error.message);controls();}}});
-  $('import-replay').addEventListener('click',()=>{if(!pendingRecord)return;const value=pendingRecord;$('input').value=pretty(value.request);editorDirty=false;run(value,pendingJSON);});
+  $('import-replay').addEventListener('click',async()=>{if(!pendingRecord)return;const value=pendingRecord;$('input').value=pretty(value.request);editorDirty=false;const outcome=await run(value,pendingJSON);set('import-status',outcome.ok?'서버에서 검사하고 새로 계산했습니다. 비교 결과: '+outcome.status+' · 가져온 기록의 증명 권한을 채택하지 않습니다.':'기록 검사 또는 새 계산을 완료하지 못했습니다. '+(outcome.message||outcome.status));});
   $('import-input').addEventListener('click',()=>{try{const request=readRequest(JSON.stringify(pendingRecord.request));clearResult();$('input').value=pretty(request);status('저장 기록의 입력만 불러왔습니다. 현재 서버에서 새 계산을 실행하세요.');}catch(error){set('import-status',error.message);}});
   $('export').addEventListener('click',()=>{if(!record)return;if(downloadURL)URL.revokeObjectURL(downloadURL);downloadURL=URL.createObjectURL(new Blob([pretty(record)+'\n'],{type:'application/json'}));$('download').href=downloadURL;$('download').download='mathscope-p7-'+record.request.kind.replaceAll('.','-')+'-'+record.inputSHA256.slice(0,12)+'.json';$('download-panel').hidden=false;$('download-panel').open=true;$('download').click();});
   function route(){if(!location.hash.startsWith('#research-m3'))return;for(const view of document.querySelectorAll('.view[data-view]'))view.classList.toggle('active',view===ROOT);for(const button of document.querySelectorAll('[data-view-target]'))button.classList.toggle('active',button.dataset.viewTarget==='research-m3');}
@@ -148,5 +149,14 @@
     ];
     try{for(const tool of tools)await document.modelContext.registerTool(tool,{signal:registration.signal});set('webmcp','P7 브라우저 도구 4개 등록 · 상태 / 예제 실행 / 재현 / 기록 읽기');}catch(error){registration.abort();set('webmcp','P7 브라우저 도구 등록 실패 · 일반 실행 화면은 사용할 수 있습니다.');}
   }
+  window.MathScopeP7Workspace=Object.freeze({
+    snapshot:()=>({revision,busy,capabilities,record}),
+    loadRequest(request){
+      if(busy)return {ok:false,status:'BUSY'};
+      if(editorDirty)return {ok:false,status:'UNSAVED_INPUT_PRESERVED'};
+      try{const value=readRequest(JSON.stringify(request));clearResult();$('input').value=pretty(value);editorDirty=false;status('3D 예제의 입력을 불러왔습니다. 새 계산 실행을 누르면 현재 서버에서 계산합니다.');$('input').focus();return {ok:true};}
+      catch(error){return {ok:false,status:'INVALID_REQUEST',message:String(error.message)};}
+    }
+  });
   document.querySelector('[data-view-target="research-m3"]')?.addEventListener('click',()=>{history.replaceState(null,'','#research-m3');route();});window.addEventListener('hashchange',route);window.addEventListener('DOMContentLoaded',route);window.addEventListener('pagehide',()=>registration?.abort());window.addEventListener('pageshow',event=>{if(event.persisted)registerTools();});route();connect();registerTools();
 })();

@@ -40,4 +40,12 @@ python cli.py replay zeta-result.json --output zeta-replay.json --max-seconds 90
 
 ## 아직 진행하지 않은 범위
 
-P7 전체와 M3 전체는 미완료다. P7-07의 descent/Selmer·height/regulator·period/saturation·Sha/Manin 조건, P7-08의 구체 곡선 rank equality 및 refined leading-term 연결을 계속해야 한다. P8, Y5→Y6→Y7, N6→N7→N8의 기존 순서를 유지한다. M4 I3/R1 전체 인수 완료도 아직 선언하지 않는다. 원문 80개 관련 기준은 `ORIGINAL_M3_M4_CRITERIA.json`에서 원 PDF 페이지·SHA와 함께 확인한다; 이 수를 전체 224개 완료율로 환산하지 않는다.
+P7 전체와 M3 전체는 미완료다. P7-07의 descent/Selmer·height/regulator·period/saturation·Sha/Manin 조건, P7-08의 구체 곡선 rank equality 및 refined leading-term 연결은 남아 있다. 사용자의 2026-10-12 후속 지시에 따라 P7 시각화 배포와 GitHub 저장을 마친 뒤 다음 M3 항목 P8을 진행하고, Y5→Y6→Y7, N6→N7→N8 순서를 이어간다. 이 작업 순서 변경은 P7 미완료 조건의 승인이 아니다. M4 I3/R1 전체 인수 완료도 아직 선언하지 않는다. 원문 80개 관련 기준은 `ORIGINAL_M3_M4_CRITERIA.json`에서 원 PDF 페이지·SHA와 함께 확인한다; 이 수를 전체 224개 완료율로 환산하지 않는다.
+
+## P7 8개 조건의 3D 화면
+
+`web/p7-visual-models.js`는 실제 실행 기록에서만 표시 좌표를 만들고, `p7-visualization.js`는 한 개의 Three.js 장면을 8개 탭에서 재사용한다. `p7-visual-controller.js`가 현재 입력의 서버 결과와 저장 예제를 구분한다. 입력이나 서버 소스가 바뀌면 현재 결과 연결을 해제한다. 화면 좌표는 근사이며 원본 dyadic·유리수·구간은 표와 선택 항목에 보존한다. 극소 구간의 화면상 겹침, 무한원점, 미계산 값, 미해결 연구 조건을 0이나 완료 상태로 바꾸지 않는다.
+
+저장 예제는 attempt2 원본 7개에서 생성한 약 146KB의 표시용 발췌이며, 전체 `.json.gz` 증거는 정확한 GitHub commit 링크로 연결한다. 브라우저 확대·회전·선택은 수학적 원본을 변경하지 않는다. WebGL을 사용할 수 없어도 동일 데이터 표를 읽을 수 있다. `node --test research-ide/mathscope-m3/tests/*.test.mjs`가 데이터 의미와 현재 결과 연결의 회귀를 검사한다.
+
+설계 계약은 `web/visualization-contract.json`, 검증 기록은 `evidence/resume-20261012/visualization-3d/`에 있다. 배포 완료는 해당 폴더의 공개 publication 및 browser receipt로 확인한다. 이 3D 구현은 수치 커널·CLI·M2 gate의 바이트를 변경하지 않는다. 남은 M3 56개 원문 기준은 `evidence/resume-20261012/m3-remaining-acceptance.json`에 별도로 정리했다.
