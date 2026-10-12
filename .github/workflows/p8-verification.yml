@@ -37,6 +37,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Resolve the pinned Lake manifest before action configuration
+        working-directory: research-ide/mathscope-m3/p8/lean
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o "$RUNNER_TEMP/p8-elan-init.sh"
+          sh "$RUNNER_TEMP/p8-elan-init.sh" -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lake" update
       - name: Install pinned Lean and fetch mathlib build cache
         uses: leanprover/lean-action@v1
         with:
@@ -54,6 +62,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: p8-lean-audit-${{ github.sha }}
-          path: research-ide/mathscope-m3/p8/evidence/lean-audit/
+          path: |
+            research-ide/mathscope-m3/p8/evidence/lean-audit/
+            research-ide/mathscope-m3/p8/lean/lake-manifest.json
           if-no-files-found: warn
           retention-days: 90
