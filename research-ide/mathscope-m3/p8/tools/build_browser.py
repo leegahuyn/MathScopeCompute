@@ -1,6 +1,6 @@
 """Deterministic static module closure; no package installation or user-code evaluation."""
 from pathlib import Path
-import argparse, hashlib, importlib.util, json, re, subprocess
+import argparse, base64, hashlib, importlib.util, json, re, subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
 RESEARCH=ROOT.parents[1]
@@ -10,6 +10,11 @@ REEXPORT=re.compile(r"^export\s+(\{[^}]+\}|\*)\s+from\s+['\"]([^'\"]+)['\"];?\s*
 def sha(value):return hashlib.sha256(value.encode() if isinstance(value,str) else value).hexdigest()
 def canonical(value):return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
 def read(path):return path.read_text(encoding='utf-8')
+def worker_source_expression(worker):
+    """Protect exact UTF-8 bytes from Publisher's Unicode-escape rewriting."""
+    encoded=base64.b64encode(worker.encode('utf-8')).decode('ascii')
+    # ignoreBOM preserves a leading U+FEFF; fatal forbids replacement decoding.
+    return 'new TextDecoder("utf-8",{fatal:true,ignoreBOM:true}).decode(Uint8Array.from(atob("'+encoded+'"),c=>c.charCodeAt(0)))'
 def p8_criteria(original,progress):
     """Retain the exact blueprint text while binding assessed P8 progress."""
     if progress.get('schema')!='MathScope.M3.P8.Progress/1':raise ValueError('Invalid P8 progress schema')
@@ -97,7 +102,9 @@ def main():
             digests[key]=subprocess.check_output(['node','--input-type=module','-e',"import fs from 'node:fs'; import {sha256} from './common.mjs'; console.log(await sha256(JSON.parse(fs.readFileSync(process.argv[1],'utf8'))));",str(path)],cwd=ROOT,text=True).strip()
     build={'schema':'MathScope.M3.P8.Build/1','sourceBinding':source,'reviewSnapshot':snapshot,'leanEvidence':evidence,'leanContract':expected,'recordedChecks':recorded,'expectedChecks':digests}
     worker='globalThis.__MATHSCOPE_P8_BUILD__='+canonical(build)+';\n'+worker
-    client=read(ROOT/'browser-client.js').replace('__P8_STATIC_WORKER_SOURCE__',json.dumps(worker,ensure_ascii=False)).replace('</script','<\\/script')
+    template=read(ROOT/'browser-client.js')
+    if template.count('__P8_STATIC_WORKER_SOURCE__')!=1:raise ValueError('Expected exactly one static P8 Worker placeholder')
+    client=template.replace('__P8_STATIC_WORKER_SOURCE__',worker_source_expression(worker)).replace('</script','<\\/script')
     outputs={WEB/'p8-engine.bundle.js':client,ROOT/'build-data.json':json.dumps(build,ensure_ascii=False,indent=2)+'\n'}
     for path,content in outputs.items():
         if args.check:

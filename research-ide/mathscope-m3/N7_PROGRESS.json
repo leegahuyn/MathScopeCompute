@@ -1,0 +1,261 @@
+{
+  "schema": "MathScope.M3.N7.Progress/1",
+  "status": "BLOCKED_BY_N6_LOCAL_FIELD",
+  "sourceBlueprint": {
+    "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+    "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+    "pageCount": 99,
+    "checklistPage": 64,
+    "sourceExtraction": "PyMuPDF exact page text; spaces in the displayed title may be inherited only when the text agrees ignoring whitespace."
+  },
+  "sourcePaper": {
+    "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"
+  },
+  "P7Changed": false,
+  "M2Changed": false,
+  "originalCriterionCount": 8,
+  "completedOriginalCriteria": 0,
+  "criteria": [
+    {
+      "id": "N7-01",
+      "title": "시간·공간 cutoff 선택",
+      "text": "q≤C0(τ+|z|^(1/D))로support를q<q*/2 안에놓고c=χxχt를선택한다. χx는r²,z에smooth하게둔다. 합격: u=p=0인\n초기시간구간과고정compact K가존재한다. t가1에가까울때원점근방에서cutoff가정확히1이어야한다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/localization.mjs",
+        "navier/evidence/N7-workbench.json"
+      ],
+      "remaining": [
+        "Use the completed N6 local A,B,p and its original qstar.",
+        "Evaluate the fixed compact support, zero initial interval and unit cutoff near the origin with actual source constants."
+      ],
+      "remainingObligations": [
+        "Use the completed N6 local A,B,p and its original qstar.",
+        "Evaluate the fixed compact support, zero initial interval and unit cutoff near the origin with actual source constants."
+      ],
+      "acceptanceScope": "An explicit fixed cutoff-support inequality inside qstar/2 and smooth r-squared/z cutoff recipe are installed. The original qstar and final local field are pending.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N7-02",
+      "title": "Localization 교차항 보존",
+      "text": "(10.4)의curl(cA), 특히∇c×A를포함하고f를전체PDE residual로정의한다. 합격: 직접계산된f와cutoff 전residual+모\n든commutator 전개의일치여부를검사한다. ∇·u=0은구조적으로유지한다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/localization.mjs"
+      ],
+      "remaining": [
+        "Localize the actual N6 potentials and pressure.",
+        "Compare the directly evaluated full force to every cutoff commutator with a numerical error budget."
+      ],
+      "remainingObligations": [
+        "Localize the actual N6 potentials and pressure.",
+        "Compare the directly evaluated full force to every cutoff commutator with a numerical error budget."
+      ],
+      "acceptanceScope": "The product rule curl(cA)=c curl A+grad(c) cross A and full residual requirement are encoded; no complete source commutator computation is claimed.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N7-03",
+      "title": "Force의 발산과 압력 계약",
+      "text": "원문p118에따라f는divergence-free일필요가없다. −Δp=∂i∂j(uiuj)−div f를검사한다. 합격: div f≠0을실패로처리하\n지않는다. 임의Leray projection으로f를바꿔compact support/pressure 조건을훼손하지않는다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/localization.mjs",
+        "navier/galerkin.mjs",
+        "navier/evidence/N8-acceptance.json"
+      ],
+      "remaining": [
+        "Verify the pressure identity on the same actual localized source force without altering that force by projection."
+      ],
+      "remainingObligations": [
+        "Verify the pressure identity on the same actual localized source force without altering that force by projection."
+      ],
+      "acceptanceScope": "The force-divergence term is retained in the pressure contract and separately tested in the finite Galerkin branch. Nonzero div f is accepted.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N7-04",
+      "title": "Terminal force jets",
+      "text": "Fj(x)=lim(t↑1)∂t^j f(x,t), ∂x^αFj(0)=0을(10.6)-(10.10)에맞춰구축한다. 합격: 유한jet order M의수치근사와∀order\nsmooth-extension 정리의의존성을분리한다. 몇개finite differences가작다는이유로C∞force라표시하지않는다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "OPEN",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/localization.mjs",
+        "navier/evidence/N7-workbench.json"
+      ],
+      "remaining": [
+        "Construct terminal Fj from the actual localized residual.",
+        "Establish the original all-order differentiated limits and flat origin conditions."
+      ],
+      "remainingObligations": [
+        "Construct terminal Fj from the actual localized residual.",
+        "Establish the original all-order differentiated limits and flat origin conditions."
+      ],
+      "acceptanceScope": "Finite input jets are explicitly distinct from an all-order force extension; the actual terminal source jets do not exist yet in this reconstruction.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N7-05",
+      "title": "t>1 force extension",
+      "text": "(10.11)의Σχ0(bjσ)σ^jFj/j!, σ=t−1≥0를사용하며(10.12)의differentiated tail constraints로bj를선택한다. 합격:\nforce는t≤2에서compact support를갖고모든인증된jets가접합된다. 이는velocity를t=1 이후smooth하게연장하는\n알고리즘이아니다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/localization.mjs",
+        "navier/evidence/N7-workbench.json"
+      ],
+      "remaining": [
+        "Supply all actual terminal jets and certified derivative constants.",
+        "Prove and bind the complete differentiated infinite tail and compact support through t=2."
+      ],
+      "remainingObligations": [
+        "Supply all actual terminal jets and certified derivative constants.",
+        "Prove and bind the complete differentiated infinite tail and compact support through t=2."
+      ],
+      "acceptanceScope": "A finite conditional jet-bound input produces increasing bj satisfying the requested differentiated cutoff inequalities. It is not a velocity extension.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N7-06",
+      "title": "전역 에너지 balance",
+      "text": "d(∥u∥²₂/2)/dt+ν∥∇u∥²₂=⟨f,u⟩를전체K에서적분한다. core만의에너지와구분한다. 합격: 정규화energy defect가\n독립space/time refinement에서감소한다. ν=1에서(10.13)의∥u(t)∥²₂+2∫∥∇u∥²₂≤(∫∥f∥₂)² 상계와모순없어야\n한다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "OPEN",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/galerkin.mjs",
+        "navier/evidence/N8-TG.json"
+      ],
+      "remaining": [
+        "Integrate the localized paper field and force on all of K.",
+        "Refine space and time independently and compare with the original (10.13) force-norm bound."
+      ],
+      "remainingObligations": [
+        "Integrate the localized paper field and force on all of K.",
+        "Refine space and time independently and compare with the original (10.13) force-norm bound."
+      ],
+      "acceptanceScope": "The generic periodic solver records whole-domain energy and a time defect, but it is not the source compact K energy calculation.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N7-07",
+      "title": "실제 blowup 경로와 오차",
+      "text": "xτ=(√(2Xinτ),0,0), η=0에서τ^A uθ=e0+O(τ^(2h)), e0>0를측정한다. 합격: e0의양의하한과remainder의explicit\nbound가있어야해석적성장certificate로연결한다. 유한값plot의증가만으로τ→0의무한대를증명하지않는다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "OPEN",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/localization.mjs",
+        "navier/evidence/N8-nearT.json"
+      ],
+      "remaining": [
+        "Evaluate the original Xin path using the reconstructed velocity.",
+        "Bind a positive e0 lower bound and an explicit O(tau^(2h)) remainder constant."
+      ],
+      "remainingObligations": [
+        "Evaluate the original Xin path using the reconstructed velocity.",
+        "Bind a positive e0 lower bound and an explicit O(tau^(2h)) remainder constant."
+      ],
+      "acceptanceScope": "Positive tau and source scaling are preserved symbolically. No measured growth is called an analytic blowup certificate.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N7-08",
+      "title": "비교 정리·주기화· ν 확인",
+      "text": "Lemma10.5의동일force/data 비교, (10.22)의ν rescaling, Corollary10.6의지지축소후disjoint translate를검토한다.\n합격: C/D 결론에필요한energy·periodic pressure·same forcing가모두남는다. periodization을arbitrary overlapping\ncopies의합으로대체하면nonlinear cross terms 때문에실패다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/localization.mjs",
+        "navier/evidence/N7-periodic.json"
+      ],
+      "remaining": [
+        "Apply the comparison and viscosity scaling to the actual source field, force, pressure and energy hypotheses.",
+        "Construct the shrunken disjoint translated solution and preserve its full assumptions."
+      ],
+      "remainingObligations": [
+        "Apply the comparison and viscosity scaling to the actual source field, force, pressure and energy hypotheses.",
+        "Construct the shrunken disjoint translated solution and preserve its full assumptions."
+      ],
+      "acceptanceScope": "The disjoint translated support, same-forcing/data, viscosity and periodic-pressure guards execute, including an overlap rejection.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    }
+  ],
+  "allOriginalCriteriaComplete": false,
+  "wholeM3Complete": false
+}

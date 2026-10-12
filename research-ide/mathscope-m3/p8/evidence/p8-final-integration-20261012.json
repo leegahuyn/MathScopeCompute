@@ -1,0 +1,74 @@
+{
+  "schema": "MathScope.M3.P8.FinalIntegration/1",
+  "recordedAt": "2026-10-12T07:41:31.791582+00:00",
+  "status": "PUBLIC_ACCEPTANCE_AND_METADATA_BUILD_VERIFIED",
+  "sourcePR": "https://github.com/leegahuyn/MathScopeCompute/pull/15",
+  "criteria": {
+    "PASS": 7,
+    "PARTIAL": 1,
+    "partial": [
+      "P8-06"
+    ],
+    "wholeP8Complete": false,
+    "wholeM3Complete": false
+  },
+  "publicAcceptance": {
+    "path": "p8/evidence/p8-live-v87-20261012.json",
+    "sha256": "e6e1095bea78d9c3d22a124d1fa5bff1406ba5eb140dcbb0d3388e482688d0a5",
+    "version": 87,
+    "checksPassed": 6
+  },
+  "rendererSHA256": "72266bdc840b668eee8a9b01cc68a62d7a431cae7e7671f66c39c5af4655428b",
+  "testedEngineManifestSHA256": "4cd8a9f4697e2708e0ca89db90ffac0de6b5eb00c9a4608c5c7de5bea67aa0c7",
+  "updatedEngineManifestSHA256": "ce4f635969de36eef47a258f2f5e516a9b65f2588d54cc92b5da6d8ead32b909",
+  "sourceFilesChangedSinceLiveAcceptance": [
+    "mathscope-m3/P8_PROGRESS.json"
+  ],
+  "mathematicalModulesAndRendererUnchangedSinceLiveAcceptance": true,
+  "updatedOutputs": {
+    "P8_PROGRESS.json": "67886a870bee815f3a4d17a9cf09bade268223818e4acb82261d34cebbf0da9f",
+    "p8/build-data.json": "8daadd8d47b08c4a80abb69f1db3656aed6cb3b40b5244438560148cca798949",
+    "web/p8-engine.bundle.js": "d6a2d72cdbaa986f48b54e750eb8f7807591ff6179187ba62346467360172882"
+  },
+  "postMetadataChecks": [
+    {
+      "command": "node --test research-ide/mathscope-m3/tests/p8-engine.test.mjs",
+      "exitCode": 0,
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "includes": "all 20 examples, replay gates and execution of the exact generated static worker"
+    },
+    {
+      "command": "python3 -m unittest discover -s research-ide/mathscope-m3/p8/tools -p 'test_progress_binding.py'",
+      "exitCode": 0,
+      "tests": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    {
+      "command": "python3 research-ide/mathscope-m3/p8/tools/build_browser.py --check",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--name-only",
+        "656dedb50d891e9aeb461c22941cb9078dbc7a17",
+        "--",
+        "research-ide/mathscope-m3/p7",
+        "research-ide/mathscope-m3/P7_PROGRESS.json",
+        ":(glob)research-ide/mathscope-m3/web/p7*",
+        "research-ide/mathscope-m2"
+      ],
+      "exitCode": 0,
+      "changedPaths": []
+    }
+  ],
+  "remainingObligation": "Delete an actually valid arithmetic rank-upper certificate and rerun its gate. Excluded P7-07 currently supplies none; rejecting an invented certificate is not counted as that deletion test.",
+  "freshBrowserLeanExecuted": false,
+  "recordedConditionalRunId": "38213076249",
+  "P7Modified": false,
+  "finalPublicationStatus": "Updated progress metadata and generated bundle are prepared for the parent publisher; this receipt does not claim a later page version has already been published."
+}

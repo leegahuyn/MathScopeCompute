@@ -1,0 +1,269 @@
+{
+  "schema": "MathScope.M3.N6.Progress/1",
+  "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+  "sourceBlueprint": {
+    "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+    "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+    "pageCount": 99,
+    "checklistPage": 62,
+    "sourceExtraction": "PyMuPDF exact page text; spaces in the displayed title may be inherited only when the text agrees ignoring whitespace."
+  },
+  "sourcePaper": {
+    "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"
+  },
+  "P7Changed": false,
+  "M2Changed": false,
+  "originalCriterionCount": 8,
+  "completedOriginalCriteria": 0,
+  "criteria": [
+    {
+      "id": "N6-01",
+      "title": "초기 finite state 구성",
+      "text": "primary curls 뒤temporal mean update와다섯moment correction을수행하여j=0 상태를만든다. 합격: Proposition9.5\n의B0=0.7,C0*=1.2와(9.9),(9.10) 명세를충족한다. 명세의상수없이경험적power slope만으로인증하지않는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "OPEN",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/source-inheritance.json",
+        "navier/source-mean-map.mjs"
+      ],
+      "remaining": [
+        "Apply temporal mean and five-moment corrections to the actual full-curl primary state.",
+        "Recompute its pressure and establish the original B0,C0 and cumulative class bounds with constants."
+      ],
+      "remainingObligations": [
+        "Apply temporal mean and five-moment corrections to the actual full-curl primary state.",
+        "Recompute its pressure and establish the original B0,C0 and cumulative class bounds with constants."
+      ],
+      "acceptanceScope": "The inherited uncorrected primary/curl/residual roots and exact source namespace are pinned. The required actual j=0 state has not been constructed.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N6-02",
+      "title": "전체 residual 재계산",
+      "text": "R(u+δu,p+δp)=R(u,p)+Lu(δu,δp)+div(δu⊗δu)를사용하며매substep 후최신압력을복원한다. 합격: 독립직접PDE\n평가와decomposed residual이오차예산내일치한다. 기존flat tail와새quadratic remainder를장부에서누락하지않\n는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/galerkin.mjs",
+        "navier/evidence/acceptance.json"
+      ],
+      "remaining": [
+        "Compute the full actual PDE residual and its split after each real source update.",
+        "Carry old flat tails and every new quadratic/curl term through the same pressure reconstruction."
+      ],
+      "remainingObligations": [
+        "Compute the full actual PDE residual and its split after each real source update.",
+        "Carry old flat tails and every new quadratic/curl term through the same pressure reconstruction."
+      ],
+      "acceptanceScope": "The complete quadratic finite Fourier residual identity is executed, with an omitted-square negative control. The updated paper state and pressure are not yet inputs.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N6-03",
+      "title": "비영 angular harmonics 보정",
+      "text": "현재source의모든nonzero harmonics를(7.13) inverse로풀고source-supported potentials에cutoff 후curl한다.\n합격: same-label 곱에서m+m′ 신규주파수가생성된다. 단계별최대harmonic을기록하고조용한truncation 대신\ndiscarded-mode bound를제공한다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/corrections.mjs",
+        "navier/evidence/N6-harmonic.json"
+      ],
+      "remaining": [
+        "Derive all coefficient sources from the actual same-label full state.",
+        "Use original smooth phase/coefficient jets and supported full curls, including their commutators and mode tails."
+      ],
+      "remainingObligations": [
+        "Derive all coefficient sources from the actual same-label full state.",
+        "Use original smooth phase/coefficient jets and supported full curls, including their commutators and mode tails."
+      ],
+      "acceptanceScope": "All pairwise harmonics of a declared finite set are enumerated; truncation without a bound is held. The projected equation (7.13) is solved on an explicit finite coefficient model and compared to an exact ODE.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N6-04",
+      "title": "Signed covariance increment",
+      "text": "고정positive a±에대해δa=(Hcov^−1(Σ/ε))/(2a)를사용한다. 새Σ는signed일수있다. 합격: B(W0,LΣ)=Σ와(7.41)의\n세remainder를모두검사한다. 앞단계a±를새residual에맞춰몰래재선택하지않는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/corrections.mjs",
+        "navier/source-inheritance.json",
+        "navier/evidence/N6-signed.json"
+      ],
+      "remaining": [
+        "Feed the actual updated signed stress into the authentic original covariance inverse.",
+        "Construct the physical correction and verify all current-state cross/curl/square remainders and derivative classes."
+      ],
+      "remainingObligations": [
+        "Feed the actual updated signed stress into the authentic original covariance inverse.",
+        "Construct the physical correction and verify all current-state cross/curl/square remainders and derivative classes."
+      ],
+      "acceptanceScope": "The signed finite inverse fixes positive base amplitudes and retains the increment square and all three remainder families. Original M2 H/a roots are separately pinned.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N6-05",
+      "title": "Zero auxiliary mean Fourier inverse",
+      "text": "(8.19)의1/(2πi vt·k) multiplier로(8.20)을풀고axial increment는(8.14)의potential로실현한다. 합격: zero mode가\n0이고Nφ=F가맞는다. |vt·k|^−1≤C(1+|k|) 및4개추가도함수를포함한Fourier tail를기록한다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/corrections.mjs",
+        "navier/evidence/N6-workbench.json"
+      ],
+      "remaining": [
+        "Compute the actual source Fourier coefficients and its C^(m+4) constants.",
+        "Realize the axial potential and retain the radial cutoff remainder in the new physical pressure/residual."
+      ],
+      "remainingObligations": [
+        "Compute the actual source Fourier coefficients and its C^(m+4) constants.",
+        "Realize the axial potential and retain the radial cutoff remainder in the new physical pressure/residual."
+      ],
+      "acceptanceScope": "The actual vt=(sqrt(2)-1,1) algebraic divisor is rationalized with a nonzero integer norm; real finite Fourier inputs are inverted, and mean/divisor/tail guards execute.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N6-06",
+      "title": "다섯 radial equations와 압력",
+      "text": "(8.25)로두보존모멘트와P,Jθ,Jz를보정하고(8.12)로pressure를다시계산한다. 합격: 두보존적분은0으로유지되고새\n결함은(8.26),(8.27)의nonlinear remainder와일치한다. λ의작은값에따른condition number를통제한다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/source-mean-map.mjs",
+        "navier/evidence/N6-source-mean.json",
+        "navier/evidence/N6-moments.json"
+      ],
+      "remaining": [
+        "Compute P,Jtheta,Jz from the complete current curl state.",
+        "Apply the source map to those defects and reconstruct pressure by (8.12).",
+        "Recompute (8.26)-(8.27) including all current means and attach the required derivative constants."
+      ],
+      "remainingObligations": [
+        "Compute P,Jtheta,Jz from the complete current curl state.",
+        "Apply the source map to those defects and reconstruct pressure by (8.12).",
+        "Recompute (8.26)-(8.27) including all current means and attach the required derivative constants."
+      ],
+      "acceptanceScope": "The actual unmodified M2 mean patch executes through its original helpers. Original positive lambda/a, five disjoint source profiles, enclosed positive moments, angular inverse and lambda-factored axial inverse are installed; this closes the fixed inverse dependency. A separate finite five-integral example also executes.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N6-07",
+      "title": "고정 도메인과 차수 향상",
+      "text": "σj=1/5+j/10, gj=hj/10 및(9.17),(9.18)의Km,ℓm,log powers를추적한다. 합격: 모든finite stage가같은q<qbig 도메\n인을사용한다. 단한번의step에서샘플잔차가늘면정밀도/범위/상수부터조사하고차수theorem과혼동하지않는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "PARTIAL",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/corrections.mjs",
+        "navier/evidence/N6-workbench.json"
+      ],
+      "remaining": [
+        "Instantiate one common qbig and actual source derivative constants for every finite stage.",
+        "Compute the stage field, physical derivative losses and retained tails on that same domain."
+      ],
+      "remainingObligations": [
+        "Instantiate one common qbig and actual source derivative constants for every finite stage.",
+        "Compute the stage field, physical derivative losses and retained tails on that same domain."
+      ],
+      "acceptanceScope": "Exact rational exponent inequalities and the fixed-domain obligation are tracked. No empirical slope is promoted to class membership.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    },
+    {
+      "id": "N6-08",
+      "title": "최종 local 합성",
+      "text": "(9.21)에서Aj,Bj,pj에shrinking cutoff를적용하고curl하여local field를만든다. finite residual의flat terms를무조건합\n산하지않는다. 합격: Lemma5.4의tail 비교로(9.20)을연결한다. 평가구간의active indices와생략tail의bound를저장\n하고없으면finite-stage approximation으로제한한다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+      "status": "OPEN",
+      "originalCriterionComplete": false,
+      "assessedAt": "2026-10-12T06:43:05.985543+00:00",
+      "assessedBy": "MathScope M3 Navier implementation review",
+      "evidence": [
+        "navier/index.mjs",
+        "navier/source-inheritance.json"
+      ],
+      "remaining": [
+        "Construct the actual finite correction sequence.",
+        "Choose shrinking cutoffs with differentiated summable tails and perform the Lemma5.4 fixed-stage comparison.",
+        "Store active indices and the omitted-tail bound for each evaluated domain."
+      ],
+      "remainingObligations": [
+        "Construct the actual finite correction sequence.",
+        "Choose shrinking cutoffs with differentiated summable tails and perform the Lemma5.4 fixed-stage comparison.",
+        "Store active indices and the omitted-tail bound for each evaluated domain."
+      ],
+      "acceptanceScope": "The finite-stage/local-field distinction is enforced. The source correction sequence and its final cutoff sum are absent.",
+      "genericBranchOnly": false,
+      "comparisonWithInheritedOriginal": {
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "sameTitleIgnoringWhitespace": true,
+        "sameTextIgnoringWhitespace": true
+      }
+    }
+  ],
+  "allOriginalCriteriaComplete": false,
+  "wholeM3Complete": false
+}

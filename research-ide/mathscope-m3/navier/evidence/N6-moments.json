@@ -1,0 +1,264 @@
+{
+  "schema": "MathScope.NavierM3.Result/1",
+  "version": "0.1.0",
+  "package": "N6",
+  "operation": "five-moments",
+  "input": {
+    "package": "N6",
+    "operation": "five-moments",
+    "parameters": {
+      "lambda": 0.2,
+      "a": 1,
+      "d": 0.2
+    }
+  },
+  "inputHash": "ea90dc6df3d2d7ffdfd460775fcfdd251f14a033e3f28df058d85cdcd0d85d65",
+  "runHash": "5a2e209452c40b81b6364630bd6266981fc46efd91d362801c2860bad3c9ae05",
+  "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+  "executionStatus": "FINITE_MOMENT_MAP_EXECUTED",
+  "source": {
+    "implementation": {
+      "schema": "MathScope.NavierM3.ImplementationPin/1",
+      "files": [
+        {
+          "path": "research-ide/mathscope-m3/navier/galerkin.mjs",
+          "sha256": "e0a04a0a5363a7d72dec89fe3b157499669db317bc064d9922ccedf3599239aa",
+          "bytes": 17825
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/corrections.mjs",
+          "sha256": "120c595312afb232138a4e23b26ae7a7de987aa15729af8fe9f50f5bccea2c8f",
+          "bytes": 22955
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/localization.mjs",
+          "sha256": "1754c965e6cc977d1e304d16b8eb20578ff27e6158801ea426a4e94f29b090fb",
+          "bytes": 9727
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/index.mjs",
+          "sha256": "d6b98110ee1644279478ac193fd1dd25cb973b74d08f21d23cf0bcf3e85dc89b",
+          "bytes": 10281
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-mean-map.mjs",
+          "sha256": "072f9cbaa7fedab6ea2cdb64158a7d5af3c3916685dfefeef65e977219ef09b7",
+          "bytes": 11303
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-inheritance.mjs",
+          "sha256": "f3189a00c35fdb1d925650f52edfcb19839d4f751db91aa916a9494b0b49faa8",
+          "bytes": 4835
+        }
+      ],
+      "sha256": "afda0e1039016e2a3553e58aae9d9ccba5f1ef5dedb36b66540bd9de3b81cdb0"
+    },
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "pages": 166
+    },
+    "profile": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "common6": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json",
+      "sha256": "ac98143158c9e7abc6bd656e687269f183bb803ecdc036edb8a3937edc24bc01",
+      "bytes": 4495330
+    },
+    "source4": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt4.json",
+      "sha256": "88f7cf6fe5af934d6b3bcacc8ad975e86bd0b37fee2110b9db8c73e72acb129e",
+      "bytes": 161629
+    },
+    "physicalGraph": {
+      "namespace": "physical",
+      "sha256": "79d2ffc302ab2db900b8432dcc5d23d7c85f12d996da244ed421b904dfbdb3cf",
+      "nodeCount": 720452,
+      "canonicalBytes": 31814841,
+      "fixedCompilerPrefix": true
+    },
+    "inheritedM2Assessment": "COMPLETE_IN_DECLARED_SOURCE_BOUND_M2_SCOPE"
+  },
+  "sourceBoundaries": {
+    "M2Preserved": true,
+    "P7Changed": false,
+    "fullUncorrectedResidualAssumedFlat": false,
+    "completeN6": false,
+    "completeN7": false,
+    "completeN8": false,
+    "wholeM3Complete": false
+  },
+  "results": {
+    "schema": "MathScope.N6.FiveMomentCorrection/1",
+    "reference": "(8.24)-(8.27)",
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "pages": 166
+    },
+    "parameterMode": "EXPLICIT_FINITE_NORMALIZED_PATCH",
+    "status": "FINITE_MOMENT_MAP_EXECUTED",
+    "input": {
+      "lambda": 0.2,
+      "a": 1,
+      "d": 0.2,
+      "targets": {
+        "P": 0.001,
+        "Jtheta": 0.0002,
+        "Jz": -0.0004
+      },
+      "quadratureIntervals": 256
+    },
+    "bump": {
+      "definition": "exp(-0.01/((x-1)(1.1-x))) on (1,1.1), otherwise zero",
+      "copies": "eta_j(x)=exp(-j*d) eta_0(x exp(-j*d))",
+      "supports": [
+        [
+          1,
+          1.1
+        ],
+        [
+          1.2214027581601699,
+          1.343543033976187
+        ],
+        [
+          1.4918246976412703,
+          1.6410071674053974
+        ]
+      ]
+    },
+    "powers": [
+      2,
+      -2.4,
+      -0.4,
+      1,
+      0.6
+    ],
+    "moments": [
+      0.0007751763299578542,
+      0.0006257484305510544,
+      0.0006894328250064741,
+      0.00073813513269402,
+      0.0007238542287762326
+    ],
+    "momentRefinementErrors": [
+      1.0842021724855044e-19,
+      0,
+      3.2526065174565133e-19,
+      6.505213034913027e-19,
+      6.505213034913027e-19
+    ],
+    "angularCoefficients": [
+      -1.0470616637416406,
+      0.18744183571703577,
+      0.3448291127890375
+    ],
+    "axialCoefficients": [
+      -3.593725211125261,
+      2.942293348459914
+    ],
+    "axialScaledCoefficients": {
+      "scale": "1-exp(-2*d*lambda)",
+      "values": [
+        -0.2762987243137688,
+        0.22621426263189762
+      ]
+    },
+    "condition": {
+      "positiveAxialGap": 0.07688365361336423,
+      "inverseGap": 13.006665955663896,
+      "lambdaUniform": false,
+      "conditionWarning": false,
+      "requiredPrecisionExplanation": "The axial inverse grows as lambda^-1. Fixed positive lambda is permitted; uniformity as lambda tends to zero is not asserted."
+    },
+    "rows": [
+      {
+        "name": "angular momentum",
+        "expected": 0,
+        "measured": -9.556172624899397e-20,
+        "absoluteError": 9.556172624899397e-20
+      },
+      {
+        "name": "axial flux",
+        "expected": 0,
+        "measured": 3.841595873608032e-18,
+        "absoluteError": 3.841595873608032e-18
+      },
+      {
+        "name": "pressure defect",
+        "expected": -0.001,
+        "measured": -0.001000000000000002,
+        "absoluteError": 1.951563910473908e-18
+      },
+      {
+        "name": "angular flux defect",
+        "expected": -0.0002,
+        "measured": -0.00020000000000000193,
+        "absoluteError": 1.9244588561617704e-18
+      },
+      {
+        "name": "axial flux defect",
+        "expected": 0.0004,
+        "measured": 0.000400000000000001,
+        "absoluteError": 9.75781955236954e-19
+      }
+    ],
+    "normalizedFiveEquationError": 3.841595873608032e-15,
+    "pass": true,
+    "nonlinearRemainder": {
+      "scope": "Additional increment-only products. Old-mean and radial derivative terms must also be added for an actual state.",
+      "Pnew": 0.000010838878423106281,
+      "JthetaNew": 0.000047443174398971995,
+      "JzNew": 0.00021331338206033708,
+      "notSetToZero": true
+    },
+    "physicalNormalization": {
+      "azimuthal": "q^-A sum u_j eta_j(r/sqrt(q))",
+      "axial": "q^-A sum s_j eta_j(r/sqrt(q))",
+      "targetRows": [
+        "q^(2A) P_phys",
+        "q^(2A-3/2) Jtheta_phys",
+        "q^(2A-1) Jz_phys"
+      ]
+    },
+    "actualPinnedLambdaReplaced": false,
+    "appliedToPinnedPhysicalField": false,
+    "rigorousQuadratureEnclosure": false
+  },
+  "checks": [],
+  "observations": {
+    "kind": "CONTRACT_TABLE",
+    "samples": [],
+    "curves": [],
+    "contract": {
+      "runHash": "5a2e209452c40b81b6364630bd6266981fc46efd91d362801c2860bad3c9ae05",
+      "inputHash": "ea90dc6df3d2d7ffdfd460775fcfdd251f14a033e3f28df058d85cdcd0d85d65"
+    }
+  },
+  "progress": {
+    "status": "PARTIAL_SOURCE_RECONSTRUCTION",
+    "complete": false,
+    "implemented": [
+      "source4/common6 hash·root 상속",
+      "전체 비선형 residual 항등식",
+      "비영 harmonic projected ODE",
+      "signed covariance inverse",
+      "정확 대수적 divisor Fourier inverse",
+      "원래 M2 mean-patch의 양의 λ·a와 5 moment inverse 구간",
+      "고정 domain의 유리수 차수 장부"
+    ],
+    "remaining": [
+      "실제 primary-curl state의 temporal+moment 초기화",
+      "모든 현재 조화항과 실제 curl을 연결한 네 단계 반복",
+      "각 단계의 압력·전체 residual·정밀도 상계",
+      "동일 최종 cutoff sum과 Lemma5.4 tail"
+    ]
+  },
+  "evidence": {
+    "numericOrAlgebraicFiniteExecution": true,
+    "analyticCertificate": null,
+    "leanTheorem": null,
+    "formalComplete": false,
+    "sourceReconstructionComplete": false
+  }
+}

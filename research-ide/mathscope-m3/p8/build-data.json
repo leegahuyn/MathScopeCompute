@@ -136,8 +136,8 @@
       },
       {
         "path": "mathscope-m3/P8_PROGRESS.json",
-        "bytes": 10904,
-        "sha256": "35281b10bf422e68128520e002fa0067b33d8268a1d84130a6406bca7f55f90c"
+        "bytes": 12422,
+        "sha256": "67886a870bee815f3a4d17a9cf09bade268223818e4acb82261d34cebbf0da9f"
       },
       {
         "path": "mathscope-m3/cli.py",
@@ -386,8 +386,8 @@
       },
       {
         "path": "mathscope-m3/p8/tools/build_browser.py",
-        "bytes": 10274,
-        "sha256": "5e6d903bf41943c68e17a1531f4c2b0c829e2858246241aceb392768f1268331"
+        "bytes": 10821,
+        "sha256": "a8dd2938e13a3d77b842d53744632ae78121fd6156e8e4af475a7ca0d5f49bf8"
       },
       {
         "path": "mathscope-m3/p8/tools/build_review_fixtures.py",
@@ -410,7 +410,7 @@
         "sha256": "37dc2f0cb6519ef7e2d6121c775183dab83898c26fe3ae92b3c3b1609766353d"
       }
     ],
-    "manifestSHA256": "4cd8a9f4697e2708e0ca89db90ffac0de6b5eb00c9a4608c5c7de5bea67aa0c7",
+    "manifestSHA256": "5bdae9fdd5d0b39e6afc21c31a31678edbfd597c9c7d5e785bff9d6b06682f9a",
     "environment": {
       "arithmetic": "ECMASCRIPT_EXACT_BIGINT_AND_RATIONAL",
       "hash": "SHA-256_WEBCRYPTO",
@@ -659,17 +659,25 @@
           "text": "degree-basis-valuation, Hodge/Newton polygons, prime-degree-Frobenius weight, refinement tower를 각 view로\n제공한다. 클릭하면 chain basis·matrix column·map·source theorem을 보이게 한다. 합격: view matrix·camera·LOD 변\n경은 수학 결과를 바꾸지 않는다. 3D projection을 원래 공간과의 동형·차원 축소 증명으로 저장할 수 없다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T07:39:59.051286+00:00",
           "evidence": [
             "tests/p8-visual-models.test.mjs",
-            "p8/evidence/p8-local-acceptance-20261012.json"
+            "tests/p8-visualization.test.mjs",
+            "p8/evidence/p8-renderer-local-20261012.json",
+            "p8/evidence/p8-live-v87-20261012.json",
+            "evidence/live-ui/p8-refinement-v87.jpg"
           ],
-          "remainingObligations": [
-            "Verify the current deployed P8 candidate: click-to-source, camera/LOD/matrix invariance, and return from another route."
-          ],
-          "acceptanceScope": "Four actual M2 structural views and source-linked model tests execute; current public P8 interaction acceptance is pending."
+          "remainingObligations": [],
+          "acceptanceScope": "All four actual M2 structural views render on the public v87 page using source-bound Canvas2D when WebGL is unavailable. Actual point selection exposes the original basis/matrix column/map/theorem, Newton slopes, Frobenius eigenvalue and finite refinement. Camera/LOD and route return preserve the mathematical record; the single scene restores camera state. The 7 mounted-renderer tests and independent model tests preserve exact source data and deny projection proof authority. Execution JSON does not export presentation state.",
+          "liveVerification": {
+            "version": 87,
+            "receipt": "p8/evidence/p8-live-v87-20261012.json",
+            "receiptSHA256": "e6e1095bea78d9c3d22a124d1fa5bff1406ba5eb140dcbb0d3388e482688d0a5",
+            "rendererSHA256": "72266bdc840b668eee8a9b01cc68a62d7a431cae7e7671f66c39c5af4655428b",
+            "freshBrowserLeanExecuted": false
+          }
         },
         {
           "id": "P8-03",
@@ -710,18 +718,26 @@
           "text": "새 operator/trace/duality 가정은 고유 ID와 정확한 수학 명제를 갖는다. theorem의 실제 의존 axiom을 출력하고 그 axiom\n을 지운 상태의 재검증을 지원한다. 합격: Lean #print axioms와 입력 assumption ledger가 일치한다. target conjecture\n자체를 가정하고 얻은 corollary는 CONDITIONAL_ON_TARGET으로 명확히 분류한다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "PARTIAL",
-          "originalCriterionComplete": false,
-          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T07:39:59.051286+00:00",
           "evidence": [
+            "p8/evidence/conditional-lean-release.json",
+            "p8/evidence/lean-attempt7-38213076249.zip",
+            "p8/evidence/lean-release-provenance.json",
             "p8/evidence/conditional-local-20261012/receipt.json",
-            "p8/evidence/lean-attempt6-38209288204.zip",
-            "p8/tools/test_conditional_audit.py"
+            "p8/tools/test_conditional_audit.py",
+            "p8/evidence/p8-live-v87-20261012.json"
           ],
-          "remainingObligations": [
-            "Attach the successful source-bound CI conditional audit to the browser build and verify the displayed ledger against its actual #print axioms."
-          ],
-          "acceptanceScope": "Local unchanged official Lean freshly compiled the conditional source/import and rejected exact axiom removal (exit 0,0,1). The CI diagnostic parser fix is verified locally; the prior CI failed only at parser recognition and is preserved."
+          "remainingObligations": [],
+          "acceptanceScope": "Actual official Lean CI run 38213076249 compiled the conditional source and fresh import (exit 0,0), printed the exact assumedTarget dependency and rejected deletion of that axiom from source (exit 1). The source-matched release is attached to the browser. Public v87 displayed the matching unique-ID input ledger, exact literal proposition, actual #print axioms and source-removal rejection as RECORDED_CI_SOURCE_MATCH / CONDITIONAL_ON_TARGET, explicitly without a fresh browser Lean run.",
+          "liveVerification": {
+            "version": 87,
+            "receipt": "p8/evidence/p8-live-v87-20261012.json",
+            "receiptSHA256": "e6e1095bea78d9c3d22a124d1fa5bff1406ba5eb140dcbb0d3388e482688d0a5",
+            "rendererSHA256": "72266bdc840b668eee8a9b01cc68a62d7a431cae7e7671f66c39c5af4655428b",
+            "freshBrowserLeanExecuted": false
+          }
         },
         {
           "id": "P8-06",

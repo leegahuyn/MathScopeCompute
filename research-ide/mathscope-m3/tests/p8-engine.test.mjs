@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import vm from 'node:vm';
 import {Worker} from 'node:worker_threads';
 import {createP8Engine} from '../p8/engine.mjs';
 import {sha256,cloneJSON} from '../p8/contracts.mjs';
@@ -46,9 +47,11 @@ test('review export separates five scoped releases from conjecture resolution',a
   const result=await engine.exportReviewPackets();assert.deepEqual(result.packets.map(p=>p.id),['P1-P3','P4','P5-P6','P7','P8']);
   for(const packet of result.packets){assert.ok(packet.remainingProofs.length);assert.ok(packet.fixtures.length);assert.equal(packet.releaseAcceptance.allOriginalCriteriaComplete,false);assert.ok(Object.values(packet.conjectureResolution).every(x=>x===false));const {packetSHA256,...body}=packet;assert.equal(packetSHA256,await sha256(body));}
 });
-test('the exact published static worker executes without ESM imports and agrees with Node source',async()=>{
+test('the published static worker survives Publisher escape rewriting and agrees with Node source',async()=>{
   const bundle=await fs.readFile(new URL('../web/p8-engine.bundle.js',import.meta.url),'utf8');
-  const source=JSON.parse(bundle.match(/^  const source=(.+);$/m)[1]);
+  const published=bundle.replace(/\\u([\da-f]{4})/gi,(_,hex)=>String.fromCharCode(parseInt(hex,16)));
+  assert.equal(published,bundle);
+  const source=vm.runInNewContext(published.match(/^  const source=(.+);$/m)[1],{TextDecoder,Uint8Array,atob});
   assert.doesNotMatch(source,/^\s*(?:import|export)\s/m);
   const bootstrap="const {parentPort}=require('node:worker_threads'); globalThis.self=globalThis; self.postMessage=x=>parentPort.postMessage(x); parentPort.on('message',x=>self.onmessage({data:x}));\n";
   const worker=new Worker(bootstrap+source,{eval:true});

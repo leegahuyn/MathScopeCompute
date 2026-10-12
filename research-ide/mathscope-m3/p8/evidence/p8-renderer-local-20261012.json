@@ -1,0 +1,56 @@
+{
+  "schema": "MathScope.M3.P8.RendererLocalAcceptance/1",
+  "recordedAt": "2026-10-12T07:25:17.414501+00:00",
+  "status": "LOCAL_RENDERER_REGRESSIONS_PASSED",
+  "sources": {
+    "web/p8-visualization.js": "72266bdc840b668eee8a9b01cc68a62d7a431cae7e7671f66c39c5af4655428b",
+    "tests/p8-visualization.test.mjs": "e0b14c5473db42c1c8e091af5d8492c1691d4d255ce0af47b6e17e10a58e28ac",
+    "web/p8-visual-models.js": "8398cdf82f2c3aa61f0514a38945cce309b098da1617cc48a2e36e4f645a8009",
+    "tests/p8-visual-models.test.mjs": "b21807f7095d7fa604f9460da40b2f6a0d60abaf5d55bc11e5287ffdfee449d1"
+  },
+  "commands": [
+    {
+      "command": "node --check research-ide/mathscope-m3/web/p8-visualization.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node --test research-ide/mathscope-m3/tests/p8-visualization.test.mjs",
+      "exitCode": 0,
+      "tests": 7,
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "command": "node --test research-ide/mathscope-m3/tests/p8-*.test.mjs research-ide/mathscope-m3/p8/tests/*.test.mjs",
+      "exitCode": 0,
+      "tests": 101,
+      "passed": 101,
+      "failed": 0
+    }
+  ],
+  "independentReview": {
+    "agent": "ns_m3",
+    "rendererTestsPassed": 7,
+    "visualModelTestsPassed": 9,
+    "concreteBlockingDefectFound": false
+  },
+  "verified": [
+    "The actual mounted renderer falls back when Three dynamic imports are unavailable.",
+    "Four real inherited M2 views and a typed comparison diagram draw source-bound marks with exact HTML selection.",
+    "An independent yaw/pitch expression agrees with the orthographic projection of independently normalized axes.",
+    "Constant-axis domains, CSS-scaled picking, resize, and device-pixel-ratio cap remain finite and aligned.",
+    "Directed/open edges retain segment topology and exact map/assumption/source selection.",
+    "200/1000 point LOD and 200-line display bounds preserve all retained HTML entries and source objects.",
+    "Camera rotation, zoom, selection and LOD do not mutate frozen mathematical model data.",
+    "Pointer cancellation, visibility, one-frame coalescing, route disposal and camera restoration work without duplicate canvases.",
+    "Missing Canvas2D and invalid or empty source coordinates never claim a rendered model or formal authority."
+  ],
+  "limits": [
+    "Canvas2D is a recording test context; this receipt is not a browser screenshot or GPU rendering test.",
+    "Public interactive acceptance and the exact published patch digest are recorded separately.",
+    "Projection, camera and LOD do not grant mathematical isomorphism, dimension, certificate or formal completion authority."
+  ],
+  "P7Modified": false,
+  "certificateIssued": false,
+  "formalComplete": false
+}

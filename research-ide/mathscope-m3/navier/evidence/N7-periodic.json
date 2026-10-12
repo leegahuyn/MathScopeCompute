@@ -1,0 +1,153 @@
+{
+  "schema": "MathScope.NavierM3.Result/1",
+  "version": "0.1.0",
+  "package": "N7",
+  "operation": "periodization",
+  "input": {
+    "package": "N7",
+    "operation": "periodization",
+    "parameters": {
+      "sameForcing": true,
+      "periodicPressure": true,
+      "zeroInitialData": true
+    }
+  },
+  "inputHash": "9c6e6d7aed9f738e0c21a01ef1df43ab954b2e1eb6e93b2c53a92014556c4af1",
+  "runHash": "fe2e1497c5029a56ca321b16fa913d70770fbe90224a6c6f850723f5c0023eda",
+  "status": "BLOCKED_BY_N6_LOCAL_FIELD",
+  "executionStatus": "FINITE_SUPPORT_CONTRACT_ACCEPTED",
+  "source": {
+    "implementation": {
+      "schema": "MathScope.NavierM3.ImplementationPin/1",
+      "files": [
+        {
+          "path": "research-ide/mathscope-m3/navier/galerkin.mjs",
+          "sha256": "e0a04a0a5363a7d72dec89fe3b157499669db317bc064d9922ccedf3599239aa",
+          "bytes": 17825
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/corrections.mjs",
+          "sha256": "120c595312afb232138a4e23b26ae7a7de987aa15729af8fe9f50f5bccea2c8f",
+          "bytes": 22955
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/localization.mjs",
+          "sha256": "1754c965e6cc977d1e304d16b8eb20578ff27e6158801ea426a4e94f29b090fb",
+          "bytes": 9727
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/index.mjs",
+          "sha256": "d6b98110ee1644279478ac193fd1dd25cb973b74d08f21d23cf0bcf3e85dc89b",
+          "bytes": 10281
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-mean-map.mjs",
+          "sha256": "072f9cbaa7fedab6ea2cdb64158a7d5af3c3916685dfefeef65e977219ef09b7",
+          "bytes": 11303
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-inheritance.mjs",
+          "sha256": "f3189a00c35fdb1d925650f52edfcb19839d4f751db91aa916a9494b0b49faa8",
+          "bytes": 4835
+        }
+      ],
+      "sha256": "afda0e1039016e2a3553e58aae9d9ccba5f1ef5dedb36b66540bd9de3b81cdb0"
+    },
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "pages": 166
+    },
+    "profile": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "common6": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json",
+      "sha256": "ac98143158c9e7abc6bd656e687269f183bb803ecdc036edb8a3937edc24bc01",
+      "bytes": 4495330
+    },
+    "source4": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt4.json",
+      "sha256": "88f7cf6fe5af934d6b3bcacc8ad975e86bd0b37fee2110b9db8c73e72acb129e",
+      "bytes": 161629
+    },
+    "physicalGraph": {
+      "namespace": "physical",
+      "sha256": "79d2ffc302ab2db900b8432dcc5d23d7c85f12d996da244ed421b904dfbdb3cf",
+      "nodeCount": 720452,
+      "canonicalBytes": 31814841,
+      "fixedCompilerPrefix": true
+    },
+    "inheritedM2Assessment": "COMPLETE_IN_DECLARED_SOURCE_BOUND_M2_SCOPE"
+  },
+  "sourceBoundaries": {
+    "M2Preserved": true,
+    "P7Changed": false,
+    "fullUncorrectedResidualAssumedFlat": false,
+    "completeN6": false,
+    "completeN7": false,
+    "completeN8": false,
+    "wholeM3Complete": false
+  },
+  "results": {
+    "schema": "MathScope.N7.PeriodizationGate/1",
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "pages": 166
+    },
+    "reference": "(10.22)-(10.23), Corollary10.6",
+    "gaps": [
+      0.6,
+      0.6,
+      0.6
+    ],
+    "disjoint": true,
+    "sameForcing": true,
+    "periodicPressure": true,
+    "zeroInitialData": true,
+    "status": "FINITE_SUPPORT_CONTRACT_ACCEPTED",
+    "nonlinearCrossTermsVanishFromDisjointSupport": true,
+    "sourcePDEVerified": false,
+    "continuumClaim": false,
+    "missing": [],
+    "viscosityRescaling": {
+      "velocity": "sqrt(nu) u(x/sqrt(nu),t)",
+      "pressure": "nu p(x/sqrt(nu),t)",
+      "force": "sqrt(nu) f(x/sqrt(nu),t)",
+      "energyFactor": 1
+    }
+  },
+  "checks": [],
+  "observations": {
+    "kind": "CONTRACT_TABLE",
+    "samples": [],
+    "curves": [],
+    "contract": {
+      "runHash": "fe2e1497c5029a56ca321b16fa913d70770fbe90224a6c6f850723f5c0023eda",
+      "inputHash": "9c6e6d7aed9f738e0c21a01ef1df43ab954b2e1eb6e93b2c53a92014556c4af1"
+    }
+  },
+  "progress": {
+    "status": "BLOCKED_BY_N6_LOCAL_FIELD",
+    "complete": false,
+    "implemented": [
+      "qstar 내부 localization cutoff 선택",
+      "div f를 포함한 pressure contract",
+      "유한 terminal-jet cutoff schedule",
+      "지지 분리·same-force·periodic-pressure 관문"
+    ],
+    "remaining": [
+      "N6 최종 A,B,p의 실제 localization",
+      "동일 force의 terminal 모든 차수 jets",
+      "전체 compact K의 energy balance",
+      "source e0 양의 하한과 remainder"
+    ]
+  },
+  "evidence": {
+    "numericOrAlgebraicFiniteExecution": true,
+    "analyticCertificate": null,
+    "leanTheorem": null,
+    "formalComplete": false,
+    "sourceReconstructionComplete": false
+  }
+}
