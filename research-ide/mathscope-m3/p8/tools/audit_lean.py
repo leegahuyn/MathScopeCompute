@@ -106,7 +106,7 @@ def parse_targets(log, expected=None):
 
 def source_manifest(base):
     paths = sorted((base/"lean").glob("*.lean")) + sorted((base/"lean/MathScope").rglob("*.lean"))
-    paths += [base/"lean/lean-toolchain",base/"lean/pins.json",base/"lean/finite-input.json",base/"finite-certificates.mjs",Path(__file__).resolve()]
+    paths += [base/"lean/lean-toolchain",base/"lean/pins.json",base/"lean/finite-input.json",base/"finite-certificates.mjs",base/"tools/generate_finite.mjs",Path(__file__).resolve()]
     return [{"path":str(p.relative_to(base)).replace("\\","/"),"sha256":sha(p.read_bytes())} for p in sorted(set(paths))]
 
 def check_static(base):
@@ -161,7 +161,7 @@ def main():
     result={"schema":"MathScope.M3.P8.LeanAudit/1","status":"FAILED","serializedAuthority":"UNTRUSTED_REQUIRES_REEXECUTION","checkedAt":dt.datetime.now(dt.timezone.utc).isoformat(),"wholeP8Complete":False,"wholeM3Complete":False,"globalRHProved":False,"globalBSDProved":False,"formalScope":"Only the exact printed consumer declarations; no geometric comparison or infinite conjecture bridge.","targets":[],"negativeControls":[]}
     try:
         pins=check_static(base);before=source_manifest(base)
-        command(["node",str(base/"finite-certificates.mjs"),"--check"],lean,output,"generated-input-check")
+        command(["node",str(base/"tools/generate_finite.mjs"),"--check"],lean,output,"generated-input-check")
         _,version=command(["lake","env","lean","--version"],lean,output,"lean-version")
         if not re.search(r"version\s+"+re.escape(pins["leanVersion"])+r"(?:\D|$)",version) or pins["leanCommit"][:12] not in version: raise ValueError("Unexpected Lean version/commit")
         _,prefix=command(["lake","env","lean","--print-prefix"],lean,output,"lean-prefix")

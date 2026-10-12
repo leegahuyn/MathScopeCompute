@@ -65,24 +65,38 @@ function candidate(value){
   return {id:value.id,a,inv,scalar,linear,output:{id:value.id,...encodeInvariants(inv),normalization:{scalar:encode(scalar),exponentialLinear:encode(linear),formula:'scalar * exp(exponentialLinear * z) * det(I - z A)'},reflection,coverage}};
 }
 function difference(a,b){const reasons=[];if(a.dimension!==b.dimension)reasons.push('dimension');if(!peq(a.characteristic,b.characteristic))reasons.push('characteristicPolynomial');if(!req(a.trace,b.trace))reasons.push('trace');if(a.rank!==b.rank)reasons.push('rank');if(a.selfAdjoint!==b.selfAdjoint)reasons.push('selfAdjoint');if(a.moments.length!==b.moments.length||a.moments.some((x,i)=>!b.moments[i]||!req(x,b.moments[i])))reasons.push('traceMoments');return reasons;}
-function minimalPrincipalWitness(a,b){
+function minimalPrincipalWitness(a,b,selectedFailurePredicates){
   if(a.length!==b.length)return {status:'DIMENSION_MISMATCH',dimensions:[a.length,b.length]};
   const n=a.length;let tried=0;
   for(let size=1;size<=n;size++)for(let mask=1;mask<2**n;mask++){
     const indices=Array.from({length:n},(_,i)=>i).filter(i=>mask&(1<<i));if(indices.length!==size)continue;tried++;
-    const aa=indices.map(i=>indices.map(j=>a[i][j])),bb=indices.map(i=>indices.map(j=>b[i][j])),ia=invariants(aa,n),ib=invariants(bb,n),reasons=difference(ia,ib);
-    if(reasons.length)return {status:'FOUND',indices,dimension:size,reasons,matrices:{A:aa.map(row=>row.map(encode)),B:bb.map(row=>row.map(encode))},invariants:{A:encodeInvariants(ia),B:encodeInvariants(ib)},searched:tried,minimality:'Minimum cardinality among same-index principal compressions; exhaustive smaller cardinalities only. No global smallest counterexample claim.'};
+    const aa=indices.map(i=>indices.map(j=>a[i][j])),bb=indices.map(i=>indices.map(j=>b[i][j])),ia=invariants(aa,n),ib=invariants(bb,n),reasons=difference(ia,ib).filter(reason=>selectedFailurePredicates.includes(reason));
+    if(reasons.length)return {status:'FOUND',kind:'MATRIX_PRINCIPAL_COMPRESSION',indices,dimension:size,reasons,selectedFailurePredicates,matrices:{A:aa.map(row=>row.map(encode)),B:bb.map(row=>row.map(encode))},invariants:{A:encodeInvariants(ia),B:encodeInvariants(ib)},searched:tried,minimality:'Minimum cardinality among same-index principal compressions reproducing at least one selected original failure predicate; exhaustive smaller cardinalities only. No global smallest counterexample claim.'};
   }
-  return {status:'NONE_IN_SEARCH_DOMAIN',searched:tried};
+  return {status:'NONE_IN_SEARCH_DOMAIN',selectedFailurePredicates,searched:tried};
+}
+function normalizationWitness(a,b){
+  if(req(a.scalar,b.scalar)&&req(a.linear,b.linear))return {status:'NO_NORMALIZATION_DIFFERENCE'};
+  const parameters={A:a.output.normalization,B:b.output.normalization};
+  const constantA=a.scalar,constantB=b.scalar;
+  const linearA=checked(rmul(a.scalar,rsub(a.linear,a.inv.trace))),linearB=checked(rmul(b.scalar,rsub(b.linear,b.inv.trace)));
+  const order=!req(constantA,constantB)?0:!req(linearA,linearB)?1:null;
+  if(order===null)return {status:'PARAMETER_CONTRACT_DIFFERENCE',kind:'NORMALIZATION_PARAMETER_CONTRACT',parameters,coefficientWitness:null,reason:'Distinct normalization parameters are recorded; matrix trace compensation prevents a degree-one value witness.'};
+  return {status:'FOUND',kind:'NORMALIZATION_FORMAL_COEFFICIENT',reasons:['determinantNormalization'],parameters,order,coefficients:{A:encode(order===0?constantA:linearA),B:encode(order===0?constantB:linearB)},formula:order===0?'[z^0] scalar * exp(linear*z) * det(I-zA) = scalar':'[z^1] scalar * exp(linear*z) * det(I-zA) = scalar * (linear - trace(A))',scope:'Exact formal coefficient witness; no numerical exponential evaluation and no matrix-compression minimality claim.'};
 }
 export function compareFiniteCandidates(input){
   if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['A','B','probes','minimize'].includes(k)))fail('COMPARISON_SCHEMA','Supply A, B, optional rational probes and minimize.');
   if(input.minimize!==undefined&&typeof input.minimize!=='boolean')fail('COMPARISON_SCHEMA','minimize must be a boolean.');
-  const a=candidate(input.A),b=candidate(input.B),reasons=difference(a.inv,b.inv);
+  const a=candidate(input.A),b=candidate(input.B),matrixReasons=difference(a.inv,b.inv),reasons=matrixReasons.slice();
   if(!req(a.scalar,b.scalar)||!req(a.linear,b.linear))reasons.push('determinantNormalization');
   const probes=input.probes??['0','1/2','1'];if(!Array.isArray(probes)||probes.length>16)fail('PROBE_BUDGET','At most sixteen rational determinant probes.');
   const quotient=probes.map(value=>{const z=q(value),numerator=rmul(a.scalar,evaluate(a.inv.fredholm,z)),denominator=rmul(b.scalar,evaluate(b.inv.fredholm,z));return {z:encode(z),numerator:encode(numerator),denominator:encode(denominator),rationalQuotient:denominator.n===0n?null:encode(rdiv(numerator,denominator)),exponentialExponent:encode(rmul(rsub(a.linear,b.linear),z)),status:denominator.n===0n?'DENOMINATOR_ZERO':'EXACT_FORMAL_QUOTIENT',formula:'rationalQuotient * exp(exponentialExponent); exponential is symbolic, not a certified transcendental evaluation'};});
-  const result={schema:'MathScope.M3.P8.FiniteCandidateComparison/1',arithmetic:'EXACT_RATIONAL',status:reasons.length?'DISTINGUISHED':'FINITE_INVARIANTS_EQUAL',candidates:[a.output,b.output],differences:reasons,determinantNormalizationQuotient:quotient,counterexample:reasons.length&&input.minimize!==false?minimalPrincipalWitness(a.a,b.a):{status:'NOT_REQUESTED_OR_NO_FINITE_DIFFERENCE'},limits:{dimension:MAX_DIMENSION,inputRationalBits:MAX_INPUT_BITS,intermediateRationalBits:MAX_INTERMEDIATE_BITS},unresolvedBridges:['DENSE_SELFADJOINT_DOMAIN','COMPACT_RESOLVENT','ZERO_SPECTRUM_WITH_MULTIPLICITY','GLOBAL_DETERMINANT_NORMALIZATION','GLOBAL_TRACE_FORMULA','GLOBAL_FUNCTIONAL_EQUATION_DUALITY','POSITIVITY_TO_RH'].map(id=>({id,status:'RESEARCH_OPEN',proofExecuted:false})),scope:{finiteCompressionOnly:true,operatorEqualityProved:false,globalRHProved:false,formalLeanProofIssued:false,wholeP7Complete:false,wholeM3Complete:false}};
+  const normWitness=normalizationWitness(a,b);
+  const failedChecks=[a,b].flatMap((c,candidateIndex)=>['reflection','coverage'].filter(check=>c.output[check].status==='FAIL').map(check=>({candidateIndex,candidateId:c.id,check,status:'FAIL'})));
+  const requestedChecks=[a,b].flatMap(c=>['reflection','coverage'].filter(check=>c.output[check].status!=='NOT_REQUESTED'));
+  const candidateContractStatus=failedChecks.length?'FAILED_REQUESTED_CONTRACTS':requestedChecks.length?'ALL_REQUESTED_CONTRACTS_PASS':'NO_ADDITIONAL_CONTRACTS_REQUESTED';
+  const counterexample=input.minimize===false?{status:'NOT_REQUESTED'}:matrixReasons.length?minimalPrincipalWitness(a.a,b.a,matrixReasons):reasons.length?normWitness:{status:'NOT_REQUESTED_OR_NO_FINITE_DIFFERENCE'};
+  const result={schema:'MathScope.M3.P8.FiniteCandidateComparison/1',arithmetic:'EXACT_RATIONAL',status:reasons.length?'DISTINGUISHED':'FINITE_INVARIANTS_EQUAL',candidateContractStatus,failedChecks,candidates:[a.output,b.output],differences:reasons,determinantNormalizationQuotient:quotient,normalizationWitness:normWitness,counterexample,limits:{dimension:MAX_DIMENSION,inputRationalBits:MAX_INPUT_BITS,intermediateRationalBits:MAX_INTERMEDIATE_BITS},unresolvedBridges:['DENSE_SELFADJOINT_DOMAIN','COMPACT_RESOLVENT','ZERO_SPECTRUM_WITH_MULTIPLICITY','GLOBAL_DETERMINANT_NORMALIZATION','GLOBAL_TRACE_FORMULA','GLOBAL_FUNCTIONAL_EQUATION_DUALITY','POSITIVITY_TO_RH'].map(id=>({id,status:'RESEARCH_OPEN',proofExecuted:false})),scope:{finiteCompressionOnly:true,operatorEqualityProved:false,globalRHProved:false,formalLeanProofIssued:false,wholeP7Complete:false,wholeM3Complete:false}};
   return result;
 }
 export async function compareCandidateRecord(input){const snapshot=clone(input),result=compareFiniteCandidates(snapshot);return {input:snapshot,inputSHA256:await hash(snapshot),result,resultSHA256:await hash(result)};}

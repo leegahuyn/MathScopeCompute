@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import {makeFiniteCertificate,validateFiniteCertificate,exportLeanCertificate,canonical} from '../finite-certificates.mjs';
 test('finite prime-field count preserves all affine points and the infinity point',()=>{
   const r=makeFiniteCertificate(); assert.equal(r.data.pointCount,'8'); assert.equal(r.data.affinePoints.length,7);
@@ -8,7 +9,15 @@ test('finite prime-field count preserves all affine points and the infinity poin
   assert.equal(r.data.euler.analyticTailBound,null);
 });
 test('all admitted primes recompute exact finite witnesses',()=>{
-  for(const p of ['3','5','7']) for(const traceLength of [3,7,8])assert.equal(validateFiniteCertificate(makeFiniteCertificate({prime:p,traceLength})).valid,true);
+  for(const p of ['3','5','7']) for(const traceLength of [3,7,8]){
+    const record=makeFiniteCertificate({prime:p,traceLength});assert.equal(validateFiniteCertificate(record).valid,true);
+    assert.deepEqual(record.data.euler.productPrefix,Array.from({length:traceLength},(_,i)=>i===0?'1':'0'));
+    assert.deepEqual(record.data.reconstruction.candidates,record.data.reconstruction.coefficients.map(x=>[x]));
+  }
+});
+test('browser module has no Node imports, CLI effects or import.meta dependency',async()=>{
+  const source=await readFile(new URL('../finite-certificates.mjs',import.meta.url),'utf8');
+  assert.doesNotMatch(source,/node:|process\.|import\.meta|console\.|await import/);
 });
 test('mathematical omissions, coefficient changes and authority promotion fail closed',()=>{
   const mutations=[r=>r.data.affinePoints.pop(),r=>r.data.pointCount='7',r=>r.data.curve.projectiveInfinityCount='0',r=>r.data.traces[2]='-5',r=>r.data.matrix.entries[1]='5',r=>r.data.reconstruction.bounds[1]='3',r=>r.data.reconstruction.candidates[1]=[],r=>r.data.euler.factor[1]='-2',r=>r.data.euler.productPrefix[1]='1',r=>r.data.euler.analyticTailBound='0',r=>r.scope.globalRHProved=true,r=>r.formalLeanProofIssued=true,r=>r.data.extra='pretend'];

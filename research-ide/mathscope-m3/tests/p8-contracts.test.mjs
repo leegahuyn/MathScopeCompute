@@ -75,6 +75,13 @@ test('source path traversal, changed assumption refs and promoted serialized rec
   const modified=cloneJSON(await bindP8Claim(good));modified.sourceFiles[0].sha256='0'.repeat(64);assert.equal((await verifyP8Binding(modified,good)).issues[0].code,'BINDING_INTEGRITY_MISMATCH');
 });
 
+test('full Lean audit runtime metadata remains bound and modified runtimes are rejected',async()=>{
+  const f=fixture();Object.assign(f.environment,{leanBinarySha256:h,lakeManifestSha256:h,importedModuleCount:3000,kernelModified:false,runtimeModified:false});
+  const record=await bindP8Claim(f), next=cloneJSON(f);next.environment.lakeManifestSha256='c'.repeat(64);
+  assert.equal((await verifyP8Binding(record,next)).status,'STALE');
+  next.environment.kernelModified=true;await assert.rejects(()=>bindP8Claim(next),{code:'INVALID_ENVIRONMENT'});
+});
+
 test('a caller edit during async hashing cannot create a mixed binding revision',async()=>{
   const f=fixture(), initial=cloneJSON(f), pending=bindP8Claim(f);f.input.largeInteger='changed';f.sourceFiles[0].content='changed';
   const record=await pending;assert.equal(record.input.largeInteger,initial.input.largeInteger);assert.equal(record.sourceFiles[0].content,initial.sourceFiles[0].content);assert.equal((await verifyP8Binding(record,initial)).ok,true);

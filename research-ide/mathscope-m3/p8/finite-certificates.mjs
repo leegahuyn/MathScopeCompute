@@ -36,13 +36,16 @@ function dataFor(input) {
   const candidates = residues.map((r,i) => { const out=[]; for(let x=-bounds[i];x<=bounds[i];x++) if(mod(x,modulus)===r)out.push(String(x));return out; });
   const factor = [1n,-t,p], inverse = [1n];
   for(let n=1;n<length;n++) inverse.push(t*inverse[n-1]-(n>1?p*inverse[n-2]:0n));
+  const product=convolution(factor,inverse,length);
+  if(product.some((x,i)=>x!==(i===0?1n:0n)))throw new Error('The finite Euler prefix is not the multiplicative identity.');
+  if(candidates.some((xs,i)=>xs.length!==1||xs[0]!==String(coefficients[i])))throw new Error('The bounded coefficient lift is not a singleton.');
   return {
     curve:{equation:'y^2=x^3-x',a:'-1',b:'0',prime:String(p),projectiveInfinityCount:'1',smoothDiscriminantResidue:String(64n%p)},
     affinePoints:points,pointCount:String(count),aP:String(t),
     matrix:{kind:'COMPANION_POLYNOMIAL_MODEL',entries:matrix.map(String),computedCohomologicalFrobenius:false},
     traces:traces.map(String),traceIndexStartsAt:0,
     reconstruction:{modulus:String(modulus),bounds:bounds.map(String),residues:residues.map(String),candidates,coefficients:coefficients.map(String),coefficientOrder:'ascending in X',boundProvenance:'DECLARED_FINITE_INTERVALS'},
-    euler:{factor:factor.map(String),inversePrefix:inverse.map(String),productPrefix:convolution(factor,inverse,length).map(String),coefficientOrder:'ascending in T',truncationDegree:length-1,analyticTailBound:null,placeVariable:'T_p; p='+String(p)},
+    euler:{factor:factor.map(String),inversePrefix:inverse.map(String),productPrefix:product.map(String),coefficientOrder:'ascending in T',truncationDegree:length-1,analyticTailBound:null,placeVariable:'T_p; p='+String(p)},
   };
 }
 export function makeFiniteCertificate(input = {prime:'5',traceLength:7}) {
@@ -96,18 +99,3 @@ end MathScope.P8.Generated
 `;
 }
 
-// Command-line use is only source export/check. Neither command issues a Lean verdict.
-if(typeof process!=='undefined' && process.argv[1] && import.meta.url === (await import('node:url')).pathToFileURL(process.argv[1]).href) {
-  const fs=await import('node:fs/promises'); const path=await import('node:path');
-  const base=path.dirname((await import('node:url')).fileURLToPath(import.meta.url));
-  const source=path.join(base,'lean/MathScope/P8/Generated.lean');
-  const fixture=path.join(base,'lean/finite-input.json');
-  const record=makeFiniteCertificate(), expectedSource=exportLeanCertificate(record), expectedFixture=JSON.stringify(record,null,2)+'\n';
-  if(process.argv[2]==='--write') {
-    await fs.mkdir(path.dirname(source),{recursive:true}); await fs.writeFile(source,expectedSource); await fs.writeFile(fixture,expectedFixture);
-    console.log('Exported finite input and Lean source; Lean has not been run.');
-  } else if(process.argv[2]==='--check') {
-    if(await fs.readFile(source,'utf8')!==expectedSource || await fs.readFile(fixture,'utf8')!==expectedFixture) throw new Error('Generated source or exact input differs from deterministic export.');
-    console.log('Deterministic finite source/input match. Lean has not been run by this check.');
-  } else throw new Error('Use --write or --check.');
-}

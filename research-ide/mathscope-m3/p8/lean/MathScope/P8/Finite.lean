@@ -65,7 +65,7 @@ theorem matrix_trace_recurrence (A : Mat2) (n : ℕ) :
   exact trace_cayley_hamilton A (mpow A n)
 
 def boundedResidues (modulus residue : ℤ) (bound : ℕ) : List ℤ :=
-  ((List.range (2*bound+1)).map fun n => (n : ℤ) - (bound : ℤ)).filter
+  ((List.range (2*bound+1)).map fun (n : ℕ) => (n : ℤ) - (bound : ℤ)).filter
     (fun x => x % modulus == residue % modulus)
 
 /-- Exact uniqueness in this printed bounded interval; the bound is a hypothesis. -/

@@ -42,6 +42,10 @@ and `MathScope/P8/Generated.lean` are checked against the deterministic JavaScri
 exporter before compilation. Parser tests and integer recomputation tests are
 separate from actual kernel execution.
 
+Regenerate input/source with `node ../tools/generate_finite.mjs --write` from this
+directory, or use `--check` to compare existing bytes. The browser-facing
+`finite-certificates.mjs` has no Node imports or filesystem access.
+
 Reference for the proof boundary: the official
 [Lean proof validation guide](https://lean-lang.org/doc/reference/latest/ValidatingProofs/)
 describes validating the actual declaration, its type, and axioms. The pinned

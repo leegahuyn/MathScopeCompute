@@ -1,6 +1,6 @@
 /** Exact assumption identities and dependency direction; no imported-audit authority. */
 import {auditDependencyGraph} from '../../mathscope-m0/proof.mjs';
-import {NO_AUTHORITY,assertJSON,canonicalJSON,cloneJSON,shape,string,id,declaration,references,fail,freeze,issue} from './contracts.mjs';
+import {NO_AUTHORITY,assertJSON,canonicalJSON,cloneJSON,shape,string,id,declaration,references,fail,freeze,issue} from './common.mjs';
 
 export const STANDARD_AXIOMS=Object.freeze(['Classical.choice','Quot.sound','propext']);
 const KINDS=Object.freeze({USER_AXIOM:'user_axiom',HYPOTHESIS:'hypothesis',EXTERNAL_THEOREM:'reference',OPEN_OBLIGATION:'open'});
