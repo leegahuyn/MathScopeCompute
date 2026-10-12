@@ -136,8 +136,8 @@
       },
       {
         "path": "mathscope-m3/P8_PROGRESS.json",
-        "bytes": 6247,
-        "sha256": "1b0ec65a3b786df107f7a37182c6849b2714c1963095c45be255d683f4d25c41"
+        "bytes": 10904,
+        "sha256": "35281b10bf422e68128520e002fa0067b33d8268a1d84130a6406bca7f55f90c"
       },
       {
         "path": "mathscope-m3/cli.py",
@@ -220,9 +220,14 @@
         "sha256": "39a90b5e5acc6c706a67178a73bf6a5d5b0d84e5d0c0e739c682c56ae0f4dcc6"
       },
       {
+        "path": "mathscope-m3/p8/evidence/conditional-lean-release.json",
+        "bytes": 5800,
+        "sha256": "d9793a3a4242c8dd06c0ae89ca928eddff3df7bbfb9b0cc88624a4b2c0a3fa0e"
+      },
+      {
         "path": "mathscope-m3/p8/evidence/lean-release.json",
-        "bytes": 25664,
-        "sha256": "f3677a296d0f37bd8a430d64da7d05f1cc59f8ceb0e1760725fc37bb89f9cb29"
+        "bytes": 25666,
+        "sha256": "6dfbda277e97d50a77e52fe4250548ee2b4e1db24ec3dcc342cc7c740ed08d3f"
       },
       {
         "path": "mathscope-m3/p8/evidence/p7-mutation-release.json",
@@ -405,7 +410,7 @@
         "sha256": "37dc2f0cb6519ef7e2d6121c775183dab83898c26fe3ae92b3c3b1609766353d"
       }
     ],
-    "manifestSHA256": "0a6306ae49a32a211fc31b28ec70699dc34cc2851eac1c1c0400c2415e084fb4",
+    "manifestSHA256": "4cd8a9f4697e2708e0ca89db90ffac0de6b5eb00c9a4608c5c7de5bea67aa0c7",
     "environment": {
       "arithmetic": "ECMASCRIPT_EXACT_BIGINT_AND_RATIONAL",
       "hash": "SHA-256_WEBCRYPTO",
@@ -638,8 +643,15 @@
           "text": "CW_TOY, DERIVED_MODEL, PRISMATIC_VIA_COMPARISON, NATIVE_PRISMATIC을 object kind로 둔다. exact/\nball/approximate와 Lean-checked/external-theorem/hypothesis를 별도로 관리한다. 합격: PRISMATIC_VIA_COMP\nARISON이어도 Lean dependency가 외부면 FORMAL_COMPLETE가 아니다. 숫자 grade 값을 크게 바꾸어 theorem 상태\n로 승격시키는 schema fixture가 실패한다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "IN_PROGRESS",
-          "originalCriterionComplete": false
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "evidence": [
+            "tests/p8-contracts.test.mjs",
+            "p8/evidence/p8-local-acceptance-20261012.json"
+          ],
+          "remainingObligations": [],
+          "acceptanceScope": "Object kind, exactness and proof method remain independent; forged numerical grades and serialized proof authority are rejected."
         },
         {
           "id": "P8-02",
@@ -647,8 +659,17 @@
           "text": "degree-basis-valuation, Hodge/Newton polygons, prime-degree-Frobenius weight, refinement tower를 각 view로\n제공한다. 클릭하면 chain basis·matrix column·map·source theorem을 보이게 한다. 합격: view matrix·camera·LOD 변\n경은 수학 결과를 바꾸지 않는다. 3D projection을 원래 공간과의 동형·차원 축소 증명으로 저장할 수 없다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "IN_PROGRESS",
-          "originalCriterionComplete": false
+          "status": "PARTIAL",
+          "originalCriterionComplete": false,
+          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "evidence": [
+            "tests/p8-visual-models.test.mjs",
+            "p8/evidence/p8-local-acceptance-20261012.json"
+          ],
+          "remainingObligations": [
+            "Verify the current deployed P8 candidate: click-to-source, camera/LOD/matrix invariance, and return from another route."
+          ],
+          "acceptanceScope": "Four actual M2 structural views and source-linked model tests execute; current public P8 interaction acceptance is pending."
         },
         {
           "id": "P8-03",
@@ -656,8 +677,15 @@
           "text": "노드는 계수환과 base를, 화살표는 tensor/twist/completion/inversion/fixed-point 또는 quasi-isomorphism을 명세한\n다. 잘못된 base-change 순서는 composability 검사로 막는다. 합격: bounded/smooth/proper/perfect 등 각 edge의 필\n요한 가정이 표시된다. 조건을 제거한 replay에서는 edge가 유효하지 않다는 이유를 반환한다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "IN_PROGRESS",
-          "originalCriterionComplete": false
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "evidence": [
+            "tests/p8-contracts.test.mjs",
+            "p8/evidence/p8-local-acceptance-20261012.json"
+          ],
+          "remainingObligations": [],
+          "acceptanceScope": "Actual M2 typed comparison routes reject reordered operations, missing assumptions and rehashed altered diagrams."
         },
         {
           "id": "P8-04",
@@ -665,8 +693,16 @@
           "text": "정수 d², unit contraction, chain equivalence, point counts, trace recurrence, bounded residue reconstruction, finite\nEuler identity를 우선 구현 후보로 둔다. 고급 비교정리의 현재 라이브러리 범위를 별도 조사한다. 합격: 각 후보에는\ntheorem statement·입력 타입·핵심 lemma·certificate 소비 방식·추가 axiom이 명시된다. 컴파일되지 않은 코드를 형식화\n완료라고 표시하지 않는다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "IN_PROGRESS",
-          "originalCriterionComplete": false
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "evidence": [
+            "p8/theorem-backlog.mjs",
+            "p8/evidence/lean-release.json",
+            "p8/evidence/lean-release-provenance.json"
+          ],
+          "remainingObligations": [],
+          "acceptanceScope": "Seven requested candidate categories now include statement, type, lemmas, consumer and extra-axiom policy. The exact finite F5 input has 12 recorded compiled targets and 8 semantic negative controls. The dedicated chain-equivalence consumer remains a declared future candidate, consistent with the original backlog criterion."
         },
         {
           "id": "P8-05",
@@ -674,8 +710,18 @@
           "text": "새 operator/trace/duality 가정은 고유 ID와 정확한 수학 명제를 갖는다. theorem의 실제 의존 axiom을 출력하고 그 axiom\n을 지운 상태의 재검증을 지원한다. 합격: Lean #print axioms와 입력 assumption ledger가 일치한다. target conjecture\n자체를 가정하고 얻은 corollary는 CONDITIONAL_ON_TARGET으로 명확히 분류한다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "IN_PROGRESS",
-          "originalCriterionComplete": false
+          "status": "PARTIAL",
+          "originalCriterionComplete": false,
+          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "evidence": [
+            "p8/evidence/conditional-local-20261012/receipt.json",
+            "p8/evidence/lean-attempt6-38209288204.zip",
+            "p8/tools/test_conditional_audit.py"
+          ],
+          "remainingObligations": [
+            "Attach the successful source-bound CI conditional audit to the browser build and verify the displayed ledger against its actual #print axioms."
+          ],
+          "acceptanceScope": "Local unchanged official Lean freshly compiled the conditional source/import and rejected exact axiom removal (exit 0,0,1). The CI diagnostic parser fix is verified locally; the prior CI failed only at parser recognition and is preserved."
         },
         {
           "id": "P8-06",
@@ -683,8 +729,18 @@
           "text": "bad prime 하나, Frobenius coefficient 하나, truncation bound 하나, zero box 하나, rank upper certificate 하나를 제\n거·변조하여 관문을 다시 실행한다. 합격: 변조된 입력은 해당 단계에서 실패하고 후속 theorem badge가 취소된다. session\n저장은 입력 해시·정밀도·비교 근거를 보존하며 재계산 결과와 일치한다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "IN_PROGRESS",
-          "originalCriterionComplete": false
+          "status": "PARTIAL",
+          "originalCriterionComplete": false,
+          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "evidence": [
+            "tests/p8-mutation-audit.test.mjs",
+            "p8/evidence/p7-mutation-release.json",
+            "p8/evidence/p8-local-acceptance-20261012.json"
+          ],
+          "remainingObligations": [
+            "A currently valid arithmetic-rank upper certificate is unavailable under excluded P7-07. Existing P7 CI rejects a fabricated Selmer upper certificate; deleting a valid one cannot yet be tested."
+          ],
+          "acceptanceScope": "Fresh browser/M2 bad-prime, Frobenius, truncation and comparison mutations plus source-bound recorded P7 zero-box and forged-rank replays are connected. No P7 rank upper bound is created."
         },
         {
           "id": "P8-07",
@@ -692,8 +748,15 @@
           "text": "global operator 후보의 finite compression, determinant normalization quotient, trace moment matching, func-\ntional equation·duality consistency, zero multiplicity coverage를 자동 비교한다. 반례는 재현 가능한 최소 입력으로 줄\n인다. 합격: 후보 A와 B가 같은 그림을 내어도 다른 characteristic polynomial·trace·rank이면 구별된다. 미증명 bridge는\n각각 RESEARCH OPEN이며 실패/통과한 유한 테스트를 나란히 표시한다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "IN_PROGRESS",
-          "originalCriterionComplete": false
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "evidence": [
+            "tests/p8-candidate-search.test.mjs",
+            "p8/evidence/p8-local-acceptance-20261012.json"
+          ],
+          "remainingObligations": [],
+          "acceptanceScope": "Exact rational finite compressions compare characteristic polynomials, rank, traces, normalization quotients, reflection/duality and multiplicities. Counterexample minimization preserves the original failed predicate within explicitly bounded principal compressions."
         },
         {
           "id": "P8-08",
@@ -701,8 +764,16 @@
           "text": "P1-P3 기본 계산, P4 실제 zeta 연결, P5-P6 고급 base, P7 분석 인증, P8 통합을 각각 독립 review packet으로 작성한다.\n지원범위·fixture 결과·미완료 증명·새 연구 질문을 담는다. 합격: 출시 준비와 수학적 난제 해결을 다른 체크박스로 둔다. 이\n번 산출물은 설계도이며 구현·컴파일·배포가 완료되었다는 상태를 생성하지 않는다.",
           "page": 36,
           "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
-          "status": "IN_PROGRESS",
-          "originalCriterionComplete": false
+          "status": "PASS",
+          "originalCriterionComplete": true,
+          "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+          "evidence": [
+            "p8/review-packets.mjs",
+            "p8/review-fixture-evidence.json",
+            "p8/evidence/p8-local-acceptance-20261012.json"
+          ],
+          "remainingObligations": [],
+          "acceptanceScope": "Five independently scoped packets P1-P3/P4/P5-P6/P7/P8 retain supported inputs, actual recorded fixture references, open proofs and research questions; release and conjecture states are distinct. P7 remains inherited/excluded."
         }
       ],
       "fixtures": [
@@ -2723,9 +2794,9 @@
     "status": "RECORDED_CI_AUDIT",
     "ci": {
       "repository": "leegahuyn/MathScopeCompute",
-      "commit": "b3c78f28d667cf5b600d217ade96f302e759e76a",
-      "runId": "38209288204",
-      "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38209288204"
+      "commit": "4410aa76760a0665f709e82f3422604a66c4056f",
+      "runId": "38213076249",
+      "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38213076249"
     },
     "input": {
       "prime": "5",
@@ -2736,7 +2807,7 @@
       "schema": "MathScope.M3.P8.LeanAudit/1",
       "status": "KERNEL_CHECKED_FINITE_SCOPES",
       "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
-      "checkedAt": "2026-10-12T05:48:32.912974+00:00",
+      "checkedAt": "2026-10-12T06:36:02.712012+00:00",
       "wholeP8Complete": false,
       "wholeM3Complete": false,
       "globalRHProved": false,
@@ -2979,7 +3050,7 @@
             "NegativePointCount.lean"
           ],
           "exitCode": 1,
-          "seconds": 1.372137,
+          "seconds": 2.361551,
           "logFile": "NegativePointCount.log",
           "logSha256": "474d2e4a8918619e7052b7698a4063712685206f94ae12cf29c122ad193692d6",
           "name": "NegativePointCount",
@@ -2995,7 +3066,7 @@
             "NegativeTrace.lean"
           ],
           "exitCode": 1,
-          "seconds": 1.38238,
+          "seconds": 2.289684,
           "logFile": "NegativeTrace.log",
           "logSha256": "c9ed6d0628ef516243eb58096959348919f950d62a81182b099e2f61e4384288",
           "name": "NegativeTrace",
@@ -3011,7 +3082,7 @@
             "NegativeResidue.lean"
           ],
           "exitCode": 1,
-          "seconds": 1.341299,
+          "seconds": 2.345588,
           "logFile": "NegativeResidue.log",
           "logSha256": "56f0f1332832e22164bc30664a6bd8904e85a3a901f14bdcc4cea71ca0ec38df",
           "name": "NegativeResidue",
@@ -3027,7 +3098,7 @@
             "NegativeEuler.lean"
           ],
           "exitCode": 1,
-          "seconds": 1.425012,
+          "seconds": 2.362328,
           "logFile": "NegativeEuler.log",
           "logSha256": "7660da9bff0d42b4557ff282beee96ebd68b39b692ea5280d722e05eb5afd8f2",
           "name": "NegativeEuler",
@@ -3043,7 +3114,7 @@
             "NegativeContraction.lean"
           ],
           "exitCode": 1,
-          "seconds": 1.351956,
+          "seconds": 2.341175,
           "logFile": "NegativeContraction.log",
           "logSha256": "83a48b151f88f995965da92889dc6868797deefad3e4d25af2ae50b070d49000",
           "name": "NegativeContraction",
@@ -3059,7 +3130,7 @@
             "NegativeDifferential.lean"
           ],
           "exitCode": 1,
-          "seconds": 1.46122,
+          "seconds": 2.312782,
           "logFile": "NegativeDifferential.log",
           "logSha256": "e19a810bcad9ed6e816281f3bf626d264787d53cb7f03250be4a506b8ff45b77",
           "name": "NegativeDifferential",
@@ -3075,7 +3146,7 @@
             "NegativePrecision.lean"
           ],
           "exitCode": 1,
-          "seconds": 1.527616,
+          "seconds": 2.285124,
           "logFile": "NegativePrecision.log",
           "logSha256": "0a64fc16243a87b9f21cee317beb6d081e4977a4ef268de0d2a7bee341e561aa",
           "name": "NegativePrecision",
@@ -3091,7 +3162,7 @@
             "NegativeFalse.lean"
           ],
           "exitCode": 1,
-          "seconds": 1.316184,
+          "seconds": 2.267643,
           "logFile": "NegativeFalse.log",
           "logSha256": "826152f3e2d92a203e54273db7668f03b0e11b59b4c598b2447ca530fe36d6e2",
           "name": "NegativeFalse",
@@ -3111,7 +3182,7 @@
             "MathScope/M1/Arithmetic/Algebra.lean"
           ],
           "exitCode": 0,
-          "seconds": 2.989247,
+          "seconds": 2.763434,
           "logFile": "build-MathScope.M1.Arithmetic.Algebra.log",
           "logSha256": "060c5eaeed4aa9b1a269112e65e077c011e524014f914be03d5375f0e15c5cf0",
           "module": "MathScope.M1.Arithmetic.Algebra",
@@ -3129,7 +3200,7 @@
             "MathScope/M1/Arithmetic/Precision.lean"
           ],
           "exitCode": 0,
-          "seconds": 1.494149,
+          "seconds": 2.487769,
           "logFile": "build-MathScope.M1.Arithmetic.Precision.log",
           "logSha256": "460fbdd410d57003d52cee5474fea141c24d5207797bfcc9241d1eeaf93a7ce4",
           "module": "MathScope.M1.Arithmetic.Precision",
@@ -3147,7 +3218,7 @@
             "MathScope/P8/Finite.lean"
           ],
           "exitCode": 0,
-          "seconds": 1.624826,
+          "seconds": 2.630745,
           "logFile": "build-MathScope.P8.Finite.log",
           "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "module": "MathScope.P8.Finite",
@@ -3165,7 +3236,7 @@
             "MathScope/P8/Generated.lean"
           ],
           "exitCode": 0,
-          "seconds": 1.423884,
+          "seconds": 2.480655,
           "logFile": "build-MathScope.P8.Generated.log",
           "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "module": "MathScope.P8.Generated",
@@ -3182,7 +3253,7 @@
           "Audit.lean"
         ],
         "exitCode": 0,
-        "seconds": 1.545397,
+        "seconds": 2.748019,
         "logFile": "fresh-consumer-audit.log",
         "logSha256": "4e97825a3167c3346f4865d607ac6aecfe7f7e7a1f991742dfd7fae38a158aea"
       },
@@ -3559,11 +3630,11 @@
     "generatedSourceSHA256": "f449fd38d54def9e37a8659415b041c7183019546cd053575ea0122bf415b036",
     "ci": {
       "repository": "leegahuyn/MathScopeCompute",
-      "commit": "b3c78f28d667cf5b600d217ade96f302e759e76a",
-      "runId": "38209288204",
-      "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38209288204"
+      "commit": "4410aa76760a0665f709e82f3422604a66c4056f",
+      "runId": "38213076249",
+      "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38213076249"
     },
-    "auditSHA256": "ac2fd7e0324a22cae8a654812ed3e352f82bc70ef1fce46e65626e5114f155d5"
+    "auditSHA256": "041228e1a0b2515bccefe0268be16215b27f9fda1aa834050a051d3196fd825e"
   },
   "recordedChecks": {
     "p7Mutations": {
@@ -4324,9 +4395,165 @@
         "commit": "dd37b6a8953dd5de3d85451d88b888022cd66fa6",
         "runId": "38208308358"
       }
+    },
+    "conditionalLean": {
+      "kind": "CONDITIONAL_LEAN",
+      "ci": {
+        "repository": "leegahuyn/MathScopeCompute",
+        "commit": "4410aa76760a0665f709e82f3422604a66c4056f",
+        "runId": "38213076249",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38213076249",
+        "artifactId": 11729803795,
+        "artifactSHA256": "b2373daa628b2bd736f7a45ef6970b9c473e5b06841a0ab514aeb6a8f7635b91"
+      },
+      "report": {
+        "schema": "MathScope.M3.P8.ConditionalLeanAudit/1",
+        "status": "CONDITIONAL_SOURCE_CHECKED_AND_REMOVAL_REJECTED",
+        "proofGrade": "CONDITIONAL_ON_TARGET",
+        "independentTargetProved": false,
+        "unconditionalFiniteAudit": false,
+        "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION",
+        "formalLeanProofIssued": false,
+        "wholeP8Complete": false,
+        "wholeM3Complete": false,
+        "checkedAt": "2026-10-12T06:36:39.367127+00:00",
+        "sourceFiles": [
+          {
+            "path": "lean/conditional/ConditionalTarget.lean",
+            "sha256": "d90a50f8abcf9e854a6eb287029943141c2b214244814cbcc1a9f9bcd182580d"
+          },
+          {
+            "path": "lean/conditional/Audit.lean",
+            "sha256": "1bd706a24016ccf18bd494365a7157d0335508e6c474fbfd048f87063903f60c"
+          },
+          {
+            "path": "tools/audit_conditional_lean.py",
+            "sha256": "494a4292b20c2562510f841efd85e63e8dc29eeb19993677c0c91cdf7ea29b02"
+          },
+          {
+            "path": "tools/audit_lean.py",
+            "sha256": "df9b236d0f3fbd2f9c81ba5273945a500cffcf4514e51d971d8f439aafe07d33"
+          },
+          {
+            "path": "lean/pins.json",
+            "sha256": "801b642096d18739c1ad63a7a9783e59203f460a1c058bf4c985338d027ba228"
+          },
+          {
+            "path": "lean/lean-toolchain",
+            "sha256": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b"
+          },
+          {
+            "path": "lean/lakefile.lean",
+            "sha256": "2d94c84322ebd1a47d1474811e4d6d5f3d9df23c50188cba5d76ac9474a994b4"
+          }
+        ],
+        "sourceManifestSha256": "aa4e08788c00556023d53a2a33ace3a54853dd8e9f23956313ed6a4f85993a57",
+        "environment": {
+          "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+          "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+          "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+          "leanBinarySha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+          "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+          "importClosureSha256": "13285c678c1baebf182dec616303177f43e041527225b473e17753f1ab002458",
+          "importedModuleCount": 650,
+          "kernelModified": false,
+          "runtimeModified": false
+        },
+        "targets": [
+          {
+            "name": "MathScope.P8.Conditional.assumedTarget",
+            "type": "MathScope.P8.Conditional.assumedTarget : 2 + 2 = 4",
+            "typeSha256": "e8dff78dc99d999c53a2e4e03d3e6f65c1241462188520e0673454f9149e098f",
+            "axioms": {
+              "all": [
+                "MathScope.P8.Conditional.assumedTarget"
+              ],
+              "standard": [],
+              "custom": [
+                "MathScope.P8.Conditional.assumedTarget"
+              ]
+            }
+          },
+          {
+            "name": "MathScope.P8.Conditional.conditional_target",
+            "type": "MathScope.P8.Conditional.conditional_target : 2 + 2 = 4",
+            "typeSha256": "0ab65ba2364b285f0443ab1490424c73608603c2d5c13aa1d3c9d611758bbf8d",
+            "axioms": {
+              "all": [
+                "MathScope.P8.Conditional.assumedTarget"
+              ],
+              "standard": [],
+              "custom": [
+                "MathScope.P8.Conditional.assumedTarget"
+              ]
+            }
+          }
+        ],
+        "axiomLedger": {
+          "target": "MathScope.P8.Conditional.conditional_target",
+          "assumption": "MathScope.P8.Conditional.assumedTarget",
+          "sameLiteralProposition": true,
+          "customAxioms": [
+            "MathScope.P8.Conditional.assumedTarget"
+          ],
+          "standardAxioms": [],
+          "status": "CONDITIONAL_ON_TARGET"
+        },
+        "build": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "--root=conditional",
+            "-o",
+            "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/p8/lean/.lake/build/lib/lean/ConditionalTarget.olean",
+            "conditional/ConditionalTarget.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 1.203846,
+          "logFile": "conditional-positive.log",
+          "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "consumerAudit": {
+          "command": [
+            "lake",
+            "env",
+            "lean",
+            "--root=conditional",
+            "conditional/Audit.lean"
+          ],
+          "exitCode": 0,
+          "seconds": 1.216781,
+          "logFile": "conditional-fresh-import.log",
+          "logSha256": "20032d8fbc8e140bfb1b05bb0c8650188cef65ee3654428eaad6ea4ae6a53773"
+        },
+        "positiveOleanSha256": "202fdfd65c4403d1e4d962fda84a2bef0fc9f7548eac90d12f398008bbc8de24",
+        "removal": {
+          "sourceRegenerated": true,
+          "sourceFile": "RemovedAssumption.lean",
+          "sourceSha256": "e2e70146efa4fecabda002728be72cd68fd0f181978bed4176b92b59f5a31943",
+          "transformation": "Delete exactly the declared axiom line; preserve consuming theorem and its proof.",
+          "expectedRejected": true,
+          "rejected": true,
+          "expectedDiagnostic": "Unknown identifier assumedTarget",
+          "commandResult": {
+            "command": [
+              "lake",
+              "env",
+              "lean",
+              "/home/runner/work/MathScopeCompute/MathScopeCompute/research-ide/mathscope-m3/p8/evidence/conditional-lean-audit/RemovedAssumption.lean"
+            ],
+            "exitCode": 1,
+            "seconds": 1.190638,
+            "logFile": "removed-assumption.log",
+            "logSha256": "c0f55df34328628be5fb81918a95d40b5102fef9bd8e182f79de2340b5621ecf"
+          }
+        }
+      }
     }
   },
   "expectedChecks": {
-    "p7Mutations": "90337c7b958b069bfc62916998aa7ea67426be7a415c5d640e2d10f2576b8fd3"
+    "p7Mutations": "90337c7b958b069bfc62916998aa7ea67426be7a415c5d640e2d10f2576b8fd3",
+    "conditionalLean": "53359680a7169cb02afa40528d277a546714dcc965b704ed1921354d764e1a43"
   }
 }
