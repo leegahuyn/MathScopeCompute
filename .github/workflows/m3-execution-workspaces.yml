@@ -52,6 +52,17 @@ jobs:
       # A stale release must fail here; CI must not silently rebuild it to pass.
       - name: Verify the shipped Worker and display contract build
         run: python -B research-ide/mathscope-m3/web/build_extended.py --check 2>&1 | tee "$M3_CI_OUTPUT/bundle-check.log"
+      - name: Reject selected-run model substitution, altered values and incomplete replay metadata
+        run: node --test --test-reporter=tap research-ide/mathscope-m3/navier/tests/n8-reproduction-contract.test.mjs 2>&1 | tee "$M3_CI_OUTPUT/n8-reproduction-contract.tap"
+      - name: Reproduce actual public N8 observations in fresh Node and shipped Worker processes
+        run: |
+          python -B research-ide/mathscope-m3/navier/tools/reproduce-selected-runs.py \
+            --output "$M3_CI_OUTPUT/n8-selected-run-reproduction" \
+            2>&1 | tee "$M3_CI_OUTPUT/n8-selected-run-reproduction.log"
+          python -B research-ide/mathscope-m3/navier/tools/verify-selected-reference.py \
+            "$M3_CI_OUTPUT/n8-selected-run-reproduction/N8-flow/N8-flow.json" \
+            --output "$M3_CI_OUTPUT/n8-selected-run-independent-numpy.json" \
+            2>&1 | tee "$M3_CI_OUTPUT/n8-selected-run-independent-numpy.log"
       - name: Verify all64 original identities, reviewed promotions and immutable source gates
         run: python -B research-ide/mathscope-m3/evidence/all64-20261012/assessment-source-resume/build_review.py --check 2>&1 | tee "$M3_CI_OUTPUT/original64-assessment-check.json"
       - name: Recheck frozen M2 input bytes without executing M2 graphs
