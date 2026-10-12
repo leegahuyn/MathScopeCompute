@@ -1,0 +1,171 @@
+{
+  "selected": "0:10",
+  "resultDigest": "8f58cdf2eba5fb2b094c42d70c2f8662b311aa9b7cd55c6789505e2dcce543b5",
+  "source": {
+    "sourceId": "0:10",
+    "sourceHash": "f69f81d4a4281eb8203c926cdbb5b50c4f535d9c5308e9f3bb8a4f900bf5fa26",
+    "sourceCoordinates": [
+      0.7853981633974483,
+      0.7853981633974483,
+      0
+    ],
+    "position": [
+      0.7853981633974483,
+      0.7853981633974483,
+      0
+    ],
+    "value": 0.4739835515216209,
+    "unit": "model_length/model_time",
+    "velocity": [
+      0.3351569834518215,
+      -0.3351569834518215,
+      0
+    ],
+    "angularVelocity": {
+      "value": -0.4267351250250076,
+      "status": "DEFINED",
+      "axis": "x3",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "formula": "Omega_z=((x1-o1)*u2-(x2-o2)*u1)/((x1-o1)^2+(x2-o2)^2)",
+      "unit": "1/model_time",
+      "isVorticity": false
+    },
+    "display": {
+      "coordinateSystem": "physical",
+      "position": [
+        0.7853981633974483,
+        0.7853981633974483,
+        0
+      ],
+      "value": 0.4739835515216209,
+      "valueStatus": "DEFINED",
+      "unit": "model_length/model_time",
+      "velocity": [
+        0.3351569834518215,
+        -0.3351569834518215,
+        0
+      ]
+    },
+    "observation": "finite Fourier velocity sample",
+    "error": null,
+    "reference": {
+      "claimIds": [
+        "N8-O-velocity",
+        "N8-O-angular-velocity"
+      ],
+      "ledger": "observations.claims",
+      "coefficientSource": "results.final"
+    },
+    "observationClaims": [
+      {
+        "id": "N8-O-velocity",
+        "observable": "Cartesian velocity",
+        "equation": "u(x,t)=sum_k uhat_k(t)*exp(i*k dot x)",
+        "reference": {
+          "blueprint": {
+            "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+            "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+            "page": 66,
+            "criterionRecord": "research-ide/mathscope-m3/N8_PROGRESS.json",
+            "criteria": [
+              "N8-01",
+              "N8-06",
+              "N8-07"
+            ]
+          },
+          "paper": {
+            "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+            "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+            "pages": 166,
+            "application": "Background Navier-Stokes source; this observation belongs to the separate finite periodic Galerkin branch."
+          }
+        },
+        "numericalTests": [
+          {
+            "path": "research-ide/mathscope-m3/navier/tests/independent_numpy.py",
+            "kind": "NUMERICAL_REGRESSION_SOURCE"
+          },
+          {
+            "path": "research-ide/mathscope-m3/navier/tests/flow-observations.test.mjs",
+            "kind": "NUMERICAL_REGRESSION_SOURCE"
+          }
+        ],
+        "finiteRunChecks": [
+          {
+            "id": "finite-run-complete",
+            "path": "results.status",
+            "pass": true
+          },
+          {
+            "id": "all-accepted-steps-div-free-and-real",
+            "path": "results.history",
+            "pass": true
+          }
+        ],
+        "analyticCertificate": null,
+        "leanTheorem": null,
+        "certifiedApproximation": false,
+        "errorEnclosure": null,
+        "scope": "EXECUTED_FINITE_PERIODIC_MODEL",
+        "meaning": "The executed finite solenoidal Fourier coefficients are synthesized at the saved positions. No omitted continuum-mode enclosure is supplied.",
+        "runHash": "f69f81d4a4281eb8203c926cdbb5b50c4f535d9c5308e9f3bb8a4f900bf5fa26",
+        "inputHash": "15ed82b5e28b472c7bb9b28d503984c76357cacef6c9d5fa5c65766a00dc177e"
+      },
+      {
+        "id": "N8-O-angular-velocity",
+        "observable": "Axial angular velocity",
+        "equation": "Omega_z=((x1-o1)*u2-(x2-o2)*u1)/((x1-o1)^2+(x2-o2)^2)",
+        "reference": {
+          "blueprint": {
+            "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
+            "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+            "page": 66,
+            "criterionRecord": "research-ide/mathscope-m3/N8_PROGRESS.json",
+            "criteria": [
+              "N8-01",
+              "N8-06",
+              "N8-07"
+            ]
+          },
+          "paper": {
+            "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+            "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+            "pages": 166,
+            "application": "Background Navier-Stokes source; this observation belongs to the separate finite periodic Galerkin branch."
+          }
+        },
+        "numericalTests": [
+          {
+            "path": "research-ide/mathscope-m3/navier/tests/flow-observations.test.mjs",
+            "kind": "NUMERICAL_REGRESSION_SOURCE"
+          }
+        ],
+        "finiteRunChecks": [
+          {
+            "id": "finite-run-complete",
+            "path": "results.status",
+            "pass": true
+          },
+          {
+            "id": "all-accepted-steps-div-free-and-real",
+            "path": "results.history",
+            "pass": true
+          }
+        ],
+        "analyticCertificate": null,
+        "leanTheorem": null,
+        "certifiedApproximation": false,
+        "errorEnclosure": null,
+        "scope": "EXECUTED_FINITE_PERIODIC_MODEL",
+        "meaning": "This is angular velocity about the declared origin and x3 axis, not vorticity. It is undefined on the axis.",
+        "runHash": "f69f81d4a4281eb8203c926cdbb5b50c4f535d9c5308e9f3bb8a4f900bf5fa26",
+        "inputHash": "15ed82b5e28b472c7bb9b28d503984c76357cacef6c9d5fa5c65766a00dc177e"
+      }
+    ],
+    "displayChangesSource": false
+  }
+}
