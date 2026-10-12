@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-12",
+  "record_kind": "READ_ONLY_PRIMARY_SOURCE_RESEARCH",
+  "scope": [
+    "11a1",
+    "37a1"
+  ],
+  "implemented": false,
+  "executed": false,
+  "proof_status_promoted": false,
+  "progress_status_changed": false,
+  "summary_ko": "기존 해석적 rank 인증과 외부 정리를 연결하는 후속 구현을 위한 조사 기록이다. 이 파일은 새 산술 계산, descent/Selmer certificate, Lean proof 또는 leading BSD 검증 결과가 아니다.",
+  "primary_sources": [
+    {
+      "id": "KOLYVAGIN_MPI_90_69",
+      "author": "V. A. Kolyvagin",
+      "title": "On the Mordell-Weil group and the Shafarevich-Tate group of modular elliptic curves",
+      "year": 1990,
+      "url": "https://archive.mpim-bonn.mpg.de/id/eprint/325/1/preprint_1990_69.pdf",
+      "locations": [
+        "Theorem 1: printed page 4, PDF page 6",
+        "Theorems 2-5: printed pages 4-5, PDF pages 6-7",
+        "Example 2: printed pages 11-12, PDF pages 13-14"
+      ],
+      "verified_statement": "For a modular elliptic curve E over Q, analytic rank at most one implies equality of algebraic and analytic ranks and finiteness of Sha(E/Q).",
+      "proof_dependencies": [
+        "Gross-Zagier relation between Heegner-point height and L-series derivative",
+        "Kolyvagin Euler-system argument",
+        "Auxiliary quadratic-twist nonvanishing results attributed in Theorem 4 to Waldspurger and to Bump-Friedberg-Hoffstein / Murty-Murty"
+      ],
+      "additional_reference_only_fact": "Example 2 treats Y^2 = 4X^3 - 4X + 1, identifies the rational generator (X,Y)=(0,1), and states Sha=0. Its relation to 37a1 via X=x, Y=2y+1 requires an exact model-binding adapter before machine use. No such adapter was implemented or executed in this research."
+    },
+    {
+      "id": "WILES_1995_THM_0_4",
+      "author": "Andrew Wiles",
+      "title": "Modular elliptic curves and Fermat's Last Theorem",
+      "year": 1995,
+      "publication_url": "https://annals.math.princeton.edu/1995/141-3/p01",
+      "full_text_url": "https://sites.math.rutgers.edu/~zeilberg/EM22/AW1995.pdf",
+      "location": "Theorem 0.4, printed page 448",
+      "verified_statement": "Every semistable elliptic curve over Q is modular."
+    },
+    {
+      "id": "GROSS_ZAGIER_PRIMARY",
+      "authors": [
+        "B. Gross",
+        "D. Zagier"
+      ],
+      "title": "Heegner points and derivatives of L-series",
+      "preprint_year": 1985,
+      "publication_year": 1986,
+      "url": "https://archive.mpim-bonn.mpg.de/id/eprint/3578/1/preprint_1985_30.pdf",
+      "role": "Primary background for the height/derivative dependency; the exact rank-equality adapter statement should use Kolyvagin Theorem 1, not infer an upper rank bound from Gross-Zagier alone."
+    },
+    {
+      "id": "MULLER_STOLL_HEIGHT",
+      "authors": [
+        "J. Steffen Mueller",
+        "Michael Stoll"
+      ],
+      "title": "Computing Canonical Heights on Elliptic Curves in Quasi-Linear Time",
+      "year": 2015,
+      "url": "https://arxiv.org/pdf/1509.08748",
+      "locations": [
+        "Section 3, equations (3.1)-(3.2)",
+        "Remark 3.1",
+        "Section 4"
+      ],
+      "role": "Canonical-height local decomposition, exact non-archimedean corrections, and explicit normalization warning."
+    },
+    {
+      "id": "CREMONA_THONGJUNTHUG_AGM",
+      "authors": [
+        "John E. Cremona",
+        "Thongchai Thongjunthug"
+      ],
+      "title": "The complex AGM, periods of elliptic curves over C and complex elliptic logarithms",
+      "url": "https://arxiv.org/pdf/1011.0914",
+      "locations": [
+        "Theorem 21",
+        "Section 6.3"
+      ],
+      "role": "Computable period formulas with branch and lattice-normalization conditions; no ball implementation was added."
+    }
+  ],
+  "proposed_rank_bridge": {
+    "intended_evidence_grade": "THEOREM_REFERENCE",
+    "kernel_checked": false,
+    "conclusion_if_all_inputs_and_dependencies_are_bound": {
+      "11a1": {
+        "arithmetic_rank": 0
+      },
+      "37a1": {
+        "arithmetic_rank": 1
+      },
+      "sha_finiteness": "External theorem conclusion; does not by itself compute Sha order."
+    },
+    "exact_hypotheses": [
+      "E is a nonsingular elliptic curve over Q with exact model identity bound to the analytic certificate.",
+      "E is modular; for these semistable fixtures this may be obtained through Wiles Theorem 0.4 after binding the complete reduction/conductor evidence.",
+      "L(E,s) is the full Hasse-Weil L-function with all bad-prime factors, not a good-only partial Euler product.",
+      "The analytic certificate proves ord_{s=1} L(E,s) is exactly 0 or 1: nonzero central value, or exact parity vanishing plus a derivative ball excluding zero, respectively.",
+      "The external theorem statement and dependency identity are recorded explicitly; a literature link is not a Lean theorem import."
+    ],
+    "not_required_by_this_rank_corollary": [
+      "The BSD conjecture",
+      "The Riemann hypothesis",
+      "A CM restriction",
+      "A chosen prime with a surjective residual Galois representation"
+    ],
+    "direct_heegner_reconstruction_not_performed": "Invoking Kolyvagin Theorem 1 uses its established composite result. Reconstructing the proof directly would additionally require binding a suitable imaginary quadratic field, Heegner hypotheses, and auxiliary nonvanishing results. No Heegner point or auxiliary twist was computed here.",
+    "no_inference_to": [
+      "Independent descent/Selmer upper-bound certificate",
+      "Saturation of a displayed rational point",
+      "Refined leading-term BSD equality",
+      "Universal BSD",
+      "Lean kernel certification"
+    ]
+  },
+  "original_criteria_separation": {
+    "source_file": "research-ide/mathscope-m3/ORIGINAL_M3_M4_CRITERIA.json",
+    "blueprint_page": 34,
+    "I3-04": "Literature-only external adapters must be THEOREM_REFERENCE. Kernel status requires importing an exact exported Lean theorem.",
+    "P7-07": {
+      "remains_incomplete": true,
+      "required_independent_work": [
+        "Rational points and certified height/regulator lower bounds",
+        "Actual descent/Selmer upper-bound certificate",
+        "Singleton independent rank interval before reporting the independent arithmetic rank as resolved",
+        "Separate known/conditional/unknown status for torsion, saturation, Tamagawa factors, period and Sha",
+        "Expose and discharge applicable Manin-constant assumptions if a modular-symbol or L_ratio route is used"
+      ],
+      "bridge_limitation": "The theorem-dependent rank value is mathematically legitimate but does not satisfy the specified independent descent/Selmer acceptance condition."
+    },
+    "P7-08": {
+      "remains_incomplete": true,
+      "potential_next_result": "Curve-specific arithmetic/analytic rank equality with explicit external theorem dependencies.",
+      "still_required": [
+        "Keep finite-height zero certificates, curve-specific rank equality, refined leading-term checks and universal conjectures as distinct result types",
+        "Automatically enumerate missing coefficient, prime and zero completeness conditions",
+        "Prevent promoting a single-curve result to universal BSD",
+        "Reject copying finite-field RH into a classical RH axiom",
+        "Export research hypotheses with their Lean assumption lists"
+      ]
+    }
+  },
+  "normalization_and_computable_data": {
+    "period": {
+      "invariant_differential": "omega = dx/(2*y + a1*x + a3) on the certified global minimal model",
+      "bsd_real_period": "Omega = integral over E(R) of |omega| = least positive real period times the number of real connected components",
+      "fixture_component_counts": {
+        "11a1": 1,
+        "37a1": 2
+      },
+      "next_computation": "Certified cubic-root isolation, justified square-root/AGM branches, explicit convergence enclosure, and exact model differential scaling.",
+      "warning": "Using only the least positive real period for 37a1 omits a factor of two."
+    },
+    "height": {
+      "chosen_proposed_convention": "H(P) = lim_{n->infinity} 4^(-n) h_x(2^n P), where h_x(a/b)=log(max(|a|,|b|)) for coprime integers a,b and b>0.",
+      "pairing": "<P,Q> = (H(P+Q)-H(P)-H(Q))/2",
+      "normalization_warning": "This H is twice the canonical height convention used in Silverman's books, as explicitly stated in Mueller-Stoll Remark 3.1. Pairing and regulator formulas must use the same convention.",
+      "decomposition": "H(P)=h_x(P)-sum_v Psi_v(P), with finite-place exact rational-log corrections and an archimedean contribution with a proved error enclosure.",
+      "next_computation": "Keep finite-place corrections, archimedean approximation, rounding and omitted-series error distinct."
+    },
+    "regulator": {
+      "rank_zero": "Empty determinant equals 1.",
+      "rank_one": "For a certified full Mordell-Weil basis G, Reg=H(G). If P=m*G modulo torsion, H(P)=m^2*Reg.",
+      "saturation_warning": "A positive height certifies non-torsion but does not certify that the point is a full generator."
+    },
+    "leading_term": {
+      "formula": "L^(r)(E,1)/r! = Omega * Reg * #Sha * product_p(c_p) / (#E(Q)_tors)^2",
+      "warning": "This research records a target formula, not a newly certified equality. A numerical ratio near an integer does not prove the order of Sha or the refined BSD formula.",
+      "sha_status_rule": "Finiteness from the general rank theorem and an exact Sha-order theorem or computation are separate fields."
+    },
+    "supporting_official_documentation": [
+      "https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/period_lattice.html",
+      "https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/lseries_ell.html"
+    ]
+  }
+}

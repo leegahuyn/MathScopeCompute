@@ -32,7 +32,7 @@ python cli.py replay zeta-result.json --output zeta-replay.json --max-seconds 90
 
 ## 기존 웹과 서버 연결
 
-기존 `https://project29770.websitepublisher.ai/v0.3.1.html`의 M3/P7 화면에 연결하는 코드는 `web/`에 있다. 기존 M2 화면 및 증거를 보존하고 정확한 문맥 anchor로 부분 패치한다. 새 사이트나 유료 서비스를 만들지 않는다.
+공개 화면은 [기존 MathScope의 M3/P7](https://project29770.websitepublisher.ai/v0.3.1.html#research-m3)이다. 페이지 v82에 기존 M2 화면 및 증거를 보존하는 5개 문맥 패치를 적용했다. 소스는 `web/`, 실제 배포·HTTP·브라우저 확인 기록은 `evidence/resume-20261012/production/`에 있다. 새 사이트나 유료 서비스를 만들지 않았다. 브라우저가 native WebMCP를 지원하지 않으면 그 상태를 표시하고 일반 실행 화면을 제공한다.
 
 기존 Compute 서비스의 `/v1/p7/capabilities`, `/v1/p7/run`, `/v1/p7/replay`가 동일한 CLI를 실행한다. 실행 입력은 64 KiB, replay는 32 MiB, 실행은 90초·384 MiB로 제한한다. 스레드 및 프로세스 간 파일 잠금으로 동일 인스턴스의 P7 계산은 한 번에 하나만 허용한다. 브라우저 대기 시간 초과는 서버 작업 종료를 뜻하지 않는다.
 

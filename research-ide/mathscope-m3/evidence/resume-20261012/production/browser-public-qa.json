@@ -1,0 +1,86 @@
+{
+  "schema": "MathScope.M3.P7.PublicBrowserQA/1",
+  "observedAt": "2026-10-12T03:46:00Z",
+  "page": "https://project29770.websitepublisher.ai/v0.3.1.html#research-m3",
+  "pageVersion": 82,
+  "pageVersionHash": "36834e2c",
+  "browser": "User Chrome via ChatGPT extension; the earlier in-app browser was unavailable",
+  "backendCLISHA256": "2ff67b4730dc17a9dafb4f48146ca191ea1bce101e509dd1221bcb093f8f2040",
+  "capabilities": {"kinds": 7, "examples": 14},
+  "runs": [
+    {
+      "example": "zeta-2",
+      "displayedStatus": "COMPLETED / finite",
+      "recordSHA256": "8629f351111bae50d37a2d35cd06c21515aa6d0b6c399455a523360c1dfbdb50",
+      "mathematicalSHA256": "e532c8bf8432114806199adfaab9b3c91e2a926d2e4920c361f57c68a658fa79",
+      "download": {
+        "bytes": 8962,
+        "sha256": "f2a07b9ad6c4a2a8eb0d274dc95897dc8eac8f4e0d2247bbb095a441da62521e",
+        "archive": "browser-zeta-export.json.gz",
+        "result": "PASS: actual file parsed and its record/source/mathematical hashes matched the displayed execution",
+        "automationNote": "Chrome download event wait timed out, but the requested file was present and fully verified; no second download was initiated"
+      },
+      "nativeFileImport": "BLOCKED_BY_CHROME_EXTENSION_FILE_URL_PERMISSION",
+      "nativeFileImportDetails": "The chooser opened but setFiles was blocked because Allow access to file URLs is not enabled for the ChatGPT extension. No permissions were changed. This is not recorded as a successful public native-file import.",
+      "pastedSameRecordServerReplay": "MATCH",
+      "sameUIFileFlowPriorEvidence": "../browser-frozen-api-qa.json separately records successful local native-file import and replay, including the 13.9MB record"
+    },
+    {
+      "example": "central-37a1",
+      "displayedStatus": "COMPLETED / TOLERANCE_MET",
+      "recordSHA256": "ac9d3790e66a5a772e3b1f16b482bf8b403aaae477db92142b645e0be59fb714",
+      "mathematicalSHA256": "70a2250093156adfeca63adae0ca7e2a8066c209a9668d563f5e1c887feb8b24",
+      "displayChecks": ["exact central-value and derivative intervals", "analytic rank 1 with theorem dependencies", "arithmetic rank equality and BSD leading term remain false"]
+    },
+    {
+      "example": "explicit-psi",
+      "displayedStatus": "COMPLETED / CERTIFIED_ENCLOSURE",
+      "recordSHA256": "d980753d03c02523dde9fc91682be561ff0279617adbbc4f569486e5f5af9126",
+      "mathematicalSHA256": "fcf6cc0f8676a8ceddd494650a365d61d6256959ca76500f871fa6044a79cc0e",
+      "elapsedSeconds": 14.70295519195497,
+      "displayChecks": ["exact zero-side enclosure and width", "independent prime-side log(2520)", "prime-side containment true", "160000-character display limit notice"],
+      "currentRecordServerReplay": "MATCH",
+      "additionalLargeDownload": false
+    },
+    {
+      "example": "taylor-zeta",
+      "displayedStatus": "COMPLETED / CERTIFIED_TAYLOR_ENCLOSURE",
+      "recordSHA256": "9eae28ca814d3c1087d7f8b670c37a61e4bfb280615fb9dd8496d59278c1dc02",
+      "mathematicalSHA256": "c220dc493cfa8fbac225ca3474fca7573f969b6119bee45aa4e74e860fcf65c1",
+      "displayChecks": ["finite-displacement Taylor output and remainder table"]
+    },
+    {
+      "example": "operator-reference",
+      "displayedStatus": "COMPLETED / REFERENCE_CONTRACT_AUDITED",
+      "recordSHA256": "ab41fca297e1ce96cce024edf5dc0b2f8604b696599d3835929f77e688d5d3ad",
+      "mathematicalSHA256": "548a371ebff9b876ca1660f8647bcd5c9598fa0b7b9dae5277b117c54122dfb7",
+      "displayChecks": ["operator and adjoint domains", "finite validation", "9 rejected negative controls", "7 unresolved RH bridges"]
+    }
+  ],
+  "interface": {
+    "initialFreshNavigation": "PASS: P7 active, connected, seven kinds and fourteen examples",
+    "finalReload": "PASS: P7 ready and native-WebMCP unsupported fallback visible",
+    "desktop": {"actualWidth": 1707, "documentWidth": 1687, "m2ToM3RoundTrip": "PASS after visible-state waits"},
+    "narrowViewport": {"requestedWidth": 390, "actualWidth": 520, "documentWidth": 500, "m2ToM3RoundTrip": "PASS", "limitation": "Chrome extension window did not reach the requested 390px width. Actual public narrow-layout check is 520px; prior local 390px visual verification remains separate."},
+    "screenshots": "Initial public desktop zeta result screenshot succeeded. Captures after viewport resizing timed out; no successful public 390px screenshot is claimed.",
+    "temporaryViewportReset": true,
+    "consoleWarningsAndErrorsObserved": 0,
+    "nativeWebMCP": "UNSUPPORTED_IN_THIS_PUBLIC_CHROME_BROWSER",
+    "nativeWebMCPVisibleFallback": "P7 browser tools unsupported; use ordinary UI",
+    "nativeWebMCPRegistrationSuccessClaimed": false,
+    "ordinaryRunAndReplayUI": "PASS"
+  },
+  "publicationIntegrity": {
+    "evidence": "browser-public-html-integrity.json",
+    "publicSHA256": "aa6c46212b065291589e116af98d571f7f5c6f5c6828788cfa302db1428fc353",
+    "candidateSHA256": "15954c831e8f46054f06dce6067be8b7938d5f36eb88eabcb65926f3cffa99ad",
+    "wholeHTMLIdentical": false,
+    "difference": "Only WebsitePublisher auto-injected meta/hostname block moved relative to the new style block",
+    "m3HTMLCSSJSExactMatch": true,
+    "existingM2ScriptExactMatch": true,
+    "largeHTMLSavedDuringPublicQA": false
+  },
+  "wholeP7Complete": false,
+  "wholeM3Complete": false,
+  "formalLeanProofIssued": false
+}
