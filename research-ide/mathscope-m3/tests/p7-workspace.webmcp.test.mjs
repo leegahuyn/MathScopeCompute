@@ -25,6 +25,7 @@ async function harness({webmcp=true,examples=null}={}){
   }
   const elements=new Map(),root=new Element(),nav=new Element('button'),document=new Target(),window=new Target(),tools=[],requests=[],timers=new Map();let timerId=0,failBusyDispatch=false;
   const element=id=>{if(!elements.has(id))elements.set(id,new Element(id==='m3-example'?'select':'div'));return elements.get(id);};
+  root.querySelector=selector=>{assert.equal(selector,'.m3-boundary strong');return element('m3-boundary-summary');};
   document.getElementById=id=>id==='mathscopeResearchM3'?root:element(id);document.createElement=tag=>new Element(tag);document.createTextNode=text=>Object.assign(new Element('text'),{textContent:text});document.querySelector=()=>nav;document.querySelectorAll=selector=>selector==='.view[data-view]'?[root]:[nav];
   if(webmcp)document.modelContext={async registerTool(definition,{signal}){tools.push({definition,signal});}};
   window.dispatchEvent=event=>{if(failBusyDispatch&&event.detail?.busy){failBusyDispatch=false;throw Error('fixture UI dispatch failed');}window.emit(event.type,event);};
