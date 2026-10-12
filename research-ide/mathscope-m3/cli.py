@@ -17,8 +17,8 @@ import time
 from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent
-VERSION = "0.1.0"
-KINDS = {"p7.special_function", "p7.zeta_zeros", "p7.elliptic_local"}
+VERSION = "0.2.0"
+KINDS = {"p7.special_function", "p7.zeta_zeros", "p7.elliptic_local", "p7.elliptic_analytic", "p7.explicit_formula"}
 MAX_JSON_BYTES = 32 * 1024 * 1024
 
 
@@ -121,6 +121,16 @@ def dispatch(request):
     if kind == "p7.zeta_zeros":
         from p7.zero_certificate import certify_zeros
         return certify_zeros(data)
+    if kind == "p7.explicit_formula":
+        from p7.explicit_formula import evaluate_explicit_formula
+        return evaluate_explicit_formula(data)
+    if kind == "p7.elliptic_analytic":
+        from p7.elliptic_analytic import elliptic_central_certificate
+        if set(data) - {"model", "precisionBits", "coefficientLimit", "tolerance"} or "model" not in data:
+            raise ValueError("elliptic analytic input requires model and supported precision/tail controls")
+        return elliptic_central_certificate(data["model"], precision_bits=data.get("precisionBits", 192),
+                                            coefficient_limit=data.get("coefficientLimit", 128),
+                                            tolerance=data.get("tolerance", "1e-40"))
     from p7.elliptic_local import curve_certificate
     if set(data) - {"model", "primes", "coefficientLimit"} or "model" not in data:
         raise ValueError("elliptic input requires model, with optional primes and coefficientLimit")

@@ -1,0 +1,40 @@
+<section class="view m1 m3" data-view="research-m3" id="mathscopeResearchM3" lang="ko">
+  <header class="m1-header"><div><p class="m1-eyebrow">MATHSCOPE / M3 · P7 RESEARCH WORKSPACE</p><h1>구간으로 계산하고, 원본으로 재현하기</h1><p class="m1-lead">완료된 M2를 이어받아 제타·특수함수, 유한 높이 영점, 타원곡선 계산을 실행합니다. 수치 구간과 가정, 미완료 조건을 함께 확인하세요.</p></div><div class="m1-runtime"><span id="m3-runtime">서버 지원 범위 확인 중</span><small>고정된 FLINT / Arb·ACB 계산</small><a href="#research-m2" class="m3-link">M2 검증 기록 ↗</a></div></header>
+  <div class="m1-status" id="m3-status" role="status" aria-live="polite">P7 실행 환경을 확인하고 있습니다.</div>
+  <div class="m3-boundary"><strong>P7 진행 중</strong><span>개별 계산 완료는 P7·M3 전체 완료나 RH·BSD 증명이 아닙니다. P8 이후 작업은 남은 P7 조건을 이어서 진행합니다.</span></div>
+  <div class="m1-grid">
+    <article class="m1-card m1-input-card">
+      <div class="m1-card-head"><h2>01 / 정확한 실행 입력</h2><span class="m1-tag">M2 → M3 / P7</span></div>
+      <label for="m3-example">서버가 지원하는 실행 예제</label><select id="m3-example" disabled><option value="">지원 범위 확인 중</option></select>
+      <button type="button" id="m3-load" class="m1-small" disabled>선택 예제 불러오기</button>
+      <label for="m3-input">모형·정밀도·자원 상한 · JSON</label><textarea id="m3-input" rows="16" spellcheck="false" translate="no" aria-describedby="m3-input-help" disabled></textarea>
+      <p id="m3-input-help" class="m1-muted">수는 예제의 정확한 문자열 형식을 유지하세요. 입력을 바꾸면 이전 결과와의 연결이 해제됩니다. 실행 입력은 계산 서버로 전송됩니다.</p>
+      <div class="m1-actions"><button id="m3-check" type="button" disabled>입력 형식 검사</button><button id="m3-run" type="button" class="m1-primary" disabled>새 계산 실행</button><button id="m3-reconnect" type="button">환경 다시 확인</button></div>
+      <p class="m1-muted" id="m3-limits"></p>
+      <details><summary>실행 환경과 소스 고정값</summary><pre id="m3-capabilities" translate="no"></pre></details>
+      <p class="m1-muted" id="m3-webmcp">P7 브라우저 도구 지원 확인 중</p>
+      <details id="m3-import-panel"><summary>저장한 실행 기록 가져오기</summary>
+        <p class="m1-muted">가져온 결과는 신뢰하지 않습니다. 서버가 해시·소스·환경·M2 선행 기록을 검사하고 새로 계산한 뒤 비교합니다. 환경이 바뀌었다면 입력만 불러와 새 계산을 실행하세요.</p>
+        <label for="m3-import-file">실행 기록 JSON 파일 · 최대 32 MiB</label><input id="m3-import-file" type="file" accept=".json,application/json">
+        <label for="m3-import-text">또는 실행 기록 JSON 붙여넣기</label><textarea id="m3-import-text" rows="6" spellcheck="false" translate="no"></textarea>
+        <div class="m1-actions"><button id="m3-import" type="button">기록 읽기</button><button id="m3-import-replay" type="button" disabled>검사 후 새 계산으로 비교</button><button id="m3-import-input" type="button" disabled>입력만 불러오기</button></div>
+        <p id="m3-import-status" class="m1-muted" role="status" aria-live="polite">아직 기록을 읽지 않았습니다.</p>
+      </details>
+    </article>
+    <article class="m1-card m1-result-card">
+      <div class="m1-card-head"><h2>02 / 계산 결과와 정확한 경계</h2><span class="m1-tag" id="m3-result-status">NOT_RUN</span></div>
+      <p id="m3-result-description" class="m1-muted">현재 입력으로 새 계산을 실행하면 결과가 표시됩니다.</p>
+      <div id="m3-result-content" hidden>
+        <div id="m3-metrics" class="m1-metrics"></div>
+        <div class="m1-actions"><button id="m3-replay" type="button" disabled>새 계산으로 재현 검사</button><button id="m3-export" type="button" disabled>실행 기록 내보내기</button></div>
+        <div id="m3-replay-status" class="m1-muted" role="status" aria-live="polite"></div>
+        <div id="m3-results"></div>
+        <details open><summary>오차 · 가정 · 검증 범위</summary><pre id="m3-scope" translate="no"></pre></details>
+        <details><summary>입력·결과·소스·환경 해시</summary><pre id="m3-provenance" translate="no"></pre></details>
+        <details><summary>전체 결과 · 원본 JSON</summary><pre id="m3-result-json" translate="no"></pre><p class="m1-muted" id="m3-json-note"></p></details>
+      </div>
+      <details id="m3-download-panel" hidden><summary>내보낼 실행 기록</summary><a id="m3-download" class="m1-link-button" download>JSON 다운로드</a><p class="m1-muted">원본 숫자·실행 조건·소스 고정값을 그대로 포함합니다. 저장된 파일 자체는 증명 권한을 갖지 않습니다.</p></details>
+    </article>
+  </div>
+  <article class="m1-card"><h2>03 / P7의 남은 조건</h2><p class="m1-muted">일반 Tate 가법 분기, L함수 해석값과 오차 분리, 명시적 공식, 연산자·정의역, 랭크 상계·조절자·주장 그래프를 원문 조건에 따라 연결합니다. 아래 상태는 서버가 제공하는 현재 진행 기록입니다.</p><div id="m3-progress"></div></article>
+</section>

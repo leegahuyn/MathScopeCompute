@@ -13,6 +13,7 @@ from app.models import AdapterResult, RunRequest
 from app.golden import ReplayRequest, replay
 from app.jobs import JobRequest, JobCapacityExceeded, JobNotFound, JobBodyLimitMiddleware, get_job_manager, close_job_manager
 from app.provenance import APP_VERSION, environment_fingerprint, utc_now
+from app.p7_api import router as p7_router
 
 @asynccontextmanager
 async def lifespan(application: FastAPI):
@@ -29,6 +30,7 @@ app = FastAPI(
         "Outputs remain scoped evidence and never auto-promote to theorem/formal status."
     ),
 )
+app.include_router(p7_router)
 
 default_origins = (
     "https://project29770.websitepublisher.ai,"
