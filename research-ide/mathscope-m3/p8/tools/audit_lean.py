@@ -71,7 +71,7 @@ def target_manifest():
              "sourceFile":f"lean/MathScope/P8/{module}.lean"} for name,pid,scope,module in TARGETS]
 
 def audit_source():
-    lines = ["import MathScope.P8.Generated", "", "set_option pp.fullNames true", "set_option pp.universes true", "set_option pp.width 120", ""]
+    lines = ["import MathScope.P8.Generated", "", "set_option pp.fullNames true", "set_option pp.universes false", ""]
     for row in target_manifest():
         name = row["name"]
         lines += [f'#eval IO.println "P8_AUDIT_BEGIN {name}"',f"#check {name}",f"#print axioms {name}",f'#eval IO.println "P8_AUDIT_END {name}"',""]

@@ -1,8 +1,7 @@
 import MathScope.P8.Generated
 
 set_option pp.fullNames true
-set_option pp.universes true
-set_option pp.width 120
+set_option pp.universes false
 
 #eval IO.println "P8_AUDIT_BEGIN MathScope.P8.inherited_d_squared"
 #check MathScope.P8.inherited_d_squared

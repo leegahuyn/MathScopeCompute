@@ -1,0 +1,69 @@
+/* P8 owns one lazy scene, separate from the frozen P7 renderer. */
+(()=>{'use strict';let modules;
+  const finitePoint=p=>Array.isArray(p)&&p.length===3&&p.every(x=>typeof x==='number'&&Number.isFinite(x));
+  const colors={data:'#6ee0c8',comparison:'#91bcff',reference:'#becbd2',open:'#e9bc77'};
+  function mount(host){
+    const $=key=>host.querySelector('[data-p8v="'+key+'"]'),view=host.closest('.view'),abort=new AbortController(),signal=abort.signal;
+    let model=null,scene=null,T=null,inView=false,loading=false,raf=null,disposed=false,revision=0,drawn=-1,frames=0,selected=-1,items=[],labels=[],domains=[],state='NOT_RUN';
+    const text=(key,value)=>{$(key).textContent=typeof value==='string'?value:JSON.stringify(value,null,2);};
+    const active=()=>!disposed&&host.isConnected&&!document.hidden&&inView&&(!view||view.classList.contains('active'));
+    const cameraSnapshot=()=>scene?{position:scene.camera.position.toArray(),target:scene.controls.target.toArray(),zoom:scene.camera.zoom}:null;
+    const audit=()=>({schema:'MathScope.M3.P8.VisualizationAudit/1',state,modelRevision:revision,drawnRevision:drawn,currentModelRendered:!!scene&&revision===drawn,frames,canvasCount:$('canvas').querySelectorAll('canvas').length,view:model?.view||null,sourceRecord:model?.provenance?.[0]?.recordSHA256||null,pointCount:model?.points?.length||0,displayedPoints:scene?.shownPoints||0,lineCount:model?.lines?.length||0,selectedId:items[selected]?.item?.id||null,camera:cameraSnapshot(),reducedMotion:matchMedia('(prefers-reduced-motion:reduce)').matches,continuousAnimation:false,drawCalls:scene?.renderer.info.render.calls||0,certificateIssued:false,formalComplete:false});
+    function sync(){host.dataset.p8vState=state;text('audit',audit());}
+    function fallback(message,next='FALLBACK'){state=next;text('fallback',message);$('fallback').hidden=false;sync();}
+    function disposeTree(root){const gs=new Set(),ms=new Set();root.traverse(o=>{if(o.geometry)gs.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material])if(m)ms.add(m);});gs.forEach(g=>g.dispose());ms.forEach(m=>m.dispose());}
+    function release(){if(raf!==null)cancelAnimationFrame(raf);raf=null;if(!scene)return;scene.abort.abort();scene.ro.disconnect();scene.controls.removeEventListener('change',render);scene.controls.dispose();disposeTree(scene.root);scene.renderer.dispose();scene.renderer.domElement.remove();scene=null;labels=[];$('labels').replaceChildren();}
+    function transform(p){return p.map((v,i)=>{const [a,b]=domains[i];if(a===b)return 0;const s=Math.max(Math.abs(a),Math.abs(b),Number.MIN_VALUE);return ((v/s-a/s)/(b/s-a/s)-.5)*3.2;});}
+    function projectedLabels(){const placed=[];for(const l of labels){const p=l.position.clone().project(scene.camera),w=scene.renderer.domElement.clientWidth,h=scene.renderer.domElement.clientHeight;let x=(p.x*.5+.5)*w,y=(-p.y*.5+.5)*h;l.el.hidden=p.z<-1||p.z>1||x<0||x>w||y<0||y>h;if(l.el.hidden)continue;const ew=l.el.offsetWidth,eh=l.el.offsetHeight;x=Math.max(ew/2+5,Math.min(w-ew/2-5,x));y=Math.max(eh/2+5,Math.min(h-eh/2-5,y));const r={l:x-ew/2-3,r:x+ew/2+3,t:y-eh/2-3,b:y+eh/2+3};l.el.hidden=placed.some(z=>r.l<z.r&&r.r>z.l&&r.t<z.b&&r.b>z.t);l.el.style.left=x+'px';l.el.style.top=y+'px';if(!l.el.hidden)placed.push(r);}}
+    function render(){if(raf!==null||!scene||!active())return;raf=requestAnimationFrame(()=>{raf=null;if(!scene||!active())return;try{scene.renderer.render(scene.root,scene.camera);frames++;drawn=revision;state='READY';$('fallback').hidden=true;projectedLabels();sync();}catch{release();fallback('3D를 그리지 못했습니다. 정확한 표와 출처를 계속 확인할 수 있습니다.');}});}
+    function addLabel(pos,value){const el=document.createElement('span');el.className='p8-axis-label';el.textContent=value;$('labels').append(el);labels.push({el,position:new T.Vector3(...pos)});}
+    function line(vertices,color,dashed=false){const g=new T.BufferGeometry().setFromPoints(vertices.map(p=>new T.Vector3(...p))),m=dashed?new T.LineDashedMaterial({color,dashSize:.07,gapSize:.04}):new T.LineBasicMaterial({color}),o=new T.Line(g,m);if(dashed)o.computeLineDistances();return o;}
+    function choose(index){selected=items[index]?index:-1;$('select').value=selected<0?'':String(selected);const entry=items[selected];text('detail',entry?{label:entry.item.label,exact:entry.item.exact,source:entry.item.source,displayCoordinates:entry.item.position||entry.item.vertices,certificateIssued:false}:{});if(scene){scene.selection.visible=!!entry;if(entry)scene.selection.position.set(...transform(entry.center));render();}sync();}
+    function reset(){if(!scene)return;scene.controls.target.set(0,0,0);scene.camera.up.set(0,1,0);scene.camera.position.set(5,3.6,5.8);scene.camera.zoom=1;scene.camera.updateProjectionMatrix();scene.controls.update();render();}
+    function zoom(factor){if(!scene)return;scene.camera.zoom=Math.max(.4,Math.min(6,scene.camera.zoom*factor));scene.camera.updateProjectionMatrix();render();}
+    function geometry(){
+      if(!scene||!model)return;if(scene.group){scene.root.remove(scene.group);disposeTree(scene.group);}scene.group=new T.Group();scene.root.add(scene.group);labels=[];$('labels').replaceChildren();scene.pickables=[];
+      const g=scene.group;
+      for(let i=0;i<3;i++){const a=[-1.6,-1.6,-1.6],b=a.slice();b[i]=1.6;g.add(line([a,b],'#557380'));const end=b.slice();end[i]=1.77;addLabel(end,['X','Y','Z'][i]+' · '+model.axes[i].label);}
+      const max=Math.min(1000,Math.max(50,Number($('lod').value)||200)),points=items.filter(x=>x.type==='point'),count=Math.min(points.length,max),subset=count===points.length?points:Array.from({length:count},(_,i)=>points[Math.floor(i*(points.length-1)/Math.max(1,count-1))]);
+      if(subset.length){const pos=[],rgb=[];subset.forEach(e=>{pos.push(...transform(e.center));const c=new T.Color(colors[e.item.role]||colors.data);rgb.push(c.r,c.g,c.b);});const pg=new T.BufferGeometry();pg.setAttribute('position',new T.Float32BufferAttribute(pos,3));pg.setAttribute('color',new T.Float32BufferAttribute(rgb,3));const object=new T.Points(pg,new T.PointsMaterial({size:8,sizeAttenuation:false,vertexColors:true}));object.userData.indices=subset.map(e=>e.index);g.add(object);scene.pickables.push(object);}
+      scene.shownPoints=subset.length;
+      for(const entry of items.filter(x=>x.type==='line').slice(0,200)){const vertices=entry.item.vertices.map(transform),color=colors[entry.item.role]||colors.data,object=line(vertices,color,entry.item.role==='open');object.userData.index=entry.index;g.add(object);scene.pickables.push(object);if(entry.item.directed){const a=new T.Vector3(...vertices.at(-2)),b=new T.Vector3(...vertices.at(-1)),direction=b.clone().sub(a),length=direction.length();if(length>.001){const arrow=new T.ArrowHelper(direction.normalize(),a,length,color,Math.min(.14,length*.22),Math.min(.065,length*.12));g.add(arrow);}}}
+      const selection=new T.Group();for(let i=0;i<3;i++){const a=[0,0,0],b=a.slice();a[i]=-.065;b[i]=.065;selection.add(line([a,b],'#ffffff'));}g.add(selection);scene.selection=selection;selection.visible=false;choose(selected);
+      text('render-note',subset.length+' / '+points.length+'개 점 · 최대 200개 선. LOD는 표와 수학 원본을 바꾸지 않습니다. 흰 십자는 선택 표시입니다.');render();
+    }
+    async function ensure(){
+      if(!active()||!items.length||scene||loading)return;loading=true;fallback('3D 엔진을 준비하고 있습니다.','LOADING');
+      try{modules=modules||Promise.all([import('three'),import('three/addons/controls/OrbitControls.js')]).catch(e=>{modules=null;throw e;});const [three,orbit]=await modules;if(!active()||!items.length)return;T=three;
+        const renderer=new T.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.setClearColor('#071721');const canvas=renderer.domElement;canvas.tabIndex=0;canvas.setAttribute('role','img');canvas.setAttribute('aria-label','P8 표시용 3D. 방향키 회전, +와 - 확대, Home 초기화. 정확한 값과 출처는 표와 선택 항목에 있습니다.');$('canvas').append(canvas);
+        const root=new T.Scene(),camera=new T.OrthographicCamera(-3,3,3,-3,.01,100),controls=new orbit.OrbitControls(camera,canvas),sceneAbort=new AbortController();controls.enableDamping=false;controls.enableZoom=false;controls.minPolarAngle=.04;controls.maxPolarAngle=Math.PI-.04;
+        const resize=()=>{if(!scene)return;const w=$('scene').clientWidth,h=$('scene').clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);const halfX=3*Math.max(1,w/h),halfY=3*Math.max(1,h/w);camera.left=-halfX;camera.right=halfX;camera.top=halfY;camera.bottom=-halfY;camera.updateProjectionMatrix();render();};
+        const ro=new ResizeObserver(resize);scene={root,camera,renderer,controls,abort:sceneAbort,ro,group:null,pickables:[],selection:null,shownPoints:0};ro.observe($('scene'));controls.addEventListener('change',render);let start;
+        canvas.addEventListener('pointerdown',e=>{start=[e.clientX,e.clientY];},{signal:sceneAbort.signal});canvas.addEventListener('pointerup',e=>{if(!scene||!start||Math.hypot(e.clientX-start[0],e.clientY-start[1])>5)return;const rect=canvas.getBoundingClientRect(),ray=new T.Raycaster();ray.params.Points.threshold=.07;ray.params.Line.threshold=.04;ray.setFromCamera(new T.Vector2((e.clientX-rect.left)/rect.width*2-1,1-(e.clientY-rect.top)/rect.height*2),camera);const hit=ray.intersectObjects(scene.pickables)[0];if(hit)choose(hit.object.userData.indices?hit.object.userData.indices[hit.index]:hit.object.userData.index);start=null;},{signal:sceneAbort.signal});
+        canvas.addEventListener('keydown',e=>{if(!scene)return;const s=new T.Spherical().setFromVector3(camera.position.clone().sub(controls.target));let used=true;if(e.key==='ArrowLeft')s.theta-=.13;else if(e.key==='ArrowRight')s.theta+=.13;else if(e.key==='ArrowUp')s.phi=Math.max(.04,s.phi-.13);else if(e.key==='ArrowDown')s.phi=Math.min(Math.PI-.04,s.phi+.13);else if(e.key==='+'||e.key==='=')zoom(1.2);else if(e.key==='-')zoom(1/1.2);else if(e.key==='Home')reset();else if(e.key==='[')choose(selected-1);else if(e.key===']')choose(selected+1);else used=false;if(used){e.preventDefault();if(e.key.startsWith('Arrow')){camera.position.copy(controls.target).add(new T.Vector3().setFromSpherical(s));controls.update();render();}}},{signal:sceneAbort.signal});
+        canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();release();fallback('WebGL 연결을 잃었습니다. 원본 표는 유지됩니다. 다시 열기로 재시도하세요.');},{signal:sceneAbort.signal});resize();reset();geometry();
+      }catch{release();fallback('이 환경에서 3D를 열지 못했습니다. 동일 데이터 표와 출처를 확인하세요.');}finally{loading=false;sync();}
+    }
+    function clear(message='실제 계산을 실행하면 구조가 표시됩니다.'){
+      revision++;model=null;items=[];selected=-1;release();$('select').replaceChildren();$('axes').replaceChildren();text('detail',{});fallback(message,'NOT_RUN');
+    }
+    function setModel(next){
+      if(!next||next.schema!=='MathScope.M3.P8.VisualModel/1'||next.certificateIssued!==false||next.formalComplete!==false){clear('표시 계약이 올바르지 않습니다.');return{ok:false};}
+      revision++;model=next;items=[];selected=-1;const positions=[];
+      for(const item of (next.points||[]).slice(0,4096))if(finitePoint(item.position)){items.push({type:'point',item,center:item.position,index:items.length});positions.push(item.position);}
+      let lineVertices=0;for(const item of (next.lines||[]).slice(0,512))if(Array.isArray(item.vertices)&&item.vertices.length>=2&&item.vertices.length<=1024&&lineVertices+item.vertices.length<=16384&&item.vertices.every(finitePoint)){items.push({type:'line',item,center:item.vertices[0],index:items.length});positions.push(...item.vertices);lineVertices+=item.vertices.length;}
+      domains=[0,1,2].map(i=>positions.length?positions.reduce(([lo,hi],p)=>[Math.min(lo,p[i]),Math.max(hi,p[i])],[Infinity,-Infinity]):[0,0]);
+      $('select').replaceChildren();const blank=document.createElement('option');blank.value='';blank.textContent='선택 안 함';$('select').append(blank);for(const e of items){const o=document.createElement('option');o.value=String(e.index);o.textContent=e.item.label;$('select').append(o);}
+      $('axes').replaceChildren();next.axes.forEach((a,i)=>{const d=document.createElement('p');d.textContent=['X','Y','Z'][i]+' · '+a.label+' ['+a.type+'] '+(a.unit||'')+' · '+domains[i].join(' → ');$('axes').append(d);});text('detail',{});
+      fallback(items.length?'선택한 구조의 새 프레임을 준비합니다.':'실행된 호환 좌표가 없습니다. 원본 표와 미실행 상태를 확인하세요.',items.length?'PREPARED':'NOT_RUN');if(!items.length)release();else if(scene){geometry();reset();}else ensure();sync();return{ok:true,items:items.length};
+    }
+    const visibility=()=>{if(!active()){if(raf!==null)cancelAnimationFrame(raf);raf=null;if(view&&!view.classList.contains('active')){release();if(items.length)fallback('P8 화면으로 돌아오면 3D를 복구합니다.','INACTIVE');}}else if(scene)render();else ensure();};
+    const io=new IntersectionObserver(entries=>{inView=entries.some(e=>e.isIntersecting);visibility();},{rootMargin:'100px'});io.observe($('scene'));const mo=new MutationObserver(visibility);if(view)mo.observe(view,{attributes:true,attributeFilter:['class']});
+    $('select').addEventListener('change',()=>choose($('select').value===''?-1:Number($('select').value)),{signal});$('lod').addEventListener('change',geometry,{signal});
+    for(const b of host.querySelectorAll('[data-p8-camera]'))b.addEventListener('click',()=>{const action=b.dataset.p8Camera;if(action==='reset')reset();else if(action==='in')zoom(1.2);else if(action==='out')zoom(1/1.2);else{release();ensure();}},{signal});
+    document.addEventListener('visibilitychange',visibility,{signal});window.addEventListener('pagehide',release,{signal});window.addEventListener('pageshow',visibility,{signal});
+    function dispose(){disposed=true;abort.abort();io.disconnect();mo.disconnect();release();model=null;items=[];state='DISPOSED';sync();}
+    clear();return{setModel,clear,dispose,audit};
+  }
+  window.MathScopeP8Visualization=Object.freeze({version:'1.0.0',mount});
+})();

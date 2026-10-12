@@ -64,4 +64,3 @@ export const sha256 = value => proofSha256(typeof value==='string' ? string(valu
 export const cloneJSON = value => JSON.parse(canonicalJSON(value));
 export function freeze(value) { if (value && typeof value==='object' && !Object.isFrozen(value)) { for (const child of Object.values(value)) freeze(child); Object.freeze(value); } return value; }
 export function issue(error) { return {code:error.code || 'INVALID_CONTRACT',message:String(error.message || error)}; }
-

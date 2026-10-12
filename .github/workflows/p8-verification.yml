@@ -24,6 +24,7 @@ jobs:
       - run: node --test research-ide/mathscope-m3/tests/p8-*.test.mjs research-ide/mathscope-m3/p8/tests/*.test.mjs
       - run: python -m unittest discover -s research-ide/mathscope-m3/p8/tools -p 'test_*.py'
       - run: python research-ide/mathscope-m3/p8/tools/audit_lean.py --check-static
+      - run: python research-ide/mathscope-m3/p8/tools/build_browser.py --check
   lean-kernel:
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -57,6 +58,9 @@ jobs:
       - name: Compile exact consumers and reject all semantic mutations
         working-directory: research-ide/mathscope-m3/p8/lean
         run: python ../tools/audit_lean.py --output ../evidence/lean-audit
+      - name: Audit a conditional target and freshly recompile after axiom removal
+        working-directory: research-ide/mathscope-m3/p8/lean
+        run: python ../tools/audit_conditional_lean.py --output ../evidence/conditional-lean-audit
       - name: Preserve successful or failed audit and full compiler diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -64,6 +68,7 @@ jobs:
           name: p8-lean-audit-${{ github.sha }}
           path: |
             research-ide/mathscope-m3/p8/evidence/lean-audit/
+            research-ide/mathscope-m3/p8/evidence/conditional-lean-audit/
             research-ide/mathscope-m3/p8/lean/lake-manifest.json
           if-no-files-found: warn
           retention-days: 90

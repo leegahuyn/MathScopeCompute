@@ -98,4 +98,3 @@ theorem finite_euler_certificate :
 end MathScope.P8.Generated
 `;
 }
-
