@@ -80,12 +80,17 @@ try{
     await page.waitForFunction(()=>window.MathScopeM3ExtendedWorkspace?.audit()?.navier.lastReplay==='MATCH',undefined,{timeout:60000});
     const replay=await page.evaluate(()=>window.MathScopeM3ExtendedWorkspace.audit().navier);
     assert.equal(replay.resultDigest,initial.resultDigest);
-    await panel.locator('h3').scrollIntoViewIfNeeded();
+    assert.equal(await workspace.locator('[data-e3-out="scene"]').isVisible(),false);
+    assert.equal(await workspace.locator('[data-e3-input="selected"]').isVisible(),false);
+    await panel.evaluate(node=>node.scrollIntoView({block:'start',behavior:'instant'}));
+    await page.evaluate(()=>window.scrollBy(0,-24));
     const image='forced-source-'+viewport.width+'x'+viewport.height+'.png';
     await page.screenshot({path:path.join(output,image),fullPage:false,animations:'disabled'});
     const geometry=await page.evaluate(()=>({viewportWidth:innerWidth,documentWidth:document.documentElement.scrollWidth,
       tableScrollWidth:document.querySelector('[data-source-forced-modes]').parentElement.scrollWidth,
-      tableClientWidth:document.querySelector('[data-source-forced-modes]').parentElement.clientWidth}));
+      tableClientWidth:document.querySelector('[data-source-forced-modes]').parentElement.clientWidth,
+      sourceTableBeforeInspector:!!(document.querySelector('[data-source-forced-current]').compareDocumentPosition(document.querySelector('[data-e3="n3"] .e3-inspector'))&Node.DOCUMENT_POSITION_FOLLOWING)}));
+    assert.equal(geometry.sourceTableBeforeInspector,true);
     assert.ok(geometry.documentWidth<=geometry.viewportWidth+2,'Unexpected document-wide horizontal overflow: '+JSON.stringify(geometry));
     const novelPageErrors=localErrors.filter(x=>!result.baselinePageErrors.includes(x));
     assert.deepEqual(novelPageErrors,[],'New page errors in the changed flow');
