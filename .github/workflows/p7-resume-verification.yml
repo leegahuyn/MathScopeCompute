@@ -32,4 +32,7 @@ jobs:
           PYTHONPATH: .
         run: python -m pytest -q tests p7/tests
       - name: Browser bundle syntax
-        run: node --check research-ide/mathscope-m3/web/workspace.js
+        run: |
+          for file in research-ide/mathscope-m3/web/*.js; do node --check "$file"; done
+      - name: P7 3D evidence semantics
+        run: node --test research-ide/mathscope-m3/tests/*.test.mjs
