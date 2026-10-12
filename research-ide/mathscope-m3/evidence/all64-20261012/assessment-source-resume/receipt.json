@@ -1,9 +1,9 @@
 {
   "schema": "MathScope.M3.ResumedOriginal64Assessment/1",
-  "reviewedAt": "2026-10-12T14:42:19.692291+00:00",
+  "reviewedAt": "2026-10-12T16:48:05.035719+00:00",
   "status": "PASS",
   "pass": true,
-  "checkCount": 118,
+  "checkCount": 128,
   "checks": [
     {
       "id": "preserved45-history-byte-exact",
@@ -58,7 +58,8 @@
           "N7-03",
           "N7-07",
           "N7-08",
-          "N8-04"
+          "N8-04",
+          "N8-08"
         ],
         "actualChangedBooleans": [
           "N6-04",
@@ -69,7 +70,8 @@
           "N7-03",
           "N7-07",
           "N7-08",
-          "N8-04"
+          "N8-04",
+          "N8-08"
         ]
       }
     },
@@ -95,14 +97,14 @@
         "Y7": 8,
         "N6": 3,
         "N7": 5,
-        "N8": 6
+        "N8": 7
       }
     },
     {
       "id": "original-complete-rows-have-concrete-evidence",
       "pass": true,
       "detail": {
-        "complete": 54
+        "complete": 55
       }
     },
     {
@@ -1078,6 +1080,91 @@
       }
     },
     {
+      "id": "n8-public-selected-reproduction-fixed-observed-receipt",
+      "pass": true,
+      "detail": {
+        "path": "navier/evidence/n8-reproduction-20261012/manifest.json",
+        "bytes": 153503,
+        "sha256": "f82c98a92ee6f760fe4c5a9a48c0d8fef021e53a7bb7b918d66258308a2d6738"
+      }
+    },
+    {
+      "id": "n8-public-selected-reproduction-receipt-status",
+      "pass": true,
+      "detail": {
+        "expected": "PASS",
+        "observed": "PASS"
+      }
+    },
+    {
+      "id": "n8-public-selected-reproduction-receipt-pass",
+      "pass": true,
+      "detail": {
+        "expected": true,
+        "observed": true
+      }
+    },
+    {
+      "id": "n8-public-selected-reproduction-receipt-fixtureCount",
+      "pass": true,
+      "detail": {
+        "expected": 3,
+        "observed": 3
+      }
+    },
+    {
+      "id": "n8-public-selected-reproduction-receipt-comparedNumericValues",
+      "pass": true,
+      "detail": {
+        "expected": 105713,
+        "observed": 105713
+      }
+    },
+    {
+      "id": "n8-public-selected-reproduction-receipt-sourceFileCount",
+      "pass": true,
+      "detail": {
+        "expected": 523,
+        "observed": 523
+      }
+    },
+    {
+      "id": "n8-public-selected-reproduction-receipt-currentBuildReproductionRequiredInCI",
+      "pass": true,
+      "detail": {
+        "expected": true,
+        "observed": true
+      }
+    },
+    {
+      "id": "n8-public-selected-reproduction-receipt-wholeM3Complete",
+      "pass": true,
+      "detail": {
+        "expected": false,
+        "observed": false
+      }
+    },
+    {
+      "id": "n8-public-selected-reproduction-receipt-wholeLocalizedFieldOrEnergyProved",
+      "pass": true,
+      "detail": {
+        "expected": false,
+        "observed": false
+      }
+    },
+    {
+      "id": "n8-public-selected-reproduction-archive-and-captured-current-source-bytes",
+      "pass": true,
+      "detail": {
+        "builder": {
+          "path": "navier/tests/build-n8-reproduction-evidence.py",
+          "bytes": 12446,
+          "sha256": "46c3351439a66e0c0161763c45562586220fd5780bd150aad81f525afe9f0dd5"
+        },
+        "heavyConstructorRerun": false
+      }
+    },
+    {
       "id": "every-new-promotion-bound-to-reviewed-source-gates",
       "pass": true,
       "detail": {
@@ -1113,6 +1200,9 @@
         ],
         "N6-05": [
           "global-temporal"
+        ],
+        "N8-08": [
+          "n8-public-selected-reproduction"
         ]
       }
     },
@@ -1121,8 +1211,8 @@
       "pass": true,
       "detail": {
         "originalBlocks": 64,
-        "complete": 54,
-        "incomplete": 10
+        "complete": 55,
+        "incomplete": 9
       }
     }
   ],
@@ -1132,8 +1222,8 @@
     "total": 64
   },
   "after": {
-    "complete": 54,
-    "incomplete": 10,
+    "complete": 55,
+    "incomplete": 9,
     "total": 64
   },
   "counts": {
@@ -1144,7 +1234,7 @@
     "Y7": 8,
     "N6": 3,
     "N7": 5,
-    "N8": 6
+    "N8": 7
   },
   "approvedPromotions": [
     "N6-04",
@@ -1155,12 +1245,13 @@
     "N7-03",
     "N7-07",
     "N7-08",
-    "N8-04"
+    "N8-04",
+    "N8-08"
   ],
   "decision": {
     "path": "evidence/all64-20261012/assessment-source-resume/decisions.json",
-    "bytes": 12233,
-    "sha256": "ec0a4e2c681062b736848cf0ea81c1d3a29a5596a9afd7669dbfc9fadb63ea57"
+    "bytes": 14188,
+    "sha256": "9add767187a96e448e6b9e01aff0bdeaba86bf400f1eec00d3d99703b265a287"
   },
   "reviewBuilder": {
     "path": "evidence/all64-20261012/assessment-source-resume/build_review.py",
@@ -1195,8 +1286,8 @@
     },
     {
       "path": "N8_PROGRESS.json",
-      "bytes": 26510,
-      "sha256": "6c5c063cf9c98b72330dab37d31d791c3cd7b182f50645aa25fb0b232561fcc0"
+      "bytes": 28062,
+      "sha256": "4d229d3844e2c2529a900c5dc754251db1901a246f5d669c61fac9c72c01ede4"
     }
   ],
   "history": {
@@ -1206,8 +1297,8 @@
   },
   "report": {
     "path": "M3_ALL64_REVIEW_KO.md",
-    "bytes": 136783,
-    "sha256": "8817734913f429cbcd4046738160e63c0ad42c487e5d1ca04cf04efb8ab2a008"
+    "bytes": 139904,
+    "sha256": "cabab0e9bb1a092527af09290807a35463dc8d67c6d2bcace84a9ac165208434"
   },
   "observedGates": [
     {
@@ -1496,6 +1587,32 @@
       "sourceFileCount": 123,
       "independentCheckCount": null,
       "elapsedSeconds": 423.5060078489987
+    },
+    {
+      "id": "n8-public-selected-reproduction",
+      "receipt": {
+        "path": "navier/evidence/n8-reproduction-20261012/manifest.json",
+        "bytes": 153503,
+        "sha256": "f82c98a92ee6f760fe4c5a9a48c0d8fef021e53a7bb7b918d66258308a2d6738"
+      },
+      "requiredReceiptFields": {
+        "status": "PASS",
+        "pass": true,
+        "fixtureCount": 3,
+        "comparedNumericValues": 105713,
+        "sourceFileCount": 523,
+        "currentBuildReproductionRequiredInCI": true,
+        "wholeM3Complete": false,
+        "wholeLocalizedFieldOrEnergyProved": false
+      },
+      "archiveBuilder": "navier/tests/build-n8-reproduction-evidence.py",
+      "observedNodeTests": {
+        "passed": 6,
+        "failed": 0
+      },
+      "sourceFileCount": 523,
+      "independentCheckCount": 14,
+      "elapsedSeconds": 10.228489194000005
     }
   ],
   "heavyConstructorRerunByAssessment": false,

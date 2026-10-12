@@ -1,0 +1,296 @@
+{
+  "schema": "MathScope.M3.P8.Progress/1",
+  "status": "COMPLETE_WITHIN_STATED_SCOPE",
+  "inheritedM2Commit": "90e977ba9225bfaa20fd3dcc97db7f794c5ed4c9",
+  "P7VisualizationPublished": true,
+  "P7SourcePR": "https://github.com/leegahuyn/MathScopeCompute/pull/12",
+  "sourcePR": "https://github.com/leegahuyn/MathScopeCompute/pull/15",
+  "criteria": [
+    {
+      "id": "P8-01",
+      "title": "객체 정체성과 증거 등급을 직교화한다",
+      "text": "CW_TOY, DERIVED_MODEL, PRISMATIC_VIA_COMPARISON, NATIVE_PRISMATIC을 object kind로 둔다. exact/\nball/approximate와 Lean-checked/external-theorem/hypothesis를 별도로 관리한다. 합격: PRISMATIC_VIA_COMP\nARISON이어도 Lean dependency가 외부면 FORMAL_COMPLETE가 아니다. 숫자 grade 값을 크게 바꾸어 theorem 상태\n로 승격시키는 schema fixture가 실패한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+      "evidence": [
+        "tests/p8-contracts.test.mjs",
+        "p8/evidence/p8-local-acceptance-20261012.json"
+      ],
+      "remainingObligations": [],
+      "acceptanceScope": "Object kind, exactness and proof method remain independent; forged numerical grades and serialized proof authority are rejected."
+    },
+    {
+      "id": "P8-02",
+      "title": "3D 구조의 좌표 계약을 고정한다",
+      "text": "degree-basis-valuation, Hodge/Newton polygons, prime-degree-Frobenius weight, refinement tower를 각 view로\n제공한다. 클릭하면 chain basis·matrix column·map·source theorem을 보이게 한다. 합격: view matrix·camera·LOD 변\n경은 수학 결과를 바꾸지 않는다. 3D projection을 원래 공간과의 동형·차원 축소 증명으로 저장할 수 없다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T07:39:59.051286+00:00",
+      "evidence": [
+        "tests/p8-visual-models.test.mjs",
+        "tests/p8-visualization.test.mjs",
+        "p8/evidence/p8-renderer-local-20261012.json",
+        "p8/evidence/p8-live-v87-20261012.json",
+        "evidence/live-ui/p8-refinement-v87.jpg"
+      ],
+      "remainingObligations": [],
+      "acceptanceScope": "All four actual M2 structural views render on the public v87 page using source-bound Canvas2D when WebGL is unavailable. Actual point selection exposes the original basis/matrix column/map/theorem, Newton slopes, Frobenius eigenvalue and finite refinement. Camera/LOD and route return preserve the mathematical record; the single scene restores camera state. The 7 mounted-renderer tests and independent model tests preserve exact source data and deny projection proof authority. Execution JSON does not export presentation state.",
+      "liveVerification": {
+        "version": 87,
+        "receipt": "p8/evidence/p8-live-v87-20261012.json",
+        "receiptSHA256": "e6e1095bea78d9c3d22a124d1fa5bff1406ba5eb140dcbb0d3388e482688d0a5",
+        "rendererSHA256": "72266bdc840b668eee8a9b01cc68a62d7a431cae7e7671f66c39c5af4655428b",
+        "freshBrowserLeanExecuted": false
+      }
+    },
+    {
+      "id": "P8-03",
+      "title": "비교 diagram의 조건을 클릭해서 검사한다",
+      "text": "노드는 계수환과 base를, 화살표는 tensor/twist/completion/inversion/fixed-point 또는 quasi-isomorphism을 명세한\n다. 잘못된 base-change 순서는 composability 검사로 막는다. 합격: bounded/smooth/proper/perfect 등 각 edge의 필\n요한 가정이 표시된다. 조건을 제거한 replay에서는 edge가 유효하지 않다는 이유를 반환한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+      "evidence": [
+        "tests/p8-contracts.test.mjs",
+        "p8/evidence/p8-local-acceptance-20261012.json"
+      ],
+      "remainingObligations": [],
+      "acceptanceScope": "Actual M2 typed comparison routes reject reordered operations, missing assumptions and rehashed altered diagrams."
+    },
+    {
+      "id": "P8-04",
+      "title": "Lean은 작은 인증 정리부터 쌓는다",
+      "text": "정수 d², unit contraction, chain equivalence, point counts, trace recurrence, bounded residue reconstruction, finite\nEuler identity를 우선 구현 후보로 둔다. 고급 비교정리의 현재 라이브러리 범위를 별도 조사한다. 합격: 각 후보에는\ntheorem statement·입력 타입·핵심 lemma·certificate 소비 방식·추가 axiom이 명시된다. 컴파일되지 않은 코드를 형식화\n완료라고 표시하지 않는다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+      "evidence": [
+        "p8/theorem-backlog.mjs",
+        "p8/evidence/lean-release.json",
+        "p8/evidence/lean-release-provenance.json"
+      ],
+      "remainingObligations": [],
+      "acceptanceScope": "Seven requested candidate categories now include statement, type, lemmas, consumer and extra-axiom policy. The exact finite F5 input has 12 recorded compiled targets and 8 semantic negative controls. The dedicated chain-equivalence consumer remains a declared future candidate, consistent with the original backlog criterion."
+    },
+    {
+      "id": "P8-05",
+      "title": "조건부 corollary의 의존성을 숨기지 않는다",
+      "text": "새 operator/trace/duality 가정은 고유 ID와 정확한 수학 명제를 갖는다. theorem의 실제 의존 axiom을 출력하고 그 axiom\n을 지운 상태의 재검증을 지원한다. 합격: Lean #print axioms와 입력 assumption ledger가 일치한다. target conjecture\n자체를 가정하고 얻은 corollary는 CONDITIONAL_ON_TARGET으로 명확히 분류한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T07:39:59.051286+00:00",
+      "evidence": [
+        "p8/evidence/conditional-lean-release.json",
+        "p8/evidence/lean-attempt7-38213076249.zip",
+        "p8/evidence/lean-release-provenance.json",
+        "p8/evidence/conditional-local-20261012/receipt.json",
+        "p8/tools/test_conditional_audit.py",
+        "p8/evidence/p8-live-v87-20261012.json"
+      ],
+      "remainingObligations": [],
+      "acceptanceScope": "Actual official Lean CI run 38213076249 compiled the conditional source and fresh import (exit 0,0), printed the exact assumedTarget dependency and rejected deletion of that axiom from source (exit 1). The source-matched release is attached to the browser. Public v87 displayed the matching unique-ID input ledger, exact literal proposition, actual #print axioms and source-removal rejection as RECORDED_CI_SOURCE_MATCH / CONDITIONAL_ON_TARGET, explicitly without a fresh browser Lean run.",
+      "liveVerification": {
+        "version": 87,
+        "receipt": "p8/evidence/p8-live-v87-20261012.json",
+        "receiptSHA256": "e6e1095bea78d9c3d22a124d1fa5bff1406ba5eb140dcbb0d3388e482688d0a5",
+        "rendererSHA256": "72266bdc840b668eee8a9b01cc68a62d7a431cae7e7671f66c39c5af4655428b",
+        "freshBrowserLeanExecuted": false
+      }
+    },
+    {
+      "id": "P8-06",
+      "title": "반증용 mutation과 재현 bundle을 만든다",
+      "text": "bad prime 하나, Frobenius coefficient 하나, truncation bound 하나, zero box 하나, rank upper certificate 하나를 제\n거·변조하여 관문을 다시 실행한다. 합격: 변조된 입력은 해당 단계에서 실패하고 후속 theorem badge가 취소된다. session\n저장은 입력 해시·정밀도·비교 근거를 보존하며 재계산 결과와 일치한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+      "evidence": [
+        "tests/p8-mutation-audit.test.mjs",
+        "p8/evidence/p7-mutation-release.json",
+        "p8/evidence/p8-local-acceptance-20261012.json",
+        "p7/evidence/arithmetic-20261012/unit-tests.json",
+        "p8/tools/audit_p7_mutations.py",
+        "tests/test_p8_p7_mutations.py",
+        "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/process.json",
+        "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/report.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/github-observation.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/report.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/process.json",
+        "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/consumer-validation.json",
+        "tests/p8-recorded-arithmetic.test.mjs",
+        "p8/evidence/p7-mutation-release-historical-v1.json",
+        "evidence/all64-20261012/public-v95/p8-acceptance.json",
+        "evidence/all64-20261012/ci-c971/receipt.json"
+      ],
+      "remainingObligations": [],
+      "acceptanceScope": "Bad-prime, Frobenius, truncation and comparison mutations execute in the current browser. The separate source-bound /2 CI receipt contains actual fresh P7 child runs deleting a valid arithmetic descent upper certificate and corrupting a zero box. Successful CI artifact bytes/current source hashes and public downstream badge revocation, replay/import and forged-import rejection are verified. The /1 audit, failed first /2 CI and the packaging-time publishedResultVerified=false remain historical; currentReleaseAcceptance supplies the later positive public gate. Browser replay does not claim fresh P7 execution or a whole-application claim graph.",
+      "currentArithmeticMutationEvidence": {
+        "audit": "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/report.json",
+        "process": "p8/evidence/p7-mutation-arithmetic-20261012-attempt1/process.json",
+        "auditSHA256": "86e2109fafbaf6ade4b8d4f71fdfc89d136c9ec83f1158f756d890a6cabadaf0",
+        "processSHA256": "a2aa887aaa47452bab149ecebc95ae8e7a9e935881b28d69a7009ebb5a000587",
+        "actualP7ChildExecutions": 6,
+        "pytestPassed": 9,
+        "observedPytestExitCode": 0,
+        "sourceUnchanged": true,
+        "sourceEpochSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+        "validRankUpperCertificateDeletionExecuted": true,
+        "localReceiptNotCI": true
+      },
+      "currentRecordedArithmeticMutationEvidence": {
+        "receipt": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+        "artifact": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/artifact.zip",
+        "report": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/report.json",
+        "process": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/process.json",
+        "consumerValidation": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/consumer-validation.json",
+        "headCommit": "529e864c8b2ed19399bab8bbc53a08721873d5d4",
+        "observedCheckoutCommit": "eb2bc3a4a14d05a88248e85167286bb4f46a6ef5",
+        "runId": "38237430568",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38237430568",
+        "artifactId": 11741622609,
+        "artifactSHA256": "067e231cfaefde97e165121f87bffafa7d7bf963eb01ee8ece859d885961a596",
+        "artifactBytes": 6814,
+        "packageCanonicalSHA256": "a46ce8dcb8c62a272cebd0535a75297eed5e124c9e091a454522b007c438d263",
+        "innerReportSHA256": "f3019437c40c56f69ce7cd534a0dee6e773667208428eff23eb1fd5f9c335099",
+        "observedPytestExitCode": 0,
+        "actualP7ChildExecutions": 6,
+        "validRankUpperCertificateDeletionExecuted": true,
+        "sourceEpochSHA256": "72564078d6fd9d19dc076eb3c4a6842108fad523898f786d0ec98c18b895b041",
+        "consumerStatus": "RECORDED_CI_SOURCE_MATCH",
+        "freshBrowserP7Execution": false,
+        "publishedResultVerified": false
+      },
+      "currentReleaseAcceptance": {
+        "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+        "scope": "Original finite/tool acceptance criterion only; mathematical conjecture and whole-M3 flags are unchanged.",
+        "reason": "실제 유효 descent upper 삭제·zero-box 변조의 source-bound CI /2와 네 browser mutation, 후속 badge 취소, 공개 replay/import·변조 거부를 확인했다.",
+        "evidence": [
+          {
+            "path": "evidence/all64-20261012/public-v95/p8-acceptance.json",
+            "bytes": 2733,
+            "sha256": "fd3ac05e09edd99ef8d1b3aa6c9e5e37d7a76ad77476b374c38516281dfa87ab"
+          },
+          {
+            "path": "p8/evidence/p7-ci-arithmetic-attempt2-38237430568/receipt.json",
+            "bytes": 10035,
+            "sha256": "e812c0d18b3f292ffc82823cd968eddcdb51050da09205677ffe4f6285713893"
+          },
+          {
+            "path": "evidence/all64-20261012/ci-c971/receipt.json",
+            "bytes": 10500,
+            "sha256": "490e583739006ff3816e6e3d144dbaaadaf04314b468c0f721a2de7d9fb7394c"
+          }
+        ],
+        "acceptedBy": "Root after independently verified actual CI/API/public UI receipts",
+        "historicalEvidenceUnchanged": true
+      },
+      "currentPublicMutationAcceptance": {
+        "receipt": {
+          "path": "evidence/all64-20261012/public-v95/p8-acceptance.json",
+          "bytes": 2733,
+          "sha256": "fd3ac05e09edd99ef8d1b3aa6c9e5e37d7a76ad77476b374c38516281dfa87ab"
+        },
+        "browserCases": 4,
+        "recordedCICases": 2,
+        "actualP7FreshBrowserExecution": false,
+        "wholeApplicationGraphAudited": false,
+        "publishedResultVerified": true
+      }
+    },
+    {
+      "id": "P8-07",
+      "title": "새 연구를 위한 구체적인 탐색 도구를 제공한다",
+      "text": "global operator 후보의 finite compression, determinant normalization quotient, trace moment matching, func-\ntional equation·duality consistency, zero multiplicity coverage를 자동 비교한다. 반례는 재현 가능한 최소 입력으로 줄\n인다. 합격: 후보 A와 B가 같은 그림을 내어도 다른 characteristic polynomial·trace·rank이면 구별된다. 미증명 bridge는\n각각 RESEARCH OPEN이며 실패/통과한 유한 테스트를 나란히 표시한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+      "evidence": [
+        "tests/p8-candidate-search.test.mjs",
+        "p8/evidence/p8-local-acceptance-20261012.json"
+      ],
+      "remainingObligations": [],
+      "acceptanceScope": "Exact rational finite compressions compare characteristic polynomials, rank, traces, normalization quotients, reflection/duality and multiplicities. Counterexample minimization preserves the original failed predicate within explicitly bounded principal compressions."
+    },
+    {
+      "id": "P8-08",
+      "title": "마일스톤 review packet으로 승인 기준을 고정한다",
+      "text": "P1-P3 기본 계산, P4 실제 zeta 연결, P5-P6 고급 base, P7 분석 인증, P8 통합을 각각 독립 review packet으로 작성한다.\n지원범위·fixture 결과·미완료 증명·새 연구 질문을 담는다. 합격: 출시 준비와 수학적 난제 해결을 다른 체크박스로 둔다. 이\n번 산출물은 설계도이며 구현·컴파일·배포가 완료되었다는 상태를 생성하지 않는다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+      "evidence": [
+        "p8/review-packets.mjs",
+        "p8/review-fixture-evidence.json",
+        "p8/evidence/p8-local-acceptance-20261012.json"
+      ],
+      "remainingObligations": [],
+      "acceptanceScope": "Five independent review packets retain supported inputs, current original criteria, explicitly historical recorded fixture references, open proofs and research questions; release review and conjecture resolution remain different. The user now includes P7; older fixture records are not relabeled as new execution."
+    }
+  ],
+  "wholeP8Complete": true,
+  "wholeM3Complete": false,
+  "policy": "Original blueprint criteria are unchanged. Expanded scope includes P7 and all64 M3 criteria. Current valid arithmetic-rank certificate mutation, source-bound successful CI packaging and actual public downstream badge/replay/import checks are accepted. Historical attempts remain immutable; recorded browser verification is not a fresh P7 process or a whole-application graph audit.",
+  "assessedAt": "2026-10-12T12:39:03.635099+00:00",
+  "assessmentBaseCommit": "656dedb50d891e9aeb461c22941cb9078dbc7a17",
+  "continuedInBranch": "mathscope-m3-except-p7-20261012",
+  "P7ExcludedFromCurrentUserRequest": false,
+  "counts": {
+    "PASS": 8,
+    "PARTIAL": 0
+  },
+  "parallelMilestoneProgress": [
+    "GAUGE_PROGRESS.json",
+    "N6_PROGRESS.json",
+    "N7_PROGRESS.json",
+    "N8_PROGRESS.json"
+  ],
+  "previousAssessments": [
+    {
+      "scopeTransition": "P7_INCLUDED_IN_ALL_64",
+      "status": "PARTIAL_EXCLUDED_P7_DEPENDENCY",
+      "assessedAt": "2026-10-12T07:39:59.051286+00:00",
+      "P7ExcludedFromCurrentUserRequest": true,
+      "counts": {
+        "PASS": 7,
+        "PARTIAL": 1
+      },
+      "P8_06": {
+        "id": "P8-06",
+        "title": "반증용 mutation과 재현 bundle을 만든다",
+        "text": "bad prime 하나, Frobenius coefficient 하나, truncation bound 하나, zero box 하나, rank upper certificate 하나를 제\n거·변조하여 관문을 다시 실행한다. 합격: 변조된 입력은 해당 단계에서 실패하고 후속 theorem badge가 취소된다. session\n저장은 입력 해시·정밀도·비교 근거를 보존하며 재계산 결과와 일치한다.",
+        "page": 36,
+        "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+        "status": "PARTIAL",
+        "originalCriterionComplete": false,
+        "assessedAt": "2026-10-12T06:27:34.243140+00:00",
+        "evidence": [
+          "tests/p8-mutation-audit.test.mjs",
+          "p8/evidence/p7-mutation-release.json",
+          "p8/evidence/p8-local-acceptance-20261012.json"
+        ],
+        "remainingObligations": [
+          "A currently valid arithmetic-rank upper certificate is unavailable under excluded P7-07. Existing P7 CI rejects a fabricated Selmer upper certificate; deleting a valid one cannot yet be tested."
+        ],
+        "acceptanceScope": "Fresh browser/M2 bad-prime, Frobenius, truncation and comparison mutations plus source-bound recorded P7 zero-box and forged-rank replays are connected. No P7 rank upper bound is created."
+      }
+    }
+  ]
+}
