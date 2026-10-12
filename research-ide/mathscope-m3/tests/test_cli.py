@@ -170,6 +170,13 @@ class CLIReplayTests(unittest.TestCase):
                 root = Path(directory) / "mathscope-m3"
                 (root / "p7").mkdir(parents=True)
                 (root / "cli.py").write_text(program)
+                # Keep the mandatory runtime recipe present so this fixture
+                # reaches the injected child failure under the real source gate.
+                for name in ("setup.py", "pyproject.toml", "MANIFEST.in",
+                             "src/mathscope_p7_pari/__init__.py", "src/mathscope_p7_pari/build.py"):
+                    recipe = Path("p7/pari_runtime") / name
+                    (root / recipe).parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(original_root / recipe, root / recipe)
                 shutil.copy2(original_root / "M3_ENTRY.json", root / "M3_ENTRY.json")
                 gate = root.parent / "mathscope-m2/navier/research/M2_COMPLETION_GATE.json"
                 gate.parent.mkdir(parents=True)
