@@ -28,6 +28,8 @@ PERIODIZATION_REVIEW_SPEC=importlib.util.spec_from_file_location('n7_periodizati
 PERIODIZATION_REVIEW_ARCHIVE=importlib.util.module_from_spec(PERIODIZATION_REVIEW_SPEC);PERIODIZATION_REVIEW_SPEC.loader.exec_module(PERIODIZATION_REVIEW_ARCHIVE)
 TEMPORAL_SPEC=importlib.util.spec_from_file_location('n6_global_temporal_archive',ROOT/'navier/tests/build-global-temporal-evidence.py')
 TEMPORAL_ARCHIVE=importlib.util.module_from_spec(TEMPORAL_SPEC);TEMPORAL_SPEC.loader.exec_module(TEMPORAL_ARCHIVE)
+FORCED_SPEC=importlib.util.spec_from_file_location('n6_global_forced_current_archive',ROOT/'navier/tests/build-global-forced-current-evidence.py')
+FORCED_ARCHIVE=importlib.util.module_from_spec(FORCED_SPEC);FORCED_SPEC.loader.exec_module(FORCED_ARCHIVE)
 def sha(x):return hashlib.sha256(x if isinstance(x,bytes) else x.encode()).hexdigest()
 def canonical(x):return json.dumps(x,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
 def read(p):return p.read_text(encoding='utf-8')
@@ -100,6 +102,7 @@ def build(check=False):
  LOCALIZATION_OPERATOR_ARCHIVE.build(check=True)
  PERIODIZATION_REVIEW_ARCHIVE.build(check=True)
  TEMPORAL_ARCHIVE.build(check=True)
+ FORCED_ARCHIVE.build(check=True)
  worker,closure,worker_cycles=STATIC_BUNDLER.bundle(WEB/'extended-worker.mjs')
  view_bundle,view_closure,view_cycles=STATIC_BUNDLER.bundle(WEB/'extended-view-entry.mjs')
  example_code="""import {getExamples} from './gauge/index.mjs';import {NAVIER_M3_EXAMPLES} from './navier/index.mjs';console.log(JSON.stringify({gauge:getExamples().map(e=>({id:e.id,label:e.label,input:e.request,packages:e.id.startsWith('y7')?['Y7']:e.id.startsWith('y6')?['Y6']:['Y5',...(e.request.kind==='field-family'?['Y6']:[])]})),navier:NAVIER_M3_EXAMPLES.map(e=>({...e,packages:[e.input.package]}))}));"""
@@ -122,12 +125,13 @@ def build(check=False):
  extras+=LOCALIZATION_OPERATOR_ARCHIVE.source_paths()+[ROOT/'navier/source-localization-operator-evidence-data.mjs',ROOT/'navier/tests/build-localization-operator-evidence.py',ROOT/'navier/tests/localization-operator-archive.test.mjs',ROOT/'navier/SOURCE_LOCALIZATION_OPERATOR.md']
  extras+=PERIODIZATION_REVIEW_ARCHIVE.source_paths()+[ROOT/'navier/source-periodization-review-evidence-data.mjs',ROOT/'navier/tests/build-periodization-review-evidence.py',ROOT/'navier/tests/periodization-review-archive.test.mjs']
  extras+=TEMPORAL_ARCHIVE.source_paths()+[ROOT/'navier/source-global-temporal-evidence-data.mjs',ROOT/'navier/tests/build-global-temporal-evidence.py',ROOT/'navier/tests/global-temporal-archive.test.mjs']
+ extras+=FORCED_ARCHIVE.source_paths()+[ROOT/'navier/tests/build-global-forced-current-evidence.py',ROOT/'navier/tests/global-forced-archive.test.mjs',WEB/'tests/navier-source-forced-current-view.test.mjs']
  for folder in ['gauge','navier']:
   extras+=list((ROOT/folder/'lean').glob('*.lean'))
   extras+=[p for p in [ROOT/folder/'original-criteria.json',ROOT/folder/'evidence/lean-audit.json',ROOT/folder/'evidence/acceptance.json'] if p.exists()]
  files=[{'path':p.relative_to(RESEARCH).as_posix(),'bytes':len(p.read_bytes()),'sha256':sha(p.read_bytes())} for p in sorted(set(closure+view_closure+extras),key=str)]
- source={'schema':'MathScope.M3.ExtendedSourceBinding/1','manifestSHA256':sha(canonical(files)),'files':files,'repository':'https://github.com/leegahuyn/MathScopeCompute','branch':'mathscope-m3-resume-20261012','p7SourceChanged':False,'auditedDeferredAssertionImports':worker_cycles+view_cycles}
- metadata={'schema':'MathScope.M3.ExtendedBuild/1','version':'0.3.15-m3','sourceBinding':source,'environment':{'worker':'STATIC_LOCAL_ESM_CLOSURE','hash':'SHA-256_WEBCRYPTO','numericalArithmetic':'IEEE754_FLOAT64_FINITE_MODEL','exactArithmetic':'BIGINT_RATIONAL_WHERE_DECLARED','formalAuthority':'RECORDED_PINNED_KERNEL_AUDIT_ONLY','requestBudgetBytes':131072,'outputBudgetBytes':25165824},'examples':examples,'criteria':criteria,'wholeM3Complete':False}
+ source={'schema':'MathScope.M3.ExtendedSourceBinding/1','manifestSHA256':sha(canonical(files)),'files':files,'repository':'https://github.com/leegahuyn/MathScopeCompute','branch':'mathscope-m3-continuation55-20261012','p7SourceChanged':False,'auditedDeferredAssertionImports':worker_cycles+view_cycles}
+ metadata={'schema':'MathScope.M3.ExtendedBuild/1','version':'0.3.16-m3','sourceBinding':source,'environment':{'worker':'STATIC_LOCAL_ESM_CLOSURE','hash':'SHA-256_WEBCRYPTO','numericalArithmetic':'IEEE754_FLOAT64_FINITE_MODEL','exactArithmetic':'BIGINT_RATIONAL_WHERE_DECLARED','formalAuthority':'RECORDED_PINNED_KERNEL_AUDIT_ONLY','requestBudgetBytes':131072,'outputBudgetBytes':25165824},'examples':examples,'criteria':criteria,'wholeM3Complete':False}
  worker='globalThis.__MATHSCOPE_M3_EXTENDED_BUILD__='+canonical(metadata)+';\n'+worker
  template=read(WEB/'extended-client.js')
  for token in ['__M3_EXTENDED_STATIC_WORKER_SOURCE__','__M3_EXTENDED_BUILD_METADATA__']:

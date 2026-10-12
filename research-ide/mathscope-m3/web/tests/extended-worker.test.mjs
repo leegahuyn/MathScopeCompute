@@ -22,9 +22,10 @@ test('built static browser Worker actually executes all three package families a
 test('shipped Worker executes and freshly replays the resumed source proofs through the audited module closure',async()=>{
  const client=browserClient();
  assert.equal(build.sourceBinding.auditedDeferredAssertionImports.length,2);
- for(const [pkg,operation] of [['N6','global-temporal-inverse-record'],['N7','source-localization-operator'],['N7','source-periodization-review'],['N7','source-core-restriction-record']]){
+ for(const [pkg,operation] of [['N6','global-forced-current-record'],['N6','global-temporal-inverse-record'],['N7','source-localization-operator'],['N7','source-periodization-review'],['N7','source-core-restriction-record']]){
   const first=await client.run({kind:'navier',input:{package:pkg,operation,parameters:{}}});
   assert.equal(first.ok,true,operation);assert.equal(first.record.wholeM3Complete,false);
+  if(operation==='global-forced-current-record'){const r=first.record.result;assert.equal(r.observations.harmonicRows.length,10);assert.equal(r.observations.inverseRows.length,20);assert.equal(r.results.gate.actualCoefficientComparisons,540);assert.equal(r.results.originalConstructionGate.pass,false);assert.equal(r.observations.pressure.totalGlobalPressureExpression,null);}
   const again=await client.replay(JSON.parse(JSON.stringify(first.record)));
   assert.equal(again.replay.status,'MATCH',operation);assert.equal(again.replay.recomputed,true,operation);
  }

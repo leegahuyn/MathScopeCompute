@@ -15,7 +15,7 @@
   "P7Changed": false,
   "M2Changed": false,
   "originalCriterionCount": 8,
-  "completedOriginalCriteria": 3,
+  "completedOriginalCriteria": 4,
   "criteria": [
     {
       "id": "N6-01",
@@ -108,10 +108,10 @@
       "text": "현재source의모든nonzero harmonics를(7.13) inverse로풀고source-supported potentials에cutoff 후curl한다.\n합격: same-label 곱에서m+m′ 신규주파수가생성된다. 단계별최대harmonic을기록하고조용한truncation 대신\ndiscarded-mode bound를제공한다.",
       "page": 62,
       "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-061419).pdf",
-      "status": "PARTIAL",
-      "originalCriterionComplete": false,
-      "assessedAt": "2026-10-12T13:33:58.646483+00:00",
-      "assessedBy": "MathScope actual source and finite observation review",
+      "status": "PASS",
+      "originalCriterionComplete": true,
+      "assessedAt": "2026-10-12T19:24:16.602401+00:00",
+      "assessedBy": "MathScope original N6-03 source-stage replay and exact criterion review",
       "evidence": [
         "navier/corrections.mjs",
         "navier/evidence/N6-harmonic.json",
@@ -125,24 +125,29 @@
         "navier/evidence/global-current-20261012/attempt1/receipt.json",
         "navier/evidence/global-signed-20261012/attempt1/receipt.json",
         "navier/evidence/global-moment-20261012/attempt1/receipt.json",
-        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md"
+        "navier/N6_SOURCE_SCOPE_REVIEW_2026_10_12.md",
+        "navier/source-global-forced-current-evidence.mjs",
+        "navier/source-global-forced-current-evidence-data.mjs",
+        "navier/tests/build-global-forced-current-evidence.py",
+        "navier/tests/replay-forced-current-snapshots.mjs",
+        "navier/tests/run-forced-snapshot-replay.py",
+        "navier/evidence/forced-snapshot-replay-20261012/attempt1/receipt.json",
+        "navier/evidence/forced-snapshot-replay-20261012/attempt1/replay.json",
+        "navier/evidence/forced-snapshot-replay-20261012/attempt1/independent.json",
+        "navier/evidence/global-forced-current-20261012/attempt382884203291/receipt.json",
+        "web/navier-source-forced-current-view.mjs",
+        "web/tests/navier-source-forced-current-view.test.mjs"
       ],
-      "remaining": [
-        "Derive the complete same-label current harmonic coefficients from the updated source field.",
-        "Solve their actual projected transport equations and realize supported physical curls with commutators and justified mode tails."
-      ],
-      "remainingObligations": [
-        "Derive the complete same-label current harmonic coefficients from the updated source field.",
-        "Solve their actual projected transport equations and realize supported physical curls with commutators and justified mode tails."
-      ],
-      "acceptanceScope": "All-label source assembly is available, but the current complete nonzero angular harmonic inverses and supported curl realization are still unexecuted.",
+      "remaining": [],
+      "remainingObligations": [],
+      "acceptanceScope": "Every nonzero harmonic of the same actual updated source is solved by the original projected inverse and realized by the full supported cutoff curl. All current and new m+m-prime modes are retained with a complete finite angular inventory and zero discarded angular tail. The saved eleven source graphs were independently rebound and replayed for 540 PDE coefficients and 2320 scalar identities. The original combined construction remains timed out; no absent final current certificate, uniform all-order class, whole-field numeric enclosure, j0 initialization or full correction cycle is inferred.",
       "genericBranchOnly": false,
       "comparisonWithInheritedOriginal": {
         "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
         "sameTitleIgnoringWhitespace": true,
         "sameTextIgnoringWhitespace": true
       },
-      "previousSourceScope": "The finite harmonic ledger and independent projected ODE example remain separate from source reconstruction. Both authentic original pulse matrices now generate C4/C5 slow jets, their coefficient/time derivative FTC bodies, noncommuting 112-component variational systems and retained factorial ordered-integral tails. This closes the derivative-kernel dependency for the selected signed curl, not the actual complete current nonzero-harmonic correction."
+      "previousSourceScope": "All-label source assembly is available, but the current complete nonzero angular harmonic inverses and supported curl realization are still unexecuted."
     },
     {
       "id": "N6-04",
@@ -457,7 +462,7 @@
   ],
   "allOriginalCriteriaComplete": false,
   "wholeM3Complete": false,
-  "assessmentRevision": "m3-original-source-operators-temporal-and-support-review-20261012",
+  "assessmentRevision": "m3-original-forced-angular-source-replay-20261012",
   "actualSourceExecution": {
     "receipt": "navier/evidence/source-current-20261012/source-current-execution.json",
     "sha256": "3c24c84c3356b458d4866cf2008047ff809dfb0a51524caed1044c5c73334b21",
@@ -479,6 +484,16 @@
       "path": "navier/evidence/global-moment-20261012/attempt1/receipt.json",
       "sha256": "62aa3f5d411e833fac4b52848b2564e9e8630974ed041e3d4614bbe9379a8724",
       "bytes": 3754
+    },
+    "forcedAngularSourceReplay": {
+      "path": "navier/evidence/forced-snapshot-replay-20261012/attempt1/receipt.json",
+      "sha256": "76cb0c616b6485bff14037bd3fd8c67e59f3f2edbd476e5d37ef15e456f3c736",
+      "bytes": 3128,
+      "actualCoefficientComparisons": 540,
+      "actualScalarIdentities": 2320,
+      "independentChecks": 213,
+      "originalCombinedGatePass": false,
+      "completeGlobalCurrentCertificateRecovered": false
     }
   }
 }
