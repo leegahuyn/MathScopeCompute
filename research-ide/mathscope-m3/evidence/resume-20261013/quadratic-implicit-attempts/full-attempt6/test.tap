@@ -1,0 +1,97 @@
+TAP version 13
+# Subtest: quadratic implicit derivative and second derivative retain the exact symbolic branch
+ok 1 - quadratic implicit derivative and second derivative retain the exact symbolic branch
+  ---
+  duration_ms: 34.2104
+  type: 'test'
+  ...
+# Subtest: full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+ok 2 - full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+  ---
+  duration_ms: 4.851
+  type: 'test'
+  ...
+# Subtest: captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+ok 3 - captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+  ---
+  duration_ms: 4.0882
+  type: 'test'
+  ...
+# Subtest: quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+ok 4 - quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+  ---
+  duration_ms: 5.7047
+  type: 'test'
+  ...
+# Subtest: substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+ok 5 - substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+  ---
+  duration_ms: 2.8157
+  type: 'test'
+  ...
+# Subtest: zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+ok 6 - zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+  ---
+  duration_ms: 2.2365
+  type: 'test'
+  ...
+# Subtest: unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+ok 7 - unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+  ---
+  duration_ms: 0.815
+  type: 'test'
+  ...
+# Subtest: an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+ok 8 - an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+  ---
+  duration_ms: 1.7586
+  type: 'test'
+  ...
+# Subtest: integral operand import alpha-renames a binder occurring in the actual quadratic argument
+ok 9 - integral operand import alpha-renames a binder occurring in the actual quadratic argument
+  ---
+  duration_ms: 1.7744
+  type: 'test'
+  ...
+# Subtest: later root substitution alpha-renames integral binders in the complete retained equation tuple
+ok 10 - later root substitution alpha-renames integral binders in the complete retained equation tuple
+  ---
+  duration_ms: 1.3379
+  type: 'test'
+  ...
+# Subtest: actual saved node 5029 binds all three equations and records a conditional derivative or the exact unresolved gate
+not ok 11 - actual saved node 5029 binds all three equations and records a conditional derivative or the exact unresolved gate
+  ---
+  duration_ms: 68218.601
+  type: 'test'
+  location: 'C:\\Users\\사용자\\Documents\\Codex\\2026-10-13\\https-project29770-websitepublisher-ai-v0-3\\work\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\tests\\saved-quadratic-implicit-derivatives.test.mjs:117:1'
+  failureType: 'testCodeFailure'
+  error: 'Independent whole-mean replay exhausted its work budget.'
+  code: 'RESOURCE_LIMIT'
+  stack: |-
+    fail (file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-13/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-whole-mean-direct-audit.mjs:14:91)
+    tick (file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-13/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-whole-mean-direct-audit.mjs:35:46)
+    put (file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-13/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-whole-mean-direct-audit.mjs:37:31)
+    file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-13/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-whole-mean-direct-audit.mjs:41:286
+    Array.reduce (<anonymous>)
+    mul (file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-13/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-whole-mean-direct-audit.mjs:41:29)
+    constructor (file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-13/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-whole-mean-direct-audit.mjs:48:74)
+    substitute (file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-13/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-whole-mean-direct-audit.mjs:128:16)
+    file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-13/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-whole-mean-direct-audit.mjs:128:43
+    Array.map (<anonymous>)
+  ...
+# Subtest: copied authorities, alternate caller roots and forged/decorated reader providers cannot mint saved source derivatives
+ok 12 - copied authorities, alternate caller roots and forged/decorated reader providers cannot mint saved source derivatives
+  ---
+  duration_ms: 6.8148
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 69079.7621

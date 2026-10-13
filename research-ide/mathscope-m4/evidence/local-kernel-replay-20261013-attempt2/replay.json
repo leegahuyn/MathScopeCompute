@@ -1,0 +1,214 @@
+{
+  "schemaVersion": "mathscope.m4.local-kernel-execution/1",
+  "startedAt": "2026-10-13T08:05:00.325Z",
+  "finishedAt": "2026-10-13T08:05:10.547Z",
+  "sourceCommit": "d015cb172b19d4e4fe7bb988cbf3aa7e94928733",
+  "command": "node research-ide/mathscope-m4/replay-local-lean.mjs --lean <directly installed executable> --attempt 2 --standard-imports",
+  "executableSha256": "37dfe799f69b990251f3b6bcff8a1c10c1afe2adcdecc5c580cc6726ffb63433",
+  "actualLeanVersion": "Lean (version 4.34.0-rc2, x86_64-w64-windows-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)",
+  "actualLeanCommit": "6a10ac8c22beadecabdbb0919c2b50214762f91d",
+  "pinnedHistoricalLeanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+  "pinnedHistoricalLeanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+  "historicalToolchainMatched": false,
+  "budget": {
+    "perCaseTimeoutMilliseconds": 30000,
+    "leanMemoryMiB": 512,
+    "threads": 1,
+    "importTrustLevel": "OFFICIAL_LEAN_DEFAULT"
+  },
+  "noDependencyInstallationAttempted": true,
+  "sourceDigests": [
+    {
+      "path": "MathScope/M0/Defs.lean",
+      "sha256": "b00496552d9de1c5271fc319670902785af5a0785aa1fe31451985aa1f2bbe37",
+      "bytes": 1558
+    },
+    {
+      "path": "MathScope/M0/Finite.lean",
+      "sha256": "07b6309d8b638c13924c63ce3c0d4a4b2023211e56ec68c95210ffdcf88b5713",
+      "bytes": 1130
+    },
+    {
+      "path": "MathScope/M0/Analytic.lean",
+      "sha256": "5b1e099473e7a4b23eee0ab7b9132e07a8c093e0249e2ccb7a74189811ae7313",
+      "bytes": 1973
+    },
+    {
+      "path": "NegativeFalse.lean",
+      "sha256": "bb8c5d5918222e9b4d279b6e41df5059171fb75ecca29b8c1f367d396ba5f261",
+      "bytes": 126
+    },
+    {
+      "path": "NegativeMatrix.lean",
+      "sha256": "1ce60aeb2856a9bbd80e2deaf6b0a2e84f61a5b0adf8a7b661fb6dcdb90b4c9b",
+      "bytes": 242
+    }
+  ],
+  "executions": [
+    {
+      "name": "Defs",
+      "source": "MathScope/M0/Defs.lean",
+      "sourceSha256": "b00496552d9de1c5271fc319670902785af5a0785aa1fe31451985aa1f2bbe37",
+      "expected": "SUCCESS",
+      "args": [
+        "--memory=512",
+        "--threads=1",
+        "-o",
+        "MathScope/M0/Defs.olean",
+        "MathScope/M0/Defs.lean"
+      ],
+      "startedAt": "2026-10-13T08:05:01.438Z",
+      "finishedAt": "2026-10-13T08:05:06.989Z",
+      "elapsedMilliseconds": 5547,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "actualOutcome": "SUCCESS",
+      "expectedOutcomeObserved": true,
+      "intendedNegativeReasonObserved": null,
+      "targetTypes": [],
+      "logPath": "lean-defs.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "outputArtifact": {
+        "path": "MathScope/M0/Defs.olean",
+        "sha256": "2a8e8df0d36f4ce5b5ba00b05b3ae996602a411d8812a603edb2724a4f57e770",
+        "bytes": 415000
+      },
+      "warningLines": [],
+      "typeAndAxiomAuditEmitted": false,
+      "log": ""
+    },
+    {
+      "name": "Finite",
+      "source": "MathScope/M0/Finite.lean",
+      "sourceSha256": "07b6309d8b638c13924c63ce3c0d4a4b2023211e56ec68c95210ffdcf88b5713",
+      "expected": "SUCCESS",
+      "args": [
+        "--memory=512",
+        "--threads=1",
+        "-o",
+        "MathScope/M0/Finite.olean",
+        "MathScope/M0/Finite.lean"
+      ],
+      "startedAt": "2026-10-13T08:05:06.989Z",
+      "finishedAt": "2026-10-13T08:05:07.999Z",
+      "elapsedMilliseconds": 1010,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "actualOutcome": "SUCCESS",
+      "expectedOutcomeObserved": true,
+      "intendedNegativeReasonObserved": null,
+      "targetTypes": [
+        "MathScope.M0.Finite.matrix_product_zero",
+        "MathScope.M0.Finite.differential_squared_zero",
+        "MathScope.M0.Finite.integer_fixture"
+      ],
+      "logPath": "lean-finite.log",
+      "logSha256": "72fca58e1260d3418a194d3322ba18cdc9df903a4b1eba45453ff2c8c4890935",
+      "outputArtifact": {
+        "path": "MathScope/M0/Finite.olean",
+        "sha256": "9158870d73e10b8a23ed7fc3b6807c215b1aed953a1de3fae7e00c37d2a1caeb",
+        "bytes": 17808
+      },
+      "warningLines": [],
+      "typeAndAxiomAuditEmitted": true,
+      "log": "MathScope.M0.Finite.matrix_product_zero : MathScope.M0.matrixProduct = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]\n'MathScope.M0.Finite.matrix_product_zero' depends on axioms: [propext]\nMathScope.M0.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2\n'MathScope.M0.Finite.differential_squared_zero' depends on axioms: [propext]\nMathScope.M0.Finite.integer_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := -7, b := 9007199254740993, c := 11, d := -13 }) = MathScope.M0.zeroC2\n'MathScope.M0.Finite.integer_fixture' does not depend on any axioms\n"
+    },
+    {
+      "name": "Analytic",
+      "source": "MathScope/M0/Analytic.lean",
+      "sourceSha256": "5b1e099473e7a4b23eee0ab7b9132e07a8c093e0249e2ccb7a74189811ae7313",
+      "expected": "SUCCESS",
+      "args": [
+        "--memory=512",
+        "--threads=1",
+        "-o",
+        "MathScope/M0/Analytic.olean",
+        "MathScope/M0/Analytic.lean"
+      ],
+      "startedAt": "2026-10-13T08:05:08.000Z",
+      "finishedAt": "2026-10-13T08:05:08.560Z",
+      "elapsedMilliseconds": 561,
+      "exitCode": 1,
+      "signal": null,
+      "errorCode": null,
+      "actualOutcome": "REJECTION",
+      "expectedOutcomeObserved": false,
+      "intendedNegativeReasonObserved": null,
+      "targetTypes": [
+        "MathScope.M0.Analytic.gap_excludes_interval",
+        "MathScope.M0.Analytic.smaller_positive_gap",
+        "MathScope.M0.Analytic.gap_transfer"
+      ],
+      "logPath": "lean-analytic.log",
+      "logSha256": "622a8bd78cafa41f79904c24f3e497ac7c077c71c2767bfb84f9d08bafa36824",
+      "outputArtifact": null,
+      "warningLines": [],
+      "typeAndAxiomAuditEmitted": false,
+      "log": "MathScope/M0/Analytic.lean:1:0: error: unknown module prefix 'Mathlib'\n\nNo directory 'Mathlib' or file 'Mathlib.olean' in the search path entries:\nC:\\Users\\사용자\\Documents\\Codex\\2026-10-13\\https-project29770-websitepublisher-ai-v0-3\\work\\MathScopeCompute\\research-ide\\mathscope-m4\\evidence\\local-kernel-replay-20261013-attempt2\\\nc:\\Users\\사용자\\.elan\\toolchains\\leanprover--lean4---v4.34.0-rc2\\lib\\lean\n"
+    },
+    {
+      "name": "NegativeFalse",
+      "source": "NegativeFalse.lean",
+      "sourceSha256": "bb8c5d5918222e9b4d279b6e41df5059171fb75ecca29b8c1f367d396ba5f261",
+      "expected": "REJECTION",
+      "args": [
+        "--memory=512",
+        "--threads=1",
+        "NegativeFalse.lean"
+      ],
+      "startedAt": "2026-10-13T08:05:08.561Z",
+      "finishedAt": "2026-10-13T08:05:09.536Z",
+      "elapsedMilliseconds": 976,
+      "exitCode": 1,
+      "signal": null,
+      "errorCode": null,
+      "actualOutcome": "REJECTION",
+      "expectedOutcomeObserved": true,
+      "intendedNegativeReasonObserved": true,
+      "targetTypes": [
+        "rejected_zero_eq_one : (0 : Nat) = 1"
+      ],
+      "logPath": "lean-negativefalse.log",
+      "logSha256": "5c4dac5dce15a0ed595c3e733b5e348b6a9bcb9de22008896735b827198e0176",
+      "outputArtifact": null,
+      "warningLines": [],
+      "typeAndAxiomAuditEmitted": false,
+      "log": "NegativeFalse.lean:5:2: error: Tactic `rfl` failed: The left-hand side\n  0\nis not definitionally equal to the right-hand side\n  1\n\n⊢ 0 = 1\n"
+    },
+    {
+      "name": "NegativeMatrix",
+      "source": "NegativeMatrix.lean",
+      "sourceSha256": "1ce60aeb2856a9bbd80e2deaf6b0a2e84f61a5b0adf8a7b661fb6dcdb90b4c9b",
+      "expected": "REJECTION",
+      "args": [
+        "--memory=512",
+        "--threads=1",
+        "NegativeMatrix.lean"
+      ],
+      "startedAt": "2026-10-13T08:05:09.536Z",
+      "finishedAt": "2026-10-13T08:05:10.547Z",
+      "elapsedMilliseconds": 1010,
+      "exitCode": 1,
+      "signal": null,
+      "errorCode": null,
+      "actualOutcome": "REJECTION",
+      "expectedOutcomeObserved": true,
+      "intendedNegativeReasonObserved": true,
+      "targetTypes": [],
+      "logPath": "lean-negativematrix.log",
+      "logSha256": "6cbe67929840727b6749ef6e7de702cae35e9f4ba6209aba75117543611e64dd",
+      "outputArtifact": null,
+      "warningLines": [],
+      "typeAndAxiomAuditEmitted": false,
+      "log": "NegativeMatrix.lean:9:2: error: Tactic `decide` proved that the proposition\n  corruptD1 (d0 { a := 0, b := 1, c := 0, d := 0 }) = zeroC2\nis false\n"
+    }
+  ],
+  "actualKernelExecuted": true,
+  "exactFiniteTargetReplaySucceeded": true,
+  "exactConditionalAnalyticReplaySucceeded": false,
+  "falseRflRejected": true,
+  "grantsM4FinalAcceptance": false,
+  "limitation": "Actual fresh kernel results apply only to the saved exact source under the explicitly recorded local toolchain. A different toolchain is not the historical 4.34.1 run. Missing Mathlib or a failed analytic import is a failed replay, not conditional-analytic acceptance."
+}

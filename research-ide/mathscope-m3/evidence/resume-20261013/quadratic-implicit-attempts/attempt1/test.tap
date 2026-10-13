@@ -1,0 +1,80 @@
+TAP version 13
+# Subtest: quadratic implicit derivative and second derivative retain the exact symbolic branch
+ok 1 - quadratic implicit derivative and second derivative retain the exact symbolic branch
+  ---
+  duration_ms: 40.9152
+  type: 'test'
+  ...
+# Subtest: full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+ok 2 - full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+  ---
+  duration_ms: 7.0461
+  type: 'test'
+  ...
+# Subtest: captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+ok 3 - captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+  ---
+  duration_ms: 1.9909
+  type: 'test'
+  ...
+# Subtest: quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+ok 4 - quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+  ---
+  duration_ms: 4.0829
+  type: 'test'
+  ...
+# Subtest: substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+ok 5 - substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+  ---
+  duration_ms: 4.6656
+  type: 'test'
+  ...
+# Subtest: zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+ok 6 - zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+  ---
+  duration_ms: 2.5172
+  type: 'test'
+  ...
+# Subtest: unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+ok 7 - unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+  ---
+  duration_ms: 1.4046
+  type: 'test'
+  ...
+# Subtest: an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+ok 8 - an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+  ---
+  duration_ms: 1.5403
+  type: 'test'
+  ...
+# QUADRATIC_IMPLICIT_AUDIT {"status":"UNRESOLVED","stop":{"code":"UNRESOLVED_CUSTOM_DERIVATIVE","reason":"No independent exact derivative rule for unreviewed_source_operation (actual_natural_series, actual source node 4483)."},"artifact":"quadratic-implicit-20261013093936551.json","sha256":"c7bacc413a4be969f5fb9a12dfa120461b901185932223e6586ca4e357cc212a","sourceImplementationSha256":"a4e3df59b5a585abef576567e3628b2408a80a7f611eae04a5eb911ea626a296","originalN602Complete":false}
+# Subtest: actual saved node 5029 binds all three equations and records a conditional derivative or the exact unresolved gate
+ok 9 - actual saved node 5029 binds all three equations and records a conditional derivative or the exact unresolved gate
+  ---
+  duration_ms: 74686.0253
+  type: 'test'
+  ...
+# Subtest: copied authorities, alternate caller roots and forged/decorated reader providers cannot mint saved source derivatives
+not ok 10 - copied authorities, alternate caller roots and forged/decorated reader providers cannot mint saved source derivatives
+  ---
+  duration_ms: 5.2049
+  type: 'test'
+  location: 'C:\\Users\\사용자\\Documents\\Codex\\2026-10-13\\https-project29770-websitepublisher-ai-v0-3\\work\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\tests\\saved-quadratic-implicit-derivatives.test.mjs:115:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot assign to read only property 'derivative' of object '#<Object>'"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-13/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/tests/saved-quadratic-implicit-derivatives.test.mjs:121:99)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 9
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 75690.1251

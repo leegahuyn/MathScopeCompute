@@ -1,0 +1,164 @@
+name: M3 bounded resume verification
+
+on:
+  push:
+    branches: [mathscope-m3-resume-20261013]
+    paths:
+      - '.github/workflows/m3-resume-focused-verification.yml'
+      - 'research-ide/mathscope-m3/navier/**'
+      - 'research-ide/mathscope-m2/navier/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: m3-bounded-resume-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  focused-source-norms:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Explicit saved-five test and bounded regression with immutable receipts
+        shell: bash
+        run: |
+          python -B - <<'PY'
+          from pathlib import Path
+          import hashlib,json,os,re,subprocess,time,datetime,signal,resource
+          root=Path.cwd()
+          out=Path(os.environ['RUNNER_TEMP'])/'m3-focused-resume'
+          out.mkdir()
+          navier=root/'research-ide/mathscope-m3/navier'
+          required=navier/'tests/saved-five-mean-change-norms.test.mjs'
+          if not required.is_file():
+              (out/'missing-required-test.json').write_text(json.dumps({'pass':False,'reason':'REQUIRED_TEST_MISSING','path':str(required)}))
+              raise SystemExit(1)
+          implicit_required={
+              'saved-monotone-implicit-derivatives.test.mjs':('MATHSCOPE_MONOTONE_AUDIT_EVIDENCE_DIR',10,'MathScope.N6.SavedConditionalMonotoneDerivativeAudit/1'),
+              'saved-quadratic-implicit-derivatives.test.mjs':('MATHSCOPE_QUADRATIC_IMPLICIT_EVIDENCE_DIR',12,'MathScope.SavedQuadraticImplicitDerivativeAudit/1'),
+              'saved-whole-mean-direct-audit.test.mjs':('MATHSCOPE_WHOLE_MEAN_AUDIT_EVIDENCE_DIR',11,'MathScope.N6.SavedWholeMeanDirectAudit/1'),
+          }
+          for filename in implicit_required:
+              if not (navier/'tests'/filename).is_file():
+                  (out/'missing-required-test.json').write_text(json.dumps({'pass':False,'reason':'REQUIRED_TEST_MISSING','path':filename}))
+                  raise SystemExit(1)
+          patterns=('saved-initialized','initialized-lazy','initialized-norm','mean-residual-change','saved-five-mean-change','fixed-stage-scalar','terminal-extension','saved-monotone-implicit-derivatives','saved-quadratic-implicit-derivatives','saved-whole-mean-direct-audit')
+          selected=[required]+[p for p in sorted(navier.rglob('*.test.mjs'))
+              if p!=required and '/evidence/' not in p.as_posix() and any(s in p.name for s in patterns)]
+          sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+          now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+          commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+          inventory=[]
+          for base in (root/'research-ide/mathscope-m2/navier',navier):
+              for p in sorted(base.rglob('*')):
+                  if p.is_file() and '/evidence/' not in p.as_posix() and p.suffix in ('.mjs','.py','.json'):
+                      inventory.append({'path':p.relative_to(root).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p)})
+          print('SELECTED_TESTS',json.dumps([p.relative_to(root).as_posix() for p in selected]),flush=True)
+          before=subprocess.check_output(['git','status','--porcelain=v1'],text=True)
+          (out/'source-before.json').write_text(json.dumps(inventory,indent=2)+'\n')
+          (out/'selection.json').write_text(json.dumps([p.relative_to(root).as_posix() for p in selected],indent=2)+'\n')
+          result={'schema':'MathScope.M3.BoundedResumeVerification/3','commit':commit,'startedAt':now(),
+              'node':subprocess.check_output(['node','--version'],text=True).strip(),
+              'python':subprocess.check_output(['python','--version'],text=True).strip(),
+              'budget':{'perTestWallSeconds':150,'implicitAuditWallSeconds':180,'nodeOldSpaceMiB':1536,'jobMinutes':18,'parallelTestFiles':1,
+                        'nodeOldSpaceIsNotAnRSSLimit':True},
+              'statusBefore':before,'tests':[],'criterionPromotionPerformed':False,'wholeM3Complete':False,'pass':False}
+          (out/'run-start.json').write_text(json.dumps(result,indent=2)+'\n')
+          for i,p in enumerate(selected):
+              command=['node','--max-old-space-size=1536','--test','--test-reporter=tap','--test-concurrency=1',str(p)]
+              env=dict(os.environ)
+              evidence=out/f'{i:02d}-saved-five-observed.json'
+              if p==required:env['M3_SAVED_FIVE_CHANGE_EVIDENCE']=str(evidence)
+              audit_spec=implicit_required.get(p.name)
+              artifact_dir=out/f'{i:02d}-implicit-artifacts'
+              if audit_spec:
+                  artifact_dir.mkdir()
+                  env[audit_spec[0]]=str(artifact_dir)
+              wall_seconds=180 if audit_spec else 150
+              started=time.monotonic();started_at=now();stop=None
+              proc=subprocess.Popen(command,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,env=env,start_new_session=True)
+              try:
+                  stdout,stderr=proc.communicate(timeout=wall_seconds)
+              except subprocess.TimeoutExpired:
+                  stop='TIME_LIMIT'
+                  os.killpg(proc.pid,signal.SIGKILL)
+                  stdout,stderr=proc.communicate()
+              code=proc.returncode
+              tap=out/f'{i:02d}.tap';err=out/f'{i:02d}.stderr'
+              tap.write_text(stdout);err.write_text(stderr)
+              def count(key):
+                  matches=re.findall(r'^# '+key+r' (\d+)$',stdout,re.M)
+                  return int(matches[-1]) if matches else None
+              controls=['copied capabilities, parents and cutoff records cannot issue source-bound results',
+                  'omitted derivative orders, caller norm values and insufficient budgets are rejected',
+                  'changes to actual roots, full pressure, scalar constants and completion flags invalidate the seal']
+              negative={name:bool(re.search(r'^ok \d+ - '+re.escape(name)+r'\s*$',stdout,re.M)) for name in controls} if p==required else None
+              observed_ok=False
+              if p==required and evidence.is_file():
+                  observed=json.loads(evidence.read_text())
+                  observed_ok=observed.get('schema')=='MathScope.N6.SavedFiveMeanChangeObserved/1' and len(observed.get('certificates',[]))==2 and observed.get('wholeM3Complete') is False
+              row={'path':p.relative_to(root).as_posix(),'sourceSHA256':sha(p),'commit':commit,
+                  'command':command,'cwd':str(root),'startedAt':started_at,'finishedAt':now(),
+                  'exitCode':code,'stopReason':stop,'seconds':round(time.monotonic()-started,3),
+                  'wallBudgetSeconds':wall_seconds,
+                  'tests':count('tests'),'passed':count('pass'),'failed':count('fail'),'skipped':count('skipped'),
+                  'cancelled':count('cancelled'),'negativeControls':negative,
+                  'artifact':{'path':evidence.name,'sha256':sha(evidence),'bytes':evidence.stat().st_size} if evidence.is_file() else None,
+                  'tapSHA256':sha(tap),'stderrSHA256':sha(err),
+                  'jobChildrenHighWaterRSSKiB':resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss,
+                  'rssMeasurementScope':'cumulative job child high-water; not a process-tree memory bound'}
+              row['pass']=code==0 and stop is None and row['failed']==0 and row['cancelled']==0 and (row['passed'] or 0)>0
+              if p==required:
+                  row['pass']=row['pass'] and row['tests']==8 and row['passed']==8 and row['skipped']==0 and all(negative.values()) and observed_ok
+              if audit_spec:
+                  artifacts=[q for q in sorted(artifact_dir.glob('*.json')) if not q.name.startswith('execution-')]
+                  row['artifactFiles']=[{'path':q.relative_to(out).as_posix(),'bytes':q.stat().st_size,'sha256':sha(q)} for q in sorted(artifact_dir.glob('*.json'))]
+                  audits=[json.loads(q.read_text()) for q in artifacts]
+                  row['executionScope']='CONDITIONAL_SOURCE_AUDIT_EXECUTION_NOT_ORIGINAL_CRITERION_ACCEPTANCE'
+                  row['mathematicalStatus']=[a.get('mathematicalStatus',a.get('status')) for a in audits]
+                  valid_artifact=len(audits)==1
+                  if valid_artifact and audit_spec[2]:valid_artifact=audits[0].get('schema')==audit_spec[2]
+                  if valid_artifact:
+                      a=audits[0]
+                      if p.name.startswith('saved-monotone'):
+                          valid_artifact=a.get('scope',{}).get('originalN601Complete') is False and a['scope'].get('originalN602Complete') is False and a['scope'].get('M3CountRaised') is False
+                      elif p.name.startswith('saved-quadratic'):
+                          valid_artifact=a.get('originalN602Complete') is False and a.get('countsChanged') is False and a.get('actualDomainOrClassAcceptance') is False
+                      else:
+                          valid_artifact=a.get('scope',{}).get('originalN601Complete') is False and a['scope'].get('originalN602Complete') is False and a['scope'].get('wholeM3Complete') is False
+                  row['pass']=row['pass'] and row['tests']==audit_spec[1] and row['passed']==audit_spec[1] and row['skipped']==0 and valid_artifact
+              result['tests'].append(row)
+              (out/f'{i:02d}-receipt.json').write_text(json.dumps(row,indent=2)+'\n')
+              print('TEST_RESULT',json.dumps(row),flush=True)
+              if not row['pass']:print('FAILURE_TAIL',stdout[-16000:],stderr[-3000:],flush=True)
+          after=subprocess.check_output(['git','status','--porcelain=v1'],text=True)
+          unchanged=all((root/r['path']).is_file() and sha(root/r['path'])==r['sha256'] for r in inventory)
+          result.update({'finishedAt':now(),'statusAfter':after,'sourceTreeUnchanged':before==after and unchanged,
+              'requiredTestExplicitlyExecuted':any(r['path']==required.relative_to(root).as_posix() for r in result['tests']),
+              'implicitTestsExplicitlyExecuted':all(any(Path(r['path']).name==name for r in result['tests']) for name in implicit_required)})
+          result['pass']=bool(result['tests']) and all(r['pass'] for r in result['tests']) and result['sourceTreeUnchanged'] and result['requiredTestExplicitlyExecuted'] and result['implicitTestsExplicitlyExecuted']
+          (out/'receipt.json').write_text(json.dumps(result,indent=2)+'\n')
+          print('RESUME_VERIFICATION',json.dumps({k:v for k,v in result.items() if k!='tests'}),flush=True)
+          raise SystemExit(0 if result['pass'] else 1)
+          PY
+      - name: Preserve actual results including skipped scopes and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-focused-resume-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/m3-focused-resume/
+          if-no-files-found: error
+          retention-days: 30

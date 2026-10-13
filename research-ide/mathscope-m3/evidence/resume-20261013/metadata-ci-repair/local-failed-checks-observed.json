@@ -1,0 +1,38 @@
+{
+  "schema": "MathScope.MetadataRepair.FailedLocalChecksObserved/1",
+  "recordedAtUTC": "2026-10-13T09:07:39.113Z",
+  "exactOriginalStartTimesCaptured": false,
+  "source": "Prior functions.exec outputs retained in this chat",
+  "observations": [
+    {
+      "stage": "Original source integrity precheck",
+      "exitCode": 1,
+      "error": "ValueError: Original bytes differ: mathscope-extension/renderer.mjs",
+      "cause": "Fresh clone working bytes had CRLF; exact HEAD blob matches pinned original bytes.",
+      "workingBeforeBytes": 9998,
+      "workingBeforeSHA256": "401aa31f352ffeee8f15d5d74f7200032559d4e68a45ace110314a9d350ab09b",
+      "originalBytes": 9863,
+      "originalSHA256": "02fa4c76c053ab1900d9d4edca83c2f54e017b0aed67a1bc2d63fd4ba598c1f3"
+    },
+    {
+      "stage": "Windows example registry decoding precheck",
+      "exitCode": 1,
+      "error": "UnicodeDecodeError: cp949 codec could not decode UTF-8 Node example registry output",
+      "repair": "Explicit UTF-8 subprocess decoding in verifier; original source validation rules unchanged."
+    },
+    {
+      "stage": "Initial edition visibility fixture tests",
+      "exitCode": 1,
+      "counts": {
+        "tests": 6,
+        "pass": 4,
+        "errors": 2
+      },
+      "error": "Fixture provenance/addon-allowlist.json was missing.",
+      "repair": "Added an explicit empty addon allowlist to the unauthenticated test fixture; runtime addon guards unchanged."
+    }
+  ],
+  "historicalReceiptsRewritten": false,
+  "criteriaPromoted": false,
+  "formalPass": false
+}

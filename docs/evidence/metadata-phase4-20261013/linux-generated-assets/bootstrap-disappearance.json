@@ -1,0 +1,16 @@
+{
+  "schema": "MathScope.M3.LinuxBootstrapFailureObservation/1",
+  "status": "BOOTSTRAP_RUNTIME_UNAVAILABLE_IN_NEXT_WSL_INVOCATION",
+  "bootstrapObserved": {
+    "version": "v24.18.0",
+    "archiveBytes": 31511588,
+    "sha256": "55aa7153f9d88f28d765fcdad5ae6945b5c0f98a36881703817e4c450fa76742",
+    "path": "/tmp/mathscope-runtime-20261013/node-v24.18.0-linux-x64/bin/node"
+  },
+  "subsequentBuilderReachedSourceChecks": false,
+  "subsequentException": "FileNotFoundError: [Errno 2] No such file or directory: 'node'",
+  "followupReadOnlyObservation": "/tmp/mathscope-runtime-20261013 did not exist in the next WSL invocation; no generated outputs or source files were changed.",
+  "cause": "TEMPORARY_RUNTIME_LIFETIME_OBSERVED; automatic removal mechanism not independently proven",
+  "rawBuilderReceiptCreated": false,
+  "remedy": "Bootstrap and builder execute sequentially inside the same WSL Python process."
+}

@@ -1,0 +1,150 @@
+{
+  "schema": "MathScope.Phase4.EnglishManifestFinalization/1",
+  "startedAt": "2026-10-13T11:57:06.097118+00:00",
+  "finishedAt": "2026-10-13T11:57:57.937176+00:00",
+  "checkpointCommit": "486b6e19e0ad85142a31a84ffdfee0d02fc35cb3",
+  "commands": [
+    {
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-B",
+        "research-ide/tools/verify_english_release.py",
+        "--write-manifest"
+      ],
+      "elapsedSeconds": 25.34399999998277,
+      "exitCode": 0,
+      "timeout": false,
+      "stdoutSHA256": "ddb8e5b1cf88f5b146404c77c94ddb7423271bc9b57a785d3191da2fa19f148f",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-B",
+        "research-ide/tools/verify_english_release.py"
+      ],
+      "elapsedSeconds": 22.75,
+      "exitCode": 0,
+      "timeout": false,
+      "stdoutSHA256": "ddb8e5b1cf88f5b146404c77c94ddb7423271bc9b57a785d3191da2fa19f148f",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-B",
+        "research-ide/tools/test_edition_visibility.py"
+      ],
+      "elapsedSeconds": 1.672000000020489,
+      "exitCode": 0,
+      "timeout": false,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "3d3ef4b9a76530be87579e950fbee0739d564f64b193642e702a9088099adc10"
+    },
+    {
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-B",
+        "research-ide/tools/test_addon_boundaries.py"
+      ],
+      "elapsedSeconds": 0.21899999998277053,
+      "exitCode": 0,
+      "timeout": false,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "4a203f958ef9d765ff1f89816631e1bdf553b4acf1d56449f1d10ad92bb46ff3"
+    },
+    {
+      "command": [
+        "node",
+        "docs/evidence/metadata-ci-repair-20261013/check-current-pin.mjs"
+      ],
+      "elapsedSeconds": 0.46799999999348074,
+      "exitCode": 0,
+      "timeout": false,
+      "stdoutSHA256": "113b4455f7ed388eaa565a650c96b30fb5caf79d041dc27e1aa9193e7e9b89e4",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "docs/evidence/metadata-phase4-20261013/check-generated-assets.mjs"
+      ],
+      "elapsedSeconds": 1.125,
+      "exitCode": 0,
+      "timeout": false,
+      "stdoutSHA256": "6ebaa3529830f448f8c6f16e60077b5a34fde1af2bb9349963721d72bdd3ab86",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "research-ide/SOURCE_TRANSLATION_MANIFEST.json",
+        "research-ide/mathscope-m3/navier/implementation-pin.mjs",
+        "research-ide/mathscope-m3/web/build_extended.py",
+        "research-ide/mathscope-m3/web/extended-build-data.json",
+        "research-ide/mathscope-m3/web/extended-engine.bundle.js"
+      ],
+      "elapsedSeconds": 0.23500000004423782,
+      "exitCode": 0,
+      "timeout": false,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "budgetSecondsPerCommand": 120,
+  "beforeSHA256": "3420c407509b550be8abc570fbc45483ea20524bcd3cb1db00eb1c2eb77506b2",
+  "afterSHA256": "ea63602094824ac6badaf5a3d89a2ecf34032168268e6967b8ad608b61da8117",
+  "beforeArtifactCount": 9835,
+  "afterArtifactCount": 10017,
+  "allPreviousMembersPreserved": true,
+  "unchangedAddonRows": 1528,
+  "membershipAttackTests": 6,
+  "addonBoundaryTests": 4,
+  "authoredCodeLFChecked": [
+    "mathscope-m3/navier/source-saved-monotone-implicit-derivatives.mjs",
+    "mathscope-m3/navier/source-saved-quadratic-implicit-derivatives.mjs",
+    "mathscope-m3/navier/tests/saved-monotone-implicit-derivatives.test.mjs",
+    "mathscope-m3/navier/tests/saved-quadratic-implicit-derivatives.test.mjs",
+    "mathscope-m3/navier/implementation-pin.mjs",
+    "mathscope-m3/navier/source-saved-whole-mean-direct-audit.mjs",
+    "mathscope-m3/navier/tests/saved-whole-mean-direct-audit.test.mjs",
+    "mathscope-m3/web/build_extended.py",
+    "mathscope-m4/tools/pinned-kernel-replay.mjs",
+    "mathscope-m4/web/verify-live-panel.mjs"
+  ],
+  "expectedPrewriteBytesEqualGeneratedManifest": true,
+  "readOnlyReplayMatchesWrite": true,
+  "verifierResult": {
+    "status": "SOURCE_AND_ENGLISH_BINDINGS_VERIFIED",
+    "originalFilesVerified": 693,
+    "sourcePinsMatched": 50,
+    "translatedCriteria": 70,
+    "englishExampleLabels": 59,
+    "editionArtifactsVerified": 10017,
+    "postV54AddonArtifactsVerified": 1528,
+    "auxiliaryOriginalImagesVerified": 242,
+    "baselineCounts": {
+      "PASS": 61,
+      "PARTIAL": 7,
+      "BLOCKED": 2
+    },
+    "manifestSha256": "ea63602094824ac6badaf5a3d89a2ecf34032168268e6967b8ad608b61da8117",
+    "formalPass": false,
+    "buildOrDeploymentPerformed": false
+  },
+  "passed": true,
+  "published": false,
+  "formalPass": false,
+  "mathematicalCriteriaPromoted": false
+}

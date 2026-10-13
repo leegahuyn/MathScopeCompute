@@ -1,0 +1,36 @@
+{
+  "schema": "MathScope.N6.ConditionalMonotoneIndependentReviewRepairNote/1",
+  "priorReceiptsPreserved": true,
+  "phase3FilesOrReceiptsRewritten": false,
+  "repairs": [
+    {
+      "finding": "Conditional monotone derivative rows were cached and returned as mutable arrays. A caller could change a future derivative answer through that array.",
+      "correction": "The privately cached rows, call bindings and registry metadata are deeply frozen. Diagnostics return immutable copies. Mutation controls are included in the new helper tests.",
+      "historicalScope": "Earlier execution tests passed without this newly added mutation control. Their exact receipts stay unchanged and do not count as tests of the repaired bytes."
+    },
+    {
+      "finding": "Shared independent-reader integral substitution could capture an actual argument having the same coordinate as the integration binder. integral_0^1 exp(r*eta)dr at eta=caller r could incorrectly become integral exp(r^2)dr.",
+      "correction": "The local integration binder is alpha-renamed before inserting an arbitrary argument. Integral endpoints remain outside the binder scope. The direct regression also retains moving-endpoint dependence in integral_0^Z exp(r*Z)dr at Z=caller r; its derivative contains both the nonzero integral and endpoint exp(r^2).",
+      "historicalScope": "The reviewer reproduced the defect before publication or source-count promotion. Earlier runs are preserved as limited observations; a fresh replay records the repaired bytes."
+    }
+  ],
+  "resourceChange": {
+    "originalFiniteReaderWorkCeiling": 200000,
+    "observedStoppedWork": 200001,
+    "newFiniteReaderWorkCeiling": 400000,
+    "unchangedScalarNodeCeiling": 200000,
+    "newObservedNonResourceGateWork": 226502,
+    "reason": "The independently derived implicit equation expansion requires additional measured finite work. The new run reaches a real unsupported maximum-selection gate instead of treating it as zero."
+  },
+  "remainingGateObservedBeforeAlphaRepair": {
+    "operation": "maximum",
+    "actualSourceNode": 539400,
+    "differentiatedActualSourceCoordinate": 622802,
+    "frozenOrSmoothSelectionProved": false
+  },
+  "mathematicalStatus": "UNRESOLVED_WITH_EXPLICIT_CONDITIONAL_COMPONENTS",
+  "originalN601Complete": false,
+  "originalN602Complete": false,
+  "completeN6": false,
+  "M3CountRaised": false
+}
