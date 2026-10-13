@@ -94,6 +94,105 @@ test('Fourier inverses keep both torus outputs and hidden body coordinates witho
   inverse.finiteSumDeclaredEqualToLimit=true;assert.throws(()=>fixture(nodes,7,[],{registries}),{code:'INVALID_FAST_TIME_AUDIT'});
 });
 
+test('natural limits inspect every nonlinear recurrence seed and reject a changed recurrence producer',()=>{
+  const nodes=primitives();nodes.push({op:'coordinate',args:['natural_radial']},{op:'actual_natural_series',args:['Phi',4,4,2,3]});
+  const seedNames=['h','j0','Lambda','sigmaStar','CSelected','A','D','d','L','Ustar','Hstar','Wstar','Zstar','chi','zeta','psi','g','gSquared','P0','P0OverPstarSquared'],
+    d={name:'natural',parameters:[4],radialParameter:5,seedNames,seedRoots:seedNames.map(()=>4),initial:[1,0,0],
+      recurrenceProducerSHA256:'d657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815'},
+    run=()=>fixture(nodes,6,[],{registries:{naturalDefinitions:[d]}});
+  assert.equal(run().independent,true);
+  for(let j=0;j<seedNames.length;j++){
+    d.seedRoots[j]=2;const r=run();assert.equal(r.independent,false,seedNames[j]);
+    assert.deepEqual(r.rows[0].forbiddenCoordinates,[2]);d.seedRoots[j]=4;
+  }
+  d.recurrenceProducerSHA256='0'.repeat(64);assert.throws(run,{code:'INVALID_FAST_TIME_AUDIT'});
+  d.recurrenceProducerSHA256='d657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815';
+  d.initial=[1,0,1];assert.throws(run,{code:'INVALID_FAST_TIME_AUDIT'});
+});
+
+test('quadratic root support includes the full equation, branch seed, preconditioner and branch bounds',()=>{
+  const nodes=primitives();nodes.push({op:'actual_quadratic_root',args:[0,0,4]});
+  const d={name:'root',eta:4,linear:[[1]],quadraticDiagonal:[[0]],rhs:[4],scale:1,preconditioner:[[1]],
+    rootRadius:1,lipschitzUpper:1,seed:[0],branch:'zero-seeded contraction limit',proof:{checks:{pass:true}}},
+    run=()=>fixture(nodes,5,[],{registries:{quadratic:[d]}});
+  assert.equal(run().independent,true);
+  const changes=[['linear',[[2]]],['quadraticDiagonal',[[2]]],['rhs',[2]],['scale',2],['preconditioner',[[2]]],['rootRadius',2],['lipschitzUpper',2]];
+  for(const [key,value]of changes){const original=d[key];d[key]=value;assert.equal(run().independent,false,key);d[key]=original;}
+  d.seed=[2];assert.throws(run,{code:'INVALID_FAST_TIME_AUDIT'});d.seed=[0];
+  d.branch='unspecified root';assert.throws(run,{code:'INVALID_FAST_TIME_AUDIT'});
+});
+
+test('monotone roots bind only their equation variable and preserve hidden bodies and moving brackets',()=>{
+  const nodes=primitives();nodes.push({op:'coordinate',args:['bound_root']},{op:'add',args:[5,4]},
+    {op:'actual_monotone_root',args:[0,4]});
+  const d={name:'monotone',variable:5,parameters:[4],body:6,left:0,right:1,derivativeLower:1,derivativeUpper:1},
+    run=()=>fixture(nodes,7,[],{registries:{monotone:[d]}});
+  assert.equal(run().independent,true);assert.ok(!run().rows[0].freeCoordinates.includes(5));
+  for(const key of ['body','left','right','derivativeLower','derivativeUpper']){
+    const original=d[key];d[key]=3;assert.deepEqual(run().rows[0].forbiddenCoordinates,[3],key);d[key]=original;
+  }
+  d.parameters=[4,4];assert.throws(run,{code:'INVALID_FAST_TIME_AUDIT'});
+});
+
+test('even and Picard limits retain all six coefficient/forcing rows and their zero axis datum',()=>{
+  const nodes=primitives();nodes.push({op:'coordinate',args:['xi']},
+    {op:'actual_background_even_profile',args:[0,0,4,4,1,1]},
+    {op:'actual_background_picard',args:[0,5,4,4,2]});
+  const d={name:'picard',xi:5,eta:4,diagonal:[0,0,2,0,3,1],A0:Array.from({length:6},()=>Array(6).fill(0)),
+    A1:Array.from({length:6},()=>Array(6).fill(0)),forcing:Array(6).fill(4),zeroAxisDatum:Array(6).fill(0),
+    radialDomain:[0,1],tail:{sourceBound:1,sourceStrip:1,solutionStrip:1},solutionNorm:1},
+    run=root=>fixture(nodes,root,[],{registries:{picard:[d]}});
+  assert.equal(run(6).independent,true);assert.equal(run(7).independent,true);
+  for(let row=0;row<6;row++){
+    for(const key of ['A0','A1']){d[key][row][5]=2;assert.equal(run(6).independent,false,key+':'+row);d[key][row][5]=0;}
+    d.forcing[row]=3;assert.equal(run(7).independent,false,'forcing:'+row);d.forcing[row]=4;
+  }
+  d.tail.solutionStrip=2;assert.equal(run(6).independent,false);d.tail.solutionStrip=1;
+  d.zeroAxisDatum[5]=1;assert.throws(()=>run(6),{code:'INVALID_FAST_TIME_AUDIT'});
+});
+
+test('Volterra limits inspect full matrix and initial data instead of only the call arguments',()=>{
+  const nodes=primitives();nodes.push({op:'coordinate',args:['internal_time']},
+    {op:'actual_covariance_volterra',args:[0,0,4,[4]]});
+  const d={name:'volterra',variable:5,parameters:[4],matrix:[[0,0],[0,0]],initial:[1,0],normUpper:1,length:1},
+    run=()=>fixture(nodes,6,[],{registries:{covariance:[d]}});
+  assert.equal(run().independent,true);
+  for(let row=0;row<2;row++)for(let col=0;col<2;col++){
+    d.matrix[row][col]=2;assert.equal(run().independent,false,'matrix:'+row+':'+col);d.matrix[row][col]=0;
+  }
+  for(let row=0;row<2;row++){const old=d.initial[row];d.initial[row]=3;assert.equal(run().independent,false,'datum:'+row);d.initial[row]=old;}
+  for(const key of ['normUpper','length']){d[key]=2;assert.equal(run().independent,false,key);d[key]=1;}
+  nodes[6].args[2]=2;assert.equal(run().independent,false,'actual output time');
+});
+
+test('global indexed fields preserve every candidate local body, chart factor and guard',()=>{
+  const nodes=primitives();nodes.push({op:'coordinate',args:['slow_Z']},{op:'coordinate',args:['slow_T']},
+    {op:'m3_global_indexed_partial',args:[0,[4,5,6],[2,1,0]]});
+  const local={name:'local',parameters:[4,5,6],body:4},row=()=>({localSystem:0,localBody:4,localParameters:[4,5,6],
+    values:[4,5,6],coefficient:1,localDirectionIndices:[0,1,2],derivativeScales:[1,1,1],guards:[[4,0,1]]}),
+    d={name:'global',parameters:[4,5,6],directions:[4,5,6],directionParameterIndices:[0,1,2],rows:[row(),row()],sourceRecipe:{completeCandidateCount:2}},
+    run=()=>fixture(nodes,7,[],{registries:{expression:[local],m3GlobalFields:[d]}});
+  assert.equal(run().independent,true);assert.equal(run().exactOperatorDefinitions[0].definingRowCount,2);
+  for(const r of d.rows){
+    r.coefficient=2;assert.equal(run().independent,false);r.coefficient=1;
+    for(let j=0;j<3;j++){r.derivativeScales[j]=3;assert.equal(run().independent,false);r.derivativeScales[j]=1;}
+    r.guards[0][2]=2;assert.equal(run().independent,false);r.guards[0][2]=1;
+    r.values[2]=3;local.body=6;for(const q of d.rows)q.localBody=6;
+    assert.equal(run().independent,false);r.values[2]=6;local.body=4;for(const q of d.rows)q.localBody=4;
+  }
+  const removed=d.rows.pop();assert.throws(run,{code:'INVALID_FAST_TIME_AUDIT'});d.rows.push(removed);
+  d.rows[1].localBody=0;assert.throws(run,{code:'INVALID_FAST_TIME_AUDIT'});
+});
+
+test('unknown defining operands remain unresolved even inside exact limit operators',()=>{
+  const nodes=primitives();nodes.push({op:'unreviewed_source_coefficient',args:[]},{op:'coordinate',args:['time']},
+    {op:'actual_covariance_volterra',args:[0,0,4,[4]]});
+  const d={name:'opaque-volterra',variable:6,parameters:[4],matrix:[[5,0],[0,0]],initial:[1,0],normUpper:1,length:1};
+  const r=fixture(nodes,7,[],{registries:{covariance:[d]}});
+  assert.equal(r.status,'UNRESOLVED');assert.equal(r.independent,false);assert.equal(r.unknownOperations[0].op,'unreviewed_source_coefficient');
+  assert.ok(r.exactOperatorDefinitions[0].unresolvedBodyTokens.length>0);
+});
+
 let saved;
 async function setup(){
   if(!saved)saved=(async()=>{const cap=await openSavedInitializedSource(),family=attachSavedInitializedNormFamily(cap),
@@ -112,7 +211,8 @@ test('actual saved five-map fast-time independence is checked from definition bo
   const result={schema:'MathScope.N6.SavedFiveFastTimeObserved/1',startedAt,finishedAt:new Date().toISOString(),audit};
   await evidence('saved-five-fast-time-observed.json',result);
   const source=savedInitializedSourceProgram(cap);
-  const selectedCollections=source.definitionCollections.filter(r=>['expression','expressionDefinitions','monotone','fieldDefinitions','inverseDefinitions'].some(k=>r.namespace.endsWith('.'+k)));
+  const selectedCollections=source.definitionCollections.filter(r=>['expression','expressionDefinitions','monotone','quadratic','picard','fixed',
+    'fieldDefinitions','inverseDefinitions','m3GlobalPulses','m3GlobalFields'].some(k=>r.namespace.endsWith('.'+k)));
   const registryJSON=JSON.stringify(selectedCollections);
   await evidence('saved-five-fast-time-definition-readback.json',{
     schema:'MathScope.N6.SavedDefinitionReadback/1',source:cap.source,
@@ -124,11 +224,13 @@ test('actual saved five-map fast-time independence is checked from definition bo
     profiles:source.definitionCollections.map(r=>({namespace:r.namespace,isArray:Array.isArray(r.value),
       size:Array.isArray(r.value)?r.value.length:Object.keys(r.value??{}).length,
       firstKeys:Object.keys(Array.isArray(r.value)?r.value[0]??{}:r.value??{})})),
-    proofsAdded:false,wholeM3Complete:false});
+    savedDefinitionBodiesRewritten:false,newIndependentDependencyAudit:true,wholeM3Complete:false});
   console.log('FAST_TIME_AUDIT',JSON.stringify({status:audit.status,visited:audit.analysis.visitedNodeCount,
     unknownOps:[...new Set(audit.analysis.unknownOperations.map(x=>x.op))],rows:audit.analysis.rows,
     stopReason:audit.analysis.stopReason,wholeM3Complete:false}));
   assert.equal(assertSavedFiveFastTimeAudit(audit),true);
+  for(const op of ['actual_background_even_profile','actual_covariance_volterra','actual_monotone_root','actual_natural_series','actual_quadratic_root','m3_global_indexed_partial'])
+    assert.ok(audit.analysis.operationHistogram[op]>0,'The actual dependency audit must exercise '+op);
   for(const key of ['actualWholeMeanDifferenceRecomputed','smoothnessOrDomainProved','leanKernelChecked',
     'fastTimeIntegratedIntoMeanNormCertificate','initialHaarAndPositiveIBPCutoffCompositionApplied',
     'completeInitialTupleClassCertified','originalN601Complete','originalN602Complete','completeN6','wholeM3Complete'])
