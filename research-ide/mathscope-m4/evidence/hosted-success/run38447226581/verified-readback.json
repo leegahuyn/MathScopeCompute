@@ -1,0 +1,619 @@
+{
+  "schemaVersion": "mathscope.m4.verified-current-hosted-readback/1",
+  "verifiedAt": "2026-10-13T18:36:21.649Z",
+  "runId": "38447226581",
+  "runUrl": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38447226581",
+  "headSha": "0c4b3fe2a8e392283cc9c5486e4bac30407d64fb",
+  "checkedOutSourceCommit": "0c4b3fe2a8e392283cc9c5486e4bac30407d64fb",
+  "actualKernelExecutedAt": "2026-10-13T18:31:26.932Z",
+  "currentKernelExecutedDuringReadback": false,
+  "archiveSha256": "d97e476f99b31e0cfadf3517b714aed520497ea6173005bc8970b656615c24f9",
+  "pinnedReceiptSha256": "71b3f16b1a8b1d1779843d032a04a3be08f1e759a2cd8b4fe8dd34c81015481c",
+  "coreReceiptSha256": "8ba8cf2b7b8ff546813fb460494930124cf0e22b8c7e8e775d12c3af23d59b05",
+  "pinnedEnvironment": {
+    "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+    "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+    "compilerExecutableSha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "lakeVersion": "Lake version 5.0.0-src+5045d00 (Lean version 4.34.1)",
+    "lakeExecutableSha256": "6f53827dab18010d6c690d14c8401cacabc1db958edb3552a877ed4cf1dd995d",
+    "compilerFrontend": "Official pinned Lean CLI; the historical embedded driver is not reused.",
+    "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "mathlibLakeManifestSha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+    "projectLakeManifestSha256": "4484affec233552db62fa98d6ef2b185dc7b0c778a07a3156cb9f4f253e02170"
+  },
+  "coreEnvironment": {
+    "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+    "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "executableSha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550"
+  },
+  "guardTests": {
+    "pass": 26,
+    "fail": 0,
+    "skipped": 0
+  },
+  "pinnedTargets": [
+    {
+      "claimId": "M0.FINITE.D_SQUARED_ZERO",
+      "target": "MathScope.M0.Finite.differential_squared_zero",
+      "targetType": "MathScope.M0.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+      "axioms": [
+        "propext"
+      ],
+      "grade": "EXACT_FINITE",
+      "assumptions": [],
+      "scope": "Universal v in Z^4 for the fixed D1 and D0 matrices of the D=1 Cech–de Rham fixture. No full prismatic comparison or omitted-weight claim."
+    },
+    {
+      "claimId": "M0.FINITE.INTEGER_FIXTURE",
+      "target": "MathScope.M0.Finite.integer_fixture",
+      "targetType": "MathScope.M0.Finite.integer_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := -7, b := 9007199254740993, c := 11, d := -13 }) = MathScope.M0.zeroC2",
+      "axioms": [],
+      "grade": "EXACT_FINITE",
+      "assumptions": [],
+      "scope": "One exact integer vector (-7, 9007199254740993, 11, -13) under the specified finite differentials. This is a concrete fixture, not a universal theorem."
+    },
+    {
+      "claimId": "M0.ANALYTIC.GAP_EXCLUSION",
+      "target": "MathScope.M0.Analytic.gap_excludes_interval",
+      "targetType": "MathScope.M0.Analytic.gap_excludes_interval (spectrum : Set ℝ) (delta : ℝ)\n  (hGap : MathScope.M0.Analytic.GapAt spectrum delta) (energy : ℝ) : 0 < energy → energy < delta → energy ∉ spectrum",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "grade": "CONDITIONAL_FORMAL",
+      "assumptions": [
+        {
+          "id": "M0.HYP.GAP_AT",
+          "kind": "HYPOTHESIS",
+          "statement": "hGap : GapAt spectrum delta; equivalently 0 < delta and every positive energy in spectrum is at least delta.",
+          "source": "MathScope/M0/Analytic.lean",
+          "status": "EXPLICIT_PARAMETER"
+        }
+      ],
+      "scope": "For any subset of real energies and a supplied GapAt hypothesis in one fixed energy unit, no positive energy below the bound belongs to that set. No self-adjoint operator, semigroup, QFT or continuum construction is provided."
+    },
+    {
+      "claimId": "M0.CONDITIONAL.SELECTED_GAP",
+      "target": "MathScope.M0.Conditional.selected_gap_excludes_interval",
+      "targetType": "MathScope.M0.Conditional.selected_gap_excludes_interval (energy : ℝ) :\n  0 < energy → energy < 1 → energy ∉ MathScope.M0.Conditional.selectedSpectrum",
+      "axioms": [
+        "Classical.choice",
+        "MathScope.M0.Conditional.selectedSpectrum",
+        "MathScope.M0.Conditional.userAssumedGapAtOne",
+        "Quot.sound",
+        "propext"
+      ],
+      "grade": "CONDITIONAL_FORMAL",
+      "assumptions": [
+        {
+          "id": "M0.AXIOM.SELECTED_SPECTRUM",
+          "kind": "USER_AXIOM",
+          "declaration": "MathScope.M0.Conditional.selectedSpectrum",
+          "statement": "selectedSpectrum : Set Real (uninterpreted spectrum object)",
+          "source": "MathScope/M0/Conditional.lean",
+          "status": "ASSUMED"
+        },
+        {
+          "id": "M0.AXIOM.GAP_ONE",
+          "kind": "USER_AXIOM",
+          "declaration": "MathScope.M0.Conditional.userAssumedGapAtOne",
+          "statement": "userAssumedGapAtOne : GapAt selectedSpectrum 1",
+          "source": "MathScope/M0/Conditional.lean",
+          "status": "ASSUMED"
+        }
+      ],
+      "scope": "Consequence of two named custom axioms about one uninterpreted real spectrum and a gap at 1. It does not identify this spectrum with any Yang–Mills Hamiltonian."
+    },
+    {
+      "claimId": "M0.COMPARISON.GAP_TRANSFER",
+      "target": "MathScope.M0.Comparison.transport_gap",
+      "targetType": "MathScope.M0.Comparison.transport_gap (original observed : Set ℝ) (delta : ℝ)\n  (comparison : MathScope.M0.Comparison.SpectrumComparison original observed)\n  (hObserved : MathScope.M0.Analytic.GapAt observed delta) : MathScope.M0.Analytic.GapAt original delta",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "grade": "CONDITIONAL_FORMAL",
+      "assumptions": [
+        {
+          "id": "M0.HYP.SPECTRUM_INCLUSION",
+          "kind": "HYPOTHESIS",
+          "statement": "comparison : SpectrumComparison original observed, containing original subset observed.",
+          "source": "MathScope/M0/Comparison.lean",
+          "status": "EXPLICIT_PARAMETER"
+        },
+        {
+          "id": "M0.HYP.OBSERVED_GAP",
+          "kind": "HYPOTHESIS",
+          "statement": "hObserved : GapAt observed delta",
+          "source": "MathScope/M0/Comparison.lean",
+          "status": "EXPLICIT_PARAMETER"
+        }
+      ],
+      "scope": "A gap on an observed superset transfers to an original subset when the explicit SpectrumComparison.inclusion field is supplied in the same energy unit."
+    }
+  ],
+  "coreTargets": [
+    {
+      "target": "MathScope.M0.Finite.matrix_product_zero",
+      "targetType": "MathScope.M0.Finite.matrix_product_zero : MathScope.M0.matrixProduct = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]",
+      "axioms": [
+        "propext"
+      ],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M0.Finite.differential_squared_zero",
+      "targetType": "MathScope.M0.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+      "axioms": [
+        "propext"
+      ],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M0.Finite.integer_fixture",
+      "targetType": "MathScope.M0.Finite.integer_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := -7, b := 9007199254740993, c := 11, d := -13 }) = MathScope.M0.zeroC2",
+      "axioms": [],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Finite.delta_two_numerator",
+      "targetType": "MathScope.M4.Finite.delta_two_numerator (x y : Int) : (x + y) * (x + y) - x * x - y * y = 2 * x * y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Finite.differential_squared_zero",
+      "targetType": "MathScope.M4.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+      "axioms": [
+        "propext"
+      ],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Finite.scalar_chain_map",
+      "targetType": "MathScope.M4.Finite.scalar_chain_map (s : Int) (v : MathScope.M0.C0) :\n  MathScope.M0.d0 { a := s * v.a, b := s * v.b, c := s * v.c, d := s * v.d } =\n    have w := MathScope.M0.d0 v;\n    { u := s * w.u, v := s * w.v, w := s * w.w, x := s * w.x, y := s * w.y }",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Finite.prime_interval_fixture",
+      "targetType": "MathScope.M4.Finite.prime_interval_fixture :\n  List.filter MathScope.M4.primeTrial (List.range 30) = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]",
+      "axioms": [],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Finite.bracket_antisymmetric",
+      "targetType": "MathScope.M4.Finite.bracket_antisymmetric (A B : MathScope.M4.Mat2) :\n  MathScope.M4.add (MathScope.M4.bracket A B) (MathScope.M4.bracket B A) = MathScope.M4.zero",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Finite.bracket_jacobi",
+      "targetType": "MathScope.M4.Finite.bracket_jacobi (A B C : MathScope.M4.Mat2) :\n  MathScope.M4.add\n      (MathScope.M4.add (MathScope.M4.bracket A (MathScope.M4.bracket B C))\n        (MathScope.M4.bracket B (MathScope.M4.bracket C A)))\n      (MathScope.M4.bracket C (MathScope.M4.bracket A B)) =\n    MathScope.M4.zero",
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Finite.shear_plaquette",
+      "targetType": "MathScope.M4.Finite.shear_plaquette (s t : Int) :\n  MathScope.M4.mul\n      (MathScope.M4.mul (MathScope.M4.mul (MathScope.M4.shear s) (MathScope.M4.shear t)) (MathScope.M4.shear (-s)))\n      (MathScope.M4.shear (-t)) =\n    MathScope.M4.identity",
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Analytic.uniform_limit_uniformly_continuous",
+      "targetType": "MathScope.M4.Analytic.uniform_limit_uniformly_continuous {X Y : Type} (mx : MathScope.M4.PrecisionMetric X)\n  (my : MathScope.M4.PrecisionMetric Y) (u : Nat → X → Y) (f : X → Y) (hUniform : MathScope.M4.UniformConverges my u f)\n  (hContinuous : ∀ (n : Nat), MathScope.M4.UniformContinuous mx my (u n)) : MathScope.M4.UniformContinuous mx my f",
+      "axioms": [],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Comparison.uniform_continuity_adapter",
+      "targetType": "MathScope.M4.Comparison.uniform_continuity_adapter {X Y : Type} (mx : MathScope.M4.PrecisionMetric X)\n  (my : MathScope.M4.PrecisionMetric Y) (u : Nat → X → Y) (f : X → Y) (hUniform : MathScope.M4.UniformConverges my u f)\n  (hContinuous : ∀ (n : Nat), MathScope.M4.UniformContinuous mx my (u n)) : MathScope.M4.UniformContinuous mx my f",
+      "axioms": [],
+      "userAxioms": []
+    },
+    {
+      "target": "MathScope.M4.Conditional.assumed_cauchy_limit",
+      "targetType": "MathScope.M4.Conditional.assumed_cauchy_limit {X : Type} (m : MathScope.M4.PrecisionMetric X) (u : Nat → X)\n  (hCauchy : MathScope.M4.Cauchy m u) : ∃ x, MathScope.M4.Converges m u x",
+      "axioms": [
+        "MathScope.M4.Conditional.assumedComplete"
+      ],
+      "userAxioms": [
+        "MathScope.M4.Conditional.assumedComplete"
+      ]
+    },
+    {
+      "target": "MathScope.M4.Generated.Jdc78e9cb182c9864ae5c.selected_finite_fixture",
+      "targetType": "MathScope.M4.Generated.Jdc78e9cb182c9864ae5c.selected_finite_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := 2, b := -3, c := 5, d := 7 }) = MathScope.M0.zeroC2",
+      "axioms": [
+        "propext"
+      ],
+      "userAxioms": []
+    }
+  ],
+  "pinnedNegativeControls": [
+    {
+      "name": "NegativeFalse",
+      "sourceSha256": "bb8c5d5918222e9b4d279b6e41df5059171fb75ecca29b8c1f367d396ba5f261",
+      "exitCode": 1,
+      "rejectedForExpectedReason": true,
+      "logPath": "negative-negativefalse.log",
+      "logSha256": "5c4dac5dce15a0ed595c3e733b5e348b6a9bcb9de22008896735b827198e0176"
+    },
+    {
+      "name": "NegativeMatrix",
+      "sourceSha256": "1ce60aeb2856a9bbd80e2deaf6b0a2e84f61a5b0adf8a7b661fb6dcdb90b4c9b",
+      "exitCode": 1,
+      "rejectedForExpectedReason": true,
+      "logPath": "negative-negativematrix.log",
+      "logSha256": "6cbe67929840727b6749ef6e7de702cae35e9f4ba6209aba75117543611e64dd"
+    }
+  ],
+  "coreNegativeControls": [
+    {
+      "name": "NegativeFalse",
+      "exitCode": 1,
+      "rejectedForExpectedReason": true
+    },
+    {
+      "name": "NegativePrime",
+      "exitCode": 1,
+      "rejectedForExpectedReason": true
+    }
+  ],
+  "budget": {
+    "compileMilliseconds": 60000,
+    "ordinaryMemoryMiB": 512,
+    "newFiniteMemoryMiB": 1536,
+    "threads": 1,
+    "correction": {
+      "runId": "38446065282",
+      "sourceCommit": "7d29107",
+      "failedMemoryMiB": 512,
+      "failedModule": "MathScope/M4/Finite.lean",
+      "observedFailure": "Actual Lean4.34.1 Linux kernel memory limit at the cubic grind proof, followed by propagated memory failure at shear_plaquette. The proofs are replaced by expanded polynomial/linear omega steps. Only the Linux new finite module gets a bounded 1536MiB allowance; prior logs, all other module/negative budgets and the 60s timeout are retained."
+    }
+  },
+  "evidence": [
+    {
+      "path": "archive.zip",
+      "sha256": "d97e476f99b31e0cfadf3517b714aed520497ea6173005bc8970b656615c24f9",
+      "bytes": 555989
+    },
+    {
+      "path": "pinned-replay/project-lake-manifest.json",
+      "sha256": "4484affec233552db62fa98d6ef2b185dc7b0c778a07a3156cb9f4f253e02170",
+      "bytes": 3162
+    },
+    {
+      "path": "pinned-replay/mathlib-lake-manifest.json",
+      "sha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+      "bytes": 2811
+    },
+    {
+      "path": "pinned-replay/sources/MathScope/M0/Defs.lean",
+      "sha256": "b00496552d9de1c5271fc319670902785af5a0785aa1fe31451985aa1f2bbe37",
+      "bytes": 1558
+    },
+    {
+      "path": "pinned-replay/sources/MathScope/M0/Finite.lean",
+      "sha256": "07b6309d8b638c13924c63ce3c0d4a4b2023211e56ec68c95210ffdcf88b5713",
+      "bytes": 1130
+    },
+    {
+      "path": "pinned-replay/sources/MathScope/M0/Analytic.lean",
+      "sha256": "5b1e099473e7a4b23eee0ab7b9132e07a8c093e0249e2ccb7a74189811ae7313",
+      "bytes": 1973
+    },
+    {
+      "path": "pinned-replay/sources/MathScope/M0/Conditional.lean",
+      "sha256": "79c3fd19000b46cecb1181dfb89a16d81b49735446fa7cafaf82a0434d51c917",
+      "bytes": 980
+    },
+    {
+      "path": "pinned-replay/sources/MathScope/M0/Comparison.lean",
+      "sha256": "c5629d6c17cde5f67e50c577a2a7b71dd0b7223db657fdb27527312c2d02a2af",
+      "bytes": 868
+    },
+    {
+      "path": "pinned-replay/sources/NegativeFalse.lean",
+      "sha256": "bb8c5d5918222e9b4d279b6e41df5059171fb75ecca29b8c1f367d396ba5f261",
+      "bytes": 126
+    },
+    {
+      "path": "pinned-replay/sources/NegativeMatrix.lean",
+      "sha256": "1ce60aeb2856a9bbd80e2deaf6b0a2e84f61a5b0adf8a7b661fb6dcdb90b4c9b",
+      "bytes": 242
+    },
+    {
+      "path": "pinned-replay/lakefile.lean",
+      "sha256": "51a6509b8449dddac614806aeddbddc448fefe126f891e3ba41072a2d725be82",
+      "bytes": 203
+    },
+    {
+      "path": "pinned-replay/lean-toolchain",
+      "sha256": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b",
+      "bytes": 25
+    },
+    {
+      "path": "pinned-replay/download-official-lean.log",
+      "sha256": "e2d2aa1e801fec542b8d9e87e4f15a50c221fcfaa6642d10ab197bdd3c27417d",
+      "bytes": 476
+    },
+    {
+      "path": "pinned-replay/extract-official-lean.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "pinned-replay/lean-version.log",
+      "sha256": "355a9a028f81641782d75d6e6b58dec70f29d2f61238a9e271690259d9bf5680",
+      "bytes": 106
+    },
+    {
+      "path": "pinned-replay/lake-version.log",
+      "sha256": "36526a338068c343bedff5daa38fec328b4f722df1e8f0b5d026d4f0f908f3a3",
+      "bytes": 53
+    },
+    {
+      "path": "pinned-replay/lake-update-pinned.log",
+      "sha256": "ef8c2dadae5a0c60848d73330b9001c34963040381ec928bded1d5b8fcf88f7f",
+      "bytes": 1555
+    },
+    {
+      "path": "pinned-replay/mathlib-cache-exact-import-closure.log",
+      "sha256": "29815072700a34ce8bb4c475254df2d37d59c6fc1cda808ac3cb9c9cae300e8a",
+      "bytes": 2612
+    },
+    {
+      "path": "pinned-replay/compile-defs.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "pinned-replay/compiled/MathScope/M0/Defs.olean",
+      "sha256": "6c3843dde56d36e375c8713b89f6f22cc7e77cd9fd7b9ec7b498eb1ac0d6004b",
+      "bytes": 415000
+    },
+    {
+      "path": "pinned-replay/compile-finite.log",
+      "sha256": "72fca58e1260d3418a194d3322ba18cdc9df903a4b1eba45453ff2c8c4890935",
+      "bytes": 610
+    },
+    {
+      "path": "pinned-replay/compiled/MathScope/M0/Finite.olean",
+      "sha256": "4913bb4e2e64099deb7cfd2163bee1f11d5a5b05239e9c0b87578c5da57d161a",
+      "bytes": 17808
+    },
+    {
+      "path": "pinned-replay/compile-analytic.log",
+      "sha256": "be64cfe388ea601349c533fc59596334cb470379ff467860a1d98c0017958292",
+      "bytes": 977
+    },
+    {
+      "path": "pinned-replay/compiled/MathScope/M0/Analytic.olean",
+      "sha256": "c30b20c51a741bb53703866b14686d7cf355753e918cbb4fa77d2d0cc7edee83",
+      "bytes": 18600
+    },
+    {
+      "path": "pinned-replay/compile-conditional.log",
+      "sha256": "57725831910b2082c3afa838394e95c39285f72d0b69118fbc04a0643de2f55c",
+      "bytes": 539
+    },
+    {
+      "path": "pinned-replay/compiled/MathScope/M0/Conditional.olean",
+      "sha256": "169dd4d26a8a3f9b128017e6efb9ac41de2b3dbf6bf1ac079d6cf5abc6f000bd",
+      "bytes": 10136
+    },
+    {
+      "path": "pinned-replay/compile-comparison.log",
+      "sha256": "34b3b75a629b4c83d2d4edd466741c14bc62377eaf58c94c87f5757ccaf9d124",
+      "bytes": 363
+    },
+    {
+      "path": "pinned-replay/compiled/MathScope/M0/Comparison.olean",
+      "sha256": "4bea61d5b44e633f0e7a318bd1e0b8346879bc534c21f2bf881becca09659131",
+      "bytes": 16544
+    },
+    {
+      "path": "pinned-replay/negative-negativefalse.log",
+      "sha256": "5c4dac5dce15a0ed595c3e733b5e348b6a9bcb9de22008896735b827198e0176",
+      "bytes": 141
+    },
+    {
+      "path": "pinned-replay/negative-negativematrix.log",
+      "sha256": "6cbe67929840727b6749ef6e7de702cae35e9f4ba6209aba75117543611e64dd",
+      "bytes": 146
+    },
+    {
+      "path": "core-replay/sources/MathScope/M0/Defs.lean",
+      "sha256": "b00496552d9de1c5271fc319670902785af5a0785aa1fe31451985aa1f2bbe37",
+      "bytes": 1558
+    },
+    {
+      "path": "core-replay/sources/MathScope/M0/Finite.lean",
+      "sha256": "07b6309d8b638c13924c63ce3c0d4a4b2023211e56ec68c95210ffdcf88b5713",
+      "bytes": 1130
+    },
+    {
+      "path": "core-replay/sources/MathScope/M4/Defs.lean",
+      "sha256": "6f4e450a25322939c00a3684fbd052ecabc14d3c1c8ad587fb6d1f99cf5f0f49",
+      "bytes": 1929
+    },
+    {
+      "path": "core-replay/sources/MathScope/M4/Finite.lean",
+      "sha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e",
+      "bytes": 2401
+    },
+    {
+      "path": "core-replay/sources/MathScope/M4/Analytic.lean",
+      "sha256": "8cbd276dca0dc5d5267a615107a6ba6c1f796769dbbaaa0212c331b71b3806e0",
+      "bytes": 1223
+    },
+    {
+      "path": "core-replay/sources/MathScope/M4/Comparison.lean",
+      "sha256": "e1acc6c6359e4c805f910aa4d707b74ae5cbcfdc8e2e3c41194583e71339cca0",
+      "bytes": 728
+    },
+    {
+      "path": "core-replay/sources/MathScope/M4/Conditional.lean",
+      "sha256": "bef1701760da5abb50b3786e0a8af0d0a44022ce14ed706bddd1f79466b413b8",
+      "bytes": 510
+    },
+    {
+      "path": "core-replay/sources/MathScope/M4/Open.lean",
+      "sha256": "e976529a4946eb203009fe8b738b1e9f6aeb96a6c9acf89f2a7cbf6c64613a50",
+      "bytes": 380
+    },
+    {
+      "path": "core-replay/sources/MathScope/M4/Generated.lean",
+      "sha256": "43cdc79ccee212a9152d90de8f58504bc9bff224da02c9d039183b01d7e247c6",
+      "bytes": 619
+    },
+    {
+      "path": "core-replay/sources/NegativeFalse.lean",
+      "sha256": "2ea25c676fe6e3427ea97d641219cdb48359775e5023e2715a6acfd5f5a4c140",
+      "bytes": 46
+    },
+    {
+      "path": "core-replay/sources/NegativePrime.lean",
+      "sha256": "cbcac5d575b3cbb0ca63707f197d072c8e9f67ef1697b7b06ad7b1f84812c662",
+      "bytes": 82
+    },
+    {
+      "path": "core-replay/lean-version.log",
+      "sha256": "355a9a028f81641782d75d6e6b58dec70f29d2f61238a9e271690259d9bf5680",
+      "bytes": 106
+    },
+    {
+      "path": "core-replay/compile-MathScope-M0-Defs.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "core-replay/compiled/MathScope/M0/Defs.olean",
+      "sha256": "a8f0390888d7e73441f2323c3133f038ded885bc8e1815f06af0559e1e941074",
+      "bytes": 415904
+    },
+    {
+      "path": "core-replay/compile-MathScope-M0-Finite.log",
+      "sha256": "72fca58e1260d3418a194d3322ba18cdc9df903a4b1eba45453ff2c8c4890935",
+      "bytes": 610
+    },
+    {
+      "path": "core-replay/compiled/MathScope/M0/Finite.olean",
+      "sha256": "b8677f0e07d7b9b1a110514ff8426663c4a5c207f168fd9cc89c8eb6c94c0ea8",
+      "bytes": 17808
+    },
+    {
+      "path": "core-replay/compile-MathScope-M4-Defs.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "core-replay/compiled/MathScope/M4/Defs.olean",
+      "sha256": "ac410205ba360bc42ab802308dbdb777e33b7be159fbbca503eff618214922fb",
+      "bytes": 242344
+    },
+    {
+      "path": "core-replay/compile-MathScope-M4-Finite.log",
+      "sha256": "2af9c4aa2df56f111c12eeb5d73fd002d6c25425d93ae75470184029dd449313",
+      "bytes": 1950
+    },
+    {
+      "path": "core-replay/compiled/MathScope/M4/Finite.olean",
+      "sha256": "0bf4a25d0aa8f8ee5c41778a10a901abd9790a78a097e6efbf805429e4173e05",
+      "bytes": 511664
+    },
+    {
+      "path": "core-replay/compile-MathScope-M4-Analytic.log",
+      "sha256": "414bcdd1a84e8fd6907d18b8a33d06330e6608c57fd24e2f32a253c3825905f2",
+      "bytes": 440
+    },
+    {
+      "path": "core-replay/compiled/MathScope/M4/Analytic.olean",
+      "sha256": "4f93832b43d7b7f625b91b76b7a449d591758ea881895c90d5c15cc81441cba5",
+      "bytes": 17960
+    },
+    {
+      "path": "core-replay/compile-MathScope-M4-Comparison.log",
+      "sha256": "2d282c7abd158426f4c4848f68c1afaa5ddadeff1818603ca341230e50b5aabd",
+      "bytes": 428
+    },
+    {
+      "path": "core-replay/compiled/MathScope/M4/Comparison.olean",
+      "sha256": "f751674f4be5c2d679d55de8a15efbd76f8d96c9a668a4a8174dac3481d4cb93",
+      "bytes": 7096
+    },
+    {
+      "path": "core-replay/compile-MathScope-M4-Conditional.log",
+      "sha256": "c3731b025fc2369273877d9ca2f97d3cb3f361043ce5b549f16533a6d102c306",
+      "bytes": 296
+    },
+    {
+      "path": "core-replay/compiled/MathScope/M4/Conditional.olean",
+      "sha256": "ff0fd48571c14ec769feb820e5bc5223180536c40511310203eaabe309d37a8f",
+      "bytes": 7264
+    },
+    {
+      "path": "core-replay/compile-MathScope-M4-Open.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "core-replay/compiled/MathScope/M4/Open.olean",
+      "sha256": "042761fd15589dc2af1420bdcb2854e15841a9d792d1521a746b3dfe109f7fb6",
+      "bytes": 18456
+    },
+    {
+      "path": "core-replay/compile-MathScope-M4-Generated.log",
+      "sha256": "5bfcb3bec986605b04f027fae0c9d373c59440c8876b45779a397e98c30c2386",
+      "bytes": 265
+    },
+    {
+      "path": "core-replay/compiled/MathScope/M4/Generated.olean",
+      "sha256": "25ae93f5a04d4c8f73908cc9f2107f6a90976f59d8ce77a25dc37843df1f2b7a",
+      "bytes": 7136
+    },
+    {
+      "path": "core-replay/NegativeFalse.log",
+      "sha256": "07edf4619c3f017a6640c0c27cfa3ed236b79bd64ee413475b4338433b8dd047",
+      "bytes": 150
+    },
+    {
+      "path": "core-replay/NegativePrime.log",
+      "sha256": "e67f812f3f8f10fa097245755027d2611454f4c824d2d68763b974a5a88e554e",
+      "bytes": 129
+    },
+    {
+      "path": "m4-guard-tests.tap",
+      "sha256": "7f66c03114eb8acffaf6c1876546c16b2228130586469d92680ba1614e63b4d1",
+      "bytes": 6671
+    }
+  ],
+  "allSourceLogOleanBytesVerified": true,
+  "allSourcesMatchPublishedHead": true,
+  "grantsM4FinalAcceptance": false,
+  "publicationConfirmed": false,
+  "limitation": "Actual official Linux successes for the exact inherited five targets and fourteen core targets (eleven new M4 claims). No full I3/R1 criterion acceptance or global research theorem follows."
+}

@@ -1,0 +1,855 @@
+{
+  "schemaVersion": "mathscope.m4.public-formal-audit/1",
+  "readbackAt": "2026-10-13T18:26:47.047Z",
+  "verified": true,
+  "hostedKernelReadbacks": [
+    {
+      "verified": true,
+      "status": "DATED_HOSTED_KERNEL_BYTES_VERIFIED",
+      "runId": "38394604031",
+      "runUrl": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38394604031",
+      "headSha": "f1206131fb87c929d89b5fcc8edf248e66692ac0",
+      "sourceCommit": "f1206131fb87c929d89b5fcc8edf248e66692ac0",
+      "executedAt": "2026-10-13T12:05:45.132Z",
+      "environment": {
+        "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+        "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+        "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+        "compilerExecutableSha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+        "lakeVersion": "Lake version 5.0.0-src+5045d00 (Lean version 4.34.1)",
+        "lakeExecutableSha256": "6f53827dab18010d6c690d14c8401cacabc1db958edb3552a877ed4cf1dd995d",
+        "compilerFrontend": "Official pinned Lean CLI; the historical embedded driver is not reused.",
+        "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+        "mathlibLakeManifestSha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+        "projectLakeManifestSha256": "4484affec233552db62fa98d6ef2b185dc7b0c778a07a3156cb9f4f253e02170"
+      },
+      "targets": [
+        {
+          "claimId": "M0.FINITE.D_SQUARED_ZERO",
+          "target": "MathScope.M0.Finite.differential_squared_zero",
+          "targetType": "MathScope.M0.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+          "axioms": [
+            "propext"
+          ],
+          "grade": "EXACT_FINITE",
+          "assumptions": [],
+          "scope": "Universal v in Z^4 for the fixed D1 and D0 matrices of the D=1 Cech–de Rham fixture. No full prismatic comparison or omitted-weight claim."
+        },
+        {
+          "claimId": "M0.FINITE.INTEGER_FIXTURE",
+          "target": "MathScope.M0.Finite.integer_fixture",
+          "targetType": "MathScope.M0.Finite.integer_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := -7, b := 9007199254740993, c := 11, d := -13 }) = MathScope.M0.zeroC2",
+          "axioms": [],
+          "grade": "EXACT_FINITE",
+          "assumptions": [],
+          "scope": "One exact integer vector (-7, 9007199254740993, 11, -13) under the specified finite differentials. This is a concrete fixture, not a universal theorem."
+        },
+        {
+          "claimId": "M0.ANALYTIC.GAP_EXCLUSION",
+          "target": "MathScope.M0.Analytic.gap_excludes_interval",
+          "targetType": "MathScope.M0.Analytic.gap_excludes_interval (spectrum : Set ℝ) (delta : ℝ)\n  (hGap : MathScope.M0.Analytic.GapAt spectrum delta) (energy : ℝ) : 0 < energy → energy < delta → energy ∉ spectrum",
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "grade": "CONDITIONAL_FORMAL",
+          "assumptions": [
+            {
+              "id": "M0.HYP.GAP_AT",
+              "kind": "HYPOTHESIS",
+              "statement": "hGap : GapAt spectrum delta; equivalently 0 < delta and every positive energy in spectrum is at least delta.",
+              "source": "MathScope/M0/Analytic.lean",
+              "status": "EXPLICIT_PARAMETER"
+            }
+          ],
+          "scope": "For any subset of real energies and a supplied GapAt hypothesis in one fixed energy unit, no positive energy below the bound belongs to that set. No self-adjoint operator, semigroup, QFT or continuum construction is provided."
+        },
+        {
+          "claimId": "M0.CONDITIONAL.SELECTED_GAP",
+          "target": "MathScope.M0.Conditional.selected_gap_excludes_interval",
+          "targetType": "MathScope.M0.Conditional.selected_gap_excludes_interval (energy : ℝ) :\n  0 < energy → energy < 1 → energy ∉ MathScope.M0.Conditional.selectedSpectrum",
+          "axioms": [
+            "Classical.choice",
+            "MathScope.M0.Conditional.selectedSpectrum",
+            "MathScope.M0.Conditional.userAssumedGapAtOne",
+            "Quot.sound",
+            "propext"
+          ],
+          "grade": "CONDITIONAL_FORMAL",
+          "assumptions": [
+            {
+              "id": "M0.AXIOM.SELECTED_SPECTRUM",
+              "kind": "USER_AXIOM",
+              "declaration": "MathScope.M0.Conditional.selectedSpectrum",
+              "statement": "selectedSpectrum : Set Real (uninterpreted spectrum object)",
+              "source": "MathScope/M0/Conditional.lean",
+              "status": "ASSUMED"
+            },
+            {
+              "id": "M0.AXIOM.GAP_ONE",
+              "kind": "USER_AXIOM",
+              "declaration": "MathScope.M0.Conditional.userAssumedGapAtOne",
+              "statement": "userAssumedGapAtOne : GapAt selectedSpectrum 1",
+              "source": "MathScope/M0/Conditional.lean",
+              "status": "ASSUMED"
+            }
+          ],
+          "scope": "Consequence of two named custom axioms about one uninterpreted real spectrum and a gap at 1. It does not identify this spectrum with any Yang–Mills Hamiltonian."
+        },
+        {
+          "claimId": "M0.COMPARISON.GAP_TRANSFER",
+          "target": "MathScope.M0.Comparison.transport_gap",
+          "targetType": "MathScope.M0.Comparison.transport_gap (original observed : Set ℝ) (delta : ℝ)\n  (comparison : MathScope.M0.Comparison.SpectrumComparison original observed)\n  (hObserved : MathScope.M0.Analytic.GapAt observed delta) : MathScope.M0.Analytic.GapAt original delta",
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "grade": "CONDITIONAL_FORMAL",
+          "assumptions": [
+            {
+              "id": "M0.HYP.SPECTRUM_INCLUSION",
+              "kind": "HYPOTHESIS",
+              "statement": "comparison : SpectrumComparison original observed, containing original subset observed.",
+              "source": "MathScope/M0/Comparison.lean",
+              "status": "EXPLICIT_PARAMETER"
+            },
+            {
+              "id": "M0.HYP.OBSERVED_GAP",
+              "kind": "HYPOTHESIS",
+              "statement": "hObserved : GapAt observed delta",
+              "source": "MathScope/M0/Comparison.lean",
+              "status": "EXPLICIT_PARAMETER"
+            }
+          ],
+          "scope": "A gap on an observed superset transfers to an original subset when the explicit SpectrumComparison.inclusion field is supplied in the same energy unit."
+        }
+      ],
+      "negativeControls": [
+        {
+          "name": "NegativeFalse",
+          "sourceSha256": "bb8c5d5918222e9b4d279b6e41df5059171fb75ecca29b8c1f367d396ba5f261",
+          "exitCode": 1,
+          "rejectedForExpectedReason": true,
+          "logPath": "negative-negativefalse.log",
+          "logSha256": "5c4dac5dce15a0ed595c3e733b5e348b6a9bcb9de22008896735b827198e0176"
+        },
+        {
+          "name": "NegativeMatrix",
+          "sourceSha256": "1ce60aeb2856a9bbd80e2deaf6b0a2e84f61a5b0adf8a7b661fb6dcdb90b4c9b",
+          "exitCode": 1,
+          "rejectedForExpectedReason": true,
+          "logPath": "negative-negativematrix.log",
+          "logSha256": "6cbe67929840727b6749ef6e7de702cae35e9f4ba6209aba75117543611e64dd"
+        }
+      ],
+      "elapsedMilliseconds": 86542,
+      "currentKernelExecuted": false,
+      "grantsM4FinalAcceptance": false,
+      "receiptSha256": "8ff837a9fc2699579b6f34a4ab31125f5bd00774115b2610fc3e7545671290fe"
+    },
+    {
+      "verified": true,
+      "status": "DATED_HOSTED_KERNEL_BYTES_VERIFIED",
+      "runId": "38394614544",
+      "runUrl": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38394614544",
+      "headSha": "f1206131fb87c929d89b5fcc8edf248e66692ac0",
+      "sourceCommit": "ef7a21f39b5caf5caa88588fcd8340316208df6b",
+      "executedAt": "2026-10-13T12:05:29.771Z",
+      "environment": {
+        "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+        "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+        "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+        "compilerExecutableSha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+        "lakeVersion": "Lake version 5.0.0-src+5045d00 (Lean version 4.34.1)",
+        "lakeExecutableSha256": "6f53827dab18010d6c690d14c8401cacabc1db958edb3552a877ed4cf1dd995d",
+        "compilerFrontend": "Official pinned Lean CLI; the historical embedded driver is not reused.",
+        "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+        "mathlibLakeManifestSha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+        "projectLakeManifestSha256": "4484affec233552db62fa98d6ef2b185dc7b0c778a07a3156cb9f4f253e02170"
+      },
+      "targets": [
+        {
+          "claimId": "M0.FINITE.D_SQUARED_ZERO",
+          "target": "MathScope.M0.Finite.differential_squared_zero",
+          "targetType": "MathScope.M0.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+          "axioms": [
+            "propext"
+          ],
+          "grade": "EXACT_FINITE",
+          "assumptions": [],
+          "scope": "Universal v in Z^4 for the fixed D1 and D0 matrices of the D=1 Cech–de Rham fixture. No full prismatic comparison or omitted-weight claim."
+        },
+        {
+          "claimId": "M0.FINITE.INTEGER_FIXTURE",
+          "target": "MathScope.M0.Finite.integer_fixture",
+          "targetType": "MathScope.M0.Finite.integer_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := -7, b := 9007199254740993, c := 11, d := -13 }) = MathScope.M0.zeroC2",
+          "axioms": [],
+          "grade": "EXACT_FINITE",
+          "assumptions": [],
+          "scope": "One exact integer vector (-7, 9007199254740993, 11, -13) under the specified finite differentials. This is a concrete fixture, not a universal theorem."
+        },
+        {
+          "claimId": "M0.ANALYTIC.GAP_EXCLUSION",
+          "target": "MathScope.M0.Analytic.gap_excludes_interval",
+          "targetType": "MathScope.M0.Analytic.gap_excludes_interval (spectrum : Set ℝ) (delta : ℝ)\n  (hGap : MathScope.M0.Analytic.GapAt spectrum delta) (energy : ℝ) : 0 < energy → energy < delta → energy ∉ spectrum",
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "grade": "CONDITIONAL_FORMAL",
+          "assumptions": [
+            {
+              "id": "M0.HYP.GAP_AT",
+              "kind": "HYPOTHESIS",
+              "statement": "hGap : GapAt spectrum delta; equivalently 0 < delta and every positive energy in spectrum is at least delta.",
+              "source": "MathScope/M0/Analytic.lean",
+              "status": "EXPLICIT_PARAMETER"
+            }
+          ],
+          "scope": "For any subset of real energies and a supplied GapAt hypothesis in one fixed energy unit, no positive energy below the bound belongs to that set. No self-adjoint operator, semigroup, QFT or continuum construction is provided."
+        },
+        {
+          "claimId": "M0.CONDITIONAL.SELECTED_GAP",
+          "target": "MathScope.M0.Conditional.selected_gap_excludes_interval",
+          "targetType": "MathScope.M0.Conditional.selected_gap_excludes_interval (energy : ℝ) :\n  0 < energy → energy < 1 → energy ∉ MathScope.M0.Conditional.selectedSpectrum",
+          "axioms": [
+            "Classical.choice",
+            "MathScope.M0.Conditional.selectedSpectrum",
+            "MathScope.M0.Conditional.userAssumedGapAtOne",
+            "Quot.sound",
+            "propext"
+          ],
+          "grade": "CONDITIONAL_FORMAL",
+          "assumptions": [
+            {
+              "id": "M0.AXIOM.SELECTED_SPECTRUM",
+              "kind": "USER_AXIOM",
+              "declaration": "MathScope.M0.Conditional.selectedSpectrum",
+              "statement": "selectedSpectrum : Set Real (uninterpreted spectrum object)",
+              "source": "MathScope/M0/Conditional.lean",
+              "status": "ASSUMED"
+            },
+            {
+              "id": "M0.AXIOM.GAP_ONE",
+              "kind": "USER_AXIOM",
+              "declaration": "MathScope.M0.Conditional.userAssumedGapAtOne",
+              "statement": "userAssumedGapAtOne : GapAt selectedSpectrum 1",
+              "source": "MathScope/M0/Conditional.lean",
+              "status": "ASSUMED"
+            }
+          ],
+          "scope": "Consequence of two named custom axioms about one uninterpreted real spectrum and a gap at 1. It does not identify this spectrum with any Yang–Mills Hamiltonian."
+        },
+        {
+          "claimId": "M0.COMPARISON.GAP_TRANSFER",
+          "target": "MathScope.M0.Comparison.transport_gap",
+          "targetType": "MathScope.M0.Comparison.transport_gap (original observed : Set ℝ) (delta : ℝ)\n  (comparison : MathScope.M0.Comparison.SpectrumComparison original observed)\n  (hObserved : MathScope.M0.Analytic.GapAt observed delta) : MathScope.M0.Analytic.GapAt original delta",
+          "axioms": [
+            "Classical.choice",
+            "Quot.sound",
+            "propext"
+          ],
+          "grade": "CONDITIONAL_FORMAL",
+          "assumptions": [
+            {
+              "id": "M0.HYP.SPECTRUM_INCLUSION",
+              "kind": "HYPOTHESIS",
+              "statement": "comparison : SpectrumComparison original observed, containing original subset observed.",
+              "source": "MathScope/M0/Comparison.lean",
+              "status": "EXPLICIT_PARAMETER"
+            },
+            {
+              "id": "M0.HYP.OBSERVED_GAP",
+              "kind": "HYPOTHESIS",
+              "statement": "hObserved : GapAt observed delta",
+              "source": "MathScope/M0/Comparison.lean",
+              "status": "EXPLICIT_PARAMETER"
+            }
+          ],
+          "scope": "A gap on an observed superset transfers to an original subset when the explicit SpectrumComparison.inclusion field is supplied in the same energy unit."
+        }
+      ],
+      "negativeControls": [
+        {
+          "name": "NegativeFalse",
+          "sourceSha256": "bb8c5d5918222e9b4d279b6e41df5059171fb75ecca29b8c1f367d396ba5f261",
+          "exitCode": 1,
+          "rejectedForExpectedReason": true,
+          "logPath": "negative-negativefalse.log",
+          "logSha256": "5c4dac5dce15a0ed595c3e733b5e348b6a9bcb9de22008896735b827198e0176"
+        },
+        {
+          "name": "NegativeMatrix",
+          "sourceSha256": "1ce60aeb2856a9bbd80e2deaf6b0a2e84f61a5b0adf8a7b661fb6dcdb90b4c9b",
+          "exitCode": 1,
+          "rejectedForExpectedReason": true,
+          "logPath": "negative-negativematrix.log",
+          "logSha256": "6cbe67929840727b6749ef6e7de702cae35e9f4ba6209aba75117543611e64dd"
+        }
+      ],
+      "elapsedMilliseconds": 69814,
+      "currentKernelExecuted": false,
+      "grantsM4FinalAcceptance": false,
+      "receiptSha256": "48a1fa692d03b9fb15e0941f0d1199ff41ffab5dd9a56c3b6d16c99fc800d4d5"
+    }
+  ],
+  "newCoreKernelReadback": {
+    "verified": true,
+    "status": "NEW_CORE_KERNEL_BYTES_VERIFIED",
+    "executedAt": "2026-10-13T18:26:01.492Z",
+    "environment": {
+      "leanVersion": "Lean (version 4.34.0-rc2, x86_64-w64-windows-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)",
+      "leanCommit": "6a10ac8c22beadecabdbb0919c2b50214762f91d",
+      "executableSha256": "37dfe799f69b990251f3b6bcff8a1c10c1afe2adcdecc5c580cc6726ffb63433"
+    },
+    "mathlibCommit": null,
+    "targets": [
+      {
+        "target": "MathScope.M0.Finite.matrix_product_zero",
+        "targetType": "MathScope.M0.Finite.matrix_product_zero : MathScope.M0.matrixProduct = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]",
+        "axioms": [
+          "propext"
+        ],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M0.Finite.differential_squared_zero",
+        "targetType": "MathScope.M0.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+        "axioms": [
+          "propext"
+        ],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M0.Finite.integer_fixture",
+        "targetType": "MathScope.M0.Finite.integer_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := -7, b := 9007199254740993, c := 11, d := -13 }) = MathScope.M0.zeroC2",
+        "axioms": [],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M4.Finite.delta_two_numerator",
+        "targetType": "MathScope.M4.Finite.delta_two_numerator (x y : Int) : (x + y) * (x + y) - x * x - y * y = 2 * x * y",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M4.Finite.differential_squared_zero",
+        "targetType": "MathScope.M4.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+        "axioms": [
+          "propext"
+        ],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M4.Finite.scalar_chain_map",
+        "targetType": "MathScope.M4.Finite.scalar_chain_map (s : Int) (v : MathScope.M0.C0) :\n  MathScope.M0.d0 { a := s * v.a, b := s * v.b, c := s * v.c, d := s * v.d } =\n    have w := MathScope.M0.d0 v;\n    { u := s * w.u, v := s * w.v, w := s * w.w, x := s * w.x, y := s * w.y }",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M4.Finite.prime_interval_fixture",
+        "targetType": "MathScope.M4.Finite.prime_interval_fixture :\n  List.filter MathScope.M4.primeTrial (List.range 30) = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]",
+        "axioms": [],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M4.Finite.bracket_antisymmetric",
+        "targetType": "MathScope.M4.Finite.bracket_antisymmetric (A B : MathScope.M4.Mat2) :\n  MathScope.M4.add (MathScope.M4.bracket A B) (MathScope.M4.bracket B A) = MathScope.M4.zero",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M4.Finite.bracket_jacobi",
+        "targetType": "MathScope.M4.Finite.bracket_jacobi (A B C : MathScope.M4.Mat2) :\n  MathScope.M4.add\n      (MathScope.M4.add (MathScope.M4.bracket A (MathScope.M4.bracket B C))\n        (MathScope.M4.bracket B (MathScope.M4.bracket C A)))\n      (MathScope.M4.bracket C (MathScope.M4.bracket A B)) =\n    MathScope.M4.zero",
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M4.Finite.shear_plaquette",
+        "targetType": "MathScope.M4.Finite.shear_plaquette (s t : Int) :\n  MathScope.M4.mul\n      (MathScope.M4.mul (MathScope.M4.mul (MathScope.M4.shear s) (MathScope.M4.shear t)) (MathScope.M4.shear (-s)))\n      (MathScope.M4.shear (-t)) =\n    MathScope.M4.identity",
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      },
+      {
+        "target": "MathScope.M4.Analytic.uniform_limit_uniformly_continuous",
+        "targetType": "MathScope.M4.Analytic.uniform_limit_uniformly_continuous {X Y : Type} (mx : MathScope.M4.PrecisionMetric X)\n  (my : MathScope.M4.PrecisionMetric Y) (u : Nat → X → Y) (f : X → Y) (hUniform : MathScope.M4.UniformConverges my u f)\n  (hContinuous : ∀ (n : Nat), MathScope.M4.UniformContinuous mx my (u n)) : MathScope.M4.UniformContinuous mx my f",
+        "axioms": [],
+        "userAxioms": [],
+        "grade": "CONDITIONAL_FORMAL"
+      },
+      {
+        "target": "MathScope.M4.Comparison.uniform_continuity_adapter",
+        "targetType": "MathScope.M4.Comparison.uniform_continuity_adapter {X Y : Type} (mx : MathScope.M4.PrecisionMetric X)\n  (my : MathScope.M4.PrecisionMetric Y) (u : Nat → X → Y) (f : X → Y) (hUniform : MathScope.M4.UniformConverges my u f)\n  (hContinuous : ∀ (n : Nat), MathScope.M4.UniformContinuous mx my (u n)) : MathScope.M4.UniformContinuous mx my f",
+        "axioms": [],
+        "userAxioms": [],
+        "grade": "CONDITIONAL_FORMAL"
+      },
+      {
+        "target": "MathScope.M4.Conditional.assumed_cauchy_limit",
+        "targetType": "MathScope.M4.Conditional.assumed_cauchy_limit {X : Type} (m : MathScope.M4.PrecisionMetric X) (u : Nat → X)\n  (hCauchy : MathScope.M4.Cauchy m u) : ∃ x, MathScope.M4.Converges m u x",
+        "axioms": [
+          "MathScope.M4.Conditional.assumedComplete"
+        ],
+        "userAxioms": [
+          "MathScope.M4.Conditional.assumedComplete"
+        ],
+        "grade": "USER_AXIOM_CONDITIONAL"
+      },
+      {
+        "target": "MathScope.M4.Generated.Jdc78e9cb182c9864ae5c.selected_finite_fixture",
+        "targetType": "MathScope.M4.Generated.Jdc78e9cb182c9864ae5c.selected_finite_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := 2, b := -3, c := 5, d := 7 }) = MathScope.M0.zeroC2",
+        "axioms": [
+          "propext"
+        ],
+        "userAxioms": [],
+        "grade": "EXACT_FINITE"
+      }
+    ],
+    "negativeControls": [
+      {
+        "name": "NegativeFalse",
+        "exitCode": 1,
+        "rejectedForExpectedReason": true
+      },
+      {
+        "name": "NegativePrime",
+        "exitCode": 1,
+        "rejectedForExpectedReason": true
+      }
+    ],
+    "generatedProofJob": {
+      "schemaVersion": "mathscope.m4.generated-proof-binding/1",
+      "jobId": "M4-781e842f1eeabfbc2a23fa52a9655ad26936233ed07dc5979358f5c056ed889a",
+      "bindingDigest": "781e842f1eeabfbc2a23fa52a9655ad26936233ed07dc5979358f5c056ed889a",
+      "parameters": {
+        "G": "INTEGER_SHEAR",
+        "delta": "D1_CECH_DE_RHAM",
+        "p": 2,
+        "precision": 16,
+        "coefficientField": "Int",
+        "coefficientFormula": "[2,-3,5,7]",
+        "coefficients": [
+          "2",
+          "-3",
+          "5",
+          "7"
+        ],
+        "assumptions": []
+      },
+      "sources": [
+        {
+          "path": "Generated.lean",
+          "content": "import MathScope.M4.Finite\n-- Canonical input: {\"G\":\"INTEGER_SHEAR\",\"assumptions\":[],\"coefficientField\":\"Int\",\"coefficientFormula\":\"[2,-3,5,7]\",\"coefficients\":[\"2\",\"-3\",\"5\",\"7\"],\"delta\":\"D1_CECH_DE_RHAM\",\"p\":2,\"precision\":16}\nnamespace MathScope.M4.Generated.Jdc78e9cb182c9864ae5c\ntheorem selected_finite_fixture : MathScope.M0.d1 (MathScope.M0.d0 ⟨(2 : Int), (-3 : Int), (5 : Int), (7 : Int)⟩) = MathScope.M0.zeroC2 := MathScope.M4.Finite.differential_squared_zero _\nset_option pp.fullNames true\n#check selected_finite_fixture\n#print axioms selected_finite_fixture\nend MathScope.M4.Generated.Jdc78e9cb182c9864ae5c\n",
+          "sha256": "43cdc79ccee212a9152d90de8f58504bc9bff224da02c9d039183b01d7e247c6"
+        }
+      ],
+      "parameterDigest": "dc78e9cb182c9864ae5cddb080b30122e40294ec470571ddc487449c2f115341",
+      "target": "MathScope.M4.Generated.Jdc78e9cb182c9864ae5c.selected_finite_fixture",
+      "requestedGrade": "EXACT_FINITE",
+      "status": "EXACT_GENERATED_FIXTURE_KERNEL_VERIFIED",
+      "kernelPass": true,
+      "scope": "One exact Int⁴ vector for the inherited fixed D=1 differential. G,p,delta,precision and formula are bound inputs, but the target asserts only this integer fixture; it is not a gauge/prime/delta theorem.",
+      "limitations": [
+        "A generated source requires a new actual kernel audit before PASS.",
+        "Changing any supplied parameter or assumption invalidates an older binding."
+      ]
+    },
+    "currentKernelExecuted": false,
+    "grantsM4FinalAcceptance": false,
+    "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf"
+  },
+  "claims": [
+    {
+      "claimId": "M4.FINITE.DELTA_TWO_NUMERATOR",
+      "criterionIds": [
+        "I3-02"
+      ],
+      "grade": "EXACT_FINITE",
+      "student": {
+        "claimId": "M4.FINITE.DELTA_TWO_NUMERATOR",
+        "explanation": "모든 정수 x,y에서 p=2 δ의 분자는 2xy입니다. 나눗셈의 정밀도와 다른 소수는 별도 조건입니다.",
+        "scope": "Universal x,y in Int; exact p=2 numerator polynomial only.",
+        "assumptionIds": []
+      },
+      "expert": {
+        "claimId": "M4.FINITE.DELTA_TWO_NUMERATOR",
+        "target": "MathScope.M4.Finite.delta_two_numerator",
+        "targetType": "MathScope.M4.Finite.delta_two_numerator (x y : Int) : (x + y) * (x + y) - x * x - y * y = 2 * x * y",
+        "scope": "Universal x,y in Int; exact p=2 numerator polynomial only.",
+        "assumptionIds": [],
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "counterexampleCondition": "Changing p, division convention or numerator coefficients is outside this target."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.FINITE.D_SQUARED_ZERO",
+      "criterionIds": [
+        "I3-02"
+      ],
+      "grade": "EXACT_FINITE",
+      "student": {
+        "claimId": "M4.FINITE.D_SQUARED_ZERO",
+        "explanation": "고정 D=1 정수 행렬에서 모든 v∈ℤ⁴에 대해 d₁(d₀(v))=0입니다. 다른 복합체나 생략 weight에는 자동 적용되지 않습니다.",
+        "scope": "Universal Int⁴ coordinates for the fixed inherited D=1 matrices.",
+        "assumptionIds": []
+      },
+      "expert": {
+        "claimId": "M4.FINITE.D_SQUARED_ZERO",
+        "target": "MathScope.M4.Finite.differential_squared_zero",
+        "targetType": "MathScope.M4.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+        "scope": "Universal Int⁴ coordinates for the fixed inherited D=1 matrices.",
+        "assumptionIds": [],
+        "axioms": [
+          "propext"
+        ],
+        "userAxioms": [],
+        "counterexampleCondition": "A mutated D1 invalidates the matrix certificate."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.FINITE.IDENTITY_SEMILINEAR_CHAIN_MAP",
+      "criterionIds": [
+        "I3-02"
+      ],
+      "grade": "EXACT_FINITE",
+      "student": {
+        "claimId": "M4.FINITE.IDENTITY_SEMILINEAR_CHAIN_MAP",
+        "explanation": "계수체 ℤ의 자기 사상이 항등인 경우, 모든 정수 s와 벡터 v에 대해 d₀(sv)=s d₀(v)입니다. Frobenius 사상에는 별도 증명이 필요합니다.",
+        "scope": "All s:Int and v:Int⁴; coefficient endomorphism sigma=id on Int.",
+        "assumptionIds": [
+          "COEFFICIENT_ENDOMORPHISM_IDENTITY"
+        ]
+      },
+      "expert": {
+        "claimId": "M4.FINITE.IDENTITY_SEMILINEAR_CHAIN_MAP",
+        "target": "MathScope.M4.Finite.scalar_chain_map",
+        "targetType": "MathScope.M4.Finite.scalar_chain_map (s : Int) (v : MathScope.M0.C0) :\n  MathScope.M0.d0 { a := s * v.a, b := s * v.b, c := s * v.c, d := s * v.d } =\n    have w := MathScope.M0.d0 v;\n    { u := s * w.u, v := s * w.v, w := s * w.w, x := s * w.x, y := s * w.y }",
+        "scope": "All s:Int and v:Int⁴; coefficient endomorphism sigma=id on Int.",
+        "assumptionIds": [
+          "COEFFICIENT_ENDOMORPHISM_IDENTITY"
+        ],
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "counterexampleCondition": "A nonidentity sigma or different coefficient ring needs its own chain-map proof."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.FINITE.PRIMES_BELOW_30",
+      "criterionIds": [
+        "I3-02"
+      ],
+      "grade": "EXACT_FINITE",
+      "student": {
+        "claimId": "M4.FINITE.PRIMES_BELOW_30",
+        "explanation": "2≤n<30에서 모든 시험 약수를 확인한 정확한 소수 목록입니다. 범위 밖 소수 또는 전칭 소수 정리는 포함하지 않습니다.",
+        "scope": "Finite exact trial-division interval [2,30).",
+        "assumptionIds": []
+      },
+      "expert": {
+        "claimId": "M4.FINITE.PRIMES_BELOW_30",
+        "target": "MathScope.M4.Finite.prime_interval_fixture",
+        "targetType": "MathScope.M4.Finite.prime_interval_fixture :\n  List.filter MathScope.M4.primeTrial (List.range 30) = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]",
+        "scope": "Finite exact trial-division interval [2,30).",
+        "assumptionIds": [],
+        "axioms": [],
+        "userAxioms": [],
+        "counterexampleCondition": "Composite 21 submitted as prime is rejected by decide."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.FINITE.BRACKET_ANTISYMMETRY",
+      "criterionIds": [
+        "I3-02"
+      ],
+      "grade": "EXACT_FINITE",
+      "student": {
+        "claimId": "M4.FINITE.BRACKET_ANTISYMMETRY",
+        "explanation": "모든 2×2 정수 행렬 A,B에 대해 [A,B]+[B,A]=0입니다. bracket은 AB−BA로 정의됩니다.",
+        "scope": "Universal integer 2x2 matrix commutator.",
+        "assumptionIds": []
+      },
+      "expert": {
+        "claimId": "M4.FINITE.BRACKET_ANTISYMMETRY",
+        "target": "MathScope.M4.Finite.bracket_antisymmetric",
+        "targetType": "MathScope.M4.Finite.bracket_antisymmetric (A B : MathScope.M4.Mat2) :\n  MathScope.M4.add (MathScope.M4.bracket A B) (MathScope.M4.bracket B A) = MathScope.M4.zero",
+        "scope": "Universal integer 2x2 matrix commutator.",
+        "assumptionIds": [],
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "counterexampleCondition": "A changed multiplication or bracket operation needs a new source check."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.FINITE.BRACKET_JACOBI",
+      "criterionIds": [
+        "I3-02"
+      ],
+      "grade": "EXACT_FINITE",
+      "student": {
+        "claimId": "M4.FINITE.BRACKET_JACOBI",
+        "explanation": "모든 2×2 정수 행렬 A,B,C의 교환자 bracket이 Jacobi 항등식을 만족합니다. 이름만 Lie라고 붙인 임의 연산을 인증하지 않습니다.",
+        "scope": "Universal integer 2x2 matrix commutator Jacobi identity.",
+        "assumptionIds": []
+      },
+      "expert": {
+        "claimId": "M4.FINITE.BRACKET_JACOBI",
+        "target": "MathScope.M4.Finite.bracket_jacobi",
+        "targetType": "MathScope.M4.Finite.bracket_jacobi (A B C : MathScope.M4.Mat2) :\n  MathScope.M4.add\n      (MathScope.M4.add (MathScope.M4.bracket A (MathScope.M4.bracket B C))\n        (MathScope.M4.bracket B (MathScope.M4.bracket C A)))\n      (MathScope.M4.bracket C (MathScope.M4.bracket A B)) =\n    MathScope.M4.zero",
+        "scope": "Universal integer 2x2 matrix commutator Jacobi identity.",
+        "assumptionIds": [],
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "counterexampleCondition": "A nonassociative multiplication is outside the proved operations."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.FINITE.SHEAR_PLAQUETTE",
+      "criterionIds": [
+        "I3-02"
+      ],
+      "grade": "EXACT_FINITE",
+      "student": {
+        "claimId": "M4.FINITE.SHEAR_PLAQUETTE",
+        "explanation": "모든 정수 s,t의 shear 행렬로 만든 네 변 plaquette의 곱은 항등행렬입니다. 일반 비가환 gauge 군이나 연속 극한을 의미하지 않습니다.",
+        "scope": "Universal integer shear subgroup U(s)U(t)U(-s)U(-t)=I.",
+        "assumptionIds": []
+      },
+      "expert": {
+        "claimId": "M4.FINITE.SHEAR_PLAQUETTE",
+        "target": "MathScope.M4.Finite.shear_plaquette",
+        "targetType": "MathScope.M4.Finite.shear_plaquette (s t : Int) :\n  MathScope.M4.mul\n      (MathScope.M4.mul (MathScope.M4.mul (MathScope.M4.shear s) (MathScope.M4.shear t)) (MathScope.M4.shear (-s)))\n      (MathScope.M4.shear (-t)) =\n    MathScope.M4.identity",
+        "scope": "Universal integer shear subgroup U(s)U(t)U(-s)U(-t)=I.",
+        "assumptionIds": [],
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "userAxioms": [],
+        "counterexampleCondition": "General noncommuting link matrices can have nontrivial holonomy."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.ANALYTIC.UNIFORM_LIMIT_CONTINUITY",
+      "criterionIds": [
+        "I3-03",
+        "I3-08"
+      ],
+      "grade": "CONDITIONAL_FORMAL",
+      "student": {
+        "claimId": "M4.ANALYTIC.UNIFORM_LIMIT_CONTINUITY",
+        "explanation": "명시된 precision ball 법칙을 갖는 모든 공간 X,Y에서, 모든 근사 함수가 균등연속이고 함수열이 전역적으로 균등수렴하면 극한 함수도 균등연속입니다. 모든 x에 공통인 N이 필요하며, 미분과 극한의 교환 또는 실수 norm 구현은 포함하지 않습니다.",
+        "scope": "All X,Y:Type with supplied PrecisionMetric structures; uniform convergence across all domain x; continuity of every n-th approximant. Uses two triangle steps at k+2,k+1,k.",
+        "assumptionIds": [
+          "PRECISION_BALL_REFLEXIVE_SYMMETRIC_TRIANGLE_FINER",
+          "UNIFORM_CONVERGENCE_ALL_DOMAIN",
+          "UNIFORM_CONTINUITY_EVERY_APPROXIMANT"
+        ]
+      },
+      "expert": {
+        "claimId": "M4.ANALYTIC.UNIFORM_LIMIT_CONTINUITY",
+        "target": "MathScope.M4.Analytic.uniform_limit_uniformly_continuous",
+        "targetType": "MathScope.M4.Analytic.uniform_limit_uniformly_continuous {X Y : Type} (mx : MathScope.M4.PrecisionMetric X)\n  (my : MathScope.M4.PrecisionMetric Y) (u : Nat → X → Y) (f : X → Y) (hUniform : MathScope.M4.UniformConverges my u f)\n  (hContinuous : ∀ (n : Nat), MathScope.M4.UniformContinuous mx my (u n)) : MathScope.M4.UniformContinuous mx my f",
+        "scope": "All X,Y:Type with supplied PrecisionMetric structures; uniform convergence across all domain x; continuity of every n-th approximant. Uses two triangle steps at k+2,k+1,k.",
+        "assumptionIds": [
+          "PRECISION_BALL_REFLEXIVE_SYMMETRIC_TRIANGLE_FINER",
+          "UNIFORM_CONVERGENCE_ALL_DOMAIN",
+          "UNIFORM_CONTINUITY_EVERY_APPROXIMANT"
+        ],
+        "axioms": [],
+        "userAxioms": [],
+        "counterexampleCondition": "Pointwise convergence alone does not supply a common N; derivative-limit interchange is a separate obligation."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Analytic.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.COMPARISON.UNIFORM_CONTINUITY_ADAPTER",
+      "criterionIds": [
+        "I3-04"
+      ],
+      "grade": "CONDITIONAL_FORMAL",
+      "student": {
+        "claimId": "M4.COMPARISON.UNIFORM_CONTINUITY_ADAPTER",
+        "explanation": "같은 precision 공간과 균등수렴·균등연속 가정을 정확히 제공한 경우 실제 exported Lean 정리로 연결됩니다. 프리즘·BSD·NS 문헌 링크는 이 adapter의 커널 결과가 아닙니다.",
+        "scope": "Exact import of MathScope.M4.Analytic.uniform_limit_uniformly_continuous with unchanged types and premises.",
+        "assumptionIds": [
+          "SAME_PRECISION_METRIC",
+          "UNIFORM_CONVERGENCE_ALL_DOMAIN",
+          "UNIFORM_CONTINUITY_EVERY_APPROXIMANT"
+        ]
+      },
+      "expert": {
+        "claimId": "M4.COMPARISON.UNIFORM_CONTINUITY_ADAPTER",
+        "target": "MathScope.M4.Comparison.uniform_continuity_adapter",
+        "targetType": "MathScope.M4.Comparison.uniform_continuity_adapter {X Y : Type} (mx : MathScope.M4.PrecisionMetric X)\n  (my : MathScope.M4.PrecisionMetric Y) (u : Nat → X → Y) (f : X → Y) (hUniform : MathScope.M4.UniformConverges my u f)\n  (hContinuous : ∀ (n : Nat), MathScope.M4.UniformContinuous mx my (u n)) : MathScope.M4.UniformContinuous mx my f",
+        "scope": "Exact import of MathScope.M4.Analytic.uniform_limit_uniformly_continuous with unchanged types and premises.",
+        "assumptionIds": [
+          "SAME_PRECISION_METRIC",
+          "UNIFORM_CONVERGENCE_ALL_DOMAIN",
+          "UNIFORM_CONTINUITY_EVERY_APPROXIMANT"
+        ],
+        "axioms": [],
+        "userAxioms": [],
+        "counterexampleCondition": "A reference URL or an unrelated theorem type cannot replace the exported target."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Comparison.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.CONDITIONAL.ASSUMED_COMPLETE_LIMIT",
+      "criterionIds": [
+        "I3-01",
+        "I3-06",
+        "I3-07"
+      ],
+      "grade": "USER_AXIOM_CONDITIONAL",
+      "student": {
+        "claimId": "M4.CONDITIONAL.ASSUMED_COMPLETE_LIMIT",
+        "explanation": "모든 해당 공간이 완비라는 사용자 공리를 가정할 때만 Cauchy 열의 극한 존재를 얻습니다. 이 공리를 증명하거나 연구 관문을 닫은 결과가 아닙니다.",
+        "scope": "Explicit user-axiom demonstration, intentionally barred from unconditional grade.",
+        "assumptionIds": [
+          "MathScope.M4.Conditional.assumedComplete"
+        ]
+      },
+      "expert": {
+        "claimId": "M4.CONDITIONAL.ASSUMED_COMPLETE_LIMIT",
+        "target": "MathScope.M4.Conditional.assumed_cauchy_limit",
+        "targetType": "MathScope.M4.Conditional.assumed_cauchy_limit {X : Type} (m : MathScope.M4.PrecisionMetric X) (u : Nat → X)\n  (hCauchy : MathScope.M4.Cauchy m u) : ∃ x, MathScope.M4.Converges m u x",
+        "scope": "Explicit user-axiom demonstration, intentionally barred from unconditional grade.",
+        "assumptionIds": [
+          "MathScope.M4.Conditional.assumedComplete"
+        ],
+        "axioms": [
+          "MathScope.M4.Conditional.assumedComplete"
+        ],
+        "userAxioms": [
+          "MathScope.M4.Conditional.assumedComplete"
+        ],
+        "counterexampleCondition": "Unconditional grade must reject this target because its #print axioms includes assumedComplete."
+      },
+      "sourceFile": "research-ide/mathscope-m4/lean/MathScope/M4/Conditional.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    },
+    {
+      "claimId": "M4.FINITE.GENERATED_VECTOR",
+      "criterionIds": [
+        "I3-05"
+      ],
+      "grade": "EXACT_FINITE",
+      "student": {
+        "claimId": "M4.FINITE.GENERATED_VECTOR",
+        "explanation": "G·Δ·p·정밀도·계수식·가정을 hash로 고정한 기본 소스가 실제 커널을 통과했습니다. 정리의 수학적 범위는 (2,−3,5,7) 한 정수 벡터의 고정 d²=0이며, 파라미터를 바꾸면 새로운 소스와 검사가 필요합니다.",
+        "scope": "One generated Int⁴ fixture (2,-3,5,7) for the fixed inherited D=1 differential. Other bound parameters do not broaden this theorem.",
+        "assumptionIds": []
+      },
+      "expert": {
+        "claimId": "M4.FINITE.GENERATED_VECTOR",
+        "target": "MathScope.M4.Generated.Jdc78e9cb182c9864ae5c.selected_finite_fixture",
+        "targetType": "MathScope.M4.Generated.Jdc78e9cb182c9864ae5c.selected_finite_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := 2, b := -3, c := 5, d := 7 }) = MathScope.M0.zeroC2",
+        "scope": "One generated Int⁴ fixture (2,-3,5,7) for the fixed inherited D=1 differential. Other bound parameters do not broaden this theorem.",
+        "assumptionIds": [],
+        "axioms": [
+          "propext"
+        ],
+        "userAxioms": [],
+        "counterexampleCondition": "Any one-character source or parameter/assumption change makes prior evidence stale."
+      },
+      "sourceFile": "research-ide/mathscope-m4/evidence/core-kernel-20261014-attempt4/sources/MathScope/M4/Generated.lean",
+      "executedAt": "2026-10-13T18:26:01.492Z",
+      "receiptSha256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+      "grantsOriginalCriterionAcceptance": false
+    }
+  ],
+  "openResearch": [
+    "RH_GLOBAL_BRIDGE",
+    "BSD_UNIVERSAL",
+    "GENERAL_G_CONTINUUM_QUANTUM_YM",
+    "NEW_PRISM_COMPARISON",
+    "DERIVATIVE_LIMIT_INTERCHANGE_REAL_ADAPTER"
+  ],
+  "originalCriteriaFinalAcceptance": "UNCONFIRMED",
+  "grantsM4FinalAcceptance": false,
+  "publicationConfirmed": false,
+  "scope": "Two dated official Lean4.34.1/mathlib successes and fresh Lean4.34.0-rc2 core targets have exact raw evidence. Core precision-metric theorem is not a real norm, derivative, continuum construction, RH or BSD proof."
+}

@@ -8,6 +8,7 @@ import { assertSavedInitializedSource, savedInitializedSourceProgram } from './s
 import { assertSavedInitializedCutoffAuthority } from './source-saved-initialized-cutoff-norms.mjs';
 import { createFactoredRationalVerifier } from './forced-rational-identity.mjs';
 import { attachSavedMonotoneDerivativeAuthority } from './source-saved-monotone-implicit-derivatives.mjs';
+import { attachSavedQuadraticDerivativeAuthority } from './source-saved-quadratic-implicit-derivatives.mjs';
 
 const seals = new WeakSet(), keys = ['beta', 'v', 'gamma'];
 const readerSeals = new WeakMap();
@@ -171,7 +172,7 @@ export function createIndependentMeanReader({ node, definitions = {}, sourceOper
     inspectedDefinitionBindings: [...callDefinitions.values()], unresolvedCustomBodyClosure: [...unresolvedClosure.values()],
     unknownSourceOperators: [...unknownSourceOperators.values()],
     discreteDerivativeStops,
-    sourceOperatorAudits: rules.map(r => r.diagnostics(reader)),
+    sourceOperatorAudits: rules.map(r => ({ ...r.diagnostics(reader), sourceOperation: r.sourceOperation, independentOperation: r.independentOperation })),
     domainHypotheses: [...domain.values()], originalDerivativeRoutineCalled: false, originalFreeCoordinateRoutineCalled: false, originalPassBitsRead: false });
   const registerDomainHypothesis = record => { require(record && record.provedByThisAudit === false, 'New analytic hypotheses must remain explicitly unproved.'); domain.set(`external:${hash(record)}`, freeze(structuredClone(record))); };
   const assertSourceNodeBinding = (id, expected) => { require(same(take(id), expected), 'An independent reader has a changed source operand.'); return true; };
@@ -232,8 +233,8 @@ export function auditSavedWholeMeanDirect(capability, cutoff, input = {}) {
   // Construct this virtual direction in the independent graph; it never
   // obtains a source node ID or replaces the exact saved node provider.
   require(originalNode(g.vr[0]).op === 'rational' && same(originalNode(g.vr[0]).args, ['1', '1']), 'The fixed original direction first component must be exactly one.');
-  const implicit = attachSavedMonotoneDerivativeAuthority(capability);
-  const replay = createIndependentMeanReader({ node: originalNode, definitions, sourceOperationRules: [implicit], maxWork: input.maxWork ?? 200000, maxNodes: input.maxNodes ?? 200000 });
+  const implicit = attachSavedMonotoneDerivativeAuthority(capability), quadratic = attachSavedQuadraticDerivativeAuthority(capability);
+  const replay = createIndependentMeanReader({ node: originalNode, definitions, sourceOperationRules: [implicit, quadratic], maxWork: input.maxWork ?? 200000, maxNodes: input.maxNodes ?? 200000 });
   const geometry = { ...g, replayTimeDirection: [replay.neg(replay.importSource(g.vr[1])), replay.importSource(g.vr[0])] };
   const verify = createFactoredRationalVerifier(replay, { maxTerms: input.maxTerms ?? 20000, maxProducts: input.maxProducts ?? 200000 });
   for (const [stage, state] of [['temporal', before], ['moments', after]]) {
@@ -257,6 +258,7 @@ export function auditSavedWholeMeanDirect(capability, cutoff, input = {}) {
     rows, diagnostics, stops, conditionalAlgebraIdentitiesMatched: algebraMatched,
     status: stops.length ? 'UNRESOLVED' : !algebraMatched ? 'DIFFERENCE_NOT_RESOLVED' : unresolved ? 'CONDITIONAL_MATCH_CUSTOM_CLOSURE_OPEN' : 'CONDITIONAL_STORED_NORMALIZED_MEAN_MATCH',
     scope: { actualSavedWholeVelocityAndPressureRootsBound: true, independentConservativeMeanFormulaConstructed: rows.length === 2,
+      actualMonotoneAndQuadraticDerivativeRulesAttached: true, implicitDomainHypothesesDischarged: false,
       originalFormulaHelperCalled: false, originalDerivativeRoutineCalled: false, oldResidualRootUsedAsProofOperand: false,
       independentStoredMeanAlgebraMatched: algebraMatched, customBodyClosureProved: !unresolved,
       allDenominatorAndDomainHypothesesProved: false, actualWholeMeanDifferenceRecomputed: false,

@@ -1,0 +1,83 @@
+TAP version 13
+# Subtest: quadratic implicit derivative and second derivative retain the exact symbolic branch
+ok 1 - quadratic implicit derivative and second derivative retain the exact symbolic branch
+  ---
+  duration_ms: 22.7357
+  type: 'test'
+  ...
+# Subtest: full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+ok 2 - full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+  ---
+  duration_ms: 3.9226
+  type: 'test'
+  ...
+# Subtest: captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+ok 3 - captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+  ---
+  duration_ms: 1.4994
+  type: 'test'
+  ...
+# Subtest: quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+ok 4 - quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+  ---
+  duration_ms: 1.5159
+  type: 'test'
+  ...
+# Subtest: substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+ok 5 - substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+  ---
+  duration_ms: 2.2821
+  type: 'test'
+  ...
+# Subtest: zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+ok 6 - zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+  ---
+  duration_ms: 1.6995
+  type: 'test'
+  ...
+# Subtest: unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+ok 7 - unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+  ---
+  duration_ms: 0.5895
+  type: 'test'
+  ...
+# Subtest: an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+ok 8 - an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+  ---
+  duration_ms: 0.9924
+  type: 'test'
+  ...
+# Subtest: integral operand import alpha-renames a binder occurring in the actual quadratic argument
+ok 9 - integral operand import alpha-renames a binder occurring in the actual quadratic argument
+  ---
+  duration_ms: 1.0847
+  type: 'test'
+  ...
+# Subtest: later root substitution alpha-renames integral binders in the complete retained equation tuple
+ok 10 - later root substitution alpha-renames integral binders in the complete retained equation tuple
+  ---
+  duration_ms: 1.0134
+  type: 'test'
+  ...
+# QUADRATIC_IMPLICIT_AUDIT {"status":"UNRESOLVED","stop":{"code":"UNRESOLVED_CUSTOM_DERIVATIVE","reason":"No independent exact derivative rule for unreviewed_source_operation (actual_natural_series, actual source node 4483)."},"artifact":"quadratic-implicit-20261013175628883.json","sha256":"497866ba75d0c4c7d07fe54b69bff2e13b20621b91c71ceb096cf02c6ca46ff6","sourceImplementationSha256":"b8b137688d33a19f66de7c2e6215a1e54698ad3ff5b9a2d565edaedb8f17e126","originalN602Complete":false}
+# Subtest: actual saved node 5029 binds all three equations and records a conditional derivative or the exact unresolved gate
+ok 11 - actual saved node 5029 binds all three equations and records a conditional derivative or the exact unresolved gate
+  ---
+  duration_ms: 39502.8767
+  type: 'test'
+  ...
+# Subtest: copied authorities, alternate caller roots and forged/decorated reader providers cannot mint saved source derivatives
+ok 12 - copied authorities, alternate caller roots and forged/decorated reader providers cannot mint saved source derivatives
+  ---
+  duration_ms: 2.0437
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 40063.6995

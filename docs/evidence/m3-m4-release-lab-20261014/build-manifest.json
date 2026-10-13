@@ -1,0 +1,42 @@
+{
+  "schema": "MathScope.R1.OwnedPatch/1",
+  "baseSHA256": "e6ebde6250a861296554f26305cb40200b0a70e822acb3f588e9dca423d6e784",
+  "candidateSHA256": "4dc46a43ffa095d05ee924195d7bcd89d355aba5ce9541b99f4359882f8f66bd",
+  "newAssets": 0,
+  "newPages": 0,
+  "unrelatedBytesPreserved": true,
+  "patchCount": 4,
+  "reversible": true,
+  "wholeM3Complete": false,
+  "additiveEngineBridges": [
+    {
+      "sourcePath": "research-ide/mathscope-m1/workspace.mjs",
+      "sourceSHA256": "b56012579cf10eb895ab5b47f0dc3ce277ba2c0519b56f230aa4d09ccb36924b",
+      "find": "const api=Object.freeze({version:M1_VERSION,",
+      "replace": "const api=Object.freeze({version:M1_VERSION,createReleaseEngine:()=>createM1Engine(),normalizeReleaseRequest:normalizeRequest,",
+      "scope": "Additive release engine constructor and input normalization; computation source and Worker bytes unchanged"
+    },
+    {
+      "sourcePath": "research-ide/mathscope-m1/workspace.bundle.js",
+      "sourceSHA256": "4dc2624ae5ef86ec23d329e7b8d9e4129daef956bd81bd3f3ddf029206d9dc14",
+      "find": "const api=Object.freeze({version:M1_VERSION,",
+      "replace": "const api=Object.freeze({version:M1_VERSION,createReleaseEngine:()=>createM1Engine(),normalizeReleaseRequest:normalizeRequest,",
+      "scope": "Additive release engine constructor and input normalization; computation source and Worker bytes unchanged"
+    },
+    {
+      "sourcePath": "research-ide/mathscope-m2/workspace.mjs",
+      "sourceSHA256": "228263028299fa4d1b39d9e164bfc7308846f8d6336994e79259e6ce73ddbebd",
+      "find": "const api=Object.freeze({version:M2_VERSION,",
+      "replace": "const api=Object.freeze({version:M2_VERSION,createReleaseEngine:()=>createM2Engine(),normalizeReleaseRequest:normalizeRequest,",
+      "scope": "Additive release engine constructor and input normalization; computation source and Worker bytes unchanged"
+    },
+    {
+      "sourcePath": "research-ide/mathscope-m2/workspace.bundle.js",
+      "sourceSHA256": "25782eb6db28d19baf7049bcbf6c9b294927df783adfd3ed9304cd79ae6e8778",
+      "find": "const api=Object.freeze({version:M2_VERSION,",
+      "replace": "const api=Object.freeze({version:M2_VERSION,createReleaseEngine:()=>createM2Engine(),normalizeReleaseRequest:normalizeRequest,",
+      "scope": "Additive release engine constructor and input normalization; computation source and Worker bytes unchanged"
+    }
+  ],
+  "originalWorkspaceFilesUnchanged": true
+}

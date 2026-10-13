@@ -7,6 +7,7 @@ on:
       - 'research-ide/mathscope-m4/*.mjs'
       - 'research-ide/mathscope-m4/tools/**'
       - 'research-ide/mathscope-m4/tests/**'
+      - 'research-ide/mathscope-m4/lean/**'
       - 'research-ide/mathscope-m0/lean/**'
       - 'research-ide/mathscope-m0/proof.mjs'
       - '.github/workflows/m4-pinned-kernel-replay.yml'
@@ -15,6 +16,7 @@ on:
       - 'research-ide/mathscope-m4/*.mjs'
       - 'research-ide/mathscope-m4/tools/**'
       - 'research-ide/mathscope-m4/tests/**'
+      - 'research-ide/mathscope-m4/lean/**'
       - 'research-ide/mathscope-m0/lean/**'
       - 'research-ide/mathscope-m0/proof.mjs'
       - '.github/workflows/m4-pinned-kernel-replay.yml'
@@ -46,6 +48,7 @@ jobs:
           node --test --test-reporter=tap --test-concurrency=1
           research-ide/mathscope-m4/tests/acceptance.test.mjs
           research-ide/mathscope-m4/tests/pinned-kernel-contract.test.mjs
+          research-ide/mathscope-m4/tests/kernel-evidence.test.mjs
           | tee "$RUNNER_TEMP/m4-guard-tests.tap"
       - name: Run actual finite and conditional Lean targets on their original pins
         env:
@@ -55,6 +58,11 @@ jobs:
           --install-official
           --work-dir "$M4_REPLAY_DIRECTORY"
           --out "research-ide/mathscope-m4/evidence/hosted-pinned-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Run new exact finite and uniform-limit core targets on the installed official Lean
+        run: >-
+          node research-ide/mathscope-m4/tools/core-kernel-replay.mjs
+          --lean "${{ runner.temp }}/mathscope-m4-pinned-${{ github.run_id }}-${{ github.run_attempt }}/installation/lean-4.34.1-linux/bin/lean"
+          --out "research-ide/mathscope-m4/evidence/hosted-core-${{ github.run_id }}-${{ github.run_attempt }}"
       - name: Preserve successful, failed, and timed-out replay receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -62,6 +70,7 @@ jobs:
           name: m4-pinned-kernel-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             research-ide/mathscope-m4/evidence/hosted-pinned-${{ github.run_id }}-${{ github.run_attempt }}/
+            research-ide/mathscope-m4/evidence/hosted-core-${{ github.run_id }}-${{ github.run_attempt }}/
             ${{ runner.temp }}/m4-guard-tests.tap
           if-no-files-found: error
           retention-days: 30

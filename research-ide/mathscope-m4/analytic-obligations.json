@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "mathscope.m4.analytic-obligations/1",
+  "scope": "Exact specifications and import boundaries. Only the precision-metric uniform-limit continuity target is newly kernel-verified. These real/Banach/Hilbert obligations have no exported Lean implementation here.",
+  "obligations": [
+    {
+      "id": "M4.HYP.COMPLETE_PRECISION_SPACE",
+      "status": "EXPLICIT_DEFINITION_USER_AXIOM_DEMO_SEPARATE",
+      "domain": "All X : Type with a supplied PrecisionMetric X; k,n,p : Nat.",
+      "normOrMetric": "close(k,x,y), with reflexivity, symmetry, precision-triangle and finer-ball laws. A concrete real norm-to-ball adapter is absent.",
+      "statement": "Complete m := ∀ u : Nat → X, (∀ k, ∃ N, ∀ n p, N≤n → N≤p → close k (u n) (u p)) → ∃ x, ∀ k, ∃ N, ∀ n, N≤n → close k (u n) x",
+      "source": "lean/MathScope/M4/Defs.lean",
+      "usedBy": ["M4.CONDITIONAL.ASSUMED_COMPLETE_LIMIT"],
+      "boundary": "assumedComplete is an explicit USER_AXIOM, never imported by unconditional modules. The uniform-limit continuity proof does not require completeness."
+    },
+    {
+      "id": "M4.HYP.UNIFORM_CONVERGENCE_ALL_DOMAIN",
+      "status": "KERNEL_EXPLICIT_PARAMETER",
+      "domain": "All x : X, all k,n : Nat; u : Nat → X → Y; f : X → Y.",
+      "normOrMetric": "PrecisionMetric Y.close; one common N works for every x.",
+      "statement": "∀ k, ∃ N, ∀ n, N≤n → ∀ x, close k (u n x) (f x)",
+      "source": "lean/MathScope/M4/Defs.lean",
+      "usedBy": ["M4.ANALYTIC.UNIFORM_LIMIT_CONTINUITY", "M4.COMPARISON.UNIFORM_CONTINUITY_ADAPTER"],
+      "boundary": "Pointwise convergence cannot replace this common-N hypothesis. The proof derives uniform continuity using approximant N and two precision triangle steps; it does not infer differentiability."
+    },
+    {
+      "id": "M4.OPEN.REAL_DERIVATIVE_LIMIT_INTERCHANGE",
+      "status": "SPECIFICATION_LEAN_IMPORT_MISSING",
+      "domain": "E a complete normed real vector space; f_n : ℝ → E all C¹; x₀=0; every compact interval K=[−R,R], R>0.",
+      "normOrMetric": "The Banach norm ‖·‖_E; derivatives are real Fréchet derivatives.",
+      "statement": "Assume ∃v, lim_n f_n(0)=v and ∀R>0 ∀ε>0 ∃N ∀n≥N ∀x∈[−R,R], ‖f'_n(x)−g(x)‖_E<ε. Required conclusion: ∃f:ℝ→E, f is C¹, f'=g, f(0)=v and f_n→f uniformly on every compact interval.",
+      "source": null,
+      "usedBy": [],
+      "boundary": "No implemented lemma takes derivatives through an infinite sum. This specification is not a kernel theorem and needs a concrete Banach/mathlib adapter and proof."
+    },
+    {
+      "id": "M4.OPEN.STRONGLY_CONTINUOUS_SEMIGROUP_BOUND",
+      "status": "SPECIFICATION_LEAN_IMPORT_MISSING",
+      "domain": "E a Banach space; T:[0,∞)→bounded linear maps E→E; t,s≥0; all x∈E; fixed M≥1 and ω∈ℝ.",
+      "normOrMetric": "Operator norm ‖T(t)‖ and vector norm ‖·‖_E.",
+      "statement": "T(0)=Id; T(t+s)=T(t)∘T(s); ∀x, lim_{t↓0} ‖T(t)x−x‖_E=0; ∀t≥0, ‖T(t)‖≤M exp(ωt).",
+      "source": null,
+      "usedBy": [],
+      "boundary": "The constants and time domain must come from a proved or explicitly assumed operator construction. A finite spectrum plot supplies none of these operator laws."
+    },
+    {
+      "id": "M4.OPEN.SELF_ADJOINT_SPECTRAL_MEASURE",
+      "status": "SPECIFICATION_LEAN_IMPORT_MISSING",
+      "domain": "Complex Hilbert space H; densely defined self-adjoint operator A; Borel sets B⊂ℝ; all x∈H.",
+      "normOrMetric": "Hilbert norm, projection-valued measure P with countable additivity in the strong operator topology; μ_x(B)=⟨P(B)x,x⟩.",
+      "statement": "P(ℝ)=Id; P(B) orthogonal projections; P(B∩C)=P(B)P(C); domain(A)={x:∫ℝ λ² dμ_x(λ)<∞}; Ax=∫ℝ λ dP(λ)x on that domain.",
+      "source": null,
+      "usedBy": [],
+      "boundary": "M0 GapAt is a predicate on a supplied real set, not this Hilbert/operator/PVM construction. A quantum Yang–Mills continuum model and positive spectral gap remain RESEARCH OPEN."
+    },
+    {
+      "id": "M4.OPEN.STABILITY_CONSTANTS",
+      "status": "SPECIFICATION_LEAN_IMPORT_MISSING",
+      "domain": "All x,y in E and t∈[0,T]; fixed finite T≥0, M≥1, ω∈ℝ; same Banach space and operator semigroup as above.",
+      "normOrMetric": "‖·‖_E; exact constants M,ω,T belong to the evidence binding.",
+      "statement": "∀t∈[0,T] ∀x,y∈E, ‖T(t)x−T(t)y‖_E≤M exp(ωt) ‖x−y‖_E.",
+      "source": null,
+      "usedBy": [],
+      "boundary": "Every derivative/continuum-limit use must list its precise domain, norm and constants. No current code consumes these open obligations or upgrades finite convergence tables to an infinite-limit theorem."
+    }
+  ],
+  "comparisonRegistry": [
+    {"id":"M4.ADAPTER.UNIFORM_CONTINUITY","status":"EXPORTED_LEAN_TARGET","module":"MathScope.M4.Comparison","target":"MathScope.M4.Comparison.uniform_continuity_adapter","upstreamTarget":"MathScope.M4.Analytic.uniform_limit_uniformly_continuous","kernelEvidence":"evidence/core-kernel-20261014-attempt4/receipt.json"},
+    {"id":"M4.REFERENCE.PRISM","status":"THEOREM REFERENCE","leanImport":null,"requiredAdapter":"Identify the exact prismatic comparison theorem, objects, hypotheses and exported Lean target; prove adapter obligations.","modelStatus":"MODEL DEVELOPMENT for implementing a known comparison; RESEARCH OPEN for a new comparison theorem."},
+    {"id":"M4.REFERENCE.TRACE_FORMULA","status":"THEOREM REFERENCE","leanImport":null,"requiredAdapter":"An exact trace theorem and cohomology/Frobenius object identification, with coefficient field, properness and smoothness hypotheses."},
+    {"id":"M4.REFERENCE.BSD_KNOWN_CASES","status":"THEOREM REFERENCE","leanImport":null,"requiredAdapter":"An exact known-case theorem with rank, elliptic-curve field, finiteness and arithmetic hypotheses; universal BSD remains RESEARCH OPEN."},
+    {"id":"M4.REFERENCE.NS_ORIGINAL","status":"THEOREM REFERENCE","leanImport":null,"requiredAdapter":"Exact original PDE theorem with domain, forcing, regularity, moment/jet, cutoff and bound hypotheses; finite numerical fixtures do not import it."}
+  ]
+}

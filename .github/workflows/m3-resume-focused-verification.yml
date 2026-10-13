@@ -2,7 +2,12 @@ name: M3 bounded resume verification
 
 on:
   push:
-    branches: [mathscope-m3-resume-20261013]
+    branches: ['mathscope-m3-*']
+    paths:
+      - '.github/workflows/m3-resume-focused-verification.yml'
+      - 'research-ide/mathscope-m3/navier/**'
+      - 'research-ide/mathscope-m2/navier/**'
+  pull_request:
     paths:
       - '.github/workflows/m3-resume-focused-verification.yml'
       - 'research-ide/mathscope-m3/navier/**'
@@ -51,11 +56,12 @@ jobs:
               'saved-quadratic-implicit-derivatives.test.mjs':('MATHSCOPE_QUADRATIC_IMPLICIT_EVIDENCE_DIR',12,'MathScope.SavedQuadraticImplicitDerivativeAudit/1'),
               'saved-whole-mean-direct-audit.test.mjs':('MATHSCOPE_WHOLE_MEAN_AUDIT_EVIDENCE_DIR',11,'MathScope.N6.SavedWholeMeanDirectAudit/1'),
           }
-          for filename in implicit_required:
+          refinement_required={'temporal-cutoff-refinement.test.mjs':4,'source-core-refinement.test.mjs':3}
+          for filename in [*implicit_required,*refinement_required]:
               if not (navier/'tests'/filename).is_file():
                   (out/'missing-required-test.json').write_text(json.dumps({'pass':False,'reason':'REQUIRED_TEST_MISSING','path':filename}))
                   raise SystemExit(1)
-          patterns=('saved-initialized','initialized-lazy','initialized-norm','mean-residual-change','saved-five-mean-change','fixed-stage-scalar','terminal-extension','saved-monotone-implicit-derivatives','saved-quadratic-implicit-derivatives','saved-whole-mean-direct-audit')
+          patterns=('saved-initialized','initialized-lazy','initialized-norm','mean-residual-change','saved-five-mean-change','fixed-stage-scalar','terminal-extension','saved-monotone-implicit-derivatives','saved-quadratic-implicit-derivatives','saved-whole-mean-direct-audit','temporal-cutoff-refinement','source-core-refinement')
           selected=[required]+[p for p in sorted(navier.rglob('*.test.mjs'))
               if p!=required and '/evidence/' not in p.as_posix() and any(s in p.name for s in patterns)]
           sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
@@ -82,6 +88,12 @@ jobs:
               env=dict(os.environ)
               evidence=out/f'{i:02d}-saved-five-observed.json'
               if p==required:env['M3_SAVED_FIVE_CHANGE_EVIDENCE']=str(evidence)
+              if p.name=='saved-five-mean-change-integrated.test.mjs':
+                  evidence=out/f'{i:02d}-saved-five-integrated-observed.json'
+                  env['M3_SAVED_FIVE_INTEGRATED_EVIDENCE']=str(evidence)
+              if p.name=='temporal-cutoff-refinement.test.mjs':
+                  evidence=out/f'{i:02d}-temporal-cutoff-observed.json'
+                  env['M3_TEMPORAL_CUTOFF_REFINEMENT_EVIDENCE']=str(evidence)
               audit_spec=implicit_required.get(p.name)
               artifact_dir=out/f'{i:02d}-implicit-artifacts'
               if audit_spec:
@@ -123,6 +135,15 @@ jobs:
               row['pass']=code==0 and stop is None and row['failed']==0 and row['cancelled']==0 and (row['passed'] or 0)>0
               if p==required:
                   row['pass']=row['pass'] and row['tests']==8 and row['passed']==8 and row['skipped']==0 and all(negative.values()) and observed_ok
+              if p.name in refinement_required:
+                  expected=refinement_required[p.name]
+                  row['pass']=row['pass'] and row['tests']==expected and row['passed']==expected and row['skipped']==0
+              if p.name=='temporal-cutoff-refinement.test.mjs':
+                  a=json.loads(evidence.read_text()) if evidence.is_file() else {}
+                  row['pass']=row['pass'] and a.get('schema')=='MathScope.N8.RecordedTemporalCutoffRefinementObserved/1' and len(a.get('result',{}).get('rows',[]))==16 and a.get('originalN805Complete') is False and a.get('wholeM3Complete') is False
+              if p.name=='saved-five-mean-change-integrated.test.mjs':
+                  a=json.loads(evidence.read_text()) if evidence.is_file() else {}
+                  row['pass']=row['pass'] and a.get('schema')=='MathScope.N6.SavedFiveMeanIntegratedObserved/1' and len(a.get('certificates',[]))==2 and a.get('originalOperatorDomainAndSourceClassUncertified') is True and a.get('wholeM3Complete') is False
               if audit_spec:
                   artifacts=[q for q in sorted(artifact_dir.glob('*.json')) if not q.name.startswith('execution-')]
                   row['artifactFiles']=[{'path':q.relative_to(out).as_posix(),'bytes':q.stat().st_size,'sha256':sha(q)} for q in sorted(artifact_dir.glob('*.json'))]
@@ -148,8 +169,9 @@ jobs:
           unchanged=all((root/r['path']).is_file() and sha(root/r['path'])==r['sha256'] for r in inventory)
           result.update({'finishedAt':now(),'statusAfter':after,'sourceTreeUnchanged':before==after and unchanged,
               'requiredTestExplicitlyExecuted':any(r['path']==required.relative_to(root).as_posix() for r in result['tests']),
-              'implicitTestsExplicitlyExecuted':all(any(Path(r['path']).name==name for r in result['tests']) for name in implicit_required)})
-          result['pass']=bool(result['tests']) and all(r['pass'] for r in result['tests']) and result['sourceTreeUnchanged'] and result['requiredTestExplicitlyExecuted'] and result['implicitTestsExplicitlyExecuted']
+              'implicitTestsExplicitlyExecuted':all(any(Path(r['path']).name==name for r in result['tests']) for name in implicit_required),
+              'refinementTestsExplicitlyExecuted':all(any(Path(r['path']).name==name for r in result['tests']) for name in refinement_required)})
+          result['pass']=bool(result['tests']) and all(r['pass'] for r in result['tests']) and result['sourceTreeUnchanged'] and result['requiredTestExplicitlyExecuted'] and result['implicitTestsExplicitlyExecuted'] and result['refinementTestsExplicitlyExecuted']
           (out/'receipt.json').write_text(json.dumps(result,indent=2)+'\n')
           print('RESUME_VERIFICATION',json.dumps({k:v for k,v in result.items() if k!='tests'}),flush=True)
           raise SystemExit(0 if result['pass'] else 1)
