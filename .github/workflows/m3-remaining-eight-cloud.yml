@@ -1,0 +1,62 @@
+name: M3 remaining eight cloud replay
+
+on:
+  push:
+    branches: [mathscope-m3-cloud-repro-20261014]
+    paths:
+      - '.github/workflows/m3-remaining-eight-cloud.yml'
+      - 'research-ide/mathscope-m3/cloud/**'
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Bounded source replay only. Passing tests do not complete M3.'
+        type: choice
+        required: true
+        default: smoke
+        options: [smoke, extended]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: m3-remaining-eight-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  reproducible-finite-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run bounded original-source and generic-control tests with immutable receipts
+        shell: bash
+        env:
+          M3_PROFILE: ${{ github.event_name == 'workflow_dispatch' && inputs.profile || 'smoke' }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/m3-remaining-eight-replay"
+          python -B research-ide/mathscope-m3/cloud/remaining8_replay.py \
+            --profile "$M3_PROFILE" \
+            --output "$RUNNER_TEMP/m3-remaining-eight-replay" \
+            --wall-seconds 180 \
+            --node-heap-mib 1536 \
+            2>&1 | tee "$RUNNER_TEMP/m3-remaining-eight-replay/runner.log"
+      - name: Preserve logs, actual source hashes, open criteria and partial failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-remaining-eight-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/m3-remaining-eight-replay/
+          if-no-files-found: warn
+          retention-days: 30
+          compression-level: 6
