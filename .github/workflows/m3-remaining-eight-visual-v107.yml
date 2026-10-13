@@ -1,0 +1,23 @@
+name: M3 Eight Remaining Visualizations v107
+on:
+  push:
+    branches:
+      - mathscope-m3-remaining8-v107-20261014
+    paths:
+      - 'research-ide/mathscope-m3/web/m3-remaining-eight-v107.*'
+      - 'research-ide/mathscope-m3/web/tests/m3-remaining-eight-v107.test.mjs'
+      - '.github/workflows/m3-remaining-eight-visual-v107.yml'
+  workflow_dispatch:
+jobs:
+  bounded-visual-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Parse deployed JavaScript
+        run: node --check research-ide/mathscope-m3/web/m3-remaining-eight-v107.js
+      - name: Run all eight simulated DOM and source-boundary checks
+        run: node --test --test-reporter=tap research-ide/mathscope-m3/web/tests/m3-remaining-eight-v107.test.mjs
