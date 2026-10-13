@@ -1,0 +1,94 @@
+name: M3 bounded resume verification
+
+on:
+  push:
+    branches: [mathscope-m3-resume-20261013]
+    paths:
+      - '.github/workflows/m3-resume-focused-verification.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  focused-source-norms:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Execute bounded existing tests without altering criterion states
+        shell: bash
+        run: |
+          python -B - <<'PY'
+          from pathlib import Path
+          import hashlib,json,os,re,subprocess,time,datetime
+          root=Path.cwd()
+          out=Path(os.environ['RUNNER_TEMP'])/'m3-focused-resume'
+          out.mkdir()
+          navier=root/'research-ide/mathscope-m3/navier'
+          selected=[]
+          patterns=('saved-initialized','initialized-lazy','initialized-norm','mean-residual-change','fixed-stage-scalar','terminal-extension')
+          for p in sorted(navier.rglob('*.test.mjs')):
+              if '/evidence/' not in p.as_posix() and any(s in p.name for s in patterns):
+                  selected.append(p)
+          inventory=[]
+          for p in sorted(navier.rglob('*')):
+              if not p.is_file() or '/evidence/' in p.as_posix(): continue
+              if p.suffix in ('.mjs','.py','.md') and any(s in p.name for s in patterns+('cutoff','initial-haar','initial-residual')):
+                  text=p.read_text()
+                  inventory.append({'path':p.relative_to(root).as_posix(),'bytes':p.stat().st_size,
+                    'exports':re.findall(r'export\s+(?:async\s+)?function\s+(\w+)',text),
+                    'environment':sorted(set(re.findall(r'(?:process\.env\.|os\.environ\[?["\x27]?)([A-Z][A-Z0-9_]+)',text))),
+                    'skipExpressions':re.findall(r'skip\s*:\s*[^,}\n]+',text)})
+          print('SOURCE_INVENTORY',json.dumps(inventory),flush=True)
+          print('SELECTED_TESTS',json.dumps([p.relative_to(root).as_posix() for p in selected]),flush=True)
+          before=subprocess.check_output(['git','status','--porcelain=v1'],text=True)
+          results=[]
+          for i,p in enumerate(selected):
+              command=['node','--max-old-space-size=1536','--test','--test-reporter=tap','--test-concurrency=1',str(p)]
+              started=time.monotonic()
+              try:
+                  r=subprocess.run(command,cwd=root,capture_output=True,text=True,timeout=150)
+                  stdout,stderr,code,stop=r.stdout,r.stderr,r.returncode,None
+              except subprocess.TimeoutExpired as e:
+                  def text(v):return v.decode(errors='replace') if isinstance(v,bytes) else v or ''
+                  stdout,stderr,code,stop=text(e.stdout),text(e.stderr),None,'TIME_LIMIT'
+              (out/f'{i:02d}.tap').write_text(stdout)
+              (out/f'{i:02d}.stderr').write_text(stderr)
+              count=lambda key: int(re.findall(r'^# '+key+r' (\d+)$',stdout,re.M)[-1]) if re.findall(r'^# '+key+r' (\d+)$',stdout,re.M) else None
+              row={'path':p.relative_to(root).as_posix(),'sourceSHA256':hashlib.sha256(p.read_bytes()).hexdigest(),
+                   'command':command,'exitCode':code,'stopReason':stop,'seconds':round(time.monotonic()-started,3),
+                   'passed':count('pass'),'failed':count('fail'),'skipped':count('skipped')}
+              results.append(row)
+              print('TEST_RESULT',json.dumps(row),flush=True)
+              if code!=0:print('FAILURE_TAIL',stdout[-16000:],stderr[-3000:],flush=True)
+          after=subprocess.check_output(['git','status','--porcelain=v1'],text=True)
+          result={'schema':'MathScope.M3.BoundedResumeVerification/1',
+            'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+            'observedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'inventory':inventory,'tests':results,'sourceTreeUnchanged':before==after,
+            'statusBefore':before,'statusAfter':after,
+            'criterionPromotionPerformed':False,'wholeM3Complete':False,
+            'pass':bool(results) and all(r['exitCode']==0 and r['failed']==0 for r in results) and before==after}
+          (out/'receipt.json').write_text(json.dumps(result,indent=2)+'\n')
+          print('RESUME_VERIFICATION',json.dumps({k:v for k,v in result.items() if k not in ('inventory','tests')}),flush=True)
+          raise SystemExit(0 if result['pass'] else 1)
+          PY
+      - name: Preserve actual results including skipped scopes and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-focused-resume-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/m3-focused-resume/
+          if-no-files-found: error
+          retention-days: 30
