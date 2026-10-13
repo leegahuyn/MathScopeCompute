@@ -42,6 +42,39 @@ def require(condition, message):
 
 
 def edition_files():
+    # A repository edition ships explicitly Git-visible authoring files.
+    # In particular local ignored publisher candidates are not CI inputs.
+    # --cached still includes tracked proof receipts matching ignore rules;
+    # an ignore rule cannot silently remove an already tracked artifact.
+    inside = subprocess.run(['git', 'rev-parse', '--is-inside-work-tree'],
+                            cwd=ROOT, capture_output=True, encoding='utf-8')
+    if inside.returncode == 0 and inside.stdout.strip() == 'true':
+        listed = subprocess.run(['git', 'ls-files', '-z', '--cached', '--others',
+                                 '--exclude-standard', '--', '.'], cwd=ROOT,
+                                check=True, capture_output=True)
+        names = listed.stdout.decode('utf-8').split('\0')
+        names = [name for name in names if name]
+        require(len(names) == len(set(names)), 'Duplicate/unmerged Git edition paths must be resolved before packaging.')
+        result = {}
+        for relative in sorted(names):
+            pure = PurePosixPath(relative)
+            require(not pure.is_absolute() and '..' not in pure.parts and str(pure) == relative,
+                    f'Unsafe Git edition path: {relative}')
+            if (pure.parts[0] in ORIGINAL_ROOTS | {ARCHIVE_MEMBERS_ROOT}
+                    or any(part in SKIP_DIRS for part in pure.parts[:-1])
+                    or relative in SKIP_FILES or pure.name.endswith(('.pyc', '.tmp', '.zip', '.zip.sha256'))):
+                continue
+            path = ROOT.joinpath(*pure.parts)
+            parent = path.parent
+            while parent != ROOT:
+                require(not parent.is_symlink(), f'Symlink directory in edition artifacts: {relative}')
+                parent = parent.parent
+            require(path.is_file() and not path.is_symlink(), f'Git-visible edition artifact is missing or a symlink: {relative}')
+            result[relative] = path
+        return result
+
+    # Distributed archives have no Git index or ignored local authoring files.
+    # Retain the complete filesystem comparison for standalone archive replay.
     result = {}
     for current, directories, files in os.walk(ROOT, followlinks=False):
         current_path = Path(current)
@@ -126,7 +159,7 @@ def archived_original_files(directory:Path|None=None, required=False):
 def validate_source_and_translation():
     selection = read_json('provenance/source-selection.json')
     original_manifest_path = ROOT/'provenance/original-v54-PACKAGE_MANIFEST.json'
-    original_manifest = json.loads(original_manifest_path.read_text())
+    original_manifest = json.loads(original_manifest_path.read_text(encoding='utf-8'))
     require(selection['sourceArchive']['sha256']==EXPECTED_ARCHIVE_SHA256
             and selection['sourceArchive']['bytes']==EXPECTED_ARCHIVE_BYTES
             and selection['sourceArchive']['manifestSha256']==EXPECTED_MANIFEST_SHA256,
@@ -179,7 +212,7 @@ def validate_source_and_translation():
     require(counts == {'PASS':61,'PARTIAL':7,'BLOCKED':2}, 'Frozen baseline counts changed.')
 
     script = "import {listExamples} from './mathscope-m1/core/registry.mjs'; process.stdout.write(JSON.stringify(await listExamples()));"
-    result = subprocess.run(['node','--input-type=module','-e',script],cwd=ROOT,check=True,capture_output=True,text=True)
+    result = subprocess.run(['node','--input-type=module','-e',script],cwd=ROOT,check=True,capture_output=True,encoding='utf-8')
     registry = json.loads(result.stdout)
     example_labels = read_json('localization/examples-text.en.json')
     example_ids = [item['id'] for item in registry]
@@ -225,6 +258,11 @@ def expected_manifest(selection, build, companion, registry):
         },
         'editionArtifactCount':len(files),
         'editionArtifacts':files,
+        'editionMembershipPolicy':{
+            'repository':'Git-visible tracked plus untracked non-ignored files; tracked proof artifacts remain included even when matched by ignore rules.',
+            'standaloneArchive':'Complete filesystem membership outside a Git worktree, with the existing explicit original-root, auxiliary-image and generated-output exclusions.',
+            'originalSourceAndAddonValidationUnchanged':True,
+        },
         'postV54AddonCount':len(addons),
         'postV54Addons':addons,
         'addonPolicy':'Only provenance/addon-allowlist.json roots are included. These files are separate from the immutable original 693-file selection and its 50 baseline source pins.',
@@ -241,7 +279,7 @@ def verify(write_manifest=False):
         target.write_bytes(json_bytes(expected))
     else:
         require(target.is_file(), 'English manifest is missing. Generate it with --write-manifest after review.')
-        require(json.loads(target.read_text()) == expected, 'English/release artifact bytes or membership changed; review and regenerate the English manifest explicitly.')
+        require(json.loads(target.read_text(encoding='utf-8')) == expected, 'English/release artifact bytes or membership changed; review and regenerate the English manifest explicitly.')
     return {
         'status':'SOURCE_AND_ENGLISH_BINDINGS_VERIFIED',
         'originalFilesVerified':len(selection['included']),

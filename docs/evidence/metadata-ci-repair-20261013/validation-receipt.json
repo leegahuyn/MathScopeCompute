@@ -1,0 +1,208 @@
+{
+  "schema": "MathScope.MetadataCIRepair/1",
+  "startedAtUTC": "2026-10-13T09:17:29.074420+00:00",
+  "gitHEAD": "620dca8fff0b9593fc38f6adc5495a1aecd81c35",
+  "scope": "Metadata membership, byte preservation and CI gate repair; no analytic or Lean completion claim.",
+  "commands": [
+    {
+      "id": "01-write-manifest",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-B",
+        "research-ide/tools/verify_english_release.py",
+        "--write-manifest"
+      ],
+      "startedAtUTC": "2026-10-13T09:17:29.128884+00:00",
+      "completedAtUTC": "2026-10-13T09:17:58.414612+00:00",
+      "elapsedSeconds": 29.281,
+      "exitCode": 0,
+      "stdout": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/01-write-manifest.stdout",
+        "bytes": 537,
+        "sha256": "bf6ae750cebab4112baf0655777a4b611f02764baa1cb4b17b5286225b7d20ff"
+      },
+      "stderr": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/01-write-manifest.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "02-readonly-verify",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-B",
+        "research-ide/tools/verify_english_release.py"
+      ],
+      "startedAtUTC": "2026-10-13T09:17:58.429639+00:00",
+      "completedAtUTC": "2026-10-13T09:18:25.079583+00:00",
+      "elapsedSeconds": 26.656,
+      "exitCode": 0,
+      "stdout": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/02-readonly-verify.stdout",
+        "bytes": 537,
+        "sha256": "bf6ae750cebab4112baf0655777a4b611f02764baa1cb4b17b5286225b7d20ff"
+      },
+      "stderr": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/02-readonly-verify.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "03-membership-attacks",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "research-ide/tools",
+        "-p",
+        "test_edition_visibility.py",
+        "-v"
+      ],
+      "startedAtUTC": "2026-10-13T09:18:25.084448+00:00",
+      "completedAtUTC": "2026-10-13T09:18:27.364306+00:00",
+      "elapsedSeconds": 2.281,
+      "exitCode": 0,
+      "stdout": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/03-membership-attacks.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/03-membership-attacks.stderr",
+        "bytes": 1231,
+        "sha256": "734d7e8ea6a4ae9b0d601b8801d392e32aaedd0a8230e9170da53b064fda5886"
+      }
+    },
+    {
+      "id": "04-addon-boundaries",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "research-ide/tools",
+        "-p",
+        "test_addon_boundaries.py",
+        "-v"
+      ],
+      "startedAtUTC": "2026-10-13T09:18:27.374276+00:00",
+      "completedAtUTC": "2026-10-13T09:18:27.649576+00:00",
+      "elapsedSeconds": 0.266,
+      "exitCode": 0,
+      "stdout": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/04-addon-boundaries.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/04-addon-boundaries.stderr",
+        "bytes": 639,
+        "sha256": "c6aa77fd3d13f23807d3582cfb070ee7f9e3282d4ace6509cb7b69ea16b268ab"
+      }
+    },
+    {
+      "id": "05-current-pin-original-capture",
+      "command": [
+        "node",
+        "../check_current_pin.mjs"
+      ],
+      "startedAtUTC": "2026-10-13T09:18:27.659704+00:00",
+      "completedAtUTC": "2026-10-13T09:18:28.145729+00:00",
+      "elapsedSeconds": 0.485,
+      "exitCode": 0,
+      "stdout": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/05-current-pin-original-capture.stdout",
+        "bytes": 251,
+        "sha256": "d50bc69ee5a50c007596cdbcd86d8879b174734f1f399676cde4a5878bd0a0f5"
+      },
+      "stderr": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/05-current-pin-original-capture.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "06-diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "startedAtUTC": "2026-10-13T09:18:28.150889+00:00",
+      "completedAtUTC": "2026-10-13T09:18:42.175839+00:00",
+      "elapsedSeconds": 14.031,
+      "exitCode": 0,
+      "stdout": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/06-diff-check.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "docs/evidence/metadata-ci-repair-20261013/06-diff-check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "manifest": {
+    "path": "research-ide/SOURCE_TRANSLATION_MANIFEST.json",
+    "bytes": 3579088,
+    "sha256": "3420c407509b550be8abc570fbc45483ea20524bcd3cb1db00eb1c2eb77506b2"
+  },
+  "currentImplementationPin": {
+    "path": "research-ide/mathscope-m3/navier/implementation-pin.mjs",
+    "bytes": 19448,
+    "sha256": "8b4b5be8ba2cabbd8e9037903a7077861ef341a37a2a143a5d9b31da23f05a66"
+  },
+  "preservedPublishedEngine": {
+    "path": "research-ide/mathscope-m3/web/extended-engine.bundle.js",
+    "bytes": 12260240,
+    "sha256": "d3eeba520ca9be92f6beb23f6b9da5eace07527692d0d6598102b9ffcca002a7"
+  },
+  "preservedPublishedBuildData": {
+    "path": "research-ide/mathscope-m3/web/extended-build-data.json",
+    "bytes": 344707,
+    "sha256": "3468904d19dc5617541fe4a528dd1cab3fa657fa09a21a1a2a136b22f45337e6"
+  },
+  "publishedEngineRebuilt": false,
+  "publishedBundleEquatedWithCurrentImplementationPin": false,
+  "originalEnglishCriterionBaselinePromoted": false,
+  "M3OriginalAcceptanceCountPromoted": false,
+  "M4OriginalAcceptanceOrFinalFreezeClaimed": false,
+  "editionArtifactCount": 9835,
+  "removedHistoricalEditionArtifacts": [],
+  "componentTestCounts": {
+    "membershipAttackTests": 6,
+    "addonBoundaryTests": 4
+  },
+  "priorObservedWorkerRegression": {
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "research-ide/mathscope-m3/web/tests/extended-worker.test.mjs"
+    ],
+    "exitCode": 0,
+    "testsPassed": 11,
+    "elapsedMilliseconds": 29887.9344,
+    "rawLogSavedByThisWrapper": false,
+    "provenance": "Previously completed read-only tool invocation during this repair; no engine or worker source change afterward."
+  },
+  "status": "PASS",
+  "completedAtUTC": "2026-10-13T09:18:42.335553+00:00"
+}

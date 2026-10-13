@@ -34,6 +34,7 @@ jobs:
       - name: Validate preserved source and English metadata
         run: |
           python3 tools/verify_english_release.py
+          python3 -B -m unittest discover -s tools -p test_edition_visibility.py -v
           python3 -B -m unittest discover -s tools -p test_addon_boundaries.py -v
           python3 -B -m unittest discover -s ../tools/ns-original-ci -p test_git_status.py -v
       - name: Run Worker, integration, and English launcher regressions

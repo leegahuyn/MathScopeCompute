@@ -144,16 +144,20 @@ if (arg('--baseline')) {
   if (digest !== HANDOFF_BASELINE.publicHtmlSha256) throw new Error(`Public baseline changed: ${digest}`);
   const html = baseline.toString('utf8');
   if (html.includes('mathscope-m4-evidence-20261013')) throw new Error('Owned anchor already exists; duplicate insertion rejected.');
-  const endings = [...html.matchAll(/<\/body\s*>/gi)];
-  if (endings.length !== 1) throw new Error('A single closing body anchor is required.');
-  const index = endings[0].index;
+  // The publisher injects its own footer immediately before </body>.
+  // Insert at the same owned-script anchor in CMS source and public bytes,
+  // so the predicted document preserves that injected footer byte for byte.
+  const insertionAnchor = 'return {bootM2};\n})();\n})();\n</script>';
+  if (html.split(insertionAnchor).length !== 2) throw new Error('A unique owned M2 script ending is required.');
+  const index = html.indexOf(insertionAnchor) + insertionAnchor.length;
   const candidate = html.slice(0, index) + fragment + html.slice(index);
   const recovered = candidate.replace(fragment, '');
   if (!Buffer.from(recovered).equals(baseline)) throw new Error('Existing bytes were changed.');
   const output = arg('--output') ? resolve(arg('--output')) : resolve(own, 'evidence/local-candidate.html');
   await writeFile(output, candidate);
   baselineCheck = { baselineSha256: digest, candidateSha256: sha(candidate), baselineBytes: baseline.length,
-    addedBytes: Buffer.byteLength(fragment), originalBytesPreserved: true, insertionAnchor: 'single closing body', output };
+    addedBytes: Buffer.byteLength(fragment), originalBytesPreserved: true, insertionAnchor,
+    insertionMode: 'AFTER_UNIQUE_OWNED_SCRIPT_BEFORE_PUBLISHER_FOOTER', output };
 }
 const receipt = { schemaVersion: 'mathscope.m4.web-patch-build/1', createdAt: new Date().toISOString(),
   fragmentSha256: sha(fragment), modelSha256: sha(JSON.stringify(model)), criteriaCount: criteria.length,

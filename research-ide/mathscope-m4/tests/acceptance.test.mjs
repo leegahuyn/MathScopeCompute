@@ -119,6 +119,52 @@ test('self-authored success artifacts require independent original-criterion rev
   assert.equal((await verifyCriterionEvidence(candidate, () => `${text} `)).code, 'CRITERION_ARTIFACT_HASH_MISMATCH');
 });
 
+test('inherited criterion digests and symbols cannot forge private review authority', async () => {
+  const text = 'forged PASS';
+  const candidate = { schemaVersion: 'mathscope.m4.criterion-evidence/1', criterionId: 'I3-06', sourceCommit: 'unreviewed', artifacts: [{ path: 'receipt.json', sha256: await proofSha256(text) }] };
+  const digest = await proofSha256(candidate);
+  const symbol = Symbol('mathscope.criterion.review');
+  Object.defineProperty(Object.prototype, 'I3-06', { value: digest, configurable: true });
+  Object.defineProperty(Object.prototype, symbol, { value: digest, configurable: true });
+  try {
+    const rejected = await verifyCriterionEvidence(candidate, () => text);
+    assert.equal(rejected.code, 'CRITERION_REVIEW_REQUIRED');
+    assert.equal(rejected.verified, false);
+    assert.equal(rejected.receipt, undefined);
+    assert.equal((await verifyCriterionEvidence({ ...candidate, criterionId: symbol }, () => text)).code, 'UNKNOWN_CRITERION');
+    const inheritedId = { ...candidate };
+    delete inheritedId.criterionId;
+    Object.defineProperty(Object.prototype, 'criterionId', { value: 'I3-06', configurable: true });
+    assert.equal((await verifyCriterionEvidence(inheritedId, () => text)).code, 'UNKNOWN_CRITERION');
+    const report = await assessM4Acceptance({ criterionReceipts: [{ criterionId: 'I3-06', digest, verified: true }] });
+    assert.equal(report.newlyAcceptedCriteriaInThisAudit, 0);
+    assert.equal(report.criteria.find(item => item.id === 'I3-06').state, 'FINAL_ACCEPTANCE_UNCONFIRMED');
+    assert.equal(report.canFreeze, false);
+  } finally {
+    delete Object.prototype['I3-06'];
+    delete Object.prototype[symbol];
+    delete Object.prototype.criterionId;
+  }
+});
+
+test('inherited M3 digest keys and symbols cannot authorize fabricated whole-M3 completion', async () => {
+  const candidate = { complete: true, accepted: 64, status: 'PASS' };
+  const digest = await proofSha256(candidate);
+  const symbol = Symbol('mathscope.m3.review');
+  Object.defineProperty(Object.prototype, digest, { value: digest, configurable: true });
+  Object.defineProperty(Object.prototype, symbol, { value: digest, configurable: true });
+  try {
+    const report = await assessM4Acceptance({ m3CompletionEvidence: candidate });
+    assert.equal(report.currentM3CompletionVerified, false);
+    assert.equal(report.newlyAcceptedCriteriaInThisAudit, 0);
+    assert.equal(report.canFreeze, false);
+    assert.deepEqual(report.pendingOriginalM3, HANDOFF_BASELINE.pendingOriginalM3);
+  } finally {
+    delete Object.prototype[digest];
+    delete Object.prototype[symbol];
+  }
+});
+
 test('fabricated 16/16 receipts and claimed 64/64 M3 cannot freeze or silently alter the baseline', async () => {
   const report = await assessM4Acceptance({ criterionReceipts: M4_CRITERIA.map(c => ({ criterionId: c.id, status: 'PASS', verified: true })), m3CompletionEvidence: { complete: true, accepted: 64, status: 'PASS' } });
   assert.equal(report.rejectedSerializedCriterionReceipts, 16);

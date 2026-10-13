@@ -42,13 +42,15 @@ M3의 남은 원문 8개가 독립 승인되고 원문 I3/R1의 모든 증거가
 node research-ide/mathscope-m4/replay-local-lean.mjs --lean <설치된 Lean 실행파일> --attempt 3 --standard-imports
 ```
 
-원래 4.34.1/mathlib pin의 새 clean Linux 실행은 `.github/workflows/m4-pinned-kernel-replay.yml`과 `tools/pinned-kernel-replay.mjs`로 준비했다. 이 workflow의 작성 자체는 hosted kernel 실행 성공이 아니다. 실제 Actions run의 exit와 업로드된 `receipt.json`을 읽은 뒤에만 새 finite/conditional kernel 재검사를 판정한다. 실제 source 변경 또는 명시적 workflow dispatch로 실행하며 결과 artifact 추가만으로 다시 실행하지 않는다.
+원래 4.34.1/mathlib pin의 새 clean Linux 실행은 `.github/workflows/m4-pinned-kernel-replay.yml`과 `tools/pinned-kernel-replay.mjs`로 수행했다. 첫 실제 run **38369365124 / HEAD 620dca8…**은 공식 archive/runtime/Lean/mathlib/lock/cache 검사와 Defs/Finite compile을 통과했지만 Analytic은 512 MiB에서 `lean::memory_exception`으로 **exit 134** 중단했다. 전체 결과는 exit 1이며 conditional/kernel 최종 성공으로 인수하지 않았다. 원본 ZIP SHA `6658e7ea…`와 그대로 추출한 receipt/로그는 `evidence/hosted-failures/run38369365124/`에 보존했다. 실제 Actions run의 exit와 업로드된 `receipt.json`을 읽은 뒤에만 다음 실행을 판정한다. source 변경 또는 명시적 workflow dispatch로 실행하며 결과 artifact 추가만으로 다시 실행하지 않는다.
 
 runner는 공식 Lean Linux archive digest `47bf4bbd…`, Lean commit `5045d005…`, runtime shared-library SHA, mathlib commit `d13f23b7…`, 원래 mathlib lock SHA `8f67b2cf…`, 모든 잠긴 transitive dependency를 비교한다. mathlib cache는 원래 analytic 소스의 정확한 import와 그 closure만 요청한다. 다른 commit의 cache 자동 탐색, source 수정, 무한 시간이 허용된 fallback은 사용하지 않는다. 이 pin들은 `evidence/official-pin-readback-20261013.json`에 기록한 실제 공식 HTTP readback에서도 확인했다.
 
-원래 Defs/Finite/Analytic/Conditional/Comparison 파일의 Git blob SHA와 명시된 target type/#print axioms, 경고·sorry 및 두 오류 대조의 **예상 실패 이유**를 검사한다. 누락된 import나 TIME_LIMIT를 올바른 수학적 오류 대조로 세지 않는다. 18분 전체 runner 예산과 case당 60초/512 MiB가 적용된다. 실패도 즉시 receipt를 기록하고 Actions artifact에 남긴다. workflow에는 저장소 쓰기 권한이 없으며 root 검토자가 판정·로그를 GitHub의 새 commit으로 보존해야 한다.
+원래 Defs/Finite/Analytic/Conditional/Comparison 파일의 Git blob SHA와 명시된 target type/#print axioms, 경고·sorry 및 두 오류 대조의 **예상 실패 이유**를 검사한다. 누락된 import나 TIME_LIMIT를 올바른 수학적 오류 대조로 세지 않는다. 18분 전체 runner 예산과 case당 60초가 적용된다. 실제 첫 memory exception의 근거에 따라 Mathlib을 읽는 Analytic/Conditional/Comparison만 **1536 MiB**로 조정하고 Defs/Finite 및 두 오류 대조는 **512 MiB**를 유지한다. 이 변경은 성공 선언이 아니며 새 실행 receipt를 확인해야 한다. 성공한 각 module의 target audit는 즉시 기록하여 이후 실패가 앞선 유효 scope를 지우지 않게 한다. 실패도 즉시 receipt를 기록하고 Actions artifact에 남긴다. workflow에는 저장소 쓰기 권한이 없으며 root 검토자가 판정·로그를 GitHub의 새 commit으로 보존해야 한다.
 
-전체 software 보호 검사 15개는 다음 명령으로 원시 TAP와 source SHA receipt를 새 attempt에 기록한다:
+추가 검토에서 빈 승인 목록이 JavaScript 상속 속성을 읽어 미검수 criterion을 승인할 수 있는 결함을 발견했다. 승인 목록을 null-prototype 객체로 바꾸고 criterion ID와 승인 digest의 own property만 허용했다. M3 전체 완료 승인 목록도 같은 방식으로 제한한다. 기존 15개 검사 기록을 보존하며, 두 상속 속성·symbol 회귀 검사를 포함한 attempt 5의 **17/17, exit 0**을 별도 기록했다. 이 software 수정은 원래 수학 기준 인수를 올리지 않는다.
+
+전체 software 보호 검사 17개는 다음 명령으로 원시 TAP와 source SHA receipt를 새 attempt에 기록한다:
 
 ```sh
 node research-ide/mathscope-m4/run-tests.mjs --attempt 4

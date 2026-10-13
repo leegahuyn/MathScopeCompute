@@ -9,8 +9,9 @@ const criterionAuthority = new WeakSet();
 const assessmentAuthority = new WeakSet();
 // Update only after independent review of actual criterion execution artifacts.
 // Empty means final M4 acceptance is UNCONFIRMED, not historical zero completion.
-const REVIEWED_CRITERION_DIGESTS = Object.freeze({});
-const REVIEWED_M3_COMPLETION_DIGESTS = Object.freeze([]);
+const REVIEWED_CRITERION_DIGESTS = Object.freeze(Object.create(null));
+// Digest keys and values must both be independently reviewed exact digests.
+const REVIEWED_M3_COMPLETION_DIGESTS = Object.freeze(Object.create(null));
 const clone = value => JSON.parse(JSON.stringify(value));
 const freeze = value => {
   if (value && typeof value === 'object' && !Object.isFrozen(value)) {
@@ -97,7 +98,8 @@ export const isVerifiedM4Assessment = value => Boolean(value && assessmentAuthor
 
 /** A serialized PASS has no authority. New checks require a reviewed immutable anchor. */
 export async function verifyCriterionEvidence(candidate, readArtifact) {
-  const criterion = M4_CRITERIA.find(item => item.id === candidate?.criterionId);
+  const criterion = candidate && Object.hasOwn(candidate, 'criterionId') && typeof candidate.criterionId === 'string'
+    ? M4_CRITERIA.find(item => item.id === candidate.criterionId) : null;
   if (!criterion) return failure('UNKNOWN_CRITERION', 'An exact original I3/R1 criterion ID is required.');
   try { canonicalProofJSON(candidate); } catch (error) { return failure('INVALID_CRITERION_EVIDENCE', String(error.message)); }
   if (candidate.schemaVersion !== 'mathscope.m4.criterion-evidence/1') return failure('INVALID_CRITERION_SCHEMA', 'Versioned criterion evidence is required.');
@@ -115,7 +117,7 @@ export async function verifyCriterionEvidence(candidate, readArtifact) {
     }
   } catch (error) { return failure('CRITERION_ARTIFACT_INVALID', String(error.message)); }
   const digest = await proofSha256(candidate);
-  if (REVIEWED_CRITERION_DIGESTS[criterion.id] !== digest) {
+  if (!Object.hasOwn(REVIEWED_CRITERION_DIGESTS, criterion.id) || REVIEWED_CRITERION_DIGESTS[criterion.id] !== digest) {
     return failure('CRITERION_REVIEW_REQUIRED', 'Artifact integrity and claimed PASS bits do not establish execution success or original-criterion acceptance. No independently reviewed criterion anchor matches this evidence.', { criterionId: criterion.id, candidateDigest: digest, integrityCheckedArtifacts: checked });
   }
   const receipt = freeze({ criterionId: criterion.id, digest, artifactDigests: checked, authority: 'REVIEWED_ORIGINAL_CRITERION', sourceCommit: candidate.sourceCommit });
@@ -132,7 +134,7 @@ export async function assessM4Acceptance({ criterionReceipts = [], kernelReceipt
   }));
   let m3Digest = null;
   try { if (m3CompletionEvidence) m3Digest = await proofSha256(m3CompletionEvidence); } catch { /* Invalid data cannot change the baseline. */ }
-  const currentM3CompletionVerified = Boolean(m3Digest && REVIEWED_M3_COMPLETION_DIGESTS.includes(m3Digest));
+  const currentM3CompletionVerified = Boolean(m3Digest && Object.hasOwn(REVIEWED_M3_COMPLETION_DIGESTS, m3Digest) && REVIEWED_M3_COMPLETION_DIGESTS[m3Digest] === m3Digest);
   const criteria = M4_CRITERIA.map(criterion => ({ ...clone(criterion),
     state: newlyAccepted.has(criterion.id) ? 'NEWLY_ACCEPTED_BY_THIS_AUDIT' : 'FINAL_ACCEPTANCE_UNCONFIRMED',
     receiptDigest: newlyAccepted.get(criterion.id)?.digest || null,

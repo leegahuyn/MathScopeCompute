@@ -32,7 +32,7 @@ def update_implementation_pin():
                                'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)})
     aggregate = hashlib.sha256(json.dumps(implementation, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     pin = {'schema': 'MathScope.NavierM3.ImplementationPin/1', 'files': implementation, 'sha256': aggregate}
-    (OUT / 'implementation-pin.mjs').write_text('// Generated from actual implementation bytes; regenerate after an implementation edit.\nexport const implementationPin = ' + json.dumps(pin, separators=(',', ':')) + ';\n')
+    (OUT / 'implementation-pin.mjs').write_text('// Generated from actual implementation bytes; regenerate after an implementation edit.\nexport const implementationPin = ' + json.dumps(pin, separators=(',', ':')) + ';\n', encoding='utf-8', newline='\n')
     return pin
 
 

@@ -20,7 +20,17 @@ if ((await readdir(outputDir)).length) throw new Error('Output directory is not 
 await mkdir(workDir, { recursive: true });
 const startedAt = new Date().toISOString();
 const start = performance.now();
-const budget = { globalMilliseconds: 18 * 60 * 1000, installMilliseconds: 240000, updateMilliseconds: 300000, cacheMilliseconds: 480000, compileMilliseconds: 60000, leanMemoryMiB: 512, threads: 1 };
+const budget = {
+  globalMilliseconds: 18 * 60 * 1000, installMilliseconds: 240000, updateMilliseconds: 300000, cacheMilliseconds: 480000, compileMilliseconds: 60000,
+  leanMemoryMiB: 512, mathlibCompilationMemoryMiB: 1536, threads: 1,
+  memoryAdjustment: {
+    previousMathlibMiB: 512,
+    failureRunId: '38369365124', failureSourceCommit: '620dca8fff0b9593fc38f6adc5495a1aecd81c35',
+    failureArtifactId: '11798103131', failureArtifactSha256: '6658e7ea9a17690df0a3769c733df553283ba1ba5a298f1f0881d5ce887b9608',
+    observedFailure: 'compile-analytic exit 134: lean::memory_exception, excessive memory consumption detected at interpreter; elapsed 13102 ms',
+    reason: 'The actual pinned Mathlib import closure exceeded the 512 MiB Lean threshold. Only Analytic and its Conditional/Comparison dependants receive a bounded 1536 MiB threshold. Original source, pins, finite/negative budgets and all time limits are retained. The higher threshold does not imply proof success.',
+  },
+};
 const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repoRoot, encoding: 'utf8' }).trim();
 const bundles = listShippedProofs().map(item => getShippedProofBundle(item.id));
 const expected = bundles[0].jobSpec.environment;
@@ -126,24 +136,22 @@ try {
   receipt.cacheRoots = mathlibImports;
   await run('mathlib-cache-exact-import-closure', lake, ['exe', 'cache', 'get', ...mathlibImports], { cwd: project, env: compilerEnvironment, timeout: budget.cacheMilliseconds });
   const modules = ['Defs', 'Finite', 'Analytic', 'Conditional', 'Comparison'];
-  const moduleLogs = new Map();
   for (const name of modules) {
     const source = `MathScope/M0/${name}.lean`;
     const compiled = `.lake/build/lib/lean/MathScope/M0/${name}.olean`;
     await mkdir(dirname(join(project, compiled)), { recursive: true });
-    const result = await run(`compile-${name.toLowerCase()}`, lake, ['env', 'lean', '--memory=512', '--threads=1', '-o', compiled, source], { cwd: project, env: compilerEnvironment });
+    const memoryMiB = ['Analytic', 'Conditional', 'Comparison'].includes(name) ? budget.mathlibCompilationMemoryMiB : budget.leanMemoryMiB;
+    const result = await run(`compile-${name.toLowerCase()}`, lake, ['env', 'lean', `--memory=${memoryMiB}`, '--threads=1', '-o', compiled, source], { cwd: project, env: compilerEnvironment });
     receipt.actualKernelExecuted = true;
     if (result.warnings.length) fail(`COMPILER_WARNINGS:${name}`);
-    moduleLogs.set(name, result.log);
     const artifactPath = join('compiled', 'MathScope', 'M0', `${name}.olean`);
     await mkdir(dirname(join(outputDir, artifactPath)), { recursive: true });
     await copyFile(join(project, compiled), join(outputDir, artifactPath));
     result.compiledArtifact = { path: artifactPath.split(sep).join('/'), sha256: await fileSha(join(project, compiled)) };
     receipt.executions[receipt.executions.length - 1].compiledArtifact = result.compiledArtifact;
-  }
-  for (const bundle of bundles) {
-    const moduleName = bundle.audit.target.split('.')[2];
-    receipt.targets.push(auditExactTargetLog(moduleLogs.get(moduleName), bundle));
+    receipt.executions[receipt.executions.length - 1].leanMemoryMiB = memoryMiB;
+    for (const bundle of bundles.filter(item => item.audit.target.startsWith(`MathScope.M0.${name}.`))) receipt.targets.push(auditExactTargetLog(result.log, bundle));
+    await writeReceipt();
   }
   for (const control of bundles[0].audit.negativeControls) {
     const result = await run(`negative-${control.name.toLowerCase()}`, lake, ['env', 'lean', '--memory=512', '--threads=1', control.sourceFile], { cwd: project, env: compilerEnvironment, requiredSuccess: false });
