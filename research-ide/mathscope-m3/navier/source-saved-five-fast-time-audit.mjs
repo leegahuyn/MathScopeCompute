@@ -19,15 +19,31 @@ const integer=x=>Number.isSafeInteger(x)&&x>=0;
  * tokens are never removed by integration or parameter substitution.
  * A result is not a private source certificate.
  */
-export function auditExpressionFreeCoordinates({node,roots,definitions,forbidden,maxWork=200000}){
+export function auditExpressionFreeCoordinates({node,roots,definitions,forbidden,registries={},maxWork=200000}){
   check(typeof node==='function'&&Array.isArray(roots)&&roots.length>0&&roots.every(integer),'Explicit roots and a graph reader are required.');
   check(Array.isArray(definitions)&&Array.isArray(forbidden)&&forbidden.length>0&&forbidden.every(integer),'Explicit definitions and coordinate ids are required.');
   if(!integer(maxWork)||maxWork<1||maxWork>200000)fail('Choose a bounded work budget between 1 and 200000.','RESOURCE_LIMIT');
-  const cache=new Map(),active=new Set(),visited=new Set(),unknown=new Map(),named=new Map(),histogram={};
+  const cache=new Map(),active=new Set(),visited=new Set(),accessed=new Set(),unknown=new Map(),named=new Map(),histogram={};
+  check(registries&&typeof registries==='object'&&!Array.isArray(registries),'Optional definition registries must be an object.');
+  for(const value of Object.values(registries))check(Array.isArray(value),'Every provided operator registry must be an array.');
   let work=0,stopReason=null;
   const tick=()=>{if(++work>maxWork)fail('Independent dependency traversal exhausted its declared work budget.','RESOURCE_LIMIT');};
-  const take=id=>{check(integer(id),'A graph child must be a nonnegative node id.');const n=node(id);check(n&&typeof n.op==='string'&&Array.isArray(n.args),'A graph node is missing or malformed.');return n;};
+  const take=id=>{check(integer(id),'A graph child must be a nonnegative node id.');accessed.add(id);const n=node(id);check(n&&typeof n.op==='string'&&Array.isArray(n.args),'A graph node is missing or malformed.');return n;};
   const union=sets=>{const out=new Set();for(const s of sets)for(const x of s)out.add(x);return out;};
+  const parameters=xs=>check(Array.isArray(xs)&&new Set(xs).size===xs.length&&xs.every(x=>take(x).op==='coordinate'),'Every formal parameter must be a distinct actual coordinate.');
+  const substituteSupport=(support,formals,values)=>{
+    parameters(formals);check(Array.isArray(values)&&values.length===formals.length&&values.every(integer),'Use a complete simultaneous argument tuple.');
+    const out=new Set();
+    for(const x of support){const at=formals.indexOf(x);if(at<0)out.add(x);else for(const y of read(values[at]))out.add(y);}
+    return out;
+  };
+  const expressionDefinition=id=>id<0?definitions[-1-id]:registries.expression?.[id];
+  const recordDefinition=(kind,index,d,body)=>{
+    const formals=new Set(d.parameters);
+    named.set(kind+':'+index,{kind,index,name:d.name,body:d.body,parameters:[...d.parameters],
+      capturedCoordinates:[...body].filter(x=>typeof x==='number'&&!formals.has(x)),
+      unresolvedBodyTokens:[...body].filter(x=>typeof x==='string')});
+  };
   const read=id=>{
     if(cache.has(id))return cache.get(id);
     tick();if(active.has(id))fail('Cyclic expression or definition dependency.','DEPENDENCY_CYCLE');
@@ -43,19 +59,47 @@ export function auditExpressionFreeCoordinates({node,roots,definitions,forbidden
       check(a.length===4&&take(a[1]).op==='coordinate','An integral must have an actual coordinate binder.');
       out=new Set(read(a[0]));out.delete(a[1]);
       for(const x of union([read(a[2]),read(a[3])]))out.add(x);
-    }else if(n.op==='m3_aux_expression_partial'){
-      check(a.length===3&&Number.isSafeInteger(a[0])&&a[0]<0&&Array.isArray(a[1])&&Array.isArray(a[2]),'Malformed named expression call.');
-      const index=-1-a[0],d=definitions[index];
-      check(d&&Array.isArray(d.parameters)&&integer(d.body)&&d.parameters.length===a[1].length&&a[2].length===a[1].length&&a[2].every(integer)&&new Set(d.parameters).size===d.parameters.length,'An expression definition or its derivative arity is invalid.');
-      const body=read(d.body),formals=new Set(d.parameters);out=new Set();
-      for(const x of body){
-        const at=d.parameters.indexOf(x);
-        if(at>=0){for(const y of read(a[1][at]))out.add(y);}
-        else out.add(x);
+    }else if(n.op==='m3_aux_expression_partial'||n.op==='actual_expression_partial'){
+      check(a.length===3&&Number.isSafeInteger(a[0])&&Array.isArray(a[1])&&Array.isArray(a[2])&&
+        (n.op==='m3_aux_expression_partial'?a[0]<0:a[0]>=0),'Malformed named expression call.');
+      const d=expressionDefinition(a[0]);
+      check(d&&integer(d.body)&&Array.isArray(d.parameters)&&d.parameters.length===a[1].length&&a[2].length===a[1].length&&a[2].every(integer),'An expression definition or its derivative arity is invalid.');
+      const body=read(d.body);out=substituteSupport(body,d.parameters,a[1]);recordDefinition(n.op,a[0],d,body);
+    }else if(n.op==='m3_aux_indexed_partial'){
+      const d=registries.fieldDefinitions?.[a[0]];
+      check(a.length===3&&integer(a[0])&&d&&Array.isArray(d.rows)&&d.rows.length>0&&
+        Array.isArray(d.directions)&&Array.isArray(d.directionParameterIndices)&&
+        Array.isArray(a[2])&&a[2].length===d.directions.length&&a[2].every(integer),'An indexed field needs its actual finite row definition and derivative directions.');
+      parameters(d.parameters);
+      check(same(d.directionParameterIndices,d.directions.map(x=>d.parameters.indexOf(x)))&&d.directionParameterIndices.every(integer),'The indexed directions must refer to declared parameters.');
+      const body=new Set();
+      for(const row of d.rows){
+        tick();const local=expressionDefinition(row.localSystem);
+        check(local&&row.localBody===local.body&&same(row.localParameters,local.parameters)&&Array.isArray(row.derivativeMaps)&&
+          row.derivativeMaps.length===d.directions.length&&Array.isArray(row.guards),'Keep each actual local defining body, Jacobian and guard.');
+        const support=substituteSupport(read(local.body),local.parameters,row.values);
+        const operands=[row.coefficient];
+        for(const map of row.derivativeMaps){check(Array.isArray(map),'A derivative map must be an array.');for(const term of map){
+          check(integer(term.parameter)&&term.parameter<local.parameters.length,'A Jacobian parameter is outside its original local tuple.');operands.push(term.coefficient);}}
+        for(const guard of row.guards){check(Array.isArray(guard)&&guard.length===3,'A full guard must retain its coordinate and both endpoints.');operands.push(...guard);}
+        for(const x of union([support,...operands.map(read)]))body.add(x);
       }
-      named.set(index,{index,name:d.name,body:d.body,parameters:[...d.parameters],
-        capturedCoordinates:[...body].filter(x=>typeof x==='number'&&!formals.has(x)),
-        unresolvedBodyTokens:[...body].filter(x=>typeof x==='string')});
+      out=substituteSupport(body,d.parameters,a[1]);recordDefinition(n.op,a[0],d,body);
+    }else if(n.op==='m3_aux_inverse_partial'){
+      const d=registries.inverseDefinitions?.[a[0]];
+      check(a.length===3&&integer(a[0])&&d&&integer(d.body)&&Array.isArray(d.Y)&&d.Y.length===2&&new Set(d.Y).size===2&&
+        Array.isArray(d.directions)&&Array.isArray(a[2])&&a[2].length===d.directions.length&&a[2].every(integer)&&
+        d.operator==='(sqrt(2)-1)*partial_y0+partial_y1'&&d.finiteSumDeclaredEqualToLimit===false,
+        'Retain the actual fixed Fourier inverse and its original body; no finite truncation can replace its limit.');
+      parameters(d.parameters);parameters(d.Y);
+      check(d.Y.every(y=>d.parameters.includes(y)&&d.directions.includes(y))&&
+        same(d.directionParameterIndices,d.directions.map(x=>d.parameters.indexOf(x)))&&d.directionParameterIndices.every(integer),
+        'The Fourier and derivative coordinates must be the actual declared arguments.');
+      // On the domain where the original fixed zero-mode inverse exists,
+      // it may depend on either output torus coordinate and every source
+      // body coordinate. This is an over-approximation, NOT a tail proof.
+      const body=union([read(d.body),new Set(d.Y)]);
+      out=substituteSupport(body,d.parameters,a[1]);recordDefinition(n.op,a[0],d,body);
     }else{
       const token='UNSUPPORTED:'+n.op+':'+id;
       out=new Set([token]);unknown.set(id,{id,op:n.op,args:structuredClone(a)});
@@ -71,13 +115,13 @@ export function auditExpressionFreeCoordinates({node,roots,definitions,forbidden
     stopReason=error.code;
   }
   const selectedHash=createHash('sha256');
-  for(const id of [...visited].sort((a,b)=>a-b))selectedHash.update(JSON.stringify([id,take(id)])+'\n');
+  for(const id of [...accessed].sort((a,b)=>a-b))selectedHash.update(JSON.stringify([id,take(id)])+'\n');
   const resolved=stopReason===null&&rows.length===roots.length&&rows.every(r=>r.unresolvedTokens.length===0),
     independent=resolved&&rows.every(r=>r.forbiddenCoordinates.length===0);
-  return {schema:'MathScope.N6.IndependentExpressionFreeCoordinates/1',
+  return {schema:'MathScope.N6.IndependentExpressionFreeCoordinates/2',
     status:independent?'INDEPENDENCE_VERIFIED':resolved?'DEPENDENCE_NOT_EXCLUDED':'UNRESOLVED',
     independent,roots:[...roots],forbidden:[...forbidden],rows,stopReason,
-    budget:{maxWork,workUsed:work},visitedNodeCount:visited.size,selectedNodesSHA256:selectedHash.digest('hex'),
+    budget:{maxWork,workUsed:work},visitedNodeCount:visited.size,accessedNodeIds:[...accessed].sort((a,b)=>a-b),selectedNodesSHA256:selectedHash.digest('hex'),
     operationHistogram:histogram,unknownOperations:[...unknown.values()],namedDefinitions:[...named.values()],
     sourceAuthenticated:false,oldFreeCoordinateRoutineCalled:false,oldRecordedPassBitRead:false,
     negativeResultIsNotACounterexample:true};
@@ -107,7 +151,12 @@ export function auditSavedFiveFastTime(capability,cutoff,input={}){
     roots=Object.values(identities).map(r=>r.increment),Y=cutoff.bodies.geometry.Y;
   check(Array.isArray(Y)&&Y.length===2&&Y.every(id=>source.node(id).op==='coordinate'),'Two actual fast torus coordinates are required.');
   check(identities.beta.increment===source.mean.potential.deltaBeta&&identities.gamma.increment===source.mean.potential.gammaDesired,'Keep the original potential and axial increments.');
-  const analysis=auditExpressionFreeCoordinates({node:source.node,roots,definitions:registry[0].value,forbidden:Y,maxWork:input.maxWork??200000});
+  const registries={};
+  for(const kind of ['expression','fieldDefinitions','inverseDefinitions']){
+    const found=source.definitionCollections.filter(r=>r.namespace.endsWith('.'+kind));
+    check(found.length===1,'Every original operator registry must be uniquely source-bound: '+kind);registries[kind]=found[0].value;
+  }
+  const analysis=auditExpressionFreeCoordinates({node:source.node,roots,definitions:registry[0].value,registries,forbidden:Y,maxWork:input.maxWork??200000});
   const result=freeze({schema:'MathScope.N6.SavedFiveFastTimeAudit/1',source:structuredClone(capability.source),
     sourceBinding:{identities,Y:[...Y],oldFullPressure:before.pressure.value,newFullPressure:after.pressure.value,
       oldA0:before.pressure.cutoffRemainder,newA0:after.pressure.cutoffRemainder,

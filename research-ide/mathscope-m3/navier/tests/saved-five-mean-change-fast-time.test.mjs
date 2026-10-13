@@ -64,6 +64,36 @@ test('higher named partials conservatively retain any hidden fast dependence',()
   assert.equal(r.independent,false);assert.deepEqual(r.rows[0].forbiddenCoordinates,[2]);
 });
 
+test('base expression calls inspect their defining body instead of trusting a declared signature',()=>{
+  const nodes=primitives();nodes.push({op:'actual_expression_partial',args:[0,[4],[1]]});
+  const r=fixture(nodes,5,[],{registries:{expression:[{name:'hidden-base',parameters:[4],body:2}]}});
+  assert.equal(r.independent,false);assert.deepEqual(r.rows[0].forbiddenCoordinates,[2]);
+});
+
+test('indexed fields inspect every local body, coefficient, derivative map and moving guard',()=>{
+  const nodes=primitives();nodes.push({op:'m3_aux_indexed_partial',args:[0,[4],[0]]});
+  const local={name:'slow-local',parameters:[4],body:4};
+  const row={localSystem:-1,localBody:4,localParameters:[4],values:[4],coefficient:1,derivativeMaps:[[{parameter:0,coefficient:1}]],guards:[[4,0,1]]};
+  const field={name:'finite-field',parameters:[4],directions:[4],directionParameterIndices:[0],rows:[row]};
+  const run=()=>fixture(nodes,5,[local],{registries:{fieldDefinitions:[field]}});
+  assert.equal(run().independent,true);row.coefficient=2;assert.equal(run().independent,false);
+  row.coefficient=1;row.derivativeMaps[0][0].coefficient=3;assert.deepEqual(run().rows[0].forbiddenCoordinates,[3]);
+  row.derivativeMaps[0][0].coefficient=1;row.guards[0][2]=2;assert.equal(run().independent,false);
+  row.localBody=0;assert.throws(run,{code:'INVALID_FAST_TIME_AUDIT'});
+});
+
+test('Fourier inverses keep both torus outputs and hidden body coordinates without truncating tails',()=>{
+  const nodes=primitives();nodes.push({op:'coordinate',args:['hidden']} ,{op:'add',args:[4,5]},
+    {op:'m3_aux_inverse_partial',args:[0,[2,3,4],[0,0,0]]},
+    {op:'definite_integral',args:[7,2,0,1]},{op:'definite_integral',args:[8,3,0,1]});
+  const inverse={name:'exact-inverse',body:6,Y:[2,3],parameters:[2,3,4],directions:[2,3,4],directionParameterIndices:[0,1,2],
+    operator:'(sqrt(2)-1)*partial_y0+partial_y1',finiteSumDeclaredEqualToLimit:false};
+  const registries={inverseDefinitions:[inverse]};
+  assert.equal(fixture(nodes,7,[],{registries}).independent,false);
+  const r=fixture(nodes,9,[],{registries});assert.equal(r.independent,true);assert.ok(r.rows[0].freeCoordinates.includes(5));
+  inverse.finiteSumDeclaredEqualToLimit=true;assert.throws(()=>fixture(nodes,7,[],{registries}),{code:'INVALID_FAST_TIME_AUDIT'});
+});
+
 let saved;
 async function setup(){
   if(!saved)saved=(async()=>{const cap=await openSavedInitializedSource(),family=attachSavedInitializedNormFamily(cap),
@@ -82,13 +112,15 @@ test('actual saved five-map fast-time independence is checked from definition bo
   const result={schema:'MathScope.N6.SavedFiveFastTimeObserved/1',startedAt,finishedAt:new Date().toISOString(),audit};
   await evidence('saved-five-fast-time-observed.json',result);
   const source=savedInitializedSourceProgram(cap);
-  const registryJSON=JSON.stringify(source.definitionCollections);
+  const selectedCollections=source.definitionCollections.filter(r=>['expression','expressionDefinitions','monotone','fieldDefinitions','inverseDefinitions'].some(k=>r.namespace.endsWith('.'+k)));
+  const registryJSON=JSON.stringify(selectedCollections);
   await evidence('saved-five-fast-time-definition-readback.json',{
     schema:'MathScope.N6.SavedDefinitionReadback/1',source:cap.source,
     sourceScope:source.definitionScope,allDefinitionsFitCaptureBudget:Buffer.byteLength(registryJSON)<=4000000,
     registrySHA256:createHash('sha256').update(registryJSON).digest('hex'),
     registryBytes:Buffer.byteLength(registryJSON),
-    collections:Buffer.byteLength(registryJSON)<=4000000?source.definitionCollections:null,
+    collections:Buffer.byteLength(registryJSON)<=4000000?selectedCollections:null,
+    selectedNodeBindings:audit.analysis.accessedNodeIds.map(id=>[id,source.node(id)]),
     profiles:source.definitionCollections.map(r=>({namespace:r.namespace,isArray:Array.isArray(r.value),
       size:Array.isArray(r.value)?r.value.length:Object.keys(r.value??{}).length,
       firstKeys:Object.keys(Array.isArray(r.value)?r.value[0]??{}:r.value??{})})),
