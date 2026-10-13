@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: quadratic implicit derivative and second derivative retain the exact symbolic branch
+ok 1 - quadratic implicit derivative and second derivative retain the exact symbolic branch
+  ---
+  duration_ms: 48.5242
+  type: 'test'
+  ...
+# Subtest: full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+ok 2 - full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+  ---
+  duration_ms: 4.8728
+  type: 'test'
+  ...
+# Subtest: captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+ok 3 - captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+  ---
+  duration_ms: 1.4427
+  type: 'test'
+  ...
+# Subtest: quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+ok 4 - quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+  ---
+  duration_ms: 1.7968
+  type: 'test'
+  ...
+# Subtest: substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+ok 5 - substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+  ---
+  duration_ms: 3.0511
+  type: 'test'
+  ...
+# Subtest: zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+ok 6 - zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+  ---
+  duration_ms: 3.161
+  type: 'test'
+  ...
+# Subtest: unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+ok 7 - unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+  ---
+  duration_ms: 0.6811
+  type: 'test'
+  ...
+# Subtest: an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+ok 8 - an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+  ---
+  duration_ms: 1.1622
+  type: 'test'
+  ...
+# Subtest: integral operand import alpha-renames a binder occurring in the actual quadratic argument
+ok 9 - integral operand import alpha-renames a binder occurring in the actual quadratic argument
+  ---
+  duration_ms: 1.2015
+  type: 'test'
+  ...
+# Subtest: later root substitution alpha-renames integral binders in the complete retained equation tuple
+ok 10 - later root substitution alpha-renames integral binders in the complete retained equation tuple
+  ---
+  duration_ms: 1.1445
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 580.2582

@@ -22,13 +22,24 @@ const startedAt = new Date().toISOString();
 const start = performance.now();
 const budget = {
   globalMilliseconds: 18 * 60 * 1000, installMilliseconds: 240000, updateMilliseconds: 300000, cacheMilliseconds: 480000, compileMilliseconds: 60000,
-  leanMemoryMiB: 512, mathlibCompilationMemoryMiB: 1536, threads: 1,
+  leanMemoryMiB: 512, mathlibCompilationMemoryMiB: 4096, threads: 1,
   memoryAdjustment: {
-    previousMathlibMiB: 512,
-    failureRunId: '38369365124', failureSourceCommit: '620dca8fff0b9593fc38f6adc5495a1aecd81c35',
-    failureArtifactId: '11798103131', failureArtifactSha256: '6658e7ea9a17690df0a3769c733df553283ba1ba5a298f1f0881d5ce887b9608',
-    observedFailure: 'compile-analytic exit 134: lean::memory_exception, excessive memory consumption detected at interpreter; elapsed 13102 ms',
-    reason: 'The actual pinned Mathlib import closure exceeded the 512 MiB Lean threshold. Only Analytic and its Conditional/Comparison dependants receive a bounded 1536 MiB threshold. Original source, pins, finite/negative budgets and all time limits are retained. The higher threshold does not imply proof success.',
+    previousMathlibMiB: 1536,
+    failureRunId: '38375770398', failureSourceCommit: '486b6e19e0ad85142a31a84ffdfee0d02fc35cb3',
+    failureArtifactId: '11801780499', failureArtifactSha256: '4bedfbe0a1b7aaf16ca5c122e3fe0080446d70abca65571eb9aaa650c786d96d',
+    observedFailure: 'compile-analytic --memory=1536 exit 134: lean::memory_exception, excessive memory consumption detected at interpreter; elapsed 19534 ms',
+    corroboratingFailure: {
+      runId: '38375779278', branchHeadCommit: '486b6e19e0ad85142a31a84ffdfee0d02fc35cb3',
+      checkedOutSourceCommit: '7d6a197c96709e864ff50c52ea7bccabdeff1610',
+      artifactId: '11800404892', artifactSha256: 'd60a6b512e71bb6993e5e0b4b351e5827b31dad1c1d22e5de48812223657d7f0',
+      elapsedMilliseconds: 13025, exitCode: 134,
+    },
+    prior512MiBFailure: {
+      runId: '38369365124', sourceCommit: '620dca8fff0b9593fc38f6adc5495a1aecd81c35',
+      artifactId: '11798103131', artifactSha256: '6658e7ea9a17690df0a3769c733df553283ba1ba5a298f1f0881d5ce887b9608',
+      elapsedMilliseconds: 13102, exitCode: 134,
+    },
+    reason: 'Two actual pinned Analytic compilations exceeded the 1536 MiB Lean threshold at the interpreter. Only Analytic and its Conditional/Comparison dependants receive a bounded 4096 MiB threshold. Original source, pins, finite/negative budgets and all time limits are retained. Both prior failed thresholds and original receipts remain preserved. The higher threshold does not imply proof success.',
   },
 };
 const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repoRoot, encoding: 'utf8' }).trim();

@@ -7,8 +7,10 @@ import { createHash } from 'node:crypto';
 import { assertSavedInitializedSource, savedInitializedSourceProgram } from './source-saved-initialized-authority.mjs';
 import { assertSavedInitializedCutoffAuthority } from './source-saved-initialized-cutoff-norms.mjs';
 import { createFactoredRationalVerifier } from './forced-rational-identity.mjs';
+import { attachSavedMonotoneDerivativeAuthority } from './source-saved-monotone-implicit-derivatives.mjs';
 
 const seals = new WeakSet(), keys = ['beta', 'v', 'gamma'];
+const readerSeals = new WeakMap();
 const fail = (message, code = 'INVALID_WHOLE_MEAN_DIRECT_AUDIT') => { throw Object.assign(new Error(message), { code }); };
 const require = (ok, message) => { if (!ok) fail(message); };
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -21,15 +23,18 @@ const gcd = (a, b) => { a = a < 0n ? -a : a; while (b) [a, b] = [b, a % b]; retu
  * Caller-supplied nodes never gain source authority. Unknown derivative rules
  * throw rather than inventing a zero derivative or truncating an exact limit.
  */
-export function createIndependentMeanReader({ node, definitions = {}, maxWork = 200000, maxNodes = 200000 } = {}) {
+export function createIndependentMeanReader({ node, definitions = {}, sourceOperationRules = [], maxWork = 200000, maxNodes = 200000 } = {}) {
   require(typeof node === 'function' && definitions && typeof definitions === 'object', 'An explicit read-only graph reader and definition registries are required.');
-  for (const n of [maxWork, maxNodes]) if (!integer(n) || n < 1 || n > 200000) fail('Use finite budgets between 1 and 200000.', 'RESOURCE_LIMIT');
+  if (!integer(maxWork) || maxWork < 1 || maxWork > 400000 || !integer(maxNodes) || maxNodes < 1 || maxNodes > 200000) fail('Use finite work <=400000 and scalar nodes <=200000.', 'RESOURCE_LIMIT');
+  require(Array.isArray(sourceOperationRules) && sourceOperationRules.every(r => r && typeof r.sourceOperation === 'string' && typeof r.independentOperation === 'string' && ['importCall', 'differentiate', 'substitute', 'diagnostics'].every(k => typeof r[k] === 'function')) && new Set(sourceOperationRules.map(r => r.sourceOperation)).size === sourceOperationRules.length, 'Retain distinct complete independent source-operation rules.');
+  const rules = [...sourceOperationRules], ruleForSource = op => rules.find(r => r.sourceOperation === op), ruleForIndependent = op => rules.find(r => r.independentOperation === op);
   const nodes = [], intern = new Map(), imported = new Map(), sourceBindings = new Map(), derivativeCache = new Map(), substitutionCache = new Map();
-  const selectedSource = new Map(), domain = new Map(), callDefinitions = new Map(), unresolvedClosure = new Map(), supportCache = new Map(), unknownSourceOperators = new Map();
-  let work = 0;
+  const selectedSource = new Map(), selectedSourceBytes = new Map(), emittedNodes = [], domain = new Map(), callDefinitions = new Map(), unresolvedClosure = new Map(), supportCache = new Map(), unknownSourceOperators = new Map(), discreteDerivativeStops = [];
+  let reader;
+  let work = 0, alphaSerial = 0;
   const tick = () => { if (++work > maxWork) fail('Independent whole-mean replay exhausted its work budget.', 'RESOURCE_LIMIT'); };
-  const take = id => { tick(); require(integer(id), 'Every source child must be an exact nonnegative node ID.'); const n = node(id); require(n && typeof n.op === 'string' && Array.isArray(n.args), 'A source node is missing or malformed.'); selectedSource.set(id, n); return n; };
-  const put = (op, args) => { tick(); const key = JSON.stringify([op, args]); if (intern.has(key)) return intern.get(key); if (nodes.length >= maxNodes) fail('Independent replay exhausted its scalar node budget.', 'RESOURCE_LIMIT'); const id = nodes.length; nodes.push({ op, args }); intern.set(key, id); return id; };
+  const take = id => { tick(); require(integer(id), 'Every source child must be an exact nonnegative node ID.'); const n = node(id); require(n && typeof n.op === 'string' && Array.isArray(n.args), 'A source node is missing or malformed.'); const raw = JSON.stringify(n); require(!selectedSourceBytes.has(id) || selectedSourceBytes.get(id) === raw, 'An already imported source node changed.'); selectedSourceBytes.set(id, raw); selectedSource.set(id, n); return n; };
+  const put = (op, args) => { tick(); const key = JSON.stringify([op, args]); if (intern.has(key)) return intern.get(key); if (nodes.length >= maxNodes) fail('Independent replay exhausted its scalar node budget.', 'RESOURCE_LIMIT'); const id = nodes.length, n = freeze({ op, args: structuredClone(args) }); nodes.push(n); emittedNodes.push(n); intern.set(key, id); return id; };
   const q = (n, d = 1n) => { n = BigInt(n); d = BigInt(d); if (!d) fail('An exact rational denominator is zero.'); if (d < 0n) { n = -n; d = -d; } const g = gcd(n, d); return put('rational', [String(n / g), String(d / g)]); };
   const zero = q(0), one = q(1), rational = id => nodes[id].op === 'rational';
   const add = (...xs) => xs.reduce((a, b) => { if (a === zero) return b; if (b === zero) return a; if (rational(a) && rational(b)) { const [n, d] = nodes[a].args.map(BigInt), [m, e] = nodes[b].args.map(BigInt); return q(n * e + m * d, d * e); } return put('add', [a, b].sort((a, b) => a - b)); }, zero);
@@ -62,6 +67,9 @@ export function createIndependentMeanReader({ node, definitions = {}, maxWork = 
     else if (['add', 'multiply', 'maximum', 'smooth_piecewise'].includes(n.op)) { for (const x of a) for (const y of primitiveSupport(x, active, cache)) support.add(y); }
     else if (['inverse', 'sqrt_positive', 'exp', 'log_positive', 'sine', 'cosine', 'ceiling', 'integer_power', 'source_step_derivative'].includes(n.op)) support = new Set(primitiveSupport(a[0], active, cache));
     else if (n.op === 'definite_integral') { support = new Set(primitiveSupport(a[0], active, cache)); support.delete(a[1]); for (const x of [a[2], a[3]]) for (const y of primitiveSupport(x, active, cache)) support.add(y); }
+    else if (ruleForSource(n.op)?.sourceClosure && ruleForSource(n.op).sourceClosure(root).primitiveBodyClosureProved) {
+      for (const x of ruleForSource(n.op).sourceClosure(root).actualArgumentSourceNodes) for (const y of primitiveSupport(x, active, cache)) support.add(y);
+    }
     else { const key = `${n.op}:${root}`; unresolvedClosure.set(key, { sourceNode: root, operation: n.op, reason: 'Actual defining limit/indexed body capture closure is not proved by a function signature.', discharged: false }); support.add(key); }
     active.delete(root); cache.set(root, support); return support;
   };
@@ -93,6 +101,7 @@ export function createIndependentMeanReader({ node, definitions = {}, maxWork = 
     else if (['integer_power', 'source_step_derivative'].includes(n.op)) out = constructor(n.op, [importSource(a[0]), a[1]]);
     else if (n.op === 'definite_integral') out = integral(...a.map(importSource));
     else if (custom.has(n.op)) out = call(n.op, a[0], a[1].map(importSource), a[2]);
+    else if (ruleForSource(n.op)) out = ruleForSource(n.op).importCall(reader, id);
     else { unknownSourceOperators.set(id, { sourceNode: id, operation: n.op, definingOperands: structuredClone(a), originalNodeSha256: hash(n), derivativeRuleReviewed: false }); out = put('unreviewed_source_operation', [id, n.op]); }
     imported.set(id, out); const existing = sourceBindings.get(out) || []; existing.push(id); sourceBindings.set(out, existing); return out;
   }
@@ -100,8 +109,21 @@ export function createIndependentMeanReader({ node, definitions = {}, maxWork = 
     if (id === bound) return value; const key = `${id}:${bound}:${value}`; if (substitutionCache.has(key)) return substitutionCache.get(key);
     tick(); const { op, args: a } = nodes[id]; let out;
     if (['rational', 'coordinate', 'source_parameter', 'unreviewed_source_operation'].includes(op)) out = id;
+    else if (ruleForIndependent(op)) out = ruleForIndependent(op).substitute(reader, id, bound, value);
     else if (op === 'independent_defined_partial') out = put(op, [a[0], a[1], a[2].map(x => substitute(x, bound, value)), a[3], a[4].map(x => substitute(x, bound, value))]);
-    else if (op === 'definite_integral') out = integral(a[1] === bound ? a[0] : substitute(a[0], bound, value), a[1], substitute(a[2], bound, value), substitute(a[3], bound, value));
+    else if (op === 'definite_integral') {
+      // Alpha-rename before inserting an arbitrary argument. The source
+      // binder is local to the integrand; endpoints remain outside its scope.
+      // Renaming even when a collision is absent avoids trusting unknown
+      // custom-body free-coordinate caches to decide whether capture occurs.
+      let body = a[0], binder = a[1];
+      if (binder !== bound) {
+        let name; do { name = `independent-integral-alpha:${++alphaSerial}:${nodes.length}`; } while (nodes.some(n => n.op === 'coordinate' && n.args[0] === name));
+        const fresh = put('coordinate', [name]); body = substitute(body, binder, fresh); binder = fresh;
+        body = substitute(body, bound, value);
+      }
+      out = integral(body, binder, substitute(a[2], bound, value), substitute(a[3], bound, value));
+    }
     else if (['integer_power', 'source_step_derivative'].includes(op)) out = constructor(op, [substitute(a[0], bound, value), a[1]]);
     else out = constructor(op, a.map(x => substitute(x, bound, value)));
     substitutionCache.set(key, out); return out;
@@ -122,7 +144,15 @@ export function createIndependentMeanReader({ node, definitions = {}, maxWork = 
     else if (op === 'cosine') out = neg(mul(constructor('sine', a), d(a[0])));
     else if (op === 'source_step_derivative') { domain.set(`step:${id}`, { kind: 'ORIGINAL_SMOOTH_STEP_DERIVATIVE', sourceOperand: id, order: a[1] + 1, provedByThisAudit: false }); out = mul(constructor(op, [a[0], a[1] + 1]), d(a[0])); }
     else if (op === 'smooth_piecewise') { domain.set(`join:${id}`, { kind: 'SMOOTH_MATCHING_JOIN', operand: id, movingBoundariesRetained: a.slice(0, 3), provedByThisAudit: false }); out = put(op, [...a.slice(0, 3), ...a.slice(3).map(d)]); }
-    else if (op === 'ceiling' || op === 'maximum') { if (a.some(x => d(x) !== zero)) fail('A discrete label or cutoff selection depends on the differentiated variable.', 'UNRESOLVED_CUSTOM_DERIVATIVE'); out = zero; }
+    else if (op === 'ceiling' || op === 'maximum') {
+      const differentiatedOperands = a.map(d);
+      if (differentiatedOperands.some(x => x !== zero)) {
+        const sourceIds = [...(sourceBindings.get(id) || [])], variableSourceIds = [...(sourceBindings.get(variable) || [])];
+        discreteDerivativeStops.push({ operation: op, independentNode: id, sourceIds, originalSourceNodes: sourceIds.map(sourceNode => ({ sourceNode, node: structuredClone(take(sourceNode)), nodeSHA256: hash(take(sourceNode)) })), operandRoots: a, differentiatedOperands, variable, variableSourceIds, frozenOrSmoothSelectionProved: false });
+        fail(`A ${op} selection (independent node ${id}, actual source nodes ${sourceIds.join(',') || 'derived'}) depends on differentiated variable ${variable} (actual source nodes ${variableSourceIds.join(',') || 'derived'}); its frozen/smooth branch is unproved.`, 'UNRESOLVED_CUSTOM_DERIVATIVE');
+      }
+      out = zero;
+    }
     else if (op === 'definite_integral') {
       const [body, bound, left, right] = a, dl = d(left), dr = d(right);
       domain.set(`leibniz:${id}:${variable}`, { kind: 'FINITE_INTEGRAL_LEIBNIZ', body, bound, left, right, variable, differentiationUnderIntegralRequired: true, movingEndpointTermsRetained: true, provedByThisAudit: false });
@@ -131,7 +161,8 @@ export function createIndependentMeanReader({ node, definitions = {}, maxWork = 
       const [kind, index, values, orders, captured] = a, binding = callDefinitions.get(`${kind}:${index}`);
       if (captured.some(x => d(x) !== zero)) fail('An actual named body captures the differentiation coordinate outside its formal arguments.', 'CAPTURED_COORDINATE_DERIVATIVE');
       out = add(...values.map((x, j) => { const scale = d(x); if (scale === zero) return zero; const at = binding.directionParameterIndices.indexOf(j); if (at < 0) fail('Frozen/discrete label derivative is not an available exact operator.', 'UNRESOLVED_CUSTOM_DERIVATIVE'); const next = [...orders]; next[at]++; return mul(scale, put(op, [kind, index, values, next, captured])); }));
-    } else fail(`No independent exact derivative rule for ${op}${op === 'unreviewed_source_operation' ? ` (${a[1]}, actual source node ${a[0]})` : ''}.`, 'UNRESOLVED_CUSTOM_DERIVATIVE');
+    } else if (ruleForIndependent(op)) out = ruleForIndependent(op).differentiate(reader, id, variable);
+    else fail(`No independent exact derivative rule for ${op}${op === 'unreviewed_source_operation' ? ` (${a[1]}, actual source node ${a[0]})` : ''}.`, 'UNRESOLVED_CUSTOM_DERIVATIVE');
     derivativeCache.set(key, out); return out;
   }
   const diagnostics = () => ({ workUsed: work, maxWork, scalarNodes: nodes.length, maxNodes,
@@ -139,8 +170,19 @@ export function createIndependentMeanReader({ node, definitions = {}, maxWork = 
     sourceBindings: [...sourceBindings].map(([id, sourceIds]) => ({ id, sourceIds })),
     inspectedDefinitionBindings: [...callDefinitions.values()], unresolvedCustomBodyClosure: [...unresolvedClosure.values()],
     unknownSourceOperators: [...unknownSourceOperators.values()],
+    discreteDerivativeStops,
+    sourceOperatorAudits: rules.map(r => r.diagnostics(reader)),
     domainHypotheses: [...domain.values()], originalDerivativeRoutineCalled: false, originalFreeCoordinateRoutineCalled: false, originalPassBitsRead: false });
-  return { nodes, zero, one, q, add, mul, neg, sub, inv, div, pow, integral, put, importSource, derivative, substitute, diagnostics };
+  const registerDomainHypothesis = record => { require(record && record.provedByThisAudit === false, 'New analytic hypotheses must remain explicitly unproved.'); domain.set(`external:${hash(record)}`, freeze(structuredClone(record))); };
+  const assertSourceNodeBinding = (id, expected) => { require(same(take(id), expected), 'An independent reader has a changed source operand.'); return true; };
+  reader = Object.freeze({ nodes, zero, one, q, add, mul, neg, sub, inv, div, pow, integral, put, importSource, derivative, substitute, diagnostics, registerDomainHypothesis, assertSourceNodeBinding });
+  readerSeals.set(reader, { node, emittedNodes, methods: { ...reader } }); return reader;
+}
+
+export function assertIndependentMeanReader(reader, input = {}) {
+  require(input && typeof input === 'object' && Object.keys(input).every(k => k === 'expectedSourceNode'), 'Select the exact expected source provider only.');
+  const s = readerSeals.get(reader); require(s && Object.isFrozen(reader) && Object.entries(s.methods).every(([k, v]) => reader[k] === v) && reader.nodes.length === s.emittedNodes.length && reader.nodes.every((n, i) => n === s.emittedNodes[i]), 'Use the unchanged privately issued independent reader and scalar nodes.');
+  require(input.expectedSourceNode === undefined || input.expectedSourceNode === s.node, 'A private saved-source adapter requires its exact original node provider.'); return true;
 }
 
 /** Derivation starts from total cylindrical conservative fluxes and subtracts
@@ -148,7 +190,7 @@ export function createIndependentMeanReader({ node, definitions = {}, maxWork = 
  */
 export function independentlyReconstructWholeMean(reader, { geometry, background, velocity, covariance, stress, pressure }) {
   const G = reader, at = x => G.importSource(x), R = at(geometry.R), e = at(geometry.epsilon), ci = at(geometry.ci), a = at(geometry.radialFast),
-    Z = at(geometry.Z), T = at(geometry.T), Y = geometry.Y.map(at), vr = geometry.vr.map(at), vt = geometry.vt.map(at),
+    Z = at(geometry.Z), T = at(geometry.T), Y = geometry.Y.map(at), vr = geometry.vr.map(at), vt = geometry.replayTimeDirection ?? geometry.vt.map(at),
     D = (x, v) => G.derivative(x, v), L = x => G.add(...Y.map((y, j) => G.mul(vr[j], D(x, y)))),
     Dr = x => G.add(D(x, R), G.mul(a, L(x))), Dz = x => G.mul(e, D(x, Z)),
     time = x => G.add(G.neg(G.mul(e, D(x, T))), G.mul(ci, G.add(...Y.map((y, j) => G.mul(vt[j], D(x, y)))))),
@@ -185,15 +227,14 @@ export function auditSavedWholeMeanDirect(capability, cutoff, input = {}) {
   const g = cutoff.bodies.geometry;
   // Recover vt=(sqrt(2)-1,1) as a NEW independent scalar. The original
   // radial direction is bound by cutoff authority; no frozen map is read.
-  const synthetic = source.nodeCount, originalNode = source.node;
+  const originalNode = source.node;
   const rows = [], stops = [];
-  // The public mathematical kernel consumes source IDs for geometry. An
-  // exact virtual direction node is supplied by this wrapper only; it never
-  // obtains source authority or enters the original saved program.
+  // Construct this virtual direction in the independent graph; it never
+  // obtains a source node ID or replaces the exact saved node provider.
   require(originalNode(g.vr[0]).op === 'rational' && same(originalNode(g.vr[0]).args, ['1', '1']), 'The fixed original direction first component must be exactly one.');
-  const geometryReader = id => id === synthetic ? { op: 'multiply', args: [synthetic + 1, g.vr[1]] } : id === synthetic + 1 ? { op: 'rational', args: ['-1', '1'] } : originalNode(id);
-  const replay = createIndependentMeanReader({ node: geometryReader, definitions, maxWork: input.maxWork ?? 200000, maxNodes: input.maxNodes ?? 200000 });
-  const geometry = { ...g, vt: [synthetic, g.vr[0]] };
+  const implicit = attachSavedMonotoneDerivativeAuthority(capability);
+  const replay = createIndependentMeanReader({ node: originalNode, definitions, sourceOperationRules: [implicit], maxWork: input.maxWork ?? 200000, maxNodes: input.maxNodes ?? 200000 });
+  const geometry = { ...g, replayTimeDirection: [replay.neg(replay.importSource(g.vr[1])), replay.importSource(g.vr[0])] };
   const verify = createFactoredRationalVerifier(replay, { maxTerms: input.maxTerms ?? 20000, maxProducts: input.maxProducts ?? 200000 });
   for (const [stage, state] of [['temporal', before], ['moments', after]]) {
     try {
@@ -204,7 +245,7 @@ export function auditSavedWholeMeanDirect(capability, cutoff, input = {}) {
       comparisons.pressureZ = verify(replay.sub(rebuilt.pressureZ, replay.importSource(state.pressure.slowZDerivative)));
       rows.push({ stage, rebuilt, originalRoots: { Etheta: state.mean.Etheta, Ez: state.mean.Ez, gr: state.mean.raw.gr, pressure: state.pressure.value, pressureZ: state.pressure.slowZDerivative }, comparisons });
     } catch (error) {
-      if (!['RESOURCE_LIMIT', 'UNRESOLVED_CUSTOM_DERIVATIVE', 'CAPTURED_COORDINATE_DERIVATIVE', 'DEPENDENCY_CYCLE'].includes(error.code)) throw error;
+      if (!['RESOURCE_LIMIT', 'UNRESOLVED_CUSTOM_DERIVATIVE', 'UNRESOLVED_IMPLICIT_UPSTREAM', 'CAPTURED_COORDINATE_DERIVATIVE', 'DEPENDENCY_CYCLE'].includes(error.code)) throw error;
       stops.push({ stage, code: error.code, reason: error.message }); break;
     }
   }

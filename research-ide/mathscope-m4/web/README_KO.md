@@ -35,4 +35,12 @@ Browser plugin 경로가 이용 불가했고 부모의 `cua.getState` 호출이 
 
 각 viewport에서 원래 24개 ID/문장의 일치, 원문 쪽수/hash, click/tap, keyboard/순서 선택, 실제 JSON download, valid view round-trip, 위조 PASS quarantine, wrong-source import 거부, 닫기·초점 복귀, 수평 clipping과 오류 overlay 부재를 확인한다. 콘솔 전체 warning/error를 기록하며 기존 페이지와 추가 패널의 문제를 구별한다. latency와 heap은 관측값으로 기록한다. 이것만으로 R1-05의 전체 제품 예산 검수나 전체 3D 장면/CPU fallback을 인수하지 않는다.
 
-M3 잔여 수학 관문의 완료, M4 전체 원래 기준 인수, 외부 사용자의 walkthrough 재현, 실제 게시 후 확인은 별도 증거가 필요하다. 배포는 공통 책임자가 fresh CI와 현재 원격 page version/hash를 확인하고 수행한다.
+M3 잔여 수학 관문의 완료, M4 전체 원래 기준 인수, 외부 사용자의 walkthrough 재현은 별도 증거가 필요하다. 배포는 공통 책임자가 각 게시 범위의 검사와 현재 원격 page version/hash를 확인하고 수행한다.
+
+## v103 실제 공개 검수
+
+원문 24개를 추적하는 추가 패널을 WebsitePublisher v103/hash `34a95b22`로 게시했다. `evidence/live-20261013095417465/receipt.json`은 실제 운영 URL을 대체 없이 읽은 Chrome 154 검수이며 desktop/mobile 두 case가 통과했다. 공개 SHA는 `e6ebde6250a861296554f26305cb40200b0a70e822acb3f588e9dca423d6e784`이다. 모바일은 touch viewport context로 검사했으며 물리적 기기 검수는 아니다.
+
+28MB 문서가 Chromium 기본 inspector cache에서 제거된 앞선 실패와, CMS inline JSON 직렬화가 authored candidate와 달랐던 다음 실패를 timestamped receipt로 보존한다. 최종 검증기는 bounded CDP response cache를 사용하고 Git v102 snapshot과 현재 fragment로 두 허용 후보를 독립 재구성한다. CMS의 data JSON `\\u003c`→`<` 변화는 같은 모델로 파싱되며 기존 바이트를 변경하지 않는다. 실제 전달 fragment 제거 후 v102 SHA와 모든 바이트가 동일하다. 판본·snapshot·rollback 검토 절차는 저장소 `docs/evidence/m4-evidence-panel-v103-20261013/`에 있다.
+
+이 공개 UI 검수는 원문 수학 완료, 새 pinned Lean replay 성공, 전체 CI 성공, 전체 M4 인수 또는 최종 freeze를 뜻하지 않는다.

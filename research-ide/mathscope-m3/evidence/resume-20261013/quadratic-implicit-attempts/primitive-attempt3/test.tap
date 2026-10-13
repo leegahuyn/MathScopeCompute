@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: quadratic implicit derivative and second derivative retain the exact symbolic branch
+ok 1 - quadratic implicit derivative and second derivative retain the exact symbolic branch
+  ---
+  duration_ms: 43.0146
+  type: 'test'
+  ...
+# Subtest: full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+ok 2 - full A, Q and scale derivatives are retained instead of an eta-independent coefficient shortcut
+  ---
+  duration_ms: 3.4822
+  type: 'test'
+  ...
+# Subtest: captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+ok 3 - captured coefficient/RHS coordinates and nonlinear actual-eta composition remain in the chain rule
+  ---
+  duration_ms: 2.0903
+  type: 'test'
+  ...
+# Subtest: quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+ok 4 - quadratic vector Cramer solve uses the full continuous matrix instead of its stored preconditioner
+  ---
+  duration_ms: 1.9985
+  type: 'test'
+  ...
+# Subtest: substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+ok 5 - substitution transforms every captured equation/branch operand and does not authenticate a derived tuple
+  ---
+  duration_ms: 3.869
+  type: 'test'
+  ...
+# Subtest: zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+ok 6 - zero and algebraically singular continuous Jacobians reject even when all serialized checks claim PASS
+  ---
+  duration_ms: 2.7598
+  type: 'test'
+  ...
+# Subtest: unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+ok 7 - unsupported branches, nonzero seeds and incomplete equations reject before derivative construction
+  ---
+  duration_ms: 0.8661
+  type: 'test'
+  ...
+# Subtest: an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+ok 8 - an unknown coefficient derivative remains unresolved and cannot be replaced by zero
+  ---
+  duration_ms: 1.6888
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 649.5433

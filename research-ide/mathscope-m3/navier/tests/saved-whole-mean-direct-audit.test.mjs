@@ -62,6 +62,17 @@ test('independent pressure Leibniz preserves both moving endpoints', () => {
   assert.ok(G.diagnostics().domainHypotheses.some(x => x.kind === 'FINITE_INTEGRAL_LEIBNIZ' && x.movingEndpointTermsRetained));
 });
 
+test('integral argument substitution alpha-renames a colliding binder and keeps endpoint dependence', () => {
+  const f = fixture(), body = f.put('exp', [f.put('multiply', [7, 3])]), p = f.put('definite_integral', [body, 7, 0, 3]),
+    G = f.reader(), Z = G.importSource(3), caller = G.importSource(7), transformed = G.substitute(G.importSource(p), Z, caller),
+    [integrand, binder, lower, upper] = G.nodes[transformed].args, verify = createFactoredRationalVerifier(G);
+  assert.notEqual(binder, caller); assert.equal(lower, G.zero); assert.equal(upper, caller);
+  const expectedBody = G.put('exp', [G.mul(binder, caller)]); assert.equal(integrand, expectedBody);
+  const derivative = G.derivative(transformed, caller), expected = G.add(G.integral(G.mul(binder, expectedBody), binder, G.zero, caller), G.put('exp', [G.mul(caller, caller)]));
+  assert.equal(verify(G.sub(derivative, expected)).pass, true); assert.equal(verify(derivative).pass, false);
+  assert.equal(verify(G.sub(derivative, G.sub(expected, G.put('exp', [G.mul(caller, caller)])))).pass, false);
+});
+
 test('named expression derivatives inspect actual body and do not erase a captured fast coordinate', () => {
   const f = fixture(), root = f.put('m3_aux_expression_partial', [-1, [2], [0]]);
   const G = f.reader({ definitions: { expressionDefinitions: [{ name: 'hidden-fast', parameters: [2], body: 5 }] } });
@@ -74,6 +85,9 @@ test('unknown derivative operations and dependent discrete labels fail closed', 
   const f = fixture(), root = f.put('opaque_limit', [2]), ceiling = f.put('ceiling', [2]), G = f.reader(), R = G.importSource(2);
   assert.throws(() => G.derivative(G.importSource(root), R), { code: 'UNRESOLVED_CUSTOM_DERIVATIVE' });
   assert.throws(() => G.derivative(G.importSource(ceiling), R), { code: 'UNRESOLVED_CUSTOM_DERIVATIVE' });
+  assert.deepEqual(G.diagnostics().discreteDerivativeStops[0].sourceIds, [ceiling]);
+  assert.deepEqual(G.diagnostics().discreteDerivativeStops[0].variableSourceIds, [2]);
+  assert.equal(G.diagnostics().discreteDerivativeStops[0].frozenOrSmoothSelectionProved, false);
 });
 
 test('primitive reader preserves nonzero denominator and analytic-domain obligations', () => {
@@ -87,6 +101,7 @@ test('primitive reader preserves nonzero denominator and analytic-domain obligat
 
 test('strict finite budgets prevent unbounded graph replay', () => {
   const f = fixture(); assert.throws(() => f.reader({ maxWork: 0 }), { code: 'RESOURCE_LIMIT' });
+  assert.throws(() => f.reader({ maxWork: 400001 }), { code: 'RESOURCE_LIMIT' });
   const G = f.reader({ maxWork: 2 }); assert.throws(() => G.importSource(2), { code: 'RESOURCE_LIMIT' });
 });
 
@@ -100,7 +115,7 @@ test('actual saved old/new whole means are independently reconstructed or report
   const { cap, cutoff } = await setup(), startedAt = new Date().toISOString();
   const implementationBytes = await readFile(new URL('../source-saved-whole-mean-direct-audit.mjs', import.meta.url));
   const implementationSha256 = createHash('sha256').update(implementationBytes).digest('hex');
-  const audit = auditSavedWholeMeanDirect(cap, cutoff, { maxWork: 200000, maxNodes: 200000, maxTerms: 20000, maxProducts: 200000 });
+  const audit = auditSavedWholeMeanDirect(cap, cutoff, { maxWork: 400000, maxNodes: 200000, maxTerms: 20000, maxProducts: 200000 });
   assert.equal(assertSavedWholeMeanDirectAudit(audit), true);
   assert.equal(audit.source.sourceNodeCount, 3615866);
   assert.equal(audit.scope.actualSavedWholeVelocityAndPressureRootsBound, true);
