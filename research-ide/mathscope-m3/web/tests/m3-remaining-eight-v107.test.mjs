@@ -15,7 +15,7 @@ class E {
     this.tagName=tag;this.children=[];this.dataset={};this.attributes={};
     this.events={};this.textContent='';this.value='';this.open=false;
   }
-  setAttribute(key,value){this.attributes[key]=String(value);}
+  setAttribute(key,value){this.attributes[key]=String(value);if(key==='data-task')this.dataset.task=String(value);}
   append(...nodes){this.children.push(...nodes);}
   replaceChildren(...nodes){this.children=[...nodes];}
   addEventListener(type,callback){this.events[type]=callback;}
