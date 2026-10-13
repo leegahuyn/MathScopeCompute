@@ -119,6 +119,11 @@ test('actual saved old/new whole means are independently reconstructed or report
   assert.equal(assertSavedWholeMeanDirectAudit(audit), true);
   assert.equal(audit.source.sourceNodeCount, 3615866);
   assert.equal(audit.scope.actualSavedWholeVelocityAndPressureRootsBound, true);
+  assert.equal(audit.scope.actualMonotoneAndQuadraticDerivativeRulesAttached, true);
+  assert.equal(audit.scope.implicitDomainHypothesesDischarged, false);
+  assert.deepEqual(audit.diagnostics.sourceOperatorAudits.map(row => row.sourceOperation), ['actual_monotone_root', 'actual_quadratic_root']);
+  assert.equal(audit.diagnostics.sourceOperatorAudits[1].sourceCapabilityBound, true);
+  assert.equal(audit.diagnostics.sourceOperatorAudits[1].definitionBindings.length, 3);
   for (const key of ['originalFormulaHelperCalled', 'originalDerivativeRoutineCalled', 'oldResidualRootUsedAsProofOperand', 'allDenominatorAndDomainHypothesesProved', 'actualWholeMeanDifferenceRecomputed', 'wholePhysicalNonzeroAngularPDERecomputed', 'originalPrivateProducerHydrated', 'numericalErrorEnclosureComputed', 'originalN601Complete', 'originalN602Complete', 'completeN6', 'wholeM3Complete']) assert.equal(audit.scope[key], false, key);
   assert.equal(audit.sourceBindings.originalNonlinearRemainders.P >= 0, true);
   assert.throws(() => assertSavedWholeMeanDirectAudit(structuredClone(audit)));

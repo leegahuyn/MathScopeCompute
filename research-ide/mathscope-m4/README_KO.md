@@ -1,5 +1,24 @@
 # M4 원문 기준과 인수 보호 장치
 
+2026-10-14 재개에서 실제 성공한 과거 Actions 실행과 새 소스의 커널 실행을 추가했다. `evidence/formal-audit-20261014.json`은 화면에 사용할 정확한 claim ID, Lean type, 가정, 공리, source 경로, 실행 시각 및 receipt SHA를 담는다. 이는 아래의 16개 원문 기준 전체 인수나 M4 freeze가 아니다.
+
+- Actions **38394604031**(push, source `f1206131…`)와 **38394614544**(PR head `f1206131…`, 실제 merge source `ef7a21f3…`)의 실제 성공 artifact를 다시 다운로드했다. 공식 ZIP SHA·receipt SHA·raw source·로그·olean·잠긴 의존성·다섯 theorem type/#print axioms를 모두 읽어 검증했다. 두 실행은 Lean 4.34.1 / mathlib `d13f23b7…`에서 exit 0이고, 두 오류 대조는 각각 예상 수학적 이유로 exit 1이다. 이전 실패 기록은 보존했다. 이 readback 시점에 커널을 다시 실행했다는 표시는 하지 않는다.
+- 별도 설치된 **Lean 4.34.0-rc2 Windows / commit `6a10ac8c…`**에서 새 `MathScope/M4/{Defs,Finite,Analytic,Comparison,Conditional,Open}.lean`과 기본 생성 소스를 실제 실행했다. attempt 2는 총 14개 audit target(승계 M0 3개, 새 M4 11개), 모든 모듈 exit 0, warning/sorry 없음이다. `0=1`의 `rfl`과 합성수 21의 prime certificate는 실제 exit 1이다. mathlib은 사용하지 않았고, 공식 Linux/mathlib 환경과 혼동하지 않는다.
+- 새 유한 정리는 p=2 δ 분자 항등식, 고정 d²=0, ℤ 계수 항등 사상인 semilinear chain map, 소수 구간 `[2,30)`, 2×2 정수 행렬의 bracket 반대칭/Jacobi, 정수 shear plaquette이다. 각 전칭 범위와 숫자 fixture의 범위를 구분한다.
+- 새 해석 정리는 명시된 precision ball 공간에서 **균등수렴 + 모든 근사 함수의 균등연속 ⇒ 극한 함수의 균등연속**이다. 실제 `#print axioms`는 빈 목록이다. 모든 x에 공통인 N과 triangle의 k+2/k+1/k 범위가 정확히 드러난다. 실수 norm 구현, 미분/무한합/극한의 교환, 일반 G quantum continuum 정리는 포함하지 않는다.
+- `assumed_cauchy_limit`에는 **`MathScope.M4.Conditional.assumedComplete` 사용자 공리**가 실제 출력되며 unconditional module import 경로에서 분리된다. `analytic-obligations.json`은 완비성·균등수렴·미분/극한 교환·semigroup·spectral measure·stability의 정확한 정의역, norm과 양화 범위를 기록한다. 구현되지 않은 실수/Banach/Hilbert adapter는 `SPECIFICATION_LEAN_IMPORT_MISSING`이다.
+- `proof-jobs.mjs`는 G·Δ·p·정밀도·계수식·계수체·가정마다 새로운 소스 및 ProofJob hash를 만든다. 기본 생성 `(2,-3,5,7)` fixture는 실제 커널을 통과했다. 변경한 소스나 파라미터에는 이 결과를 재사용하지 않는다. arbitrary 소스나 serialized PASS에는 커널 권한이 생기지 않는다.
+
+검증 명령:
+
+```sh
+node --test research-ide/mathscope-m4/tests/kernel-evidence.test.mjs
+node research-ide/mathscope-m4/audit-kernel-evidence.mjs --out research-ide/mathscope-m4/evidence/formal-audit-20261014.json
+node research-ide/mathscope-m4/tools/core-kernel-replay.mjs --lean <installed-lean-executable> --out research-ide/mathscope-m4/evidence/<new-attempt>
+```
+
+새 증거 공격 검사는 **9/9 PASS, skipped 0**, 기존 보호 검사와 합친 suite는 **26/26 PASS, exit 0**이다. raw receipt/source/type/axiom/log/olean 변조, 현재 소스 한 글자 변경, 생성 소스 injection, G/Δ/p/정밀도/계수/가정 변경, export/import 신뢰 소실, 학생·전문가 claim ID/조건/범위 동기화를 검사한다. 실제 `#print axioms`에서 읽은 사용자 공리 closure는 `UNCONDITIONAL_FORMAL` build 등급에서 거부하고 명시적인 `CONDITIONAL_FORMAL`로만 표시한다. 아래의 과거 기록은 당시 상태를 설명하며 최신 성공을 삭제하거나 그 이전 실패를 성공으로 다시 쓰지 않는다.
+
 99쪽 원 설계도의 p.19–20 I3 및 p.67–68 R1 기준을 `criteria.mjs`에 16개 원문 ID로 보존했다. M0의 기존 I3 기초와 M4 확장을 중복 집계하지 않는다. 과거 M4 최종 인수는 **미확인**이며, 미확인을 0% 또는 완료로 바꾸지 않는다.
 
 `acceptance.mjs`는 기존 M0의 고정된 실제 Lean 감사 authority를 사용하면서 해당 소스·원시 커널 로그·오류 대조 로그·import 환경 manifest의 실제 바이트 SHA-256를 다시 읽어 검사한다. 이 성공의 범위는 **과거의 동일 커널 실행에 대한 artifact 재결속**이다. 현재 Lean을 실행하거나 신규 해석 정리·M4 항목을 승인한 결과가 아니다. 저장된 receipt를 JSON으로 복제하거나 import하면 authority가 사라진다.

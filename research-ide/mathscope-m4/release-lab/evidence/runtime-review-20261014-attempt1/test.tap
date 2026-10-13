@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: fresh isolated Worker replay matches; serialized claims never grant formal status
+ok 1 - fresh isolated Worker replay matches; serialized claims never grant formal status
+  ---
+  duration_ms: 697.6198
+  type: 'test'
+  ...
+# Subtest: input changed during calculation yields STALE; unrelated fixture stays current
+ok 2 - input changed during calculation yields STALE; unrelated fixture stays current
+  ---
+  duration_ms: 534.0286
+  type: 'test'
+  ...
+# Subtest: cancel then resume recomputes the original interrupted input
+ok 3 - cancel then resume recomputes the original interrupted input
+  ---
+  duration_ms: 323.5826
+  type: 'test'
+  ...
+# Subtest: M1 replay binds normalized engine defaults to the same raw editor request
+ok 4 - M1 replay binds normalized engine defaults to the same raw editor request
+  ---
+  duration_ms: 303.125
+  type: 'test'
+  ...
+# Subtest: different valid imported inputs stay STALE and a foreign fixture kind is rejected
+ok 5 - different valid imported inputs stay STALE and a foreign fixture kind is rejected
+  ---
+  duration_ms: 549.5679
+  type: 'test'
+  ...
+# Subtest: M1 replay cancellation before dispatch reaches the subsequently queued job
+ok 6 - M1 replay cancellation before dispatch reaches the subsequently queued job
+  ---
+  duration_ms: 157.0742
+  type: 'test'
+  ...
+# Subtest: retained job cap rejects another engine allocation; disposal closes the laboratory
+ok 7 - retained job cap rejects another engine allocation; disposal closes the laboratory
+  ---
+  duration_ms: 532.6536
+  type: 'test'
+  ...
+# Subtest: a completed actual result exceeding the retained-byte budget is not retained as usable evidence
+not ok 8 - a completed actual result exceeding the retained-byte budget is not retained as usable evidence
+  ---
+  duration_ms: 141.5469
+  type: 'test'
+  location: 'C:\\Users\\사용자\\Documents\\Codex\\2026-10-14\\https-project29770-websitepublisher-ai-v0-3\\work\\MathScopeCompute\\research-ide\\mathscope-m4\\release-lab\\runtime.test.mjs:64:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETED'
+    - 'BUDGET_EXCEEDED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'BUDGET_EXCEEDED'
+  actual: 'COMPLETED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-14/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m4/release-lab/runtime.test.mjs:67:43)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: browser plot helper preserves wrapped Float64 scalars and actual extension-field source paths
+ok 9 - browser plot helper preserves wrapped Float64 scalars and actual extension-field source paths
+  ---
+  duration_ms: 10.3893
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 8
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3874.7672

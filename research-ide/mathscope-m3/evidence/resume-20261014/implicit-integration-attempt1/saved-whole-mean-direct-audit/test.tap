@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: independent cylindrical vector viscosity sends v=R² to Etheta=-3
+ok 1 - independent cylindrical vector viscosity sends v=R² to Etheta=-3
+  ---
+  duration_ms: 7.9628
+  type: 'test'
+  ...
+# Subtest: independent full axial flux retains time, fast time, pressure, covariance, stress and self product
+ok 2 - independent full axial flux retains time, fast time, pressure, covariance, stress and self product
+  ---
+  duration_ms: 41.4337
+  type: 'test'
+  ...
+# Subtest: total-flux subtraction retains every background and mixed-velocity interaction
+ok 3 - total-flux subtraction retains every background and mixed-velocity interaction
+  ---
+  duration_ms: 4.4224
+  type: 'test'
+  ...
+# Subtest: independent pressure Leibniz preserves both moving endpoints
+ok 4 - independent pressure Leibniz preserves both moving endpoints
+  ---
+  duration_ms: 2.9382
+  type: 'test'
+  ...
+# Subtest: integral argument substitution alpha-renames a colliding binder and keeps endpoint dependence
+ok 5 - integral argument substitution alpha-renames a colliding binder and keeps endpoint dependence
+  ---
+  duration_ms: 0.9396
+  type: 'test'
+  ...
+# Subtest: named expression derivatives inspect actual body and do not erase a captured fast coordinate
+ok 6 - named expression derivatives inspect actual body and do not erase a captured fast coordinate
+  ---
+  duration_ms: 2.5004
+  type: 'test'
+  ...
+# Subtest: unknown derivative operations and dependent discrete labels fail closed
+ok 7 - unknown derivative operations and dependent discrete labels fail closed
+  ---
+  duration_ms: 0.8932
+  type: 'test'
+  ...
+# Subtest: primitive reader preserves nonzero denominator and analytic-domain obligations
+ok 8 - primitive reader preserves nonzero denominator and analytic-domain obligations
+  ---
+  duration_ms: 0.3921
+  type: 'test'
+  ...
+# Subtest: strict finite budgets prevent unbounded graph replay
+ok 9 - strict finite budgets prevent unbounded graph replay
+  ---
+  duration_ms: 0.5084
+  type: 'test'
+  ...
+# Subtest: actual saved old/new whole means are independently reconstructed or report every exact unresolved gate
+not ok 10 - actual saved old/new whole means are independently reconstructed or report every exact unresolved gate
+  ---
+  duration_ms: 41854.6178
+  type: 'test'
+  location: 'C:\\Users\\사용자\\Documents\\Codex\\2026-10-14\\https-project29770-websitepublisher-ai-v0-3\\work\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\tests\\saved-whole-mean-direct-audit.test.mjs:114:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   undefined,
+    -   'actual_monotone_root',
+        'actual_quadratic_root'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'actual_monotone_root'
+    1: 'actual_quadratic_root'
+  actual:
+    1: 'actual_quadratic_root'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/%EC%82%AC%EC%9A%A9%EC%9E%90/Documents/Codex/2026-10-14/https-project29770-websitepublisher-ai-v0-3/work/MathScopeCompute/research-ide/mathscope-m3/navier/tests/saved-whole-mean-direct-audit.test.mjs:124:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: serialized source/cutoff records and completion overrides cannot produce private audits
+ok 11 - serialized source/cutoff records and completion overrides cannot produce private audits
+  ---
+  duration_ms: 96.7485
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 10
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 42667.308

@@ -1,0 +1,29 @@
+MathScope.M4.Finite.delta_two_numerator (x y : Int) : (x + y) * (x + y) - x * x - y * y = 2 * x * y
+'MathScope.M4.Finite.delta_two_numerator' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M4.Finite.differential_squared_zero (v : MathScope.M0.C0) :
+  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2
+'MathScope.M4.Finite.differential_squared_zero' depends on axioms: [propext]
+MathScope.M4.Finite.scalar_chain_map (s : Int) (v : MathScope.M0.C0) :
+  MathScope.M0.d0 { a := s * v.a, b := s * v.b, c := s * v.c, d := s * v.d } =
+    have w := MathScope.M0.d0 v;
+    { u := s * w.u, v := s * w.v, w := s * w.w, x := s * w.x, y := s * w.y }
+'MathScope.M4.Finite.scalar_chain_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M4.Finite.prime_interval_fixture :
+  List.filter MathScope.M4.primeTrial (List.range 30) = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+'MathScope.M4.Finite.prime_interval_fixture' does not depend on any axioms
+MathScope.M4.Finite.bracket_antisymmetric (A B : MathScope.M4.Mat2) :
+  MathScope.M4.add (MathScope.M4.bracket A B) (MathScope.M4.bracket B A) = MathScope.M4.zero
+'MathScope.M4.Finite.bracket_antisymmetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M4.Finite.bracket_jacobi (A B C : MathScope.M4.Mat2) :
+  MathScope.M4.add
+      (MathScope.M4.add (MathScope.M4.bracket A (MathScope.M4.bracket B C))
+        (MathScope.M4.bracket B (MathScope.M4.bracket C A)))
+      (MathScope.M4.bracket C (MathScope.M4.bracket A B)) =
+    MathScope.M4.zero
+'MathScope.M4.Finite.bracket_jacobi' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M4.Finite.shear_plaquette (s t : Int) :
+  MathScope.M4.mul
+      (MathScope.M4.mul (MathScope.M4.mul (MathScope.M4.shear s) (MathScope.M4.shear t)) (MathScope.M4.shear (-s)))
+      (MathScope.M4.shear (-t)) =
+    MathScope.M4.identity
+'MathScope.M4.Finite.shear_plaquette' depends on axioms: [propext, Classical.choice, Quot.sound]
