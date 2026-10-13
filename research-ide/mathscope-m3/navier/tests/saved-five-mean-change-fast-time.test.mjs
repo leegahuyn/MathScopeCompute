@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {writeFile,mkdir,readdir,readFile} from 'node:fs/promises';
+import {writeFile,mkdir,readFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {openSavedInitializedSource} from '../source-saved-initialized-authority.mjs';
+import {execFileSync} from 'node:child_process';
+import {openSavedInitializedSource,savedInitializedSourceProgram} from '../source-saved-initialized-authority.mjs';
 import {attachSavedInitializedNormFamily} from '../source-saved-initialized-norm-family.mjs';
 import {attachSavedInitializedCutoffAuthority} from '../source-saved-initialized-cutoff-norms.mjs';
 import {auditExpressionFreeCoordinates,auditSavedFiveFastTime,assertSavedFiveFastTimeAudit} from '../source-saved-five-fast-time-audit.mjs';
@@ -80,6 +81,18 @@ test('actual saved five-map fast-time independence is checked from definition bo
   const {cap,cutoff}=await setup(),startedAt=new Date().toISOString(),audit=auditSavedFiveFastTime(cap,cutoff);
   const result={schema:'MathScope.N6.SavedFiveFastTimeObserved/1',startedAt,finishedAt:new Date().toISOString(),audit};
   await evidence('saved-five-fast-time-observed.json',result);
+  const source=savedInitializedSourceProgram(cap);
+  const registryJSON=JSON.stringify(source.definitionCollections);
+  await evidence('saved-five-fast-time-definition-readback.json',{
+    schema:'MathScope.N6.SavedDefinitionReadback/1',source:cap.source,
+    sourceScope:source.definitionScope,allDefinitionsFitCaptureBudget:Buffer.byteLength(registryJSON)<=4000000,
+    registrySHA256:createHash('sha256').update(registryJSON).digest('hex'),
+    registryBytes:Buffer.byteLength(registryJSON),
+    collections:Buffer.byteLength(registryJSON)<=4000000?source.definitionCollections:null,
+    profiles:source.definitionCollections.map(r=>({namespace:r.namespace,isArray:Array.isArray(r.value),
+      size:Array.isArray(r.value)?r.value.length:Object.keys(r.value??{}).length,
+      firstKeys:Object.keys(Array.isArray(r.value)?r.value[0]??{}:r.value??{})})),
+    proofsAdded:false,wholeM3Complete:false});
   console.log('FAST_TIME_AUDIT',JSON.stringify({status:audit.status,visited:audit.analysis.visitedNodeCount,
     unknownOps:[...new Set(audit.analysis.unknownOperations.map(x=>x.op))],rows:audit.analysis.rows,
     stopReason:audit.analysis.stopReason,wholeM3Complete:false}));
@@ -104,17 +117,15 @@ test('copied authorities, completion overrides and invalid budgets cannot certif
 
 // Read inherited release records without changing or normalizing their historical flags.
 test('prerequisite records are captured verbatim for the continuation checkpoint',async()=>{
-  const root=join(process.cwd(),'research-ide'),matches=[];
-  async function visit(dir,depth){
-    for(const item of await readdir(dir,{withFileTypes:true})){
-      const p=join(dir,item.name);
-      if(item.isDirectory()&&depth>0&&/mathscope|release/.test(item.name))await visit(p,depth-1);
-      if(item.isFile()&&['M2_FINAL_COMPLETION.json','N6_PROGRESS.json','N7_PROGRESS.json','N8_PROGRESS.json','M3_ALL64_REVIEW_KO.md'].includes(item.name)){
-        const raw=await readFile(p);matches.push({path:p.slice(process.cwd().length+1),bytes:raw.length,
-          sha256:createHash('sha256').update(raw).digest('hex'),text:raw.toString('utf8')});
-      }
-    }
+  const tracked=execFileSync('git',['ls-files','-z'],{encoding:'utf8',maxBuffer:8*1024*1024}).split('\0').filter(Boolean);
+  const names=new Set(['M2_FINAL_COMPLETION.json','N6_PROGRESS.json','N7_PROGRESS.json','N8_PROGRESS.json','M3_ALL64_REVIEW_KO.md']);
+  const paths=tracked.filter(p=>names.has(p.split('/').at(-1))),matches=[];
+  for(const path of paths){
+    const raw=await readFile(join(process.cwd(),path));
+    matches.push({path,bytes:raw.length,sha256:createHash('sha256').update(raw).digest('hex'),text:raw.toString('utf8')});
   }
-  await visit(root,3);await evidence('prerequisite-records-verbatim.json',{schema:'MathScope.ResumeReadback/1',records:matches,rewritten:false});
-  assert.ok(matches.some(r=>r.path.endsWith('M2_FINAL_COMPLETION.json')),'Locate the actual inherited M2 record; do not guess its directory.');
+  await evidence('prerequisite-records-verbatim.json',{schema:'MathScope.ResumeReadback/2',
+    discovery:'git ls-files -z across the complete tracked repository',trackedFileCount:tracked.length,
+    records:matches,rewritten:false});
+  assert.ok(matches.some(r=>r.path.endsWith('M2_FINAL_COMPLETION.json')),'The actual inherited M2 record must be located in the full tracked repository.');
 });
