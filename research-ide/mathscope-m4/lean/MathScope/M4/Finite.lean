@@ -38,15 +38,17 @@ theorem bracket_jacobi (A B C : Mat2) :
     add (add (bracket A (bracket B C)) (bracket B (bracket C A)))
       (bracket C (bracket A B)) = zero := by
   cases A; cases B; cases C
-  simp [add, bracket, sub, mul, zero]
-  grind
+  simp only [add, bracket, sub, mul, zero]
+  congr 1 <;>
+    simp only [Int.mul_add, Int.mul_sub, Int.mul_comm, Int.mul_left_comm] <;>
+    omega
 
 /-- Exact holonomy for the integer shear subgroup. It is neither a
 nonabelian continuum limit nor a general SU2/SU3/G2 claim. -/
 theorem shear_plaquette (s t : Int) :
     mul (mul (mul (shear s) (shear t)) (shear (-s))) (shear (-t)) = identity := by
   simp [mul, shear, identity]
-  grind
+  omega
 
 set_option pp.fullNames true
 #check delta_two_numerator

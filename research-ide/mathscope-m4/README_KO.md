@@ -19,6 +19,10 @@ node research-ide/mathscope-m4/tools/core-kernel-replay.mjs --lean <installed-le
 
 새 증거 공격 검사는 **9/9 PASS, skipped 0**, 기존 보호 검사와 합친 suite는 **26/26 PASS, exit 0**이다. raw receipt/source/type/axiom/log/olean 변조, 현재 소스 한 글자 변경, 생성 소스 injection, G/Δ/p/정밀도/계수/가정 변경, export/import 신뢰 소실, 학생·전문가 claim ID/조건/범위 동기화를 검사한다. 실제 `#print axioms`에서 읽은 사용자 공리 closure는 `UNCONDITIONAL_FORMAL` build 등급에서 거부하고 명시적인 `CONDITIONAL_FORMAL`로만 표시한다. 아래의 과거 기록은 당시 상태를 설명하며 최신 성공을 삭제하거나 그 이전 실패를 성공으로 다시 쓰지 않는다.
 
+실제 Linux portability 검사 **38446065282 / source `7d29107…`**에서는 기존 다섯 pinned target과 26개 보호 검사가 통과했으나, 새 `Finite.lean`의 Jacobi `grind` proof가 Lean 4.34.1의 **512 MiB kernel memory**를 초과했다. 뒤의 shear 오류도 같은 memory exhaustion이며 소스 문법 오류로 분류하지 않는다. 원본 ZIP SHA `efad00bd…`, 실패 receipt/source/log/부분 olean 및 성공한 기존 replay는 `evidence/hosted-failures/run38446065282/`에 그대로 보존했다. 실패한 declaration의 자기 자신을 포함하는 `#print axioms`는 성공 결과로 승격하지 않는다.
+
+Jacobi proof를 다항식 전개와 작은 선형 `omega` proof로 바꾸고 shear도 `omega`로 단순화했다. 새 Windows attempt 4는 **14 target / exit 0 / warning 0 / sorry 0 / 두 수학적 오류 대조 exit 1**이다. 새 Jacobi와 shear는 `Classical.choice` 없이 `[propext, Quot.sound]`만 사용한다. attempt 3의 unused-simp-argument warning 거부 기록도 보존했다. 최신 공개 audit는 attempt 4의 원시 소스·type·공리·SHA에 다시 묶였다. 원래 attempt 1/2는 당시 소스의 실제 성공이며 변경된 현재 소스로 재사용하지 않는다. runner는 실제 Linux 512 MiB 실패를 근거로 **새 Finite module만 Linux 1536 MiB**, 나머지 및 오류 대조는 512 MiB, 각 60초를 유지한다. 이 예산 조정 자체를 Linux 성공으로 표시하지 않으며 다음 Actions의 실제 receipt로 판정한다.
+
 99쪽 원 설계도의 p.19–20 I3 및 p.67–68 R1 기준을 `criteria.mjs`에 16개 원문 ID로 보존했다. M0의 기존 I3 기초와 M4 확장을 중복 집계하지 않는다. 과거 M4 최종 인수는 **미확인**이며, 미확인을 0% 또는 완료로 바꾸지 않는다.
 
 `acceptance.mjs`는 기존 M0의 고정된 실제 Lean 감사 authority를 사용하면서 해당 소스·원시 커널 로그·오류 대조 로그·import 환경 manifest의 실제 바이트 SHA-256를 다시 읽어 검사한다. 이 성공의 범위는 **과거의 동일 커널 실행에 대한 artifact 재결속**이다. 현재 Lean을 실행하거나 신규 해석 정리·M4 항목을 승인한 결과가 아니다. 저장된 receipt를 JSON으로 복제하거나 import하면 authority가 사라진다.

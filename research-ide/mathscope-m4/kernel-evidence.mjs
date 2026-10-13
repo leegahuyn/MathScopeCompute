@@ -14,7 +14,7 @@ const anchors=freeze({
  '38394604031':{receipt:'8ff837a9fc2699579b6f34a4ab31125f5bd00774115b2610fc3e7545671290fe',readback:'f6adce62982bfd8402849f2feb9ffddec40898f993198417ffc111973d174a2b',archive:'aeef510fad9eb804e4eac082e4bd6660a3423c06c12bdcc9fd16ecc934aaa284',sourceCommit:'f1206131fb87c929d89b5fcc8edf248e66692ac0',headSha:'f1206131fb87c929d89b5fcc8edf248e66692ac0'},
  '38394614544':{receipt:'48a1fa692d03b9fb15e0941f0d1199ff41ffab5dd9a56c3b6d16c99fc800d4d5',readback:'a63cc290759528b41af91cfac5b3ec53f61efd9b6967e973d8cf894183662359',archive:'3c998162032d99e137a16ec03bbe771150c70d9aaa729184c47b3e18ea687c1f',sourceCommit:'ef7a21f39b5caf5caa88588fcd8340316208df6b',headSha:'f1206131fb87c929d89b5fcc8edf248e66692ac0'},
 });
-export const CORE_RUN=Object.freeze({directory:'research-ide/mathscope-m4/evidence/core-kernel-20261014-attempt2',receiptSha256:'fdec6e1b3538c21e929614d60e64a8a062da22564e07a4dcb63597a3b6f2e027'});
+export const CORE_RUN=Object.freeze({directory:'research-ide/mathscope-m4/evidence/core-kernel-20261014-attempt4',receiptSha256:'4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf'});
 export const isVerifiedM4KernelReadback=x=>Boolean(x&&authority.has(x));
 export function assessM4KernelGrade(readback,targetName,requestedGrade){
  if(!isVerifiedM4KernelReadback(readback))return {accepted:false,status:'RAW_KERNEL_REBINDING_REQUIRED'};

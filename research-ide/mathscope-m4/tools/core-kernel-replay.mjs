@@ -15,6 +15,8 @@ if((await readdir(out)).length) throw new Error('Existing evidence may not be ov
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const compiled=join(out,'compiled');
 const receipt={schemaVersion:'mathscope.m4.core-kernel-replay/1',startedAt:new Date().toISOString(),sourceCommit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),platform:process.platform,nodeVersion:process.version,mathlibCommit:null,usesMathlib:false,environment:{},sources:[],executions:[],targets:[],negativeControls:[],scope:'New exact integer finite fixtures and precision-metric uniform-limit theorem. Core toolchain is recorded separately from historical Linux/mathlib pins.',grantsM4FinalAcceptance:false,publicationConfirmed:false,exitCode:1};
+receipt.budget={compileMilliseconds:60000,ordinaryMemoryMiB:512,newFiniteMemoryMiB:process.platform==='linux'?1536:512,threads:1,
+ correction:{runId:'38446065282',sourceCommit:'7d29107',failedMemoryMiB:512,failedModule:'MathScope/M4/Finite.lean',observedFailure:'Actual Lean4.34.1 Linux kernel memory limit at the cubic grind proof, followed by propagated memory failure at shear_plaquette. The proofs are replaced by expanded polynomial/linear omega steps. Only the Linux new finite module gets a bounded 1536MiB allowance; prior logs, all other module/negative budgets and the 60s timeout are retained.'}};
 const save=()=>writeFile(join(out,'receipt.json'),JSON.stringify(receipt,null,2)+'\n');
 function run(name,args) {
  const t=performance.now();
@@ -41,7 +43,8 @@ try {
  for(const [name,text]of checks)await source(name+'.lean',Buffer.from(text));
  for(const entry of receipt.sources.filter(x=>/MathScope\//.test(x.path))) {
   const olean=join(compiled,entry.path.replace('.lean','.olean'));await mkdir(dirname(olean),{recursive:true});
-  const r=await execute('compile-'+entry.path.replaceAll('/','-').replace('.lean',''),['--memory=512','--threads=1','-o',olean,'sources/'+entry.path]);
+  const memory=entry.path==='MathScope/M4/Finite.lean'?receipt.budget.newFiniteMemoryMiB:receipt.budget.ordinaryMemoryMiB;
+  const r=await execute('compile-'+entry.path.replaceAll('/','-').replace('.lean',''),['--memory='+memory,'--threads=1','-o',olean,'sources/'+entry.path]);
   if(r.exitCode!==0)throw new Error(`COMPILE_FAILED:${entry.path}:${r.errorCode||r.exitCode}`);
   if(r.warnings.length||/sorryAx|declaration uses.*sorry/.test(r.log))throw new Error(`WARNING_OR_SORRY:${entry.path}`);
   receipt.executions.at(-1).compiledSha256=hash(await readFile(olean));
