@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "mathscope.m4.test-failure-preservation/1",
+  "dateKST": "2026-10-13",
+  "exactExecutionTimestampCapture": "NOT_CAPTURED_FOR_FIRST_ATTEMPT",
+  "sourceCommitCapture": "NOT_CAPTURED_AT_TEST_START",
+  "command": "node --test research-ide/mathscope-m4/tests/acceptance.test.mjs",
+  "nodeVersion": "v24.18.0",
+  "exitCode": 1,
+  "counts": { "tests": 10, "pass": 6, "fail": 4, "cancelled": 0, "skipped": 0, "todo": 0 },
+  "failureReason": "The first reader checked working-tree raw artifact bytes and correctly rejected Windows CRLF changes versus pinned Lean audit SHA-256. No M0 evidence file was changed to make the test pass.",
+  "artifact": "research-ide/mathscope-m0/evidence/lean-environment.json",
+  "workingTree": { "bytes": 1756893, "sha256": "33370b7f6656bb2267d7b83778e003265610aaf2c06aced384f04abacd3046c5", "CRLF": true },
+  "gitHEAD": { "bytes": 1702609, "sha256": "b596afdb954f29f3b327eca57e8fafe0ba141fe5fc1abb8c988a35d3d937a4b4", "CRLF": false },
+  "failedTestNames": [
+    "five historical M0 target scopes rebind to exact raw source/log/environment artifacts",
+    "forged compiler PASS, theorem type, custom axioms and negative-control success are rejected",
+    "raw compiler log corruption and missing artifact cannot inherit a valid metadata audit",
+    "export/import loses assessment authority; student/expert view preserves all original claim IDs"
+  ],
+  "correction": "The artifact audit reader was changed to exact immutable Git blob bytes at a fixed commit. Checkout differences remain recorded; a dedicated CRLF rejection test was added. The subsequent run is captured separately in test-attempt2-20261013.tap and .json.",
+  "rawFirstAttemptFullTAP": "UNAVAILABLE: first direct invocation used the default Node reporter and was not written to a raw log file; this record preserves observed counts, names and byte-mismatch evidence without reconstructing an exact timestamp or raw TAP."
+}

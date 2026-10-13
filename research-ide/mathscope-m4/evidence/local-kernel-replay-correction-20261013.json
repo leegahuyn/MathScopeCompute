@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "mathscope.m4.kernel-replay-correction/1",
+  "preservedReceipt": "local-kernel-replay-20261013/replay.json",
+  "originalAttemptExitCode": 1,
+  "correction": "In attempt 1 the generic expected-negative predicate treated any nonzero exit as rejection. NegativeMatrix failed because Defs.olean was missing after the preceding 30-second trust=0 timeout, so its expectedOutcomeObserved=true must not be interpreted as a correct mathematical negative control. The raw receipt remains unchanged. The runner now requires the intended decide/false reason and excludes missing-module failures.",
+  "reclassifiedNegativeMatrix": "DEPENDENCY_FAILURE_NOT_VALID_NEGATIVE_CONTROL",
+  "negativeFalseReclassified": "VALID_NEGATIVE_CONTROL: actual rfl failure for 0=1",
+  "nextAttempt": "local-kernel-replay-20261013-attempt2 uses the same memory/time budget and official Lean default import trust. It is a separate actual run under 4.34.0-rc2, not the historical pinned 4.34.1 environment."
+}
