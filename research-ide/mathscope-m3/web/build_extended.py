@@ -130,7 +130,7 @@ def build(check=False):
   extras+=list((ROOT/folder/'lean').glob('*.lean'))
   extras+=[p for p in [ROOT/folder/'original-criteria.json',ROOT/folder/'evidence/lean-audit.json',ROOT/folder/'evidence/acceptance.json'] if p.exists()]
  files=[{'path':p.relative_to(RESEARCH).as_posix(),'bytes':len(p.read_bytes()),'sha256':sha(p.read_bytes())} for p in sorted(set(closure+view_closure+extras),key=str)]
- source={'schema':'MathScope.M3.ExtendedSourceBinding/1','manifestSHA256':sha(canonical(files)),'files':files,'repository':'https://github.com/leegahuyn/MathScopeCompute','branch':'mathscope-m3-resume-20261013','p7SourceChanged':False,'auditedDeferredAssertionImports':worker_cycles+view_cycles}
+ source={'schema':'MathScope.M3.ExtendedSourceBinding/1','manifestSHA256':sha(canonical(files)),'files':files,'repository':'https://github.com/leegahuyn/MathScopeCompute','branch':'mathscope-m3-m4-20261014','p7SourceChanged':False,'auditedDeferredAssertionImports':worker_cycles+view_cycles}
  metadata={'schema':'MathScope.M3.ExtendedBuild/1','version':'0.3.16-m3','sourceBinding':source,'environment':{'worker':'STATIC_LOCAL_ESM_CLOSURE','hash':'SHA-256_WEBCRYPTO','numericalArithmetic':'IEEE754_FLOAT64_FINITE_MODEL','exactArithmetic':'BIGINT_RATIONAL_WHERE_DECLARED','formalAuthority':'RECORDED_PINNED_KERNEL_AUDIT_ONLY','requestBudgetBytes':131072,'outputBudgetBytes':25165824},'examples':examples,'criteria':criteria,'wholeM3Complete':False}
  worker='globalThis.__MATHSCOPE_M3_EXTENDED_BUILD__='+canonical(metadata)+';\n'+worker
  template=read(WEB/'extended-client.js')
