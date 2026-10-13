@@ -1,0 +1,9 @@
+MathScope.M0.Conditional.selectedSpectrum : Set ℝ
+MathScope.M0.Conditional.userAssumedGapAtOne : MathScope.M0.Analytic.GapAt MathScope.M0.Conditional.selectedSpectrum 1
+MathScope.M0.Conditional.selected_gap_excludes_interval (energy : ℝ) :
+  0 < energy → energy < 1 → energy ∉ MathScope.M0.Conditional.selectedSpectrum
+'MathScope.M0.Conditional.selected_gap_excludes_interval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound,
+ MathScope.M0.Conditional.selectedSpectrum,
+ MathScope.M0.Conditional.userAssumedGapAtOne]

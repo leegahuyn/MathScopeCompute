@@ -45,6 +45,18 @@ def excluded(name):
     if pure.is_absolute() or '..' in pure.parts or str(pure)!=name:raise ValueError('Unsafe index path')
     return any(x in validator.SKIP_DIRS for x in pure.parts[:-1]) or name in validator.SKIP_FILES or pure.name.endswith(('.pyc','.tmp','.zip','.zip.sha256'))
 
+def bind_index_source_selection(expected,reader):
+    # Original source/translation validation still checks the working files.
+    # The release byte binding must describe the reviewed bytes shipped to
+    # Linux, including metadata read directly by expected_manifest rather
+    # than via edition_files/addon_files. Reject unstaged semantic changes.
+    name='provenance/source-selection.json'
+    raw=reader.read(name)
+    if json.loads(raw)!=validator.read_json(name):
+        raise ValueError('Source-selection content differs from the reviewed Git index; stage it before auditing.')
+    result={**expected,'sourceSelection':{**expected['sourceSelection'],'sha256':hashlib.sha256(raw).hexdigest()}}
+    return result
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--write-manifest',action='store_true');args=parser.parse_args();reader=IndexReader()
     def edition():return {name:IndexArtifact(reader,name) for name in sorted(reader.entries) if not excluded(name) and PurePosixPath(name).parts[0] not in validator.ORIGINAL_ROOTS|{validator.ARCHIVE_MEMBERS_ROOT}}
@@ -53,6 +65,8 @@ def main():
         for root in allowlist['allowedRoots']:validator.validate_addon_root(root);roots.append(root+'/')
         return {name:IndexArtifact(reader,name) for name in sorted(reader.entries) if not excluded(name) and any(name.startswith(root) for root in roots)}
     validator.edition_files=edition;validator.addon_files=addons
+    original_expected_manifest=validator.expected_manifest
+    validator.expected_manifest=lambda *values:bind_index_source_selection(original_expected_manifest(*values),reader)
     try:
         before=dict(reader.entries);report=validator.verify(args.write_manifest)
         after=subprocess.check_output(['git','ls-files','--stage','-z','--','.'],cwd=ROOT)

@@ -1,0 +1,545 @@
+{
+  "schemaVersion": "mathscope.m4.pinned-clean-kernel-replay/1",
+  "startedAt": "2026-10-13T18:30:09.805Z",
+  "sourceCommit": "28acbd9b6233bfcfcd682580a75933278c1f4062",
+  "nodeVersion": "v24.21.0",
+  "platform": "linux",
+  "budget": {
+    "globalMilliseconds": 1080000,
+    "installMilliseconds": 240000,
+    "updateMilliseconds": 300000,
+    "cacheMilliseconds": 480000,
+    "compileMilliseconds": 60000,
+    "leanMemoryMiB": 512,
+    "mathlibCompilationMemoryMiB": 4096,
+    "threads": 1,
+    "memoryAdjustment": {
+      "previousMathlibMiB": 1536,
+      "failureRunId": "38375770398",
+      "failureSourceCommit": "486b6e19e0ad85142a31a84ffdfee0d02fc35cb3",
+      "failureArtifactId": "11801780499",
+      "failureArtifactSha256": "4bedfbe0a1b7aaf16ca5c122e3fe0080446d70abca65571eb9aaa650c786d96d",
+      "observedFailure": "compile-analytic --memory=1536 exit 134: lean::memory_exception, excessive memory consumption detected at interpreter; elapsed 19534 ms",
+      "corroboratingFailure": {
+        "runId": "38375779278",
+        "branchHeadCommit": "486b6e19e0ad85142a31a84ffdfee0d02fc35cb3",
+        "checkedOutSourceCommit": "7d6a197c96709e864ff50c52ea7bccabdeff1610",
+        "artifactId": "11800404892",
+        "artifactSha256": "d60a6b512e71bb6993e5e0b4b351e5827b31dad1c1d22e5de48812223657d7f0",
+        "elapsedMilliseconds": 13025,
+        "exitCode": 134
+      },
+      "prior512MiBFailure": {
+        "runId": "38369365124",
+        "sourceCommit": "620dca8fff0b9593fc38f6adc5495a1aecd81c35",
+        "artifactId": "11798103131",
+        "artifactSha256": "6658e7ea9a17690df0a3769c733df553283ba1ba5a298f1f0881d5ce887b9608",
+        "elapsedMilliseconds": 13102,
+        "exitCode": 134
+      },
+      "reason": "Two actual pinned Analytic compilations exceeded the 1536 MiB Lean threshold at the interpreter. Only Analytic and its Conditional/Comparison dependants receive a bounded 4096 MiB threshold. Original source, pins, finite/negative budgets and all time limits are retained. Both prior failed thresholds and original receipts remain preserved. The higher threshold does not imply proof success."
+    }
+  },
+  "expectedEnvironment": {
+    "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+    "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "mathlibLakeManifestSha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+    "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+    "driverSha256": "0e3f7d16718c0d2b6bf5bf80f26c66358b0468b35607d6ef0d921857b50440aa",
+    "driverSourceSha256": "dbcada6e01a624daf70f53689fc95fa71b1a53c3e0279d2c2157c11c1e62e78e",
+    "importClosureDigest": "77ae522db918211a75ca552740d37573830858450c2bd20061e9c01d3715f577",
+    "importManifestSha256": "b596afdb954f29f3b327eca57e8fafe0ba141fe5fc1abb8c988a35d3d937a4b4",
+    "importModuleCount": 2258,
+    "unresolvedImportCount": 0,
+    "kernelModified": false,
+    "runtimeModified": false,
+    "verifierGuardModified": false,
+    "frontend": "official shared-library frontend with explicit installation root"
+  },
+  "officialArchive": {
+    "version": "4.34.1",
+    "url": "https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst",
+    "sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+    "provenance": "Official leanprover/lean4 v4.34.1 release asset digest, independently read on 2026-10-13."
+  },
+  "actualEnvironment": {
+    "leanVersion": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+    "leanCommit": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "runtimeLibrarySha256": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+    "compilerExecutableSha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "lakeVersion": "Lake version 5.0.0-src+5045d00 (Lean version 4.34.1)",
+    "lakeExecutableSha256": "6f53827dab18010d6c690d14c8401cacabc1db958edb3552a877ed4cf1dd995d",
+    "compilerFrontend": "Official pinned Lean CLI; the historical embedded driver is not reused.",
+    "mathlibCommit": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "mathlibLakeManifestSha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+    "projectLakeManifestSha256": "4484affec233552db62fa98d6ef2b185dc7b0c778a07a3156cb9f4f253e02170"
+  },
+  "sources": [
+    {
+      "path": "MathScope/M0/Defs.lean",
+      "sha256": "b00496552d9de1c5271fc319670902785af5a0785aa1fe31451985aa1f2bbe37",
+      "bytes": 1558
+    },
+    {
+      "path": "MathScope/M0/Finite.lean",
+      "sha256": "07b6309d8b638c13924c63ce3c0d4a4b2023211e56ec68c95210ffdcf88b5713",
+      "bytes": 1130
+    },
+    {
+      "path": "MathScope/M0/Analytic.lean",
+      "sha256": "5b1e099473e7a4b23eee0ab7b9132e07a8c093e0249e2ccb7a74189811ae7313",
+      "bytes": 1973
+    },
+    {
+      "path": "MathScope/M0/Conditional.lean",
+      "sha256": "79c3fd19000b46cecb1181dfb89a16d81b49735446fa7cafaf82a0434d51c917",
+      "bytes": 980
+    },
+    {
+      "path": "MathScope/M0/Comparison.lean",
+      "sha256": "c5629d6c17cde5f67e50c577a2a7b71dd0b7223db657fdb27527312c2d02a2af",
+      "bytes": 868
+    },
+    {
+      "path": "NegativeFalse.lean",
+      "sha256": "bb8c5d5918222e9b4d279b6e41df5059171fb75ecca29b8c1f367d396ba5f261",
+      "bytes": 126
+    },
+    {
+      "path": "NegativeMatrix.lean",
+      "sha256": "1ce60aeb2856a9bbd80e2deaf6b0a2e84f61a5b0adf8a7b661fb6dcdb90b4c9b",
+      "bytes": 242
+    },
+    {
+      "path": "lakefile.lean",
+      "sha256": "51a6509b8449dddac614806aeddbddc448fefe126f891e3ba41072a2d725be82",
+      "bytes": 203
+    },
+    {
+      "path": "lean-toolchain",
+      "sha256": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b",
+      "bytes": 25
+    }
+  ],
+  "executions": [
+    {
+      "name": "download-official-lean",
+      "args": [
+        "--fail",
+        "--location",
+        "--retry",
+        "2",
+        "--max-time",
+        "210",
+        "--output",
+        "/home/runner/work/_temp/mathscope-m4-pinned-38447237944-1/installation/lean-4.34.1-linux.tar.zst",
+        "https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst"
+      ],
+      "startedAt": "2026-10-13T18:30:09.827Z",
+      "finishedAt": "2026-10-13T18:30:11.990Z",
+      "elapsedMilliseconds": 2164,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "download-official-lean.log",
+      "logSha256": "4a40b6f84a9dfb3fd770a23eed4160e9f428f83e60dcae56b522e27349014db5",
+      "warnings": []
+    },
+    {
+      "name": "extract-official-lean",
+      "args": [
+        "--zstd",
+        "-xf",
+        "/home/runner/work/_temp/mathscope-m4-pinned-38447237944-1/installation/lean-4.34.1-linux.tar.zst",
+        "-C",
+        "/home/runner/work/_temp/mathscope-m4-pinned-38447237944-1/installation"
+      ],
+      "startedAt": "2026-10-13T18:30:12.538Z",
+      "finishedAt": "2026-10-13T18:30:17.827Z",
+      "elapsedMilliseconds": 5290,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "extract-official-lean.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "warnings": []
+    },
+    {
+      "name": "lean-version",
+      "args": [
+        "--version"
+      ],
+      "startedAt": "2026-10-13T18:30:17.843Z",
+      "finishedAt": "2026-10-13T18:30:17.932Z",
+      "elapsedMilliseconds": 89,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "lean-version.log",
+      "logSha256": "355a9a028f81641782d75d6e6b58dec70f29d2f61238a9e271690259d9bf5680",
+      "warnings": []
+    },
+    {
+      "name": "lake-version",
+      "args": [
+        "--version"
+      ],
+      "startedAt": "2026-10-13T18:30:18.206Z",
+      "finishedAt": "2026-10-13T18:30:18.249Z",
+      "elapsedMilliseconds": 44,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "lake-version.log",
+      "logSha256": "36526a338068c343bedff5daa38fec328b4f722df1e8f0b5d026d4f0f908f3a3",
+      "warnings": []
+    },
+    {
+      "name": "lake-update-pinned",
+      "args": [
+        "update"
+      ],
+      "startedAt": "2026-10-13T18:30:18.530Z",
+      "finishedAt": "2026-10-13T18:31:04.866Z",
+      "elapsedMilliseconds": 46336,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "lake-update-pinned.log",
+      "logSha256": "ef8c2dadae5a0c60848d73330b9001c34963040381ec928bded1d5b8fcf88f7f",
+      "warnings": []
+    },
+    {
+      "name": "mathlib-cache-exact-import-closure",
+      "args": [
+        "exe",
+        "cache",
+        "get",
+        "Mathlib.Basic.Real.Basic"
+      ],
+      "startedAt": "2026-10-13T18:31:04.873Z",
+      "finishedAt": "2026-10-13T18:31:27.284Z",
+      "elapsedMilliseconds": 22411,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "mathlib-cache-exact-import-closure.log",
+      "logSha256": "fb1b44e4b5295da909f935737fdbc178e181bf036744fd35f8bcce51b538a85c",
+      "warnings": []
+    },
+    {
+      "name": "compile-defs",
+      "args": [
+        "env",
+        "lean",
+        "--memory=512",
+        "--threads=1",
+        "-o",
+        ".lake/build/lib/lean/MathScope/M0/Defs.olean",
+        "MathScope/M0/Defs.lean"
+      ],
+      "startedAt": "2026-10-13T18:31:27.285Z",
+      "finishedAt": "2026-10-13T18:31:28.581Z",
+      "elapsedMilliseconds": 1296,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "compile-defs.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "warnings": [],
+      "compiledArtifact": {
+        "path": "compiled/MathScope/M0/Defs.olean",
+        "sha256": "6c3843dde56d36e375c8713b89f6f22cc7e77cd9fd7b9ec7b498eb1ac0d6004b"
+      },
+      "leanMemoryMiB": 512
+    },
+    {
+      "name": "compile-finite",
+      "args": [
+        "env",
+        "lean",
+        "--memory=512",
+        "--threads=1",
+        "-o",
+        ".lake/build/lib/lean/MathScope/M0/Finite.olean",
+        "MathScope/M0/Finite.lean"
+      ],
+      "startedAt": "2026-10-13T18:31:28.585Z",
+      "finishedAt": "2026-10-13T18:31:29.763Z",
+      "elapsedMilliseconds": 1178,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "compile-finite.log",
+      "logSha256": "72fca58e1260d3418a194d3322ba18cdc9df903a4b1eba45453ff2c8c4890935",
+      "warnings": [],
+      "compiledArtifact": {
+        "path": "compiled/MathScope/M0/Finite.olean",
+        "sha256": "4913bb4e2e64099deb7cfd2163bee1f11d5a5b05239e9c0b87578c5da57d161a"
+      },
+      "leanMemoryMiB": 512
+    },
+    {
+      "name": "compile-analytic",
+      "args": [
+        "env",
+        "lean",
+        "--memory=4096",
+        "--threads=1",
+        "-o",
+        ".lake/build/lib/lean/MathScope/M0/Analytic.olean",
+        "MathScope/M0/Analytic.lean"
+      ],
+      "startedAt": "2026-10-13T18:31:29.766Z",
+      "finishedAt": "2026-10-13T18:31:31.671Z",
+      "elapsedMilliseconds": 1905,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "compile-analytic.log",
+      "logSha256": "be64cfe388ea601349c533fc59596334cb470379ff467860a1d98c0017958292",
+      "warnings": [],
+      "compiledArtifact": {
+        "path": "compiled/MathScope/M0/Analytic.olean",
+        "sha256": "c30b20c51a741bb53703866b14686d7cf355753e918cbb4fa77d2d0cc7edee83"
+      },
+      "leanMemoryMiB": 4096
+    },
+    {
+      "name": "compile-conditional",
+      "args": [
+        "env",
+        "lean",
+        "--memory=4096",
+        "--threads=1",
+        "-o",
+        ".lake/build/lib/lean/MathScope/M0/Conditional.olean",
+        "MathScope/M0/Conditional.lean"
+      ],
+      "startedAt": "2026-10-13T18:31:31.673Z",
+      "finishedAt": "2026-10-13T18:31:33.531Z",
+      "elapsedMilliseconds": 1858,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "compile-conditional.log",
+      "logSha256": "57725831910b2082c3afa838394e95c39285f72d0b69118fbc04a0643de2f55c",
+      "warnings": [],
+      "compiledArtifact": {
+        "path": "compiled/MathScope/M0/Conditional.olean",
+        "sha256": "169dd4d26a8a3f9b128017e6efb9ac41de2b3dbf6bf1ac079d6cf5abc6f000bd"
+      },
+      "leanMemoryMiB": 4096
+    },
+    {
+      "name": "compile-comparison",
+      "args": [
+        "env",
+        "lean",
+        "--memory=4096",
+        "--threads=1",
+        "-o",
+        ".lake/build/lib/lean/MathScope/M0/Comparison.olean",
+        "MathScope/M0/Comparison.lean"
+      ],
+      "startedAt": "2026-10-13T18:31:33.533Z",
+      "finishedAt": "2026-10-13T18:31:35.385Z",
+      "elapsedMilliseconds": 1852,
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "compile-comparison.log",
+      "logSha256": "34b3b75a629b4c83d2d4edd466741c14bc62377eaf58c94c87f5757ccaf9d124",
+      "warnings": [],
+      "compiledArtifact": {
+        "path": "compiled/MathScope/M0/Comparison.olean",
+        "sha256": "4bea61d5b44e633f0e7a318bd1e0b8346879bc534c21f2bf881becca09659131"
+      },
+      "leanMemoryMiB": 4096
+    },
+    {
+      "name": "negative-negativefalse",
+      "args": [
+        "env",
+        "lean",
+        "--memory=512",
+        "--threads=1",
+        "NegativeFalse.lean"
+      ],
+      "startedAt": "2026-10-13T18:31:35.387Z",
+      "finishedAt": "2026-10-13T18:31:36.463Z",
+      "elapsedMilliseconds": 1075,
+      "exitCode": 1,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "negative-negativefalse.log",
+      "logSha256": "5c4dac5dce15a0ed595c3e733b5e348b6a9bcb9de22008896735b827198e0176",
+      "warnings": []
+    },
+    {
+      "name": "negative-negativematrix",
+      "args": [
+        "env",
+        "lean",
+        "--memory=512",
+        "--threads=1",
+        "NegativeMatrix.lean"
+      ],
+      "startedAt": "2026-10-13T18:31:36.463Z",
+      "finishedAt": "2026-10-13T18:31:37.533Z",
+      "elapsedMilliseconds": 1070,
+      "exitCode": 1,
+      "signal": null,
+      "errorCode": null,
+      "logPath": "negative-negativematrix.log",
+      "logSha256": "6cbe67929840727b6749ef6e7de702cae35e9f4ba6209aba75117543611e64dd",
+      "warnings": []
+    }
+  ],
+  "targets": [
+    {
+      "claimId": "M0.FINITE.D_SQUARED_ZERO",
+      "target": "MathScope.M0.Finite.differential_squared_zero",
+      "targetType": "MathScope.M0.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+      "axioms": [
+        "propext"
+      ],
+      "grade": "EXACT_FINITE",
+      "assumptions": [],
+      "scope": "Universal v in Z^4 for the fixed D1 and D0 matrices of the D=1 Cech–de Rham fixture. No full prismatic comparison or omitted-weight claim."
+    },
+    {
+      "claimId": "M0.FINITE.INTEGER_FIXTURE",
+      "target": "MathScope.M0.Finite.integer_fixture",
+      "targetType": "MathScope.M0.Finite.integer_fixture :\n  MathScope.M0.d1 (MathScope.M0.d0 { a := -7, b := 9007199254740993, c := 11, d := -13 }) = MathScope.M0.zeroC2",
+      "axioms": [],
+      "grade": "EXACT_FINITE",
+      "assumptions": [],
+      "scope": "One exact integer vector (-7, 9007199254740993, 11, -13) under the specified finite differentials. This is a concrete fixture, not a universal theorem."
+    },
+    {
+      "claimId": "M0.ANALYTIC.GAP_EXCLUSION",
+      "target": "MathScope.M0.Analytic.gap_excludes_interval",
+      "targetType": "MathScope.M0.Analytic.gap_excludes_interval (spectrum : Set ℝ) (delta : ℝ)\n  (hGap : MathScope.M0.Analytic.GapAt spectrum delta) (energy : ℝ) : 0 < energy → energy < delta → energy ∉ spectrum",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "grade": "CONDITIONAL_FORMAL",
+      "assumptions": [
+        {
+          "id": "M0.HYP.GAP_AT",
+          "kind": "HYPOTHESIS",
+          "statement": "hGap : GapAt spectrum delta; equivalently 0 < delta and every positive energy in spectrum is at least delta.",
+          "source": "MathScope/M0/Analytic.lean",
+          "status": "EXPLICIT_PARAMETER"
+        }
+      ],
+      "scope": "For any subset of real energies and a supplied GapAt hypothesis in one fixed energy unit, no positive energy below the bound belongs to that set. No self-adjoint operator, semigroup, QFT or continuum construction is provided."
+    },
+    {
+      "claimId": "M0.CONDITIONAL.SELECTED_GAP",
+      "target": "MathScope.M0.Conditional.selected_gap_excludes_interval",
+      "targetType": "MathScope.M0.Conditional.selected_gap_excludes_interval (energy : ℝ) :\n  0 < energy → energy < 1 → energy ∉ MathScope.M0.Conditional.selectedSpectrum",
+      "axioms": [
+        "Classical.choice",
+        "MathScope.M0.Conditional.selectedSpectrum",
+        "MathScope.M0.Conditional.userAssumedGapAtOne",
+        "Quot.sound",
+        "propext"
+      ],
+      "grade": "CONDITIONAL_FORMAL",
+      "assumptions": [
+        {
+          "id": "M0.AXIOM.SELECTED_SPECTRUM",
+          "kind": "USER_AXIOM",
+          "declaration": "MathScope.M0.Conditional.selectedSpectrum",
+          "statement": "selectedSpectrum : Set Real (uninterpreted spectrum object)",
+          "source": "MathScope/M0/Conditional.lean",
+          "status": "ASSUMED"
+        },
+        {
+          "id": "M0.AXIOM.GAP_ONE",
+          "kind": "USER_AXIOM",
+          "declaration": "MathScope.M0.Conditional.userAssumedGapAtOne",
+          "statement": "userAssumedGapAtOne : GapAt selectedSpectrum 1",
+          "source": "MathScope/M0/Conditional.lean",
+          "status": "ASSUMED"
+        }
+      ],
+      "scope": "Consequence of two named custom axioms about one uninterpreted real spectrum and a gap at 1. It does not identify this spectrum with any Yang–Mills Hamiltonian."
+    },
+    {
+      "claimId": "M0.COMPARISON.GAP_TRANSFER",
+      "target": "MathScope.M0.Comparison.transport_gap",
+      "targetType": "MathScope.M0.Comparison.transport_gap (original observed : Set ℝ) (delta : ℝ)\n  (comparison : MathScope.M0.Comparison.SpectrumComparison original observed)\n  (hObserved : MathScope.M0.Analytic.GapAt observed delta) : MathScope.M0.Analytic.GapAt original delta",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "grade": "CONDITIONAL_FORMAL",
+      "assumptions": [
+        {
+          "id": "M0.HYP.SPECTRUM_INCLUSION",
+          "kind": "HYPOTHESIS",
+          "statement": "comparison : SpectrumComparison original observed, containing original subset observed.",
+          "source": "MathScope/M0/Comparison.lean",
+          "status": "EXPLICIT_PARAMETER"
+        },
+        {
+          "id": "M0.HYP.OBSERVED_GAP",
+          "kind": "HYPOTHESIS",
+          "statement": "hObserved : GapAt observed delta",
+          "source": "MathScope/M0/Comparison.lean",
+          "status": "EXPLICIT_PARAMETER"
+        }
+      ],
+      "scope": "A gap on an observed superset transfers to an original subset when the explicit SpectrumComparison.inclusion field is supplied in the same energy unit."
+    }
+  ],
+  "negativeControls": [
+    {
+      "name": "NegativeFalse",
+      "sourceSha256": "bb8c5d5918222e9b4d279b6e41df5059171fb75ecca29b8c1f367d396ba5f261",
+      "exitCode": 1,
+      "rejectedForExpectedReason": true,
+      "logPath": "negative-negativefalse.log",
+      "logSha256": "5c4dac5dce15a0ed595c3e733b5e348b6a9bcb9de22008896735b827198e0176"
+    },
+    {
+      "name": "NegativeMatrix",
+      "sourceSha256": "1ce60aeb2856a9bbd80e2deaf6b0a2e84f61a5b0adf8a7b661fb6dcdb90b4c9b",
+      "exitCode": 1,
+      "rejectedForExpectedReason": true,
+      "logPath": "negative-negativematrix.log",
+      "logSha256": "6cbe67929840727b6749ef6e7de702cae35e9f4ba6209aba75117543611e64dd"
+    }
+  ],
+  "cleanWorkDirectory": true,
+  "actualKernelExecuted": true,
+  "allPinnedTargetsVerified": true,
+  "grantsM4FinalAcceptance": false,
+  "publicationConfirmed": false,
+  "status": "PINNED_FINITE_AND_CONDITIONAL_KERNEL_REPLAY_VERIFIED",
+  "exitCode": 0,
+  "limitation": "This run checks five exact inherited M0 target scopes under their original pins. It cannot accept every original I3/R1 criterion or any global RH/BSD/YM/NS research conclusion.",
+  "implementationDigests": [
+    {
+      "path": "research-ide/mathscope-m4/tools/pinned-kernel-replay.mjs",
+      "sha256": "825a87527b41bad4cb6e96707fe750e022412f9448ae104c807613753338364b"
+    },
+    {
+      "path": "research-ide/mathscope-m4/tools/pinned-kernel-contract.mjs",
+      "sha256": "c7c134c22a978c17cbfb70f89f8e35c5c5ef765b4480f474345a9d282e8344af"
+    }
+  ],
+  "finishedAt": "2026-10-13T18:31:37.534Z",
+  "elapsedMilliseconds": 87727,
+  "archiveSha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+  "cacheRoots": [
+    "Mathlib.Basic.Real.Basic"
+  ]
+}
