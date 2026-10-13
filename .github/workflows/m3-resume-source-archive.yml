@@ -1,0 +1,41 @@
+name: M3 resume source archive
+
+on:
+  push:
+    branches: [mathscope-m3-resume-20261013]
+    paths: ['.github/workflows/m3-resume-source-archive.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preserve-tracked-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Archive only the exact tracked tree, without credentials or runtime state
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/m3-resume-source"
+          mkdir -p "$out"
+          git rev-parse HEAD > "$out/commit.txt"
+          git rev-parse HEAD^{tree} > "$out/tree.txt"
+          git ls-tree -r --long HEAD > "$out/tracked-tree.txt"
+          git status --porcelain=v1 > "$out/status-before.txt"
+          git archive --format=tar HEAD | gzip -1 > "$out/tracked-source.tar.gz"
+          (cd "$out" && sha256sum tracked-source.tar.gz > SHA256SUMS)
+          git status --porcelain=v1 > "$out/status-after.txt"
+          cmp "$out/status-before.txt" "$out/status-after.txt"
+          du -h "$out/tracked-source.tar.gz"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: m3-resume-source-${{ github.sha }}
+          path: ${{ runner.temp }}/m3-resume-source/
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
