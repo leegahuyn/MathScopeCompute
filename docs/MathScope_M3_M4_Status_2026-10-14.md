@@ -2,7 +2,7 @@
 
 운영 웹에 실제 계산·재현 작업대를 추가하고 GitHub에 소스와 검증 기록을 저장했습니다. **원래 M3 인수는 56/64이며 남은 8개는 아직 완료되지 않았습니다. M4 I3/R1 전체 최종 인수도 미확인입니다.** 새 기능의 실행 성공과 원래 수학 관문의 완료를 구별합니다.
 
-운영 웹: [MathScope v0.3.1](https://project29770.websitepublisher.ai/v0.3.1.html) · 게시 판본 **v106 / `20181a02`**. 소스 검토: [PR #23](https://github.com/leegahuyn/MathScopeCompute/pull/23), 작업 브랜치 `mathscope-m3-m4-20261014`. 이 상태 문서의 점검 기준 커밋은 `0c4b3fe2a8e392283cc9c5486e4bac30407d64fb`입니다.
+운영 웹: [MathScope v0.3.1](https://project29770.websitepublisher.ai/v0.3.1.html) · 게시 판본 **v106 / `20181a02`**. 소스 검토: [PR #23](https://github.com/leegahuyn/MathScopeCompute/pull/23), 작업 브랜치 `mathscope-m3-m4-20261014`. 현재 소스와 운영 번들의 검증 기준 커밋은 `b5c991a821e4f2acd6cf165bcd250b4692b2fb89`입니다.
 
 ## 이번에 실행하고 저장한 범위
 
@@ -66,7 +66,7 @@ M0–M2 승계와 M3 56/64, 과거 TIME_LIMIT·실패 receipt를 변경하지 �
 | 최종 Git 소스 commit SHA | `mathscope-m3-m4-20261014` 최신 HEAD; 공식 커널 증명 소스는 `0c4b3fe2a8e392283cc9c5486e4bac30407d64fb`와 해시 일치 |
 | 최종 Linux CI run 및 실제 결과 | [38447226581](https://github.com/leegahuyn/MathScopeCompute/actions/runs/38447226581) · [38447237944](https://github.com/leegahuyn/MathScopeCompute/actions/runs/38447237944): 공식 Linux Lean 4.34.1 커널 **SUCCESS**; 전체 체크는 PR에 별도 표시 |
 | v106 공개 HTML SHA256 | `edd3f0aa700525f1002400df889e0acbcc369e979391bb540ac82e11e39cb915` |
-| 최종 게시 후 브라우저 readback receipt | `docs/evidence/m3-m4-release-lab-20261014/publication-v106.json` 및 `browser-v105.json` |
+| 최종 게시 후 브라우저 readback receipt | `docs/evidence/m3-m4-release-lab-20261014/publication-v106.json` 및 `browser-v106.json` |
 | 최종 릴리스 지원 범위와 HOLD 판정 | 유한 계산·재현·출처 관측 작업대 게시. 원래 M3 잔여8·M4 전체 인수와 전체 freeze는 **HOLD**. |
 
 새 로컬 커널은 Lean 4.34.0-rc2 Windows이며, 승계된 공식 Linux Lean 4.34.1/mathlib 실행과 별도로 기록합니다. 최신 Linux run `38446065282`의 새 core compile은 메모리 예산에서 실패했고 원본 artifact를 보존했습니다. 수정된 소스의 공식 Linux 실행 두 건은 모두 성공했습니다. 실제 소스·로그·olean 바이트와 14개 core target, 기존 pinned target 5개, 보호 검사 26/26을 확인했습니다. 전체 저장소의 다른 체크와 원래 수학 인수는 구별합니다.
@@ -78,3 +78,5 @@ M0–M2 승계와 M3 56/64, 과거 TIME_LIMIT·실패 receipt를 변경하지 �
 전체 CI에서 발견한 Navier 구현 파일 목록 누락과 Windows 메타데이터 줄바꿈 해시 문제는 엄격한 검사를 유지한 채 수정했습니다. Source pin은 118개 파일이며 raw Git/Linux 바이트로 생성했고, 새 메타데이터 보호 회귀 2/2와 temporal-tail 검사 4/4는 통과했습니다.
 
 M3 브라우저 번들도 원래 검사로 재생성·검증하여 v106에 저장했습니다. 785개 source binding, 원래 48개 기준, gauge16/navier25 예제를 보존했고 worker bundle SHA는 `57bb531b256633d278e816cbfde3c1f95cb2f26dc99e64931864006f12b1d4d1`입니다. 게시 후 전체 HTTP 바이트가 예상 페이지와 정확히 일치했고, 새 R1 모델·다른 내용도 그대로 보존되었습니다.
+
+v106에서는 새 M3 Worker의 Taylor–Green 기준 PDE를 직접 실행하여 source manifest·118-file 구현 pin·81개 표시 좌표를 확인했습니다. 이는 원래 전체 NS 재구성과 별도인 유한 주기 모형입니다. 같은 게시판에서 R1 Δ 예제의 독립 재실행 MATCH와 모바일·키보드 검수도 확인했고 콘솔 오류·경고는 없었습니다. 검증 기준 b5c991a의 CI에서 execution contract·research manifest·pinned kernel·reproduce·verify가 통과했습니다. 큰 원본 보정 작업은 별도 CI 상태로 유지하며 전체 M3/M4 완료로 해석하지 않습니다.
