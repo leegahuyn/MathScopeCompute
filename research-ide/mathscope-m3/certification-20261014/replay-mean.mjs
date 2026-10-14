@@ -136,6 +136,11 @@ export async function auditSavedWholeMeanConditional(capability,cutoff,input={})
       for(const k of ['Etheta','Ez'])comparisons[k]=verify(replay.sub(rebuilt[k],importer.at(state.mean[k])));
       comparisons.gr=verify(replay.sub(rebuilt.gr,importer.at(state.mean.raw.gr)));
       comparisons.pressureZ=verify(replay.sub(rebuilt.pressureZ,importer.at(state.pressure.slowZDerivative)));
+      for(const comparison of Object.values(comparisons))if(!comparison.pass){
+        const ids=[...new Set(comparison.numerator.flatMap(row=>row.monomial.split(',').map(item=>Number(item.split(':')[0]))))];
+        comparison.remainingOperands=ids.map(id=>({independentNode:id,node:structuredClone(replay.nodes[id]),nodeSHA256:hash(replay.nodes[id]),originalSourceNodes:replay.originalSourceIds(id)}));
+        comparison.algebraicNonmatchIsNotYetAPDECounterexample=true;
+      }
       rows.push({stage,rebuilt,originalRoots:{Etheta:state.mean.Etheta,Ez:state.mean.Ez,gr:state.mean.raw.gr,pressure:state.pressure.value,pressureZ:state.pressure.slowZDerivative},comparisons});
     }
   }catch(error){
@@ -150,7 +155,7 @@ export async function auditSavedWholeMeanConditional(capability,cutoff,input={})
   const result=freeze({schema:'MathScope.N6.SavedWholeMeanConditionalAudit/1',source:structuredClone(capability.source),
       sourceBindings:{previousVelocity:structuredClone(before.velocity),updatedVelocity:structuredClone(after.velocity),previousPressure:before.pressure.value,updatedPressure:after.pressure.value,previousA0:before.pressure.cutoffRemainder,updatedA0:after.pressure.cutoffRemainder,originalNonlinearRemainders:structuredClone(source.mean.nonlinear.remainderDefects),unchangedCovariance:structuredClone(before.mean.fullAngularCovariance),unchangedStress:structuredClone(before.mean.fullOriginalStress)},
       conditionalReplacement:{sourceMaximum:r.sourceMaximum,aggregate:r.aggregate,selectedSkeletonSHA256:r.selectedSkeletonSHA256,faceDimensionCounts:r.faceDimensionCounts,faces:compact(r.faces,24),conditionalDominance:r.conditionalDominance,applied:importer!==null,transformedBindings:compact(importer?.bindings??[],32),originalSourceGraphChanged:false,allAnalyticGuardsDischarged:false},
-      rows:compact(rows,2),diagnostics,stops,conditionalAlgebraIdentitiesMatched:matched,
+      rows:compact(rows,20),diagnostics,stops,conditionalAlgebraIdentitiesMatched:matched,conditionalWholeMeanDifferencesRecomputed:rows.length===2,
       verifierLimitation:{integralAlphaEquivalenceCertified:false,algebraicNonmatchMayBeAlphaRenamingOnly:true,
         reason:'This separate reader preserves binders when exact occurrence proves there is no capture, and otherwise alpha-renames them. The factored verifier treats definite_integral nodes as atomic expressions without an alpha-equivalence theorem. Thus a failed algebraic comparison is not, by itself, a counterexample to the original residual identity.'},
       status:stops.length?'UNRESOLVED_AFTER_CONDITIONAL_FTC_SELECTION':matched?'CONDITIONAL_UPDATED_NORMALIZED_MEAN_MATCH_ALL_ANALYTIC_GUARDS_OPEN':'CONDITIONAL_UPDATED_MEAN_DIFFERENCE_NOT_RESOLVED',

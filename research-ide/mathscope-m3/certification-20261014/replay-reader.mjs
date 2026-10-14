@@ -223,7 +223,8 @@ export function createIndependentMeanReader({ node, definitions = {}, sourceOper
     domainHypotheses: [...domain.values()], originalDerivativeRoutineCalled: false, originalFreeCoordinateRoutineCalled: false, originalPassBitsRead: false });
   const registerDomainHypothesis = record => { require(record && record.provedByThisAudit === false, 'New analytic hypotheses must remain explicitly unproved.'); domain.set(`external:${hash(record)}`, freeze(structuredClone(record))); };
   const assertSourceNodeBinding = (id, expected) => { require(same(take(id), expected), 'An independent reader has a changed source operand.'); return true; };
-  reader = Object.freeze({ nodes, zero, one, q, add, mul, neg, sub, inv, div, pow, integral, put, importSource, derivative, substitute, diagnostics, registerDomainHypothesis, assertSourceNodeBinding, occurs });
+  const originalSourceIds = id => [...(sourceBindings.get(id)??[])];
+  reader = Object.freeze({ nodes, zero, one, q, add, mul, neg, sub, inv, div, pow, integral, put, importSource, derivative, substitute, diagnostics, registerDomainHypothesis, assertSourceNodeBinding, occurs, originalSourceIds });
   readerSeals.set(reader, { node, emittedNodes, methods: { ...reader } }); return reader;
 }
 
