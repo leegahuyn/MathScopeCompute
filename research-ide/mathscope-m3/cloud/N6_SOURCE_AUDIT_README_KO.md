@@ -34,4 +34,4 @@ python -B research-ide/mathscope-m3/cloud/n6_source_audit.py --profile n6 --outp
 
 ## 상태
 
-original M3 56/64, N6-01 OPEN / N6-02 PARTIAL을 유지한다. 새 클라우드 실행의 확인 결과와 커밋은 `evidence/n6-source-audit-20261014/CLOUD_EXECUTION_OBSERVATION.json`에 기록한다. 공개 사이트를 게시하거나 `main`을 갱신하는 단계는 이 작업에 없다.
+original M3 56/64, N6-01 OPEN / N6-02 PARTIAL을 유지한다. 최종 [N6 실행 38489754794](https://github.com/leegahuyn/MathScopeCompute/actions/runs/38489754794)에서 7묶음/64개 유한 테스트가 모두 통과했다. 실제 temporal mean은 root 633815를 가져오다가 maxWork=400000에 도달해 미해결이며 내부 실패 subnode는 특정되지 않았다. [상세 결과와 원본 ZIP](../evidence/n6-source-audit-20261014/RESULTS_KO.md), [모든 실행·SHA 기록](../evidence/n6-source-audit-20261014/CLOUD_EXECUTION_OBSERVATION.json)을 보존한다. 기존 8묶음 재실행도 8/8 통과했으며 이는 원본 수학 완료가 아니다. 공개 사이트를 게시하거나 `main`을 갱신하는 단계는 이 작업에 없다.
