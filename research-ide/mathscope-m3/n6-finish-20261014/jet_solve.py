@@ -37,6 +37,7 @@ class DirectionalSourceCalculus(SourceCalculus):
         self.leibniz_certificates = []
         self.selector_certificates = []
         self.fiber_constant_uses = []
+        self.source_integral_renamings = []
         self._fresh_coordinate = -1
 
     def fresh_coordinate(self):
@@ -138,6 +139,36 @@ class DirectionalSourceCalculus(SourceCalculus):
 
     def expand(self, ident, env=()):
         n = self.source.get(ident)
+        if n and n["op"] == "definite_integral":
+            key = ident, tuple(env)
+            if key in self.expansions:
+                return self.expansions[key]
+            body, binder, left, right = n["args"]
+            scoped = tuple((k, v) for k, v in env if k != binder)
+            body_support, body_unknown = self.source_support(body)
+            replacement_support, replacement_unknown = set(), set()
+            for coordinate, value in scoped:
+                if coordinate in body_support or body_unknown:
+                    support, unknown = self.expression_support(value)
+                    replacement_support.update(support);replacement_unknown.update(unknown)
+            if replacement_unknown:
+                result = self.put("uncomputed_capture_free_substitution", [ident, list(scoped),
+                    {"reason": "source integral argument capture support unproved", "unknown": sorted(replacement_unknown)}])
+                self.expansions[key] = result
+                return result
+            if binder in replacement_support:
+                renamed, renamed_expr = self.fresh_coordinate()
+                # Substitute only the ORIGINAL bound body occurrence. An
+                # inserted argument containing the old coordinate remains
+                # free, because delayed environments are simultaneous.
+                body_env = tuple(sorted([*scoped, (binder, renamed_expr)]))
+                result = self.put("definite_integral", [self.ref(body, body_env), renamed,
+                    self.ref(left, env), self.ref(right, env)])
+                self.source_integral_renamings.append({"sourceIntegral": ident, "originalBinder": binder,
+                    "freshBinder": renamed, "completeSimultaneousEnvironment": [list(x) for x in scoped],
+                    "insertedOriginalCoordinateRemainsFree": True})
+                self.expansions[key] = result
+                return result
         if n and n["op"] == "m3_aux_indexed_partial":
             key = ident, tuple(env)
             if key not in self.theta_expansions:
@@ -625,6 +656,7 @@ def run(context, out, shard=0, shards=4):
                          "thetaFieldIdentities": list(calc.theta_identities.values()),
                          "finiteIntegralLeibnizCertificates": calc.leibniz_certificates,
                          "actualFixedSelectorCertificates": calc.selector_certificates,
+                         "captureFreeSourceIntegralRenamings": calc.source_integral_renamings,
                          "actualNativeSystemCaptureAudits": list(calc.system_capture_cache.values()),
                          "sourceValueGrammar": "[original source ID, simultaneous capture-free environment pairs]; source IDs and integral binders are literals, all environment values are formula node references",
                          "globalFullFieldDomainOrSupportClaimed": False})

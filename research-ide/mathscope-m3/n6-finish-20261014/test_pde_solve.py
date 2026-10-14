@@ -130,9 +130,19 @@ class DedicatedPDETests(unittest.TestCase):
         evidence = build_component(terms, source, definitions)
         self.assertEqual(verify_original_coverage(terms, evidence)['completeThetaFieldSourceAtomsChecked'], 2)
         self.assertTrue(all(a['completeIndexedThetaFiberProof']['allOriginalRowsRetained'] for a in evidence['atomAttempts']))
+        self.assertTrue(all(a['expandedAlgebraRequiresLiftedInactiveRowOperandsDefined'] for a in evidence['atomAttempts']))
+        self.assertTrue(all(not a['completeIndexedThetaFiberProof']['provedOnOriginalLeafDefinedDomain'] for a in evidence['atomAttempts']))
+        self.assertTrue(all(not r['originalTermZeroOnLeafDefinedDomain'] for r in evidence['allOriginalTerms']))
         result = run_bridge(evidence)
         self.assertTrue(result['verified'], result)
         self.assertEqual(result['normalizedNumeratorTerms'], 0)
+        self.assertTrue(result['factorizedAlgebraRequiresLiftedInactiveRowOperandsDefined'])
+        self.assertEqual(result['originalInputTermZeroOnLeafDomain'], [])
+        # Even a conditionally zero full numerator cannot create a strict
+        # original-domain input-term zero certificate.
+        evidence['allOriginalTerms'][0]['originalTermZeroOnLeafDefinedDomain'] = True
+        with self.assertRaises(ValueError):
+            verify_original_coverage(terms, evidence)
 
 
 if __name__ == '__main__':

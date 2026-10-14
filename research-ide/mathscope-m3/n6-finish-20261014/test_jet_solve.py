@@ -128,6 +128,34 @@ class SolveTests(unittest.TestCase):
         self.assertFalse(unknown);self.assertIn(11, support)
         self.assertNotIn(n["args"][1], support)
 
+    def test_delayed_source_integral_argument_is_not_captured(self):
+        calc = fixture()
+        calc.source.update({10: {"op": "coordinate", "args": ["formal"]},
+                            11: {"op": "coordinate", "args": ["original-binder"]},
+                            12: {"op": "add", "args": [10, 11]},
+                            13: {"op": "definite_integral", "args": [12, 11, 0, 1]}})
+        free_old_binder = calc.ref(11)
+        expanded = calc.expand(13, ((10, free_old_binder),))
+        node = calc.nodes[expanded]
+        self.assertEqual(node["op"], "definite_integral")
+        self.assertLess(node["args"][1], 0)
+        self.assertTrue(calc.source_integral_renamings)
+        support, unknown = calc.expression_support(expanded)
+        self.assertFalse(unknown);self.assertIn(11, support)
+        derivative = calc.d(expanded, 11)
+        self.assertFalse(calc.reachable(derivative)["stops"])
+        self.assertNotEqual(derivative, calc.zero)
+
+    def test_delayed_source_integral_unknown_capture_support_stops(self):
+        calc = fixture()
+        calc.source.update({10: {"op": "coordinate", "args": ["formal"]},
+                            11: {"op": "coordinate", "args": ["original-binder"]},
+                            12: {"op": "add", "args": [10, 11]},
+                            13: {"op": "definite_integral", "args": [12, 11, 0, 1]}})
+        uncertain = calc.stop(calc.ref(3), 3, "unknown source argument support")
+        expanded = calc.expand(13, ((10, uncertain),))
+        self.assertTrue(calc.reachable(expanded)["stops"])
+
     def test_typed_formula_hash_ignores_node_numbers_and_preserves_binder(self):
         calc = fixture();root = calc.d(calc.ref(9), 2)
         arena = FormulaArena();arena.put("rational", ["99", "1"])

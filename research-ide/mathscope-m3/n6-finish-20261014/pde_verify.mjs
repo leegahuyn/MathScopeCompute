@@ -38,6 +38,8 @@ try{
   result.denominatorFactorPolynomials=full.denominatorFactorPolynomials;
   result.normalizedActualAtomicNodes=full.actualAtomicNodes.map(id=>({node:id,value:G.nodes[id]}));
   result.originalInputTermZeroOnLeafDomain=input.allOriginalTerms.filter(r=>r.originalTermZeroOnLeafDefinedDomain).map(r=>r.inputTermIndex);
+  result.expandedConditionalZeroInputTerms=input.allOriginalTerms.filter(r=>r.expandedConditionalZero).map(r=>r.inputTermIndex);
+  result.factorizedAlgebraRequiresLiftedInactiveRowOperandsDefined=input.allOriginalTerms.some(r=>r.expandedAlgebraRequiresLiftedInactiveRowOperandsDefined);
   result.conditionalFunctionalResidualZero=full.pass;
   result.productsUsed=full.productsUsed;
   await save();

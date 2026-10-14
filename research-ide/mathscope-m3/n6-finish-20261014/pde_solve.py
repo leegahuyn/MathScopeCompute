@@ -345,6 +345,7 @@ class SourceExpander:
         self.calculus = OrdinaryDerivative(arena) if mode == 'ordinary' else TaylorDerivative(arena)
         self.cache, self.active, self.captures, self.zero_rules = {}, set(), {}, {}
         self.theta_proofs = {}
+        self.conditional_dependencies, self._conditional_stack = {}, []
 
     def compile_indexed_theta(self, ident, node, binding):
         """Complete finite-row identity; switches ACTUALLY do not vary in theta.
@@ -366,7 +367,9 @@ class SourceExpander:
                  'storedOrders': orders, 'rowsAttempted': [], 'allOriginalRowsRetained': False,
                  'slowLabelsOrTorusCopiesFrozenByAssumption': False,
                  'globalSourceDomainProved': False,
-                 'guardIndicatorIdentity': 'choose(x,l,r,0,f,0)=1_(l<x<r)*f on its ORIGINAL defined domain, including exact zero at both endpoints'}
+                 'guardIndicatorIdentity': 'choose(x,l,r,0,f,0)=1_(l<x<r)*f ONLY where the lifted f is also defined; original choose is lazy and may skip undefined inactive row operands',
+                 'factorizedAlgebraExtraPremises': ['Every lifted inactive row operand and every new rational denominator is defined at the evaluated arguments, or an independently justified compatible total extension is supplied'],
+                 'factorizedCircuitIsOriginalPartialFunctionDomainIdentity': False}
         self.theta_proofs[ident] = proof
         row_terms = []
         for index, row in enumerate(d['rows']):
@@ -420,22 +423,34 @@ class SourceExpander:
         arguments = [self.compile(value) for value in node['args'][1]]
         result = g.substitute(formal_field, dict(zip(d['parameters'], arguments)))
         proof.update(allOriginalRowsRetained=True, originalRows=len(row_terms), formulaRoot=result,
-                     provedOnOriginalLeafDefinedDomain=True)
+                     lazyThetaDerivativeLemmaOnOriginalLeafDefinedDomain=True,
+                     provedOnOriginalLeafDefinedDomain=False,
+                     provedConditionalFactorizedAlgebra=True)
+        if self._conditional_stack:
+            self._conditional_stack[-1].add(ident)
         return result
 
     def compile(self, ident):
         if ident in self.cache:
+            if self._conditional_stack:
+                self._conditional_stack[-1].update(self.conditional_dependencies.get(ident, set()))
             return self.cache[ident]
         if ident in self.active:
             raise Stop('Recursive exact source definition requires independent existence/uniqueness proof')
         if len(self.active) > 900:
             raise Stop('Source-body depth budget 900 reached')
         self.active.add(ident)
+        self._conditional_stack.append(set())
         try:
             result = self._compile(ident)
             self.cache[ident] = result
             return result
         finally:
+            dependencies = self._conditional_stack.pop()
+            if ident in self.cache:
+                self.conditional_dependencies[ident] = dependencies
+                if self._conditional_stack:
+                    self._conditional_stack[-1].update(dependencies)
             self.active.discard(ident)
 
     def _compile(self, ident):
@@ -564,10 +579,15 @@ def build_component(terms, source, definitions, per_atom_seconds=6, max_nodes=35
             status, reason = 'UNRESOLVED_ORIGINAL_ATOM_RETAINED', f'{type(error).__name__}: {error}'
         arena.deadline = float('inf')
         bindings[sid] = left, right
+        conditional_sources = sorted(primary.conditional_dependencies.get(sid, set())) if not reason else []
+        literal_source_zero = bool(primary.zero_rules.get(sid)) and left == arena.zero and not reason
         attempts.append({'sourceNode': sid, 'actualNode': original, 'nodeSHA256': js_hash(original),
                          'definitionKey': definition_key(original), 'status': status, 'reason': reason,
                          'primaryRoot': left, 'independentTaylorRoot': right,
-                         'sourceAtomProvedZeroOnOriginalLeafDefinedDomain': left == arena.zero and not reason,
+                         'sourceAtomProvedZeroOnOriginalLeafDefinedDomain': literal_source_zero,
+                         'expandedConditionalZero': left == arena.zero and not reason,
+                         'factorizedIndexedSourceDependencies': conditional_sources,
+                         'expandedAlgebraRequiresLiftedInactiveRowOperandsDefined': bool(conditional_sources),
                          'literalSourceZeroRule': primary.zero_rules.get(sid),
                          'completeIndexedThetaFiberProof': primary.theta_proofs.get(sid),
                          'captureAudit': primary.captures.get(sid), 'elapsedSeconds': time.monotonic() - started})
@@ -579,9 +599,14 @@ def build_component(terms, source, definitions, per_atom_seconds=6, max_nodes=35
         right = arena.mul(arena.q(Q(term['coefficient'])), *(arena.power(bindings[s][1], p) for s, p in powers))
         primary_terms.append(left)
         independent_terms.append(right)
+        by_source = {attempt['sourceNode']: attempt for attempt in attempts}
+        strict_zero = any(by_source[s]['sourceAtomProvedZeroOnOriginalLeafDefinedDomain'] for s, _ in powers)
         original_ledger.append({'inputTermIndex': index, 'original': term, 'originalSHA256': js_hash(term),
                                 'primaryTermRoot': left, 'independentTermRoot': right,
-                                'originalTermZeroOnLeafDefinedDomain': left == arena.zero,
+                                'originalTermZeroOnLeafDefinedDomain': strict_zero,
+                                'expandedConditionalZero': left == arena.zero,
+                                'expandedAlgebraRequiresLiftedInactiveRowOperandsDefined':
+                                    any(by_source[s]['expandedAlgebraRequiresLiftedInactiveRowOperandsDefined'] for s, _ in powers),
                                 'sourceFactorBindings': [{'sourceNode': s, 'power': p,
                                                          'primaryRoot': bindings[s][0], 'independentRoot': bindings[s][1]}
                                                         for s, p in powers]})
@@ -656,6 +681,8 @@ def run(context, out, component=0):
             'normalizedConditionalTerms': algebra.get('normalizedNumeratorTerms', len(terms)),
             'strictSourceAtomsProvedZeroOnLeafDefinedDomain': sum(a['sourceAtomProvedZeroOnOriginalLeafDefinedDomain'] for a in evidence['atomAttempts']),
             'originalTermsZeroOnLeafDefinedDomain': sum(r['originalTermZeroOnLeafDefinedDomain'] for r in evidence['allOriginalTerms']),
+            'expandedConditionalZeroTerms': sum(r['expandedConditionalZero'] for r in evidence['allOriginalTerms']),
+            'factorizedAlgebraRequiresLiftedInactiveRowOperandsDefined': any(r['expandedAlgebraRequiresLiftedInactiveRowOperandsDefined'] for r in evidence['allOriginalTerms']),
             'atomAttempts': len(evidence['atomAttempts']),
             'sourceOperationCounts': dict(sorted(Counter(a['actualNode']['op'] for a in evidence['atomAttempts']).items())),
             'derivedSourceNodeIDs': [a['sourceNode'] for a in evidence['atomAttempts'] if not a['reason']],

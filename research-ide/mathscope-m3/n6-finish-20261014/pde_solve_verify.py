@@ -24,7 +24,7 @@ def verify_original_coverage(terms, evidence):
         check(hash_json(atom['actualNode']) == atom['nodeSHA256'], 'Original source atom hash changed')
         atoms[sid] = atom
         fiber = atom.get('completeIndexedThetaFiberProof')
-        if fiber and fiber.get('provedOnOriginalLeafDefinedDomain'):
+        if fiber and fiber.get('provedConditionalFactorizedAlgebra'):
             check(fiber['allOriginalRowsRetained'] and fiber['originalRows'] == 162 and
                   len(fiber['rowsAttempted']) == 162 and
                   [r['row'] for r in fiber['rowsAttempted']] == list(range(162)),
@@ -33,9 +33,13 @@ def verify_original_coverage(terms, evidence):
                   all(r['allOriginalSwitchesAndOtherArgumentsThetaIndependent'] and
                       r['exactLocalThetaArgumentAndJacobian'] for r in fiber['rowsAttempted']),
                   'Indexed theta proof silently froze a varying selector/argument')
+            check(fiber['provedOnOriginalLeafDefinedDomain'] is False and
+                  fiber['factorizedCircuitIsOriginalPartialFunctionDomainIdentity'] is False and
+                  bool(fiber['factorizedAlgebraExtraPremises']),
+                  'Lazy indexed source domain was silently replaced by total indicator multiplication')
         if atom['sourceAtomProvedZeroOnOriginalLeafDefinedDomain']:
             zero = atom.get('literalSourceZeroRule')
-            # A purely elementary exact zero may have no registry lemma.
+            check(bool(zero), 'Original-domain strict zero needs an independent literal source-atom rule')
             if zero:
                 audit = zero['captureAudit']
                 check(audit['pass'] and not audit['unboundCapturedCoordinates'] and not audit['unreviewedSupport'],
@@ -59,12 +63,15 @@ def verify_original_coverage(terms, evidence):
             atom = atoms[factor['sourceNode']]
             check(factor['primaryRoot'] == atom['primaryRoot'] and
                   factor['independentRoot'] == atom['independentTaylorRoot'], 'Source atom formula binding changed')
+        if row['originalTermZeroOnLeafDefinedDomain']:
+            check(any(atoms[f['sourceNode']]['sourceAtomProvedZeroOnOriginalLeafDefinedDomain']
+                      for f in row['sourceFactorBindings']), 'A conditional factorized zero was promoted to original-domain term zero')
         Fraction(term['coefficient'])
     check(evidence['originalAnalyticEqualityProved'] is False,
           'Finite source-body algebra was promoted to original global analytic PDE equality')
     return {'status': 'INDEPENDENT_ORIGINAL_TERM_AND_SOURCE_INDEX_COVERAGE_PASS',
             'allOriginalTermsChecked': len(terms), 'allOriginalAtomsChecked': len(atoms),
-            'completeThetaFieldSourceAtomsChecked': sum(bool(a.get('completeIndexedThetaFiberProof', {}).get('provedOnOriginalLeafDefinedDomain'))
+            'completeThetaFieldSourceAtomsChecked': sum(bool(a.get('completeIndexedThetaFiberProof', {}).get('provedConditionalFactorizedAlgebra'))
                                                        for a in atoms.values() if a.get('completeIndexedThetaFiberProof')),
             'wholeAnalyticEqualityProved': False}
 

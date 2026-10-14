@@ -20,6 +20,10 @@ The new solvers perform additional mathematics:
   normalizes every original residual term with exact BigInt rational arithmetic.
   A separate verifier checks original term/coefficient coverage and deliberate
   source mutations. Every unresolved atom and remaining monomial is retained.
+  Factoring lazy source branches into indicators requires additional inactive
+  operand/denominator definedness premises. Such conditional algebra zeros are
+  distinct from literal original-source zero proofs and never close original
+  analytic PDE obligations.
 - guard_solve derives exact parameter hierarchy,terminal-normalization bounds,
   compact-fiber positivity/regularity,all-order bump flatness,and capture-safe
   substitution identities. A local chart or conditional image theorem cannot
