@@ -168,7 +168,8 @@ export function reconstructConditionalConservativeMean(reader,{geometry,backgrou
 
 export async function auditSavedWholeMeanConditional(capability,cutoff,input={}){
   assertSavedInitializedSource(capability);assertSavedInitializedCutoffAuthority(cutoff);
-  require(input&&typeof input==='object'&&!Array.isArray(input)&&Object.keys(input).every(k=>['maxWork','maxNodes','maxTerms','maxProducts'].includes(k)),'Only finite work/node/rational-verifier budgets may be supplied.');
+  require(input&&typeof input==='object'&&!Array.isArray(input)&&Object.keys(input).every(k=>['maxWork','maxNodes','maxTerms','maxProducts','maximumMode'].includes(k)),'Only finite budgets and the explicit original/conditional replay strategy may be supplied.');
+  const maximumMode=input.maximumMode??'conditional';require(['original','conditional'].includes(maximumMode),'Use original source operands or the separately recorded conditional FTC strategy.');
   const source=savedInitializedSourceProgram(capability),before=source.mean.stages.temporal,after=source.mean.stages.moments;
   require(same(cutoff.source,capability.source)&&same(cutoff.actualRoots,source.actualRoots),'The private source and pressure cutoff authority must bind identical roots.');
   require(same(before.mean.background,after.mean.background)&&same(before.mean.fullAngularCovariance,after.mean.fullAngularCovariance)&&same(before.mean.fullOriginalStress,after.mean.fullOriginalStress),'Keep the identical actual background, six covariances and full stress.');
@@ -182,7 +183,14 @@ export async function auditSavedWholeMeanConditional(capability,cutoff,input={})
     replay=createIndependentMeanReader({node:originalNode,definitions,sourceOperationRules:rules,maxWork:input.maxWork??5000000,maxNodes:input.maxNodes??800000}),rows=[],stops=[],remainingAtomCheckpoints=[];
   let importer=null,stage='conditional-maximum-import';
   try{
-    importer=createConditionalFTCImporter(replay,{node:originalNode,maximum:539400});
+    if(maximumMode==='conditional')importer=createConditionalFTCImporter(replay,{node:originalNode,maximum:539400});
+    else{
+      const bindings=[],cache=new Map();
+      importer={proof:r,bindings,sourceAuthenticated:false,allAnalyticPremisesProved:false,at:sourceId=>{
+        if(cache.has(sourceId))return cache.get(sourceId);const row={sourceId,status:'import-started',imported:null,transformed:null,changed:false};bindings.push(row);
+        const value=replay.importSource(sourceId);cache.set(sourceId,value);Object.assign(row,{status:'import-completed',imported:value,transformed:value});return value;
+      }};
+    }
     require(importer.proof.selectedSkeletonSHA256===r.selectedSkeletonSHA256,'The original source FTC skeleton and all retained faces must agree.');
     const g=cutoff.bodies.geometry;require(same(originalNode(g.vr[0]),{op:'rational',args:['1','1']}),'Retain the original unit direction.');
     const geometry={...g,replayTimeDirection:[replay.neg(importer.at(g.vr[1])),importer.at(g.vr[0])]},
@@ -212,12 +220,13 @@ export async function auditSavedWholeMeanConditional(capability,cutoff,input={})
   if(!diagnostics.diagnosticsAvailable)stops.push({stage:'post-stop-diagnostics',code:'DIAGNOSTICS_UNAVAILABLE_AFTER_SOURCE_STOP',reason:diagnostics.diagnosticsFailure.reason,underlyingCode:diagnostics.diagnosticsFailure.code,primarySourceStopPreserved:true});
   const result=freeze({schema:'MathScope.N6.SavedWholeMeanConditionalAudit/1',source:structuredClone(capability.source),
       sourceBindings:{previousVelocity:structuredClone(before.velocity),updatedVelocity:structuredClone(after.velocity),previousPressure:before.pressure.value,updatedPressure:after.pressure.value,previousA0:before.pressure.cutoffRemainder,updatedA0:after.pressure.cutoffRemainder,originalNonlinearRemainders:structuredClone(source.mean.nonlinear.remainderDefects),unchangedCovariance:structuredClone(before.mean.fullAngularCovariance),unchangedStress:structuredClone(before.mean.fullOriginalStress)},
-      conditionalReplacement:{sourceMaximum:r.sourceMaximum,aggregate:r.aggregate,selectedSkeletonSHA256:r.selectedSkeletonSHA256,faceDimensionCounts:r.faceDimensionCounts,faces:compact(r.faces,24),conditionalDominance:r.conditionalDominance,applied:importer!==null,transformedBindings:compact(importer?.bindings??[],32),originalSourceGraphChanged:false,allAnalyticGuardsDischarged:false},
+      replayStrategy:maximumMode,allOriginalMaximumValuesRetained:maximumMode==='original',
+      conditionalReplacement:{sourceMaximum:r.sourceMaximum,aggregate:r.aggregate,selectedSkeletonSHA256:r.selectedSkeletonSHA256,faceDimensionCounts:r.faceDimensionCounts,faces:compact(r.faces,24),conditionalDominance:r.conditionalDominance,applied:maximumMode==='conditional'&&importer!==null,transformedBindings:compact(importer?.bindings??[],32),originalSourceGraphChanged:false,allAnalyticGuardsDischarged:false},
       rows:compact(rows,20),remainingAtomCheckpoints,diagnostics,stops,conditionalAlgebraIdentitiesMatched:matched,conditionalWholeMeanDifferencesRecomputed:rows.length===2,
       verifierLimitation:{integralAlphaEquivalenceCertified:false,algebraicNonmatchMayBeAlphaRenamingOnly:true,
         reason:'This separate reader preserves binders when exact occurrence proves there is no capture, and otherwise alpha-renames them. The factored verifier treats definite_integral nodes as atomic expressions without an alpha-equivalence theorem. Thus a failed algebraic comparison is not, by itself, a counterexample to the original residual identity.'},
-      status:stops.length?'UNRESOLVED_AFTER_CONDITIONAL_FTC_SELECTION':matched?'CONDITIONAL_UPDATED_NORMALIZED_MEAN_MATCH_ALL_ANALYTIC_GUARDS_OPEN':'CONDITIONAL_UPDATED_MEAN_DIFFERENCE_NOT_RESOLVED',
-      scope:{actualSavedWholeVelocityAndPressureRootsBound:true,independentConservativeMeanFormulaConstructed:rows.length===2,originalExactSourceProviderPreserved:true,actualMonotoneQuadraticNaturalDerivativeRulesAttached:true,conditionalOriginalFTCMaximumSelectionApplied:importer!==null,
+      status:stops.length?'UNRESOLVED_SOURCE_REPLAY':matched?'UPDATED_NORMALIZED_MEAN_MATCH_ALL_ANALYTIC_GUARDS_OPEN':maximumMode==='original'?'ORIGINAL_GRAPH_UPDATED_MEAN_DIFFERENCE_NOT_RESOLVED':'CONDITIONAL_UPDATED_MEAN_DIFFERENCE_NOT_RESOLVED',
+      scope:{actualSavedWholeVelocityAndPressureRootsBound:true,independentConservativeMeanFormulaConstructed:rows.length===2,originalExactSourceProviderPreserved:true,actualMonotoneQuadraticNaturalDerivativeRulesAttached:true,conditionalOriginalFTCMaximumSelectionApplied:maximumMode==='conditional'&&importer!==null,
         originalFormulaHelperCalled:false,originalDerivativeRoutineCalled:false,oldResidualRootUsedAsProofOperand:false,customBodyClosureProved:false,allDenominatorAndDomainHypothesesProved:false,implicitDomainHypothesesDischarged:false,
         sourceNormAndClassCertified:false,actualWholeMeanDifferenceRecomputed:false,wholePhysicalNonzeroAngularPDERecomputed:false,originalPrivateProducerHydrated:false,numericalErrorEnclosureComputed:false,originalN601Complete:false,originalN602Complete:false,completeN6:false,wholeM3Complete:false,countsChanged:false},
       limitation:'Conditional algebra for the unchanged exact saved temporal/moment velocity and pressure, after structurally proved FTC branch selection under explicitly open analytic/capture guards. Integral alpha-equivalence is not certified by the factored verifier; nonmatches may be representational. It does not certify all-order classes, numerical enclosures, nonzero angular/Cartesian PDE or original N6 completion.'});
