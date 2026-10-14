@@ -98,10 +98,11 @@ def source_binding(repo):
         if sha(raw)!=expected:raise ValueError('Changed pressure producer '+path)
         producer_rows.append({'path':path,'sha256':expected,'bytes':len(raw)})
     raw=(repo/'research-ide/mathscope-m2/navier/source-profile-data.mjs').read_bytes();profile=json.loads(re.search(rb'export const PINNED_N3 = (.*);',raw).group(1));p=profile['parametersExactExpressions']
+    if fixed['source']['parametersExactExpressions']!=p or fixed['source']['parameterExpressionSHA256']!=profile['parameterExpressionSHA256'] or outer['parameterExpressionSHA256']!=profile['parameterExpressionSHA256']:raise ValueError('The retained pressure does not bind the exact pinned parameter graph')
     expected={'Md':{'integer':1048576},'T':{'sum':[{'exp':{'ref':'Md'}},{'integer':10}]},'h':{'exp':{'product':[{'integer':-8002},{'ref':'T'}]}},'lambda':{'exp':{'product':[{'integer':-1000},{'ref':'T'}]}},'co':{'rational':'1/256'},'Tf':{'integer':128},'BOuter':{'product':[{'integer':1000},{'ref':'T'}]},'logP':{'product':[{'integer':2},{'ref':'T'}]},'Pstar':{'exp':{'ref':'logP'}},'K':{'power':[{'ref':'Pstar'},2]}}
     if any(p[k]!=v for k,v in expected.items()):raise ValueError('Changed actual pressure parameters')
     if [r['id'] for r in outer['stages']]!=STAGES or [r['id'] for r in pressure['stages']]!=STAGES:raise ValueError('Changed twelve-stage pressure schedule')
-    if core['P0']!=pressure['pressure']:raise ValueError('The actual core pressure root changed')
+    if core['P0']!=pressure['pressure'] or core['eta']!=pressure['eta']:raise ValueError('The actual core pressure root or formal eta changed')
     ids={core['P0'],core['P0OverPstarSquared'],pressure['initialInfinitePrefix'],pressure['terminalInfiniteTail'],outer['roots']['Qb'],outer['roots']['Qp'],outer['roots']['terminalWait']}
     for r in pressure['stages']:ids.update(r[k] for k in ['variable','integrand','lower','upper','integral','theta'])
     for r in outer['stages']:ids.update(r[k] for k in ['start','end','length','logAStart','logAEnd'])
