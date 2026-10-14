@@ -1,0 +1,95 @@
+name: M3 whole mean and actual N6 source proofs
+on:
+  push:
+    branches: [mathscope-m3-mean-equivalence-20261014]
+    paths: ['research-ide/mathscope-m3/mean-equivalence-20261014/*.mjs', 'research-ide/mathscope-m3/mean-equivalence-20261014/*.py', '.github/workflows/m3-mean-equivalence.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - run: python -B research-ide/mathscope-m3/mean-equivalence-20261014/run_job.py --kind prepare --output "$RUNNER_TEMP/verified-inputs"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mean-proof-inputs-${{ github.run_id }}
+          path: ${{ runner.temp }}/verified-inputs/
+          retention-days: 90
+          if-no-files-found: error
+  audit:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [controls, mean, natural, residual]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/download-artifact@v4
+        with:
+          name: mean-proof-inputs-${{ github.run_id }}
+          path: ${{ runner.temp }}/verified-inputs
+      - name: Execute bounded independent proof attempt
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+          PROOF_KIND: ${{ matrix.kind }}
+        run: python -B research-ide/mathscope-m3/mean-equivalence-20261014/run_job.py --kind "$PROOF_KIND" --inputs "$RUNNER_TEMP/verified-inputs" --output "$RUNNER_TEMP/proof-$PROOF_KIND"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mean-proof-${{ matrix.kind }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/proof-${{ matrix.kind }}/
+          retention-days: 90
+          if-no-files-found: error
+  initial:
+    needs: [prepare, audit]
+    if: always() && needs.prepare.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/download-artifact@v4
+        with:
+          name: mean-proof-inputs-${{ github.run_id }}
+          path: ${{ runner.temp }}/verified-inputs
+      - uses: actions/download-artifact@v4
+        with:
+          name: mean-proof-mean-${{ github.run_id }}
+          path: ${{ runner.temp }}/mean-output
+      - run: python -B research-ide/mathscope-m3/mean-equivalence-20261014/run_job.py --kind initial --inputs "$RUNNER_TEMP/verified-inputs" --mean-out "$RUNNER_TEMP/mean-output" --output "$RUNNER_TEMP/proof-initial"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mean-proof-initial-${{ github.run_id }}
+          path: ${{ runner.temp }}/proof-initial/
+          retention-days: 90
+          if-no-files-found: error

@@ -1,0 +1,494 @@
+# MathScope M3 — 전체 Mean 8/8 수식 일치 및 N6-01·N6-02 무조건부 인증 프로젝트
+
+## 0. 최우선 임무
+
+기존 MathScope M3 연구를 중단 지점부터 이어서 진행하십시오.
+
+이번 작업의 목표는 다음 두 가지입니다.
+
+**목표 A — Temporal·Moments 전체 mean의 8/8 원본 수식 일치**
+
+현재 전체 mean 두 단계에서 총 8개 비교 중 4개가 일치하고 4개가 미해결입니다. 나머지 4개를 실제 수학적 항등식과 원본 함수 정의를 이용하여 해결하고, 독립 검증을 통해 전체 8/8 수식 일치를 확보하십시오.
+
+**목표 B — N6-01·N6-02의 무조건부 수학 인증**
+
+목표 A를 완료한 뒤 원본 Navier–Stokes 논문의 Proposition 9.5 및 관련 정리를 실제 저장된 원본 소스에 적용하고, 다음을 모두 인증하는 작업까지 진행하십시오.
+
+- N6-01: 원본 \(j=0\) finite correction state와 전체 클래스·모멘트 조건
+- N6-02: 실제 전체 3D Cartesian Navier–Stokes PDE residual 및 독립 계산 일치
+
+이는 단순한 `CONDITIONAL`, `SOURCE_VERIFIED`, `FINITE_TEST_PASS`를 얻는 작업이 아닙니다.
+
+**반드시 모든 미증명 가정의 정당화를 시도하고, 실제 원본 함수에 대한 수학적 증거를 생산하십시오.**
+
+단, 모든 조건을 증명하지 못했다면 무조건부 인증을 선언하지 마십시오. 새로 입증된 범위와 남은 최소 명제를 정확히 보고하십시오.
+
+---
+
+## 1. 기존 작업 승계
+
+GitHub 저장소:
+
+https://github.com/leegahuyn/MathScopeCompute
+
+기준 Draft PR:
+
+https://github.com/leegahuyn/MathScopeCompute/pull/27
+
+최종 기준 커밋:
+
+`5422e232219a5de4722ac4e38ba79eb83b9e95cd`
+
+최신 계산 보고서:
+
+https://github.com/leegahuyn/MathScopeCompute/blob/5422e232219a5de4722ac4e38ba79eb83b9e95cd/research-ide/mathscope-m3/evidence/n6-certification-20261014/RESULTS_KO.md
+
+기존 무조건부 인증 시도:
+
+https://github.com/leegahuyn/MathScopeCompute/actions/runs/38495642925
+
+기준 논문:
+
+`navier-stokes(5).pdf`, 166쪽 OpenAI Navier–Stokes 원고
+
+설계도:
+
+`MathScope_Research_IDE_Blueprint_v1_KO(1)(20261013-234959).pdf`
+
+GitHub에 저장된 PDF 및 SHA-256 manifest도 확인하십시오.
+
+작업에 앞서 PR #27의 현재 HEAD와 최근 커밋을 확인하고, 다른 작업이 이미 진행 중이라면 충돌 없이 승계하십시오.
+
+원본 수식 producer, 증거 파일, 기존 실패 기록을 절대로 임의 수정하거나 삭제하지 마십시오.
+
+새 안전 브랜치에서 작업하고 GitHub Actions를 계산 환경으로 사용하십시오.
+
+---
+
+# PART A — 전체 Mean 4/8 → 8/8
+
+## 2. 현재 확인된 결과
+
+기존 원본 전체 mean 계산에서 다음 결과가 확보되었습니다.
+
+| 비교 | Temporal | Moments |
+|---|---|---|
+| Etheta | MATCH | MATCH |
+| gr | MATCH | MATCH |
+| Ez | UNRESOLVED | UNRESOLVED |
+| pressureZ | UNRESOLVED | UNRESOLVED |
+
+기존 계산은 원본 maximum을 유지한 상태에서 수행되었습니다.
+
+- 전체 source parent: 3,892,594 nodes
+- Whole-mean 작업량: 350,225
+- 독립 scalar nodes: 53,131
+- Resource stop: 없음
+- 기존 root 633815의 계산 중단: 해결
+
+따라서 이전에 해결한 DAG·메모리 병목을 처음부터 재작업하지 마십시오.
+
+현재 남은 핵심 과제는 **압력 도함수의 원본식과 독립 미분식의 수학적 동등성**입니다.
+
+## 3. 압력 미분 불일치의 정확한 정식화
+
+기존 결과 보고서는 두 단계의 pressureZ 차이를 다음 형태로 묶었습니다.
+
+\[
+\Delta p_Z =
+A\left[
+(I_{\mathrm{derived}}-I_{\mathrm{source}})
+-\chi(J_{\mathrm{derived}}-J_{\mathrm{source}})
+\right].
+\]
+
+여기서
+
+\[
+A=s-2hZ^2\exp(\text{source node }633904)
+\]
+
+이며 주요 원본 노드는 다음과 같습니다.
+
+| 항목 | Temporal | Moments |
+|---|---|---|
+| Source I | 3614628 | 3615355 |
+| Source J | 3614629 | 3615356 |
+| pressureZ 비교 | 3614703 | 3615388 |
+
+추가 주요 변수:
+
+- \(s\): actual monotone source 622820
+- \(h\): source 9
+- \(Z\): source 622803
+- \(\chi\): source 633733
+
+각 단계에서 압력 미분의 차이는 8개 monomial으로 남아 있습니다.
+
+**핵심 목표는 이 차이들이 실제로 0인지 수학적으로 증명하는 것입니다.**
+
+단순히 서로 다른 원본 노드를 같은 이름으로 치환하여 0을 출력하지 마십시오.
+
+## 4. 실제 적분 동등성 증명
+
+다음 작업을 순서대로 수행하십시오.
+
+### 4-A. 적분 구조 복원
+
+Temporal 및 Moments 각각에 대해 다음을 복원하십시오.
+
+1. Source I/J의 정확한 integral body
+2. 독립적으로 미분하여 얻은 I/J
+3. 적분 경계와 방향
+4. 적분 변수 및 자유변수
+5. 바인딩된 좌표와 숨은 capture
+6. 실제 integrand의 모든 정의 의존성
+7. 사용된 implicit root 및 natural series
+8. 원본 pressure reconstruction과 cutoff 관계
+
+각 expression의 원본 node ID, source hash, AST와 수학적 의미를 함께 저장하십시오.
+
+### 4-B. Capture-safe alpha-equivalence
+
+적분변수의 이름만 다른 수식을 동일하게 처리할 수 있도록 capture-safe alpha-equivalence를 구현하십시오.
+
+다만 다음 조건을 반드시 만족해야 합니다.
+
+- Bound variable만 정당하게 rename할 것
+- Free variable을 변경하지 않을 것
+- 적분구간과 방향을 보존할 것
+- Jacobian이 필요한 변수 치환을 생략하지 않을 것
+- 서로 다른 실제 함수 정의를 이름만으로 합치지 않을 것
+- Implicit root의 선택 branch를 보존할 것
+- Natural series의 limit과 finite partial sum을 동일시하지 않을 것
+- 불일치하는 integrand는 명시적으로 거부할 것
+
+독립적인 negative tests도 작성하여 잘못된 binder 치환, 정의역 변경, 원본 source 변조가 실제로 실패하는지 확인하십시오.
+
+### 4-C. 실제 함수의 의미상 동등성
+
+다음 연산이 기존 논문의 정확한 정리와 원본 producer에서 허용되는지 확인하십시오.
+
+- `independent_implicit_monotone_root`
+- `independent_defined_partial`
+- `actual_natural_series`
+- `actual_quadratic_root`
+- Original radial integral operators
+- Source pressure derivative
+- Cutoff-dependent pressure reconstruction
+
+각 수식의 동등성을 증명할 때는 필요한 존재성, 분기 선택, 미분 가능성, 정의역 조건을 확인하십시오.
+
+새로운 정리가 필요하다면 이를 정확한 보조정리로 정식화하고 증명을 시도하십시오.
+
+### 4-D. 두 단계 전체 비교 재실행
+
+먼저 Temporal의 pressureZ와 Ez를 해결하고, 이어 Moments를 동일한 방식으로 검사하십시오.
+
+기존 MATCH 4개도 변경된 정규화 규칙 아래 독립 재검증하십시오.
+
+최종적으로 다음 네 종류의 증거를 별도로 기록하십시오.
+
+1. Structural AST identity
+2. Capture-safe alpha-equivalence
+3. Analytically justified functional identity
+4. Numerical comparison with rigorous error bounds, where applicable
+
+**8/8은 실제 수학적 동등성이 증명된 경우에만 선언하십시오.**
+
+표현 정규화가 불가능하거나 실제 차이가 있다면 원본 operand를 보존하고, 정확한 미일치 수식과 반례 후보를 보고하십시오.
+
+---
+
+# PART B — N6-01 무조건부 인증
+
+## 5. 실제 j=0 finite correction state
+
+논문 Definition 9.4, Proposition 9.5 및 식 (8.12), (8.20), (8.25), (9.8)–(9.10)을 기준으로 인증하십시오.
+
+전체 mean 8/8을 확보한 경우 해당 결과를 실제 최신 pressure 재구성에 연결하십시오.
+
+원본 구성 순서는 다음과 같습니다.
+
+1. Fixed background와 primary potentials의 전체 curl 구성
+2. 전체 wave covariance와 현재 pressure 계산
+3. Temporal mean update (8.20)
+4. 실제 axial potential, cutoff, flat remainder 보존
+5. 업데이트된 velocity에 대한 전체 pressure·mean·defect 재계산
+6. Five-equation moment correction (8.25)
+7. 최종 pressure 및 모든 residual·moment 재계산
+8. 원본 \(j=0\) 클래스 조건 검증
+
+다음 상태를 실제 source에서 확인하십시오.
+
+\[
+B_0=0.7,\qquad C_0^*=1.2.
+\]
+
+또한 다음의 원본 클래스·보존 조건을 인증하십시오.
+
+- \(G_{\mathrm{wave}}\in W^{0.7}\)
+- \(E_\theta,E_z\in M^{1.2}\)
+- \((P,J_\theta,J_z)\in S^{1.2}\)
+- 식 (9.9)의 전체 velocity/pressure 상계
+- 식 (9.10)의 두 정확한 보존 모멘트
+- 공통 정의역 및 source support
+- Gaussian·Fourier·cutoff remainder
+- 실제 원본 함수의 모든 필요한 미분차수
+
+**각 클래스에 필요한 수학적 상수와 적용 범위가 존재한다는 사실을 실제 원본 source에 연결하십시오.**
+
+단순한 기울기 관측이나 몇 개 도함수의 수치값으로 무조건부 인증하지 마십시오.
+
+## 6. 남은 해석적 보조정리
+
+이전 작업에서 이미 얻은 결과를 재사용하십시오.
+
+- Retained A.21 \(P_0\)의 압력 질량 상계
+
+\[
+\nu(R)\le \frac{1125}{296}K<4K.
+\]
+
+- 관련 복소 영역에서 \(P_0\) holomorphy
+- Signed variance의 양성·단순근 관련 결과
+- B8/C2 연속 행렬의 determinant 및 inverse 상계
+- 실제 maximum source의 capture closure
+
+단, 기존 문서에 서술된 증명은 그 실제 가정과 적용 범위를 독립적으로 점검하십시오.
+
+아래의 미해결 의무를 우선 증명 대상으로 삼으십시오.
+
+**A. NS-BRHO-ACTUAL-OPERATOR**
+
+실제 node 4483의 Banach fixed-point operator, natural-series recurrence, 수렴 및 항별 미분의 정확한 대응.
+
+**B. B8-ACTUAL-FIVE-HISTORY-DEBT**
+
+Node 5029의 실제 전체 five-equation 이력과 RHS에 대해 필요한 C² 노름 상계, 특히
+
+\[
+\max_{0\le m\le2}
+\|\partial_\eta^m \mathrm{rhs}\|_\infty
+\le15h
+\]
+
+의 실제 원본 적용 증명.
+
+**C. I1-ACTUAL-C12-INPUT-ENVELOPE**
+
+실제 \(E>0\), radial shear, signed variance, circle lift 및 필요한 pointwise/derivative envelope 인증.
+
+**D. I2-ACTUAL-IMPROPER-HEAT-DEBT**
+
+H5–H9의 실제 improper heat moment 적분과 endpoint majorant 및 도함수 교환 정당화.
+
+이 네 의무에 대해 기존 논문과 소스가 이미 제공하는 논증을 먼저 적용하십시오.
+
+조건부 보조정리만 생성하고 종료하지 말고, 가능한 실제 source bounds를 계산·증명하여 전제를 제거하는 작업을 진행하십시오.
+
+N6-01의 모든 실제 합격 조건이 닫히지 않았다면 원래 판정은 OPEN으로 유지하십시오.
+
+---
+
+# PART C — N6-02 전체 3D PDE 인증
+
+## 7. 원본 전체 장의 직접 잔차 재계산
+
+기존 계산의 실제 원본 field roots는 다음과 같습니다.
+
+- Velocity: `3825006`, `3825007`, `3825008`
+- Pressure: `3825009`
+
+기존 direct conservative residual:
+
+`3825257 / 3825259 / 3825261`
+
+기존 assembled residual:
+
+`3825348 / 3825349 / 3825350`
+
+전체 3성분 잔차의 기존 비교 결과는 각각
+
+- 175 monomials
+- 203 monomials
+- 690 monomials
+
+이 미해결 상태입니다.
+
+이제 전체 mean 비교에서 확보한 정당한 미분·적분 동등성 규칙을 사용해 다음을 수행하십시오.
+
+### 7-A. 독립 계산
+
+실제 전체 3D Cartesian 장에서
+
+\[
+R(u,p)=
+\partial_tu+(u\cdot\nabla)u-\Delta u+\nabla p
+\]
+
+를 계산하고, 별도의 구현으로
+
+\[
+\begin{aligned}
+R(u+w,p+\pi)
+={}&R(u,p)+\partial_tw-\Delta w+\nabla\pi\\
+&+(u\cdot\nabla)w+(w\cdot\nabla)u
++(w\cdot\nabla)w
+\end{aligned}
+\]
+
+를 계산하십시오.
+
+두 경로는 실제로 독립적이어야 하며, 같은 residual 생성 함수를 두 번 호출하는 방식으로 일치를 선언해서는 안 됩니다.
+
+### 7-B. 미해결 항 분석
+
+175/203/690개의 각 잔여항을 다음 범주로 분류하십시오.
+
+- Alpha-equivalent integral
+- Actual implicit derivative identity
+- Natural-series derivative identity
+- Coordinate/chain-rule expression
+- Cylindrical connection term
+- Pressure and cutoff correction
+- Quadratic mixed/self-interaction
+- Fourier/Gaussian/flat remainder
+- Genuine unresolved difference
+
+수학적으로 정당화된 동등성만 적용하고, 잔여항의 개수와 실제 식을 재계산하십시오.
+
+수식 차이가 모두 해소되었다면 독립적인 source-bound 검사 및 부정 대조군으로 다시 검증하십시오.
+
+### 7-C. 원본 인수 검증
+
+다음 조건을 모두 요구합니다.
+
+1. 전체 radial/azimuthal/axial 성분 보존
+2. 최신 pressure 및 모든 pressure derivative 포함
+3. 원본 좌표의 실제 chain rule
+4. Wave curl/cutoff correction 포함
+5. 모든 quadratic remainder 포함
+6. 이전 flat tail 및 새로운 tail 보존
+7. 독립 direct/decomposed PDE residual 일치
+8. 선택 정의역에서의 엄밀 수치 오차 예산
+9. 원본 함수의 실제 수학적 존재성·매끄러움 조건
+10. 적용한 원문 정리와 source 사이의 증명 의존성 확인
+
+전체 mean 8/8만으로 N6-02를 완료 처리해서는 안 됩니다.
+
+---
+
+# PART D — GitHub Actions 실행
+
+## 8. 클라우드 계산 아키텍처
+
+계산은 GitHub Actions 기반으로 실행하십시오.
+
+새 브랜치를 PR #27 최신 커밋에서 생성하고 기존 CI를 보호하십시오.
+
+가능하면 다음 작업을 별도 job으로 분할하십시오.
+
+**Job A:** Temporal I/J expression equality 및 alpha-equivalence
+
+**Job B:** Moments I/J expression equality 및 alpha-equivalence
+
+**Job C:** 8/8 whole-mean 독립 검증
+
+**Job D:** Natural-series/Banach fixed-point 실제 함수 인증
+
+**Job E:** Quadratic/monotone actual-source 해석적 인증
+
+**Job F:** N6-01 초기 finite-state 및 클래스·모멘트 상계
+
+**Job G:** N6-02 전체 Cartesian PDE residual 독립 검사
+
+의존성이 없는 작업은 병렬로 진행하되, N6-01 및 N6-02의 최종 인증은 선행 수학 증거가 확보된 뒤 판정하십시오.
+
+실행 계약은 다음과 같습니다.
+
+- Python·Node 버전 고정
+- Source commit 및 전체 입력 SHA-256 기록
+- 작업별 시간·메모리 상한
+- 대규모 DAG checkpoint 및 정확한 재개
+- 독립 검증 코드와 원본 구현 분리
+- 성공·실패·중단 아티팩트 모두 저장
+- 이전 기록 덮어쓰기 금지
+- 유한 테스트·기호 증명·해석적 증명·수치 인증 구분
+- 큰 계산은 작업 단위로 나누어 재실행 가능하게 구성
+- GitHub 표준 runner 자원 우선 사용
+- 유료 자원이 필요할 경우 임의 결제 금지
+
+불필요하게 전체 389만 노드 그래프를 모든 job에서 반복 생성하지 않도록 하십시오. 동일한 원본 해시를 가진 검증된 중간 산출물을 재사용하되, 캐시와 원본 수학적 정당성을 구별하십시오.
+
+## 9. 자동 검증 및 판정
+
+수식 일치 판정은 다음과 같이 구분하십시오.
+
+- `EXACT_MATCH`
+- `PROVED_ALPHA_EQUIVALENCE`
+- `PROVED_FUNCTIONAL_EQUIVALENCE`
+- `CONDITIONAL_MATCH`
+- `UNRESOLVED_DIFFERENCE`
+- `RESOURCE_LIMIT`
+
+각 항목에 원본 node IDs, 정확한 등식, 사용한 lemma, 가정, 독립 verifier 결과를 첨부하십시오.
+
+N6-01·02 인수 판정은 다음과 같이 별도 유지하십시오.
+
+- `PROVED`
+- `SOURCE_VERIFIED`
+- `NUMERIC_CERTIFIED`
+- `CONDITIONAL`
+- `UNRESOLVED`
+
+수치 결과가 우연히 같거나 테스트가 전부 통과했다는 이유로 수학적 무조건부 증명으로 승격하지 마십시오.
+
+---
+
+# PART E — 최종 산출물
+
+## 10. 반드시 제공할 결과
+
+작업 종료 시 다음을 GitHub에 저장하십시오.
+
+1. Temporal 전체 mean 4개 비교 결과 및 수식별 인증서
+2. Moments 전체 mean 4개 비교 결과 및 수식별 인증서
+3. 전체 8/8 또는 정확한 잔여 미일치 판정
+4. 압력 미분 I/J alpha·functional-equivalence 증명
+5. 기존 175/203/690 PDE 잔여항 감소·해결 기록
+6. N6-01 실제 \(j=0\) 상태와 모든 클래스·모멘트 검사
+7. N6-02 전체 Cartesian PDE 직접/독립 분해 비교
+8. Natural/quadratic/monotone 관련 실제 해석적 증명 및 미증명 의무
+9. 소스·PDF·입력·출력·오차·환경·SHA-256 manifest
+10. GitHub Actions 성공/실패 아티팩트 및 한국어 최종 연구 보고서
+
+GitHub에 소스 커밋과 Draft PR을 남기십시오.
+
+`main` 자동 병합, force push, 기존 56/64 판정의 임의 변경, 공개 사이트의 무검증 배포를 금지합니다.
+
+완료된 수학적 인수 조건이 있다면 증거와 함께 승격 후보를 명시하십시오. 증명이 부족하면 완료 판정을 유지하지 말고 OPEN으로 남기십시오.
+
+## 11. 진행 방식과 종료 조건
+
+**작업을 즉시 시작하고, 단순한 설계서 작성이나 기존 테스트 재실행에서 종료하지 마십시오.**
+
+진행 우선순위:
+
+**Temporal pressureZ/Ez 증명 → Moments pressureZ/Ez 증명 → 전체 mean 8/8 독립 검사 → 잔여 해석적 가정의 실제 증명 → N6-01 초기 상태 인증 → N6-02 전체 3D PDE 인증 → GitHub 증거 저장**
+
+특정 경로가 막히면 동일 작업을 무한 반복하지 말고 정확한 blocker와 대안 경로를 검토하십시오.
+
+계산 예산 내에서 가능한 독립 작업은 계속 진행하십시오.
+
+마지막 보고에서는 다음 세 가지를 반드시 구분하십시오.
+
+**A. 완전히 증명·인증한 항목**
+
+**B. 계산은 완료했으나 해석적 증명이 부족한 항목**
+
+**C. 새 보조정리 또는 추가 계산이 필요한 미해결 항목**
+
+최종 목표는 단순한 테스트 PASS가 아니라, **실제 원본 mean의 완전한 수식 일치와 N6-01·N6-02의 재현 가능한 무조건부 수학 인증**입니다.
+
+논문의 증명을 실제 원본 소스에 정당하게 적용하는 것을 우선하며, 입증되지 않은 명제를 가정으로 숨기거나 임의로 참 처리하지 마십시오.
