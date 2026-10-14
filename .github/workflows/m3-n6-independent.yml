@@ -1,0 +1,92 @@
+name: M3 N6 independent source proof continuation
+on:
+  push:
+    branches: [mathscope-m3-n6-independent-20261014]
+    paths: ['research-ide/mathscope-m3/n6-unconditional-20261014/**', '.github/workflows/m3-n6-independent.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: n6-independent-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - run: python -B research-ide/mathscope-m3/n6-unconditional-20261014/run_job.py --kind prepare --output "$RUNNER_TEMP/n6-prepare"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: n6-independent-prepare-${{ github.run_id }}
+          path: ${{ runner.temp }}/n6-prepare/
+          if-no-files-found: error
+          retention-days: 90
+  research:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [controls, rayleigh, analytic, cartesian]
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Bounded independent original-source calculation
+        env:
+          N6_RESEARCH_KIND: ${{ matrix.kind }}
+        run: python -B research-ide/mathscope-m3/n6-unconditional-20261014/run_job.py --kind "$N6_RESEARCH_KIND" --output "$RUNNER_TEMP/n6-$N6_RESEARCH_KIND"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: n6-independent-${{ matrix.kind }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/n6-${{ matrix.kind }}/
+          if-no-files-found: error
+          retention-days: 90
+  acceptance:
+    needs: research
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: n6-independent-*-${{ github.run_id }}
+          path: ${{ runner.temp }}/n6-same-run
+      - name: Verify exact same-source receipts and preserve every open obligation
+        run: python -B research-ide/mathscope-m3/n6-unconditional-20261014/run_job.py --kind acceptance --research-output "$RUNNER_TEMP/n6-same-run" --output "$RUNNER_TEMP/n6-acceptance"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: n6-independent-acceptance-${{ github.run_id }}
+          path: ${{ runner.temp }}/n6-acceptance/
+          if-no-files-found: error
+          retention-days: 90
