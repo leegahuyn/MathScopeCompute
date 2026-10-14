@@ -103,6 +103,19 @@ test('exact positive series tail matches the full combinatorial formula and decr
   assert.throws(()=>naturalSeriesScaledTail({degree:2,Y:'1',coefficientNormProved:true}));
 });
 
+test('unused natural rule diagnostics preserve the first exhausted reader stop without source hydration',()=>{
+  const f=fixture(),rule=createNaturalSeriesAuditRule({node:f.node,core:f.core}),G=createIndependentMeanReader({node:f.node,sourceOperationRules:[rule],maxWork:30});
+  let stop=null;try{for(let j=0;j<100;j++)G.put('coordinate',[`exhaust-work-${j}`]);}catch(error){stop={code:error.code,reason:error.message};}
+  assert.equal(stop.code,'RESOURCE_LIMIT');
+  const beforeWork=G.diagnostics().workUsed,diagnostics=rule.diagnostics(G),after=G.diagnostics();
+  assert.equal(after.workUsed,beforeWork,'Reading diagnostics must not consume more work.');
+  assert.equal(diagnostics.readerInitialized,false);assert.deepEqual(diagnostics.calls,[]);assert.deepEqual(diagnostics.derivativeRows,[]);
+  assert.equal(after.selectedSourceNodeCount,0,'An unused rule diagnostic must not import or bind a source node.');
+  assert.equal(after.sourceOperatorAudits[0].readerInitialized,false);
+  assert.equal(diagnostics.sourceAnalyticDomainProved,false);assert.equal(diagnostics.originalN602Complete,false);
+  assert.equal(stop.reason,'Independent whole-mean replay exhausted its work budget.');
+});
+
 let pending;
 const setup=()=>pending||=(async()=>{const cap=await openSavedInitializedSource(),source=savedInitializedSourceProgram(cap),rule=attachSavedNaturalSeriesAuditAuthority(cap);return {cap,source,rule};})();
 

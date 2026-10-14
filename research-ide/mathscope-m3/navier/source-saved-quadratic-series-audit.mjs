@@ -152,7 +152,14 @@ function makeRule({node,core},authentication=null){
     s.partialRows.push({root:id,degree:N,result:out,coefficientRecurrenceFullyRetained:true,originalDerivativeRoutineCalled:false,exactFiniteExpression:true,finitePartialSumIsNotExactLimit:true,analyticTailAndEvaluationErrorsStillRequired:true});return out;
   }
   function sourceClosure(id){const n=take(id);require(n.op===sourceOperation&&n.args.length===5,'Use an actual natural source call for the closure audit.');validate(n.args[0],n.args[3],n.args[4]);return freeze({primitiveBodyClosureProved:true,actualArgumentSourceNodes:[n.args[1],n.args[2]],actualCoefficientBodyCoordinateSupport:[base.eta],sourceBodyAnalyticClassProved:false,definitionSHA256});}
-  const diagnostics=G=>{const s=state(G);return {sourceOperation,independentOperation,sourceCapabilityBound:!!authentication,
+  const diagnostics=G=>{
+    // Diagnostics must remain readable after RESOURCE_LIMIT, including when
+    // this rule was attached but never imported. Checking the private reader
+    // seal/provider is read-only; initializing state would bind source nodes,
+    // consume more work and conceal the original recorded stop.
+    assertIndependentMeanReader(G,authentication?{expectedSourceNode:node}:undefined);
+    const observed=readers.get(G),s=observed??{calls:new Map(),rows:[],partialRows:[],stops:[]};
+    return {sourceOperation,independentOperation,sourceCapabilityBound:!!authentication,readerInitialized:!!observed,
     definitionSHA256,definingCoreSourceTuple:base,primitiveSourceInputCount:inspected.size,
     primitiveSourceInputsSHA256:hash([...inspected].sort(([a],[b])=>a-b)),reviewedProducerBindings:structuredClone(authentication?.producers??[]),
     calls:[...s.calls].map(([id,r])=>({id,...structuredClone(r)})),derivativeRows:structuredClone(s.rows),finitePartialRows:structuredClone(s.partialRows),stops:structuredClone(s.stops),

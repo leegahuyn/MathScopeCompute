@@ -8,7 +8,7 @@ import {createFactoredRationalVerifier} from '../forced-rational-identity.mjs';
 import {openSavedInitializedSource} from '../source-saved-initialized-authority.mjs';
 import {attachSavedInitializedNormFamily} from '../source-saved-initialized-norm-family.mjs';
 import {attachSavedInitializedCutoffAuthority} from '../source-saved-initialized-cutoff-norms.mjs';
-import {createConditionalFTCImporter,reconstructConditionalConservativeMean,auditSavedWholeMeanConditional,assertSavedWholeMeanConditionalAudit} from '../source-saved-whole-mean-conditional-audit.mjs';
+import {createConditionalFTCImporter,reconstructConditionalConservativeMean,collectConditionalMeanDiagnostics,auditSavedWholeMeanConditional,assertSavedWholeMeanConditionalAudit} from '../source-saved-whole-mean-conditional-audit.mjs';
 
 function fixture(){
   const nodes=[{op:'rational',args:['0','1']},{op:'rational',args:['1','1']},...['R','Z','T','Y0','Y1'].map(x=>({op:'coordinate',args:[x]}))];
@@ -68,6 +68,18 @@ test('conditional recomputation records that atomic integral comparisons lack al
     'The same exact integral can have distinct alpha-renamed atomic node identities; this must never be reported as a PDE counterexample.');
 });
 
+test('conditional recomputation preserves evidence when an old diagnostics rule spends exhausted reader work',()=>{
+  const f=fixture(),rule={sourceOperation:'fixture_limit',independentOperation:'independent_fixture_limit',importCall(){},differentiate(){},substitute(){},
+    diagnostics:G=>{G.assertSourceNodeBinding(2,f.node(2));return {};}};
+  const G=createIndependentMeanReader({node:f.node,maxWork:2,sourceOperationRules:[rule]});
+  assert.throws(()=>G.importSource(2),{code:'RESOURCE_LIMIT'});
+  const d=collectConditionalMeanDiagnostics(G,{maxWork:2,maxNodes:200000});
+  assert.equal(d.diagnosticsAvailable,false);assert.equal(d.diagnosticsFailure.code,'RESOURCE_LIMIT');assert.equal(d.diagnosticsFailure.primarySourceStopPreserved,true);
+  assert.equal(d.workUsed,null);assert.equal(d.workUsedExact,false);assert.equal(d.scalarNodes,2);assert.equal(d.sourceOperatorAudits,null);
+  const broken=createIndependentMeanReader({node:f.node,sourceOperationRules:[{...rule,diagnostics:()=>{throw new TypeError('implementation failure');}}]});
+  assert.throws(()=>collectConditionalMeanDiagnostics(broken),{name:'TypeError'},'An unrelated implementation error must remain a test failure.');
+});
+
 let pending;
 const setup=()=>pending||=(async()=>{const cap=await openSavedInitializedSource(),family=await attachSavedInitializedNormFamily(cap),cutoff=await attachSavedInitializedCutoffAuthority(family);return {cap,cutoff};})();
 
@@ -81,6 +93,7 @@ test('actual updated full means run conditional FTC substitution or retain the n
   assert.deepEqual(audit.conditionalReplacement.faceDimensionCounts,[3,9,9,3]);assert.equal(audit.conditionalReplacement.allAnalyticGuardsDischarged,false);
   for(const k of ['originalFormulaHelperCalled','originalDerivativeRoutineCalled','oldResidualRootUsedAsProofOperand','customBodyClosureProved','allDenominatorAndDomainHypothesesProved','implicitDomainHypothesesDischarged','sourceNormAndClassCertified','actualWholeMeanDifferenceRecomputed','wholePhysicalNonzeroAngularPDERecomputed','originalPrivateProducerHydrated','numericalErrorEnclosureComputed','originalN601Complete','originalN602Complete','completeN6','wholeM3Complete','countsChanged'])assert.equal(audit.scope[k],false,k);
   assert.equal(audit.sourceBindings.originalNonlinearRemainders.P>=0,true);assert.ok(audit.rows.count===2||audit.stops.length>0);
+  if(!audit.diagnostics.diagnosticsAvailable){assert.equal(audit.diagnostics.workUsed,null);assert.equal(audit.diagnostics.workUsedExact,false);assert.ok(audit.stops.some(s=>s.code==='DIAGNOSTICS_UNAVAILABLE_AFTER_SOURCE_STOP'&&s.underlyingCode===audit.diagnostics.diagnosticsFailure.code));}
   assert.equal(audit.verifierLimitation.integralAlphaEquivalenceCertified,false);assert.equal(audit.verifierLimitation.algebraicNonmatchMayBeAlphaRenamingOnly,true);
   assert.throws(()=>assertSavedWholeMeanConditionalAudit(structuredClone(audit)));
   const raw=JSON.stringify(audit,null,2)+'\n';assert.ok(Buffer.byteLength(raw)<=5*1024*1024,'Retain compact counts/hashes instead of the full giant graph.');

@@ -24,6 +24,30 @@ const compact=(value,limit=40)=>{
   if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,compact(v,limit)]));
   return typeof value==='string'&&value.length>1600?{characters:value.length,sha256:hash(value),preview:value.slice(0,1600)}:value;
 };
+const reportableStops=new Set(['RESOURCE_LIMIT','UNRESOLVED_CUSTOM_DERIVATIVE','UNRESOLVED_IMPLICIT_UPSTREAM','CAPTURED_COORDINATE_DERIVATIVE','DEPENDENCY_CYCLE','UNRESOLVED_NATURAL_INPUT_CLOSURE','NATURAL_DERIVATIVE_ORDER_LIMIT','SINGULAR_IMPLICIT_ROOT']);
+
+/** Reporting must not destroy the primary unresolved source stop merely
+ * because an old registered diagnostics routine spends exhausted work.
+ * Unknown implementation errors still throw; unavailable metrics are null.
+ */
+export function collectConditionalMeanDiagnostics(reader,input={}){
+  assertIndependentMeanReader(reader);
+  require(input&&Object.keys(input).every(k=>['maxWork','maxNodes'].includes(k)),'Diagnostics accept only the recorded finite reader budgets.');
+  try{
+    const raw=reader.diagnostics();
+    return {diagnosticsAvailable:true,diagnosticsFailure:null,workUsed:raw.workUsed,workUsedExact:true,maxWork:raw.maxWork,scalarNodes:raw.scalarNodes,maxNodes:raw.maxNodes,selectedSourceNodeCount:raw.selectedSourceNodeCount,selectedSourceNodesSha256:raw.selectedSourceNodesSha256,
+      sourceBindings:compact(raw.sourceBindings,24),inspectedDefinitionBindings:compact(raw.inspectedDefinitionBindings,24),unresolvedCustomBodyClosure:compact(raw.unresolvedCustomBodyClosure,24),unknownSourceOperators:compact(raw.unknownSourceOperators,24),
+      discreteDerivativeStops:compact(raw.discreteDerivativeStops,16),sourceOperatorAudits:raw.sourceOperatorAudits.map(a=>compact(a,12)),domainHypotheses:compact(raw.domainHypotheses,24),
+      originalDerivativeRoutineCalled:false,originalFreeCoordinateRoutineCalled:false,originalPassBitsRead:false,fullScalarGraphOmitted:true,compactCountsAndHashesRetainOmittedDiagnosticIdentity:true};
+  }catch(error){
+    if(!reportableStops.has(error.code))throw error;
+    return {diagnosticsAvailable:false,diagnosticsFailure:{code:error.code,reason:error.message,stage:'post-stop-diagnostics',primarySourceStopPreserved:true},
+      workUsed:null,workUsedExact:false,maxWork:input.maxWork??null,scalarNodes:reader.nodes.length,maxNodes:input.maxNodes??null,
+      selectedSourceNodeCount:null,selectedSourceNodesSha256:null,sourceBindings:null,inspectedDefinitionBindings:null,unresolvedCustomBodyClosure:null,unknownSourceOperators:null,discreteDerivativeStops:null,sourceOperatorAudits:null,domainHypotheses:null,
+      originalDerivativeRoutineCalled:false,originalFreeCoordinateRoutineCalled:false,originalPassBitsRead:false,fullScalarGraphOmitted:true,compactCountsAndHashesRetainOmittedDiagnosticIdentity:false,
+      limitation:'The original registered diagnostics routine consumed work after an unresolved stop. Its unavailable counts/hashes were not invented; exact source/cutoff/replacement bindings and the primary stop remain in the enclosing artifact.'};
+  }
+}
 
 /** Unauthenticated fixture/import kernel. It independently rechecks every
  * FTC face. A supplied proof flag or copied source record grants no authority.
@@ -51,8 +75,9 @@ export function createConditionalFTCImporter(reader,input={}){
   };
   const at=sourceId=>{
     if(cache.has(sourceId))return cache.get(sourceId);
+    const binding={sourceId,status:'import-started',imported:null,transformed:null,changed:null};bindings.push(binding);
     const imported=G.importSource(sourceId),transformed=containsMaximum(imported)?G.substitute(imported,maximum,selected):imported;
-    cache.set(sourceId,transformed);bindings.push({sourceId,imported,transformed,changed:imported!==transformed});return transformed;
+    cache.set(sourceId,transformed);Object.assign(binding,{status:'import-completed',imported,transformed,changed:imported!==transformed});return transformed;
   };
   return Object.freeze({at,proof,maximum,selected,bindings,sourceAuthenticated:false,allAnalyticPremisesProved:false});
 }
@@ -111,15 +136,15 @@ export async function auditSavedWholeMeanConditional(capability,cutoff,input={})
       rows.push({stage,rebuilt,originalRoots:{Etheta:state.mean.Etheta,Ez:state.mean.Ez,gr:state.mean.raw.gr,pressure:state.pressure.value,pressureZ:state.pressure.slowZDerivative},comparisons});
     }
   }catch(error){
-    if(!['RESOURCE_LIMIT','UNRESOLVED_CUSTOM_DERIVATIVE','UNRESOLVED_IMPLICIT_UPSTREAM','CAPTURED_COORDINATE_DERIVATIVE','DEPENDENCY_CYCLE','UNRESOLVED_NATURAL_INPUT_CLOSURE','NATURAL_DERIVATIVE_ORDER_LIMIT','SINGULAR_IMPLICIT_ROOT'].includes(error.code))throw error;
-    stops.push({stage,code:error.code,reason:error.message,lastImportedSourceRoot:importer?.bindings.at(-1)?.sourceId??539400,originalRootOrOperatorNotReplacedByZero:true});
+    if(!reportableStops.has(error.code))throw error;
+    const lastImportedSourceRoot=importer?.bindings.at(-1)?.sourceId??539400,lastNode=originalNode(lastImportedSourceRoot);
+    const reportedSourceNodes=[...error.message.matchAll(/(?:actual source nodes?|source node)\s+([\d, ]+)/g)].flatMap(m=>m[1].split(/[, ]+/).filter(Boolean).map(Number));
+    stops.push({stage,code:error.code,reason:error.message,lastImportedSourceRoot,lastImportedSourceNode:{sourceNode:lastImportedSourceRoot,node:structuredClone(lastNode),nodeSHA256:hash(lastNode)},lastImportStatus:importer?.bindings.at(-1)?.status??'conditional-maximum-import-not-completed',reportedSourceNodes,
+      exactInnerFailingNodeKnown:reportedSourceNodes.length>0,resourceLimitIsNotAMathematicalCounterexample:error.code==='RESOURCE_LIMIT',originalRootOrOperatorNotReplacedByZero:true});
   }
-  const raw=replay.diagnostics(),matched=rows.length===2&&rows.every(row=>Object.values(row.comparisons).every(c=>c.pass)),
-    diagnostics={workUsed:raw.workUsed,maxWork:raw.maxWork,scalarNodes:raw.scalarNodes,maxNodes:raw.maxNodes,selectedSourceNodeCount:raw.selectedSourceNodeCount,selectedSourceNodesSha256:raw.selectedSourceNodesSha256,
-      sourceBindings:compact(raw.sourceBindings,24),inspectedDefinitionBindings:compact(raw.inspectedDefinitionBindings,24),unresolvedCustomBodyClosure:compact(raw.unresolvedCustomBodyClosure,24),unknownSourceOperators:compact(raw.unknownSourceOperators,24),
-      discreteDerivativeStops:compact(raw.discreteDerivativeStops,16),sourceOperatorAudits:raw.sourceOperatorAudits.map(a=>compact(a,12)),domainHypotheses:compact(raw.domainHypotheses,24),
-      originalDerivativeRoutineCalled:false,originalFreeCoordinateRoutineCalled:false,originalPassBitsRead:false,fullScalarGraphOmitted:true,compactCountsAndHashesRetainOmittedDiagnosticIdentity:true},
-    result=freeze({schema:'MathScope.N6.SavedWholeMeanConditionalAudit/1',source:structuredClone(capability.source),
+  const diagnostics=collectConditionalMeanDiagnostics(replay,{maxWork:input.maxWork??400000,maxNodes:input.maxNodes??200000}),matched=rows.length===2&&rows.every(row=>Object.values(row.comparisons).every(c=>c.pass));
+  if(!diagnostics.diagnosticsAvailable)stops.push({stage:'post-stop-diagnostics',code:'DIAGNOSTICS_UNAVAILABLE_AFTER_SOURCE_STOP',reason:diagnostics.diagnosticsFailure.reason,underlyingCode:diagnostics.diagnosticsFailure.code,primarySourceStopPreserved:true});
+  const result=freeze({schema:'MathScope.N6.SavedWholeMeanConditionalAudit/1',source:structuredClone(capability.source),
       sourceBindings:{previousVelocity:structuredClone(before.velocity),updatedVelocity:structuredClone(after.velocity),previousPressure:before.pressure.value,updatedPressure:after.pressure.value,previousA0:before.pressure.cutoffRemainder,updatedA0:after.pressure.cutoffRemainder,originalNonlinearRemainders:structuredClone(source.mean.nonlinear.remainderDefects),unchangedCovariance:structuredClone(before.mean.fullAngularCovariance),unchangedStress:structuredClone(before.mean.fullOriginalStress)},
       conditionalReplacement:{sourceMaximum:r.sourceMaximum,aggregate:r.aggregate,selectedSkeletonSHA256:r.selectedSkeletonSHA256,faceDimensionCounts:r.faceDimensionCounts,faces:compact(r.faces,24),conditionalDominance:r.conditionalDominance,applied:importer!==null,transformedBindings:compact(importer?.bindings??[],32),originalSourceGraphChanged:false,allAnalyticGuardsDischarged:false},
       rows:compact(rows,2),diagnostics,stops,conditionalAlgebraIdentitiesMatched:matched,
