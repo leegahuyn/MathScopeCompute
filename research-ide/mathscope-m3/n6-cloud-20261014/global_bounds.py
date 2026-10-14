@@ -389,6 +389,7 @@ def run(context, out):
               'conditionalGaussianSeriesControls': len(certificate['gaussianSeriesControls']),
               'allOrderRealHeatMixedNormTheoremProved': True,
               'allOrderHeatImproperDerivativeTailTheoremProved': True,
+              'boundaryDerivativeInterpretation': 'At abs(eta)=1 these are limits of real ingredient jets from abs(eta)<=1. A two-sided extension, original cover joins, and a common holomorphic eta strip are separate unproved obligations.',
               'allOrderProof': {'induction': 'Differentiate the displayed exact X^-a eta^b H^(m) recurrence; its two chain derivatives are -2(1-eta²)/X² and -4eta/X. Dominated convergence supplies every fixed H derivative on Z>=0. The recurrence and norm triangle inequality therefore hold for arbitrary nonnegative p,q, not only computed rows.',
                   'norm': '|D_X^p D_eta^q H| <= sum_(m,a,b) abs(c_pq[m,a,b])*4^-a*(hmax)_m*(1+hmax)_m, uniformly for X>=4, abs(eta)<=1.',
                   'improperTail': 'Gamma(1+h)>exp(-2)>1/9. For t>=L>=1, t^(h+m)<=t^(m+1). Integer incomplete gamma integration by parts gives the exported exact rational tail; no omitted tail is assigned zero.',

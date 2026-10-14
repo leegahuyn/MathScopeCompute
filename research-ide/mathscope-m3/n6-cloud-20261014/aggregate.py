@@ -68,7 +68,8 @@ def aggregate(context,root,out):
              'N6-01':'OPEN','N6-02':'PARTIAL','M3':'56/64',
              'mathematicalAcceptancePromoted':False,'publicDeploymentPerformed':False,
              'sameRunCheckpointSHA256':context['checkpointSHA256'],
-             'globalBoundsResultAvailable':bounds is not None}
+             'globalBoundsResultAvailable':bounds is not None,
+             'strictInputValidation':verdict.get('strictInputValidation','PASSED')}
     summary['jetApplication']=application
     if bounds:
         summary['allOrderHeatNormCalculation']={k:bounds[k] for k in ['mixedHeatDerivativeNormRows','improperHeatTailOrders','conditionalGaussianSeriesControls']}
@@ -109,5 +110,6 @@ Artifacts 보존 요청은 90일이며 실제 만료 시각은 `GITHUB_OBSERVATI
     (out/'RESULTS_KO.md').write_text(report,encoding='utf8')
     print(json.dumps(summary,ensure_ascii=False))
     # Keep the complete partial ledger even when infrastructure failed.
-    if missing:raise RuntimeError('Some calculation shards failed or are missing; partial ledger preserved')
+    if missing or summary['strictInputValidation']=='FAILED':
+        raise RuntimeError('Shard or strict dependency input validation failed; full partial ledger preserved')
     return summary

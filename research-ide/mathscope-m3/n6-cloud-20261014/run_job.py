@@ -176,6 +176,13 @@ def main():
                 maxRSSKiB=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
                 childMaxRSSKiB=resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss)
     receipt(a.output,meta)
+    if code:
+        # Diagnosis stays in GitHub logs; large artifacts never need to be
+        # downloaded to the user's notebook to investigate a worker failure.
+        error_lines=(a.output/'stderr.log').read_text(encoding='utf8').splitlines()
+        print('\n'.join(error_lines[-80:]))
+    if a.kind=='acceptance' and (a.output/'verification-summary.json').is_file():
+        print(json.dumps(read(a.output/'verification-summary.json'),ensure_ascii=False))
     print(json.dumps({'kind':a.kind,'shard':a.shard,'status':status,'elapsedSeconds':meta['elapsedSeconds'],'failure':meta.get('failure')}))
     return code
 if __name__=='__main__':sys.exit(main())

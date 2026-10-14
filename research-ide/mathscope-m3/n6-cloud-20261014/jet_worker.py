@@ -10,6 +10,7 @@ earlier unproved differentiation; that order is deliberately retained.
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+import copy
 from fractions import Fraction
 from pathlib import Path
 import hashlib
@@ -21,8 +22,8 @@ PARENT = "7c36afa44610b9786362dc228766c3d895491bb116103eca58a79d80a6b7609f"
 EXPECTED_REMAINING = 365
 PREFIX_DB_SHA256 = "ffd82b62c8aaeeb0d076a614f7af0b9782804abab9337743c2951275bb9d9003"
 PREFIX_HEADER_SHA256 = "010f1cc18f09c5e9ef226788e8770016603bf520b25289f01d4a08f5aa1da97c"
-EXPRESSION_OPS = {"actual_expression_partial", "m3_aux_expression_partial"}
-REGISTERED_OPS = EXPRESSION_OPS | {"m3_aux_indexed_partial", "m3_aux_inverse_partial"}
+EXPRESSION_OPS = {"actual_expression_partial", "m3_aux_expression_partial", "m3_coupled_expression_partial", "m3_forced_expression_partial"}
+REGISTERED_OPS = EXPRESSION_OPS | {"m3_aux_indexed_partial", "m3_aux_inverse_partial", "m3_coupled_indexed_partial", "m3_coupled_inverse_partial", "m3_global_indexed_partial"}
 UNARY = {"inverse", "exp", "log_positive", "sqrt_positive", "sine", "cosine", "ceiling", "integer_power", "source_step_derivative"}
 
 
@@ -114,6 +115,13 @@ def definition_key(node):
         return f"fieldDefinitions:{a[0]}"
     if op == "m3_aux_inverse_partial":
         return f"inverseDefinitions:{a[0]}"
+    grouped = {"m3_coupled_expression_partial": (0, "coupled-expression:"), "m3_coupled_indexed_partial": (1, "coupled-field:"), "m3_coupled_inverse_partial": (2, "coupled-inverse:"), "m3_forced_expression_partial": (4, "forced-expression:")}
+    if op in grouped:
+        group, prefix = grouped[op]
+        require(isinstance(a[0], str) and a[0].startswith(prefix), "changed complete source registry identifier")
+        return f"definitions:{group}:{int(a[0][len(prefix):])}"
+    if op == "m3_global_indexed_partial":
+        return f"m3GlobalFields:{a[0]}"
     return None
 
 
@@ -130,7 +138,7 @@ class SourceCalculus:
     derivative rules for integrals/joins are not accepted without a proof.
     """
 
-    def __init__(self, witnesses, definitions, max_work=180000, max_nodes=70000):
+    def __init__(self, witnesses, definitions, max_work=20000000, max_nodes=300000):
         self.source = witnesses
         self.defs = definitions
         self.nodes = []
@@ -140,11 +148,14 @@ class SourceCalculus:
         self.support_active = set()
         self.capture_cache = {}
         self.capture_active = set()
+        self.system_capture_cache = {}
+        self.system_capture_active = set()
         self.expansions = {}
         self.work = 0
         self.max_work = max_work
         self.max_nodes = max_nodes
         self.deadline = float("inf")
+        self.slow_root_image_theorem = None
         self.zero = self.q(0)
         self.one = self.q(1)
 
@@ -205,6 +216,14 @@ class SourceCalculus:
         return self.put("independent_uncomputed_derivative", [source, variable, reason, extra])
 
     def source_support(self, ident):
+        already_active = ident in self.support_active
+        try:
+            return self._source_support(ident)
+        finally:
+            if not already_active:
+                self.support_active.discard(ident)
+
+    def _source_support(self, ident):
         """Support from the complete scalar operand grammar, never a name.
 
         A registry function has an explicitly complete input tuple. Its body
@@ -245,20 +264,36 @@ class SourceCalculus:
                     audit = self.capture_audit(ident)
                     if not audit["pass"]:
                         unknown.add(f"unproved-capture-closure:{ident}:{definition_key(n)}")
-            elif op in {"m3_coupled_expression_partial", "m3_coupled_indexed_partial", "m3_coupled_inverse_partial", "m3_global_indexed_partial", "m3_forced_expression_partial"}:
-                children = a[1]
             elif op == "actual_monotone_root":
                 children = a[1:]
+                audit = self.system_capture_audit(op, a[0])
+                if not audit["pass"]:
+                    unknown.add(f"unproved-actual-system-capture:{ident}:{audit['key']}")
             elif op == "actual_quadratic_root":
                 children = [a[2]]
+                audit = self.system_capture_audit(op, a[0])
+                if not audit["pass"]:
+                    unknown.add(f"unproved-actual-system-capture:{ident}:{audit['key']}")
             elif op == "actual_natural_series":
                 children = a[1:3]
+                audit = self.system_capture_audit(op, None)
+                if not audit["pass"]:
+                    unknown.add(f"unproved-actual-system-capture:{ident}:{audit['key']}")
             elif op in {"actual_background_picard", "actual_background_even_profile"}:
                 children = a[2:4]
+                audit = self.system_capture_audit(op, a[0])
+                if not audit["pass"]:
+                    unknown.add(f"unproved-actual-system-capture:{ident}:{audit['key']}")
             elif op in {"actual_covariance_volterra", "m3_global_pulse_jet"}:
                 children = [a[2], *a[3]]
+                audit = self.system_capture_audit(op, a[0])
+                if not audit["pass"]:
+                    unknown.add(f"unproved-actual-system-capture:{ident}:{audit['key']}")
             elif op == "m3_forced_pulse_partial":
                 children = [a[3], *a[4]]
+                audit = self.system_capture_audit(op, a[0])
+                if not audit["pass"]:
+                    unknown.add(f"unproved-actual-system-capture:{ident}:{audit['key']}")
             else:
                 children = []
                 unknown.add(f"unreviewed-source-operation:{ident}:{op}")
@@ -272,7 +307,108 @@ class SourceCalculus:
         self.support_cache[ident] = result
         return result
 
+    def system_capture_audit(self, op, system):
+        active_before = self.system_capture_active.copy()
+        try:
+            return self._system_capture_audit(op, system)
+        finally:
+            self.system_capture_active.intersection_update(active_before)
+
+    def _system_capture_audit(self, op, system):
+        """Audit ACTUAL implicit/limit coefficients, not merely their tuple.
+
+        Original root/Picard constructors do not enforce lexical closure.
+        Consequently the complete pinned coefficient bodies must be reopened
+        here. A missed, cyclic or unknown body remains a stop. This audit
+        concerns coordinate dependence only; no existence/class premise is
+        granted by inspecting coefficients.
+        """
+        if op == "actual_monotone_root":
+            key = f"monotone:{system}"
+        elif op == "actual_quadratic_root":
+            key = f"quadratic:{system}"
+        elif op in {"actual_background_picard", "actual_background_even_profile"}:
+            key = f"picard:{system}"
+        elif op == "actual_natural_series":
+            key = "fixed:null"
+        elif op == "m3_forced_pulse_partial":
+            key = f"definitions:3:{system}"
+        elif op == "m3_global_pulse_jet":
+            key = f"m3GlobalPulses:{system}"
+        elif op == "actual_covariance_volterra":
+            matches = [k for k, v in self.defs.items() if k.startswith("m3GlobalPulses:") and v["definition"].get("covariance") == system]
+            key = matches[0] if len(matches) == 1 else f"missing-or-ambiguous-covariance:{system}"
+        else:
+            return {"pass": False, "key": f"unreviewed-system:{op}:{system}"}
+        if key in self.system_capture_cache:
+            return self.system_capture_cache[key]
+        if key in self.system_capture_active:
+            return {"pass": False, "key": key, "reason": "recursive actual-system coefficient capture closure unproved"}
+        binding = self.defs.get(key)
+        if binding is None:
+            result = {"pass": False, "key": key, "reason": "complete original system registry absent"}
+            self.system_capture_cache[key] = result
+            return result
+        self.system_capture_active.add(key)
+        d = binding["definition"]
+        roots, bound = [], []
+        if op == "actual_monotone_root":
+            roots = [d[name] for name in ["body", "left", "right", "derivativeLower", "derivativeUpper"] if name in d]
+            bound = [d["variable"], *d.get("parameters", [])]
+            complete = len(roots) == 5
+        elif op == "actual_quadratic_root":
+            fixed = self.defs.get("fixed:null", {}).get("definition", {})
+            eta = fixed.get("core", {}).get("eta")
+            roots = [*d.get("rhs", []), *sum(d.get("linear", []), []), *sum(d.get("quadraticDiagonal", []), [])]
+            roots += [d[k] for k in ["scale", "rootRadius", "lipschitzUpper"] if type(d.get(k)) is int]
+            roots += sum(d.get("preconditioner", []), [])
+            bound = [eta] if type(eta) is int else []
+            complete = bool(bound and d.get("rhs") and d.get("linear") and d.get("quadraticDiagonal") and "scale" in d)
+        elif op in {"actual_background_picard", "actual_background_even_profile"}:
+            bound = [d.get("xi"), d.get("eta")]
+            roots = [*sum(d.get("A0", []), []), *sum(d.get("A1", []), []), *d.get("forcing", []), *d.get("zeroAxisDatum", [])]
+            roots += [d[k] for k in ["radialDomain"] if type(d.get(k)) is int]
+            roots += [v for v in d.get("sourceLeading", {}).values() if type(v) is int]
+            roots += [d.get("tail", {})[k] for k in ["sourceBound", "sourceStrip", "solutionStrip", "loss", "Kcondition", "Kprecision", "K", "error", "target"] if type(d.get("tail", {}).get(k)) is int]
+            complete = all(type(v) is int for v in bound) and len(d.get("A0", [])) == len(d.get("A1", [])) == len(d.get("forcing", [])) == 6
+        elif op == "actual_natural_series":
+            core = d.get("core", {})
+            bound = [core.get("Y"), core.get("eta")]
+            roots = [v for v in core.values() if type(v) is int]
+            required = {"Y", "eta", "L", "Ustar", "Hstar", "Wstar", "Zstar", "chi", "zeta", "g", "gSquared", "P0"}
+            complete = required <= core.keys() and all(type(v) is int for v in bound)
+        else:
+            bound = [d.get("variable"), *d.get("parameters", [])]
+            roots = sum(d.get("matrix", []), [])
+            for value in [*d.get("forcing", []), *d.get("initial", [])]:
+                roots.extend([value] if type(value) is int else [value[k] for k in ["real", "imaginary"] if type(value.get(k)) is int])
+            roots += [d[k] for k in ["left", "length"] if type(d.get(k)) is int]
+            complete = bool(d.get("matrix")) and all(type(v) is int for v in bound)
+        coords, unknown = set(), set()
+        for root in roots:
+            require(type(root) is int, "a literal system coefficient was treated as a source node")
+            c, u = self.source_support(root)
+            coords.update(c)
+            unknown.update(u)
+        escapes = sorted(coords-set(bound))
+        result = {"pass": bool(complete) and not unknown and not escapes, "key": key,
+                  "definitionSHA256": binding["definitionSHA256"], "formalBoundCoordinates": bound,
+                  "coefficientRootCount": len(roots), "coefficientFreeCoordinates": sorted(coords),
+                  "hiddenCapturedCoordinates": escapes, "unreviewedSupport": sorted(unknown),
+                  "allNestedActualSystemsReopened": True, "analyticExistenceOrDifferentiabilityProved": False,
+                  "naturalRecurrenceCoordinateClosure": "Every exact natural coefficient is generated from all original core roots by finite algebra and eta differentiation; neither operation introduces a free coordinate. Every partial sum and its defined limit therefore has only the two bound coordinates." if op == "actual_natural_series" else None}
+        self.system_capture_active.remove(key)
+        self.system_capture_cache[key] = result
+        return result
+
     def capture_audit(self, ident):
+        active_before = self.capture_active.copy()
+        try:
+            return self._capture_audit(ident)
+        finally:
+            self.capture_active.intersection_update(active_before)
+
+    def _capture_audit(self, ident):
         n = self.source[ident]
         key = definition_key(n)
         binding = self.defs.get(key)
@@ -391,6 +527,8 @@ class SourceCalculus:
             result = self.put(op, [sub(a[0]), a[1]])
         elif op in {"add", "multiply", "maximum", "smooth_piecewise", "inverse", "exp", "log_positive", "sqrt_positive", "sine", "cosine", "ceiling"}:
             result = self.put(op, [sub(x) for x in a])
+        elif op == "source_image_conditional_formula":
+            result = self.put(op, [sub(a[0]), a[1]])
         else:
             # A deferred substitution across an unsupported calculus stop is
             # preserved verbatim and cannot be counted as an evaluated jet.
@@ -441,6 +579,21 @@ class SourceCalculus:
             # Exact symbolic chain-rule transport is retained; the theorem
             # proving source-step smoothness is a named pending prerequisite.
             result = self.put("step_chain_rule_pending_proof", [self.mul(self.put(op, [a[0], a[1]+1]), der(a[0])), variable])
+        elif op == "unexpanded_source_value" and a[0] == 622820 and a[2] == "actual_monotone_root" and self.slow_root_image_theorem is not None:
+            # The original theorem binds THIS exact source equation, not an
+            # arbitrary root registry label. Its domain remains explicit.
+            require(self.source[622820] == {"op": "actual_monotone_root", "args": [2, 622803, 622804]}, "conditional slow-root formula source changed")
+            env = tuple(map(tuple, a[1]))
+            s, z, t, h = (self.ref(sid, env) for sid in [622820, 622803, 622804, 9])
+            twice_h = self.mul(self.q(2), h)
+            log_s = self.put("log_positive", [s])
+            s_2h = self.put("exp", [self.mul(twice_h, log_s)])
+            fs = self.add(self.one, self.neg(self.mul(twice_h, self.pow(z, 2), self.put("exp", [self.mul(self.add(twice_h, self.q(-1)), log_s)]))))
+            numerator = self.add(self.mul(self.q(2), z, s_2h, der(z)), der(t))
+            formula = self.mul(numerator, self.put("inverse", [fs]))
+            result = self.put("source_image_conditional_formula", [formula, {"sourceNode": 622820, "requestedSourceCoordinate": variable, "formula": "D_j s=(2*Z*s^(2h)*D_j Z+D_j T)/(1-2*h*Z^2*s^(2h-1))", "validOn": "original source image and its proved common complex local collar", "sourceAllOrderTheorem": "slow-root-all-orders-shard-N.json", "allOriginalPDEApplicationsInsideProvedImageOrCollar": False}])
+        elif op == "source_image_conditional_formula":
+            result = self.put(op, [der(a[0]), a[1]])
         elif op == "definite_integral":
             result = self.stop(ident, variable, "source finite-integral Leibniz uniform continuity/dominating bound not proved", originalIntegral=a)
         elif op == "smooth_piecewise":
@@ -566,6 +719,8 @@ def slow_root_all_order_theorem(witnesses, definitions):
 
 
 def run(context, out, shard=0, shards=1):
+    import sys
+    sys.setrecursionlimit(max(sys.getrecursionlimit(), 10000))
     started = time.monotonic()
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
@@ -582,12 +737,25 @@ def run(context, out, shard=0, shards=1):
         if request["actualDefinitionKey"] in selected:
             grouped[request["actualDefinitionKey"]].append(request)
     rows, family_rows = [], []
+    shared_support, shared_captures, shared_system_captures = {}, {}, {}
     for key in sorted(grouped):
         calc = SourceCalculus(witnesses, definitions)
-        calc.deadline = time.monotonic() + 45
+        calc.slow_root_image_theorem = slow_all_orders
+        calc.support_cache = shared_support
+        calc.capture_cache = shared_captures
+        calc.system_capture_cache = shared_system_captures
+        calc.deadline = time.monotonic() + 90
         family_start = time.monotonic()
-        for request in grouped[key]:
+        # Prioritize potential absent-input words before expensive varying
+        # body derivatives. This is scheduling only: the complete independent
+        # system/body capture and coordinate-support proof is still required.
+        def attempt_priority(request):
+            first = program[request["orderedDifferentiationCoordinates"][0]]["args"][1]
+            return (first in request["actualSourceNode"]["args"][1], request["result"])
+        for request in sorted(grouped[key], key=attempt_priority):
             row = dict(request)
+            row["originalRequest"] = copy.deepcopy(request)
+            row["originalMinimalObligation"] = request.get("minimalObligation")
             row["requestId"] = f"cartesian-result:{request['result']}"
             row["orderedSourceCoordinates"] = [program[v]["args"][1] for v in request["orderedDifferentiationCoordinates"]]
             row["calculusAttempted"] = True
@@ -628,7 +796,7 @@ def run(context, out, shard=0, shards=1):
                     row["proofPremises"] = ["This original source leaf value exists on its declared input domain", "All required original active-domain positive/nonzero conditions", "Every original global PDE argument is in that domain remains a separate open obligation"]
                 else:
                     row["status"] = "PARTIAL_EXACT_FORMULA_WITH_EXPLICIT_ANALYTIC_STOPS"
-                    row["minimalObligation"] = "; ".join(sorted({s["node"]["args"][2] if s["node"]["op"] == "independent_uncomputed_derivative" else s["node"]["op"] for s in evidence["stops"]}))
+                    row["computedMinimalObligation"] = "; ".join(sorted({s["node"]["args"][2] if s["node"]["op"] == "independent_uncomputed_derivative" else s["node"]["op"] for s in evidence["stops"]}))
             except (BudgetStop, RecursionError) as error:
                 row["status"] = "RESOURCE_STOP_RETAINED"
                 row["failure"] = {"type": type(error).__name__, "message": str(error), "work": calc.work, "formulaNodes": len(calc.nodes)}
@@ -637,8 +805,8 @@ def run(context, out, shard=0, shards=1):
                 row["failure"] = {"type": type(error).__name__, "message": str(error)}
             rows.append(row)
             print(json.dumps({"stage": "A", "shard": shard, "requestId": row["requestId"], "sourceNode": row["baseSourceNode"], "word": row["orderedSourceCoordinates"], "status": row["status"]}), flush=True)
-        formulas = write(out / f"jet-formulas-shard-{shard}-family-{families.index(key)}.json", {"schema": "MathScope.N6.CloudIndependentJetFormulaDAG/1", "definitionKey": key, "sourceParentSHA256": PARENT, "nodes": calc.nodes, "sourceValueMeaning": "exact source node with simultaneous formal-parameter environment; source values are not derivative oracles", "originalSourceDerivativeHelperCalled": False})
-        family_rows.append({"definitionKey": key, "definitionSHA256": definitions[key]["definitionSHA256"], "requests": len(grouped[key]), "work": calc.work, "formulaNodes": len(calc.nodes), "formulas": formulas, "elapsedSeconds": time.monotonic()-family_start})
+        formulas = write(out / f"jet-formulas-shard-{shard}-family-{families.index(key)}.json", {"schema": "MathScope.N6.CloudIndependentJetFormulaDAG/1", "definitionKey": key, "sourceParentSHA256": PARENT, "nodes": calc.nodes, "actualSystemCaptureAudits": list(calc.system_capture_cache.values()), "sourceValueMeaning": "exact source node with simultaneous formal-parameter environment; source values are not derivative oracles", "originalSourceDerivativeHelperCalled": False})
+        family_rows.append({"definitionKey": key, "definitionSHA256": definitions[key]["definitionSHA256"], "requests": len(grouped[key]), "work": calc.work, "formulaNodes": len(calc.nodes), "sharedSourceSupportEntries": len(shared_support), "maxWork": calc.max_work, "maxFormulaNodes": calc.max_nodes, "familyWallTimeLimitSeconds": 90, "allActiveSetsCleanAtCheckpoint": not calc.support_active and not calc.capture_active and not calc.system_capture_active, "formulas": formulas, "elapsedSeconds": time.monotonic()-family_start})
         # Durable per-family checkpoint survives an interrupted later family.
         write(out / f"jet-checkpoint-shard-{shard}.json", {"sourceParentSHA256": PARENT, "shard": shard, "shards": shards, "completedFamilies": family_rows, "completedRequestIds": [r["requestId"] for r in rows], "allRequestsRetained": rows})
     counts = Counter(r["status"] for r in rows)

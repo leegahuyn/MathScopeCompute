@@ -101,6 +101,8 @@ def rebuild(program, substitutions):
 
 
 def apply(context, results_root, out):
+    import sys
+    sys.setrecursionlimit(max(sys.getrecursionlimit(), 10000))
     out = Path(out)
     checkpoint, previous, requests, original, witnesses, definitions = validate_inputs(context)
     baseline_path = Path(context["baseline"]) / "cartesian-applied-pde-checkpoint.json"
@@ -109,7 +111,7 @@ def apply(context, results_root, out):
     old_mapping = baseline["originalScalarNodeToClosedScalarNode"]
     require(len(old_mapping) == len(original), "original->prior Cartesian scalar mapping is incomplete")
     original_requests = {r["result"]: r for r in requests}
-    calc = SourceCalculus(witnesses, definitions, max_work=2500000, max_nodes=100000)
+    calc = SourceCalculus(witnesses, definitions, max_work=80000000, max_nodes=300000)
     proven, ignored, shard_receipts, received = {}, [], [], set()
     files = sorted(Path(results_root).rglob("jet-results-shard-*.json"))
     for file in files:
@@ -174,6 +176,7 @@ def apply(context, results_root, out):
     result["originalN602Complete"] = False
     artifact = write(out / "cartesian-jets-applied-checkpoint.json", result)
     fallback = write(out / "jet-application-source-prefix-witnesses.json", witnesses.evidence())
+    captures = write(out / "jet-application-actual-system-captures.json", {"sourceParentSHA256": previous["originalNodesSHA256"], "actualSystemCaptureAudits": list(calc.system_capture_cache.values())})
     summary = {"schema": "MathScope.N6.CloudJetApplication/1", "sourceParentSHA256": previous["originalNodesSHA256"],
                "baselineOriginalRequests": 393, "baselineClosedOnDeclaredDomains": 28,
                "baselineRemainingRequests": 365, "receivedShards": shard_receipts,
@@ -186,6 +189,7 @@ def apply(context, results_root, out):
                "remainingUnprovedJetScalarNodes": sum(n["op"] == "unresolved_total_source_jet" for n in nodes),
                "newAppliedCheckpoint": artifact, "originalSourceDerivativeHelperCalled": False,
                "independentApplicationLazySourcePrefixEvidence": fallback,
+               "independentActualSystemCaptureEvidence": captures,
                "unknownJetReplacedByZero": False, "wholeCartesianPDEProved": False,
                "originalN601Complete": False, "originalN602Complete": False}
     write(out / "jet-application-result.json", summary)

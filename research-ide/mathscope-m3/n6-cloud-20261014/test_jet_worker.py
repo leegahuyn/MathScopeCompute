@@ -3,7 +3,7 @@ from fractions import Fraction
 import copy
 import unittest
 
-from jet_worker import SourceCalculus, definition_key, js_hash
+from jet_worker import BudgetStop, SourceCalculus, definition_key, js_hash
 from jet_apply import rebuild
 
 
@@ -36,6 +36,8 @@ class JetTests(unittest.TestCase):
         if op == "coordinate":
             return Fraction(values[a[1]])
         if op == "source_value":
+            if a[0] == 622820 and a[0] in values:
+                return Fraction(values[a[0]])
             expanded = calc.expand(a[0], tuple(map(tuple, a[1])))
             return ev(expanded)
         if op == "add":
@@ -49,6 +51,12 @@ class JetTests(unittest.TestCase):
             return ev(a[0])**a[1]
         if op == "inverse":
             return 1/ev(a[0])
+        if op == "exp" and ev(a[0]) == 0:
+            return Fraction(1)
+        if op == "log_positive" and ev(a[0]) == 1:
+            return Fraction(0)
+        if op == "source_image_conditional_formula":
+            return ev(a[0])
         raise AssertionError(op)
 
     def test_exact_rational_first_and_second_derivative(self):
@@ -153,6 +161,87 @@ class JetTests(unittest.TestCase):
     def test_application_rejects_unknown_scalar_grammar(self):
         with self.assertRaisesRegex(ValueError, "unreviewed Cartesian"):
             rebuild([{"op": "unproved_magic_zero", "args": []}], {})
+
+    def test_actual_monotone_hidden_capture_is_rejected(self):
+        self.source[4] = {"op": "actual_monotone_root", "args": [0, 0]}
+        self.source[6] = {"op": "coordinate", "args": ["bound-root"]}
+        self.source[7] = {"op": "add", "args": [6, 1]}
+        definition = {"variable": 6, "parameters": [0], "body": 7, "left": 2, "right": 2, "derivativeLower": 2, "derivativeUpper": 2}
+        self.defs["monotone:0"] = {"key": "monotone:0", "definition": definition, "definitionSHA256": js_hash(definition)}
+        calc = self.calc()
+        self.assertFalse(calc.capture_audit(5)["pass"])
+        self.assertEqual(calc.system_capture_cache["monotone:0"]["hiddenCapturedCoordinates"], [1])
+        self.assertNotEqual(calc.d(calc.ref(5), 1), calc.zero)
+
+    def test_actual_monotone_closed_coefficient_body_support_is_proved(self):
+        self.source[4] = {"op": "actual_monotone_root", "args": [0, 0]}
+        self.source[6] = {"op": "coordinate", "args": ["bound-root"]}
+        self.source[7] = {"op": "add", "args": [6, 0]}
+        definition = {"variable": 6, "parameters": [0], "body": 7, "left": 2, "right": 2, "derivativeLower": 2, "derivativeUpper": 2}
+        self.defs["monotone:0"] = {"key": "monotone:0", "definition": definition, "definitionSHA256": js_hash(definition)}
+        calc = self.calc()
+        self.assertTrue(calc.capture_audit(5)["pass"])
+        self.assertEqual(calc.d(calc.ref(5), 1), calc.zero)
+
+    def test_actual_picard_hidden_coefficient_capture_is_rejected(self):
+        self.source[4] = {"op": "actual_background_picard", "args": [0, 0, 0, 0]}
+        self.source[6] = {"op": "coordinate", "args": ["xi"]}
+        definition = {"xi": 6, "eta": 0, "A0": [[2]*6 for _ in range(6)], "A1": [[2]*6 for _ in range(6)], "forcing": [1]*6}
+        self.defs["picard:0"] = {"key": "picard:0", "definition": definition, "definitionSHA256": js_hash(definition)}
+        calc = self.calc()
+        self.assertFalse(calc.capture_audit(5)["pass"])
+        self.assertEqual(calc.system_capture_cache["picard:0"]["hiddenCapturedCoordinates"], [1])
+
+    def test_actual_natural_fixed_core_hidden_capture_is_rejected(self):
+        self.source[4] = {"op": "actual_natural_series", "args": ["Phi", 0, 0, 0, 0]}
+        self.source[6] = {"op": "coordinate", "args": ["hidden-natural-datum"]}
+        core = {key: 2 for key in ["L", "Ustar", "Hstar", "Wstar", "Zstar", "chi", "zeta", "g", "gSquared", "P0"]}
+        core.update(Y=0, eta=1, zeta=6)
+        definition = {"core": core}
+        self.defs["fixed:null"] = {"key": "fixed:null", "definition": definition, "definitionSHA256": js_hash(definition)}
+        calc = self.calc()
+        self.assertFalse(calc.capture_audit(5)["pass"])
+        self.assertEqual(calc.system_capture_cache["fixed:null"]["hiddenCapturedCoordinates"], [6])
+
+    def test_actual_quadratic_hidden_matrix_capture_is_rejected(self):
+        self.source[4] = {"op": "actual_quadratic_root", "args": [0, 0, 0]}
+        definition = {"rhs": [2], "linear": [[1]], "quadraticDiagonal": [[2]], "scale": 2}
+        self.defs["fixed:null"] = {"key": "fixed:null", "definition": {"core": {"eta": 0}}, "definitionSHA256": "synthetic"}
+        self.defs["quadratic:0"] = {"key": "quadratic:0", "definition": definition, "definitionSHA256": js_hash(definition)}
+        calc = self.calc()
+        self.assertFalse(calc.capture_audit(5)["pass"])
+        self.assertEqual(calc.system_capture_cache["quadratic:0"]["hiddenCapturedCoordinates"], [1])
+
+    def test_resource_stop_cleans_all_active_sets_and_can_retry(self):
+        calc = self.calc()
+        calc.max_work = 5
+        with self.assertRaises(BudgetStop):
+            calc.capture_audit(5)
+        self.assertFalse(calc.support_active)
+        self.assertFalse(calc.capture_active)
+        self.assertFalse(calc.system_capture_active)
+        calc.max_work = 1000
+        self.assertTrue(calc.capture_audit(5)["pass"])
+
+    def test_slow_implicit_exact_formula_retains_image_premise(self):
+        source = {
+            9: {"op": "rational", "args": ["1", "64"]},
+            622803: {"op": "coordinate", "args": ["Z"]},
+            622804: {"op": "coordinate", "args": ["T"]},
+            622820: {"op": "actual_monotone_root", "args": [2, 622803, 622804]},
+        }
+        calc = SourceCalculus(source, {})
+        calc.slow_root_image_theorem = {"syntheticAlgebraFixture": True}
+        dz = calc.d(calc.ref(622820), 622803)
+        dt = calc.d(calc.ref(622820), 622804)
+        point = {622803: 1, 622804: 0, 622820: 1}
+        self.assertEqual(self.exact_eval(calc, dz, point), Fraction(64, 31))
+        self.assertEqual(self.exact_eval(calc, dt, point), Fraction(32, 31))
+        self.assertEqual(calc.nodes[dz]["op"], "source_image_conditional_formula")
+        self.assertFalse(calc.nodes[dz]["args"][1]["allOriginalPDEApplicationsInsideProvedImageOrCollar"])
+        self.assertTrue(calc.reachable(dz)["stops"])
+        second = calc.d(dz, 622803)
+        self.assertEqual(calc.nodes[second]["op"], "source_image_conditional_formula")
 
 
 if __name__ == "__main__":

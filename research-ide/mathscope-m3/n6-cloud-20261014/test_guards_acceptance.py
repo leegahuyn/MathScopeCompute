@@ -1,8 +1,11 @@
 import unittest
+import copy
 from fractions import Fraction as Q
 
 from guard_worker import (Parameters,ScalarProof,combine,fact,guard_attempt,
                          inverse,nonzero,positive,power,rational,step_lemma,unary)
+from guard_worker import sha
+from acceptance import REQUEST_BINDING_FIELDS,verify_request_binding
 
 
 class ExactGlobalGuardTests(unittest.TestCase):
@@ -100,6 +103,46 @@ class ExactGlobalGuardTests(unittest.TestCase):
         row=guard_attempt(g,self.proof(nodes))
         self.assertEqual(row['status'],'OPEN')
         self.assertFalse(row['localChartReceiptUsedAsGlobalProof'])
+
+
+class OriginalRequestBindingTests(unittest.TestCase):
+    def fixture(self):
+        original={k:None for k in REQUEST_BINDING_FIELDS}
+        original.update(actualSourceNode={'op':'rational','args':['1','1']},
+            result=10,base=2,orderedDifferentiationCoordinates=[0],
+            actualDefinitionSHA256='pinned-registry-sha',minimalObligation='old independent proof frontier',
+            status='UNRESOLVED',derivativeComputed=False,proof=None,exactValue=None)
+        row=copy.deepcopy(original)
+        row.update(originalRequest=copy.deepcopy(original),originalMinimalObligation=original['minimalObligation'],
+            originalSourceNodeSHA256=sha(original['actualSourceNode']),orderedSourceCoordinates=[22])
+        return original,row
+
+    def test_computed_reason_and_formula_can_change(self):
+        original,row=self.fixture()
+        row.update(minimalObligation='new exact calculus stop',computedMinimalObligation='new stop',
+                   proof='new derivation',exactValue='0',status='COMPUTED')
+        self.assertTrue(verify_request_binding(original,row,[{'op':'coordinate','args':['x',22]}]))
+
+    def test_node_registry_direction_and_capture_bindings_cannot_change(self):
+        for key in REQUEST_BINDING_FIELDS:
+            original,row=self.fixture();row[key]='MUTATED'
+            with self.subTest(key=key),self.assertRaises(ValueError):verify_request_binding(original,row)
+
+    def test_complete_original_request_must_be_preserved(self):
+        original,row=self.fixture();row['originalRequest']['minimalObligation']='rewritten original'
+        with self.assertRaises(ValueError):verify_request_binding(original,row)
+
+    def test_original_reason_must_be_preserved(self):
+        original,row=self.fixture();row['originalMinimalObligation']='rewritten original'
+        with self.assertRaises(ValueError):verify_request_binding(original,row)
+
+    def test_source_coordinate_word_is_bound_independently(self):
+        original,row=self.fixture();row['orderedSourceCoordinates']=[23]
+        with self.assertRaises(ValueError):verify_request_binding(original,row,[{'op':'coordinate','args':['x',22]}])
+
+    def test_closed_jet_requires_capture_evidence(self):
+        original,row=self.fixture();row.update(closedOnOriginalLeafDefinedDomain=True,derivativeComputed=True)
+        with self.assertRaises(ValueError):verify_request_binding(original,row)
 
 
 if __name__=='__main__':unittest.main()

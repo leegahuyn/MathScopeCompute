@@ -20,6 +20,36 @@ GUARDS_SHA='845c625abb5e677ae9c416afe40fdb37bfaf569ea27f5b603ca86aed6fd7115d'
 REQUESTS_SHA='78a1d4c5dec48b2358b1a3a0341d264c4814e1bdce560142e02c8cdb877459ca'
 SEQUENCE=['primary-current-pressure','temporal-8.20','post-temporal-8.12',
           'five-moments-8.25-on-new-P-J','post-moment-8.12']
+REQUEST_BINDING_FIELDS=('actualOrDerivedOperand','operation','base',
+    'orderedDifferentiationCoordinates','result','baseNode','syntacticSupport',
+    'baseSourceNode','actualSourceNode','actualDefinitionKey',
+    'actualDefinitionName','actualDefinitionSHA256','allActualApplicationArgumentsRetained')
+
+
+def verify_request_binding(original,row,source_program=None):
+    """Verify actual source meaning while allowing new computed explanations.
+
+    The baseline's minimalObligation/proof/exactValue/status are historical
+    assessment metadata. A worker may compute a new reason or exact formula;
+    the original request is separately preserved, never used as a proof flag.
+    """
+    for key in REQUEST_BINDING_FIELDS:
+        if key not in original or row.get(key)!=original[key]:
+            raise ValueError('Original jet node/registry/directions/capture row changed: '+key)
+    if 'originalRequest' in row and row['originalRequest']!=original:
+        raise ValueError('Preserved complete original jet request changed')
+    if 'originalMinimalObligation' in row and row['originalMinimalObligation']!=original.get('minimalObligation'):
+        raise ValueError('Preserved original minimal obligation changed')
+    if row.get('originalSourceNodeSHA256')!=sha(original['actualSourceNode']):
+        raise ValueError('Original jet source node hash changed')
+    if source_program is not None:
+        coordinates=[source_program[x]['args'][1] for x in original['orderedDifferentiationCoordinates']]
+        if row.get('orderedSourceCoordinates')!=coordinates:
+            raise ValueError('Original ordered source-coordinate word changed')
+    if row.get('closedOnOriginalLeafDefinedDomain') is True:
+        if row.get('derivativeComputed') is not True or row.get('exactParameterAndCaptureSemantics',{}).get('pass') is not True:
+            raise ValueError('A closed jet lacks its independently computed capture/calculus evidence')
+    return True
 
 
 def verify_original_matrix(matrix):
@@ -59,7 +89,7 @@ def stage_files(results_root,name):
     return [(str(p.relative_to(results_root)),read(p)) for p in paths]
 
 
-def evaluate_acceptance(matrix,stage_results,baseline_requests=None):
+def evaluate_acceptance(matrix,stage_results,baseline_requests=None,source_program=None):
     verify_original_matrix(matrix)
     # No implementation here proves the complete universal W/M/S, Haar, source
     # image or complex Picard premises. In particular a forged zero frontier
@@ -74,6 +104,8 @@ def evaluate_acceptance(matrix,stage_results,baseline_requests=None):
     for path,data in jet_files:
         if data.get('baselineRemainingRequests')!=365:raise ValueError('Original 365-jet frontier substituted')
         if data.get('attemptedRequests')!=len(data.get('requests',[])):raise ValueError('Jet attempt count mismatch')
+        if data.get('newClosedOnOriginalLeafDefinedDomains')!=sum(r.get('closedOnOriginalLeafDefinedDomain') is True for r in data.get('requests',[])):
+            raise ValueError('Jet closure count mismatch')
         for row in data['requests']:
             if row['requestId']!=f"cartesian-result:{row['result']}":raise ValueError('Jet result ID changed')
             if row['requestId'] in seen:raise ValueError('Duplicated original jet request across shards')
@@ -85,9 +117,7 @@ def evaluate_acceptance(matrix,stage_results,baseline_requests=None):
         for row in request_rows:
             original=expected.get(row['requestId'])
             if original is None:raise ValueError('Invented source jet request')
-            for key,value in original.items():
-                if key not in ['status','derivativeComputed'] and row.get(key)!=value:
-                    raise ValueError('Original jet node/registry/directions/capture row changed: '+key)
+            verify_request_binding(original,row,source_program)
         missing=sorted(set(expected)-seen)
     else:missing=[] if len(seen)==365 else ['Original baseline frontier comparison unavailable']
     coverage.append({'stage':'A','attempted':len(seen),'required':365,'missingOriginalRequestIDs':missing,
@@ -140,6 +170,7 @@ def evaluate_acceptance(matrix,stage_results,baseline_requests=None):
             'wholeSourceCertificateIndependentlyVerified':False,
             'sourceBindingsVerifiedByImmutableDigest':True})
     return {'schema':'MathScope.N6.CloudStrictAcceptance/1','stage':'D',
+        'strictInputValidation':'PASSED',
         'originalParentNodesSHA256':PARENT,'originalProp95j0BindingUnchanged':True,
         'B0':'7/10','C0star':'6/5','originalRequirementsSHA256':REQUIREMENTS_SHA,
         'allOriginalSourceBindingsSHA256':BINDINGS_SHA,'requirements':obligations,'dependencies':deps,
@@ -160,7 +191,8 @@ def run(context,results_root,out):
              'residual':stage_files(results_root,'residual-component-*-result.json'),
              'bounds':stage_files(results_root,'global-bounds-result.json')}
     baseline=read(find(context['baseline'],'cartesian-closure-result.json'))['remainingUnresolvedRequests']
-    try:result=evaluate_acceptance(matrix,sources,baseline)
+    source_program=read(find(context['baseline'],'cartesian-source-checkpoint.json'))['cartesian']['scalarProgram']
+    try:result=evaluate_acceptance(matrix,sources,baseline,source_program)
     except (ValueError,KeyError,TypeError) as error:
         # Always preserve a failed/partial acceptance report after missing or
         # invalid worker outputs; transport aggregation separately fails CI.
@@ -187,7 +219,7 @@ def run(context,results_root,out):
         else:raise AssertionError('Acceptance source-binding mutation was accepted: '+key)
     if sources['guards']:
         forged=json.loads(json.dumps(sources));forged['guards'][0][1]['originalN601Complete']=True
-        try:evaluate_acceptance(matrix,forged,baseline)
+        try:evaluate_acceptance(matrix,forged,baseline,source_program)
         except ValueError:controls.append({'mutation':'stage claims universal completion','rejected':True})
         else:raise AssertionError('A serialized completion flag bypassed proof requirements')
     result['negativeControls']=controls
