@@ -17,7 +17,7 @@
 - `source-saved-radius-monotone-audit.mjs`: 원본 `maximum` 반지름 노드와 monotone systems 0/1/2의 실제 정의, 조건과 미입증 의무를 보존한다.
 - `source-saved-quadratic-series-audit.mjs`: 실제 natural-series 호출과 quadratic implicit derivative를 독립 감사하며, 급수 수렴·항별 미분과 implicit-domain 조건을 유지한다.
 - `source-saved-whole-mean-conditional-audit.mjs`: 감사한 strict-radius branch를 가정으로 남겨 정확한 source operand에 적용하고, 새 급수 규칙과 함께 최신 temporal/moments의 전체 평균 재구성을 시도한다. 다음 실제 미해결 연산과 노드를 기록한다. 기존 무조건 감사 결과는 그대로 유지한다.
-- `n6_source_audit.py`: 이전 8개 테스트와 기존 monotone/quadratic 감사 및 새 세 테스트를 **순차** 실행한다. 테스트별 600초, 전체 실행 2400초와 Node 힙 4096 MiB를 적용하고, timeout/OOM을 원본 인수 실패와 구별해 기록한다. 이 힙 설정은 전체 RSS 제한이 아니다.
+- `n6_source_audit.py`: `full`은 이전 8개 테스트와 기존 monotone/quadratic 감사 및 새 세 테스트, 총 13개 묶음을 **순차** 실행한다. 기본 `n6`는 이전 N6-01/N6-02 두 묶음 및 5개 추가 source audit, 총 7개 묶음에 집중한다. 테스트별 600초, 전체 실행 2400초와 Node 힙 4096 MiB를 적용하고, timeout/OOM을 원본 인수 실패와 구별해 기록한다. 이 힙 설정은 전체 RSS 제한이 아니다. 첫 full 실행을 별도 보존하고 수정 뒤 같은 N7/N8 검사를 반복하지 않는다.
 - 새 workflow는 코드 SHA, 실제 소스 SHA-256, TAP, stderr, 개별 receipt와 partial/final JSON을 저장한다. 원본 장부가 전후 동일한지 확인하며 어느 테스트도 원본 criterion을 승격하지 않는다. Actions artifact는 90일 보관하며 실제로 확인한 결과 ZIP은 이 브랜치에도 보존한다.
 
 ## 입력 자료와 재현
@@ -27,7 +27,7 @@
 GitHub의 `M3 N6 original source audit` workflow에서 해당 브랜치를 선택해 실행하거나, 저장소를 받은 환경에서 Node 24 / Python 3.12로 아래 명령을 실행한다. 출력 폴더는 저장소 **밖**의 절대 경로여야 한다.
 
 ```text
-python -B research-ide/mathscope-m3/cloud/n6_source_audit.py --output <absolute-output-directory> --wall-seconds 600 --node-heap-mib 4096
+python -B research-ide/mathscope-m3/cloud/n6_source_audit.py --profile n6 --output <absolute-output-directory> --wall-seconds 600 --node-heap-mib 4096
 ```
 
 실제 전체 원본 graph와 155개 소스는 기존 저장소의 immutable snapshot에서 검증한다. 작은 fixture 또는 독립 형식 미분의 통과는 `B0=0.7`, `C0*=1.2`, uniform C^m bounds, signed branch smoothness, 최신 full pressure, nonzero-angular physical PDE와 명시적 수치 오차 예산을 대신하지 않는다.

@@ -13,6 +13,12 @@ on:
       - 'research-ide/mathscope-m3/navier/source-saved-whole-mean-conditional-audit.mjs'
       - 'research-ide/mathscope-m3/navier/tests/saved-whole-mean-conditional-audit.test.mjs'
   workflow_dispatch:
+    inputs:
+      profile:
+        description: 'n6: seven source gates; full: also retry all prior eight groups.'
+        type: choice
+        default: n6
+        options: [n6, full]
 
 permissions:
   contents: read
@@ -37,14 +43,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Sequential source audits and bounded retry of prior eight tests
+      - name: Sequential source audits with explicit replay scope
         shell: bash
+        env:
+          M3_PROFILE: ${{ github.event_name == 'workflow_dispatch' && inputs.profile || 'n6' }}
         run: |
           set -euo pipefail
           out="$RUNNER_TEMP/m3-n6-source-audit"
           mkdir -p "$out"
           python -B research-ide/mathscope-m3/cloud/n6_source_audit.py \
-            --output "$out" --wall-seconds 600 --node-heap-mib 4096 \
+            --output "$out" --profile "$M3_PROFILE" --wall-seconds 600 --node-heap-mib 4096 \
             2>&1 | tee "$out/runner.log"
       - name: Preserve exact source hashes and partial results even on failure
         if: always()

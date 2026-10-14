@@ -60,6 +60,7 @@ def classify_stop(row, output):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--profile", choices=("n6", "full"), default="n6")
     parser.add_argument("--wall-seconds", type=int, default=600)
     parser.add_argument("--node-heap-mib", type=int, default=4096)
     parser.add_argument("--job-wall-seconds", type=int, default=2400)
@@ -74,7 +75,7 @@ def main():
     if out == replay.ROOT or replay.ROOT in out.parents:
         parser.error("Outputs must be outside the tracked repository.")
     out.mkdir(parents=True, exist_ok=True)
-    selected = list(replay.SMOKE) + list(N6)
+    selected = (list(replay.SMOKE) if args.profile == "full" else list(replay.SMOKE[:2])) + list(N6)
     replay.EVIDENCE_ENV.update({
         "saved-radius-monotone-audit.test.mjs": ("MATHSCOPE_RADIUS_MONOTONE_EVIDENCE_DIR", "radius-monotone", True),
         "saved-quadratic-series-audit.test.mjs": ("MATHSCOPE_QUADRATIC_SERIES_EVIDENCE_DIR", "quadratic-series", True),
@@ -86,6 +87,7 @@ def main():
         "schema": "MathScope.M3.N6SourceAudit/1", "startedAt": replay.utc(),
         "sourceCommit": replay.cmd_output("git", "rev-parse", "HEAD"),
         "sourceTree": replay.cmd_output("git", "rev-parse", "HEAD^{tree}"),
+        "profile": args.profile,
         "priorRun": {"id": 38480202315, "commit": "bdaf007e2de1cb8bf310ef0efb1b799e6c977711",
                      "conclusion": "failure", "specificStop": "N7-04 NODE_HEAP_EXHAUSTED at 1536 MiB"},
         "environment": {"python": sys.version.split()[0], "node": replay.cmd_output("node", "--version"),
