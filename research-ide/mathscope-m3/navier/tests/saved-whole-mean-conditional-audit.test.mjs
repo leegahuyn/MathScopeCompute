@@ -61,7 +61,10 @@ test('conditional recomputation records that atomic integral comparisons lack al
   const f=fixture(),importer=createConditionalFTCImporter(f.G,{node:f.node,maximum:f.maximum}),body=f.put('exp',[f.put('multiply',[3,5])]),
     integral=f.put('definite_integral',[body,5,0,1]),sourceDerivative=f.put('definite_integral',[f.put('multiply',[5,body]),5,0,1]),Z=f.G.importSource(3),verify=createFactoredRationalVerifier(f.G);
   assert.equal(verify(f.G.sub(f.G.derivative(f.G.importSource(integral),Z),f.G.importSource(sourceDerivative))).pass,true);
-  assert.equal(verify(f.G.sub(f.G.derivative(importer.at(integral),Z),importer.at(sourceDerivative))).pass,false,
+  assert.equal(importer.at(integral),f.G.importSource(integral),'A root without the represented maximum keeps its original integral binder.');
+  assert.equal(verify(f.G.sub(f.G.derivative(importer.at(integral),Z),importer.at(sourceDerivative))).pass,true);
+  const renamed=sourceId=>f.G.substitute(f.G.importSource(sourceId),importer.maximum,importer.selected);
+  assert.equal(verify(f.G.sub(f.G.derivative(renamed(integral),Z),renamed(sourceDerivative))).pass,false,
     'The same exact integral can have distinct alpha-renamed atomic node identities; this must never be reported as a PDE counterexample.');
 });
 
