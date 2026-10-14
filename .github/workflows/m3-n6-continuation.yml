@@ -1,0 +1,89 @@
+name: M3 N6 resumed source-domain and residual audits
+on:
+  push:
+    branches: [mathscope-m3-mean-equivalence-20261014]
+    paths: ['research-ide/mathscope-m3/n6-continuation-20261014/**', '.github/workflows/m3-n6-continuation.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - run: python -B research-ide/mathscope-m3/n6-continuation-20261014/run_job.py --kind prepare --output "$RUNNER_TEMP/continuation-prepare"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: n6-continuation-prepare-${{ github.run_id }}
+          path: ${{ runner.temp }}/continuation-prepare/
+          if-no-files-found: error
+          retention-days: 90
+  analytic:
+    needs: [prepare, audit]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/download-artifact@v4
+        with:
+          name: n6-continuation-mean-${{ github.run_id }}
+          path: ${{ runner.temp }}/same-run-mean
+      - name: Source-bound global and common-domain analytic lemmas
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+        run: python -B research-ide/mathscope-m3/n6-continuation-20261014/run_job.py --kind analytic --mean-output "$RUNNER_TEMP/same-run-mean" --output "$RUNNER_TEMP/continuation-analytic"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: n6-continuation-analytic-${{ github.run_id }}
+          path: ${{ runner.temp }}/continuation-analytic/
+          if-no-files-found: error
+          retention-days: 90
+  audit:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [controls, mean, initial, pde]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Continue inherited evidence within a bounded command
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+          AUDIT_KIND: ${{ matrix.kind }}
+        run: python -B research-ide/mathscope-m3/n6-continuation-20261014/run_job.py --kind "$AUDIT_KIND" --output "$RUNNER_TEMP/continuation-$AUDIT_KIND"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: n6-continuation-${{ matrix.kind }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/continuation-${{ matrix.kind }}/
+          if-no-files-found: error
+          retention-days: 90
