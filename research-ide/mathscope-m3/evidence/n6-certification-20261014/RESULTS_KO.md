@@ -3,7 +3,7 @@
 **무조건부 N6-01·N6-02 인증은 미완료다. 원래 56/64 판정은 유지한다.** 테스트 실행 성공, 원본 바이트 일치, 조건부 대수 일치, 실제 함수의 존재·노름·전체 PDE 인증을 구분했다.
 
 - 별도 브랜치: `mathscope-m3-n6-certification-20261014`, [Draft PR #27](https://github.com/leegahuyn/MathScopeCompute/pull/27). 기반은 PR #26의 `bd93e3ee24212eb68c8ed3b6017c234758bd48f5`다.
-- [최종 계산 실행 38494696384](https://github.com/leegahuyn/MathScopeCompute/actions/runs/38494696384): 독립 7개 작업 모두 실행 성공. 이는 N6 합격을 뜻하지 않는다.
+- [최종 계산 실행 38495642925](https://github.com/leegahuyn/MathScopeCompute/actions/runs/38495642925): 독립 7개 작업 모두 실행 성공. 이는 N6 합격을 뜻하지 않는다.
 - 원본 155개 producer와 저장된 3,892,594-node parent를 전후 검증했다. source·PDF·요청 원문·성공 및 미일치 결과·공식 ZIP 아티팩트를 GitHub에 저장했다. ZIP의 다운로드 SHA256을 GitHub Actions 공식 digest와 대조했다.
 
 ## 실제로 증명한 것
