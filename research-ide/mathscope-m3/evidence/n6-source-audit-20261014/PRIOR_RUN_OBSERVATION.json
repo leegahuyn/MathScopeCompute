@@ -1,0 +1,147 @@
+{
+  "schema": "MathScope.N6.PreviousCloudObservation/1",
+  "runId": 38480202315,
+  "runUrl": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38480202315",
+  "sourceCommit": "bdaf007e2de1cb8bf310ef0efb1b799e6c977711",
+  "sourceTree": "eaace030353a313b0c9d3d2dfe7d77f6d7af1751",
+  "conclusion": "failure",
+  "artifactId": 11856923712,
+  "artifactPath": "prior-run-38480202315.zip",
+  "artifactSHA256": "6ac5553867251d75d270bdc235dd4490efb3850c0be12586b794a922991dd4bc",
+  "artifactBytes": 461584,
+  "testGroupsPassed": 7,
+  "testGroupsFailed": 1,
+  "tests": [
+    {
+      "criterion": "N6-01",
+      "script": "research-ide/mathscope-m3/navier/tests/saved-five-mean-change-norms.test.mjs",
+      "classification": "SOURCE_PARTIAL",
+      "status": "PASS_FINITE_TEST",
+      "seconds": 30.647,
+      "tap": {
+        "tests": 8,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0,
+        "path": "00.tap",
+        "sha256": "438469b4d9df1b357a9dc38d7cefd8d44aca3310d55eec47c7e3ee43c5e78437"
+      }
+    },
+    {
+      "criterion": "N6-02",
+      "script": "research-ide/mathscope-m3/navier/tests/saved-whole-mean-direct-audit.test.mjs",
+      "classification": "SOURCE_CONDITIONAL",
+      "status": "PASS_FINITE_TEST",
+      "seconds": 32.133,
+      "tap": {
+        "tests": 11,
+        "passed": 11,
+        "failed": 0,
+        "skipped": 0,
+        "path": "01.tap",
+        "sha256": "f64f5c460f22041f4ef7cfc38c148584b78ef9d4ef7d04625e7795c855f77f62"
+      }
+    },
+    {
+      "criterion": "N6-07",
+      "script": "research-ide/mathscope-m3/navier/tests/iteration-decay.test.mjs",
+      "classification": "THEOREM_IMPLICATION_ONLY",
+      "status": "PASS_FINITE_TEST",
+      "seconds": 0.301,
+      "tap": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "path": "02.tap",
+        "sha256": "5094ee3a68efa5f060771c2f15c0d8b13c3006fb2377f95d62c53bf86f065d6c"
+      }
+    },
+    {
+      "criterion": "N6-08",
+      "script": "research-ide/mathscope-m3/navier/final-summation/tests/source-final-summation.test.mjs",
+      "classification": "CONDITIONAL_CUTOFF",
+      "status": "PASS_FINITE_TEST",
+      "seconds": 0.319,
+      "tap": {
+        "tests": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "path": "03.tap",
+        "sha256": "dfbe16368d23770c74ae3d252f9f4832c52d7135280993b2994721a7d0917b95"
+      }
+    },
+    {
+      "criterion": "N7-04",
+      "script": "research-ide/mathscope-m3/navier/tests/source-exterior-force-jets.test.mjs",
+      "classification": "EXTERIOR_ONLY",
+      "status": "FAIL_OR_UNVERIFIED",
+      "seconds": 132.616,
+      "tap": {
+        "tests": 1,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0,
+        "path": "04.tap",
+        "sha256": "43e7d079b5e2ba7089323091a26c15c7f387018bee310cce35f1e051d4ac1fa1"
+      }
+    },
+    {
+      "criterion": "N7-05",
+      "script": "research-ide/mathscope-m3/navier/terminal-extension/tests/source-terminal-cutoff-schedule.test.mjs",
+      "classification": "CONDITIONAL_JETS",
+      "status": "PASS_FINITE_TEST",
+      "seconds": 1.729,
+      "tap": {
+        "tests": 7,
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0,
+        "path": "05.tap",
+        "sha256": "2b40603bae6c074db7e868527e0e677729c5f65bc9cb645a8c6c33160a1f4e78"
+      }
+    },
+    {
+      "criterion": "N7-06",
+      "script": "research-ide/mathscope-m3/navier/tests/flow-interface.test.mjs",
+      "classification": "GENERIC_MODEL_ONLY",
+      "status": "PASS_FINITE_TEST",
+      "seconds": 1.031,
+      "tap": {
+        "tests": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "path": "06.tap",
+        "sha256": "c65f578cb813051f3be283736148029aba9e1ae1b596cd74c91c0119afe168ef"
+      }
+    },
+    {
+      "criterion": "N8-05",
+      "script": "research-ide/mathscope-m3/navier/tests/temporal-cutoff-refinement.test.mjs",
+      "classification": "PRE_TEMPORAL_TAIL_ONLY",
+      "status": "PASS_FINITE_TEST",
+      "seconds": 0.136,
+      "tap": {
+        "tests": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "path": "07.tap",
+        "sha256": "8ee80f37d2615fcebb5fa90ff37a639d9c6d5cf8176ca949754778ff0d4d4fce"
+      }
+    }
+  ],
+  "specificFailure": {
+    "criterion": "N7-04",
+    "reason": "NODE_HEAP_EXHAUSTED",
+    "heapMiB": 1536,
+    "nodeCountLastLogged": 622781,
+    "signal": "SIGABRT",
+    "evidence": "04.tap: FATAL ERROR Allocation failed - JavaScript heap out of memory"
+  },
+  "finiteTestPASSIsOriginalCriterionCompletion": false,
+  "wholeM3Complete": false,
+  "allEightOriginalCriteriaProved": false
+}

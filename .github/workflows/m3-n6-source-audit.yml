@@ -1,0 +1,57 @@
+name: M3 N6 original source audit
+
+on:
+  push:
+    branches: [mathscope-m3-n6-source-audit-20261014]
+    paths:
+      - '.github/workflows/m3-n6-source-audit.yml'
+      - 'research-ide/mathscope-m3/cloud/n6_source_audit.py'
+      - 'research-ide/mathscope-m3/navier/source-saved-radius-monotone-audit.mjs'
+      - 'research-ide/mathscope-m3/navier/source-saved-quadratic-series-audit.mjs'
+      - 'research-ide/mathscope-m3/navier/tests/saved-radius-monotone-audit.test.mjs'
+      - 'research-ide/mathscope-m3/navier/tests/saved-quadratic-series-audit.test.mjs'
+      - 'research-ide/mathscope-m3/navier/source-saved-whole-mean-conditional-audit.mjs'
+      - 'research-ide/mathscope-m3/navier/tests/saved-whole-mean-conditional-audit.test.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: m3-n6-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  original-source-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Sequential source audits and bounded retry of prior eight tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/m3-n6-source-audit"
+          mkdir -p "$out"
+          python -B research-ide/mathscope-m3/cloud/n6_source_audit.py \
+            --output "$out" --wall-seconds 600 --node-heap-mib 4096 \
+            2>&1 | tee "$out/runner.log"
+      - name: Preserve exact source hashes and partial results even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-n6-source-audit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/m3-n6-source-audit/
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 6
