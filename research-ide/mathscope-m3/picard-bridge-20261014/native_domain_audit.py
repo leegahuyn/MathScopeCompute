@@ -22,6 +22,8 @@ sys.path.insert(0,str(REPO/'research-ide/mathscope-m3/certification-20261014'))
 sys.path.insert(0,str(REPO/'research-ide/mathscope-m3/n6-unconditional-20261014'))
 from source_dag import definitions,primitive_children,verify_capture
 from analytic_prerequisites import SourceAudit, HEADER_SHA,DB_SHA,PAPER_SHA,PROTOTYPE_SHA,file_sha
+from complex_polynomial_bounds import certify_inverse
+from natural_series_audit import run as audit_natural_series
 
 PARENT_SHA='7c36afa44610b9786362dc228766c3d895491bb116103eca58a79d80a6b7609f'
 POLY_L={(0,0):F(1),(1,2):F(-2)}
@@ -83,7 +85,7 @@ def analyze(inputs, output):
         n=node(i)
         if n['op'] not in ('inverse','log_positive','sqrt_positive','actual_natural_series','actual_quadratic_root','actual_monotone_root'):continue
         a=n['args'];arg=a[0] if n['op'] not in ('actual_natural_series','actual_quadratic_root','actual_monotone_root') else a[1] if len(a)>1 and isinstance(a[1],int) else None
-        calls.append({'sourceNode':i,'operator':n['op'],'arguments':a,
+        calls.append({'sourceNode':i,'sourceNodeSHA256':digest(n),'operator':n['op'],'arguments':a,
                       'argumentSourceNode':arg,'etaDependent':2 in audit.free(i),
                       'inGroups':[name for name,ids in groups.items() if i in ids],
                       'nativeComplexDomainProvedByThisAudit':False})
@@ -119,17 +121,23 @@ def analyze(inputs, output):
             try:return power(q,a[1])
             except ValueError:return None
         return None
-    proven=[];other=[]
+    proven=[];other=[];inverse_leaves=[]
     for call in calls:
         if call['operator'] not in ('inverse','log_positive','sqrt_positive'):continue
         k=call['argumentSourceNode'];p=poly(k) if k is not None else None
         call['argumentExactPolynomialInHEta']=coeff_dict(p) if p is not None else None
-        if call['operator']=='inverse' and p==POLY_L:
+        leaf=certify_inverse(p) if call['operator']=='inverse' else None
+        if leaf is not None:
             call['nativeComplexDomainProvedByThisAudit']=True
-            call['proofID']='N6-PB-L-NONZERO-STADIUM-QUARTER'
-            proven.append(call['sourceNode'])
+            call['proofID']=leaf['proofID']
+            inverse_leaves.append({'sourceNode':call['sourceNode'],
+                                   'argumentSourceNode':k,
+                                   'argumentExactPolynomialInHEta':coeff_dict(p), **leaf})
+            if p==POLY_L:proven.append(call['sourceNode'])
         else:other.append(call['sourceNode'])
-    db.close()
+    require(len(all_ids)==3679 and len(calls)==216 and
+            Counter(c['operator'] for c in calls)==Counter({'actual_natural_series':157,'inverse':33,'log_positive':21,'sqrt_positive':5}),
+            'Authenticated Picard call inventory differs from the inherited frontier')
     output=Path(output);output.mkdir(parents=True,exist_ok=True)
     result={
        'schema':'MathScope.N6.PicardActualNativeDomainInventory/1',
@@ -145,6 +153,14 @@ def analyze(inputs, output):
             'sourceParameterHBoundIsHypothesis':True,
             'analyticallyValidForNativeInverseCalls':bool(proven)},
        'allOtherDenominatorOrLogCallsNeedingProof':other,
+       'nativeComplexInverseLeaves':inverse_leaves,
+       'candidateCommonComplexDomain':{
+          'shape':'stadium', 'distanceToRealSegmentStrictUpper':'1/4',
+          'realSegment':['-1','1'], 'allCoefficientCallsAdmitted':False,
+          'enclosingDiskIsOnlyAnEnvelope':True,
+          'enclosingDiskCannotBeUsedAsFullDomain':{
+             'operand':'1+eta^2', 'poles':['i','-i'], 'poleAbs':'1',
+             'diskRadius':'5/4', 'exactCounterexample':'eta=i gives 1+eta^2=0'}},
        'nativeA0A1ForcingCommonHolomorphicStripProved':False,
        'nativeA0A1ForcingUniformComplexSupNormProved':False,
        'sameProfileM2PicardNormTransferredToAllOriginalN6':False,
@@ -155,9 +171,18 @@ def analyze(inputs, output):
        'originalN602Complete':False,
        'originalM3Status':'56/64'
     }
+    natural=audit_natural_series(node,system,groups,all_ids,audit,result['source'],registries,repo=REPO)
+    result['naturalSeriesFamilyInventory']=natural
+    result['picardConvergence']=natural['picardConvergence']
+    db.close()
+    (output/'natural-series-inventory.json').write_text(json.dumps(natural,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
     (output/'native-domain-inventory.json').write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
     concise={'coefficientClosureNodes':len(all_ids),'nativeOperatorCalls':len(calls),
              'nativePrimitiveInverseNodesCertifiedForL':len(proven),
+             'nativeComplexInverseLeavesCertified':len(inverse_leaves),
+             'naturalArgumentFamilies':natural['summary']['argumentFamilyCount'],
+             'naturalProvedArgumentRanges':natural['summary']['exactArgumentDomainProvedCalls'],
+             'naturalKernelHolomorphyProved':natural['summary']['actualKernelHolomorphyProvedCalls'],
              'otherInverseLogSqrtCalls':len(other),
              'etaDependentOpaqueCalls':sum(c['etaDependent'] for c in calls),
              'newGlobalGuardTotalOfficiallyClosed':0,'actualFullPicardNormCertified':False}

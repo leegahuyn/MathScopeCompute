@@ -3,7 +3,8 @@ on:
   push:
     branches: [mathscope-m3-n6-picard-bridge-20261014]
     paths:
-      - 'research-ide/mathscope-m3/picard-bridge-20261014/**'
+      - 'research-ide/mathscope-m3/picard-bridge-20261014/*.py'
+      - 'research-ide/mathscope-m3/picard-bridge-20261014/run_source.mjs'
       - '.github/workflows/m3-n6-picard-bridge.yml'
 permissions:
   contents: read
@@ -94,16 +95,23 @@ jobs:
         run: |
           set -euo pipefail
           python -B research-ide/mathscope-m3/picard-bridge-20261014/native_domain_audit.py --inputs "$PICARD_NATIVE_INPUTS" --output "$RUNNER_TEMP/n6-native" | tee "$RUNNER_TEMP/n6-native/native.log"
-      - name: Independent negative tests for complex denominator bounds
+      - name: Exact series, domain, and evidence-view rejection tests
         shell: bash
         run: |
           set -euo pipefail
-          python -B -m unittest discover -s research-ide/mathscope-m3/picard-bridge-20261014 -p 'test_native_domain.py' -v 2>&1 | tee "$RUNNER_TEMP/n6-native/tests.log"
+          python -B -m unittest discover -s research-ide/mathscope-m3/picard-bridge-20261014 -p 'test_native*.py' -v 2>&1 | tee "$RUNNER_TEMP/n6-native/tests.log"
+          python -B -m unittest discover -s research-ide/mathscope-m3/picard-bridge-20261014 -p 'test_complex_polynomial.py' -v 2>&1 | tee "$RUNNER_TEMP/n6-native/polynomial-tests.log"
+          python -B -m unittest discover -s research-ide/mathscope-m3/picard-bridge-20261014 -p 'test_natural_series.py' -v 2>&1 | tee "$RUNNER_TEMP/n6-native/series-tests.log"
+      - name: Render source-bound M3 Picard evidence view
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -B research-ide/mathscope-m3/picard-bridge-20261014/render_native_view.py --input "$RUNNER_TEMP/n6-native/native-domain-inventory.json" --output "$RUNNER_TEMP/n6-native/picard-domain-view.html"
       - name: SHA256 result and bounded source inventory
         if: always()
         shell: bash
         run: |
-          (cd "$RUNNER_TEMP/n6-native" && sha256sum *.json *.log 2>/dev/null || true) > "$RUNNER_TEMP/n6-native/checksums.txt"
+          (cd "$RUNNER_TEMP/n6-native" && sha256sum *.json *.log *.html 2>/dev/null || true) > "$RUNNER_TEMP/n6-native/checksums.txt"
           git rev-parse HEAD > "$RUNNER_TEMP/n6-native/source-commit.txt"
           python --version > "$RUNNER_TEMP/n6-native/python-version.txt"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -114,5 +122,6 @@ jobs:
             ${{ runner.temp }}/n6-native/*.json
             ${{ runner.temp }}/n6-native/*.log
             ${{ runner.temp }}/n6-native/*.txt
+            ${{ runner.temp }}/n6-native/*.html
           retention-days: 90
           if-no-files-found: warn
