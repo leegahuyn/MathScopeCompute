@@ -156,6 +156,7 @@ class SourceCalculus:
         self.max_nodes = max_nodes
         self.deadline = float("inf")
         self.slow_root_image_theorem = None
+        self.step_all_order_lemma = None
         self.zero = self.q(0)
         self.one = self.q(1)
 
@@ -264,6 +265,14 @@ class SourceCalculus:
                     audit = self.capture_audit(ident)
                     if not audit["pass"]:
                         unknown.add(f"unproved-capture-closure:{ident}:{definition_key(n)}")
+                    elif op in EXPRESSION_OPS:
+                        # A defined stored partial of this exact expression
+                        # can lose dependencies but cannot introduce a formal
+                        # coordinate absent from its original defining body.
+                        # Do not extend this lemma to indexed/Fourier leaves.
+                        active_formals = set(audit["formalBodyFreeCoordinates"])
+                        parameters = binding["definition"]["parameters"]
+                        children = [value for parameter, value in zip(parameters, a[1]) if parameter in active_formals]
             elif op == "actual_monotone_root":
                 children = a[1:]
                 audit = self.system_capture_audit(op, a[0])
@@ -576,9 +585,11 @@ class SourceCalculus:
         elif op == "cosine":
             result = self.neg(self.mul(self.put("sine", [a[0]]), der(a[0])))
         elif op == "source_step_derivative":
-            # Exact symbolic chain-rule transport is retained; the theorem
-            # proving source-step smoothness is a named pending prerequisite.
-            result = self.put("step_chain_rule_pending_proof", [self.mul(self.put(op, [a[0], a[1]+1]), der(a[0])), variable])
+            formula = self.mul(self.put(op, [a[0], a[1]+1]), der(a[0]))
+            if self.step_all_order_lemma is not None:
+                result = formula
+            else:
+                result = self.put("step_chain_rule_pending_proof", [formula, variable])
         elif op == "unexpanded_source_value" and a[0] == 622820 and a[2] == "actual_monotone_root" and self.slow_root_image_theorem is not None:
             # The original theorem binds THIS exact source equation, not an
             # arbitrary root registry label. Its domain remains explicit.
@@ -728,6 +739,14 @@ def run(context, out, shard=0, shards=1):
     checkpoint, previous, requests, program, witnesses, definitions = validate_inputs(context)
     slow_all_orders = slow_root_all_order_theorem(witnesses, definitions)
     slow_all_orders_artifact = write(out / f"slow-root-all-orders-shard-{shard}.json", slow_all_orders)
+    from guard_worker import step_lemma, STEP_SHA
+    step_producer = Path(context["repo"]) / "research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs"
+    require(file_hash(step_producer) == STEP_SHA, "original flat-step producer changed before independent chain-rule application")
+    step_proof = step_lemma()
+    require(step_proof["name"] == "original-flat-logistic-C-infinity" and step_proof["doesNotProveComposedOpaqueArgumentRegularity"] is True, "unrecognized original-step all-order theorem scope")
+    step_proof = {"sourceParentSHA256": PARENT, "sourceProducerSHA256": STEP_SHA, "lemma": step_proof,
+                  "application": "D_j sigma^(n)(g)=sigma^(n+1)(g)*D_j g for every n>=0; g's own derivative stops and all source-domain obligations remain unchanged", "originalSourceDerivativeHelperCalled": False}
+    step_proof_artifact = write(out / f"applied-step-all-orders-shard-{shard}.json", step_proof)
     # Family sharding keeps shared bodies, captures and derivative memoization
     # together, with stable assignment independent of hash randomization.
     families = sorted({r["actualDefinitionKey"] for r in requests})
@@ -741,17 +760,28 @@ def run(context, out, shard=0, shards=1):
     for key in sorted(grouped):
         calc = SourceCalculus(witnesses, definitions)
         calc.slow_root_image_theorem = slow_all_orders
+        calc.step_all_order_lemma = step_proof
         calc.support_cache = shared_support
         calc.capture_cache = shared_captures
         calc.system_capture_cache = shared_system_captures
         calc.deadline = time.monotonic() + 90
         family_start = time.monotonic()
+        preflight_support, preflight_stops = {}, []
+        for source_node in sorted({r["baseSourceNode"] for r in grouped[key]}):
+            try:
+                audit = calc.capture_audit(source_node)
+                coordinates, unreviewed = calc.source_support(source_node)
+                if audit["pass"] and not unreviewed:
+                    preflight_support[source_node] = coordinates
+            except (BudgetStop, RecursionError, ValueError) as error:
+                preflight_stops.append({"sourceNode": source_node, "type": type(error).__name__, "message": str(error)})
         # Prioritize potential absent-input words before expensive varying
         # body derivatives. This is scheduling only: the complete independent
         # system/body capture and coordinate-support proof is still required.
         def attempt_priority(request):
             first = program[request["orderedDifferentiationCoordinates"][0]]["args"][1]
-            return (first in request["actualSourceNode"]["args"][1], request["result"])
+            support = preflight_support.get(request["baseSourceNode"], request["actualSourceNode"]["args"][1])
+            return (first in support, request["result"])
         for request in sorted(grouped[key], key=attempt_priority):
             row = dict(request)
             row["originalRequest"] = copy.deepcopy(request)
@@ -806,7 +836,7 @@ def run(context, out, shard=0, shards=1):
             rows.append(row)
             print(json.dumps({"stage": "A", "shard": shard, "requestId": row["requestId"], "sourceNode": row["baseSourceNode"], "word": row["orderedSourceCoordinates"], "status": row["status"]}), flush=True)
         formulas = write(out / f"jet-formulas-shard-{shard}-family-{families.index(key)}.json", {"schema": "MathScope.N6.CloudIndependentJetFormulaDAG/1", "definitionKey": key, "sourceParentSHA256": PARENT, "nodes": calc.nodes, "actualSystemCaptureAudits": list(calc.system_capture_cache.values()), "sourceValueMeaning": "exact source node with simultaneous formal-parameter environment; source values are not derivative oracles", "originalSourceDerivativeHelperCalled": False})
-        family_rows.append({"definitionKey": key, "definitionSHA256": definitions[key]["definitionSHA256"], "requests": len(grouped[key]), "work": calc.work, "formulaNodes": len(calc.nodes), "sharedSourceSupportEntries": len(shared_support), "maxWork": calc.max_work, "maxFormulaNodes": calc.max_nodes, "familyWallTimeLimitSeconds": 90, "allActiveSetsCleanAtCheckpoint": not calc.support_active and not calc.capture_active and not calc.system_capture_active, "formulas": formulas, "elapsedSeconds": time.monotonic()-family_start})
+        family_rows.append({"definitionKey": key, "definitionSHA256": definitions[key]["definitionSHA256"], "requests": len(grouped[key]), "work": calc.work, "formulaNodes": len(calc.nodes), "sharedSourceSupportEntries": len(shared_support), "maxWork": calc.max_work, "maxFormulaNodes": calc.max_nodes, "familyWallTimeLimitSeconds": 90, "allActiveSetsCleanAtCheckpoint": not calc.support_active and not calc.capture_active and not calc.system_capture_active, "preflightSupportBeforeBodyDifferentiation": {"provedSourceApplications": len(preflight_support), "stops": preflight_stops}, "formulas": formulas, "elapsedSeconds": time.monotonic()-family_start})
         # Durable per-family checkpoint survives an interrupted later family.
         write(out / f"jet-checkpoint-shard-{shard}.json", {"sourceParentSHA256": PARENT, "shard": shard, "shards": shards, "completedFamilies": family_rows, "completedRequestIds": [r["requestId"] for r in rows], "allRequestsRetained": rows})
     counts = Counter(r["status"] for r in rows)
@@ -819,6 +849,8 @@ def run(context, out, shard=0, shards=1):
               "families": family_rows, "requests": rows, "all94OriginalGlobalGuardsStillRequired": True,
               "verifiedLazySourcePrefixEvidence": fallback,
               "sourceSlowImplicitAllOrders": slow_all_orders_artifact,
+              "sourceStepAllOrdersActuallyApplied": step_proof_artifact,
+              "expressionSupportCompositionLemma": {"quantifier": "Every exact registered expression-partial family whose complete nested capture audit passes, at every stored derivative order where that original leaf is defined.", "proof": "The original defining body depends only on the formal coordinates in its independently computed free-coordinate set. Every defined partial derivative is a limit of difference quotients of that body or its preceding derivatives; these quotients and their limit cannot introduce any absent formal coordinate. After simultaneous capture-free application, only actual arguments corresponding to active formal coordinates can vary the leaf. This is induction over the stored derivative sequence, not commutation of mixed derivatives.", "indexedAndFourierLeavesIncluded": False, "unconditionalWholeSourceExistenceProved": False},
               "originalN601Complete": False, "originalN602Complete": False, "original56Of64Changed": False,
               "wholeCartesianPDEProved": False, "unknownJetReplacedByZero": False,
               "firstAbsentInputLemmaProof": "The original leaf's complete actual argument tuple and capture audit determine all varying coordinates. If the FIRST ordered differentiation coordinate is absent, the function on its existing domain is constant in that coordinate, so that derivative and derivatives of its zero result are zero. A later absent coordinate cannot erase an unproved earlier derivative.",

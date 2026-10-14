@@ -243,6 +243,47 @@ class JetTests(unittest.TestCase):
         second = calc.d(dz, 622803)
         self.assertEqual(calc.nodes[second]["op"], "source_image_conditional_formula")
 
+    def test_unused_formal_input_is_removed_after_full_capture_audit(self):
+        self.source[5] = {"op": "actual_expression_partial", "args": [0, [0, 1], [0, 0]]}
+        self.defs["expression:0"] = binding("expression:0", [0, 1], 4)
+        calc = self.calc()
+        self.assertTrue(calc.capture_audit(5)["pass"])
+        self.assertEqual(calc.source_support(5), (frozenset({0}), frozenset()))
+        self.assertEqual(calc.d(calc.ref(5), 1), calc.zero)
+
+    def test_unused_formal_input_stays_absent_at_stored_positive_order(self):
+        self.source[5] = {"op": "actual_expression_partial", "args": [0, [0, 1], [2, 0]]}
+        self.defs["expression:0"] = binding("expression:0", [0, 1], 4)
+        calc = self.calc()
+        self.assertEqual(calc.source_support(5), (frozenset({0}), frozenset()))
+        self.assertEqual(calc.d(calc.ref(5), 1), calc.zero)
+
+    def test_body_support_composes_nested_actual_arguments(self):
+        self.source[6] = {"op": "actual_expression_partial", "args": [1, [1, 0], [0, 0]]}
+        self.source[5] = {"op": "actual_expression_partial", "args": [0, [0, 1], [0, 0]]}
+        self.defs["expression:1"] = binding("expression:1", [0, 1], 4)
+        self.defs["expression:0"] = binding("expression:0", [0, 1], 6)
+        calc = self.calc()
+        self.assertEqual(calc.source_support(5), (frozenset({1}), frozenset()))
+        self.assertEqual(calc.d(calc.ref(5), 0), calc.zero)
+        self.assertNotEqual(calc.d(calc.ref(5), 1), calc.zero)
+
+    def test_proved_step_chain_rule_is_applied_without_step_stop(self):
+        self.source[4] = {"op": "source_step_derivative", "args": [0, 0]}
+        calc = self.calc()
+        calc.step_all_order_lemma = {"syntheticAlgebraFixture": True}
+        derivative = calc.d(calc.ref(5), 0)
+        self.assertFalse(calc.reachable(derivative)["stops"])
+        self.assertEqual(calc.nodes[derivative]["op"], "source_step_derivative")
+        self.assertEqual(calc.nodes[derivative]["args"][1], 1)
+
+    def test_proved_step_does_not_erase_opaque_argument_stop(self):
+        self.source[6] = {"op": "actual_background_picard", "args": [0, 0, 0, 0]}
+        self.source[4] = {"op": "source_step_derivative", "args": [6, 0]}
+        calc = self.calc()
+        calc.step_all_order_lemma = {"syntheticAlgebraFixture": True}
+        self.assertTrue(calc.reachable(calc.d(calc.ref(4), 0))["stops"])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
