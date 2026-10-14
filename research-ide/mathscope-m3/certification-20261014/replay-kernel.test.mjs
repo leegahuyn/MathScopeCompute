@@ -47,3 +47,10 @@ test('resource stop identifies the actual active source import path',()=>{
   const source=[{op:'rational',args:['0','1']},{op:'coordinate',args:['x']},{op:'exp',args:[1]}],G=createIndependentMeanReader({node:id=>source[id],maxWork:3});
   assert.throws(()=>G.importSource(2),error=>error.code==='RESOURCE_LIMIT'&&error.actualSourceImportStack.join(',')==='2,1'&&error.workUsed===4);
 });
+test('zero derivative arms normalize exactly and do not create a false maximum dependence',()=>{
+  const {G}=setup(),x=G.importSource(2),y=G.importSource(3),piece=G.put('smooth_piecewise',[x,G.zero,G.one,G.q(2),G.q(2),G.q(2)]),maximum=G.put('maximum',[G.one,piece]);
+  assert.equal(G.derivative(piece,y),G.zero);assert.equal(G.derivative(maximum,y),G.zero);
+  assert.ok(G.diagnostics().domainHypotheses.some(h=>h.kind==='SMOOTH_MATCHING_JOIN'&&h.provedByThisAudit===false));
+  const changing=G.put('smooth_piecewise',[x,G.zero,G.one,y,y,y]);
+  assert.throws(()=>G.derivative(G.put('maximum',[G.one,changing]),y),{code:'UNRESOLVED_CUSTOM_DERIVATIVE'});
+});

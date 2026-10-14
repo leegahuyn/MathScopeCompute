@@ -47,6 +47,10 @@ export function createIndependentMeanReader({ node, definitions = {}, sourceOper
   const constructor = (op, args) => {
     if (op === 'add') return add(...args); if (op === 'multiply') return mul(...args); if (op === 'inverse') return inv(args[0]);
     if (op === 'integer_power') return pow(...args); if (op === 'definite_integral') return integral(...args);
+    // The reviewed grammar is [x,lower,upper,left,middle,right]. A defined
+    // piecewise value with three zero arms is identically zero; this does not
+    // choose a maximum branch or discharge the original join/domain guards.
+    if(op==='smooth_piecewise'&&args.length===6&&args.slice(3).every(x=>x===zero))return zero;
     if (op === 'exp' && args[0] === zero) return one; if (op === 'log_positive' && args[0] === one) return zero;
     if (op === 'sqrt_positive' || op === 'log_positive') domain.set(`${op}:${args[0]}`, { kind: 'POSITIVE_ANALYTIC_ARGUMENT', operation: op, operand: args[0], provedByThisAudit: false });
     return put(op, args);
@@ -187,7 +191,7 @@ export function createIndependentMeanReader({ node, definitions = {}, sourceOper
     else if (op === 'sine') out = mul(constructor('cosine', a), d(a[0]));
     else if (op === 'cosine') out = neg(mul(constructor('sine', a), d(a[0])));
     else if (op === 'source_step_derivative') { domain.set(`step:${id}`, { kind: 'ORIGINAL_SMOOTH_STEP_DERIVATIVE', sourceOperand: id, order: a[1] + 1, provedByThisAudit: false }); out = mul(constructor(op, [a[0], a[1] + 1]), d(a[0])); }
-    else if (op === 'smooth_piecewise') { domain.set(`join:${id}`, { kind: 'SMOOTH_MATCHING_JOIN', operand: id, movingBoundariesRetained: a.slice(0, 3), provedByThisAudit: false }); out = put(op, [...a.slice(0, 3), ...a.slice(3).map(d)]); }
+    else if (op === 'smooth_piecewise') { domain.set(`join:${id}`, { kind: 'SMOOTH_MATCHING_JOIN', operand: id, movingBoundariesRetained: a.slice(0, 3), provedByThisAudit: false }); out = constructor(op, [...a.slice(0, 3), ...a.slice(3).map(d)]); }
     else if (op === 'ceiling' || op === 'maximum') {
       const differentiatedOperands = a.map(d);
       if (differentiatedOperands.some(x => x !== zero)) {

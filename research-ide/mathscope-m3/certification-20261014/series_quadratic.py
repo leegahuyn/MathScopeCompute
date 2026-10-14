@@ -138,7 +138,14 @@ def source_attempt(repo):
         if sha(raw)!=expected:raise ValueError('Changed actual producer '+path)
         bindings.append({'path':path,'sha256':expected,'bytes':len(raw)})
     profile_raw=read(repo,'research-ide/mathscope-m2/navier/source-profile-data.mjs');profile=json.loads(re.search(rb'export const PINNED_N3 = (.*);',profile_raw).group(1));p=profile['parametersExactExpressions']
-    expected={'h':{'exp':{'product':[{'integer':-8002},{'ref':'T'}]}},'j0':{'power':[{'ref':'h'},4]},'muMoment':{'power':[{'ref':'h'},2]},'sigmaStar':{'quotient':[{'ref':'j0'},{'integer':2000}]},'rho':{'quotient':[{'power':[{'ref':'sigmaStar'},2]},{'integer':65536}]},'Lambda':{'power':[{'ref':'Q'},64]}}
+    expected={
+      'Md':{'integer':1048576},'T':{'sum':[{'exp':{'ref':'Md'}},{'integer':10}]},'logP':{'product':[{'integer':2},{'ref':'T'}]},'Pstar':{'exp':{'ref':'logP'}},'K':{'power':[{'ref':'Pstar'},2]},
+      'h':{'exp':{'product':[{'integer':-8002},{'ref':'T'}]}},'lambda':{'exp':{'product':[{'integer':-1000},{'ref':'T'}]}},'j0':{'power':[{'ref':'h'},4]},'muMoment':{'power':[{'ref':'h'},2]},
+      'sigmaStar':{'quotient':[{'ref':'j0'},{'integer':2000}]},'rho':{'quotient':[{'power':[{'ref':'sigmaStar'},2]},{'integer':65536}]},'Lambda':{'power':[{'ref':'Q'},64]},'BRefUpper':{'power':[{'ref':'Q'},300]},
+      'logCSelected':{'sum':[{'product':[{'integer':10},{'log':{'sum':[{'integer':1},{'ref':'BRefUpper'}]}}]},{'power':[{'ref':'Q'},200]}]},'CSelected':{'exp':{'ref':'logCSelected'}},
+      'XR':{'product':[{'integer':110},{'power':[{'product':[{'ref':'CSelected'},{'ref':'Pstar'}]},10]}]},'sourceEnvelopeS':{'power':[{'ref':'CSelected'},100000]},'C12EnvelopeR':{'exp':{'power':[{'ref':'sourceEnvelopeS'},256]}},
+      'radialFrequencyN':{'sum':[{'integer':1},{'ceil':{'power':[{'ref':'C12EnvelopeR'},50]}}]},'X0I2':{'product':[{'ref':'XR'},{'exp':{'sum':[{'ref':'T'},{'integer':2},{'product':[{'integer':60},{'ref':'BOuter'}]},{'integer':-20}]}}]},'BOuter':{'product':[{'integer':1000},{'ref':'T'}]},
+    }
     if any(p[k]!=v for k,v in expected.items()) or int(p['Q']['quotient'][0]['product'][0]['integer'])!=2**260:raise ValueError('Changed exact parameter tree')
     targets={2,474,4483,5029,*[core[k] for k in ['eta',*CORE_NAMES]]}
     for d in systems:
@@ -146,6 +153,7 @@ def source_attempt(repo):
     cutoff=max(targets);nodes={}
     for ident,node in stream_snapshot(repo):
         if ident<=cutoff:nodes[ident]=node
+    if verify_capture(repo)!=capture:raise ValueError('Original producer capture changed during source stream')
     if nodes[4483]!={'op':'actual_natural_series','args':['average',474,2,0,0]} or nodes[5029]!={'op':'actual_quadratic_root','args':[0,4,2]}:raise ValueError('Changed actual source gates')
     selected={};unknown={};cache={};active=set()
     def support(ident):
@@ -168,9 +176,10 @@ def source_attempt(repo):
         sup=set()
         for ident in ids:sup.update(support(ident))
         matrix_support.append({'system':j,'capturedCoordinates':sorted(sup,key=str),'coefficientsEtaIndependent':not sup})
-    return {'sourceCapture':capture,'fullParentStreamVerified':True,'sourceProducerBindings':bindings,'sourceProfileDataSHA256':sha(profile_raw),
+    y_node=nodes[474];exact_y=F(*map(int,y_node['args'])) if y_node['op']=='rational' else None
+    return {'sourceCapture':capture,'sourceCaptureReverifiedAfterStream':True,'fullParentStreamVerified':True,'sourceProducerBindings':bindings,'sourceProfileDataSHA256':sha(profile_raw),
       'parameterExpressionSHA256':profile['parameterExpressionSHA256'],'exactParameterShapesChecked':sorted(expected),
-      'actualGates':[{'sourceNode':i,'node':nodes[i],'sha256':digest(nodes[i])} for i in [4483,5029]],'actualNaturalYArgument':{'sourceNode':474,'node':nodes[474]},
+      'actualGates':[{'sourceNode':i,'node':nodes[i],'sha256':digest(nodes[i])} for i in [4483,5029]],'actualNaturalYArgument':{'sourceNode':474,'node':y_node,'exactRationalValue':str(exact_y) if exact_y is not None else None,'withinWrittenNaturalRectangleVerified':exact_y is not None and 0<=exact_y<=F(41,10),'etaArgumentIsOriginalFormalEta':nodes[4483]['args'][2]==core['eta'],'domainClassStillRequiresActualBanachLemma':True},
       'originalFixedCore':{k:core[k] for k in ['eta',*CORE_NAMES]},'primitiveCoreCoordinateSupport':core_support,'corePrimitiveCaptureClosureVerified':core_only_eta,
       'naturalExternalArgumentsOnly':['Y','eta'],'naturalFormalEtaAndCoefficientFieldsAreLocalTable':True,
       'quadraticDefinitionBindings':[{'index':j,'definition':d,'sha256':digest(d)} for j,d in enumerate(systems)],'actualMatrixCoefficientCaptureAudit':matrix_support,
