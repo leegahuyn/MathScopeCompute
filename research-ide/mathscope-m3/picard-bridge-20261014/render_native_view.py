@@ -13,6 +13,8 @@ from pathlib import Path
 
 OPERATORS = {"actual_natural_series": 157, "inverse": 33,
              "log_positive": 21, "sqrt_positive": 5}
+HEADER_SHA = "010f1cc18f09c5e9ef226788e8770016603bf520b25289f01d4a08f5aa1da97c"
+DB_SHA = "ffd82b62c8aaeeb0d076a614f7af0b9782804abab9337743c2951275bb9d9003"
 
 
 def require(condition, message):
@@ -23,6 +25,12 @@ def require(condition, message):
 def validate(data):
     require(data.get("schema") == "MathScope.N6.PicardActualNativeDomainInventory/1",
             "Unsupported native inventory schema")
+    source = data.get("source", {})
+    require(source.get("headerSHA256") == HEADER_SHA
+            and source.get("databaseSHA256") == DB_SHA
+            and source.get("picard") == "ActualSameN3OrderOneInner"
+            and source.get("eta") == 2 and source.get("xi") == 25516,
+            "Native source metadata does not match this pinned Picard view")
     calls = data.get("actualNativeCalls", [])
     require(len(calls) == 216, "Expected all 216 authenticated native calls")
     ids = [c.get("sourceNode") for c in calls]
@@ -30,6 +38,12 @@ def validate(data):
             "Native source node IDs must be unique integers")
     require({op: sum(c.get("operator") == op for c in calls) for op in OPERATORS}
             == OPERATORS, "Native operator counts changed")
+    l = data.get("nativeLRoot", {})
+    require(l.get("formula") == "1-2*h*eta^2"
+            and 1953 in l.get("allFoundOriginalInverseNodes", [])
+            and l.get("analyticallyValidForNativeInverseCalls") is True
+            and any(c["sourceNode"] == 1953 and c["operator"] == "inverse" for c in calls),
+            "Displayed L proof is not attached to its original inverse call")
     require(data.get("actualRootCoefficientClosure", {}).get("uniqueNodeCount") == 3679,
             "Authenticated Picard closure count changed")
     require(data.get("N6RemainingJetsUnchanged") == 230

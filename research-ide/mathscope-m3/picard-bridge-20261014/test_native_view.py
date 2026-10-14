@@ -3,7 +3,7 @@ import copy
 import json
 import unittest
 
-from render_native_view import OPERATORS, embedded_json, render, validate
+from render_native_view import DB_SHA, HEADER_SHA, OPERATORS, embedded_json, render, validate
 
 
 def fixture():
@@ -12,9 +12,14 @@ def fixture():
     for operator, count in OPERATORS.items():
         calls += [{"sourceNode": len(calls) + i, "operator": operator}
                   for i in range(count)]
+    calls[157]["sourceNode"] = 1953
     return {
         "schema": "MathScope.N6.PicardActualNativeDomainInventory/1",
+        "source": {"headerSHA256": HEADER_SHA, "databaseSHA256": DB_SHA,
+                   "picard": "ActualSameN3OrderOneInner", "eta": 2, "xi": 25516},
         "actualNativeCalls": calls,
+        "nativeLRoot": {"formula": "1-2*h*eta^2", "allFoundOriginalInverseNodes": [1953],
+                        "analyticallyValidForNativeInverseCalls": True},
         "actualRootCoefficientClosure": {"uniqueNodeCount": 3679},
         "N6RemainingJetsUnchanged": 230, "N6TotalGlobalGuardCountUnchanged": 38,
         "N6ResidualPDETermsUnchanged": 1020, "originalM3Status": "56/64",
@@ -68,6 +73,18 @@ class NativeViewTests(unittest.TestCase):
         data = fixture()
         data["actualNativeCalls"].pop()
         with self.assertRaisesRegex(ValueError, "216"):
+            render(data)
+
+    def test_unpinned_source_rejected(self):
+        data = fixture()
+        data["source"]["databaseSHA256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "pinned Picard"):
+            render(data)
+
+    def test_unbound_L_claim_rejected(self):
+        data = fixture()
+        data["nativeLRoot"]["allFoundOriginalInverseNodes"] = []
+        with self.assertRaisesRegex(ValueError, "original inverse"):
             render(data)
 
     def test_summary_mismatch_rejected(self):
