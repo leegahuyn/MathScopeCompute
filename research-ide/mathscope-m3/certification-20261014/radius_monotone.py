@@ -189,12 +189,19 @@ def source_closure(nodes,tables,root):
             result=(union(parts)-{eta})|visit(a[2])
         elif op=="actual_expression_partial":
             d=tables["expression"][a[0]];result=(set(visit(d["body"]))-set(d["parameters"]))|union(a[1])
+        elif op in ("actual_background_picard","actual_background_even_profile"):
+            d=tables["picard"][a[0]]
+            parts=sum(d["A0"],[])+sum(d["A1"],[])+d["forcing"]+d["zeroAxisDatum"]+d["radialDomain"]
+            parts += [d["tail"][k] for k in ("sourceBound","sourceStrip","solutionStrip","loss","Kcondition","Kprecision","K","error","target") if k in d.get("tail",{})]
+            parts += [d["solutionNorm"][k] for k in ("commonCollar","naturalExtensionToY5") if k in d.get("solutionNorm",{})]
+            result=(union(parts)-{d["xi"],d["eta"]})|union(a[2:4])
         else: unresolved[id]={"operation":op,"actualOperands":a};result=set()
         active.remove(id);cache[id]=frozenset(result);return cache[id]
     free=sorted(visit(root))
     return {"root":root,"freeCoordinateNodes":free,"freeCoordinateRows":[{"sourceNode":id,"node":nodes[id]} for id in free],
       "unknownDefiningOperators":[{"sourceNode":id,"reason":value} for id,value in sorted(unresolved.items())],
-      "closureProved":not unresolved,"closedConstantProved":not unresolved and not free,"visitedNodeCount":len(used),
+      "closureProved":not unresolved,"coordinateCaptureClosureProved":not unresolved,"closedConstantProved":not unresolved and not free,"visitedNodeCount":len(used),
+      "actualInfiniteLimitExistenceProved":False,"actualBodyRealnessAndIntegrabilityProved":False,
       "selectedNodesSHA256":digest([[id,nodes[id]] for id in sorted(used)])}
 
 def radius_faces(nodes):
@@ -244,11 +251,18 @@ def run_source(repo):
     assert_equal(nodes[1],{"op":"rational","args":["1","1"]},"Original eta upper endpoint changed")
     assert_equal(nodes[215514],{"op":"sqrt_positive","args":[137008]},"Original Cartesian radius changed")
     assert_equal(nodes[346574],{"op":"multiply","args":[20,215514]},"Original negative radius changed")
-    closures={"maximum":source_closure(nodes,tables,539400),"radiusSquared":source_closure(nodes,tables,137008)}
+    assert_equal(nodes[539403],{"op":"maximum","args":[1,539399,539402]},"Actual new maximum539403 changed")
+    assert_equal(nodes[539402],{"op":"add","args":[522376,539401]},"Actual order-one norm aggregate changed")
+    assert_equal(nodes[539401],{"op":"add","args":[495937,503863]},"Actual order-one norm components changed")
+    closures={"maximum":source_closure(nodes,tables,539400),"maximum539403":source_closure(nodes,tables,539403),"radiusSquared":source_closure(nodes,tables,137008)}
     for j,d in enumerate(tables["monotone"]):closures[f"monotone{j}Body"]=source_closure(nodes,tables,d["body"])
     return {"status":"SOURCE_VERIFIED","sourceCapture":capture,"sourceCaptureReverifiedAfterStream":True,"fullParentStreamExhaustedAndVerified":True,"fullParentNodeCount":3892594,"retainedNodeCount":len(nodes),"sourceParameters":params,
       "reviewedProducerBindings":producer_bindings,"sourcePaperSHA256":tables["fixed"]["source"]["sourcePaperSHA256"],
       "originalMaximum":{"sourceNode":539400,"node":nodes[539400],"nodeSHA256":MAXIMUM_HASH},"FTCfaces":faces,
+      "nextActualReplayGate":{"sourceNode":539403,"node":nodes[539403],"nodeSHA256":digest(nodes[539403]),"higherNormAggregate":539402,
+          "higherNormComponentRoots":[495937,503863,522376],"B0vsB1DominanceProved":False,
+          "constantSelectorLemma":"If the complete defining source is well-defined and its body-aware coordinate capture is closed, the original maximum is a constant with respect to R622802. This route requires no choice betweenB0/B1 and no differentiable maximum theorem.",
+          "actualSourceDefinitionsWellDefinedProved":False},
       "sourceMonotoneDefinitions":[{"index":j,"definition":d,"definitionSHA256":DEFINITION_HASHES[j]} for j,d in enumerate(tables["monotone"])],
       "sourceClosures":closures,
       "remainingSourceLemmas":[

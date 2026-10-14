@@ -127,6 +127,25 @@ export function createIndependentMeanReader({ node, definitions = {}, sourceOper
     else out=true;
     occurrenceCache.set(key,out);return out;
   }
+  function dependencyWitness(root,variable){
+    const seen=new Set(),queue=[[root,[]]],unknown=[];let visits=0;
+    while(queue.length&&visits++<200000){
+      const [id,path]=queue.pop();if(seen.has(id))continue;seen.add(id);
+      const n=nodes[id],row={independentNode:id,operation:n.op,sourceIds:sourceBindings.get(id)??[]},nextPath=[...path,row];
+      if(id===variable)return {found:true,path:nextPath,unknown,visits};
+      const a=n.args;let children=[];
+      if(n.op==='definite_integral')children=[...(a[1]===variable?[]:[a[0]]),a[2],a[3]];
+      else if(['integer_power','source_step_derivative'].includes(n.op))children=[a[0]];
+      else if(n.op==='independent_defined_partial')children=[...a[2],...a[4]];
+      else if(n.op==='independent_implicit_monotone_root')children=a[2];
+      else if(n.op==='independent_implicit_quadratic_root')children=[a[2],...a[3]];
+      else if(n.op==='independent_exact_natural_series')children=[a[1],a[2]];
+      else if(['add','multiply','maximum','smooth_piecewise','inverse','sqrt_positive','exp','log_positive','sine','cosine','ceiling'].includes(n.op))children=a;
+      else if(!['rational','coordinate','source_parameter'].includes(n.op))unknown.push(row);
+      for(const child of children)queue.push([child,nextPath]);
+    }
+    return {found:false,path:[],unknown:unknown.slice(0,24),visits,budgetExhausted:queue.length>0};
+  }
   function substitute(id, bound, value) {
     if (id === bound) return value; if(bound===value||!occurs(id,bound)){skippedSubstitutions++;return id;} const key = `${id}:${bound}:${value}`; if (substitutionCache.has(key)) return substitutionCache.get(key);
     tick(); const { op, args: a } = nodes[id]; let out;
@@ -174,7 +193,7 @@ export function createIndependentMeanReader({ node, definitions = {}, sourceOper
       if (differentiatedOperands.some(x => x !== zero)) {
         const sourceIds = [...(sourceBindings.get(id) || [])], variableSourceIds = [...(sourceBindings.get(variable) || [])];
         discreteDerivativeStops.push({ operation: op, independentNode: id, sourceIds, originalSourceNodes: sourceIds.map(sourceNode => ({ sourceNode, node: structuredClone(take(sourceNode)), nodeSHA256: hash(take(sourceNode)) })), operandRoots: a, differentiatedOperands, variable, variableSourceIds, frozenOrSmoothSelectionProved: false });
-        fail(`A ${op} selection (independent node ${id}, actual source nodes ${sourceIds.join(',') || 'derived'}) depends on differentiated variable ${variable} (actual source nodes ${variableSourceIds.join(',') || 'derived'}); its frozen/smooth branch is unproved.`, 'UNRESOLVED_CUSTOM_DERIVATIVE');
+        throw Object.assign(new Error(`A ${op} selection (independent node ${id}, actual source nodes ${sourceIds.join(',') || 'derived'}) depends on differentiated variable ${variable} (actual source nodes ${variableSourceIds.join(',') || 'derived'}); its frozen/smooth branch is unproved.`),{code:'UNRESOLVED_CUSTOM_DERIVATIVE',dependencyWitness:dependencyWitness(id,variable)});
       }
       out = zero;
     }

@@ -143,7 +143,7 @@ export async function auditSavedWholeMeanConditional(capability,cutoff,input={})
     const lastImportedSourceRoot=importer?.bindings.at(-1)?.sourceId??539400,lastNode=originalNode(lastImportedSourceRoot);
     const reportedSourceNodes=[...error.message.matchAll(/(?:actual source nodes?|source node)\s+([\d, ]+)/g)].flatMap(m=>m[1].split(/[, ]+/).filter(Boolean).map(Number));
     stops.push({stage,code:error.code,reason:error.message,lastImportedSourceRoot,lastImportedSourceNode:{sourceNode:lastImportedSourceRoot,node:structuredClone(lastNode),nodeSHA256:hash(lastNode)},lastImportStatus:importer?.bindings.at(-1)?.status??'conditional-maximum-import-not-completed',reportedSourceNodes,actualSourceImportStack:error.actualSourceImportStack??[],workUsedAtStop:error.workUsed??null,scalarNodesAtStop:error.scalarNodes??null,
-      exactInnerFailingNodeKnown:reportedSourceNodes.length>0,resourceLimitIsNotAMathematicalCounterexample:error.code==='RESOURCE_LIMIT',originalRootOrOperatorNotReplacedByZero:true});
+      dependencyWitness:error.dependencyWitness??null,exactInnerFailingNodeKnown:reportedSourceNodes.length>0,resourceLimitIsNotAMathematicalCounterexample:error.code==='RESOURCE_LIMIT',originalRootOrOperatorNotReplacedByZero:true});
   }
   const diagnostics=collectConditionalMeanDiagnostics(replay,{maxWork:input.maxWork??5000000,maxNodes:input.maxNodes??800000}),matched=rows.length===2&&rows.every(row=>Object.values(row.comparisons).every(c=>c.pass));
   if(!diagnostics.diagnosticsAvailable)stops.push({stage:'post-stop-diagnostics',code:'DIAGNOSTICS_UNAVAILABLE_AFTER_SOURCE_STOP',reason:diagnostics.diagnosticsFailure.reason,underlyingCode:diagnostics.diagnosticsFailure.code,primarySourceStopPreserved:true});
