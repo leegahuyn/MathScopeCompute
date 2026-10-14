@@ -171,8 +171,10 @@ def clock_derivative_certificates(mutation=None):
     return result
 
 
-def native_bindings(source,definitions):
+def native_bindings(source,definitions,parameters):
     fixed=definitions['fixed:null']['definition'];core=fixed['core'];outer=fixed['outer'];pressure=fixed['pressure']
+    require(fixed['source']['parametersExactExpressions']==parameters.expressions,
+            'captured native fixed-point parameter expressions differ from the pinned actual profile')
     require(core['P0']==pressure['pressure']==fixed['naturalKernel']['actualPressureRoot'],'native pressure root binding differs')
     require(core['g']==fixed['naturalKernel']['actualPositiveGRoot'],'native positive g root binding differs')
     require([x['id'] for x in outer['stages']]==STAGES==[x['id'] for x in pressure['stages']],'complete native clock stage inventory changed')
@@ -255,11 +257,12 @@ def run(context,out):
         with urllib.request.urlopen(FLAT_URL,timeout=30) as reply:flat=reply.read(20000)
         require(hashlib.sha256(flat).hexdigest()==FLAT_SHA,'original official FlatCutoff bytes changed')
         result['originalSourceBindings']=pins+[{'url':FLAT_URL,'sha256':FLAT_SHA,'bytes':len(flat)}]
-        result['profileChecks']=source_profile_checks(source_parameters(context))
+        parameters=source_parameters(context)
+        result['profileChecks']=source_profile_checks(parameters)
         result['clockDerivativeCertificates']=clock_derivative_certificates()
         result['terminalWaitProof']=terminal_theorem()
         checkpoint,previous,originals,program,source,definitions=validate_inputs(context)
-        binding=native_bindings(source,definitions)
+        binding=native_bindings(source,definitions,parameters)
         evidence=write(out/'native-pressure-amplitude-source-bindings.json',binding)
         result['sourceNodeBindingEvidence']=evidence
         result.update(nativePressureEqualsLeanNewPressureProved=True,nativeGEqualsLeanRealAmplitudeProved=True,

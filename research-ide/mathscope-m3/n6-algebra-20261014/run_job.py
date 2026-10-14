@@ -5,12 +5,13 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent;REPO=HERE.parents[2];FINISH=HERE.parent/'n6-finish-20261014'
 sys.path.insert(1,str(FINISH))
 def module(name,path):
+    if str(path.parent) not in sys.path:sys.path.insert(0,str(path.parent))
     s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);sys.modules[name]=m;s.loader.exec_module(m);return m
 finish=module('immutable_finish_controller',FINISH/'run_job.py')
 read,write,sha=finish.read,finish.write,finish.sha
 def implementation():
     rows=finish.implementation()
-    for folder in [HERE,HERE.parent/'n6-clock-bridge-20261014',HERE.parent/'n6-guard-followup-20261014']:
+    for folder in [HERE,HERE.parent/'n6-clock-bridge-20261014',HERE.parent/'n6-guard-followup-20261014',HERE.parent/'n6-root-relation-20261014']:
         for p in folder.rglob('*'):
             if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc':rows[p.relative_to(REPO).as_posix()]=sha(p)
     p=REPO/'.github/workflows/m3-n6-algebra.yml';rows[p.relative_to(REPO).as_posix()]=sha(p)
@@ -56,6 +57,17 @@ def main():
             if extra.is_file():module('remaining_guard_followup',extra).run(c,out)
             clock=HERE.parent/'n6-clock-bridge-20261014/source_clock_bridge.py'
             if clock.is_file():module('intrinsic_clock_bridge',clock).run(c,out)
+            norm=HERE.parent/'n6-clock-bridge-20261014/native_recurrence_norm_bridge.py'
+            if norm.is_file():
+                c['native_clock_certificate_path']=str(out/'native-pressure-amplitude-clock-bridge.json')
+                c['native_clock_certificate_sha256']=sha(c['native_clock_certificate_path'])
+                module('original_native_recurrence_norm_bridge',norm).run(c,out)
+        if x.component==2:
+            relation=HERE.parent/'n6-root-relation-20261014/root_relation.py'
+            test=subprocess.run([sys.executable,'-B','-m','unittest','discover','-s',str(relation.parent),'-p','test_*.py','-v'],stdout=log,stderr=err,timeout=120)
+            if test.returncode:raise ValueError('Original implicit-root relation controls failed')
+            module('original_root_equation_quotient',relation).run(c,out,component=2)
+            meta['originalRootRelationControlsPassed']=True
         path=x.prior/f'pde-solve-component-{x.component}-circuit.json';evidence=read(path)
         pde=module('immutable_pde_source_calculus',FINISH/'pde_solve.py');verify=module('immutable_pde_source_verifier',FINISH/'pde_solve_verify.py')
         original,terms,source,definitions,pins=pde.load_inputs(c,x.component)
@@ -89,10 +101,13 @@ def main():
             'verificationPhase':algebra.get('verificationPhase'),'exactConditionalAlgebraVerified':certified,
             'verifiedConditionalNumeratorTerms':algebra.get('normalizedNumeratorTerms') if certified else None,
             'candidateNumeratorTerms':algebra.get('normalizedNumeratorTerms'),'remainingStop':algebra.get('stop'),
+            'normalizationProductsUsed':algebra.get('productsUsed'),'reconstructionProductsUsed':algebra.get('reconstructionProductsUsed'),
+            'sourceAdditionReassociation':algebra.get('exactSourceAdditionReassociation'),
             'conditionalFunctionalResidualZero':algebra.get('conditionalFunctionalResidualZero') if certified else None,
             'strictOriginalTermZeros':sum(bool(r['originalTermZeroOnLeafDefinedDomain']) for r in evidence['allOriginalTerms']),
             'originalAnalyticEqualityProved':False,'analyticallyDischargedOriginalPDETerms':0,
             'allInactiveOperandAndDenominatorDefinednessPremisesRetained':True,'originalParentSHA256':lock['originalParentSHA256']}
+        if hasattr(pde,'compact_atom_inventory'):result.update(pde.compact_atom_inventory(algebra))
         write(out/'result.json',result)
         if source.db is not None:source.db.close()
         if protected!=finish.cloud.old_runner().verify_pins() or meta['implementation']!=implementation():raise ValueError('Source implementation changed during verification')
@@ -101,9 +116,14 @@ def main():
         meta['executionStatus']='IMPLEMENTATION_OR_RESOURCE_FAILURE';meta['failure']={'type':type(error).__name__,'message':str(error)};traceback.print_exc();code=1
     meta.update(elapsedSeconds=time.monotonic()-start,maxPythonRSSKiB=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
     finish.cloud.receipt(out,meta)
-    if (out/'result.json').exists():print(json.dumps(read(out/'result.json'),ensure_ascii=False))
+    if (out/'result.json').exists():
+        compact=read(out/'result.json');compact.pop('normalizedOpaqueAtomInventory',None)
+        if isinstance(compact.get('sourceAdditionReassociation'),dict):compact['sourceAdditionReassociation']={k:v for k,v in compact['sourceAdditionReassociation'].items() if k!='receipts'}
+        print(json.dumps(compact,ensure_ascii=False))
     for name,keys in [('guard-followup-result.json',['attemptedGuards','newGloballyClosedGuards','remainingGlobalGuards']),
-        ('native-pressure-amplitude-clock-bridge.json',['nativePressureEqualsLeanNewPressureProved','nativeGEqualsLeanRealAmplitudeProved','nativeB_rhoNormBoundProved','preciseSourceBindingStop'])]:
+        ('native-pressure-amplitude-clock-bridge.json',['nativePressureEqualsLeanNewPressureProved','nativeGEqualsLeanRealAmplitudeProved','nativeB_rhoNormBoundProved','preciseSourceBindingStop']),
+        ('native-recurrence-norm-bridge.json',['nativeZstarDerivativeIdentityProved','nativeB_rhoNormBoundProved','preciseSourceBindingStop']),
+        ('original-root-relation-result.json',['components','originalInputTermsAttempted','originalAnalyticEqualityProved'])]:
         if (out/name).is_file():print(json.dumps({'supplementalCertificate':name,**{k:v for k,v in read(out/name).items() if k in keys}},ensure_ascii=False))
     print(json.dumps(meta.get('failure',{'status':meta['executionStatus'],'elapsedSeconds':meta['elapsedSeconds']})))
     if code:print('\n'.join((out/'stderr.log').read_text(encoding='utf8').splitlines()[-30:]));print((out/'algebra-stderr.log').read_text(encoding='utf8')[-6000:] if (out/'algebra-stderr.log').exists() else '')

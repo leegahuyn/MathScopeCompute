@@ -4,7 +4,7 @@ from pathlib import Path
 import unittest
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from guard_followup import IterativeSourceCalculus,attempt,domain_support,negative_controls
+from guard_followup import IterativeSourceCalculus,attempt,domain_support,negative_controls,classify_row_audit,constant_four_minus_sqrt_two,branch_dominance
 from jet_worker import js_hash
 
 
@@ -22,6 +22,40 @@ def fixture(depth=1,hidden=False):
 
 
 class IterativeCaptureTests(unittest.TestCase):
+    def indexed_fixture(self,hidden=False,native=False):
+        source={0:{'op':'coordinate','args':['x']},1:{'op':'coordinate','args':['y']},
+            2:{'op':'coordinate','args':['hidden binder']},3:{'op':'rational','args':['1','1']},
+            4:{'op':'rational','args':['0','1']},5:{'op':'coordinate','args':['implicit s']}}
+        body=2 if hidden else 0
+        defs={}
+        if native:
+            source[6]={'op':'actual_monotone_root','args':[0,0,1]};body=6
+            d={'variable':5,'parameters':[0,1],'body':2 if hidden else 5,'left':4,'right':3,'derivativeLower':3,'derivativeUpper':3}
+            defs['monotone:0']={'key':'monotone:0','definition':d,'definitionSHA256':js_hash(d)}
+        d={'parameters':[0,1],'body':body,'derivativeLimits':[1,1]}
+        defs['expressionDefinitions:0']={'key':'expressionDefinitions:0','definition':d,'definitionSHA256':js_hash(d)}
+        d={'parameters':[0,1],'directions':[0,1],'rows':[{'coefficient':3,'values':[0,1],
+            'localParameters':[0,1],'localBody':body,'localSystem':-1,'guards':[],
+            'derivativeMaps':[[{'parameter':0,'coefficient':3}],[{'parameter':1,'coefficient':3}]]}]}
+        defs['fieldDefinitions:0']={'key':'fieldDefinitions:0','definition':d,'definitionSHA256':js_hash(d)}
+        source[7]={'op':'m3_aux_indexed_partial','args':[0,[0,1],[0,0]]}
+        return IterativeSourceCalculus(source,defs,max_work=100000)
+
+    def test_every_indexed_local_body_reopened_and_hidden_capture_rejected(self):
+        calc=self.indexed_fixture(hidden=True);coords,unknown=calc.source_support(7)
+        self.assertTrue(unknown);self.assertFalse(calc.capture_audit(7)['pass'])
+        self.assertEqual(calc.indexed_local_capture_cache['fieldDefinitions:0']['uniqueLocalBodiesIndependentlyAudited'][0]['hiddenCapturedCoordinates'],[2])
+
+    def test_native_coefficients_inside_indexed_local_body_are_reopened(self):
+        calc=self.indexed_fixture(hidden=True,native=True);coords,unknown=calc.source_support(7)
+        self.assertTrue(unknown);self.assertFalse(calc.capture_audit(7)['pass'])
+        self.assertFalse(calc.system_capture_cache['monotone:0']['pass'])
+
+    def test_exact_indexed_local_body_and_native_capture_can_pass(self):
+        calc=self.indexed_fixture(native=True);coords,unknown=calc.source_support(7)
+        self.assertFalse(unknown);self.assertTrue(calc.capture_audit(7)['pass'])
+        self.assertTrue(calc.indexed_local_capture_cache['fieldDefinitions:0']['allActualLocalBodiesChecked'])
+
     def test_actual_deep_dag_has_no_python_recursion(self):
         source,defs,_=fixture(4000);calc=IterativeSourceCalculus(source,defs,max_work=100000)
         coords,unknown=calc.source_support(max(source))
@@ -50,7 +84,7 @@ class IterativeCaptureTests(unittest.TestCase):
         source,defs,program=fixture();defs['expression:0']['definition']['domain']={'positive':2}
         defs['expression:0']['definitionSHA256']=js_hash(defs['expression:0']['definition'])
         calc=IterativeSourceCalculus(source,defs,max_work=100000)
-        with self.assertRaises(ValueError):attempt(program,{'root':2,'bound':0,'value':1},calc)
+        self.assertFalse(attempt(program,{'root':2,'bound':0,'value':1},calc)['globallyProved'])
 
     def test_binder_scope_removes_only_integrand_dependency(self):
         source={0:{'op':'coordinate','args':['r']},1:{'op':'coordinate','args':['x']},
@@ -71,6 +105,55 @@ class IterativeCaptureTests(unittest.TestCase):
 
     def test_runtime_mutations_are_rejected(self):
         self.assertTrue(all(x['rejected'] for x in negative_controls()))
+
+    def test_native_variational_blocks_are_not_falsely_counted_as_chart_failures(self):
+        audit={'resourceStop':None,'rows':[{'registryKey':'m3GlobalFields:0','verified':True},
+            {'registryKey':'fieldDefinitions:1','verified':True},{'registryKey':'m3GlobalBlocks:0','verified':False}]}
+        result=classify_row_audit(audit)
+        self.assertEqual(result['actualIndexedFieldRowsVerified'],2)
+        self.assertTrue(result['allActualIndexedFieldRowsStructurallyVerified'])
+        self.assertEqual(result['nativePulseVariationalBlockRows'],1)
+        self.assertFalse(result['nativePulseDomainCertificateInferred'])
+
+    def test_original_constant_guard_exact_square_enclosure(self):
+        program=[{'op':'rational','args':['-1','1']},{'op':'rational','args':['2','1']},
+            {'op':'sqrt_positive','args':[1]},{'op':'multiply','args':[0,2]},
+            {'op':'rational','args':['4','1']},{'op':'add','args':[3,4]}]
+        guard={'kind':'POSITIVE_ACTUAL_ARGUMENT_ON_ACTIVE_DOMAIN','operation':'log_positive','operand':5}
+        result=constant_four_minus_sqrt_two(program,guard)
+        self.assertTrue(result['exactConstant4MinusSqrt2']);self.assertEqual(result['strictLowerBound'],'2')
+        for index,value in [(4,1),(1,16)]:
+            changed=copy.deepcopy(program);changed[index]={'op':'rational','args':[str(value),'1']}
+            with self.assertRaises(ValueError):constant_four_minus_sqrt_two(changed,guard)
+
+    def branch_fixture(self):
+        return [{'op':'rational','args':['0','1']},{'op':'rational','args':['1','1']},
+            {'op':'coordinate','args':['t',999]},{'op':'rational','args':['-1','1']},
+            {'op':'multiply','args':[3,2]},{'op':'add','args':[1,4]},
+            {'op':'multiply','args':[2,5]},{'op':'inverse','args':[6]},
+            {'op':'multiply','args':[3,7]},{'op':'exp','args':[8]},
+            {'op':'smooth_piecewise','args':[2,0,1,0,9,0]}]
+
+    def test_all_dag_sinks_force_original_bump_interior(self):
+        result=branch_dominance(self.branch_fixture(),{'operand':6})
+        self.assertTrue(result['globallyProved']);self.assertFalse(result['selectorDefinednessProved'])
+
+    def test_unguarded_inverse_sink_rejects_branch_proof(self):
+        program=self.branch_fixture()+[{'op':'inverse','args':[6]}]
+        self.assertFalse(branch_dominance(program,{'operand':6})['globallyProved'])
+
+    def test_literal_source_id_is_not_an_evaluation_edge(self):
+        program=self.branch_fixture()+[{'op':'coordinate','args':['unrelated source coordinate',7]}]
+        self.assertTrue(branch_dominance(program,{'operand':6})['globallyProved'])
+
+    def test_integral_shadowing_drops_outer_branch_fact(self):
+        program=self.branch_fixture();program[10]={'op':'definite_integral','args':[9,2,0,1]}
+        program.append({'op':'smooth_piecewise','args':[2,0,1,0,10,0]})
+        self.assertFalse(branch_dominance(program,{'operand':6})['globallyProved'])
+
+    def test_unknown_evaluation_grammar_fails_closed(self):
+        program=self.branch_fixture()+[{'op':'unknown_helper','args':[7]}]
+        with self.assertRaises(ValueError):branch_dominance(program,{'operand':6})
 
 
 if __name__=='__main__':unittest.main()

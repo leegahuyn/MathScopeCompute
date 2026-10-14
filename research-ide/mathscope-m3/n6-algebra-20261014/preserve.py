@@ -13,7 +13,7 @@ def main():
     a.output.mkdir(parents=True,exist_ok=True);run=os.environ['GITHUB_RUN_ID'];commit=os.environ['GITHUB_SHA'];lock=read(HERE/'INPUT_LOCK.json')
     source_path=controller.REPO/lock['sourceMatrixPath']
     if sha(source_path)!=lock['sourceMatrixSHA256']:raise ValueError('Source frontier changed')
-    frontier=read(source_path);rows=[];hashes=[];progress=[];guard_followup=None;clock_bridge=None;new_guard_ids=set()
+    frontier=read(source_path);rows=[];hashes=[];progress=[];guard_followup=None;clock_bridge=None;native_norm_bridge=None;root_relation=None;new_guard_ids=set()
     for i in range(3):
         folder=a.results/f'n6-algebra-{i}-{run}'
         if not (folder/'receipt.json').is_file():
@@ -44,14 +44,37 @@ def main():
                 for r in guard_followup['rows']:
                     if r['id'] not in frontier['remainingGlobalGuardIDs'] or r['originalGuard']!=original_guards[r['id']]['originalGuard']:raise ValueError('Followup changed original guard')
                     if r['globallyProved']:
-                        if r['evidence']['sourceExistenceProved'] or r['evidence']['wholeGlobalImageProved']:raise ValueError('Substitution proof cannot promote original source existence')
+                        ev=r['evidence'];kind=r['originalGuard']['kind']
+                        if ev.get('sourceExistenceProved') or ev.get('wholeGlobalImageProved'):raise ValueError('Primitive proof cannot promote original source existence')
+                        if kind=='ACTUAL_OPAQUE_SUBSTITUTION':
+                            capture=ev.get('allIndexedLocalBodyCaptureAudits')
+                            if capture is None or not all(v.get('pass') and v.get('allActualLocalBodiesChecked') for v in capture.values()):raise ValueError('Complete indexed local-body capture audit missing')
+                        elif kind=='POSITIVE_ACTUAL_ARGUMENT_ON_ACTIVE_DOMAIN':
+                            if not ev.get('exactConstant4MinusSqrt2') or ev.get('strictLowerBound')!='2' or r['originalGuard'].get('operand')!=45:raise ValueError('Exact constant positivity evidence missing')
+                        elif kind=='NONZERO_ACTUAL_ARGUMENT':
+                            if not all(ev.get(k) is True for k in ['strictActiveBranchNonzero','allRootToInversePathsGuarded','allOriginalDAGSinksConsidered']):raise ValueError('Whole-source active-branch denominator proof missing')
+                        else:raise ValueError('Unsupported new guard proof family')
                         new_guard_ids.add(r['id'])
                 if len(new_guard_ids)!=guard_followup['newGloballyClosedGuards']:raise ValueError('New guard count inconsistent')
             if (folder/'native-pressure-amplitude-clock-bridge.json').is_file():clock_bridge=read(folder/'native-pressure-amplitude-clock-bridge.json')
+            if (folder/'native-recurrence-norm-bridge.json').is_file():native_norm_bridge=read(folder/'native-recurrence-norm-bridge.json')
+            for name in ['native-recurrence-norm-bridge.json','native-recurrence-norm-source-bindings.json']:
+                if (folder/name).is_file():(a.output/name).write_bytes((folder/name).read_bytes())
+        if i==2 and (folder/'original-root-relation-result.json').is_file():
+            root_relation=read(folder/'original-root-relation-result.json')
+            if not e.get('originalRootRelationControlsPassed') or root_relation['originalAnalyticEqualityProved']:raise ValueError('Original root relation source controls missing')
+            for cert in root_relation['components']:
+                name=f'original-root-relation-component-{cert["component"]}.json'
+                if cert['component']!=2 or cert['originalInputTerms']!=654 or sha(folder/name)!=cert['certificateSHA256'] or not cert['exactQuotientCertificateVerified']:raise ValueError('Original implicit equation coefficient certificate changed')
+                data=read(folder/name)
+                if not all(c['rejected'] for c in data['negativeControls']) or not data['independentCoefficientVerification']['verified']:raise ValueError('Original implicit equation mutation survived')
+                (a.output/name).write_bytes((folder/name).read_bytes())
+            write(a.output/'original-root-relation-result.json',root_relation)
     summary={'schema':'MathScope.N6.TargetedAlgebraSummary/1','sourceCommit':commit,'runId':run,'sourceDerivativeRun':lock['sourceRun'],
         'runURL':f'https://github.com/{prior.REPO}/actions/runs/{run}','originalInputTerms':[169,197,654],
         'originalTermsRechecked':sum(r['originalInputTerms'] for r in rows),'verifiedConditionalComponents':[r['component'] for r in rows if r['exactConditionalAlgebraVerified']],
         'verifiedConditionalNumeratorTerms':[next((r['verifiedConditionalNumeratorTerms'] for r in rows if r['component']==i),None) for i in range(3)],
+        'originalImplicitRootQuotientNormalForm':root_relation,
         'sourceBodyDerivativesRecomputed':False,'remainingJets':frontier['cloudExecution']['remainingJetRequestsOnLeafDefinedDomain'],
         'previouslyRemainingGuards':frontier['cloudExecution']['remainingGlobalGuards'],'newFollowupGuardsClosed':len(new_guard_ids),
         'remainingGuards':frontier['cloudExecution']['remainingGlobalGuards']-len(new_guard_ids),'analyticallyDischargedOriginalPDETerms':0,
@@ -60,7 +83,7 @@ def main():
     write(a.output/'OBLIGATION_MATRIX.json',{'schema':'MathScope.N6.TargetedAlgebraObligations/1','sourceFrontier':lock,
         'originalUniversalRequirements':frontier['requirements'],'remainingJetIDs':frontier['remainingJetIDs'],
         'remainingGlobalGuardIDs':[i for i in frontier['remainingGlobalGuardIDs'] if i not in new_guard_ids],
-        'guardFollowup':guard_followup,'intrinsicPressureAmplitudeBridge':clock_bridge,
+        'guardFollowup':guard_followup,'intrinsicPressureAmplitudeBridge':clock_bridge,'nativeNormPreBridge':native_norm_bridge,
         'exactAlgebraByComponent':rows,'execution':summary,
         'wholeSourceAnalyticDomainWMSHaarSupportPicardAndPDEComplete':False})
     write(a.output/'CERTIFICATE_HASHES.json',hashes);write(a.output/'shard-progress.json',progress)

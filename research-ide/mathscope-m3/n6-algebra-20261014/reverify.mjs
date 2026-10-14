@@ -13,6 +13,53 @@ const G={nodes:structuredClone(input.nodes)},put=(op,args)=>{const id=G.nodes.le
   q=text=>{const [n,d='1']=text.split('/');return put('rational',[n,d]);},
   add=xs=>xs.length===1?xs[0]:put('add',xs),mul=xs=>xs.length===1?xs[0]:put('multiply',xs),
   neg=x=>mul([q('-1'),x]),pow=(x,p)=>p===1?x:put('integer_power',[x,p]);
+// The pinned verifier reduces one add node left-to-right.  A flat exported
+// polynomial would repeatedly multiply an ever larger numerator by the unit
+// denominator, costing O(n^2) exact products even though no new terms arise.
+// Binary balancing changes only exact addition associativity, retaining every
+// coefficient/monomial and the original rational verifier unchanged.
+function balancedAdd(xs){
+  if(!xs.length)return q('0');
+  let level=xs;
+  while(level.length>1){
+    const next=[];
+    for(let i=0;i<level.length;i+=2)next.push(i+1<level.length?add([level[i],level[i+1]]):level[i]);
+    level=next;
+  }
+  return level[0];
+}
+/** Source IDs remain fixed.  Only add associativity is changed, AFTER original
+ * coefficient/factor coverage.  Every appended tree replays the exact ordered
+ * original child list, including repeats.  This avoids the pinned reduce()
+ * factor registry retaining every large prefix numerator of a flat source sum.
+ */
+function balanceOriginalAdds(){
+  const cutoff=G.nodes.length,receipts=[];
+  const leaves=id=>{
+    if(id<cutoff)return [id];
+    const node=G.nodes[id];
+    if(node?.op!=='add')throw Error('Reassociated source sum used a non-add transformation');
+    return node.args.flatMap(leaves);
+  };
+  let omittedChildRejected=true;
+  for(let id=0;id<cutoff;id++){
+    const node=G.nodes[id];
+    if(node.op!=='add'||node.args.length<=2)continue;
+    const originalChildren=[...node.args],root=balancedAdd(originalChildren),replayed=leaves(root);
+    if(JSON.stringify(originalChildren)!==JSON.stringify(replayed))throw Error('Source addition reassociation omitted/reordered a child');
+    const restoredArgs=G.nodes[root].args;
+    G.nodes[root].args=restoredArgs.slice(1); // Actual transformation mutation.
+    const mutationRejected=JSON.stringify(originalChildren)!==JSON.stringify(leaves(root));
+    G.nodes[root].args=restoredArgs;
+    omittedChildRejected&&=mutationRejected;
+    if(!mutationRejected)throw Error('Omitted source addition child mutation survived exact leaf replay');
+    node.args=[root];
+    receipts.push({originalNode:id,originalChildren,replacementRoot:root,
+      exactOriginalOrderAndMultiplicityPreserved:true});
+  }
+  return {rule:'FINITE_ADDITION_ASSOCIATIVITY_ONLY',originalNodeCount:cutoff,
+    transformedAdds:receipts.length,receipts,omittedChildNegativeControlRejected:omittedChildRejected};
+}
 const execute=(root,limits={maxTerms:50000,maxProducts:5000000})=>createCompleteResidualVerifier(G,limits)(root);
 /** Exact AC/rational circuit reconstruction, without polynomial expansion.
  * Canonical IDs are interned by complete descriptors, never hash equality.
@@ -68,6 +115,7 @@ const result={schema:'MathScope.N6.FactoredExportPDEReverification/1',status:'RU
   analyticSourceDomainAndDenominatorsDischarged:false,
   immutableSourceRoots:input.originalRoots??null,originalComponent:input.originalComponent??null,
   reconstructionMethod:'residual - exportedNumerator * product(each EXACT denominator factor to its NEGATIVE integer power)',
+  exportedPolynomialAddition:'BALANCED_BINARY_EXACT_ASSOCIATIVITY',
   expandedCommonDenominatorProductBuilt:false};
 const save=()=>writeFile(output,JSON.stringify(result,null,2)+'\n');
 await save();
@@ -76,6 +124,13 @@ try{
   await save();
   result.originalTermCircuitReconstruction=checkOriginalCircuit();
   result.independentOriginalTermCircuitReconstructionPass=true;
+  result.verificationPhase='EXACT_SOURCE_ADD_REASSOCIATION';
+  await save();
+  result.exactSourceAdditionReassociation=balanceOriginalAdds();
+  if(result.exactSourceAdditionReassociation.transformedAdds){
+    result.negativeControls.push({mutation:'reassociated_source_add_child_omitted',
+      rejected:result.exactSourceAdditionReassociation.omittedChildNegativeControlRejected});
+  }
   result.verificationPhase='INDEPENDENT_SOURCE_CALCULUS_COMPARISONS';
   await save();
   for(const atom of input.atomAttempts){
@@ -102,7 +157,7 @@ try{
   result.productsUsed=full.productsUsed;
   result.originalNormalizationLimits={maxTerms:full.maxTerms,maxProducts:full.maxProducts};
   await save();
-  const polynomial=rows=>add(rows.map(row=>mul([q(row.coefficient),...(!row.monomial?[]:row.monomial.split(',').map(s=>{const [id,p]=s.split(':').map(Number);return pow(id,p);} ))])));
+  const polynomial=rows=>balancedAdd(rows.map(row=>mul([q(row.coefficient),...(!row.monomial?[]:row.monomial.split(',').map(s=>{const [id,p]=s.split(':').map(Number);return pow(id,p);} ))])));
   const numerator=full.numerator.length?polynomial(full.numerator):q('0'),
     inverseFactors=full.denominatorFactorPolynomials.map(f=>pow(polynomial(f.polynomial),-f.power)),
     exportedFraction=mul([numerator,...inverseFactors]);

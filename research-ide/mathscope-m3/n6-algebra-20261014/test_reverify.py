@@ -29,6 +29,30 @@ def denominator_fixture(count=17):
             'sourceFactorBindings': [{'sourceNode': 100, 'power': 1, 'primaryRoot': root, 'independentRoot': root}]}]}
 
 
+def large_polynomial_fixture(count=5000, common_denominator=False):
+    fixture = denominator_fixture(1)
+    g = Arena(20000)
+    level = [g.put('coordinate', ['toy_sum' + str(i), i]) for i in range(count)]
+    if common_denominator:
+        denominator = g.add(g.put('coordinate', ['shared_denominator', count]), g.one)
+        level = [g.mul(x, g.power(denominator, -1)) for x in level]
+        root = g.put('add', level)  # Deliberately flat SOURCE fractional sum.
+    else:
+        while len(level) > 1:
+            level = [g.put('add', level[i:i + 2]) if i + 1 < len(level) else level[i]
+                for i in range(0, len(level), 2)]
+        root = level[0]
+    fixture['nodes'] = g.nodes
+    fixture['primaryResidualRoot'] = fixture['independentTaylorResidualRoot'] = root
+    for row in fixture['atomAttempts']:
+        row['primaryRoot'] = row['independentTaylorRoot'] = root
+    for row in fixture['allOriginalTerms']:
+        row['primaryTermRoot'] = row['independentTermRoot'] = root
+        for factor in row['sourceFactorBindings']:
+            factor['primaryRoot'] = factor['independentRoot'] = root
+    return fixture
+
+
 def reverify(evidence):
     candidates = [Path(__file__).parents[3], Path.cwd() / 'work/inspect']
     repo = next((p for p in candidates if (p / 'research-ide/mathscope-m3/mean-equivalence-20261014/residual-rational-verifier.mjs').is_file()), None)
@@ -47,6 +71,32 @@ def reverify(evidence):
 
 
 class FactoredExportTests(unittest.TestCase):
+    def test_flat_source_fractional_sum_exact_association_and_mutation(self):
+        # reduce() registers each prefix polynomial internally.  Keeping this
+        # source sum flat causes quadratic retained prefix storage as well as
+        # >12.5m unit products.  Source reassociation keeps every original term.
+        result = reverify(large_polynomial_fixture(common_denominator=True))
+        self.assertTrue(result['verified'], result.get('stop'))
+        self.assertEqual(result['normalizedNumeratorTerms'], 5000)
+        self.assertEqual(len(result['denominatorFactorPolynomials']), 1)
+        association = result['exactSourceAdditionReassociation']
+        self.assertEqual(association['transformedAdds'], 1)
+        self.assertEqual(len(association['receipts'][0]['originalChildren']), 5000)
+        self.assertTrue(association['omittedChildNegativeControlRejected'])
+        self.assertTrue(all(control['rejected'] for control in result['negativeControls']))
+        self.assertLess(result['productsUsed'], 500000)
+
+    def test_five_thousand_monomials_balanced_exact_reconstruction(self):
+        # Flat left-to-right export would require >12.5 million unit products,
+        # exceeding the actual 5 million product limit.  Balanced exact sums
+        # verify all 5000 coefficients within that same unchanged budget.
+        result = reverify(large_polynomial_fixture())
+        self.assertTrue(result['verified'], result.get('stop'))
+        self.assertEqual(result['normalizedNumeratorTerms'], 5000)
+        self.assertEqual(result['exportedPolynomialAddition'], 'BALANCED_BINARY_EXACT_ASSOCIATIVITY')
+        self.assertLess(result['reconstructionProductsUsed'], 500000)
+        self.assertTrue(all(control['rejected'] for control in result['negativeControls']))
+
     def test_seventeen_factors_exact_reconstruction_and_mutations(self):
         # An expanded common denominator has 2^17=131072 monomials, exceeding
         # the genuine 50000-term limit. This proof needs no such expansion.
