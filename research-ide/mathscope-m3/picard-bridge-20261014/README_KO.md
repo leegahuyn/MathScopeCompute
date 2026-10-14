@@ -46,3 +46,15 @@ PICARD_BRIDGE_INPUT="$RUNNER_TEMP/n6-picard/source.json" python -B -m unittest d
 \`\`\`
 
 실제 GitHub Actions 성공/실패 stdout, 검증된 source blobs와 hash, \`result.json\`을 보존한다. GitHub-hosted 작업은 사용자 노트북에 저장소를 내려받지 않는다.
+
+
+## 157개 실제 자연급수의 후속 결과
+
+같은 PR #31의 n=1 원본 그래프를 24개 입력 함수족으로 분류한 구현은 `natural_series_audit.py`에 있다. 실제 범위 확인은 Y=4인 9개 호출이며 148개 호출의 입력 범위는 미해결이다. 실제 호환 계수 노름을 가정한 복소 수렴 정리와 전체 계수 노름의 미증명을 구분한다.
+
+- [수학적 방법과 조건](NATURAL_SERIES_METHOD_KO.md)
+- [실제 실행 결과와 공개 확인 상태](NATURAL_SERIES_RESULTS_KO.md)
+- [기계 판독 결과](NATURAL_SERIES_VERIFIED_SUMMARY.json)
+- [인증된 클라우드 증거와 원본 HTML](evidence/38537364528/)
+
+기존 결과 문서는 이전 실행의 역사적 기록이다. 최신 N6 잔여 1,288개와 M3 56/64는 유지한다.
