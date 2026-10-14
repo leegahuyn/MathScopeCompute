@@ -4,11 +4,19 @@ import hashlib
 import json
 from pathlib import Path
 import tempfile
+import subprocess
 import unittest
 from acceptance import CLASS_IDS, PARENT, SEQUENCE, original_acceptance, original_class_obligations
-from run_job import safe_name, verify_receipt, write
+from run_job import HERE, REPO, safe_name, verify_receipt, write
 
 class AcceptanceControls(unittest.TestCase):
+    def test_pinned_reference_hashes_match_immutable_git_blobs(self):
+        lock = json.loads((HERE / 'INPUT_LOCK.json').read_text(encoding='utf8'))
+        for name, expected in lock['verifierAndReferenceInputs'].items():
+            with self.subTest(path=name):
+                raw = subprocess.check_output(['git', 'show', 'HEAD:' + name], cwd=REPO)
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), expected)
+
     def rows(self):
         return [{'id': name, 'status': 'OPEN', 'wholeSourceCertificateIndependentlyVerified': False} for name in sorted(CLASS_IDS)]
 
