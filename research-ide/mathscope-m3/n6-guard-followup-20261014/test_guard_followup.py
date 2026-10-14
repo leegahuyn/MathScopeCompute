@@ -1,4 +1,5 @@
 import copy
+import json
 import sys
 from pathlib import Path
 import unittest
@@ -22,6 +23,84 @@ def fixture(depth=1,hidden=False):
 
 
 class IterativeCaptureTests(unittest.TestCase):
+    def picard_fixture(self,hidden_domain=False):
+        source={0:{'op':'coordinate','args':['xi']},1:{'op':'coordinate','args':['eta']},
+            2:{'op':'coordinate','args':['hidden binder']},3:{'op':'rational','args':['1','1']},
+            4:{'op':'rational','args':['0','1']},5:{'op':'actual_background_picard','args':[0,0,0,1,0]},
+            6:{'op':'actual_expression_partial','args':[0,[0,1],[0,0]]}}
+        d={'xi':0,'eta':1,'A0':[[4]*6 for _ in range(6)],'A1':[[4]*6 for _ in range(6)],
+            'forcing':[4]*6,'zeroAxisDatum':[4]*6,'radialDomain':[4,2 if hidden_domain else 3],
+            'solutionNorm':{'commonCollar':3,'naturalExtensionToY5':3,'naturalExtensionNotUsedAsActualActivation':True}}
+        expression={'parameters':[0,1],'body':5,'derivativeLimits':[1,1]}
+        defs={key:{'key':key,'definition':value,'definitionSHA256':js_hash(value)}
+            for key,value in [('picard:0',d),('expression:0',expression)]}
+        program=[{'op':'coordinate','args':['binder',2]},{'op':'coordinate','args':['xi',0]},
+            {'op':'actual_opaque_value','args':[6,'actual_expression_partial']}]
+        return source,defs,program
+
+    def test_native_radial_domain_list_endpoints_independently_reopened(self):
+        source,defs,program=self.picard_fixture()
+        calc=IterativeSourceCalculus(source,defs,max_work=10000)
+        proof=attempt(program,{'root':2,'bound':0,'value':1},calc)
+        self.assertTrue(proof['globallyProved'])
+        self.assertTrue(proof['nativeDomainListEndpointsAndIndexedDerivativeScalesAudited'])
+        audit=calc.system_capture_cache['picard:0']
+        self.assertTrue(audit['completeNativeDomainAndBoundRootsAudited'])
+        self.assertEqual([(r['sourceField'],r['sourceNode']) for r in audit['nativeDomainAndBoundRootAudits'][:2]],
+            [('radialDomain[0]',4),('radialDomain[1]',3)])
+
+    def test_hidden_native_radial_domain_list_endpoint_rejects_substitution(self):
+        source,defs,program=self.picard_fixture(hidden_domain=True)
+        calc=IterativeSourceCalculus(source,defs,max_work=10000)
+        self.assertFalse(attempt(program,{'root':2,'bound':0,'value':1},calc)['globallyProved'])
+        self.assertEqual(calc.system_capture_cache['picard:0']['additionalNativeDomainHiddenCoordinates'],[2])
+
+    def test_hidden_native_solution_norm_bound_rejects_substitution(self):
+        source,defs,program=self.picard_fixture()
+        d=defs['picard:0']['definition'];d['solutionNorm']['commonCollar']=2
+        defs['picard:0']['definitionSHA256']=js_hash(d)
+        calc=IterativeSourceCalculus(source,defs,max_work=10000)
+        self.assertFalse(attempt(program,{'root':2,'bound':0,'value':1},calc)['globallyProved'])
+
+    def test_malformed_native_norm_and_unreviewed_domain_fields_fail_closed(self):
+        for field,value in [('solutionNorm',{'commonCollar':'2'}),('extraDomain',{'positive':2})]:
+            source,defs,program=self.picard_fixture()
+            d=defs['picard:0']['definition'];d[field]=value
+            defs['picard:0']['definitionSHA256']=js_hash(d)
+            calc=IterativeSourceCalculus(source,defs,max_work=10000)
+            self.assertFalse(attempt(program,{'root':2,'bound':0,'value':1},calc)['globallyProved'])
+
+    def test_retained_original_volterra_norm_bound_is_reopened(self):
+        for hidden in [False,True]:
+            source={0:{'op':'coordinate','args':['time']},1:{'op':'coordinate','args':['parameter']},
+                2:{'op':'coordinate','args':['hidden binder']},3:{'op':'rational','args':['1','1']},
+                4:{'op':'rational','args':['0','1']}}
+            original={'variable':0,'parameters':[1],'matrix':[[4,4],[4,4]],'initial':[3,4],
+                'length':3,'normUpper':2 if hidden else 3}
+            d={'variable':0,'parameters':[1],'matrix':[[4,4],[4,4]],'initial':[3,4],'length':3,'left':4,
+                'originalDefinition':json.dumps(original),'directions':[1]}
+            defs={'m3GlobalPulses:0':{'key':'m3GlobalPulses:0','definition':d,'definitionSHA256':js_hash(d)}}
+            calc=IterativeSourceCalculus(source,defs,max_work=10000)
+            audit=calc.system_capture_audit('m3_global_pulse_jet',0)
+            self.assertEqual(audit['pass'],not hidden)
+            self.assertTrue(any(r['sourceField']=='originalDefinition.normUpper' for r in audit['nativeDomainAndBoundRootAudits']))
+
+    def test_literal_eta_order_does_not_become_source_domain_edge(self):
+        source,defs,program=self.picard_fixture()
+        d=defs['picard:0']['definition'];d['tail']={'etaOrder':2,'sourceStrip':3}
+        defs['picard:0']['definitionSHA256']=js_hash(d)
+        calc=IterativeSourceCalculus(source,defs,max_work=10000)
+        self.assertTrue(attempt(program,{'root':2,'bound':0,'value':1},calc)['globallyProved'])
+
+    def test_recursive_native_domain_metadata_fails_closed_and_cleans_active_state(self):
+        source,defs,program=self.picard_fixture()
+        d=defs['picard:0']['definition'];d['radialDomain'][1]=5
+        defs['picard:0']['definitionSHA256']=js_hash(d)
+        calc=IterativeSourceCalculus(source,defs,max_work=10000)
+        self.assertFalse(attempt(program,{'root':2,'bound':0,'value':1},calc)['globallyProved'])
+        self.assertFalse(calc.native_domain_capture_active)
+        self.assertFalse(calc.support_active)
+
     def indexed_fixture(self,hidden=False,native=False):
         source={0:{'op':'coordinate','args':['x']},1:{'op':'coordinate','args':['y']},
             2:{'op':'coordinate','args':['hidden binder']},3:{'op':'rational','args':['1','1']},
@@ -55,6 +134,25 @@ class IterativeCaptureTests(unittest.TestCase):
         calc=self.indexed_fixture(native=True);coords,unknown=calc.source_support(7)
         self.assertFalse(unknown);self.assertTrue(calc.capture_audit(7)['pass'])
         self.assertTrue(calc.indexed_local_capture_cache['fieldDefinitions:0']['allActualLocalBodiesChecked'])
+
+    def test_hidden_global_derivative_scale_capture_is_rejected(self):
+        calc=self.indexed_fixture()
+        d=calc.defs['fieldDefinitions:0']['definition'];d['rows'][0]['derivativeScales']=[3,2]
+        calc.defs['fieldDefinitions:0']['definitionSHA256']=js_hash(d)
+        coords,unknown=calc.source_support(7)
+        self.assertTrue(unknown);self.assertFalse(calc.capture_audit(7)['pass'])
+        audit=calc.indexed_local_capture_cache['fieldDefinitions:0']
+        self.assertTrue(audit['allStoredDerivativeScalesChecked'])
+        self.assertEqual(audit['fixedLabelDerivativeScaleCaptureAudits'][1]['hiddenCapturedCoordinates'],[2])
+
+    def test_exact_global_derivative_scales_reopened_and_can_pass(self):
+        calc=self.indexed_fixture()
+        d=calc.defs['fieldDefinitions:0']['definition'];d['rows'][0]['derivativeScales']=[3,0]
+        calc.defs['fieldDefinitions:0']['definitionSHA256']=js_hash(d)
+        coords,unknown=calc.source_support(7)
+        self.assertFalse(unknown);self.assertTrue(calc.capture_audit(7)['pass'])
+        audit=calc.indexed_local_capture_cache['fieldDefinitions:0']
+        self.assertEqual(len(audit['fixedLabelDerivativeScaleCaptureAudits']),2)
 
     def test_actual_deep_dag_has_no_python_recursion(self):
         source,defs,_=fixture(4000);calc=IterativeSourceCalculus(source,defs,max_work=100000)

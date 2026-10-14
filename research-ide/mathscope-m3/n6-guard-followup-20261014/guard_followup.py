@@ -27,6 +27,7 @@ class IterativeSourceCalculus(SourceCalculus):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs);self.maximum_explicit_stack=0
         self.indexed_local_capture_cache={};self.indexed_local_capture_active=set();self.header_bindings_loaded=False
+        self.native_domain_capture_active=set()
 
     def original_binding(self,key):
         if key in self.defs:return self.defs[key]
@@ -47,6 +48,91 @@ class IterativeSourceCalculus(SourceCalculus):
             self.header_bindings_loaded=True
         return self.defs.get(key)
 
+    def _system_capture_audit(self,op,system):
+        base=super()._system_capture_audit(op,system)
+        if base.get('completeNativeDomainAndBoundRootsAudited'):return base
+        key=base.get('key')
+        if key in self.native_domain_capture_active:
+            return {**base,'pass':False,'reason':'recursive actual native domain/bound capture remains unproved'}
+        self.native_domain_capture_active.add(key)
+        try:return self._native_domain_capture_audit(op,base)
+        finally:self.native_domain_capture_active.discard(key)
+
+    def _native_domain_capture_audit(self,op,base):
+        binding=self.defs.get(base.get('key'))
+        if binding is None:return base
+        d=binding['definition'];bound=set(base.get('formalBoundCoordinates',[]));roots=[];unknown=[]
+        def scalar(name,value):
+            if type(value) is int:roots.append((name,value))
+            else:unknown.append('unreviewed scalar native domain/bound field '+name)
+        # These source fields are operational scalar bounds, not numeric orders
+        # or component labels. In particular Picard's radialDomain is a LIST.
+        for name in ['rootRadius','lipschitzUpper','normUpper','matrixNorm','initialNorm']:
+            if name in d:scalar(name,d[name])
+        if op in ['actual_background_picard','actual_background_even_profile']:
+            domain=d.get('radialDomain')
+            if isinstance(domain,list) and len(domain)==2:
+                for index,endpoint in enumerate(domain):scalar(f'radialDomain[{index}]',endpoint)
+            elif type(domain) is int:scalar('radialDomain',domain)
+            else:unknown.append('complete original native radialDomain interval is absent or unreviewed')
+            norms=d.get('solutionNorm',{})
+            if not isinstance(norms,dict):unknown.append('unreviewed original solutionNorm metadata')
+            else:
+                for name,value in norms.items():
+                    if name in ['commonCollar','naturalExtensionToY5']:scalar('solutionNorm.'+name,value)
+                    elif name=='naturalExtensionNotUsedAsActualActivation' and type(value) is bool:pass
+                    else:unknown.append('unreviewed original solutionNorm field '+name)
+            leading=d.get('sourceLeading',{})
+            if not isinstance(leading,dict):unknown.append('unreviewed original sourceLeading metadata')
+            else:
+                for name,value in leading.items():scalar('sourceLeading.'+name,value)
+            tail=d.get('tail',{})
+            if not isinstance(tail,dict):unknown.append('unreviewed original native tail metadata');tail={}
+            for name in ['sourceBound','sourceStrip','solutionStrip','loss','Kcondition','Kprecision','K','error','target']:
+                if name in tail:scalar('tail.'+name,tail[name])
+            known_tail={'sourceBound','sourceStrip','solutionStrip','loss','Kcondition','Kprecision','K','error','target',
+                'sourceMajorant','etaOrder','proof','sourceTruncationIndexNumericallyMaterialized','tailIsForTheCertifiedIndexNotForDisplayedTerms'}
+            unknown.extend('unreviewed original native tail field '+name for name in tail if name not in known_tail)
+        if 'originalDefinition' in d:
+            try:original=json.loads(d['originalDefinition'])
+            except (TypeError,ValueError):original=None
+            if not isinstance(original,dict):unknown.append('unreviewed original native definition metadata')
+            elif original.get('variable')!=d.get('variable') or original.get('parameters')!=d.get('parameters'):
+                unknown.append('original native definition has different bound variable/parameter tuple')
+            else:
+                for name in ['normUpper','length','left','initialNorm','matrixNorm']:
+                    if name in original:scalar('originalDefinition.'+name,original[name])
+                matrix=original.get('matrix',[])
+                if not isinstance(matrix,list) or any(not isinstance(row,list) for row in matrix):
+                    unknown.append('unreviewed original native matrix shape')
+                else:
+                    for i,row in enumerate(matrix):
+                        for j,value in enumerate(row):scalar(f'originalDefinition.matrix[{i}][{j}]',value)
+                for i,value in enumerate(original.get('initial',[])):
+                    if type(value) is int:scalar(f'originalDefinition.initial[{i}]',value)
+                    elif isinstance(value,dict) and set(value)=={'real','imaginary'}:
+                        for part in ['real','imaginary']:scalar(f'originalDefinition.initial[{i}].{part}',value[part])
+                    else:unknown.append('unreviewed original native initial datum')
+                for name in original:
+                    if any(word in name.lower() for word in ['domain','premise','hypothes','guard']):
+                        unknown.append('unreviewed original native domain metadata '+name)
+        # No extra domain predicate may be silently treated as explanatory
+        # text. Original known interval/endpoints are handled explicitly.
+        for name in d:
+            reviewed_radial=name=='radialDomain' and op in ['actual_background_picard','actual_background_even_profile']
+            if any(word in name.lower() for word in ['domain','premise','hypothes','guard']) and not reviewed_radial:
+                unknown.append('unreviewed native domain metadata '+name)
+        records=[];escapes=set()
+        for name,root in roots:
+            coords,stops=self.source_support(root);extra=coords-bound;escapes.update(extra);unknown.extend(stops)
+            records.append({'sourceField':name,'sourceNode':root,'sourceNodeSHA256':sha(self.source[root]),
+                'freeCoordinates':sorted(coords),'hiddenCapturedCoordinates':sorted(extra),'unreviewedSupport':sorted(stops)})
+        result={**base,'pass':bool(base.get('pass')) and not unknown and not escapes,
+            'completeNativeDomainAndBoundRootsAudited':True,'nativeDomainAndBoundRootAudits':records,
+            'additionalNativeDomainHiddenCoordinates':sorted(escapes),'unreviewedNativeDomainFields':sorted(set(unknown)),
+            'nativeExistenceOrNormBoundProved':False}
+        self.system_capture_cache[base['key']]=result;return result
+
     def _capture_audit(self,ident):
         n=self.source[ident];key=definition_key(n);binding=self.original_binding(key)
         if binding is not None and n['op'] in EXPRESSION_OPS:
@@ -59,9 +145,15 @@ class IterativeSourceCalculus(SourceCalculus):
         elif key in self.indexed_local_capture_active:
             return {**base,'pass':False,'reason':'recursive indexed local-body capture closure remains unproved'}
         else:
-            self.indexed_local_capture_active.add(key);records=[];seen=set()
+            self.indexed_local_capture_active.add(key);records=[];scales=[];seen=set()
             try:
                 for index,row in enumerate(binding['definition']['rows']):
+                    for position,scale in enumerate(row.get('derivativeScales',[])):
+                        if type(scale) is not int:raise SourceIntegrityError('original indexed derivative scale is not a source expression')
+                        coords,unknown=self.source_support(scale);escapes=coords-set(binding['definition']['parameters'])
+                        scales.append({'row':index,'direction':position,'sourceNode':scale,'sourceNodeSHA256':sha(self.source[scale]),
+                            'freeCoordinates':sorted(coords),'hiddenCapturedCoordinates':sorted(escapes),'unreviewedSupport':sorted(unknown),
+                            'pass':not escapes and not unknown})
                     body=row.get('localBody');parameters=row.get('localParameters');system=row.get('localSystem')
                     if type(body) is not int or not isinstance(parameters,list) or len(parameters)!=len(set(parameters)) or len(parameters)!=len(row.get('values',[])):
                         records.append({'row':index,'pass':False,'reason':'complete original local body/parameter/application tuple missing'});continue
@@ -86,8 +178,9 @@ class IterativeSourceCalculus(SourceCalculus):
                         'actualLocalBody':body,'actualLocalBodyNodeSHA256':sha(self.source[body]),'completeLocalParameters':parameters,
                         'fullLocalBodyFreeCoordinates':sorted(coords),'hiddenCapturedCoordinates':sorted(escapes),'unreviewedSupport':sorted(unknown),
                         'allNestedNativeBodiesIndependentlyReopened':True,'pass':not escapes and not unknown})
-                extra={'pass':bool(records) and all(r['pass'] for r in records),'actualDeclaredRows':len(binding['definition']['rows']),
-                    'uniqueLocalBodiesIndependentlyAudited':records,'allActualLocalBodiesChecked':True}
+                extra={'pass':bool(records) and all(r['pass'] for r in records) and all(r['pass'] for r in scales),
+                    'actualDeclaredRows':len(binding['definition']['rows']),'uniqueLocalBodiesIndependentlyAudited':records,
+                    'fixedLabelDerivativeScaleCaptureAudits':scales,'allActualLocalBodiesChecked':True,'allStoredDerivativeScalesChecked':True}
                 self.indexed_local_capture_cache[key]=extra
             finally:self.indexed_local_capture_active.discard(key)
         return {**base,'pass':bool(extra['pass']),'independentCompleteIndexedLocalBodyCapture':extra}
@@ -222,7 +315,8 @@ def attempt(program,guard,calc):
         'captureAudit':audit,'domainTraversalReceipt':domain_receipt,
         'rule':'The original actual function AND its complete definedness dependencies omit the original binder; substitution leaves the exact partial function and its domain unchanged.',
         'sourceExistenceProved':False,'wholeGlobalImageProved':False,'allNativeSystemCaptureAudits':list(calc.system_capture_cache.values()),
-        'allIndexedLocalBodyCaptureAudits':calc.indexed_local_capture_cache}
+        'allIndexedLocalBodyCaptureAudits':calc.indexed_local_capture_cache,
+        'nativeDomainListEndpointsAndIndexedDerivativeScalesAudited':True}
 
 
 def constant_four_minus_sqrt_two(program,guard):
@@ -355,6 +449,36 @@ def negative_controls():
         name='hidden native coefficient inside indexed localBody' if native else 'hidden indexed localBody capture'
         if not rejected:raise AssertionError('unsafe indexed capture mutation accepted: '+name)
         results.append({'mutation':name,'rejected':True})
+    for name in ['hidden native radialDomain list endpoint','hidden native solutionNorm bound',
+            'hidden native tail strip','hidden global indexed derivativeScales']:
+        source={0:{'op':'coordinate','args':['xi']},1:{'op':'coordinate','args':['eta']},2:{'op':'coordinate','args':['hidden binder']},
+            3:{'op':'rational','args':['1','1']},4:{'op':'rational','args':['0','1']},
+            6:{'op':'actual_background_picard','args':[0,0,0,1,0]}}
+        native={'xi':0,'eta':1,'A0':[[4]*6 for _ in range(6)],'A1':[[4]*6 for _ in range(6)],
+            'forcing':[4]*6,'zeroAxisDatum':[4]*6,'radialDomain':[4,3],
+            'solutionNorm':{'commonCollar':3},'tail':{'sourceStrip':3}}
+        if 'radialDomain' in name:native['radialDomain'][1]=2
+        if 'solutionNorm' in name:native['solutionNorm']['commonCollar']=2
+        if 'tail strip' in name:native['tail']['sourceStrip']=2
+        definitions={'picard:0':native}
+        body=6
+        if 'derivativeScales' in name:
+            local={'parameters':[0,1],'body':0,'derivativeLimits':[1,1]}
+            definitions['expressionDefinitions:0']=local
+            definitions['fieldDefinitions:0']={'parameters':[0,1],'directions':[0,1],
+                'rows':[{'coefficient':3,'values':[0,1],'localParameters':[0,1],'localBody':0,'localSystem':-1,
+                    'guards':[],'derivativeScales':[3,2],
+                    'derivativeMaps':[[{'parameter':0,'coefficient':3}],[{'parameter':1,'coefficient':3}]]}]}
+            source[7]={'op':'m3_aux_indexed_partial','args':[0,[0,1],[0,0]]};body=7
+        definitions['expression:0']={'parameters':[0,1],'body':body,'derivativeLimits':[1,1]}
+        defs={key:{'key':key,'definition':d,'definitionSHA256':js_hash(d)} for key,d in definitions.items()}
+        source[8]={'op':'actual_expression_partial','args':[0,[0,1],[0,0]]}
+        program=[{'op':'coordinate','args':['binder',2]},{'op':'coordinate','args':['xi',0]},
+            {'op':'actual_opaque_value','args':[8,'actual_expression_partial']}]
+        calc=IterativeSourceCalculus(source,defs,max_work=10000)
+        rejected=not attempt(program,{'root':2,'bound':0,'value':1},calc)['globallyProved']
+        if not rejected:raise AssertionError('unsafe domain or derivative-scale mutation accepted: '+name)
+        results.append({'mutation':name,'rejected':True})
     return results
 
 
@@ -421,6 +545,7 @@ def run(context,out):
             'rows':rows,'previouslyGloballyProvedGuards':52,'remainingGlobalGuards':42-sum(r['globallyProved'] for r in rows),
             'iterativeSourceWork':calc.work,'maximumExplicitSourceStack':calc.maximum_explicit_stack,
             'sourceCaptureBudgetSeconds':seconds,'sourceIndexBudgetSeconds':360,'supplementalRowAuditBudgetSeconds':120,
+            'nativeDomainListEndpointsAndIndexedDerivativeScalesAudited':True,
             'wholeGlobalSourceImageProved':False,'commonFullFieldSupportProved':False,'N601Promoted':False,'N602Promoted':False,
             'negativeControls':negative_controls(),
             'sourceBinding':{'originalParentNodesSHA256':PARENT,'originalProgramSHA256':sha(program),

@@ -13,3 +13,7 @@
 실제 후속 결과에서 기존 행 감사의 미일치 188개는 모두 `m3GlobalBlocks` 38개에 속했다. 고정된 원본 kernel에서 이 registry는 sparse native pulse 변분 matrix block cache이며 indexed chart field가 아니다. 실제 indexed field 28개의 4,050행은 모두 구조 검사를 통과했다. 원래 188개 진단을 보존하면서 두 종류를 구분하고, pulse의 native domain을 chart 구조 검사로 인증하지 않는다.
 
 원본 denominator125·238에는 전체 scalar DAG의 **모든 sink에서 모든 inverse 사용처까지**의 평가 경로를 검사한다. op마다 expression child와 literal source ID·차수를 엄격히 구분한다. 각 node에서 모든 부모 경로의 보장 조건을 교집합으로 합치고, 실제 piecewise의 중간 가지에만 `0<selector<1` 조건을 추가한다. 적분 binder·opaque 치환·미검토 미분 환경을 통과할 때는 외부 조건을 버린다. 모든 inverse 사용처에 같은 중간 가지 조건이 남고 원본 분모가 정확히 `selector*(1-selector)`일 때만 활성 평가 경로에서 분모가 양수임을 판정한다. selector의 존재나 flat join·source image는 이 판정으로 해결하지 않는다. unguarded inverse sink 추가·외부 가지 이동·적분 변수 shadowing·literal ID 혼동을 음성 대조군으로 검사한다. 원본 전체 DAG에서 조건이 성립하지 않으면 그대로 OPEN이다.
+
+최종 후속 감사는 native 함수의 값 본문과 별도로 저장된 정의역·상계 식도 다시 연다. 특히 원본 Picard의 `radialDomain`은 scalar ID가 아니라 `[0,a]` 목록이므로 **양 끝점**의 실제 source ID·해시·자유 좌표를 각각 기록한다. `sourceLeading`, `solutionNorm`, tail의 실제 strip·상계·손실·오차 root와 Volterra의 보존된 원본 `normUpper`·구간·matrix·초깃값도 검사한다. 설명용 차수 `etaOrder`는 source ID로 해석하지 않는다. 미검토 정의역 조건·잘못된 scalar 형식·자기 참조는 실패로 보존한다. 이는 상계의 좌표 의존성 감사이며 해당 상계의 참값·native 해의 존재를 증명하는 검사가 아니다.
+
+Indexed field 각 행의 모든 `derivativeScales`도 전체 전역 formal tuple 범위 안에 있는지 독립 검사하고 source ID·해시·자유 좌표를 남긴다. 숨은 radial endpoint, solution norm·tail strip, 전역 derivative scale 변조는 모두 거절해야 한다. 성공한 치환 증거에는 `nativeDomainListEndpointsAndIndexedDerivativeScalesAudited=true`와 실제 상세 행을 함께 저장하며, 이 강한 재검증 전의 치환 결과는 최신 인증으로 재사용하지 않는다.
