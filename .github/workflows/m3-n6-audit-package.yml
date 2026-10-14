@@ -1,0 +1,43 @@
+name: M3 N6 audit package integrity
+on:
+  push:
+    branches: [mathscope-m3-n6-source-audit-20261014]
+    paths: ['.github/workflows/m3-n6-audit-package.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regenerate-metadata:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Regenerate saved bundle metadata without publishing or changing criteria
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/n6-package"
+          mkdir -p "$out"
+          sha256sum research-ide/mathscope-m3/{ORIGINAL_M3_M4_CRITERIA,N6_PROGRESS,N7_PROGRESS,N8_PROGRESS}.json > "$out/criteria-before.sha256"
+          python -B research-ide/mathscope-m3/web/build_extended.py | tee "$out/build.json"
+          python -B research-ide/mathscope-m3/web/build_extended.py --check | tee "$out/check.json"
+          sha256sum research-ide/mathscope-m3/{ORIGINAL_M3_M4_CRITERIA,N6_PROGRESS,N7_PROGRESS,N8_PROGRESS}.json > "$out/criteria-after.sha256"
+          cmp "$out/criteria-before.sha256" "$out/criteria-after.sha256"
+          cp research-ide/mathscope-m3/web/extended-engine.bundle.js "$out/"
+          cp research-ide/mathscope-m3/web/extended-build-data.json "$out/"
+          git rev-parse HEAD > "$out/source-commit.txt"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: m3-n6-package-${{ github.run_id }}
+          path: ${{ runner.temp }}/n6-package/
+          if-no-files-found: error
+          retention-days: 90
