@@ -33,7 +33,7 @@ def run(context,results,out):
         if e['runId']!=run_id or e['kind']!=kind or e['shard']!=shard or e['implementation']!=controller.implementation():
             raise ValueError('Mismatched code/run/worker receipt')
         row.update(status=e['executionStatus'],elapsedSeconds=e['elapsedSeconds'],maxRSSKiB=e['maxRSSKiB'],
-                   receiptSHA256=verification['receiptSHA256'],failure=e.get('failure'))
+                   receiptSHA256=verification['receiptSHA256'],failure=e.get('failure'),resumedFrom=e.get('resumedFrom'))
         for p in sorted(folder.rglob('*')):
             if p.is_file():certificates.append({'artifact':folder.name,'path':p.relative_to(folder).as_posix(),
                         'bytes':p.stat().st_size,'sha256':controller.sha(p)})
@@ -90,13 +90,18 @@ def run(context,results,out):
         if row['result'] in applied:
             row.update(closedOnOriginalLeafDefinedDomain=True,derivativeComputed=True,
                 exactParameterAndCaptureSemantics={'pass':True,'method':'complete original source capture audit and fresh-cache derivative replay during actual Cartesian substitution'},
+                lemma='REPLAYED_ORIGINAL_SOURCE_DIRECTIONAL_CALCULUS',
+                proof={'actualApplicationReference':'jet-solve-application-result.json','formulaArtifact':row['formulaArtifact'],
+                       'originalGlobalDefinednessPremisesRetained':True},
                 actualApplicationReference='jet-solve-application-result.json')
+            if row.get('exactZero'):row['exactValue']='0'
     new_closed=len(applied)
     new_guards=sum(guards[i]['provedByThisWorker'] for i in guard_target)
     remaining_jets=237-new_closed;remaining_guards=59-new_guards
     summary={'schema':'MathScope.N6Remaining.Summary/1','sourceCommit':commit,'runId':run_id,
         'runURL':f'https://github.com/leegahuyn/MathScopeCompute/actions/runs/{run_id}',
         'expectedCalculationJobs':len(EXPECTED),'successfulCalculationJobs':len(EXPECTED)-len(failures),
+        'reusedIdenticalCalculationJobs':sum(bool(r.get('resumedFrom')) for r in progress),
         'attemptedRemainingJets':len(seen),'newClosedJetRequestsOnLeafDefinedDomain':new_closed,
         'previouslyNewClosedJetRequests':128,'remainingJetRequestsOnLeafDefinedDomain':remaining_jets,
         'attemptedRemainingGuards':guard_result['attemptedRemainingGuards'] if guard_result else 0,
@@ -116,6 +121,19 @@ def run(context,results,out):
         dependencies.append({**requirement,'status':'OPEN',
           'dependencyIDs':original_acceptance.dependency_plan(requirement),
           'wholeSourceCertificateIndependentlyVerified':False})
+    durable_pde=[]
+    for data in pde_results:
+        compact=copy.deepcopy(data);verifier=compact['independentDerivativeAndAlgebraVerifier']
+        omitted={}
+        for key in ['allRemainingNumeratorMonomials','denominatorFactorPolynomials','normalizedActualAtomicNodes']:
+            if key in verifier:
+                value=verifier.pop(key);omitted[key]={'entries':len(value),'canonicalJSONSHA256':json_sha(value)}
+        compact['fullExactEvidenceArtifact']={'artifact':f'n6-finish-pde-{data["component"]}-{run_id}',
+            'algebraPath':f'pde-solve-component-{data["component"]}-algebra.json',
+            'originalTermCircuitPath':f'pde-solve-component-{data["component"]}-circuit.json','durableHashIndex':'CERTIFICATE_HASHES.json',
+            'largeFieldsPreservedInArtifact':omitted}
+        durable_pde.append(compact)
+    durable_jets=[{k:v for k,v in data.items() if k!='rows'} for data in jet_results]
     matrix={'schema':'MathScope.N6Remaining.ObligationMatrix/1','sourceCommit':commit,
         'originalParentNodesSHA256':controller.cloud.PARENT,'previousFrontierSource':context['remainingSourceLock'],
         'originalIndependentCartesianRequests':original['originalIndependentCartesianRequests'],
@@ -124,7 +142,7 @@ def run(context,results,out):
         'cumulativeCartesianRequests':list(current.values()),'cumulativeGlobalGuardRows':list(guards.values()),
         'remainingJetIDs':[i for i,r in current.items() if not r['closedOnOriginalLeafDefinedDomain']],
         'remainingGlobalGuardIDs':[i for i,r in guards.items() if not r['provedByThisWorker']],
-        'dedicatedJetResults':jet_results,'dedicatedPDEResults':pde_results,'dedicatedGuardResult':guard_result,
+        'dedicatedJetResults':durable_jets,'dedicatedPDEResults':durable_pde,'dedicatedGuardResult':guard_result,
         'cloudExecution':summary,'shardProgress':progress,
         'unconditionalCertificationPromoted':False,'allOriginalStatementsAndPreviousEvidencePreserved':True}
     write(out/'OBLIGATION_MATRIX.json',matrix);write(out/'verification-summary.json',summary)
@@ -154,7 +172,7 @@ PDE의 조건부 미분 대수 정규화 항 수는 {normalized}입니다. sourc
 
 계산 작업 {summary['successfulCalculationJobs']}/{len(EXPECTED)} 성공. 성공은 수학적 완전 인증과 별개입니다. 누락·실패: {json.dumps(failures,ensure_ascii=False)}.
 
-사용자 노트북에 저장소·ZIP·계산 아티팩트를 받지 않았습니다. 표준 Ubuntu hosted runner, Python3.12/Node24, 작업당5GiB/840CPU초만 사용했습니다. Git의 검증된 원본 체크포인트를 재사용하고 이미 닫힌 jet128개·guard35개는 새 계산 대상에서 제외했습니다. Artifacts 보존90일, 실제 만료시각과 artifact digest는 GITHUB_OBSERVATION.json, 모든 결과/로그의 해시는 CERTIFICATE_HASHES.json에 기록합니다. main·원본 producer·원본 기준·56/64·공개 사이트는 보호하며 병합·배포하지 않았습니다.
+사용자 노트북에 저장소·ZIP·계산 아티팩트를 받지 않았습니다. 표준 Ubuntu hosted runner, Python3.12/Node24, 프로세스별 주소공간5GiB/840CPU초 상한, PDE 대수 하위 프로세스420초 제한, 계산 작업18분 제한을 설정했습니다. Git의 검증된 원본 체크포인트를 재사용하고 이미 닫힌 jet128개·guard35개는 새 계산 대상에서 제외했습니다. Artifacts 보존90일, 실제 만료시각과 artifact digest는 GITHUB_OBSERVATION.json, 모든 결과/로그의 해시는 CERTIFICATE_HASHES.json에 기록합니다. main·원본 producer·원본 기준·56/64·공개 사이트는 보호하며 병합·배포하지 않았습니다.
 '''
     (out/'RESULTS_KO.md').write_text(report,encoding='utf8')
     if failures:raise RuntimeError('Remaining solver worker failed; exact partial results and every open obligation preserved')

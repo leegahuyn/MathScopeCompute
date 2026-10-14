@@ -12,10 +12,14 @@
 
 새 검산기는 적분 변수를 실수 전체가 아니라 **그 적분의 실제 유한 구간**에 제한한다. 예를 들어 `[1,3]`의 `1/t`는 매끄럽지만 `[0,1]`의 같은 식은 거절한다. 적분 함수와 움직이는 두 끝점이 원본 구간 및 각 매개변수의 열린 이웃에서 C∞이면, 각 고정 차수 미분에 대해 compactness로 국소 균등 dominating bound가 존재한다. 이 사실로 임의의 고정 차수 Leibniz 법칙을 정당화한다. 원본 Picard·전체 W/M/S 상계로 확장하지 않는다.
 
-Opaque substitution은 전체 원본 함수의 인수와 숨은 capture를 먼저 감사한다. 치환할 좌표가 없으면 원본 **부분함수와 그 정의역**의 항등식이다. 실제 좌표 인수가 바뀌는 경우에는 원본 registry·미분 차수·모든 인수를 유지한 새 인수 튜플을 독립 구성한다. 이것은 함수의 존재나 전역 source image를 증명하지 않는다.
+Opaque substitution은 전체 원본 함수의 인수와 숨은 capture를 먼저 감사한다. 사용되지 않는 형식 인수도 원래 합성의 정의역에 영향을 줄 수 있으므로 모든 실제 인수의 보수적 정의역 좌표를 포함한다. 별도의 domain·premise 조건이 있는 함수는 독립적인 정의역 pullback 증명 없이는 거절한다. 실제 좌표 인수가 바뀌는 경우에는 원본 registry·미분 차수·모든 인수를 유지한 새 인수 튜플을 독립 구성한다. 이 항등식은 같은 완전한 인수 튜플로 당겨온 정의역 위의 정확한 치환이며, 함수의 존재나 전역 source image를 증명하지 않는다. 본문이 x에만 의존하지만 정의역이 y>0인 음성 대조군을 추가했다.
 
 원본 annular bump가 `exp(-1/(t(1-t)))`, 외부값 0인 정확한 식인지 유리함수 다항식으로 검사한다. 약분으로 내부 pole을 숨기는 식은 거절한다. 임의 차수 미분은 bump에 끝점에서만 pole을 갖는 유리함수를 곱한 꼴이다. `t^-m exp(-1/t)->0`의 모든 m에 대한 지수 급수 상계로 모든 끝점 jet가 0임을 증명한다. 원본 전체 함수와 합성하려면 selector의 실제 전역 C∞ 정의역이 별도로 필요하다.
 
 원본 slow image와 atlas scaling에는 정확한 보조정리를 추가한다. `R'=sqrt(r)R`, `Z'=r^(1/2-h)Z`, `T'=rT`, `s'=rs`이면 원본 implicit equation의 값은 r배이고 X와 eta는 보존된다. 그러나 **모든 실제 global candidate의 scaling과 평가 전 guard가 이 정리에 결합되었음을 검증하기 전에는 source image 관련 guard를 전역 해결로 세지 않는다.**
+
+추가한 실제 전 행 감사기는 인증된 전체 원본 registry header의 모든 indexed field와 모든 행을 순회한다. 원본 좌표 ID, 완전한 인수 튜플, 실제 `Q_ref/Q_label`의 지수 양수성, `Q_label=exp(-ell_label log 2)`, 세 slow 좌표의 scaling, 고정 label Jacobian 및 실제 평가 전 band guard를 정확한 유리 계수 다항식으로 독립 검사한다. Aux 행이 slow 좌표를 그대로 전달하는 경우에도 모든 물리 미분의 인수 번호와 계수를 검증한다. 검증된 실제 행에서 band guard 제거와 Jacobian 변조를 다시 거절한다. 원본 두 평가 kernel의 불변 해시가 guard 외부 0 분기와 내부 함수 평가 순서를 결합한다.
+
+이 검사의 결론은 **원본 reference image에 속하는 점을 입력했을 때** 각 활성 후보도 image에 속한다는 조건부 전달 정리이다. 모든 Cartesian·radial·Fourier 호출의 실제 입력이 reference image에 속함, 모든 changing label/copy join, Fourier inverse의 정의역과 전체 source support는 별도의 문제이다. 한 행 또는 한 종류가 실패하면 해당 원본 registry ID와 행 번호 및 이유를 보존한다. 전 행 구조 검사가 통과해도 이러한 전체 호출 증명이 없으면 전역 guard 해결 수를 올리지 않는다.
 
 필요한 원본 node가 prefix에 없을 때만, 이미 Git에 보존된 3,892,594-node 압축 source stream을 runner 임시 SQLite로 한 번 읽는다. 모든 stream/member 해시를 검사하며 producer를 재계산하지 않는다. 임시 DB는 업로드하지 않고 선택된 원본 witness와 영수증만 남긴다. 입력 해시가 틀리면 수학적 미해결로 숨기지 않고 실행 자체를 실패시킨다.

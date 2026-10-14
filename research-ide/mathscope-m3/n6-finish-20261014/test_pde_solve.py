@@ -3,7 +3,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
-from pde_solve import Arena, OrdinaryDerivative, TaylorDerivative, build_component, js_hash, SourceExpander, Stop
+from pde_solve import Arena, OrdinaryDerivative, TaylorDerivative, build_component, js_hash, SourceExpander, Stop, compact_atom_inventory
 from pde_solve_verify import verify_original_coverage, negative_source_controls
 
 
@@ -48,6 +48,16 @@ def run_bridge(evidence):
 
 
 class DedicatedPDETests(unittest.TestCase):
+    def test_compact_inventory_distinguishes_unavailable_basis_and_actual_root(self):
+        self.assertIsNone(compact_atom_inventory({})['normalizedSlowRootApplications'])
+        algebra = {'normalizedActualAtomicNodes': [{'node': 5, 'value': {'op': 'opaque_function',
+            'args': [{'kind': 'actual_unexpanded_source_value', 'sourceNode': 622820,
+                      'allOriginalFreeCoordinates': [622803, 622804]}, [1, 2]]}}]}
+        inventory = compact_atom_inventory(algebra)
+        self.assertEqual(inventory['normalizedSlowRootApplications'][0]['generatedNode'], 5)
+        self.assertEqual(inventory['normalizedSlowRootApplications'][0]['actualArgumentCircuitNodes'], [1, 2])
+        self.assertFalse(inventory['normalizedSlowRootApplications'][0]['identityAppliedByThisWorker'])
+
     def test_registered_source_body_derivative_cancels_explicit_declared_body(self):
         source, definitions = fixtures()
         terms = [{'monomial': '10:1', 'coefficient': '1'}, {'monomial': '11:1', 'coefficient': '-1'},

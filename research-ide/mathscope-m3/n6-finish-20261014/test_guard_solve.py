@@ -6,7 +6,7 @@ import unittest
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'n6-cloud-20261014'))
 from guard_solve import (Bound,FiberProof,bump_binding,bump_theorem,chart_image_theorem,
-    const,inv,negative_controls,parameter_theorem,substitution_attempt,terminal_theorem,times)
+    audit_chart_row,const,inv,negative_controls,parameter_theorem,substitution_attempt,terminal_theorem,times)
 from jet_worker import SourceCalculus,js_hash
 
 
@@ -136,8 +136,75 @@ class CaptureSubstitutionTests(unittest.TestCase):
         program,calc=self.fixture(True);e=substitution_attempt(program,{'root':3,'bound':1,'value':2},calc)
         self.assertFalse(e['globallyProved'])
 
+    def test_unused_parameter_explicit_domain_not_erased(self):
+        program,calc=self.fixture();definition=calc.defs['expression:0']['definition']
+        definition['domain']={'positive':1};calc.defs['expression:0']['definitionSHA256']=js_hash(definition)
+        e=substitution_attempt(program,{'root':3,'bound':1,'value':2},calc)
+        self.assertFalse(e['globallyProved'])
+        self.assertIn('domain',e['reason'])
+
     def test_runtime_negative_controls_rejected(self):
         self.assertTrue(all(c['rejected'] for c in negative_controls()))
+
+
+class ActualChartRowTests(unittest.TestCase):
+    def fixture(self):
+        source={9:{'op':'source_parameter','args':['h']},
+            622802:{'op':'coordinate','args':['R']},622803:{'op':'coordinate','args':['Z']},
+            622804:{'op':'coordinate','args':['T']},622820:{'op':'actual_monotone_root','args':[2,622803,622804]}}
+        def node(op,args):
+            ident=max(source)+1;source[ident]={'op':op,'args':args};return ident
+        one=node('rational',['1','1']);two=node('rational',['2','1']);half=node('rational',['1','2'])
+        minus=node('rational',['-1','1']);left=node('rational',['-3','4']);right=node('rational',['3','4'])
+        ell=node('coordinate',['actual-label']);reference=node('coordinate',['reference-label'])
+        logtwo=node('log_positive',[two]);labelq=node('exp',[node('multiply',[minus,ell,logtwo])])
+        referenceq=node('exp',[node('multiply',[minus,reference,logtwo])])
+        ratio=node('multiply',[referenceq,node('inverse',[labelq])]);sqrt=node('sqrt_positive',[ratio])
+        D=node('add',[half,node('multiply',[minus,9])])
+        axial=node('exp',[node('multiply',[D,node('log_positive',[ratio])])])
+        mapped=[node('multiply',[c,s]) for c,s in zip([622802,622803,622804],[sqrt,axial,ratio])]
+        logq=node('log_positive',[node('multiply',[referenceq,622820])])
+        band=node('add',[node('multiply',[minus,logq,node('inverse',[logtwo])]),node('multiply',[minus,ell])])
+        definition={'parameters':[622802,622803,622804,ell,reference],'directions':[622802,622803,622804]}
+        row={'localParameters':[622802,622803,622804],'localBody':622820,'values':mapped,
+            'localDirectionIndices':[0,1,2],'derivativeScales':[sqrt,axial,ratio],
+            'label':{'ell':ell,'Q':labelq},'guards':[[band,left,right]]}
+        return source,definition,row,one
+
+    def test_actual_scaled_candidate_and_complete_jacobian(self):
+        source,d,row,_=self.fixture();result=audit_chart_row(source,d,row)
+        self.assertTrue(result['referenceImageImpliesEveryActiveCandidateImage'])
+        self.assertTrue(result['exactFixedLabelJacobianVerified'])
+        self.assertFalse(result['globalFullCallDomainProved'])
+
+    def test_mutated_candidate_guard_is_rejected(self):
+        source,d,row,_=self.fixture();row['guards'][0][2]=row['guards'][0][1]
+        with self.assertRaises(ValueError):audit_chart_row(source,d,row)
+
+    def test_mutated_jacobian_is_rejected(self):
+        source,d,row,one=self.fixture();row['derivativeScales'][1]=one
+        with self.assertRaises(ValueError):audit_chart_row(source,d,row)
+
+    def test_crossed_axial_exponent_is_rejected(self):
+        source,d,row,_=self.fixture();source[row['derivativeScales'][1]]={'op':'exp','args':[9]}
+        with self.assertRaises(ValueError):audit_chart_row(source,d,row)
+
+    def test_local_chart_does_not_replace_missing_original_id(self):
+        source,d,row,_=self.fixture();row['localParameters'][0]=row['label']['ell']
+        with self.assertRaises(ValueError):audit_chart_row(source,d,row)
+
+    def test_identity_auxiliary_map_retains_all_slow_coordinates(self):
+        source,d,row,one=self.fixture();row['values']=[622802,622803,622804]
+        row.pop('derivativeScales');row.pop('localDirectionIndices')
+        row['derivativeMaps']=[[{'parameter':j,'coefficient':one}] for j in range(3)]
+        self.assertTrue(audit_chart_row(source,d,row)['identitySlowMap'])
+
+    def test_auxiliary_hidden_slow_direction_mixing_is_rejected(self):
+        source,d,row,one=self.fixture();row['values']=[622802,622803,622804]
+        row.pop('derivativeScales');row.pop('localDirectionIndices')
+        row['derivativeMaps']=[[{'parameter':j,'coefficient':one}] for j in range(3)]
+        row['derivativeMaps'][0].append({'parameter':2,'coefficient':one})
+        with self.assertRaises(ValueError):audit_chart_row(source,d,row)
 
 
 if __name__=='__main__':unittest.main()

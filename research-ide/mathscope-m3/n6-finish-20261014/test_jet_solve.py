@@ -3,8 +3,9 @@ import copy
 from fractions import Fraction as Q
 import unittest
 
-from jet_solve import DirectionalSourceCalculus, FormulaArena, formula_semantic_hash
+from jet_solve import DirectionalSourceCalculus, FormulaArena, formula_semantic_hash, new_request_row
 from jet_worker import js_hash
+from acceptance import REQUEST_BINDING_FIELDS, verify_request_binding
 
 
 def bound(key, definition):
@@ -37,6 +38,20 @@ def fixture():
 
 
 class SolveTests(unittest.TestCase):
+    def test_request_row_serializes_strict_source_binding(self):
+        original = dict.fromkeys(REQUEST_BINDING_FIELDS, None)
+        original.update(result=12, baseSourceNode=9, actualSourceNode={"op": "coordinate", "args": ["theta"]},
+                        orderedDifferentiationCoordinates=[0], minimalObligation={"reason": "historical stop"})
+        program = [{"op": "coordinate", "args": ["theta", 2]}]
+        row = new_request_row(original, program)
+        self.assertTrue(verify_request_binding(original, row, program))
+        self.assertEqual(row["originalSourceNodeSHA256"], js_hash(original["actualSourceNode"]))
+        self.assertFalse(row["derivativeComputed"])
+        row["originalRequest"]["minimalObligation"]["reason"] = "mutation"
+        self.assertEqual(original["minimalObligation"]["reason"], "historical stop")
+        with self.assertRaisesRegex(ValueError, "Preserved complete"):
+            verify_request_binding(original, row, program)
+
     def test_complete_fixed_selector_theta_derivative_has_no_join_premise(self):
         calc = fixture()
         root = calc.d(calc.ref(9), 2)

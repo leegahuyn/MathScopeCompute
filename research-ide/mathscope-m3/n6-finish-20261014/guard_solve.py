@@ -390,6 +390,37 @@ def serialize_scalar(program,i,depth=6,seen=None):
     return {'id':i,'node':n,'sha256':sha(n),'children':[serialize_scalar(program,j,depth-1,seen) for j in children]}
 
 
+def conservative_domain_support(source_calc,root,max_nodes=50000):
+    """All actual arguments contribute to definedness, including unused ones."""
+    from jet_worker import definition_key,REGISTERED_OPS
+    memo={};active=set()
+    def at(i):
+        if i in memo:return memo[i]
+        if i in active:raise ValueError('cyclic source domain dependency')
+        if len(memo)+len(active)>max_nodes:raise RuntimeError('complete actual argument domain support budget')
+        active.add(i);n=source_calc.source[i];op=n['op'];a=n['args']
+        binding=source_calc.defs.get(definition_key(n))
+        if binding is not None:
+            fields=[k for k in binding['definition'] if any(w in k.lower() for w in ['domain','premise','hypothes','guard'])]
+            if fields:raise ValueError('explicit source domain/premises not independently pulled back: '+','.join(fields))
+        if op=='coordinate':value={i}
+        elif op in ['rational','source_parameter']:value=set()
+        else:
+            if op in REGISTERED_OPS:kids=a[1]
+            elif op in ['add','multiply','maximum','smooth_piecewise']:kids=a
+            elif op in ['inverse','sqrt_positive','exp','log_positive','sine','cosine','ceiling','integer_power','source_step_derivative']:kids=a[:1]
+            elif op=='definite_integral':
+                value=(at(a[0])-{a[1]})|at(a[2])|at(a[3]);kids=None
+            elif op=='actual_monotone_root':kids=a[1:]
+            elif op=='actual_quadratic_root':kids=a[2:3]
+            elif op=='actual_natural_series':kids=a[1:3]
+            elif op in ['actual_background_picard','actual_background_even_profile']:kids=a[2:4]
+            else:raise ValueError('unreviewed exact partial-function domain grammar '+op)
+            if kids is not None:value=set().union(*(at(j) for j in kids))
+        active.remove(i);memo[i]=value;return value
+    return at(root)
+
+
 def substitution_attempt(program,guard,source_calc):
     """Exact substitution of partial functions: existence remains separate."""
     root,bound,value=(guard[k] for k in ['root','bound','value'])
@@ -403,6 +434,9 @@ def substitution_attempt(program,guard,source_calc):
     collect(root);source_id=applied[0][1]
     support,unknowns=source_calc.source_support(source_id)
     if unknowns:return {'globallyProved':False,'reason':'unreviewed complete source capture closure','unreviewed':sorted(unknowns)}
+    try:domain_support=conservative_domain_support(source_calc,source_id)
+    except (ValueError,RuntimeError) as error:
+        return {'globallyProved':False,'reason':str(error),'conditionalBodySupport':sorted(support)}
     def scalar_coordinate(i):
         n=program[i]
         if n['op']!='coordinate' or len(n['args'])!=2 or type(n['args'][1]) is not int:return None
@@ -410,12 +444,25 @@ def substitution_attempt(program,guard,source_calc):
     steps=[];original=source_calc.source[source_id];op=original['op']
     from jet_worker import definition_key,REGISTERED_OPS
     key=definition_key(original);binding=source_calc.defs.get(key)
+    # A body may omit a coordinate which still occurs in the declared domain.
+    # Such metadata needs its own pullback calculus, never the absent-body rule.
+    if binding is not None:
+        domain_keys=[k for k in binding['definition'] if any(w in k.lower() for w in ['domain','premise','hypothes','guard'])]
+        if domain_keys:return {'globallyProved':False,'reason':'explicit source domain/premises require an independent exact domain pullback',
+            'domainMetadataFields':domain_keys,'conditionalBodySupport':sorted(support)}
     arguments=copy.deepcopy(original['args'][1]) if op in REGISTERED_OPS else None
     reconstructed=None
     for b,v in [*applied[1:],(bound,value)]:
         sid=scalar_coordinate(b)
         if sid is None:return {'globallyProved':False,'reason':'fresh scalar alpha binder needs complete lexical alpha-renaming proof','steps':steps}
-        absent=sid not in support
+        # Actual arguments remain part of a partial composition's definedness
+        # even when the formal expression body omits their values.
+        actual_domain_support=set()
+        if arguments is not None:
+            for argument in arguments:
+                ds=conservative_domain_support(source_calc,argument)
+                actual_domain_support.update(ds)
+        absent=sid not in support and sid not in actual_domain_support and sid not in domain_support
         steps.append({'originalScalarBinder':b,'originalSourceCoordinate':sid,'originalScalarReplacement':v,
             'replacementNode':program[v],'sourceCoordinateAbsent':absent,
             'rule':'identity of the original partial function because complete capture-verified support omits this coordinate' if absent else 'simultaneous capture-free application to the complete original input tuple; original domain pulled back under the same substitution'})
@@ -427,15 +474,15 @@ def substitution_attempt(program,guard,source_calc):
                 return {'globallyProved':False,'reason':'nontrivial opaque substitution lacks a complete capture-verified simple source application','steps':steps}
             changed=[]
             for argument in arguments:
-                argument_support,unreviewed=source_calc.source_support(argument)
-                if unreviewed:return {'globallyProved':False,'reason':'actual argument support is unreviewed','steps':steps}
+                argument_support=conservative_domain_support(source_calc,argument)
                 if sid not in argument_support:changed.append(argument)
                 elif argument==sid:changed.append(replacement)
                 else:return {'globallyProved':False,'reason':'nontrivial compound source argument needs independent capture-free expression substitution','steps':steps}
-            arguments=changed;support=set(support)-{sid}
+            arguments=changed;support=set(support)-{sid};domain_support.discard(sid)
             replacement_support,replacement_unknown=source_calc.source_support(replacement)
             if replacement_unknown:return {'globallyProved':False,'reason':'replacement source support is unreviewed','steps':steps}
             support.update(replacement_support)
+            domain_support.update(conservative_domain_support(source_calc,replacement))
             reconstructed={'originalSourceNode':source_id,'originalSourceNodeSHA256':sha(original),
                 'registryKey':key,'definitionSHA256':binding['definitionSHA256'],
                 'formalParameters':binding['definition']['parameters'],
@@ -443,8 +490,9 @@ def substitution_attempt(program,guard,source_calc):
                 'newCompleteActualSourceArgumentTuple':arguments,
                 'originalCompleteActualSourceArgumentTuple':original['args'][1]}
             steps[-1]['independentlyReconstructedApplication']=copy.deepcopy(reconstructed)
-    return {'globallyProved':True,'sourceID':source_id,'completeSourceCoordinateSupport':sorted(support),'steps':steps,
-        'equalityScope':'identity of partial functions, with their original definedness domains retained',
+    return {'globallyProved':True,'sourceID':source_id,'completeSourceCoordinateSupport':sorted(support),
+        'conservativeOriginalDomainCoordinateSupport':sorted(domain_support),'steps':steps,
+        'equalityScope':'exact capture-free substitution with the same complete actual argument tuple and its pulled-back domain; source definedness remains a separate obligation',
         'sourceExistenceProved':False,'globalChartMembershipInferred':False,
         'independentlyReconstructedFinalApplication':reconstructed,
         'actualSystemCaptureAudits':list(source_calc.system_capture_cache.values())}
@@ -506,11 +554,239 @@ def complete_source_store(initial,context,allow_full=True):
             self.loaded[ident]={'sourceNode':ident,'node':value,'nodeSHA256':sha(value)}
             return value
         def evidence(self):return {**super().evidence(),'completeOriginalSourceIndex':self.full_receipt}
+        def all_registries(self):
+            self.complete()
+            from source_dag import open_header,definitions
+            try:header=open_header(context['repo']);result=definitions(header)
+            except (ValueError,OSError) as error:raise SourceIntegrityError(str(error)) from error
+            self.full_receipt['authenticatedSourceHeaderSHA256']=sha(header)
+            return result
         def close(self):
             if self.complete_db is not None:self.complete_db.close()
             if self.db is not None:self.db.close()
             if self.temp is not None:self.temp.cleanup()
     return CompleteStore()
+
+
+class ChartAlgebra:
+    """Small exact polynomial verifier, with transcendental nodes as atoms.
+
+    This proves displayed chart identities only. Every denominator is retained
+    separately, so polynomial cancellation cannot prove original definedness.
+    """
+    def __init__(self,source,max_work=100000):self.source=source;self.work=0;self.max_work=max_work
+    def polynomial(self,i,atoms):
+        memo={}
+        def add(a,b):
+            out=dict(a)
+            for k,v in b.items():out[k]=out.get(k,Q())+v
+            return {k:v for k,v in out.items() if v}
+        def mul(a,b):
+            out={}
+            for ka,va in a.items():
+                for kb,vb in b.items():
+                    key=tuple(sorted(ka+kb));out[key]=out.get(key,Q())+va*vb
+            if len(out)>512:raise RuntimeError('exact chart polynomial 512-term budget')
+            return {k:v for k,v in out.items() if v}
+        def at(j):
+            self.work+=1
+            if self.work>self.max_work:raise RuntimeError('exact chart algebra work budget')
+            if j in atoms:return {(str(atoms[j]),):Q(1)}
+            if j in memo:return memo[j]
+            n=self.source[j];op=n['op'];a=n['args']
+            if op=='rational':v={():Q(int(a[0]),int(a[1]))}
+            elif op in ['add','multiply']:
+                v={} if op=='add' else {():Q(1)}
+                for child in a:v=add(v,at(child)) if op=='add' else mul(v,at(child))
+            elif op=='integer_power' and type(a[1]) is int and 0<=a[1]<=8:
+                v={():Q(1)}
+                for _ in range(a[1]):v=mul(v,at(a[0]))
+            elif op=='inverse':
+                child=at(a[0])
+                if set(child)!={()} or not child[()]:raise ValueError('nonconstant inverse retained as domain-sensitive atom')
+                v={():1/child[()]}
+            else:raise ValueError('unmatched chart algebra source operation '+op)
+            memo[j]=v;return v
+        return at(i)
+    def rational(self,i):
+        try:p=self.polynomial(i,{})
+        except ValueError:return None
+        return p.get((),Q()) if set(p)<={()} else None
+    def factors(self,i):
+        n=self.source[i]
+        if n['op']=='multiply':return [k for child in n['args'] for k in self.factors(child)]
+        if self.rational(i)==1:return []
+        return [i]
+    def strip_coordinate(self,i,coordinate,expected=None):
+        factors=self.factors(i)
+        if factors.count(coordinate)!=1:raise ValueError('candidate slow coordinate is not one exact linear factor')
+        factors.remove(coordinate)
+        if expected is not None:
+            if sorted(factors)!=sorted(self.factors(expected)):raise ValueError('candidate coordinate differs from its exact linear source scale')
+            return expected
+        if len(factors)!=1:raise ValueError('candidate slow scale is not one exact retained source factor')
+        return factors[0]
+    def positive_exp_ratio(self,i):
+        factors=self.factors(i);exps=[];inverses=[]
+        for child in factors:
+            n=self.source[child]
+            if n['op']=='exp':exps.append(child)
+            elif n['op']=='inverse' and self.source[n['args'][0]]['op']=='exp':inverses.append(n['args'][0])
+            else:raise ValueError('ratio positivity is not an exact product of exponentials and their reciprocals')
+        if len(exps)!=1 or len(inverses)!=1:raise ValueError('expected the complete original Q_ref/Q_label pair')
+        return exps[0],inverses[0]
+    def logarithms(self,i,limit=180):
+        todo=[i];seen=set();out=[]
+        while todo:
+            j=todo.pop()
+            if j in seen:continue
+            seen.add(j)
+            if len(seen)>limit:raise ValueError('band guard source closure exceeds exact bounded grammar')
+            n=self.source[j];op=n['op'];a=n['args']
+            if op=='log_positive':out.append(j)
+            elif op in ['add','multiply']:todo.extend(a)
+            elif op in ['inverse','exp','integer_power']:todo.append(a[0])
+        return out
+
+
+def audit_chart_row(source,definition,row,root=622820,h=9):
+    """Verify every actual slow map, its fixed-label Jacobian and band guard.
+
+    Returned transport is CONDITIONAL on the reference point belonging to the
+    original image. It never proves evaluation of arbitrary Fourier/pressure
+    argument substitutions or the field's changing-label flat joins.
+    """
+    alg=ChartAlgebra(source);parameters=definition.get('parameters',[]);directions=definition.get('directions',[])
+    local=row.get('localParameters',[]);values=row.get('values',[])
+    if len(local)!=len(values) or len(set(local))!=len(local):raise ValueError('complete original local parameter tuple missing')
+    # Slow formal coordinates are bound by exact IDs, never their display name.
+    slow=[622802,622803,622804]
+    if not all(c in parameters and c in local for c in slow):raise ValueError('all three original slow coordinate IDs are not explicitly bound')
+    positions=[local.index(c) for c in slow];mapped=[values[j] for j in positions]
+    identity=mapped==slow;scales=[];ratio=None;band_guard=None
+    if identity:scales=[None,None,None]
+    else:
+        if source[h]['op']!='source_parameter' or source[h]['args'][0]!='h':raise ValueError('original h source node binding differs')
+        if 'derivativeScales' in row and len(row['derivativeScales'])==3:t_scale=row['derivativeScales'][2]
+        elif 'derivativeMaps' in row and slow[2] in directions:
+            t_entries=row['derivativeMaps'][directions.index(slow[2])]
+            if len(t_entries)!=1 or t_entries[0].get('parameter')!=positions[2]:raise ValueError('actual T coefficient is not a single declared linear scale')
+            t_scale=t_entries[0]['coefficient']
+        else:raise ValueError('actual T linear scale source binding missing')
+        scales=[alg.strip_coordinate(mapped[0],slow[0]),alg.strip_coordinate(mapped[1],slow[1]),
+            alg.strip_coordinate(mapped[2],slow[2],t_scale)]
+        ratio=scales[2];reference_q,label_q=alg.positive_exp_ratio(ratio)
+        radial=source[scales[0]]
+        if radial!={'op':'sqrt_positive','args':[ratio]}:raise ValueError('radial chart scale is not the positive square root of the actual ratio')
+        axial=source[scales[1]]
+        if axial['op']!='exp':raise ValueError('axial chart scale is not the original exponential power')
+        logs=alg.logarithms(axial['args'][0]);ratio_logs=[j for j in logs if source[j]['args']==[ratio]]
+        if len(ratio_logs)!=1:raise ValueError('actual axial scale lost log of the exact ratio')
+        logratio=ratio_logs[0]
+        if alg.polynomial(axial['args'][0],{h:'h',logratio:'L'})!={('L',):Q(1,2),('L','h'):Q(-1)}:
+            raise ValueError('actual axial exponent differs from (1/2-h)*log(ratio)')
+        ell=row.get('label',{}).get('ell')
+        if type(ell) is not int or row.get('label',{}).get('Q',label_q)!=label_q:raise ValueError('actual candidate label/Q binding missing')
+        label_exponent=source[label_q]['args'][0]
+        logtwos=[j for j in alg.logarithms(label_exponent) if alg.rational(source[j]['args'][0])==2]
+        if len(logtwos)!=1 or alg.polynomial(label_exponent,{ell:'ell',logtwos[0]:'log2'})!={('ell','log2'):Q(-1)}:
+            raise ValueError('actual Q_label is not exp(-ell_label*log(2))')
+        logtwo=logtwos[0]
+        for guard in row.get('guards',[]):
+            if not isinstance(guard,list) or len(guard)!=3:raise ValueError('malformed original row guard')
+            coordinate,left,right=guard
+            if alg.rational(left)!=Q(-3,4) or alg.rational(right)!=Q(3,4):continue
+            try:
+                glogs=alg.logarithms(coordinate)
+                qlogs=[j for j in glogs if sorted(alg.factors(source[j]['args'][0]))==sorted([reference_q,root])]
+                inverse_log=[j for j in alg.factors(coordinate) if source[j]['op']=='inverse' and source[j]['args']==[logtwo]]
+                # The inverse log(2) occurs inside an addend, so find by bounded DAG scan.
+                def find_inv(j):
+                    n=source[j]
+                    if n=={'op':'inverse','args':[logtwo]}:return [j]
+                    return [k for c in n['args'] for k in find_inv(c)] if n['op'] in ['add','multiply'] else []
+                inverses=find_inv(coordinate)
+                if len(qlogs)==1 and len(set(inverses))==1:
+                    p=alg.polynomial(coordinate,{ell:'ell',qlogs[0]:'logq',inverses[0]:'invlog2'})
+                    if p=={('invlog2','logq'):Q(-1),('ell',):Q(-1)}:band_guard=guard;break
+            except ValueError:continue
+        if band_guard is None:raise ValueError('no exact original pre-evaluation band guard for q/Q_label')
+    # All physical derivatives must have the exact fixed-label linear Jacobian.
+    if 'derivativeScales' in row:
+        if row.get('localDirectionIndices')!=positions or directions!=slow:raise ValueError('global row derivative direction/parameter binding differs')
+        declared=row['derivativeScales']
+        for got,want in zip(declared,scales):
+            if (alg.rational(got)!=1 if want is None else got!=want):raise ValueError('global row Jacobian scale mutation')
+    elif 'derivativeMaps' in row:
+        maps=row['derivativeMaps']
+        if len(maps)!=len(directions):raise ValueError('auxiliary derivative map omitted a global direction')
+        for c,pos,want in zip(slow,positions,scales):
+            if c not in directions:raise ValueError('auxiliary row omitted an original physical derivative')
+            entries=maps[directions.index(c)]
+            if len(entries)!=1 or entries[0].get('parameter')!=pos:raise ValueError('auxiliary physical Jacobian mixes local parameters')
+            got=entries[0].get('coefficient')
+            if (alg.rational(got)!=1 if want is None else got!=want):raise ValueError('auxiliary physical Jacobian coefficient mutation')
+        for entries in maps:
+            if any(e.get('parameter') in positions for e in entries) and entries not in [maps[directions.index(c)] for c in slow]:
+                raise ValueError('an auxiliary derivative changes the original slow coordinates')
+    else:raise ValueError('actual indexed derivative Jacobian absent')
+    return {'sourceRowSHA256':sha(row),'localBody':row.get('localBody'),'completeActualTuple':values,
+        'slowFormalParameterIndices':positions,'actualSlowValues':mapped,'actualFixedLabelScales':scales,
+        'identitySlowMap':identity,'ratio':ratio,'actualBandGuard':band_guard,'exactFixedLabelJacobianVerified':True,
+        'referenceImageImpliesEveryActiveCandidateImage':True,
+        'candidateRootBracket':'1/2 < ratio*s < 2, eta and X invariant' if not identity else 'original reference image unchanged',
+        'sourceDefinednessProved':False,'globalFullCallDomainProved':False,'algebraWork':alg.work}
+
+
+def audit_all_chart_rows(source,context):
+    """Inspect every serialized indexed row; emit actual obstructions, no pass flags."""
+    kernels={'source-global-expressions.mjs':'89904bd7441a57cf634ff7b4c579e9ee7688868d14eafd999e44f41f74f0c2d1',
+        'source-auxiliary-expressions.mjs':'4e1741d0a5ebadaf0858d79b141856d9dc52bb0b3b119b39e6cf83248355ca86'}
+    for name,pin in kernels.items():
+        if file_sha(Path(context['repo'])/'research-ide/mathscope-m3/navier'/name)!=pin:
+            raise SourceIntegrityError('original indexed guard evaluation kernel changed: '+name)
+    registries=source.all_registries();selected=[]
+    for name,items in registries.items():
+        if name=='definitions' and isinstance(items,list):
+            for group,entries in enumerate(items):
+                if isinstance(entries,list):
+                    for index,d in enumerate(entries):
+                        if isinstance(d,dict) and isinstance(d.get('rows'),list):selected.append((f'{name}:{group}:{index}',d))
+        elif isinstance(items,list):
+            for index,d in enumerate(items):
+                if isinstance(d,dict) and isinstance(d.get('rows'),list):selected.append((f'{name}:{index}',d))
+    results=[];controls=[];began=time.monotonic();resource_stop=None
+    for key,d in selected:
+        for index,row in enumerate(d['rows']):
+            if len(results)>=30000 or time.monotonic()-began>120:
+                resource_stop='120-second/30000-row exact all-indexed-row audit resource stop';break
+            item={'registryKey':key,'definitionSHA256':sha(d),'row':index,'sourceRowSHA256':sha(row),'verified':False}
+            try:item.update(audit_chart_row(source,d,row));item['verified']=True
+            except (ValueError,KeyError,RuntimeError,RecursionError) as error:item['obstruction']={'type':type(error).__name__,'message':str(error)}
+            results.append(item)
+            if item['verified'] and not item['identitySlowMap'] and not controls:
+                mutations=[]
+                changed=copy.deepcopy(row);changed['guards']=[g for g in changed['guards'] if g!=item['actualBandGuard']]
+                mutations.append(('remove actual pre-evaluation band guard',changed))
+                if 'derivativeScales' in row:
+                    changed=copy.deepcopy(row);changed['derivativeScales'][0]=changed['derivativeScales'][2]
+                    mutations.append(('replace actual radial Jacobian by time Jacobian',changed))
+                for name,changed in mutations:
+                    try:audit_chart_row(source,d,changed)
+                    except (ValueError,KeyError):controls.append({'actualRegistryKey':key,'actualRow':index,'mutation':name,'rejected':True})
+                    else:raise AssertionError('actual indexed row negative control accepted: '+name)
+        if resource_stop:break
+    return {'schema':'MathScope.N6.ActualAllIndexedRowDomainTransport/1','allOriginalRegistryHeadersAuthenticated':True,
+        'guardEvaluationKernelSHA256':kernels,
+        'indexedDefinitionsInventoried':len(selected),'actualRowsInventoried':sum(len(d['rows']) for _,d in selected),
+        'actualRowsAttempted':len(results),'actualRowsVerified':sum(x['verified'] for x in results),
+        'allActualIndexedRowsStructurallyVerified':not resource_stop and bool(results) and all(x['verified'] for x in results),'rows':results,
+        'resourceStop':resource_stop,'negativeControls':controls,
+        'evaluationSemantics':'Each serialized guard wraps the local body as choose(coordinate,left,right,0,prior,0); outside an active guard the local root is not evaluated. This says nothing about existence of derivatives across changing labels.',
+        'wholeGlobalCallGraphAudited':False,'globalSourceImageProved':False,
+        'remainingGlobalCallObstructions':['Every scalar/registry/native root application at every original Cartesian, radial-integral and Fourier argument still needs compositional domain transport.',
+            'Reference-chart image membership must be shown at the actual Cartesian source arguments.',
+            'All changing-label/copy joins and inverse Fourier source domains remain separate.']}
 
 
 def run(context,out):
@@ -588,6 +864,19 @@ def run(context,out):
         'actualGlobalRayleighEnvelopeProved':False,'actualPicardHolomorphicCoefficientNormsProved':False,
         'originalN601Complete':False,'originalN602Complete':False,'original56Of64Changed':False,
         'negativeControls':negative_controls(),'elapsedSeconds':time.monotonic()-started}
+    # Preserve every actual guard attempt before a supplemental whole-registry
+    # audit can hit its independent source/resource budget.
+    write(out/'guard-solve-result.json',result)
+    try:
+        audit=audit_all_chart_rows(source,context)
+    except (RuntimeError,RecursionError,ValueError,KeyError,MemoryError) as error:
+        audit={'executionStatus':'ATTEMPT_STOP_RETAINED','failure':{'type':type(error).__name__,'message':str(error)},
+            'globalSourceImageProved':False,'wholeGlobalCallGraphAudited':False}
+    write(out/'actual-all-indexed-row-domain-audit.json',audit)
+    result['actualAllRowStructuralAudit']={k:v for k,v in audit.items() if k!='rows'}
+    result['globalChartCandidateAuditComplete']=audit.get('allActualIndexedRowsStructurallyVerified',False)
+    result['elapsedSeconds']=time.monotonic()-started
+    write(out/'additional-original-source-witnesses.json',source.evidence())
     write(out/'guard-solve-result.json',result);source.close();return result
 
 

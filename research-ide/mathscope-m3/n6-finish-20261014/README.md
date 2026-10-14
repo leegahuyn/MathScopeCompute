@@ -46,4 +46,8 @@ large artifact is downloaded to the user's notebook.
 
 Run via a push touching this directory or its workflow on the dedicated branch.
 workflow_dispatch is also declared,subject to GitHub's default-branch workflow
-registration rules. No paid runner,merge or deployment is requested.
+registration rules. Optional resume_run_id authenticates complete prior receipts
+and reuses only successful workers with exactly the same implementation and
+input-checkpoint digest. Old runtime provenance and original logs are retained;
+reuse is reported separately from fresh computation. A changed implementation
+requires fresh calculation. No paid runner,merge or deployment is requested.

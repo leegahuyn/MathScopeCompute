@@ -23,8 +23,18 @@ jobs:
     - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
       with:
         node-version: 24.19.0
+    - name: Download optional verified prior checkpoint
+      if: ${{ github.event_name == 'workflow_dispatch' && inputs.resume_run_id != '' }}
+      continue-on-error: true
+      uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      with:
+        github-token: ${{ github.token }}
+        run-id: ${{ inputs.resume_run_id }}
+        name: n6-finish-prepare-${{ inputs.resume_run_id }}
+        path: ${{ runner.temp }}/resume
     - name: Prepare verified original inputs and only the current unsolved frontier
-      run: python -B research-ide/mathscope-m3/n6-finish-20261014/run_job.py --kind prepare --output "$RUNNER_TEMP/n6-prepare"
+      run: python -B research-ide/mathscope-m3/n6-finish-20261014/run_job.py --kind prepare --output "$RUNNER_TEMP/n6-prepare" --resume
+        "$RUNNER_TEMP/resume"
     - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
       if: always()
       with:
@@ -73,12 +83,21 @@ jobs:
       with:
         name: n6-finish-prepare-${{ github.run_id }}
         path: ${{ runner.temp }}/n6-prepare
+    - name: Download optional verified prior checkpoint
+      if: ${{ github.event_name == 'workflow_dispatch' && inputs.resume_run_id != '' }}
+      continue-on-error: true
+      uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      with:
+        github-token: ${{ github.token }}
+        run-id: ${{ inputs.resume_run_id }}
+        name: n6-finish-${{ matrix.kind }}-${{ matrix.shard }}-${{ inputs.resume_run_id }}
+        path: ${{ runner.temp }}/resume
     - name: Compute original requests with RAM and CPU budgets
       env:
         N6_KIND: ${{ matrix.kind }}
         N6_SHARD: ${{ matrix.shard }}
       run: python -B research-ide/mathscope-m3/n6-finish-20261014/run_job.py --kind "$N6_KIND" --shard "$N6_SHARD" --prepared "$RUNNER_TEMP/n6-prepare/prepared"
-        --output "$RUNNER_TEMP/n6-result"
+        --output "$RUNNER_TEMP/n6-result" --resume "$RUNNER_TEMP/resume"
     - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
       if: always()
       with:
@@ -150,4 +169,9 @@ jobs:
     paths:
     - research-ide/mathscope-m3/n6-finish-20261014/**
     - .github/workflows/m3-n6-finish.yml
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      resume_run_id:
+        description: Optional same-implementation successful checkpoint run to reuse
+        required: false
+        type: string

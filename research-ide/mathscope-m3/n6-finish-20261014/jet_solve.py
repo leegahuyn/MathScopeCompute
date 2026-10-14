@@ -557,6 +557,20 @@ def apply(context, results_root, out):
     return result
 
 
+def new_request_row(original, program):
+    """Retain original meaning and serialize the strict verifier bindings."""
+    row = copy.deepcopy(original)
+    row.update({"requestId": f"cartesian-result:{original['result']}", "originalRequest": copy.deepcopy(original),
+                "originalMinimalObligation": copy.deepcopy(original.get("minimalObligation")),
+                "originalScalarResult": original["result"], "baseSourceNode": original["baseSourceNode"],
+                "originalSourceNodeSHA256": js_hash(original["actualSourceNode"]),
+                "orderedSourceCoordinates": [program[x]["args"][1] for x in original["orderedDifferentiationCoordinates"]],
+                "calculationAttempted": True, "derivativeComputed": False,
+                "newClosedOnLeafDefinedDomain": False, "newUnconditionalJetProved": False,
+                "globalOriginalPDEDomainProved": False})
+    return row
+
+
 def run(context, out, shard=0, shards=4):
     sys.setrecursionlimit(max(sys.getrecursionlimit(), 20000))
     started = time.monotonic();out = Path(out);out.mkdir(parents=True, exist_ok=True)
@@ -585,14 +599,11 @@ def run(context, out, shard=0, shards=4):
         # Pure angle words go first: they do not cross a label/copy boundary.
         ordered = sorted(grouped[family], key=lambda r: (not all(program[x]["args"][1] == theta for x in r["orderedDifferentiationCoordinates"]), r["result"]))
         for original in ordered:
-            row = copy.deepcopy(original)
-            row.update({"requestId": f"cartesian-result:{original['result']}", "originalRequest": copy.deepcopy(original),
-                   "originalScalarResult": original["result"], "baseSourceNode": original["baseSourceNode"],
-                   "orderedSourceCoordinates": [program[x]["args"][1] for x in original["orderedDifferentiationCoordinates"]],
-                   "calculationAttempted": True, "newClosedOnLeafDefinedDomain": False,
-                   "newUnconditionalJetProved": False, "globalOriginalPDEDomainProved": False})
+            row = new_request_row(original, program)
             try:
-                require(calc.capture_audit(original["baseSourceNode"])["pass"], "source family complete capture audit failed")
+                audit = calc.capture_audit(original["baseSourceNode"])
+                row["exactParameterAndCaptureSemantics"] = audit
+                require(audit["pass"], "source family complete capture audit failed")
                 result = calc.ref(original["baseSourceNode"])
                 for direction in row["orderedSourceCoordinates"]:
                     result = calc.d(result, direction)
@@ -600,6 +611,7 @@ def run(context, out, shard=0, shards=4):
                 row.update(formulaRoot=result, remainingStops=stops,
                            status="PROVED_EXACT_ADDITIONAL_LEAF_JET" if not stops else "EXACT_EXPANSION_WITH_REMAINING_ANALYTIC_STOPS",
                            newClosedOnLeafDefinedDomain=not stops,
+                           derivativeComputed=not stops,
                            exactZero=result == calc.zero,
                            proofScope="original leaf's active defined domain; actual selector invariance and compact-integral regularity checked independently")
             except (ValueError, BudgetStop, RecursionError, KeyError) as error:

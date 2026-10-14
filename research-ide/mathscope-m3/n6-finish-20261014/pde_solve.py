@@ -596,6 +596,33 @@ def build_component(terms, source, definitions, per_atom_seconds=6, max_nodes=35
             'originalAnalyticEqualityProved': False}
 
 
+def compact_atom_inventory(algebra):
+    """Expose the ACTUAL normalized basis without downloading large circuits."""
+    actual = algebra.get('normalizedActualAtomicNodes')
+    if actual is None:
+        return {'normalizedSlowRootApplications': None, 'normalizedOpaqueAtomInventory': None,
+                'normalizedBasisAvailable': False}
+    opaque, slow = [], []
+    for row in actual:
+        node = row['value']
+        if node['op'] != 'opaque_function':
+            continue
+        descriptor, arguments = node['args']
+        compact = {'generatedNode': row['node'], 'kind': descriptor.get('kind'),
+                   'originalSourceNode': descriptor.get('sourceNode'),
+                   'definitionKey': descriptor.get('definitionKey'),
+                   'sourceOperation': descriptor.get('sourceOperation'),
+                   'storedDerivativeOrders': descriptor.get('storedDerivativeOrders'),
+                   'actualArgumentCircuitNodes': arguments}
+        opaque.append(compact)
+        if descriptor.get('kind') == 'actual_unexpanded_source_value' and descriptor.get('sourceNode') == 622820:
+            slow.append({**compact, 'originalFreeCoordinateIDs': descriptor.get('allOriginalFreeCoordinates'),
+                         'pointwiseEquationCandidate': 's-Z^2*exp(2*h*log(s))-T=0',
+                         'identityAppliedByThisWorker': False})
+    return {'normalizedSlowRootApplications': slow, 'normalizedOpaqueAtomInventory': opaque,
+            'normalizedBasisAvailable': True}
+
+
 def run(context, out, component=0):
     sys.setrecursionlimit(max(sys.getrecursionlimit(), 10000))
     started, out = time.monotonic(), Path(out)
@@ -621,6 +648,7 @@ def run(context, out, component=0):
         from pde_solve_verify import verify_original_coverage, negative_source_controls
         coverage = verify_original_coverage(terms, evidence)
         controls = negative_source_controls(terms, evidence)
+        inventory = compact_atom_inventory(algebra)
         result = {'schema': 'MathScope.N6.DedicatedOriginalPDESolve/1', 'component': component,
             'status': 'ALL_ORIGINAL_TERMS_ATTEMPTED_REGISTERED_BODY_CALCULUS_ANALYTIC_GLOBAL_PDE_OPEN',
             'originalSourceRoots': evidence['originalRoots'], 'sourceParentSHA256': PARENT,
@@ -629,6 +657,9 @@ def run(context, out, component=0):
             'strictSourceAtomsProvedZeroOnLeafDefinedDomain': sum(a['sourceAtomProvedZeroOnOriginalLeafDefinedDomain'] for a in evidence['atomAttempts']),
             'originalTermsZeroOnLeafDefinedDomain': sum(r['originalTermZeroOnLeafDefinedDomain'] for r in evidence['allOriginalTerms']),
             'atomAttempts': len(evidence['atomAttempts']),
+            'sourceOperationCounts': dict(sorted(Counter(a['actualNode']['op'] for a in evidence['atomAttempts']).items())),
+            'derivedSourceNodeIDs': [a['sourceNode'] for a in evidence['atomAttempts'] if not a['reason']],
+            **inventory,
             'derivedAtoms': sum(a['status'] == 'SOURCE_BODY_DERIVED_WITH_TWO_INDEPENDENT_CALCULI' for a in evidence['atomAttempts']),
             'unresolvedAtomsRetained': sum(bool(a['reason']) for a in evidence['atomAttempts']),
             'analyticallyDischargedTerms': 0, 'originalAnalyticEqualityProved': False,
