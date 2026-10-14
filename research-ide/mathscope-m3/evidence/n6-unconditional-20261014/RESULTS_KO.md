@@ -38,6 +38,11 @@
 [`cloud-38508339662/ARCHIVE_MANIFEST.json`](cloud-38508339662/ARCHIVE_MANIFEST.json)에 있다.
 개별 모든 로그·새 source checkpoint·원래/남은 항·미계산 요청은 해당 ZIP에 들어 있다.
 `obligation-matrix.json`과 `verification-summary.json`은 같은 run의 acceptance 산출물이다.
+공개 판정표 `OBLIGATION_MATRIX_SCOPED.json`은 그 원본 산출물의 SHA를 검증한 뒤 최종
+독립 검토의 source/scope 명확화를 적용한 파생본이다. raw ZIP·matrix·판정·모든393요청/94guard를
+그대로 보존하며, 새 수학 증명을 부여하지 않는다. `normalize_obligations.py`로 재현한다.
+특히 Picard strip은 실제 내부 collar의 coefficient/forcing call만을 대상으로 하며,
+natural4483/B8 5029는 관련된 별도 입력 전제다. 전체 heat의 holomorphic 확장을 요구하지 않는다.
 원본 논문166쪽과 Blueprint99쪽은 이전 업로드와 저장소 보존본의 bytes가 동일함을 확인했다.
 PDF를 새로 중복 저장하지 않았고, 정확한 SHA·페이지수는 `REFERENCE_RECEIPT.json`에 기록했다.
 
@@ -212,8 +217,8 @@ direct velocity에 없다는 사실만으로 누락 update·stage mismatch·PDE 
 1. (9.8) residual wave W^(7/10): roots3825348–3825350.
 2. (9.8) mean Etheta/Ez M^(6/5): roots3614976/3615392.
 3. (9.8) defects P/Jtheta/Jz S^(6/5): roots3615055/3615101/3615147.
-4. (9.9) full wave W^(1/2), full primary curls: velocities3825006–3825008.
-5. (9.9) full curl remainder W^(17/25), 모든 cutoff/connection terms.
+4. (9.9) full wave W^(1/2), full primary curls. velocities3825006–3825008은 전체 속도의 검토용 anchors이며, w는 base/mean과 분리된 실제 grouped full-curl source를 별도 바인딩해야 한다. 전체 velocity roots 자체로 W membership을 인증하지 않는다.
+5. (9.9) full curl remainder W^(17/25), 모든 cutoff/connection terms. 마찬가지로 실제 w−w0_tan을 별도 바인딩해야 한다.
 6. (9.9) tangential velocity·pressure: roots3614791/3614792/3615361.
 7. (9.9) radial epsilon gain: root3614790 및 endpoint/cutoff 미분.
 8. (9.10) 전체 angular Haar weighted moment: root3614791.
