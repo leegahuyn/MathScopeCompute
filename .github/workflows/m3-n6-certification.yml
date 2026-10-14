@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        kind: [dag, mean, radius_monotone, series_quadratic, initial_residual]
+        kind: [dag, mean, radius_monotone, series_quadratic, initial_residual, full_residual_compare]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -55,6 +55,8 @@ jobs:
             timeout 2200s node "$src/run_mean.mjs" --output "$out" 2>&1 | tee "$out/stdout.txt"
           elif [[ "$N6_KIND" == dag ]]; then
             timeout 2200s python -B "$src/source_dag.py" --output "$out" 2>&1 | tee "$out/stdout.txt"
+          elif [[ "$N6_KIND" == full_residual_compare ]]; then
+            timeout 2200s node "$src/full_residual_compare.mjs" --output "$out" 2>&1 | tee "$out/stdout.txt"
           else
             if [[ "$N6_KIND" == initial_residual ]]; then
               python -B -m unittest discover -s "$src" -p test_initial_residual.py 2>&1 | tee "$out/algebra-tests.txt"
