@@ -123,6 +123,11 @@ def arithmetic_attempt():
     check('I2_actual_heat_scalar_reduction_given_H5H9',heat_exp==7552134,'Actual normalized rhs<=2^16/(lambda*X0I2); XR>=2^40 and X0I2=XR*exp(60001T-18) imply rhs<2^-7552134 using e>2,T>=128.')
     check('I2_A2_guard_given_actual_heat_estimate',3+60+13-200-heat_exp<0,'8beta0²*kappa_eff*d0<2^-7552258<1.')
     return {'checks':checks,'allExactImplicationChecksPassed':all(c['pass'] for c in checks),'naturalBoundTree':tree,
+      'provedClassicalLemmas':[
+        {'id':'LITERAL_SOURCE_STEP_MASS_AND_DERIVATIVE','status':'PROVED','proofMethod':'WRITTEN_CLASSICAL','statement':'The literal flat step is real smooth, has sigma(0)=0,sigma(1)=1,0<=sigma-prime<648. Thus every source bump has its exact stated positive mass.','proofDocument':'series_quadratic_lemmas.md section3'},
+        {'id':'LITERAL_SOURCE_B8_C2_CONTINUOUS_MATRICES','status':'PROVED','proofMethod':'WRITTEN_CLASSICAL','statement':'The literal B8 continuous block matrix is invertible with norm<2^68; the literal C2 continuous block matrix is invertible with norm<2^30. The stated Qdiag bounds are64 and2^13 respectively.','proofDocument':'series_quadratic_lemmas.md sections3-4','doesNotProveActualIncomingDebt':True},
+        {'id':'ACTUAL_FIXED_CORE_POLYNOMIAL_DENOMINATORS','status':'PROVED','proofMethod':'WRITTEN_CLASSICAL','statement':'For the exact h,j,sigma parameter expressions and the specified Omega tube, |L|>99/100 and |H^2+sigma^2|>=H(real)^2+3sigma^2/4>0.','proofDocument':'series_quadratic_lemmas.md section1','doesNotProveWholeSourceBanachMembership':True},
+      ],
       'naturalDomain':{'etaWindow':['-33/32','33/32'],'complexTubeRadius':'sigmaStar^2/2048','coefficientRadius':'rho=sigmaStar^2/65536','evaluationNeighborhood':'|Y|<=5 and dist(eta,I)<rho/4','sourceAmplitude':'CSelected=(1+Q^300)^10*exp(Q^200)','conditionalNorm':'||(Phi,u)||_B_rho<=Q','conditionalContraction':'51*Q^-54'},
       'B8IndependentContinuousMatrixBounds':{'w':text(w),'detULower':text(detU),'detELower':text(detE),'inverseInfinityUpper':'2^68','quadraticInfinityUpper':'64','selectedRootRadiusGivenActualDebt':'30*2^-132','JacobianInverseGivenActualDebt':'2^69'},
       'C2IndependentContinuousMatrixBounds':{'detELower':text(detC2E),'inverseInfinityUpper':'2^30','quadraticInfinityUpper':'2^13'},
@@ -170,19 +175,22 @@ def source_attempt(repo):
         active.remove(ident);cache[ident]=out;return out
     core_support={k:sorted(support(core[k]),key=str) for k in CORE_NAMES}
     core_only_eta=all(all(c==core['eta'] for c in coordinates) for coordinates in core_support.values())
-    matrix_support=[]
+    matrix_support=[];rhs_support=[]
     for j,d in enumerate(systems):
         ids=[*sum(d['linear'],[]),*sum(d['quadraticDiagonal'],[]),d['scale']]
         sup=set()
         for ident in ids:sup.update(support(ident))
         matrix_support.append({'system':j,'capturedCoordinates':sorted(sup,key=str),'coefficientsEtaIndependent':not sup})
+        rhs_coordinates=set()
+        for ident in d['rhs']:rhs_coordinates.update(support(ident))
+        rhs_support.append({'system':j,'actualRhsRoots':d['rhs'],'primitiveCapturedCoordinatesAndUnprovedOperators':sorted(rhs_coordinates,key=str),'primitiveOnlyBodyClosureProved':all(isinstance(c,int) for c in rhs_coordinates),'capturesOnlyOriginalEtaProved':all(c==core['eta'] for c in rhs_coordinates),'unknownLimitOperatorsNeverReplacedByZero':True})
     y_node=nodes[474];exact_y=F(*map(int,y_node['args'])) if y_node['op']=='rational' else None
     return {'sourceCapture':capture,'sourceCaptureReverifiedAfterStream':True,'fullParentStreamVerified':True,'sourceProducerBindings':bindings,'sourceProfileDataSHA256':sha(profile_raw),
       'parameterExpressionSHA256':profile['parameterExpressionSHA256'],'exactParameterShapesChecked':sorted(expected),
       'actualGates':[{'sourceNode':i,'node':nodes[i],'sha256':digest(nodes[i])} for i in [4483,5029]],'actualNaturalYArgument':{'sourceNode':474,'node':y_node,'exactRationalValue':str(exact_y) if exact_y is not None else None,'withinWrittenNaturalRectangleVerified':exact_y is not None and 0<=exact_y<=F(41,10),'etaArgumentIsOriginalFormalEta':nodes[4483]['args'][2]==core['eta'],'domainClassStillRequiresActualBanachLemma':True},
       'originalFixedCore':{k:core[k] for k in ['eta',*CORE_NAMES]},'primitiveCoreCoordinateSupport':core_support,'corePrimitiveCaptureClosureVerified':core_only_eta,
       'naturalExternalArgumentsOnly':['Y','eta'],'naturalFormalEtaAndCoefficientFieldsAreLocalTable':True,
-      'quadraticDefinitionBindings':[{'index':j,'definition':d,'sha256':digest(d)} for j,d in enumerate(systems)],'actualMatrixCoefficientCaptureAudit':matrix_support,
+      'quadraticDefinitionBindings':[{'index':j,'definition':d,'sha256':digest(d)} for j,d in enumerate(systems)],'actualMatrixCoefficientCaptureAudit':matrix_support,'actualRhsCaptureAudit':rhs_support,
       'unreviewedInputOperators':[{'sourceNode':i,'node':n} for i,n in sorted(unknown.items())],
       'retainedPrefixNodes':len(nodes),'selectedPrimitiveInputNodes':len(selected),'selectedPrimitiveInputSHA256':digest([[i,n] for i,n in sorted(selected.items())])}
 

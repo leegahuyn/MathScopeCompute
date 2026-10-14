@@ -108,6 +108,8 @@ M(1)≤5/4+(1/64)/(1−1/36)=709/560, 그 제곱은 2보다 작다. 큰 z≥1에
 
 원본 vs=a+bs²/a≥a>0, vstar=2+δ/2<5/2이다. literal cutoff의 활성 구간에서 r²=ζ²(vstar−vs)/a<3/a≤3S이고, 비활성 구간에서 r=0이다. 따라서 F(0)=−r≤0<F(S^12)이다. 이로써 실제 a,p2에 위의 연속 영역 경계가 공급되면 원본 system0의 존재성·유일성·괄호·m/M 경계가 함께 따라온다.
 
+r의 smoothness에는 반드시 piecewise guard를 유지한다. sqrt((vstar−vs)/a)는 vs<rightCut=2+δ/4인 활성 구간에서만 필요하며, 그곳에서 vstar−vs>δ/4이다. rightCut 근방의 평탄한 sigma extension이 r=0 가지와 모든 고정된 차수에서 접합한다. 비활성 구간에서는 그 sqrt의 인수가 음수일 수 있다. 따라서 모든 비활성 sqrt까지 전역 양수라고 등록하는 reader domain 가정은 허용하지 않는다.
+
 그러나 그 **실제 a,p2 경계 자체는 아직 이 감사가 증명하지 않았다**. 기존 B.8 producer의 정확한 rhs는 전체 B.22/B.26/B.34 및 restoration 적분인 `pre.scaledDebt`다. `actualB8ContractionProof()`는 `actual-continuation-exact-b8-data.mjs`에 저장된 incoming preconditioned bound=10^−8을 받아 유한 산술을 확인한다. 현재 감사는 그 정확한 rhs가 전 η 구간에서 그 노름 이하라는 연결을 독립적으로 인증하지 않는다. 이 연결 없이 E>0,a≥1/S,|p2|≤S를 새 PASS로 만들지 않는다.
 
 ## 4. 원본 circle lift의 정규화와 양성
@@ -150,6 +152,12 @@ a\{1+\langle t^2\rangle\}=v_s+ar^2=v_{\rm Target}.
 
 전체 maximum 원본은 node622802인 미래 R 좌표보다 먼저 만들어졌으므로 그 원본 숫자 DAG에 그 미래 좌표가 직접 등장할 수 없다. 대입 후 나타나는 R 의존성을 해소하려면 상류 정의의 숨은 X/η capture와 FTC 바인딩을 위와 같이 직접 감사해야 한다. 실제 적분 함수가 유한 C^m임을 아직 독립적으로 증명하지 못하면 B의 가지 선택도 전체 원본의 무조건적인 C^m 인증으로 승격하지 않는다.
 
+2026-10-14의 최적화된 실제 cloud replay에서 다음 관문은 node539403=max(1,node539399,node539402)로 이동했다. node539402=node522376+(node495937+node503863)이며 이전 B0와 차수가 높은 B1을 함께 선택한다. 세 앵커의 양성만으로 B0와 B1 중 어느 것이 더 큰지는 정할 수 없다. 둘 사이의 미분 가능한 maximum 가지를 임의로 선택하지 않는다.
+
+다만 실제 검증된 prefix archive에서 Picard0의 전체 A0/A1/forcing/zeroAxisDatum, radial domain, tail 및 solution norm operands를 펼치고 formal xi=node25516,eta=node2를 바인딩했을 때, 원본 node539400과 node539403의 **coordinate capture는 모두 완전히 닫혀 있었다**. 각각 79,333개와 81,777개 정의 의존 노드를 검사했고, 남은 free-coordinate와 미지원 정의 연산자는 없었다. 539403의 선택 노드 SHA-256은 `977a984d02ee7607d3fbf629fcc2e3c1727e5843761532ff73761897f27a97a9`이다. 새 전체-stream cloud 감사에서 이 결과를 다시 생성한다. 이는 원본 이름의 `freeCoordinates` 플래그를 신뢰한 결과가 아니다.
+
+그러므로 완전한 원본 정의가 실수 함수로 존재한다는 연결이 붙으면, 이 선택은 물리 R/Z/T 및 Y에 대한 **상수**다. 이 경우 물리 미분은 상수의 미분으로 0이며 B0/B1의 비교나 maximum의 매끄러움 가정이 필요하지 않다. 그러나 capture 폐쇄는 Picard·natural·quadratic의 실제 limit 존재성 및 norm 얼굴 적분의 유한성을 대신 증명하지 않는다. reader 대입 후 생긴 R 의존성은 원본과의 semantic binding을 따로 확인해야 한다.
+
 ## 7. 실행과 남은 최소 연결
 
 `python research-ide/mathscope-m3/certification-20261014/radius_monotone.py --output EVIDENCE_DIR`는 `radius-monotone-proof.json`과 `execution.json`을 배타적으로 생성한다. `--self-test`는 지수값이나 수치 표본 없이 14개의 정확한 유리수·정수 부등식과 Q(0)=1/2의 계수를 검증한다. 실제 원본 전체 계산은 클라우드 job에서 수행한다.
@@ -157,7 +165,7 @@ a\{1+\langle t^2\rangle\}=v_s+ar^2=v_{\rm Target}.
 남은 연결은 구체적으로 다음과 같다.
 
 1. 원본 B.8의 실제 `pre.scaledDebt`와 저장된 contraction incoming bound를 같은 전체 η 영역에서 연결하고, 이어서 실제 E,a,p2,ts,vs의 pointwise envelope 및 필요한 유한 차수의 regularity를 증명한다. system0 body7450과 system1 body7539의 원본 natural node4483·quadratic node5029까지 같은 정의여야 한다.
-2. FTC node539399의 모든 실제 얼굴 함수가 해당 box에서 실수이고 적분 가능함을 증명하고, 미분할 각 차수에 대한 지배를 공급한다. 식의 동일성, finite jet3, C∞/모든 차수는 서로 대체할 수 없다.
+2. FTC node539399 및 539402의 모든 실제 얼굴 함수가 해당 box에서 실수이고 적분 가능함을 증명한다. capture가 닫힌 물리 상수의 미분에는 그 적분을 매개변수별로 미분할 필요가 없다. 실제 source-norm의 다른 매개변수 미분을 따로 요구할 경우에는 해당 차수의 지배를 별도로 공급한다. 식의 동일성, finite jet3, C∞/모든 차수는 서로 대체할 수 없다.
 3. system2의 실제 각 대입이 선언된 원본 이미지에 속한다는 연결을 유지한다. 매개변수 h의 경계 자체는 이 감사에서 실제 식으로 증명한다.
 
 Q 양성·signed variance의 단순근·정규화 정리는 위 연결을 해결하는 데 재사용할 수 있는 증명 결과다. 전체 updated mean/residual, physical PDE, original N6-01/N6-02, 56/64 진도는 이 결과만으로 완료되지 않는다.

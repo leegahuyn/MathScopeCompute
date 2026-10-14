@@ -87,6 +87,8 @@ actual core graph를 독립적으로 걷는 audit는 모든 계수 입력이 for
 
 과거 approximate inverse와 PASS를 전혀 사용하지 않는다. 원본 bump는 `b_j(x)=sigma'((x-l_j)/w)`, `w=1/4096`, support `l_j=(j+6)/2048`, `j=0,...,4`이다. 원본 flat step은 `sigma(t)=f(t)/(f(t)+f(1-t))`, `f(t)=exp(-1/t²)` 및 endpoint flat extension이다.
 
+각 고정된 k에 대해 `f^(k)(t)=exp(-1/t²) P_k(1/t)`이고 `P_(k+1)(u)=2u³P_k(u)-u²P_k'(u)`이다. t가 0으로 내려갈 때 모든 polynomial factor와 exponential의 곱은 0으로 간다. 따라서 f의 zero extension은 C-infinity이고 모든 endpoint derivative가 0이다. denominator는 [0,1]에서 양수이므로 sigma는 매끄럽고, 0/1로 확장한 각 collar에서도 모든 derivative가 일치한다. 이는 제한된 3-jet을 C-infinity로 선언하는 방식이 아니다.
+
 `u=1/t>=1`일 때 `exp(u²)>=u^4/2`이므로 `f'(t)<=4`. 적어도 t 또는 1-t는 1/2 이상이므로 `f(t)+f(1-t)>=e^-4>1/81`. 따라서
 
 \[

@@ -15,6 +15,7 @@ import {attachSavedQuadraticDerivativeAuthority} from './replay-quadratic.mjs';
 import {attachSavedNaturalSeriesAuditAuthority} from './replay-series.mjs';
 import {auditSavedRadiusAndMonotone,inspectRadiusFTCDominance} from '../navier/source-saved-radius-monotone-audit.mjs';
 import {createFactoredRationalVerifier} from '../navier/forced-rational-identity.mjs';
+import {primitiveAlphaForm} from './alpha-equivalence.mjs';
 
 const seals=new WeakSet(),keys=['beta','v','gamma'];
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
@@ -28,6 +29,62 @@ const compact=(value,limit=40)=>{
   return typeof value==='string'&&value.length>1600?{characters:value.length,sha256:hash(value),preview:value.slice(0,1600)}:value;
 };
 const reportableStops=new Set(['RESOURCE_LIMIT','UNRESOLVED_CUSTOM_DERIVATIVE','UNRESOLVED_IMPLICIT_UPSTREAM','CAPTURED_COORDINATE_DERIVATIVE','DEPENDENCY_CYCLE','UNRESOLVED_NATURAL_INPUT_CLOSURE','NATURAL_DERIVATIVE_ORDER_LIMIT','SINGULAR_IMPLICIT_ROOT']);
+
+/** Small exact operand checkpoint for actual remaining numerators. Scalar
+ * children use reviewed positions; registry/order metadata are never edges.
+ * Named/limit bodies are retained as opaque boundaries and never merged.
+ */
+export function checkpointRemainingMeanAtoms(G,comparisons,{maxNodes=10000,maxAlphaWork=100000,maxBytes=1500000}={}){
+  require(G&&Array.isArray(G.nodes)&&comparisons&&Number.isSafeInteger(maxNodes)&&maxNodes>0&&maxNodes<=10000&&Number.isSafeInteger(maxAlphaWork)&&maxAlphaWork>0&&maxAlphaWork<=100000&&Number.isSafeInteger(maxBytes)&&maxBytes>0&&maxBytes<=1500000,'Use bounded remaining-operand diagnostics only.');
+  const roots=[...new Set(Object.values(comparisons).filter(c=>!c.pass).flatMap(c=>c.numerator.flatMap(row=>row.monomial.split(',').filter(Boolean).map(item=>Number(item.split(':')[0])))))];
+  const selected=new Map(),boundaries=[],pending=[...roots];let bytes=0,limitStop=null;
+  const children=node=>{
+    const a=node.args,op=node.op;
+    if(['rational','coordinate','source_parameter','unreviewed_source_operation'].includes(op))return [];
+    if(['integer_power','source_step_derivative'].includes(op))return [a[0]];
+    if(op==='definite_integral')return a;
+    if(op==='independent_defined_partial')return [...a[2],...a[4]];
+    if(op==='independent_implicit_monotone_root')return a[2];
+    if(op==='independent_implicit_quadratic_root')return [a[2],...a[3]];
+    if(op==='independent_exact_natural_series')return [a[1],a[2],a[5]];
+    if(['add','multiply','maximum','smooth_piecewise','inverse','sqrt_positive','exp','log_positive','sine','cosine','ceiling'].includes(op))return a;
+    return null;
+  };
+  while(pending.length){
+    const id=pending.pop();if(selected.has(id))continue;
+    require(Number.isSafeInteger(id)&&id>=0&&G.nodes[id],'A remaining polynomial atom or reviewed scalar operand is missing.');
+    const node=G.nodes[id],row={independentNode:id,node:structuredClone(node),nodeSHA256:hash(node),originalSourceNodes:typeof G.originalSourceIds==='function'?G.originalSourceIds(id):[]},size=Buffer.byteLength(JSON.stringify(row));
+    if(selected.size>=maxNodes||bytes+size>maxBytes){limitStop={code:'REMAINING_OPERAND_CHECKPOINT_LIMIT',atIndependentNode:id,retainedNodes:selected.size,retainedBytes:bytes,maxNodes,maxBytes,unrecordedPendingRoots:pending.length+1};break;}
+    selected.set(id,row);bytes+=size;
+    const next=children(node);
+    if(next===null||opIsOpaque(node.op))boundaries.push({independentNode:id,operation:node.op,completeDefiningBodyClosureProved:false,sourceIDs:row.originalSourceNodes});
+    if(next)pending.push(...next);
+  }
+  function opIsOpaque(op){return ['independent_defined_partial','independent_implicit_monotone_root','independent_implicit_quadratic_root','independent_exact_natural_series','unreviewed_source_operation'].includes(op);}
+  const forms=new Map(),alphaRows=[];let alphaWork=0;
+  for(let rootIndex=0;rootIndex<roots.length;rootIndex++){
+    const id=roots[rootIndex],quota=Math.floor((maxAlphaWork-alphaWork)/(roots.length-rootIndex+1));
+    if(quota<1){forms.set(id,{available:false,stop:{code:'RESOURCE_LIMIT',reason:'Total safe-primitive alpha comparison budget exhausted.'}});continue;}
+    try{const form=primitiveAlphaForm(G.nodes,id,{maxWork:quota});alphaWork+=form.work;forms.set(id,{available:true,...form});}
+    catch(error){if(!['RESOURCE_LIMIT','UNRESOLVED_ALPHA_OPERATOR'].includes(error.code))throw error;
+      // The existing alpha checker does not expose work on rejection. Charge
+      // its whole reserved quota plus the one failing tick as a safe bound.
+      alphaWork+=quota+1;
+      forms.set(id,{available:false,stop:{code:error.code,reason:error.message,atIndependentNode:error.node??null,operation:error.operation??null}});
+    }
+  }
+  for(let i=0;i<roots.length;i++)for(let j=i+1;j<roots.length;j++){
+    const left=roots[i],right=roots[j];if(G.nodes[left].op!==G.nodes[right].op)continue;
+    const a=forms.get(left),b=forms.get(right);
+    alphaRows.push(a.available&&b.available?{left,right,operation:G.nodes[left].op,status:'EXACT_REVIEWED_PRIMITIVE_ALPHA_COMPARISON',equivalent:a.canonical===b.canonical,leftSHA256:a.sha256,rightSHA256:b.sha256,completeCanonicalTreesCompared:true}:
+      {left,right,operation:G.nodes[left].op,status:'ALPHA_COMPARISON_UNRESOLVED',equivalent:null,leftStop:a.stop??null,rightStop:b.stop??null,unknownOperatorMerged:false});
+  }
+  const rows=[...selected.values()].sort((a,b)=>a.independentNode-b.independentNode);
+  return {schema:'MathScope.N6.RemainingMeanAtomicOperandCheckpoint/1',roots,rootRows:roots.map(id=>selected.get(id)??{independentNode:id,node:structuredClone(G.nodes[id]),nodeSHA256:hash(G.nodes[id]),originalSourceNodes:typeof G.originalSourceIds==='function'?G.originalSourceIds(id):[],descendantsOmittedByLimit:true}),reviewedOperandRows:rows,reviewedOperandRowsSHA256:hash(rows),retainedNodes:rows.length,retainedBytes:bytes,
+    completeReviewedOperandCheckpoint:limitStop===null,limitStop,opaqueDefiningBodyBoundaries:boundaries,allDefiningBodyCaptureClosureProved:false,
+    primitiveAlphaForms:roots.map(id=>{const f=forms.get(id);return f.available?{independentNode:id,status:'PRIMITIVE_FORM_AVAILABLE',sha256:f.sha256,work:f.work}:{independentNode:id,status:'PRIMITIVE_FORM_UNRESOLVED',stop:f.stop};}),remainingAtomComparisons:alphaRows,
+    totalAlphaWorkUpperBound:alphaWork,alphaWorkIncludesConservativeChargesForRejectedForms:true,maxAlphaWork,unknownFunctionLimitOperatorsMerged:false,sourceAlgebraAcceptanceChanged:false,originalN601Complete:false,originalN602Complete:false};
+}
 
 /** Reporting must not destroy the primary unresolved source stop merely
  * because an old registered diagnostics routine spends exhausted work.
@@ -122,7 +179,7 @@ export async function auditSavedWholeMeanConditional(capability,cutoff,input={})
   const radius=await auditSavedRadiusAndMonotone(),r=radius.sourceMaximum;
   require(r.sourceAuthenticated&&r.structuralIdentityVerified&&r.sourceMaximum.sourceNode===539400&&r.aggregate.sourceNode===539399&&radius.source.completeParentSnapshotNodeSHA256===capability.source.completeParentSnapshotNodeSHA256,'The independent structural FTC audit must bind this same immutable complete source parent.');
   const originalNode=source.node,rules=[attachSavedMonotoneDerivativeAuthority(capability),attachSavedQuadraticDerivativeAuthority(capability),attachSavedNaturalSeriesAuditAuthority(capability)],
-    replay=createIndependentMeanReader({node:originalNode,definitions,sourceOperationRules:rules,maxWork:input.maxWork??5000000,maxNodes:input.maxNodes??800000}),rows=[],stops=[];
+    replay=createIndependentMeanReader({node:originalNode,definitions,sourceOperationRules:rules,maxWork:input.maxWork??5000000,maxNodes:input.maxNodes??800000}),rows=[],stops=[],remainingAtomCheckpoints=[];
   let importer=null,stage='conditional-maximum-import';
   try{
     importer=createConditionalFTCImporter(replay,{node:originalNode,maximum:539400});
@@ -141,6 +198,7 @@ export async function auditSavedWholeMeanConditional(capability,cutoff,input={})
         comparison.remainingOperands=ids.map(id=>({independentNode:id,node:structuredClone(replay.nodes[id]),nodeSHA256:hash(replay.nodes[id]),originalSourceNodes:replay.originalSourceIds(id)}));
         comparison.algebraicNonmatchIsNotYetAPDECounterexample=true;
       }
+      remainingAtomCheckpoints.push({stage,checkpoint:checkpointRemainingMeanAtoms(replay,comparisons,{maxNodes:2000,maxBytes:300000,maxAlphaWork:100000})});
       rows.push({stage,rebuilt,originalRoots:{Etheta:state.mean.Etheta,Ez:state.mean.Ez,gr:state.mean.raw.gr,pressure:state.pressure.value,pressureZ:state.pressure.slowZDerivative},comparisons});
     }
   }catch(error){
@@ -155,7 +213,7 @@ export async function auditSavedWholeMeanConditional(capability,cutoff,input={})
   const result=freeze({schema:'MathScope.N6.SavedWholeMeanConditionalAudit/1',source:structuredClone(capability.source),
       sourceBindings:{previousVelocity:structuredClone(before.velocity),updatedVelocity:structuredClone(after.velocity),previousPressure:before.pressure.value,updatedPressure:after.pressure.value,previousA0:before.pressure.cutoffRemainder,updatedA0:after.pressure.cutoffRemainder,originalNonlinearRemainders:structuredClone(source.mean.nonlinear.remainderDefects),unchangedCovariance:structuredClone(before.mean.fullAngularCovariance),unchangedStress:structuredClone(before.mean.fullOriginalStress)},
       conditionalReplacement:{sourceMaximum:r.sourceMaximum,aggregate:r.aggregate,selectedSkeletonSHA256:r.selectedSkeletonSHA256,faceDimensionCounts:r.faceDimensionCounts,faces:compact(r.faces,24),conditionalDominance:r.conditionalDominance,applied:importer!==null,transformedBindings:compact(importer?.bindings??[],32),originalSourceGraphChanged:false,allAnalyticGuardsDischarged:false},
-      rows:compact(rows,20),diagnostics,stops,conditionalAlgebraIdentitiesMatched:matched,conditionalWholeMeanDifferencesRecomputed:rows.length===2,
+      rows:compact(rows,20),remainingAtomCheckpoints,diagnostics,stops,conditionalAlgebraIdentitiesMatched:matched,conditionalWholeMeanDifferencesRecomputed:rows.length===2,
       verifierLimitation:{integralAlphaEquivalenceCertified:false,algebraicNonmatchMayBeAlphaRenamingOnly:true,
         reason:'This separate reader preserves binders when exact occurrence proves there is no capture, and otherwise alpha-renames them. The factored verifier treats definite_integral nodes as atomic expressions without an alpha-equivalence theorem. Thus a failed algebraic comparison is not, by itself, a counterexample to the original residual identity.'},
       status:stops.length?'UNRESOLVED_AFTER_CONDITIONAL_FTC_SELECTION':matched?'CONDITIONAL_UPDATED_NORMALIZED_MEAN_MATCH_ALL_ANALYTIC_GUARDS_OPEN':'CONDITIONAL_UPDATED_MEAN_DIFFERENCE_NOT_RESOLVED',

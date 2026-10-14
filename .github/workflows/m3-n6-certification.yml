@@ -2,7 +2,7 @@ name: M3 N6 source certification attempts
 on:
   push:
     branches: [mathscope-m3-n6-certification-20261014]
-    paths: ['research-ide/mathscope-m3/certification-20261014/**', '.github/workflows/m3-n6-certification.yml']
+    paths: ['research-ide/mathscope-m3/certification-20261014/*.mjs', 'research-ide/mathscope-m3/certification-20261014/*.py', '.github/workflows/m3-n6-certification.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        kind: [dag, mean, radius_monotone, series_quadratic, initial_residual, full_residual_compare]
+        kind: [dag, mean, radius_monotone, series_quadratic, initial_residual, full_residual_compare, pressure_mass]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,7 +51,7 @@ jobs:
           out="$RUNNER_TEMP/n6-$N6_KIND"
           src="research-ide/mathscope-m3/certification-20261014"
           if [[ "$N6_KIND" == mean ]]; then
-            node --test --test-reporter=tap "$src/replay-kernel.test.mjs" 2>&1 | tee "$out/kernel.tap"
+            node --test --test-reporter=tap "$src/replay-kernel.test.mjs" "$src/replay-mean-diagnostics.test.mjs" 2>&1 | tee "$out/kernel.tap"
             timeout 2200s node "$src/run_mean.mjs" --output "$out" 2>&1 | tee "$out/stdout.txt"
           elif [[ "$N6_KIND" == dag ]]; then
             timeout 2200s python -B "$src/source_dag.py" --output "$out" 2>&1 | tee "$out/stdout.txt"
@@ -60,6 +60,8 @@ jobs:
           else
             if [[ "$N6_KIND" == initial_residual ]]; then
               python -B -m unittest discover -s "$src" -p test_initial_residual.py 2>&1 | tee "$out/algebra-tests.txt"
+            elif [[ "$N6_KIND" == radius_monotone ]]; then
+              python -B -m unittest discover -s "$src" -p radius_monotone_test.py 2>&1 | tee "$out/capture-tests.txt"
             fi
             timeout 2200s python -B "$src/$N6_KIND.py" --output "$out" 2>&1 | tee "$out/stdout.txt"
           fi

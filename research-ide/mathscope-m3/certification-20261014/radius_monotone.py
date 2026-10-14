@@ -267,7 +267,7 @@ def run_source(repo):
       "sourceClosures":closures,
       "remainingSourceLemmas":[
         {"id":"REAL_REGULAR_PRELOOP","nodes":[7450,7539],"needed":"The exact continued/B8 source E>0,a>=1/S,|p2|<=S,|ts|<=S,vs<=S on the whole actual loop rectangle. For finite order m, actual preloop bodies and cutoff must have that order; a3-jet is not all-orderC-infinity.","status":"UNRESOLVED"},
-        {"id":"FTC_REAL_INTEGRABLE","nodes":[539399,494498,499013,516218],"needed":"All24 actual face bodies are real, retained face integrals finite, and every required parameter derivative may pass through them. Finite endpoint ordering alone does not prove this.","status":"UNRESOLVED"},
+        {"id":"FTC_REAL_INTEGRABLE","nodes":[539399,539403,494498,499013,516218],"needed":"All actual B0/B1 face bodies define real finite integrals on their source boxes. Together with complete coordinate capture, this makes the selectors physical-coordinate constants; no B0/B1 dominance or parameter differentiation under their integrals is needed for that constant derivative. Actual source-norm derivatives, if separately requested, need their own order-specific domination. Finite endpoint ordering alone proves none of these integrability claims.","status":"UNRESOLVED"},
         {"id":"SOURCE_IMAGE_MEMBERSHIP","nodes":[622819,622820],"needed":"Every actual substituted system2 tuple lies on the declared s0/eta source image; formal uninstantiatedZ,T outside that domain are not certified.","status":"SOURCE_DOMAIN_RESTRICTION_RETAINED"}],
       "sourceApplicationUnconditionallyProved":False}
 

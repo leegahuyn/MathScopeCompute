@@ -30,6 +30,8 @@
 
 Direct와 assembled root ID가 다른 것은 algebraic nonmatch의 증거가 아니다. 새 script는 각각의 실제 body/hash를 보존하지만 그 source-body 차이를 독립적으로 0으로 줄이지 않았다면 `algebraicEqualityIndependentlyVerified=false`로 출력한다.
 
+별도 `full_residual_compare.mjs --output <새 directory>`는 이 실제 세 direct/assembled roots의 차이를 독립 rational verifier로 실행한다. 성분마다 maxTerms=10,000, maxProducts=2,000,000의 새 verifier를 사용하며 제한에 걸리면 실제 마지막 읽은 source node/body/hash를 남기고 나머지 성분을 계속 검사한다. rational body는 전개하고 analytic/function/integral/limit node는 **그 원본 ID** 그대로 atomic operand로 유지한다. numerator가 0이면 nonzero-divisor 조건 아래 해당 source algebra identity가 성립한다. numerator가 비영이어도 나중의 defining equation/alpha/cover relation으로 같아질 수 있으므로 PDE 반례로 표시하지 않는다. 이 실행 역시 실제 source jets를 새 Cartesian 미분 경로로 생성한 것은 아니다.
+
 ## 3차원 Cartesian identity에서 확인하는 것
 
 물리 좌표에서 각 `i=0,1,2` 성분에 대해
