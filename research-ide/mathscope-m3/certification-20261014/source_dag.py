@@ -106,6 +106,7 @@ def main():
             batch.append((ident,json.dumps(node,separators=(',',':'),ensure_ascii=False)));ops[node['op']]+=1;retained+=1
             if len(batch)>=10000:db.executemany('INSERT OR REPLACE INTO nodes VALUES (?,?)',batch);db.commit();batch=[]
     if batch:db.executemany('INSERT OR REPLACE INTO nodes VALUES (?,?)',batch);db.commit()
+    verify_capture(repo)
     cache={};missing=[];definition_bindings={};unreviewed={}
     def take(i):
         if i in cache:return cache[i]

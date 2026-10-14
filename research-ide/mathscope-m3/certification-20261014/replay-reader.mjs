@@ -134,10 +134,9 @@ export function createIndependentMeanReader({ node, definitions = {}, sourceOper
     else if (ruleForIndependent(op)) out = ruleForIndependent(op).substitute(reader, id, bound, value);
     else if (op === 'independent_defined_partial') out = put(op, [a[0], a[1], a[2].map(x => substitute(x, bound, value)), a[3], a[4].map(x => substitute(x, bound, value))]);
     else if (op === 'definite_integral') {
-      // Alpha-rename before inserting an arbitrary argument. The source
-      // binder is local to the integrand; endpoints remain outside its scope.
-      // Renaming even when a collision is absent avoids trusting unknown
-      // custom-body free-coordinate caches to decide whether capture occurs.
+      // The binder is local to the integrand; endpoints are outside scope.
+      // Exact reviewed occurrence can avoid renaming. Unknown dependencies
+      // force the conservative path and retain their open closure obligation.
       let body = a[0], binder = a[1];
       if (binder !== bound) {
         // A binder absent from the replacement cannot capture it. The
@@ -191,7 +190,7 @@ export function createIndependentMeanReader({ node, definitions = {}, sourceOper
     else fail(`No independent exact derivative rule for ${op}${op === 'unreviewed_source_operation' ? ` (${a[1]}, actual source node ${a[0]})` : ''}.`, 'UNRESOLVED_CUSTOM_DERIVATIVE');
     derivativeCache.set(key, out); return out;
   }
-  const diagnostics = () => ({ workUsed: work, maxWork, scalarNodes: nodes.length, maxNodes, skippedSubstitutions, retainedBinders, exactCaptureAvoidance:true,
+  const diagnostics = () => ({ workUsed: work, maxWork, scalarNodes: nodes.length, maxNodes, skippedSubstitutions, retainedBinders, exactCaptureAvoidanceForReviewedOperands:true, unknownCaptureClosureProved:false,
     selectedSourceNodeCount: selectedSource.size, selectedSourceNodesSha256: hash([...selectedSource].sort(([a], [b]) => a - b)),
     sourceBindings: [...sourceBindings].map(([id, sourceIds]) => ({ id, sourceIds })),
     inspectedDefinitionBindings: [...callDefinitions.values()], unresolvedCustomBodyClosure: [...unresolvedClosure.values()],
