@@ -586,6 +586,24 @@ jobs:
               --matrix-out "$RUNNER_TEMP/result/OBLIGATION_MATRIX_BACKGROUND_26.json" \
               --out "$RUNNER_TEMP/result/ACTUAL_BACKGROUND_26_JET_REGULARITY.json"
           } 2>&1 | tee "$RUNNER_TEMP/result/GATE_background_26_jets.log"
+      - name: Bind missing original arithmetic runtime dependency by exact source bytes
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib
+          name='research-ide/mathscope-m1/navier/numerics.mjs'
+          raw=pathlib.Path(name).read_bytes()
+          pin='a406401c5a0e024e94d58cce0d7e6bdaa6b35488f22fd0ead4bf87222416c62c'
+          assert len(raw)==11667 and hashlib.sha256(raw).hexdigest()==pin
+          dest=pathlib.Path(os.environ['RUNNER_TEMP'])/'kernels'/name
+          dest.parent.mkdir(parents=True,exist_ok=True)
+          if dest.exists():assert dest.read_bytes()==raw
+          else:dest.write_bytes(raw)
+          receipt={'schema':'MathScope.N6.OriginalRuntimeDependencyBinding/1','path':name,'bytes':len(raw),'sha256':pin,
+           'originalCommit':'a35bb0727953e56470682839c98fd9759306d18c','originalGitBlobSHA1':'f58ac2b0ceb55cc5d7b154f5ee692bf7b1c7197f',
+           'cloudRuntimeCopyOnly':True,'originalSourceFunctionModified':False,'newOriginalDischarged':0}
+          (pathlib.Path(os.environ['RUNNER_TEMP'])/'result/ORIGINAL_RUNTIME_DEPENDENCY_BINDING.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          PY
       - name: Original leading10x24 scalar ledger and actual analytic composition
         id: gate_leading_10x24
         if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
@@ -665,6 +683,21 @@ jobs:
               --numeric-picard "$RUNNER_TEMP/result/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json" \
               --out "$RUNNER_TEMP/result/ACTUAL_N1_AUXILIARY_NUMERIC_MAJORANT.json"
           } 2>&1 | tee "$RUNNER_TEMP/result/GATE_n1_auxiliary_numeric.log"
+      - name: Actual local Picard0 cutoff binder and axis-primitive domain transport
+        id: gate_picard0_local_transport
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_actual_picard0_local_transport.py -v
+            python "$tool/actual_picard0_local_transport.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+              --numeric "$RUNNER_TEMP/result/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json" --kernels "$RUNNER_TEMP/kernels" \
+              --out "$RUNNER_TEMP/result/ACTUAL_PICARD0_LOCAL_TRANSPORT.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_picard0_local_transport.log"
       - name: Record scoped result hashes
         if: always()
         env:

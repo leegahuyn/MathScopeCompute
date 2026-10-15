@@ -174,7 +174,12 @@ class ConstantDomains:
   prove(op in {'add','multiply','inverse','integer_power','exp','log_positive','sqrt_positive','ceiling','maximum'},'Unreviewed constant ancestor '+str((i,op)))
   prove(op!='ceiling' or not environment,'Unreviewed discontinuous integral integrand')
   rows=[self.at(j,environment) for j in (a[:1] if op in {'integer_power','inverse','exp','log_positive','sqrt_positive','ceiling'} else a)]
-  out=self.operation(op,rows,a[1] if op=='integer_power' else None)
+  try:out=self.operation(op,rows,a[1] if op=='integer_power' else None)
+  except Gap as err:
+   err.primitive_frontier={'node':i,'sourceNode':node,
+     'argumentEnclosures':[{'lo':str(v.lo) if v.lo is not None else None,'hi':str(v.hi) if v.hi is not None else None,'strictPositive':v.strict_positive} for v in rows],
+     'scopedCoordinates':[j for j,_ in environment]}
+   raise
   if op=='add' and self.lambda_minus_h_with_nonnegative_remainder(i,environment):
    # h/lambda=exp(-7002*T)<1, from the already checked literal
    # parameter ASTs and T>128. No independent-small-number guess is used.
@@ -382,9 +387,20 @@ def main():
  get=v3.Source(a.source_db);seen,defs,_=conservative_capture(get,reg,G_ROOT)
  require(len(seen)==136186 and len(defs)==84 and sha(sorted(seen))==e.CAPTURE_PIN,'Changed actual g21 capture')
  rows=original_rows(data['compact'],matrix,get,reg);roots=bind_inputs(data,hashes,reg);source_parameter_proof(reg['fixed'])
- gap=None;proof=None
+ gap=None;proof=None;gap_details=None
  try:proof=body_proof(get,reg,roots)
- except Gap as err:gap=str(err)
+ except Gap as err:
+  gap=str(err);gap_details=getattr(err,'primitive_frontier',None)
+  if gap_details is not None:
+   # Bounded read-only diagnostics. An unresolved ancestor remains a gap;
+   # neither these nodes nor the frontier are a regularity certificate.
+   todo=[gap_details['node']];cone={};seen=set()
+   while todo and len(cone)<512:
+    i=todo.pop()
+    if i in seen:continue
+    seen.add(i);n=get(i);cone[str(i)]=n;todo.extend(j for j in argument_children(n) if j not in seen)
+   gap_details.update({'smallOriginalPrimitiveCone':cone,'unexpandedFrontier':sorted(set(todo)-seen),'coneComplete':not todo,
+                       'diagnosticNodeLimit':512,'coneIsNotAProof':True})
  complete=gap is None;proved_ids=[r['id'] for r in rows] if complete else []
  for row in rows:row.update({'status':'PROVED' if complete else 'OPEN','actualFunctionDerivativeExistenceProved':complete,'originalOrderedRequestPreserved':True})
  remaining=[j for j in matrix['remainingJetIDs'] if j not in set(proved_ids)]
@@ -401,6 +417,7 @@ def main():
  result={'schema':'MathScope.N6.ActualBackground26JetRegularity/1','sourceHeaderBinding':hbinding,
   'fixedDefinitionSHA256':FIXED_PIN,'inputSHA256':hashes,'originalSourceFiles':source_files,'rowClosureMode':'ALL26_OR_NONE',
   'actualOriginalBackgroundRows':rows,'actualSourceBodyProof':proof,'unprovedBodyDomainGaps':[] if complete else [gap],
+  'unprovedPrimitiveFrontier':gap_details,
   'originalPhysicalDomain':'Same admitted positive-radius chart, T_physical>=0, original s in [1/2,2] and frozen integer band; T=0 derivatives are one-sided as originally specified.',
   'provedOriginalBackgroundRowCount':len(proved_ids),'remainingOriginalJetCount':len(remaining),
   'wholeGOnJProved':False,'allInfiniteBandsEquivalenceClaimed':False,

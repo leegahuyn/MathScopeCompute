@@ -1,0 +1,107 @@
+{
+  "schema": "MathScope.N6.ActualOuterAmplitudeQuantitative/1",
+  "fixedDefinitionSHA256": "c8041bf166aa318a5dab4a0ccb53d1503609feadbaec4361fe4587bb5945bc1b",
+  "inputSHA256": {
+    "payload": "b6a1e0987650e1326c578d9004cdda8efa05d2375864966fc399ae514804b4c1",
+    "kernel-binding": "c422952afe5886b5c2b873550a40fa756696f8502f11c27f2629687a4a7d943d",
+    "outer": "88b9f590dac9001db80c3275509b5bd5960f1630b30d080c4a2fc1aba171016a"
+  },
+  "sourcePath": "research-ide/mathscope-m2/navier/actual-global-source-outer.mjs",
+  "sourceSHA256": "5a46c11ebe8ba3ef26eaf6d632ed7bba03ab98cd5e4354b32f989ae6adb367e9",
+  "actualLiteralSourceChecks": {
+    "allTwelveLiteralEnergyStages": [
+      "initial",
+      "axialDecay",
+      "entry",
+      "reservedPower",
+      "pulse",
+      "interpolation",
+      "angular",
+      "steepen",
+      "steepPower",
+      "flatten",
+      "wait",
+      "terminal"
+    ],
+    "completeEnergyLeaves": [
+      516,
+      543,
+      335,
+      318,
+      293,
+      217,
+      198,
+      178,
+      157,
+      138,
+      113,
+      97,
+      75,
+      55,
+      46,
+      547
+    ],
+    "infinitePowerTailNode": 335,
+    "angularEnergyCorrectionNodes": [
+      516,
+      543
+    ],
+    "referenceEnergyNode": 547,
+    "literalPulseNormalizationExponent": "3/5-lambda-120000*lambda*T",
+    "allThreeLiteralAmplitudeCoefficients": true,
+    "literalCompactMainPulseBody": true,
+    "negativeEnergySignMutationRejected": true
+  },
+  "independentExactArithmetic": {
+    "KbIdeal": "4901/20000",
+    "KbLower": "501748929/2048000000",
+    "KbUpper": "367579/1500000",
+    "atOriginalBracketLeftUpper": "-1221/25000",
+    "atOriginalBracketRightLower": "2479/25000",
+    "originalDerivativeLowerImproved": "2191/5000",
+    "complexRadicandErrorUpper": "5940647/3000000000000",
+    "allExactInequalitiesPassed": true
+  },
+  "actualSourceNegativeControls": {
+    "omittedActualInfiniteTailRejected": true,
+    "omittedActualAngularEnergyRejected": true
+  },
+  "provedActualUniformConclusions": {
+    "realEtaDomain": "[-1,1]",
+    "sameOriginalSelectedBracket": [
+      "9/10",
+      "6/5"
+    ],
+    "sameOriginalDerivativeFloor": "7/20",
+    "actualAmplitudeInsideOriginalBracket": true,
+    "actualDerivativeStrictlyAboveOriginalFloor": true,
+    "complexEtaDomain": "distance(eta,[-1,1])<1/4",
+    "allPulsePolynomialAndAffineCoefficientsHolomorphic": true,
+    "actualDiscriminantRealPartLower": "6/25",
+    "actualAmp2RealPartLower": "6/25",
+    "actualSelectedAmplitudeHolomorphicNormUpper": "2",
+    "actualAngularAndPulseCoefficientNormUpper": "CSelected^32",
+    "actualAmplitudeAndCoefficientCauchyRadius": "1/8",
+    "fullReferenceInfiniteEnergyTailRetained": true,
+    "sameReferenceEnergyNotFinalGlobalESquared": true
+  },
+  "quantitativeBounds": {
+    "normalizedEnergyErrorFromHalf": "<1/1000000",
+    "normalizedNonpulseEnergyAbsolute": "<2^30*lambda*(T+1)",
+    "amplitudePolynomial0ErrorFromMinusQuarter": "<1/1000000",
+    "amplitudePolynomial1Absolute": "<1/1000000",
+    "amplitudePolynomial2ErrorFromKb": "<1/1000000",
+    "affineConstantAbsolute": "<exp(-5/lambda)",
+    "affineAmplitudeAbsolute": "<exp(-1/(2lambda))"
+  },
+  "proof": "ACTUAL_OUTER_AMPLITUDE_QUANTITATIVE_KO.md",
+  "sourceBracketDeclarationsUsedAsProof": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0,
+  "excluded": [
+    "Whole all-order leading majorant composition",
+    "Whole covariance target cone and determinant",
+    "Full g21/J and original row closure"
+  ]
+}
