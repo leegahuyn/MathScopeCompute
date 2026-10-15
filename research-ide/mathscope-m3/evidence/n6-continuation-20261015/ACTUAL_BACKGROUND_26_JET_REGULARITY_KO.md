@@ -53,3 +53,13 @@ epsilon s^(-1/2) bnorm,   s^(-2A) Pnorm
 F/G/b의 각 여덟 요청은 R,T,Z,RR,ZZ와 순서 [R,Y1], [R,Y2], [R,theta]다. pressure의 두 요청은 R,Z다. 앞의 C∞가 실제 R 미분의 존재를 먼저 제공한다. 그 뒤 같은 함수와 R 미분은 Y1/Y2/theta를 인자로 갖지 않으므로 아홉 혼합 요청은 정확히 0이다. 요청 순서를 바꾸어서 첫 미분의 존재를 건너뛰지 않는다. 나머지 열일곱 요청은 같은 원본 registered partial이다.
 
 검사기는 compact의 전체230개 (원본ID,source node,순서 좌표) 목록을 독립 고정 SHA로 비교한다. 입력 역사 장부는 최신 인증본 SHA `2e854cc1c7ee577a4451dc9e93849212ae055dcccc705599ee109b7d10bbcf21`이며 절대로 덮어쓰지 않는다. 모든 body·분모·입력 연결이 통과했을 때만 별도 새 장부에 26개를 PROVED, 나머지204개를 OPEN으로 기록한다. 하나라도 body 정의역이 남으면 26개 전부 OPEN, 새 소거0이다. Guard10과 PDE1020, 원래14개 universal requirements는 그대로 유지한다. 따라서 성공 시에도 전체 N6 증명이 완료되는 것은 아니다.
+
+## 첫 fresh 실행에서 발견한 실제 상수 적분239의 보완
+
+첫 인증 실행38725792575는 원래 node239의 `definite_integral`을 미검토 연산으로 남겨 **26개 모두 OPEN**으로 기록했다. 이 실패 기록은 보존한다. 새 규칙은 유한 적분을 값으로 치환하지 않는다. 원본 실제 graph의 integrand, binder 및 두 endpoint를 모두 읽고 endpoint는 바깥 scope, body는 새 binder scope에서 검사한다. memo key에도 scope를 포함한다. 모든 inverse/log/sqrt 인수가 닫힌 적분 구간 전체에서 유효하고 integrand가 연속임을 증명한 뒤에만 유한성을 사용한다. 미검토 integrand나 극점, 바인딩되지 않은 좌표, binder-dependent ceiling은 실패한다.
+
+실제 source-step의 전역 C∞ square-seed 정의는 별도의 원본 파일 `actual-global-source-expressions.mjs` SHA cd0b5900bba330c5d960bddd84bb695dd275094302dd9bc3cc5fcfee533895a3로 인증한다. `sigma=exp(-1/x²)/(exp(-1/x²)+exp(-1/(1-x)²))`의 lazy 상수 exterior를 사용한다. 따라서 0<=sigma<=1, sigma'>=0이고 0<x<1에서는 sigma'>0이다. 유한한 고정 차수의 모든 미분은 전역 연속이다. 알 수 없는 차수나 native 연산을 허용하지 않는다.
+
+실제239의 integrand는 `exp((1-lambda)*(x-S(x)))*(lambda-h+(1-lambda)*sigma(x))`, S(x)=int_0^x sigma이며 0<=x<=1이다. literal h/lambda=exp(-7002*T)<1이므로 lambda-h>0이고 나머지 항은 비음수다. 따라서239는 유한한 양수다. Qb root259는 이 양수와 `(1-h)*(-4 log h)>0` 및 비음수 flatten 적분의 양의 결합이어서 양수다. Qp root275는 1..3에서 양의 인자 곱과 sigma'((x-1)/2)를 적분한다. 끝점에서 sigma'가0이어도 x=2에서 양수이고 전 구간 비음수이므로 Qp>0이다. 이는 유리수 내부 점과 연속성을 이용한 정확한 존재 증명이며 수치 구적 추정이 아니다. 따라서 실제 wait root280의 log(Qb/Qp)는 유한하다. 이 단계는 wait의 양수성이나 적분의 근삿값을 주장하지 않는다.
+
+실제 full fixed의239/259/275/280에 대한 작은 로컬 재검사는 이 사실들을 확인했다. 전체 selector617466의 모든 조상 및 26개 본문의 최종 합성은 다음 fresh full-cache 실행이 수행해야 한다. 여기까지의 로컬 재검사나20개 작은 fixture 통과로26개를 먼저 소거하지 않는다.

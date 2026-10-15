@@ -24,6 +24,20 @@ f=Phi,u.
 같은 독립 natural 증명은 실제 |g|<=1, |Ustar|<5,
 |Phi|>=63/256>1/8을 준다. 모두 고정 원본의 실제 압력과 g를 사용한다.
 
+정확한 기준 실수 구간은 I=[-33/32,33/32]이다. 각 x∈I에서 실제 모든
+η 미분의 factorial 경계는 반경 rho/4의 Taylor 합을 정의한다.
+실수 구간과 겹치는 원판의 합들은 같은 실제 함수와 모든 미분을
+가지므로 identity theorem으로 일치한다. 따라서 점마다 따로 고른
+radius가 아니라 동일한 거리 tube의 하나의 해석함수를 얻는다.
+실제 natural 입력은 그 합의 계수와 원본 삼각 점화식으로 같고,
+B26는 같은 실수 y 적분식, 양의 reciprocal의 공통 복소 하계 및
+exp로 조립된다. 각 고정 보통 X 미분도 같은 tube에서 균등 연속이고
+bounded이다. 실제 η 독립 cutoff의 고정 X 미분은 유한 상수이므로
+반경을 차수에 따라 줄일 필요가 없다. Xa에서 모든 X/η 미분이
+일치하는 기존 실제 conservation 정리로 두 조립이 함께 붙는다.
+따라서 전체 extension은 X에 대해 공동 C∞이고 η에 대해 holomorphic이다.
+η에 따라 root나 cutoff branch를 바꾸는 구성을 사용하지 않는다.
+
 여기서 실제 B.26 입력에 자연 항등식을 적용할 수 있다. 공통 collar는
 0<=y=log(X/Xa)<=t1/16<t1이므로 원본 reference가 아직 정확히 natural이고
 beta=1, blend=0이다. 자연 보존 항등식은 실제 prescribed source를
@@ -71,7 +85,10 @@ Xa의 모든 혼합 접합은 이미 source-bound natural/B.26 정리에서 증�
 
 실제 v는 원래 U의 반경 평균으로 주어진다. 평균은 각 X 미분에서
 수축이고 그 η 미분도 같은 평균의 미분이다. 거리 δ/2의 tube에서
-Cauchy 경계를 적용한다. 실제 원래 실수 구간과 작은 tube에서는 |η|<17/16이며, 이것으로 |d|=|1−η²|<3을 얻는다. 더 느슨한 |η|<=2는 선형 η 인자에만 쓰고 |d| 상계를 그 값에서 추론하지 않는다. |D|<=1, |L^-1|<=2와 함께 쓰면
+Cauchy 경계를 적용한다. 실제 기준 구간은 [-33/32,33/32]이고 δ<1/32이므로
+전체 δ tube에서도 |η|<17/16이다. 따라서 d=1−η²에 대해
+|d|<=1+|η|²<3이다. 단순한 |η|<=2만으로 이 d 경계를 얻는 것은 아니다.
+이에 더 느슨한 |η|<=2, |D|<=1, |L^-1|<=2를 함께 쓰면
 
 ```
 |dX^k v| <=2*(4+4+6)*B/delta=28B/delta  (k=0,1,2).
@@ -139,6 +156,20 @@ radial activation의 복소 해석성을 가정하지 않는다.
 이는 원래 `solutionNorm.commonCollar`보다 강하다. 유한 iterate를 해로
 취급하지 않고 같은 원래 ordered-integral 급수의 합을 지배한다.
 
+원래 solutionNorm의 두 번째 필드 `naturalExtensionToY5`도 따로
+검사한다. 그것은 `exp(45*C1²/(2*Lambda*loss))`이다. 실제 natural
+함수만 사용한 별도의 해석적 six-profile 연산자를 |Y|<=5까지 연장하면
+같은 Banach 급수 경계가 첫 두 X 미분을 B로 지배하고 앞의 행렬과
+forcing 경계도 그대로 유효하다. 복소 ξ radial 선분의 길이를
+`a5=sqrt(5/Lambda)`로 바꾸면 동일한 증명이
+`exp(9*C1²*a5²/(2*loss))`를 주며 원래 두 번째 식과 같다.
+원점 datum과 natural 계수가 같으므로 이 보조 해는 0<=X<=Xa에서만
+actual Picard0와 유일성으로 일치한다. B26 collar의 복소 X 확장이나
+X>Xa에서 actual Picard0를 natural 해로 치환한다는 주장은 하지 않는다.
+원래 `naturalExtensionNotUsedAsActualActivation=true`를 그대로 보존한다.
+여기서 승인하는 것은 두 번째 value norm이다. 더 작은 실제 a²를
+사용한 저장 Kcondition을 Y5 전체의 tail index라고 확장하지 않는다.
+
 ## 4. 원래 Kcondition과 표시된 η 꼬리
 
 n>=2에서 n!>(n/3)^n 및 q<=n/2를 사용하면
@@ -153,11 +184,28 @@ t_n < [3A/sqrt(2*n*Delta)]^n.
 `log2(m!)<=m²`, `log2(16/delta)<=4+2/delta`이므로 원래
 `Kprecision=ceil((bits+m²+4m+2m/delta)/2)`가 정확한 2^-bits 목표를 준다.
 
+여기서 quantifier와 tube를 분리한다. 고정된 원본 source의 모든
+`0<=xi<=a`, 모든 실수 η∈I 및 모든 정수
+`K>=ceil(72(C1*a)²/loss)`에 대해 value tail이 성립한다. 더 강하게
+value 경계는 거리<δ/8의 η tube 전체에서 균등하다. 추가 Cauchy 반경
+δ/16을 사용한 m차 경계는 거리<=δ/16의 작은 tube에서 균등하고,
+특히 모든 실수 η∈I에서 유효하다. m차 경계를 δ/8 tube 경계까지
+같은 상수로 주장하지 않는다. 모든 고정 m>=0와 그 m에 대한 위
+Kprecision predicate를 만족하는 K에서 목표 오차를 얻는다. 실제
+등록부에 저장된 m=2, bits=128의 K를 모든 다른 m의 같은 precision
+K라고 부르지 않는다. 원래 constructor가 허용한 요청 범위와 다른
+등록부의 K 조건은 이 정리로 자동 소거하지 않는다.
+
 새 checker는 fresh cache에서 이 B/C1/a/loss/K/solutionNorm/error의
 실제 primitive AST를 읽어 고정 native 정의와 비교한다. 값의 거대한
 지수나 정수 K를 십진수로 물질화하지 않는다. 독립 natural 증명, 실제
 Picard 정칙성·접합, 실제 step32 영수증을 모두 소비한 경우에만
 `numericC1KCertifiedTailBoundsProvedHere=true`를 출력한다.
+독립 B product 노드를 C1 ancestry에서 따로 찾아 원래 식과 비교한다.
+정확한 source parameter AST, 실제 natural kernel/287개 pressure AST,
+F0/U0/v0/omega constructor와 xi² 치환 및 앞선 joint domain 영수증의
+동일 hash chain도 필수이다. M/X는 실제 평균과 prefix로 유지하며
+singular diagonal의 rescaled integral과 zero-axis datum도 같은 것이다.
 
 ## 5. Bnorm 적용과 남은 범위
 

@@ -53,14 +53,14 @@ def arithmetic():
   'etaCauchyTail':'Each fixed m derivative has original factor m!*(16/delta)^m; the literal source Kprecision guarantees the original target 2^(-bits).'}
 def main():
  p=argparse.ArgumentParser(description=__doc__)
- for k in ('source-db','stage3','header','compact','natural','picard','repair'):p.add_argument('--'+k,type=Path)
+ for k in ('source-db','stage3','header','compact','natural','natural-binding','leading-binding','payload','picard','repair'):p.add_argument('--'+k,type=Path)
  p.add_argument('--arithmetic-only',action='store_true');p.add_argument('--out',type=Path,required=True);a=p.parse_args()
  result={'schema':'MathScope.N6.ActualPicardOriginalNumericMajorant/1',**arithmetic(),
   'proof':'ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT_KO.md','actualSourceAndAnalyticInputsComposed':False,
   'numericC1KCertifiedTailBoundsProvedHere':False,'actualBnormThresholdApplicationProved':False,
   'wholeGOnJProved':False,'newOriginalGuardsDischarged':0,'newOriginalJetsDischarged':0,'newOriginalPDETermsDischarged':0}
  if not a.arithmetic_only:
-  paths={k:getattr(a,k.replace('-','_')) for k in ('source-db','stage3','header','compact','natural','picard','repair')}
+  paths={k:getattr(a,k.replace('-','_')) for k in ('source-db','stage3','header','compact','natural','natural-binding','leading-binding','payload','picard','repair')}
   need(all(paths.values()),'Provide every original source/analytic input or --arithmetic-only')
   need(digest(a.stage3)=='388a8c7adec5a221a789123bf06a2e087032ba7ce49cdd34d832132361a6a36f' and digest(a.header)==HEADER,'Same original fresh cache/header')
   spec=importlib.util.spec_from_file_location('numeric_picard_original_v3',a.stage3);v3=importlib.util.module_from_spec(spec);spec.loader.exec_module(v3)
@@ -71,6 +71,28 @@ def main():
   need(digest(a.natural)=='4b94c652630c250f883622601d1d9d4998c412927fe3bc4352ba5e8c70e2fe3d','Actual independent natural Banach proof')
   need(pc['actualPicardSHA256']==PICARD and pc['actualFixedSHA256']=='c8041bf166aa318a5dab4a0ccb53d1503609feadbaec4361fe4587bb5945bc1b','Actual common collar and source')
   for key in ('actualCoefficientCInfinityXiAndCommonEtaHolomorphy','actualNaturalB26AllOrderMatchingAtXa','actualPicardAllFixedMixedDerivativeNormalConvergence'):need(pc['provedSubkernelConclusions'][key],'Actual Picard analytic premise '+key)
+  nb=json.loads(a.natural_binding.read_text(encoding='utf8'));lb=json.loads(a.leading_binding.read_text(encoding='utf8'));payload=json.loads(a.payload.read_text(encoding='utf8'))
+  need(digest(a.payload)=='b6a1e0987650e1326c578d9004cdda8efa05d2375864966fc399ae514804b4c1','Exact actual fixed/coefficient diagnostics')
+  need(payload['fullNativePayloadSHA256']['fixed']==pc['actualFixedSHA256'] and payload['fullNativePayloads']['picard:0']==d,'Same actual native/function ASTs')
+  for key,path in (('majorant',a.natural),('natural_binding',a.natural_binding),('leading_binding',a.leading_binding)):
+   need(pc['inputBindings'][key]['sha256']==digest(path),'Same independently composed Picard source premise '+key)
+  need(nb['schema']=='MathScope.N6.ActualNaturalOriginalKernelRebinding/1' and nb['fixedDefinitionSHA256']==pc['actualFixedSHA256'],'Actual original natural kernel rebinding')
+  for key in ('allActualCoreRootsEqual','fullActualPressureDefinitionEqual','fullActualOuterProgramEqual','fullActualSourceProfileEqual','sourceKernelBytesUnchanged'):need(nb[key],'Actual natural source equality '+key)
+  need(nb['pressurePrimitiveAncestorCount']==natural['actualPressureASTVerification']['pressurePrimitiveAncestorCount']==287 and nb['pressurePrimitiveASTSHA256']==natural['actualPressureASTVerification']['pressurePrimitiveASTSHA256']=='19a9eec59702f233d4744083aaef545f0d600d5549177ee8e8b3a143535c8152','Same complete actual pressure input')
+  need(lb['schema']=='MathScope.N6.ActualPicardLeadingConstructorBinding/1' and lb['sourceSHA256']=='3deb02f1f7c9dfd0d0fc7936050eead9514f0e11e44ecb5bd4053073c2518ad8','Actual unchanged inner coefficient constructor')
+  need(all(lb['checks'].values()) and lb['sourceBytesUnchanged'] and lb['sourceLeading']==d['sourceLeading'],'Actual F/U/v/omega constructors and Xi-squared substitutions')
+  par=payload['fullNativePayloads']['fixed']['source']['parametersExactExpressions']
+  parameter_constraints={
+   'Q':{'quotient':[{'product':[{'integer':str(2**260)},{'ref':'K'}]},{'power':[{'ref':'sigmaStar'},2]}]},
+   'Lambda':{'power':[{'ref':'Q'},64]},'rho':{'quotient':[{'power':[{'ref':'sigmaStar'},2]},{'integer':65536}]},
+   'Xa':{'quotient':[{'integer':4},{'ref':'Lambda'}]},'t1':{'power':[{'ref':'CSelected'},-120]},
+   'CSelected':{'exp':{'ref':'logCSelected'}},
+   'logCSelected':{'sum':[{'product':[{'integer':10},{'log':{'sum':[{'integer':1},{'ref':'BRefUpper'}]}}]},{'power':[{'ref':'Q'},200]}]},
+   'BRefUpper':{'power':[{'ref':'Q'},300]},'j0':{'power':[{'ref':'h'},4]},
+   'sigmaStar':{'quotient':[{'ref':'j0'},{'integer':2000}]},'K':{'power':[{'ref':'Pstar'},2]},
+   'Pstar':{'exp':{'ref':'logP'}},'logP':{'product':[{'integer':2},{'ref':'T'}]},
+   'h':{'exp':{'product':[{'integer':-8002},{'ref':'T'}]}},'T':{'sum':[{'exp':{'ref':'Md'}},{'integer':10}]},'Md':{'integer':1048576}}
+  for key,value in parameter_constraints.items():need(par[key]==value,'Original admissible source parameter expression '+key)
   need(repair['sourceHeaderSHA256']==HEADER and repair['actualSourceFormulaBindingsComplete'],'Same original activation step')
   need(repair['independentRationalPreservationCertificate']['universalStepFirstDerivativeUpper']==32,'Independent actual squared-Gaussian derivative bound')
   selected={};symbols={}
@@ -104,9 +126,29 @@ def main():
    actual=at(d['tail'][name]);need(S.simplify(actual-value)==0,'Changed original Picard constant '+name);bindings[name]={'root':d['tail'][name],'exactSourceExpressionChecked':True}
   need(S.simplify(at(d['radialDomain'][1])**2-aa)==0,'Original common a^2')
   need(S.simplify(at(d['solutionNorm']['commonCollar'])-S.exp(9*C1*C1*aa/(2*loss)))==0,'Original displayed solution norm')
+  need(S.simplify(at(d['solutionNorm']['naturalExtensionToY5'])-S.exp(45*C1*C1/(2*La*loss)))==0,'Original natural-extension solution norm')
+  need(d['solutionNorm']['naturalExtensionNotUsedAsActualActivation'] is True,'Natural auxiliary bound cannot replace the actual B26 activation')
+  # Bind B independently of the resulting C1 expression, rather than only
+  # accepting an algebraically equal total sourceBound.
+  b_nodes=[i for i in selected if at(int(i))==B]
+  need(len(b_nodes)==1,'One retained literal original B formula in the C1 ancestry')
+  Broot=int(b_nodes[0]);need(g(Broot)['op']=='multiply','Original B must be a retained product body')
   need(len(selected)<1000,'Small constant proof cone')
   result.update({'actualSourceAndAnalyticInputsComposed':True,'numericC1KCertifiedTailBoundsProvedHere':True,
    'sourceHeaderSHA256':HEADER,'originalPicardSHA256':PICARD,'sourceConstants':bindings,'actualEtaOrder':m,'actualBits':bits,
+   'independentActualBFormula':{'root':Broot,'node':g(Broot),'exactFormula':'4096*Lambda^2*Q^3/t1','checkedSeparatelyFromC1':True},
+   'bothOriginalSolutionNormFields':{'commonCollar':{'root':d['solutionNorm']['commonCollar'],'formula':'exp(9*C1^2*aSquared/(2*loss))','domain':'0<=xi<=a, distance(eta,I)<delta/8'},
+    'naturalExtensionToY5':{'root':d['solutionNorm']['naturalExtensionToY5'],'formula':'exp(45*C1^2/(2*Lambda*loss))','domain':'Separate natural analytic six-profile operator: |Lambda*X|<=5, distance(eta,I)<delta/8','agreementWithActualPicard0':'Only on 0<=X<=Xa, by the same natural coefficients and zero-axis uniqueness','actualB26ActivationReplaced':False,'storedCommonCollarKNotAssertedAsY5TailIndex':True}},
+   'actualParameterASTConstraints':parameter_constraints,
+   'universalSourceScopedQuantifiers':{'source':'Only this authenticated Picard0, with every unchanged pinned source parameter expression',
+    'realInputs':'Every real eta in I=[-33/32,33/32] and 0<=xi<=sqrt(Xa*exp(t1/16))',
+    'commonValueTube':'distance(eta,I)<delta/8; C1 and coefficient bounds use the larger source tube delta/4',
+    'fixedEtaDerivativeTube':'distance(eta,I)<=delta/16, including every real eta in I',
+    'allK':'Every integer K>=ceil(72*(C1*a)^2/loss); this is the exact original Kcondition predicate',
+    'allFixedM':'Every integer m>=0 has derivative tail m!*(16/delta)^m*4^(-K)/3 on the smaller tube',
+    'precisionPredicate':'For each admissible original requested bits,m, K>=max(1,Kcondition,ceil((bits+m^2+4*m+2*m/delta)/2)) implies that actual m-tail<=2^(-bits)',
+    'originalStoredKScope':'The concrete original stored K is checked for its own stored etaOrder/bits; it is not claimed to reach 2^(-bits) for every other m at that same K',
+    'jointPatching':'The real eta derivative factorial bounds define compatible Taylor sums on overlapping discs; uniform ordinary-X derivatives of the same actual natural/B26 formulas and all-order matching at Xa make the extension jointly C-infinity in xi and holomorphic in eta'},
    'inputSHA256':{k:digest(v) for k,v in paths.items() if k!='source-db'},'originalConstantCone':selected,
    'sourceScope':'Only actual Picard0 common collar and original requested eta tail. No arbitrary/global leading jet or Bnorm bound is promoted.'})
  else:result['scope']='Exact finite arithmetic diagnostic only; original analytic/source inputs are not yet composed.'

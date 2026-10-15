@@ -548,6 +548,9 @@ jobs:
             --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
             --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --natural "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
             --picard "$RUNNER_TEMP/result/ACTUAL_PICARD_REGULARITY_COMPOSITION.json" \
+            --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --natural-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json" \
+            --leading-binding "$RUNNER_TEMP/result/ACTUAL_PICARD_LEADING_BINDING.json" \
             --repair "$RUNNER_TEMP/result/ACTUAL_REPAIR_SHEAR_PRESERVATION.json" \
             --out "$RUNNER_TEMP/result/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_picard_numeric_majorant.log"
       - name: Actual outer amplitude original bracket derivative floor and complex tube
@@ -583,6 +586,85 @@ jobs:
               --matrix-out "$RUNNER_TEMP/result/OBLIGATION_MATRIX_BACKGROUND_26.json" \
               --out "$RUNNER_TEMP/result/ACTUAL_BACKGROUND_26_JET_REGULARITY.json"
           } 2>&1 | tee "$RUNNER_TEMP/result/GATE_background_26_jets.log"
+      - name: Original leading10x24 scalar ledger and actual analytic composition
+        id: gate_leading_10x24
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            node "$tool/actual_leading_10x24_probe.mjs" --kernel-root "$RUNNER_TEMP/kernels" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/ACTUAL_LEADING_10X24_SOURCE_LEDGER.json"
+            python "$tool/actual_leading_10x24.py" --binding "$RUNNER_TEMP/result/ACTUAL_LEADING_10X24_SOURCE_LEDGER.json" \
+              --leading "$RUNNER_TEMP/result/ACTUAL_COMPLETED_LEADING_DOMAINS.json" \
+              --c1 "$RUNNER_TEMP/result/ACTUAL_C1_C12_REGULARITY_COMPOSITION.json" \
+              --i1 "$RUNNER_TEMP/result/ACTUAL_I1_TRUE_DEBT_CONTRACTION.json" \
+              --i2 "$RUNNER_TEMP/result/ACTUAL_I2_TRUE_HEAT_DEBT_CONTRACTION.json" \
+              --amplitude "$RUNNER_TEMP/result/ACTUAL_OUTER_AMPLITUDE_QUANTITATIVE.json" \
+              --envelope "$RUNNER_TEMP/result/ACTUAL_PRELOOP_SOURCE_ENVELOPE.json" \
+              --b26 "$RUNNER_TEMP/result/ACTUAL_B26_RADIAL_POSITIVITY.json" \
+              --b34 "$RUNNER_TEMP/result/ACTUAL_B34_RADIAL_POSITIVITY.json" \
+              --loop-proof "$RUNNER_TEMP/result/ACTUAL_LOOP_REGULARITY.json" \
+              --natural "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+              --natural-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_LEADING_10X24_MAJORANT.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_leading_10x24.log"
+      - name: Explicit actual Picard0 native-body consumers for every original1260 row
+        id: gate_picard_consumers
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        env:
+          N6_COMPACT: ${{ runner.temp }}/prior/COMPACT_JET_PDE_SOURCE.json
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_actual_picard_consumer_graph.py -v
+            python "$tool/actual_picard_consumer_graph.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --guards "$RUNNER_TEMP/prior/GUARD_DISCHARGES.json" \
+              --jets "$RUNNER_TEMP/prior/JET_REQUEST_AUDIT.json" --pde "$RUNNER_TEMP/prior/PDE_DEPENDENCY_AUDIT.json" \
+              --numeric "$RUNNER_TEMP/result/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_PICARD_CONSUMER_GRAPH.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_picard_consumers.log"
+      - name: Original ID scoped Picard proof reuse and PDE application boundary
+        id: gate_picard_reuse_application
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_picard_reuse_application_audit.py -v
+            python "$tool/picard_reuse_application_audit.py" --guards "$RUNNER_TEMP/prior/GUARD_DISCHARGES.json" \
+              --jets "$RUNNER_TEMP/prior/JET_REQUEST_AUDIT.json" --pde "$RUNNER_TEMP/prior/PDE_DEPENDENCY_AUDIT.json" \
+              --frontier "$RUNNER_TEMP/result/SHARED_SOURCE_STRUCTURE_FRONTIER.json" \
+              --consumers "$RUNNER_TEMP/result/ACTUAL_PICARD_CONSUMER_GRAPH.json" \
+              --numeric "$RUNNER_TEMP/result/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json" \
+              --background "$RUNNER_TEMP/result/ACTUAL_BACKGROUND_26_JET_REGULARITY.json" \
+              --matrix "$RUNNER_TEMP/result/OBLIGATION_MATRIX_BACKGROUND_26.json" \
+              --increment "$RUNNER_TEMP/result/SHARED_PDE_INCREMENT_IDENTITY.json" \
+              --out "$RUNNER_TEMP/result/PICARD_REUSE_APPLICATION_AUDIT.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_picard_reuse_application.log"
+      - name: Original current n1 natural auxiliary norm K strips and actual reflection
+        id: gate_n1_auxiliary_numeric
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            node "$tool/actual_n1_auxiliary_probe.mjs" --kernel-root "$RUNNER_TEMP/kernels" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_N1_AUXILIARY_NORM_BINDING.json"
+            python "$tool/actual_n1_auxiliary_norm.py" --binding "$RUNNER_TEMP/result/ACTUAL_N1_AUXILIARY_NORM_BINDING.json" \
+              --natural "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+              --natural-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json" \
+              --numeric-picard "$RUNNER_TEMP/result/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_N1_AUXILIARY_NUMERIC_MAJORANT.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_n1_auxiliary_numeric.log"
       - name: Record scoped result hashes
         if: always()
         env:

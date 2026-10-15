@@ -21,6 +21,7 @@ ORDER_PIN='f3c6144b294fc1252bd01f9f255e664de30e2ce73a5e88e52bd806c92945a8d3'
 R,Z,T,ELL=e.R,e.Z,e.TIME,622791
 X,ETA,QVAR=e.X,e.ETA,617438
 FILES={
+ 'research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs':'cd0b5900bba330c5d960bddd84bb695dd275094302dd9bc3cc5fcfee533895a3',
  'research-ide/mathscope-m3/navier/source-global-band.mjs':'babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60',
  'research-ide/mathscope-m3/navier/source-global-current.mjs':'93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760',
  'research-ide/mathscope-m2/navier/actual-residual-order-induction-background.mjs':'e04a02a8878168d673fd7deed45de6bbfb2591ec58f3abc9eb8f08e1d2770879',
@@ -73,8 +74,10 @@ def product(a,b):
  if a.lo==a.hi==0 or b.lo==b.hi==0:return bounded(Q(0))
  if a.lo is not None and a.lo>=0 and b.lo is not None and b.lo>=0:
   return Bound(min(Q(2),a.lo*b.lo),None if a.hi is None or b.hi is None else a.hi*b.hi,a.strict_positive and b.strict_positive)
+ if a.hi is not None and a.hi<=0 and b.hi is not None and b.hi<=0:
+  return Bound(min(Q(2),a.hi*b.hi),None if a.lo is None or b.lo is None else a.lo*b.lo,a.hi<0 and b.hi<0)
  if a.lo==a.hi and a.lo is not None:
-  if a.lo<0:return Bound(None if b.hi is None else a.lo*b.hi,None if b.lo is None else a.lo*b.lo,False)
+  if a.lo<0:return Bound(None if b.hi is None else a.lo*b.hi,None if b.lo is None else a.lo*b.lo,b.hi is not None and b.hi<0)
   return Bound(None if b.lo is None else a.lo*b.lo,None if b.hi is None else a.lo*b.hi,b.strict_positive)
  if b.lo==b.hi and b.lo is not None:return product(b,a)
  return Bound(None,None,False)
@@ -139,7 +142,9 @@ class ConstantDomains:
   if op=='exp':return Bound(Q(1) if a.lo is not None and a.lo>=0 else Q(0),Q(1) if a.hi is not None and a.hi<=0 else None,True)
   if op=='log_positive':
    prove(a.strict_positive,'Unproved finite constant logarithm')
-   return Bound(Q(0) if a.lo is not None and a.lo>=1 else None,Q(0) if a.hi is not None and a.hi<=1 else None,a.lo is not None and a.lo>1)
+   # 1-1/x <= log(x) <= x-1 for x>0, preserving a strict
+   # negative upper bound for h<1 without evaluating enormous scales.
+   return Bound(1-1/a.lo if a.lo is not None and a.lo>0 else None,a.hi-1 if a.hi is not None and a.hi>0 else None,a.lo is not None and a.lo>1)
   if op=='sqrt_positive':
    prove(a.lo is not None and a.lo>=0,'Unproved finite constant radical')
    return Bound(Q(0),None,a.strict_positive)
@@ -147,15 +152,85 @@ class ConstantDomains:
   if op=='maximum':return Bound(None if all(v.lo is None for v in rows) else max(v.lo for v in rows if v.lo is not None),None if any(v.hi is None for v in rows) else max(v.hi for v in rows),any(v.strict_positive for v in rows))
   raise Gap('Unreviewed finite constant operation '+op)
  @lru_cache(None)
- def at(self,i):
+ def at(self,i,environment=()):
   self.used.add(i);node=self.get(i);op,a=node['op'],node['args']
   if op=='rational':return bounded(Q(int(a[0]),int(a[1])))
   if op=='source_parameter':prove(a[0] in self.parameters,'Unbound fixed source parameter');return self.ast(a[0])
+  if op=='coordinate':
+   prove(i in dict(environment),'Unbound constant-integral coordinate '+str(i));return dict(environment)[i]
+  if op=='definite_integral':return self.integral(i,a,environment)
+  if op=='source_step_derivative':
+   arg=self.at(a[0],environment);order=a[1]
+   prove(type(order) is int and 0<=order<=12,'Unreviewed actual square-step derivative order')
+   # The separately pinned literal interpreter defines the globally smooth
+   # square-seed quotient. Its first derivative is strictly positive on
+   # (0,1), nonnegative everywhere, and all endpoint jets vanish.
+   if order==0:
+    if arg.hi is not None and arg.hi<=0:return bounded(Q(0))
+    if arg.lo is not None and arg.lo>=1:return bounded(Q(1))
+    return Bound(Q(0),Q(1),arg.strict_positive)
+   if order==1:return Bound(Q(0),None,arg.strict_positive and arg.hi is not None and arg.hi<1)
+   return Bound(None,None,False)
   prove(op in {'add','multiply','inverse','integer_power','exp','log_positive','sqrt_positive','ceiling','maximum'},'Unreviewed constant ancestor '+str((i,op)))
-  rows=[self.at(j) for j in (a[:1] if op in {'integer_power','inverse','exp','log_positive','sqrt_positive','ceiling'} else a)]
+  prove(op!='ceiling' or not environment,'Unreviewed discontinuous integral integrand')
+  rows=[self.at(j,environment) for j in (a[:1] if op in {'integer_power','inverse','exp','log_positive','sqrt_positive','ceiling'} else a)]
   out=self.operation(op,rows,a[1] if op=='integer_power' else None)
+  if op=='add' and self.lambda_minus_h_with_nonnegative_remainder(i,environment):
+   # h/lambda=exp(-7002*T)<1, from the already checked literal
+   # parameter ASTs and T>128. No independent-small-number guess is used.
+   self.ast('h');self.ast('lambda');out=Bound(Q(0),out.hi,True)
   if op in {'inverse','log_positive','sqrt_positive'} or op=='integer_power' and a[1]<0:
    self.domains.append({'node':i,'operation':op,'argument':a[0],'strictPositive':rows[0].strict_positive,'proved':True})
+  return out
+ def lambda_minus_h_with_nonnegative_remainder(self,i,environment):
+  leaves=[]
+  def flatten(j):
+   n=self.get(j)
+   if n['op']=='add':
+    for k in n['args']:flatten(k)
+   else:leaves.append(j)
+  flatten(i);lp=[];hm=[]
+  for j in leaves:
+   n=self.get(j)
+   if n=={'op':'source_parameter','args':['lambda']}:lp.append(j)
+   if n['op']=='multiply' and len(n['args'])==2:
+    for h,minus in (n['args'],n['args'][::-1]):
+     if self.get(h)=={'op':'source_parameter','args':['h']} and self.get(minus)=={'op':'rational','args':['-1','1']}:hm.append(j)
+  if len(lp)!=1 or len(hm)!=1:return False
+  return all((v:=self.at(j,environment)).lo is not None and v.lo>=0 for j in leaves if j not in {lp[0],hm[0]})
+ def integral(self,i,args,environment):
+  body,binder,lower,upper=args
+  prove(self.get(binder)['op']=='coordinate','Malformed constant integral binder')
+  # Endpoints are evaluated outside the new scope; shadowing the same
+  # coordinate affects only the body, including nested integral bodies.
+  def endpoint(j):
+   out=self.at(j,environment);n=self.get(j)
+   if n['op']=='rational':
+    v=Q(int(n['args'][0]),int(n['args'][1]));return Bound(v,v,v>0)
+   return out
+  low,high=endpoint(lower),endpoint(upper)
+  scoped=dict(environment);scoped[binder]=Bound(None if low.lo is None or high.lo is None else min(low.lo,high.lo),None if low.hi is None or high.hi is None else max(low.hi,high.hi),low.strict_positive and high.strict_positive)
+  inner=self.at(body,tuple(sorted(scoped.items())))
+  forward=low.hi is not None and high.lo is not None and low.hi<=high.lo
+  reverse=high.hi is not None and low.lo is not None and high.hi<=low.lo
+  out=Bound(None,None,False);witness=None
+  if forward or reverse:
+   left,right=(low,high) if forward else (high,low)
+   lengthlo=None if right.lo is None or left.hi is None else right.lo-left.hi
+   lengthhi=None if right.hi is None or left.lo is None else right.hi-left.lo
+   lengthpos=lengthlo is not None and lengthlo>0 or left.lo==left.hi==0 and right.strict_positive
+   pos=lengthpos and inner.strict_positive
+   # A continuous nonnegative function has positive integral if positive
+   # at one interior point. This is essential for sigma' with zero endpoint
+   # values; no sampled quadrature is used as an integral estimate.
+   if not pos and inner.lo is not None and inner.lo>=0 and left.lo==left.hi and right.lo==right.hi and left.lo is not None and right.lo is not None and left.lo<right.lo:
+    mid=(left.lo+right.lo)/2;point=dict(environment);point[binder]=bounded(mid)
+    test=self.at(body,tuple(sorted(point.items())))
+    if test.strict_positive:pos=True;witness=str(mid)
+   integral_bound=product(inner,Bound(lengthlo,lengthhi,lengthpos))
+   if inner.lo is not None and inner.lo>=0:integral_bound=Bound(Q(0),integral_bound.hi,pos)
+   out=integral_bound if forward else product(bounded(Q(-1)),integral_bound)
+  self.domains.append({'node':i,'operation':'definite_integral','binder':binder,'lower':lower,'upper':upper,'integrand':body,'allScopedPrimitiveDomainsChecked':True,'continuousOnFiniteClosedInterval':True,'orientationProved':forward or reverse,'strictPositive':out.strict_positive,'positiveInteriorRationalWitness':witness,'proved':True})
   return out
 
 def ordinary_closure(get,roots,*,stop=()):

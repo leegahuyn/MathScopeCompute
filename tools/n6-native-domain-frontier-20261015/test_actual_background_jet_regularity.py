@@ -25,7 +25,7 @@ class BackgroundProofControls(unittest.TestCase):
   with self.assertRaises(b.Gap):self.engine({}).operation('inverse',[b.Bound(None,None)])
  def test_positive_log_does_not_imply_positive_value(self):
   g={0:node('rational','1','2'),1:node('log_positive',0)}
-  r=self.engine(g).at(1);self.assertFalse(r.strict_positive);self.assertEqual(r.hi,0)
+  r=self.engine(g).at(1);self.assertFalse(r.strict_positive);self.assertLess(r.hi,0)
  def test_algebra_preserves_real_integral_scope(self):
   g={0:node('coordinate','outer'),1:node('coordinate','eta'),2:node('actual_expression_partial',2,[0,1],[0,0]),3:node('integer_power',2,2),4:node('rational','0','1'),5:node('coordinate','X'),6:node('definite_integral',3,0,4,5)}
   out=b.BodyNormal(g.__getitem__,{}).at(6)
@@ -41,5 +41,30 @@ class BackgroundProofControls(unittest.TestCase):
  def test_tiny_power_bound_retains_strict_positive_difference(self):
   g={0:node('rational','1','2'),1:node('integer_power',0,100000),2:node('rational','-1','1'),3:node('multiply',1,2),4:node('rational','1','1'),5:node('add',4,3),6:node('inverse',5)}
   self.assertTrue(self.engine(g).at(6).strict_positive)
+ def test_finite_integral_rejects_axis_pole(self):
+  g={0:node('coordinate','x'),1:node('inverse',0),2:node('rational','0','1'),3:node('rational','1','1'),4:node('definite_integral',1,0,2,3)}
+  with self.assertRaises(b.Gap):self.engine(g).at(4)
+ def test_integral_endpoints_are_outside_new_scope(self):
+  g={0:node('coordinate','x'),1:node('rational','1','1'),2:node('definite_integral',0,0,1,0)}
+  with self.assertRaises(b.Gap):self.engine(g).at(2)
+  self.assertTrue(self.engine(g).at(2,((0,b.Bound(Q(2),Q(2),True)),)).strict_positive)
+ def test_nested_integral_variable_endpoint_is_scoped(self):
+  g={0:node('coordinate','x'),1:node('coordinate','y'),2:node('rational','0','1'),3:node('rational','1','1'),4:node('definite_integral',1,1,2,0),5:node('definite_integral',4,0,2,3)}
+  r=self.engine(g).at(5);self.assertTrue(r.strict_positive)
+ def test_shared_body_cache_does_not_erase_scopes(self):
+  g={0:node('coordinate','x'),1:node('inverse',0),2:node('rational','0','1'),3:node('rational','1','1'),4:node('rational','2','1'),5:node('definite_integral',1,0,3,4),6:node('definite_integral',1,0,2,3)}
+  e=self.engine(g);self.assertTrue(e.at(5).strict_positive)
+  with self.assertRaises(b.Gap):e.at(6)
+ def test_step_derivative_positive_integral_uses_interior(self):
+  g={0:node('coordinate','x'),1:node('source_step_derivative',0,1),2:node('rational','0','1'),3:node('rational','1','1'),4:node('definite_integral',1,0,2,3)}
+  e=self.engine(g);self.assertTrue(e.at(4).strict_positive)
+  self.assertEqual(e.domains[-1]['positiveInteriorRationalWitness'],'1/2')
+ def test_unknown_integrand_and_derivative_orders_fail(self):
+  for op,args in [('opaque_native',[0]),('source_step_derivative',[0,13])]:
+   g={0:node('coordinate','x'),1:node(op,*args),2:node('rational','0','1'),3:node('rational','1','1'),4:node('definite_integral',1,0,2,3)}
+   with self.assertRaises(b.Gap):self.engine(g).at(4)
+ def test_discontinuous_binder_ceiling_not_declared_continuous(self):
+  g={0:node('coordinate','x'),1:node('ceiling',0),2:node('rational','0','1'),3:node('rational','1','1'),4:node('definite_integral',1,0,2,3)}
+  with self.assertRaises(b.Gap):self.engine(g).at(4)
 
 if __name__=='__main__':unittest.main()
