@@ -2,6 +2,7 @@
 import unittest
 from fractions import Fraction as Q
 import actual_background_jet_regularity as b
+from actual_background_jet_regularity import ConstantDomains,Bound,Gap,bounded
 
 def node(op,*args):return {'op':op,'args':list(args)}
 class BackgroundProofControls(unittest.TestCase):
@@ -66,5 +67,32 @@ class BackgroundProofControls(unittest.TestCase):
  def test_discontinuous_binder_ceiling_not_declared_continuous(self):
   g={0:node('coordinate','x'),1:node('ceiling',0),2:node('rational','0','1'),3:node('rational','1','1'),4:node('definite_integral',1,0,2,3)}
   with self.assertRaises(b.Gap):self.engine(g).at(4)
+
+class StrictNegativeControls(unittest.TestCase):
+ def engine(self):return ConstantDomains(lambda i:None,{})
+ def test_negative_maximum_preserves_strict_sign_without_a_decimal_margin(self):
+  c=self.engine();small=Bound(Q(0),None,True)
+  negative=c.operation('multiply',[bounded(Q(-1)),small])
+  self.assertTrue(negative.strict_negative);self.assertEqual(negative.hi,0)
+  maximum=c.operation('maximum',[negative,negative]);self.assertTrue(maximum.strict_negative)
+  positive=c.operation('multiply',[bounded(Q(-1)),maximum]);self.assertTrue(positive.strict_positive)
+  self.assertTrue(c.operation('inverse',[positive]).strict_positive)
+ def test_zero_in_maximum_prevents_nonzero_reciprocal_promotion(self):
+  c=self.engine();negative=Bound(None,Q(0),False,True)
+  value=c.operation('maximum',[negative,bounded(Q(0))])
+  self.assertFalse(value.strict_negative)
+  with self.assertRaises(Gap):c.operation('inverse',[value])
+ def test_unknown_nonpositive_input_cannot_be_treated_as_strictly_negative(self):
+  c=self.engine();value=c.operation('maximum',[Bound(None,Q(0),False,True),Bound(None,Q(0))])
+  self.assertFalse(value.strict_negative)
+  with self.assertRaises(Gap):c.operation('inverse',[value])
+ def test_negative_reciprocal_and_odd_power_keep_strict_sign(self):
+  c=self.engine();negative=Bound(None,Q(0),False,True)
+  self.assertTrue(c.operation('inverse',[negative]).strict_negative)
+  self.assertTrue(c.operation('integer_power',[negative],3).strict_negative)
+  self.assertTrue(c.operation('integer_power',[negative],2).strict_positive)
+ def test_contradictory_strict_signs_are_rejected(self):
+  with self.assertRaises(Gap):Bound(Q(0),None,False,True)
+  with self.assertRaises(Gap):Bound(None,Q(0),True)
 
 if __name__=='__main__':unittest.main()

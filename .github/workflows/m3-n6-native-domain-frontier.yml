@@ -572,7 +572,7 @@ jobs:
           set -euo pipefail
           tool=tools/n6-native-domain-frontier-20261015
           {
-            python -m unittest discover -s "$tool" -p test_actual_background_jet_regularity.py -v
+            python -m unittest discover -s "$tool" -p 'test_actual_background_*.py' -v
             python "$tool/actual_background_jet_regularity.py" \
               --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
               --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \

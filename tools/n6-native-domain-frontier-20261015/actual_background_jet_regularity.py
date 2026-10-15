@@ -13,6 +13,7 @@ from pathlib import Path
 import actual_eta_transport as e
 from native_domain_extract import (argument_children,conservative_capture,require,sha,STAGE3_PIN,G_ROOT)
 from natural_domain_proof import FIXED_PIN,TARGET_PIN,source_parameter_proof
+from actual_background_body_domains import audit_actual_body_domains,PrimitiveGap
 
 HEADER='f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1'
 MATRIX_PIN='2e854cc1c7ee577a4451dc9e93849212ae055dcccc705599ee109b7d10bbcf21'
@@ -64,7 +65,14 @@ class BodyNormal:
 
 @dataclass(frozen=True)
 class Bound:
- lo:Q|None;hi:Q|None;strict_positive:bool=False
+ lo:Q|None;hi:Q|None;strict_positive:bool=False;strict_negative:bool=False
+ def __post_init__(self):
+  object.__setattr__(self,'strict_positive',self.strict_positive or self.lo is not None and self.lo>0)
+  object.__setattr__(self,'strict_negative',self.strict_negative or self.hi is not None and self.hi<0)
+  prove(self.lo is None or self.hi is None or self.lo<=self.hi,'Inconsistent real enclosure')
+  prove(not (self.strict_positive and self.strict_negative),'Contradictory strict source signs')
+  prove(not self.strict_positive or self.hi is None or self.hi>0,'Positive source has nonpositive upper bound')
+  prove(not self.strict_negative or self.lo is None or self.lo<0,'Negative source has nonnegative lower bound')
 def bounded(v):
  if v==0:return Bound(Q(0),Q(0),False)
  if v>2:return Bound(Q(2),None,True)
@@ -75,10 +83,13 @@ def product(a,b):
  if a.lo is not None and a.lo>=0 and b.lo is not None and b.lo>=0:
   return Bound(min(Q(2),a.lo*b.lo),None if a.hi is None or b.hi is None else a.hi*b.hi,a.strict_positive and b.strict_positive)
  if a.hi is not None and a.hi<=0 and b.hi is not None and b.hi<=0:
-  return Bound(min(Q(2),a.hi*b.hi),None if a.lo is None or b.lo is None else a.lo*b.lo,a.hi<0 and b.hi<0)
+  return Bound(min(Q(2),a.hi*b.hi),None if a.lo is None or b.lo is None else a.lo*b.lo,a.strict_negative and b.strict_negative)
+ if a.lo is not None and a.lo>=0 and b.hi is not None and b.hi<=0:
+  return Bound(None if a.hi is None or b.lo is None else a.hi*b.lo,a.lo*b.hi,False,a.strict_positive and b.strict_negative)
+ if a.hi is not None and a.hi<=0 and b.lo is not None and b.lo>=0:return product(b,a)
  if a.lo==a.hi and a.lo is not None:
-  if a.lo<0:return Bound(None if b.hi is None else a.lo*b.hi,None if b.lo is None else a.lo*b.lo,b.hi is not None and b.hi<0)
-  return Bound(None if b.lo is None else a.lo*b.lo,None if b.hi is None else a.lo*b.hi,b.strict_positive)
+  if a.lo<0:return Bound(None if b.hi is None else a.lo*b.hi,None if b.lo is None else a.lo*b.lo,b.strict_negative,b.strict_positive)
+  return Bound(None if b.lo is None else a.lo*b.lo,None if b.hi is None else a.lo*b.hi,b.strict_positive,b.strict_negative)
  if b.lo==b.hi and b.lo is not None:return product(b,a)
  return Bound(None,None,False)
 
@@ -118,16 +129,17 @@ class ConstantDomains:
    lo=None if any(v.lo is None for v in rows) else sum(v.lo for v in rows)
    hi=None if any(v.hi is None for v in rows) else sum(v.hi for v in rows)
    pos=lo is not None and (lo>0 or lo==0 and all(v.lo is not None and v.lo>=0 for v in rows) and any(v.strict_positive for v in rows))
-   return Bound(lo,hi,pos)
+   neg=hi is not None and (hi<0 or hi==0 and all(v.hi is not None and v.hi<=0 for v in rows) and any(v.strict_negative for v in rows))
+   return Bound(lo,hi,pos,neg)
   if op=='multiply':
    out=bounded(Q(1))
    for row in rows:out=product(out,row)
    return out
   a=rows[0]
   if op=='inverse':
-   prove(a.strict_positive or a.hi is not None and a.hi<0,'Unproved finite constant inverse')
+   prove(a.strict_positive or a.strict_negative,'Unproved finite constant inverse')
    if a.strict_positive:return Bound(Q(0) if a.hi is None else 1/a.hi,None if a.lo in (None,0) else 1/a.lo,True)
-   return Bound(None if a.hi==0 else 1/a.hi,None if a.lo is None else 1/a.lo,False)
+   return Bound(None if a.hi in (None,0) else 1/a.hi,Q(0) if a.lo is None else 1/a.lo,False,True)
   if op=='integer_power':
    prove(type(n) is int,'Noninteger source power')
    if n==0:return bounded(Q(1))
@@ -137,19 +149,20 @@ class ConstantDomains:
     lo=min(Q(2),a.lo) if a.lo>=1 else Q(0)
     hi=None if a.hi is None or a.hi>1 else a.hi
     return Bound(lo,hi,a.strict_positive)
-   if n%2==0:return Bound(Q(0),None,a.hi is not None and a.hi<0)
+   if n%2==0:return Bound(Q(0),None,a.strict_negative)
+   if a.hi is not None and a.hi<=0:return Bound(None,Q(0),False,a.strict_negative)
    return Bound(None,None,False)
   if op=='exp':return Bound(Q(1) if a.lo is not None and a.lo>=0 else Q(0),Q(1) if a.hi is not None and a.hi<=0 else None,True)
   if op=='log_positive':
    prove(a.strict_positive,'Unproved finite constant logarithm')
    # 1-1/x <= log(x) <= x-1 for x>0, preserving a strict
    # negative upper bound for h<1 without evaluating enormous scales.
-   return Bound(1-1/a.lo if a.lo is not None and a.lo>0 else None,a.hi-1 if a.hi is not None and a.hi>0 else None,a.lo is not None and a.lo>1)
+   return Bound(1-1/a.lo if a.lo is not None and a.lo>0 else None,a.hi-1 if a.hi is not None and a.hi>0 else None,a.lo is not None and a.lo>1,a.hi is not None and a.hi<1)
   if op=='sqrt_positive':
    prove(a.lo is not None and a.lo>=0,'Unproved finite constant radical')
    return Bound(Q(0),None,a.strict_positive)
   if op=='ceiling':return Bound(Q(1) if a.strict_positive else None,None,a.strict_positive)
-  if op=='maximum':return Bound(None if all(v.lo is None for v in rows) else max(v.lo for v in rows if v.lo is not None),None if any(v.hi is None for v in rows) else max(v.hi for v in rows),any(v.strict_positive for v in rows))
+  if op=='maximum':return Bound(None if all(v.lo is None for v in rows) else max(v.lo for v in rows if v.lo is not None),None if any(v.hi is None for v in rows) else max(v.hi for v in rows),any(v.strict_positive for v in rows),all(v.strict_negative for v in rows))
   raise Gap('Unreviewed finite constant operation '+op)
  @lru_cache(None)
  def at(self,i,environment=()):
@@ -177,7 +190,7 @@ class ConstantDomains:
   try:out=self.operation(op,rows,a[1] if op=='integer_power' else None)
   except Gap as err:
    err.primitive_frontier={'node':i,'sourceNode':node,
-     'argumentEnclosures':[{'lo':str(v.lo) if v.lo is not None else None,'hi':str(v.hi) if v.hi is not None else None,'strictPositive':v.strict_positive} for v in rows],
+     'argumentEnclosures':[{'lo':str(v.lo) if v.lo is not None else None,'hi':str(v.hi) if v.hi is not None else None,'strictPositive':v.strict_positive,'strictNegative':v.strict_negative} for v in rows],
      'scopedCoordinates':[j for j,_ in environment]}
    raise
   if op=='add' and self.lambda_minus_h_with_nonnegative_remainder(i,environment):
@@ -185,7 +198,7 @@ class ConstantDomains:
    # parameter ASTs and T>128. No independent-small-number guess is used.
    self.ast('h');self.ast('lambda');out=Bound(Q(0),out.hi,True)
   if op in {'inverse','log_positive','sqrt_positive'} or op=='integer_power' and a[1]<0:
-   self.domains.append({'node':i,'operation':op,'argument':a[0],'strictPositive':rows[0].strict_positive,'proved':True})
+   self.domains.append({'node':i,'operation':op,'argument':a[0],'strictPositive':rows[0].strict_positive,'strictNegative':rows[0].strict_negative,'proved':True})
   return out
  def lambda_minus_h_with_nonnegative_remainder(self,i,environment):
   leaves=[]
@@ -326,7 +339,10 @@ def body_proof(get,reg,leading_roots):
   expected=e.mul(factors[index],call(helper,[actualq,chartx,charte]))
   prove(normal.at(d['body'])==expected,'Changed physical normalization/chart body'+str(index))
   ledger.append({'definition':index,'body':d['body'],'definitionSHA256':sha(d),'normalizedDefinition':helper,'literalActualChartAndMultiplierCompared':True})
+ try:primitive_audit=audit_actual_body_domains(get,reg,leading_roots,scale_id,constants)
+ except PrimitiveGap as err:raise Gap('Actual primitive-closure gap: '+str(err)) from err
  return {'allNormalizedAndPhysicalBodiesCompared':True,'bodyLineages':ledger,'actualChart':chart,
+  'actualPrimitiveClosureAudit':primitive_audit,
   'cutoff':{'definition':680,'body':reg['expression'][680]['body'],'actualFlatBodyCompared':True,
    'allOrdersAtEndpoints':'exp(-1/u) and exp(-1/(1-u)) have zero one-sided jets at u=0,1; the denominator is positive inside.'},
   'leadingCp':{'definition':677,'body':cp['body'],'exactFiniteIntegralOfSameF0Squared':True,'movingEndpointAndAxisCoveredByActualLeadingCInfinity':True},
