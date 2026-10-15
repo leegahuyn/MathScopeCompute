@@ -149,7 +149,11 @@ class ConstantDomains:
     lo=min(Q(2),a.lo) if a.lo>=1 else Q(0)
     hi=None if a.hi is None or a.hi>1 else a.hi
     return Bound(lo,hi,a.strict_positive)
-   if n%2==0:return Bound(Q(0),None,a.strict_negative)
+   if n%2==0:
+    # Every positive even power maps [-1,1] into [0,1]. Retain this
+    # closed upper bound when the real interval crosses zero.
+    hi=Q(1) if a.lo is not None and a.hi is not None and a.lo>=-1 and a.hi<=1 else None
+    return Bound(Q(0),hi,a.strict_positive or a.strict_negative)
    if a.hi is not None and a.hi<=0:return Bound(None,Q(0),False,a.strict_negative)
    return Bound(None,None,False)
   if op=='exp':return Bound(Q(1) if a.lo is not None and a.lo>=0 else Q(0),Q(1) if a.hi is not None and a.hi<=0 else None,True)
@@ -213,7 +217,8 @@ class ConstantDomains:
   except Gap as err:
    err.primitive_frontier={'node':i,'sourceNode':node,
      'argumentEnclosures':[{'lo':str(v.lo) if v.lo is not None else None,'hi':str(v.hi) if v.hi is not None else None,'strictPositive':v.strict_positive,'strictNegative':v.strict_negative} for v in rows],
-     'scopedCoordinates':[j for j,_ in environment]}
+     'scopedCoordinates':[j for j,_ in environment],
+     'scopedCoordinateEnclosures':[{'coordinate':j,'lo':str(b.lo) if b.lo is not None else None,'hi':str(b.hi) if b.hi is not None else None,'strictPositive':b.strict_positive,'strictNegative':b.strict_negative} for j,b in environment]}
    raise
   if op=='add' and self.lambda_minus_h_with_nonnegative_remainder(i,environment):
    # h/lambda=exp(-7002*T)<1, from the already checked literal
