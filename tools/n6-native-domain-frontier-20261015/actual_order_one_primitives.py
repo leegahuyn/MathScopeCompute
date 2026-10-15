@@ -48,14 +48,24 @@ def derive():
  controls={'omittedUvEtaHistoryRejected':omitted_uv!=0,
   'missingPressureRadialJacobianRejected':S.factor((4*xi*F0*F1-xi*om)/(xi)-(2*F0*F1-om/2))!=0,
   'wrongContinuityAxialSignRejected':S.factor((derivative-omega/2-v*(defect+4*e*x*S.diff(u,x))/(2*L)))!=0,
-  'omittedAxisConstantRejected':S.Symbol('v_axis')!=0}
+  'omittedAxisConstantAtActualEtaZeroRejected':S.Integer(-4)!=0}
  need(all(controls.values()),'Exact negative control')
+ lam,t=S.symbols('lambda t',positive=True)
+ strict_convexity=S.factor(S.diff(t**(2+lam),t,2))
+ need(S.simplify(strict_convexity-(1+lam)*(2+lam)*t**lam)==0,'Actual continuous E determinant convexity')
+ supports=[(S.Rational(k,2)-S.Rational(1,4096),S.Rational(k,2)+S.Rational(1,4096)) for k in range(3,8)]
+ need(all(1<l<r<4 for l,r in supports) and all(supports[j][1]<supports[j+1][0] for j in range(4)),'Five actual positive ordered supports')
  return {'omegaPrefixDerivativeDefect':'P_X-Omega0/(2X)=v0*[L*(v0+X*v0_X)+d*U0_eta-2*A*eta*U0-2*eta*X*U0_X]/(2*L)',
   'leadingContinuityFromActualMass':'M0_X=U0 and v0=(2eta U0-2D eta M0/X-d M0_eta/X)/L imply the bracket is identically zero.',
   'exactChecks':{'fullOmegaPrefixDerivativeDefect':str(exact),'continuityFromGenuineMass':str(S.factor(dg)),'evenPicardMassJacobian':str(massder),'picardPressureJacobian':str(pressure)},
-  'strictNegativeControls':controls}
+  'strictNegativeControls':controls,
+  'continuousIposNonsingularity':{'allPositiveLambda':True,'UPointDeterminant':'x1*x2*(w_lambda(x2)-w_lambda(x1))>0; w_lambda_prime(x)=x^(-1-2lambda)>0',
+   'EPointDeterminant':'Factor x_j^(-2-2lambda)>0; t_j=x_j^2 makes rows [t^(2+lambda),1,t]. The strictly positive second divided difference times the Vandermonde has one fixed nonzero sign.',
+   'exactStrictConvexity':str(strict_convexity),'actualSupports':[[str(l),str(r)] for l,r in supports],
+   'continuousIntegralStep':'Multilinearity writes det of the actual matrix as the integral of these point determinants against the product of the three or two positive unit-mass bump measures. Ordered disjoint supports preserve strict sign.',
+   'coefficientSizeBoundNeeded':False}}
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--binding',type=Path);p.add_argument('--picard',type=Path);p.add_argument('--arithmetic-only',action='store_true');p.add_argument('--out',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--binding',type=Path);p.add_argument('--picard',type=Path);p.add_argument('--leading',type=Path);p.add_argument('--arithmetic-only',action='store_true');p.add_argument('--out',type=Path,required=True);a=p.parse_args()
  result={'schema':'MathScope.N6.ActualOrderOnePrimitiveCalculus/1',**derive(),
   'paperBinding':{'sha256':PAPER,'pages':{'26':['4.7'],'46':['5.2','5.5','5.6'],'47':['Lemma 5.1'],'51':['5.15'],'52':['5.16','Lemma 5.2 Step 3']}},
   'proof':'ACTUAL_ORDER_ONE_PRIMITIVES_KO.md','actualSourceBindingsComposed':False,
@@ -66,19 +76,39 @@ def main():
   need(b['schema']=='MathScope.N6.ActualOrderOnePrimitiveBinding/1','Original source-binding schema')
   need({x['path']:x['sha256'] for x in b['sourceFiles']}==PINS,'Changed original primitive source files')
   need(b['diagnosticsSHA256']=='b6a1e0987650e1326c578d9004cdda8efa05d2375864966fc399ae514804b4c1' and b['diagnosticOverlap']>0,'Original diagnostic prefix binding')
+  need(b['sourceHeaderSHA256']=='f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1','Same detached original header record, not canonical-header hash')
+  need(b['sourcePaperSHA256']==PAPER,'Same user-provided source paper')
   need(all(b['exactOriginalBindings'].values()) and all(b['strictNegativeControls'].values()),'Actual original equations/controls')
   need(all(c['pass'] for c in b['leadingStream']['checks']),'Actual original complete M0 history')
   need(b['originalExactAlgebra']['omega']['pass'] and b['originalExactAlgebra']['continuity']['pass'],'Original full differential-polynomial kernels')
   for name in ('actualGlobalLeadingMassPrimitiveIdentity','actualGlobalLeadingStreamReconstruction','actualLeadingContinuityIdentity'):need(b['leadingStream']['scope'][name],'Original leading stream identity '+name)
   for name,value in b['exactPrimitiveBindings'].items():need(all(c['pass'] for c in value) if isinstance(value,list) else value['pass'],'Incomplete literal primitive binding '+name)
   need(b['bodyRoots']=={'F1':29290,'U1':29289,'v1':29440,'M1':29334,'average':29336,'Pi1':50558},'Different actual order-one body')
+  ip=b['actualIposSource'];need(len(ip['matrixBindings'])==13 and all(c['pass'] for c in ip['matrixBindings']) and ip['RbaseBinding']['pass'] and ip['amplitudeBinding']['pass'],'All literal actual Ipos matrices and positive factors')
+  need(ip['positiveParameterExpressions']['lambda']=={'exp':{'product':[{'integer':-1000},{'ref':'T'}]}},'Positive unchanged original lambda')
   need(b['support']['pass'] and b['support']['exterior']['pass'],'Actual completed support and zero branches')
   need(pc['schema']=='MathScope.N6.ActualPicardRegularityComposition/1' and pc['actualPicardSHA256']=='c3ee2bdec0b3f1bdd63a679bc1d6fbaeff72fc961e68b24b8a39efd4d6229b60','Original Picard0 composition')
+  need(pc['actualFixedSHA256']=='c8041bf166aa318a5dab4a0ccb53d1503609feadbaec4361fe4587bb5945bc1b','Same original complete fixed definition')
   for k in ('actualPicardAllFixedMixedDerivativeNormalConvergence','actualNativeEvenProfilesCInfinityOnZeroToASquared','actualNaturalB26AllOrderMatchingAtXa'):need(pc['provedSubkernelConclusions'][k],'Actual Picard input '+k)
   result.update({'actualSourceBindingsComposed':True,'inputSHA256':{'binding':digest(a.binding),'picard':digest(a.picard)},'sourceHeaderSHA256':b['sourceHeaderSHA256'],
    'conditionalActualPrimitiveConclusions':{'genuineOmega0ZeroAxisPrimitive':True,'allSixOrderOneBodiesRetained':True,'allFiveActualMomentEquations':True,'allActualPi1PrimitiveConstantsBound':True},
-   'remainingAnalyticPremises':['Full actual leading U0/M0/v0 C∞, with original true B8/I1/outer-pulse roots, the natural axis value and all global joins.','Original continuous Ipos matrices are nonsingular, Kpos>0 and lambda>0.'],
-   'conclusionWithThosePremises':'The original six order-one profiles are C∞ for X>=0, eta in [-1,1] with inward endpoint jets. Pi1 is the genuine integral of 2F0F1-Omega0/(2X), and all original zero branches glue to every order.'})
+   'actualContinuousIposMatricesProvedNonsingular':True,'actualIposFactorsPositive':True,
+   'remainingAnalyticPremises':['Full actual leading U0/M0/v0 C∞, with original true B8/I1/outer-pulse roots, the natural axis value and all global joins.'],
+   'conclusionWithThosePremises':'The original six order-one profiles are C∞ for X>=0, eta in [-1,1] with inward endpoint jets. Pi1 is the genuine integral of the literal compiled F0F1 pressure density minus Omega0/(2X), and all original zero branches glue to every order.',
+   'separateUnprovedIdentification':'The literal local/core and reserved-power F0pos factors still require identification with the complete physical leading F0 on their supports.'})
+  if a.leading:
+   lead=json.loads(a.leading.read_text(encoding='utf8'))
+   need(lead['schema']=='MathScope.N6.ActualCompletedLeadingFrozenApplication/1' and lead['fixedDefinitionSHA256']==pc['actualFixedSHA256'] and lead['sourceHeaderSHA256']==b['sourceHeaderSHA256'],'Same completed leading theorem')
+   need(lead['inputSHA256']['stream-binding']==digest(a.binding),'Completed leading uses this exact actual stream audit')
+   lr=lead['actualCompletedLeadingRoots'];need({k:lr[k] for k in b['actualLeadingRoots']}==b['actualLeadingRoots'],'Same actual leading U/M/V/v/Xv source roots')
+   lc=lead['provedActualCompletedLeading']
+   need(lc['regularity']=='F0,U0,M0,V0/X are C-infinity for X>=0 and abs(eta)<1; all fixed one-sided eta jets extend to eta=+-1','Actual leading regularity scope')
+   need(lc['radialMomentIdentity']=='partial_X M0=U0; actual V0/X uses this same M0 and its eta derivative','Actual leading primitive')
+   need(lc['axialSupport']=='U0=M0=V0=0 after the original Xv','Actual leading exterior support')
+   result.update({'actualAllOrderGlobalRegularityComposed':True,'remainingAnalyticPremises':[],'provedActualOrderOneConclusions':{
+    'allSixOriginalProfilesCInfinity':True,'axisAndEtaEndpointOneSidedJets':True,'genuineLiteralPressurePrimitive':True,'allOriginalPi1JoinConstantsAndAllFixedMixedJets':True,
+    'actualContinuousMomentSolvesForArbitraryFiniteDebts':True},'independentSourceGlobalPressureIdentificationProved':False})
+   result['inputSHA256']['leading']=digest(a.leading)
  else:result['scope']='Exact arithmetic only; no source application or global regularity is claimed.'
- a.out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8');print(json.dumps({'sourceBindingsComposed':not a.arithmetic_only,'globalRegularityPromoted':False,'newOriginalDischarged':0}))
+ a.out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8');print(json.dumps({'sourceBindingsComposed':not a.arithmetic_only,'globalRegularityPromoted':result['actualAllOrderGlobalRegularityComposed'],'newOriginalDischarged':0}))
 if __name__=='__main__':main()

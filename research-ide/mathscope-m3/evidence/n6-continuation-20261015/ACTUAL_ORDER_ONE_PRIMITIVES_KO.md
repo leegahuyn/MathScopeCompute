@@ -144,8 +144,39 @@ X>=0, η∈[-1,1]에서 모든 고정 혼합 미분을 갖는다. η 끝점은 �
 미분이고 축은 한쪽 미분이다. 어떤 고차 미분의 작은 수치 상계를
 가정하지 않는다. moment 입력은 유한하기만 하면 된다.
 
-현재 조합기는 마지막 전역 선행 해석 영수증을 대신 만들어 내지 않는다.
-따라서 fresh 본문 결속 후에도 이를 명시적 조건으로 남긴다. 또한
+전역 선행 영수증을 생략하면 이 전제는 명시적 조건으로 남는다.
+`--leading ACTUAL_COMPLETED_LEADING_DOMAINS.json`을 주면 조합기는 그
+영수증이 이 probe의 정확한 `stream-binding` SHA-256을 소비했는지,
+실제 U/M/V/v/Xv root들이 같은지, 안쪽 η 영역의 C∞와 한쪽 끝점 jets 및
+실제 support를 증명했는지 검사한 뒤 여섯 profile의 전 차수 접합을
+조합한다. source probe는 그 영수증을 입력으로 받지 않으므로 순환이 없다.
+또한
 원본 F0pos와 완전 leading F0의 Ipos 일치, 전체 물리 압력 방정식,
 전체 J와 covariance/Volterra 및 모든 원본 Jet/PDE의 검사는 이 결과와
 별도로 남는다. 특히 이 결과의 PASS를 원본 의무 소거로 세지 않는다.
+
+## 5. 실제 Ipos 연속 행렬의 독립 비특이성
+
+새 probe는 Umat 네 적분과 Emat 아홉 적분, 실제 다섯 bump support,
+Rbase와 ef의 양의 원본 식을 재구성한다. 이 13개 연속 적분을 근삿값이나
+행렬 주석으로 대체하지 않는다. 각 bump는 원래 폭 1/2048의 sigma-prime
+정규화이고 양의 단위 질량을 가진다. 중심 3/2,2,5/2,3,7/2와 반폭
+1/4096 때문에 support들은 (1,4) 안에서 엄격히 순서가 정해진다.
+
+실제 Umat의 두 점 열은 `(x,x*w_lambda(x))`이고
+`w_lambda(x)=int_0^log(x) exp(-2lambda*s) ds`이다. 두 점의 determinant는
+`x1*x2*(w_lambda(x2)-w_lambda(x1))`이다. 그 미분
+`w_lambda_prime=x^(-1-2lambda)>0` 때문에 두 support에서 항상 양수다.
+
+Emat의 세 점 열은 `(x²,x^(-2-2lambda),x^(-2lambda))`이다. 각 열에서
+양수 `x^(-2-2lambda)`를 빼고 t=x²로 두면 `(t^(2+lambda),1,t)`이다.
+실제 λ>0에서 두 번째 미분은 `(1+lambda)*(2+lambda)*t^lambda>0`이다.
+따라서 세 순서점의 Vandermonde와 양의 두 번째 divided difference가
+고정된 0 아닌 부호를 준다. determinant의 다중선형성으로 이 식들을
+양의 bump 측도의 곱에 대해 적분하면 **실제 연속 행렬**의 determinant도
+같은 엄격한 부호를 갖는다. λ를 0으로 두거나 부동소수점으로 평가하지 않는다.
+
+원래 ef는 양의 Pstar, 양의 exp, 1/(1+η²), 양의 Rbase의 실수 거듭제곱의
+곱이다. 따라서 실제 α/β는 유한하고 매끄러운 모든 moment 입력에 대해
+같은 연속 역행렬로 존재한다. 이 부분은 debt의 크기나 λ의 수치 하한을
+요구하지 않으며 Lemma 5.2 Step 2의 실제 원본 적용을 제공한다.

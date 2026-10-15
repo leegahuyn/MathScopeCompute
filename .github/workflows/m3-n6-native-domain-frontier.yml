@@ -450,6 +450,46 @@ jobs:
               --picard "$RUNNER_TEMP/result/ACTUAL_PICARD_REGULARITY_COMPOSITION.json" \
               --out "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_PRIMITIVE_CALCULUS.json"
           } 2>&1 | tee "$RUNNER_TEMP/result/GATE_order_one_primitives.log"
+      - name: Compose completed actual leading physical domains and frozen frames
+        id: gate_completed_leading
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_completed_leading_domains.py \
+            --post-c12 "$RUNNER_TEMP/result/ACTUAL_POST_C12_SHEAR.json" \
+            --outer "$RUNNER_TEMP/result/ACTUAL_OUTER_ROOT_AND_HEAT_DOMAINS.json" \
+            --i1 "$RUNNER_TEMP/result/ACTUAL_I1_TRUE_DEBT_CONTRACTION.json" \
+            --i2 "$RUNNER_TEMP/result/ACTUAL_I2_TRUE_HEAT_DEBT_CONTRACTION.json" \
+            --i1-binding "$RUNNER_TEMP/result/ACTUAL_I1_NATIVE_BINDING.json" \
+            --i2-binding "$RUNNER_TEMP/result/ACTUAL_I2_NATIVE_BINDING.json" \
+            --repair "$RUNNER_TEMP/result/ACTUAL_REPAIR_SHEAR_PRESERVATION.json" \
+            --frame "$RUNNER_TEMP/result/ACTUAL_FROZEN_FRAME_DOMAINS.json" \
+            --stream-binding "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_PRIMITIVE_BINDING.json" \
+            --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_COMPLETED_LEADING_DOMAINS.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_completed_leading.log"
+      - name: Compose genuine order one global profiles and all pressure join jets
+        id: gate_order_one_global
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_order_one_primitives.py \
+            --binding "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_PRIMITIVE_BINDING.json" \
+            --picard "$RUNNER_TEMP/result/ACTUAL_PICARD_REGULARITY_COMPOSITION.json" \
+            --leading "$RUNNER_TEMP/result/ACTUAL_COMPLETED_LEADING_DOMAINS.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_GLOBAL_REGULARITY.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_order_one_global.log"
+      - name: Bind actual sparse Volterra registry coefficients and full binomial blocks
+        id: gate_volterra_sparse_registry
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_volterra_registry_extract.py \
+            --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_VOLTERRA_SPARSE_REGISTRY.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_volterra_sparse_registry.log"
       - name: Record scoped result hashes
         if: always()
         env:

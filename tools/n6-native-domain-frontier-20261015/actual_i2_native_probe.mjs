@@ -57,8 +57,12 @@ const wait=G.div(G.log(G.div(Qb,Qp)),G.sub(o,h));same(G.outer.roots.terminalWait
 // Endpoint amplitudes contain no angular bump coefficient or pulse amplitude.
 const st=G.outer.stages,ids=['initial','axialDecay','entry','reservedPower','pulse','interpolation','angular','steepen','steepPower','flatten','wait','terminal'];assert.deepEqual(st.map(s=>s.id),ids);
 const durations=[o,T,o,G.mul(q(60),B),G.div(q(13),lambda),G.parameter('Tf'),G.mul(q(30),B),o,hold,o,wait,q(3)];
+// Retain the original unevaluated sigma(Tf/Tf) endpoint in the literal
+// comparison. Its value one is an analytic flat-step identity, not an AST
+// simplification performed by the original producer.
+const interpolationEndpoint=G.step(G.div(durations[5],G.parameter('Tf')));
 const deltas=[q(-1,5),G.mul(q(-1,2),T),G.sub(q(-1,2),G.mul(lambda,q(1,2))),G.mul(alpha,durations[3]),G.mul(alpha,durations[4]),
- G.sub(G.mul(alpha,durations[5]),G.log(q(2))),G.mul(alpha,durations[6]),G.sub(alpha,G.mul(G.sub(o,lambda),q(1,2))),
+ G.sub(G.mul(alpha,durations[5]),G.mul(G.log(q(2)),interpolationEndpoint)),G.mul(alpha,durations[6]),G.sub(alpha,G.mul(G.sub(o,lambda),q(1,2))),
  G.mul(q(-3,2),hold),G.add(q(-3,2),G.mul(G.sub(o,h),q(1,2))),G.mul(neg(A),wait)];
 let yy=z,logAmp=z;for(let i=0;i<12;i++){same(st[i].start,yy);same(st[i].logAStart,logAmp);same(st[i].length,durations[i]);if(i<11){yy=G.add(yy,durations[i]);logAmp=G.add(logAmp,deltas[i]);same(st[i].end,yy);same(st[i].logAEnd,logAmp);}}
 const Xt=G.mul(XR,exp(st[11].start)),Et=G.mul(P,exp(st[11].logAStart)),XK=G.mul(Xt,exp(q(1,5))),eK=G.mul(Et,exp(neg(G.mul(A,q(1,5)))));
