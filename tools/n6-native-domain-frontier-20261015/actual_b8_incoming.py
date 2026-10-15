@@ -75,6 +75,7 @@ def sum_intervals(rows):
 def analyze_replay(replay,binding=None):
     assert replay['schema']=='MathScope.SymbolicB8ContinuousMomentMap/1'
     supports=[[(F(j+6,2048)),F(2*(j+6)+1,4096)] for j in range(5)]
+    assert all(supports[j][1]<supports[j+1][0] for j in range(4))
     assert [[q(v) for v in row] for row in replay['geometry']['supports']]==supports
     assert replay['geometry']['bump']=="sigma'((x-left)/width)"
     assert replay['geometry']['unitMass'] is False
@@ -104,6 +105,7 @@ def analyze_replay(replay,binding=None):
     assert matrix_norm(badResidual)>F(1,4)
     if binding:
         assert binding['schema']=='MathScope.N6.ActualB8ContinuousSourceBinding/1'
+        assert binding['sourceSHA256']=='1e0d6586a60ee5aa3d5315c40f624ebb9e8a4925a00117818d41d6697fc67baf'
         assert binding['sourceBytesUnchanged'] and binding['registryCompared']
         assert binding['fixedDefinitionCompared'] and binding['diagnosticOverlap']>0
         assert all(binding['checks'].values())

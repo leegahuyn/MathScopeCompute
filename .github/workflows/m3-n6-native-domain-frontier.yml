@@ -298,6 +298,59 @@ jobs:
             --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
             --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
             --out "$RUNNER_TEMP/result/ACTUAL_FROZEN_FRAME_DOMAINS.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_frozen_frame.log"
+      - name: Actual full preloop source S envelope
+        id: gate_preloop_envelope
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_preloop_source_envelope.py \
+            --natural "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+            --natural-radial "$RUNNER_TEMP/result/ACTUAL_NATURAL_RADIAL_POSITIVITY.json" \
+            --b26 "$RUNNER_TEMP/result/ACTUAL_B26_RADIAL_POSITIVITY.json" --b34 "$RUNNER_TEMP/result/ACTUAL_B34_RADIAL_POSITIVITY.json" \
+            --b8 "$RUNNER_TEMP/result/ACTUAL_B8_INCOMING.json" --loop-binding "$RUNNER_TEMP/result/ACTUAL_LOOP_NATIVE_BINDING.json" \
+            --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_PRELOOP_SOURCE_ENVELOPE.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_preloop_envelope.log"
+      - name: Actual C1 endpoint collars on the original rectangle
+        id: gate_loop_collars
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_loop_endpoint_collars.py \
+            --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --natural "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" --radial "$RUNNER_TEMP/result/ACTUAL_NATURAL_RADIAL_POSITIVITY.json" \
+            --join "$RUNNER_TEMP/result/ACTUAL_NATURAL_B26_IDENTITY.json" --b26-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_B26_BINDING.json" \
+            --loop-binding "$RUNNER_TEMP/result/ACTUAL_LOOP_NATIVE_BINDING.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_C1_ENDPOINT_COLLARS.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_loop_collars.log"
+      - name: Compose actual C1 full rectangle and original finite N C12
+        id: gate_c1_c12_composition
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_c1_c12_composition.py \
+            --natural "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+            --natural-radial "$RUNNER_TEMP/result/ACTUAL_NATURAL_RADIAL_POSITIVITY.json" \
+            --b26 "$RUNNER_TEMP/result/ACTUAL_B26_RADIAL_POSITIVITY.json" --b34 "$RUNNER_TEMP/result/ACTUAL_B34_RADIAL_POSITIVITY.json" \
+            --b8 "$RUNNER_TEMP/result/ACTUAL_B8_INCOMING.json" --join "$RUNNER_TEMP/result/ACTUAL_NATURAL_B26_IDENTITY.json" \
+            --b26-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_B26_BINDING.json" \
+            --loop-binding "$RUNNER_TEMP/result/ACTUAL_LOOP_NATIVE_BINDING.json" --loop-proof "$RUNNER_TEMP/result/ACTUAL_LOOP_REGULARITY.json" \
+            --envelope "$RUNNER_TEMP/result/ACTUAL_PRELOOP_SOURCE_ENVELOPE.json" --collars "$RUNNER_TEMP/result/ACTUAL_C1_ENDPOINT_COLLARS.json" \
+            --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_C1_C12_REGULARITY_COMPOSITION.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_c1_c12_composition.log"
+      - name: Actual I1 I2 repair shear preservation with explicit root premises
+        id: gate_repair_shear
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_repair_shear_preservation.py \
+            --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+            --profile research-ide/mathscope-m2/navier/source-profile-data.mjs \
+            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_REPAIR_SHEAR_PRESERVATION.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_repair_shear.log"
       - name: Record scoped result hashes
         if: always()
         env:

@@ -15,7 +15,9 @@ FIXED = 'c8041bf166aa318a5dab4a0ccb53d1503609feadbaec4361fe4587bb5945bc1b'
 RAW = 'b6a1e0987650e1326c578d9004cdda8efa05d2375864966fc399ae514804b4c1'
 MAJORANT = '4b94c652630c250f883622601d1d9d4998c412927fe3bc4352ba5e8c70e2fe3d'
 NATURAL = 'c422952afe5886b5c2b873550a40fa756696f8502f11c27f2629687a4a7d943d'
-B26 = 'a16fdf4842ae07925106706f1f4a1a3046ef6b1e091a10f01560a749863c4256'
+# Strengthened binding adds exact full fixed-definition equality. The prior
+# a16fdf... receipt remains preserved with its original successful replay.
+B26 = '837c6e811096595034c1d66e8a541976ddc5580ea7a67e3d19ebe2d673019b75'
 
 
 def require(value, message):
@@ -48,10 +50,14 @@ def compose(d):
     conclusion = majorant['derivedMathematicalConclusion']
     require(conclusion['actualPhiRealLower'] == '1/4 on 0<=Y<=41/10, eta in I' and conclusion['actualPhiComplexLower'] == '63/256 on real 0<=Y<=41/10, dist(eta,I)<=rho/(1024Q)', 'Actual Phi reciprocal theorem differs')
     require(b26['sourceSHA256'] == '7fd65f8e2519e4bab3fe017e6349ae98d700592548bc0e5a28aee431080ff2c3' and b26['diagnosticOverlap'] == 2377, 'Different actual B26 source binding')
-    all_true(b26, ['sourceBytesUnchanged'], 'B26 producer source changed')
+    all_true(b26, ['sourceBytesUnchanged', 'fixedDefinitionCompared'], 'B26 producer source or original fixed definition changed')
     all_true(b26['checks'], ['literalSourceP1AndNs', 'allFiveLiteralCoreMoments', 'referenceLeftNaturalBodies', 'referenceLeftNaturalMomentHistory', 'literalNegativeZetaSign', 'literalB26ControlsAndMiddleBodies'], 'Actual B26 equation/body binding incomplete')
     all_true(identity['exactChecks'], ['derivativeAngularConservationEquals2XTimesAngularODE', 'derivativeAxialConservationEqualsAxialODE', 'angularODEEqualsOriginalPhiRecurrence', 'axialODEEqualsOriginalURecurrence', 'HsZetaPlusLChiZeroWithoutDivisionByHs', 'actualP1RetainsSourceXFactor'], 'All-order matching conservation algebra incomplete')
     all_true(identity['negativeControls'], ['omittedXInSourceP1Rejected', 'changedZetaSignRejected'], 'Matching adverse controls incomplete')
+    require({row['path']: row['sha256'] for row in identity['sourceFiles']} == {
+        'research-ide/mathscope-m2/navier/actual-continuation-exact-core.mjs': 'd657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815',
+        'research-ide/mathscope-m2/navier/actual-continuation-exact-pregluing.mjs': '7fd65f8e2519e4bab3fe017e6349ae98d700592548bc0e5a28aee431080ff2c3'},
+        'Matching conservation theorem attached to other source files')
     all_true(leading, ['sourceBytesUnchanged', 'originalCountsUnchanged'], 'Leading constructor source changed')
     require(leading['sourceSHA256'] == '3deb02f1f7c9dfd0d0fc7936050eead9514f0e11e44ecb5bd4053073c2518ad8'
             and leading['diagnosticOverlap'] > 0, 'Different original inner constructor source')

@@ -49,6 +49,35 @@ function canonical(id,aliases=new Map(),env=new Map()){
   return [op,...children];
 }
 const same=(a,b,aliases=new Map())=>assert.deepEqual(canonical(a,aliases),canonical(b,aliases));
+// Literal branch lineage needed by the two actual radial endpoint collars.
+const XR=p.pre.constants.XR,T=G.parameter('T'),lambda=G.parameter('lambda');
+const eXR=G.mul(XR,G.exp(o)),decayEnd=G.mul(eXR,G.exp(T)),Xc=G.mul(decayEnd,G.exp(o));
+const y=G.log(G.div(X,XR));
+const stateE=G.nodes[state.E];assert.equal(stateE.op,'smooth_piecewise');
+assert.deepEqual(stateE.args.slice(0,3),[X,p.b8.roots.B8patchRight,XR]);
+const earlyE=G.nodes[stateE.args[3]];assert.equal(earlyE.op,'add');
+assert(earlyE.args.includes(p.b8.deltaE));
+const earlyChoose=G.nodes[earlyE.args.find(i=>i!==p.b8.deltaE)];assert.equal(earlyChoose.op,'smooth_piecewise');
+assert.deepEqual(earlyChoose.args.slice(0,3),[X,p.pre.constants.Xa,p.pre.constants.Xi]);
+assert.equal(earlyChoose.args[4],p.pre.functions.B26EAt(X));
+const outerChoose=G.nodes[stateE.args[5]];assert.equal(outerChoose.op,'smooth_piecewise');
+assert.deepEqual(outerChoose.args.slice(0,3),[X,XR,eXR]);
+const terminalChoose=G.nodes[outerChoose.args[5]];assert.equal(terminalChoose.op,'smooth_piecewise');
+assert.deepEqual(terminalChoose.args.slice(0,3),[X,decayEnd,Xc]);
+const expectedPower=G.mul(p.pre.constants.Keta,G.exp(G.add(q(-7,10),G.mul(q(-1,2),T),G.mul(q(-1,2),lambda),G.neg(G.mul(G.add(q(1,2),lambda),G.sub(y,G.add(T,q(2))))))));
+assert.equal(terminalChoose.args[5],expectedPower);
+assert.equal(state.U,p.b8.actualPreC12U);
+const stateU=G.nodes[state.U];assert.equal(stateU.op,'smooth_piecewise');
+const axialOuter=G.nodes[stateU.args[5]];assert.equal(axialOuter.op,'smooth_piecewise');
+assert.deepEqual(axialOuter.args.slice(0,3),[X,eXR,decayEnd]);
+const axialTail=G.nodes[axialOuter.args[5]];assert.equal(axialTail.op,'smooth_piecewise');
+assert.equal(axialTail.args[1],z);assert.equal(axialTail.args[3],z);
+assert.equal(axialTail.args[0],G.log(G.div(X,G.outer.roots.Xp)));
+const pulseStart=G.add(G.add(G.add(o,T),o),G.mul(q(60),G.parameter('BOuter')));
+assert.equal(G.outer.roots.Xp,G.mul(XR,G.exp(pulseStart)));
+const params=G.source.parametersExactExpressions;
+assert.deepEqual(params.loopILeft,{product:[{quotient:[{integer:4},{ref:'Lambda'}]},{exp:{quotient:[{ref:'t1'},{integer:8}]}}]});
+assert.deepEqual(params.loopIRight,{product:[{ref:'XR'},{exp:{sum:[{ref:'T'},{integer:3}]}}]});
 const expectedPi=G.mul(q(4),integrate(t=>G.inv(G.add(o,G.pow(t,2))),z,o,'independent_pi'));
 same(pi,expectedPi);
 same(twoPi,G.mul(q(2),pi));
@@ -70,6 +99,21 @@ same(thetaDefinition.body,G.sub(phiAt(thetaDefinition.variable),loop.phase),alia
 same(thetaDefinition.left,G.mul(twoPi,G.sub(loop.phase,o)),aliases);
 same(thetaDefinition.right,G.mul(twoPi,G.add(loop.phase,o)),aliases);
 assert.equal(thetaDefinition.name,'ActualC1CircleInverseLift');
+const primitiveAAt=t=>G.mul(q(1,2),state.a,G.sub(phiAt(t),G.div(t,twoPi)));
+const primitiveBAt=t=>G.mul(q(1,2),state.E,state.a,G.sub(G.mul(state.ts,phiAt(t)),G.div(integrate(w=>tAt(w),z,t,'independent_B_primitive'),twoPi)));
+const expectedMeanA=integrate(t=>G.mul(primitiveAAt(t),density(t)),z,twoPi,'independent_A_mean');
+const expectedMeanB=integrate(t=>G.mul(primitiveBAt(t),density(t)),z,twoPi,'independent_B_mean');
+same(loop.means.meanA,expectedMeanA,aliases);same(loop.means.meanB,expectedMeanB,aliases);
+const expectedA=G.sub(G.mul(q(1,2),state.a,G.sub(loop.phase,G.div(loop.theta,twoPi))),expectedMeanA);
+const expectedB=G.sub(G.mul(q(1,2),state.E,state.a,G.sub(G.mul(state.ts,loop.phase),G.div(integrate(t=>tAt(t),z,loop.theta,'independent_B_at_phase'),twoPi))),expectedMeanB);
+same(loop.primitives.A,G.choose(X,p.constants.Ileft,p.constants.Iright,z,expectedA,z),aliases);
+same(loop.primitives.B,G.choose(X,p.constants.Ileft,p.constants.Iright,z,expectedB,z),aliases);
+const N=G.parameter('radialFrequencyN'),physicalPhase=G.mul(N,G.log(X));
+assert.equal(p.roots.actualC12Phase,physicalPhase);
+const Aphysical=G.substitute(loop.primitives.A,loop.phase,physicalPhase),Bphysical=G.substitute(loop.primitives.B,loop.phase,physicalPhase);
+assert.equal(p.deltaU,G.div(Bphysical,N));
+assert.equal(p.deltaE,G.mul(state.E,G.sub(G.exp(G.div(Aphysical,N)),o)));
+assert.equal(p.roots.actualC12E,G.add(state.E,p.deltaE));assert.equal(p.roots.actualC12U,G.add(state.U,p.deltaU));
 // Compare against the actual g21 registry if its compact extraction is supplied.
 let registryCompared=false;
 if(opt.compact){const compact=JSON.parse(await readFile(resolve(opt.compact),'utf8'));for(const [i,s] of [[p.muSystem,muDefinition],[p.thetaSystem,thetaDefinition]])assert.deepEqual(s,compact.definitions['monotone:'+i].fullDefinition);registryCompared=true;}
@@ -82,7 +126,7 @@ let wrongRejected=false;try{same(muDefinition.body,wrongMuBody,aliases);}catch{w
 assert.deepEqual(before,await readFile(resolve(root,path)));
 const result={schema:'MathScope.N6.ActualC1NativeRegularityBinding/1',sourcePath:path,sourceSHA256:createHash('sha256').update(before).digest('hex'),sourceBytesUnchanged:true,sourceNodeCount,
 registryCompared,fixedDefinitionCompared,diagnosticOverlap,monotoneDefinitions:[muDefinition,thetaDefinition],sourceStateRoots:{...state},loopRootContracts:{...loop.target,...loop.parameterChoices,mu:loop.mu,theta:loop.theta,phase:loop.phase,A:loop.primitives.A,B:loop.primitives.B},
-checks:{literalActualStateSourceP1P2AndShears:true,literalPi:true,literalExponentialMean:true,literalVarianceRatio:true,literalSecondDerivative:true,literalRemovableMuEquation:true,literalTiltAndCircleEquation:true,literalGlobalLiftBrackets:true,changedVarianceTargetRejected:wrongRejected},
+checks:{literalActualStateSourceP1P2AndShears:true,literalEndpointParameters:true,literalLeftB26Branch:true,literalRightPowerEBranch:true,literalRightZeroUTailBranch:true,literalPulseStartAfterRightCollar:true,literalPi:true,literalExponentialMean:true,literalVarianceRatio:true,literalSecondDerivative:true,literalRemovableMuEquation:true,literalTiltAndCircleEquation:true,literalGlobalLiftBrackets:true,literalZeroMeanPrimitiveBodies:true,literalFiniteNPhaseAndC12Bodies:true,changedVarianceTargetRejected:wrongRejected},
 scalarVariance:{roots:{...variance,pi,twoPi},nodes:scalarNodes,nodeCount:seen.size,sha256:hash([...seen].sort((a,b)=>a-b).map(id=>[id,G.nodes[id]]))},
 remainingActualSourcePremises:['Completed background E,U,moments are C-infinity on a neighborhood of the full loop rectangle.','E>0, a^-1<=S, vs<=S, abs(p2)<=S on that rectangle.','vs-2>=S^-1 on two endpoint collars for the radial zero extension.'],newOriginalGuardsDischarged:0,newOriginalJetsDischarged:0,newOriginalPDETermsDischarged:0};
 await mkdir(dirname(out),{recursive:true});await writeFile(out,JSON.stringify(result,null,2)+'\n');

@@ -1,0 +1,575 @@
+{
+  "schema": "MathScope.N6.ActualC1NativeRegularityBinding/1",
+  "sourcePath": "research-ide/mathscope-m2/navier/actual-continuation-exact-loop.mjs",
+  "sourceSHA256": "07ee5caa8ce45a9d8a910cab7243ae3e351965a8602a38030917f69114d8902d",
+  "sourceBytesUnchanged": true,
+  "sourceNodeCount": 7981,
+  "registryCompared": true,
+  "fixedDefinitionCompared": true,
+  "diagnosticOverlap": 4032,
+  "monotoneDefinitions": [
+    {
+      "name": "ActualC1VarianceRoot",
+      "parameters": [
+        4756,
+        2
+      ],
+      "variable": 7394,
+      "body": 7450,
+      "left": 0,
+      "right": 6256,
+      "derivativeLower": 7453,
+      "derivativeUpper": 7455,
+      "source": "LOOP_DERIVATIVE_ENVELOPE.md (7)–(11), QUANTITATIVE_LOOP_SELECTION.md; actual premodulation state bound by the pinned source S.",
+      "endpointSigns": "F(0)<=0<=F(muMax); the right bracket is the source muMax=S^12.",
+      "rootBranch": "Unique nonnegative branch, including the zero branch on the flat source collars.",
+      "bodyContainsActualSource": true,
+      "removableQuotientAtP2ZeroPreserved": true
+    },
+    {
+      "name": "ActualC1CircleInverseLift",
+      "parameters": [
+        4756,
+        2,
+        7471
+      ],
+      "variable": 7472,
+      "body": 7539,
+      "left": 7541,
+      "right": 7543,
+      "derivativeLower": 7546,
+      "derivativeUpper": 7548,
+      "source": "LOOP_DERIVATIVE_ENVELOPE.md (13), actual lifted circle density.",
+      "endpointSigns": "phi(theta+2pi)=phi(theta)+1 and phi(0)=0 imply a root in [2pi(phase-1),2pi(phase+1)].",
+      "rootBranch": "Unique global lifted inverse; no discontinuous modulo or floor is differentiated.",
+      "bodyContainsActualSource": true
+    }
+  ],
+  "sourceStateRoots": {
+    "domain": [
+      6257,
+      6258
+    ],
+    "E": 6304,
+    "U": 5175,
+    "moments": [
+      6542,
+      6543,
+      6544,
+      6545,
+      6546
+    ],
+    "a": 7114,
+    "bs": 7290,
+    "p1": 6889,
+    "p2": 7292,
+    "ts": 7295,
+    "vs": 7298,
+    "cs": 7300,
+    "js": 7303,
+    "actualFiveMomentHistoryUsed": true,
+    "referenceSubstitutedForActualState": false,
+    "heatI2OutsideThisDomain": true
+  },
+  "loopRootContracts": {
+    "vStar": 7305,
+    "zeta": 7317,
+    "r": 7323,
+    "vTarget": 7326,
+    "S": 6253,
+    "d0": 6255,
+    "muMax": 6256,
+    "delta": 6254,
+    "mu": 7456,
+    "theta": 7549,
+    "phase": 7471,
+    "A": 7942,
+    "B": 7943
+  },
+  "checks": {
+    "literalActualStateSourceP1P2AndShears": true,
+    "literalPi": true,
+    "literalExponentialMean": true,
+    "literalVarianceRatio": true,
+    "literalSecondDerivative": true,
+    "literalRemovableMuEquation": true,
+    "literalTiltAndCircleEquation": true,
+    "literalGlobalLiftBrackets": true,
+    "changedVarianceTargetRejected": true
+  },
+  "scalarVariance": {
+    "roots": {
+      "M": 7341,
+      "R": 7351,
+      "R2": 7393,
+      "z": 7334,
+      "QMeaning": "integral_0^1 (1-s) R_second(s*z) ds",
+      "zeroArgumentAllowed": true,
+      "pi": 7332,
+      "twoPi": 7333
+    },
+    "nodes": {
+      "0": {
+        "op": "rational",
+        "args": [
+          "0",
+          "1"
+        ]
+      },
+      "1": {
+        "op": "rational",
+        "args": [
+          "1",
+          "1"
+        ]
+      },
+      "20": {
+        "op": "rational",
+        "args": [
+          "-1",
+          "1"
+        ]
+      },
+      "24": {
+        "op": "rational",
+        "args": [
+          "2",
+          "1"
+        ]
+      },
+      "474": {
+        "op": "rational",
+        "args": [
+          "4",
+          "1"
+        ]
+      },
+      "7327": {
+        "op": "coordinate",
+        "args": [
+          "C1_pi$96"
+        ]
+      },
+      "7328": {
+        "op": "integer_power",
+        "args": [
+          7327,
+          2
+        ]
+      },
+      "7329": {
+        "op": "add",
+        "args": [
+          1,
+          7328
+        ]
+      },
+      "7330": {
+        "op": "inverse",
+        "args": [
+          7329
+        ]
+      },
+      "7331": {
+        "op": "definite_integral",
+        "args": [
+          7330,
+          7327,
+          0,
+          1
+        ]
+      },
+      "7332": {
+        "op": "multiply",
+        "args": [
+          474,
+          7331
+        ]
+      },
+      "7333": {
+        "op": "multiply",
+        "args": [
+          24,
+          7332
+        ]
+      },
+      "7334": {
+        "op": "coordinate",
+        "args": [
+          "C1_variance_z$97"
+        ]
+      },
+      "7335": {
+        "op": "coordinate",
+        "args": [
+          "C1_exponential_mean$98"
+        ]
+      },
+      "7336": {
+        "op": "sine",
+        "args": [
+          7335
+        ]
+      },
+      "7337": {
+        "op": "multiply",
+        "args": [
+          7334,
+          7336
+        ]
+      },
+      "7338": {
+        "op": "exp",
+        "args": [
+          7337
+        ]
+      },
+      "7339": {
+        "op": "definite_integral",
+        "args": [
+          7338,
+          7335,
+          0,
+          7333
+        ]
+      },
+      "7340": {
+        "op": "inverse",
+        "args": [
+          7333
+        ]
+      },
+      "7341": {
+        "op": "multiply",
+        "args": [
+          7339,
+          7340
+        ]
+      },
+      "7342": {
+        "op": "multiply",
+        "args": [
+          24,
+          7334
+        ]
+      },
+      "7343": {
+        "op": "coordinate",
+        "args": [
+          "C1_exponential_mean$99"
+        ]
+      },
+      "7344": {
+        "op": "sine",
+        "args": [
+          7343
+        ]
+      },
+      "7345": {
+        "op": "multiply",
+        "args": [
+          7342,
+          7344
+        ]
+      },
+      "7346": {
+        "op": "exp",
+        "args": [
+          7345
+        ]
+      },
+      "7347": {
+        "op": "definite_integral",
+        "args": [
+          7346,
+          7343,
+          0,
+          7333
+        ]
+      },
+      "7348": {
+        "op": "multiply",
+        "args": [
+          7340,
+          7347
+        ]
+      },
+      "7349": {
+        "op": "integer_power",
+        "args": [
+          7341,
+          2
+        ]
+      },
+      "7350": {
+        "op": "inverse",
+        "args": [
+          7349
+        ]
+      },
+      "7351": {
+        "op": "multiply",
+        "args": [
+          7348,
+          7350
+        ]
+      },
+      "7355": {
+        "op": "multiply",
+        "args": [
+          24,
+          7344
+        ]
+      },
+      "7357": {
+        "op": "multiply",
+        "args": [
+          7346,
+          7355
+        ]
+      },
+      "7358": {
+        "op": "definite_integral",
+        "args": [
+          7357,
+          7343,
+          0,
+          7333
+        ]
+      },
+      "7359": {
+        "op": "multiply",
+        "args": [
+          7340,
+          7358
+        ]
+      },
+      "7362": {
+        "op": "multiply",
+        "args": [
+          7336,
+          7338
+        ]
+      },
+      "7363": {
+        "op": "definite_integral",
+        "args": [
+          7362,
+          7335,
+          0,
+          7333
+        ]
+      },
+      "7364": {
+        "op": "multiply",
+        "args": [
+          7340,
+          7363
+        ]
+      },
+      "7365": {
+        "op": "multiply",
+        "args": [
+          24,
+          7341
+        ]
+      },
+      "7366": {
+        "op": "multiply",
+        "args": [
+          7364,
+          7365
+        ]
+      },
+      "7367": {
+        "op": "integer_power",
+        "args": [
+          7350,
+          2
+        ]
+      },
+      "7368": {
+        "op": "multiply",
+        "args": [
+          7366,
+          7367
+        ]
+      },
+      "7369": {
+        "op": "multiply",
+        "args": [
+          20,
+          7368
+        ]
+      },
+      "7372": {
+        "op": "multiply",
+        "args": [
+          7359,
+          7369
+        ]
+      },
+      "7373": {
+        "op": "multiply",
+        "args": [
+          7355,
+          7357
+        ]
+      },
+      "7374": {
+        "op": "definite_integral",
+        "args": [
+          7373,
+          7343,
+          0,
+          7333
+        ]
+      },
+      "7375": {
+        "op": "multiply",
+        "args": [
+          7340,
+          7374
+        ]
+      },
+      "7376": {
+        "op": "multiply",
+        "args": [
+          7350,
+          7375
+        ]
+      },
+      "7377": {
+        "op": "add",
+        "args": [
+          7372,
+          7376
+        ]
+      },
+      "7378": {
+        "op": "multiply",
+        "args": [
+          7336,
+          7362
+        ]
+      },
+      "7379": {
+        "op": "definite_integral",
+        "args": [
+          7378,
+          7335,
+          0,
+          7333
+        ]
+      },
+      "7380": {
+        "op": "multiply",
+        "args": [
+          7340,
+          7379
+        ]
+      },
+      "7381": {
+        "op": "multiply",
+        "args": [
+          7365,
+          7380
+        ]
+      },
+      "7382": {
+        "op": "multiply",
+        "args": [
+          24,
+          7364
+        ]
+      },
+      "7383": {
+        "op": "multiply",
+        "args": [
+          7364,
+          7382
+        ]
+      },
+      "7384": {
+        "op": "add",
+        "args": [
+          7381,
+          7383
+        ]
+      },
+      "7385": {
+        "op": "multiply",
+        "args": [
+          7367,
+          7384
+        ]
+      },
+      "7386": {
+        "op": "multiply",
+        "args": [
+          24,
+          7350
+        ]
+      },
+      "7387": {
+        "op": "multiply",
+        "args": [
+          7369,
+          7386
+        ]
+      },
+      "7388": {
+        "op": "multiply",
+        "args": [
+          7366,
+          7387
+        ]
+      },
+      "7389": {
+        "op": "add",
+        "args": [
+          7385,
+          7388
+        ]
+      },
+      "7390": {
+        "op": "multiply",
+        "args": [
+          20,
+          7389
+        ]
+      },
+      "7391": {
+        "op": "multiply",
+        "args": [
+          7348,
+          7390
+        ]
+      },
+      "7392": {
+        "op": "add",
+        "args": [
+          7372,
+          7391
+        ]
+      },
+      "7393": {
+        "op": "add",
+        "args": [
+          7377,
+          7392
+        ]
+      }
+    },
+    "nodeCount": 64,
+    "sha256": "f25a9eafa1208ee1bc6afa6d233969be431e7b83c2a2ec48a48fecd7b317c5b1"
+  },
+  "remainingActualSourcePremises": [
+    "Completed background E,U,moments are C-infinity on a neighborhood of the full loop rectangle.",
+    "E>0, a^-1<=S, vs<=S, abs(p2)<=S on that rectangle.",
+    "vs-2>=S^-1 on two endpoint collars for the radial zero extension."
+  ],
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0
+}
