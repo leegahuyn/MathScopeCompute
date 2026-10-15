@@ -28,6 +28,20 @@ def exact_row_inventory(guards,jets,pde):
     require({r['originalGuard']['body'] for r in gr}=={248},'Different original pressure family')
     return gr,jr,pr
 
+def jet_registry_binding(row,call,reg):
+    """Use the actual call, including rows with no conditional jet target.
+
+    An absent later coordinate does not justify an earlier derivative.  Its
+    null historical target must therefore remain null in the output.
+    """
+    require(sha(call)==row['sourceCallSHA256'],'Changed original jet source call')
+    key,definition=native_definition(call,reg)
+    require(sha(definition)==row['definitionSHA256'],'Changed original jet definition')
+    target=row['conditionalTarget']
+    if target is not None:
+        require(target['registry']==key,'Conditional target differs from actual source call')
+    return key,definition
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for k in ('source-db','stage3','header','compact','guards','jets','pde','out'):
@@ -69,13 +83,13 @@ def main():
                      'sourceRoots':[G_ROOT],'mask':guard_mask,
                      'commonAnalyticStep':'Actual joint C1 in Z,Y0,Y1 on the original full J; compactness and moving-endpoint Leibniz.'})
     for r in jr:
-        target=r['conditionalTarget'];key=target['registry']
-        require(key in C['definitions'],'Missing actual original jet definition')
         call=get(r['sourceNode'])
-        require(sha(call)==r['sourceCallSHA256'],'Changed original jet source call')
+        key,definition=jet_registry_binding(r,call,reg)
+        require(key in C['definitions'],'Missing actual original jet definition')
         mask=frontier(r['sourceNode'])
         rows.append({'id':r['id'],'family':'CartesianJet','sourceRoots':[r['sourceNode']],
-                     'registeredTarget':target,'orderedSourceCoordinates':r['orderedSourceCoordinates'],
+                     'sourceRegistry':key,'originalClassification':r['classification'],
+                     'registeredTarget':r['conditionalTarget'],'orderedSourceCoordinates':r['orderedSourceCoordinates'],
                      'sourceCallSHA256':r['sourceCallSHA256'],'mask':mask,
                      'commonAnalyticStep':'Actual smooth native body and source AD/chain-rule compatibility on the unchanged admitted domain.'})
     for r in pr:
@@ -97,7 +111,7 @@ def main():
         for key in kk:reach[key][row['family']]+=1
     coverage=[{'definitionKey':k,'rowCounts':dict(v),'totalAffected':sum(v.values())} for k,v in reach.items()]
     coverage.sort(key=lambda r:(-r['totalAffected'],r['definitionKey']))
-    jet_groups=Counter(r['registeredTarget']['registry'] for r in rows if r['family']=='CartesianJet')
+    jet_groups=Counter(r['sourceRegistry'] for r in rows if r['family']=='CartesianJet')
     result={
       'schema':'MathScope.N6.SharedSourceStructureFrontier/1','sourceHeaderBinding':binding,
       'stage3ModuleSHA256':STAGE3_PIN,'inputSHA256':{k:digest(getattr(a,k)) for k in ('compact',*INPUT_PINS)},
