@@ -490,6 +490,99 @@ jobs:
             --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
             --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
             --out "$RUNNER_TEMP/result/ACTUAL_VOLTERRA_SPARSE_REGISTRY.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_volterra_sparse_registry.log"
+      - name: Actual eta chart and all native caller argument transport
+        id: gate_eta_transport
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_actual_eta_transport.py -v
+            python "$tool/actual_eta_transport.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_ETA_CALLER_TRANSPORT.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_eta_transport.log"
+      - name: Exact shared native boundaries for all1260 original obligations
+        id: gate_shared_structure
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_shared_structure_frontier.py -v
+            python "$tool/shared_structure_frontier.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --guards "$RUNNER_TEMP/prior/GUARD_DISCHARGES.json" \
+              --jets "$RUNNER_TEMP/prior/JET_REQUEST_AUDIT.json" --pde "$RUNNER_TEMP/prior/PDE_DEPENDENCY_AUDIT.json" \
+              --out "$RUNNER_TEMP/result/SHARED_SOURCE_STRUCTURE_FRONTIER.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_shared_structure.log"
+      - name: Exact PDE surgery increment with squares force and full cutoff curl
+        id: gate_shared_pde_increment
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/shared_pde_increment_identity.py \
+            --out "$RUNNER_TEMP/result/SHARED_PDE_INCREMENT_IDENTITY.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_shared_pde_increment.log"
+      - name: Original Bnorm arithmetic ancestry without assuming actual norm validity
+        id: gate_bnorm_ancestry
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_bnorm_ancestry.py \
+            --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_BNORM_SOURCE_ANCESTRY.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_bnorm_ancestry.log"
+      - name: Actual Picard0 unchanged original numeric C1 solution norm and certified K tail
+        id: gate_picard_numeric_majorant
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_picard_numeric_majorant.py \
+            --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --natural "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+            --picard "$RUNNER_TEMP/result/ACTUAL_PICARD_REGULARITY_COMPOSITION.json" \
+            --repair "$RUNNER_TEMP/result/ACTUAL_REPAIR_SHEAR_PRESERVATION.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_picard_numeric_majorant.log"
+      - name: Actual outer amplitude original bracket derivative floor and complex tube
+        id: gate_outer_amplitude_quantitative
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_outer_amplitude_quantitative.py \
+            --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --kernel-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json" \
+            --outer "$RUNNER_TEMP/result/ACTUAL_OUTER_ROOT_AND_HEAT_DOMAINS.json" --kernels "$RUNNER_TEMP/kernels" \
+            --out "$RUNNER_TEMP/result/ACTUAL_OUTER_AMPLITUDE_QUANTITATIVE.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_outer_amplitude_quantitative.log"
+      - name: Genuine original26 background jets and separate immutable-parent ledger
+        id: gate_background_26_jets
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_actual_background_jet_regularity.py -v
+            python "$tool/actual_background_jet_regularity.py" \
+              --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+              --leading "$RUNNER_TEMP/result/ACTUAL_COMPLETED_LEADING_DOMAINS.json" \
+              --orderone "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_GLOBAL_REGULARITY.json" \
+              --orderone-binding "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_PRIMITIVE_BINDING.json" \
+              --majorant "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+              --natural-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json" --kernels "$RUNNER_TEMP/kernels" \
+              --matrix "$RUNNER_TEMP/prior/OBLIGATION_MATRIX_CONTINUATION.json" \
+              --matrix-out "$RUNNER_TEMP/result/OBLIGATION_MATRIX_BACKGROUND_26.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_BACKGROUND_26_JET_REGULARITY.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_background_26_jets.log"
       - name: Record scoped result hashes
         if: always()
         env:
