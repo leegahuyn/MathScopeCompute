@@ -203,6 +203,39 @@ jobs:
               --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
               --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/ACTUAL_VOLTERRA_DENOMINATORS.json"
           } 2>&1 | tee "$RUNNER_TEMP/result/GATE_volterra.log"
+      - name: Compose actual Picard regularity and original even profiles
+        id: gate_picard_composition
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/test_actual_picard_parity.py"
+            python "$tool/actual_picard_parity.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_PICARD_PARITY.json"
+            node "$tool/actual_picard_leading_probe.mjs" --kernel-root "$PWD" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_PICARD_LEADING_BINDING.json"
+            python "$tool/test_picard_interface_lineage.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --domains "$RUNNER_TEMP/result/PICARD_DOMAIN_PROOF.json"
+            python "$tool/picard_interface_lineage.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --domains "$RUNNER_TEMP/result/PICARD_DOMAIN_PROOF.json" --out "$RUNNER_TEMP/result/PICARD_INTERFACE_LINEAGE.json"
+            python "$tool/picard_regularity_composition.py" --domains "$RUNNER_TEMP/result/PICARD_DOMAIN_PROOF.json" \
+              --lineage "$RUNNER_TEMP/result/PICARD_INTERFACE_LINEAGE.json" --structure "$RUNNER_TEMP/result/ACTUAL_PICARD_STRUCTURE.json" \
+              --natural-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json" --majorant "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+              --b26-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_B26_BINDING.json" --b26-identity "$RUNNER_TEMP/result/ACTUAL_NATURAL_B26_IDENTITY.json" \
+              --parity "$RUNNER_TEMP/result/ACTUAL_PICARD_PARITY.json" --leading-binding "$RUNNER_TEMP/result/ACTUAL_PICARD_LEADING_BINDING.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_PICARD_REGULARITY_COMPOSITION.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_picard_composition.log"
+      - name: Actual natural radial positivity on the original natural domain
+        id: gate_natural_radial_positivity
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_natural_radial_positivity.py \
+            --majorant "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_RADIAL_POSITIVITY.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_natural_radial_positivity.log"
       - name: Record scoped result hashes
         if: always()
         env:
