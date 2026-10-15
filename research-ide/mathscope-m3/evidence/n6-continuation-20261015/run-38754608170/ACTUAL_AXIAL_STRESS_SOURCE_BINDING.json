@@ -1,0 +1,1087 @@
+{
+  "schema": "MathScope.N6.ActualAxialStressSourceBinding/1",
+  "sourceHeaderSHA256": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+  "fixedDefinitionSHA256": "c8041bf166aa318a5dab4a0ccb53d1503609feadbaec4361fe4587bb5945bc1b",
+  "sourcePaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "diagnosticsSHA256": "b6a1e0987650e1326c578d9004cdda8efa05d2375864966fc399ae514804b4c1",
+  "sourceFiles": [
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-stress.mjs",
+      "sha256": "22d0fe9deae4dd7a5dca687758fb3b8b57a56cba7472c9fb23b76dd360f0bcc2",
+      "bytes": 9664
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-pde-proof.mjs",
+      "sha256": "816bd419d6b09545c18d2629c405fe91391f502b467409adecf6eed07c43c547",
+      "bytes": 5784
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-inner.mjs",
+      "sha256": "3deb02f1f7c9dfd0d0fc7936050eead9514f0e11e44ecb5bd4053073c2518ad8",
+      "bytes": 10768
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-order-one.mjs",
+      "sha256": "bdfa6fa313b09893850a567623135df699568d05f788c98c00fc9f31c6d41c72",
+      "bytes": 18329
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-support.mjs",
+      "sha256": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+      "bytes": 10013
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs",
+      "sha256": "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501",
+      "bytes": 7350
+    }
+  ],
+  "originalConstructionOptions": {
+    "terms": 0,
+    "bits": 128,
+    "heatIterations": 0
+  },
+  "originalPrefixNodeCount": 117100,
+  "actualDensity": {
+    "registry": "expression:1",
+    "definition": {
+      "name": "actual_n1_Tz_forward_integrand",
+      "parameters": [
+        4756,
+        2
+      ],
+      "body": 117047,
+      "derivativeLimits": [
+        128,
+        128
+      ],
+      "implementation": "actual-residual-order-induction-expressions.mjs:materializeExpressionFunction",
+      "unspecifiedOracle": false,
+      "historicalBodyPreserved": true
+    },
+    "definitionSHA256": "f815fd78afc4ef36627e657a34ba84624c838a44039de6435b748020b52b1689",
+    "component": "axial",
+    "guard": [
+      4756,
+      28814,
+      28824
+    ],
+    "angularGuardUsesDifferentRightEndpoint": 28826
+  },
+  "actualAxialFormula": {
+    "root": 117045,
+    "terms": [
+      87480,
+      87481,
+      87488,
+      87489,
+      87490,
+      117027,
+      117030,
+      117031
+    ],
+    "termRoles": [
+      "time U1",
+      "X v0 U1_X",
+      "U0 Z_(c+lambda1) U1",
+      "X v1 U0_X",
+      "U1 Z_c U0",
+      "Z_(-2A+lambda1) Pi1",
+      "-2(X U1_XX+U1_X)",
+      "-Z_(c-D) Z_c U0"
+    ],
+    "allEightOriginalTermsIndependentlyReconstructed": true,
+    "lambda1": 25,
+    "lambda1Equals2h": true,
+    "leadingU0": 9236,
+    "leadingv0": 18778,
+    "U1": 29289,
+    "v1": 29440,
+    "Pi1": 50558
+  },
+  "selectedActualSourceNodes": {
+    "28814": {
+      "op": "multiply",
+      "args": [
+        3617,
+        28813
+      ]
+    },
+    "28824": {
+      "op": "multiply",
+      "args": [
+        588,
+        3293
+      ]
+    },
+    "28826": {
+      "op": "multiply",
+      "args": [
+        12,
+        28825
+      ]
+    },
+    "87480": {
+      "op": "multiply",
+      "args": [
+        1953,
+        87479
+      ]
+    },
+    "87481": {
+      "op": "multiply",
+      "args": [
+        18779,
+        72309
+      ]
+    },
+    "87488": {
+      "op": "multiply",
+      "args": [
+        9236,
+        87487
+      ]
+    },
+    "87489": {
+      "op": "multiply",
+      "args": [
+        29441,
+        33214
+      ]
+    },
+    "87490": {
+      "op": "multiply",
+      "args": [
+        29289,
+        78019
+      ]
+    },
+    "117027": {
+      "op": "multiply",
+      "args": [
+        1953,
+        117026
+      ]
+    },
+    "117030": {
+      "op": "multiply",
+      "args": [
+        190,
+        117029
+      ]
+    },
+    "117031": {
+      "op": "multiply",
+      "args": [
+        20,
+        79047
+      ]
+    },
+    "117045": {
+      "op": "add",
+      "args": [
+        117031,
+        117044
+      ]
+    },
+    "117047": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28814,
+        28824,
+        0,
+        117045,
+        0
+      ]
+    },
+    "117059": {
+      "op": "multiply",
+      "args": [
+        20,
+        117058
+      ]
+    },
+    "117067": {
+      "op": "multiply",
+      "args": [
+        4781,
+        117066
+      ]
+    },
+    "117069": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28814,
+        28824,
+        0,
+        117059,
+        0
+      ]
+    },
+    "117075": {
+      "op": "definite_integral",
+      "args": [
+        117074,
+        117073,
+        28814,
+        28824
+      ]
+    }
+  },
+  "actualInnerPDE": {
+    "schema": "MathScope.ActualInnerPDEIdentity/1",
+    "order": 1,
+    "system": 0,
+    "commonASquared": 24805,
+    "checks": {
+      "FDerivative": {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 0,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          26746,
+          26747,
+          26748,
+          26749,
+          26750,
+          26751,
+          28804,
+          28805,
+          117101,
+          28806,
+          117102,
+          117103,
+          25601,
+          25638,
+          25637,
+          25777,
+          25902,
+          25799,
+          25914,
+          26394,
+          26693,
+          26738
+        ],
+        "actualAtomicOperandCount": 0,
+        "denominatorOperands": [],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 0,
+        "denominatorMonomials": 1,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": true
+      },
+      "UDerivative": {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 0,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          26746,
+          26747,
+          26748,
+          26749,
+          26750,
+          26751,
+          28804,
+          28805,
+          117101,
+          28806,
+          117102,
+          117103,
+          25601,
+          25638,
+          25637,
+          25777,
+          25902,
+          25799,
+          25914,
+          26394,
+          26693,
+          26738
+        ],
+        "actualAtomicOperandCount": 0,
+        "denominatorOperands": [],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 0,
+        "denominatorMonomials": 1,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": true
+      },
+      "average": {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 117223,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          26746,
+          26747,
+          26748,
+          26749,
+          26750,
+          26751,
+          28804,
+          28805,
+          117101,
+          28806,
+          117102,
+          117103,
+          25601,
+          25638,
+          25637,
+          25777,
+          25902,
+          25799,
+          25914,
+          26394,
+          26693,
+          26738
+        ],
+        "actualAtomicOperandCount": 4,
+        "denominatorOperands": [
+          25516
+        ],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 0,
+        "denominatorMonomials": 1,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": true
+      },
+      "pressure": {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 117226,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          26746,
+          26747,
+          26748,
+          26749,
+          26750,
+          26751,
+          28804,
+          28805,
+          117101,
+          28806,
+          117102,
+          117103,
+          25601,
+          25638,
+          25637,
+          25777,
+          25902,
+          25799,
+          25914,
+          26394,
+          26693,
+          26738
+        ],
+        "actualAtomicOperandCount": 4,
+        "denominatorOperands": [],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 0,
+        "denominatorMonomials": 1,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": true
+      },
+      "angular": {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 117174,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          26746,
+          26747,
+          26748,
+          26749,
+          26750,
+          26751,
+          28804,
+          28805,
+          117101,
+          28806,
+          117102,
+          117103,
+          25601,
+          25638,
+          25637,
+          25777,
+          25902,
+          25799,
+          25914,
+          26394,
+          26693,
+          26738
+        ],
+        "actualAtomicOperandCount": 15,
+        "denominatorOperands": [
+          28,
+          25577
+        ],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 0,
+        "denominatorMonomials": 5,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": true
+      },
+      "axial": {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 117211,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          26746,
+          26747,
+          26748,
+          26749,
+          26750,
+          26751,
+          28804,
+          28805,
+          117101,
+          28806,
+          117102,
+          117103,
+          25601,
+          25638,
+          25637,
+          25777,
+          25902,
+          25799,
+          25914,
+          26394,
+          26693,
+          26738
+        ],
+        "actualAtomicOperandCount": 18,
+        "denominatorOperands": [
+          28,
+          25577
+        ],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 0,
+        "denominatorMonomials": 6,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": true
+      }
+    },
+    "sourceChecks": {
+      "systemOrder": true,
+      "sourceRhsPresent": true,
+      "sourceMatrixPresent": true,
+      "zeroAxisDatum": true,
+      "originalDiagonal": true,
+      "actualSourceBound": true,
+      "positiveConvergenceModulus": true,
+      "finiteDisplayedIterateNotUsed": true,
+      "sameCommonInterval": true,
+      "sourceLeadingF": true,
+      "sourceLeadingU": true,
+      "sourceLeadingV": true,
+      "missingKnownForceRejected": true
+    },
+    "stateRoots": [
+      26746,
+      26747,
+      26748,
+      26749,
+      26750,
+      26751
+    ],
+    "stateEtaRoots": [
+      28804,
+      28805,
+      117101,
+      28806,
+      117102,
+      117103
+    ],
+    "actualForcing": [
+      0,
+      0,
+      0,
+      26395,
+      26694,
+      26744
+    ],
+    "negativeControl": {
+      "omission": "actual known angular forcing",
+      "check": {
+        "schema": "MathScope.ActualGraphRationalIdentity/1",
+        "expression": 117228,
+        "arithmetic": "Exact BigInt rational functions of the retained actual source operands, with explicit denominator clearing.",
+        "sourceAtomicNodes": [
+          26746,
+          26747,
+          26748,
+          26749,
+          26750,
+          26751,
+          28804,
+          28805,
+          117101,
+          28806,
+          117102,
+          117103,
+          25601,
+          25638,
+          25637,
+          25777,
+          25902,
+          25799,
+          25914,
+          26394,
+          26693,
+          26738
+        ],
+        "actualAtomicOperandCount": 15,
+        "denominatorOperands": [
+          28,
+          25577
+        ],
+        "nonzeroDenominatorProofRequired": true,
+        "numeratorMonomials": 5,
+        "denominatorMonomials": 5,
+        "analyticOperandsReplacedByNumericalValues": false,
+        "pass": false
+      },
+      "correctlyRejected": true
+    },
+    "meaning": "The original matrix rows, pressure reconstruction and streamfunction average imply the two actual tangential residuals are identically zero on the inner interval. The radial inverse is regular at xi=0; the axis extension is the implemented even-X profile kernel.",
+    "leftSupportUse": "Xminus<Xkeep<a^2. Both actual positive-order cutoffs equal one there and every Ipos correction is supported later. B8, C12, I1, I2 and the heat edit are outside this common source collar.",
+    "actualSourceValuesNumericallyEnclosed": false,
+    "finitePicardIterateCertifiedAsSolution": false,
+    "pass": true
+  },
+  "actualSupportOrder": {
+    "schema": "MathScope.ActualBackgroundSupportOrder/1",
+    "profileId": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "parameterChecks": {
+      "samePinnedSource": true,
+      "actualH": true,
+      "actualLambda": true,
+      "actualT": true,
+      "actualTf": true,
+      "actualCo": true,
+      "actualXa": true,
+      "actualT1": true,
+      "actualLambdaScale": true,
+      "actualXR": true,
+      "actualIposLeft": true,
+      "actualIposRight": true
+    },
+    "expressionChecks": {
+      "pulseStart": true,
+      "pulseLength": true,
+      "axialEnd": true,
+      "plus": true,
+      "terminal": true,
+      "interpolationStartsAfterPulse": true,
+      "cutoff": true,
+      "commonInterval": true,
+      "stageOrder": true,
+      "consecutiveStages": true,
+      "allEndpointsIndependentOfEta": true
+    },
+    "arithmeticChecks": {
+      "TLower": true,
+      "hSmallerThanLambda": true,
+      "hDyadicSmall": true,
+      "QbGreaterThanOne": true,
+      "QpLessThanH": true,
+      "nextStageLongerThanOne": true,
+      "positivePulseLength": true,
+      "allIposBumpsBeforeRight": true,
+      "cutoffBelowOne": true,
+      "IposStartsAfterXR": true
+    },
+    "endpoints": {
+      "Xa": 3617,
+      "Xminus": 28814,
+      "Xkeep": 28819,
+      "Xcut": 28823,
+      "aSquared": 24805,
+      "IposLeft": 28987,
+      "IposRight": 28988,
+      "lastU": 29328,
+      "Xv": 3293,
+      "Xplus": 28824,
+      "Xb": 28826
+    },
+    "derivation": {
+      "inner": "0<t1<1; Xa=4/Lambda with Lambda>=2^16640. Hence Xa<Xminus<Xkeep<Xcut<a^2<1<XR<IposLeft.",
+      "bump": "Every normalized radial bump lies below 4. Its physical X endpoint is below 16*X0Ipos < exp(5)*X0Ipos.",
+      "middle": "IposRight/Xv=exp(-9-13/lambda)<1 and Xplus/Xv=exp(1).",
+      "wait": "lambda>h>0 makes Qsteep>0. Qb>(1/3)*(1/2)*4*2048>1, while 0<Qp<27*h/255<h<1. Thus log(Qb/Qp)/(1-h)>0.",
+      "final": "Immediately after the pulse lies an interval of length Tf=128, followed by positive stage lengths. Thus Xplus<Xv*exp(128)<Xb.",
+      "sourceStep": "sigma=exp(-1/s^2)/(exp(-1/s^2)+exp(-1/(1-s)^2)) on (0,1), with flat endpoint jets; integral sigma_prime=1."
+    },
+    "inequalities": [
+      "Xminus<Xkeep<Xcut<a^2<IposLeft<IposRight<Xv<Xplus<Xb",
+      "all five radial bump endpoints<IposRight",
+      "all endpoints are independent of eta"
+    ],
+    "numericalCoordinateComparisonUsed": false,
+    "pass": true,
+    "leadingExterior": {
+      "parameterChecks": {
+        "loopRight": true,
+        "I1Left": true,
+        "I1Right": true,
+        "logGapsPositive": true
+      },
+      "physicalRightEnds": [
+        5089,
+        5093,
+        6258,
+        7982
+      ],
+      "tailLogCoordinate": 5099,
+      "tailLogRight": 103,
+      "rootBumpStepArguments": [
+        9198,
+        9203,
+        9211,
+        9216,
+        9221
+      ],
+      "derivation": "I1Right/IposLeft=exp(-6), decayEnd<IposLeft and loopIRight/IposLeft=exp(15-60000T)<1. X>=Xplus gives log(X/Xp)>=13/lambda+1. For I1 derivative bumps, X/X0I1>=exp(5)>32, beyond every support ending at 13.5."
+    }
+  },
+  "actualRawAxialExterior": {
+    "schema": "MathScope.ActualExteriorZeroEvaluation/1",
+    "endpoint": 28824,
+    "checks": [
+      {
+        "index": 0,
+        "expression": 87480,
+        "zero": true
+      },
+      {
+        "index": 1,
+        "expression": 87481,
+        "zero": true
+      },
+      {
+        "index": 2,
+        "expression": 87488,
+        "zero": true
+      },
+      {
+        "index": 3,
+        "expression": 87489,
+        "zero": true
+      },
+      {
+        "index": 4,
+        "expression": 87490,
+        "zero": true
+      },
+      {
+        "index": 5,
+        "expression": 117027,
+        "zero": true
+      },
+      {
+        "index": 6,
+        "expression": 117030,
+        "zero": true
+      },
+      {
+        "index": 7,
+        "expression": 117031,
+        "zero": true
+      }
+    ],
+    "visitedNodes": 291,
+    "zeroBranchTrace": [
+      {
+        "node": 72261,
+        "rightEndpoint": 28823,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 72308,
+        "rightEndpoint": 28988,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 28839,
+        "rightEndpoint": 28823,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 29268,
+        "rightEndpoint": 28988,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 87469,
+        "rightEndpoint": 28823,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 87474,
+        "rightEndpoint": 28988,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 5128,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 5157,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 5128
+      },
+      {
+        "node": 5175,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 5157
+      },
+      {
+        "node": 5148,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 5173,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 5148
+      },
+      {
+        "node": 5293,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 5173
+      },
+      {
+        "node": 6180,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 6181,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 6180
+      },
+      {
+        "node": 6182,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 6181
+      },
+      {
+        "node": 6202,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 6193
+      },
+      {
+        "node": 18778,
+        "rightEndpoint": 7982,
+        "selected": "after",
+        "after": 6202
+      },
+      {
+        "node": 7959,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 9199,
+        "stepArgument": 9198,
+        "derivativeOrder": 1,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 9204,
+        "stepArgument": 9203,
+        "derivativeOrder": 1,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 29336,
+        "rightEndpoint": 29328,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 29436,
+        "rightEndpoint": 29328,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 50558,
+        "rightEndpoint": 28824,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 96317,
+        "rightEndpoint": 28824,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 117024,
+        "rightEndpoint": 28824,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 72317,
+        "rightEndpoint": 28823,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 72375,
+        "rightEndpoint": 28988,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 7286,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 7287,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 7286
+      },
+      {
+        "node": 7288,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 7287
+      },
+      {
+        "node": 33202,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 19021,
+        "stepArgument": 9198,
+        "derivativeOrder": 2,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 19023,
+        "stepArgument": 9203,
+        "derivativeOrder": 2,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 11166,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 11167,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 11166
+      },
+      {
+        "node": 11168,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 11167
+      },
+      {
+        "node": 19017,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 32340,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 32341,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 32340
+      },
+      {
+        "node": 32342,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 32341
+      },
+      {
+        "node": 53445,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 53448,
+        "stepArgument": 9198,
+        "derivativeOrder": 3,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 53453,
+        "stepArgument": 9203,
+        "derivativeOrder": 3,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 74673,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 74674,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 74673
+      },
+      {
+        "node": 74675,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 74674
+      },
+      {
+        "node": 78381,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 11679,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 11680,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 11679
+      },
+      {
+        "node": 11681,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 11680
+      },
+      {
+        "node": 78706,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 77542,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 77543,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 77542
+      },
+      {
+        "node": 77544,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 77543
+      },
+      {
+        "node": 79027,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      }
+    ],
+    "compactIntegrandMistakenForZeroPrimitive": false,
+    "pass": true
+  },
+  "exactNegativeControls": {
+    "allEightTermOmissionsRejected": [
+      {
+        "index": 0,
+        "sourceTerm": 87480,
+        "correctlyRejected": true
+      },
+      {
+        "index": 1,
+        "sourceTerm": 87481,
+        "correctlyRejected": true
+      },
+      {
+        "index": 2,
+        "sourceTerm": 87488,
+        "correctlyRejected": true
+      },
+      {
+        "index": 3,
+        "sourceTerm": 87489,
+        "correctlyRejected": true
+      },
+      {
+        "index": 4,
+        "sourceTerm": 87490,
+        "correctlyRejected": true
+      },
+      {
+        "index": 5,
+        "sourceTerm": 117027,
+        "correctlyRejected": true
+      },
+      {
+        "index": 6,
+        "sourceTerm": 117030,
+        "correctlyRejected": true
+      },
+      {
+        "index": 7,
+        "sourceTerm": 117031,
+        "correctlyRejected": true
+      }
+    ]
+  },
+  "actualSourceBytesUnchanged": true,
+  "originalDefinitionsUnchanged": true,
+  "sourceAssertionsUsedAsAnalyticPremises": false,
+  "regularityOfActualDensityProvedHere": false,
+  "forwardBackwardPrimitiveEqualityProvedHere": false,
+  "remainingAnalyticPremises": [
+    "Bind global U0,v0 and U1,v1,Pi1 restrictions to the exact inner PDE solution on a common open collar through Xminus; the global and inner B26 mass integrals use different binders.",
+    "Compose actual completed-leading/order-one joint regularity and L nonvanishing before interpreting native1 ordinary partials at all joins.",
+    "Prove the actual axial mass and pressure-flux moments vanish and justify differentiation under their integrals before equating forward/backward stress primitives."
+  ],
+  "wholeGOnJProved": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0
+}
