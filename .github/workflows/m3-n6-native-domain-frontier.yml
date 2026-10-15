@@ -759,6 +759,19 @@ jobs:
               --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
               --out "$RUNNER_TEMP/result/ACTUAL_AXIAL_RAW_REGULARITY.json"
           } 2>&1 | tee "$RUNNER_TEMP/result/GATE_axial_raw_regularity.log"
+      - name: Exact original leading and inner B26 equality on the Xminus collar
+        id: gate_leading_inner_collar
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            MATHSCOPE_KERNEL_ROOT="$RUNNER_TEMP/kernels" node --test "$tool/test_actual_leading_inner_collar.mjs"
+            node "$tool/actual_leading_inner_collar.mjs" --kernel-root "$RUNNER_TEMP/kernels" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_LEADING_INNER_COLLAR.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_leading_inner_collar.log"
       - name: Record scoped result hashes
         if: always()
         env:
