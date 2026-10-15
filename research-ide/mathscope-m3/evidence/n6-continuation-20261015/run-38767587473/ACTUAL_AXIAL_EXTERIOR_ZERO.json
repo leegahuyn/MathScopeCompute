@@ -1,0 +1,2097 @@
+{
+  "schema": "MathScope.N6.ActualAxialExteriorZero/1",
+  "sourceHeaderSHA256": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+  "fixedDefinitionSHA256": "c8041bf166aa318a5dab4a0ccb53d1503609feadbaec4361fe4587bb5945bc1b",
+  "sourcePaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "diagnosticsSHA256": "b6a1e0987650e1326c578d9004cdda8efa05d2375864966fc399ae514804b4c1",
+  "sourceFiles": [
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-stress.mjs",
+      "sha256": "22d0fe9deae4dd7a5dca687758fb3b8b57a56cba7472c9fb23b76dd360f0bcc2",
+      "bytes": 9664
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-inner.mjs",
+      "sha256": "3deb02f1f7c9dfd0d0fc7936050eead9514f0e11e44ecb5bd4053073c2518ad8",
+      "bytes": 10768
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-order-one.mjs",
+      "sha256": "bdfa6fa313b09893850a567623135df699568d05f788c98c00fc9f31c6d41c72",
+      "bytes": 18329
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-global.mjs",
+      "sha256": "497e18fc52c10b9eb482bdb6cc18b406c02f453dc19663ba5535c13a41ec015f",
+      "bytes": 16060
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-b8.mjs",
+      "sha256": "1e0d6586a60ee5aa3d5315c40f624ebb9e8a4925a00117818d41d6697fc67baf",
+      "bytes": 10341
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-pregluing.mjs",
+      "sha256": "7fd65f8e2519e4bab3fe017e6349ae98d700592548bc0e5a28aee431080ff2c3",
+      "bytes": 11423
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs",
+      "sha256": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311",
+      "bytes": 36281
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs",
+      "sha256": "cd0b5900bba330c5d960bddd84bb695dd275094302dd9bc3cc5fcfee533895a3",
+      "bytes": 12714
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-global-primitive-kernels.mjs",
+      "sha256": "efebfbcfb124f5bed96bf13435333cb784a0d5cab319303a0244c788ce1bed59",
+      "bytes": 8962
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-support.mjs",
+      "sha256": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+      "bytes": 10013
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-identities.mjs",
+      "sha256": "bf7ba32a83fc5297de59cc620e24488d56a1e4c718e5b297373e78dbaf22b712",
+      "bytes": 6972
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs",
+      "sha256": "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501",
+      "bytes": 7350
+    }
+  ],
+  "originalConstructionOptions": {
+    "terms": 0,
+    "bits": 128,
+    "heatIterations": 0
+  },
+  "originalPrefixNodeCount": 117100,
+  "originalPrefixSHA256": "d125d121e115ea2e3c4b67a37c72a30c1dbcbca705007ca5c02412c1bf5c2116",
+  "originalSourcePrefixUnchanged": true,
+  "originalFunctionDefinitionsUnchanged": true,
+  "sourceBytesUnchanged": true,
+  "exactOriginalRoots": {
+    "U0": 9236,
+    "U1": 29289,
+    "Pi1": 50558,
+    "v0": 18778,
+    "v1": 29440,
+    "X": 4756,
+    "eta": 2,
+    "Xv": 3293,
+    "Xplus": 28824,
+    "rawAxial": 117045,
+    "density": 117047
+  },
+  "exteriorDomain": {
+    "kind": "strict-positive-outward-half-line",
+    "coordinate": 4756,
+    "left": 28824,
+    "leftSourceNode": {
+      "op": "multiply",
+      "args": [
+        588,
+        3293
+      ]
+    },
+    "inequality": "X>Xplus>0"
+  },
+  "actualEndpointOrdering": {
+    "coordinate": 4756,
+    "parameterExpressions": {
+      "lambda": {
+        "exp": {
+          "product": [
+            {
+              "integer": -1000
+            },
+            {
+              "ref": "T"
+            }
+          ]
+        }
+      },
+      "BOuter": {
+        "product": [
+          {
+            "integer": 1000
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      },
+      "X0Ipos": {
+        "product": [
+          {
+            "ref": "XR"
+          },
+          {
+            "exp": {
+              "sum": [
+                {
+                  "ref": "T"
+                },
+                {
+                  "integer": 2
+                },
+                {
+                  "product": [
+                    {
+                      "integer": 60
+                    },
+                    {
+                      "ref": "BOuter"
+                    }
+                  ]
+                },
+                {
+                  "integer": -14
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "IposRight": {
+        "product": [
+          {
+            "ref": "X0Ipos"
+          },
+          {
+            "exp": {
+              "integer": 5
+            }
+          }
+        ]
+      },
+      "X0I1": {
+        "product": [
+          {
+            "ref": "XR"
+          },
+          {
+            "exp": {
+              "sum": [
+                {
+                  "ref": "T"
+                },
+                {
+                  "integer": 2
+                },
+                {
+                  "product": [
+                    {
+                      "integer": 60
+                    },
+                    {
+                      "ref": "BOuter"
+                    }
+                  ]
+                },
+                {
+                  "integer": -25
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "I1Right": {
+        "product": [
+          {
+            "ref": "X0I1"
+          },
+          {
+            "exp": {
+              "integer": 5
+            }
+          }
+        ]
+      },
+      "loopIRight": {
+        "product": [
+          {
+            "ref": "XR"
+          },
+          {
+            "exp": {
+              "sum": [
+                {
+                  "ref": "T"
+                },
+                {
+                  "integer": 3
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "actualEndpoints": {
+      "Xa": 3617,
+      "Xminus": 28814,
+      "Xkeep": 28819,
+      "Xcut": 28823,
+      "aSquared": 24805,
+      "IposLeft": 28987,
+      "IposRight": 28988,
+      "lastU": 29328,
+      "Xv": 3293,
+      "Xplus": 28824,
+      "Xb": 28826
+    },
+    "strictChain": "Xcut28823<aSquared24805<1<XR12<IposRight28988<Xv3293<Xplus28824",
+    "domain": {
+      "kind": "strict-positive-outward-half-line",
+      "coordinate": 4756,
+      "left": 28824,
+      "leftSourceNode": {
+        "op": "multiply",
+        "args": [
+          588,
+          3293
+        ]
+      },
+      "inequality": "X>Xplus>0"
+    },
+    "optionalOutwardInterval": {
+      "left": 28824,
+      "right": 117101,
+      "rightSourceNode": {
+        "op": "multiply",
+        "args": [
+          3293,
+          117100
+        ]
+      },
+      "formula": "Jout=(Xplus,Xv*exp(3/2))",
+      "nonemptyReason": "1<3/2 and Xv>0"
+    },
+    "exactLogComparisons": {
+      "IposRightOverXv": "exp(-9-13/lambda)<1",
+      "XplusOverXv": "exp(1)>1",
+      "tailLog": "X>Xplus=Xp*exp(13/lambda+1) implies log(X/Xp)>13/lambda+1>13/lambda",
+      "I1Support": "X>Xplus>I1Right=X0I1*exp(5), so X/X0I1>exp(5)>32",
+      "actualStepArguments": [
+        "2*(X/X0I1-9)>1",
+        "2*(X/X0I1-10)>1"
+      ]
+    },
+    "actualAverageCutoff": {
+      "source": 29328,
+      "sourceNode": {
+        "op": "multiply",
+        "args": [
+          28987,
+          29327
+        ]
+      },
+      "normalizedSupport": 29008,
+      "normalizedSupportSourceNode": {
+        "op": "rational",
+        "args": [
+          "8193",
+          "4096"
+        ]
+      },
+      "squaredSupport": 29327,
+      "squaredSupportSourceNode": {
+        "op": "rational",
+        "args": [
+          "67125249",
+          "16777216"
+        ]
+      },
+      "formula": "lastU=X0Ipos*(8193/4096)^2",
+      "strictBound": "(8193/4096)^2<16<32<exp(5), so lastU<IposRight<Xv<Xplus",
+      "exactIntegerCheck": "8193^2<16*4096^2",
+      "actualAverageBranches": [
+        29336,
+        29436
+      ]
+    },
+    "derivation": [
+      "The authenticated exact parameter graph has T>10 and lambda=exp(-1000*T)>0; it is never set to zero. The scalar ordering proves0<t1<1, Xa=4/Lambda, and aSquared<loopILeft<1<XR.",
+      "Xcut=Xa*exp(t1/32)<Xa*exp(t1/16)=aSquared<1. X0Ipos=XR*exp(60001*T-12)>XR and IposRight=X0Ipos*exp(5)>X0Ipos.",
+      "The pulse source endpoints give Xv=XR*exp(T+2+60BOuter)*exp(13/lambda). Thus IposRight/Xv=exp(-9-13/lambda)<1, and Xplus=Xv*exp(1)>Xv.",
+      "The leading patchRight=XR*exp(-5), decayEnd=XR*exp(T+1), loopIRight=XR*exp(T+3), and I1Right=XR*exp(T+2+60BOuter-20) are all strictly below Xv. This uses BOuter=1000*T and T>10.",
+      "For the original logarithmic tail branch, positive X/Xp and monotonic log give log(X/Xp)>13/lambda. For the two actual I1 derivative bumps, X/X0I1>exp(5)>32>13.5 places their step arguments above1.",
+      "All selections concern the same free X. No branch or endpoint inside an integral, and no shifted native argument, inherits this outward domain."
+    ],
+    "numericalCoordinateComparisonUsed": false
+  },
+  "actualSupportOrder": {
+    "schema": "MathScope.ActualBackgroundSupportOrder/1",
+    "profileId": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "parameterChecks": {
+      "samePinnedSource": true,
+      "actualH": true,
+      "actualLambda": true,
+      "actualT": true,
+      "actualTf": true,
+      "actualCo": true,
+      "actualXa": true,
+      "actualT1": true,
+      "actualLambdaScale": true,
+      "actualXR": true,
+      "actualIposLeft": true,
+      "actualIposRight": true
+    },
+    "expressionChecks": {
+      "pulseStart": true,
+      "pulseLength": true,
+      "axialEnd": true,
+      "plus": true,
+      "terminal": true,
+      "interpolationStartsAfterPulse": true,
+      "cutoff": true,
+      "commonInterval": true,
+      "stageOrder": true,
+      "consecutiveStages": true,
+      "allEndpointsIndependentOfEta": true
+    },
+    "arithmeticChecks": {
+      "TLower": true,
+      "hSmallerThanLambda": true,
+      "hDyadicSmall": true,
+      "QbGreaterThanOne": true,
+      "QpLessThanH": true,
+      "nextStageLongerThanOne": true,
+      "positivePulseLength": true,
+      "allIposBumpsBeforeRight": true,
+      "cutoffBelowOne": true,
+      "IposStartsAfterXR": true
+    },
+    "endpoints": {
+      "Xa": 3617,
+      "Xminus": 28814,
+      "Xkeep": 28819,
+      "Xcut": 28823,
+      "aSquared": 24805,
+      "IposLeft": 28987,
+      "IposRight": 28988,
+      "lastU": 29328,
+      "Xv": 3293,
+      "Xplus": 28824,
+      "Xb": 28826
+    },
+    "derivation": {
+      "inner": "0<t1<1; Xa=4/Lambda with Lambda>=2^16640. Hence Xa<Xminus<Xkeep<Xcut<a^2<1<XR<IposLeft.",
+      "bump": "Every normalized radial bump lies below 4. Its physical X endpoint is below 16*X0Ipos < exp(5)*X0Ipos.",
+      "middle": "IposRight/Xv=exp(-9-13/lambda)<1 and Xplus/Xv=exp(1).",
+      "wait": "lambda>h>0 makes Qsteep>0. Qb>(1/3)*(1/2)*4*2048>1, while 0<Qp<27*h/255<h<1. Thus log(Qb/Qp)/(1-h)>0.",
+      "final": "Immediately after the pulse lies an interval of length Tf=128, followed by positive stage lengths. Thus Xplus<Xv*exp(128)<Xb.",
+      "sourceStep": "sigma=exp(-1/s^2)/(exp(-1/s^2)+exp(-1/(1-s)^2)) on (0,1), with flat endpoint jets; integral sigma_prime=1."
+    },
+    "inequalities": [
+      "Xminus<Xkeep<Xcut<a^2<IposLeft<IposRight<Xv<Xplus<Xb",
+      "all five radial bump endpoints<IposRight",
+      "all endpoints are independent of eta"
+    ],
+    "numericalCoordinateComparisonUsed": false,
+    "pass": true,
+    "leadingExterior": {
+      "parameterChecks": {
+        "loopRight": true,
+        "I1Left": true,
+        "I1Right": true,
+        "logGapsPositive": true
+      },
+      "physicalRightEnds": [
+        5089,
+        5093,
+        6258,
+        7982
+      ],
+      "tailLogCoordinate": 5099,
+      "tailLogRight": 103,
+      "rootBumpStepArguments": [
+        9198,
+        9203,
+        9211,
+        9216,
+        9221
+      ],
+      "derivation": "I1Right/IposLeft=exp(-6), decayEnd<IposLeft and loopIRight/IposLeft=exp(15-60000T)<1. X>=Xplus gives log(X/Xp)>=13/lambda+1. For I1 derivative bumps, X/X0I1>=exp(5)>32, beyond every support ending at 13.5."
+    }
+  },
+  "actualScalarParameterOrdering": {
+    "schema": "MathScope.N6.ActualLeadingInnerCollarOrdering/1",
+    "coordinate": 4756,
+    "eta": 2,
+    "openCollar": {
+      "left": "Xa*exp(t1/256)",
+      "right": "Xa*exp(3*t1/256)",
+      "contains": "Xminus=Xa*exp(t1/128)",
+      "containment": "Xa<left<Xminus<right<Xkeep<aSquared<loopILeft<1"
+    },
+    "exactExponentCrossProducts": [
+      {
+        "left": "128",
+        "right": "256",
+        "strict": true
+      },
+      {
+        "left": "256",
+        "right": "384",
+        "strict": true
+      },
+      {
+        "left": "192",
+        "right": "256",
+        "strict": true
+      },
+      {
+        "left": "16",
+        "right": "64",
+        "strict": true
+      },
+      {
+        "left": "8",
+        "right": "16",
+        "strict": true
+      }
+    ],
+    "actualEndpointNodeBindings": {
+      "Xa": 3617,
+      "Xminus": 28814,
+      "Xkeep": 28819,
+      "aSquared": 24805,
+      "loopILeft": 6257,
+      "X0I1": 7981
+    },
+    "actualI1StepArgumentSourceNodes": {
+      "24": {
+        "op": "rational",
+        "args": [
+          "2",
+          "1"
+        ]
+      },
+      "688": {
+        "op": "rational",
+        "args": [
+          "-10",
+          "1"
+        ]
+      },
+      "4756": {
+        "op": "coordinate",
+        "args": [
+          "X"
+        ]
+      },
+      "8843": {
+        "op": "rational",
+        "args": [
+          "-9",
+          "1"
+        ]
+      },
+      "9195": {
+        "op": "inverse",
+        "args": [
+          7981
+        ]
+      },
+      "9196": {
+        "op": "multiply",
+        "args": [
+          4756,
+          9195
+        ]
+      },
+      "9197": {
+        "op": "add",
+        "args": [
+          8843,
+          9196
+        ]
+      },
+      "9198": {
+        "op": "multiply",
+        "args": [
+          24,
+          9197
+        ]
+      },
+      "9202": {
+        "op": "add",
+        "args": [
+          688,
+          9196
+        ]
+      },
+      "9203": {
+        "op": "multiply",
+        "args": [
+          24,
+          9202
+        ]
+      }
+    },
+    "exactScaleInequalities": {
+      "LambdaLowerExponent": "16640",
+      "smallEndpointNumerator": "12",
+      "smallEndpointUpperDenominator": "2^16640",
+      "logXRStrictLower": "20*T>200",
+      "logRestLeftStrictLower": "20*T-8>192",
+      "I1LogRatio": "60001*T-23>0"
+    },
+    "derivation": [
+      "T=exp(1048576)+10>1048576+11>10; h=exp(-8002*T) lies strictly between0 and1, so0<sigmaStar=h^4/2000<1. K=Pstar^2>1 and the literal Q formula imply Q>2^260.",
+      "Lambda=Q^64>2^16640. logCSelected>Q^200>1 implies CSelected>e>2, so0<t1=CSelected^-120<2^-120<1.",
+      "For0<t1<1, exp(t1/8)<e<3. The bound e<3 follows from n!>=2^(n-1) for n>=2, strict for n>=3, and the geometric series. Therefore loopILeft=(4/Lambda)*exp(t1/8)<12/2^16640<1.",
+      "Multiplying the exact coefficient inequalities by positive t1 and using strict monotonicity of exp proves Xa<collarLeft<Xminus<collarRight<Xkeep<aSquared<loopILeft.",
+      "log XR=log110+10logCSelected+20T>20T>200. Hence restLeft=XR*exp(-8)>1, with restLeft<restRight=XR*exp(-7)<patchRight=XR*exp(-5). Xi=110>1.",
+      "BOuter=1000T makes X0I1/XR=exp(T+2+60BOuter-25)=exp(60001T-23)>1. Thus X<Xkeep<1<XR<X0I1 on the entire collar.",
+      "The I1 arguments2*(X/X0I1-9) and2*(X/X0I1-10) are strictly negative there. The literal source step is constant zero for negative arguments, so its first derivative is exactly zero."
+    ],
+    "numericalCoordinateComparisonUsed": false
+  },
+  "actualExteriorTrace": {
+    "schema": "MathScope.ActualExteriorZeroEvaluation/1",
+    "endpoint": 28824,
+    "checks": [
+      {
+        "index": 0,
+        "expression": 9236,
+        "zero": true
+      },
+      {
+        "index": 1,
+        "expression": 29289,
+        "zero": true
+      },
+      {
+        "index": 2,
+        "expression": 50558,
+        "zero": true
+      }
+    ],
+    "visitedNodes": 22,
+    "zeroBranchTrace": [
+      {
+        "node": 5128,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 5157,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 5128
+      },
+      {
+        "node": 5175,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 5157
+      },
+      {
+        "node": 7959,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 9199,
+        "stepArgument": 9198,
+        "derivativeOrder": 1,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 9204,
+        "stepArgument": 9203,
+        "derivativeOrder": 1,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 28839,
+        "rightEndpoint": 28823,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 29268,
+        "rightEndpoint": 28988,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 50558,
+        "rightEndpoint": 28824,
+        "selected": "after",
+        "after": 0
+      }
+    ],
+    "compactIntegrandMistakenForZeroPrimitive": false,
+    "pass": true
+  },
+  "actualThreeProfileVisitedNodes": [
+    9236,
+    7966,
+    5175,
+    5157,
+    5128,
+    7961,
+    7959,
+    9209,
+    9207,
+    9201,
+    9169,
+    9200,
+    24,
+    9199,
+    9206,
+    9170,
+    9205,
+    9204,
+    29289,
+    28839,
+    29268,
+    50558
+  ],
+  "actualEightTermExteriorTrace": {
+    "schema": "MathScope.ActualExteriorZeroEvaluation/1",
+    "endpoint": 28824,
+    "checks": [
+      {
+        "index": 0,
+        "expression": 87480,
+        "zero": true
+      },
+      {
+        "index": 1,
+        "expression": 87481,
+        "zero": true
+      },
+      {
+        "index": 2,
+        "expression": 87488,
+        "zero": true
+      },
+      {
+        "index": 3,
+        "expression": 87489,
+        "zero": true
+      },
+      {
+        "index": 4,
+        "expression": 87490,
+        "zero": true
+      },
+      {
+        "index": 5,
+        "expression": 117027,
+        "zero": true
+      },
+      {
+        "index": 6,
+        "expression": 117030,
+        "zero": true
+      },
+      {
+        "index": 7,
+        "expression": 117031,
+        "zero": true
+      }
+    ],
+    "visitedNodes": 291,
+    "zeroBranchTrace": [
+      {
+        "node": 72261,
+        "rightEndpoint": 28823,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 72308,
+        "rightEndpoint": 28988,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 28839,
+        "rightEndpoint": 28823,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 29268,
+        "rightEndpoint": 28988,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 87469,
+        "rightEndpoint": 28823,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 87474,
+        "rightEndpoint": 28988,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 5128,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 5157,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 5128
+      },
+      {
+        "node": 5175,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 5157
+      },
+      {
+        "node": 5148,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 5173,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 5148
+      },
+      {
+        "node": 5293,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 5173
+      },
+      {
+        "node": 6180,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 6181,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 6180
+      },
+      {
+        "node": 6182,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 6181
+      },
+      {
+        "node": 6202,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 6193
+      },
+      {
+        "node": 18778,
+        "rightEndpoint": 7982,
+        "selected": "after",
+        "after": 6202
+      },
+      {
+        "node": 7959,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 9199,
+        "stepArgument": 9198,
+        "derivativeOrder": 1,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 9204,
+        "stepArgument": 9203,
+        "derivativeOrder": 1,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 29336,
+        "rightEndpoint": 29328,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 29436,
+        "rightEndpoint": 29328,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 50558,
+        "rightEndpoint": 28824,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 96317,
+        "rightEndpoint": 28824,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 117024,
+        "rightEndpoint": 28824,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 72317,
+        "rightEndpoint": 28823,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 72375,
+        "rightEndpoint": 28988,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 7286,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 7287,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 7286
+      },
+      {
+        "node": 7288,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 7287
+      },
+      {
+        "node": 33202,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 19021,
+        "stepArgument": 9198,
+        "derivativeOrder": 2,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 19023,
+        "stepArgument": 9203,
+        "derivativeOrder": 2,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 11166,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 11167,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 11166
+      },
+      {
+        "node": 11168,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 11167
+      },
+      {
+        "node": 19017,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 32340,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 32341,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 32340
+      },
+      {
+        "node": 32342,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 32341
+      },
+      {
+        "node": 53445,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 53448,
+        "stepArgument": 9198,
+        "derivativeOrder": 3,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 53453,
+        "stepArgument": 9203,
+        "derivativeOrder": 3,
+        "rule": "flat step derivative outside the actual I1 bump support"
+      },
+      {
+        "node": 74673,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 74674,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 74673
+      },
+      {
+        "node": 74675,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 74674
+      },
+      {
+        "node": 78381,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 11679,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 11680,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 11679
+      },
+      {
+        "node": 11681,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 11680
+      },
+      {
+        "node": 78706,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 77542,
+        "rightEndpoint": 103,
+        "selected": "after",
+        "after": 0
+      },
+      {
+        "node": 77543,
+        "rightEndpoint": 5093,
+        "selected": "after",
+        "after": 77542
+      },
+      {
+        "node": 77544,
+        "rightEndpoint": 5089,
+        "selected": "after",
+        "after": 77543
+      },
+      {
+        "node": 79027,
+        "rightEndpoint": 6258,
+        "selected": "after",
+        "after": 0
+      }
+    ],
+    "compactIntegrandMistakenForZeroPrimitive": false,
+    "pass": true
+  },
+  "selectedSourceNodes": {
+    "0": {
+      "op": "rational",
+      "args": [
+        "0",
+        "1"
+      ]
+    },
+    "1": {
+      "op": "rational",
+      "args": [
+        "1",
+        "1"
+      ]
+    },
+    "2": {
+      "op": "coordinate",
+      "args": [
+        "eta"
+      ]
+    },
+    "8": {
+      "op": "source_parameter",
+      "args": [
+        "lambda"
+      ]
+    },
+    "24": {
+      "op": "rational",
+      "args": [
+        "2",
+        "1"
+      ]
+    },
+    "101": {
+      "op": "rational",
+      "args": [
+        "13",
+        "1"
+      ]
+    },
+    "102": {
+      "op": "inverse",
+      "args": [
+        8
+      ]
+    },
+    "103": {
+      "op": "multiply",
+      "args": [
+        101,
+        102
+      ]
+    },
+    "588": {
+      "op": "exp",
+      "args": [
+        1
+      ]
+    },
+    "688": {
+      "op": "rational",
+      "args": [
+        "-10",
+        "1"
+      ]
+    },
+    "3293": {
+      "op": "multiply",
+      "args": [
+        613,
+        3292
+      ]
+    },
+    "4756": {
+      "op": "coordinate",
+      "args": [
+        "X"
+      ]
+    },
+    "5097": {
+      "op": "inverse",
+      "args": [
+        613
+      ]
+    },
+    "5098": {
+      "op": "multiply",
+      "args": [
+        4756,
+        5097
+      ]
+    },
+    "5099": {
+      "op": "log_positive",
+      "args": [
+        5098
+      ]
+    },
+    "5128": {
+      "op": "smooth_piecewise",
+      "args": [
+        5099,
+        0,
+        103,
+        0,
+        5127,
+        0
+      ]
+    },
+    "5148": {
+      "op": "smooth_piecewise",
+      "args": [
+        5099,
+        0,
+        103,
+        1146,
+        5147,
+        0
+      ]
+    },
+    "5157": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        5091,
+        5093,
+        3458,
+        5156,
+        5128
+      ]
+    },
+    "5173": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        5091,
+        5093,
+        5172,
+        5171,
+        5148
+      ]
+    },
+    "5175": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        4567,
+        5089,
+        5090,
+        5174,
+        5157
+      ]
+    },
+    "5293": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        4567,
+        5089,
+        5270,
+        5292,
+        5173
+      ]
+    },
+    "6180": {
+      "op": "smooth_piecewise",
+      "args": [
+        5099,
+        0,
+        103,
+        611,
+        6179,
+        0
+      ]
+    },
+    "6181": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        5091,
+        5093,
+        6150,
+        6153,
+        6180
+      ]
+    },
+    "6182": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        4567,
+        5089,
+        5696,
+        6149,
+        6181
+      ]
+    },
+    "6202": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        3617,
+        5089,
+        6201,
+        6193,
+        6193
+      ]
+    },
+    "6258": {
+      "op": "source_parameter",
+      "args": [
+        "loopIRight"
+      ]
+    },
+    "7286": {
+      "op": "smooth_piecewise",
+      "args": [
+        5099,
+        0,
+        103,
+        0,
+        7285,
+        0
+      ]
+    },
+    "7287": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        5091,
+        5093,
+        0,
+        7248,
+        7286
+      ]
+    },
+    "7288": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        4567,
+        5089,
+        7230,
+        7238,
+        7287
+      ]
+    },
+    "7959": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        6257,
+        6258,
+        0,
+        7958,
+        0
+      ]
+    },
+    "7961": {
+      "op": "multiply",
+      "args": [
+        7959,
+        7960
+      ]
+    },
+    "7966": {
+      "op": "add",
+      "args": [
+        5175,
+        7961
+      ]
+    },
+    "7981": {
+      "op": "source_parameter",
+      "args": [
+        "X0I1"
+      ]
+    },
+    "7982": {
+      "op": "source_parameter",
+      "args": [
+        "I1Right"
+      ]
+    },
+    "8843": {
+      "op": "rational",
+      "args": [
+        "-9",
+        "1"
+      ]
+    },
+    "9169": {
+      "op": "actual_quadratic_root",
+      "args": [
+        1,
+        0,
+        2
+      ]
+    },
+    "9170": {
+      "op": "actual_quadratic_root",
+      "args": [
+        1,
+        1,
+        2
+      ]
+    },
+    "9195": {
+      "op": "inverse",
+      "args": [
+        7981
+      ]
+    },
+    "9196": {
+      "op": "multiply",
+      "args": [
+        4756,
+        9195
+      ]
+    },
+    "9197": {
+      "op": "add",
+      "args": [
+        8843,
+        9196
+      ]
+    },
+    "9198": {
+      "op": "multiply",
+      "args": [
+        24,
+        9197
+      ]
+    },
+    "9199": {
+      "op": "source_step_derivative",
+      "args": [
+        9198,
+        1
+      ]
+    },
+    "9200": {
+      "op": "multiply",
+      "args": [
+        24,
+        9199
+      ]
+    },
+    "9201": {
+      "op": "multiply",
+      "args": [
+        9169,
+        9200
+      ]
+    },
+    "9202": {
+      "op": "add",
+      "args": [
+        688,
+        9196
+      ]
+    },
+    "9203": {
+      "op": "multiply",
+      "args": [
+        24,
+        9202
+      ]
+    },
+    "9204": {
+      "op": "source_step_derivative",
+      "args": [
+        9203,
+        1
+      ]
+    },
+    "9205": {
+      "op": "multiply",
+      "args": [
+        24,
+        9204
+      ]
+    },
+    "9206": {
+      "op": "multiply",
+      "args": [
+        9170,
+        9205
+      ]
+    },
+    "9207": {
+      "op": "add",
+      "args": [
+        9201,
+        9206
+      ]
+    },
+    "9209": {
+      "op": "multiply",
+      "args": [
+        9207,
+        9208
+      ]
+    },
+    "9236": {
+      "op": "add",
+      "args": [
+        7966,
+        9209
+      ]
+    },
+    "11166": {
+      "op": "smooth_piecewise",
+      "args": [
+        5099,
+        0,
+        103,
+        0,
+        11165,
+        0
+      ]
+    },
+    "11167": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        5091,
+        5093,
+        474,
+        5155,
+        11166
+      ]
+    },
+    "11168": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        4567,
+        5089,
+        11145,
+        11152,
+        11167
+      ]
+    },
+    "11679": {
+      "op": "smooth_piecewise",
+      "args": [
+        5099,
+        0,
+        103,
+        0,
+        11678,
+        0
+      ]
+    },
+    "11680": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        5091,
+        5093,
+        0,
+        7247,
+        11679
+      ]
+    },
+    "11681": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        4567,
+        5089,
+        11637,
+        11645,
+        11680
+      ]
+    },
+    "18778": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        6257,
+        7982,
+        6202,
+        18777,
+        6202
+      ]
+    },
+    "19017": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        6257,
+        6258,
+        0,
+        19016,
+        0
+      ]
+    },
+    "19021": {
+      "op": "source_step_derivative",
+      "args": [
+        9198,
+        2
+      ]
+    },
+    "19023": {
+      "op": "source_step_derivative",
+      "args": [
+        9203,
+        2
+      ]
+    },
+    "28824": {
+      "op": "multiply",
+      "args": [
+        588,
+        3293
+      ]
+    },
+    "28839": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28819,
+        28823,
+        28835,
+        28838,
+        0
+      ]
+    },
+    "28987": {
+      "op": "source_parameter",
+      "args": [
+        "X0Ipos"
+      ]
+    },
+    "28988": {
+      "op": "source_parameter",
+      "args": [
+        "IposRight"
+      ]
+    },
+    "29008": {
+      "op": "rational",
+      "args": [
+        "8193",
+        "4096"
+      ]
+    },
+    "29268": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28987,
+        28988,
+        0,
+        29267,
+        0
+      ]
+    },
+    "29289": {
+      "op": "add",
+      "args": [
+        28839,
+        29268
+      ]
+    },
+    "29327": {
+      "op": "rational",
+      "args": [
+        "67125249",
+        "16777216"
+      ]
+    },
+    "29328": {
+      "op": "multiply",
+      "args": [
+        28987,
+        29327
+      ]
+    },
+    "29336": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28819,
+        29328,
+        29332,
+        29335,
+        0
+      ]
+    },
+    "29436": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28819,
+        29328,
+        29343,
+        29435,
+        0
+      ]
+    },
+    "32340": {
+      "op": "smooth_piecewise",
+      "args": [
+        5099,
+        0,
+        103,
+        0,
+        32339,
+        0
+      ]
+    },
+    "32341": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        5091,
+        5093,
+        0,
+        32284,
+        32340
+      ]
+    },
+    "32342": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        4567,
+        5089,
+        32260,
+        32268,
+        32341
+      ]
+    },
+    "33202": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        6257,
+        6258,
+        0,
+        33201,
+        0
+      ]
+    },
+    "50558": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28819,
+        28824,
+        50557,
+        50556,
+        0
+      ]
+    },
+    "53445": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        6257,
+        6258,
+        0,
+        53444,
+        0
+      ]
+    },
+    "53448": {
+      "op": "source_step_derivative",
+      "args": [
+        9198,
+        3
+      ]
+    },
+    "53453": {
+      "op": "source_step_derivative",
+      "args": [
+        9203,
+        3
+      ]
+    },
+    "72261": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28819,
+        28823,
+        72257,
+        72260,
+        0
+      ]
+    },
+    "72308": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28987,
+        28988,
+        0,
+        72307,
+        0
+      ]
+    },
+    "72317": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28819,
+        28823,
+        72310,
+        72316,
+        0
+      ]
+    },
+    "72375": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28987,
+        28988,
+        0,
+        72374,
+        0
+      ]
+    },
+    "74673": {
+      "op": "smooth_piecewise",
+      "args": [
+        5099,
+        0,
+        103,
+        0,
+        74672,
+        0
+      ]
+    },
+    "74674": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        5091,
+        5093,
+        0,
+        7247,
+        74673
+      ]
+    },
+    "74675": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        4567,
+        5089,
+        74661,
+        74668,
+        74674
+      ]
+    },
+    "77542": {
+      "op": "smooth_piecewise",
+      "args": [
+        5099,
+        0,
+        103,
+        0,
+        77541,
+        0
+      ]
+    },
+    "77543": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        5091,
+        5093,
+        0,
+        0,
+        77542
+      ]
+    },
+    "77544": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        4567,
+        5089,
+        77526,
+        77535,
+        77543
+      ]
+    },
+    "78381": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        6257,
+        6258,
+        0,
+        78380,
+        0
+      ]
+    },
+    "78706": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        6257,
+        6258,
+        0,
+        78705,
+        0
+      ]
+    },
+    "79027": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        6257,
+        6258,
+        0,
+        79026,
+        0
+      ]
+    },
+    "87469": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28819,
+        28823,
+        87467,
+        87468,
+        0
+      ]
+    },
+    "87474": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28987,
+        28988,
+        0,
+        87473,
+        0
+      ]
+    },
+    "87480": {
+      "op": "multiply",
+      "args": [
+        1953,
+        87479
+      ]
+    },
+    "87481": {
+      "op": "multiply",
+      "args": [
+        18779,
+        72309
+      ]
+    },
+    "87488": {
+      "op": "multiply",
+      "args": [
+        9236,
+        87487
+      ]
+    },
+    "87489": {
+      "op": "multiply",
+      "args": [
+        29441,
+        33214
+      ]
+    },
+    "87490": {
+      "op": "multiply",
+      "args": [
+        29289,
+        78019
+      ]
+    },
+    "96317": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28819,
+        28824,
+        87492,
+        96316,
+        0
+      ]
+    },
+    "117024": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28819,
+        28824,
+        96322,
+        117023,
+        0
+      ]
+    },
+    "117027": {
+      "op": "multiply",
+      "args": [
+        1953,
+        117026
+      ]
+    },
+    "117030": {
+      "op": "multiply",
+      "args": [
+        190,
+        117029
+      ]
+    },
+    "117031": {
+      "op": "multiply",
+      "args": [
+        20,
+        79047
+      ]
+    },
+    "117045": {
+      "op": "add",
+      "args": [
+        117031,
+        117044
+      ]
+    },
+    "117047": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28814,
+        28824,
+        0,
+        117045,
+        0
+      ]
+    }
+  },
+  "actualRawAxialFormula": {
+    "root": 117045,
+    "terms": [
+      87480,
+      87481,
+      87488,
+      87489,
+      87490,
+      117027,
+      117030,
+      117031
+    ],
+    "termRoles": [
+      "time U1",
+      "X v0 U1_X",
+      "U0 Z_(c+lambda1) U1",
+      "X v1 U0_X",
+      "U1 Z_c U0",
+      "Z_(-2A+lambda1) Pi1",
+      "-2(X U1_XX+U1_X)",
+      "-Z_(c-D) Z_c U0"
+    ],
+    "allEightOriginalTermsIndependentlyReconstructed": true,
+    "lambda1": 25,
+    "leadingU0": 9236,
+    "leadingv0": 18778,
+    "U1": 29289,
+    "v1": 29440,
+    "Pi1": 50558
+  },
+  "actualDensity": {
+    "registry": "expression:1",
+    "bootstrapDefinition": {
+      "name": "actual_n1_Tz_forward_integrand",
+      "parameters": [
+        4756,
+        2
+      ],
+      "body": 117047,
+      "derivativeLimits": [
+        4,
+        6
+      ],
+      "implementation": "actual-continuation-exact-functions.mjs:materializeExpressionFunction",
+      "unspecifiedOracle": false
+    },
+    "definition": {
+      "name": "actual_n1_Tz_forward_integrand",
+      "parameters": [
+        4756,
+        2
+      ],
+      "body": 117047,
+      "derivativeLimits": [
+        128,
+        128
+      ],
+      "implementation": "actual-residual-order-induction-expressions.mjs:materializeExpressionFunction",
+      "unspecifiedOracle": false,
+      "historicalBodyPreserved": true
+    },
+    "definitionSHA256": "f815fd78afc4ef36627e657a34ba84624c838a44039de6435b748020b52b1689",
+    "component": "axial",
+    "guard": [
+      4756,
+      28814,
+      28824
+    ],
+    "sourceNode": {
+      "op": "smooth_piecewise",
+      "args": [
+        4756,
+        28814,
+        28824,
+        0,
+        117045,
+        0
+      ]
+    },
+    "angularGuardUsesDifferentRightEndpoint": 28826
+  },
+  "sourceConclusions": {
+    "actualThreeOriginalProfilesHaveZeroExteriorBranch": true,
+    "actualEightOriginalAxialTermZeroTracesBound": true,
+    "originalRawResidualAndSupportedDensityWrapperRetained": true
+  },
+  "analyticPremises": [
+    "The source zero checker is algebra on the retained branches. Every original factor/operand must have its actual finite value on the admitted outward positive-radius domain; no undefined expression is canceled by multiplying by zero.",
+    "The separately accepted actual raw-residual/completed-profile regularity theorem supplies the ordinary derivatives and the finiteness of v0=18778,v1=29440 and all native/primitive operands. Their vanishing is not assumed by this receipt.",
+    "Use joint actual smoothness before deducing higher derivative zeros or endpoint jets at Xplus, and preserve original inward eta endpoint conventions. Source incidence or a passing trace alone proves no derivative existence.",
+    "For the strict source branch X>Xplus, the Pi1 after branch is zero; its interior50556 is not replaced by zero. Density gluing, total axial integral cancellation, and stress primitive gluing are separate statements."
+  ],
+  "actualAnalyticCompositionApplied": false,
+  "analyticRightExteriorZeroProvedHere": false,
+  "rawAxialResidualZeroProvedHere": false,
+  "allDerivativeExistenceProvedHere": false,
+  "densityJoinsProvedHere": false,
+  "actualTotalAxialMomentZeroProvedHere": false,
+  "TzPrimitiveGluingProvedHere": false,
+  "numericalNormHonestyProvedHere": false,
+  "wholeGOnJProved": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0
+}
