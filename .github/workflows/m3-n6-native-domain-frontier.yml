@@ -64,6 +64,7 @@ jobs:
           tests=json.loads((root/'TESTS.json').read_text());assert tests['successful'] and tests['passed']==72
           PY
       - name: Extract all actual natural arguments and original source domains
+        id: original_source
         shell: bash
         run: |
           set -euo pipefail
@@ -72,61 +73,148 @@ jobs:
             --source "$RUNNER_TEMP/source" \
             --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
             --out "$RUNNER_TEMP/result" 2>&1 | tee "$RUNNER_TEMP/result/DOMAIN_EXECUTION.log"
-      - name: Independent source-bound subkernel checks and support extraction
+      - name: Source-bound basic gate
+        id: gate_basic
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
         shell: bash
         run: |
           set -euo pipefail
           tool=tools/n6-native-domain-frontier-20261015
-          python -m unittest discover -s "$tool" -p test_native_domain_extract.py -v 2>&1 | tee "$RUNNER_TEMP/result/DOMAIN_TESTS.log"
-          python "$tool/verify_regularity_mechanisms.py" --kernels "$RUNNER_TEMP/kernels" \
-            --extract "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/REGULARITY_MECHANISMS.json"
-          python "$tool/jet_pde_native_chart.py" --extract "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
-            --out "$RUNNER_TEMP/result/NATIVE_CHART_DERIVATIVES.json"
-          python "$tool/jet_pde_assembly_certificate.py" --extract "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
-            --out "$RUNNER_TEMP/result/CONDITIONAL_ASSEMBLY_ALGEBRA.json"
-          python "$tool/jet_pde_support_extract.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
-            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
-            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/COMPACT_162_SUPPORT.json"
-          python "$tool/actual_picard_structure.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
-            --out "$RUNNER_TEMP/result/ACTUAL_PICARD_STRUCTURE.json"
-          python "$tool/actual_natural_proof.py" --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
-            --arguments "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
-            --kernels "$RUNNER_TEMP/kernels" --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json"
-          node "$tool/actual_natural_proof.kernel-probe.mjs" --kernel-root "$PWD" \
-            --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json"
-          python "$tool/actual_support_proof.py" --support "$RUNNER_TEMP/result/COMPACT_162_SUPPORT.json" \
-            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/ACTUAL_SUPPORT_PROOF.json"
-          python "$tool/actual_indexed_derivative_proof.py" --support "$RUNNER_TEMP/result/COMPACT_162_SUPPORT.json" \
-            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --support-proof "$RUNNER_TEMP/result/ACTUAL_SUPPORT_PROOF.json" \
-            --out "$RUNNER_TEMP/result/ACTUAL_INDEXED_DERIVATIVES.json"
-          python "$tool/actual_heat_regularization.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
-            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
-            --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_HEAT_REGULARITY.json"
-          node "$tool/actual_loop_native_probe.mjs" --kernel-root "$PWD" \
-            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/ACTUAL_LOOP_NATIVE_BINDING.json"
-          python "$tool/actual_loop_regularity.py" --kernels "$RUNNER_TEMP/kernels" \
-            --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
-            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
-            --binding "$RUNNER_TEMP/result/ACTUAL_LOOP_NATIVE_BINDING.json" --out "$RUNNER_TEMP/result/ACTUAL_LOOP_REGULARITY.json"
-          python "$tool/test_picard_domain_proof.py"
-          python "$tool/picard_domain_proof.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
-            --kernel-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json" \
-            --majorant "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" --out "$RUNNER_TEMP/result/PICARD_DOMAIN_PROOF.json"
-          python -m unittest discover -s "$tool" -p test_natural_outer_context_extract.py -v
-          python "$tool/natural_outer_context_extract.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
-            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
-            --domains "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/NATURAL_OUTER_CONTEXTS.json"
-          python -m unittest discover -s "$tool" -p test_natural_domain_proof.py -v
-          python "$tool/natural_domain_proof.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
-            --out "$RUNNER_TEMP/result/NATURAL_CONTEXT_RANGE_PROOF.json"
+          {
+            python -m unittest discover -s "$tool" -p test_native_domain_extract.py -v 2>&1 | tee "$RUNNER_TEMP/result/DOMAIN_TESTS.log"
+            python "$tool/verify_regularity_mechanisms.py" --kernels "$RUNNER_TEMP/kernels" \
+              --extract "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/REGULARITY_MECHANISMS.json"
+            python "$tool/jet_pde_native_chart.py" --extract "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+              --out "$RUNNER_TEMP/result/NATIVE_CHART_DERIVATIVES.json"
+            python "$tool/jet_pde_assembly_certificate.py" --extract "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+              --out "$RUNNER_TEMP/result/CONDITIONAL_ASSEMBLY_ALGEBRA.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_basic.log"
+      - name: Source-bound natural gate
+        id: gate_natural
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/actual_picard_structure.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_PICARD_STRUCTURE.json"
+            python "$tool/actual_natural_proof.py" --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --arguments "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --kernels "$RUNNER_TEMP/kernels" --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json"
+            node "$tool/actual_natural_proof.kernel-probe.mjs" --kernel-root "$PWD" \
+              --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_natural.log"
+      - name: Source-bound support gate
+        id: gate_support
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/jet_pde_support_extract.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/COMPACT_162_SUPPORT.json"
+            python "$tool/actual_support_proof.py" --support "$RUNNER_TEMP/result/COMPACT_162_SUPPORT.json" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/ACTUAL_SUPPORT_PROOF.json"
+            python "$tool/actual_indexed_derivative_proof.py" --support "$RUNNER_TEMP/result/COMPACT_162_SUPPORT.json" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --support-proof "$RUNNER_TEMP/result/ACTUAL_SUPPORT_PROOF.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_INDEXED_DERIVATIVES.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_support.log"
+      - name: Source-bound heat gate
+        id: gate_heat
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/actual_heat_regularization.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_HEAT_REGULARITY.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_heat.log"
+      - name: Source-bound loop gate
+        id: gate_loop
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            node "$tool/actual_loop_native_probe.mjs" --kernel-root "$PWD" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/ACTUAL_LOOP_NATIVE_BINDING.json"
+            python "$tool/actual_loop_regularity.py" --kernels "$RUNNER_TEMP/kernels" \
+              --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+              --binding "$RUNNER_TEMP/result/ACTUAL_LOOP_NATIVE_BINDING.json" --out "$RUNNER_TEMP/result/ACTUAL_LOOP_REGULARITY.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_loop.log"
+      - name: Source-bound picard gate
+        id: gate_picard
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/test_picard_domain_proof.py"
+            python "$tool/picard_domain_proof.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --kernel-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json" \
+              --majorant "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" --out "$RUNNER_TEMP/result/PICARD_DOMAIN_PROOF.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_picard.log"
+      - name: Source-bound outer gate
+        id: gate_outer
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_natural_outer_context_extract.py -v
+            python "$tool/natural_outer_context_extract.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+              --domains "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/NATURAL_OUTER_CONTEXTS.json"
+            python -m unittest discover -s "$tool" -p test_natural_domain_proof.py -v
+            python "$tool/natural_domain_proof.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --out "$RUNNER_TEMP/result/NATURAL_CONTEXT_RANGE_PROOF.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_outer.log"
+      - name: Source-bound matching gate
+        id: gate_matching
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            node "$tool/actual_natural_b26_probe.mjs" --kernel-root "$PWD" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_B26_BINDING.json"
+            python "$tool/actual_natural_b26_identity.py" --kernels "$RUNNER_TEMP/kernels" \
+              --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_B26_IDENTITY.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_matching.log"
+      - name: Source-bound volterra gate
+        id: gate_volterra
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/actual_volterra_denominator_binding.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/ACTUAL_VOLTERRA_DENOMINATORS.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_volterra.log"
       - name: Record scoped result hashes
         if: always()
         env:
           RESULT: ${{ runner.temp }}/result
+          STEP_STATES: ${{ toJson(steps) }}
         run: |
           python - <<'PY'
           import hashlib,json,os,pathlib
           out=pathlib.Path(os.environ['RESULT']);out.mkdir(exist_ok=True)
+          steps=json.loads(os.environ['STEP_STATES'])
+          statuses=[{'id':key,'outcome':value.get('outcome'),'conclusion':value.get('conclusion')} for key,value in steps.items() if key=='original_source' or key.startswith('gate_')]
+          (out/'GATE_EXECUTION_STATUS.json').write_text(json.dumps({'run':os.environ['GITHUB_RUN_ID'],'commit':os.environ['GITHUB_SHA'],'independentGateOutcomes':statuses,'originalObligationsDischargedByGateStatus':0},indent=2)+'\n')
           rows=[{'path':p.name,'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(out.iterdir()) if p.is_file() and p.suffix in ('.json','.log') and p.name!='RESULT_SHA256.json']
           (out/'RESULT_SHA256.json').write_text(json.dumps({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'newDischarged':0,'files':rows},indent=2)+'\n')
           PY

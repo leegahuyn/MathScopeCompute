@@ -56,24 +56,50 @@ def main():
   if op in unary:ci_stack.extend(args[:1])
   elif op in ('add','multiply','maximum','smooth_piecewise'):ci_stack.extend(args)
   else:raise ValueError('Nonprimitive actual c_i ancestor '+str(i)+' '+op)
- map_cones=[]
- for root in sorted(map_roots):
-  seen=set();stack=[root]
-  while stack:
-   i=stack.pop()
-   if i in seen:continue
-   seen.add(i);assert str(i) in nodes,'Missing actual derivativeMap coefficient ancestor '+str(i)
-   n=nodes[str(i)];op=n['op'];args=n['args']
-   if op in ('rational','coordinate','source_parameter'):continue
-   if op in unary:stack.extend(args[:1])
-   elif op in ('add','multiply','maximum','smooth_piecewise'):stack.extend(args)
-   else:raise ValueError('Nonprimitive derivativeMap coefficient ancestor '+str(i)+' '+op)
-  map_cones.append({'root':root,'nodes':len(seen),'allSourceAncestorsPresent':True})
+ # Coefficients are constant for the NATIVE FIXED-LABEL derivative rule.
+ # Their unfrozen values contain nearest-label ceil -> point-chart roots;
+ # that global native frontier remains above. It is NOT a primitive or
+ # constant cone claim before the actual integer label boundary is cut.
+ # Never cut a continuous coordinate, a c_i value, or a native function.
+ peer=next(d for d in bindings if d['key']=='definitions:1:0')
+ peers={(r['label']['key'],r['label']['sign']):r for r in peer['rows']}
+ smooth_directions={622802,622803,622804,635044,635045,622806}
+ grouped={};four_field_roots=set()
+ for field in (d for d in bindings if d['key'].startswith('fieldDefinitions:')):
+  for row_index,row in enumerate(field['rows']):
+   matching=peers[(row['label']['key'],row['label']['sign'])]
+   assert row['label']['ell']==matching['label']['ell'] and row['label']['grid']==matching['label']['grid']
+   frozen={622791,row['label']['ell'],*row['label']['grid'],*matching['values'][12:14],matching['values'][15]}
+   assert not frozen.intersection(smooth_directions),'Cannot freeze a differentiated original coordinate'
+   for root in sorted({term['coefficient'] for column in row['derivativeMaps'] for term in column}):
+    four_field_roots.add(root);seen=set();stack=[root];cuts=set();coordinates=set()
+    while stack:
+     i=stack.pop()
+     if i in seen:continue
+     seen.add(i);assert str(i) in nodes,'Missing actual derivativeMap coefficient ancestor '+str(i)
+     if i in frozen:cuts.add(i);continue
+     n=nodes[str(i)];op=n['op'];args=n['args']
+     if op=='coordinate':coordinates.add(i);continue
+     if op in ('rational','source_parameter'):continue
+     if op in unary:stack.extend(args[:1])
+     elif op in ('add','multiply','maximum','smooth_piecewise'):stack.extend(args)
+     else:raise ValueError('Unreviewed native operator AFTER original frozen-label boundary '+str(i)+' '+op)
+    assert not coordinates.intersection(smooth_directions),'An actual map coefficient has an unfrozen continuous-coordinate capture'
+    key=(root,tuple(sorted(cuts)))
+    if key not in grouped:
+     grouped[key]={'root':root,'nodes':len(seen),'encounteredOriginalFrozenSourceRoots':sorted(cuts),
+       'remainingCoordinateSources':sorted(coordinates),'allPrimitiveAncestorsPresentUpToOriginalFrozenLabels':True,
+       'noUnfrozenDifferentiatedCoordinate':True,'applications':[]}
+    grouped[key]['applications'].append({'registry':field['key'],'row':row_index})
+ assert len(four_field_roots)==22,'Changed original four-field map coefficient inventory'
+ map_cones=list(grouped.values())
  result={'schema':'MathScope.N6.Actual162SupportAndDerivativeMapBindings/1','sourceHeaderSHA256':D['sourceHeaderSHA256'],'readOnly':True,
   'registryBindings':bindings,'nodes':nodes,'operations':dict(ops),'nativeCallFrontier':native,'boundedLocalBodyFrontier':sorted(cut),
-  'frozenRowArgumentPrimitiveConesRetained':True,'localBodyOnlyTopEightLevelsRetained':True,
+  'frozenRowArgumentPrimitiveConesRetained':False,'sourceRowArgumentConesRetainedThroughNativeFrontier':True,'localBodyOnlyTopEightLevelsRetained':True,
   'actualOriginalCiPrimitiveCone':{'root':623025,'nodes':len(ci_seen),'allSourceAncestorsPresent':True},
   'actualDerivativeMapCoefficientPrimitiveCones':map_cones,
+  'actualFourFieldMapCoefficientRootCount':len(four_field_roots),
+  'derivativeMapConeScope':'Only fieldDefinitions6..9, ONLY AFTER exact original integer N/ell/grid/copy/delta roots are frozen. No c_i value or native function is frozen. The unfrozen global native frontier remains explicitly retained and its regularity is OPEN.',
   'newDischarged':0,'scope':'Original row/center/label/copy/guard graph bindings for support proof; smoothness of guarded inner bodies remains external.'}
  a.out.write_text(json.dumps(result,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
  print(json.dumps({'bytes':a.out.stat().st_size,'sourceNodes':len(nodes),'sourceRegistryDefinitions':len(bindings),'newDischarged':0}))
