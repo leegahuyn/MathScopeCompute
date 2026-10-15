@@ -1,0 +1,104 @@
+name: N6 actual native domains and source support frontier
+on:
+  push:
+    branches: [mathscope-m3-n6-cloud-20261014]
+    paths:
+      - 'tools/n6-native-domain-frontier-20261015/*.py'
+      - '.github/workflows/m3-n6-native-domain-frontier.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: n6-native-domains-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            tools/n6-native-domain-frontier-20261015
+            tools/n6-domain-transport-20261015
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.13.5'
+      - run: python -m pip install sympy==1.14.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          run-id: 38673138045
+          name: n6-domain-full-source-38673138045
+          path: ${{ runner.temp }}/source
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          run-id: 38694948443
+          name: n6-remaining-closure-38694948443
+          path: ${{ runner.temp }}/prior
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          run-id: 38689780299
+          name: n6-regularity-source-38689780299
+          path: ${{ runner.temp }}/kernels
+      - name: Verify prior execution artifacts
+        env:
+          PRIOR: ${{ runner.temp }}/prior
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib
+          root=pathlib.Path(os.environ['PRIOR']);r=json.loads((root/'RESULT_SHA256.json').read_text())
+          assert r['commit']=='2f88dd1fc36365a5840fc7a9fab486ab868a8085' and r['run']=='38694948443'
+          for row in r['files']:
+              raw=(root/row['path']).read_bytes()
+              assert len(raw)==row['bytes'] and hashlib.sha256(raw).hexdigest()==row['sha256'],row['path']
+          tests=json.loads((root/'TESTS.json').read_text());assert tests['successful'] and tests['passed']==72
+          PY
+      - name: Extract all actual natural arguments and original source domains
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/result"
+          python tools/n6-native-domain-frontier-20261015/native_domain_extract.py \
+            --source "$RUNNER_TEMP/source" \
+            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
+            --out "$RUNNER_TEMP/result" 2>&1 | tee "$RUNNER_TEMP/result/DOMAIN_EXECUTION.log"
+      - name: Independent source-bound subkernel checks and support extraction
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          python -m unittest discover -s "$tool" -p test_native_domain_extract.py -v 2>&1 | tee "$RUNNER_TEMP/result/DOMAIN_TESTS.log"
+          python "$tool/verify_regularity_mechanisms.py" --kernels "$RUNNER_TEMP/kernels" \
+            --extract "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/REGULARITY_MECHANISMS.json"
+          python "$tool/jet_pde_native_chart.py" --extract "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+            --out "$RUNNER_TEMP/result/NATIVE_CHART_DERIVATIVES.json"
+          python "$tool/jet_pde_assembly_certificate.py" --extract "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+            --out "$RUNNER_TEMP/result/CONDITIONAL_ASSEMBLY_ALGEBRA.json"
+          python "$tool/jet_pde_support_extract.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
+            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/COMPACT_162_SUPPORT.json"
+      - name: Record scoped result hashes
+        if: always()
+        env:
+          RESULT: ${{ runner.temp }}/result
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib
+          out=pathlib.Path(os.environ['RESULT']);out.mkdir(exist_ok=True)
+          rows=[{'path':p.name,'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(out.iterdir()) if p.is_file() and p.suffix in ('.json','.log') and p.name!='RESULT_SHA256.json']
+          (out/'RESULT_SHA256.json').write_text(json.dumps({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'newDischarged':0,'files':rows},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: n6-native-domains-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/result/*.json
+            ${{ runner.temp }}/result/*.log
+          retention-days: 90
+          if-no-files-found: error
