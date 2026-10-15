@@ -60,9 +60,11 @@ const endpoint=G.log(G.div(X,Xa));
 const expectedF=G.mul(g,phi(q(4)),G.exp(G.mul(q(-1,2),G.integral(c.a,cy,z,endpoint))));
 const expectedU=G.add(u(q(4)),G.integral(c.UlogDerivative,cy,z,endpoint));
 assert.equal(G.nodes[p.roots.B26F].args[4],expectedF);assert.equal(G.nodes[p.roots.B26U].args[4],expectedU);
-let diagnosticOverlap=0;if(options.diagnostics){const diag=JSON.parse(await readFile(resolve(options.diagnostics),'utf8'));for(const[id,n]of Object.entries(diag.argumentAndContextGraph)){const i=Number(id);if(i<sourceNodeCount){assert.deepEqual(G.nodes[i],n);diagnosticOverlap++;}}assert(diagnosticOverlap>0);}
+let diagnosticOverlap=0,fixedDefinitionCompared=false;if(options.diagnostics){const diag=JSON.parse(await readFile(resolve(options.diagnostics),'utf8'));
+assert.deepEqual({source:G.source,core:G.core,pressure:G.pressure,outer:G.outer,naturalKernel:G.naturalKernel},diag.fullNativePayloads.fixed);fixedDefinitionCompared=true;
+for(const[id,n]of Object.entries(diag.argumentAndContextGraph)){const i=Number(id);if(i<sourceNodeCount){assert.deepEqual(G.nodes[i],n);diagnosticOverlap++;}}assert(diagnosticOverlap>0);}
 assert.deepEqual(before,await readFile(sourcePath));
-const result={schema:'MathScope.N6.ActualNaturalB26SourceBinding/1',sourcePath:path,sourceSHA256:createHash('sha256').update(before).digest('hex'),sourceBytesUnchanged:true,sourceNodeCount,diagnosticOverlap,
+const result={schema:'MathScope.N6.ActualNaturalB26SourceBinding/1',sourcePath:path,sourceSHA256:createHash('sha256').update(before).digest('hex'),sourceBytesUnchanged:true,sourceNodeCount,diagnosticOverlap,fixedDefinitionCompared,
  checks:{literalSourceP1AndNs:true,allFiveLiteralCoreMoments:true,referenceLeftNaturalBodies:true,referenceLeftNaturalMomentHistory:true,literalNegativeZetaSign:true,literalB26ControlsAndMiddleBodies:true},
  sourceRoots:{referenceCoordinate:rx,referenceF:F,referenceU:U,referenceMoments:p.reference.moments,source:expected,coreMoments:actualMoments,B26F:expectedF,B26U:expectedU,controlCoordinate:cy,controls:c},
  negativeControls:{positiveZetaSignRejected:true},independentConservationProof:'ACTUAL_NATURAL_B26_JOIN_KO.md',newOriginalGuardsDischarged:0,newOriginalJetsDischarged:0,newOriginalPDETermsDischarged:0};

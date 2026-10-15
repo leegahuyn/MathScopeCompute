@@ -27,6 +27,13 @@ jobs:
             /tools/n6-domain-transport-20261015/*
             /research-ide/mathscope-m0/*.mjs
             /research-ide/mathscope-m1/navier/numerics.mjs
+            /research-ide/mathscope-m1/navier/followup-20261010-symbolic-gluing/certify_symbolic_b8.py
+            /research-ide/mathscope-m1/navier/followup-20261010-symbolic-gluing/certify_symbolic_c2.py
+            /research-ide/mathscope-m1/navier/followup-next/uniform-gluing/dyadic_interval.py
+            /research-ide/mathscope-m1/navier/followup-next/uniform-gluing/logarithmic_interval.py
+            /research-ide/mathscope-m1/navier/followup-next/uniform-gluing/certify_uniform_moment_map.py
+            /research-ide/mathscope-m1/navier/followup-20261010-outer-reselection/OUTER_DERIVATION.md
+            /research-ide/mathscope-m1/navier/followup-20261010-outer-reselection/check_outer_envelopes.py
             /research-ide/mathscope-m2/navier/*.mjs
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
@@ -143,6 +150,7 @@ jobs:
           tool=tools/n6-native-domain-frontier-20261015
           {
             node "$tool/actual_loop_native_probe.mjs" --kernel-root "$PWD" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
               --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/ACTUAL_LOOP_NATIVE_BINDING.json"
             python "$tool/actual_loop_regularity.py" --kernels "$RUNNER_TEMP/kernels" \
               --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
@@ -236,6 +244,60 @@ jobs:
           python tools/n6-native-domain-frontier-20261015/actual_natural_radial_positivity.py \
             --majorant "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
             --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_RADIAL_POSITIVITY.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_natural_radial_positivity.log"
+      - name: Actual B26 and B34 positive radial shear
+        id: gate_b26_b34_positivity
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/actual_b26_radial_positivity.py" --kernels "$RUNNER_TEMP/kernels" \
+              --natural "$RUNNER_TEMP/result/ACTUAL_NATURAL_RADIAL_POSITIVITY.json" \
+              --binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_B26_BINDING.json" --out "$RUNNER_TEMP/result/ACTUAL_B26_RADIAL_POSITIVITY.json"
+            node "$tool/actual_b34_binding.mjs" --kernel-root "$PWD" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_B34_BINDING.json"
+            python "$tool/actual_b34_radial_positivity.py" --binding "$RUNNER_TEMP/result/ACTUAL_B34_BINDING.json" \
+              --b26 "$RUNNER_TEMP/result/ACTUAL_B26_RADIAL_POSITIVITY.json" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_B34_RADIAL_POSITIVITY.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_b26_b34_positivity.log"
+      - name: Fresh original continuous B8 moment operator
+        id: gate_b8_continuous
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research-ide/mathscope-m1/navier/followup-20261010-symbolic-gluing/certify_symbolic_b8.py \
+            --panels 1024 --output "$RUNNER_TEMP/result/ACTUAL_B8_CONTINUOUS_REPLAY.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_b8_continuous.log"
+      - name: Actual B8 incoming debt and independent contraction
+        id: gate_b8_incoming
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            node "$tool/actual_b8_native_probe.mjs" --kernel-root "$PWD" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_B8_NATIVE_BINDING.json"
+            python "$tool/actual_b8_incoming.py" --replay "$RUNNER_TEMP/result/ACTUAL_B8_CONTINUOUS_REPLAY.json" \
+              --binding "$RUNNER_TEMP/result/ACTUAL_B8_NATIVE_BINDING.json" \
+              --natural "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+              --natural-radial "$RUNNER_TEMP/result/ACTUAL_NATURAL_RADIAL_POSITIVITY.json" \
+              --b26 "$RUNNER_TEMP/result/ACTUAL_B26_RADIAL_POSITIVITY.json" --b34 "$RUNNER_TEMP/result/ACTUAL_B34_RADIAL_POSITIVITY.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_B8_INCOMING.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_b8_incoming.log"
+      - name: Actual completed-leading static moving-frame domains
+        id: gate_frozen_frame
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/n6-native-domain-frontier-20261015/actual_frozen_frame_domains.py \
+            --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_FROZEN_FRAME_DOMAINS.json" 2>&1 | tee "$RUNNER_TEMP/result/GATE_frozen_frame.log"
       - name: Record scoped result hashes
         if: always()
         env:
