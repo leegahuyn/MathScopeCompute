@@ -822,6 +822,55 @@ jobs:
               --out "$RUNNER_TEMP/result/ACTUAL_AXIAL_DENSITY_REGULARITY.json"
             MATHSCOPE_PROOF_FIXTURE_ROOT="$RUNNER_TEMP/result" python -m unittest discover -s "$tool" -p test_actual_axial_density_regularity.py -v
           } 2>&1 | tee "$RUNNER_TEMP/result/GATE_axial_density_regularity.log"
+      - name: Exact original axial guard radial binder and three Cartesian face calls
+        id: gate_axial_face_binding
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_actual_axial_face_binding.py -v
+            python "$tool/actual_axial_face_binding.py" \
+              --background "$RUNNER_TEMP/result/ACTUAL_BACKGROUND_26_JET_REGULARITY.json" \
+              --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
+              --out "$RUNNER_TEMP/result/ACTUAL_AXIAL_FACE_BINDING.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_axial_face_binding.log"
+      - name: Genuine density ordinary partials and bounded piecewise original finite face
+        id: gate_axial_finite_faces
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/actual_axial_finite_faces.py" --input-dir "$RUNNER_TEMP/result" \
+              --out "$RUNNER_TEMP/result/ACTUAL_AXIAL_FINITE_FACES.json"
+            MATHSCOPE_PROOF_FIXTURE_ROOT="$RUNNER_TEMP/result" python -m unittest discover -s "$tool" -p test_actual_axial_finite_faces.py -v
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_axial_finite_faces.log"
+      - name: Fresh original background continuation using only the proved exact axial face
+        id: gate_background_26_axial_face
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/actual_background_jet_regularity.py" \
+              --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+              --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" \
+              --leading "$RUNNER_TEMP/result/ACTUAL_COMPLETED_LEADING_DOMAINS.json" \
+              --orderone "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_GLOBAL_REGULARITY.json" \
+              --orderone-binding "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_PRIMITIVE_BINDING.json" \
+              --majorant "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json" \
+              --natural-binding "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json" --kernels "$RUNNER_TEMP/kernels" \
+              --matrix "$RUNNER_TEMP/prior/OBLIGATION_MATRIX_CONTINUATION.json" \
+              --axial-finite-face-input-dir "$RUNNER_TEMP/result" \
+              --matrix-out "$RUNNER_TEMP/result/OBLIGATION_MATRIX_BACKGROUND_26_AXIAL_FACE.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_BACKGROUND_26_AXIAL_FACE_CONTINUATION.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_background_26_axial_face.log"
       - name: Record scoped result hashes
         if: always()
         env:

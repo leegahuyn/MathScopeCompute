@@ -95,7 +95,8 @@ def product(a,b):
 
 class ConstantDomains:
  """Finite real source constants with conservative sign proofs, no floats."""
- def __init__(self,get,parameters,native_handler=None):self.get=get;self.parameters=parameters;self.native_handler=native_handler;self.domains=[];self.used=set()
+ def __init__(self,get,parameters,native_handler=None,scalar_handler=None):
+  self.get=get;self.parameters=parameters;self.native_handler=native_handler;self.scalar_handler=scalar_handler;self.domains=[];self.used=set()
  @lru_cache(None)
  def ast(self,key):
   value=self.parameters[key]
@@ -171,6 +172,20 @@ class ConstantDomains:
  @lru_cache(None)
  def at(self,i,environment=()):
   self.used.add(i);node=self.get(i);op,a=node['op'],node['args']
+  # An explicitly replayed exact-source scalar theorem can close its complete
+  # finite integral before generic continuous-integrand recursion. This does
+  # not admit a new primitive or smoothness contract for any of its children.
+  if self.scalar_handler is not None:
+   try:application=self.scalar_handler(self,i,node,environment)
+   except ValueError as original:
+    err=original if isinstance(original,Gap) else Gap(str(original))
+    if not hasattr(err,'primitive_frontier'):
+     err.primitive_frontier={'node':i,'sourceNode':node,'scopedCoordinates':[j for j,_ in environment],
+      'unsupportedNativeOrPrimitive':True,'finiteOrPositiveValueAssumed':False,'exactScalarApplicationRejected':True}
+    raise err from original
+   if application is not None:
+    prove(isinstance(application,Bound),'Exact scalar theorem returned no real finite-value enclosure')
+    return application
   if op=='rational':return bounded(Q(int(a[0]),int(a[1])))
   if op=='source_parameter':prove(a[0] in self.parameters,'Unbound fixed source parameter');return self.ast(a[0])
   if op=='coordinate':
@@ -312,7 +327,7 @@ def bind_inputs(data,hashes,reg):
  for index in range(2,11):require(reg['expression'][index]['parameters']==[X,ETA] and reg['expression'][index]['unspecifiedOracle'] is False,'Changed original profile formal coordinates')
  return roots
 
-def body_proof(get,reg,leading_roots,native_handler=None):
+def body_proof(get,reg,leading_roots,native_handler=None,scalar_handler=None):
  q=('coordinate',QVAR);x=('coordinate',X);eta=('coordinate',ETA);h=('parameter','h')
  A=e.add(e.rat(1,2),h);L=e.add(e.rat(1),e.mul(e.rat(-2),h,e.power(eta,2)))
  cp=reg['expression'][677];prove(cp['name']=='ActualCovarianceSensitivityTargetPrefix_Cp' and cp['parameters']==[X,ETA],'Actual finite Cp helper definition')
@@ -331,7 +346,7 @@ def body_proof(get,reg,leading_roots,native_handler=None):
  sigma_id=next(iter(sigmas));sigma=get(sigma_id)
  prove(sigma['op']=='multiply' and len(sigma['args'])==2 and QVAR in sigma['args'],'Original scale times positive q')
  scale_id=next(i for i in sigma['args'] if i!=QVAR)
- constants=ConstantDomains(get,reg['fixed']['source']['parametersExactExpressions'],native_handler=native_handler)
+ constants=ConstantDomains(get,reg['fixed']['source']['parametersExactExpressions'],native_handler=native_handler,scalar_handler=scalar_handler)
  prove(constants.at(scale_id).strict_positive,'Original selector scale positivity/finiteness unresolved')
  normal=BodyNormal(get,reg,{3451:'P0',leading_roots['M']:'M0',scale_id:'fixedSelectorScale'})
  scale=normal.at(scale_id);sigmaN=e.mul(scale,q);chi0=call(680,[sigmaN]);extra=e.mul(sigmaN,call(680,[sigmaN],[1]));w=e.exp(e.mul(e.rat(2),h,e.log(q)))
@@ -405,6 +420,7 @@ def main():
  ap=argparse.ArgumentParser(description=__doc__)
  names=['source-db','stage3','header','compact','leading','orderone','orderone-binding','majorant','natural-binding','kernels','matrix','matrix-out','out']
  for n in names:ap.add_argument('--'+n,type=Path,required=True)
+ ap.add_argument('--axial-finite-face-input-dir',type=Path)
  a=ap.parse_args();sys.setrecursionlimit(20000)
  require(a.matrix.resolve() not in {a.out.resolve(),a.matrix_out.resolve()},'Historical matrix must remain immutable')
  require(digest(a.stage3.read_bytes())==STAGE3_PIN,'Changed inherited Stage3')
@@ -435,8 +451,12 @@ def main():
  # Other ConstantDomains callers retain their fail-closed default.
  from actual_background_profile_constants import make_profile_native_handler
  profile_native_handler=make_profile_native_handler(reg,data,hashes,Bound)
+ scalar_handler=None
+ if a.axial_finite_face_input_dir is not None:
+  from actual_axial_finite_faces import make_finite_face_application
+  scalar_handler=make_finite_face_application(get,a.axial_finite_face_input_dir,Bound)
  gap=None;proof=None;gap_details=None
- try:proof=body_proof(get,reg,roots,native_handler=profile_native_handler)
+ try:proof=body_proof(get,reg,roots,native_handler=profile_native_handler,scalar_handler=scalar_handler)
  except Gap as err:
   gap=str(err);gap_details=getattr(err,'primitive_frontier',None)
   if gap_details is not None:
@@ -479,6 +499,12 @@ def main():
   'wholeGOnJProved':False,'allInfiniteBandsEquivalenceClaimed':False,
   'newOriginalGuardsDischarged':0,'newOriginalJetsDischarged':len(proved_ids),'newOriginalPDETermsDischarged':0,
   'proof':'ACTUAL_BACKGROUND_26_JET_REGULARITY_KO.md'}
+ if scalar_handler is not None:
+  result['actualAxialFiniteFaceApplication']={
+   'reconstructedTheorem':copy.deepcopy(scalar_handler.receipt),
+   'actualApplications':copy.deepcopy(scalar_handler.applications),
+   'originalRowsAcceptedFromScalarFinitenessAlone':False,
+   'allNineBodyAnd26OrderedRequestAcceptanceGatesRetained':True}
  require(a.matrix.read_bytes()==raw['matrix'],'Historical matrix changed during read-only proof')
  a.out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
  a.matrix_out.write_text(json.dumps(newmatrix,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
