@@ -1,0 +1,2100 @@
+{
+  "schema": "MathScope.N6.ActualN1AuxiliaryNormBinding/1",
+  "sourcePath": "research-ide/mathscope-m2/navier/actual-residual-order-induction-source.mjs",
+  "sourceSHA256": "30e135309b5e0a5866917949d2ded96cce64828b1331400cb8e2260caabdc047",
+  "sourceBytesUnchanged": true,
+  "sourceHeaderSHA256": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+  "originalActualPicardDefinitionCompared": true,
+  "fixedCoreAndSourceCompared": true,
+  "n2Constructed": false,
+  "originalAuxiliarySystem": {
+    "name": "ActualSameN3auxiliaryOrder1",
+    "order": 1,
+    "kind": "auxiliary",
+    "xi": 117309,
+    "eta": 2,
+    "diagonal": [
+      0,
+      0,
+      2,
+      0,
+      3,
+      1
+    ],
+    "A0": [
+      [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        20
+      ],
+      [
+        117366,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        117388,
+        117408,
+        117410,
+        0,
+        117415,
+        0
+      ],
+      [
+        117418,
+        117439,
+        117441,
+        25560,
+        0,
+        117415
+      ]
+    ],
+    "A1": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        117445,
+        117447,
+        117447,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        117452,
+        117454,
+        25576,
+        0,
+        0
+      ]
+    ],
+    "forcing": [
+      0,
+      0,
+      0,
+      117532,
+      117581,
+      117624
+    ],
+    "zeroAxisDatum": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "radialDomain": [
+      0,
+      117625
+    ],
+    "lowerOrders": [
+      {
+        "order": 0,
+        "F": 117365,
+        "U": 117369,
+        "v": 117383,
+        "kind": "auxiliary"
+      }
+    ],
+    "tail": {
+      "sourceBound": 117190,
+      "sourceStrip": 117104,
+      "solutionStrip": 117103,
+      "loss": 117103,
+      "Kcondition": 117202,
+      "valueTailAtK": "4^-K/3 for K>=Kcondition",
+      "etaTailAtK": "m!*(2/solutionStrip)^m*4^-K/3",
+      "sourceNormProducer": "actual-residual-order-induction-source.mjs:innerNorm",
+      "actualAllOperandsSpecified": true,
+      "finitePartialSumIsSolution": false
+    },
+    "solutionNorm": 117197,
+    "actualNaturalAuxiliaryEquations": true,
+    "actualFinalizedLowerCutoffs": false
+  },
+  "originalAuxiliaryDefinitionSHA256": "dbb79e07e1d58a64d246dcae7792df219c173c2f25ab1712f04423415bf95694",
+  "actualSourceParameterExpressions": {
+    "Md": {
+      "integer": 1048576
+    },
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "logP": {
+      "product": [
+        {
+          "integer": 2
+        },
+        {
+          "ref": "T"
+        }
+      ]
+    },
+    "Pstar": {
+      "exp": {
+        "ref": "logP"
+      }
+    },
+    "lambda": {
+      "exp": {
+        "product": [
+          {
+            "integer": -1000
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "h": {
+      "exp": {
+        "product": [
+          {
+            "integer": -8002
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "co": {
+      "rational": "1/256"
+    },
+    "Tf": {
+      "integer": 128
+    },
+    "K": {
+      "power": [
+        {
+          "ref": "Pstar"
+        },
+        2
+      ]
+    },
+    "epsilonMoment": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        3
+      ]
+    },
+    "muMoment": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        2
+      ]
+    },
+    "j0": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        4
+      ]
+    },
+    "deltaStar": {
+      "quotient": [
+        {
+          "ref": "j0"
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "sigmaStar": {
+      "quotient": [
+        {
+          "ref": "j0"
+        },
+        {
+          "integer": 2000
+        }
+      ]
+    },
+    "outerComplexRadius": {
+      "quotient": [
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        },
+        {
+          "integer": 2048
+        }
+      ]
+    },
+    "rho": {
+      "quotient": [
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        },
+        {
+          "integer": 65536
+        }
+      ]
+    },
+    "Q": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": "1852673427797059126777135760139006525652319754650249024631321344126610074238976"
+            },
+            {
+              "ref": "K"
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        }
+      ]
+    },
+    "Lambda": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        64
+      ]
+    },
+    "logCaxis": {
+      "sum": [
+        {
+          "quotient": [
+            {
+              "product": [
+                {
+                  "integer": 64
+                },
+                {
+                  "ref": "Lambda"
+                }
+              ]
+            },
+            {
+              "power": [
+                {
+                  "ref": "sigmaStar"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "integer": 1
+        }
+      ]
+    },
+    "Caxis": {
+      "exp": {
+        "ref": "logCaxis"
+      }
+    },
+    "barT": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        -200
+      ]
+    },
+    "BRefUpper": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        300
+      ]
+    },
+    "Bk": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        80
+      ]
+    },
+    "Tsh": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        90
+      ]
+    },
+    "logCSelected": {
+      "sum": [
+        {
+          "product": [
+            {
+              "integer": 10
+            },
+            {
+              "log": {
+                "sum": [
+                  {
+                    "integer": 1
+                  },
+                  {
+                    "ref": "BRefUpper"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "Q"
+            },
+            200
+          ]
+        }
+      ]
+    },
+    "CSelected": {
+      "exp": {
+        "ref": "logCSelected"
+      }
+    },
+    "XR": {
+      "product": [
+        {
+          "integer": 110
+        },
+        {
+          "power": [
+            {
+              "product": [
+                {
+                  "ref": "CSelected"
+                },
+                {
+                  "ref": "Pstar"
+                }
+              ]
+            },
+            10
+          ]
+        }
+      ]
+    },
+    "Xsep": {
+      "product": [
+        {
+          "integer": 110
+        },
+        {
+          "exp": {
+            "ref": "Tsh"
+          }
+        }
+      ]
+    },
+    "L0": {
+      "log": {
+        "product": [
+          {
+            "rational": "55/2"
+          },
+          {
+            "ref": "Lambda"
+          }
+        ]
+      }
+    },
+    "Lmath": {
+      "sum": [
+        {
+          "ref": "logCSelected"
+        },
+        {
+          "quotient": [
+            {
+              "product": [
+                {
+                  "integer": 34
+                },
+                {
+                  "ref": "Lambda"
+                }
+              ]
+            },
+            {
+              "power": [
+                {
+                  "ref": "sigmaStar"
+                },
+                2
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "VA": {
+      "sum": [
+        {
+          "integer": 1
+        },
+        {
+          "ref": "BRefUpper"
+        },
+        {
+          "product": [
+            {
+              "integer": 1048576
+            },
+            {
+              "power": [
+                {
+                  "ref": "BRefUpper"
+                },
+                2
+              ]
+            },
+            {
+              "power": [
+                {
+                  "ref": "Lambda"
+                },
+                4
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "Bcmp0": {
+      "product": [
+        {
+          "integer": 1000000
+        },
+        {
+          "power": [
+            {
+              "sum": [
+                {
+                  "integer": 1
+                },
+                {
+                  "power": [
+                    {
+                      "ref": "Q"
+                    },
+                    1000
+                  ]
+                },
+                {
+                  "ref": "BRefUpper"
+                },
+                {
+                  "ref": "VA"
+                },
+                {
+                  "ref": "L0"
+                }
+              ]
+            },
+            4
+          ]
+        }
+      ]
+    },
+    "Gamma": {
+      "product": [
+        {
+          "ref": "Bcmp0"
+        },
+        {
+          "exp": {
+            "ref": "Lmath"
+          }
+        }
+      ]
+    },
+    "Kcmp": {
+      "product": [
+        {
+          "integer": 1000
+        },
+        {
+          "power": [
+            {
+              "ref": "Gamma"
+            },
+            16
+          ]
+        }
+      ]
+    },
+    "Vmax": {
+      "product": [
+        {
+          "ref": "VA"
+        },
+        {
+          "exp": {
+            "product": [
+              {
+                "integer": 2
+              },
+              {
+                "ref": "Lmath"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "tauBase": {
+      "min": [
+        {
+          "quotient": [
+            {
+              "ref": "barT"
+            },
+            {
+              "integer": 4
+            }
+          ]
+        },
+        {
+          "rational": "1/1000"
+        },
+        {
+          "quotient": [
+            {
+              "integer": 1
+            },
+            {
+              "product": [
+                {
+                  "integer": 100
+                },
+                {
+                  "ref": "Gamma"
+                },
+                {
+                  "ref": "Bcmp0"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "quotient": [
+            {
+              "ref": "j0"
+            },
+            {
+              "product": [
+                {
+                  "integer": 100000000
+                },
+                {
+                  "sum": [
+                    {
+                      "integer": 1
+                    },
+                    {
+                      "ref": "BRefUpper"
+                    }
+                  ]
+                },
+                {
+                  "sum": [
+                    {
+                      "integer": 1
+                    },
+                    {
+                      "ref": "L0"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "quotient": [
+            {
+              "power": [
+                {
+                  "ref": "Q"
+                },
+                -200
+              ]
+            },
+            {
+              "product": [
+                {
+                  "integer": 1000000
+                },
+                {
+                  "sum": [
+                    {
+                      "integer": 1
+                    },
+                    {
+                      "ref": "BRefUpper"
+                    }
+                  ]
+                },
+                {
+                  "sum": [
+                    {
+                      "integer": 1
+                    },
+                    {
+                      "ref": "L0"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "quotient": [
+            {
+              "integer": 1
+            },
+            {
+              "product": [
+                {
+                  "integer": 100000000
+                },
+                {
+                  "ref": "Bcmp0"
+                },
+                {
+                  "power": [
+                    {
+                      "sum": [
+                        {
+                          "integer": 1
+                        },
+                        {
+                          "ref": "Kcmp"
+                        }
+                      ]
+                    },
+                    2
+                  ]
+                },
+                {
+                  "power": [
+                    {
+                      "sum": [
+                        {
+                          "integer": 1
+                        },
+                        {
+                          "ref": "Vmax"
+                        }
+                      ]
+                    },
+                    2
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "t1": {
+      "power": [
+        {
+          "ref": "CSelected"
+        },
+        -120
+      ]
+    },
+    "kappa0": {
+      "ref": "t1"
+    },
+    "omega1": {
+      "ref": "t1"
+    },
+    "omega2": {
+      "ref": "t1"
+    },
+    "DeltaEarly": {
+      "exp": {
+        "quotient": [
+          {
+            "product": [
+              {
+                "integer": -1
+              },
+              {
+                "power": [
+                  {
+                    "ref": "Q"
+                  },
+                  200
+                ]
+              }
+            ]
+          },
+          {
+            "integer": 4
+          }
+        ]
+      }
+    },
+    "sourceEnvelopeS": {
+      "power": [
+        {
+          "ref": "CSelected"
+        },
+        100000
+      ]
+    },
+    "sourceJLeft": {
+      "product": [
+        {
+          "quotient": [
+            {
+              "integer": 4
+            },
+            {
+              "ref": "Lambda"
+            }
+          ]
+        },
+        {
+          "exp": {
+            "quotient": [
+              {
+                "ref": "t1"
+              },
+              {
+                "integer": 16
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sourceJRight": {
+      "product": [
+        {
+          "integer": 16
+        },
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60000
+                  },
+                  {
+                    "ref": "T"
+                  }
+                ]
+              },
+              {
+                "integer": -25
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "loopILeft": {
+      "product": [
+        {
+          "quotient": [
+            {
+              "integer": 4
+            },
+            {
+              "ref": "Lambda"
+            }
+          ]
+        },
+        {
+          "exp": {
+            "quotient": [
+              {
+                "ref": "t1"
+              },
+              {
+                "integer": 8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "loopIRight": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "BOuter": {
+      "product": [
+        {
+          "integer": 1000
+        },
+        {
+          "ref": "T"
+        }
+      ]
+    },
+    "Xa": {
+      "quotient": [
+        {
+          "integer": 4
+        },
+        {
+          "ref": "Lambda"
+        }
+      ]
+    },
+    "loopD0": {
+      "quotient": [
+        {
+          "integer": 1
+        },
+        {
+          "product": [
+            {
+              "integer": 8
+            },
+            {
+              "ref": "sourceEnvelopeS"
+            }
+          ]
+        }
+      ]
+    },
+    "loopMuMax": {
+      "power": [
+        {
+          "ref": "sourceEnvelopeS"
+        },
+        12
+      ]
+    },
+    "loopDelta": {
+      "exp": {
+        "product": [
+          {
+            "integer": -1
+          },
+          {
+            "power": [
+              {
+                "ref": "sourceEnvelopeS"
+              },
+              16
+            ]
+          }
+        ]
+      }
+    },
+    "C12EnvelopeR": {
+      "exp": {
+        "power": [
+          {
+            "ref": "sourceEnvelopeS"
+          },
+          256
+        ]
+      }
+    },
+    "radialFrequencyN": {
+      "sum": [
+        {
+          "integer": 1
+        },
+        {
+          "ceil": {
+            "power": [
+              {
+                "ref": "C12EnvelopeR"
+              },
+              50
+            ]
+          }
+        }
+      ]
+    },
+    "directionalMarginKappa": {
+      "power": [
+        {
+          "ref": "C12EnvelopeR"
+        },
+        -10
+      ]
+    },
+    "stressFlatLowerConstant": {
+      "min": [
+        {
+          "power": [
+            {
+              "ref": "CSelected"
+            },
+            -11
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "C12EnvelopeR"
+            },
+            -8
+          ]
+        }
+      ]
+    },
+    "X0I1": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60
+                  },
+                  {
+                    "ref": "BOuter"
+                  }
+                ]
+              },
+              {
+                "integer": -25
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "I1Right": {
+      "product": [
+        {
+          "ref": "X0I1"
+        },
+        {
+          "exp": {
+            "integer": 5
+          }
+        }
+      ]
+    },
+    "X0I2": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60
+                  },
+                  {
+                    "ref": "BOuter"
+                  }
+                ]
+              },
+              {
+                "integer": -20
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "I2Right": {
+      "product": [
+        {
+          "ref": "X0I2"
+        },
+        {
+          "exp": {
+            "integer": 5
+          }
+        }
+      ]
+    },
+    "X0Ipos": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60
+                  },
+                  {
+                    "ref": "BOuter"
+                  }
+                ]
+              },
+              {
+                "integer": -14
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "IposRight": {
+      "product": [
+        {
+          "ref": "X0Ipos"
+        },
+        {
+          "exp": {
+            "integer": 5
+          }
+        }
+      ]
+    },
+    "X0Imean": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60
+                  },
+                  {
+                    "ref": "BOuter"
+                  }
+                ]
+              },
+              {
+                "integer": -8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "ImeanRight": {
+      "product": [
+        {
+          "ref": "X0Imean"
+        },
+        {
+          "exp": {
+            "integer": 5
+          }
+        }
+      ]
+    }
+  },
+  "scalarRoots": {
+    "C": 117190,
+    "solutionNorm": 117197,
+    "strip": 117103,
+    "sourceStrip": 117104,
+    "loss": 117103,
+    "previousStrip": 24807,
+    "radialDomain": 117107,
+    "radius": 117106,
+    "Kcondition": 117202,
+    "naturalBase": 117129,
+    "gBound": 117126,
+    "H": 117133,
+    "V": 117135,
+    "e1": 117136,
+    "e2": 117138,
+    "E": 117139,
+    "omega": 117156,
+    "pKnown": 117175,
+    "Htheta": 117174,
+    "Hz": 117174,
+    "matrixBound": 117186,
+    "forcingBound0": 0,
+    "forcingBound1": 0,
+    "forcingBound2": 0,
+    "forcingBound3": 117176,
+    "forcingBound4": 117177,
+    "forcingBound5": 117179
+  },
+  "scalarNodes": {
+    "0": {
+      "op": "rational",
+      "args": [
+        "0",
+        "1"
+      ]
+    },
+    "1": {
+      "op": "rational",
+      "args": [
+        "1",
+        "1"
+      ]
+    },
+    "9": {
+      "op": "source_parameter",
+      "args": [
+        "h"
+      ]
+    },
+    "19": {
+      "op": "rational",
+      "args": [
+        "1",
+        "2"
+      ]
+    },
+    "24": {
+      "op": "rational",
+      "args": [
+        "2",
+        "1"
+      ]
+    },
+    "25": {
+      "op": "multiply",
+      "args": [
+        9,
+        24
+      ]
+    },
+    "474": {
+      "op": "rational",
+      "args": [
+        "4",
+        "1"
+      ]
+    },
+    "591": {
+      "op": "rational",
+      "args": [
+        "16",
+        "1"
+      ]
+    },
+    "656": {
+      "op": "rational",
+      "args": [
+        "3",
+        "2"
+      ]
+    },
+    "669": {
+      "op": "rational",
+      "args": [
+        "10",
+        "1"
+      ]
+    },
+    "3308": {
+      "op": "rational",
+      "args": [
+        "1024",
+        "1"
+      ]
+    },
+    "3430": {
+      "op": "rational",
+      "args": [
+        "5",
+        "1"
+      ]
+    },
+    "3454": {
+      "op": "source_parameter",
+      "args": [
+        "Lambda"
+      ]
+    },
+    "3455": {
+      "op": "source_parameter",
+      "args": [
+        "sigmaStar"
+      ]
+    },
+    "3456": {
+      "op": "source_parameter",
+      "args": [
+        "CSelected"
+      ]
+    },
+    "3457": {
+      "op": "inverse",
+      "args": [
+        3454
+      ]
+    },
+    "3469": {
+      "op": "integer_power",
+      "args": [
+        3455,
+        2
+      ]
+    },
+    "3497": {
+      "op": "inverse",
+      "args": [
+        3456
+      ]
+    },
+    "7306": {
+      "op": "rational",
+      "args": [
+        "1",
+        "8"
+      ]
+    },
+    "8835": {
+      "op": "rational",
+      "args": [
+        "9",
+        "1"
+      ]
+    },
+    "24797": {
+      "op": "source_parameter",
+      "args": [
+        "Q"
+      ]
+    },
+    "24798": {
+      "op": "source_parameter",
+      "args": [
+        "rho"
+      ]
+    },
+    "24799": {
+      "op": "multiply",
+      "args": [
+        3308,
+        24797
+      ]
+    },
+    "24800": {
+      "op": "inverse",
+      "args": [
+        24799
+      ]
+    },
+    "24801": {
+      "op": "multiply",
+      "args": [
+        24798,
+        24800
+      ]
+    },
+    "24807": {
+      "op": "multiply",
+      "args": [
+        7306,
+        24801
+      ]
+    },
+    "24808": {
+      "op": "integer_power",
+      "args": [
+        3454,
+        2
+      ]
+    },
+    "24821": {
+      "op": "rational",
+      "args": [
+        "72",
+        "1"
+      ]
+    },
+    "24823": {
+      "op": "inverse",
+      "args": [
+        24807
+      ]
+    },
+    "28810": {
+      "op": "rational",
+      "args": [
+        "128",
+        "1"
+      ]
+    },
+    "28815": {
+      "op": "rational",
+      "args": [
+        "64",
+        "1"
+      ]
+    },
+    "29004": {
+      "op": "rational",
+      "args": [
+        "1",
+        "2048"
+      ]
+    },
+    "117103": {
+      "op": "multiply",
+      "args": [
+        24801,
+        29004
+      ]
+    },
+    "117104": {
+      "op": "multiply",
+      "args": [
+        474,
+        117103
+      ]
+    },
+    "117105": {
+      "op": "rational",
+      "args": [
+        "6",
+        "1"
+      ]
+    },
+    "117106": {
+      "op": "rational",
+      "args": [
+        "7",
+        "1"
+      ]
+    },
+    "117107": {
+      "op": "multiply",
+      "args": [
+        3457,
+        117106
+      ]
+    },
+    "117122": {
+      "op": "multiply",
+      "args": [
+        3454,
+        28810
+      ]
+    },
+    "117123": {
+      "op": "inverse",
+      "args": [
+        3469
+      ]
+    },
+    "117124": {
+      "op": "multiply",
+      "args": [
+        117122,
+        117123
+      ]
+    },
+    "117125": {
+      "op": "exp",
+      "args": [
+        117124
+      ]
+    },
+    "117126": {
+      "op": "multiply",
+      "args": [
+        3497,
+        117125
+      ]
+    },
+    "117127": {
+      "op": "add",
+      "args": [
+        1,
+        117126
+      ]
+    },
+    "117128": {
+      "op": "multiply",
+      "args": [
+        24797,
+        28815
+      ]
+    },
+    "117129": {
+      "op": "multiply",
+      "args": [
+        117127,
+        117128
+      ]
+    },
+    "117130": {
+      "op": "multiply",
+      "args": [
+        24,
+        24808
+      ]
+    },
+    "117131": {
+      "op": "maximum",
+      "args": [
+        1,
+        117130
+      ]
+    },
+    "117132": {
+      "op": "multiply",
+      "args": [
+        117129,
+        117131
+      ]
+    },
+    "117133": {
+      "op": "maximum",
+      "args": [
+        1,
+        117132
+      ]
+    },
+    "117134": {
+      "op": "multiply",
+      "args": [
+        28810,
+        117133
+      ]
+    },
+    "117135": {
+      "op": "multiply",
+      "args": [
+        24823,
+        117134
+      ]
+    },
+    "117136": {
+      "op": "multiply",
+      "args": [
+        591,
+        24823
+      ]
+    },
+    "117137": {
+      "op": "integer_power",
+      "args": [
+        117136,
+        2
+      ]
+    },
+    "117138": {
+      "op": "multiply",
+      "args": [
+        24,
+        117137
+      ]
+    },
+    "117139": {
+      "op": "add",
+      "args": [
+        25,
+        474
+      ]
+    },
+    "117140": {
+      "op": "multiply",
+      "args": [
+        24,
+        117136
+      ]
+    },
+    "117141": {
+      "op": "add",
+      "args": [
+        117139,
+        117140
+      ]
+    },
+    "117142": {
+      "op": "add",
+      "args": [
+        1,
+        117141
+      ]
+    },
+    "117143": {
+      "op": "multiply",
+      "args": [
+        24,
+        117135
+      ]
+    },
+    "117144": {
+      "op": "multiply",
+      "args": [
+        117142,
+        117143
+      ]
+    },
+    "117145": {
+      "op": "multiply",
+      "args": [
+        117105,
+        117135
+      ]
+    },
+    "117146": {
+      "op": "multiply",
+      "args": [
+        656,
+        117135
+      ]
+    },
+    "117147": {
+      "op": "multiply",
+      "args": [
+        117135,
+        117146
+      ]
+    },
+    "117148": {
+      "op": "multiply",
+      "args": [
+        3430,
+        117139
+      ]
+    },
+    "117149": {
+      "op": "multiply",
+      "args": [
+        117105,
+        117136
+      ]
+    },
+    "117150": {
+      "op": "add",
+      "args": [
+        3430,
+        117148
+      ]
+    },
+    "117151": {
+      "op": "add",
+      "args": [
+        117149,
+        117150
+      ]
+    },
+    "117152": {
+      "op": "multiply",
+      "args": [
+        117135,
+        117151
+      ]
+    },
+    "117153": {
+      "op": "multiply",
+      "args": [
+        117133,
+        117152
+      ]
+    },
+    "117154": {
+      "op": "add",
+      "args": [
+        117144,
+        117145
+      ]
+    },
+    "117155": {
+      "op": "add",
+      "args": [
+        117147,
+        117154
+      ]
+    },
+    "117156": {
+      "op": "add",
+      "args": [
+        117153,
+        117155
+      ]
+    },
+    "117157": {
+      "op": "multiply",
+      "args": [
+        117133,
+        117151
+      ]
+    },
+    "117158": {
+      "op": "multiply",
+      "args": [
+        117148,
+        117157
+      ]
+    },
+    "117159": {
+      "op": "add",
+      "args": [
+        669,
+        117148
+      ]
+    },
+    "117160": {
+      "op": "add",
+      "args": [
+        117149,
+        117159
+      ]
+    },
+    "117161": {
+      "op": "multiply",
+      "args": [
+        117133,
+        117160
+      ]
+    },
+    "117162": {
+      "op": "multiply",
+      "args": [
+        3430,
+        117161
+      ]
+    },
+    "117163": {
+      "op": "multiply",
+      "args": [
+        591,
+        117139
+      ]
+    },
+    "117164": {
+      "op": "rational",
+      "args": [
+        "69",
+        "1"
+      ]
+    },
+    "117165": {
+      "op": "add",
+      "args": [
+        117148,
+        117164
+      ]
+    },
+    "117166": {
+      "op": "multiply",
+      "args": [
+        117136,
+        117165
+      ]
+    },
+    "117167": {
+      "op": "multiply",
+      "args": [
+        117105,
+        117138
+      ]
+    },
+    "117168": {
+      "op": "add",
+      "args": [
+        28815,
+        117163
+      ]
+    },
+    "117169": {
+      "op": "add",
+      "args": [
+        117166,
+        117168
+      ]
+    },
+    "117170": {
+      "op": "add",
+      "args": [
+        117167,
+        117169
+      ]
+    },
+    "117171": {
+      "op": "multiply",
+      "args": [
+        117133,
+        117170
+      ]
+    },
+    "117172": {
+      "op": "multiply",
+      "args": [
+        117105,
+        117171
+      ]
+    },
+    "117173": {
+      "op": "add",
+      "args": [
+        117158,
+        117162
+      ]
+    },
+    "117174": {
+      "op": "add",
+      "args": [
+        117172,
+        117173
+      ]
+    },
+    "117175": {
+      "op": "multiply",
+      "args": [
+        19,
+        117156
+      ]
+    },
+    "117176": {
+      "op": "multiply",
+      "args": [
+        24,
+        117175
+      ]
+    },
+    "117177": {
+      "op": "multiply",
+      "args": [
+        24,
+        117174
+      ]
+    },
+    "117178": {
+      "op": "multiply",
+      "args": [
+        591,
+        117175
+      ]
+    },
+    "117179": {
+      "op": "add",
+      "args": [
+        117177,
+        117178
+      ]
+    },
+    "117180": {
+      "op": "rational",
+      "args": [
+        "512",
+        "1"
+      ]
+    },
+    "117181": {
+      "op": "add",
+      "args": [
+        1,
+        117139
+      ]
+    },
+    "117182": {
+      "op": "add",
+      "args": [
+        1,
+        117133
+      ]
+    },
+    "117183": {
+      "op": "add",
+      "args": [
+        117135,
+        117182
+      ]
+    },
+    "117184": {
+      "op": "add",
+      "args": [
+        117157,
+        117183
+      ]
+    },
+    "117185": {
+      "op": "multiply",
+      "args": [
+        117180,
+        117181
+      ]
+    },
+    "117186": {
+      "op": "multiply",
+      "args": [
+        117184,
+        117185
+      ]
+    },
+    "117187": {
+      "op": "add",
+      "args": [
+        117176,
+        117186
+      ]
+    },
+    "117188": {
+      "op": "add",
+      "args": [
+        117177,
+        117187
+      ]
+    },
+    "117189": {
+      "op": "add",
+      "args": [
+        117179,
+        117188
+      ]
+    },
+    "117190": {
+      "op": "multiply",
+      "args": [
+        24,
+        117189
+      ]
+    },
+    "117191": {
+      "op": "integer_power",
+      "args": [
+        117190,
+        2
+      ]
+    },
+    "117192": {
+      "op": "multiply",
+      "args": [
+        8835,
+        117191
+      ]
+    },
+    "117193": {
+      "op": "multiply",
+      "args": [
+        117107,
+        117192
+      ]
+    },
+    "117194": {
+      "op": "multiply",
+      "args": [
+        24,
+        117103
+      ]
+    },
+    "117195": {
+      "op": "inverse",
+      "args": [
+        117194
+      ]
+    },
+    "117196": {
+      "op": "multiply",
+      "args": [
+        117193,
+        117195
+      ]
+    },
+    "117197": {
+      "op": "exp",
+      "args": [
+        117196
+      ]
+    },
+    "117198": {
+      "op": "multiply",
+      "args": [
+        24821,
+        117191
+      ]
+    },
+    "117199": {
+      "op": "multiply",
+      "args": [
+        117107,
+        117198
+      ]
+    },
+    "117200": {
+      "op": "inverse",
+      "args": [
+        117103
+      ]
+    },
+    "117201": {
+      "op": "multiply",
+      "args": [
+        117199,
+        117200
+      ]
+    },
+    "117202": {
+      "op": "ceiling",
+      "args": [
+        117201
+      ]
+    }
+  },
+  "actualAuxiliaryReflection": {
+    "sourceProfileParity": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    "everyNonzeroMatrixAndForcingEntryCompared": true,
+    "coefficientAncestorNodes": 388,
+    "naturalOnlyNativeBoundary": true
+  },
+  "analyticMajorantProvedHere": false,
+  "originalBnormApplicationProvedHere": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0
+}
