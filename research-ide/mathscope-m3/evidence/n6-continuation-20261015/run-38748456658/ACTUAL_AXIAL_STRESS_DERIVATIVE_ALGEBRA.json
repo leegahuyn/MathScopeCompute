@@ -1,0 +1,78 @@
+{
+  "schema": "MathScope.N6.ActualAxialStressDerivativeAlgebra/1",
+  "scope": "exact algebra of the original interior517233 only",
+  "sourceConeNodeCount": 83,
+  "sourceConeCanonicalSHA256": "f02b61635b695f7941caf256042307c99757589e772a0049146797b399b71920",
+  "sourceConeCanonicalEncoding": "UTF-8 JSON sort_keys=True separators=(comma,colon)",
+  "originalGuardAndBinderAndNativeTuplesCompared": true,
+  "exactAlgebra": {
+    "sympyVersion": "1.14.0",
+    "arithmetic": "exact rational symbolic algebra; no numerical substitution",
+    "sourceInteriorNode": 517233,
+    "sourceExpansionMinusExpected": "0",
+    "independentCartesianChainMinusExpected": "0",
+    "wrongCoefficientAndOmittedTermControlsRejected": 3,
+    "formula": "x1*x2*(-3*r^(-5)*Ieta + 2*r^(-3)*feta - r^(-1)*fXeta)",
+    "formalPrimitive": "-J(X,eta)/sqrt(2X)",
+    "formalOrderedDerivative": "D_x1 D_x2 D_eta",
+    "coordinateIdentities": {
+      "X": "(x1^2+x2^2)/2",
+      "r": "sqrt(2X)>0"
+    },
+    "formalNativeAtoms": {
+      "feta": "native expression 1 at [517175,517017], orders [0,1]",
+      "fXeta": "native expression 1 at [517175,517017], orders [1,1]",
+      "Ieta": "integral native expression 1 at [117055,517017], orders [0,1], binder117055, lower28814, upper517175"
+    },
+    "actualGuard": {
+      "node": 517234,
+      "op": "smooth_piecewise",
+      "args": [
+        517175,
+        28814,
+        28824,
+        0,
+        517233,
+        0
+      ],
+      "a": "Xa*exp(t1/128)",
+      "b": "XR*exp(T+3+60*BOuter+13/lambda)",
+      "positivityFinitenessAndOrderProved": false
+    }
+  },
+  "liveSourceComparison": {
+    "actualNodeCountCompared": 83,
+    "allOriginalConeNodesStructurallyEqual": true,
+    "fullSourceArchiveAuthenticatedByThisTool": false
+  },
+  "unprovedAnalyticHypothesesForPrimitiveInterpretation": [
+    "Registry expression1 must be identified with the full axial residual f, including its actual body, sign and normalization; this cone only pins calls.",
+    "The actual a,b and parameters are finite, lambda!=0 and 0<a<b; the interior uses a<X<b and r>=sqrt(2a)>0.",
+    "The actual native partials f_eta and f_Xeta exist with suitable joint regularity on the compact integration interval and a parameter neighborhood.",
+    "For the actual scoped primitive J=int_a^X f, justify J_eta=int_a^X f_eta, J_Xeta=f_eta and J_XXeta=f_Xeta using differentiation under the integral and FTC."
+  ],
+  "unprovedAdditionalStressGluingRequirements": [
+    "Actual density vanishes on the required inner and outer collars and its required endpoint jets vanish.",
+    "For every admitted eta, int_a^b f(s,eta)ds=0, with the required parameter derivative identities; density flatness alone does not give this total moment.",
+    "All complete literal bodies and the original26 ordered requests must pass together under the original acceptance gate."
+  ],
+  "actualNativeDerivativeExistenceProved": false,
+  "actualIntegralFinitenessProved": false,
+  "actualDensityJoinsProved": false,
+  "actualStressPrimitiveJoinsProved": false,
+  "smoothPiecewiseRegularityProved": false,
+  "originalBackground26ClosureProved": false,
+  "numericalEvidenceUsed": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0,
+  "sourceDefinitionsConstantsQuantifiersAndOrderedDerivativesChanged": false,
+  "inputBindings": [
+    {
+      "kind": "background",
+      "file": "ACTUAL_BACKGROUND_26_JET_REGULARITY.json",
+      "sha256": "bc6a5d640026eadc905d4abead6336405e18d14e039e975e21db66a0d2bd7852"
+    }
+  ],
+  "stage3SHA256": "388a8c7adec5a221a789123bf06a2e087032ba7ce49cdd34d832132361a6a36f"
+}

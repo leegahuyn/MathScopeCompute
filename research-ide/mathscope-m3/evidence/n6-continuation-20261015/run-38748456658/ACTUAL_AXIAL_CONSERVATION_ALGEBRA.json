@@ -1,0 +1,127 @@
+{
+  "schema": "MathScope.N6.ActualAxialConservationAlgebra/1",
+  "scope": "Exact conditional symbolic algebra for the supplied source formula; arbitrary symbolic profiles, with no actual source bindings composed.",
+  "sourceFormulaIdentity": "raw-conserved=-U1*C0-U0*C1",
+  "exactConservationResidual": "0",
+  "constants": {
+    "A": "h + 1/2",
+    "D": "1/2 - h",
+    "d": "1 - eta**2",
+    "L": "-2*eta**2*h + 1",
+    "c": "-h - 1/2"
+  },
+  "operatorDefinitions": {
+    "Z_alpha": "(2*eta*(alpha*f-X*f_X)+(1-eta^2)*f_eta)/L",
+    "T_alpha": "(-alpha*f+D*eta*f_eta+X*f_X)/L",
+    "C_i": "partial_X(X*v_i)+Z_(c+i*lambda1)(U_i), i=0,1"
+  },
+  "rawFormula": "X*v0(X, eta)*Derivative(U1(X, eta), X) + X*v1(X, eta)*Derivative(U0(X, eta), X) - 2*X*Derivative(U1(X, eta), (X, 2)) + (2*eta*(-X*Derivative(Pi1(X, eta), X) + (-2*h + lambda1 - 1)*Pi1(X, eta)) + (1 - eta**2)*Derivative(Pi1(X, eta), eta))/(-2*eta**2*h + 1) + (2*eta*(-X*Derivative(U0(X, eta), X) + (-h - 1/2)*U0(X, eta)) + (1 - eta**2)*Derivative(U0(X, eta), eta))*U1(X, eta)/(-2*eta**2*h + 1) + (2*eta*(-X*Derivative(U1(X, eta), X) + (-h + lambda1 - 1/2)*U1(X, eta)) + (1 - eta**2)*Derivative(U1(X, eta), eta))*U0(X, eta)/(-2*eta**2*h + 1) - (2*eta*(-X*(2*eta*(-X*Derivative(U0(X, eta), (X, 2)) + (-h - 1/2)*Derivative(U0(X, eta), X) - Derivative(U0(X, eta), X)) + (1 - eta**2)*Derivative(U0(X, eta), X, eta))/(-2*eta**2*h + 1) - (2*eta*(-X*Derivative(U0(X, eta), X) + (-h - 1/2)*U0(X, eta)) + (1 - eta**2)*Derivative(U0(X, eta), eta))/(-2*eta**2*h + 1)) + (1 - eta**2)*(4*eta*h*(2*eta*(-X*Derivative(U0(X, eta), X) + (-h - 1/2)*U0(X, eta)) + (1 - eta**2)*Derivative(U0(X, eta), eta))/(-2*eta**2*h + 1)**2 + (-2*X*Derivative(U0(X, eta), X) + 2*eta*(-X*Derivative(U0(X, eta), X, eta) + (-h - 1/2)*Derivative(U0(X, eta), eta)) - 2*eta*Derivative(U0(X, eta), eta) + (1 - eta**2)*Derivative(U0(X, eta), (eta, 2)) + 2*(-h - 1/2)*U0(X, eta))/(-2*eta**2*h + 1)))/(-2*eta**2*h + 1) - 2*Derivative(U1(X, eta), X) + (X*Derivative(U1(X, eta), X) + eta*(1/2 - h)*Derivative(U1(X, eta), eta) + (h - lambda1 + 1/2)*U1(X, eta))/(-2*eta**2*h + 1)",
+  "conservedFormula": "X*(U0(X, eta)*Derivative(v1(X, eta), X) + U1(X, eta)*Derivative(v0(X, eta), X) + v0(X, eta)*Derivative(U1(X, eta), X) + v1(X, eta)*Derivative(U0(X, eta), X)) - 2*X*Derivative(U1(X, eta), (X, 2)) + (2*eta*(-X*(2*U0(X, eta)*Derivative(U1(X, eta), X) + 2*U1(X, eta)*Derivative(U0(X, eta), X) + Derivative(Pi1(X, eta), X)) + (Pi1(X, eta) + 2*U0(X, eta)*U1(X, eta))*(-2*h + lambda1 - 1)) + (1 - eta**2)*(2*U0(X, eta)*Derivative(U1(X, eta), eta) + 2*U1(X, eta)*Derivative(U0(X, eta), eta) + Derivative(Pi1(X, eta), eta)))/(-2*eta**2*h + 1) - (2*eta*(-X*(2*eta*(-X*Derivative(U0(X, eta), (X, 2)) + (-h - 1/2)*Derivative(U0(X, eta), X) - Derivative(U0(X, eta), X)) + (1 - eta**2)*Derivative(U0(X, eta), X, eta))/(-2*eta**2*h + 1) - (2*eta*(-X*Derivative(U0(X, eta), X) + (-h - 1/2)*U0(X, eta)) + (1 - eta**2)*Derivative(U0(X, eta), eta))/(-2*eta**2*h + 1)) + (1 - eta**2)*(4*eta*h*(2*eta*(-X*Derivative(U0(X, eta), X) + (-h - 1/2)*U0(X, eta)) + (1 - eta**2)*Derivative(U0(X, eta), eta))/(-2*eta**2*h + 1)**2 + (-2*X*Derivative(U0(X, eta), X) + 2*eta*(-X*Derivative(U0(X, eta), X, eta) + (-h - 1/2)*Derivative(U0(X, eta), eta)) - 2*eta*Derivative(U0(X, eta), eta) + (1 - eta**2)*Derivative(U0(X, eta), (eta, 2)) + 2*(-h - 1/2)*U0(X, eta))/(-2*eta**2*h + 1)))/(-2*eta**2*h + 1) + U0(X, eta)*v1(X, eta) + U1(X, eta)*v0(X, eta) - 2*Derivative(U1(X, eta), X) + (X*Derivative(U1(X, eta), X) + eta*(1/2 - h)*Derivative(U1(X, eta), eta) + (h - lambda1 + 1/2)*U1(X, eta))/(-2*eta**2*h + 1)",
+  "radialFlux": "X*(U0(X, eta)*v1(X, eta) + U1(X, eta)*v0(X, eta)) - 2*X*Derivative(U1(X, eta), X)",
+  "radialAntiderivatives": {
+    "exactChecks": {
+      "TPrimitiveDerivativeResidual": "0",
+      "ZPrimitiveDerivativeResidual": "0"
+    },
+    "TPrimitive": "(X*Derivative(Q(X, eta), X) + eta*(1/2 - h)*Derivative(Q(X, eta), eta) + (-alpha - 1)*Q(X, eta))/(-2*eta**2*h + 1)",
+    "ZPrimitive": "(-2*X*eta*Derivative(Q(X, eta), X) + 2*eta*(alpha + 1)*Q(X, eta) + (1 - eta**2)*Derivative(Q(X, eta), eta))/(-2*eta**2*h + 1)",
+    "conditionalDefiniteIdentities": {
+      "T": "integral_a^b T_alpha(f) dX = (-(alpha+1)*M + D*eta*M_eta + [X*f]_a^b)/L",
+      "Z": "integral_a^b Z_alpha(f) dX = (2*eta*(alpha+1)*M + d*M_eta - 2*eta*[X*f]_a^b)/L",
+      "M": "M(eta)=integral_a^b f(X,eta) dX"
+    },
+    "scope": "Only derivatives of candidate primitives are checked here. The definite identities additionally require their analytic hypotheses.",
+    "remainingDefiniteIdentityPremises": [
+      "Finite radial bounds a<b that are independent of eta, and L!=0.",
+      "A genuine primitive Q_X=f with the required joint differentiability on the complete radial interval.",
+      "The fundamental theorem of calculus and differentiation under the integral for M_eta; no source integrability or interchange is proved here.",
+      "Retain both actual endpoint flux terms [X*f]_a^b unless separately proved zero."
+    ]
+  },
+  "signedPrimitives": {
+    "forward": "sqrt(2)*(-Q_Xvalue + Q_avalue)/(2*sqrt(X))",
+    "backward": "sqrt(2)*(-Q_Xvalue + Q_bvalue)/(2*sqrt(X))",
+    "difference": "(sqrt(2)*Q_avalue - sqrt(2)*Q_bvalue)/(2*sqrt(X))",
+    "exactDifferenceResidual": "0",
+    "exactRecoverMomentResidual": "0",
+    "iff": "For X>0 and genuine finite primitives, forward=backward iff integral_a^b f=0.",
+    "densityFlatnessImpliesZeroMoment": false
+  },
+  "compactCounterexample": {
+    "smoothBump": "f(X)=rho(X-1)*rho(2-X), rho(t)=exp(-1/t) for t>0 and 0 for t<=0",
+    "support": "[1,2]",
+    "allEndpointJetsVanish": true,
+    "polynomialRecurrence": "P_0(w)=1; P_(n+1)(w)=w^2*(P_n(w)-P_n'(w))",
+    "recurrenceDerivativeResidual": "0",
+    "allMonomialDecay": "0",
+    "massLowerBound": "exp(-8)/2",
+    "massBoundReason": "On [5/4,7/4], both positive arguments of rho are >=1/4, so each rho>=exp(-4); integrate over the interval of length 1/2.",
+    "conclusion": "All density endpoint jets can vanish while the total moment is strictly positive. The signed primitive joins then fail.",
+    "finiteJetPolynomialControl": {
+      "density": "(X-1)^4*(2-X)^4 on [1,2], zero outside",
+      "zeroExtensionRegularity": "C^3; not C-infinity",
+      "exactTotalMoment": "1/630"
+    },
+    "actualSourceCounterexample": false
+  },
+  "strictNegativeControls": {
+    "controls": {
+      "omittedCrossAdvection": {
+        "rejected": true,
+        "exactResidual": "-X*v1(X, eta)*Derivative(U0(X, eta), X)",
+        "exactRationalWitness": "-23/3"
+      },
+      "wrongPressureCoefficient": {
+        "rejected": true,
+        "exactResidual": "(2*X*eta*Derivative(Pi1(X, eta), X) + eta**2*Derivative(Pi1(X, eta), eta) + 4*eta*h*Pi1(X, eta) - 2*eta*lambda1*Pi1(X, eta) + 2*eta*Pi1(X, eta) - Derivative(Pi1(X, eta), eta))/(2*eta**2*h - 1)",
+        "exactRationalWitness": "-75/77"
+      },
+      "omittedAxialViscosity": {
+        "rejected": true,
+        "exactResidual": "2*X*Derivative(U1(X, eta), (X, 2)) + 2*Derivative(U1(X, eta), X)",
+        "exactRationalWitness": "12"
+      },
+      "omittedOrderOneContinuityTerm": {
+        "rejected": true,
+        "exactResidual": "(-2*X*eta**2*h*U0(X, eta)*Derivative(v1(X, eta), X) - 2*X*eta*U0(X, eta)*Derivative(U1(X, eta), X) + X*U0(X, eta)*Derivative(v1(X, eta), X) - 2*eta**2*h*U0(X, eta)*v1(X, eta) - eta**2*U0(X, eta)*Derivative(U1(X, eta), eta) - 2*eta*h*U0(X, eta)*U1(X, eta) + 2*eta*lambda1*U0(X, eta)*U1(X, eta) - eta*U0(X, eta)*U1(X, eta) + U0(X, eta)*v1(X, eta) + U0(X, eta)*Derivative(U1(X, eta), eta))/(2*eta**2*h - 1)",
+        "exactRationalWitness": "-635/126"
+      }
+    },
+    "witnessProfiles": {
+      "U0": "X*eta + X + eta + 1",
+      "U1": "X**2 + eta**2 + 2",
+      "v0": "X*eta + 1",
+      "v1": "X + eta + 2",
+      "Pi1": "X*eta + eta**2 + 3"
+    },
+    "witnessPoint": {
+      "X": "3/2",
+      "eta": "1/3",
+      "h": "1/10",
+      "lambda1": "1/7"
+    }
+  },
+  "actualSourceBindingsComposed": false,
+  "actualContinuityComposed": false,
+  "actualZeroMassAndFluxMomentsProved": false,
+  "actualPrimitiveJoinsProved": false,
+  "actualGlobalRegularityComposed": false,
+  "originalFrontier": {
+    "jets": 230,
+    "guards": 10,
+    "PDEObligations": 1020,
+    "total": 1260
+  },
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0,
+  "remainingActualPremises": [
+    "Authenticate the literal native1 axial residual registry body, operator arguments, signs, normalization, and original leading/order-one source correspondence.",
+    "Establish actual C0=C1=0 with the complete leading and order-one profiles, not metadata flags.",
+    "Prove the original positive ordered finite radial bounds a<b and L!=0 on the actual domain.",
+    "Establish joint regularity of the actual density and required eta/X derivatives on the full compact interval, finite integrals, and every required integral/parameter derivative interchange.",
+    "Prove actual inner and outer collar vanishing and endpoint jets with the correct axial component support; density flatness alone gives no zero total moment.",
+    "Derive the actual zero mass, nonlinear flux and pressure moment equations and endpoint radial fluxes from the original five-moment solve and conserved identity, for every required eta.",
+    "Prove the total actual weighted residual integral and its required parameter derivatives vanish before identifying forward/backward primitives and gluing their fixed mixed jets."
+  ]
+}
