@@ -1,0 +1,73 @@
+{
+  "schema": "MathScope.N6.IndependentActualI2HeatDebtPeerReview/1",
+  "reviewedSHA256": {
+    "ACTUAL_I2_TRUE_HEAT_DEBT_CONTRACTION_KO.md": "bd8bbf3f8b02bdd3f5cb289e5e08f573bffdef0b111c8a636dd23a87e8b05313",
+    "actual_i2_incoming.py": "0bdbff9513f8442781b26f94b9e5cec41a5109e75e35d67cf125ced1250b1a9c",
+    "actual_i2_native_probe.mjs": "6c5af6a4337edf3a840b43ee90cf6917971ee67461926ff53afea3c42ab4c6c0"
+  },
+  "mathematicalVerdict": "ACCEPTED; fresh literal native replay and composition remain pending",
+  "independentAnalyticChecks": {
+    "actualTerminalWaitPositiveFromLiteralQbQpBounds": true,
+    "allStageEndpointLogAmplitudePlusHalfLengthCostsNonpositive": true,
+    "actualTailScaleComparison": "eK*sqrt(XK)<=e_*sqrt(X0I2)",
+    "actualTailEnvelope": "0<Ecl<=2eK*(X/XK)^(-1/2-h)",
+    "fullLaplaceHeatLoss": "0<=1-H(2(1-eta^2)/X)<=4h/X",
+    "actualDIIntegralRetainsAndCancelsPositiveH": "8sqrt(2)*h*eK*sqrt(XK)*integral_1^infinity t^(-1-h)dt=8sqrt(2)eKsqrt(XK)",
+    "actualDSIntegralDenominator": "2A=1+2h>1",
+    "actualDCpIntegralDenominator": "2A+1=2+2h>1",
+    "sameOriginalNormalizedRhsBound": "64/X0I2",
+    "sameActualLambdaX0Absorption": "2^36/(lambda*X0I2)<2^-58987<2^-720",
+    "genuineSameContinuousEBlockContraction": true,
+    "allFixedEtaLossDerivativesRemainOInverseX": true,
+    "allImproperEtaDerivativesHaveIntegrableMajorants": true,
+    "actualEndpointRootZeroFromH0AndBoxUniqueness": true
+  },
+  "domain": "Physical eta in[-1,1] only; C-infinity in the interior and continuous one-sided jets of each fixed order at both endpoints.",
+  "negativeHeatArgumentExtensionClaimed": false,
+  "nativeProbeReviewed": {
+    "fullOriginalGammaAndThreeImproperDebts": true,
+    "allLiteralStageEndpointsAndActualTailGeometry": true,
+    "allActualNormalizationsAndSameContinuousEBlock": true,
+    "freshExecutionClaimedHere": false
+  },
+  "exactArithmeticReplayed": {
+    "terminalWaitStrictlyPositive": true,
+    "actualTailBounds": {
+      "XK": "XK>=X0I2>1",
+      "Ecl": "<=2*eK*(X/XK)^(-1/2-h)",
+      "scaleComparison": "eK*sqrt(XK)<=e_*sqrt(X0I2)",
+      "K": "e_*/(1+eta^2)>=e_*/2"
+    },
+    "actualHeatBound": "0<=1-H(2*(1-eta^2)/X)<=4h/X for physical eta in[-1,1]",
+    "fullActualHeatDebts": {
+      "I": "<=16*eK*sqrt(XK)",
+      "S": "<=16*h*eK^2",
+      "Cp": "<=16*h*eK^2/XK"
+    },
+    "actualNormalizedHeatDebtUpper": "64/X0I2",
+    "actualPreconditionedRhsUpper": "2^36/(lambda*X0I2)<2^-58987<2^-720",
+    "originalRootRadius": "1/1000000",
+    "imageUpper": "230344386280611654799899571593522271174128492457058131614758685317726084130380178960334883128519211886075950624436269830308263222041308144077235977260296389627038289/1346594790796383617853693410017312938380886989522732508031559911185595431500052690461098633287062643514107640027181623734532974656047053788960720581286881497588537259808881817137065922018386615621451072444360032256000000000000",
+    "actualLipschitzUpper": "1/2923003274661805836407369665432566039311865085952000000",
+    "imageStrictlyInsideOriginalBox": true,
+    "contractionStrictlyBelowQuarter": true,
+    "strictNegativeControls": [
+      {
+        "name": "unbounded replacement normalized incoming debt",
+        "rejected": true
+      },
+      {
+        "name": "uncontrolled infinite tail debt",
+        "rejected": true
+      }
+    ]
+  },
+  "notClaimed": [
+    "Full completed leading domains and joins",
+    "Final g21 regularity on every original pressure J",
+    "Original Guard/Jet/PDE closure"
+  ],
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0
+}

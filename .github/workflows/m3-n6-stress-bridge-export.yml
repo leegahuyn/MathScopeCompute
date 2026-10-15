@@ -1,0 +1,64 @@
+name: N6 stress bridge pinned source export
+on:
+  push:
+    branches: [mathscope-m3-n6-cloud-20261014]
+    paths: ['.github/workflows/m3-n6-stress-bridge-export.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: n6-stress-bridge-export-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: cce1e9adee01aad99835f8f4610b695684d5af30
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/n6-native-domain-frontier-20261015/*
+            /tools/n6-domain-transport-20261015/*
+            /research-ide/mathscope-m0/*.mjs
+            /research-ide/mathscope-m1/navier/numerics.mjs
+            /research-ide/mathscope-m1/navier/followup-20261010-symbolic-gluing/*.py
+            /research-ide/mathscope-m1/navier/followup-next/uniform-gluing/*.py
+            /research-ide/mathscope-m1/navier/followup-20261010-outer-reselection/OUTER_DERIVATION.md
+            /research-ide/mathscope-m1/navier/followup-20261010-outer-reselection/check_outer_envelopes.py
+            /research-ide/mathscope-m2/navier/*.mjs
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/*.md
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/FIRST26_FRONTIER_RUN38734477166.json
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/run-38734477166/*
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/run-38694948443/*
+            /.github/workflows/m3-n6-native-domain-frontier.yml
+      - name: Preserve exact tracked bytes without executing the source producer
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,os,shutil,subprocess
+          root=Path.cwd();out=Path(os.environ['RUNNER_TEMP'])/'stress-bridge-export';out.mkdir(parents=True)
+          head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+          assert head=='cce1e9adee01aad99835f8f4610b695684d5af30'
+          entries=[]
+          for name in subprocess.check_output(['git','ls-files','-z']).decode().split('\0'):
+              if not name:continue
+              p=root/name
+              if not p.is_file():continue
+              raw=p.read_bytes();dest=out/'repo'/name;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(raw)
+              blob=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+              expected=subprocess.check_output(['git','rev-parse','HEAD:'+name],text=True).strip()
+              assert blob==expected,name
+              entries.append({'path':name,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'gitBlobSHA1':blob})
+          (out/'EXPORT_MANIFEST.json').write_text(json.dumps({'schema':'MathScope.N6.StressBridgePinnedExport/1','sourceCommit':head,'run':os.environ['GITHUB_RUN_ID'],'originalProducerExecuted':False,'proofDischargeClaimed':False,'files':entries},indent=2)+'\n')
+          print(json.dumps({'sourceCommit':head,'files':len(entries),'bytes':sum(e['bytes'] for e in entries),'proofDischargeClaimed':False}))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: n6-stress-bridge-source-${{ github.run_id }}
+          path: ${{ runner.temp }}/stress-bridge-export/
+          retention-days: 90
+          if-no-files-found: error

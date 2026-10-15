@@ -1,0 +1,70 @@
+{
+  "schema": "MathScope.N6.UnitIntervalEvenPowerPeerReview/1",
+  "actualUnprovedSourceFrontier": {
+    "run": "38733393420",
+    "node": 402510,
+    "inverseArgument": 402509,
+    "literalArgument": "1-2*h*eta_402372^2",
+    "completeSmallSourceConeNodes": 11
+  },
+  "genericRule": {
+    "premises": "positive even integer n, finite enclosure -1<=lo<=x<=hi<=1",
+    "conclusion": "0<=x^n<=1; strict positivity only if the original actual value is already strictly positive or strictly negative",
+    "zeroOddNegativeOutsideCases": "n=0 stays1; odd powers are not clamped; negative powers require a proved nonzero base first; outside/unbounded intervals gain no unit upper bound"
+  },
+  "actualParameterBinding": {
+    "h": {
+      "exp": {
+        "product": [
+          {
+            "integer": -8002
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "Md": {
+      "integer": 1048576
+    },
+    "argument": "exp(Md)>1+Md implies T>128, so0<h<1/16. These exact parameter ASTs are already checked by source_parameter_proof before ConstantDomains is used."
+  },
+  "actualLConditionalCalculation": {
+    "etaScope": "[-1,1] must be supplied by the actual recursively checked original FTC integral environment",
+    "etaSquared": "[0,1]",
+    "twoHTimesEtaSquared": "[0,1/8]",
+    "L": "[7/8,1]",
+    "inverseL": "positive finite"
+  },
+  "noNodeIDBypass": true,
+  "onlyActualEnclosureUsedByGenericRule": true,
+  "scopeBoundary": "The standalone11-node replay intentionally supplies an explicit eta[-1,1] premise; it does not authenticate the full original integration graph. Fresh full-source replay must derive that scoped enclosure. Missing or broader eta scopes are rejected by the adverse controls.",
+  "controls": {
+    "independentUnitIntervalAndActualConeTestsPassed": 13,
+    "allBackgroundWildcardTestsPassed": 82,
+    "zeroAndOutsidePoleProtectionsPassed": true,
+    "sourceSmallHMutationRejected": true
+  },
+  "first26DischargedByReview": 0,
+  "currentHistoricalRunBGCount": 0,
+  "freshOriginalSourceReplayRequired": true,
+  "files": {
+    "work/actual_background_jet_regularity.py": "ff46e706465f5ce3164667e8ca30e71df84316a2b3aff1e48de959c8ea200ab1",
+    "work/test_background_unit_interval_peer.py": "fb378f137dd261a2af7460790fa4c4aa221d444d96ccbd5f5a735b6175df0a1c",
+    "work/test_actual_background_unit_interval_power.py": "033d141ebccc7dcbbcb17c4fd212eb35cc28b992ebe415d851ec5419bcee845c",
+    "work/regularity-source/research-ide/mathscope-m2/navier/actual-background-physical-seminorms.mjs": "d3713e0a3f1cd17404e2afb23da20c4b32e9e840445eed53ce2849ecd200d240"
+  }
+}

@@ -1,0 +1,70 @@
+name: N6 domain source export
+on:
+  push:
+    branches: [mathscope-m3-n6-cloud-20261014]
+    paths: ['.github/workflows/m3-n6-domain-source-export.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: n6-domain-source-export-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research-ide/mathscope-m3/navier/source-global-*.mjs
+            /research-ide/mathscope-m3/navier/source-auxiliary-expressions.mjs
+            /research-ide/mathscope-m3/navier/source-coupled-expressions.mjs
+            /research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/checkpoints/actual-forced-inverses-and-refreshed-pressure/*
+      - name: Verify every original source byte and preserve full source without regeneration
+        shell: bash
+        run: |
+          python - <<'PY'
+          import gzip, hashlib, json, os, pathlib, shutil
+          out=pathlib.Path(os.environ['RUNNER_TEMP'])/'n6-domain-source'
+          out.mkdir(parents=True,exist_ok=True)
+          folder=pathlib.Path('research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/checkpoints/actual-forced-inverses-and-refreshed-pressure')
+          expected=['e70d0e7fc6cc029ca660d4a1b3c1e70569e83ca43218b9fa18740a70d69894a6','66ea83272d267d65258ca542d2f09d4bdfa44b71d9055d88814dd79dce0b778a','56289fd57e5d7b153965b6427ee1dc2f1e53a8c8c2700fd87880e5c4f9b6a5df','a7a1390fcff294e71c0bfe93f5e30e3845a47d067ca83fd64a8db2c02426966e']
+          sha=lambda b:hashlib.sha256(b).hexdigest()
+          def require(ok,msg):
+            if not ok: raise ValueError(msg)
+          dest=out/'original-parent.ndjson.gz';compressed=hashlib.sha256()
+          with dest.open('wb') as f:
+            for i,h in enumerate(expected):
+              raw=(folder/f'graph.ndjson.gz.part{i:04d}').read_bytes()
+              require(sha(raw)==h,'original compressed part changed')
+              f.write(raw);compressed.update(raw)
+          require(compressed.hexdigest()=='42ac47a05160f9bd0aebd8cf54b72501007a0c46a351039c8c84b5bc1e6832e3','joined compressed source changed')
+          rawhash=hashlib.sha256();nodeshash=hashlib.sha256();count=0;size=0
+          with gzip.open(dest,'rb') as f:
+            line=f.readline();rawhash.update(line);size+=len(line);header=json.loads(line)
+            require(header['firstNode']==0 and header['nodeCount']==3892594,'source header changed')
+            (out/'header.json').write_bytes(line)
+            for line in f:
+              ident,n=json.loads(line)
+              require(ident==count and set(n)=={'op','args'},'source node order or grammar changed')
+              rawhash.update(line);nodeshash.update(line);size+=len(line);count+=1
+          require(count==3892594 and size==209857208,'source count or byte length changed')
+          require(nodeshash.hexdigest()=='7c36afa44610b9786362dc228766c3d895491bb116103eca58a79d80a6b7609f','original parent changed')
+          require(rawhash.hexdigest()=='9be5187506edbd2e7ccdad81392b0c29cc84350f374e331b7b5845a435c7fdf0','source stream changed')
+          files=[];(out/'source').mkdir(exist_ok=True)
+          for p in sorted(pathlib.Path('research-ide/mathscope-m3/navier').glob('*.mjs')):
+            shutil.copyfile(p,out/'source'/p.name);files.append({'path':str(p),'sha256':sha(p.read_bytes())})
+          receipt={'schema':'MathScope.N6.FullParentDomainAuditExport/1','commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'nodes':count,'parentSHA256':nodeshash.hexdigest(),'rawSHA256':rawhash.hexdigest(),'compressedSHA256':compressed.hexdigest(),'sourceFiles':files,'sourceProducerExecuted':False,'mathematicalCompletionClaimed':False,'frontierChanged':False}
+          (out/'source-export.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          print(json.dumps(receipt))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: n6-domain-full-source-${{ github.run_id }}
+          path: ${{ runner.temp }}/n6-domain-source/
+          retention-days: 90
+          if-no-files-found: error

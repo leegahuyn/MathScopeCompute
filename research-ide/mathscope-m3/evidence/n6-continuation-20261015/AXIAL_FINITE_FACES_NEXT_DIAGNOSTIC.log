@@ -1,0 +1,51 @@
+READ-ONLY DIAGNOSTIC ONLY. No theorem, finite-face proof or obligation update.
+Starting head: cd1f6762af0b77b67816f24ddf8dfe38d390c982
+Authenticated cache: task/face-runtime/native-source-cache.sqlite
+Source cache was opened in mode=ro; source files/cache were not changed.
+
+Diagnostic method:
+- Reused original ConstantDomains, same leading/orderone/native2..10 bindings.
+- In an isolated in-memory subclass ONLY root517240 at empty environment was
+  provisionally replaced by finite-positive Bound(0,None,True), solely to ask
+  what the original selector617466 traversal encounters next.
+- This admission is NOT a proof or accepted source handler and was not saved
+  into any producer, certificate or original row matrix.
+
+First attempt runtime result:
+  Stack overflow (used1952kB), visited3248, no source frontier.
+- Windows Python C-stack limitation. No mathematical claim followed.
+
+Retried with an isolated64MiB-stack thread, read-only SQLite created inside it.
+Observed exact diagnostic output:
+{"diagnosticOnly":true,"admittedRoot":517240,"notProof":true,
+ "nextGap":"Unreviewed constant ancestor (516996, 'smooth_piecewise')",
+ "frontier":{"node":516996,"sourceNode":{"op":"smooth_piecewise",
+ "args":[516967,28814,28824,0,516995,0]},"argumentEnclosures":[],
+ "scopedCoordinates":[516889,516890],"unsupportedNativeOrPrimitive":true,
+ "finiteOrPositiveValueAssumed":false},"visited":40219}
+
+Further exact source-node reads, no additional admission:
+346654 = integer_power[346574,2]
+346574 = multiply[20,215514]                  (negative radius)
+215514 = sqrt_positive[137008]
+137008 = multiply[24,28826]                   (2*Xb)
+516965 = integer_power[516889,2]
+516966 = add[346654,516965]
+516967 = multiply[19,516966]                  ((R^2+x2^2)/2)
+516889 = coordinate['physical_norm_face_6_1$28306']
+516890 = coordinate['physical_norm_face_6_2$28307']
+516996 = smooth_piecewise[516967,28814,28824,0,516995,0]
+516997 = integer_power[516996,2]
+516998 = add[1,516997]
+516999 = sqrt_positive[516998]
+517000 = definite_integral[516999,516890,20,1]
+517001 = definite_integral[517000,516889,346574,215514]
+
+Candidate next proof, NOT applied:
+- Fixed x1=-R means X516967=Xb+x2^2/2>=Xb.
+- The same authenticated source support-order theorem gives Xb28826>Xplus28824.
+- Therefore exact guard516996 selects after0 throughout this anchored face;
+  its inner source operands would not need evaluation. The encoded H is1,
+  eta integral517000=2 and complete face517001=4R.
+- Source-bound proof/application of this separate anchored face remains future
+  work. Current authorized implementation scope remains ONLY root517240.

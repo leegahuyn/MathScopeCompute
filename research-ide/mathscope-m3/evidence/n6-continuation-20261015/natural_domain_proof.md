@@ -1,0 +1,15 @@
+# Actual natural argument audit: exact local implications
+
+The authenticated g21 capture contains 533 natural-series nodes, 58 distinct radial argument roots, and the same original eta coordinate2 in every tuple. The maximum retained natural radial order is three and eta order is five. These are source facts, not regularity proofs.
+
+`natural_domain_proof.py` validates the fixed payload, target and call inventory hashes and then proves exact local range implications. The source parameter hierarchy gives Q>2^260, Lambda>0, Xa=4/Lambda, and `0<t1<2^-120`. Therefore `4*exp(2*t1)<41/10`, using the rational geometric-series upper bound for exp on a positive interval below one. No enormous real constant is materialized.
+
+The normalizer preserves each original positive-log prerequisite while reducing exact products, reciprocals and `exp(log x)`/`log(exp x)` identities. Guard branches are used in their original direction: outside-left supplies selector<=left endpoint, and inside supplies selector<=right endpoint. A positive multiple or positive exponential of that selector then gives the displayed upper bound. An integral binder is confined between its two original endpoints, in either orientation. The code does not assume an unevaluated variable endpoint is small.
+
+The current exact evidence contains 33 constant-Y bounds and 398 calls whose every recorded nearest guard/binder context proves the required Y upper bound. The remaining 102 calls require outer execution scopes for variable integral endpoints. This is a collection of upper-bound implications, not 431 complete runtime-domain certificates: positivity of actual profile inputs, positive-log definedness, the original eta tube and native parameter substitutions must still be proved where not already supplied by the local branch.
+
+For example, the natural call using coordinate binder6517 has an integral with upper endpoint4757=Lambda*X. Its first integral context alone permits arbitrarily large positive X. That is a precise insufficiency of the first-context evidence, not a counterexample to the original lazy function: the containing source branch can restrict X before evaluating this integral. The follow-up outer-context extraction records those next guards and explicit native caller tuples without guessing their conditions.
+
+The pressure interval must retain its true scope. With rho in `[sqrt(Xa),2*sqrt(Xb)]` and s in `[1/2,2]`, X=rho^2/(2s) can range from Xa/4 to 4Xb. It is broader than the declared local evaluation chart `[Xa/2,2Xb]`. Thus the final domain argument must use the actual global background, heat extension and lazy shell guards on positive X, without narrowing the original radial integral.
+
+Eight new controls pass, including changed branch direction, a large binder endpoint, unknown operations, preserved log-definedness prerequisites and a deliberately unsafe upper-only squaring case. No actual source discontinuity or nonexistence counterexample has been established. No original obligation is discharged by this intermediate range audit.

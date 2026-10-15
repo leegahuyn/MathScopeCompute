@@ -1,0 +1,88 @@
+{
+  "schema": "MathScope.N6.ActualPostC12ShearGap/1",
+  "inputSHA256": {
+    "composition": "0bc12df8dcf7d52fa31a46c6cb9c21e6818783240a7eb5c11615ea6071624b5b",
+    "envelope": "d64beeac80aabcc382dac9beb6ae2dab6aca98deb79d48ec54d740db8dbedbc5",
+    "native": "64813a49cac1fddfc7e796b682731866ea70cb12514c07c44f9c2c22343b37d0",
+    "payload": "b6a1e0987650e1326c578d9004cdda8efa05d2375864966fc399ae514804b4c1"
+  },
+  "fixedDefinitionSHA256": "c8041bf166aa318a5dab4a0ccb53d1503609feadbaec4361fe4587bb5945bc1b",
+  "actualFirstLogRadiusDerivativeBudget": {
+    "referenceF_y": 4,
+    "referenceU_y": 4,
+    "referenceMoments_y_eta0to1": 25,
+    "referenceSource_y": 100,
+    "B26Cutoff_y": 121,
+    "actualU_yy": 200,
+    "actualA_y": 200,
+    "actualBs_y": 205,
+    "actualNs_y": 230,
+    "actualP2_y": 260,
+    "allThreeFirstStateDerivatives": 600,
+    "sourceS": 100000
+  },
+  "actualSlowDerivativeLogBounds": [
+    {
+      "quantity": "r_y",
+      "logBoundPower": 18
+    },
+    {
+      "quantity": "Wp",
+      "logBoundPower": 15
+    },
+    {
+      "quantity": "mu_y",
+      "logBoundPower": 24
+    },
+    {
+      "quantity": "t_y",
+      "logBoundPower": 26
+    },
+    {
+      "quantity": "density_y",
+      "logBoundPower": 28
+    },
+    {
+      "quantity": "theta_y",
+      "logBoundPower": 30
+    },
+    {
+      "quantity": "A_y",
+      "logBoundPower": 32
+    },
+    {
+      "quantity": "B_y_over_E",
+      "logBoundPower": 36
+    }
+  ],
+  "independentExactChecks": {
+    "literalFastChainA": true,
+    "literalFastChainB": true,
+    "literalPrincipalVsEqualsVTarget": true,
+    "originalCutoffTargetAtLeast2PlusDeltaOver8": true,
+    "sourceThirdStepDerivativeBelow2Power22": true,
+    "actualFirstStateDerivativesBelowS": true,
+    "actualSlowLoopDerivativesBelowOriginalR": true,
+    "originalFiniteNAbsorbsAllErrors": true,
+    "omittedFastPhaseDerivativeRejected": true
+  },
+  "provedActualConclusions": {
+    "domain": "Original full loop rectangle and eta in [-33/32,33/32], with an open neighborhood",
+    "Enew": "positive and C-infinity",
+    "anewLower": "(1/2)*vTarget/(1+t^2)>0",
+    "vsnewLower": "2+loopDelta/16",
+    "principalA": "vTarget/(1+t^2)",
+    "principalBs": "-vTarget*t/(1+t^2)",
+    "actualVsErrorUpper": "30*R^5/N<R^-44<loopDelta/16",
+    "originalFiniteNAndPhysicalFastPhaseRetained": true
+  },
+  "proof": "ACTUAL_POST_C12_SHEAR_KO.md",
+  "notClaimed": [
+    "anew>2",
+    "Post-I1/I2 whole-domain application",
+    "Full final g21 pressure-J regularity"
+  ],
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0
+}

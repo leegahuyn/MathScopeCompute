@@ -1,0 +1,36 @@
+{
+  "schema": "MathScope.N6.SharedPDEIncrementIdentity/1",
+  "functionPremise": "The SAME ordinary physical u,w,p,pi and cutoff/potential are jointly smooth to the orders used; viscosity is the same constant.",
+  "exactUnconditionalDefect": "R(u+w,p+pi)-R(u,p)-L_u(w,pi)-div(w tensor w)=-w*div(w)",
+  "independentComponentResiduals": [
+    "0",
+    "0",
+    "0"
+  ],
+  "linearTermsRetained": [
+    "partial_t w",
+    "(u dot grad)w",
+    "(w dot grad)u",
+    "grad pi",
+    "-nu Laplacian w"
+  ],
+  "actualNonlinearSquareRetained": true,
+  "forcePreserved": [
+    "0",
+    "0",
+    "0"
+  ],
+  "fullCutoffCurlIdentity": "curl(chi*A)=chi*curl(A)+grad(chi) cross A; div(curl(chi*A))=0",
+  "strictNegativeControls": {
+    "droppedQuadraticTermRejected": true,
+    "droppedCrossAdvectionRejected": true,
+    "droppedCutoffCurlRejected": true
+  },
+  "sourceApplicationComposed": false,
+  "currentNativeSmoothnessAssumedProved": false,
+  "physicalForceDeclaredZero": false,
+  "actualSourceCorrectionInserted": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0
+}

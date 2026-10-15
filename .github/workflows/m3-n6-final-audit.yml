@@ -1,0 +1,80 @@
+name: M3 N6 strict final guard domain audit
+'on':
+  push:
+    branches:
+    - mathscope-m3-n6-cloud-20261014
+    paths:
+    - research-ide/mathscope-m3/n6-final-audit-20261014/**
+    - research-ide/mathscope-m3/n6-guard-followup-20261014/**
+    - .github/workflows/m3-n6-final-audit.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: n6-final-guard-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  PYTHONUTF8: '1'
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  calculate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        persist-credentials: false
+    - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+      with:
+        python-version: 3.12.10
+    - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      with:
+        node-version: 24.19.0
+    - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      with:
+        github-token: ${{ github.token }}
+        run-id: '38523108728'
+        name: n6-finish-prepare-38523108728
+        path: ${{ runner.temp }}/prepared
+    - name: Recheck complete original native domains and indexed derivative scales
+      run: python -B research-ide/mathscope-m3/n6-final-audit-20261014/run_job.py --prepared "$RUNNER_TEMP/prepared/prepared" --output "$RUNNER_TEMP/result"
+    - if: always()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      with:
+        name: n6-final-guard-${{ github.run_id }}
+        path: ${{ runner.temp }}/result/
+        retention-days: 90
+        if-no-files-found: error
+  preserve:
+    if: always()
+    needs:
+    - calculate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        persist-credentials: false
+    - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+      with:
+        python-version: 3.12.10
+    - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      with:
+        github-token: ${{ github.token }}
+        name: n6-final-guard-${{ github.run_id }}
+        path: ${{ runner.temp }}/result
+    - name: Preserve strict original frontier and Korean report on child branch
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: python -B research-ide/mathscope-m3/n6-final-audit-20261014/preserve.py --result "$RUNNER_TEMP/result" --output "$RUNNER_TEMP/summary"
+    - if: always()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      with:
+        name: n6-final-summary-${{ github.run_id }}
+        path: ${{ runner.temp }}/summary/
+        retention-days: 90
+        if-no-files-found: error

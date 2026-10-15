@@ -1,0 +1,39 @@
+{
+  "schema": "MathScope.N6.PicardSurgeryExecutionHistory/1",
+  "run": "38727884201",
+  "head": "973be0f095bb7be9fd6003f2b8a1a2dcce05f0af",
+  "archiveSHA256": "b349b432b2914f73877cc833eadab4c75c99b2d210aa56fa44483adce5581298",
+  "scopedPassed": 38,
+  "scopedTotal": 40,
+  "failedGates": [
+    "gate_leading_10x24",
+    "gate_n1_auxiliary_numeric"
+  ],
+  "failure": "Both unchanged-source probes stopped before execution because the exported kernel folder lacked mathscope-m1/navier/numerics.mjs.",
+  "correction": "Copy the already checked-out dependency into the cloud runtime only after exact original SHA256 comparison.",
+  "originalDependency": {
+    "path": "research-ide/mathscope-m1/navier/numerics.mjs",
+    "originalCommit": "a35bb0727953e56470682839c98fd9759306d18c",
+    "sha256": "a406401c5a0e024e94d58cce0d7e6bdaa6b35488f22fd0ead4bf87222416c62c",
+    "gitBlobSHA1": "f58ac2b0ceb55cc5d7b154f5ee692bf7b1c7197f",
+    "bytes": 11667
+  },
+  "originalSourceConstantsOrFunctionsChanged": false,
+  "verifiedConsumerGraph": {
+    "sourceNodes": 159532,
+    "nativeDefinitions": 167,
+    "allOriginal1260RowsHaveValueBodyPathToPicard0": true,
+    "everyPathArgumentDomainProved": false,
+    "sourceGraphIncidenceIsNotDischarge": true
+  },
+  "background26NewDischarged": 0,
+  "background26RemainingGap": "Unproved finite constant inverse",
+  "nextDiagnostic": "Report exact unresolved source primitive node/argument enclosures and a bounded original cone; keep all26 OPEN if unresolved.",
+  "remaining": {
+    "Guard": 10,
+    "Jet": 230,
+    "PDE": 1020,
+    "total": 1260
+  },
+  "newOriginalDischarged": 0
+}
