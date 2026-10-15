@@ -772,6 +772,31 @@ jobs:
               --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
               --out "$RUNNER_TEMP/result/ACTUAL_LEADING_INNER_COLLAR.json"
           } 2>&1 | tee "$RUNNER_TEMP/result/GATE_leading_inner_collar.log"
+      - name: Genuine actual Picard average and unchanged positive-order inner branches
+        id: gate_picard_average_collar
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            MATHSCOPE_KERNEL_ROOT="$RUNNER_TEMP/kernels" node --test "$tool/test_actual_picard_average_collar.mjs"
+            node "$tool/actual_picard_average_collar.mjs" --kernel-root "$RUNNER_TEMP/kernels" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_PICARD_AVERAGE_COLLAR.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_picard_average_collar.log"
+      - name: Same-source actual axial residual zero on an open left collar
+        id: gate_axial_left_collar
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python "$tool/actual_axial_left_collar.py" --input-dir "$RUNNER_TEMP/result" \
+              --out "$RUNNER_TEMP/result/ACTUAL_AXIAL_LEFT_COLLAR.json"
+            MATHSCOPE_PROOF_FIXTURE_ROOT="$RUNNER_TEMP/result" python -m unittest discover -s "$tool" -p test_actual_axial_left_collar.py -v
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_axial_left_collar.log"
       - name: Record scoped result hashes
         if: always()
         env:
