@@ -35,6 +35,12 @@ jobs:
             /research-ide/mathscope-m1/navier/followup-20261010-outer-reselection/OUTER_DERIVATION.md
             /research-ide/mathscope-m1/navier/followup-20261010-outer-reselection/check_outer_envelopes.py
             /research-ide/mathscope-m2/navier/*.mjs
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/FIRST26_FRONTIER_RUN38734477166.json
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/run-38734477166/ACTUAL_COMPLETED_LEADING_DOMAINS.json
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/run-38734477166/ACTUAL_ORDER_ONE_PRIMITIVE_CALCULUS.json
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/run-38734477166/ACTUAL_ORDER_ONE_GLOBAL_REGULARITY.json
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/run-38734477166/ACTUAL_ORDER_ONE_PRIMITIVE_BINDING.json
+            /research-ide/mathscope-m3/evidence/n6-continuation-20261015/run-38734477166/NATIVE_DOMAIN_DIAGNOSTICS.json
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.13.5'
@@ -698,6 +704,61 @@ jobs:
               --numeric "$RUNNER_TEMP/result/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json" --kernels "$RUNNER_TEMP/kernels" \
               --out "$RUNNER_TEMP/result/ACTUAL_PICARD0_LOCAL_TRANSPORT.json"
           } 2>&1 | tee "$RUNNER_TEMP/result/GATE_picard0_local_transport.log"
+      - name: Actual axial stress body and original Picard equation binding
+        id: gate_axial_stress_source
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          node "$tool/actual_axial_stress_probe.mjs" --kernel-root "$RUNNER_TEMP/kernels" \
+            --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_AXIAL_STRESS_SOURCE_BINDING.json" \
+            2>&1 | tee "$RUNNER_TEMP/result/GATE_axial_stress_source.log"
+      - name: Actual 83-node Cartesian stress derivative algebra
+        id: gate_axial_stress_derivative
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_actual_axial_stress_derivative.py -v
+            python "$tool/actual_axial_stress_derivative.py" \
+              --background "$RUNNER_TEMP/result/ACTUAL_BACKGROUND_26_JET_REGULARITY.json" \
+              --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+              --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
+              --out "$RUNNER_TEMP/result/ACTUAL_AXIAL_STRESS_DERIVATIVE_ALGEBRA.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_axial_stress_derivative.log"
+      - name: Axial conservation identity with retained endpoint and moment premises
+        id: gate_axial_conservation
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_actual_axial_conservation.py -v
+            python "$tool/actual_axial_conservation.py" \
+              --out "$RUNNER_TEMP/result/ACTUAL_AXIAL_CONSERVATION_ALGEBRA.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_axial_conservation.log"
+      - name: Genuine raw axial residual regularity on positive radial compact boxes
+        id: gate_axial_raw_regularity
+        if: ${{ !cancelled() && steps.original_source.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool=tools/n6-native-domain-frontier-20261015
+          {
+            python -m unittest discover -s "$tool" -p test_actual_axial_raw_regularity.py -v
+            python "$tool/actual_axial_raw_regularity.py" \
+              --binding "$RUNNER_TEMP/result/ACTUAL_AXIAL_STRESS_SOURCE_BINDING.json" \
+              --leading "$RUNNER_TEMP/result/ACTUAL_COMPLETED_LEADING_DOMAINS.json" \
+              --orderone "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_GLOBAL_REGULARITY.json" \
+              --orderone-binding "$RUNNER_TEMP/result/ACTUAL_ORDER_ONE_PRIMITIVE_BINDING.json" \
+              --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+              --out "$RUNNER_TEMP/result/ACTUAL_AXIAL_RAW_REGULARITY.json"
+          } 2>&1 | tee "$RUNNER_TEMP/result/GATE_axial_raw_regularity.log"
       - name: Record scoped result hashes
         if: always()
         env:
