@@ -4,6 +4,7 @@ on:
     branches: [mathscope-m3-n6-cloud-20261014]
     paths:
       - 'tools/n6-native-domain-frontier-20261015/*.py'
+      - 'tools/n6-native-domain-frontier-20261015/*.mjs'
       - '.github/workflows/m3-n6-native-domain-frontier.yml'
   workflow_dispatch:
 permissions:
@@ -20,9 +21,13 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            tools/n6-native-domain-frontier-20261015
-            tools/n6-domain-transport-20261015
+            /tools/n6-native-domain-frontier-20261015/*
+            /tools/n6-domain-transport-20261015/*
+            /research-ide/mathscope-m0/*.mjs
+            /research-ide/mathscope-m1/navier/numerics.mjs
+            /research-ide/mathscope-m2/navier/*.mjs
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.13.5'
@@ -82,6 +87,22 @@ jobs:
           python "$tool/jet_pde_support_extract.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
             --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py \
             --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/COMPACT_162_SUPPORT.json"
+          python "$tool/actual_picard_structure.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --out "$RUNNER_TEMP/result/ACTUAL_PICARD_STRUCTURE.json"
+          python "$tool/actual_natural_proof.py" --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --arguments "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --kernels "$RUNNER_TEMP/kernels" --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_MAJORANT.json"
+          node "$tool/actual_natural_proof.kernel-probe.mjs" --kernel-root "$PWD" \
+            --payload "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/ACTUAL_NATURAL_KERNEL_BINDING.json"
+          python "$tool/actual_support_proof.py" --support "$RUNNER_TEMP/result/COMPACT_162_SUPPORT.json" \
+            --compact "$RUNNER_TEMP/prior/COMPACT_JET_PDE_SOURCE.json" --out "$RUNNER_TEMP/result/ACTUAL_SUPPORT_PROOF.json"
+          python -m unittest discover -s "$tool" -p test_natural_outer_context_extract.py -v
+          python "$tool/natural_outer_context_extract.py" --source-db "$RUNNER_TEMP/result/native-source-cache.sqlite" \
+            --stage3 tools/n6-domain-transport-20261015/verify_domain_transport.py --header "$RUNNER_TEMP/source/header.json" \
+            --domains "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" --out "$RUNNER_TEMP/result/NATURAL_OUTER_CONTEXTS.json"
+          python -m unittest discover -s "$tool" -p test_natural_domain_proof.py -v
+          python "$tool/natural_domain_proof.py" --diagnostics "$RUNNER_TEMP/result/NATIVE_DOMAIN_DIAGNOSTICS.json" \
+            --out "$RUNNER_TEMP/result/NATURAL_CONTEXT_RANGE_PROOF.json"
       - name: Record scoped result hashes
         if: always()
         env:
