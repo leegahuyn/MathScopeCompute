@@ -95,7 +95,7 @@ def product(a,b):
 
 class ConstantDomains:
  """Finite real source constants with conservative sign proofs, no floats."""
- def __init__(self,get,parameters):self.get=get;self.parameters=parameters;self.domains=[];self.used=set()
+ def __init__(self,get,parameters,native_handler=None):self.get=get;self.parameters=parameters;self.native_handler=native_handler;self.domains=[];self.used=set()
  @lru_cache(None)
  def ast(self,key):
   value=self.parameters[key]
@@ -184,7 +184,29 @@ class ConstantDomains:
     return Bound(Q(0),Q(1),arg.strict_positive)
    if order==1:return Bound(Q(0),None,arg.strict_positive and arg.hi is not None and arg.hi<1)
    return Bound(None,None,False)
-  prove(op in {'add','multiply','inverse','integer_power','exp','log_positive','sqrt_positive','ceiling','maximum'},'Unreviewed constant ancestor '+str((i,op)))
+  if op=='actual_expression_partial' and self.native_handler is not None:
+   try:
+    out=self.native_handler(self,i,node,environment)
+    prove(isinstance(out,Bound),'Actual profile native handler returned no real finite-value enclosure')
+    return out
+   except ValueError as original:
+    err=original if isinstance(original,Gap) else Gap(str(original))
+    if not hasattr(err,'primitive_frontier'):
+     err.primitive_frontier={'node':i,'sourceNode':node,'argumentEnclosures':[],
+      'scopedCoordinates':[j for j,_ in environment],'nativeActualArgumentTuple':a[1],'nativeActualPartialOrders':a[2],
+      'scopedCoordinateEnclosures':[{'coordinate':j,'lo':str(b.lo) if b.lo is not None else None,'hi':str(b.hi) if b.hi is not None else None,
+       'strictPositive':b.strict_positive,'strictNegative':b.strict_negative} for j,b in environment],
+      'unsupportedNativeOrPrimitive':True,'finiteOrPositiveValueAssumed':False}
+    else:
+     err.primitive_frontier.setdefault('enclosingActualNativeCalls',[]).append({'node':i,'sourceNode':node,'actualArguments':a[1],'actualPartialOrders':a[2],
+      'scopedCoordinateEnclosures':[{'coordinate':j,'lo':str(b.lo) if b.lo is not None else None,'hi':str(b.hi) if b.hi is not None else None,
+       'strictPositive':b.strict_positive,'strictNegative':b.strict_negative} for j,b in environment]})
+    raise err from original
+  if op not in {'add','multiply','inverse','integer_power','exp','log_positive','sqrt_positive','ceiling','maximum'}:
+   err=Gap('Unreviewed constant ancestor '+str((i,op)))
+   err.primitive_frontier={'node':i,'sourceNode':node,'argumentEnclosures':[],
+    'scopedCoordinates':[j for j,_ in environment],'unsupportedNativeOrPrimitive':True,'finiteOrPositiveValueAssumed':False}
+   raise err
   prove(op!='ceiling' or not environment,'Unreviewed discontinuous integral integrand')
   rows=[self.at(j,environment) for j in (a[:1] if op in {'integer_power','inverse','exp','log_positive','sqrt_positive','ceiling'} else a)]
   try:out=self.operation(op,rows,a[1] if op=='integer_power' else None)
@@ -285,7 +307,7 @@ def bind_inputs(data,hashes,reg):
  for index in range(2,11):require(reg['expression'][index]['parameters']==[X,ETA] and reg['expression'][index]['unspecifiedOracle'] is False,'Changed original profile formal coordinates')
  return roots
 
-def body_proof(get,reg,leading_roots):
+def body_proof(get,reg,leading_roots,native_handler=None):
  q=('coordinate',QVAR);x=('coordinate',X);eta=('coordinate',ETA);h=('parameter','h')
  A=e.add(e.rat(1,2),h);L=e.add(e.rat(1),e.mul(e.rat(-2),h,e.power(eta,2)))
  cp=reg['expression'][677];prove(cp['name']=='ActualCovarianceSensitivityTargetPrefix_Cp' and cp['parameters']==[X,ETA],'Actual finite Cp helper definition')
@@ -304,7 +326,7 @@ def body_proof(get,reg,leading_roots):
  sigma_id=next(iter(sigmas));sigma=get(sigma_id)
  prove(sigma['op']=='multiply' and len(sigma['args'])==2 and QVAR in sigma['args'],'Original scale times positive q')
  scale_id=next(i for i in sigma['args'] if i!=QVAR)
- constants=ConstantDomains(get,reg['fixed']['source']['parametersExactExpressions'])
+ constants=ConstantDomains(get,reg['fixed']['source']['parametersExactExpressions'],native_handler=native_handler)
  prove(constants.at(scale_id).strict_positive,'Original selector scale positivity/finiteness unresolved')
  normal=BodyNormal(get,reg,{3451:'P0',leading_roots['M']:'M0',scale_id:'fixedSelectorScale'})
  scale=normal.at(scale_id);sigmaN=e.mul(scale,q);chi0=call(680,[sigmaN]);extra=e.mul(sigmaN,call(680,[sigmaN],[1]));w=e.exp(e.mul(e.rat(2),h,e.log(q)))
@@ -403,14 +425,27 @@ def main():
  get=v3.Source(a.source_db);seen,defs,_=conservative_capture(get,reg,G_ROOT)
  require(len(seen)==136186 and len(defs)==84 and sha(sorted(seen))==e.CAPTURE_PIN,'Changed actual g21 capture')
  rows=original_rows(data['compact'],matrix,get,reg);roots=bind_inputs(data,hashes,reg);source_parameter_proof(reg['fixed'])
+ # These contracts are enabled only after bind_inputs has authenticated the
+ # same completed leading/order-one all-fixed-order regularity receipts.
+ # Other ConstantDomains callers retain their fail-closed default.
+ from actual_background_profile_constants import make_profile_native_handler
+ profile_native_handler=make_profile_native_handler(reg,data,hashes,Bound)
  gap=None;proof=None;gap_details=None
- try:proof=body_proof(get,reg,roots)
+ try:proof=body_proof(get,reg,roots,native_handler=profile_native_handler)
  except Gap as err:
   gap=str(err);gap_details=getattr(err,'primitive_frontier',None)
   if gap_details is not None:
    # Bounded read-only diagnostics. An unresolved ancestor remains a gap;
    # neither these nodes nor the frontier are a regularity certificate.
    todo=[gap_details['node']];cone={};seen=set()
+   node=get(gap_details['node'])
+   if node['op']=='actual_expression_partial':
+    index=node['args'][0];definition=reg['expression'][index]
+    gap_details.update({'nativeRegistry':'expression','nativeIndex':index,'nativeDefinition':definition,'nativeDefinitionSHA256':sha(definition),
+     'nativeActualArgumentTuple':node['args'][1],'nativeActualPartialOrders':node['args'][2]})
+    # LIFO: the actual call and every actual argument precede a possibly
+    # enormous callee body in this bounded diagnostic cone.
+    todo.insert(0,definition['body'])
    while todo and len(cone)<512:
     i=todo.pop()
     if i in seen:continue

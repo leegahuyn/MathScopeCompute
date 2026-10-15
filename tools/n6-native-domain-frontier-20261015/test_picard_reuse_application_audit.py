@@ -65,7 +65,10 @@ def fixture(proved=False):
    'actualCutoffBranchAudits':[{'allThreeActualBranchesScopedAndChecked':True,'originalFlatEndpointExponentialProofRetained':True}],
    'actualCpIntegralAudits':[{'allActualIntegrandPrimitivesChecked':True,'finiteContinuousIntegralWithMovingUpperEndpoint':True}],
    'actualChartDefinitionSHA256':audit.CHART,'allOperandsCheckedBeforeAlgebraicCancellation':True,
-   'allActualNativeTuplesChecked':True,'allConditionalBranchesAuditedOnTheirOwnDomains':True,'unprovedFrontier':[]}
+   'allActualNativeTuplesChecked':True,'allConditionalBranchesAuditedOnTheirOwnDomains':True,
+   'everyDefinitionRestrictedToItsOwnFormalParameters':True,'everyActualFreeCoordinateBoundByDefinitionParameterScope':True,
+   'perBodyParameterScopes':[{'definition':i,'parameters':[617438,4756,2] if i<688 else [622802,622803,622804,622791],
+    'initialEnvironmentCoordinates':sorted([617438,4756,2] if i<688 else [622802,622803,622804,622791])} for i in sorted(audit.BODIES)],'unprovedFrontier':[]}
   background['actualSourceBodyProof']={'allNormalizedAndPhysicalBodiesCompared':True,'allBodyPrimitiveDomainsChecked':True,
    'finiteN1Only':True,'infiniteBackgroundEqualityClaimed':False,'bodyLineages':ledger,
    'actualChart':dict.fromkeys(['actualEquationAndCoordinatesCompared','positiveSInOriginalInterval',
@@ -98,6 +101,18 @@ class ProofReuseAdverseControls(unittest.TestCase):
   self.reject(lambda b,m,o,d:b['actualSourceBodyProof']['actualPrimitiveClosureAudit'].update(unprovedFrontier=[{'op':'inverse','operand':0}]))
  def test_primitive_walk_missing_ninth_body_rejected(self):
   self.reject(lambda b,m,o,d:b['actualSourceBodyProof']['actualPrimitiveClosureAudit']['bodyRootsAndDefinitionHashes'].pop())
+ def test_actual_free_coordinate_scope_flag_required(self):
+  self.reject(lambda b,m,o,d:b['actualSourceBodyProof']['actualPrimitiveClosureAudit'].update(everyActualFreeCoordinateBoundByDefinitionParameterScope=False))
+ def test_normalized_environment_cannot_include_rogue_R(self):
+  self.reject(lambda b,m,o,d:b['actualSourceBodyProof']['actualPrimitiveClosureAudit']['perBodyParameterScopes'][0]['initialEnvironmentCoordinates'].append(622802))
+ def test_physical_environment_cannot_include_formal_X(self):
+  self.reject(lambda b,m,o,d:b['actualSourceBodyProof']['actualPrimitiveClosureAudit']['perBodyParameterScopes'][-1]['initialEnvironmentCoordinates'].append(4756))
+ def test_parameter_scope_ledger_cannot_omit_a_body(self):
+  self.reject(lambda b,m,o,d:b['actualSourceBodyProof']['actualPrimitiveClosureAudit']['perBodyParameterScopes'].pop())
+ def test_actual_formal_parameter_order_preserved(self):
+  self.reject(lambda b,m,o,d:b['actualSourceBodyProof']['actualPrimitiveClosureAudit']['perBodyParameterScopes'][0]['parameters'].reverse())
+ def test_empty_body_environment_rejected(self):
+  self.reject(lambda b,m,o,d:b['actualSourceBodyProof']['actualPrimitiveClosureAudit']['perBodyParameterScopes'][0].update(initialEnvironmentCoordinates=[]))
  def test_operand_first_walk_flag_required(self):
   self.reject(lambda b,m,o,d:b['actualSourceBodyProof']['actualPrimitiveClosureAudit'].update(allOperandsCheckedBeforeAlgebraicCancellation=False))
  def test_unproved_actual_primitive_entry_rejected(self):

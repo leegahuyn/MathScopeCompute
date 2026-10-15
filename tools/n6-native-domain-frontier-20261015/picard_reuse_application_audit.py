@@ -102,7 +102,15 @@ def actual_body_witness(proof,native_definitions):
     require(primitive.get('schema')=='MathScope.N6.ActualBackgroundPrimitiveClosure/1',
             'Actual uncancelled primitive closure certificate required')
     exact_true(primitive,'completeActualClosure','allOperandsCheckedBeforeAlgebraicCancellation',
-      'allActualNativeTuplesChecked','allConditionalBranchesAuditedOnTheirOwnDomains')
+      'allActualNativeTuplesChecked','allConditionalBranchesAuditedOnTheirOwnDomains',
+      'everyDefinitionRestrictedToItsOwnFormalParameters','everyActualFreeCoordinateBoundByDefinitionParameterScope')
+    scopes=primitive.get('perBodyParameterScopes',[])
+    require(len(scopes)==9 and {r.get('definition') for r in scopes}==BODIES,
+            'Every actual background body requires its own parameter scope')
+    for row in scopes:
+        parameters=[617438,4756,2] if row['definition'] in {681,682,683,684,685} else [622802,622803,622804,622791]
+        require(row.get('parameters')==parameters and row.get('initialEnvironmentCoordinates')==sorted(parameters),
+                'Actual body environment exceeds or omits its original formal parameters')
     require(primitive.get('unprovedFrontier')==[],'Unproved actual body primitive frontier')
     require(primitive.get('actualPrimitiveDomainChecks') and primitive.get('nativeBoundaryCalls') and
             len(primitive.get('visitedSourceIDsSHA256',''))==64,'Incomplete actual primitive walk witness')

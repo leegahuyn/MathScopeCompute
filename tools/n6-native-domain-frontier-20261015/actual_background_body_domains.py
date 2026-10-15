@@ -53,15 +53,20 @@ def audit_actual_body_domains(get,reg,leading_roots,scale_id,constants):
  roots=[(i,reg['expression'][i]) for i in [681,682,683,684,685,688,689,690,691]]
  cutoff=reg['expression'][680];cp=reg['expression'][677];cv=cutoff['parameters'][0]
  need(cutoff['parameters']==[622831] and cp['parameters']==[X,ETA],'Exact original cutoff/Cp formal arguments')
+ cp_node=get(cp['body']);need(cp_node['op']=='definite_integral' and len(cp_node['args'])==4,'Actual Cp integral source node');cp_binder=cp_node['args'][1]
  coordinate=('coordinate',cv);u=e.add(e.mul(e.rat(2),coordinate),e.rat(-1));one_minus=e.add(e.rat(1),e.mul(e.rat(-1),u))
- default={X:Box(Q(0),None,True),ETA:Box(Q(-1),Q(1)),QVAR:Box(Q(0),None,True),R:Box(Q(0),None,True),Z:Box(),T:Box(Q(0),None),ELL:Box(),cv:Box()}
+ domain_bounds={X:Box(Q(0),None,True),ETA:Box(Q(-1),Q(1)),QVAR:Box(Q(0),None,True),R:Box(Q(0),None,True),Z:Box(),T:Box(Q(0),None),ELL:Box(),cv:Box()}
+ def scope(parameters):
+  need(all(j in domain_bounds for j in parameters),'Unknown definition formal parameter')
+  return tuple(sorted((j,domain_bounds[j]) for j in parameters))
  visited=set();checks=[];native=[];root_hits=set();integrals=[];cutoffs=[];chart_body_checked=False
  def record(i,op,arg,proof):checks.append({'sourceNode':i,'operation':op,'actualArgument':arg,'proof':proof,'proved':True})
  @lru_cache(None)
  def at(i,environment=(),branch=''):
   nonlocal chart_body_checked
-  visited.add(i);env={**default,**dict(environment)};n=get(i);op,a=n['op'],n['args']
+  visited.add(i);env=dict(environment);n=get(i);op,a=n['op'],n['args']
   if i in approved:
+   need(i==scale_id or X in env and ETA in env,'Approved profile boundary outside its actual formal-coordinate scope')
    root_hits.add(i)
    return Box(Q(0),None,True) if i==scale_id else Box()
   if op=='rational':return point(Q(int(a[0]),int(a[1])))
@@ -74,7 +79,7 @@ def audit_actual_body_domains(get,reg,leading_roots,scale_id,constants):
    values=[at(j,environment,branch) for j in args]
    if index in range(2,11):
     allowed=args==[X,ETA] and orders==[0,0]
-    if index==2 and orders==[0,0] and args[1]==ETA and args[0] in dict(environment):
+    if index==2 and orders==[0,0] and args==[cp_binder,ETA] and cp_binder in dict(environment):
      b=values[0];allowed=b.lo is not None and b.lo>=0
     need(allowed and d['parameters']==[X,ETA] and d.get('unspecifiedOracle') is False,'Unapproved actual profile native tuple '+str((i,a)))
    elif index==680:
@@ -90,8 +95,8 @@ def audit_actual_body_domains(get,reg,leading_roots,scale_id,constants):
    need(i==e.CHART_S and a==[e.CHART_SYSTEM,Z,T],'Unknown actual native root')
    for j in a[1:]:at(j,environment,branch)
    d=reg['monotone'][e.CHART_SYSTEM]
-   at(d['left'],environment,branch);at(d['right'],environment,branch)
-   local={**dict(environment),d['variable']:Box(Q(1,2),Q(2))};at(d['body'],tuple(sorted(local.items())),branch)
+   at(d['left'],(),branch);at(d['right'],(),branch)
+   local={j:env[j] for j in d['parameters']};local[d['variable']]=Box(Q(1,2),Q(2));at(d['body'],tuple(sorted(local.items())),branch)
    chart_body_checked=True;native.append({'sourceNode':i,'definitionKind':'monotone','definition':e.CHART_SYSTEM,'definitionSHA256':digest(d),'actualArguments':[Z,T],'originalImageAndPositiveRootIntervalChecked':True})
    return Box(Q(1,2),Q(2),True)
   if op=='definite_integral':
@@ -136,16 +141,17 @@ def audit_actual_body_domains(get,reg,leading_roots,scale_id,constants):
    return Box(Q(0),None,b.positive or k%2==0 and b.negative) if b.lo is not None and b.lo>=0 or k%2==0 else Box()
   raise PrimitiveGap('Unreachable actual primitive operation')
  # Audit literal cutoff and Cp definitions as well as the nine bodies.
- at(cutoff['body']);at(cp['body'])
- for _,d in roots:at(d['body'])
+ at(cutoff['body'],scope(cutoff['parameters']));at(cp['body'],scope(cp['parameters']))
+ for _,d in roots:at(d['body'],scope(d['parameters']))
  need(chart_body_checked and cutoffs and integrals,'Complete actual chart/cutoff/Cp primitive audits required')
  need(approved.keys()<=root_hits,'All three source boundary roots must actually occur')
  return {'schema':'MathScope.N6.ActualBackgroundPrimitiveClosure/1','completeActualClosure':True,
   'bodyRootsAndDefinitionHashes':[{'definition':i,'body':d['body'],'definitionSHA256':digest(d)} for i,d in roots],
+  'perBodyParameterScopes':[{'definition':i,'parameters':d['parameters'],'initialEnvironmentCoordinates':sorted(d['parameters'])} for i,d in roots],
   'visitedSourceNodeCount':len(visited),'visitedSourceIDsSHA256':digest(sorted(visited)),
   'actualVisitedNodeRecordsSHA256':digest([(i,get(i)) for i in sorted(visited)]),
   'actualPrimitiveDomainChecks':checks,'nativeBoundaryCalls':native,
   'approvedBoundaryRoots':[{'sourceRoot':i,'contract':approved[i],'sourceNodeSHA256':digest(get(i))} for i in sorted(root_hits)],
   'actualCutoffBranchAudits':cutoffs,'actualCpIntegralAudits':integrals,'actualChartDefinitionSHA256':chart['definitionSHA256'],
-  'allOperandsCheckedBeforeAlgebraicCancellation':True,'allActualNativeTuplesChecked':True,'allConditionalBranchesAuditedOnTheirOwnDomains':True,
+  'allOperandsCheckedBeforeAlgebraicCancellation':True,'allActualNativeTuplesChecked':True,'allConditionalBranchesAuditedOnTheirOwnDomains':True,'everyDefinitionRestrictedToItsOwnFormalParameters':True,'everyActualFreeCoordinateBoundByDefinitionParameterScope':True,
   'unprovedFrontier':[],'scope':'Nine implemented finite normalized/physical bodies only; original image and one-sided physical T=0; no infinite background equality.'}

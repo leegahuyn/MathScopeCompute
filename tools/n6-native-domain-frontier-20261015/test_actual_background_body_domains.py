@@ -80,5 +80,19 @@ class ActualBodyDomains(unittest.TestCase):
  def test_unknown_integral(self):self.changed(lambda new,n,r:new('definite_integral',1,e.X,0,1))
  def test_bad_cutoff_order(self):
   self.changed(lambda new,n,r:new('actual_expression_partial',680,[new('multiply',617438,617466)],[2]))
+ def test_canceled_physical_coordinate_in_normalized_body(self):
+  n,r,c,new=fixture();r['expression'][681]['body']=new('add',r['expression'][681]['body'],new('multiply',0,e.R))
+  with self.assertRaises((PrimitiveGap,ValueError)):self.run_audit(n,r,c)
+ def test_canceled_formal_coordinate_in_physical_body(self):self.changed(lambda new,n,r:e.X)
+ def test_canceled_q_in_cutoff_body(self):
+  n,r,c,new=fixture();n[622845]['args'][3]=new('add',1,new('multiply',0,617438))
+  with self.assertRaises((PrimitiveGap,ValueError)):self.run_audit(n,r,c)
+ def test_canceled_R_in_chart_body(self):
+  n,r,c,new=fixture();d=r['monotone'][2];d['body']=new('add',d['body'],new('multiply',0,e.R))
+  with self.assertRaises((PrimitiveGap,ValueError)):self.run_audit(n,r,c)
+ def test_M0_boundary_wrong_scope(self):self.changed(lambda new,n,r:9239)
+ def test_non_Cp_profile_argument_tuple(self):
+  n,r,c,new=fixture();r['expression'][681]['body']=new('add',r['expression'][681]['body'],new('multiply',0,new('actual_expression_partial',2,[617438,e.ETA],[0,0])))
+  with self.assertRaises((PrimitiveGap,ValueError)):self.run_audit(n,r,c)
 
 if __name__=='__main__':unittest.main()
