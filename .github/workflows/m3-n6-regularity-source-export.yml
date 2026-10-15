@@ -1,0 +1,60 @@
+name: N6 regularity source kernels
+on:
+  push:
+    branches: [mathscope-m3-n6-cloud-20261014]
+    paths: ['.github/workflows/m3-n6-regularity-source-export.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: n6-regularity-export-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research-ide/mathscope-m0/*.mjs
+            /research-ide/mathscope-m2/navier/*.mjs
+            /research-ide/mathscope-m3/navier/*.mjs
+            /research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/source-bytes-before.json
+            /research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis/*.md
+            /research-ide/mathscope-m1/navier/followup-20261010-final-stress-audit/*.md
+            /research-ide/mathscope-m1/navier/followup-20261010-symbolic-gluing/*.md
+      - name: Preserve exact public source files and original capture matches
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib,shutil
+          root=pathlib.Path('.');out=pathlib.Path(os.environ['RUNNER_TEMP'])/'regularity-source';out.mkdir(parents=True,exist_ok=True)
+          files=[]
+          for base,pattern in [('research-ide/mathscope-m0','*.mjs'),('research-ide/mathscope-m2/navier','*.mjs'),('research-ide/mathscope-m3/navier','*.mjs'),('research-ide/mathscope-m1/navier/followup-20261010-same-datum-axis','*.md'),('research-ide/mathscope-m1/navier/followup-20261010-final-stress-audit','*.md'),('research-ide/mathscope-m1/navier/followup-20261010-symbolic-gluing','*.md')]:
+              for p in sorted(pathlib.Path(base).glob(pattern)):
+                  if not p.is_file() or p.is_symlink():raise ValueError('Unexpected source file type')
+                  raw=p.read_bytes();target=out/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw)
+                  files.append({'path':str(p),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'gitBlobSHA1':hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()})
+          capture=pathlib.Path('research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/source-bytes-before.json')
+          raw=capture.read_bytes()
+          if hashlib.sha256(raw).hexdigest()!='37960fe03a79493d12b6b9051b8a69a88ab71cc3505cc8cd62c6f2fc4bc0daeb':raise ValueError('Original source capture changed')
+          old=json.loads(raw);table={r['path']:r for r in files};matched=[];notExported=[]
+          for r in old['files']:
+              if r['path'] not in table:notExported.append(r['path']);continue
+              if table[r['path']]['sha256']!=r['sha256']:raise ValueError('Protected source changed: '+r['path'])
+              matched.append(r['path'])
+          (out/'ORIGINAL_SOURCE_CAPTURE.json').write_bytes(raw)
+          receipt={'schema':'MathScope.N6.RegularitySourceKernels/1','run':os.environ['GITHUB_RUN_ID'],'commit':os.environ['GITHUB_SHA'],'files':files,'matchedOriginalCaptureFiles':matched,'originalCaptureFilesOutsideExport':notExported,'full155CaptureClaimed':len(matched)==155,'sourceProducerExecuted':False,'mathematicalCompletionClaimed':False,'sourceScope':'Selected original public source kernels and proof documents only'}
+          (out/'SOURCE_EXPORT.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          print(json.dumps({'files':len(files),'matchedProtectedFiles':len(matched),'outsideExport':len(notExported)}))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: n6-regularity-source-${{ github.run_id }}
+          path: ${{ runner.temp }}/regularity-source/
+          retention-days: 90
+          if-no-files-found: error
