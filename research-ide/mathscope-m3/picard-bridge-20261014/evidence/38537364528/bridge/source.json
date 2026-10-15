@@ -1,0 +1,911 @@
+{
+  "schema": "MathScope.N6PicardM2NativeBridgeAudit/1",
+  "verifiedM2FixedOrder": 1,
+  "sourceRequestedOrders": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "declaredM2Criterion": "N4-03",
+  "m2SourceParameterHash": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "exactM2OriginalSystem": {
+    "schema": "MathScope.SourceSixComponentPicardSystem/1",
+    "n": 1,
+    "sourceProfile": "same-profile-2026-10-10.3",
+    "sourceEquations": [
+      "5.2",
+      "5.3",
+      "5.4",
+      "5.5",
+      "5.6",
+      "5.7",
+      "5.8"
+    ],
+    "coordinates": [
+      "phi_n",
+      "U_n",
+      "K_n",
+      "Pi_n",
+      "partial_xi phi_n",
+      "partial_xi U_n"
+    ],
+    "axisDatum": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "singularDiagonal": [
+      0,
+      0,
+      2,
+      0,
+      3,
+      1
+    ],
+    "definitions": {
+      "X": "xi^2",
+      "K_n": "A_X(U_n)-U_n",
+      "lambda_n": "2*n*h",
+      "beta": "-A-1/2+lambda_n",
+      "gamma": "-A+lambda_n",
+      "delta": "-2*A+lambda_n",
+      "Hphi": "phi0+X*partial_X phi0",
+      "HU": "X*partial_X U0",
+      "knownPressureSource": "pKnown=C^-2*sum_(1<=i,j<n;i+j=n)(phi_i*phi_j)-Omega_(n-1)/(2X)"
+    },
+    "A0": [
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "-1"
+      ],
+      [
+        "4*xi*phi0/C^2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "2*(beta*(-1+2*eta*U0)/L+V0/X)",
+        "4*eta*(A-lambda_n)*Hphi/L+2*Z_(-A-1/2)(phi0)",
+        "-4*eta*(D+lambda_n)*Hphi/L",
+        "0",
+        "xi/L+xi*(V0/X)-2*eta*xi*U0/L",
+        "0"
+      ],
+      [
+        "-8*eta*X*phi0/(L*C^2)",
+        "2*gamma*(-1+2*eta*U0)/L+4*eta*(A-lambda_n)*HU/L+2*Z_(-A)(U0)",
+        "-4*eta*(D+lambda_n)*HU/L",
+        "4*delta*eta/L",
+        "0",
+        "xi/L+xi*(V0/X)-2*eta*xi*U0/L"
+      ]
+    ],
+    "A1": [
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "2*(D*eta+d*U0)/L",
+        "-2*d*Hphi/L",
+        "-2*d*Hphi/L",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "2*(D*eta+d*U0-d*HU)/L",
+        "-2*d*HU/L",
+        "2*d/L",
+        "0",
+        "0"
+      ]
+    ],
+    "forcing": [
+      "0",
+      "0",
+      "0",
+      "2*xi*pKnown",
+      "2*(known angular transport - Z_(-A-1/2+lambda_(n-1)-D) Z_(-A-1/2+lambda_(n-1)) phi_(n-1))",
+      "2*(known axial transport - Z_(-A+lambda_(n-1)-D) Z_(-A+lambda_(n-1)) U_(n-1) - 2*eta*X*pKnown/L)"
+    ],
+    "regularity": {
+      "V0OverXi": "xi*(V0/X); V0/X is smooth from (5.2)",
+      "pressureRowSubstitutedIntoAxial": true,
+      "zeroAxisData": true,
+      "diagonalInverse": "(Gg)_i(xi)=xi*integral_0^1 t^c_i*g_i(t*xi) dt",
+      "axisParity": [
+        "even",
+        "even",
+        "even",
+        "even",
+        "odd",
+        "odd"
+      ]
+    },
+    "blockCertificate": {
+      "A1Maps": "first four coordinates into last two",
+      "A1Kills": "last two coordinates",
+      "nilpotentProducts": [
+        {
+          "row": 1,
+          "column": 1,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 1,
+          "column": 5,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 1,
+          "column": 6,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 2,
+          "column": 5,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 2,
+          "column": 6,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 3,
+          "column": 4,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 3,
+          "column": 5,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 3,
+          "column": 6,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 4,
+          "column": 2,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 4,
+          "column": 3,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 4,
+          "column": 4,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 4,
+          "column": 5,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 4,
+          "column": 6,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 5,
+          "column": 1,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 5,
+          "column": 2,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 5,
+          "column": 3,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 5,
+          "column": 4,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 5,
+          "column": 5,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 5,
+          "column": 6,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 6,
+          "column": 1,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 6,
+          "column": 2,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 6,
+          "column": 3,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 6,
+          "column": 4,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 6,
+          "column": 5,
+          "possibleDiagonalKernelPaths": []
+        },
+        {
+          "row": 6,
+          "column": 6,
+          "possibleDiagonalKernelPaths": []
+        }
+      ],
+      "allDiagonalKernelProductsVanish": true,
+      "parameterDerivativesPreserveMask": true,
+      "maximumEtaDerivatives": "ceil(k/2)"
+    },
+    "commonDomain": {
+      "aExact": "sqrt(Xa*exp(t1/16))",
+      "archivedOrdering": "X_an=Xa*exp(t1/16) < X_modulation_left=Xa*exp(t1/8) < Xa*exp(t1/4)",
+      "positiveOrderCutoffOrdering": "X_minus=Xa*exp(t1/128) < X_keep=Xa*exp(t1/64) < X_cut=Xa*exp(t1/32) < a^2=Xa*exp(t1/16)",
+      "notationGuard": "The positive-order X_minus is a new point inside the analytic activation collar; it is not the archived modulation interval endpoint.",
+      "sourceFile": "followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md",
+      "sourceSha256": "2035fa202134d7ca0affcad7ad7aafbb05e3508fde3a5f34a3f2cea6fd003750",
+      "independentOfOrder": true,
+      "parameterStripNumericRadius": null,
+      "CnForActualProfile": null
+    },
+    "sameProfileCoefficientsSolved": false
+  },
+  "m2NormalizedSystem": {
+    "coordinates": [
+      "F_1",
+      "U_1",
+      "K_1",
+      "Pi_1",
+      "partial_xi F_1",
+      "partial_xi U_1"
+    ],
+    "diagonalCPowers": [
+      -1,
+      0,
+      0,
+      0,
+      -1,
+      0
+    ],
+    "changeOfUnknown": "W_normalized = diag(C^-1,1,1,1,C^-1,1) W_original",
+    "transformation": "A_normalized[i,j] = C^(diagonalCPowers[i]-diagonalCPowers[j])*A_original[i,j]",
+    "definitions": {
+      "F0": "phi0/C",
+      "HF": "Hphi/C=F0+X*partial_X F0",
+      "ZF0": "Z_(-A-1/2)(F0)",
+      "ZU0": "Z_(-A)(U0)",
+      "v": "V0/X via its regular radial-average reconstruction",
+      "lambda_n": "2*h",
+      "delta_n": "-2*A+2*h; distinct from the parameter-strip radius delta",
+      "pKnown": "-omegaOverX/2",
+      "omegaOverX": "Omega0/X; all four source groups retained"
+    },
+    "A0": [
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "-1"
+      ],
+      [
+        "4*xi*F0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "2*(beta*(-1+2*eta*U0)/L+v)",
+        "4*eta*(A-lambda_n)*HF/L+2*ZF0",
+        "-4*eta*(D+lambda_n)*HF/L",
+        "0",
+        "xi/L+xi*v-2*eta*xi*U0/L",
+        "0"
+      ],
+      [
+        "-8*eta*X*F0/L",
+        "2*gamma*(-1+2*eta*U0)/L+4*eta*(A-lambda_n)*HU/L+2*ZU0",
+        "-4*eta*(D+lambda_n)*HU/L",
+        "4*delta_n*eta/L",
+        "0",
+        "xi/L+xi*v-2*eta*xi*U0/L"
+      ]
+    ],
+    "A1": [
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "2*(D*eta+d*U0)/L",
+        "-2*d*HF/L",
+        "-2*d*HF/L",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "2*(D*eta+d*U0-d*HU)/L",
+        "-2*d*HU/L",
+        "2*d/L",
+        "0",
+        "0"
+      ]
+    ],
+    "forcing": [
+      "0",
+      "0",
+      "0",
+      "-xi*omegaOverX",
+      "-2*ZZF0",
+      "-2*ZZU0+2*eta*X*omegaOverX/L"
+    ],
+    "forcingDefinitions": {
+      "ZZF0": "Z_(-A-1/2-D) Z_(-A-1/2) F0",
+      "ZZU0": "Z_(-A-D) Z_(-A) U0",
+      "knownInteriorConvolution": "empty for n=1; i,j>=1 and i+j=1 has no terms"
+    }
+  },
+  "majorantConstants": {
+    "delta": {
+      "quotient": [
+        {
+          "ref": "rho"
+        },
+        {
+          "product": [
+            {
+              "integer": "1024"
+            },
+            {
+              "ref": "Q"
+            }
+          ]
+        }
+      ]
+    },
+    "aSquared": {
+      "product": [
+        {
+          "ref": "Xa"
+        },
+        {
+          "exp": {
+            "quotient": [
+              {
+                "ref": "t1"
+              },
+              {
+                "integer": "16"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "a": {
+      "sqrt": {
+        "ref": "aSquared"
+      }
+    },
+    "radialBaseBound": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": "4096"
+            },
+            {
+              "power": [
+                {
+                  "ref": "Lambda"
+                },
+                2
+              ]
+            },
+            {
+              "power": [
+                {
+                  "ref": "Q"
+                },
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "ref": "t1"
+        }
+      ]
+    },
+    "vOverXBound": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": "28"
+            },
+            {
+              "ref": "radialBaseBound"
+            }
+          ]
+        },
+        {
+          "ref": "delta"
+        }
+      ]
+    },
+    "omegaOverXBound": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": "4096"
+            },
+            {
+              "power": [
+                {
+                  "ref": "radialBaseBound"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "delta"
+            },
+            2
+          ]
+        }
+      ]
+    },
+    "matrixInfinityNormBound": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": "512"
+            },
+            {
+              "ref": "radialBaseBound"
+            }
+          ]
+        },
+        {
+          "ref": "delta"
+        }
+      ]
+    },
+    "forcingInfinityNormBound": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": "65536"
+            },
+            {
+              "power": [
+                {
+                  "ref": "radialBaseBound"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "delta"
+            },
+            2
+          ]
+        }
+      ]
+    },
+    "C1": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": "262144"
+            },
+            {
+              "power": [
+                {
+                  "ref": "radialBaseBound"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "delta"
+            },
+            2
+          ]
+        }
+      ]
+    },
+    "sourceStripRadius": {
+      "quotient": [
+        {
+          "ref": "delta"
+        },
+        {
+          "integer": "4"
+        }
+      ]
+    },
+    "solutionStripRadius": {
+      "quotient": [
+        {
+          "ref": "delta"
+        },
+        {
+          "integer": "8"
+        }
+      ]
+    },
+    "cauchyRadiusLoss": {
+      "quotient": [
+        {
+          "ref": "delta"
+        },
+        {
+          "integer": "8"
+        }
+      ]
+    },
+    "picardA": {
+      "product": [
+        {
+          "ref": "C1"
+        },
+        {
+          "ref": "a"
+        }
+      ]
+    },
+    "truncationIndex": {
+      "max": [
+        {
+          "integer": "1"
+        },
+        {
+          "ceil": {
+            "quotient": [
+              {
+                "product": [
+                  {
+                    "integer": "72"
+                  },
+                  {
+                    "power": [
+                      {
+                        "ref": "picardA"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              },
+              {
+                "ref": "cauchyRadiusLoss"
+              }
+            ]
+          }
+        },
+        {
+          "integer": "64"
+        }
+      ]
+    },
+    "tailUpper": {
+      "power": [
+        {
+          "integer": "2"
+        },
+        -128
+      ]
+    }
+  },
+  "nativeN6OriginalParentSHA256": "7c36afa44610b9786362dc228766c3d895491bb116103eca58a79d80a6b7609f",
+  "originalM3SourceNodes": {
+    "picardXi": 25516,
+    "picardEta": 2,
+    "natural4483": 4483,
+    "quadratic5029": 5029
+  },
+  "allSourceOrdersShareSymbolicEtaDerivativeBlock": true,
+  "allHigherOrdersActuallySolved": false,
+  "allOriginalSourceEtaComplexInverseDomainsVerified": false,
+  "existingActualOrderOneProofIsNotGlobalNSCertificate": true,
+  "requiredBridgeClaims": [
+    {
+      "id": "PB-COMPLEX-STRIP",
+      "status": "OPEN",
+      "premise": "Original native A0,A1,f bounded holomorphic on one common S_rho for each actual finite n and all original active arguments"
+    },
+    {
+      "id": "PB-NATIVE-IDENTITY",
+      "status": "OPEN",
+      "premise": "Every literal original native coefficient/integral/inverse branch equals the source-bound norm-input function in M2"
+    },
+    {
+      "id": "PB-PREVIOUS-ORDERS",
+      "status": "OPEN",
+      "premise": "For each n>=2, actual finalized lower-order coefficients/moments/cutoffs imply uniform forcing norms on the same radial interval"
+    },
+    {
+      "id": "PB-ALL-BANDS",
+      "status": "OPEN",
+      "premise": "Actual N6 bands/labels/copies and Cartesian evaluation remain inside certified source domains with W/M/S uniform bounds"
+    }
+  ],
+  "verifiedFiniteM2Checks": 15,
+  "actualPinnedSourceFilesVerified": [
+    {
+      "path": "navier/source-profile-data.mjs",
+      "bytes": 8996,
+      "sha256": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a"
+    },
+    {
+      "path": "navier/source-background.mjs",
+      "bytes": 9764,
+      "sha256": "7e9b5c45cd6740dfff1005ce6dd877920f0d43d0d426a6c85c15345faecd6349"
+    },
+    {
+      "path": "navier/actual-background-majorant.mjs",
+      "bytes": 7200,
+      "sha256": "e741d1cd144481c205874d05842b7961807c923f92155a662347dbcd48785b52"
+    },
+    {
+      "path": "navier/actual-background-jets.mjs",
+      "bytes": 12529,
+      "sha256": "0f96de9291df0f0c92cad12240f7397f52982eb3bcd8c00f99a512afe322c78f"
+    },
+    {
+      "path": "navier/actual-background-observations.mjs",
+      "bytes": 6661,
+      "sha256": "fdba06c71759e49e4da61e0bf8396cc08f8481bbe2e1cff061ddf19c32b11b4e"
+    },
+    {
+      "path": "navier/actual-background-points.mjs",
+      "bytes": 7293,
+      "sha256": "e03dd1eefbd97b40405a71285e2a37a42a90a3b4b0738179828693e736bc50ba"
+    },
+    {
+      "path": "navier/research/ACTUAL_BACKGROUND_KO.md",
+      "bytes": 18171,
+      "sha256": "4ca9f89d35a3c1e7e6318bec15f76429ddfeb320017e95aab384271408f46f85"
+    },
+    {
+      "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/SAME_DATUM_ANALYTIC_AXIS.md",
+      "bytes": 20071,
+      "sha256": "1923770e721cd73d569150eec19eb8cf78a645b86207b6be90cb97aabb547920"
+    },
+    {
+      "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/axis-envelope-certificate.json",
+      "bytes": 9343,
+      "sha256": "32f59e314e04d71bd7d47cf1bf3d1208e98b6549240875b7e2e2740c63ba2605"
+    },
+    {
+      "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/symbolic_axis_jet.py",
+      "bytes": 8775,
+      "sha256": "477ae1b888eaa5b3a7da39922d96443023c717bf8c75a12e44fe891aba13ccfa"
+    },
+    {
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/pressure-datum-0001/receipt.json",
+      "bytes": 144763,
+      "sha256": "f6b32aab94547230a538d544c81be58831e2555802b653e95a3bf81c56fb7be3"
+    },
+    {
+      "path": "mathscope-m1/navier/followup-20261010-final-stress-audit/ACTIVATION_COLLAR_BOUNDS_EN.md",
+      "bytes": 6843,
+      "sha256": "2035fa202134d7ca0affcad7ad7aafbb05e3508fde3a5f34a3f2cea6fd003750"
+    },
+    {
+      "path": "mathscope-m1/navier/followup-next/uniform-gluing/smooth-derivative-certificate.json",
+      "bytes": 1679,
+      "sha256": "e268809aaa791afe4a6b8b2224bee19d021636ed70e6070ef4177d615d057500"
+    },
+    {
+      "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/CONTINUATION_AND_NEW_DEBT.md",
+      "bytes": 23134,
+      "sha256": "b2b4dfc3f1223e3a5e2bb09043dc649d48d2cda16813d6c719f7d47f6b0214e2"
+    }
+  ],
+  "passed": true,
+  "certificateSHA256": "a0f0ca8113df25270c443a67e00e81ef50ca98c80f0f259ddcf1b7a5dd7935ed"
+}

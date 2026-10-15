@@ -1,0 +1,625 @@
+{
+  "schema": "MathScope.N6.PicardNaturalSeriesCloudVerified/1",
+  "date": "2026-10-14",
+  "timezone": "Asia/Seoul",
+  "recordedAt": "2026-10-14T18:05:48+09:00",
+  "repository": "leegahuyn/MathScopeCompute",
+  "pullRequest": {
+    "number": 31,
+    "url": "https://github.com/leegahuyn/MathScopeCompute/pull/31",
+    "state": "OPEN",
+    "draft": true,
+    "existingBranch": "mathscope-m3-n6-picard-bridge-20261014",
+    "inheritedCommit": "6a39ced78b64fbd0188d98492391a75440f2b310",
+    "evidenceCodeCommit": "76b49378f9b83b8ab87e0be1838f85128a197e86",
+    "newBranchCreated": false,
+    "mainModified": false
+  },
+  "source": {
+    "sourceParentSHA256": "7c36afa44610b9786362dc228766c3d895491bb116103eca58a79d80a6b7609f",
+    "headerSHA256": "010f1cc18f09c5e9ef226788e8770016603bf520b25289f01d4a08f5aa1da97c",
+    "databaseSHA256": "ffd82b62c8aaeeb0d076a614f7af0b9782804abab9337743c2951275bb9d9003",
+    "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "originalSourceFilesVerified": 155,
+    "picard": "ActualSameN3OrderOneInner",
+    "xi": 25516,
+    "eta": 2,
+    "naturalProducerBindings": [
+      {
+        "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs",
+        "sha256": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311"
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-core.mjs",
+        "sha256": "d657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815"
+      },
+      {
+        "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-tail.mjs",
+        "sha256": "fa569df96f7950e4c1d908405d8a30bcb73088b1e2d3af7a0baa047d4b2a3df0"
+      }
+    ],
+    "naturalProducerBytesIndependentlyVerified": true
+  },
+  "actualNativeScan": {
+    "coefficientClosureNodes": 3679,
+    "calls": 216,
+    "operatorCounts": {
+      "actual_natural_series": 157,
+      "inverse": 33,
+      "log_positive": 21,
+      "sqrt_positive": 5
+    },
+    "etaDependentCalls": 169,
+    "naturalSummary": {
+      "callCount": 157,
+      "argumentFamilyCount": 24,
+      "componentCounts": {
+        "Phi": 83,
+        "u": 51,
+        "average": 23
+      },
+      "exactArgumentDomainProvedCalls": 9,
+      "argumentDomainUnresolvedCalls": 148,
+      "maximumRadialOrder": 2,
+      "maximumEtaOrder": 3,
+      "conditionalConvergenceCalls": 157,
+      "conditionalConvergenceCountMeansImplicationOnly": true,
+      "actualKernelHolomorphyProvedCalls": 0,
+      "fullCoefficientNormProved": false
+    },
+    "argumentStructureClasses": {
+      "EXACT_RATIONAL": {
+        "argumentFamilyCount": 1,
+        "callCount": 9
+      },
+      "INTEGRATION_COORDINATE_EXPRESSION": {
+        "argumentFamilyCount": 19,
+        "callCount": 103
+      },
+      "PARAMETER_ONLY_EXPRESSION": {
+        "argumentFamilyCount": 1,
+        "callCount": 12
+      },
+      "RADIAL_COORDINATE_EXPRESSION": {
+        "argumentFamilyCount": 3,
+        "callCount": 33
+      }
+    },
+    "provedRealRadialRange": {
+      "family": "Y:474/eta:2",
+      "YSourceNode": 474,
+      "YExactRational": "4",
+      "callSourceNodes": [
+        4468,
+        4469,
+        4483,
+        5303,
+        5307,
+        5748,
+        9836,
+        9839,
+        10450
+      ],
+      "scope": "Only actual real radial argument ranges; no actual coefficient norm, kernel holomorphy or full Picard proof"
+    },
+    "unresolvedRealRadialArgumentCalls": 148,
+    "inverseLeaves": [
+      {
+        "sourceNode": 17,
+        "argumentSourceNode": 16,
+        "argumentExactPolynomialInHEta": {
+          "h^0 eta^0": "1",
+          "h^0 eta^2": "1"
+        },
+        "proofID": "N6-PB-ONE-PLUS-ETA-SQUARED-STADIUM-QUARTER",
+        "domain": "complex eta with dist(eta,[-1,1])<1/4; real 0<h<1/100",
+        "operandAbsStrictLower": "9/16",
+        "inverseAbsStrictUpper": "16/9",
+        "exactProof": "Choose x in [-1,1] with |eta-x|<1/4. Since |x-i|>=1 and |x+i|>=1, |eta-i|>3/4 and |eta+i|>3/4. Thus |1+eta^2|=|eta-i|*|eta+i|>9/16.",
+        "sourceParameterHBoundIsHypothesis": true,
+        "sourceNodeBindingRequired": true,
+        "finitePointSampleUsed": false,
+        "nativeA0A1ForcingNormProvedByThisLeaf": false,
+        "globalGuardOfficiallyClosedByThisLeaf": false
+      },
+      {
+        "sourceNode": 279,
+        "argumentSourceNode": 207,
+        "argumentExactPolynomialInHEta": {
+          "h^0 eta^0": "1",
+          "h^1 eta^0": "-1"
+        },
+        "proofID": "N6-PB-ONE-MINUS-H-POSITIVE",
+        "domain": "complex eta with dist(eta,[-1,1])<1/4; real 0<h<1/100",
+        "operandAbsStrictLower": "99/100",
+        "inverseAbsStrictUpper": "100/99",
+        "exactProof": "Real 0<h<1/100 gives |1-h|=1-h>99/100.",
+        "sourceParameterHBoundIsHypothesis": true,
+        "sourceNodeBindingRequired": true,
+        "finitePointSampleUsed": false,
+        "nativeA0A1ForcingNormProvedByThisLeaf": false,
+        "globalGuardOfficiallyClosedByThisLeaf": false
+      },
+      {
+        "sourceNode": 1953,
+        "argumentSourceNode": 28,
+        "argumentExactPolynomialInHEta": {
+          "h^0 eta^0": "1",
+          "h^1 eta^2": "-2"
+        },
+        "proofID": "N6-PB-L-NONZERO-STADIUM-QUARTER",
+        "domain": "complex eta with dist(eta,[-1,1])<1/4; real 0<h<1/100",
+        "operandAbsStrictLower": "31/32",
+        "inverseAbsStrictUpper": "32/31",
+        "exactProof": "|eta|<5/4 and |2*h*eta^2|<1/32; the reverse triangle inequality gives |1-2*h*eta^2|>31/32.",
+        "sourceParameterHBoundIsHypothesis": true,
+        "sourceNodeBindingRequired": true,
+        "finitePointSampleUsed": false,
+        "nativeA0A1ForcingNormProvedByThisLeaf": false,
+        "globalGuardOfficiallyClosedByThisLeaf": false
+      },
+      {
+        "sourceNode": 3434,
+        "argumentSourceNode": 3433,
+        "argumentExactPolynomialInHEta": {
+          "h^0 eta^0": "1",
+          "h^1 eta^0": "2"
+        },
+        "proofID": "N6-PB-ONE-PLUS-TWO-H-POSITIVE",
+        "domain": "complex eta with dist(eta,[-1,1])<1/4; real 0<h<1/100",
+        "operandAbsStrictLower": "1",
+        "inverseAbsStrictUpper": "1",
+        "exactProof": "Real h>0 gives |1+2*h|=1+2*h>1.",
+        "sourceParameterHBoundIsHypothesis": true,
+        "sourceNodeBindingRequired": true,
+        "finitePointSampleUsed": false,
+        "nativeA0A1ForcingNormProvedByThisLeaf": false,
+        "globalGuardOfficiallyClosedByThisLeaf": false
+      }
+    ],
+    "remainingInverseLogSqrtCalls": 55
+  },
+  "conditionalNaturalContinuation": {
+    "status": "PROVED_CONDITIONAL",
+    "proofID": "N6-PB-NATURAL-COMPATIBLE-JET-COMPLEX-CONTINUATION",
+    "coefficientNormProved": false,
+    "compatibleActualCoefficientJetsRequired": true,
+    "coefficientWeight": "20^-n*rho^-l*l!*binom(n+l,l)/((n+1)^2*(l+1)^2)",
+    "realJetInterval": "I=[-33/32,33/32]",
+    "domain": "|Y|<=5; dist(eta,I)<=rho/2; Q>0; rho>0",
+    "generalDomain": "c=1-t-R/20>0, |Y|<=R, dist(eta,I)<=t*rho, 0<=t<1",
+    "generalScaledBound": "(m+k)!*20^-k*c^(-m-k-1)",
+    "proof": "Taylor majorization gives (n+m)!/n!*(1-t)^(-n-m-1); differentiated generating function sums to (m+k)!*20^-k*c^(-m-k-1). Compact normal convergence proves holomorphy and termwise differentiation.",
+    "boundsForActualDerivativeOrders": [
+      {
+        "radialOrder": 0,
+        "etaOrder": 0,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "4",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 8,
+        "scaledTailUpper": "1/12800",
+        "firstPositiveTailTerm": "1/25600",
+        "tailRatioUpper": "1/2",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      },
+      {
+        "radialOrder": 0,
+        "etaOrder": 1,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "16",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 8,
+        "scaledTailUpper": "1/576",
+        "firstPositiveTailTerm": "1/1280",
+        "tailRatioUpper": "11/20",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      },
+      {
+        "radialOrder": 0,
+        "etaOrder": 2,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "128",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 8,
+        "scaledTailUpper": "11/256",
+        "firstPositiveTailTerm": "11/640",
+        "tailRatioUpper": "3/5",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      },
+      {
+        "radialOrder": 0,
+        "etaOrder": 3,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "1536",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 8,
+        "scaledTailUpper": "33/28",
+        "firstPositiveTailTerm": "33/80",
+        "tailRatioUpper": "13/20",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      },
+      {
+        "radialOrder": 1,
+        "etaOrder": 0,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "4/5",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 8,
+        "scaledTailUpper": "81/512000",
+        "firstPositiveTailTerm": "9/128000",
+        "tailRatioUpper": "5/9",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      },
+      {
+        "radialOrder": 1,
+        "etaOrder": 1,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "32/5",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 8,
+        "scaledTailUpper": "81/22400",
+        "firstPositiveTailTerm": "9/6400",
+        "tailRatioUpper": "11/18",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      },
+      {
+        "radialOrder": 1,
+        "etaOrder": 2,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "384/5",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 8,
+        "scaledTailUpper": "297/3200",
+        "firstPositiveTailTerm": "99/3200",
+        "tailRatioUpper": "2/3",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      },
+      {
+        "radialOrder": 1,
+        "etaOrder": 3,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "6144/5",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 9,
+        "scaledTailUpper": "65/44",
+        "firstPositiveTailTerm": "39/88",
+        "tailRatioUpper": "7/10",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      },
+      {
+        "radialOrder": 2,
+        "etaOrder": 0,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "8/25",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 8,
+        "scaledTailUpper": "3/10000",
+        "firstPositiveTailTerm": "9/80000",
+        "tailRatioUpper": "5/8",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      },
+      {
+        "radialOrder": 2,
+        "etaOrder": 1,
+        "radialAbsBound": "5",
+        "etaTubeFractionOfRho": "1/2",
+        "jointMargin": "1/4",
+        "scaledSupNormUpper": "96/25",
+        "scale": "Q*rho^(-etaOrder)",
+        "degree": 8,
+        "scaledTailUpper": "9/1250",
+        "firstPositiveTailTerm": "9/4000",
+        "tailRatioUpper": "11/16",
+        "coefficientNormSuppliedAsHypothesis": true,
+        "finiteCoefficientEvaluationErrorIncluded": false
+      }
+    ],
+    "quarterStadiumCovered": false,
+    "finitePartialSumDeclaredWholeFunction": false
+  },
+  "picardConvergence": {
+    "status": "UNPROVED_FOR_ORIGINAL_N6",
+    "naturalSeriesNormalConvergenceIsNotPicardConvergence": true,
+    "actualA0A1ForcingCommonComplexDomainProved": false,
+    "actualA0A1ForcingUniformNormProved": false,
+    "existingConditionalTailThreshold": "K>=ceil(9*2^140*Lambda^8*Q^17*a^2/(t1^4*rho^5))",
+    "thresholdFromIndependentMajorantAudit": "verify_majorant.py; norms and positivity remain hypotheses",
+    "requiredOriginalPremises": [
+      {
+        "id": "PB-COMPLEX-STRIP",
+        "status": "OPEN",
+        "premise": "Every actual A0/A1/forcing composition is bounded holomorphic on the same eta tube, including all integral paths and inverse/log/sqrt branches."
+      },
+      {
+        "id": "PB-NATIVE-IDENTITY",
+        "status": "OPEN",
+        "premise": "The actual native functions equal the functions supplying the Picard majorant norms; a finite approximant or operator declaration does not establish equality."
+      },
+      {
+        "id": "PB-PREVIOUS-ORDERS",
+        "status": "OPEN",
+        "premise": "Every finite order n>=2 has finalized lower-order solutions, moments and cutoffs yielding forcing norms on the same radial interval."
+      },
+      {
+        "id": "PB-ALL-BANDS",
+        "status": "OPEN",
+        "premise": "Every original band, label, copy and Cartesian evaluation remains in that certified domain with its required W/M/S bounds."
+      }
+    ],
+    "hypothesesNumericallySubstitutedAsActualSource": false
+  },
+  "mathematicalReview": {
+    "level": "Classical conditional analysis with exact rational replay and independent review",
+    "newLeanKernelProof": false,
+    "storedHistoricalPassFlagsUsedAsProofPremises": false,
+    "actualKernelHolomorphyProvedCalls": 0,
+    "fullActualCoefficientNormProved": false,
+    "quarterStadiumTransferredToNaturalCalls": false,
+    "uniformBoundForAllHApproachingZeroProved": false
+  },
+  "cloud": {
+    "evidenceRunID": 38537364528,
+    "url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38537364528",
+    "bridge": "SUCCESS",
+    "native": "SUCCESS",
+    "tests": {
+      "bridgeExactAlgebraAndMutation": 6,
+      "nativeDomainAndView": 15,
+      "polynomialLeaves": 6,
+      "naturalSeries": 13,
+      "total": 40
+    },
+    "artifacts": [
+      {
+        "id": 11880602631,
+        "name": "m3-n6-picard-bridge-38537364528",
+        "size_in_bytes": 7515,
+        "digest": "sha256:e1ce32c73a956d8ce0b5fa3f57fbc43c68a9552ef0ad1f8aba1d19d4c902d408",
+        "expired": false,
+        "created_at": "2026-10-14T08:46:51Z",
+        "updated_at": "2026-10-14T08:46:51Z"
+      },
+      {
+        "id": 11880133812,
+        "name": "m3-n6-picard-native-38537364528",
+        "size_in_bytes": 168537,
+        "digest": "sha256:00ef57641cfa2561054512813f2051ae9bcb2f3f3e76ddc744abc8cc8ceb454d",
+        "expired": false,
+        "created_at": "2026-10-14T08:47:29Z",
+        "updated_at": "2026-10-14T08:47:29Z"
+      }
+    ],
+    "fileChecksums": [
+      {
+        "artifactGroup": "native",
+        "name": "native-domain-inventory.json",
+        "bytes": 2758403,
+        "sha256": "4bed5d7b4847a977fe4ec5150a47368376515435b31db5b57f1d3a3d0f7e543b"
+      },
+      {
+        "artifactGroup": "native",
+        "name": "natural-series-inventory.json",
+        "bytes": 2487051,
+        "sha256": "4db44f444226d69567adcce29b711da9b0fedde2c04c578b64791296ed307dc0"
+      },
+      {
+        "artifactGroup": "native",
+        "name": "picard-domain-view.html",
+        "bytes": 1427319,
+        "sha256": "0a86464d9c554c3c504b887b848646e5ef3c9b9fc768f2bb623890f0d924e0dc"
+      },
+      {
+        "artifactGroup": "bridge",
+        "name": "source.json",
+        "bytes": 19880,
+        "sha256": "201fb2cc69252277e2a672c3ea7bfc4a6e27ed2c0db7d7c8ac19285168d0d06d"
+      },
+      {
+        "artifactGroup": "bridge",
+        "name": "result.json",
+        "bytes": 1990,
+        "sha256": "82fb46d82e9b62bb06efa7159dcdc031e6c63ed22caa6ba873391cabdcfbbcf7"
+      }
+    ],
+    "naturalInventorySemanticSHA256": "83c997bb3d42218f68a106393f464074efb03aa25292ec2e31335c141b6ef013",
+    "allFiveWorkflowSnapshot": [
+      {
+        "id": 38537371646,
+        "name": "MathScope research IDE checks",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "76b49378f9b83b8ab87e0be1838f85128a197e86",
+        "head_branch": "mathscope-m3-n6-picard-bridge-20261014",
+        "html_url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38537371646",
+        "created_at": "2026-10-14T08:45:20Z",
+        "updated_at": "2026-10-14T08:46:47Z"
+      },
+      {
+        "id": 38537371553,
+        "name": "MathScopeCompute CI",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "76b49378f9b83b8ab87e0be1838f85128a197e86",
+        "head_branch": "mathscope-m3-n6-picard-bridge-20261014",
+        "html_url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38537371553",
+        "created_at": "2026-10-14T08:45:20Z",
+        "updated_at": "2026-10-14T08:48:51Z"
+      },
+      {
+        "id": 38537371764,
+        "name": "M3 P7 continuation verification",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "76b49378f9b83b8ab87e0be1838f85128a197e86",
+        "head_branch": "mathscope-m3-n6-picard-bridge-20261014",
+        "html_url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38537371764",
+        "created_at": "2026-10-14T08:45:20Z",
+        "updated_at": "2026-10-14T08:49:50Z"
+      },
+      {
+        "id": 38537371578,
+        "name": "M3 gauge and fluid execution workspaces",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "76b49378f9b83b8ab87e0be1838f85128a197e86",
+        "head_branch": "mathscope-m3-n6-picard-bridge-20261014",
+        "html_url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38537371578",
+        "created_at": "2026-10-14T08:45:20Z",
+        "updated_at": "2026-10-14T08:55:26Z"
+      },
+      {
+        "id": 38537364528,
+        "name": "M3 N6 Picard native-domain bridge audit",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "76b49378f9b83b8ab87e0be1838f85128a197e86",
+        "head_branch": "mathscope-m3-n6-picard-bridge-20261014",
+        "html_url": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38537364528",
+        "created_at": "2026-10-14T08:45:17Z",
+        "updated_at": "2026-10-14T08:47:33Z"
+      }
+    ],
+    "laterReportCommitCINotCoveredByThisSnapshot": true
+  },
+  "researchIDEManifest": {
+    "historicalFailureRunID": 38534518429,
+    "historicalFailureURL": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38534518429",
+    "cause": "Stored English release SOURCE_TRANSLATION_MANIFEST.json did not match expected full source inventory; eight missing files were reconciled.",
+    "historicalLaterRegressionsSkipped": true,
+    "correctedRunID": 38537371646,
+    "correctedRunURL": "https://github.com/leegahuyn/MathScopeCompute/actions/runs/38537371646",
+    "correctedHeadSHA": "76b49378f9b83b8ab87e0be1838f85128a197e86",
+    "correctedConclusion": "SUCCESS",
+    "historicalFailureRecordPreserved": true
+  },
+  "localEvidenceViewQA": {
+    "result": "PASS",
+    "sourceRun": 38537364528,
+    "viewSHA256": "0a86464d9c554c3c504b887b848646e5ef3c9b9fc768f2bb623890f0d924e0dc",
+    "qaFileSHA256": "9326d3a223072afdf073cf245ce8f1a0845901795d2256023cd3e2e724c26d37",
+    "checks": {
+      "identity": true,
+      "notBlank": true,
+      "noFrameworkOverlay": true,
+      "consoleHealth": true,
+      "desktopScreenshot": true,
+      "mobileScreenshot": true,
+      "mobileNoDocumentOverflow": true,
+      "mobileTableLocalScroll": true,
+      "detailSourceNodes": true,
+      "search": true,
+      "URLHashState": true,
+      "emptyState": true,
+      "reset": true,
+      "realRangeFilter": true,
+      "conditionalNormTable": true,
+      "fullNormRemainsUnproved": true
+    },
+    "desktopAndMobileVerified": true,
+    "mathematicalCertificateReplay": false,
+    "publicWebsiteQAIncluded": false
+  },
+  "website": {
+    "projectID": 29770,
+    "status": "PUBLISHED_WITH_HISTORICAL_DESKTOP_PASS_AND_CURRENT_CONNECTION_TIMEOUT",
+    "auditPageURL": "https://project29770.websitepublisher.ai/m3-picard-audit.html",
+    "existingM3N6URL": "https://project29770.websitepublisher.ai/v0.3.1.html",
+    "actualPublicationAndReadbackVerifiedByThisReport": true,
+    "versionHash": "80a30933",
+    "publicReadbackSHA256": "8f099dcb035d9fb387380e64046319ed385f0076ce438f75035268ac443adda2",
+    "note": "Publication and desktop/public-data checks passed October 14. October 15 fresh navigation timed out; current public mobile verification remains incomplete. No full coefficient/Picard certification is implied.",
+    "publicationAndReadbackDate": "2026-10-14",
+    "version": 111,
+    "auditPageVersion": 1,
+    "auditPageVersionHash": "91c43792",
+    "exactEmbeddedDataMatchesCloudJSON": true,
+    "liveDesktopEmbeddedViewVerifiedOn": "2026-10-14",
+    "latestRecheckDate": "2026-10-15",
+    "latestFreshConnectionPassed": false,
+    "latestBrowserError": "ERR_CONNECTION_TIMED_OUT",
+    "livePublicMobileVerified": false,
+    "publicationQAPath": "evidence/38537364528/Picard_Public_Publication_QA.json"
+  },
+  "recoveredProvenance": {
+    "referencedContinuationConversation": {
+      "id": "6acf3c59-5d54-83ee-b447-0d92ed49b344",
+      "title": "Picard 검증 작업 이어가기",
+      "status": "User-supplied bounded preview plus source verification; preview is not an independent proof"
+    },
+    "earlierVisualizationConversation": {
+      "id": "6acea147-b0d0-83ee-a0e8-d8d457ab0ba2",
+      "title": "M3 시각화 추가",
+      "recentTurnsRead": 20,
+      "olderAssistantBodiesRecovered": false,
+      "messageSentToThatConversation": false
+    },
+    "historicalHandoffArchive": {
+      "path": "research-ide/reference-documents/resume-20261013/MathScope_M3_M4_Resume_Handoff_2026-10-13_KO_Package (1).zip",
+      "gitBlob": "581a0d8cb95156552c72cae529309a6f6791f6e3",
+      "sha256": "2a1d8e1ca53db437223661b0e36eb31ccf1eb0f06a08ba4ec346b754a59a6d71",
+      "manifestPath": "research-ide/reference-documents/resume-20261013/MANIFEST.json",
+      "historicalState": "October 13 website v102, PR21 and c45; superseded as current working state by PR31",
+      "recoveredMarkdown": true
+    },
+    "authenticatedAttachments": [
+      {
+        "name": "navier-stokes(7).pdf",
+        "bytes": 2959204,
+        "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"
+      },
+      {
+        "name": "Latest Research IDE Blueprint",
+        "bytes": 886241,
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      {
+        "name": "Historical October 12 M2/M3/M4 handoff",
+        "bytes": 231484,
+        "sha256": "0c9bdd670d9dbd411b34bb17dcb20efac79aaefa071be877b518967919df37f1"
+      }
+    ],
+    "byteAuthenticationIsNotMathematicalCertification": true
+  },
+  "unchangedOriginalFrontier": {
+    "cartesianJets": 230,
+    "globalGuards": 38,
+    "PDEResidualTerms": 1020,
+    "total": 1288,
+    "N601": "OPEN",
+    "N602": "PARTIAL",
+    "M3": "56/64",
+    "newOfficialObligationsDischarged": 0
+  },
+  "priorReportsPreserved": [
+    "RESULTS_KO.md",
+    "VERIFIED_RESULT_SUMMARY.json"
+  ]
+}
