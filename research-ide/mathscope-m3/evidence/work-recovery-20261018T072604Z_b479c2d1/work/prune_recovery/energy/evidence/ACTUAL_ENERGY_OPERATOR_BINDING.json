@@ -1,0 +1,2846 @@
+{
+  "schema": "MathScope.RecoveryActualEnergyOperatorBinding/1",
+  "implementation": "NEW_RECOVERY_IMPLEMENTATION_NOT_LOST_BYTES",
+  "actualFamily": {
+    "sha256": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+    "fixedSource": "f_cb76b8ef5e4490552e0e9b32",
+    "stages": [
+      "f_1db258e7c5bbb3108d5dde59",
+      "f_c7adfb9f68e4cf20075df353",
+      "f_38948a0b93f0235e274e9bc7",
+      "f_d90a360388d7fd2abbe0022f",
+      "f_efc91cb09962b2e99aabcf91",
+      "f_efc72b019cc0f2b9eb1f0026"
+    ],
+    "correctionPotentials": [
+      {
+        "id": "f_ac81b63855489a21bb407b2d",
+        "operation": "ActualCorrectionPotentials",
+        "inputs": [
+          "f_1db258e7c5bbb3108d5dde59",
+          "f_c7adfb9f68e4cf20075df353"
+        ],
+        "data": {
+          "j": 1,
+          "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+          "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+          "original_recipe_retained": true
+        }
+      },
+      {
+        "id": "f_ee3818cfaeb5198c4d1286f9",
+        "operation": "ActualCorrectionPotentials",
+        "inputs": [
+          "f_c7adfb9f68e4cf20075df353",
+          "f_38948a0b93f0235e274e9bc7"
+        ],
+        "data": {
+          "j": 2,
+          "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+          "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+          "original_recipe_retained": true
+        }
+      },
+      {
+        "id": "f_2da4d431d22cb43aeff654c4",
+        "operation": "ActualCorrectionPotentials",
+        "inputs": [
+          "f_38948a0b93f0235e274e9bc7",
+          "f_d90a360388d7fd2abbe0022f"
+        ],
+        "data": {
+          "j": 3,
+          "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+          "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+          "original_recipe_retained": true
+        }
+      },
+      {
+        "id": "f_3e01ace5e07046569fbcfca8",
+        "operation": "ActualCorrectionPotentials",
+        "inputs": [
+          "f_d90a360388d7fd2abbe0022f",
+          "f_efc91cb09962b2e99aabcf91"
+        ],
+        "data": {
+          "j": 4,
+          "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+          "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+          "original_recipe_retained": true
+        }
+      },
+      {
+        "id": "f_77235d47b546355b7febf30d",
+        "operation": "ActualCorrectionPotentials",
+        "inputs": [
+          "f_efc91cb09962b2e99aabcf91",
+          "f_efc72b019cc0f2b9eb1f0026"
+        ],
+        "data": {
+          "j": 5,
+          "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+          "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+          "original_recipe_retained": true
+        }
+      }
+    ],
+    "cutoffScales": [
+      {
+        "id": "f_3b700fc1d0d2c77582a0399d",
+        "operation": "ActualShrinkingScale",
+        "inputs": [
+          "f_cb76b8ef5e4490552e0e9b32",
+          "f_5486aa5a7070b99cce5740bb",
+          "f_9f3819cae1476e00bce4e5c9"
+        ],
+        "data": {
+          "j": 1,
+          "gamma": "h*1/20",
+          "previous": "log(1/qbig)",
+          "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+          "a": "exp(L)",
+          "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+          "norm_inputs": [
+            "f_5486aa5a7070b99cce5740bb",
+            "f_9f3819cae1476e00bce4e5c9"
+          ],
+          "every_m_le_j": true,
+          "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+        }
+      },
+      {
+        "id": "f_74b782b03adf1a4984b59949",
+        "operation": "ActualShrinkingScale",
+        "inputs": [
+          "f_cb76b8ef5e4490552e0e9b32",
+          "f_3b700fc1d0d2c77582a0399d",
+          "f_b2a025b05d8fbbbbd8ad0d5f",
+          "f_dfac5452c6437743b087a44b",
+          "f_3a5c9290e659d71d10c84e8d"
+        ],
+        "data": {
+          "j": 2,
+          "gamma": "h*2/20",
+          "previous": "L_(j-1)",
+          "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+          "a": "exp(L)",
+          "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+          "norm_inputs": [
+            "f_b2a025b05d8fbbbbd8ad0d5f",
+            "f_dfac5452c6437743b087a44b",
+            "f_3a5c9290e659d71d10c84e8d"
+          ],
+          "every_m_le_j": true,
+          "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+        }
+      },
+      {
+        "id": "f_6de97e1d6c2b0406e8378fde",
+        "operation": "ActualShrinkingScale",
+        "inputs": [
+          "f_cb76b8ef5e4490552e0e9b32",
+          "f_74b782b03adf1a4984b59949",
+          "f_9b30644c7a0338819ea74499",
+          "f_323ed5e81fa618bd3ea74496",
+          "f_04d4eb39de8d6924a1485f0e",
+          "f_025485cdafd47d78ea1aa882"
+        ],
+        "data": {
+          "j": 3,
+          "gamma": "h*3/20",
+          "previous": "L_(j-1)",
+          "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+          "a": "exp(L)",
+          "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+          "norm_inputs": [
+            "f_9b30644c7a0338819ea74499",
+            "f_323ed5e81fa618bd3ea74496",
+            "f_04d4eb39de8d6924a1485f0e",
+            "f_025485cdafd47d78ea1aa882"
+          ],
+          "every_m_le_j": true,
+          "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+        }
+      },
+      {
+        "id": "f_f04af347097e6fe2f932a058",
+        "operation": "ActualShrinkingScale",
+        "inputs": [
+          "f_cb76b8ef5e4490552e0e9b32",
+          "f_6de97e1d6c2b0406e8378fde",
+          "f_bf28c2df51576c94152738a2",
+          "f_83ad93e1d2df7216e45d5ea4",
+          "f_9758fdec16727fe03fe4074f",
+          "f_69bc5879d4f068624c7e1274",
+          "f_2edece70a31de72902c13885"
+        ],
+        "data": {
+          "j": 4,
+          "gamma": "h*4/20",
+          "previous": "L_(j-1)",
+          "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+          "a": "exp(L)",
+          "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+          "norm_inputs": [
+            "f_bf28c2df51576c94152738a2",
+            "f_83ad93e1d2df7216e45d5ea4",
+            "f_9758fdec16727fe03fe4074f",
+            "f_69bc5879d4f068624c7e1274",
+            "f_2edece70a31de72902c13885"
+          ],
+          "every_m_le_j": true,
+          "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+        }
+      },
+      {
+        "id": "f_01dc61ab82cf40fc7cbf57dc",
+        "operation": "ActualShrinkingScale",
+        "inputs": [
+          "f_cb76b8ef5e4490552e0e9b32",
+          "f_f04af347097e6fe2f932a058",
+          "f_746d89dbef6e3844f3deecfa",
+          "f_5907b77795c2caee2beb40ba",
+          "f_23ef3f457c0068ee13c51243",
+          "f_b6d9dad25ac2f27de4ed06ba",
+          "f_bb4f18f8c7e1b5255e1c0700",
+          "f_2dfa8713f641ca8c982fe7a7"
+        ],
+        "data": {
+          "j": 5,
+          "gamma": "h*5/20",
+          "previous": "L_(j-1)",
+          "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+          "a": "exp(L)",
+          "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+          "norm_inputs": [
+            "f_746d89dbef6e3844f3deecfa",
+            "f_5907b77795c2caee2beb40ba",
+            "f_23ef3f457c0068ee13c51243",
+            "f_b6d9dad25ac2f27de4ed06ba",
+            "f_bb4f18f8c7e1b5255e1c0700",
+            "f_2dfa8713f641ca8c982fe7a7"
+          ],
+          "every_m_le_j": true,
+          "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+        }
+      }
+    ],
+    "numericalFieldEvaluator": false,
+    "numericalSupremumEvaluator": false
+  },
+  "sourceBinding": {
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "pages": 166
+    },
+    "profileId": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "common6FamilyGraph": {
+      "sha256": "bff6b64458f52426e996a7b5a1dee44b4ae1f7fb226d54654889c79679e4e219",
+      "nodeCount": 622781,
+      "canonicalBytes": 28446215,
+      "fixedCompilerPrefix": true
+    },
+    "common6Path": "mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json",
+    "sourceProfileArchive": {
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+      "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd",
+      "bytes": 77149
+    },
+    "acceptedCoreArchive": {
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/core-intervals-0002/receipt.json",
+      "sha256": "8f65d85d903df534c2c10501119fbcef636678c95ec214e165041681d16fb5a5",
+      "bytes": 936426
+    }
+  },
+  "originalOperator": {
+    "schema": "MathScope.N7.OriginalLocalizedFieldOperator/1",
+    "sharedFieldInstance": "ORIGINAL_PROP9_9_FINAL_FIELDS_ON_SAME_COMMON_DOMAIN",
+    "equation": "u=curl(c*A)+c*B_e_theta; p=c*p_loc",
+    "equivalentVelocity": "c*u_loc+grad(c) cross A",
+    "localApplicationDomain": "0<q<qStar, where the listed original source fields are defined.",
+    "globalDefinition": "Apply (10.4) on the original local domain and extend it identically by zero outside. The entire cutoff support lies in q<qStar/2, so the two definitions agree on an open overlap.",
+    "undefinedLocalFieldsMultipliedByZero": false,
+    "sourceFields": [
+      "A",
+      "B_e_theta",
+      "p_loc"
+    ],
+    "velocity": [
+      {
+        "component": 0,
+        "terms": [
+          {
+            "field": "A",
+            "component": 2,
+            "derivative": 1,
+            "coefficient": 622958
+          },
+          {
+            "field": "A",
+            "component": 1,
+            "derivative": 2,
+            "coefficient": 624073
+          },
+          {
+            "field": "A",
+            "component": 2,
+            "derivative": null,
+            "coefficient": 623745
+          },
+          {
+            "field": "A",
+            "component": 1,
+            "derivative": null,
+            "coefficient": 624074
+          },
+          {
+            "field": "B_e_theta",
+            "component": 0,
+            "derivative": null,
+            "coefficient": 622958
+          }
+        ]
+      },
+      {
+        "component": 1,
+        "terms": [
+          {
+            "field": "A",
+            "component": 0,
+            "derivative": 2,
+            "coefficient": 622958
+          },
+          {
+            "field": "A",
+            "component": 2,
+            "derivative": 0,
+            "coefficient": 624073
+          },
+          {
+            "field": "A",
+            "component": 0,
+            "derivative": null,
+            "coefficient": 623770
+          },
+          {
+            "field": "A",
+            "component": 2,
+            "derivative": null,
+            "coefficient": 624075
+          },
+          {
+            "field": "B_e_theta",
+            "component": 1,
+            "derivative": null,
+            "coefficient": 622958
+          }
+        ]
+      },
+      {
+        "component": 2,
+        "terms": [
+          {
+            "field": "A",
+            "component": 1,
+            "derivative": 0,
+            "coefficient": 622958
+          },
+          {
+            "field": "A",
+            "component": 0,
+            "derivative": 1,
+            "coefficient": 624073
+          },
+          {
+            "field": "A",
+            "component": 1,
+            "derivative": null,
+            "coefficient": 623723
+          },
+          {
+            "field": "A",
+            "component": 0,
+            "derivative": null,
+            "coefficient": 624076
+          },
+          {
+            "field": "B_e_theta",
+            "component": 2,
+            "derivative": null,
+            "coefficient": 622958
+          }
+        ]
+      }
+    ],
+    "pressure": [
+      {
+        "field": "p_loc",
+        "derivative": null,
+        "coefficient": 622958
+      }
+    ],
+    "multiplicationBeforeCurl": true,
+    "allSpatialCutoffProductTermsRetained": true,
+    "sourceFieldValuesMaterialized": false,
+    "externalSourceIdentificationRequired": true,
+    "divergenceIdentity": "div curl(c*A)=0 and div(c*B_e_theta)=r^-1 partial_theta(c*B)=0, using the same original axisymmetric B and theta-independent cutoff.",
+    "zeroBranchProof": "Inside the original local domain, c=0 and all spatial cutoff derivatives vanish, so every operator coefficient is zero. Outside that domain the global definition is identically zero; no undefined local field is evaluated or multiplied by zero.",
+    "plateauProof": "c=1 and grad(c)=0 give the original curl(A)+B_e_theta and the same p_loc, with no omitted commutator."
+  },
+  "operatorRowsBoundToCapturedOriginal": true,
+  "operatorBindingDoesNotIdentifyFinalNumericOperands": true,
+  "coordinateConvention": {
+    "cartesian": [
+      "x",
+      "y",
+      "z"
+    ],
+    "tau": "1-t",
+    "physicalTimeDerivative": "-partial_tau",
+    "viscosity": "1",
+    "orientation": "right-handed Cartesian curl",
+    "axisymmetricCoordinate": "s=x^2+y^2",
+    "directField": "B_e_theta=b(s,z,tau)*(-y,x,0)",
+    "cutoff": "C(s,z,tau)"
+  },
+  "requiredAtoms": [
+    "A0@0,0,0,0",
+    "A0@0,0,0,1",
+    "A0@0,0,1,0",
+    "A0@0,0,1,1",
+    "A0@0,0,2,0",
+    "A0@0,0,3,0",
+    "A0@0,1,0,0",
+    "A0@0,1,0,1",
+    "A0@0,1,1,0",
+    "A0@0,1,2,0",
+    "A0@0,2,0,0",
+    "A0@0,2,1,0",
+    "A0@0,3,0,0",
+    "A0@1,0,0,0",
+    "A0@1,0,1,0",
+    "A0@1,1,0,0",
+    "A0@2,0,0,0",
+    "A0@2,0,1,0",
+    "A0@2,1,0,0",
+    "A1@0,0,0,0",
+    "A1@0,0,0,1",
+    "A1@0,0,1,0",
+    "A1@0,0,1,1",
+    "A1@0,0,2,0",
+    "A1@0,0,3,0",
+    "A1@0,1,0,0",
+    "A1@0,1,1,0",
+    "A1@0,2,0,0",
+    "A1@0,2,1,0",
+    "A1@1,0,0,0",
+    "A1@1,0,0,1",
+    "A1@1,0,1,0",
+    "A1@1,0,2,0",
+    "A1@1,1,0,0",
+    "A1@1,2,0,0",
+    "A1@2,0,0,0",
+    "A1@2,0,1,0",
+    "A1@3,0,0,0",
+    "A2@0,0,0,0",
+    "A2@0,0,0,1",
+    "A2@0,0,1,0",
+    "A2@0,0,2,0",
+    "A2@0,1,0,0",
+    "A2@0,1,0,1",
+    "A2@0,1,1,0",
+    "A2@0,1,2,0",
+    "A2@0,2,0,0",
+    "A2@0,3,0,0",
+    "A2@1,0,0,0",
+    "A2@1,0,0,1",
+    "A2@1,0,1,0",
+    "A2@1,0,2,0",
+    "A2@1,1,0,0",
+    "A2@1,2,0,0",
+    "A2@2,0,0,0",
+    "A2@2,1,0,0",
+    "A2@3,0,0,0",
+    "C@0,0,0",
+    "C@0,0,1",
+    "C@0,1,0",
+    "C@0,1,1",
+    "C@0,2,0",
+    "C@0,3,0",
+    "C@1,0,0",
+    "C@1,0,1",
+    "C@1,1,0",
+    "C@1,2,0",
+    "C@2,0,0",
+    "C@2,1,0",
+    "C@3,0,0",
+    "b@0,0,0",
+    "b@0,0,1",
+    "b@0,1,0",
+    "b@0,2,0",
+    "b@1,0,0",
+    "b@2,0,0",
+    "p@0,0,0,0",
+    "p@0,0,1,0",
+    "p@0,1,0,0",
+    "p@1,0,0,0",
+    "x0",
+    "x1"
+  ],
+  "exactPolynomials": {
+    "velocity": [
+      [
+        {
+          "monomial": "A1@0,0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "C@0,0,0*b@0,0,0*x1",
+          "coefficient": "-1"
+        }
+      ],
+      [
+        {
+          "monomial": "A0@0,0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "C@0,0,0*b@0,0,0*x0",
+          "coefficient": "1"
+        }
+      ],
+      [
+        {
+          "monomial": "A0@0,0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@0,0,0",
+          "coefficient": "1"
+        }
+      ]
+    ],
+    "velocityGradient": [
+      [
+        [
+          {
+            "monomial": "A1@0,0,0,0*C@1,1,0*x0",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A1@0,0,1,0*C@1,0,0*x0",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A1@1,0,0,0*C@0,1,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A1@1,0,1,0*C@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A2@0,0,0,0*C@2,0,0*x0*x1",
+            "coefficient": "4"
+          },
+          {
+            "monomial": "A2@0,1,0,0*C@1,0,0*x0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A2@1,0,0,0*C@1,0,0*x1",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A2@1,1,0,0*C@0,0,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "C@0,0,0*b@1,0,0*x0*x1",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "C@1,0,0*b@0,0,0*x0*x1",
+            "coefficient": "-2"
+          }
+        ],
+        [
+          {
+            "monomial": "A1@0,0,0,0*C@1,1,0*x1",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A1@0,0,1,0*C@1,0,0*x1",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A1@0,1,0,0*C@0,1,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A1@0,1,1,0*C@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A2@0,0,0,0*C@1,0,0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A2@0,0,0,0*C@2,0,0*x1*x1",
+            "coefficient": "4"
+          },
+          {
+            "monomial": "A2@0,1,0,0*C@1,0,0*x1",
+            "coefficient": "4"
+          },
+          {
+            "monomial": "A2@0,2,0,0*C@0,0,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "C@0,0,0*b@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "C@0,0,0*b@1,0,0*x1*x1",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "C@1,0,0*b@0,0,0*x1*x1",
+            "coefficient": "-2"
+          }
+        ],
+        [
+          {
+            "monomial": "A1@0,0,0,0*C@0,2,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A1@0,0,1,0*C@0,1,0",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A1@0,0,2,0*C@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A2@0,0,0,0*C@1,1,0*x1",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A2@0,0,1,0*C@1,0,0*x1",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A2@0,1,0,0*C@0,1,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "A2@0,1,1,0*C@0,0,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "C@0,0,0*b@0,1,0*x1",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "C@0,1,0*b@0,0,0*x1",
+            "coefficient": "-1"
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "monomial": "A0@0,0,0,0*C@1,1,0*x0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A0@0,0,1,0*C@1,0,0*x0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A0@1,0,0,0*C@0,1,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "A0@1,0,1,0*C@0,0,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "A2@0,0,0,0*C@1,0,0",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A2@0,0,0,0*C@2,0,0*x0*x0",
+            "coefficient": "-4"
+          },
+          {
+            "monomial": "A2@1,0,0,0*C@1,0,0*x0",
+            "coefficient": "-4"
+          },
+          {
+            "monomial": "A2@2,0,0,0*C@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "C@0,0,0*b@0,0,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "C@0,0,0*b@1,0,0*x0*x0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "C@1,0,0*b@0,0,0*x0*x0",
+            "coefficient": "2"
+          }
+        ],
+        [
+          {
+            "monomial": "A0@0,0,0,0*C@1,1,0*x1",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A0@0,0,1,0*C@1,0,0*x1",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A0@0,1,0,0*C@0,1,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "A0@0,1,1,0*C@0,0,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "A2@0,0,0,0*C@2,0,0*x0*x1",
+            "coefficient": "-4"
+          },
+          {
+            "monomial": "A2@0,1,0,0*C@1,0,0*x0",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A2@1,0,0,0*C@1,0,0*x1",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A2@1,1,0,0*C@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "C@0,0,0*b@1,0,0*x0*x1",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "C@1,0,0*b@0,0,0*x0*x1",
+            "coefficient": "2"
+          }
+        ],
+        [
+          {
+            "monomial": "A0@0,0,0,0*C@0,2,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "A0@0,0,1,0*C@0,1,0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A0@0,0,2,0*C@0,0,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "A2@0,0,0,0*C@1,1,0*x0",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A2@0,0,1,0*C@1,0,0*x0",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A2@1,0,0,0*C@0,1,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A2@1,0,1,0*C@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "C@0,0,0*b@0,1,0*x0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "C@0,1,0*b@0,0,0*x0",
+            "coefficient": "1"
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "monomial": "A0@0,0,0,0*C@2,0,0*x0*x1",
+            "coefficient": "-4"
+          },
+          {
+            "monomial": "A0@0,1,0,0*C@1,0,0*x0",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A0@1,0,0,0*C@1,0,0*x1",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A0@1,1,0,0*C@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A1@0,0,0,0*C@1,0,0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A1@0,0,0,0*C@2,0,0*x0*x0",
+            "coefficient": "4"
+          },
+          {
+            "monomial": "A1@1,0,0,0*C@1,0,0*x0",
+            "coefficient": "4"
+          },
+          {
+            "monomial": "A1@2,0,0,0*C@0,0,0",
+            "coefficient": "1"
+          }
+        ],
+        [
+          {
+            "monomial": "A0@0,0,0,0*C@1,0,0",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A0@0,0,0,0*C@2,0,0*x1*x1",
+            "coefficient": "-4"
+          },
+          {
+            "monomial": "A0@0,1,0,0*C@1,0,0*x1",
+            "coefficient": "-4"
+          },
+          {
+            "monomial": "A0@0,2,0,0*C@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A1@0,0,0,0*C@2,0,0*x0*x1",
+            "coefficient": "4"
+          },
+          {
+            "monomial": "A1@0,1,0,0*C@1,0,0*x0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A1@1,0,0,0*C@1,0,0*x1",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A1@1,1,0,0*C@0,0,0",
+            "coefficient": "1"
+          }
+        ],
+        [
+          {
+            "monomial": "A0@0,0,0,0*C@1,1,0*x1",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A0@0,0,1,0*C@1,0,0*x1",
+            "coefficient": "-2"
+          },
+          {
+            "monomial": "A0@0,1,0,0*C@0,1,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A0@0,1,1,0*C@0,0,0",
+            "coefficient": "-1"
+          },
+          {
+            "monomial": "A1@0,0,0,0*C@1,1,0*x0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A1@0,0,1,0*C@1,0,0*x0",
+            "coefficient": "2"
+          },
+          {
+            "monomial": "A1@1,0,0,0*C@0,1,0",
+            "coefficient": "1"
+          },
+          {
+            "monomial": "A1@1,0,1,0*C@0,0,0",
+            "coefficient": "1"
+          }
+        ]
+      ]
+    ],
+    "pressure": [
+      {
+        "monomial": "C@0,0,0*p@0,0,0,0",
+        "coefficient": "1"
+      }
+    ],
+    "directForce": [
+      [
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,0,0*C@0,1,0*C@1,1,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,0,0*C@0,2,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,1,0*C@0,1,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,2,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,1,0,0*C@0,1,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,1,1,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,0,0,0*C@0,1,0*C@1,0,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,0,0,0*C@0,1,0*C@2,0,0*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,1,0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,0,1,0*C@1,0,0*C@1,0,0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,1,0,0*C@0,1,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,1,1,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,2,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@0,0,0*C@0,1,0*b@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@0,0,0*C@0,1,0*b@1,0,0*x1*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@0,0,0*C@1,0,0*b@0,1,0*x1*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@0,0,0,0*C@0,0,0*C@1,1,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@0,0,1,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@0,1,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@0,1,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A2@0,0,0,0*C@0,0,0*C@1,0,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A2@0,0,0,0*C@0,0,0*C@2,0,0*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A2@0,1,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A2@0,2,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@0,0,0*C@0,0,0*b@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@0,0,0*C@0,0,0*b@1,0,0*x1*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@0,0,0*C@1,0,0*b@0,0,0*x1*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A1@0,0,0,0*C@0,0,0*C@0,2,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A1@0,0,1,0*C@0,0,0*C@0,1,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A1@0,0,2,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@0,0,0,0*C@0,0,0*C@1,1,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@0,0,1,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@0,1,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@0,1,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@0,0,0*C@0,0,0*b@0,1,0*x1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@0,0,0*C@0,1,0*b@0,0,0*x1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,0,0*C@0,1,0*C@1,1,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,0,0*C@0,2,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,1,0*C@0,0,0*C@1,1,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,1,0*C@0,1,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,2,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@1,0,0,0*C@0,0,0*C@0,2,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@1,0,0,0*C@0,1,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@1,0,1,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,0,0,0*C@0,1,0*C@2,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,1,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,0,1,0*C@1,0,0*C@1,0,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,1,0,0*C@0,0,0*C@1,1,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,1,1,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@1,0,0,0*C@0,0,0*C@1,1,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@1,0,0,0*C@0,1,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@1,1,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@0,0,0*C@0,1,0*b@1,0,0*x0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@0,0,0*C@1,0,0*b@0,1,0*x0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@0,1,1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@0,3,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@1,1,0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@2,1,0*x0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@2,1,0*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,1*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A1@0,0,1,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A1@1,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A1@1,0,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A2@0,0,0,0*C@0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A2@0,1,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A2@1,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@0,0,0*C@0,0,0*b@1,0,0*x0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@0,0,0*C@1,0,0*b@0,0,0*x0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@0,0,1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@0,2,0",
+          "coefficient": "3"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@1,0,0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@2,0,0*x0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@2,0,0*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,1,1*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,2,0*A1@1,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,2,0*C@0,1,0",
+          "coefficient": "3"
+        },
+        {
+          "monomial": "A1@0,0,3,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,1,0,0*A2@0,0,0,0*C@0,1,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,1,0,0*A2@1,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,1,0,0*C@0,0,0*C@0,1,0*b@0,0,0*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,1,0,0*C@1,1,0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,1,1,0*A2@0,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,1,1,0*A2@1,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,1,1,0*C@0,0,0*C@0,0,0*b@0,0,0*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,1,1,0*C@1,0,0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,2,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,2,1,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@0,0,0,0*C@0,0,0*C@1,1,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@0,0,0,0*C@0,1,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@0,0,1,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@0,1,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@0,0,0*C@0,0,0*b@0,1,0*x1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@1,1,0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@1,0,1,0*A2@0,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,0,1,0*A2@0,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@1,0,1,0*C@0,0,0*C@0,0,0*b@0,0,0*x1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@1,0,1,0*C@1,0,0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@2,0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@2,0,1,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,0,0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@0,1,0,0*C@0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@0,1,0,0*C@1,0,0*C@1,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@0,2,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@1,0,0,0*C@0,0,0*C@1,0,0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@1,0,0,0*C@0,0,0*C@2,0,0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@1,0,0,0*C@1,0,0*C@1,0,0*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@1,1,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@0,0,0*C@1,0,0*b@0,0,0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@1,0,1*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@1,2,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@2,0,0*x1",
+          "coefficient": "-16"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@3,0,0*x0*x0*x1",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@3,0,0*x1*x1*x1",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "A2@0,0,0,1*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,0,1,0*C@1,1,0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A2@0,0,2,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,1,0,0*A2@0,1,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@0,1,0,0*A2@1,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,1,0,0*A2@1,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@0,0,0*C@0,0,0*b@1,0,0*x0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@0,0,1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@0,2,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@1,0,0",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@2,0,0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@2,0,0*x1*x1",
+          "coefficient": "-12"
+        },
+        {
+          "monomial": "A2@0,1,0,1*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@0,1,1,0*C@0,1,0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,1,2,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@0,2,0,0*A2@1,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@0,2,0,0*C@0,0,0*C@0,0,0*b@0,0,0*x0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@0,2,0,0*C@1,0,0*x1",
+          "coefficient": "-6"
+        },
+        {
+          "monomial": "A2@0,3,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@0,0,0*C@0,0,0*b@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@0,0,0*C@0,0,0*b@1,0,0*x1*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "A2@1,1,0,0*C@0,0,0*C@0,0,0*b@0,0,0*x1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@1,1,0,0*C@1,0,0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A2@2,0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@2,1,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "C@0,0,0*b@0,0,1*x1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "C@0,0,0*b@0,2,0*x1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "C@0,0,0*b@1,0,0*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "C@0,0,0*b@2,0,0*x0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "C@0,0,0*b@2,0,0*x1*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "C@0,0,0*C@0,0,0*b@0,0,0*b@0,0,0*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "C@0,0,0*p@1,0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "C@0,0,1*b@0,0,0*x1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "C@0,1,0*b@0,1,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "C@0,2,0*b@0,0,0*x1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "C@1,0,0*b@0,0,0*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "C@1,0,0*b@1,0,0*x0*x0*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "C@1,0,0*b@1,0,0*x1*x1*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "C@1,0,0*p@0,0,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "C@2,0,0*b@0,0,0*x0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "C@2,0,0*b@0,0,0*x1*x1*x1",
+          "coefficient": "4"
+        }
+      ],
+      [
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,0,0*C@0,1,0*C@1,1,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,0,0*C@0,2,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,1,0*C@0,0,0*C@1,1,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,1,0*C@0,1,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,2,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,1,0,0*C@0,0,0*C@0,2,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,1,0,0*C@0,1,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,1,1,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,0,0*C@0,1,0*C@1,1,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,0,0*C@0,2,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,1,0*C@0,0,0*C@1,1,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@1,0,0,0*C@0,0,0*C@0,2,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,0,0,0*C@0,1,0*C@2,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,1,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,0,1,0*C@1,0,0*C@1,0,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,1,0,0*C@0,0,0*C@1,1,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,1,0,0*C@0,1,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@1,0,0,0*C@0,0,0*C@1,1,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@1,0,1,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@1,1,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@0,0,0*C@0,1,0*b@1,0,0*x0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@0,0,0*C@1,0,0*b@0,1,0*x0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@0,1,1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@0,3,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@1,1,0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@2,1,0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@2,1,0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,1*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A0@0,0,1,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A0@0,1,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A0@0,1,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@0,0,0,0*C@0,1,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@0,0,1,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@1,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A2@0,0,0,0*C@0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A2@1,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A2@1,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@0,0,0*C@0,0,0*b@1,0,0*x0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@0,0,0*C@1,0,0*b@0,0,0*x0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@0,0,1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@0,2,0",
+          "coefficient": "-3"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@1,0,0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@2,0,0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@2,0,0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,1,1*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,2,0*A0@0,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,2,0*A1@0,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,2,0*A1@1,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,2,0*C@0,1,0",
+          "coefficient": "-3"
+        },
+        {
+          "monomial": "A0@0,0,3,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@0,0,0,0*C@0,0,0*C@1,1,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@0,0,0,0*C@0,1,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@0,0,1,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@1,0,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@0,0,0*C@0,0,0*b@0,1,0*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@1,1,0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,1,1,0*A2@0,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,1,0*A2@1,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,1,1,0*C@0,0,0*C@0,0,0*b@0,0,0*x0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,1,0*C@1,0,0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,2,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,2,1,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@1,0,0,0*A1@0,0,0,0*C@0,1,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@1,0,0,0*A1@0,0,1,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@1,0,0,0*A2@0,0,0,0*C@0,1,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@1,0,0,0*A2@0,1,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@1,0,0,0*C@0,0,0*C@0,1,0*b@0,0,0*x1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@1,0,0,0*C@1,1,0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@1,0,1,0*A1@0,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@1,0,1,0*A1@0,0,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@1,0,1,0*A2@0,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@1,0,1,0*A2@0,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@1,0,1,0*C@0,0,0*C@0,0,0*b@0,0,0*x1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@1,0,1,0*C@1,0,0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@2,0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@2,0,1,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,0,0,0*C@0,1,0*C@1,0,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,0,0,0*C@0,1,0*C@2,0,0*x0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,1,0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,0,1,0*C@1,0,0*C@1,0,0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@1,0,0,0*C@0,1,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@1,0,1,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@2,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@0,0,0*C@0,1,0*b@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@0,0,0*C@0,1,0*b@1,0,0*x0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@0,0,0*C@1,0,0*b@0,1,0*x0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A2@0,0,0,0*C@0,0,0*C@1,0,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A2@0,0,0,0*C@0,0,0*C@2,0,0*x0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A2@1,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A2@2,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@0,0,0*C@0,0,0*b@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@0,0,0*C@0,0,0*b@1,0,0*x0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@0,0,0*C@1,0,0*b@0,0,0*x0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@0,0,0,0*C@0,0,0*C@1,1,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@0,0,1,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@1,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@1,0,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@0,0,0*C@0,0,0*b@0,1,0*x0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@0,0,0*C@0,1,0*b@0,0,0*x0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,0,0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@0,1,0,0*C@0,0,0*C@1,0,0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@0,1,0,0*C@0,0,0*C@2,0,0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@0,1,0,0*C@1,0,0*C@1,0,0*x0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@1,0,0,0*C@0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@1,0,0,0*C@1,0,0*C@1,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@1,1,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*A2@2,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@0,0,0*C@1,0,0*b@0,0,0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@1,0,1*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@1,2,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@2,0,0*x0",
+          "coefficient": "16"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@3,0,0*x0*x0*x0",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "A2@0,0,0,0*C@3,0,0*x0*x1*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "A2@0,0,0,1*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@0,0,1,0*C@1,1,0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A2@0,0,2,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@0,1,0,0*A2@1,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@0,1,0,0*A2@2,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@0,0,0*C@0,0,0*b@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@0,0,0*C@0,0,0*b@1,0,0*x0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@0,1,0,0*C@2,0,0*x0*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "A2@0,2,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@1,0,0,0*A2@1,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@1,0,0,0*A2@1,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@0,0,0*C@0,0,0*b@1,0,0*x0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@0,0,1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@0,2,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@1,0,0",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@2,0,0*x0*x0",
+          "coefficient": "12"
+        },
+        {
+          "monomial": "A2@1,0,0,0*C@2,0,0*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A2@1,0,0,1*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@1,0,1,0*C@0,1,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A2@1,0,2,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@1,1,0,0*C@0,0,0*C@0,0,0*b@0,0,0*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A2@1,1,0,0*C@1,0,0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A2@1,2,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@2,0,0,0*C@0,0,0*C@0,0,0*b@0,0,0*x1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A2@2,0,0,0*C@1,0,0*x0",
+          "coefficient": "6"
+        },
+        {
+          "monomial": "A2@3,0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "C@0,0,0*b@0,0,1*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "C@0,0,0*b@0,2,0*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "C@0,0,0*b@1,0,0*x0",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "C@0,0,0*b@2,0,0*x0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "C@0,0,0*b@2,0,0*x0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "C@0,0,0*C@0,0,0*b@0,0,0*b@0,0,0*x1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "C@0,0,0*p@0,1,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "C@0,0,1*b@0,0,0*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "C@0,1,0*b@0,1,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "C@0,2,0*b@0,0,0*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "C@1,0,0*b@0,0,0*x0",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "C@1,0,0*b@1,0,0*x0*x0*x0",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "C@1,0,0*b@1,0,0*x0*x1*x1",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "C@1,0,0*p@0,0,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "C@2,0,0*b@0,0,0*x0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "C@2,0,0*b@0,0,0*x0*x1*x1",
+          "coefficient": "-4"
+        }
+      ],
+      [
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,0,0*C@0,1,0*C@1,0,0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,0,0*C@0,1,0*C@2,0,0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,0,0*C@1,0,0*C@1,1,0*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,1,0*C@0,0,0*C@1,0,0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,1,0*C@0,0,0*C@2,0,0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,0,1,0*C@1,0,0*C@1,0,0*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,1,0,0*C@0,0,0*C@1,1,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,1,0,0*C@0,1,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,1,1,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A0@0,2,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,0,0*C@0,1,0*C@2,0,0*x0*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,0,0*C@1,0,0*C@1,1,0*x0*x1",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,1,0*C@0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,0,1,0*C@1,0,0*C@1,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@0,1,0,0*C@0,1,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@1,0,0,0*C@0,0,0*C@1,1,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@1,0,1,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A1@1,1,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,0,0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@0,1,0,0*C@0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@1,0,0,0*C@0,0,0*C@1,0,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*A2@1,0,0,0*C@0,0,0*C@2,0,0*x1*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@0,0,0*C@1,0,0*b@0,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@1,0,1*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@1,2,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@2,0,0*x1",
+          "coefficient": "16"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@3,0,0*x0*x0*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "A0@0,0,0,0*C@3,0,0*x1*x1*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "A0@0,0,0,1*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A0@0,1,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A0@0,2,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@0,0,0,0*C@0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@0,0,0,0*C@1,0,0*C@1,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@0,1,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,0,1,0*A1@1,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,0,1,0*C@1,1,0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,0,2,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A0@0,1,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A0@0,1,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A1@0,0,0,0*C@0,0,0*C@1,1,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A1@1,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A1@1,0,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@0,0,0,0*C@1,0,0*C@1,0,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@0,1,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*A2@1,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@0,0,0*C@1,0,0*b@0,0,0*x0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@0,0,1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@0,2,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@1,0,0",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@2,0,0*x0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@0,1,0,0*C@2,0,0*x1*x1",
+          "coefficient": "12"
+        },
+        {
+          "monomial": "A0@0,1,0,1*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,1,1,0*A1@0,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@0,1,1,0*A1@1,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,1,1,0*C@0,1,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,1,2,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,2,0,0*A2@0,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@0,2,0,0*A2@1,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@0,2,0,0*C@0,0,0*C@0,0,0*b@0,0,0*x0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@0,2,0,0*C@1,0,0*x1",
+          "coefficient": "6"
+        },
+        {
+          "monomial": "A0@0,3,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@1,0,0,0*A1@0,0,0,0*C@0,1,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@1,0,0,0*A1@0,0,1,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@1,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,0,0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A0@1,0,0,0*A2@0,1,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@1,0,0,0*C@0,0,0*C@1,0,0*b@0,0,0*x1*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@1,0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "8"
+        },
+        {
+          "monomial": "A0@1,1,0,0*A1@0,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@1,1,0,0*A1@0,0,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@1,1,0,0*A2@0,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A0@1,1,0,0*A2@0,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A0@1,1,0,0*C@0,0,0*C@0,0,0*b@0,0,0*x1",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A0@1,1,0,0*C@1,0,0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A0@2,0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A0@2,1,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,0,0*C@0,1,0*C@1,0,0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,0,0*C@0,1,0*C@2,0,0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,0,0*C@1,0,0*C@1,1,0*x0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,1,0*C@0,0,0*C@1,0,0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,1,0*C@0,0,0*C@2,0,0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@0,0,1,0*C@1,0,0*C@1,0,0*x0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@1,0,0,0*C@0,0,0*C@1,1,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@1,0,0,0*C@0,1,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@1,0,1,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A1@2,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,0,0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,1,0,0*C@0,0,0*C@1,0,0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@0,1,0,0*C@0,0,0*C@2,0,0*x0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*A2@1,0,0,0*C@0,0,0*C@2,0,0*x0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@0,0,0*C@1,0,0*b@0,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@1,0,1*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@1,2,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@2,0,0*x0",
+          "coefficient": "-16"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@3,0,0*x0*x0*x0",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "A1@0,0,0,0*C@3,0,0*x0*x1*x1",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "A1@0,0,0,1*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A1@1,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,0,1,0*A1@2,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@0,0,1,0*C@1,1,0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,0,2,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,1,0,0*A2@0,0,0,0*C@1,0,0*C@1,0,0*x0*x0",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@0,1,0,0*A2@1,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@0,1,0,0*C@0,0,0*C@1,0,0*b@0,0,0*x0*x0",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@0,1,0,0*C@2,0,0*x0*x1",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "A1@0,2,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A1@1,0,0,0*C@0,0,0*C@0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A1@1,0,1,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@0,0,0,0*C@1,0,0*C@1,0,0*x0*x1",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@0,1,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "4"
+        },
+        {
+          "monomial": "A1@1,0,0,0*A2@1,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@0,0,0*C@1,0,0*b@0,0,0*x0*x1",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@0,0,1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@0,2,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@1,0,0",
+          "coefficient": "-8"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@2,0,0*x0*x0",
+          "coefficient": "-12"
+        },
+        {
+          "monomial": "A1@1,0,0,0*C@2,0,0*x1*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@1,0,0,1*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@1,0,1,0*C@0,1,0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,0,2,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@1,1,0,0*A2@0,0,0,0*C@0,0,0*C@1,0,0*x0",
+          "coefficient": "-2"
+        },
+        {
+          "monomial": "A1@1,1,0,0*A2@1,0,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@1,1,0,0*C@0,0,0*C@0,0,0*b@0,0,0*x0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@1,1,0,0*C@1,0,0*x1",
+          "coefficient": "-4"
+        },
+        {
+          "monomial": "A1@1,2,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@2,0,0,0*A2@0,0,0,0*C@0,0,0*C@1,0,0*x1",
+          "coefficient": "2"
+        },
+        {
+          "monomial": "A1@2,0,0,0*A2@0,1,0,0*C@0,0,0*C@0,0,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "A1@2,0,0,0*C@0,0,0*C@0,0,0*b@0,0,0*x1",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "A1@2,0,0,0*C@1,0,0*x0",
+          "coefficient": "-6"
+        },
+        {
+          "monomial": "A1@3,0,0,0*C@0,0,0",
+          "coefficient": "-1"
+        },
+        {
+          "monomial": "C@0,0,0*p@0,0,1,0",
+          "coefficient": "1"
+        },
+        {
+          "monomial": "C@0,1,0*p@0,0,0,0",
+          "coefficient": "1"
+        }
+      ]
+    ]
+  },
+  "originalAlgebraChecks": [
+    {
+      "id": "source-rows-equal-full-curl-product",
+      "pass": true,
+      "remainingMonomials": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "localized-velocity-product-rule",
+      "pass": true,
+      "remainingMonomials": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "axisymmetric-direct-field-divergence",
+      "pass": true,
+      "remainingMonomials": [
+        0
+      ]
+    },
+    {
+      "id": "axisymmetric-cutoff-orthogonal-to-direct-field",
+      "pass": true,
+      "remainingMonomials": [
+        0
+      ]
+    },
+    {
+      "id": "full-localized-velocity-divergence",
+      "pass": true,
+      "remainingMonomials": [
+        0
+      ]
+    },
+    {
+      "id": "curl-commutator-orthogonal-to-cutoff-gradient",
+      "pass": true,
+      "remainingMonomials": [
+        0
+      ]
+    },
+    {
+      "id": "direct-residual-equals-all-commutators",
+      "pass": true,
+      "remainingMonomials": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "force-divergence-pressure-poisson",
+      "pass": true,
+      "remainingMonomials": [
+        0
+      ]
+    }
+  ],
+  "originalNegativeControls": [
+    {
+      "id": "omitted-gradient-cross-A-changes-velocity",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-gradient-cross-A-breaks-divergence",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-pressure-cutoff-changes-force",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-force-divergence-breaks-pressure-poisson",
+      "nonzero": true
+    },
+    {
+      "id": "theta-dependent-cutoff-breaks-direct-field-solenoidality",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-linear-cutoff",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-diffusion-product",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-curl-commutator-linear",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-nonlinear-scaling",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-velocity-cutoff-advection",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-local-advects-curl-commutator",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-curl-commutator-advects-local",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-curl-commutator-quadratic",
+      "nonzero": true
+    },
+    {
+      "id": "omitted-pressure-product",
+      "nonzero": true
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "work/remaining_chain/source/source-near-terminal-evidence-data.mjs",
+      "sha256": "9db21cf8ce69b6e36651e111cb6e75929a875f8e15ca8f1f76dfe55a42b4c7fa"
+    },
+    {
+      "path": "work/remaining_chain/source/source-localization.mjs",
+      "sha256": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036"
+    },
+    {
+      "path": "work/remaining_chain/source/localization-jet-algebra.mjs",
+      "sha256": "baee439b1d232a2159f8283eccd2907ab4ebb67bbfae77157503994dad64c48b"
+    },
+    {
+      "path": "work/remaining_chain/source/final-summation/source-final-summation.mjs",
+      "sha256": "67c2f0a63d4b1a5fdf86a4c25f776ed0fdf0a6cd379d08aaf858231621c04450"
+    },
+    {
+      "path": "work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json",
+      "sha256": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78"
+    }
+  ],
+  "scope": "Original operator rows and exact generic differential polynomials bound to frozen actual family. Actual field jet values, active selectors, and whole-K integrals remain unavailable.",
+  "N706Closed": false,
+  "N805Closed": false,
+  "actualLastResolvedTau": null
+}

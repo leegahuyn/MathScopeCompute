@@ -1,0 +1,434 @@
+{
+  "schema": "MathScope.N602.SecondIndependentOriginalCriteriaReview/1",
+  "reviewer": "/root/pdf_criteria",
+  "reviewed_at_utc": "2026-10-18T05:22:09.437696+00:00",
+  "decision": "PASS_ORIGINAL_N602_IN_ONE_ACTUAL_CANONICAL_FINITE_CYCLE_SOURCE_DOMAIN",
+  "original_N602_satisfied": true,
+  "criterion": {
+    "text": "R(u+δu,p+δp)=R(u,p)+Lu(δu,δp)+div(δu⊗δu)를 사용하며 매 substep 후 최신 압력을 복원한다. 합격: 독립 직접 PDE 평가와 decomposed residual이 오차 예산 내 일치한다. 기존 flat tail와 새 quadratic remainder를 장부에서 누락하지 않는다.",
+    "source": {
+      "path": "recovered/pdfs/MathScope_Research_IDE_Blueprint_v1_KO(1)(20261017-114129).pdf",
+      "bytes": 886241,
+      "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+    },
+    "pdf_page": 62,
+    "paper_source": {
+      "path": "recovered/pdfs/navier-stokes(20261017-114135).pdf",
+      "bytes": 2959204,
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"
+    },
+    "paper_pages": [
+      97,
+      98,
+      100,
+      108,
+      109,
+      110,
+      111
+    ]
+  },
+  "basis": "Actual exact source computation plus independent direct/tensor residual comparison and separate analytic domain proof. Neither zero numerator nor private seal alone proves the domain.",
+  "read_only_verification": {
+    "checks_passed": 190,
+    "checks_failed": 0,
+    "source_producers_reexecuted": false,
+    "original_archive_byte_equal_files": 135,
+    "original_archive_sha256": "c1ebc511859fcec3deac63b2064e59dce10740667ef3492cdc4aca36b49f3926",
+    "categories": [
+      "prior-review and summary evidence hashes",
+      "archive hash and135 member byte comparisons",
+      "process exit/summary/all4stages",
+      "all3 comparisons, denominator flags, complete modes and source bindings",
+      "negative control flags",
+      "old-mean/wave/pressure/Fax continuity"
+    ],
+    "description": "Read existing source, receipt, logs and archive only; no producer, test suite, Windows run or finite cycle replay."
+  },
+  "execution": {
+    "process_exit_code": 0,
+    "elapsed_seconds": 1700.657,
+    "final_node_count": 4312220,
+    "loaded_module_sha256": "7cb5819ba9db2c1f5530ae744d6c15966e7af25bdaa1926e6a6a8485266cb12b",
+    "actual_exact_component_comparisons": 12,
+    "actual_negative_controls": 9,
+    "private_boundary_negative_checks": 10,
+    "stages": [
+      {
+        "stage": "post-forced",
+        "node_count": 4160796,
+        "actual_velocity": [
+          4159966,
+          4159967,
+          4159968
+        ],
+        "actual_full_pressure": 4159969,
+        "latest_mean_pressure": 3890533,
+        "all_three_exact_comparisons_pass": true,
+        "direct_roots": [
+          4160283,
+          4160285,
+          4160287
+        ],
+        "decomposed_roots": [
+          4160779,
+          4160784,
+          4160789
+        ]
+      },
+      {
+        "stage": "signed",
+        "node_count": 4191862,
+        "actual_velocity": [
+          4191022,
+          4191023,
+          4191024
+        ],
+        "actual_full_pressure": 4191026,
+        "latest_mean_pressure": 4190984,
+        "all_three_exact_comparisons_pass": true,
+        "direct_roots": [
+          4191340,
+          4191342,
+          4191344
+        ],
+        "decomposed_roots": [
+          4191815,
+          4191820,
+          4191825
+        ]
+      },
+      {
+        "stage": "temporal",
+        "node_count": 4310210,
+        "actual_velocity": [
+          4309415,
+          4309417,
+          4309419
+        ],
+        "actual_full_pressure": 4309421,
+        "latest_mean_pressure": 4309376,
+        "all_three_exact_comparisons_pass": true,
+        "direct_roots": [
+          4309691,
+          4309693,
+          4309695
+        ],
+        "decomposed_roots": [
+          4310166,
+          4310171,
+          4310176
+        ]
+      },
+      {
+        "stage": "fresh-five",
+        "node_count": 4312220,
+        "actual_velocity": [
+          4311535,
+          4311537,
+          4311539
+        ],
+        "actual_full_pressure": 4311541,
+        "latest_mean_pressure": 4311479,
+        "all_three_exact_comparisons_pass": true,
+        "direct_roots": [
+          4311724,
+          4311726,
+          4311728
+        ],
+        "decomposed_roots": [
+          4312176,
+          4312181,
+          4312186
+        ]
+      }
+    ]
+  },
+  "denominator_review": {
+    "nonzeroSourceDenominatorProofRequired_flag_retained": true,
+    "flag_interpretation": "The generic rational checker reports the need for an external domain proof and does not consume/clear it. Actual original constructor bounds and the source-domain arguments below supply that proof.",
+    "current_run_operand_ids": [
+      622802,
+      622820,
+      622821,
+      622822,
+      623015,
+      624050,
+      633696,
+      633724,
+      633918,
+      633922,
+      635063
+    ],
+    "old_graph_id_meanings_not_substituted": true,
+    "complete_scalar_graph_export_claimed": false,
+    "semantic_coverage": "Constructor-level proof covers actual source operands and hidden analytic bodies. No unexported per-ID semantic map is invented.",
+    "proofs": [
+      {
+        "name": "Source identity, positive-q domain and complete finite prefix",
+        "disposition": "DISCHARGED_ANALYTICALLY_ON_AUTHENTICATED_SOURCE_DOMAIN",
+        "proof": "The live factory recursively authenticates the original forced/current/representative/band/common-family chain. The original domain is T>=0, q=Q_ref*s>0, 1/2<=s<=2, 0<q<qGlobalStar=2^(-(ell0+4)), and b_(N+1)*q>=1 (N=1 here). Monotonic b_n makes every omitted cutoff and its derivatives zero. Every active label has ell>=ell0. The selected representative is in the same box, at distance<4/S^3. This is a source-defined finite-prefix window, not all q for N=1. The explicit selector growth ensures such windows exist.",
+        "sources": [
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-finite-cycle-continuation.mjs:37-56",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-current.mjs:234-245",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-representative.mjs:65-90",
+          "work/n602_continuation/source/research-ide/mathscope-m2/navier/actual-common-admissible-family.mjs:38-60,79-100"
+        ],
+        "paper_pages": []
+      },
+      {
+        "name": "Positive chart, cylindrical and frame denominators",
+        "disposition": "DISCHARGED_ANALYTICALLY_ON_AUTHENTICATED_SOURCE_DOMAIN",
+        "proof": "Q=2^-ell, epsilon=Q^h and s in[1/2,2] are positive; k=ceil(epsilon^-1/2)>=1. Active local bodies have Xa<X<Xb, Xa>0 and R=sqrt(2sX)>0. Fixed radial integrals use sqrt(Xa)<=R<=2sqrt(Xb). The monotone chart derivative is 1-2h*eta^2>=1-2h>1/2. Palette scale ci=Tg^i*Q^(1+h)>0, Tg=4+sqrt(2)>0 and Dgeom=4-2sqrt(2)>0. Original same-box/frame bounds protect tangential/full normal denominators. Cylindrical quotients are evaluated on R>0; the receipt does not evaluate raw 1/R at the axis.",
+        "sources": [
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-band.mjs:63-132",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-current.mjs:34-45,66-82",
+          "work/n602_continuation/source/research-ide/mathscope-m2/navier/actual-common-admissible-family.mjs:145-170"
+        ],
+        "paper_pages": []
+      },
+      {
+        "name": "Actual fixed H and original positive primary amplitudes",
+        "disposition": "DISCHARGED_ANALYTICALLY_ON_AUTHENTICATED_SOURCE_DOMAIN",
+        "proof": "The common-family threshold is a representative-independent maximum of the original cone, concentration and frame conditions; active ell>=ell0 satisfies them. The retained source argument gives |det H|>=d*/S with d*>0 and y_sigma>=c*zeta>0 on the open stress shell. H and a_sigma=sqrt(y_sigma) are the actual same-band Volterra/Haar fields. The signed update checks that they equal the old original H columns and amplitudes and divides by epsilon*det H*2a. It does not take a square root of signed Sigma. At flat shell endpoints, the original smooth zero extension and lazy support guard apply; no strictly positive endpoint lower bound for a is asserted.",
+        "sources": [
+          "work/n602_continuation/source/research-ide/mathscope-m2/navier/actual-common-admissible-family.mjs:79-100,133-174",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-band.mjs:132-176",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-representative.mjs:73-83",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-finite-cycle-continuation.mjs:170-219",
+          "work/n602_continuation/source/research-ide/mathscope-m2/navier/actual-physical-residual-algebra.mjs:40-61"
+        ],
+        "paper_pages": [
+          109
+        ]
+      },
+      {
+        "name": "Normalized bump and compact Sigma inverse",
+        "disposition": "DISCHARGED_ANALYTICALLY_ON_AUTHENTICATED_SOURCE_DOMAIN",
+        "proof": "x0=sqrt(2X0Imean)*exp(1/2)>0 and sqrt(s)>0. The seed exp(-1/(u(1-u))) is strictly positive on 0<u<1 and has smooth zero extension. Its full support lies in the original Imean patch inside the fixed radial envelope, so rhoMass>0 and integral rho=1. For e=1,2, actual M=integral R^e Haar(E) obeys integral R^e[Haar(E)-rho*R^-e*M]=0. Thus the radial primitive has the original compact-support/FTC meaning. It uses the full current E, not an initial-zero-mean-only identity.",
+        "sources": [
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-current.mjs:66-82",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-finite-cycle-continuation.mjs:102-124",
+          "work/n602_crossreview/NONZERO_MEAN_CHART_REVIEW.md"
+        ],
+        "paper_pages": [
+          109
+        ]
+      },
+      {
+        "name": "Temporal Fourier divisors and exact limit",
+        "disposition": "DISCHARGED_ANALYTICALLY_ON_AUTHENTICATED_SOURCE_DOMAIN",
+        "proof": "For k=(k0,k1)!=0, m=k1-k0 and n=k0 give k.v_t=m+n*sqrt(2). Its integer norm m^2-2n^2 is nonzero, hence has absolute value>=1. The code checks the exact norm for materialized modes and retains the universal Diophantine bound. Also 2*pi>0 and ci>0. The zero mode is separated. Actual inherited Volterra solutions, smooth guarded joins, products, Haar means and compact translated integrals provide smoothness/periodicity for the new Etheta/Ez. The exact inverse remains the state operand; finite C0/C1 tail checks do not replace it by a finite sum.",
+        "sources": [
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-auxiliary-fourier.mjs:53-74,138-192",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-finite-cycle-continuation.mjs:224-263"
+        ],
+        "paper_pages": [
+          95,
+          96,
+          110
+        ]
+      },
+      {
+        "name": "Fixed five-profile matrix denominators",
+        "disposition": "DISCHARGED_ANALYTICALLY_ON_AUTHENTICATED_SOURCE_DOMAIN",
+        "proof": "The actual source fixes lambda=exp(-1000*T)>0, a(eta)>0, d=1/5 and a positive nonzero bump in x>0. Every mu_p is strictly positive. Angular powers 2,-2-2lambda,-2lambda are pairwise distinct, so their exp(d*p) nodes have nonzero gaps. Axial e^d>0 and 1-exp(-2*d*lambda)>0. The unchanged source bridge checks support, positive normalized moments, angular determinant separation and the factored axial inverse. Zero in the enclosing lambda interval is only an endpoint, not its actual value. The successor uses the identical matrix/profiles but fresh post-temporal P/J targets. No uniformity as lambda tends to zero or requirement lambda>d is imposed.",
+        "sources": [
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-moment.mjs:20-54,115-160",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-mean-map.mjs:35-111",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-finite-cycle-continuation.mjs:266-303"
+        ],
+        "paper_pages": [
+          97,
+          98,
+          111
+        ]
+      },
+      {
+        "name": "Cutoff and exact coefficient-field denominators",
+        "disposition": "DISCHARGED_ANALYTICALLY_ON_AUTHENTICATED_SOURCE_DOMAIN",
+        "proof": "Smooth-step inverse bodies are used only in their open transition intervals; the exponential sum denominator is positive there. Local pulse/mesh bodies are protected by lazy piecewise guards before singular inverses are evaluated. Literal Q(sqrt(2)) coefficient inversion rejects zero norm. Other analytic source expressions remain their actual opaque operands, with no invented algebraic relations. This supplies semantics beyond polynomial numerator cancellation.",
+        "sources": [
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-band.mjs:45-59",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-current.mjs:34-45",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-continuation-kernels.mjs:7-41",
+          "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-quadratic-identity.mjs:5-92"
+        ],
+        "paper_pages": []
+      }
+    ],
+    "unresolved_domain_hypotheses_within_declared_scope": []
+  },
+  "state_and_equation_review": [
+    "Each actual successor is an unchanged privately sealed descendant of the original forced state; saved JSON authority flags are rejected.",
+    "Forced/signed states retain the nonzero mean, four current wave modes per template, ten lift/sign templates, all162 contributions, both chart derivative columns and full angular pressure.",
+    "Full angular covariance is formed before auxiliary Haar. Actual gr/P determines latest pressure after each velocity update; Etheta/Ez and J use that same current.",
+    "Temporal and fresh-five use actual old mean plus actual increments. The actual axial increment and Fax are retained.",
+    "The real conservative cylindrical PDE and separately implemented tensor-divergence expansion use the same actual operands. Both ordered cross products and the increment square remain. Exact zero discrepancy gives zero algebraic error on the declared source domain.",
+    "Fresh-five targets are post-temporal P/J. Fixed profile identities preserve two zero conservation moments and cancel linear targets; new defects are retained nonlinear remainder integrals, not zero.",
+    "Background flat force, inherited whole mean residual, primary pulse/forced cutoff terms, old/current Fax and stage-specific A0 remain. Historical A0 entries are not summed as one simultaneous force."
+  ],
+  "scope": {
+    "one_required_finite_cycle": true,
+    "cycle": [
+      "forced",
+      "signed",
+      "temporal",
+      "fresh-five"
+    ],
+    "all_implemented_poststeps_checked": true,
+    "coefficient_order": 1,
+    "declared_original_source_domain_required": true,
+    "arbitrary_unbound_input_functions_accepted": false,
+    "literal_infinite_iterations_required": false,
+    "numeric_field_samples_claimed": false,
+    "whole_localized_energy_or_dissipation_certified": false,
+    "uniform_all_order_numeric_norms_certified": false,
+    "N706_closed": false,
+    "N805_closed": false,
+    "all_M3_or_M4_closed": false,
+    "new_Lean_kernel_proof_claimed": false
+  },
+  "remaining_original_conditions": [
+    "Keep fixed source/parameter hashes and unchanged constructor ancestry.",
+    "Use the declared positive-q finite-prefix chart and original support guards/endpoint extensions.",
+    "Do not transfer this finite exact residual certificate to energy/refinement, new inputs or unexecuted stages."
+  ],
+  "blocking_findings": [],
+  "pins": [
+    {
+      "path": "work/n602_continuation/ACTUAL_FINITE_CYCLE_RECEIPT.json",
+      "bytes": 600203,
+      "sha256": "1a525f1501f073cf4163b1bb18fe0dce4ff417027cbd3ef2f5582e82a370f34d"
+    },
+    {
+      "path": "work/n602_continuation/ACTUAL_PROCESS.json",
+      "bytes": 445,
+      "sha256": "1c3784d8a6c7ef86dfcead25c788bb2350a5eed84d70913e9dd887c238daad5f"
+    },
+    {
+      "path": "work/n602_continuation/DOMAIN_AND_SOURCE_SCOPE.md",
+      "bytes": 3278,
+      "sha256": "9cd4735d290f9a3a3b0701af52deaf126225aec9411b2a6e7ff256f51cffe19d"
+    },
+    {
+      "path": "work/n602_continuation/FINITE_CYCLE_RESULT.json",
+      "bytes": 17034,
+      "sha256": "6edf9b41f32a78d87a2c9ddf555cb0c849d69fd46d35506f49e1e2a6bc5144be"
+    },
+    {
+      "path": "work/n602_continuation/FINITE_CYCLE_RESULT.md",
+      "bytes": 2062,
+      "sha256": "82e55b8794f5d8e0737f0f11ed7bb962375fdfba2c8e898e0a03512313a3ebc3"
+    },
+    {
+      "path": "work/n602_continuation/ORIGINAL_INPUT_INTEGRITY.json",
+      "bytes": 31168,
+      "sha256": "bd895fdb47aa2e842e8481c4e358350cee83440689205e45d207a0fbcf857d1f"
+    },
+    {
+      "path": "work/n602_continuation/PRIVATE_BOUNDARY_RESULT.json",
+      "bytes": 1289,
+      "sha256": "9748215d023046268904dc25020f2afcf77f6fcbcc90611aaf6c57cf8fd04451"
+    },
+    {
+      "path": "work/n602_continuation/SOURCE_PROVENANCE.json",
+      "bytes": 52579,
+      "sha256": "d19d5b724cc2b319af6c5099f9eb036245dd1d86d40a8c0ce8833dc38b9df317"
+    },
+    {
+      "path": "work/n602_continuation/logs/actual.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/n602_continuation/logs/actual.stdout.log",
+      "bytes": 152535,
+      "sha256": "4ed03fe31341cab521e37efb977b621e2a31c59983db2cddd2e35791b9719954"
+    },
+    {
+      "path": "work/n602_continuation/run_actual_finite_cycle.mjs",
+      "bytes": 7017,
+      "sha256": "9bd30171ebe7dd8670e0a5791874588566a5c70f1d25014ff20b3a4011b0dee9"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m2/navier/actual-common-admissible-family.mjs",
+      "bytes": 27270,
+      "sha256": "7fd3ec07b567af86f84df7a1b789a5a57366186d4e8c26c2a4a35dc5948c5b75"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m2/navier/actual-physical-residual-algebra.mjs",
+      "bytes": 9362,
+      "sha256": "df6f10cda4c77b0b679ded7eb254979e528d133239b2da1ce0904479585d2116"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-auxiliary-fourier.mjs",
+      "bytes": 14174,
+      "sha256": "59e1d8f7fd72b880de030a2a56bee9be65b5e02203cffa73157ce8dae420ad2e"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-continuation-kernels.mjs",
+      "bytes": 5486,
+      "sha256": "72725fea67bbb4943530d77b0266bee61e251901b6e148ea1bb6d7c6b0341651"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-finite-cycle-continuation.mjs",
+      "bytes": 30344,
+      "sha256": "7cb5819ba9db2c1f5530ae744d6c15966e7af25bdaa1926e6a6a8485266cb12b"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-band.mjs",
+      "bytes": 23815,
+      "sha256": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-current.mjs",
+      "bytes": 30522,
+      "sha256": "93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-moment.mjs",
+      "bytes": 21972,
+      "sha256": "0d02d55b291db8c55db26810ae4783d62e09ac3d058fd582f4161cb444871e46"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-global-representative.mjs",
+      "bytes": 9824,
+      "sha256": "f3fbcf74b42c59cbfdd563e0fddcba9fab5cad782a96695930e3445c50373541"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-mean-map.mjs",
+      "bytes": 11303,
+      "sha256": "072f9cbaa7fedab6ea2cdb64158a7d5af3c3916685dfefeef65e977219ef09b7"
+    },
+    {
+      "path": "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-quadratic-identity.mjs",
+      "bytes": 7578,
+      "sha256": "696ff2202a9fb58e4de791a264fa23321fd81774f1f1a4f8336803d6a10b5bcd"
+    },
+    {
+      "path": "work/n602_crossreview/FINAL_FINITE_CYCLE_REVIEW.json",
+      "bytes": 10575,
+      "sha256": "287b812b1de197620b87da0b3120d8bfead55a319f7c6e13cd54f878e7374f4c"
+    },
+    {
+      "path": "work/n602_crossreview/FINAL_FINITE_CYCLE_REVIEW.md",
+      "bytes": 3686,
+      "sha256": "c77c3d81ab2b90d9357fbf94f3323f49a9b2677fe8776a3ba29235bd32099aa6"
+    },
+    {
+      "path": "work/n602_crossreview/FINITE_CYCLE_MATHEMATICAL_REVIEW.md",
+      "bytes": 5215,
+      "sha256": "eeaced2273354e4ffd42ee4ca488a4bff39709f709d413df8f4da2a8b5225fd9"
+    },
+    {
+      "path": "work/n602_crossreview/NONZERO_MEAN_CHART_REVIEW.md",
+      "bytes": 2208,
+      "sha256": "cfec1df0798985a72f22cd78c3a6a88d695640d7f59dae5c41b280287b9b5041"
+    },
+    {
+      "path": "work/n602_crossreview/ORIGINAL_SOURCE_PRESERVATION.json",
+      "bytes": 28235,
+      "sha256": "29a474ca21ce5c89e1d1147a84553b13b967b6dce54bf0e2394a6193176fc4fb"
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+[
+  {
+    "id": "node_version",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "--version"
+    ]
+  },
+  {
+    "id": "frozen_energy_package_review",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/energy_independent_review/code/check_final_freeze.py"
+    ]
+  },
+  {
+    "id": "scalar_recovery",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/scalar/code/recover_scalar_closure.py",
+      "--root",
+      "recovered/base",
+      "--source",
+      "work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz",
+      "--stage3",
+      "work/recovery_git/recovered/tools/n6-domain-transport-20261015/verify_domain_transport.py",
+      "--out",
+      "work/prune_recovery/scalar/evidence"
+    ]
+  },
+  {
+    "id": "scalar_controls",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/scalar/code/test_scalar_recovery.py",
+      "--root",
+      "recovered/base",
+      "--source",
+      "work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz",
+      "--stage3",
+      "work/recovery_git/recovered/tools/n6-domain-transport-20261015/verify_domain_transport.py",
+      "--evidence",
+      "work/prune_recovery/scalar/evidence"
+    ]
+  },
+  {
+    "id": "binder_controls",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "work/prune_recovery/scalar/binder_review",
+      "-p",
+      "test_scoped_bindings.py",
+      "-v"
+    ]
+  },
+  {
+    "id": "binder_audit",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/scalar/binder_review/audit_actual_bindings.py"
+    ]
+  },
+  {
+    "id": "historical_cycle_identity",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/scalar/code/inspect_historical_finite_cycle.py",
+      "--root",
+      "recovered/base",
+      "--out",
+      "work/prune_recovery/scalar/evidence/HISTORICAL_FINITE_CYCLE_GRAPH_IDENTITY.json"
+    ]
+  },
+  {
+    "id": "scalar_independent_review",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/scalar_independent_review/code/review_recovery.py"
+    ]
+  },
+  {
+    "id": "native_generation",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/native/code/native_binding.py"
+    ]
+  },
+  {
+    "id": "native_indexed_operand_recovery",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/native/code/recover_indexed_operands.py",
+      "--source",
+      "work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz"
+    ]
+  },
+  {
+    "id": "native_original_proof_application",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/native/code/proof_application.py",
+      "--source",
+      "work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz"
+    ]
+  },
+  {
+    "id": "native_controls",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/native/code/verify_native.py"
+    ]
+  },
+  {
+    "id": "energy_operator",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "work/prune_recovery/energy/code/recover_operator.mjs",
+      "recovered/base",
+      "work/prune_recovery/energy/evidence"
+    ]
+  },
+  {
+    "id": "energy_controls",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/energy/code/check_recovery.py",
+      "recovered/base"
+    ]
+  },
+  {
+    "id": "prepare_derived_energy_cache",
+    "kind": "derived_cache"
+  },
+  {
+    "id": "energy_actual_source_connection",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/energy/code/connect_recovered_source.py"
+    ]
+  },
+  {
+    "id": "energy_pressure_recipe",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/energy/code/connect_pressure_recipe.py"
+    ]
+  },
+  {
+    "id": "native_independent_math_review",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/native_independent_review/review_math.py"
+    ]
+  },
+  {
+    "id": "native_independent_binding_review",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/native_independent_review/binding_scope/review_frozen_bindings.py"
+    ]
+  },
+  {
+    "id": "native_independent_direct_operand_review",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/native_independent_review/binding_scope/review_direct_supplement.py",
+      "--source",
+      "work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz"
+    ]
+  },
+  {
+    "id": "energy_independent_algebra_review",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/energy_independent_review/code/check_energy_algebra.py"
+    ]
+  },
+  {
+    "id": "energy_independent_boundary_review",
+    "kind": "process",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-X",
+      "utf8",
+      "work/prune_recovery/energy_independent_review/code/check_energy_boundary.py"
+    ]
+  }
+]

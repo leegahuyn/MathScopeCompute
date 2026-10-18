@@ -1,0 +1,29 @@
+MATHSCOPE  /  DESIGN BLUEPRINT
+23 / REFERENCES
+Lean 검증과 도구 연동 자료
+공식 문서·공식 저장소. 링크 확인일 2026.10.06. 실제 연동은 선택한 버전에서 검증한다.
+설계 제안 v0.1  ·  2026.10.06
+24
+L1
+Lean Reference · Validating a Lean Proof
+lean-lang.org / Reference / ValidatingProofs
+명제 의미, 공리 의존성, 미완성 증명, 검증 실행의 신뢰 경계. 15·16·20쪽 참고.
+L2
+Lean 4 · LSP Diagnostics and Extensions
+github.com/leanprover/lean4 / src/Lean/Data/Lsp
+Diagnostics.lean·Extra.lean의 진단·목표·버전 관련 인터페이스. 실제 연동은 고정 버전에서 검증.
+L3
+Lean Infoview · Embedding in Other Editors
+github.com/leanprover/vscode-lean4 / lean4-infoview
+웹 기반 Infoview의 호스트 연동 구조. 외부 앱에서는 LSP 중계와 어댑터 개발이 필요하다.
+L4
+Lean Reference · Lake
+lean-lang.org / Reference / Build-Tools-and-Distribution / Lake
+프로젝트 의존성·manifest·빌드·언어 서버 실행. 환경 재현 설계의 근거.
+L5
+mathlib4 · Official Repository
+github.com/leanprover-community/mathlib4
+형식수학 라이브러리와 개발 환경. 특정 고급 분야의 전 범위 지원을 가정하지 않는다.
+일반 정리와 현재 설정의 적용을 분리한다
+모든 c에 대한 정리가 검증되었다면 슬라이더 이동 때마다 그 정리 전체를 재검사할 필요는 없다. 현재 설정에 대
+한 적용·가정 확인과 수치 결과만 관련 의존성에 따라 갱신한다.

@@ -1,0 +1,38 @@
+MATHSCOPE  /  DESIGN BLUEPRINT
+06 / DATA MODEL
+의미와 결과를 버전 단위로 연결한다
+정의 파일은 읽기 쉬운 형식으로, 대용량 표본과 로그는 별도 산출물로 저장한다.
+설계 제안 v0.1  ·  2026.10.06
+07
+ObjectSpec
+id · revision · kind · definition
+field · dimIntrinsic · dimAmbient
+assumptions · domain · coordinateSystem
+RepresentationSpec
+id · revision · objectRevision
+method · parameters · pathSpec
+sampling · precision
+preservationContract · exclusions
+Artifact / Diagnostic
+sourceRevisions · contentHash · format
+originalPointId · numericError
+metricDefinition · sampleScope · seed
+ClaimSpec
+id · revision · statement · scope
+formalStatement · assumptions
+semanticReview · dependsOn
+object/representation refs
+EvidenceRecord
+kind: formal | numerical | exact-computation | review | counterexample
+claimRevision · result · environmentHash · sourceHash · artifactHash
+toolchain · dependencyLock · axioms · logRef · timestamp · reviewer
+세 가지 무효화 규칙
+변경
+현재 증거에 미치는 영향
+카메라 위치·색상만 변경
+수학적 입력이 같으면 증거는 유지. 화면 상태는 별도 저장한다.
+정의·가정·관측 파라미터 변경
+관련 의존성을 타고 STALE 표시. 과거 성공 기록은 삭제하지 않는다.
+Lean / mathlib / 계산 코드
+변경
+환경 hash가 달라진다. 동일 명제라도 현재 환경에서 다시 확인한다.

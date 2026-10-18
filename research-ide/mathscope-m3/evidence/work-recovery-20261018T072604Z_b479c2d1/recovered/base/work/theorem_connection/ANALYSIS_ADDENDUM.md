@@ -1,0 +1,9 @@
+# Updated source audit conclusion
+
+The earlier `analysis/theorem_sources/base_theorem_audit.json` remains an unchanged intermediate audit. Its statements that full-vector transport or inherited wave premises still need application are superseded by `transport/TRANSPORT_APPLICATION.json`, `N601_JOINT_PROOF.md`, and `evidence/N601_JOINT_SOURCE_APPLICATION.json`.
+
+The recovered common-Y, background, Fourier and radial original producers match their original pins. The existing same-source all-fixed-order theorem is real and applies to the actual final post-temporal/post-five functions. It preserves the coefficient bodies, canonical selector, common domain and Gaussian endpoint factors; it is not an extrapolation from the saved finite orders. Actual complete-curl primary and pressure estimates, the exact full three-component chart identity, whole reference-mean compatibility and retained pulse Gaussian bound now supply the joint original j=0 norm application. The seven original norm groups and both exact moments are bound to one final tuple.
+
+For N6-02, the complete implemented forced constructor can use the universal exact cylindrical update theorem and the unchanged full-label normalization. Its missing frozen snapshots are a separate replay issue. The original signed constructor nevertheless lacks complete auxiliary pressure after its covariance update: it integrates before retaining the full-Y covariance. The successor registry identifies the exact required next construction. No initial-state conclusion supplies a general later-stage norm theorem or an arbitrary correction-cycle dispatcher.
+
+This addendum changes no original source, saved receipt, native ledger, baseline count, or original1260 proof. Independent crossreviews determine the parent task's final acceptance decision.

@@ -1,0 +1,593 @@
+{
+  "N6_01_promoted": false,
+  "N6_02_later_substeps_certified": false,
+  "all_fixed_order_inference_chain": [
+    {
+      "argument": "The arbitrary-m affine chain rule applies to both actual xi/v columns. The wave constructor literally reuses sign.values and sign.derivativeMaps and adds only theta's identity column. Higher coordinate derivatives vanish on fixed-label charts. A derivative of length m costs at most (32404*S_ref)^m and preserves the epsilon exponent.",
+      "evidence": "common_y:39-63,71-109; global_angular_code:73-117",
+      "id": "T1",
+      "requires": [
+        "P_PRIMARY",
+        "P_SUPPORT",
+        "P_DOMAIN"
+      ]
+    },
+    {
+      "argument": "For K=Q_ref/Q_label, s_label(P)=K*s_ref because 2D+2h=1 and the actual monotone root is unique on the active overlap. X, eta and Q*s are invariant. All actual background profile/cutoff bodies therefore coincide, with velocity scaling K^A (radial b uses epsilon_ref=K^h*epsilon_label) and pressure K^(2A). Whole Y-dependent mean correction keeps the identity Y map and inverse slow chart; no inverse torus cover or replacement mean is assumed.",
+      "evidence": "global_band_code:70-97; initialized_angular_code:113-122,128-159",
+      "id": "T2",
+      "requires": [
+        "P_MEAN",
+        "P_DOMAIN"
+      ]
+    },
+    {
+      "argument": "The native result is an exact function identity, not equality at finitely many points. Separate all-order source bounds supply smoothness. Differentiating equal smooth functions gives every fixed coefficient derivative identity without a fresh native jet run. Dr squared retains derivatives of the R-dependent fast coefficient. Mean-pressure terms cancel linearly before the wave estimate.",
+      "evidence": "angular_producer_code:205-210; radial_axial_producer_code:251-255",
+      "id": "T3",
+      "requires": [
+        "P_PRIMARY",
+        "P_MEAN",
+        "P_NATIVE",
+        "T1",
+        "T2"
+      ]
+    },
+    {
+      "argument": "The actual homogeneous principal equation leaves +psi_prime*t. The regular coefficient contains every principal-on-curl, slow, phase, pressure, viscous, frame, mean-wave and same-label square term. Exact full-curl divergence removes the longitudinal k loss, without assuming n dot a=0 for the full amplitude. Finite Leibniz rules at any fixed m preserve alpha=1-3*kappa_s for modes +/-1 and alpha=1-kappa_s for +/-2. Frozen ratio factors are bounded by 16*4^(m+L); no extra epsilon loss is introduced. Thus actual G_wave belongs to W_(99997/100000), hence W_(7/10).",
+      "evidence": "written_all_order_proof:13-58; wave_consumer:146-248",
+      "id": "T4",
+      "requires": [
+        "P_PRIMARY",
+        "P_MEAN",
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    {
+      "argument": "The actual cutoff tail retains +psi_prime*t. Its source Gaussian/length nodes give c>0 and exp(-c*S_label). Each fixed physical derivative, including chart, normalization and carrier factors, is bounded by a finite C*Q^(-M)*S_label^P*exp(-c*S_label). With Q=2^(-ell), S_label=ell^2 and q>=Q/2 on active-label support, square completion gives C_N=C*2^N*(2P/c)^P*exp((M+N)^2/(2c)) for every N; the P=0 factor is1. Hence F_pulse is flat. No numerical C or new threshold is required.",
+      "evidence": "written_all_order_proof:60-77; wave_consumer:250-267; global_angular_code:130-156",
+      "id": "T5",
+      "requires": [
+        "P_PRIMARY",
+        "P_SUPPORT",
+        "P_DOMAIN",
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    {
+      "argument": "Original all-order flat joins extend the chart result across guards/relabeling. Finite assembly keeps all three components, all162 source rows, both mean-wave orders and same-row squares. Therefore Pi_nonzero R=G_wave+F_pulse on the original domain. This closes the transport implication only; it does not accept the whole N6-01 tuple or any later N6-02 substep.",
+      "evidence": "common_y:108; global_angular_code:166-176; written_all_order_proof:42-48",
+      "id": "T6",
+      "requires": [
+        "P_SUPPORT",
+        "T4",
+        "T5"
+      ]
+    }
+  ],
+  "background_homogeneity_polynomial_checks": {
+    "X_invariant": {
+      "left": [
+        "0",
+        "0"
+      ],
+      "right": [
+        "0",
+        "0"
+      ]
+    },
+    "angular_background_velocity": {
+      "left": [
+        "1/2",
+        "1"
+      ],
+      "right": [
+        "1/2",
+        "1"
+      ]
+    },
+    "axial_background_velocity": {
+      "left": [
+        "1/2",
+        "1"
+      ],
+      "right": [
+        "1/2",
+        "1"
+      ]
+    },
+    "background_pressure": {
+      "left": [
+        "1",
+        "2"
+      ],
+      "right": [
+        "1",
+        "2"
+      ]
+    },
+    "eta_invariant": {
+      "left": [
+        "0",
+        "0"
+      ],
+      "right": [
+        "0",
+        "0"
+      ]
+    },
+    "implicit_s_homogeneity": {
+      "left": [
+        "1",
+        "0"
+      ],
+      "right": [
+        "1",
+        "0"
+      ]
+    },
+    "qActual_invariant": {
+      "left": [
+        "0",
+        "0"
+      ],
+      "right": [
+        "0",
+        "0"
+      ]
+    },
+    "radial_background_velocity": {
+      "left": [
+        "1/2",
+        "1"
+      ],
+      "right": [
+        "1/2",
+        "1"
+      ]
+    },
+    "residual_pressure": {
+      "left": [
+        "3/2",
+        "2"
+      ],
+      "right": [
+        "3/2",
+        "2"
+      ]
+    },
+    "residual_quadratic_connections": {
+      "left": [
+        "3/2",
+        "2"
+      ],
+      "right": [
+        "3/2",
+        "2"
+      ]
+    },
+    "residual_time_viscosity": {
+      "left": [
+        "3/2",
+        "2"
+      ],
+      "right": [
+        "3/2",
+        "2"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_SOURCE_APPLICATION_STABLE_ATTEMPT1/ACTUAL_ANGULAR_PDE_SOURCE_APPLICATION.json",
+      "id": "pin:angular_original",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/MathScopeCompute/tools/n6-native-domain-frontier-20261015/actual_angular_pde_source_application.py",
+      "id": "pin:angular_producer_code",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inputs/ACTUAL_ANGULAR_PDE_SOURCE_APPLICATION.json",
+      "id": "pin:angular_wave_copy",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/intake_audit/recovered_source_candidates/9badb503543f8bc8/source-common-y-class-majorants.mjs",
+      "id": "pin:common_y",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-global-angular.mjs",
+      "id": "pin:global_angular_code",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-global-band.mjs",
+      "id": "pin:global_band_code",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-initialized-angular.mjs",
+      "id": "pin:initialized_angular_code",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/initialized-angular-construction.json",
+      "id": "pin:initialized_original",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/initialized.json",
+      "id": "pin:initialized_wave_copy",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/normFamily.json",
+      "id": "pin:norm_family",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-initialized-norm-family.mjs",
+      "id": "pin:norm_family_code",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_PDE_SOURCE_V3.json",
+      "id": "pin:packet_original",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inputs/ANGULAR_PDE_SOURCE_V3.json",
+      "id": "pin:packet_wave_copy",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/primaryClass.json",
+      "id": "pin:primary",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-primary-class-majorants.mjs",
+      "id": "pin:primary_code",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/pressure-proof/radial-axial-pde/RADIAL_AXIAL_PDE_STABLE_ATTEMPT1/ACTUAL_RADIAL_AXIAL_PDE_SOURCE_APPLICATION.json",
+      "id": "pin:radial_axial_original",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/PR30-primary67-continuation/MathScopeCompute/tools/n6-native-domain-frontier-20261015/actual_radial_axial_pde_source_application.py",
+      "id": "pin:radial_axial_producer_code",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/code/wave_bridge.py",
+      "id": "pin:wave_consumer",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/reports/ALL_ORDER_PROOF_KO.md",
+      "id": "pin:written_all_order_proof",
+      "status": "PASS"
+    },
+    {
+      "detail": "analysis/theorem_sources/angular_transport_audit.md",
+      "id": "pin:written_integration",
+      "status": "PASS"
+    },
+    {
+      "detail": "initialized_wave_copy = initialized_original",
+      "id": "initialized_wave_copy_same_bytes",
+      "status": "PASS"
+    },
+    {
+      "detail": "angular_wave_copy = angular_original",
+      "id": "angular_wave_copy_same_bytes",
+      "status": "PASS"
+    },
+    {
+      "detail": "packet_wave_copy = packet_original",
+      "id": "packet_wave_copy_same_bytes",
+      "status": "PASS"
+    },
+    {
+      "detail": "Recovered original affine-chain source",
+      "id": "common_y_expected_original",
+      "status": "PASS"
+    },
+    {
+      "detail": "One exact original source header",
+      "id": "all_component_same_header",
+      "status": "PASS"
+    },
+    {
+      "detail": "Radial/axial theorem imports this exact angular theorem",
+      "id": "radial_axial_binds_same_angular_theorem",
+      "status": "PASS"
+    },
+    {
+      "detail": "Both theorems bind the same initialized construction",
+      "id": "native_theorems_bind_same_initialized_source",
+      "status": "PASS"
+    },
+    {
+      "detail": "169+197+654 comparison rows; no norm inferred from their count",
+      "id": "native_full_three_components",
+      "status": "PASS"
+    },
+    {
+      "detail": "All162 maps retained for all components",
+      "id": "all162_common_maps",
+      "status": "PASS"
+    },
+    {
+      "detail": "All velocity3+pressure fields retained",
+      "id": "all162_angular_source_fields",
+      "status": "PASS"
+    },
+    {
+      "detail": "Same paper and source-parameter graph",
+      "id": "paper_and_parameter_identity",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact initialized-mean graph identity",
+      "id": "same_initialized_mean_graph",
+      "status": "PASS"
+    },
+    {
+      "detail": "10 lifts x 4 modes x 3 components",
+      "id": "nonzero_harmonics_all_components",
+      "status": "PASS"
+    },
+    {
+      "detail": "Whole common-Y mean preserved",
+      "id": "whole_reference_mean",
+      "status": "PASS"
+    },
+    {
+      "detail": "Source-bound prerequisite statements recorded, not newly proven by this flag check",
+      "id": "same_source_continuation",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actual argument tuples, guards and labels compared; a changed map is rejected",
+      "id": "all162_literal_map_evidence_matches_source",
+      "status": "PASS"
+    },
+    {
+      "detail": "Original three assembled/wave roots retained; a changed root is rejected",
+      "id": "actual_component_residual_roots",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:implicit_s_homogeneity",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:X_invariant",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:eta_invariant",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:qActual_invariant",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:radial_background_velocity",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:angular_background_velocity",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:axial_background_velocity",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:background_pressure",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:residual_quadratic_connections",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:residual_time_viscosity",
+      "status": "PASS"
+    },
+    {
+      "detail": "Exact polynomial equality in symbolic h",
+      "id": "scaling:residual_pressure",
+      "status": "PASS"
+    }
+  ],
+  "conclusion_if_prerequisites_hold": "The actual full three-component nonzero residual has Pi_nonzero R=G_wave+F_pulse, with G_wave in W_(99997/100000) subset W_(7/10), and every fixed physical derivative of F_pulse flat to every q order. No independent angular-transport premise or fresh all-jet execution is needed.",
+  "conditional_prerequisites": [
+    {
+      "evidence": "primary_code:123-143,175-240; primary.sourcePulseBindings",
+      "id": "P_PRIMARY",
+      "statement": "Same-source all-fixed-order primary, potential, pressure and full-curl remainder bounds, including actual homogeneous ODE, moving-normal pressure and tangency.",
+      "status": "INHERITED_MATHEMATICAL_PREMISE; source identity checked here"
+    },
+    {
+      "evidence": "norm_family_code:24-50; norm_family.family.continuation",
+      "id": "P_MEAN",
+      "statement": "Same-source initialized mean has all-fixed-order bounds through the finite recursive demand, preserving the original coefficient bodies, selector, latest pressure and q domain.",
+      "status": "INHERITED_MATHEMATICAL_PREMISE; exact mean graph checked here"
+    },
+    {
+      "evidence": "common_y:71-109; global_angular_code:166-176",
+      "id": "P_SUPPORT",
+      "statement": "Original source supports have all-order flat zero extensions and distinct-label products vanish; labels/copies/carriers are frozen before differentiation.",
+      "status": "INHERITED_SOURCE_GEOMETRY_PREMISE; pinned original source retained"
+    },
+    {
+      "evidence": "angular_producer_code:205-210,254-313; radial_axial_producer_code:107-136,183-212,251-255",
+      "id": "P_NATIVE",
+      "statement": "The actual full three-component direct-minus-mean operator equals the original coupled residual as functions on each fixed-label chart.",
+      "status": "INHERITED_EXACT_FUNCTION_IDENTITY; same inputs/components/maps checked here"
+    },
+    {
+      "evidence": "written_all_order_proof:5-9,60-77; global_band_code:65-97,154-178",
+      "id": "P_DOMAIN",
+      "statement": "Use the original certified atlas windows: the literal N=1 prefix requires 0<q<qGlobalStar and b_2*q>=1. Positive source Gaussian decay/length and palette bounds remain in force.",
+      "status": "ORIGINAL_DOMAIN_RESTRICTION; not enlarged"
+    }
+  ],
+  "finite_execution_is_not_all_order_proof": true,
+  "grade": "CHECKED_SOURCE_APPLICATION_OF_CONDITIONAL_ALL_FIXED_ORDER_TRANSPORT",
+  "negative_controls": [
+    {
+      "expected_rejection": "all162_literal_map_evidence_matches_source",
+      "id": "changed_first_map_argument",
+      "mutation_scope": "In-memory copy only; original files untouched",
+      "observed_failed_checks": [
+        "all162_literal_map_evidence_matches_source"
+      ],
+      "status": "PASS"
+    },
+    {
+      "expected_rejection": "actual_component_residual_roots",
+      "id": "changed_angular_assembled_root",
+      "mutation_scope": "In-memory copy only; original files untouched",
+      "observed_failed_checks": [
+        "actual_component_residual_roots"
+      ],
+      "status": "PASS"
+    }
+  ],
+  "original_producers_executed": false,
+  "original_source_files_modified": false,
+  "result": "PASS",
+  "schema": "MathScope.SuccessorAngularTransportApplication/1",
+  "source_bindings": {
+    "angular_original": {
+      "bytes": 536696,
+      "path": "analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_SOURCE_APPLICATION_STABLE_ATTEMPT1/ACTUAL_ANGULAR_PDE_SOURCE_APPLICATION.json",
+      "sha256": "67d90e772579c0be478242b7a60fe7445d278800700f2eb95b32bbc578bb39f3"
+    },
+    "angular_producer_code": {
+      "bytes": 62701,
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/tools/n6-native-domain-frontier-20261015/actual_angular_pde_source_application.py",
+      "sha256": "0e0a019cd8594ab311be4473186d3181935367f8ae6501a4789372f113b5c6eb"
+    },
+    "angular_wave_copy": {
+      "bytes": 536696,
+      "path": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inputs/ACTUAL_ANGULAR_PDE_SOURCE_APPLICATION.json",
+      "sha256": "67d90e772579c0be478242b7a60fe7445d278800700f2eb95b32bbc578bb39f3"
+    },
+    "common_y": {
+      "bytes": 16223,
+      "path": "analysis/intake_audit/recovered_source_candidates/9badb503543f8bc8/source-common-y-class-majorants.mjs",
+      "sha256": "9badb503543f8bc83f5db0e7a373a9a8434ae63104f201601c8e1df66e493da6"
+    },
+    "global_angular_code": {
+      "bytes": 21721,
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-global-angular.mjs",
+      "sha256": "4e9c3ea67b124a953856f83d0aca0dcfec4b01a245043424de2bb035b8d902ca"
+    },
+    "global_band_code": {
+      "bytes": 23815,
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-global-band.mjs",
+      "sha256": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60"
+    },
+    "initialized_angular_code": {
+      "bytes": 24460,
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-initialized-angular.mjs",
+      "sha256": "655809f64af15daa67260ae4207ceac3d3090816086e9920027eedda2ccf24b7"
+    },
+    "initialized_original": {
+      "bytes": 1733741,
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/initialized-angular-construction.json",
+      "sha256": "ba60de00a1e41f9c448da3aabcbf791bc4649b5fcfd99cff7a71865463db8b14"
+    },
+    "initialized_wave_copy": {
+      "bytes": 1733741,
+      "path": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/initialized.json",
+      "sha256": "ba60de00a1e41f9c448da3aabcbf791bc4649b5fcfd99cff7a71865463db8b14"
+    },
+    "norm_family": {
+      "bytes": 5286543,
+      "path": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/normFamily.json",
+      "sha256": "d98a245f1fc563ba44c48d21c59a43d6787fc3895d922472bb3f3ab6e04d9a6d"
+    },
+    "norm_family_code": {
+      "bytes": 12670,
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-initialized-norm-family.mjs",
+      "sha256": "857a1641e1b5da964ed4893d6108cc06191cf8f8c92c9a16b285af9f0aaf8fc4"
+    },
+    "packet_original": {
+      "bytes": 1544048,
+      "path": "analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_PDE_SOURCE_V3.json",
+      "sha256": "36ea92bf82e016ceac3dac9e81dbe6ee4bf0a541bd8ec0c5d2109cf253d0ecd4"
+    },
+    "packet_wave_copy": {
+      "bytes": 1544048,
+      "path": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inputs/ANGULAR_PDE_SOURCE_V3.json",
+      "sha256": "36ea92bf82e016ceac3dac9e81dbe6ee4bf0a541bd8ec0c5d2109cf253d0ecd4"
+    },
+    "primary": {
+      "bytes": 8483361,
+      "path": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/primaryClass.json",
+      "sha256": "84fbcd228accdff56b13b8a01065cbf6efae9f07cf88421780122a45247f1a25"
+    },
+    "primary_code": {
+      "bytes": 27252,
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-primary-class-majorants.mjs",
+      "sha256": "40b3f1220b7ad1b9b05a11ae1378c864351e77e8efe7134ae1b78921fbab47ea"
+    },
+    "radial_axial_original": {
+      "bytes": 1499008,
+      "path": "analysis/base/PR30-primary67-continuation/pressure-proof/radial-axial-pde/RADIAL_AXIAL_PDE_STABLE_ATTEMPT1/ACTUAL_RADIAL_AXIAL_PDE_SOURCE_APPLICATION.json",
+      "sha256": "84522cf7c9db5c3e311cff48eb257106043f601eba3d16cf70387707b6cbd365"
+    },
+    "radial_axial_producer_code": {
+      "bytes": 63226,
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/tools/n6-native-domain-frontier-20261015/actual_radial_axial_pde_source_application.py",
+      "sha256": "d92c6352a76179eb27b1553ce4146498043ebd8b10a8a5b8edee428225065ff3"
+    },
+    "wave_consumer": {
+      "bytes": 25445,
+      "path": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/code/wave_bridge.py",
+      "sha256": "524b0efa080fa8cf405fdc0f12ada592659b7cb615c74f081dc8b5ebcf6c0ccb"
+    },
+    "written_all_order_proof": {
+      "bytes": 6770,
+      "path": "analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/reports/ALL_ORDER_PROOF_KO.md",
+      "sha256": "17b270f6cf292887c361fca40ecd7b9eb030855cbe51cc1307b986990a15cf4b"
+    },
+    "written_integration": {
+      "bytes": 15009,
+      "path": "analysis/theorem_sources/angular_transport_audit.md",
+      "sha256": "e499a43c835263b4bc9eb9555c99d0119efd870fd7f642a86b13b497ad452d4a"
+    }
+  },
+  "status_policy": "Preserve N6-01 OPEN and N6-02 PARTIAL pending their separate integration/stage decisions.",
+  "verification_scope": "Exact pinned-source/link/map/root checks and rational scaling identities; analytical inference recorded against explicit inherited prerequisites. No original producer, native derivative expansion or tests executed.",
+  "verifier": {
+    "file": "verify_transport_application.py",
+    "sha256": "d0ef6a8074f78e585c0f69c51482a727df222f693aeeb8131ad69d8a5e2e1cf7"
+  }
+}

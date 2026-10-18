@@ -1,0 +1,559 @@
+{
+  "schema": "MathScope.M3.InitialMeanFastCutoffBridge/1",
+  "task": "temporal/five slow_change에 빠른 시간 소거와 cutoff 증거 연결",
+  "source": {
+    "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "originalMeanCertificateSHA256": "22c878e7ace454c61f00c9ee4952738f7f9fa7b1c269eca538ca224dd8fcb96b",
+    "originalMeanGraph": {
+      "sha256": "c091bff34ba97bc4113dc50d6f650cd8075b1e1a085d13704fc1d91dbe721f3f",
+      "nodeCount": 3615866,
+      "deltaNodeCount": 1990,
+      "canonicalBytes": 3101565
+    },
+    "sourceNodePrefixSHA256": "99dcc6ff6aaa92d4449d6ad5aae5a8ff2037f3e1644ac3ad0fdd2994ca020745",
+    "sourceNodePrefixBytes": 186045031,
+    "sourceNodeCount": 3615866,
+    "completeParentSnapshotNodeCount": 3892594,
+    "completeParentSnapshotNodeSHA256": "7c36afa44610b9786362dc228766c3d895491bb116103eca58a79d80a6b7609f",
+    "sourceDependencyCount": 155,
+    "replayDependencyCount": 9,
+    "originalReceiptSHA256": "d17bc42fcfaf8000d014977d4725f325dbdb73849a43c71c36d20ea63ef14684",
+    "replayReceiptSHA256": "76cb0c616b6485bff14037bd3fd8c67e59f3f2edbd476e5d37ef15e456f3c736",
+    "sourceSnapshotIndexSHA256": "ba251f2f3401d2d81467a8ac3c5ceb0da7c6ddc3899aab6d9d580755ff0fd1f3",
+    "originalSourceSequence": [
+      "primary-current-pressure",
+      "temporal-8.20",
+      "post-temporal-8.12",
+      "five-moments-8.25-on-new-P-J",
+      "post-moment-8.12"
+    ]
+  },
+  "rows": [
+    {
+      "order": 0,
+      "field": "Etheta",
+      "actual_final_source_id": 3614976,
+      "terms": {
+        "initial_Haar": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "b6edddc4a743d30132e9fdf1b04b6c59399862970c31a068048f60b8d1f1404e",
+            "node": 4211
+          },
+          "power": 1355,
+          "pole": 18,
+          "epsilonExponentExact": "99999/50000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "temporal_slow_change": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "d69cfb811e803fefec817e39c35e52427f889837a3abc6b7a39c0d5fefed24b8",
+            "node": 4588
+          },
+          "power": 7645,
+          "pole": 192,
+          "epsilonExponentExact": "199997/100000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "five_slow_change": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "d341d8e9cc04f7017367553874fdd9846e066089ba0f3a51c6d0692f4c808428",
+            "node": 4641
+          },
+          "power": 17345,
+          "pole": 96,
+          "epsilonExponentExact": "199997/100000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        }
+      },
+      "composed_bound": {
+        "constant": {
+          "op": "add",
+          "args": [
+            {
+              "kind": "source_bound_expression",
+              "graph": "b6edddc4a743d30132e9fdf1b04b6c59399862970c31a068048f60b8d1f1404e",
+              "node": 4211
+            },
+            {
+              "kind": "source_bound_expression",
+              "graph": "d69cfb811e803fefec817e39c35e52427f889837a3abc6b7a39c0d5fefed24b8",
+              "node": 4588
+            },
+            {
+              "kind": "source_bound_expression",
+              "graph": "d341d8e9cc04f7017367553874fdd9846e066089ba0f3a51c6d0692f4c808428",
+              "node": 4641
+            }
+          ]
+        },
+        "power": {
+          "op": "maximum",
+          "args": [
+            1355,
+            7645,
+            17345
+          ]
+        },
+        "pole": {
+          "op": "maximum",
+          "args": [
+            18,
+            192,
+            96
+          ]
+        },
+        "epsilonExponentExact": "199997/100000",
+        "weight": "zeta",
+        "gaussian": "1",
+        "numerical_constant": null
+      },
+      "margin_over_6_5": "79997/100000",
+      "mathematical_status": "CONDITIONAL_SOURCE_BOUND_ESTIMATE",
+      "new_complete_original_norm": false,
+      "premise": "기존 소스 노름 생성기가 명시한 모든 입력 상계가 같은 원본에서 성립한다는 조건; 소수값 출력은 요구하지 않음"
+    },
+    {
+      "order": 0,
+      "field": "Ez",
+      "actual_final_source_id": 3615392,
+      "terms": {
+        "initial_Haar": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "b6edddc4a743d30132e9fdf1b04b6c59399862970c31a068048f60b8d1f1404e",
+            "node": 4216
+          },
+          "power": 1768,
+          "pole": 96,
+          "epsilonExponentExact": "99999/50000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "temporal_slow_change": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "d69cfb811e803fefec817e39c35e52427f889837a3abc6b7a39c0d5fefed24b8",
+            "node": 4589
+          },
+          "power": 8467,
+          "pole": 192,
+          "epsilonExponentExact": "199997/100000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "five_slow_change": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "d341d8e9cc04f7017367553874fdd9846e066089ba0f3a51c6d0692f4c808428",
+            "node": 4642
+          },
+          "power": 17757,
+          "pole": 192,
+          "epsilonExponentExact": "199997/100000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "negative_fast_A1": {
+          "constant": {
+            "kind": "typed_source_bound_expression",
+            "graph": "7413db57596554927367ec6cfe1ba705f28c620eebab86a0d2aea50fe0c1ef5e",
+            "node": 22
+          },
+          "power": {
+            "kind": "typed_source_natural",
+            "graph": "7413db57596554927367ec6cfe1ba705f28c620eebab86a0d2aea50fe0c1ef5e",
+            "node": 23
+          },
+          "pole": {
+            "kind": "typed_source_natural",
+            "graph": "7413db57596554927367ec6cfe1ba705f28c620eebab86a0d2aea50fe0c1ef5e",
+            "node": 12
+          },
+          "epsilonExponentExact": "149/100",
+          "weight": "zeta",
+          "source": {
+            "operation": "ci0*N*(-A1)",
+            "ci": 635063,
+            "A1": 1706796,
+            "N": "(sqrt(2)-1)*partial_Y0+partial_Y1"
+          },
+          "sign_in_residual": -1
+        }
+      },
+      "composed_bound": {
+        "constant": {
+          "op": "add",
+          "args": [
+            {
+              "kind": "source_bound_expression",
+              "graph": "b6edddc4a743d30132e9fdf1b04b6c59399862970c31a068048f60b8d1f1404e",
+              "node": 4216
+            },
+            {
+              "kind": "source_bound_expression",
+              "graph": "d69cfb811e803fefec817e39c35e52427f889837a3abc6b7a39c0d5fefed24b8",
+              "node": 4589
+            },
+            {
+              "kind": "source_bound_expression",
+              "graph": "d341d8e9cc04f7017367553874fdd9846e066089ba0f3a51c6d0692f4c808428",
+              "node": 4642
+            },
+            {
+              "kind": "typed_source_bound_expression",
+              "graph": "7413db57596554927367ec6cfe1ba705f28c620eebab86a0d2aea50fe0c1ef5e",
+              "node": 22
+            }
+          ]
+        },
+        "power": {
+          "op": "maximum",
+          "args": [
+            1768,
+            8467,
+            17757,
+            {
+              "kind": "typed_source_natural",
+              "graph": "7413db57596554927367ec6cfe1ba705f28c620eebab86a0d2aea50fe0c1ef5e",
+              "node": 23
+            }
+          ]
+        },
+        "pole": {
+          "op": "maximum",
+          "args": [
+            96,
+            192,
+            192,
+            {
+              "kind": "typed_source_natural",
+              "graph": "7413db57596554927367ec6cfe1ba705f28c620eebab86a0d2aea50fe0c1ef5e",
+              "node": 12
+            }
+          ]
+        },
+        "epsilonExponentExact": "149/100",
+        "weight": "zeta",
+        "gaussian": "1",
+        "numerical_constant": null
+      },
+      "margin_over_6_5": "29/100",
+      "mathematical_status": "CONDITIONAL_SOURCE_BOUND_ESTIMATE",
+      "new_complete_original_norm": false,
+      "premise": "기존 소스 노름 생성기가 명시한 모든 입력 상계가 같은 원본에서 성립한다는 조건; 소수값 출력은 요구하지 않음"
+    },
+    {
+      "order": 1,
+      "field": "Etheta",
+      "actual_final_source_id": 3614976,
+      "terms": {
+        "initial_Haar": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "b6edddc4a743d30132e9fdf1b04b6c59399862970c31a068048f60b8d1f1404e",
+            "node": 4222
+          },
+          "power": 1766,
+          "pole": 24,
+          "epsilonExponentExact": "99999/50000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "temporal_slow_change": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "d69cfb811e803fefec817e39c35e52427f889837a3abc6b7a39c0d5fefed24b8",
+            "node": 4590
+          },
+          "power": 8057,
+          "pole": 192,
+          "epsilonExponentExact": "199997/100000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "five_slow_change": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "d341d8e9cc04f7017367553874fdd9846e066089ba0f3a51c6d0692f4c808428",
+            "node": 4643
+          },
+          "power": 17757,
+          "pole": 96,
+          "epsilonExponentExact": "199997/100000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        }
+      },
+      "composed_bound": {
+        "constant": {
+          "op": "add",
+          "args": [
+            {
+              "kind": "source_bound_expression",
+              "graph": "b6edddc4a743d30132e9fdf1b04b6c59399862970c31a068048f60b8d1f1404e",
+              "node": 4222
+            },
+            {
+              "kind": "source_bound_expression",
+              "graph": "d69cfb811e803fefec817e39c35e52427f889837a3abc6b7a39c0d5fefed24b8",
+              "node": 4590
+            },
+            {
+              "kind": "source_bound_expression",
+              "graph": "d341d8e9cc04f7017367553874fdd9846e066089ba0f3a51c6d0692f4c808428",
+              "node": 4643
+            }
+          ]
+        },
+        "power": {
+          "op": "maximum",
+          "args": [
+            1766,
+            8057,
+            17757
+          ]
+        },
+        "pole": {
+          "op": "maximum",
+          "args": [
+            24,
+            192,
+            96
+          ]
+        },
+        "epsilonExponentExact": "199997/100000",
+        "weight": "zeta",
+        "gaussian": "1",
+        "numerical_constant": null
+      },
+      "margin_over_6_5": "79997/100000",
+      "mathematical_status": "CONDITIONAL_SOURCE_BOUND_ESTIMATE",
+      "new_complete_original_norm": false,
+      "premise": "기존 소스 노름 생성기가 명시한 모든 입력 상계가 같은 원본에서 성립한다는 조건; 소수값 출력은 요구하지 않음"
+    },
+    {
+      "order": 1,
+      "field": "Ez",
+      "actual_final_source_id": 3615392,
+      "terms": {
+        "initial_Haar": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "b6edddc4a743d30132e9fdf1b04b6c59399862970c31a068048f60b8d1f1404e",
+            "node": 4229
+          },
+          "power": 2176,
+          "pole": 96,
+          "epsilonExponentExact": "99999/50000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "temporal_slow_change": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "d69cfb811e803fefec817e39c35e52427f889837a3abc6b7a39c0d5fefed24b8",
+            "node": 4591
+          },
+          "power": 8878,
+          "pole": 192,
+          "epsilonExponentExact": "199997/100000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "five_slow_change": {
+          "constant": {
+            "kind": "source_bound_expression",
+            "graph": "d341d8e9cc04f7017367553874fdd9846e066089ba0f3a51c6d0692f4c808428",
+            "node": 4644
+          },
+          "power": 18168,
+          "pole": 192,
+          "epsilonExponentExact": "199997/100000",
+          "weight": "zeta",
+          "gaussian": "1",
+          "numerical_constant": null
+        },
+        "negative_fast_A1": {
+          "constant": {
+            "kind": "typed_source_bound_expression",
+            "graph": "edf9cd022bcc9d9033b37c73025ffb3c2ce29fecb2bc786aea3cfffc7e6705c9",
+            "node": 22
+          },
+          "power": {
+            "kind": "typed_source_natural",
+            "graph": "edf9cd022bcc9d9033b37c73025ffb3c2ce29fecb2bc786aea3cfffc7e6705c9",
+            "node": 23
+          },
+          "pole": {
+            "kind": "typed_source_natural",
+            "graph": "edf9cd022bcc9d9033b37c73025ffb3c2ce29fecb2bc786aea3cfffc7e6705c9",
+            "node": 12
+          },
+          "epsilonExponentExact": "149/100",
+          "weight": "zeta",
+          "source": {
+            "operation": "ci0*N*(-A1)",
+            "ci": 635063,
+            "A1": 1706796,
+            "N": "(sqrt(2)-1)*partial_Y0+partial_Y1"
+          },
+          "sign_in_residual": -1
+        }
+      },
+      "composed_bound": {
+        "constant": {
+          "op": "add",
+          "args": [
+            {
+              "kind": "source_bound_expression",
+              "graph": "b6edddc4a743d30132e9fdf1b04b6c59399862970c31a068048f60b8d1f1404e",
+              "node": 4229
+            },
+            {
+              "kind": "source_bound_expression",
+              "graph": "d69cfb811e803fefec817e39c35e52427f889837a3abc6b7a39c0d5fefed24b8",
+              "node": 4591
+            },
+            {
+              "kind": "source_bound_expression",
+              "graph": "d341d8e9cc04f7017367553874fdd9846e066089ba0f3a51c6d0692f4c808428",
+              "node": 4644
+            },
+            {
+              "kind": "typed_source_bound_expression",
+              "graph": "edf9cd022bcc9d9033b37c73025ffb3c2ce29fecb2bc786aea3cfffc7e6705c9",
+              "node": 22
+            }
+          ]
+        },
+        "power": {
+          "op": "maximum",
+          "args": [
+            2176,
+            8878,
+            18168,
+            {
+              "kind": "typed_source_natural",
+              "graph": "edf9cd022bcc9d9033b37c73025ffb3c2ce29fecb2bc786aea3cfffc7e6705c9",
+              "node": 23
+            }
+          ]
+        },
+        "pole": {
+          "op": "maximum",
+          "args": [
+            96,
+            192,
+            192,
+            {
+              "kind": "typed_source_natural",
+              "graph": "edf9cd022bcc9d9033b37c73025ffb3c2ce29fecb2bc786aea3cfffc7e6705c9",
+              "node": 12
+            }
+          ]
+        },
+        "epsilonExponentExact": "149/100",
+        "weight": "zeta",
+        "gaussian": "1",
+        "numerical_constant": null
+      },
+      "margin_over_6_5": "29/100",
+      "mathematical_status": "CONDITIONAL_SOURCE_BOUND_ESTIMATE",
+      "new_complete_original_norm": false,
+      "premise": "기존 소스 노름 생성기가 명시한 모든 입력 상계가 같은 원본에서 성립한다는 조건; 소수값 출력은 요구하지 않음"
+    }
+  ],
+  "all_order_slow_lemma": {
+    "quantifier": "모든 유한 계수 미분 차수 m; 같은 고정 band와 정의역",
+    "premises": {
+      "base_b": "M1",
+      "base_V_G": "M0; 원래 느린 배경",
+      "increments_v_gamma": "M(1-kappa_s)",
+      "increments_beta": "M(2-kappa_s)",
+      "old_v_gamma": "0 또는 M(1-kappa_s)",
+      "old_beta": "0 또는 M(2-kappa_s)",
+      "full_pressure_difference": "M(1-kappa_s)"
+    },
+    "explicit_operator_rules": {
+      "Dr": "각 명시 연산 1회당 kappa_s 손실; 추가 계수미분은 상수/로그/극 차수에 반영",
+      "Dz": "epsilon 이득",
+      "slowTime": "-epsilon partial_T",
+      "laplacian": "가변 Dr를 두 번 합성; 계수 미분항 유지"
+    },
+    "group_exponents": {
+      "slow_time": "199999/100000",
+      "radial_linear": "99999/50000",
+      "radial_old_cross": "299997/100000",
+      "radial_quadratic": "299997/100000",
+      "axial_linear": "199999/100000",
+      "axial_cross_and_quadratic": "149999/50000",
+      "complete_pressure_difference": "199999/100000",
+      "viscous_Dr2": "199997/100000",
+      "viscous_RinvDr": "99999/50000",
+      "viscous_Dz2": "399999/100000",
+      "viscous_cylindrical_connection": "199999/100000"
+    },
+    "conclusion_exponent": "199997/100000",
+    "bound_construction": "완전 Leibniz 합의 계수 binomial(m,k); C는 유한 합/곱, b,d는 유한 합/최대. 실제 노름 selector를 그대로 사용.",
+    "scope": "지정된 입력 클래스 상계에 대한 일반 합성 정리. 입력 클래스의 독립 증명이나 원본 전체 M3 완료가 아님."
+  },
+  "direct_cutoff_improvement": {
+    "identity": "-ci N A1 gamma_d = +A1(E0_z-Haar(E0_z))",
+    "old_initial_Ez_order": "m+98010",
+    "direct_initial_Ez_order": "m+98005",
+    "source_derivative_orders_saved": 5,
+    "numeric_runtime_speedup_measured": false
+  },
+  "minimum_positive_ibp": {
+    "target_6_5": 20001,
+    "target_149_100": 49001
+  },
+  "connections_completed": [
+    "동일 원본 8.22 빠른 소거와 전체 T1",
+    "N-A1 교환 후 원본 초기 Ez에 대한 직접 cutoff 연결",
+    "초기 temporal→five 망원 합성",
+    "A1 부호·전체 torus·양의 IBP 상계",
+    "두 최신 압력 A0 중심화/영 Haar 모멘트",
+    "m=0,1 실제 상계 표현 합성"
+  ],
+  "remaining_source_norm_premises": [
+    "원본 primary/배경 노름 생성기의 입력 상계 및 전칭 적용은 기존 same-source norm continuation을 참조한다. 이번 연결기의 독립 증명으로 승격하지 않음.",
+    "source_norm_result의 상수/로그/극 차수는 지정된 생성기의 값 또는 정리 적용으로 소비해야 함. 98,000차 도함수 배열 전체 출력을 새 조건으로 요구하지 않음."
+  ],
+  "new_original_norm_ids_fully_closed": [],
+  "inherited": {
+    "original_1260": "COMPLETE_IN_DECLARED_CURRENT_SOURCE_SCOPE",
+    "Guard": 0,
+    "Jet": 0,
+    "PDE": 0,
+    "exact_difference_interval": [
+      "0",
+      "0"
+    ],
+    "M3": "56/64",
+    "N6-01": "OPEN",
+    "N6-02": "PARTIAL; correction substeps deferred"
+  },
+  "old_proofs_rerun": false,
+  "correction_substeps_rerun": false,
+  "remote_writes": 0,
+  "new_lean_kernel_proof": false
+}

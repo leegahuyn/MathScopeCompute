@@ -1,0 +1,662 @@
+{
+  "schema": "MathScope.RecoveryOriginalEightLedger/1",
+  "base_commit": "1d4449517ac1217415e67e39c822aeea97325c21",
+  "inherited_ledger": {
+    "path": "recovered/base/FINAL_ID_LEDGER.json",
+    "sha256": "4148360b7a5bc5a0500e936488b0c125e431ae013f698bc8e4244f0902c30f60"
+  },
+  "initial_obligations": {
+    "completed": 1260,
+    "total": 1260,
+    "scope": "Inherited original initial construction only; Guard/Jet/PDE0 [0,0] retained, not expanded to global obligations."
+  },
+  "constants": {
+    "B0": "7/10",
+    "C0_star": "6/5"
+  },
+  "M3": {
+    "completed": 62,
+    "total": 64,
+    "newly_closed_this_recovery": [],
+    "inherited_closed_from_original_eight": [
+      "N6-01",
+      "N6-02",
+      "N6-07",
+      "N6-08",
+      "N7-04",
+      "N7-05"
+    ],
+    "open": [
+      "N7-06",
+      "N8-05"
+    ]
+  },
+  "M4": {
+    "original_conditions": 16,
+    "criteria_path": "recovered/base/work/m4_criteria/M4_ORIGINAL_CRITERIA.json",
+    "accepted_current_release": null,
+    "status": "Pending original M3 completion; no new acceptance or site publication"
+  },
+  "items": [
+    {
+      "id": "N6-01",
+      "title": "초기 finite state 구성",
+      "original_obligation": "□ N6-01 | 초기 finite state 구성\nprimary curls 뒤 temporal mean update와 다섯 moment correction을 수행하여 j=0 상태를 만든다. 합격: Proposition9.5\n의 B0=0.7,C0*=1.2와 (9.9),(9.10) 명세를 충족한다. 명세의 상수 없이 경험적 power slope만으로 인증하지 않는다.",
+      "original_scope": "Same initialized j=0 finite state after primary curls, temporal update, five-moment correction and pressure; normalized weighted classes and exact moments; B0=0.7, C0*=1.2.",
+      "original_source": {
+        "blueprint_page": 62,
+        "paper_pages": [
+          69,
+          70,
+          100,
+          101,
+          106,
+          107
+        ]
+      },
+      "status": "CLOSED",
+      "decision": "원래 j=0 초기 상태의 공동 조건 완료",
+      "reused_evidence": [
+        "same-source all-fixed-order norm continuation",
+        "primary W classes and actual full-three-component source identity",
+        "fast-cutoff mean theorem",
+        "retained nonlinear defect theorem",
+        "actual commonY affine transport and compatible-prefix uniformity"
+      ],
+      "actual_target_binding": "속도3825006/3825007/3825008, 전체압력3825009, 최종mean압력3615361 및 잔차3825348/3825349/3825350에 동일 source identity로 결합.",
+      "assumptions_resolved": [
+        "B0=7/10, C0*=6/5 및 원래 일곱 노름 그룹",
+        "실제 G_wave/F_pulse 분리와 전차수 transport",
+        "두 정확한 가중 모멘트, 최신 압력, 전체 flat remainder",
+        "동일 selector/domain 및 band-label-copy 범위"
+      ],
+      "modified_or_added_code": [
+        "work/theorem_connection/code/verify_n601_joint_application.py",
+        "work/theorem_connection/transport/verify_transport_application.py"
+      ],
+      "validation": "공동 적용 검사 exit0, 두 잘못된 source 대조 거부; 독립 검토 2개가 동일 SHA를 승인. 유한 검사 수에서 전차수 정리를 외삽하지 않음.",
+      "evidence_files": [
+        {
+          "path": "work/theorem_connection/evidence/N601_JOINT_SOURCE_APPLICATION.json",
+          "sha256": "5e32f8e32b95f319b681d4e92b7c01befba54bb2600af9655ace21562de689b9",
+          "size_bytes": 32764
+        },
+        {
+          "path": "work/theorem_connection/N601_JOINT_PROOF.md",
+          "sha256": "79a355ffaa5f8e74513ddbbf858abe411c1c30ad29d001f8cd34a6d41855745c",
+          "size_bytes": 8959
+        }
+      ],
+      "independent_reviews": [
+        {
+          "path": "work/derivative_fix/evidence/n601_crossreview/REVIEW_DECISION.json",
+          "sha256": "c953b6491e230b441577504dfaa25715d3ca1dc0bd4660eae123fef417616c08",
+          "size_bytes": 1971
+        },
+        {
+          "path": "pdf_criteria/n601_candidate_review.json",
+          "sha256": "0d6a0c99bf96586215ac4c18da7ea60e88166899eeae9db1a99c44f1d556488a",
+          "size_bytes": 18665
+        }
+      ],
+      "remaining_original_obligations": [],
+      "mathematical_vs_numerical_scope": "새 전역장 수치평가를 수행했다는 판정이 아님.",
+      "inherited_evidence_path_base": "recovered/base/",
+      "status_basis": "Inherited from authenticated base ledger; unchanged in this recovery"
+    },
+    {
+      "id": "N6-02",
+      "title": "전체 residual 재계산",
+      "original_obligation": "□ N6-02 | 전체 residual 재계산\nR(u+δu,p+δp)=R(u,p)+Lu(δu,δp)+div(δu⊗δu)를 사용하며 매 substep 후 최신 압력을 복원한다. 합격: 독립 직접 PDE\n평가와 decomposed residual이 오차 예산 내 일치한다. 기존 flat tail와 새 quadratic remainder를 장부에서 누락하지 않\n는다.",
+      "original_scope": "Same actual complete current fields at every implemented substep; independent direct PDE vs exact decomposition including latest pressure, old flat tail and new quadratic remainder.",
+      "original_source": {
+        "blueprint_page": 62,
+        "paper_pages": [
+          59,
+          100,
+          103,
+          104,
+          105,
+          107,
+          108,
+          109,
+          110,
+          111
+        ]
+      },
+      "status": "CLOSED",
+      "decision": "필수 실제 canonical finite cycle의 네 poststep 인수 완료",
+      "reused_evidence": [
+        "초기1260 범위의 exact full3 residual evidence",
+        "complete forced-constructor source application",
+        "independent conservative cylindrical update identity"
+      ],
+      "actual_target_binding": "genuine original forced private state에서 signed→temporal→fresh-five로 연결. 각 최신 전체 압력 root는4159969,4191026,4309421,4311541이며 실행 고유 graph에 속한다.",
+      "assumptions_resolved": [
+        "원본135개 의존성 바이트 보존 및 private ancestry 인증",
+        "post-forced의 비영 mean과 모든 기존 ±1/±2 modes, all162 covariance 보존",
+        "네 실제 poststep의 full3 직접/분해 정확 비교12개",
+        "낡은 압력·누락 quadratic·누락 background flat 대조9개 거부",
+        "실제 temporal exact inverse와 C1 tail 및 post-temporal fresh-five targets",
+        "원래 양의 기하/프로필/H/행렬/평균 질량에 대한 정의역 가정과 실제 새 source 결합"
+      ],
+      "modified_or_added_code": [
+        "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-finite-cycle-continuation.mjs",
+        "work/n602_continuation/source/research-ide/mathscope-m3/navier/source-continuation-kernels.mjs",
+        "work/n602_continuation/run_actual_finite_cycle.mjs"
+      ],
+      "validation": "실제 전체 finite cycle EXIT0,1700.657초,4,312,220 nodes.12 exact comparisons/9 omission controls. 독립 source 검토46개 및 두번째 원문/정의역 검토. 기존355.34초 pre-temporal 실행은 별도 보존.",
+      "evidence_files": [
+        {
+          "path": "work/n602_continuation/ACTUAL_FINITE_CYCLE_RECEIPT.json",
+          "sha256": "1a525f1501f073cf4163b1bb18fe0dce4ff417027cbd3ef2f5582e82a370f34d",
+          "size_bytes": 600203
+        },
+        {
+          "path": "work/n602_continuation/ACTUAL_PROCESS.json",
+          "sha256": "1c3784d8a6c7ef86dfcead25c788bb2350a5eed84d70913e9dd887c238daad5f",
+          "size_bytes": 445
+        },
+        {
+          "path": "work/n602_continuation/FINITE_CYCLE_RESULT.json",
+          "sha256": "6edf9b41f32a78d87a2c9ddf555cb0c849d69fd46d35506f49e1e2a6bc5144be",
+          "size_bytes": 17034
+        },
+        {
+          "path": "work/n602_continuation/DOMAIN_AND_SOURCE_SCOPE.md",
+          "sha256": "9cd4735d290f9a3a3b0701af52deaf126225aec9411b2a6e7ff256f51cffe19d",
+          "size_bytes": 3278
+        }
+      ],
+      "independent_reviews": [
+        {
+          "path": "work/n602_crossreview/FINAL_FINITE_CYCLE_REVIEW.json",
+          "sha256": "287b812b1de197620b87da0b3120d8bfead55a319f7c6e13cd54f878e7374f4c",
+          "size_bytes": 10575
+        },
+        {
+          "path": "work/n602_crossreview/PDF_CRITERIA_FINAL_REVIEW.json",
+          "sha256": "3dee6964b3a1477f5a2bfeff3f84e53a0c0013b1f938fbe00b2082cfaae78493",
+          "size_bytes": 21507
+        }
+      ],
+      "remaining_original_obligations": [],
+      "mathematical_vs_numerical_scope": "하나의 실제 필수 유한 canonical cycle이다. 무한literal실행을 요구하지 않으며 전역장 수치평가·N7-06/N8-05 인수와 구분한다.",
+      "inherited_evidence_path_base": "recovered/base/",
+      "status_basis": "Inherited from authenticated base ledger; unchanged in this recovery"
+    },
+    {
+      "id": "N6-07",
+      "title": "고정 도메인과 차수 향상",
+      "original_obligation": "□ N6-07 | 고정 도메인과 차수 향상\nσj=1/5+j/10, gj=hj/10 및 (9.17),(9.18)의 Km,ℓm,log powers를 추적한다. 합격: 모든 finite stage가 같은 q<qbig 도메\n인을 사용한다. 단 한 번의 step에서 샘플 잔차가 늘면 정밀도/범위/상수부터 조사하고 차수 theorem과 혼동하지 않는다.",
+      "original_scope": "Every finite state on common qbig; stage-independent derivative losses and stage-dependent valid constants/log powers; numerical residual behavior is separately diagnosed.",
+      "original_source": {
+        "blueprint_page": 62,
+        "paper_pages": [
+          106,
+          111,
+          112,
+          113,
+          114
+        ]
+      },
+      "status": "CLOSED",
+      "decision": "같은 실제 재귀 상태의 공통 도메인·전차수 상계 구성 완료",
+      "reused_evidence": [
+        "Proposition9.3/9.6",
+        "Lemma9.7/9.8",
+        "인증된 N6-01 초기 상태와 고정 원래 inverse/operators"
+      ],
+      "actual_target_binding": "같은 초기 tuple에서 forced→pressure→signed→pressure→temporal→pressure→fresh-five→pressure를 모든 finite j에 정의. 모든 생성 harmonic과 conjugate 및 원래 potential을 보존.",
+      "assumptions_resolved": [
+        "sigma_j=1/5+j/10,g_j=h*j/10",
+        "qbig=commonQStar/64=2^(-(ellMinimum+10))의 실제 source 일치",
+        "stage-independent K_m과 ell_m; 실제 Z_j/잔차의 weighted supremum으로 유일하게 정한 C_jm,P_jm",
+        "표본 단조성과 차수 정리를 분리"
+      ],
+      "modified_or_added_code": [
+        "work/remaining_chain/code/source_recursive_family.py",
+        "work/remaining_chain/code/verify_remaining_chain.py"
+      ],
+      "validation": "원래 정리 적용과 source-functional graph,42개 affine 지수 관계 및 잘못된 현재 상태 대조를 검토. 독립 검토2개 승인.",
+      "evidence_files": [
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_REMAINING_CHAIN_APPLICATION.json",
+          "sha256": "bc0d40d467186f3024913ae50bf3b02e69e569110a1368ad1292ea28d70ffe3a",
+          "size_bytes": 39844
+        },
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json",
+          "sha256": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+          "size_bytes": 115869
+        },
+        {
+          "path": "work/remaining_chain/PROOF_APPLICATION.md",
+          "sha256": "641ff6eb9a78066babc71921ba67059e9f9705cac28b0f7f95688b0e78542dd5",
+          "size_bytes": 13442
+        }
+      ],
+      "independent_reviews": [
+        {
+          "path": "work/derivative_fix/evidence/remaining_chain_crossreview/REVIEW_DECISION.json",
+          "sha256": "64bd7745cefb21d96828b7252ebf9eaa173037302f7d9470af2231d78615dc2b",
+          "size_bytes": 2422
+        },
+        {
+          "path": "pdf_criteria/remaining_chain_candidate_review.json",
+          "sha256": "fbfb701aada8f8fff2fc9e6c8d4b6ab7cac11ae9136247ab74a94f782d5cf9ef",
+          "size_bytes": 13023
+        }
+      ],
+      "remaining_original_obligations": [],
+      "mathematical_vs_numerical_scope": "정확한 수학적 함수·상수 구성이다. 모든 실제 상수의 수치값이나 실행 가능한 최종장 수치 evaluator를 제공한 것은 아니다.",
+      "inherited_evidence_path_base": "recovered/base/",
+      "status_basis": "Inherited from authenticated base ledger; unchanged in this recovery"
+    },
+    {
+      "id": "N6-08",
+      "title": "최종 local 합성",
+      "original_obligation": "□ N6-08 | 최종 local 합성\n(9.21)에서 Aj,Bj,pj에 shrinking cutoff를 적용하고 curl하여 local field를 만든다. finite residual의 flat terms를 무조건 합\n산하지 않는다. 합격: Lemma5.4의 tail 비교로 (9.20)을 연결한다. 평가 구간의 active indices와 생략 tail의 bound를 저장\n하고 없으면 finite-stage approximation으로 제한한다.\n패키지 판정:",
+      "original_scope": "Same finite correction sequence to local field through potential cutoff sum and finite-stage tail comparison; active indices and omitted-tail bound for evaluation window.",
+      "original_source": {
+        "blueprint_page": 62,
+        "paper_pages": [
+          57,
+          58,
+          59,
+          112,
+          113,
+          114,
+          115,
+          116
+        ]
+      },
+      "status": "CLOSED",
+      "decision": "같은 실제 potential cutoff 합과 명시적 구간·tail 완료",
+      "reused_evidence": [
+        "Lemma5.4",
+        "Proposition9.9",
+        "위 실제 Z_j 및 source-defined norm family"
+      ],
+      "actual_target_binding": "원래 potential gauge를 고정하고 cutoff를 potential에 적용한 뒤 curl. cutoff 상계는 a>=1 전체에 대한 supremum을 먼저 정의하여 a_j 선택과의 순환 의존을 제거.",
+      "assumptions_resolved": [
+        "완전히 정해진 실제 C-hat/P-hat와 a_j=exp(L_j)",
+        "J=3,m=1 구간[1/a5,2/a5]에서 correction1..4만 가능,1..3은 plateau,5이상 정확히0",
+        "한 uncut stage와의 차이는 (1/8)q^(h/5−ellPrime_1); 미래 cutoff항 생략 tail0과 구분",
+        "모든 fixed m,N에 한 finite J를 선택하여 잔차flatness 증명; finite flat residual을 무조건 합산하지 않음"
+      ],
+      "modified_or_added_code": [
+        "work/remaining_chain/code/source_recursive_family.py",
+        "work/remaining_chain/code/verify_remaining_chain.py"
+      ],
+      "validation": "정확한 source-dependent symbolic 구간과 전체 전차수 비교 증명에 대해 독립 검토2개 승인.",
+      "evidence_files": [
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_REMAINING_CHAIN_APPLICATION.json",
+          "sha256": "bc0d40d467186f3024913ae50bf3b02e69e569110a1368ad1292ea28d70ffe3a",
+          "size_bytes": 39844
+        },
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json",
+          "sha256": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+          "size_bytes": 115869
+        },
+        {
+          "path": "work/remaining_chain/PROOF_APPLICATION.md",
+          "sha256": "641ff6eb9a78066babc71921ba67059e9f9705cac28b0f7f95688b0e78542dd5",
+          "size_bytes": 13442
+        }
+      ],
+      "independent_reviews": [
+        {
+          "path": "work/derivative_fix/evidence/remaining_chain_crossreview/REVIEW_DECISION.json",
+          "sha256": "64bd7745cefb21d96828b7252ebf9eaa173037302f7d9470af2231d78615dc2b",
+          "size_bytes": 2422
+        },
+        {
+          "path": "pdf_criteria/remaining_chain_candidate_review.json",
+          "sha256": "fbfb701aada8f8fff2fc9e6c8d4b6ab7cac11ae9136247ab74a94f782d5cf9ef",
+          "size_bytes": 13023
+        }
+      ],
+      "remaining_original_obligations": [],
+      "mathematical_vs_numerical_scope": "구간 끝점은 정확한 source 식으로 저장했다. decimal endpoint나 그 구간의 수치 field 평가 완료를 주장하지 않는다.",
+      "inherited_evidence_path_base": "recovered/base/",
+      "status_basis": "Inherited from authenticated base ledger; unchanged in this recovery"
+    },
+    {
+      "id": "N7-04",
+      "title": "Terminal force jets",
+      "original_obligation": "□ N7-04 | Terminal force jets\nFj(x)=lim(t↑1)∂t^j f(x,t), ∂x^ αFj(0)=0을 (10.6)-(10.10)에 맞춰 구축한다. 합격: 유한 jet order M의 수치 근사와 ∀order\nsmooth-extension 정리의 의존성을 분리한다. 몇 개 finite differences가 작다는 이유로 C∞ force라 표시하지 않는다.",
+      "original_scope": "Jets of the same localized force, compatible terminal derivative limits; finite numerical jet range distinguished from all-order smooth extension theorem.",
+      "original_source": {
+        "blueprint_page": 64,
+        "paper_pages": [
+          118,
+          119,
+          120
+        ]
+      },
+      "status": "CLOSED",
+      "decision": "동일한 전체 localized force의 terminal jets 수학적 구성 완료",
+      "reused_evidence": [
+        "Lemma10.2,(10.6)-(10.10)",
+        "original localization and exterior heat/pressure",
+        "N6-08의 같은 최종 A,B,p"
+      ],
+      "actual_target_binding": "f=R(curl(c*A)+c*B*e_theta,c*p_loc)에서 실제 F_j를 uniform terminal limit로 정의. source localization qbig가 위 domain과 일치.",
+      "assumptions_resolved": [
+        "q-positive 영역의 endpoint/FTC",
+        "positive-radius exterior heat 및 압력의 전체 cutoff 항",
+        "원점 부근 모든 미분의 flatness",
+        "전체 compact K에서 호환되는 jets와 모든 origin derivative0"
+      ],
+      "modified_or_added_code": [
+        "work/remaining_chain/code/source_recursive_family.py",
+        "work/remaining_chain/code/verify_remaining_chain.py"
+      ],
+      "validation": "같은 최종 함수에 대한 세 영역의 분석적 연결을 두 독립 검토자가 승인.",
+      "evidence_files": [
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_REMAINING_CHAIN_APPLICATION.json",
+          "sha256": "bc0d40d467186f3024913ae50bf3b02e69e569110a1368ad1292ea28d70ffe3a",
+          "size_bytes": 39844
+        },
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json",
+          "sha256": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+          "size_bytes": 115869
+        },
+        {
+          "path": "work/remaining_chain/PROOF_APPLICATION.md",
+          "sha256": "641ff6eb9a78066babc71921ba67059e9f9705cac28b0f7f95688b0e78542dd5",
+          "size_bytes": 13442
+        }
+      ],
+      "independent_reviews": [
+        {
+          "path": "work/derivative_fix/evidence/remaining_chain_crossreview/REVIEW_DECISION.json",
+          "sha256": "64bd7745cefb21d96828b7252ebf9eaa173037302f7d9470af2231d78615dc2b",
+          "size_bytes": 2422
+        },
+        {
+          "path": "pdf_criteria/remaining_chain_candidate_review.json",
+          "sha256": "fbfb701aada8f8fff2fc9e6c8d4b6ab7cac11ae9136247ab74a94f782d5cf9ef",
+          "size_bytes": 13023
+        }
+      ],
+      "remaining_original_obligations": [],
+      "mathematical_vs_numerical_scope": "유한 수치 jet 근사와 wholeK norm의 수치값은 계산하지 않았다. 표본 최대값을 norm 상계로 사용하지 않았다.",
+      "inherited_evidence_path_base": "recovered/base/",
+      "status_basis": "Inherited from authenticated base ledger; unchanged in this recovery"
+    },
+    {
+      "id": "N7-05",
+      "title": "t>1 force extension",
+      "original_obligation": "□ N7-05 | t>1 force extension\n(10.11)의 Σχ0(bjσ)σ^jFj/j!, σ=t−1≥0를 사용하며 (10.12)의 differentiated tail constraints로 bj를 선택한다. 합격:\nforce는 t≤2에서 compact support를 갖고 모든 인증된 jets가 접합된다. 이는 velocity를 t=1 이후 smooth하게 연장하는\n알고리즘이 아니다.",
+      "original_scope": "Same terminal force jets extended by differentiated-tail-controlled cutoff jet sum, compact space-time support through t=2; force extension only.",
+      "original_source": {
+        "blueprint_page": 64,
+        "paper_pages": [
+          120
+        ]
+      },
+      "status": "CLOSED",
+      "decision": "같은 실제 jets의 정수 schedule·모든 차수 접합 완료",
+      "reused_evidence": [
+        "Lemma10.3,(10.11)-(10.12)",
+        "N7-04 실제 F_j와 compact K"
+      ],
+      "actual_target_binding": "N_(j,a)=||F_j||_C^a(K)는 위 실제 force에서 완전히 정의된 유한 norm. b0=1 이후 모든 a+m<=floor(j/2)를 만족하는 최소 정수 b_j>b_(j-1)를 선택.",
+      "assumptions_resolved": [
+        "최소 정수 집합의 비공허성",
+        "모든 differentiated tail의2^-j 지배와 균등 수렴",
+        "sigma=0의 모든 mixed jet 접합",
+        "force의 K×[0,2] compact support; velocity 연장 주장이 아님"
+      ],
+      "modified_or_added_code": [
+        "work/remaining_chain/code/verify_remaining_chain.py"
+      ],
+      "validation": "정의된 actual norm과 실제 jets를 대상으로 한 원래 정리 적용을 독립 검토2개 승인.",
+      "evidence_files": [
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_REMAINING_CHAIN_APPLICATION.json",
+          "sha256": "bc0d40d467186f3024913ae50bf3b02e69e569110a1368ad1292ea28d70ffe3a",
+          "size_bytes": 39844
+        },
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json",
+          "sha256": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+          "size_bytes": 115869
+        },
+        {
+          "path": "work/remaining_chain/PROOF_APPLICATION.md",
+          "sha256": "641ff6eb9a78066babc71921ba67059e9f9705cac28b0f7f95688b0e78542dd5",
+          "size_bytes": 13442
+        }
+      ],
+      "independent_reviews": [
+        {
+          "path": "work/derivative_fix/evidence/remaining_chain_crossreview/REVIEW_DECISION.json",
+          "sha256": "64bd7745cefb21d96828b7252ebf9eaa173037302f7d9470af2231d78615dc2b",
+          "size_bytes": 2422
+        },
+        {
+          "path": "pdf_criteria/remaining_chain_candidate_review.json",
+          "sha256": "fbfb701aada8f8fff2fc9e6c8d4b6ab7cac11ae9136247ab74a94f782d5cf9ef",
+          "size_bytes": 13023
+        }
+      ],
+      "remaining_original_obligations": [],
+      "mathematical_vs_numerical_scope": "실제 b_j의 decimal/integer 출력 목록은 평가하지 않았다. 과거 hardcoded5,11,22,43,86,172는 actual schedule이 아니다.",
+      "inherited_evidence_path_base": "recovered/base/",
+      "status_basis": "Inherited from authenticated base ledger; unchanged in this recovery"
+    },
+    {
+      "id": "N7-06",
+      "title": "전역 에너지 balance",
+      "original_obligation": "□ N7-06 | 전역 에너지 balance\nd(∥u∥²₂/2)/dt+ν∥∇u∥²₂=⟨f,u⟩를 전체 K에서 적분한다. core만의 에너지와 구분한다. 합격: 정규화 energy defect가\n독립 space/time refinement에서 감소한다. ν=1에서 (10.13)의 ∥u(t)∥² ₂+2∫∥∇u∥²₂≤(∫∥f∥₂)² 상계와 모순 없어야\n한다.",
+      "original_scope": "Same localized fields and force integrated over all compact support K; energy balance and independent spatial/time refinement; nu=1 inequality comparison.",
+      "original_source": {
+        "blueprint_page": 64,
+        "paper_pages": [
+          121
+        ]
+      },
+      "status": "OPEN",
+      "decision": "실제장의 분석적 에너지 동일성은 연결; 필수 수치 세분화 미완료",
+      "reused_evidence": [
+        "Lemma10.4,(10.13)-(10.14)",
+        "같은 localized divergence-free u 및 f=R(u,p)"
+      ],
+      "actual_target_binding": "전체 compact K의 실제 u,f에 적분부분법 에너지 동일성과nu=1 상계를 적용. 모델의 energy 결과는 별도.",
+      "assumptions_resolved": [
+        "모델 time_amp 미분식 수정",
+        "이전 모델의 정체값 연속극한9/700과 수정 후 시간 오차 감소 확인",
+        "wholeK 수치값을 모델/표본 값과 분리"
+      ],
+      "modified_or_added_code": [
+        "work/integrated_verifier/code/verify_all_eight_items.py",
+        "work/integrated_verifier/code/test_all_eight_items.py",
+        "work/remaining_chain/code/verify_remaining_chain.py"
+      ],
+      "validation": "통합 회귀17개 PASS. 수정 모델 defect 약2.54313e-7(256,128). 실제 전역장 세분화 표는 없다. 추가 실제 core7평가와3축독립2배 표, 실제10angulartemplate의473node 에너지식, 동일header22packet의92,722records 결합을 실행했다. 최종globalfield는 아니다.",
+      "evidence_files": [
+        {
+          "path": "work/integrated_verifier/evidence/INTEGRATION_RUN_RECEIPT.json",
+          "sha256": "8f5080121a92d9e56ccd79bbec26dc12f4f6ab1371d887f756417e8fb497da9b",
+          "size_bytes": 1596
+        },
+        {
+          "path": "work/derivative_fix/evidence/EXECUTION_RECEIPT.json",
+          "sha256": "cf992d06d4f5885c8f28fae962f084ae2b20b68f3fbf3a237b46394dca31a466",
+          "size_bytes": 6560
+        },
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_REMAINING_CHAIN_APPLICATION.json",
+          "sha256": "bc0d40d467186f3024913ae50bf3b02e69e569110a1368ad1292ea28d70ffe3a",
+          "size_bytes": 39844
+        },
+        {
+          "path": "work/actual_evaluator/evidence/EXECUTION_RECEIPT.json",
+          "sha256": "969b872487c0f9e4d93222d7b5005565c83453aa1dc3f2b47875772b24f265c0",
+          "size_bytes": 6607
+        },
+        {
+          "path": "work/actual_evaluator/README.md",
+          "sha256": "d62acb856540722956d0fdafc188e99781ec3ae12dfc78d3277a0a6820fc5066",
+          "size_bytes": 7097
+        },
+        {
+          "path": "work/actual_evaluator_sources/CONSTRUCTIVE_ROUTE.md",
+          "sha256": "daf1adec4e83c6bfa4a5dd238e9ac247b3db8efaaacc536c674ae8271ea0fa7f",
+          "size_bytes": 16689
+        }
+      ],
+      "independent_reviews": [],
+      "remaining_original_obligations": [
+        "Evaluate the same final source-defined field and actual selectors with certified numerical jets, including current native caller-domain, derivative and tail obligations.",
+        "Materialize required local indexed recursive operands and evaluate derivatives before caller substitution; direct source record recovery alone is not numerical evaluation.",
+        "Integrate actual energy, dissipation and force work on all K with spatial and temporal error/tail enclosures.",
+        "Save independently refined spatial/time normalized defects that decrease, and compare the original nu=1 inequality (10.13)."
+      ],
+      "mathematical_vs_numerical_scope": "모델 수정 성공을 실제 global energy 수치 인증으로 승격하지 않음.",
+      "inherited_evidence_path_base": "recovered/base/",
+      "status_basis": "New source and operator work completed, but original actual-global numerical requirements remain unmet",
+      "recovery_evidence_groups": [
+        "work/prune_recovery/scalar",
+        "work/prune_recovery/scalar_independent_review",
+        "work/prune_recovery/native",
+        "work/prune_recovery/native_independent_review",
+        "work/prune_recovery/energy",
+        "work/prune_recovery/energy_independent_review"
+      ],
+      "newly_resolved": [
+        "700 missing raw scalar source records authenticated and recovered",
+        "Lexical binder scope and expression/semantic native distinctions made executable and independently checked",
+        "Source-domain adapters and finite indexed derivative recipes linked to original definitions",
+        "Exact localization, full Cartesian gradient and direct force consumer connected to frozen family; missing actual jets explicitly rejected",
+        "Initial canonical potential and full pressure source connections recovered; not substituted for final correction family"
+      ],
+      "actual_global_last_resolved_tau": null
+    },
+    {
+      "id": "N8-05",
+      "title": "공간·급수·정밀도 적응",
+      "original_obligation": "□ N8-05 | 공간·급수·정밀도 적응\ncore radius, axial length, pulse wavelength, active cutoff orders를 함께 해결한다. 각 refinement 축을 독립 증가시킨\n다. 합격: 2배 grid, Fourier cutoff, coefficient order, arithmetic precision 비교표와 별도 tail bound를 저장한다. 예산\n초과 시 last-resolved τ와 원인을 표시한다.",
+      "original_scope": "Paper reconstruction run resolves core/axial/pulse/cutoff scales and four independent refinement axes, saves separate tails and last-resolved tau on budget exhaustion; distinct comparator path not substituted.",
+      "original_source": {
+        "blueprint_page": 66,
+        "paper_pages": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          113,
+          121
+        ]
+      },
+      "status": "OPEN",
+      "decision": "실제 전역장의 네 축 수치 evaluator·비교표 미완료",
+      "reused_evidence": [
+        "원래 N8-05 adaptive contract",
+        "실제 source-defined global family 및 exact active/tail 계약"
+      ],
+      "actual_target_binding": "대상은 위의 같은 global field. 모델 fixture의 tau는 제외하고 actual last-resolved tau=null을 유지.",
+      "assumptions_resolved": [
+        "grid/Fourier/coefficient/precision의 모델 결과와 실제 결과 분리",
+        "실제 source-dependent cutoff 구간·tail의 분석적 계약 마련",
+        "추가18개 원자료를 확인하여 기존 evaluator의 범위를 대조"
+      ],
+      "modified_or_added_code": [
+        "work/integrated_verifier/code/verify_all_eight_items.py",
+        "work/integrated_verifier/code/numerics_corrections.py",
+        "work/remaining_chain/code/verify_remaining_chain.py"
+      ],
+      "validation": "모델/실제 scope 회귀 통과. 실제4축2배 비교는 실행되지 않았다. 추가 실제 core7평가와3축독립2배 표, 실제10angulartemplate의473node 에너지식, 동일header22packet의92,722records 결합을 실행했다. 최종globalfield는 아니다.",
+      "evidence_files": [
+        {
+          "path": "work/integrated_verifier/evidence/INTEGRATION_RUN_RECEIPT.json",
+          "sha256": "8f5080121a92d9e56ccd79bbec26dc12f4f6ab1371d887f756417e8fb497da9b",
+          "size_bytes": 1596
+        },
+        {
+          "path": "work/remaining_chain/evidence/ACTUAL_REMAINING_CHAIN_APPLICATION.json",
+          "sha256": "bc0d40d467186f3024913ae50bf3b02e69e569110a1368ad1292ea28d70ffe3a",
+          "size_bytes": 39844
+        },
+        {
+          "path": "work/actual_evaluator/evidence/EXECUTION_RECEIPT.json",
+          "sha256": "969b872487c0f9e4d93222d7b5005565c83453aa1dc3f2b47875772b24f265c0",
+          "size_bytes": 6607
+        },
+        {
+          "path": "work/actual_evaluator/README.md",
+          "sha256": "d62acb856540722956d0fdafc188e99781ec3ae12dfc78d3277a0a6820fc5066",
+          "size_bytes": 7097
+        },
+        {
+          "path": "work/actual_evaluator_sources/CONSTRUCTIVE_ROUTE.md",
+          "sha256": "daf1adec4e83c6bfa4a5dd238e9ac247b3db8efaaacc536c674ae8271ea0fa7f",
+          "size_bytes": 16689
+        }
+      ],
+      "independent_reviews": [],
+      "remaining_original_obligations": [
+        "Evaluate the same final source-defined field and actual selectors with certified numerical jets, including current native caller-domain, derivative and tail obligations.",
+        "Materialize required local indexed recursive operands and evaluate derivatives before caller substitution; direct source record recovery alone is not numerical evaluation.",
+        "Resolve core radius, axial length, pulse wavelength and active cutoff orders on the same actual final field.",
+        "Save independent 2x grid, Fourier cutoff, coefficient order and arithmetic precision comparisons and separate tails.",
+        "Report actual global last-resolved tau and cause; current value remains null because no actual global evaluation completed."
+      ],
+      "mathematical_vs_numerical_scope": "actual_last_resolved_tau=null; model_last_resolved_tau와 혼합하지 않음.",
+      "inherited_evidence_path_base": "recovered/base/",
+      "status_basis": "New source and operator work completed, but original actual-global numerical requirements remain unmet",
+      "recovery_evidence_groups": [
+        "work/prune_recovery/scalar",
+        "work/prune_recovery/scalar_independent_review",
+        "work/prune_recovery/native",
+        "work/prune_recovery/native_independent_review",
+        "work/prune_recovery/energy",
+        "work/prune_recovery/energy_independent_review"
+      ],
+      "newly_resolved": [
+        "700 missing raw scalar source records authenticated and recovered",
+        "Lexical binder scope and expression/semantic native distinctions made executable and independently checked",
+        "Source-domain adapters and finite indexed derivative recipes linked to original definitions",
+        "Exact localization, full Cartesian gradient and direct force consumer connected to frozen family; missing actual jets explicitly rejected",
+        "Initial canonical potential and full pressure source connections recovered; not substituted for final correction family"
+      ],
+      "actual_global_last_resolved_tau": null
+    }
+  ],
+  "original_native_boundary": {
+    "crosswalk": "work/prune_recovery/ORIGINAL_138_CROSSWALK.json",
+    "original_count": 138,
+    "whole_numeric_kernels_completed_this_recovery": 0,
+    "whole_numeric_kernels_open": 138,
+    "substeps": "Uniform bounds, conditional brackets, symbolic indexed recipes and authenticated raw records are separately completed; none is mislabeled as whole numerical kernel completion."
+  }
+}

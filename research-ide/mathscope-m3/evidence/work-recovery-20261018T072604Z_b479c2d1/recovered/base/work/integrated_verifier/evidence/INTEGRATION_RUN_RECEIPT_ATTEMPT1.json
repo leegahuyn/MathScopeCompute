@@ -1,0 +1,40 @@
+{
+  "created_utc": "2026-10-18T01:52:20.204204+00:00",
+  "scope": "Only merged changed verifier and scoped regressions; no inherited Windows full launcher or original1260 replay",
+  "steps": [
+    {
+      "name": "integrated_tests",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_all_eight_items.py",
+        "test_numerics_corrections.py"
+      ],
+      "cwd": "/workspace/scratch/11bf626d6c2d/work/integrated_verifier/code",
+      "exit_code": 1,
+      "stdout": "logs/integrated_tests.stdout.log",
+      "stderr": "logs/integrated_tests.stderr.log"
+    },
+    {
+      "name": "integrated_cli",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/scratch/11bf626d6c2d/work/integrated_verifier/code/verify_all_eight_items.py",
+        "--root",
+        "/workspace/scratch/11bf626d6c2d/work/integrated_verifier",
+        "--out",
+        "/workspace/scratch/11bf626d6c2d/work/integrated_verifier/evidence/INTEGRATED_RESULTS.json"
+      ],
+      "cwd": "/workspace/scratch/11bf626d6c2d/work/integrated_verifier",
+      "exit_code": 0,
+      "stdout": "logs/integrated_cli.stdout.log",
+      "stderr": "logs/integrated_cli.stderr.log"
+    }
+  ],
+  "all_passed": false,
+  "new_m3_completions": 0
+}

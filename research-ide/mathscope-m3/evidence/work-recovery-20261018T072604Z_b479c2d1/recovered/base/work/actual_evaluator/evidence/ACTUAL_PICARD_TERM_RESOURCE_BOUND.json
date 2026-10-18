@@ -1,0 +1,26 @@
+{
+  "schema": "MathScope.ActualPicardLiteralSeriesTermBudget/1",
+  "source": "analysis/base/PR30-recovery-handoff/angular-proof/inputs/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json",
+  "source_sha256": "36026f7c3804d54f779d214ead8ea434db32b3fc5cb468465d174748eda5a74b",
+  "source_header_sha256": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+  "actual_Kcondition_root": 24825,
+  "notation": {
+    "Q": "The fixed source_parameter Q at node24797 (Q_profile), greater than2^260.",
+    "band_Q": "The different shrinking band scale2^-ell at node622794 (Q_band), used in actual_scale_budget.py. These are not the same scalar."
+  },
+  "literal_source_argument_identity": "72*2^139*Q^465*exp(t1/16)/(t1^4*rho^5)",
+  "monomial_identity_recomputed_from_all_actual_scalar_ancestors": true,
+  "source_domain": "Actual Picard0 common collar, with original parameter expressions and original tail estimate.",
+  "strict_derivation": [
+    "Pstar=exp(2T)>1, K=Pstar^2>1; 0<h<1, j0=h^4, sigmaStar=j0/2000 in (0,1).",
+    "Q=2^260*K/sigmaStar^2>2^260; rho=sigmaStar^2/65536 in (0,1).",
+    "logCSelected=10log(1+Q^300)+Q^200>0, so t1=exp(-120logCSelected) in (0,1).",
+    "Therefore Kcondition >= its positive argument >72*2^(139+465*260)>2^121045."
+  ],
+  "declared_max_literal_series_terms": 1000000,
+  "literal_series_term_budget_exceeded": true,
+  "certified_tail": "For K>=the unchanged source Kcondition, the original tail is m!*(16/delta)^m*4^-K/3 on the prescribed derivative collar.",
+  "actual_partial_sum_evaluated": false,
+  "actual_last_resolved_tau": null,
+  "scope": "Only the literal original sufficient-K Picard term-by-term route is excluded under this term budget. This does not lower-bound the best algorithm, prove optimal K, block positive norm bounds, or declare symbolic/accelerated solution methods impossible."
+}

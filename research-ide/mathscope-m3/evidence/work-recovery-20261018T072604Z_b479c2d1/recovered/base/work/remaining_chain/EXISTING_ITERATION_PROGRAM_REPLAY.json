@@ -1,0 +1,5883 @@
+{
+  "schema": "MathScope.N6.RecordedSourceIterationDecay/1",
+  "status": "SOURCE_DOMAIN_AND_ALL_FINITE_DECAY_ALGEBRA_VERIFIED_CLASS_ATTACHMENT_PENDING",
+  "recordedOnly": true,
+  "newDecayProofExecuted": true,
+  "freshSourceConstructorExecuted": false,
+  "newLeanExecuted": false,
+  "sourceBinding": {
+    "acceptedCoreArchive": {
+      "bytes": 936426,
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/core-intervals-0002/receipt.json",
+      "sha256": "8f65d85d903df534c2c10501119fbcef636678c95ec214e165041681d16fb5a5"
+    },
+    "common6FamilyGraph": {
+      "canonicalBytes": 28446215,
+      "fixedCompilerPrefix": true,
+      "nodeCount": 622781,
+      "sha256": "bff6b64458f52426e996a7b5a1dee44b4ae1f7fb226d54654889c79679e4e219"
+    },
+    "common6Path": "mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json",
+    "paper": {
+      "pages": 166,
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+    },
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "profileId": "same-profile-2026-10-10.3",
+    "sourceProfileArchive": {
+      "bytes": 77149,
+      "path": "mathscope-m1/navier/followup-20261010-symbolic-gluing/attempts/one-profile-0002/receipt.json",
+      "sha256": "184152e17553d825f1f590b611b575f646d182e3d891aa010e6a3f5cbb201afd"
+    }
+  },
+  "sourceArtifacts": {
+    "domain": {
+      "bytes": 64369,
+      "path": "research-ide/mathscope-m3/navier/evidence/source-exterior-force-jets-20261012/attempt2/source-domain.json",
+      "sha256": "1350acb65cae056f094e8d90dd557d0b44d1c5f51d55149b2aa1089f9ed2ae5c"
+    },
+    "domainReceipt": {
+      "bytes": 2962,
+      "path": "research-ide/mathscope-m3/navier/evidence/source-exterior-force-jets-20261012/attempt2/receipt.json",
+      "sha256": "90300bc80176119ab93e1613aeb7071702f7724244f14eb21e8078c18129a0c7"
+    },
+    "fullScalarProgram": {
+      "bytes": 3652495,
+      "completeFormulaProgramIncludedInThisRecord": false,
+      "fullArtifactRetainedInRepository": true,
+      "path": "research-ide/mathscope-m3/navier/evidence/source-exterior-force-jets-20261012/attempt2/exterior-force-jets.json",
+      "scalarNodeCount": 30292,
+      "scalarProgramSHA256": "0b542f970b0096cfeea9dc97d974cfa14c4386c6f5638581118e65b69537475c",
+      "sha256": "c02ef50a4dd56571b2c8a63cc8f18185386516970b529c6f4a07a0847ac980da"
+    }
+  },
+  "sourceDomain": {
+    "qBigSourceRoot": 622791,
+    "commonQStarSourceRoot": 617437,
+    "domainRatio": "1/64",
+    "qStarEqualsQBig": true,
+    "everyFiniteStageUsesSameDomain": true,
+    "everyDerivativeOrderUsesSameDomain": true,
+    "sourceDomainChoiceJustified": true
+  },
+  "sourceParameter": {
+    "h": {
+      "exp": {
+        "product": [
+          {
+            "integer": -8002
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "positive": true,
+    "upper": "1/16",
+    "hNumericallyRounded": false
+  },
+  "program": {
+    "schema": "MathScope.N6.OriginalIterationDecayProgram/1",
+    "algebra": {
+      "schema": "MathScope.N6.ExactAllFiniteIterationDecay/1",
+      "sourceAuthenticated": false,
+      "recipe": {
+        "schema": "MathScope.N6.OriginalIterationDecayRecipe/1",
+        "kappa": "1/100000",
+        "sigma0": "1/5",
+        "gain": "1/10",
+        "oldPrimary": "1/2",
+        "oldWaveRemainder": "17/25",
+        "totalMean": "9/10",
+        "totalRadialMean": "19/10",
+        "retainedMeanGain": "17/100",
+        "operatorOrder": [
+          "forced-angular",
+          "signed-covariance",
+          "temporal-mean",
+          "five-current-moments"
+        ],
+        "forcedErrors": [
+          "linear",
+          "old-wave-cross",
+          "self-quadratic",
+          "total-mean-cross"
+        ],
+        "signedErrors": [
+          "linear",
+          "total-mean-cross",
+          "old-wave-cross",
+          "self-quadratic"
+        ],
+        "signedCovariance": [
+          "primary-transverse-leading",
+          "old-wave-minus-primary",
+          "full-curl-remainder",
+          "signed-self-quadratic"
+        ],
+        "temporalErrors": [
+          "slow-time",
+          "radial-flux",
+          "axial-flux",
+          "viscosity"
+        ],
+        "pressure": {
+          "afterEveryOperation": true,
+          "fullUpdatedFields": true,
+          "currentDefects": true,
+          "axialMomentIncludesCRhoP": true,
+          "increment": "T0(delta-gr-rho*delta-P)",
+          "fixedRho": true
+        },
+        "flatRemainders": {
+          "base": "E_B retained",
+          "pulse": "retained outside supported next-pulse source",
+          "axialReconstruction": "F_ax retained with actual Delta-gamma",
+          "radialCutoff": "retained with actual reconstructed velocities",
+          "realization": "compare to one fixed finite residual; never sum E_j"
+        },
+        "fixedDenominators": [
+          "original noncharacteristic normal",
+          "original primary H",
+          "original 2*sqrt(y_sigma)",
+          "original five-profile inverse"
+        ],
+        "harmonicRule": {
+          "quadratic": "all m+n",
+          "inverse": "preserves m",
+          "curl": "preserves m",
+          "conjugates": "both signs retained"
+        },
+        "physical": {
+          "radialKappa": "1/100000",
+          "spatialH": "2",
+          "temporalH": "3/2",
+          "extraCurlDerivatives": 1,
+          "velocityPrefactor": "A",
+          "pressurePrefactor": "2A",
+          "potentialPrefactor": "A-1/2",
+          "residualPrefactor": "2A+1/2"
+        }
+      },
+      "inductionVariable": "j>=0",
+      "sigma": {
+        "constant": "1/5",
+        "slope": "1/10"
+      },
+      "wave": {
+        "constant": "7/10",
+        "slope": "1/10"
+      },
+      "meanAndDefect": {
+        "constant": "6/5",
+        "slope": "1/10"
+      },
+      "H": {
+        "constant": "59999/50000",
+        "slope": "1/10"
+      },
+      "initial": {
+        "primary": {
+          "constant": "1/2",
+          "slope": "0"
+        },
+        "fullCurlRemainder": {
+          "constant": "99999/100000",
+          "slope": "0"
+        },
+        "linear": {
+          "constant": "99997/100000",
+          "slope": "0"
+        },
+        "nonlinear": {
+          "constant": "99999/100000",
+          "slope": "0"
+        },
+        "primaryCovarianceRemainder": {
+          "constant": "74999/50000",
+          "slope": "0"
+        },
+        "axialAndPressure": {
+          "constant": "199999/100000",
+          "slope": "0"
+        },
+        "fullMean": {
+          "constant": "99999/100000",
+          "slope": "0"
+        },
+        "H0": {
+          "constant": "99999/100000",
+          "slope": "0"
+        },
+        "meanRemainder": {
+          "constant": "199997/100000",
+          "slope": "0"
+        },
+        "fiveNonlinearDefectConservativeLower": {
+          "constant": "179999/100000",
+          "slope": "0"
+        }
+      },
+      "originalInitialOrders": {
+        "B0": "7/10",
+        "C0Star": "6/5"
+      },
+      "forced": [
+        {
+          "id": "linear",
+          "value": {
+            "constant": "119997/100000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "old-wave-cross",
+          "value": {
+            "constant": "119999/100000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "self-quadratic",
+          "value": {
+            "constant": "139999/100000",
+            "slope": "1/5"
+          }
+        },
+        {
+          "id": "total-mean-cross",
+          "value": {
+            "constant": "11/10",
+            "slope": "1/10"
+          }
+        }
+      ],
+      "signed": [
+        {
+          "id": "linear",
+          "value": {
+            "constant": "29999/25000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "total-mean-cross",
+          "value": {
+            "constant": "109999/100000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "old-wave-cross",
+          "value": {
+            "constant": "59999/50000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "self-quadratic",
+          "value": {
+            "constant": "139997/100000",
+            "slope": "1/5"
+          }
+        }
+      ],
+      "signedCovariance": [
+        {
+          "id": "old-wave-minus-primary",
+          "before": {
+            "constant": "137999/100000",
+            "slope": "1/10"
+          },
+          "afterRadialDivergence": {
+            "constant": "68999/50000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "full-curl-remainder",
+          "before": {
+            "constant": "84999/50000",
+            "slope": "1/10"
+          },
+          "afterRadialDivergence": {
+            "constant": "169997/100000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "signed-self-quadratic",
+          "before": {
+            "constant": "69999/50000",
+            "slope": "1/5"
+          },
+          "afterRadialDivergence": {
+            "constant": "139997/100000",
+            "slope": "1/5"
+          }
+        }
+      ],
+      "signedLeadingCovarianceCanceledOnlyByActualIdentity": true,
+      "temporal": [
+        {
+          "id": "slow-time",
+          "value": {
+            "constant": "109999/50000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "radial-flux",
+          "value": {
+            "constant": "219997/100000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "axial-flux",
+          "value": {
+            "constant": "109999/50000",
+            "slope": "1/10"
+          }
+        },
+        {
+          "id": "viscosity",
+          "value": {
+            "constant": "54999/25000",
+            "slope": "1/10"
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "initial-linear-at-least-B0",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "99997/100000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "7/10",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "29997/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-nonlinear-at-least-B0",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "99999/100000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "7/10",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "29999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-covariance-after-radial-loss-at-least-1.49",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "74999/50000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "149/100",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "499/50000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-axial-pressure-at-least-1.49",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "199999/100000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "149/100",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "50999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-temporal-remainder-at-least-1.49",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "199997/100000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "149/100",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "50997/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-retained-averaged-mean-at-least-C0",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "149/100",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "6/5",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "29/100",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-five-nonlinear-defect-at-least-C0",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "179999/100000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "6/5",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "59999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-wave-mean-interaction-at-least-B0",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "99999/100000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "7/10",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "29999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-curl-above-cumulative-remainder",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "99999/100000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "17/25",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "31999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-mean-above-cumulative-mean",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "99999/100000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "9/10",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "9999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "initial-radial-mean-above-cumulative-radial",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "199999/100000",
+            "slope": "0"
+          },
+          "right": {
+            "constant": "19/10",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "9999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "forced-linear",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "119997/100000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "11/10",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "9997/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "forced-old-wave-cross",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "119999/100000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "11/10",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "9999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "forced-self-quadratic",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "139999/100000",
+            "slope": "1/5"
+          },
+          "right": {
+            "constant": "11/10",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "29999/100000",
+            "slope": "1/10"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "forced-total-mean-cross",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "11/10",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "11/10",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "0",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-linear",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "29999/25000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "109999/100000",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "9997/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-total-mean-cross",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "109999/100000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "109999/100000",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "0",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-old-wave-cross",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "59999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "109999/100000",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "9999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-self-quadratic",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "139997/100000",
+            "slope": "1/5"
+          },
+          "right": {
+            "constant": "109999/100000",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "14999/50000",
+            "slope": "1/10"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-mean-old-wave-minus-primary",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "68999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "137/100",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "499/50000",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-mean-full-curl-remainder",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "169997/100000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "137/100",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "32997/100000",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-mean-signed-self-quadratic",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "139997/100000",
+            "slope": "1/5"
+          },
+          "right": {
+            "constant": "137/100",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "2997/100000",
+            "slope": "1/10"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-retained-weighted-moment",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "219999/100000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "137/100",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "82999/100000",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-axial-and-pressure-changes",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "109999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "137/100",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "41499/50000",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "temporal-slow-time",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "109999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "54999/25000",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "1/50000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "temporal-radial-flux",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "219997/100000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "54999/25000",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "1/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "temporal-axial-flux",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "109999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "54999/25000",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "1/50000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "temporal-viscosity",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "54999/25000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "54999/25000",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "0",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "retained-mean-gain-closes-cycle",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "137/100",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "13/10",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "7/100",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "new-temporal-mean-gain-closes-cycle",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "54999/25000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "13/10",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "22499/25000",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "five-new-defects-close-cycle",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "52499/25000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "13/10",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "19999/25000",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "mean-interaction-closes-wave-cycle",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "59999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "4/5",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "19999/50000",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "forced-errors-close-wave-cycle",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "11/10",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "4/5",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "3/10",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "signed-errors-close-wave-cycle",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "109999/100000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "4/5",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "29999/100000",
+            "slope": "0"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "all-signed-increments-preserve-old-remainder",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "69999/100000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "17/25",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "1999/100000",
+            "slope": "1/10"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "all-forced-increments-preserve-old-remainder",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "7/10",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "17/25",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "1/50",
+            "slope": "1/10"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "all-new-mean-and-pressure-increments-preserve-cumulative-class",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "59999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "9/10",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "14999/50000",
+            "slope": "1/10"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "all-new-radial-increments-preserve-cumulative-class",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "109999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "19/10",
+            "slope": "0"
+          },
+          "margin": {
+            "constant": "14999/50000",
+            "slope": "1/10"
+          },
+          "strict": true,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and positive intercept",
+          "pass": true
+        },
+        {
+          "id": "physical-cycle-j-forced-minimum",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "3/5",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "0",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "3/5",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "physical-cycle-j-signed-minimum",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "59999/100000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "0",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "59999/100000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "physical-cycle-j-mean-and-pressure-minimum",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "54999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "0",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "54999/50000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        },
+        {
+          "id": "physical-cycle-j-radial-minimum",
+          "role": "CLASS_EXPONENT_IMPLICATION",
+          "left": {
+            "constant": "104999/50000",
+            "slope": "1/10"
+          },
+          "right": {
+            "constant": "0",
+            "slope": "1/10"
+          },
+          "margin": {
+            "constant": "104999/50000",
+            "slope": "0"
+          },
+          "strict": false,
+          "domain": "every integer j>=0",
+          "exactDecision": "nonnegative slope and nonnegative intercept",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "allNonnegativeStagesByAffineInduction": true,
+      "sourceClassPremisesDischarged": false,
+      "conclusion": "If the original initial state and the four original updated-current maps satisfy their stated class hypotheses, every complete cycle improves wave, full tangential mean and current defect orders by exactly 1/10 on the same domain.",
+      "noSampleResidualMonotonicityClaim": true,
+      "noBackgroundFlatResidualDropped": true,
+      "noCurrentCovarianceSquareRoot": true,
+      "noActualFiniteStageFieldConstructed": true,
+      "allOrderNumericGraphsExecuted": false
+    },
+    "physical": {
+      "schema": "MathScope.N6.ExactPhysicalIterationLosses/1",
+      "variable": "h",
+      "sourceAuthenticated": false,
+      "order": 3,
+      "A": {
+        "constant": "1/2",
+        "slope": "1"
+      },
+      "D": {
+        "constant": "1/2",
+        "slope": "-1"
+      },
+      "sX": {
+        "constant": "1/2",
+        "slope": "2"
+      },
+      "sT": {
+        "constant": "1",
+        "slope": "3/2"
+      },
+      "radial": {
+        "constant": "1/2",
+        "slope": "1/100000"
+      },
+      "ell": {
+        "constant": "5",
+        "slope": "8"
+      },
+      "K": {
+        "constant": "13/2",
+        "slope": "19/2"
+      },
+      "ellPrime": {
+        "constant": "10",
+        "slope": "19/2"
+      },
+      "formulas": {
+        "ell": "2A+(m+1)*(1+3h/2)",
+        "K": "2A+1/2+(m+2)*(1+3h/2)",
+        "ellPrime": "ell_(m+1)+(m+1)",
+        "increment": "C_(j,m)*q^(h*j/10-ell_m)*(1+abs(log(q)))^P_(j,m)",
+        "finiteState": "C_(j,m)*q^(-K_m)*(1+abs(log(q)))^P_(j,m)",
+        "residual": "C_(j,m)*q^(h*(1/5+j/10)-K_m)*(1+abs(log(q)))^P_(j,m)+E_(j,m)"
+      },
+      "paperExplicitEll": true,
+      "KIsConservativeDerivedChoice": true,
+      "KRequiredPremise": "The original normalized background and complete current have the all-fixed-order polynomial-S amplitude bounds used in Lemma9.8.",
+      "cutoffProof": "Every derivative of chi(a*q) is bounded by C*q^(-m), independent of a, because a*q is bounded on its derivative support and 0<D<1. The full curl needs one more potential derivative; ell_(m+1)+(m+1) is sufficient.",
+      "commonQPowerLossIndependentOfStage": true,
+      "constantsAndLogPowersMayDependOnStage": true,
+      "logPowersSetToZero": false,
+      "checks": [
+        {
+          "id": "spatial-loss-dominates-radial-amplitude",
+          "left": {
+            "constant": "1/2",
+            "slope": "2"
+          },
+          "right": {
+            "constant": "1/2",
+            "slope": "1/100000"
+          },
+          "difference": {
+            "constant": "0",
+            "slope": "199999/100000"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "0",
+            "199999/1600000"
+          ],
+          "pass": true
+        },
+        {
+          "id": "spatial-loss-dominates-axial-amplitude",
+          "left": {
+            "constant": "1/2",
+            "slope": "2"
+          },
+          "right": {
+            "constant": "1/2",
+            "slope": "-1"
+          },
+          "difference": {
+            "constant": "0",
+            "slope": "3"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "0",
+            "3/16"
+          ],
+          "pass": true
+        },
+        {
+          "id": "spatial-loss-dominates-frame",
+          "left": {
+            "constant": "1/2",
+            "slope": "2"
+          },
+          "right": {
+            "constant": "1/2",
+            "slope": "0"
+          },
+          "difference": {
+            "constant": "0",
+            "slope": "2"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "0",
+            "1/8"
+          ],
+          "pass": true
+        },
+        {
+          "id": "spatial-loss-dominates-phase-carrier",
+          "left": {
+            "constant": "1/2",
+            "slope": "2"
+          },
+          "right": {
+            "constant": "1/2",
+            "slope": "1/2"
+          },
+          "difference": {
+            "constant": "0",
+            "slope": "3/2"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "0",
+            "3/32"
+          ],
+          "pass": true
+        },
+        {
+          "id": "time-loss-dominates-amplitude",
+          "left": {
+            "constant": "1",
+            "slope": "3/2"
+          },
+          "right": {
+            "constant": "1",
+            "slope": "1"
+          },
+          "difference": {
+            "constant": "0",
+            "slope": "1/2"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "0",
+            "1/32"
+          ],
+          "pass": true
+        },
+        {
+          "id": "time-loss-dominates-phase-carrier",
+          "left": {
+            "constant": "1",
+            "slope": "3/2"
+          },
+          "right": {
+            "constant": "1",
+            "slope": "3/2"
+          },
+          "difference": {
+            "constant": "0",
+            "slope": "0"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "0",
+            "0"
+          ],
+          "pass": true
+        },
+        {
+          "id": "time-loss-dominates-space-loss",
+          "left": {
+            "constant": "1",
+            "slope": "3/2"
+          },
+          "right": {
+            "constant": "1/2",
+            "slope": "2"
+          },
+          "difference": {
+            "constant": "1/2",
+            "slope": "-1/2"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "1/2",
+            "15/32"
+          ],
+          "pass": true
+        },
+        {
+          "id": "twice-A-dominates-velocity-prefactor",
+          "left": {
+            "constant": "1",
+            "slope": "2"
+          },
+          "right": {
+            "constant": "1/2",
+            "slope": "1"
+          },
+          "difference": {
+            "constant": "1/2",
+            "slope": "1"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "1/2",
+            "9/16"
+          ],
+          "pass": true
+        },
+        {
+          "id": "twice-A-dominates-potential-prefactor",
+          "left": {
+            "constant": "1",
+            "slope": "2"
+          },
+          "right": {
+            "constant": "0",
+            "slope": "1"
+          },
+          "difference": {
+            "constant": "1",
+            "slope": "1"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "1",
+            "17/16"
+          ],
+          "pass": true
+        },
+        {
+          "id": "K-dominates-increment-and-finite-field-loss",
+          "left": {
+            "constant": "13/2",
+            "slope": "19/2"
+          },
+          "right": {
+            "constant": "5",
+            "slope": "8"
+          },
+          "difference": {
+            "constant": "3/2",
+            "slope": "3/2"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "3/2",
+            "51/32"
+          ],
+          "pass": true
+        },
+        {
+          "id": "K-dominates-physical-residual-conversion",
+          "left": {
+            "constant": "13/2",
+            "slope": "19/2"
+          },
+          "right": {
+            "constant": "9/2",
+            "slope": "13/2"
+          },
+          "difference": {
+            "constant": "2",
+            "slope": "3"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "2",
+            "35/16"
+          ],
+          "pass": true
+        },
+        {
+          "id": "cutoff-loss-dominates-potential-product-and-curl",
+          "left": {
+            "constant": "10",
+            "slope": "19/2"
+          },
+          "right": {
+            "constant": "10",
+            "slope": "19/2"
+          },
+          "difference": {
+            "constant": "0",
+            "slope": "0"
+          },
+          "hInterval": [
+            "0",
+            "1/16"
+          ],
+          "endpointMargins": [
+            "0",
+            "0"
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    "dependencies": {
+      "schema": "MathScope.N6.FiniteOriginalIterationDependencyProgram/1",
+      "sourceAuthenticated": false,
+      "stageCount": 3,
+      "order": 3,
+      "nodes": [
+        {
+          "id": "original-background",
+          "operation": "source",
+          "producer": "actual-common-admissible-family.mjs: prepareActualCommonAdmissibleFamily; source-global-class.mjs: prepareGlobalClassNormExpansion source request",
+          "inputs": []
+        },
+        {
+          "id": "original-primary-full-curl",
+          "operation": "source",
+          "producer": "actual-global-wave-bound-kernel.mjs: originalWeightedCovarianceJetPowers with authenticated target norms",
+          "inputs": []
+        },
+        {
+          "id": "original-stress",
+          "operation": "source",
+          "producer": "actual-common-target-weighted-norms.mjs: original weighted stress and all-order positive remainder",
+          "inputs": []
+        },
+        {
+          "id": "fixed-original-pulse",
+          "operation": "source",
+          "producer": "actual-pulse-gaussian-power-kernel.mjs: allOrderMixedGaussianJetPowerAudit and common forward propagator",
+          "inputs": []
+        },
+        {
+          "id": "fixed-original-signed-inverse",
+          "operation": "source",
+          "producer": "source-global-class.mjs: prepareGlobalClassNormExpansion (composed norm request remains separate)",
+          "inputs": []
+        },
+        {
+          "id": "fixed-original-five-profiles",
+          "operation": "source",
+          "producer": "source-mean-map.mjs: original fixed profile and positive inverse",
+          "inputs": []
+        },
+        {
+          "id": "fixed-original-radial-pressure-map",
+          "operation": "source",
+          "producer": "source-global-class.mjs: original Gaussian radial primitive and fixed mean patch",
+          "inputs": []
+        },
+        {
+          "id": "fixed-original-temporal-map",
+          "operation": "source",
+          "producer": "source-global-temporal.mjs: complete indexed inverse and source-bound coefficient tails",
+          "inputs": []
+        },
+        {
+          "id": "initial-primary-current",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "original-background",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "original-primary-full-curl",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-temporal-before-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "initial-primary-current",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "initial-temporal-before-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "initial-temporal-before-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-temporal-before-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "initial-temporal-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-temporal-before-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "initial-temporal-before-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "initial-primary-current",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-temporal-before-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-temporal-before-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "initial-temporal-before-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "initial-temporal-before-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "initial-temporal-before-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-temporal-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-temporal-before-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "initial-temporal-zero-mean",
+          "operation": "subtract-haar",
+          "inputs": [
+            {
+              "input": "initial-temporal-before-E",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-temporal-inverse",
+          "operation": "fixed-zero-mean-torus-inverse",
+          "inputs": [
+            {
+              "input": "initial-temporal-zero-mean",
+              "additionalDerivatives": 4
+            },
+            {
+              "input": "fixed-original-temporal-map",
+              "additionalDerivatives": 4
+            }
+          ],
+          "detail": "Four extra torus derivatives are a conservative C0/C1-tail input request; fixed slow derivatives are retained."
+        },
+        {
+          "id": "initial-temporal-potential",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "initial-temporal-inverse",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-temporal-full-velocity",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "initial-temporal-potential",
+              "additionalDerivatives": 1
+            },
+            {
+              "input": "initial-temporal-inverse",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": "Actual axial reconstruction is used; F_ax is separate."
+        },
+        {
+          "id": "initial-temporal-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "initial-primary-current",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-temporal-full-velocity",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-temporal-after-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "initial-temporal-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "initial-temporal-after-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "initial-temporal-after-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-temporal-after-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "initial-temporal-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-temporal-after-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "initial-temporal-after-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "initial-temporal-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-temporal-after-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-temporal-after-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "initial-temporal-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "initial-temporal-after-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "initial-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-temporal-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-temporal-after-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "initial-moments-before-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "initial-temporal-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "initial-moments-before-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "initial-moments-before-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-moments-before-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "initial-moments-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-moments-before-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "initial-moments-before-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "initial-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-moments-before-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-moments-before-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "initial-moments-before-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "initial-moments-before-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "initial-moments-before-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-moments-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-moments-before-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "initial-moments-coefficients",
+          "operation": "fixed-five-current-moment-map",
+          "inputs": [
+            {
+              "input": "initial-moments-before-new-defects",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-five-profiles",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-moments-potentials",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "initial-moments-coefficients",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-moments-full-velocity",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "initial-moments-potentials",
+              "additionalDerivatives": 1
+            },
+            {
+              "input": "initial-moments-coefficients",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-moments-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "initial-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-moments-full-velocity",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-moments-after-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "initial-moments-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "initial-moments-after-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "initial-moments-after-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-moments-after-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "initial-moments-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-moments-after-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "initial-moments-after-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "initial-moments-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-moments-after-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "initial-moments-after-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "initial-moments-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "initial-moments-after-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "initial-moments-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-moments-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "initial-moments-after-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-0-harmonic-source",
+          "operation": "complete-supported-harmonic-residual",
+          "inputs": [
+            {
+              "input": "initial-moments-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "All nonzero m+n retained; old flat residual stays outside the supported source."
+        },
+        {
+          "id": "cycle-0-forced",
+          "operation": "exact-zero-data-forced-pulse",
+          "inputs": [
+            {
+              "input": "cycle-0-harmonic-source",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-pulse",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "Original (7.13), every mixed variational source, pressure and full conjugate pairs."
+        },
+        {
+          "id": "cycle-0-forced-potential",
+          "operation": "original-cutoff-and-inverse-normal-cross-product",
+          "inputs": [
+            {
+              "input": "cycle-0-forced",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-pulse",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-forced-full-curl",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-0-forced-potential",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-forced-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "initial-moments-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-forced-full-curl",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-forced",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-after-forced-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-0-forced-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-0-after-forced-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-0-after-forced-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-after-forced-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-after-forced-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-after-forced-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-0-after-forced-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-forced-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-after-forced-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-after-forced-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-0-after-forced-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-0-after-forced-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-0-after-forced-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-after-forced-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-after-forced-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-0-average",
+          "operation": "haar",
+          "inputs": [
+            {
+              "input": "cycle-0-after-forced-E",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-weighted-moments",
+          "operation": "whole-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-0-average",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-zero-weighted-moment",
+          "operation": "subtract-fixed-profile-times-moment",
+          "inputs": [
+            {
+              "input": "cycle-0-average",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-weighted-moments",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-five-profiles",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-Sigma",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-zero-weighted-moment",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-signed",
+          "operation": "fixed-primary-signed-division",
+          "inputs": [
+            {
+              "input": "cycle-0-Sigma",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-signed-inverse",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "original-primary-full-curl",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "Original fixed H and 2*sqrt(y_sigma); no square root of the new covariance."
+        },
+        {
+          "id": "cycle-0-signed-full-curl",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-0-signed",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-signed-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-after-forced-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-signed",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-signed-full-curl",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-after-signed-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-0-signed-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-0-after-signed-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-0-after-signed-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-after-signed-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-after-signed-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-after-signed-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-0-after-signed-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-signed-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-after-signed-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-after-signed-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-0-after-signed-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-0-after-signed-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-0-after-signed-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-after-signed-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-after-signed-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-0-temporal-before-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-0-after-signed-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-0-temporal-before-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-before-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-temporal-before-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-temporal-before-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-0-temporal-before-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-after-signed-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-temporal-before-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-temporal-before-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-before-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-0-temporal-before-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-before-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-temporal-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-temporal-before-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-0-temporal-zero-mean",
+          "operation": "subtract-haar",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-before-E",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-temporal-inverse",
+          "operation": "fixed-zero-mean-torus-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-zero-mean",
+              "additionalDerivatives": 4
+            },
+            {
+              "input": "fixed-original-temporal-map",
+              "additionalDerivatives": 4
+            }
+          ],
+          "detail": "Four extra torus derivatives are a conservative C0/C1-tail input request; fixed slow derivatives are retained."
+        },
+        {
+          "id": "cycle-0-temporal-potential",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-inverse",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-temporal-full-velocity",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-potential",
+              "additionalDerivatives": 1
+            },
+            {
+              "input": "cycle-0-temporal-inverse",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": "Actual axial reconstruction is used; F_ax is separate."
+        },
+        {
+          "id": "cycle-0-temporal-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-after-signed-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-temporal-full-velocity",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-temporal-after-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-0-temporal-after-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-after-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-temporal-after-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-temporal-after-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-0-temporal-after-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-temporal-after-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-temporal-after-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-0-temporal-after-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-temporal-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-temporal-after-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-0-moments-before-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-0-moments-before-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-before-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-moments-before-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-moments-before-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-0-moments-before-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-moments-before-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-moments-before-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-before-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-0-moments-before-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-before-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-moments-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-moments-before-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-0-moments-coefficients",
+          "operation": "fixed-five-current-moment-map",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-before-new-defects",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-five-profiles",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-moments-potentials",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-coefficients",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-moments-full-velocity",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-potentials",
+              "additionalDerivatives": 1
+            },
+            {
+              "input": "cycle-0-moments-coefficients",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-moments-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-moments-full-velocity",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-moments-after-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-0-moments-after-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-after-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-moments-after-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-moments-after-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-0-moments-after-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-moments-after-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-0-moments-after-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-0-moments-after-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-moments-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-0-moments-after-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-1-harmonic-source",
+          "operation": "complete-supported-harmonic-residual",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "All nonzero m+n retained; old flat residual stays outside the supported source."
+        },
+        {
+          "id": "cycle-1-forced",
+          "operation": "exact-zero-data-forced-pulse",
+          "inputs": [
+            {
+              "input": "cycle-1-harmonic-source",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-pulse",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "Original (7.13), every mixed variational source, pressure and full conjugate pairs."
+        },
+        {
+          "id": "cycle-1-forced-potential",
+          "operation": "original-cutoff-and-inverse-normal-cross-product",
+          "inputs": [
+            {
+              "input": "cycle-1-forced",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-pulse",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-forced-full-curl",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-1-forced-potential",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-forced-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-0-moments-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-forced-full-curl",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-forced",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-after-forced-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-1-forced-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-1-after-forced-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-1-after-forced-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-after-forced-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-after-forced-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-after-forced-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-1-after-forced-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-forced-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-after-forced-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-after-forced-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-1-after-forced-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-1-after-forced-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-1-after-forced-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-after-forced-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-after-forced-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-1-average",
+          "operation": "haar",
+          "inputs": [
+            {
+              "input": "cycle-1-after-forced-E",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-weighted-moments",
+          "operation": "whole-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-1-average",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-zero-weighted-moment",
+          "operation": "subtract-fixed-profile-times-moment",
+          "inputs": [
+            {
+              "input": "cycle-1-average",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-weighted-moments",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-five-profiles",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-Sigma",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-zero-weighted-moment",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-signed",
+          "operation": "fixed-primary-signed-division",
+          "inputs": [
+            {
+              "input": "cycle-1-Sigma",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-signed-inverse",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "original-primary-full-curl",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "Original fixed H and 2*sqrt(y_sigma); no square root of the new covariance."
+        },
+        {
+          "id": "cycle-1-signed-full-curl",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-1-signed",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-signed-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-after-forced-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-signed",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-signed-full-curl",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-after-signed-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-1-signed-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-1-after-signed-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-1-after-signed-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-after-signed-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-after-signed-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-after-signed-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-1-after-signed-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-signed-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-after-signed-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-after-signed-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-1-after-signed-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-1-after-signed-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-1-after-signed-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-after-signed-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-after-signed-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-1-temporal-before-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-1-after-signed-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-1-temporal-before-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-before-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-temporal-before-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-temporal-before-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-1-temporal-before-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-after-signed-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-temporal-before-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-temporal-before-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-before-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-1-temporal-before-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-before-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-temporal-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-temporal-before-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-1-temporal-zero-mean",
+          "operation": "subtract-haar",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-before-E",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-temporal-inverse",
+          "operation": "fixed-zero-mean-torus-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-zero-mean",
+              "additionalDerivatives": 4
+            },
+            {
+              "input": "fixed-original-temporal-map",
+              "additionalDerivatives": 4
+            }
+          ],
+          "detail": "Four extra torus derivatives are a conservative C0/C1-tail input request; fixed slow derivatives are retained."
+        },
+        {
+          "id": "cycle-1-temporal-potential",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-inverse",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-temporal-full-velocity",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-potential",
+              "additionalDerivatives": 1
+            },
+            {
+              "input": "cycle-1-temporal-inverse",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": "Actual axial reconstruction is used; F_ax is separate."
+        },
+        {
+          "id": "cycle-1-temporal-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-after-signed-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-temporal-full-velocity",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-temporal-after-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-1-temporal-after-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-after-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-temporal-after-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-temporal-after-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-1-temporal-after-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-temporal-after-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-temporal-after-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-1-temporal-after-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-temporal-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-temporal-after-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-1-moments-before-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-1-moments-before-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-before-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-moments-before-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-moments-before-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-1-moments-before-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-moments-before-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-moments-before-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-before-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-1-moments-before-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-before-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-moments-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-moments-before-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-1-moments-coefficients",
+          "operation": "fixed-five-current-moment-map",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-before-new-defects",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-five-profiles",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-moments-potentials",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-coefficients",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-moments-full-velocity",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-potentials",
+              "additionalDerivatives": 1
+            },
+            {
+              "input": "cycle-1-moments-coefficients",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-moments-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-moments-full-velocity",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-moments-after-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-1-moments-after-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-after-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-moments-after-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-moments-after-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-1-moments-after-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-moments-after-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-1-moments-after-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-1-moments-after-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-moments-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-1-moments-after-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-2-harmonic-source",
+          "operation": "complete-supported-harmonic-residual",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "All nonzero m+n retained; old flat residual stays outside the supported source."
+        },
+        {
+          "id": "cycle-2-forced",
+          "operation": "exact-zero-data-forced-pulse",
+          "inputs": [
+            {
+              "input": "cycle-2-harmonic-source",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-pulse",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "Original (7.13), every mixed variational source, pressure and full conjugate pairs."
+        },
+        {
+          "id": "cycle-2-forced-potential",
+          "operation": "original-cutoff-and-inverse-normal-cross-product",
+          "inputs": [
+            {
+              "input": "cycle-2-forced",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-pulse",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-forced-full-curl",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-2-forced-potential",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-forced-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-1-moments-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-forced-full-curl",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-forced",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-after-forced-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-2-forced-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-2-after-forced-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-2-after-forced-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-after-forced-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-after-forced-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-after-forced-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-2-after-forced-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-2-forced-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-after-forced-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-after-forced-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-2-after-forced-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-2-after-forced-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-2-after-forced-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-after-forced-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-after-forced-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-2-average",
+          "operation": "haar",
+          "inputs": [
+            {
+              "input": "cycle-2-after-forced-E",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-weighted-moments",
+          "operation": "whole-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-2-average",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-zero-weighted-moment",
+          "operation": "subtract-fixed-profile-times-moment",
+          "inputs": [
+            {
+              "input": "cycle-2-average",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-weighted-moments",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-five-profiles",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-Sigma",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-zero-weighted-moment",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-signed",
+          "operation": "fixed-primary-signed-division",
+          "inputs": [
+            {
+              "input": "cycle-2-Sigma",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-signed-inverse",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "original-primary-full-curl",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "Original fixed H and 2*sqrt(y_sigma); no square root of the new covariance."
+        },
+        {
+          "id": "cycle-2-signed-full-curl",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-2-signed",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-signed-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-2-after-forced-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-signed",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-signed-full-curl",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-after-signed-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-2-signed-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-2-after-signed-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-2-after-signed-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-after-signed-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-after-signed-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-after-signed-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-2-after-signed-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-2-signed-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-after-signed-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-after-signed-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-2-after-signed-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-2-after-signed-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-2-after-signed-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-after-signed-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-after-signed-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-2-temporal-before-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-2-after-signed-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-2-temporal-before-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-before-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-temporal-before-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-temporal-before-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-2-temporal-before-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-2-after-signed-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-temporal-before-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-temporal-before-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-before-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-2-temporal-before-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-before-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-temporal-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-temporal-before-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-2-temporal-zero-mean",
+          "operation": "subtract-haar",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-before-E",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-temporal-inverse",
+          "operation": "fixed-zero-mean-torus-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-zero-mean",
+              "additionalDerivatives": 4
+            },
+            {
+              "input": "fixed-original-temporal-map",
+              "additionalDerivatives": 4
+            }
+          ],
+          "detail": "Four extra torus derivatives are a conservative C0/C1-tail input request; fixed slow derivatives are retained."
+        },
+        {
+          "id": "cycle-2-temporal-potential",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-inverse",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-temporal-full-velocity",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-potential",
+              "additionalDerivatives": 1
+            },
+            {
+              "input": "cycle-2-temporal-inverse",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": "Actual axial reconstruction is used; F_ax is separate."
+        },
+        {
+          "id": "cycle-2-temporal-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-2-after-signed-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-temporal-full-velocity",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-temporal-after-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-2-temporal-after-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-after-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-temporal-after-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-temporal-after-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-2-temporal-after-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-temporal-after-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-temporal-after-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-2-temporal-after-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-temporal-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-temporal-after-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-2-moments-before-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-2-moments-before-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-before-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-moments-before-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-moments-before-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-2-moments-before-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-moments-before-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-moments-before-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-before-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-2-moments-before-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-before-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-moments-before-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-moments-before-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        },
+        {
+          "id": "cycle-2-moments-coefficients",
+          "operation": "fixed-five-current-moment-map",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-before-new-defects",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-five-profiles",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-moments-potentials",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-coefficients",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-moments-full-velocity",
+          "operation": "full-potential-curl",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-potentials",
+              "additionalDerivatives": 1
+            },
+            {
+              "input": "cycle-2-moments-coefficients",
+              "additionalDerivatives": 1
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-moments-updated",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-2-temporal-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-moments-full-velocity",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-moments-after-gr",
+          "operation": "full-quadratic-mean-and-two-derivatives",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-updated",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Every old, cross and new quadratic term of (8.3)."
+        },
+        {
+          "id": "cycle-2-moments-after-P",
+          "operation": "haar-and-full-radial-integral",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-after-gr",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-moments-after-pm",
+          "operation": "fixed-supported-radial-inverse",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-moments-after-P",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "fixed-original-radial-pressure-map",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "T0(gr-rho*P), retaining both terms and the fixed source rho."
+        },
+        {
+          "id": "cycle-2-moments-after-pressure-state",
+          "operation": "sum",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-updated",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-moments-after-pm",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": ""
+        },
+        {
+          "id": "cycle-2-moments-after-E",
+          "operation": "full-mean-residual",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-after-pressure-state",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-background",
+              "additionalDerivatives": 2
+            },
+            {
+              "input": "original-stress",
+              "additionalDerivatives": 2
+            }
+          ],
+          "detail": "Actual Etheta/Ez after this pressure reconstruction."
+        },
+        {
+          "id": "cycle-2-moments-after-new-defects",
+          "operation": "whole-current-flux-integrals",
+          "inputs": [
+            {
+              "input": "cycle-2-moments-after-pressure-state",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-moments-after-gr",
+              "additionalDerivatives": 0
+            },
+            {
+              "input": "cycle-2-moments-after-P",
+              "additionalDerivatives": 0
+            }
+          ],
+          "detail": "New P/Jtheta/Jz, including the entire c_rho*P axial product."
+        }
+      ],
+      "rows": [
+        {
+          "stage": 0,
+          "outputs": {
+            "current": "initial-moments-after-pressure-state",
+            "residual": "initial-moments-after-E",
+            "defects": "initial-moments-after-new-defects"
+          },
+          "sourceRequests": [
+            {
+              "source": "original-background",
+              "producer": "actual-common-admissible-family.mjs: prepareActualCommonAdmissibleFamily; source-global-class.mjs: prepareGlobalClassNormExpansion source request",
+              "current": 19,
+              "residual": 21,
+              "defects": 19
+            },
+            {
+              "source": "original-primary-full-curl",
+              "producer": "actual-global-wave-bound-kernel.mjs: originalWeightedCovarianceJetPowers with authenticated target norms",
+              "current": 19,
+              "residual": 21,
+              "defects": 19
+            },
+            {
+              "source": "original-stress",
+              "producer": "actual-common-target-weighted-norms.mjs: original weighted stress and all-order positive remainder",
+              "current": 19,
+              "residual": 21,
+              "defects": 19
+            },
+            {
+              "source": "fixed-original-pulse",
+              "producer": "actual-pulse-gaussian-power-kernel.mjs: allOrderMixedGaussianJetPowerAudit and common forward propagator",
+              "current": null,
+              "residual": null,
+              "defects": null
+            },
+            {
+              "source": "fixed-original-signed-inverse",
+              "producer": "source-global-class.mjs: prepareGlobalClassNormExpansion (composed norm request remains separate)",
+              "current": null,
+              "residual": null,
+              "defects": null
+            },
+            {
+              "source": "fixed-original-five-profiles",
+              "producer": "source-mean-map.mjs: original fixed profile and positive inverse",
+              "current": 6,
+              "residual": 8,
+              "defects": 6
+            },
+            {
+              "source": "fixed-original-radial-pressure-map",
+              "producer": "source-global-class.mjs: original Gaussian radial primitive and fixed mean patch",
+              "current": 17,
+              "residual": 19,
+              "defects": 17
+            },
+            {
+              "source": "fixed-original-temporal-map",
+              "producer": "source-global-temporal.mjs: complete indexed inverse and source-bound coefficient tails",
+              "current": 15,
+              "residual": 17,
+              "defects": 15
+            }
+          ]
+        },
+        {
+          "stage": 1,
+          "outputs": {
+            "current": "cycle-0-moments-after-pressure-state",
+            "residual": "cycle-0-moments-after-E",
+            "defects": "cycle-0-moments-after-new-defects"
+          },
+          "sourceRequests": [
+            {
+              "source": "original-background",
+              "producer": "actual-common-admissible-family.mjs: prepareActualCommonAdmissibleFamily; source-global-class.mjs: prepareGlobalClassNormExpansion source request",
+              "current": 45,
+              "residual": 47,
+              "defects": 45
+            },
+            {
+              "source": "original-primary-full-curl",
+              "producer": "actual-global-wave-bound-kernel.mjs: originalWeightedCovarianceJetPowers with authenticated target norms",
+              "current": 45,
+              "residual": 47,
+              "defects": 45
+            },
+            {
+              "source": "original-stress",
+              "producer": "actual-common-target-weighted-norms.mjs: original weighted stress and all-order positive remainder",
+              "current": 45,
+              "residual": 47,
+              "defects": 45
+            },
+            {
+              "source": "fixed-original-pulse",
+              "producer": "actual-pulse-gaussian-power-kernel.mjs: allOrderMixedGaussianJetPowerAudit and common forward propagator",
+              "current": 27,
+              "residual": 29,
+              "defects": 27
+            },
+            {
+              "source": "fixed-original-signed-inverse",
+              "producer": "source-global-class.mjs: prepareGlobalClassNormExpansion (composed norm request remains separate)",
+              "current": 22,
+              "residual": 24,
+              "defects": 22
+            },
+            {
+              "source": "fixed-original-five-profiles",
+              "producer": "source-mean-map.mjs: original fixed profile and positive inverse",
+              "current": 32,
+              "residual": 34,
+              "defects": 32
+            },
+            {
+              "source": "fixed-original-radial-pressure-map",
+              "producer": "source-global-class.mjs: original Gaussian radial primitive and fixed mean patch",
+              "current": 43,
+              "residual": 45,
+              "defects": 43
+            },
+            {
+              "source": "fixed-original-temporal-map",
+              "producer": "source-global-temporal.mjs: complete indexed inverse and source-bound coefficient tails",
+              "current": 41,
+              "residual": 43,
+              "defects": 41
+            }
+          ]
+        },
+        {
+          "stage": 2,
+          "outputs": {
+            "current": "cycle-1-moments-after-pressure-state",
+            "residual": "cycle-1-moments-after-E",
+            "defects": "cycle-1-moments-after-new-defects"
+          },
+          "sourceRequests": [
+            {
+              "source": "original-background",
+              "producer": "actual-common-admissible-family.mjs: prepareActualCommonAdmissibleFamily; source-global-class.mjs: prepareGlobalClassNormExpansion source request",
+              "current": 71,
+              "residual": 73,
+              "defects": 71
+            },
+            {
+              "source": "original-primary-full-curl",
+              "producer": "actual-global-wave-bound-kernel.mjs: originalWeightedCovarianceJetPowers with authenticated target norms",
+              "current": 71,
+              "residual": 73,
+              "defects": 71
+            },
+            {
+              "source": "original-stress",
+              "producer": "actual-common-target-weighted-norms.mjs: original weighted stress and all-order positive remainder",
+              "current": 71,
+              "residual": 73,
+              "defects": 71
+            },
+            {
+              "source": "fixed-original-pulse",
+              "producer": "actual-pulse-gaussian-power-kernel.mjs: allOrderMixedGaussianJetPowerAudit and common forward propagator",
+              "current": 53,
+              "residual": 55,
+              "defects": 53
+            },
+            {
+              "source": "fixed-original-signed-inverse",
+              "producer": "source-global-class.mjs: prepareGlobalClassNormExpansion (composed norm request remains separate)",
+              "current": 48,
+              "residual": 50,
+              "defects": 48
+            },
+            {
+              "source": "fixed-original-five-profiles",
+              "producer": "source-mean-map.mjs: original fixed profile and positive inverse",
+              "current": 58,
+              "residual": 60,
+              "defects": 58
+            },
+            {
+              "source": "fixed-original-radial-pressure-map",
+              "producer": "source-global-class.mjs: original Gaussian radial primitive and fixed mean patch",
+              "current": 69,
+              "residual": 71,
+              "defects": 69
+            },
+            {
+              "source": "fixed-original-temporal-map",
+              "producer": "source-global-temporal.mjs: complete indexed inverse and source-bound coefficient tails",
+              "current": 67,
+              "residual": 69,
+              "defects": 67
+            }
+          ]
+        },
+        {
+          "stage": 3,
+          "outputs": {
+            "current": "cycle-2-moments-after-pressure-state",
+            "residual": "cycle-2-moments-after-E",
+            "defects": "cycle-2-moments-after-new-defects"
+          },
+          "sourceRequests": [
+            {
+              "source": "original-background",
+              "producer": "actual-common-admissible-family.mjs: prepareActualCommonAdmissibleFamily; source-global-class.mjs: prepareGlobalClassNormExpansion source request",
+              "current": 97,
+              "residual": 99,
+              "defects": 97
+            },
+            {
+              "source": "original-primary-full-curl",
+              "producer": "actual-global-wave-bound-kernel.mjs: originalWeightedCovarianceJetPowers with authenticated target norms",
+              "current": 97,
+              "residual": 99,
+              "defects": 97
+            },
+            {
+              "source": "original-stress",
+              "producer": "actual-common-target-weighted-norms.mjs: original weighted stress and all-order positive remainder",
+              "current": 97,
+              "residual": 99,
+              "defects": 97
+            },
+            {
+              "source": "fixed-original-pulse",
+              "producer": "actual-pulse-gaussian-power-kernel.mjs: allOrderMixedGaussianJetPowerAudit and common forward propagator",
+              "current": 79,
+              "residual": 81,
+              "defects": 79
+            },
+            {
+              "source": "fixed-original-signed-inverse",
+              "producer": "source-global-class.mjs: prepareGlobalClassNormExpansion (composed norm request remains separate)",
+              "current": 74,
+              "residual": 76,
+              "defects": 74
+            },
+            {
+              "source": "fixed-original-five-profiles",
+              "producer": "source-mean-map.mjs: original fixed profile and positive inverse",
+              "current": 84,
+              "residual": 86,
+              "defects": 84
+            },
+            {
+              "source": "fixed-original-radial-pressure-map",
+              "producer": "source-global-class.mjs: original Gaussian radial primitive and fixed mean patch",
+              "current": 95,
+              "residual": 97,
+              "defects": 95
+            },
+            {
+              "source": "fixed-original-temporal-map",
+              "producer": "source-global-temporal.mjs: complete indexed inverse and source-bound coefficient tails",
+              "current": 93,
+              "residual": 95,
+              "defects": 93
+            }
+          ]
+        }
+      ],
+      "requestedNorms": [
+        {
+          "stage": 0,
+          "source": "original-background",
+          "derivativeOrder": 21,
+          "producer": "actual-common-admissible-family.mjs: prepareActualCommonAdmissibleFamily; source-global-class.mjs: prepareGlobalClassNormExpansion source request",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 0,
+          "source": "original-primary-full-curl",
+          "derivativeOrder": 21,
+          "producer": "actual-global-wave-bound-kernel.mjs: originalWeightedCovarianceJetPowers with authenticated target norms",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 0,
+          "source": "original-stress",
+          "derivativeOrder": 21,
+          "producer": "actual-common-target-weighted-norms.mjs: original weighted stress and all-order positive remainder",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 0,
+          "source": "fixed-original-five-profiles",
+          "derivativeOrder": 8,
+          "producer": "source-mean-map.mjs: original fixed profile and positive inverse",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 0,
+          "source": "fixed-original-radial-pressure-map",
+          "derivativeOrder": 19,
+          "producer": "source-global-class.mjs: original Gaussian radial primitive and fixed mean patch",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 0,
+          "source": "fixed-original-temporal-map",
+          "derivativeOrder": 17,
+          "producer": "source-global-temporal.mjs: complete indexed inverse and source-bound coefficient tails",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 1,
+          "source": "original-background",
+          "derivativeOrder": 47,
+          "producer": "actual-common-admissible-family.mjs: prepareActualCommonAdmissibleFamily; source-global-class.mjs: prepareGlobalClassNormExpansion source request",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 1,
+          "source": "original-primary-full-curl",
+          "derivativeOrder": 47,
+          "producer": "actual-global-wave-bound-kernel.mjs: originalWeightedCovarianceJetPowers with authenticated target norms",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 1,
+          "source": "original-stress",
+          "derivativeOrder": 47,
+          "producer": "actual-common-target-weighted-norms.mjs: original weighted stress and all-order positive remainder",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 1,
+          "source": "fixed-original-pulse",
+          "derivativeOrder": 29,
+          "producer": "actual-pulse-gaussian-power-kernel.mjs: allOrderMixedGaussianJetPowerAudit and common forward propagator",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 1,
+          "source": "fixed-original-signed-inverse",
+          "derivativeOrder": 24,
+          "producer": "source-global-class.mjs: prepareGlobalClassNormExpansion (composed norm request remains separate)",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 1,
+          "source": "fixed-original-five-profiles",
+          "derivativeOrder": 34,
+          "producer": "source-mean-map.mjs: original fixed profile and positive inverse",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 1,
+          "source": "fixed-original-radial-pressure-map",
+          "derivativeOrder": 45,
+          "producer": "source-global-class.mjs: original Gaussian radial primitive and fixed mean patch",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 1,
+          "source": "fixed-original-temporal-map",
+          "derivativeOrder": 43,
+          "producer": "source-global-temporal.mjs: complete indexed inverse and source-bound coefficient tails",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 2,
+          "source": "original-background",
+          "derivativeOrder": 73,
+          "producer": "actual-common-admissible-family.mjs: prepareActualCommonAdmissibleFamily; source-global-class.mjs: prepareGlobalClassNormExpansion source request",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 2,
+          "source": "original-primary-full-curl",
+          "derivativeOrder": 73,
+          "producer": "actual-global-wave-bound-kernel.mjs: originalWeightedCovarianceJetPowers with authenticated target norms",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 2,
+          "source": "original-stress",
+          "derivativeOrder": 73,
+          "producer": "actual-common-target-weighted-norms.mjs: original weighted stress and all-order positive remainder",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 2,
+          "source": "fixed-original-pulse",
+          "derivativeOrder": 55,
+          "producer": "actual-pulse-gaussian-power-kernel.mjs: allOrderMixedGaussianJetPowerAudit and common forward propagator",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 2,
+          "source": "fixed-original-signed-inverse",
+          "derivativeOrder": 50,
+          "producer": "source-global-class.mjs: prepareGlobalClassNormExpansion (composed norm request remains separate)",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 2,
+          "source": "fixed-original-five-profiles",
+          "derivativeOrder": 60,
+          "producer": "source-mean-map.mjs: original fixed profile and positive inverse",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 2,
+          "source": "fixed-original-radial-pressure-map",
+          "derivativeOrder": 71,
+          "producer": "source-global-class.mjs: original Gaussian radial primitive and fixed mean patch",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 2,
+          "source": "fixed-original-temporal-map",
+          "derivativeOrder": 69,
+          "producer": "source-global-temporal.mjs: complete indexed inverse and source-bound coefficient tails",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 3,
+          "source": "original-background",
+          "derivativeOrder": 99,
+          "producer": "actual-common-admissible-family.mjs: prepareActualCommonAdmissibleFamily; source-global-class.mjs: prepareGlobalClassNormExpansion source request",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 3,
+          "source": "original-primary-full-curl",
+          "derivativeOrder": 99,
+          "producer": "actual-global-wave-bound-kernel.mjs: originalWeightedCovarianceJetPowers with authenticated target norms",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 3,
+          "source": "original-stress",
+          "derivativeOrder": 99,
+          "producer": "actual-common-target-weighted-norms.mjs: original weighted stress and all-order positive remainder",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 3,
+          "source": "fixed-original-pulse",
+          "derivativeOrder": 81,
+          "producer": "actual-pulse-gaussian-power-kernel.mjs: allOrderMixedGaussianJetPowerAudit and common forward propagator",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 3,
+          "source": "fixed-original-signed-inverse",
+          "derivativeOrder": 76,
+          "producer": "source-global-class.mjs: prepareGlobalClassNormExpansion (composed norm request remains separate)",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 3,
+          "source": "fixed-original-five-profiles",
+          "derivativeOrder": 86,
+          "producer": "source-mean-map.mjs: original fixed profile and positive inverse",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 3,
+          "source": "fixed-original-radial-pressure-map",
+          "derivativeOrder": 97,
+          "producer": "source-global-class.mjs: original Gaussian radial primitive and fixed mean patch",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        },
+        {
+          "stage": 3,
+          "source": "fixed-original-temporal-map",
+          "derivativeOrder": 95,
+          "producer": "source-global-temporal.mjs: complete indexed inverse and source-bound coefficient tails",
+          "constant": {
+            "status": "SOURCE_BODY_MAJORANT_NOT_EXPANDED"
+          },
+          "sPower": {
+            "status": "SOURCE_OPERATION_DEGREE_NOT_INSTANTIATED"
+          },
+          "boundaryPole": {
+            "status": "SOURCE_WEIGHTED_CLASS_NOT_INSTANTIATED"
+          }
+        }
+      ],
+      "recurrence": "D_(v,a)(m)=max_(w->v) D_(w,a)(m+d_(v,w)); source a needs m; an absent source contributes no request.",
+      "derivativeDemandSeparateFromExplicitEpsilonLoss": true,
+      "extraInputDerivativesMultipliedIntoQPower": false,
+      "logarithmicConversion": {
+        "identity": "S=ell^2",
+        "comparison": "ell<=C*(1+abs(log(q))) on every admitted fixed-neighbor dyadic chart",
+        "forFiniteIntegerSPower": "S^p <= C^(2p)*(1+abs(log(q)))^(2p)",
+        "logPower": "2*p",
+        "logPowerSetToZero": false,
+        "operatorProducts": "multiply constants and add S powers; Leibniz sums take maxima of all mixed derivative powers and retain their binomial counts in the constant",
+        "valueComputed": false,
+        "missing": "Actual source-specific majorant and S-degree leaves for the full updated-current sequence."
+      },
+      "finiteHarmonicRange": {
+        "initialMaximum": 2,
+        "stageBound": "2^(j+1)",
+        "allSumsRetained": true,
+        "meaning": "The wave field starts at |m|<=1 and its residual at |m|<=2. Each complete cycle adds only existing residual modes; its new quadratic residual at most doubles the range.",
+        "rangeChangesConstantsOnly": true
+      },
+      "flatSourceOrderRequest": {
+        "targetNDependent": true,
+        "actualIBPCountNotInvented": true,
+        "expanded": false,
+        "meaning": "A separate fixed-stage original integration-by-parts majorant must request every source derivative needed for the selected q^N flat bound."
+      },
+      "operationDAGIsExplicit": true,
+      "actualStageBodyDAGBound": false,
+      "allOrderClassConstantsInstantiated": false,
+      "workUsed": 70496,
+      "maxWork": 100000,
+      "noStageOrDerivativeDependentQDomain": true
+    },
+    "stages": [
+      {
+        "stage": 0,
+        "sigma": "1/5",
+        "B": "7/10",
+        "CStar": "6/5",
+        "gOverH": "0",
+        "residualDecayOverH": "1/5",
+        "coefficientsComputed": false,
+        "actualFullResidualSample": null,
+        "sampleMonotonicityNotAssumed": true,
+        "sourceClassConstants": "UNINSTANTIATED_SOURCE_NORM_REQUESTS",
+        "logPowers": "UNINSTANTIATED_SOURCE_DEGREE_REQUESTS"
+      },
+      {
+        "stage": 1,
+        "sigma": "3/10",
+        "B": "4/5",
+        "CStar": "13/10",
+        "gOverH": "1/10",
+        "residualDecayOverH": "3/10",
+        "coefficientsComputed": false,
+        "actualFullResidualSample": null,
+        "sampleMonotonicityNotAssumed": true,
+        "sourceClassConstants": "UNINSTANTIATED_SOURCE_NORM_REQUESTS",
+        "logPowers": "UNINSTANTIATED_SOURCE_DEGREE_REQUESTS"
+      },
+      {
+        "stage": 2,
+        "sigma": "2/5",
+        "B": "9/10",
+        "CStar": "7/5",
+        "gOverH": "1/5",
+        "residualDecayOverH": "2/5",
+        "coefficientsComputed": false,
+        "actualFullResidualSample": null,
+        "sampleMonotonicityNotAssumed": true,
+        "sourceClassConstants": "UNINSTANTIATED_SOURCE_NORM_REQUESTS",
+        "logPowers": "UNINSTANTIATED_SOURCE_DEGREE_REQUESTS"
+      },
+      {
+        "stage": 3,
+        "sigma": "1/2",
+        "B": "1",
+        "CStar": "3/2",
+        "gOverH": "3/10",
+        "residualDecayOverH": "1/2",
+        "coefficientsComputed": false,
+        "actualFullResidualSample": null,
+        "sampleMonotonicityNotAssumed": true,
+        "sourceClassConstants": "UNINSTANTIATED_SOURCE_NORM_REQUESTS",
+        "logPowers": "UNINSTANTIATED_SOURCE_DEGREE_REQUESTS"
+      }
+    ],
+    "sourceAuthenticated": false,
+    "allFiniteExponentInductionVerified": true,
+    "allFiniteClassMembershipProved": false,
+    "actualSourceCutoffScheduleConstructed": false,
+    "actualFinalFieldConstructed": false,
+    "residualSamplePolicy": "If one sampled residual grows, inspect interval precision, covered domain, complete terms and constants. An asymptotic exponent inequality does not assert monotone finite-sample residual norms."
+  },
+  "checks": [
+    {
+      "id": "private-authenticated-original-common-domain",
+      "pass": true
+    },
+    {
+      "id": "same-source-tiny-positive-h-definition",
+      "pass": true
+    },
+    {
+      "id": "source-h-strictly-between-zero-and-one-sixteenth",
+      "pass": true,
+      "argument": "T=exp(Md)+10>10, hence 0<h=exp(-8002T)<exp(-4)<1/16, using e>2. No binary floating-point value is assigned to h."
+    },
+    {
+      "id": "all-four-fixed-original-inverse-prerequisites",
+      "pass": true
+    },
+    {
+      "id": "same-qBig-at-every-stage-and-output-derivative-order",
+      "pass": true
+    },
+    {
+      "id": "all-finite-rational-exponent-and-physical-loss-checks",
+      "pass": true
+    },
+    {
+      "id": "missing-current-class-constants-kept-explicit",
+      "pass": true
+    }
+  ],
+  "sourceReferences": [
+    {
+      "pages": [
+        106,
+        107
+      ],
+      "references": [
+        "Proposition9.5"
+      ],
+      "role": "Actual initial pressure/temporal/five-moment class hypotheses"
+    },
+    {
+      "pages": [
+        108,
+        109,
+        110,
+        111
+      ],
+      "references": [
+        "Proposition9.6",
+        "(9.11)--(9.14)"
+      ],
+      "role": "All four ordered updates, full covariance and residual exponent inequalities"
+    },
+    {
+      "pages": [
+        111,
+        112,
+        113,
+        114
+      ],
+      "references": [
+        "Lemmas9.7/9.8",
+        "(9.15)--(9.19)"
+      ],
+      "role": "One domain, finite derivative requests, phase and physical losses"
+    },
+    {
+      "pages": [
+        57,
+        58,
+        59,
+        114,
+        115
+      ],
+      "references": [
+        "Lemma5.4",
+        "Proposition9.9",
+        "(9.20)/(9.21)"
+      ],
+      "role": "Actual source majorants needed before a final cutoff/tail schedule can be instantiated"
+    }
+  ],
+  "remainingObligations": [
+    {
+      "id": "actual-initial-class-state",
+      "required": "Bind Prop9.5 class estimates to the authenticated initial temporal -> new pressure/current moments -> five-map -> final pressure sequence.",
+      "missingValue": "Original input-current weighted seminorms and corresponding all-order S powers."
+    },
+    {
+      "id": "actual-every-stage-forced-harmonic-source",
+      "required": "Bind the exact forced inverse to every actual residual coefficient and full pressure/conjugate/curl/current update.",
+      "missingValue": "Complete same-source cycle body and joint derivative/closure dispatcher."
+    },
+    {
+      "id": "actual-composed-class-norms",
+      "required": "Instantiate all finite derivative requests in this operation DAG with source-only norm generators and exact Gaussian/reciprocal/polynomial-S bounds.",
+      "missingValue": "C_(j,m), P_(j,m), cutoff C-hat_(j,m)/P-hat_(j,m) and every fixed-stage flat C_(j,m,N)."
+    },
+    {
+      "id": "actual-original-shrinking-cutoff-and-tail",
+      "required": "Use those authenticated majorants to choose the common a_j and certify active indices and omitted tail on the selected evaluation window.",
+      "missingValue": "An original final-field schedule and its source-bound field/potential evaluator."
+    }
+  ],
+  "scope": {
+    "sourceDomainAuthenticated": true,
+    "originalExponentInductionExecuted": true,
+    "physicalStageIndependentLossesExecuted": true,
+    "finiteDerivativeDemandDAGExecuted": true,
+    "fullCurrentClassAttachment": false,
+    "allOrderClassConstantsInstantiated": false,
+    "finalSourceSummationInstantiated": false,
+    "allSpaceFinalFieldConstructed": false,
+    "wholeN6Complete": false,
+    "wholeM3Complete": false,
+    "criterionAssessmentEdited": false
+  },
+  "proofSHA256": "9ac5ad3479958727436d6d9bf389177fcc278c0b2bd54531b9b1f87a6a987379"
+}

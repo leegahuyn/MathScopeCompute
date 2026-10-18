@@ -1,0 +1,484 @@
+{
+  "schema": "MathScope.N6.OriginalSevenNormTypedScopeAudit/1",
+  "originalCriteria": {
+    "N6-01": {
+      "id": "N6-01",
+      "title": "초기 finite state 구성",
+      "text": "primary curls 뒤 temporal mean update와 다섯 moment correction을 수행하여 j=0 상태를 만든다. 합격: Proposition9.5\n의 B0=0.7,C0*=1.2와 (9.9),(9.10) 명세를 충족한다. 명세의 상수 없이 경험적 power slope만으로 인증하지 않는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    "N6-02": {
+      "id": "N6-02",
+      "title": "전체 residual 재계산",
+      "text": "R(u+δu,p+δp)=R(u,p)+Lu(δu,δp)+div(δu⊗δu)를 사용하며 매 substep 후 최신 압력을 복원한다. 합격: 독립 직접 PDE\n평가와 decomposed residual이 오차 예산 내 일치한다. 기존 flat tail와 새 quadratic remainder를 장부에서 누락하지 않\n는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    "N6-07": {
+      "id": "N6-07",
+      "title": "고정 도메인과 차수 향상",
+      "text": "σj=1/5+j/10, gj=hj/10 및 (9.17),(9.18)의 Km,ℓm,log powers를 추적한다. 합격: 모든 finite stage가 같은 q<qbig 도메\n인을 사용한다. 단 한 번의 step에서 샘플 잔차가 늘면 정밀도/범위/상수부터 조사하고 차수 theorem과 혼동하지 않는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    "N6-08": {
+      "id": "N6-08",
+      "title": "최종 local 합성",
+      "text": "(9.21)에서 Aj,Bj,pj에 shrinking cutoff를 적용하고 curl하여 local field를 만든다. finite residual의 flat terms를 무조건 합\n산하지 않는다. 합격: Lemma5.4의 tail 비교로 (9.20)을 연결한다. 평가 구간의 active indices와 생략 tail의 bound를 저장\n하고 없으면 finite-stage approximation으로 제한한다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    }
+  },
+  "officialPaper": {
+    "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "definitions": [
+      "6.4",
+      "6.5",
+      "9.4"
+    ],
+    "equations": [
+      "6.20",
+      "6.23",
+      "6.24",
+      "6.25",
+      "6.26",
+      "6.27",
+      "6.28",
+      "6.29",
+      "9.8",
+      "9.9",
+      "9.10"
+    ],
+    "pageNumbers": [
+      69,
+      70,
+      71,
+      106,
+      107
+    ]
+  },
+  "typedDefinitions": {
+    "derivatives": [
+      "R",
+      "Z",
+      "T",
+      "H1",
+      "H2"
+    ],
+    "frozenWhenDifferentiating": [
+      "band",
+      "label",
+      "rectangle copy",
+      "representative",
+      "harmonic integer",
+      "carrier rounding"
+    ],
+    "Sstar": "ell_ref^2; all fixed constants may contain finite nonnegative powers of Sstar",
+    "epsilon": "Q_ref^h, exact positive source h, not binary64 replacement",
+    "zeta": "exp(-a_a/log(X/Xa)^2-a_b/log(Xb/X)^2), a_a,a_b>0; zero outside original shell",
+    "delta": "min(1,log(X/Xa),log(Xb/X))",
+    "M": "For each fixed I in N0^5, |D^I f|<=C_I epsilon^alpha Sstar^b_I zeta delta^(-d_I); same common-torus representatives, theta independent, smooth radial zero extension. No pulse-envelope/auxiliary-rectangle condition.",
+    "W": "For each fixed I in N0^5, |D^I A_(label,m)|<=C_I epsilon^alpha Sstar^b_I sqrt(zeta) delta^(-d_I) P(v); collect equal label/harmonic contributions before testing. Fixed supports and compatible common-torus lifts; P is a pointwise weight on0<=v<=Ls. Actual cutoff fields also have smooth temporal zero extension.",
+    "S": "For each fixed I in N0^2, |D_(Z,T)^I F|<=C_I epsilon^alpha Sstar^b_I, with exact normalized radial measure/weight included.",
+    "momentNormalization": "If fstar=Q^a fphysical, integral R^e Haar(fstar)dR = Q^(a-(e+1)/2) integral r^e Haar(fphysical)dr.",
+    "uniformity": "C_I,b_I,d_I depend only on the fixed derivative order and original profile data forj=0; uniform across every original active band, label, copy and point on the SAME original instantiated domain.",
+    "quantifierOrder": "For every fixed I there exist finite source-only constants C_I,b_I,d_I; NOT one constant uniform across all derivative orders."
+  },
+  "sameOriginalDomain": {
+    "bandFloorProof": "q<2^(-(ell0+4)) implies -log2(q)>ell0+4. Every active |ell+log2(q)|<3/4 therefore has ell>=ell0.",
+    "commonSequenceReplaced": false,
+    "compatibleAtlas": "For any two prefix orders valid at this same q, every extra coefficient is exactly zero together with all derivatives. The backgrounds, phases, original matrices, Volterra solutions, H and fixed positive a coincide by ODE uniqueness. The actual monotone b_n>=2^n makes these prefix domains cover every q>0.",
+    "conditions": [
+      "0<q<qGlobalStar",
+      "b_(N+1)*q>=1"
+    ],
+    "exactPrefixProof": "The actual common b_n is monotone. For n>=N+1, b_n*q>=1; the original time cutoff and all its derivatives are exactly zero, including at the flat endpoint.",
+    "nextScale": 617515,
+    "nextScaleTimesQ": 634228,
+    "oneFinitePrefixClaimedValidAtAllQ": false,
+    "prefixOrder": 1,
+    "prefixSharedByAllCoverLabels": true,
+    "prefixSharedByWholeRadialIntegral": true,
+    "q": 622830,
+    "qGlobalStar": 634227,
+    "referenceChart": "The original (R,Z,T), with T>=0, q=Q_ref*s>0 and 1/2<=s<=2."
+  },
+  "domainScope": "The original instantiated completej0 domain, with its compatible-prefix convention. This audit does not enlarge the N1 source window to allq, and does not require an uninstantiated higher prefix.",
+  "normTargets": [
+    {
+      "id": "9.8-wave-B0",
+      "originalRequirement": {
+        "id": "9.8-wave-B0",
+        "criterion": "N6-01",
+        "sourceRoots": [
+          3825348,
+          3825349,
+          3825350
+        ],
+        "statement": "Every grouped source nonzero harmonic in W^(7/10), all fixed derivative orders on one original q<q_big domain.",
+        "minimalUnprovedLemma": "Actual primary complete-curl W^(1/2) estimates, primary linear residual W^(1-3*kappa_s), nonlinear and mean-wave products, full nonzero angular modes, every fixed-order source constant and tail.",
+        "status": "OPEN",
+        "scope": "original complete j=0 state on one common domain",
+        "quantifier": "For every fixed derivative multiindex, uniformly across all original bands, labels, copies and points",
+        "wholeSourceCertificateIndependentlyVerified": false,
+        "dependencyIDs": [
+          "original-registered-source-existence",
+          "common-full-field-domain-support",
+          "all-order-WMS-original-j0-norms",
+          "nonlinear-cutoff-flat-Fourier-Gaussian-tails"
+        ]
+      },
+      "class": "W",
+      "targetExponent": "7/10",
+      "actualTargetMeaning": "each grouped nonzero harmonic of the complete normalized residual",
+      "availableSourceCompositionExponent": "89999/100000",
+      "margin": "19999/100000",
+      "membershipAppliedHere": false
+    },
+    {
+      "id": "9.8-mean-C0",
+      "originalRequirement": {
+        "id": "9.8-mean-C0",
+        "criterion": "N6-01",
+        "sourceRoots": [
+          3614976,
+          3615392
+        ],
+        "statement": "Exact Etheta and Ez in M^(6/5).",
+        "minimalUnprovedLemma": "Actual leading covariance/partition cancellation (9.11); Haar residual M^1.49; temporal zero-mean source M^(1-kappa_s), full four-extra-derivative Fourier inverse and actual cutoff tails.",
+        "status": "OPEN",
+        "scope": "original complete j=0 state on one common domain",
+        "quantifier": "For every fixed derivative multiindex, uniformly across all original bands, labels, copies and points",
+        "wholeSourceCertificateIndependentlyVerified": false,
+        "dependencyIDs": [
+          "original-registered-source-existence",
+          "common-full-field-domain-support",
+          "all-order-WMS-original-j0-norms",
+          "nonlinear-cutoff-flat-Fourier-Gaussian-tails"
+        ]
+      },
+      "class": "M",
+      "targetExponent": "6/5",
+      "actualTargetMeaning": "complete initialized Etheta and Ez",
+      "availableSourceCompositionExponent": "149/100",
+      "margin": "29/100",
+      "membershipAppliedHere": false
+    },
+    {
+      "id": "9.8-defects-C0",
+      "originalRequirement": {
+        "id": "9.8-defects-C0",
+        "criterion": "N6-01",
+        "sourceRoots": [
+          3615055,
+          3615101,
+          3615147
+        ],
+        "statement": "Actual P,Jtheta,Jz in S^(6/5).",
+        "minimalUnprovedLemma": "Fresh temporal defects S^(1-kappa_s); fixed lambda/a mean matrix inverse; full (8.26)/(8.27) remainder class and full radial/Haar integration constants.",
+        "status": "OPEN",
+        "scope": "original complete j=0 state on one common domain",
+        "quantifier": "For every fixed derivative multiindex, uniformly across all original bands, labels, copies and points",
+        "wholeSourceCertificateIndependentlyVerified": false,
+        "dependencyIDs": [
+          "original-registered-source-existence",
+          "common-full-field-domain-support",
+          "all-order-WMS-original-j0-norms",
+          "nonlinear-cutoff-flat-Fourier-Gaussian-tails"
+        ]
+      },
+      "class": "S",
+      "targetExponent": "6/5",
+      "actualTargetMeaning": "latest complete P, Jtheta, Jz",
+      "availableSourceCompositionExponent": "99999/50000",
+      "margin": "39999/50000",
+      "membershipAppliedHere": false
+    },
+    {
+      "id": "9.9-total-wave",
+      "originalRequirement": {
+        "id": "9.9-total-wave",
+        "criterion": "N6-01",
+        "sourceRoots": [
+          3825006,
+          3825007,
+          3825008
+        ],
+        "statement": "Complete wave w in W^(1/2).",
+        "minimalUnprovedLemma": "Uniform actual full-potential curl primary bound, source-positive covariance weights, full support and locally finite cover; total velocity roots cannot alone certify wave class.",
+        "status": "OPEN",
+        "scope": "original complete j=0 state on one common domain",
+        "quantifier": "For every fixed derivative multiindex, uniformly across all original bands, labels, copies and points",
+        "wholeSourceCertificateIndependentlyVerified": false,
+        "sourceRootRole": "complete velocity inspection anchors; these roots are not the isolated grouped wave/curl remainder",
+        "actualNormTargetBindingStillRequired": "Bind w and w-w0_tan separately from the base and mean terms, using actual grouped full-curl source coefficients; total velocity roots alone do not certify W membership.",
+        "dependencyIDs": [
+          "original-registered-source-existence",
+          "common-full-field-domain-support",
+          "all-order-WMS-original-j0-norms",
+          "nonlinear-cutoff-flat-Fourier-Gaussian-tails"
+        ]
+      },
+      "class": "W",
+      "targetExponent": "1/2",
+      "actualTargetMeaning": "isolated full-curl primary wave roots3676894/5/6",
+      "availableSourceCompositionExponent": "1/2",
+      "margin": "0/1",
+      "membershipAppliedHere": true
+    },
+    {
+      "id": "9.9-curl-remainder",
+      "originalRequirement": {
+        "id": "9.9-curl-remainder",
+        "criterion": "N6-01",
+        "sourceRoots": [
+          3825006,
+          3825007,
+          3825008
+        ],
+        "statement": "w-w0_tan in W^(17/25)=W^0.68.",
+        "minimalUnprovedLemma": "Original rm and cutoff/connection terms have W^(1-kappa_s), and mean interactions preserve the required grouped harmonic bounds.",
+        "status": "OPEN",
+        "scope": "original complete j=0 state on one common domain",
+        "quantifier": "For every fixed derivative multiindex, uniformly across all original bands, labels, copies and points",
+        "wholeSourceCertificateIndependentlyVerified": false,
+        "sourceRootRole": "complete velocity inspection anchors; these roots are not the isolated grouped wave/curl remainder",
+        "actualNormTargetBindingStillRequired": "Bind w and w-w0_tan separately from the base and mean terms, using actual grouped full-curl source coefficients; total velocity roots alone do not certify W membership.",
+        "dependencyIDs": [
+          "original-registered-source-existence",
+          "common-full-field-domain-support",
+          "all-order-WMS-original-j0-norms",
+          "nonlinear-cutoff-flat-Fourier-Gaussian-tails"
+        ]
+      },
+      "class": "W",
+      "targetExponent": "17/25",
+      "actualTargetMeaning": "the same waves minus the assembled original transverse primary wave",
+      "availableSourceCompositionExponent": "99999/100000",
+      "margin": "31999/100000",
+      "membershipAppliedHere": true
+    },
+    {
+      "id": "9.9-tangential-and-pressure",
+      "originalRequirement": {
+        "id": "9.9-tangential-and-pressure",
+        "criterion": "N6-01",
+        "sourceRoots": [
+          3614791,
+          3614792,
+          3615361
+        ],
+        "statement": "v,gamma,p_m in M^(9/10).",
+        "minimalUnprovedLemma": "Actual full source input seminorms for temporal, T1, five-moment and T0 operators; support and every required slow/auxiliary derivative.",
+        "status": "OPEN",
+        "scope": "original complete j=0 state on one common domain",
+        "quantifier": "For every fixed derivative multiindex, uniformly across all original bands, labels, copies and points",
+        "wholeSourceCertificateIndependentlyVerified": false,
+        "dependencyIDs": [
+          "original-registered-source-existence",
+          "common-full-field-domain-support",
+          "all-order-WMS-original-j0-norms",
+          "nonlinear-cutoff-flat-Fourier-Gaussian-tails"
+        ]
+      },
+      "class": "M",
+      "targetExponent": "9/10",
+      "actualTargetMeaning": "actual v3614791,gamma3614792,pm3615361",
+      "availableSourceCompositionExponent": "99999/100000",
+      "margin": "9999/100000",
+      "membershipAppliedHere": false
+    },
+    {
+      "id": "9.9-radial",
+      "originalRequirement": {
+        "id": "9.9-radial",
+        "criterion": "N6-01",
+        "sourceRoots": [
+          3614790
+        ],
+        "statement": "beta in M^(19/10).",
+        "minimalUnprovedLemma": "Actual azimuthal-potential realization gives the epsilon radial gain, including the differentiated endpoint/cutoff terms.",
+        "status": "OPEN",
+        "scope": "original complete j=0 state on one common domain",
+        "quantifier": "For every fixed derivative multiindex, uniformly across all original bands, labels, copies and points",
+        "wholeSourceCertificateIndependentlyVerified": false,
+        "dependencyIDs": [
+          "original-registered-source-existence",
+          "common-full-field-domain-support",
+          "all-order-WMS-original-j0-norms",
+          "nonlinear-cutoff-flat-Fourier-Gaussian-tails"
+        ]
+      },
+      "class": "M",
+      "targetExponent": "19/10",
+      "actualTargetMeaning": "actual beta3614790",
+      "availableSourceCompositionExponent": "199999/100000",
+      "margin": "9999/100000",
+      "membershipAppliedHere": false
+    }
+  ],
+  "auditPremiseScope": {
+    "A": "Not an independent p62 completion criterion. Actual positivity/frame/H bounds remain real dependencies where the norm proof uses them; the restricted N1 source application is already supplied by current primary and F/G evidence. A wholeallq M2 Rayleigh audit must not be added as a new N6-01 or N6-02 gate.",
+    "B": "Not an independent p62 completion criterion. The full infinite M2 coefficient/Picard holomorphic eta-strip theorem is not needed merely to re-differentiate the proved actual finiteN1 source functions. Existing proved actual N1 C2/proximity and every-fixed-order compact source constants are reused. No exterior heat holomorphy is required.",
+    "realDependenciesPreserved": [
+      "same original finiteN1 source identity",
+      "source-specific C2/proximity needed by covariance positivity",
+      "same fixed common domain",
+      "every-fixed-order normalized and weighted source bounds used by each operator",
+      "all complete pressure/curl/endpoint/Fourier/flat tails"
+    ]
+  },
+  "minimalNewCommonQuantitativeApplication": {
+    "name": "Original initialized source W/M/S quantitative composition",
+    "notANewAnalyticNormStandard": true,
+    "sourceOnlyConstant": "For each fixedm form the finite sum/product of the original anchored-FTC, protected matrix/square-root, stable normalized Volterra, full Fourier inverse(m+4), full moving/whole radial, fixed five-map and complete nonlinear products. Deferred source_norm_result is the indicated actual generator result, never a caller number or arbitrary supremum.",
+    "stages": [
+      "actual primary full-curl and exact81-label squared covariance cancellation",
+      "full pre-Haar common-Y pullback and source higherstress bound",
+      "latest gr pressure T0 and initial mean residual",
+      "original temporal inverse with ci0 and full T1/A1",
+      "fresh P/J targets, original five equations, latest full pressure",
+      "complete slow/fast residual differences and all nonzero harmonics; original Gaussian and positiveIBP cutoff tails"
+    ],
+    "finiteIBP": "For targetcutoff exponentA usep=max(1,ceil((A-(1-kappa_s))/kappa_s)); target1.49 requiresp49001. Full A_e input demandm+2p+3 and fastNA1 originalEz demandm+2p+8 stay finite. Existing saved positiveIBP recurrence proves this without materializing every derivative table.",
+    "exponentAbsorption": "For any fixed positive exponent gapg and finite log powerb, x^b exp(-g*x) has finite maximum max(1,(b/(e*g))^b). Thus a genuine finite log loss is absorbed on the sameqdomain with a source constant; no derivative-dependent shrink is introduced. The original W/M/S definitions already permit Sstar powers, so those powers need no absorption.",
+    "remainingSourceApplicationGaps": [
+      "Bind the existing all-finite initialized norm/Haar/cutoff/mean-change recurrences to the now completed actual Γ/Phi/five/pressure and fullPDE source theorem, rather than using a stored broad false flag or test success as a mathematical obstruction.",
+      "For9.8wave group actual m=±1,±2 per label and retain complete mean-wave/wave-wave interactions; use exact source coefficients, principal cancellation and cutoff tails.",
+      "For9.8mean compose actual temporal fast cancellation, true Haar residual, finite positiveIBP cutoff bound and the complete temporal/five slow difference; retain latestpm.",
+      "For9.8defects use the actual exact five-row cancellation plus full nonlinear remainder equality, not the correction coefficients alone."
+    ]
+  },
+  "originalRowsDischargedByThisAudit": 0,
+  "originalRegistryEdited": false,
+  "oldProducerConsumerOrTestsReexecuted": false,
+  "inputBindings": {
+    "criteria": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/ORIGINAL_M3_M4_CRITERIA.json",
+      "sha256": "bfe0e57b127849a5413414c8e8340ed5592049082fd211d9172a2fce6f219156",
+      "bytes": 43963
+    },
+    "registry": {
+      "path": "pressure-proof/radial-axial-pde-original-import/RADIAL_AXIAL823_ORIGINAL_ROW_IMPORT.json",
+      "sha256": "2e2e7ffe50b724e46dfc892bd3051ccb1bbb38ce8666d2600ba5b25f5d121c43",
+      "bytes": 6871485
+    },
+    "primaryClass": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/evidence/global-primary-class-20261012/attempt1/actual-primary-class.json",
+      "sha256": "84fbcd228accdff56b13b8a01065cbf6efae9f07cf88421780122a45247f1a25",
+      "bytes": 8483361
+    },
+    "primaryClassCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-primary-class-majorants.mjs",
+      "sha256": "40b3f1220b7ad1b9b05a11ae1378c864351e77e8efe7134ae1b78921fbab47ea",
+      "bytes": 27252
+    },
+    "primaryClassDegreeCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-wave-bound-kernel.mjs",
+      "sha256": "aed60d154195d07b38e2b7fa3005a1b792cc6e8c8867a91008fecec2d33ca6b9",
+      "bytes": 12859
+    },
+    "primaryActual": {
+      "path": "pressure-proof/ACTUAL_PRIMARY_INDEXED_REGULARITY.json",
+      "sha256": "93693f79d2b23b9a9958532838dc42c06950ec42c2b5c377744cfc2980e46fd9",
+      "bytes": 158027
+    },
+    "primarySource": {
+      "path": "pressure-proof/inputs/PRIMARY_INDEXED_SOURCE.json",
+      "sha256": "9f86a6d918380024bca0585b3996519d1445f5d57bbb808f07c83aecc91be13d",
+      "bytes": 2477322
+    },
+    "fgHonesty": {
+      "path": "pressure-proof/independent-review/sigma-native/ACTIVE_N1_FG_NORM_HONESTY_REVIEW.json",
+      "sha256": "5fcf1085960115433be10f445d16c2778726e9a8cf851a8ead73a8c05d73b8d0",
+      "bytes": 23330
+    },
+    "domain": {
+      "path": "pressure-proof/common-domain-divergence/ACTUAL_COMMON_DOMAIN_SUPPORT_DIVERGENCE.json",
+      "sha256": "1c9a843092e7fcee0d571818fee891c1fc63d13276c3c18fc615788186d3633a",
+      "bytes": 96224
+    },
+    "domainReceipt": {
+      "path": "pressure-proof/common-domain-divergence/EXECUTION_RECEIPT.json",
+      "sha256": "55e80a07ad26ee2ecb40ba7b1e37f0161c96861b7646ab58ad43e67a078e54bd",
+      "bytes": 24416
+    },
+    "initialized": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/initialized-angular-construction.json",
+      "sha256": "ba60de00a1e41f9c448da3aabcbf791bc4649b5fcfd99cff7a71865463db8b14",
+      "bytes": 1733741
+    },
+    "normFamily": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/evidence/saved-initialized-norm-family-20261012/attempt1/saved-initialized-norm-family.json",
+      "sha256": "d98a245f1fc563ba44c48d21c59a43d6787fc3895d922472bb3f3ab6e04d9a6d",
+      "bytes": 5286543
+    },
+    "cutoff": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/evidence/saved-initialized-cutoff-norms-20261012/attempt3/saved-initialized-cutoff-norms.json",
+      "sha256": "aaa32363f00da5feb40a384aa8d82db83e7cdcd786a31d61d500bffabbefc9ee",
+      "bytes": 7669505
+    },
+    "haar": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/evidence/source-initial-haar-class-20261012/attempt1/initial-haar-class.json",
+      "sha256": "9bac19d10f7ad82143630936642cee57de35d0ede2d45bf7c354c92b307188ec",
+      "bytes": 6790190
+    },
+    "normFamilyCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-initialized-norm-family.mjs",
+      "sha256": "857a1641e1b5da964ed4893d6108cc06191cf8f8c92c9a16b285af9f0aaf8fc4",
+      "bytes": 12670
+    },
+    "normCompositionCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-initialized-lazy-norm-program.mjs",
+      "sha256": "269deb686610ea0e81c74b88b9365f76b950c9e5de5839efb747faddf9f34ab9",
+      "bytes": 30845
+    },
+    "haarCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-initial-haar-class.mjs",
+      "sha256": "5528fe3a4686bc4ca77a2d49816a0021e590a09e5f0673b9047a1f3f0a363aed",
+      "bytes": 11848
+    },
+    "haarKernel": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-initial-haar-class-kernel.mjs",
+      "sha256": "a54069a199877a34bf524caf6ea1d68a96046868210950987b5fc2b18445138b",
+      "bytes": 8628
+    },
+    "cutoffCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-initialized-cutoff-norms.mjs",
+      "sha256": "83da036b9d759c52c3b18408ee5e76d8eef61b7d6201621252ffa808dc0dc75c",
+      "bytes": 36507
+    },
+    "freshCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-global-fresh-mean-class-majorants.mjs",
+      "sha256": "39fba17a71f79ee2bf4de2b87b19ae845c0f0b0dacaace50ee37d2aa13c8e97d",
+      "bytes": 30594
+    },
+    "changeCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-five-mean-change-norms.mjs",
+      "sha256": "9f04489f62ce682014aee52bbe861388b2ee622ff0c4d6e8022ec06a56a40759",
+      "bytes": 13160
+    },
+    "meanChangeKernel": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-mean-residual-change-kernel.mjs",
+      "sha256": "020632f50bd1ecad8bed03accf76c15d065ba641df21a05d11f8f08ab89d9306",
+      "bytes": 15361
+    },
+    "globalAngularCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-global-angular.mjs",
+      "sha256": "4e9c3ea67b124a953856f83d0aca0dcfec4b01a245043424de2bb035b8d902ca",
+      "bytes": 21721
+    },
+    "initializedAngularCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-initialized-angular.mjs",
+      "sha256": "655809f64af15daa67260ae4207ceac3d3090816086e9920027eedda2ccf24b7",
+      "bytes": 24460
+    },
+    "initialMeanCode": {
+      "path": "MathScopeCompute/research-ide/mathscope-m3/navier/source-global-initial-mean.mjs",
+      "sha256": "513779930558d044076318f39396060465b6518184b952482a0d973ac16bd411",
+      "bytes": 12706
+    }
+  }
+}

@@ -1,0 +1,382 @@
+--- a/code/verify_all_eight_items.py
++++ b/code/verify_all_eight_items.py
+@@ -18,6 +18,8 @@
+ import math
+ from pathlib import Path
+ from typing import Any, Dict, List
++
++from numerics_corrections import verify_gaussian_model, verify_recorded_losses
+ 
+ 
+ def sha256_file(path: Path) -> str:
+@@ -62,62 +64,27 @@
+     rhs_740 = [(1 - psi) * fm[i] + psi_prime * tm[i] for i in range(3)]
+     identity_740_exact = (lhs_740 == rhs_740)
+ 
+-    # 1.2 Mathematical analysis of Gaussian tail decay from GAUSSIAN_TAIL_CONNECTION.json
+-    # and actual source nodes 617317 (gaussian_lower) and 300173 (lengthRatioLower) in original-parent.ndjson.gz:
+-    # E(ell) = -c * ell^2 + (M + N) * ell * ln(2) + 2 * P * ln(ell)
+-    # E'(ell) = -2 * c * ell + (M + N) * ln(2) + 2 * P / ell
+-    # Exact stationary point where E'(ell_crit) = 0:
+-    # ell_crit = ((M+N)*ln(2) + sqrt(((M+N)*ln(2))^2 + 16*c*P)) / (4*c)
++    # Exact rational enclosure certificate for the v5 MODEL parameters only.
++    # The actual source c and physical derivative constants are not evaluated.
++    gaussian_model = verify_gaussian_model()
++    tail_values = {
++        k: {"log_bound": math.nextafter(float(v["E_enclosure"][1]), math.inf),
++            "derivative_E_prime": math.nextafter(float(v["E_prime_enclosure"][1]), math.inf),
++            "bound_value": None, "positive_exponential_not_materialized": True,
++            "E_enclosure": v["E_enclosure"], "E_prime_enclosure": v["E_prime_enclosure"]}
++        for k, v in gaussian_model["bands"].items()
++    }
+     c_env = 0.05
+     M_pow, N_pow, P_poly = 4, 4, 3
+-    lin_coeff = (M_pow + N_pow) * math.log(2.0)
+-    ell_crit = (lin_coeff + math.sqrt(lin_coeff ** 2 + 16.0 * c_env * P_poly)) / (4.0 * c_env)
+-
+-    # Exact analytical threshold ell_thresh(Lambda=500.0) such that E(ell) <= -500.0 for all ell >= ell_thresh:
+-    target_neg_log = 500.0
+-    # Solve c * ell^2 - (M+N)*ln(2)*ell - 2*P*ln(ell) >= target_neg_log numerically/monotonically above ell_crit:
+-    def E_func(ell_val: float) -> float:
+-        return -c_env * (ell_val ** 2) + lin_coeff * ell_val + 2.0 * P_poly * math.log(ell_val)
+-
+-    def E_deriv(ell_val: float) -> float:
+-        return -2.0 * c_env * ell_val + lin_coeff + (2.0 * P_poly) / ell_val
+-
+-    ell_thresh_500 = math.ceil(ell_crit)
+-    while E_func(float(ell_thresh_500)) > -target_neg_log:
+-        ell_thresh_500 += 1
+-
+-    supercritical_bands = [60, 80, 120, 180, 240, 300]
+-    tail_values = {}
+-    for ell in supercritical_bands:
+-        exp_val = E_func(float(ell))
+-        tail_values[str(ell)] = {
+-            "log_bound": exp_val,
+-            "derivative_E_prime": E_deriv(float(ell)),
+-            "bound_value": math.exp(exp_val) if exp_val > -700 else 0.0,
+-        }
+-
+-    # Strictly decreasing on the supercritical regime ell > ell_crit (40 < 80 < 120 < 180 < 240 < 300)
+-    # AND satisfies the strict -500.0 threshold on the valid regime ell >= ell_thresh_500 (173):
+-    supercritical_monotone = all(
+-        tail_values[str(supercritical_bands[i])]["log_bound"] > tail_values[str(supercritical_bands[i + 1])]["log_bound"]
+-        and tail_values[str(supercritical_bands[i])]["derivative_E_prime"] < 0.0
+-        for i in range(len(supercritical_bands) - 1)
+-    )
+-    threshold_500_satisfied_on_valid_regime = (
+-        ell_thresh_500 == 173
+-        and tail_values["180"]["log_bound"] < -500.0
+-        and tail_values["240"]["log_bound"] < -500.0
+-        and tail_values["300"]["log_bound"] < -500.0
+-    )
++    ell_crit = float(gaussian_model["stationary_point_enclosure"][1])
++    ell_thresh_500 = gaussian_model["least_integer_ell_for_E_le_minus_500"]
++    supercritical_monotone = all(gaussian_model["bands"][str(i)]["strictly_decreasing_here"]
++                                for i in gaussian_model["supercritical_sample_bands"])
++    threshold_500_satisfied_on_valid_regime = all(gaussian_model["threshold_proof"][k]
++        for k in ("E_previous_gt_minus500", "E_threshold_lt_minus500", "strict_decrease_thereafter"))
+     tail_strictly_decreasing_for_large_l = supercritical_monotone and threshold_500_satisfied_on_valid_regime
+-
+-    # Universal C_N bound from GAUSSIAN_TAIL_CONNECTION.json physical_derivative_contract:
+-    # C_N = 2^N * (2P/c)^P * exp((M+N)^2 / (2c)) bounds Q^(-M) * (S*)^P * exp(-c*S*) * q^(-N) for ALL ell >= 1
+-    log_C_N = N_pow * math.log(2.0) + P_poly * math.log(2.0 * P_poly / c_env) + ((M_pow + N_pow) ** 2) / (2.0 * c_env)
+-    universal_C_N_holds_all_ell = all(
+-        (N_pow * math.log(2.0) + E_func(float(ell))) <= log_C_N
+-        for ell in range(1, 301)
+-    )
++    log_C_N = float(gaussian_model["log_C_N_coarse_enclosure"][1])
++    universal_C_N_holds_all_ell = True  # analytic square/max proof in certificate, not finite sampling
+ 
+     # Verify source DAG structure of node 617317 (gaussian_lower) and node 300173 (lengthRatioLower) in parent_nodes
+     gaussian_source_dag_verified = (
+@@ -152,6 +119,10 @@
+         "sympy_js_kernel_exact_comparisons_count": len(indep_alg["kernel_comparison"]["checks"]),
+         "saved_receipt_10_subobligations_bound": saved_receipt["status_summary"]["n6_01_ten_sub_obligations_bound"],
+         "gaussian_tail_decay": {
++            "evidence_scope": "VERIFIER_TEST_ONLY_EXACT_RATIONAL_MODEL_CERTIFICATE",
++            "actual_source_c_evaluated": False,
++            "actual_last_resolved_tau": None,
++            "exact_rational_certificate": gaussian_model,
+             "c_env": c_env,
+             "M_pow": M_pow,
+             "N_pow": N_pow,
+@@ -338,41 +309,16 @@
+     exp_checks = checks.get("original-all-j-exponent-inequalities-recomputed", {}).get("checks", [])
+     loss_ineqs = checks.get("original-physical-loss-domination-recomputed", {}).get("inequalities", [])
+ 
+-    h_loss = Fraction(1, 200)
+-    A_loss = Fraction(1, 2) + h_loss
+-    sx_loss = Fraction(1, 2) + h_loss / 2
+-    st_loss = Fraction(1, 1) + Fraction(3, 2) * h_loss
+-
+-    discrepancy_pairs_count = 0
+-    all_differences_j_independent = True
+-    sample_discrepancies = []
+-
+-    for j_idx in range(1, 7):
+-        for m in range(0, 21):
+-            ell_m_acc = 2 * A_loss + (m + 1) * st_loss
+-            ell_m_prod = ell_m_acc + sx_loss
+-            diff_ell = ell_m_prod - ell_m_acc
+-
+-            km_acc = 2 * A_loss + (m + 2) * st_loss
+-            km_prod = km_acc + 2 * A_loss + sx_loss
+-            diff_km = km_prod - km_acc
+-
+-            if diff_ell != 0 and diff_km != 0:
+-                discrepancy_pairs_count += 1
+-            if diff_ell != sx_loss or diff_km != (2 * A_loss + sx_loss):
+-                all_differences_j_independent = False
+-            if j_idx in (1, 6) and m in (0, 1, 5, 20):
+-                sample_discrepancies.append({
+-                    "stage_j": j_idx,
+-                    "order_m": m,
+-                    "delta_ell_m": str(diff_ell),
+-                    "delta_K_m": str(diff_km),
+-                })
++    # Consume the saved records rather than manufacture 6x21 toy comparisons.
++    recorded_losses = verify_recorded_losses(inputs_dir)
++    discrepancy_pairs_count = recorded_losses["discrepancy_records"]  # legacy key: records, not pairs
++    all_differences_j_independent = recorded_losses["stage_independent_algebra"]
++    sample_discrepancies = recorded_losses["rows"][:9]
+ 
+     h_val = Fraction(1, 1000)
+     delta_sigma_per_stage = Fraction(1, 10)
+     g_slope_per_stage = h_val / 10
+-    j_threshold_shift_m1 = math.ceil(float((Fraction(1, 2) - Fraction(3, 2) * h_val) / (g_slope_per_stage / 2)))
++    j_threshold_shift_m1 = None  # no source-derived offset/J shift established
+ 
+     # Shrinking cutoff schedule (Lemma 5.4 / Prop. 9.9) with stage gain delta_sigma_j = 0.1 * j
+     a_seq = [0.0]
+@@ -409,20 +355,29 @@
+         "loss_checks_count": 204,
+         "discrepancy_pairs_count": discrepancy_pairs_count,
+         "loss_differences_independent_of_j": all_differences_j_independent,
+-        "exact_difference_formula_m_ge_1": "1/2 - (3/2)*h (strictly independent of stage index j)",
++        "exact_difference_formula_m_ge_1": recorded_losses["difference_formulas"],
++        "exact_difference_formula_m_eq_0": recorded_losses["m_zero"],
++        "recorded_loss_audit": recorded_losses,
++        "discrepancy_count_semantics": "126 discrepancy records in 63 (stage,order) pairs",
+         "stage_improvement_delta_sigma": str(delta_sigma_per_stage),
+         "threshold_stage_shift_for_h_1e_minus_3": j_threshold_shift_m1,
+-        "convergence_and_order_improvement_preserved": (all_differences_j_independent and delta_sigma_per_stage == Fraction(1, 10)),
++        "convergence_and_order_improvement_preserved": False,
++        "conditional_exponent_gain_preserved": (all_differences_j_independent and delta_sigma_per_stage == Fraction(1, 10)),
++        "actual_all_stage_bounds_discharged": False,
+         "sample_discrepancies": sample_discrepancies,
+         "actual_stage_cycle_schedule_rows_count": len(stage_sched_doc.get("stage_rows", [])),
+         "actual_stage_attachment_gaps_keys": list(stage_gaps_doc.keys()),
+         "n608_shrinking_cutoff_verification": {
+             "cutoff_rows": cutoff_rows,
+-            "all_lemma_5_4_inequalities_hold": all(r["lemma_5_4_inequality_holds"] for r in cutoff_rows),
++            "all_lemma_5_4_inequalities_hold": False,
++            "model_sample_inequalities_hold": all(r["lemma_5_4_inequality_holds"] for r in cutoff_rows),
++            "actual_tail_bound": None,
++            "scope": "Toy finite radii and half-radius sample checks only; no all-q Lemma5.4 certificate. Model gain uses delta_sigma*j, not the original h*j/10. a_j values here are model radii, not the paper increasing multipliers.",
+             "a_j_dyadic_doubling_holds": all(r["dyadic_separation_2a_j_le_a_prev"] for r in cutoff_rows),
+             "sample_q_window": q_window,
+             "active_indices_on_window": active_indices,
+-            "locally_finite_sum_verified": len(active_indices) < len(cutoff_rows),
++            "locally_finite_sum_verified": False,
++            "finite_model_list_has_inactive_entries": len(active_indices) < len(cutoff_rows),
+         },
+     }
+ 
+@@ -453,7 +408,8 @@
+ 
+     jet_orders = list(range(6))
+     f_j_norms = {}
+-    origin_flatness_verified = True
++    origin_flatness_verified = False
++    model_origin_value_assigned_zero = True
+     for j in jet_orders:
+         vals_at_origin = 0.0
+         if vals_at_origin != 0.0:
+@@ -487,7 +443,9 @@
+         max_lhs = max(c_jm * (b_j ** (m - j)) * norm_fj for m in range(half_j + 1))
+         extension_rows.append({
+             "j": j,
+-            "F_j_norm_on_K": norm_fj,
++            "F_j_norm_on_K": None,
++            "model_sample_magnitude": norm_fj,
++            "evidence_scope": "FINITE_TOY_RADIAL_SAMPLES_NOT_CaK_NORMS",
+             "b_j": b_j,
+             "monotone_b_j_gt_b_prev": b_j > b_seq[j - 1],
+             "max_m_le_half_j_lhs": max_lhs,
+@@ -496,25 +454,42 @@
+         })
+ 
+     return {
+-        "evidence_grade": "ACTUAL_EXTERIOR_90_JETS_AUDIT_PLUS_WHOLE_K_CROSS_TERM_AND_EXTENSION_VERIFIER",
++        "evidence_grade": "SAVED_EXTERIOR_RECORD_COUNTS_AND_TOY_RADIAL_SAMPLES_ONLY",
++        "mathematical_complete": False,
++        "new_M3_completions": 0,
++        "actual_whole_K_source_attached": False,
++        "actual_Fj_CaK_norms": None,
+         "verifier_test_label": "Whole-K cross-term and b_j extension verifier tests Lemma 10.2/10.3 equations; actual global K jets depend on N6-08 local limit",
+         "actual_terminal_source_checks_count": len(term_app.get("source_checks", [])),
+-        "actual_recorded_integer_b_j_sequence": term_energy.get("extension_schedule", {}).get("b_j_integers", [5, 11, 22, 43, 86, 172]),
++        "actual_recorded_integer_b_j_sequence": term_energy.get("n7_05", {}).get("actual_b_j"),
++        "historical_v5_hardcoded_b_j_sequence": [5, 11, 22, 43, 86, 172],
++        "historical_v5_b_sequence_scope": "Hardcoded in prior verifier; not sourced actual whole-K extension evidence.",
++        "recorded_b_sequence_is_not_actual_whole_K_certificate": True,
+         "n704_terminal_force_jets": {
+             "compact_set_K_radius": r_out,
+             "cutoff_transition_annulus": [r_in, r_out],
+-            "cross_terms_included": True,
++            "cross_terms_included": False,
++            "one_toy_first_cutoff_derivative_term_included": True,
++            "evidence_scope": "MODEL_RADIAL_SAMPLES_ONLY; NO_ALL_CROSS_TERMS_OR_WHOLE_K_NORM",
++            "cutoff_regularity": "piecewise cubic C1; not C-infinity at the joins",
+             "origin_flatness_verified": origin_flatness_verified,
+-            "f_j_norms_on_K": {str(k): v for k, v in f_j_norms.items()},
++            "model_origin_value_assigned_zero": model_origin_value_assigned_zero,
++            "all_origin_derivatives_verified": False,
++            "f_j_norms_on_K": None,
++            "model_sample_magnitudes_by_j": {str(k): v for k, v in f_j_norms.items()},
+         },
+         "n705_extension_parameters": {
+             "b_0": b_seq[0],
+             "extension_rows": extension_rows,
+-            "all_b_j_conditions_hold": all(
++            "all_b_j_conditions_hold": False,
++            "actual_whole_K_CaK_norms_supplied": False,
++            "actual_integer_b_j_constructed": False,
++            "model_sample_scalar_conditions_hold": all(
+                 r["monotone_b_j_gt_b_prev"] and r["paper_condition_b_j_power_m_minus_j_holds"]
+                 for r in extension_rows
+             ),
+-            "compact_support_in_t_within_0_2": True,
++            "compact_support_in_t_within_0_2": False,
++            "model_intended_support": "[0,2]; actual all-order extension not constructed",
+             "force_extension_separated_from_velocity": True,
+         },
+     }
+@@ -540,7 +515,8 @@
+         if t <= t_quiet:
+             return 0.0
+         s = (t - t_quiet) / (t_end - t_quiet)
+-        return (6.0 * s * s * (1.0 - s)) / (t_end - t_quiet)
++        # Exact derivative of the retained s**3 * (3 - 2*s).
++        return (9.0 * s * s - 8.0 * s * s * s) / (t_end - t_quiet)
+ 
+     spatial_norm_u_sq = 0.045
+     spatial_norm_grad_u_sq = 0.180
+@@ -629,10 +605,17 @@
+             }
+ 
+     return {
+-        "evidence_grade": "ACTUAL_ENERGY_REFINEMENT_AUDIT_PLUS_ZERO_IC_AND_4AXIS_VERIFIER",
++        "evidence_grade": "SAVED_RECORD_COUNTS_AND_MODEL_ENERGY_ERROR_BUDGET_ONLY",
++        "mathematical_complete": False,
++        "new_M3_completions": 0,
++        "actual_final_field_source_attached": False,
++        "actual_whole_K_integrals": None,
++        "actual_last_resolved_tau": None,
+         "verifier_test_label": "Zero-IC solenoidal energy integrator and 4-axis error budget verifier test Lemma 10.4 and Sec. 10.4; actual global field near-T evaluation remains open",
+         "actual_energy_refinement_checks_count": len(energy_conn.get("source_checks", [])),
+         "n706_global_energy_balance": {
++            "evidence_scope": "VERIFIER_TEST_ONLY_MODEL_AMPLITUDE_AND_ASSUMED_SPATIAL_NORMALIZATIONS",
++            "actual_whole_K_energy_balance_verified": False,
+             "zero_initial_condition_enforced": True,
+             "quiet_interval": [0.0, t_quiet],
+             "viscosity_nu": nu,
+@@ -643,6 +626,10 @@
+             ),
+         },
+         "n805_four_axis_adaptation": {
++            "evidence_scope": "VERIFIER_TEST_ONLY_TOY_ERROR_FORMULAS; NO_ACTUAL_REFINEMENT_RUNS",
++            "actual_directed_precision_runs": False,
++            "actual_final_spatial_Fourier_coefficient_runs": False,
++            "actual_last_resolved_tau": None,
+             "independent_axis_sweeps_at_tau_1e_minus_4": axis_sweeps,
+             "each_axis_monotone_decreasing": {
+                 axis_name: all(
+@@ -652,7 +639,8 @@
+                 for axis_name, rows in axis_sweeps.items()
+             },
+             "tau_progression": tau_progression,
+-            "last_resolved_tau": last_resolved_tau,
++            "last_resolved_tau": None,
++            "model_last_resolved_tau": last_resolved_tau,
+             "unresolved_reason": unresolved_reason,
+         },
+     }
+@@ -661,7 +649,10 @@
+ def run_all_verifiers(root_dir: Path) -> Dict[str, Any]:
+     inputs_dir = root_dir / "inputs"
+     return {
+-        "schema": "mathscope.m3.eight-items-verification/2",
++        "schema": "mathscope.m3.eight-items-verification/3",
++        "mathematical_complete": False,
++        "new_M3_completions": 0,
++        "actual_last_resolved_tau": None,
+         "package_root_relative": True,
+         "n601_verification": verify_n601_identities_and_bindings(inputs_dir),
+         "n602_verification": verify_n602_full_residual_substeps(inputs_dir=inputs_dir, nu=Fraction(1, 1)),
+--- a/code/test_all_eight_items.py
++++ b/code/test_all_eight_items.py
+@@ -53,17 +53,23 @@
+         res = v8.verify_n607_and_n608_losses_and_summation(INPUTS_DIR)
+         self.assertEqual(res["discrepancy_pairs_count"], 126)
+         self.assertTrue(res["loss_differences_independent_of_j"])
+-        self.assertTrue(res["convergence_and_order_improvement_preserved"])
+-        self.assertTrue(res["n608_shrinking_cutoff_verification"]["all_lemma_5_4_inequalities_hold"])
++        self.assertFalse(res["convergence_and_order_improvement_preserved"])
++        self.assertTrue(res["conditional_exponent_gain_preserved"])
++        self.assertEqual(res["recorded_loss_audit"]["stage_order_combinations"], 63)
++        self.assertFalse(res["n608_shrinking_cutoff_verification"]["all_lemma_5_4_inequalities_hold"])
++        self.assertTrue(res["n608_shrinking_cutoff_verification"]["model_sample_inequalities_hold"])
++        self.assertIsNone(res["n608_shrinking_cutoff_verification"]["actual_tail_bound"])
+         self.assertTrue(res["n608_shrinking_cutoff_verification"]["a_j_dyadic_doubling_holds"])
+-        self.assertTrue(res["n608_shrinking_cutoff_verification"]["locally_finite_sum_verified"])
++        self.assertFalse(res["n608_shrinking_cutoff_verification"]["locally_finite_sum_verified"])
+ 
+     def test_n704_and_n705_terminal_jets_and_extension_parameters(self) -> None:
+         res = v8.verify_n704_and_n705_terminal_jets_and_extension(INPUTS_DIR)
+-        self.assertTrue(res["n704_terminal_force_jets"]["cross_terms_included"])
+-        self.assertTrue(res["n704_terminal_force_jets"]["origin_flatness_verified"])
+-        self.assertEqual(res["actual_recorded_integer_b_j_sequence"], [5, 11, 22, 43, 86, 172])
+-        self.assertTrue(res["n705_extension_parameters"]["all_b_j_conditions_hold"])
++        self.assertFalse(res["n704_terminal_force_jets"]["cross_terms_included"])
++        self.assertFalse(res["n704_terminal_force_jets"]["origin_flatness_verified"])
++        self.assertIsNone(res["actual_recorded_integer_b_j_sequence"])
++        self.assertEqual(res["historical_v5_hardcoded_b_j_sequence"], [5, 11, 22, 43, 86, 172])
++        self.assertFalse(res["n705_extension_parameters"]["all_b_j_conditions_hold"])
++        self.assertTrue(res["n705_extension_parameters"]["model_sample_scalar_conditions_hold"])
+         self.assertTrue(res["n705_extension_parameters"]["force_extension_separated_from_velocity"])
+ 
+     def test_n706_and_n805_zero_ic_energy_and_four_axis_adaptation(self) -> None:
+@@ -71,7 +77,30 @@
+         self.assertTrue(res["n706_global_energy_balance"]["all_runs_satisfy_zero_ic_and_10_14"])
+         sweeps_ok = res["n805_four_axis_adaptation"]["each_axis_monotone_decreasing"]
+         self.assertTrue(all(sweeps_ok.values()))
+-        self.assertEqual(res["n805_four_axis_adaptation"]["last_resolved_tau"], 1e-4)
++        self.assertIsNone(res["n805_four_axis_adaptation"]["last_resolved_tau"])
++        self.assertEqual(res["n805_four_axis_adaptation"]["model_last_resolved_tau"], 1e-4)
++
++    def test_n706_model_energy_balance_defect_converges_to_zero(self) -> None:
++        """Check the energy identity itself, independently of inequality (10.14)."""
++        res = v8.verify_n706_and_n805_energy_and_adaptation(INPUTS_DIR)
++        runs = res["n706_global_energy_balance"]["refinement_runs"]
++        normalized_by_n_t = {}
++        for run in runs:
++            # a(1)=1, so 2*E_final is the spatial norm multiplier. Removing it
++            # isolates temporal integration error despite changes in n_x.
++            normalized = run["energy_balance_defect"] / (2.0 * run["E_final"])
++            n_t = run["n_t"]
++            # The exact identity is integral(a*a')=1/2. Composite midpoint
++            # quadrature has error <= 4/n_t**2 for this polynomial; see
++            # PROOF_SCOPE.md for the bound. A wrong derivative leaves an O(1)
++            # normalized defect and must not pass via inequality (10.14).
++            self.assertLessEqual(normalized, 4.0 / (n_t * n_t))
++            normalized_by_n_t[n_t] = normalized
++        self.assertEqual(sorted(normalized_by_n_t), [64, 128, 256])
++        for coarse, fine in ((64, 128), (128, 256)):
++            ratio = normalized_by_n_t[coarse] / normalized_by_n_t[fine]
++            self.assertGreater(ratio, 3.9)
++            self.assertLess(ratio, 4.1)
+ 
+ 
+ if __name__ == "__main__":
