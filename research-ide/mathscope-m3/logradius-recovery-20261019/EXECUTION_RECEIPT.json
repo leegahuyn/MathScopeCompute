@@ -1,0 +1,371 @@
+{
+  "schema": "MathScope.LogRadiusRecoveryExecutionReceipt/1",
+  "actor": "ChatGPT current task",
+  "implementation_kind": "NEW source-bound scalar connection; inherited source code and numerical consumers are reused unchanged",
+  "recorded_utc": "2026-10-18T21:39:52.960188+00:00",
+  "source_baseline_commit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+  "local_checkout_head": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+  "branch_expected_by_parent": "mathscope-m3-n6-cloud-20261014",
+  "new_unit": "research-ide/mathscope-m3/logradius-recovery-20261019",
+  "runtime": {
+    "node": "v24.19.0",
+    "external_dependencies_required": false
+  },
+  "code_and_input": {
+    "bind_logradius.mjs": {
+      "bytes": 14245,
+      "sha256": "bfb9896adbe915a2eb37c3a829d4368d4d7fbf9b28bfd3bdb798b6405241c173"
+    },
+    "verify_logradius.mjs": {
+      "bytes": 14806,
+      "sha256": "24226852c4584238e98c8a4b8d187ae833be9ec358c0708d51149a9c3a6e15f0"
+    },
+    "SOURCE_BOUND_INPUTS.json": {
+      "bytes": 21713,
+      "sha256": "c42dd7c8c6cbd442597f30ea6cc58022ba280c8ea36021ad1eb93b90c653f368"
+    }
+  },
+  "execution_commands": {
+    "smoke": {
+      "command": [
+        "node",
+        "--input-type=module",
+        "-e",
+        "import {bindRecoveredLogRadius,projectBoundRecoveredLogRadius} from './research-ide/mathscope-m3/logradius-recovery-20261019/bind_logradius.mjs'; const r=await bindRecoveredLogRadius(); process.stdout.write(JSON.stringify(projectBoundRecoveredLogRadius(r),null,2)+'\\n');"
+      ],
+      "cwd": "/workspace/scratch/00fe7982b3e1/MathScopeCompute",
+      "exit_code": 0,
+      "elapsed_seconds": 0.4131443500518799,
+      "stdout_bytes": 21357,
+      "stderr_bytes": 0,
+      "input_hashes": {
+        "bind_logradius.mjs": "5d7aebf21d62daec0101ec2fe6ecedf2231fb5ca62a35fd038dc71839c049cd8",
+        "SOURCE_BOUND_INPUTS.json": "c42dd7c8c6cbd442597f30ea6cc58022ba280c8ea36021ad1eb93b90c653f368"
+      },
+      "output_hashes": {
+        "stdout.json": "0aa87885a775aeb5b8f9971b452b13ce9167a798884452c65946d41130524886",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "scope": "Successful first new scalar connection smoke. Source snapshot is preserved; later descriptive error labels may differ."
+    },
+    "validation": {
+      "command": [
+        "node",
+        "research-ide/mathscope-m3/logradius-recovery-20261019/verify_logradius.mjs",
+        "--output-dir",
+        "/workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/logradius-recovery-20261019/evidence/validation-attempt1"
+      ],
+      "cwd": "/workspace/scratch/00fe7982b3e1/MathScopeCompute",
+      "exit_code": 0,
+      "elapsed_seconds": 0.5872783660888672,
+      "input_hashes": {
+        "bind_logradius.mjs": "bfb9896adbe915a2eb37c3a829d4368d4d7fbf9b28bfd3bdb798b6405241c173",
+        "verify_logradius.mjs": "24226852c4584238e98c8a4b8d187ae833be9ec358c0708d51149a9c3a6e15f0",
+        "SOURCE_BOUND_INPUTS.json": "c42dd7c8c6cbd442597f30ea6cc58022ba280c8ea36021ad1eb93b90c653f368"
+      },
+      "output_hashes": {
+        "BOUND_LOGRADIUS.json": "591cbefd6ef2b74aacf9be46cc41dd1580445cda10cb5a4ba1b7d86d227958f9",
+        "LOGRADIUS_VALIDATION.json": "026f570ce8d95d439b5c1e3ecf6aaa0259c17cd36537875e72416156a86df2c3",
+        "stdout.log": "e79183fe3b01e1f83890528cda75541700bf66099fb48f1302bd46cdaecb38f7",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "output_policy": {
+      "schema": "MathScope.LogRadiusOutputPolicy/1",
+      "status": "PASS",
+      "default": {
+        "command": [
+          "node",
+          "research-ide/mathscope-m3/logradius-recovery-20261019/verify_logradius.mjs"
+        ],
+        "cwd": "/workspace/scratch/00fe7982b3e1/MathScopeCompute",
+        "exit_code": 0,
+        "elapsed_seconds": 0.6138050556182861,
+        "files_outside_receipt_directory_unchanged": true,
+        "source_hashes_before": {
+          "SOURCE_BOUND_INPUTS.json": "c42dd7c8c6cbd442597f30ea6cc58022ba280c8ea36021ad1eb93b90c653f368",
+          "verify_logradius.mjs": "24226852c4584238e98c8a4b8d187ae833be9ec358c0708d51149a9c3a6e15f0",
+          "bind_logradius.mjs": "bfb9896adbe915a2eb37c3a829d4368d4d7fbf9b28bfd3bdb798b6405241c173",
+          "evidence/validation-attempt1/BOUND_LOGRADIUS.json": "591cbefd6ef2b74aacf9be46cc41dd1580445cda10cb5a4ba1b7d86d227958f9",
+          "evidence/validation-attempt1/LOGRADIUS_VALIDATION.json": "026f570ce8d95d439b5c1e3ecf6aaa0259c17cd36537875e72416156a86df2c3",
+          "evidence/validation-attempt1/stdout.log": "e79183fe3b01e1f83890528cda75541700bf66099fb48f1302bd46cdaecb38f7",
+          "evidence/validation-attempt1/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "evidence/validation-attempt1/COMMAND.json": "f9cf814a16c116079c9138699f9a0a2a54bacd302f76add6c3566ea3a0ba46ff",
+          "evidence/smoke-attempt1/stdout.json": "0aa87885a775aeb5b8f9971b452b13ce9167a798884452c65946d41130524886",
+          "evidence/smoke-attempt1/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "evidence/smoke-attempt1/COMMAND.json": "3708c590a534cc68ae4963befe7320da8c0b87d829ce2a72f56528d76c3c08ea",
+          "evidence/smoke-attempt1/bind_logradius.mjs": "5d7aebf21d62daec0101ec2fe6ecedf2231fb5ca62a35fd038dc71839c049cd8"
+        },
+        "source_hashes_after": {
+          "SOURCE_BOUND_INPUTS.json": "c42dd7c8c6cbd442597f30ea6cc58022ba280c8ea36021ad1eb93b90c653f368",
+          "verify_logradius.mjs": "24226852c4584238e98c8a4b8d187ae833be9ec358c0708d51149a9c3a6e15f0",
+          "bind_logradius.mjs": "bfb9896adbe915a2eb37c3a829d4368d4d7fbf9b28bfd3bdb798b6405241c173",
+          "evidence/validation-attempt1/BOUND_LOGRADIUS.json": "591cbefd6ef2b74aacf9be46cc41dd1580445cda10cb5a4ba1b7d86d227958f9",
+          "evidence/validation-attempt1/LOGRADIUS_VALIDATION.json": "026f570ce8d95d439b5c1e3ecf6aaa0259c17cd36537875e72416156a86df2c3",
+          "evidence/validation-attempt1/stdout.log": "e79183fe3b01e1f83890528cda75541700bf66099fb48f1302bd46cdaecb38f7",
+          "evidence/validation-attempt1/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "evidence/validation-attempt1/COMMAND.json": "f9cf814a16c116079c9138699f9a0a2a54bacd302f76add6c3566ea3a0ba46ff",
+          "evidence/smoke-attempt1/stdout.json": "0aa87885a775aeb5b8f9971b452b13ce9167a798884452c65946d41130524886",
+          "evidence/smoke-attempt1/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "evidence/smoke-attempt1/COMMAND.json": "3708c590a534cc68ae4963befe7320da8c0b87d829ce2a72f56528d76c3c08ea",
+          "evidence/smoke-attempt1/bind_logradius.mjs": "5d7aebf21d62daec0101ec2fe6ecedf2231fb5ca62a35fd038dc71839c049cd8"
+        }
+      },
+      "existing_output": {
+        "command": [
+          "node",
+          "research-ide/mathscope-m3/logradius-recovery-20261019/verify_logradius.mjs",
+          "--output-dir",
+          "/workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/logradius-recovery-20261019/evidence/validation-attempt1"
+        ],
+        "cwd": "/workspace/scratch/00fe7982b3e1/MathScopeCompute",
+        "exit_code": 1,
+        "elapsed_seconds": 0.04606938362121582,
+        "existing_output_hashes_before": {
+          "BOUND_LOGRADIUS.json": "591cbefd6ef2b74aacf9be46cc41dd1580445cda10cb5a4ba1b7d86d227958f9",
+          "LOGRADIUS_VALIDATION.json": "026f570ce8d95d439b5c1e3ecf6aaa0259c17cd36537875e72416156a86df2c3"
+        },
+        "existing_output_hashes_after": {
+          "BOUND_LOGRADIUS.json": "591cbefd6ef2b74aacf9be46cc41dd1580445cda10cb5a4ba1b7d86d227958f9",
+          "LOGRADIUS_VALIDATION.json": "026f570ce8d95d439b5c1e3ecf6aaa0259c17cd36537875e72416156a86df2c3"
+        },
+        "expected_rejection": "EXISTING_EVIDENCE_WILL_NOT_BE_OVERWRITTEN",
+        "rejected_before_binding": true
+      }
+    }
+  },
+  "primary_evidence": {
+    "diagnosis/NEXT_RESUME_ASSESSMENT.json": {
+      "bytes": 6769,
+      "sha256": "0143096f2b9150d38753b732041e2b24e91b7111f1e66a474fac1751cb3eb3ba"
+    },
+    "diagnosis/NEXT_RESUME_ASSESSMENT_KO.md": {
+      "bytes": 2365,
+      "sha256": "123091fb4edb69151df6cfa125249c7c2b97aef2ecfe8bd32104e18c4544d3d9"
+    },
+    "diagnosis/build_source_inputs.py": {
+      "bytes": 4731,
+      "sha256": "3dae948c6339827b5d6dbc51ebb1a3c684124c7979e383db67f6b81c83a1ed2e"
+    },
+    "evidence/FROZEN_DEPENDENCIES_AUDIT_ATTEMPT1.json": {
+      "bytes": 1244,
+      "sha256": "a6447a8779dee17b36d771905cbc699ae36cacbc86b9a9bb41a0d85e7c95c3ae"
+    },
+    "evidence/FROZEN_DEPENDENCIES_UNCHANGED.json": {
+      "bytes": 2027,
+      "sha256": "92f027df217cb88f14fb434740af8060ba86529b5d8abad5680dae99ae080ea2"
+    },
+    "evidence/output-policy/OUTPUT_POLICY_CHECK.json": {
+      "bytes": 4235,
+      "sha256": "11702503c51d0c0a5d871811f48b698cb9caad2a7c974a4311fe4cf57a967722"
+    },
+    "evidence/output-policy/default.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/output-policy/default.stdout.log": {
+      "bytes": 202,
+      "sha256": "5e65584141e3c8fd69583c388243a57df9b61ae847d2fd37014dbfcffa69e81a"
+    },
+    "evidence/output-policy/existing-output.stderr.log": {
+      "bytes": 744,
+      "sha256": "f67cd7073e66d943c2c3677f4aacdc8e93ee71bf02ab16bc7c781b0dbfc67a02"
+    },
+    "evidence/output-policy/existing-output.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/EXECUTION.json": {
+      "bytes": 749,
+      "sha256": "1352bef69f9fa1796a0ec81d230daa47e6dcc4bff46ebc1ca981bf56cfd9aab6"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/FILE_MANIFEST.json": {
+      "bytes": 2328,
+      "sha256": "897b360cce036fa7e5354a41e6dc8e9aeceb5f5a935b7809e3e1709005e956dd"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/INDEPENDENT_API_CHECKS.json": {
+      "bytes": 13634,
+      "sha256": "1fb76fe9c156d9f23e0ba432577bdf64fea7ff8f4a8ed97236a8b390f36c2e7d"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/INDEPENDENT_RECORD_ALGEBRA.json": {
+      "bytes": 1553,
+      "sha256": "b504b90798bb8a797727848a4c8d9e8707bc46a70ff36e7eb726456708f41314"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/LOGRADIUS_BINDING_REVIEW.json": {
+      "bytes": 5477,
+      "sha256": "88c0f68027257b40313f950dd6449d0128dd3a3a253fe30aede784ad7f9b6db6"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/LOGRADIUS_BINDING_REVIEW_KO.md": {
+      "bytes": 3254,
+      "sha256": "51f5aee374384620e2a81d4f798cc04c628db640ca8d1453596dabddd64f1651"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/OBSERVED_BOUND_LOGRADIUS.json": {
+      "bytes": 21412,
+      "sha256": "591cbefd6ef2b74aacf9be46cc41dd1580445cda10cb5a4ba1b7d86d227958f9"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/SOURCE_READ_AUDIT.json": {
+      "bytes": 17680,
+      "sha256": "4fc9e03fbd6ff2a2b9b92ab61c3ede1b656ad938295747baa72c087d1f5478d2"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/independent-logradius-probe.mjs": {
+      "bytes": 6487,
+      "sha256": "142458eaaf42c8536573a4aab489b831208999474274cf5d587a22bc980ed32a"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/reviewed-source/README_KO.md": {
+      "bytes": 10208,
+      "sha256": "1ea052bfe65a375bcd72aa1a55e7f16078d6685f94ff0f81b61c3f466974d271"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/reviewed-source/SOURCE_BOUND_INPUTS.json": {
+      "bytes": 21713,
+      "sha256": "c42dd7c8c6cbd442597f30ea6cc58022ba280c8ea36021ad1eb93b90c653f368"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/reviewed-source/bind_logradius.mjs": {
+      "bytes": 14245,
+      "sha256": "bfb9896adbe915a2eb37c3a829d4368d4d7fbf9b28bfd3bdb798b6405241c173"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/reviewed-source/verify_logradius.mjs": {
+      "bytes": 14806,
+      "sha256": "24226852c4584238e98c8a4b8d187ae833be9ec358c0708d51149a9c3a6e15f0"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/peer-review/logradius-binding-attempt1/stdout.log": {
+      "bytes": 95,
+      "sha256": "04879fe91c1b4671124aa90b69f0e4a9e67fde361258b4e7e8ca908712145af9"
+    },
+    "evidence/smoke-attempt1/COMMAND.json": {
+      "bytes": 1065,
+      "sha256": "3708c590a534cc68ae4963befe7320da8c0b87d829ce2a72f56528d76c3c08ea"
+    },
+    "evidence/smoke-attempt1/bind_logradius.mjs": {
+      "bytes": 14191,
+      "sha256": "5d7aebf21d62daec0101ec2fe6ecedf2231fb5ca62a35fd038dc71839c049cd8"
+    },
+    "evidence/smoke-attempt1/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/smoke-attempt1/stdout.json": {
+      "bytes": 21357,
+      "sha256": "0aa87885a775aeb5b8f9971b452b13ce9167a798884452c65946d41130524886"
+    },
+    "evidence/validation-attempt1/BOUND_LOGRADIUS.json": {
+      "bytes": 21412,
+      "sha256": "591cbefd6ef2b74aacf9be46cc41dd1580445cda10cb5a4ba1b7d86d227958f9"
+    },
+    "evidence/validation-attempt1/COMMAND.json": {
+      "bytes": 1103,
+      "sha256": "f9cf814a16c116079c9138699f9a0a2a54bacd302f76add6c3566ea3a0ba46ff"
+    },
+    "evidence/validation-attempt1/LOGRADIUS_VALIDATION.json": {
+      "bytes": 22130,
+      "sha256": "026f570ce8d95d439b5c1e3ecf6aaa0259c17cd36537875e72416156a86df2c3"
+    },
+    "evidence/validation-attempt1/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/validation-attempt1/stdout.log": {
+      "bytes": 195,
+      "sha256": "e79183fe3b01e1f83890528cda75541700bf66099fb48f1302bd46cdaecb38f7"
+    }
+  },
+  "new_verified_scope": {
+    "source_trace_records": 57,
+    "source_interpretation_records": 3,
+    "additional_arithmetic_records_vs_prior_A13": 21,
+    "original_A13_boundary_ids": [
+      239,
+      257,
+      275
+    ],
+    "numeric_outputs": [
+      259,
+      277,
+      278,
+      279,
+      280,
+      319
+    ],
+    "checks": 35,
+    "negative_controls": 25,
+    "source_parameters_evaluated": [
+      "Md",
+      "T",
+      "BOuter",
+      "lambda",
+      "h",
+      "Tf"
+    ],
+    "h_strictly_positive": true,
+    "existing_factor54_retained": true,
+    "original_ast319_linear_identity_verified": true,
+    "independent512_recurrence_compared": true,
+    "direct_source_byte_stability_verified": true,
+    "source_parameter_T_is_not_external_coordinate_T": true
+  },
+  "fixed_precision_scope": {
+    "original_integral_relative_precision_guaranteed": false,
+    "K_normalized_log_enclosure_width": "log(54)",
+    "rounding_inflation_also_retained": true,
+    "log_coordinate_width_has_no_new_acceptance_threshold": true,
+    "whole_Xb_relative_precision_guaranteed": false
+  },
+  "frozen_dependencies": {
+    "caller_manifest_sha256": "d3891b5609b3ac25063cd5b24758e9b9d92e3fc8d57839b93c440202d1fb5074",
+    "radial_manifest_sha256": "9347d26d3a8db1ef9bf3f6c7208eef3961663510a57b1c8543ada000587b8fd6",
+    "all83_manifest_members_unchanged": true,
+    "one_existing_generated_bytecode_is_declared_excluded": true,
+    "original_frozen_source_or_evidence_files_modified": false
+  },
+  "attempt_history": [
+    "Smoke attempt1 succeeded; its exact runtime source is preserved. Descriptive error fields were subsequently clarified before main verification.",
+    "Validation attempt1 succeeded35checks25negativecontrols.",
+    "Default-output check succeeded without writes to the source/evidence tree. Existing-output invocation correctly exited1 before binding, preserving prior evidence.",
+    "An auxiliary frozen-file inventory assertion first rejected one existing Python bytecode file despite the caller manifest explicitly excluding generated bytecode. Exact observation is preserved; final audit follows that original exclusion and verifies all83 source/evidence members unchanged."
+  ],
+  "independent_review": {
+    "status": "PASS_WITH_ORIGINAL_SCOPE_OPEN",
+    "review_sha256": "88c0f68027257b40313f950dd6449d0128dd3a3a253fe30aede784ad7f9b6db6",
+    "path": "evidence/peer-review/logradius-binding-attempt1/LOGRADIUS_BINDING_REVIEW.json",
+    "checks_passed": 9,
+    "negative_controls_passed": 5,
+    "pinned_files_checked": 30,
+    "baseline_git_blobs_checked": 14,
+    "original_runtime_import_files_checked": 11,
+    "actual_source_records_checked": 60,
+    "material_findings": [],
+    "main_verifier_rerun": false,
+    "original_producers_rerun": false,
+    "core_runtime_verifier_and_input_manifest_sha256_unchanged": true,
+    "readme_snapshot_note": "Independent reviewed README snapshot is preserved. Final README adds this review result and the explicit unchanged-dependency inventory note; no runtime or formula change followed review."
+  },
+  "remote_and_site": {
+    "github_write_attempted_by_this_subagent": false,
+    "commit_created_by_this_subagent": false,
+    "CI_run_by_this_subagent": false,
+    "site_publish_attempted_by_this_subagent": false,
+    "parent_owns_final_remote_save_and_publication": true
+  },
+  "status": {
+    "M3_inherited": "62/64",
+    "N7_06": "OPEN",
+    "N8_05": "OPEN",
+    "actual_global_last_resolved_tau": null,
+    "new_M3_closures": 0,
+    "M4_original16_acceptance_verified_here": false
+  },
+  "exact_next_resume": {
+    "small_scalar_possible": "Original XR has13named closed dependencies and no unknown ref; evaluate XR and28825/28826 without discarding propagated logradius uncertainty in a separate requested unit.",
+    "first_actual_frame_obligation": "Authenticate external R/Z/T622802/622803/622804 andell622791 from the actual global point and original ell>=ell0/coefficient window before mesh and representative evaluation.",
+    "downstream": [
+      "original mesh ceilings623855/623856/623857",
+      "same-box active intersection andnegativeWidth623914 sign",
+      "actual representativeargs623921/623934 andslow inverse623935",
+      "whole-K final field andoriginalN7-06/N8-05"
+    ]
+  },
+  "frozen_utc": "2026-10-18T21:42:43.921229+00:00"
+}

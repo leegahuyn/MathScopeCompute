@@ -1,0 +1,463 @@
+{
+  "schema": "MathScope.RecoveredOriginalA13Binding/1",
+  "pass": true,
+  "sourceAuthenticated": true,
+  "sourceAuthenticationScope": "Byte-pinned occurrence of the original A13 subgraph and reciprocal276 in the saved recovered source; no current indexed/physical caller authority is issued",
+  "originalBaselineCommit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+  "inputManifestSHA256": "02554e5544ed39fd79b369462de85c1f863721c8adaac78d0eecebb60f3da6a9",
+  "callerCapsulePayloadSHA256": "620925294060e0c821492c5bbf2dcc20cfcab2c83e9a937fa3798498813dec06",
+  "sourceRecordCount": 77,
+  "sourceRecordSHA256": "6ae40f81c526c29d40b55d37dfd4e5496d1e4eda24823605dcfe436610e4a524",
+  "sourceNodeIds": [
+    0,
+    1,
+    8,
+    9,
+    14,
+    19,
+    20,
+    21,
+    24,
+    166,
+    167,
+    180,
+    181,
+    184,
+    185,
+    186,
+    207,
+    219,
+    222,
+    223,
+    224,
+    225,
+    226,
+    227,
+    228,
+    229,
+    230,
+    231,
+    232,
+    233,
+    234,
+    235,
+    236,
+    237,
+    238,
+    239,
+    240,
+    241,
+    242,
+    243,
+    244,
+    245,
+    246,
+    247,
+    248,
+    249,
+    250,
+    251,
+    252,
+    253,
+    254,
+    255,
+    256,
+    257,
+    258,
+    259,
+    260,
+    261,
+    262,
+    263,
+    264,
+    265,
+    266,
+    267,
+    268,
+    269,
+    270,
+    271,
+    272,
+    273,
+    274,
+    275,
+    276,
+    277,
+    278,
+    279,
+    280
+  ],
+  "rootNames": {
+    "A13SteepIntegral": 239,
+    "A13FlattenIntegral": 257,
+    "A13TerminalIntegral": 275,
+    "Qb": 259,
+    "Qp": 275,
+    "terminalWait": 280
+  },
+  "inheritedSourceAudit": {
+    "pass": true,
+    "sourceAuthenticated": false,
+    "parentGraphAuthenticationRequired": true,
+    "checks": [
+      {
+        "id": "A13SteepIntegral-complete-body",
+        "pass": true,
+        "actual": 238,
+        "expected": 238
+      },
+      {
+        "id": "A13SteepIntegral-original-endpoints",
+        "pass": true,
+        "actual": [
+          0,
+          1
+        ],
+        "expected": [
+          0,
+          1
+        ]
+      },
+      {
+        "id": "A13FlattenIntegral-complete-body",
+        "pass": true,
+        "actual": 256,
+        "expected": 256
+      },
+      {
+        "id": "A13FlattenIntegral-original-endpoints",
+        "pass": true,
+        "actual": [
+          0,
+          1
+        ],
+        "expected": [
+          0,
+          1
+        ]
+      },
+      {
+        "id": "A13TerminalIntegral-complete-body",
+        "pass": true,
+        "actual": 274,
+        "expected": 274
+      },
+      {
+        "id": "A13TerminalIntegral-original-endpoints",
+        "pass": true,
+        "actual": [
+          1,
+          261
+        ],
+        "expected": [
+          1,
+          261
+        ]
+      },
+      {
+        "id": "original-positive-Qb-definition",
+        "pass": true,
+        "actual": 259,
+        "expected": 259
+      },
+      {
+        "id": "original-Qp-is-complete-terminal-integral",
+        "pass": true
+      },
+      {
+        "id": "original-positive-wait-definition",
+        "pass": true,
+        "actual": 280,
+        "expected": 280
+      },
+      {
+        "id": "original-positive-parameter-separation",
+        "pass": true
+      }
+    ],
+    "integrals": [
+      {
+        "name": "A13SteepIntegral",
+        "root": 239,
+        "body": 238,
+        "variable": 226,
+        "lower": 0,
+        "upper": 1
+      },
+      {
+        "name": "A13FlattenIntegral",
+        "root": 257,
+        "body": 256,
+        "variable": 246,
+        "lower": 0,
+        "upper": 1
+      },
+      {
+        "name": "A13TerminalIntegral",
+        "root": 275,
+        "body": 274,
+        "variable": 262,
+        "lower": 1,
+        "upper": 261
+      }
+    ],
+    "inequalities": {
+      "parameterDomain": "T=exp(1048576)+10>128;0<h<lambda<1/16; a=1-lambda,b=1-h in(1/2,1);rho_o=h/256<1/4096.",
+      "cutoff": "The original square-seed sigma is nondecreasing,0<=sigma<=1,sigma(0)=0,sigma(1)=1,sigma(1-s)=1-sigma(s). Thus integral_0^1 sigma=integral_0^1(1-sigma)=1/2.",
+      "steep": "For0<=s<=1,0<=S(s)<=s,exp(a(s-S)) in[1,e],lambda+a*sigma-h=(lambda-h)+a*sigma. Therefore I_steep>=a/2>1/4 and I_steep<=e*(1-h)<3.",
+      "flatten": "exp(b*S) in[1,e] and integral(1-sigma)=1/2 imply b/2<=I_flatten<=e*b/2. Therefore1/4<I_flatten<3/2.",
+      "terminal": "After t=(s-1)/2, Qp=rho_o/(1-rho_o)*integral_0^1 exp(b*(1+2t))*sigma_prime(t)dt. Its lower bound exceeds rho_o, and its upper bound is below2*e^3*rho_o<54*rho_o.",
+      "elementary": "2<e<3 follows from the positive factorial series and its geometric tail; no binary64 transcendental comparison is used."
+    }
+  },
+  "inheritedIntegralBounds": [
+    {
+      "name": "A13SteepIntegral",
+      "root": 239,
+      "numericalInterval": {
+        "lower": {
+          "rational": "1/4"
+        },
+        "upper": {
+          "rational": "3"
+        }
+      },
+      "strictlyPositiveLower": true,
+      "finiteUpper": true,
+      "exactOriginalIntegrandRetained": true,
+      "originalIntegralValueRelativeToleranceGuaranteed": false
+    },
+    {
+      "name": "A13FlattenIntegral",
+      "root": 257,
+      "numericalInterval": {
+        "lower": {
+          "rational": "1/4"
+        },
+        "upper": {
+          "rational": "3/2"
+        }
+      },
+      "strictlyPositiveLower": true,
+      "finiteUpper": true,
+      "exactOriginalIntegrandRetained": true,
+      "originalIntegralValueRelativeToleranceGuaranteed": false
+    },
+    {
+      "name": "A13TerminalIntegral",
+      "root": 275,
+      "numericalInterval": {
+        "lower": {
+          "exp": {
+            "neg": {
+              "exp": {
+                "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413204591/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+              }
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "neg": {
+              "exp": {
+                "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+              }
+            }
+          }
+        }
+      },
+      "strictlyPositiveLower": true,
+      "finiteUpper": true,
+      "exactOriginalIntegrandRetained": true,
+      "originalIntegralValueRelativeToleranceGuaranteed": false
+    }
+  ],
+  "originalHClosedInterval": {
+    "lower": {
+      "exp": {
+        "neg": {
+          "exp": {
+            "rational": "60708923219674361378774373936577218383009030823399465164165255105870445445706602193/57896044618658097711785492504343953926634992332820282019728792003956564819968"
+          }
+        }
+      }
+    },
+    "upper": {
+      "exp": {
+        "neg": {
+          "exp": {
+            "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413201453/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+          }
+        }
+      }
+    }
+  },
+  "node275ClosedInterval": {
+    "lower": {
+      "exp": {
+        "neg": {
+          "exp": {
+            "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413204591/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+          }
+        }
+      }
+    },
+    "upper": {
+      "exp": {
+        "neg": {
+          "exp": {
+            "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+          }
+        }
+      }
+    }
+  },
+  "node276ClosedInterval": {
+    "lower": {
+      "exp": {
+        "exp": {
+          "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+        }
+      }
+    },
+    "upper": {
+      "exp": {
+        "exp": {
+          "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413204591/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+        }
+      }
+    }
+  },
+  "normalized": {
+    "exactRelation": "node275 = h*K; node276 = h^(-1)*K^(-1)",
+    "K": {
+      "quantity": "node275/h",
+      "closedRationalBounds": [
+        "1/256",
+        "27/128"
+      ]
+    },
+    "inverseK": {
+      "quantity": "h*node276 = h/node275",
+      "closedRationalBounds": [
+        "128/27",
+        "256"
+      ]
+    },
+    "sourceCoefficient": "co=1/256",
+    "reusedOriginalConsumerFactor": "54",
+    "argumentDerivative": "node267 = sigma_2_prime((s-1)/2); derivative with respect to the step argument",
+    "changeOfVariables": "u=(s-1)/2; ds=2 du cancels the explicit denominator factor 2 in node272",
+    "positiveMeasure": "sigma_2_prime(u)>=0 and integral_0^1 sigma_2_prime(u)du=1",
+    "hRemainsStrictlyPositive": true,
+    "normalizationUsesExactSharedH": true,
+    "originalValueRelativeToleranceGuaranteed": false
+  },
+  "independentOriginalParameters": {
+    "h": {
+      "exp": {
+        "product": [
+          {
+            "integer": -8002
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "lambda": {
+      "exp": {
+        "product": [
+          {
+            "integer": -1000
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "co": {
+      "rational": "1/256"
+    },
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "Md": {
+      "integer": 1048576
+    }
+  },
+  "sourceStepFamily": "Original sigma_2 square-seed step, distinct from the sigma_1 outer cutoff",
+  "arithmetic": {
+    "precisionBits": 256,
+    "parameterEvaluationOrder": [
+      "Md",
+      "T",
+      "h"
+    ],
+    "report": {
+      "schema": "MathScope.ClosedNumericalExponentialArithmetic/1",
+      "precisionBits": 256,
+      "operations": 379,
+      "regularOperations": 3102,
+      "deepest": 5,
+      "maximumEndpointDepth": 4,
+      "maxDepth": 128,
+      "memoEntries": 180,
+      "maxMemoEntries": 4096,
+      "memoHits": 79,
+      "memoEpoch": 0,
+      "memoizedEndpointsAreImmutable": true,
+      "tinyRatioBounds": 18,
+      "regularFallbacks": 0,
+      "elementary": {
+        "method": "DIRECTED_POSITIVE_TAYLOR_RANGE_REDUCTION_SQUARING_RECIPROCAL",
+        "degree": 40,
+        "reducedArgument": [
+          "0",
+          "1/8"
+        ],
+        "positiveTaylorRemainder": "1/311262244327701009394582620422643155709303102674562634450364693078658319908864000000000",
+        "evaluations": 0,
+        "tinyPositiveUpperBounds": 0,
+        "tinyPolicy": "For x<=-(bits+8), the interval [0,2^-bits] contains exp(x)>0. No tiny exponential is replaced by an exact zero."
+      },
+      "sourceAuthenticated": false,
+      "sourceIntegralOrParameterEvaluated": false,
+      "exactExpLogCancellation": true,
+      "outwardRatioQuantization": true,
+      "positiveTinyUpperEndpointsRetained": true,
+      "binary64UsedForNumericalDecisions": false
+    }
+  },
+  "scope": {
+    "existingA13ProofAndConsumerReused": true,
+    "newRecoveredSubgraphBinding": true,
+    "newScaledReciprocalConnection": true,
+    "node275StrictlyPositive": true,
+    "node276FinitePositive": true,
+    "closedNumericalExponentialEndpoints": true,
+    "originalSourceParametersChanged": false,
+    "hReplacedByZero": false,
+    "nestedSigmaPrimitivesNumericallyRefined": false,
+    "originalIntegralValueRelativeToleranceGuaranteed": false,
+    "currentIndexedCallerAuthenticated": false,
+    "currentPhysicalPointAuthenticated": false,
+    "completeXbNumericallyEvaluated": false,
+    "wholeKNativeFieldCompleted": false,
+    "N7_06_closed": false,
+    "N8_05_closed": false,
+    "new_M3_closures": 0,
+    "actual_global_last_resolved_tau": null
+  }
+}

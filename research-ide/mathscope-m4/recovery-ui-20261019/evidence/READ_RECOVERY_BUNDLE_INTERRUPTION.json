@@ -1,0 +1,54 @@
+{
+  "schema": "MathScope.PublicationRecoveryReadAttempt/1",
+  "write": false,
+  "started_after": "2026-10-18 20:21:08 UTC",
+  "operations": [
+    {
+      "tool": "mcp__codex_apps__websitepublisher_fragments",
+      "input": {
+        "project_id": 29770,
+        "operation": "list"
+      }
+    },
+    {
+      "tool": "mcp__codex_apps__websitepublisher_get_skill",
+      "input": {
+        "skill_name": "main",
+        "section": "fragments-reusable-components-across-pages"
+      }
+    },
+    {
+      "tool": "write_stdin",
+      "input": {
+        "session_id": 85279,
+        "chars": "",
+        "yield_time_ms": 1000
+      },
+      "purpose": "Read completion of the read-only production HTML GET"
+    }
+  ],
+  "orchestration": "Promise.allSettled awaited inside one functions.exec",
+  "cell_id": null,
+  "result": "aborted by user after 860.9s",
+  "which_operation_stalled": "UNCONFIRMED; no per-operation result was delivered before interruption",
+  "new_mutations": 0,
+  "last_direct_api_readback": {
+    "at": "2026-10-18 20:21:08 UTC",
+    "version": 117,
+    "hash": "d7474dd6"
+  },
+  "subsequent_parent_observation": {
+    "tool": "mcp__codex_apps__websitepublisher_fragments",
+    "operation": "list",
+    "duration_seconds": 4.278,
+    "result": {
+      "success": true,
+      "data": {
+        "fragments": [],
+        "count": 0
+      }
+    },
+    "scope": "Parent-provided actual result; not a successful result of this interrupted bundle"
+  },
+  "conclusion": "Fragments are documented in callable tool metadata and parent independently confirmed an empty fragment list. The bundle interruption does not establish a payload-size cause or an approval denial."
+}

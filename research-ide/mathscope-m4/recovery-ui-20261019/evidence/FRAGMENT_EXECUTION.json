@@ -1,0 +1,101 @@
+{
+  "schema": "MathScope.FragmentUIExecution/1",
+  "recordedAt": "2026-10-18T20:43:45.625707+00:00",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "--test-reporter=tap",
+        "research-ide/mathscope-m4/recovery-ui-20261019/tests/recovery-model.test.mjs"
+      ],
+      "startedAt": "2026-10-18T20:43:45.268456+00:00",
+      "endedAt": "2026-10-18T20:43:45.551858+00:00",
+      "exitCode": 0,
+      "stdout": {
+        "path": "research-ide/mathscope-m4/recovery-ui-20261019/evidence/fragments-1.stdout.log",
+        "sha256": "d75d29931c8e069bda03cd0cd739be8cefaf2d1c57cf19fa0165d82cc1c70411"
+      },
+      "stderr": {
+        "path": "research-ide/mathscope-m4/recovery-ui-20261019/evidence/fragments-1.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "tests": 19
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "research-ide/mathscope-m4/recovery-ui-20261019/generated/runtime.js"
+      ],
+      "startedAt": "2026-10-18T20:43:45.552430+00:00",
+      "endedAt": "2026-10-18T20:43:45.575514+00:00",
+      "exitCode": 0,
+      "stdout": {
+        "path": "research-ide/mathscope-m4/recovery-ui-20261019/evidence/fragments-2.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "research-ide/mathscope-m4/recovery-ui-20261019/evidence/fragments-2.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "python",
+        "research-ide/mathscope-m4/recovery-ui-20261019/verify_static.py"
+      ],
+      "startedAt": "2026-10-18T20:43:45.575901+00:00",
+      "endedAt": "2026-10-18T20:43:45.620710+00:00",
+      "exitCode": 0,
+      "stdout": {
+        "path": "research-ide/mathscope-m4/recovery-ui-20261019/evidence/fragments-3.stdout.log",
+        "sha256": "9f710ad976f295dd481e487726adb4268fa335c368f9f92bfd5167eac208ca70"
+      },
+      "stderr": {
+        "path": "research-ide/mathscope-m4/recovery-ui-20261019/evidence/fragments-3.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "allPassed": true,
+  "decodedDataUnchangedFromCompressedCheckpoint": true,
+  "dataSha256": "a0aece9bfb60d7ca3d7632c5e61c3d4f32b5a2bd495642b9517a3c0e03e23e85",
+  "fragmentRequestCount": 14,
+  "requestBytes": [
+    18654,
+    12201,
+    12201,
+    12201,
+    12201,
+    12201,
+    12201,
+    12201,
+    12201,
+    12201,
+    12201,
+    12202,
+    2666,
+    31738
+  ],
+  "activation": {
+    "path": "research-ide/mathscope-m4/recovery-ui-20261019/generated/fragments/activation-patch.json",
+    "bytes": 21290,
+    "sha256": "98c63602f943d7246698e045fc83eb1a65475d0aee7f9afe1b4fe276533b88b0",
+    "requiredCurrentVersion": 117,
+    "baseVersionHash": "d7474dd6",
+    "operations": 1,
+    "mustReadBeforeWrite": true,
+    "gates": [
+      "All 14 new names have successful fragment create/readback evidence",
+      "No conflicting or missing fragment version",
+      "Current actual page still matches the guarded baseline",
+      "No paid change, asset deletion, other-page mutation, or force flag"
+    ]
+  },
+  "runtimeDiff": "evidence/FRAGMENT_RUNTIME_DIFF.patch",
+  "outside39ScriptsPreserved": true,
+  "immutableSourcePaths": 353,
+  "noNewRemoteMutation": true,
+  "published": false,
+  "originalMathematicalAcceptancePromoted": false
+}

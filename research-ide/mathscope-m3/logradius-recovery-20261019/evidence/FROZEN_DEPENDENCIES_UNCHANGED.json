@@ -1,0 +1,40 @@
+{
+  "schema": "MathScope.LogRadiusFrozenDependencyAudit/1",
+  "checked_utc": "2026-10-18T21:38:10.057173+00:00",
+  "status": "PASS",
+  "audits": [
+    {
+      "directory": "caller-recovery-20261019",
+      "manifest_sha256": "d3891b5609b3ac25063cd5b24758e9b9d92e3fc8d57839b93c440202d1fb5074",
+      "expected_manifest_sha256": "d3891b5609b3ac25063cd5b24758e9b9d92e3fc8d57839b93c440202d1fb5074",
+      "manifest_matches": true,
+      "files_checked": 33,
+      "mismatches": [],
+      "status": "PASS",
+      "manifest_declared_exclusions": "Generated Python bytecode and this self-referential manifest only",
+      "observed_declared_excluded_files": [
+        {
+          "path": "__pycache__/band_caller.cpython-312.pyc",
+          "bytes": 11767,
+          "sha256": "175b53bcc132fab9b838d39074354d8589c449372df6ccb16ea2844070cc8fa9",
+          "created_by_this_task": false
+        }
+      ],
+      "unexpected_files": []
+    },
+    {
+      "directory": "radial-recovery-20261019",
+      "manifest_sha256": "9347d26d3a8db1ef9bf3f6c7208eef3961663510a57b1c8543ada000587b8fd6",
+      "expected_manifest_sha256": "9347d26d3a8db1ef9bf3f6c7208eef3961663510a57b1c8543ada000587b8fd6",
+      "manifest_matches": true,
+      "files_checked": 50,
+      "mismatches": [],
+      "status": "PASS",
+      "manifest_declared_exclusions": "Generated Python bytecode and only this root self-referential manifest; nested peer manifests are included",
+      "observed_declared_excluded_files": [],
+      "unexpected_files": []
+    }
+  ],
+  "scope": "All83 frozen manifest members and both master manifest SHA256 pins match. Caller manifest explicitly excludes generated Python bytecode; no dependency file was modified or removed.",
+  "previous_attempt_explanation": "The first local inventory assertion incorrectly treated one already-declared excluded __pycache__ file as an unexpected source file. Its exact bytes/hash are retained in this receipt; the checker was aligned with the existing manifest exclusion, not with a new exception."
+}

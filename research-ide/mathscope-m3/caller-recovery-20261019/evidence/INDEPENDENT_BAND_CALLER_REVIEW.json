@@ -1,0 +1,2865 @@
+{
+  "schema": "MathScope.IndependentBandCallerReview/1",
+  "observedAt": "2026-10-18T20:24:30.327617+00:00",
+  "reviewer": "/root/remote_state",
+  "status": "PASS_WITHIN_DECLARED_FORMAL_CHART_SCOPE",
+  "concrete_defects": [],
+  "reviewed_files": [
+    {
+      "path": "research-ide/mathscope-m3/caller-recovery-20261019/band_caller.py",
+      "bytes": 7965,
+      "sha256": "77f839095664636cdfd428e9b1c8338539c31c2213a77ba7661c94623d074503"
+    },
+    {
+      "path": "research-ide/mathscope-m3/caller-recovery-20261019/README_KO.md",
+      "bytes": 9659,
+      "sha256": "bfbf38119a0d02cda4699498bda708306aab5d3e4a5d54b87a7060649fd05fa9"
+    },
+    {
+      "path": "research-ide/mathscope-m3/caller-recovery-20261019/build_caller_dossier.py",
+      "bytes": 15744,
+      "sha256": "ada6a824036c6ca8908b810f556391a398184a7e3ba56d02f4fc3c254a47047a"
+    },
+    {
+      "path": "research-ide/mathscope-m3/caller-recovery-20261019/verify_band_caller.py",
+      "bytes": 9244,
+      "sha256": "e27f01d85a98fdcff10df0ebad08e564c46785e51e1474a71397a4dd586c42c5"
+    },
+    {
+      "path": "research-ide/mathscope-m3/caller-recovery-20261019/evidence/CALLER_SOURCE_CAPSULE.json",
+      "bytes": 82927,
+      "sha256": "ba08b603d841e0f27cdd8f44513ff52de6a6b0f279c4d8d3ec2c7dfa2dbafd42"
+    },
+    {
+      "path": "research-ide/mathscope-m3/caller-recovery-20261019/evidence/BAND_CALLER_VALIDATION.json",
+      "bytes": 241004,
+      "sha256": "0f866976f48a47436bb65e20fd74400ab40a6b1498d2db01c223cca39d65882c"
+    }
+  ],
+  "manual_review": {
+    "center_and_ties": "For s in[1/2,2], floor(1/2-log2(s)) equals1 for s^2<=1/2,0 for1/2<s^2<=2,and-1 for s^2>2. Integer translation removes ell exactly; rational boxes that straddle either irrational threshold remain OPEN. No tie rounding is introduced.",
+    "support": "For positive s,r, abs(log2(r*s))<3/4 is exactly1/8<(r*s)^4<8. The fourth power is monotone on positive values. Closed boxes wholly outside the strict support return zero; crossing boxes remain OPEN. This does not classify the independent radial guard.",
+    "covariance": "For positive r,s, F(r*s;r^(1/2-h)Z,rT)=rF(s;Z,T), eta is unchanged,and Rprime^2/(2*sprime)=R^2/(2*s). Active band support puts transported root strictly inside original(1/2,2). The statements concern correlated transports of original input points, not every Cartesian combination of returned marginal intervals.",
+    "axial_enclosure": "Integer center offset and candidate displacement force |delta|<=2. With bits>=16,epsilon=|delta|*2^(-bits-32)<=2^-47<1. For x=h*|delta|*log(2) in[0,epsilon], exp(-x) lies in[1-epsilon,1] and exp(x) lies in[1,1/(1-epsilon)]. Positive sqrt(r) outward enclosures preserve the product bounds. Actual h stays strictly positive.",
+    "scope": "Actual external global R/Z/T provenance, integer ell>=ell0/coefficient window, fixed mesh ceilings/representative inputs, radial integrals and nonzero whole-K fields remain unverified. No N7-06/N8-05 closure, no new M3 closure,and tau remains null. Frozen-label derivative multipliers hold both integer labels fixed; no derivative of the nearest-label map is claimed."
+  },
+  "independent_checks": [
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "header",
+      "path": "research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_ORIGINAL_HEADER.json"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "closure",
+      "path": "research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/work/prune_recovery/scalar/evidence/RAW_INITIALIZED_SCALAR_CLOSURE.json"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "direct",
+      "path": "research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/work/prune_recovery/native/evidence/DIRECT_INDEXED_OPERAND_SUPPLEMENTS.json"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "transitive",
+      "path": "research-ide/mathscope-m3/evidence/work-continuation-20261018T081100Z_5f6a2d9c/work/resumed_continuation/indexed/evidence/TRANSITIVE_INDEXED_DEPENDENCIES.json"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "recipes",
+      "path": "research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/work/prune_recovery/native/evidence/FINITE_INDEXED_RECIPES.json"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "derivative_connection",
+      "path": "research-ide/mathscope-m3/evidence/work-continuation-20261018T081100Z_5f6a2d9c/work/resumed_continuation/indexed/evidence/ACTUAL_INDEXED_DERIVATIVE_CONNECTION.json"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "band_source",
+      "path": "research-ide/mathscope-m3/navier/source-global-band.mjs"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "representative_source",
+      "path": "research-ide/mathscope-m3/navier/source-global-representative.mjs"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "current_source",
+      "path": "research-ide/mathscope-m3/navier/source-global-current.mjs"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "index_source",
+      "path": "research-ide/mathscope-m3/navier/global-source-index.mjs"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "partition_source",
+      "path": "research-ide/mathscope-m2/navier/actual-covariance-source-certificate.mjs"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "profile_source",
+      "path": "research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/work/n602_continuation/source/research-ide/mathscope-m2/navier/source-profile-data.mjs"
+    },
+    {
+      "name": "source_file_exact_bytes",
+      "pass": true,
+      "source": "native_implementation",
+      "path": "research-ide/mathscope-m3/recovery-20261019/native/slow_inverse_native.py"
+    },
+    {
+      "name": "all_capsule_records_match_original_source_maps",
+      "pass": true,
+      "record_count": 329
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "1/2",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "33/64",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "17/32",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "35/64",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "9/16",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "37/64",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "19/32",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "39/64",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "5/8",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "41/64",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "21/32",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "43/64",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "11/16",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "45/64",
+      "offset": 1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "23/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "47/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "3/4",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "49/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "25/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "51/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "13/16",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "53/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "27/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "55/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "7/8",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "57/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "29/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "59/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "15/16",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "61/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "31/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "63/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "1",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "65/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "33/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "67/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "17/16",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "69/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "35/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "71/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "9/8",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "73/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "37/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "75/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "19/16",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "77/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "39/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "79/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "5/4",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "81/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "41/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "83/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "21/16",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "85/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "43/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "87/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "11/8",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "89/64",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "45/32",
+      "offset": 0
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "91/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "23/16",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "93/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "47/32",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "95/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "3/2",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "97/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "49/32",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "99/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "25/16",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "101/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "51/32",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "103/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "13/8",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "105/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "53/32",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "107/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "27/16",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "109/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "55/32",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "111/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "7/4",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "113/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "57/32",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "115/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "29/16",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "117/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "59/32",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "119/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "15/8",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "121/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "61/32",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "123/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "31/16",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "125/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "63/32",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "127/64",
+      "offset": -1
+    },
+    {
+      "name": "literal_log_center_point",
+      "pass": true,
+      "s": "2",
+      "offset": -1
+    },
+    {
+      "name": "irrational_center_threshold_strictly_enclosed",
+      "pass": true
+    },
+    {
+      "name": "center_threshold_crossing_remains_open",
+      "pass": true,
+      "radicand": "1/2"
+    },
+    {
+      "name": "irrational_center_threshold_strictly_enclosed",
+      "pass": true
+    },
+    {
+      "name": "center_threshold_crossing_remains_open",
+      "pass": true,
+      "radicand": "2"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "1/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "1/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "3/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "1/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "5/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "3/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "7/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "1/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "9/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "5/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "11/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "3/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "13/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "7/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "15/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "1/4"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "17/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "9/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "19/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "5/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "21/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "11/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "23/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "3/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "25/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "13/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "27/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "7/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "29/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "15/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "31/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "1/2"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "33/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "17/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "35/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "9/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "37/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "19/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "39/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "5/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "41/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "21/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "43/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "11/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "45/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "23/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "47/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "3/4"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "49/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "25/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "51/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "13/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "53/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "27/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "55/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "7/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "57/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "29/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "59/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "15/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "61/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "31/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "63/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "1"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "65/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "33/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "67/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "17/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "69/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "35/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "71/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "9/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "73/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "37/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "75/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "19/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "77/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "39/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "79/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "5/4"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "81/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "41/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "83/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "21/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "85/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "43/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "87/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "11/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "89/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "45/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "91/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "23/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "93/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "47/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "95/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "3/2"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "97/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "49/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "99/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "25/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "101/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "51/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "103/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "13/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "105/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "53/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "107/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "27/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "109/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "55/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "111/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "7/4"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "113/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "57/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "115/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "29/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "117/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "59/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "119/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "15/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "121/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "61/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "123/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "31/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "125/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "63/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "127/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "2"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "129/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "65/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "131/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "33/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "133/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "67/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "135/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "17/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "137/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "69/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "139/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "35/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "141/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "71/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "143/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "9/4"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "145/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "73/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "147/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "37/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "149/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "75/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "151/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "19/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "153/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "77/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "155/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "39/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "157/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "79/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "159/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "5/2"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "161/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "81/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "163/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "41/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "165/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "83/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "167/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "21/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "169/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "85/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "171/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "43/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "173/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "87/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "175/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "11/4"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "177/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "89/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "179/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "45/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "181/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "91/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "183/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "23/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "185/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "93/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "187/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "47/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "189/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "95/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "191/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "3"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "193/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "97/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "195/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "49/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "197/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "99/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "199/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "25/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "201/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "101/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "203/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "51/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "205/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "103/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "207/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "13/4"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "209/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "105/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "211/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "53/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "213/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "107/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "215/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "27/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "217/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "109/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "219/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "55/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "221/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "111/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "223/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "7/2"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "225/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "113/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "227/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "57/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "229/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "115/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "231/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "29/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "233/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "117/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "235/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "59/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "237/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "119/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "239/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "15/4"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "241/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "121/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "243/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "61/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "245/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "123/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "247/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "31/8"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "249/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "125/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "251/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "63/16"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "253/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "127/32"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "255/64"
+    },
+    {
+      "name": "literal_log_support_point",
+      "pass": true,
+      "s": "4"
+    },
+    {
+      "name": "support_threshold_crossing_remains_open",
+      "pass": true,
+      "interval": [
+        "718831593098106570229421/1208925819614629174706176",
+        "359415796549053285114711/604462909807314587353088"
+      ]
+    },
+    {
+      "name": "support_threshold_crossing_remains_open",
+      "pass": true,
+      "interval": [
+        "2033162776043200832893773/1208925819614629174706176",
+        "1016581388021600416446887/604462909807314587353088"
+      ]
+    },
+    {
+      "name": "full_positive_variable_residual_covariance_identity",
+      "pass": true
+    },
+    {
+      "name": "eta_transport_identity",
+      "pass": true
+    },
+    {
+      "name": "radial_guard_transport_identity",
+      "pass": true
+    },
+    {
+      "name": "original_formal_chart_status_not_promoted",
+      "pass": true
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "original_formal_chart_status_not_promoted",
+      "pass": true
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "original_formal_chart_status_not_promoted",
+      "pass": true
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": -2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": -2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": -2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 16,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "original_formal_chart_status_not_promoted",
+      "pass": true
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "original_formal_chart_status_not_promoted",
+      "pass": true
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "original_formal_chart_status_not_promoted",
+      "pass": true
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": -2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": -2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": -2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 32,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "original_formal_chart_status_not_promoted",
+      "pass": true
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "original_formal_chart_status_not_promoted",
+      "pass": true
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "original_formal_chart_status_not_promoted",
+      "pass": true
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": -2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": -2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": -2,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": -1,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "epsilon_domain_proven_at_resource_extremes",
+      "pass": true
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "0"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1/3"
+    },
+    {
+      "name": "independent_axial_envelope_extremes",
+      "pass": true,
+      "bits": 512,
+      "delta": 0,
+      "h_probe_scope": "h-envelope algorithm control; not actual source h",
+      "h_fraction_of_upper": "1"
+    },
+    {
+      "name": "reviewed_literal_source_node",
+      "pass": true,
+      "name_detail": "center",
+      "node": 632179
+    },
+    {
+      "name": "reviewed_literal_source_node",
+      "pass": true,
+      "name_detail": "support_left",
+      "node": 625191
+    },
+    {
+      "name": "reviewed_literal_source_node",
+      "pass": true,
+      "name_detail": "support_right",
+      "node": 120836
+    },
+    {
+      "name": "reviewed_files_stable_during_review",
+      "pass": true
+    }
+  ],
+  "check_count": 497,
+  "all_checks_pass": true,
+  "method": "Read original source records and byte pins; direct literal-log comparisons; full symbolic positive-variable transport identities;240-dps h-envelope endpoint controls at16/32/512 bits. Existing232-check producer was not rerun.",
+  "limitations": [
+    "Finite high-precision checks supplement the exact inequalities and do not prove whole-K numerical obligations.",
+    "Positive h-envelope probes including endpoints are algorithm controls, not replacement parameters for the actual source h.",
+    "Actual original integration, mesh selection and global provenance are outside this module."
+  ],
+  "N7_06_closed": false,
+  "N8_05_closed": false,
+  "new_M3_closures": 0,
+  "actual_global_last_resolved_tau": null
+}

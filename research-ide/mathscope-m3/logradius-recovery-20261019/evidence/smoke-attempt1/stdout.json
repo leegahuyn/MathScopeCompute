@@ -1,0 +1,637 @@
+{
+  "arithmetic": {
+    "parameterEvaluationOrder": [
+      "Md",
+      "T",
+      "BOuter",
+      "lambda",
+      "h",
+      "Tf"
+    ],
+    "parameterExpressionVisits": 17,
+    "precisionBits": 256,
+    "report": {
+      "binary64UsedForNumericalDecisions": false,
+      "deepest": 6,
+      "elementary": {
+        "degree": 40,
+        "evaluations": 40,
+        "method": "DIRECTED_POSITIVE_TAYLOR_RANGE_REDUCTION_SQUARING_RECIPROCAL",
+        "positiveTaylorRemainder": "1/311262244327701009394582620422643155709303102674562634450364693078658319908864000000000",
+        "reducedArgument": [
+          "0",
+          "1/8"
+        ],
+        "tinyPolicy": "For x<=-(bits+8), the interval [0,2^-bits] contains exp(x)>0. No tiny exponential is replaced by an exact zero.",
+        "tinyPositiveUpperBounds": 0
+      },
+      "exactExpLogCancellation": true,
+      "maxDepth": 128,
+      "maxMemoEntries": 8192,
+      "maximumEndpointDepth": 5,
+      "memoEntries": 1232,
+      "memoEpoch": 0,
+      "memoHits": 512,
+      "memoizedEndpointsAreImmutable": true,
+      "operations": 2704,
+      "outwardRatioQuantization": true,
+      "positiveTinyUpperEndpointsRetained": true,
+      "precisionBits": 256,
+      "regularFallbacks": 0,
+      "regularOperations": 20536,
+      "schema": "MathScope.ClosedNumericalExponentialArithmetic/1",
+      "sourceAuthenticated": false,
+      "sourceIntegralOrParameterEvaluated": false,
+      "tinyRatioBounds": 144
+    },
+    "traversal": {
+      "boundaryPremisesProvedHere": false,
+      "conditionalBoundaryIntervalsConsumed": [
+        239,
+        257,
+        275
+      ],
+      "nodeVisits": 57,
+      "opaqueSourceValuesReplacedByZero": false,
+      "originalNodesRewritten": false,
+      "schema": "MathScope.TracedArithmeticEvaluation/1",
+      "sourceAuthenticated": false,
+      "sourceParametersNumericallyConsumed": [
+        "BOuter",
+        "T",
+        "Tf",
+        "h",
+        "lambda"
+      ],
+      "visitedNodes": 57
+    }
+  },
+  "authenticatedConnectionRecordCount": 60,
+  "domainChecks": {
+    "TGreaterThan128": true,
+    "hStrictlyPositive": true,
+    "lambdaGreaterThanH": true,
+    "lambdaLessThanOneSixteenth": true
+  },
+  "errorScope": {
+    "KBounds": [
+      "1/256",
+      "27/128"
+    ],
+    "arithmeticBitsAloneRefineIntegralBounds": false,
+    "coordinateWidthsAreObservedWithoutAnAcceptanceThreshold": true,
+    "fixedIntrinsicLogQpUncertainty": "log(54)",
+    "integralRefinementPerformed": false,
+    "originalIntegralRelativeToleranceGuaranteed": false,
+    "reusedFactor54": true,
+    "wholeXbRelativeToleranceGuaranteed": false
+  },
+  "exactIdentities": {
+    "Qb": "exp(-(1-h)/2)*(exp(-(1-lambda)/2)*((lambda-h)/(1-lambda)+I239)+(1-h)*L+I257)",
+    "XbInterpretation": "node28826=XR*exp(node319); only this source identity is authenticated, neither node28825 nor node28826 is evaluated",
+    "holdLength": "L=-4*log(h)=32008*T",
+    "logRadiusOverXR": "node319=13*exp(1000*T)+122009*T+135+node280",
+    "terminalWait": "node280=(log(node259)-log(node275))/(1-h)=(8002*T+log(Qb)-log(K))/(1-h), K=Qp/h"
+  },
+  "executionTraceRecordCount": 57,
+  "inheritedA13": {
+    "expensiveHistoricalProducersRerun": false,
+    "inputManifestSHA256": "02554e5544ed39fd79b369462de85c1f863721c8adaac78d0eecebb60f3da6a9",
+    "normalized": {
+      "K": {
+        "closedRationalBounds": [
+          "1/256",
+          "27/128"
+        ],
+        "quantity": "node275/h"
+      },
+      "argumentDerivative": "node267 = sigma_2_prime((s-1)/2); derivative with respect to the step argument",
+      "changeOfVariables": "u=(s-1)/2; ds=2 du cancels the explicit denominator factor 2 in node272",
+      "exactRelation": "node275 = h*K; node276 = h^(-1)*K^(-1)",
+      "hRemainsStrictlyPositive": true,
+      "inverseK": {
+        "closedRationalBounds": [
+          "128/27",
+          "256"
+        ],
+        "quantity": "h*node276 = h/node275"
+      },
+      "normalizationUsesExactSharedH": true,
+      "originalValueRelativeToleranceGuaranteed": false,
+      "positiveMeasure": "sigma_2_prime(u)>=0 and integral_0^1 sigma_2_prime(u)du=1",
+      "reusedOriginalConsumerFactor": "54",
+      "sourceCoefficient": "co=1/256"
+    },
+    "numericalIntegralBounds": [
+      {
+        "exactOriginalIntegrandRetained": true,
+        "finiteUpper": true,
+        "name": "A13SteepIntegral",
+        "numericalInterval": {
+          "lower": {
+            "rational": "1/4"
+          },
+          "upper": {
+            "rational": "3"
+          }
+        },
+        "originalIntegralValueRelativeToleranceGuaranteed": false,
+        "root": 239,
+        "strictlyPositiveLower": true
+      },
+      {
+        "exactOriginalIntegrandRetained": true,
+        "finiteUpper": true,
+        "name": "A13FlattenIntegral",
+        "numericalInterval": {
+          "lower": {
+            "rational": "1/4"
+          },
+          "upper": {
+            "rational": "3/2"
+          }
+        },
+        "originalIntegralValueRelativeToleranceGuaranteed": false,
+        "root": 257,
+        "strictlyPositiveLower": true
+      },
+      {
+        "exactOriginalIntegrandRetained": true,
+        "finiteUpper": true,
+        "name": "A13TerminalIntegral",
+        "numericalInterval": {
+          "lower": {
+            "exp": {
+              "neg": {
+                "exp": {
+                  "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413204591/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+                }
+              }
+            }
+          },
+          "upper": {
+            "exp": {
+              "neg": {
+                "exp": {
+                  "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+                }
+              }
+            }
+          }
+        },
+        "originalIntegralValueRelativeToleranceGuaranteed": false,
+        "root": 275,
+        "strictlyPositiveLower": true
+      }
+    ],
+    "sourceAuthenticationScope": "Byte-pinned occurrence of the original A13 subgraph and reciprocal276 in the saved recovered source; no current indexed/physical caller authority is issued",
+    "sourceFormAuditAuthenticated": false,
+    "sourceFormParentGraphAuthenticationRequired": true,
+    "sourceRecordCount": 77,
+    "sourceRecordSHA256": "6ae40f81c526c29d40b55d37dfd4e5496d1e4eda24823605dcfe436610e4a524"
+  },
+  "inputManifestSHA256": "c42dd7c8c6cbd442597f30ea6cc58022ba280c8ea36021ad1eb93b90c653f368",
+  "newArithmeticRecordIds": [
+    6,
+    7,
+    13,
+    56,
+    76,
+    83,
+    84,
+    98,
+    101,
+    102,
+    103,
+    114,
+    139,
+    147,
+    148,
+    158,
+    179,
+    199,
+    218,
+    294,
+    319
+  ],
+  "nextUnresolved": {
+    "currentFrame": "Authenticate actual external Z/T and physical coordinates, ell>=ell0, active band/mesh choices and representative guards in their original lexical frames.",
+    "fullRadius": "Evaluate the original XR definition and its exact dependency graph before node28826; preserve the log-radius uncertainty when exponentiating.",
+    "precision": "Refining the fixed original A13 bounds requires a separate controlled evaluation of their exact nested sigma integrals; no new threshold is introduced here."
+  },
+  "originalBaselineCommit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+  "originalParameterDefinitions": {
+    "BOuter": {
+      "product": [
+        {
+          "integer": 1000
+        },
+        {
+          "ref": "T"
+        }
+      ]
+    },
+    "Md": {
+      "integer": 1048576
+    },
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "Tf": {
+      "integer": 128
+    },
+    "XR": {
+      "product": [
+        {
+          "integer": 110
+        },
+        {
+          "power": [
+            {
+              "product": [
+                {
+                  "ref": "CSelected"
+                },
+                {
+                  "ref": "Pstar"
+                }
+              ]
+            },
+            10
+          ]
+        }
+      ]
+    },
+    "h": {
+      "exp": {
+        "product": [
+          {
+            "integer": -8002
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "lambda": {
+      "exp": {
+        "product": [
+          {
+            "integer": -1000
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    }
+  },
+  "originalParameterIntervals": [
+    {
+      "interval": {
+        "lower": {
+          "rational": "1048576"
+        },
+        "upper": {
+          "rational": "1048576"
+        }
+      },
+      "name": "Md"
+    },
+    {
+      "interval": {
+        "lower": {
+          "exp": {
+            "rational": "1048576"
+          }
+        },
+        "upper": {
+          "exp": {
+            "rational": "121416805764108066932466369176469931665150427440758720078238275608681517825325531341/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+          }
+        }
+      },
+      "name": "T"
+    },
+    {
+      "interval": {
+        "lower": {
+          "exp": {
+            "rational": "60708802813761880187055517968424088606456358591717520818327191806955894380867686201/57896044618658097711785492504343953926634992332820282019728792003956564819968"
+          }
+        },
+        "upper": {
+          "exp": {
+            "rational": "121417605627523760374111035936848177212912717183435041636654383613911788761735374705/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+          }
+        }
+      },
+      "name": "BOuter"
+    },
+    {
+      "interval": {
+        "lower": {
+          "exp": {
+            "neg": {
+              "exp": {
+                "rational": "121417605627523760374111035936848177212912717183435041636654383613911788761735374705/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+              }
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "neg": {
+              "exp": {
+                "rational": "60708802813761880187055517968424088606456358591717520818327191806955894380867686201/57896044618658097711785492504343953926634992332820282019728792003956564819968"
+              }
+            }
+          }
+        }
+      },
+      "name": "lambda"
+    },
+    {
+      "interval": {
+        "lower": {
+          "exp": {
+            "neg": {
+              "exp": {
+                "rational": "60708923219674361378774373936577218383009030823399465164165255105870445445706602193/57896044618658097711785492504343953926634992332820282019728792003956564819968"
+              }
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "neg": {
+              "exp": {
+                "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413201453/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+              }
+            }
+          }
+        }
+      },
+      "name": "h"
+    },
+    {
+      "interval": {
+        "lower": {
+          "rational": "128"
+        },
+        "upper": {
+          "rational": "128"
+        }
+      },
+      "name": "Tf"
+    }
+  ],
+  "pass": true,
+  "rootNames": {
+    "Qb": 259,
+    "inverseOneMinusH": 279,
+    "logRadiusOverXR": 319,
+    "logRatio": 278,
+    "ratio": 277,
+    "terminalWait": 280
+  },
+  "rows": [
+    {
+      "coordinateObservation": {
+        "acceptanceThreshold": null,
+        "coordinate": {
+          "lower": "1605220294051603359565520497716241087771789896400498162182585321587917108216235/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+          "upper": "1605220294051603359565520497716241087771789896400498162182585321587917108221057/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+        },
+        "coordinateDefinition": "log^2(value)",
+        "coordinateWidth": "2411/57896044618658097711785492504343953926634992332820282019728792003956564819968",
+        "logarithmCount": 2,
+        "originalValueRelativeToleranceGuaranteed": false,
+        "toleranceClaim": false
+      },
+      "finiteUpper": true,
+      "interval": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "rational": "1605220294051603359565520497716241087771789896400498162182585321587917108216235/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "rational": "1605220294051603359565520497716241087771789896400498162182585321587917108221057/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+            }
+          }
+        }
+      },
+      "name": "Qb",
+      "originalValueRelativeToleranceGuaranteed": false,
+      "root": 259,
+      "strictlyPositiveLower": true
+    },
+    {
+      "coordinateObservation": {
+        "acceptanceThreshold": null,
+        "coordinate": {
+          "lower": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+          "upper": "30354461609837180689387186968288609191504515411699732582082627552935222722853301199/28948022309329048855892746252171976963317496166410141009864396001978282409984"
+        },
+        "coordinateDefinition": "log^2(value)",
+        "coordinateWidth": "3555/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+        "logarithmCount": 2,
+        "originalValueRelativeToleranceGuaranteed": false,
+        "toleranceClaim": false
+      },
+      "finiteUpper": true,
+      "interval": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "rational": "30354461609837180689387186968288609191504515411699732582082627552935222722853301199/28948022309329048855892746252171976963317496166410141009864396001978282409984"
+            }
+          }
+        }
+      },
+      "name": "ratio",
+      "originalValueRelativeToleranceGuaranteed": false,
+      "root": 277,
+      "strictlyPositiveLower": true
+    },
+    {
+      "coordinateObservation": {
+        "acceptanceThreshold": null,
+        "coordinate": {
+          "lower": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+          "upper": "30354461609837180689387186968288609191504515411699732582082627552935222722853301199/28948022309329048855892746252171976963317496166410141009864396001978282409984"
+        },
+        "coordinateDefinition": "log^1(value)",
+        "coordinateWidth": "3555/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+        "logarithmCount": 1,
+        "originalValueRelativeToleranceGuaranteed": false,
+        "toleranceClaim": false
+      },
+      "finiteUpper": true,
+      "interval": {
+        "lower": {
+          "exp": {
+            "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+          }
+        },
+        "upper": {
+          "exp": {
+            "rational": "30354461609837180689387186968288609191504515411699732582082627552935222722853301199/28948022309329048855892746252171976963317496166410141009864396001978282409984"
+          }
+        }
+      },
+      "name": "logRatio",
+      "originalValueRelativeToleranceGuaranteed": false,
+      "root": 278,
+      "strictlyPositiveLower": true
+    },
+    {
+      "coordinateObservation": {
+        "acceptanceThreshold": null,
+        "coordinate": {
+          "lower": "0",
+          "upper": "53/28948022309329048855892746252171976963317496166410141009864396001978282409984"
+        },
+        "coordinateDefinition": "log^1(value)",
+        "coordinateWidth": "53/28948022309329048855892746252171976963317496166410141009864396001978282409984",
+        "logarithmCount": 1,
+        "originalValueRelativeToleranceGuaranteed": false,
+        "toleranceClaim": false
+      },
+      "finiteUpper": true,
+      "interval": {
+        "lower": {
+          "rational": "1"
+        },
+        "upper": {
+          "exp": {
+            "rational": "53/28948022309329048855892746252171976963317496166410141009864396001978282409984"
+          }
+        }
+      },
+      "name": "inverseOneMinusH",
+      "originalValueRelativeToleranceGuaranteed": false,
+      "root": 279,
+      "strictlyPositiveLower": true
+    },
+    {
+      "coordinateObservation": {
+        "acceptanceThreshold": null,
+        "coordinate": {
+          "lower": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+          "upper": "7588615402459295172346796742072152297876128852924933145520656888233805680713325313/7237005577332262213973186563042994240829374041602535252466099000494570602496"
+        },
+        "coordinateDefinition": "log^1(value)",
+        "coordinateWidth": "3767/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+        "logarithmCount": 1,
+        "originalValueRelativeToleranceGuaranteed": false,
+        "toleranceClaim": false
+      },
+      "finiteUpper": true,
+      "interval": {
+        "lower": {
+          "exp": {
+            "rational": "121417846439348722757548747873154436766018061646798930328330510211740890891413201241/115792089237316195423570985008687907853269984665640564039457584007913129639936"
+          }
+        },
+        "upper": {
+          "exp": {
+            "rational": "7588615402459295172346796742072152297876128852924933145520656888233805680713325313/7237005577332262213973186563042994240829374041602535252466099000494570602496"
+          }
+        }
+      },
+      "name": "terminalWait",
+      "originalValueRelativeToleranceGuaranteed": false,
+      "root": 280,
+      "strictlyPositiveLower": true
+    },
+    {
+      "coordinateObservation": {
+        "acceptanceThreshold": null,
+        "coordinate": {
+          "lower": "60708802813761880187055517968424088606456358591717520818327191806955894380867686201/57896044618658097711785492504343953926634992332820282019728792003956564819968",
+          "upper": "60708802813761880187055517968424088606456358591717520818327191806955894380867688275/57896044618658097711785492504343953926634992332820282019728792003956564819968"
+        },
+        "coordinateDefinition": "log^2(value)",
+        "coordinateWidth": "1037/28948022309329048855892746252171976963317496166410141009864396001978282409984",
+        "logarithmCount": 2,
+        "originalValueRelativeToleranceGuaranteed": false,
+        "toleranceClaim": false
+      },
+      "finiteUpper": true,
+      "interval": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "rational": "60708802813761880187055517968424088606456358591717520818327191806955894380867686201/57896044618658097711785492504343953926634992332820282019728792003956564819968"
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "rational": "60708802813761880187055517968424088606456358591717520818327191806955894380867688275/57896044618658097711785492504343953926634992332820282019728792003956564819968"
+            }
+          }
+        }
+      },
+      "name": "logRadiusOverXR",
+      "originalValueRelativeToleranceGuaranteed": false,
+      "root": 319,
+      "strictlyPositiveLower": true
+    }
+  ],
+  "schema": "MathScope.RecoveredOriginalLogRadiusBinding/1",
+  "scope": {
+    "N7_06_closed": false,
+    "N8_05_closed": false,
+    "QbRatioWaitLogRadiusNumericallyEnclosed": true,
+    "actual_global_last_resolved_tau": null,
+    "closedNumericalExponentialEndpoints": true,
+    "completeXbNumericallyEvaluated": false,
+    "currentIndexedCallerAuthenticated": false,
+    "currentPhysicalPointAuthenticated": false,
+    "ellAndMeshDecisionsEvaluated": false,
+    "existingA13ProofAndConsumerReused": true,
+    "existingTracedEvaluatorReused": true,
+    "hReplacedByZero": false,
+    "nestedSigmaPrimitivesNumericallyRefined": false,
+    "newSavedScalarConnection": true,
+    "new_M3_closures": 0,
+    "originalHStrictlyPositive": true,
+    "originalIntegralValueRelativeToleranceGuaranteed": false,
+    "originalSourceParametersChanged": false,
+    "wholeKNativeFieldCompleted": false,
+    "wholeXbRelativeToleranceGuaranteed": false
+  },
+  "sourceAuthenticated": true,
+  "sourceAuthenticationScope": "Byte-pinned saved scalar subgraph and inherited original A13 premises; no current indexed/physical caller authority",
+  "sourceRecordSHA256": "0bec0cfb0c924895cc5f1f770e3c42cbfd7c954ba3c3ee0a8c6a261990d97d48",
+  "unevaluatedInterpretationRecordIds": [
+    12,
+    28825,
+    28826
+  ]
+}

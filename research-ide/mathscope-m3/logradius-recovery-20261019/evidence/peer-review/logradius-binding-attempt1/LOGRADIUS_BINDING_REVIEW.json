@@ -1,0 +1,135 @@
+{
+  "schema": "MathScope.IndependentLogRadiusBindingReview/1",
+  "reviewedAt": "2026-10-18T21:40:29.700914+00:00",
+  "reviewer": "Current ChatGPT collaborating agent /root/remote_state",
+  "status": "PASS_WITH_ORIGINAL_SCOPE_OPEN",
+  "materialFindings": [],
+  "sourceSnapshots": [
+    {
+      "path": "research-ide/mathscope-m3/logradius-recovery-20261019/bind_logradius.mjs",
+      "bytes": 14245,
+      "sha256": "bfb9896adbe915a2eb37c3a829d4368d4d7fbf9b28bfd3bdb798b6405241c173"
+    },
+    {
+      "path": "research-ide/mathscope-m3/logradius-recovery-20261019/verify_logradius.mjs",
+      "bytes": 14806,
+      "sha256": "24226852c4584238e98c8a4b8d187ae833be9ec358c0708d51149a9c3a6e15f0"
+    },
+    {
+      "path": "research-ide/mathscope-m3/logradius-recovery-20261019/SOURCE_BOUND_INPUTS.json",
+      "bytes": 21713,
+      "sha256": "c42dd7c8c6cbd442597f30ea6cc58022ba280c8ea36021ad1eb93b90c653f368"
+    },
+    {
+      "path": "research-ide/mathscope-m3/logradius-recovery-20261019/README_KO.md",
+      "bytes": 10208,
+      "sha256": "1ea052bfe65a375bcd72aa1a55e7f16078d6685f94ff0f81b61c3f466974d271"
+    }
+  ],
+  "sourceChecks": {
+    "pinnedFiles": 30,
+    "baselineOriginalGitBlobs": 14,
+    "originalRuntimeImportFiles": 11,
+    "authenticatedRecords": 60,
+    "arithmeticTraceRecords": 57,
+    "inheritedA13Records": 77,
+    "additionalArithmeticRecords": 21,
+    "allByteAndRecordChecksPass": true
+  },
+  "manualMathematicalReview": {
+    "originalQbRecurrence": "The original239 and257 integrals enter259 with the positive exp(-(1-lambda)/2) and exp(-(1-h)/2) factors and the unchanged hold term (1-h)*(-4 log h).",
+    "waitAndSign": "With the original0<h<lambda<1/16 and L=32008T, L/4<Qb<L+137/30 and Qp<54h/256<1. Hence Qb/Qp>1 and log ratio, inverse(1-h), and wait are positive and finite. The source-form A13 proof already established these coarse positive integral bounds.",
+    "original319Coefficients": {
+      "BOuter": "90",
+      "T": "1",
+      "Tf": "1",
+      "constant": "7",
+      "inverseLambda": "13",
+      "logH": "-4",
+      "wait": "1"
+    },
+    "substituted319": "13 exp(1000T)+122009T+135+node280",
+    "interpretation": "Original node28826 is XR*exp(node319). Node319 is log(Xb/XR); the XR value and exponentiated whole Xb remain unevaluated by this module.",
+    "commonHCorrelation": "Existing Qp=h*K with K in[1/256,27/128] and log-width log54 is retained as a normalized error observation. Actual inherited closed Qp endpoints are propagated without a zero substitution.",
+    "errorLimit": "The reused directed arithmetic supplies finite closed intervals. The existing fixed factor54 integral enclosure is not refined by arithmetic precision or small iterated-log coordinate width. This review does not re-prove the generic arithmetic implementation."
+  },
+  "independentExecution": {
+    "command": [
+      "node",
+      "/workspace/scratch/00fe7982b3e1/work_20261019/next_resume_assessment/peer_review/logradius-binding-attempt1/independent-logradius-probe.mjs"
+    ],
+    "exitCode": 0,
+    "checksPassed": 9,
+    "negativeControlsPassed": 5,
+    "elapsedSeconds": 0.4614219610011787,
+    "sourceBytesStableBeforeAfter": true,
+    "mainVerifierRerun": false,
+    "historical700And3407ProducersRerun": false
+  },
+  "authorityReview": {
+    "issuedReportDeeplyFrozen": true,
+    "alternatingGetterReplacementRejected": true,
+    "publicProjectionMutationDoesNotAffectPrivateSnapshot": true,
+    "unownedCopiesRejected": true,
+    "forbiddenArgumentRejected": true,
+    "BOMAlteredManifestRejected": true,
+    "inheritedSourceFormAuditRemainsUnownedUntilSavedSubgraphBinding": true,
+    "genericTraceSourceAuthenticated": false
+  },
+  "remainingOriginalScope": {
+    "M3InheritedComplete": 62,
+    "M3Total": 64,
+    "newM3Closures": 0,
+    "N7_06": "OPEN",
+    "N8_05": "OPEN",
+    "actual_global_last_resolved_tau": null,
+    "M4Original16Acceptance": "UNCONFIRMED",
+    "XRAndWholeXbValue": "NOT_EVALUATED_BY_THIS_MODULE",
+    "actualCurrentIndexedAndPhysicalFrames": "UNVERIFIED",
+    "ellAndMeshMembershipAndCeilings": "UNVERIFIED",
+    "originalSigmaIntegralRelativeTolerance": "NOT_ESTABLISHED",
+    "wholeKNativeAndEnergyTailObligations": "OPEN"
+  },
+  "evidence": [
+    {
+      "path": "SOURCE_READ_AUDIT.json",
+      "bytes": 17680,
+      "sha256": "4fc9e03fbd6ff2a2b9b92ab61c3ede1b656ad938295747baa72c087d1f5478d2"
+    },
+    {
+      "path": "INDEPENDENT_RECORD_ALGEBRA.json",
+      "bytes": 1553,
+      "sha256": "b504b90798bb8a797727848a4c8d9e8707bc46a70ff36e7eb726456708f41314"
+    },
+    {
+      "path": "INDEPENDENT_API_CHECKS.json",
+      "bytes": 13634,
+      "sha256": "1fb76fe9c156d9f23e0ba432577bdf64fea7ff8f4a8ed97236a8b390f36c2e7d"
+    },
+    {
+      "path": "OBSERVED_BOUND_LOGRADIUS.json",
+      "bytes": 21412,
+      "sha256": "591cbefd6ef2b74aacf9be46cc41dd1580445cda10cb5a4ba1b7d86d227958f9"
+    },
+    {
+      "path": "EXECUTION.json",
+      "bytes": 749,
+      "sha256": "1352bef69f9fa1796a0ec81d230daa47e6dcc4bff46ebc1ca981bf56cfd9aab6"
+    },
+    {
+      "path": "independent-logradius-probe.mjs",
+      "bytes": 6487,
+      "sha256": "142458eaaf42c8536573a4aab489b831208999474274cf5d587a22bc980ed32a"
+    },
+    {
+      "path": "stdout.log",
+      "bytes": 95,
+      "sha256": "04879fe91c1b4671124aa90b69f0e4a9e67fde361258b4e7e8ca908712145af9"
+    },
+    {
+      "path": "stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

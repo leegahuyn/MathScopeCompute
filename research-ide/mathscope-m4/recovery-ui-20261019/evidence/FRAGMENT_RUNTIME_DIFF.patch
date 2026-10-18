@@ -1,0 +1,32 @@
+--- compressed-checkpoint/recovery-model.mjs
++++ fragment-ready/recovery-model.mjs
+@@ -1,6 +1,17 @@
+ export const RECOVERY_SCHEMA = 'MathScope.RecoveryEvidenceView/1';
+ export const N8_AXES = ['grid', 'fourier_cutoff', 'coefficient_order', 'arithmetic_precision'];
+ export const N7_AXES = ['space', 'time'];
++
++export function collectRecoveryParts(parts, expectedCount) {
++  if (!Number.isInteger(expectedCount) || expectedCount < 1 || expectedCount > 64 || !Array.isArray(parts) || parts.length !== expectedCount) throw new Error('증거 조각의 개수가 고정 원본과 다릅니다.');
++  let encoded = '';
++  parts.forEach((part, index) => {
++    if (part?.index !== String(index) || typeof part.content !== 'string' || !part.content.length || part.content.length > 12000) throw new Error('증거 조각의 순서 또는 크기가 잘못되었습니다.');
++    encoded += part.content;
++    if (encoded.length > 400000) throw new Error('증거 조각의 전체 크기가 허용 범위를 넘었습니다.');
++  });
++  return encoded;
++}
+ 
+ export async function decodeRecoveryPayload(encoded, encoding, expectedBytes, Decompressor = globalThis.DecompressionStream) {
+   if (encoding !== 'gzip-base64') throw new Error('지원하지 않는 증거 전송 형식입니다. 원장 링크를 확인하세요.');
+--- compressed-checkpoint/recovery-runtime.js
++++ fragment-ready/recovery-runtime.js
+@@ -165,7 +165,8 @@
+ async function init() {
+   try {
+     const el=document.getElementById('ms3ip-recovery-data');if(!el)throw new Error('증거 데이터가 없습니다. 배포 조각의 연결 상태를 확인해야 합니다.');
+-    const raw=await decodeRecoveryPayload(el.textContent,el.dataset.encoding,Number(el.dataset.bytes)),hash=await sha256(raw);if(hash!==el.dataset.sha256)throw new Error('증거 데이터 SHA-256 불일치. 수치와 상태의 연결을 중단했습니다.');
++    const encoded=el.dataset.parts?collectRecoveryParts(Array.from(document.querySelectorAll('script[data-ms3ip-part]')).map(part=>({index:part.dataset.ms3ipPart,content:part.textContent})),Number(el.dataset.parts)):el.textContent;
++    const raw=await decodeRecoveryPayload(encoded,el.dataset.encoding,Number(el.dataset.bytes)),hash=await sha256(raw);if(hash!==el.dataset.sha256)throw new Error('증거 데이터 SHA-256 불일치. 수치와 상태의 연결을 중단했습니다.');
+     data=validateRecoveryData(JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(raw)));
+     txt('m3-count','62 / 64 · 원래 범위 승계');txt('m4-count',data.criteria.filter(r=>r.stage==='M4'&&r.status==='PARTIAL').length+' PARTIAL · '+data.criteria.filter(r=>r.stage==='M4'&&r.status==='OPEN').length+' OPEN');txt('tau','null · 미해결');
+     txt('error','데이터 SHA-256 일치 · 원래 80개 ID / 실제 소스의 저장 구간 / null 보존');$('error').dataset.error='false';

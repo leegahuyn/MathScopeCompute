@@ -1,0 +1,41 @@
+{
+  "schema": "MathScope.RadialOutputPolicyChecks/1",
+  "status": "PASS",
+  "runs": [
+    {
+      "argv": [
+        "node",
+        "verify_binding.mjs",
+        "--output-dir",
+        "evidence/validation-attempt3"
+      ],
+      "cwd": "/workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/radial-recovery-20261019",
+      "started_at": "2026-10-18T20:54:33.794008+00:00",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "stdout": "",
+      "stderr": "file:///workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/radial-recovery-20261019/verify_binding.mjs:19\nif(output&&names.some(name=>existsSync(resolve(output,name))))throw new Error('EXISTING_EVIDENCE_WILL_NOT_BE_OVERWRITTEN');\n                                                                    ^\n\nError: EXISTING_EVIDENCE_WILL_NOT_BE_OVERWRITTEN\n    at file:///workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/radial-recovery-20261019/verify_binding.mjs:19:69\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.19.0\n",
+      "existing_file_names_unchanged": true,
+      "existing_result_hashes_unchanged": true
+    },
+    {
+      "argv": [
+        "node",
+        "verify_binding.mjs"
+      ],
+      "cwd": "/workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/radial-recovery-20261019",
+      "started_at": "2026-10-18T20:54:33.838060+00:00",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"checksPassed\": 27,\n  \"negativeControlsPassed\": 13,\n  \"sourceRecords\": 77,\n  \"elapsedMilliseconds\": 201.768714,\n  \"newM3Closures\": 0,\n  \"actualGlobalLastResolvedTau\": null,\n  \"inputManifestSHA256\": \"02554e5544ed39fd79b369462de85c1f863721c8adaac78d0eecebb60f3da6a9\",\n  \"outputDirectory\": null\n}\n",
+      "stderr": "",
+      "existing_file_names_unchanged": true,
+      "existing_result_hashes_unchanged": true
+    }
+  ],
+  "existing_result_hashes": {
+    "evidence/validation-attempt3/BOUND_ORIGINAL_A13.json": "52a7b88172504f30f88fd21297c56df0cc68a22ce796e03391d297ec1a1749a3",
+    "evidence/validation-attempt3/RADIAL_BINDING_VALIDATION.json": "aef7869137e81e7d5443463b4b6be5c660bd8c2174277497a6441b3504ff8a27"
+  },
+  "scope": "Existing evidence rejected before execution; default mode writes no files"
+}
