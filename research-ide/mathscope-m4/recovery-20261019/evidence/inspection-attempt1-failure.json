@@ -1,0 +1,17 @@
+{
+  "schema": "MathScope.M4.CommandFailure/1",
+  "command": [
+    "node",
+    "--test-reporter=tap",
+    "research-ide/mathscope-m4/recovery-20261019/tests/inspect-evidence.test.mjs"
+  ],
+  "exitCode": 1,
+  "tests": 4,
+  "pass": 1,
+  "fail": 3,
+  "error": "spawnSync git EPERM",
+  "failureLocation": "record(): execFileSync(git, [rev-parse, HEAD])",
+  "source": "Tool-return observation, not a reproduced raw compiler log",
+  "classification": "Test harness attempted a disallowed Node child_process operation before observation validation; no source proof/numerical rejection occurred.",
+  "resolution": "Capture Git baseline with authorized shell read; use that read-only metadata in browser-compatible tests and fresh supported Workers. No permission setting or access control is changed."
+}

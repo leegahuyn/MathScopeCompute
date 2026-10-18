@@ -1,0 +1,143 @@
+{
+  "schema": "MathScope.CutoffValidationExecution/1",
+  "commands": [
+    {
+      "label": "outer-cutoff",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/recovery-20261019/run_outer_cutoff.py"
+      ],
+      "cwd": "/workspace/scratch/00fe7982b3e1/MathScopeCompute",
+      "exit_code": 0,
+      "elapsed_seconds": 0.5221936689995346,
+      "logs": [
+        {
+          "path": "research-ide/mathscope-m3/recovery-20261019/evidence/cutoff-validation-attempt2/outer-cutoff.stdout.log",
+          "sha256": "129a3d1c10a30360d235eecabbf179a66848e967f9ee11e4ac6b7814a682485d"
+        },
+        {
+          "path": "research-ide/mathscope-m3/recovery-20261019/evidence/cutoff-validation-attempt2/outer-cutoff.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "label": "cutoff-tests",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/recovery-20261019",
+        "-p",
+        "test_outer_cutoff.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/00fe7982b3e1/MathScopeCompute",
+      "exit_code": 0,
+      "elapsed_seconds": 0.2965029240003787,
+      "logs": [
+        {
+          "path": "research-ide/mathscope-m3/recovery-20261019/evidence/cutoff-validation-attempt2/cutoff-tests.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "research-ide/mathscope-m3/recovery-20261019/evidence/cutoff-validation-attempt2/cutoff-tests.stderr.log",
+          "sha256": "90c29740acf52ae348b8cf970e3a37561f36c1cde75637025ce03cf7a527b8fe"
+        }
+      ]
+    },
+    {
+      "label": "original-ledger",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/recovery-20261019/build_m3_ledger.py"
+      ],
+      "cwd": "/workspace/scratch/00fe7982b3e1/MathScopeCompute",
+      "exit_code": 0,
+      "elapsed_seconds": 0.1938586199976271,
+      "logs": [
+        {
+          "path": "research-ide/mathscope-m3/recovery-20261019/evidence/cutoff-validation-attempt2/original-ledger.stdout.log",
+          "sha256": "9555ef8929b4bee9fe11e7b1304a6c94228681d8e1b06c62cc7142bf7429d625"
+        },
+        {
+          "path": "research-ide/mathscope-m3/recovery-20261019/evidence/cutoff-validation-attempt2/original-ledger.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "code_inputs": [
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/build_m3_ledger.py",
+      "sha256": "fde6fbc2637cab2d2b323c2090446a99e999be93895497afef8e9c609a5eca01"
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/outer_cutoff.py",
+      "sha256": "535e1126c6450627bd61cf0e5a94c33938b12e71886a995175493dddfe6b8ced"
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/run_outer_cutoff.py",
+      "sha256": "ae4c24d21dd1ac8fa0ee0916efde821fd788b0bd6e2f2cd60b5ea60021ab1837"
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/run_validation.py",
+      "sha256": "1b49c36b715884aab31b132fd4f87335ae971480c4c14aa7819ceb2830ec0dff"
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/test_outer_cutoff.py",
+      "sha256": "514a75b345f9270ff25c5607564d582507ece18f8edc6b7db64de821c35915f4"
+    }
+  ],
+  "source_inputs": {
+    "research-ide/mathscope-m3/navier/evidence/source-localization-20261012/attempt1/localization.json": "fa2acf400bb1fe8705bdb716d171882a3343562be3c5167e0fcb153d96cbf24e",
+    "research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+    "research-ide/mathscope-m3/navier/source-localization.mjs": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036"
+  },
+  "verified_outputs": [
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/evidence/ACTUAL_ENERGY_REFINEMENT_ATTEMPTS.json",
+      "sha256": "c55bb69cddc9789a3918564a5618816fb4d10f2e350b15fb61f88d3ad47661c9",
+      "bytes": 2909
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/evidence/OUTER_CUTOFF_DOUBLED_GRID.json",
+      "sha256": "a9ffd7f14130a49edeedd95d9c90cca302a963f323fd2d0dd9f74c7a74a11338",
+      "bytes": 1240055
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/evidence/OUTER_CUTOFF_RUN.json",
+      "sha256": "129a3d1c10a30360d235eecabbf179a66848e967f9ee11e4ac6b7814a682485d",
+      "bytes": 1598
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/evidence/OUTER_CUTOFF_WHOLE_K_CELLS.json",
+      "sha256": "9f2bc9bb9c135eb6e5e3063e2b5c89301da8fb2483af0a04cd618f10023f62be",
+      "bytes": 176550
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/M3_CURRENT_ORIGINAL_LEDGER.json",
+      "sha256": "b1c491d968f5aa3a91088f4e2a2cb931bea1a5ef94b5d16681da09bfd3b7be47"
+    }
+  ],
+  "prior_observed_failure": {
+    "command": "python -m unittest discover -s research-ide/mathscope-m3/recovery-20261019 -p test_outer_cutoff.py -v",
+    "exit_code": 1,
+    "error": "ModuleNotFoundError: No module named mpmath",
+    "evidence_location": "Earlier actual tool response in this session; exact raw stdout/stderr were not persisted.",
+    "resolution": "Installed pinned mpmath1.3.0 into the separate scratch dependency directory; final command uses PYTHONPATH."
+  },
+  "review_fix": "The public4096-bit request now reserves32 internal exp guard bits; an active-transition regression exercises it.",
+  "M3": {
+    "inherited_complete": 62,
+    "total": 64,
+    "newly_closed": 0,
+    "open": [
+      "N7-06",
+      "N8-05"
+    ]
+  },
+  "actual_last_resolved_tau": null
+}

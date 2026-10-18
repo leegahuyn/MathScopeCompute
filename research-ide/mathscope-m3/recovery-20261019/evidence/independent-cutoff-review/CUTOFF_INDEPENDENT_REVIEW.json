@@ -1,0 +1,7073 @@
+{
+  "reviewer": "ChatGPT delegated independent source/math reviewer",
+  "reviewed_file": "/workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/recovery-20261019/outer_cutoff.py",
+  "reviewed_sha256_before": "535e1126c6450627bd61cf0e5a94c33938b12e71886a995175493dddfe6b8ced",
+  "reviewed_sha256_after": "535e1126c6450627bd61cf0e5a94c33938b12e71886a995175493dddfe6b8ced",
+  "source_pins_verified_by_constructor": {
+    "research-ide/mathscope-m3/navier/evidence/source-localization-20261012/attempt1/localization.json": "fa2acf400bb1fe8705bdb716d171882a3343562be3c5167e0fcb153d96cbf24e",
+    "research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+    "research-ide/mathscope-m3/navier/source-localization.mjs": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036"
+  },
+  "method": "mpmath 160 decimal digits; independently differentiate literal source quotient; inspect enclosure membership",
+  "mpmath_version": "1.3.0",
+  "scope": "cutoff ordinary derivatives orders 0..3 and all 13 normalized C jet coefficients; selected rational points/boxes only",
+  "limitations": [
+    "finite independent numerical audit does not prove every interval enclosure",
+    "does not compute any missing nonzero global potential, pressure, force, energy, or tail bound",
+    "does not complete N7-06, N8-05, M3, or M4; actual last-resolved tau remains null"
+  ],
+  "manual_review": [
+    "exp Taylor remainder bounds all remaining positive terms by a geometric majorant; reciprocal and repeated squaring are outward",
+    "flat derivative recurrence P_next=v^2(P-Pprime) and monomial extrema at v=power/endpoints are correct through order 3",
+    "denominator lower bound exp(-2), quotient ordinary derivative recursion, and chain factors 2^order are valid",
+    "closed cutoff seams include all exact zero derivative values and source zero extension is handled before missing local fields",
+    "C@ radial variable is x^2+y^2 and pinned r0=1; axial and tau scaling metadata and physical time sign convention are consistent"
+  ],
+  "precision_boundary_observations": [
+    {
+      "bits": 4064,
+      "outcome": "RETURNED"
+    },
+    {
+      "bits": 4065,
+      "outcome": "RETURNED"
+    },
+    {
+      "bits": 4096,
+      "outcome": "RETURNED"
+    }
+  ],
+  "checks": [
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "1",
+        "1"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "49/100",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "49/100",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "49/100",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "49/100",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "1",
+        "1"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "1/2",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "1/2",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "1/2",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "1/2",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "1208925819614629174706175/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5001/10000",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-1/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5001/10000",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-1582565/1208925819614629174706176",
+        "317/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5001/10000",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-39564134594935/604462909807314587353088",
+        "2967309145/37778931862957161709568"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5001/10000",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.9999999999999999999994649017391764413269878313397011073525787130558606283594708467451673557407948252",
+      "interval": [
+        "1208925819614629174705529/1208925819614629174706176",
+        "604462909807314587352765/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "51/100",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-0.000000000000000002676605627859616685911164841775667040749175512597756519451918444046867865815972485941627667984525215",
+      "interval": [
+        "-1617909/604462909807314587353088",
+        "-3235817/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "51/100",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-0.00000000000001285350836598471549037963551977254260483510177858989898589707768704355867885371471801174069556882383",
+      "interval": [
+        "-15538938137/1208925819614629174706176",
+        "-1942367267/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "51/100",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-0.00000000005910167257135963678778757810068954205246412185340817761666896861741807178877001413429557468813646983",
+      "interval": [
+        "-35724768976995/604462909807314587353088",
+        "-35724768976949/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "51/100",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.9998621062079836850726668614058418906886459544110167389478154444194173428045456723258276006143908356",
+      "interval": [
+        "1208759116249096081973703/1208925819614629174706176",
+        "151094889531137010246713/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "11/20",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-0.02791538701262207325039301447473902012587964602102933244770280373966908338413406229971449521618962178",
+      "interval": [
+        "-33747632124093714522881/1208925819614629174706176",
+        "-131826687984741072355/4722366482869645213696"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "11/20",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-4.548960341989493960624679968148536343566569144888920892475234829239930238307180121225351841017647661",
+      "interval": [
+        "-42963715701828850128999/9444732965739290427392",
+        "-5499355609834092816511871/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "11/20",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-540.733988132075682400853247869242719505711594517451236118453934164392426335632401414265148877644373",
+      "interval": [
+        "-163426819949014189844408061/302231454903657293676544",
+        "-653707279796056759377632243/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "11/20",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.9350308308713359378724571900326600640405453730567552547277572099668397356736055438477981009976398098",
+      "interval": [
+        "35324466049252422194371/37778931862957161709568",
+        "1130382913576077510219873/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5/8",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-2.159935153471826016633127549623955710755747625484014798715190095331041160582826300834703377008682609",
+      "interval": [
+        "-1305600687862688560690479/604462909807314587353088",
+        "-2611201375725377121380957/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5/8",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-36.86762876558569977472758692884620422431944789517067564814565358575745473305571221757983408192067298",
+      "interval": [
+        "-44570228322683571356416277/1208925819614629174706176",
+        "-11142557080670892839104069/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5/8",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "288.653387841942920505550414607162925653692098254233566063458292350257204359146114172012910816349117",
+      "interval": [
+        "348960533481360281268859543/1208925819614629174706176",
+        "43620066685170035158607443/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5/8",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.6970592839654072792824449196733390721772191944858068538606280329654173940519653230966428624688112202",
+      "interval": [
+        "842692966187866535200027/1208925819614629174706176",
+        "210673241546966633800007/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-3.812749030332684316897209857092688283480674613597302850585893887946022124927411433455078053942595734",
+      "interval": [
+        "-2304665373239911510074283/604462909807314587353088",
+        "-4609330746479823020148565/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-8.55670416031512507245778477250688088148176521960519281933880568945125037862884277499956386180433179",
+      "interval": [
+        "-5172210295104434946283925/604462909807314587353088",
+        "-10344420590208869892567849/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "254.2694183469177636383190544936795617739184240530460535677145437764312463956939772700012827595226112",
+      "interval": [
+        "307392864977982586283688753/1208925819614629174706176",
+        "307392864977982586283688755/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.5003999999786666577920003484853644409113711237090358696318779574128857076354341877598385148049815151",
+      "interval": [
+        "604946480109370010809045/1208925819614629174706176",
+        "302473240054685005404523/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7499/10000",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-3.999999359999556266691060647879047326661218210562912657429485219190616617488111498945370924120482897",
+      "interval": [
+        "-4835702504745455704807833/1208925819614629174706176",
+        "-604462813093181963100979/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7499/10000",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-0.01280001774933186969394745396701643505889693428682201577365289734773079375649795609313107102029289263",
+      "interval": [
+        "-15474271948692831618053/1208925819614629174706176",
+        "-3868567987173207904513/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7499/10000",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "128.0005324799268179896551085616399491491684584799105926052061428058609237073470487424339027613107464",
+      "interval": [
+        "154743148639404491138296231/1208925819614629174706176",
+        "19342893579925561392287029/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7499/10000",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.5",
+      "interval": [
+        "1/2",
+        "1/2"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "3/4",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-4.0",
+      "interval": [
+        "-4",
+        "-4"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "3/4",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "3/4",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "128.0",
+      "interval": [
+        "128",
+        "128"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "3/4",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.4996000000213333422079996515146355590886288762909641303681220425871142923645658122401614851950184849",
+      "interval": [
+        "301989669752629581948565/604462909807314587353088",
+        "603979339505259163897131/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7501/10000",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-3.999999359999556266691060647879047326661218210562912657429485219190616617488111498945370924120482897",
+      "interval": [
+        "-4835702504745455704807833/1208925819614629174706176",
+        "-604462813093181963100979/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7501/10000",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.01280001774933186969394745396701643505889693428682201577365289734773079375649795609313107102029289263",
+      "interval": [
+        "3868567987173207904513/302231454903657293676544",
+        "15474271948692831618053/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7501/10000",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "128.0005324799268179896551085616399491491684584799105926052061428058609237073470487424339027613107464",
+      "interval": [
+        "154743148639404491138296231/1208925819614629174706176",
+        "19342893579925561392287029/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7501/10000",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.3029407160345927207175550803266609278227808055141931461393719670345826059480346769033571375311887798",
+      "interval": [
+        "91558213356690659876537/302231454903657293676544",
+        "366232853426762639506149/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-3.812749030332684316897209857092688283480674613597302850585893887946022124927411433455078053942595734",
+      "interval": [
+        "-2304665373239911510074283/604462909807314587353088",
+        "-4609330746479823020148565/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "8.55670416031512507245778477250688088148176521960519281933880568945125037862884277499956386180433179",
+      "interval": [
+        "10344420590208869892567849/1208925819614629174706176",
+        "5172210295104434946283925/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "254.2694183469177636383190544936795617739184240530460535677145437764312463956939772700012827595226112",
+      "interval": [
+        "307392864977982586283688753/1208925819614629174706176",
+        "307392864977982586283688755/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.06496916912866406212754280996733993595945462694324474527224279003316026432639445615220189900236019021",
+      "interval": [
+        "78542906038551664486303/1208925819614629174706176",
+        "2454465813704739515197/37778931862957161709568"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/8",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-2.159935153471826016633127549623955710755747625484014798715190095331041160582826300834703377008682609",
+      "interval": [
+        "-1305600687862688560690479/604462909807314587353088",
+        "-2611201375725377121380957/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/8",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "36.86762876558569977472758692884620422431944789517067564814565358575745473305571221757983408192067298",
+      "interval": [
+        "11142557080670892839104069/302231454903657293676544",
+        "44570228322683571356416277/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/8",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "288.653387841942920505550414607162925653692098254233566063458292350257204359146114172012910816349117",
+      "interval": [
+        "348960533481360281268859543/1208925819614629174706176",
+        "43620066685170035158607443/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/8",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0001378937920163149273331385941581093113540455889832610521845555805826571954543276741723993856091644192",
+      "interval": [
+        "20837920691636591559/151115727451828646838272",
+        "166703365533092732473/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "19/20",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-0.02791538701262207325039301447473902012587964602102933244770280373966908338413406229971449521618962178",
+      "interval": [
+        "-33747632124093714522881/1208925819614629174706176",
+        "-131826687984741072355/4722366482869645213696"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "19/20",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "4.548960341989493960624679968148536343566569144888920892475234829239930238307180121225351841017647661",
+      "interval": [
+        "5499355609834092816511871/1208925819614629174706176",
+        "42963715701828850128999/9444732965739290427392"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "19/20",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-540.733988132075682400853247869242719505711594517451236118453934164392426335632401414265148877644373",
+      "interval": [
+        "-163426819949014189844408061/302231454903657293676544",
+        "-653707279796056759377632243/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "19/20",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0000000000000000000005350982608235586730121686602988926474212869441393716405291532548326442592051748341916164327012773327",
+      "interval": [
+        "323/604462909807314587353088",
+        "647/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "99/100",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-0.000000000000000002676605627859616685911164841775667040749175512597756519451918444046867865815972485941627667984525215",
+      "interval": [
+        "-1617909/604462909807314587353088",
+        "-3235817/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "99/100",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.00000000000001285350836598471549037963551977254260483510177858989898589707768704355867885371471801174069556882383",
+      "interval": [
+        "1942367267/151115727451828646838272",
+        "15538938137/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "99/100",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-0.00000000005910167257135963678778757810068954205246412185340817761666896861741807178877001413429557468813646983",
+      "interval": [
+        "-35724768976995/604462909807314587353088",
+        "-35724768976949/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "99/100",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "9.161610876232588365537916074102096887966538314602690494860138395482104950374857737900111983561581308e-2172",
+      "interval": [
+        "0",
+        "1/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "9999/10000",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-4.580805621421826588161586183362768761683474290677256568976044623275016949260578173242955737965514367e-2164",
+      "interval": [
+        "-1/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "9999/10000",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "2.289486741276067239206119613417807665350974116171778380514729122667736863438555182493153220251534789e-2156",
+      "interval": [
+        "-317/604462909807314587353088",
+        "1582565/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "9999/10000",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-1.143827530170139090637216157108307816514910420015632755632200570265263290874495192337962123230877368e-2148",
+      "interval": [
+        "-39564134594935/604462909807314587353088",
+        "2967309145/37778931862957161709568"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "9999/10000",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "1",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-3.567770185749321216357671749645400093187653080823515521075370528371795892404532793438288315964432291e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352105",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "1",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "4.303503284344813190071757803657473553452140067444281069726858797595727917450651692337270269549517159e-12504661987382593360126705798779656436339527513154755917359724267853644056097608519787603567581586098136591566837468834509923086849950766744490624700446197845175807",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "1",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "-3.170849688473386375103783269065532364713106178985575078697464712095572398794391373478522864908811257e-8336441324921728906751137199186437624226351675436503944906482845235762704065072346525069045054390732091061044558312556339948724566633844496327083133630798563450265",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "1",
+      "order": 3
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "11/10",
+      "order": 0
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "11/10",
+      "order": 1
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "11/10",
+      "order": 2
+    },
+    {
+      "label": "chi_point",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "s": "11/10",
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "1184503914845916280943501/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "49/100",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-99694840601289706040795/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "49/100",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-610452490756941746477447/604462909807314587353088",
+        "623038698711366071029781/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "49/100",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-9376834064526276615074713/604462909807314587353088",
+        "9570164070145950058187257/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "49/100",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "1184503914845916280943501/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "99/200",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-99694840601289706040795/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "99/200",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-610452490756941746477447/604462909807314587353088",
+        "623038698711366071029781/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "99/200",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-9376834064526276615074713/604462909807314587353088",
+        "9570164070145950058187257/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "99/200",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "1184503914845916280943501/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-99694840601289706040795/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-610452490756941746477447/604462909807314587353088",
+        "623038698711366071029781/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-9376834064526276615074713/604462909807314587353088",
+        "9570164070145950058187257/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.9999999999999999999999999999999999999999998978512387073716687514535250786216272922415273003307670585",
+      "interval": [
+        "1184503914845916280943501/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "101/200",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-2.043183671442389353939909289214061441243645438474581436516800176379866501742302141235143694438210001e-39",
+      "interval": [
+        "-99694840601289706040795/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "101/200",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-4.005065351786337758697183518534887405938403714682268097400671975974777340683934465090372448032135685e-35",
+      "interval": [
+        "-610452490756941746477447/604462909807314587353088",
+        "623038698711366071029781/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "101/200",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.0000000000000000000000000000007688942070531390318777214047956814358555192194504365438036702032173648599570962907500788038100438868",
+      "interval": [
+        "-9376834064526276615074713/604462909807314587353088",
+        "9570164070145950058187257/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "101/200",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.9999999999999999999994649017391764413269878313397011073525787130558606283594708467451673557407948252",
+      "interval": [
+        "1184503914845916280943501/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "51/100",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.000000000000000002676605627859616685911164841775667040749175512597756519451918444046867865815972485941627667984525215",
+      "interval": [
+        "-99694840601289706040795/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "51/100",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.00000000000001285350836598471549037963551977254260483510177858989898589707768704355867885371471801174069556882383",
+      "interval": [
+        "-610452490756941746477447/604462909807314587353088",
+        "623038698711366071029781/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "51/100",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.00000000005910167257135963678778757810068954205246412185340817761666896861741807178877001413429557468813646983",
+      "interval": [
+        "-9376834064526276615074713/604462909807314587353088",
+        "9570164070145950058187257/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "51/100",
+      "domain": [
+        "49/100",
+        "51/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "924578135732615506397399/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-1245364607657969884038325/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-59363495819765375736712891/604462909807314587353088",
+        "63090357850356610352413479/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-1936537992905685031863951969/302231454903657293676544",
+        "6726737889442319005760199319/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.9999999940944215158651521428156045807294509977169825965843193334448072613332640198585630111663333006",
+      "interval": [
+        "924578135732615506397399/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "21/40",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.000004737549913865384168901223622825810027844970209004779044952694099235387813685427546124995443245487464",
+      "interval": [
+        "-1245364607657969884038325/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "21/40",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.003422636694830111132957371698632083484539292207393943252645168202467458728894819426980910926082064736",
+      "interval": [
+        "-59363495819765375736712891/604462909807314587353088",
+        "63090357850356610352413479/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "21/40",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-2.184731296904744255131429587876966910945381350417630028437765646014326748963118116966364709060766116",
+      "interval": [
+        "-1936537992905685031863951969/302231454903657293676544",
+        "6726737889442319005760199319/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "21/40",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.9998621062079836850726668614058418906886459544110167389478154444194173428045456723258276006143908356",
+      "interval": [
+        "924578135732615506397399/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "11/20",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.02791538701262207325039301447473902012587964602102933244770280373966908338413406229971449521618962178",
+      "interval": [
+        "-1245364607657969884038325/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "11/20",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-4.548960341989493960624679968148536343566569144888920892475234829239930238307180121225351841017647661",
+      "interval": [
+        "-59363495819765375736712891/604462909807314587353088",
+        "63090357850356610352413479/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "11/20",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-540.733988132075682400853247869242719505711594517451236118453934164392426335632401414265148877644373",
+      "interval": [
+        "-1936537992905685031863951969/302231454903657293676544",
+        "6726737889442319005760199319/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "11/20",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.9958899275399798444866942126954985448827650752679921996665973662536758541667465091668752099768584375",
+      "interval": [
+        "924578135732615506397399/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "23/40",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.375168802703352475318327396793551412434998260197927334629812355116423189315541727841882756744791621",
+      "interval": [
+        "-1245364607657969884038325/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "23/40",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-24.45517098408440918759266560559171847796182584810173514801902318207715424566726948047408535726458013",
+      "interval": [
+        "-59363495819765375736712891/604462909807314587353088",
+        "63090357850356610352413479/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "23/40",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-831.4684791129776704668741366654352639189659595818721396127720651225080337225892529310069079290678846",
+      "interval": [
+        "-1936537992905685031863951969/302231454903657293676544",
+        "6726737889442319005760199319/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "23/40",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.9770226300899743850460961133098414086082905701001975761982230105668616994004714566507223488955234267",
+      "interval": [
+        "924578135732615506397399/1208925819614629174706176",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/5",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-1.19262492654605904716702949273217309629980508926780489552549218240687526534035104134564055292532948",
+      "interval": [
+        "-1245364607657969884038325/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/5",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-38.34795131718647191373386021789904725202383139889545887110763812834617817721638164336376051918274047",
+      "interval": [
+        "-59363495819765375736712891/604462909807314587353088",
+        "63090357850356610352413479/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/5",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-228.5227804259187730960756198323362214191455811865946797478376714933440792971546993368507761876257201",
+      "interval": [
+        "-1936537992905685031863951969/302231454903657293676544",
+        "6726737889442319005760199319/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/5",
+      "domain": [
+        "1/2",
+        "3/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.9770226300899743850460961133098414086082905701001975761982230105668616994004714566507223488955234267",
+      "interval": [
+        "13046745603962139571109/75557863725914323419136",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/5",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-1.19262492654605904716702949273217309629980508926780489552549218240687526534035104134564055292532948",
+      "interval": [
+        "-6607215898326083038369241/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/5",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-38.34795131718647191373386021789904725202383139889545887110763812834617817721638164336376051918274047",
+      "interval": [
+        "-597448070041273155489785837/1208925819614629174706176",
+        "188062559306756639714338893/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/5",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-228.5227804259187730960756198323362214191455811865946797478376714933440792971546993368507761876257201",
+      "interval": [
+        "-20196242122036547939415487347/604462909807314587353088",
+        "9392346808136612398828993693/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/5",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.8704295306002940825252729651259711902737176925547719358604247741312594585832600520330105503934083387",
+      "interval": [
+        "13046745603962139571109/75557863725914323419136",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "13/20",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-2.966600383599208986989491990618166191410840897787764688650221104568834402425456722733068159940141557",
+      "interval": [
+        "-6607215898326083038369241/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "13/20",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-27.02507957224018825523211695016048704267025938284460100451666737866895914915483003503145511588215083",
+      "interval": [
+        "-597448070041273155489785837/1208925819614629174706176",
+        "188062559306756639714338893/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "13/20",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "445.3477984103617240228427975395751446818460042547113771195443707649361076125434382734425195231425801",
+      "interval": [
+        "-20196242122036547939415487347/604462909807314587353088",
+        "9392346808136612398828993693/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "13/20",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.6970592839654072792824449196733390721772191944858068538606280329654173940519653230966428624688112202",
+      "interval": [
+        "13046745603962139571109/75557863725914323419136",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-3.812749030332684316897209857092688283480674613597302850585893887946022124927411433455078053942595734",
+      "interval": [
+        "-6607215898326083038369241/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-8.55670416031512507245778477250688088148176521960519281933880568945125037862884277499956386180433179",
+      "interval": [
+        "-597448070041273155489785837/1208925819614629174706176",
+        "188062559306756639714338893/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "254.2694183469177636383190544936795617739184240530460535677145437764312463956939772700012827595226112",
+      "interval": [
+        "-20196242122036547939415487347/604462909807314587353088",
+        "9392346808136612398828993693/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.5",
+      "interval": [
+        "13046745603962139571109/75557863725914323419136",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-4.0",
+      "interval": [
+        "-6607215898326083038369241/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-597448070041273155489785837/1208925819614629174706176",
+        "188062559306756639714338893/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "128.0",
+      "interval": [
+        "-20196242122036547939415487347/604462909807314587353088",
+        "9392346808136612398828993693/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.3029407160345927207175550803266609278227808055141931461393719670345826059480346769033571375311887798",
+      "interval": [
+        "13046745603962139571109/75557863725914323419136",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-3.812749030332684316897209857092688283480674613597302850585893887946022124927411433455078053942595734",
+      "interval": [
+        "-6607215898326083038369241/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "8.55670416031512507245778477250688088148176521960519281933880568945125037862884277499956386180433179",
+      "interval": [
+        "-597448070041273155489785837/1208925819614629174706176",
+        "188062559306756639714338893/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "254.2694183469177636383190544936795617739184240530460535677145437764312463956939772700012827595226112",
+      "interval": [
+        "-20196242122036547939415487347/604462909807314587353088",
+        "9392346808136612398828993693/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "domain": [
+        "3/5",
+        "4/5"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.6970592839654072792824449196733390721772191944858068538606280329654173940519653230966428624688112202",
+      "interval": [
+        "2141884189895179763931/151115727451828646838272",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-3.812749030332684316897209857092688283480674613597302850585893887946022124927411433455078053942595734",
+      "interval": [
+        "-592778900151581221056401/37778931862957161709568",
+        "-191805227865268209859889/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-8.55670416031512507245778477250688088148176521960519281933880568945125037862884277499956386180433179",
+      "interval": [
+        "-87603266029193521611589115/302231454903657293676544",
+        "58854857347423855551611875/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "254.2694183469177636383190544936795617739184240530460535677145437764312463956939772700012827595226112",
+      "interval": [
+        "-18101787188545959470789367603/604462909807314587353088",
+        "38592622004963596061651915441/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/10",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.5",
+      "interval": [
+        "2141884189895179763931/151115727451828646838272",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-4.0",
+      "interval": [
+        "-592778900151581221056401/37778931862957161709568",
+        "-191805227865268209859889/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-87603266029193521611589115/302231454903657293676544",
+        "58854857347423855551611875/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "128.0",
+      "interval": [
+        "-18101787188545959470789367603/604462909807314587353088",
+        "38592622004963596061651915441/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.3029407160345927207175550803266609278227808055141931461393719670345826059480346769033571375311887798",
+      "interval": [
+        "2141884189895179763931/151115727451828646838272",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-3.812749030332684316897209857092688283480674613597302850585893887946022124927411433455078053942595734",
+      "interval": [
+        "-592778900151581221056401/37778931862957161709568",
+        "-191805227865268209859889/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "8.55670416031512507245778477250688088148176521960519281933880568945125037862884277499956386180433179",
+      "interval": [
+        "-87603266029193521611589115/302231454903657293676544",
+        "58854857347423855551611875/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "254.2694183469177636383190544936795617739184240530460535677145437764312463956939772700012827595226112",
+      "interval": [
+        "-18101787188545959470789367603/604462909807314587353088",
+        "38592622004963596061651915441/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "4/5",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.1295704693997059174747270348740288097262823074452280641395752258687405414167399479669894496065916613",
+      "interval": [
+        "2141884189895179763931/151115727451828646838272",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "17/20",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-2.966600383599208986989491990618166191410840897787764688650221104568834402425456722733068159940141557",
+      "interval": [
+        "-592778900151581221056401/37778931862957161709568",
+        "-191805227865268209859889/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "17/20",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "27.02507957224018825523211695016048704267025938284460100451666737866895914915483003503145511588215083",
+      "interval": [
+        "-87603266029193521611589115/302231454903657293676544",
+        "58854857347423855551611875/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "17/20",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "445.3477984103617240228427975395751446818460042547113771195443707649361076125434382734425195231425801",
+      "interval": [
+        "-18101787188545959470789367603/604462909807314587353088",
+        "38592622004963596061651915441/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "17/20",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.02297736991002561495390388669015859139170942989980242380177698943313830059952854334927765110447657334",
+      "interval": [
+        "2141884189895179763931/151115727451828646838272",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "9/10",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-1.19262492654605904716702949273217309629980508926780489552549218240687526534035104134564055292532948",
+      "interval": [
+        "-592778900151581221056401/37778931862957161709568",
+        "-191805227865268209859889/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "9/10",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "38.34795131718647191373386021789904725202383139889545887110763812834617817721638164336376051918274047",
+      "interval": [
+        "-87603266029193521611589115/302231454903657293676544",
+        "58854857347423855551611875/151115727451828646838272"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "9/10",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-228.5227804259187730960756198323362214191455811865946797478376714933440792971546993368507761876257201",
+      "interval": [
+        "-18101787188545959470789367603/604462909807314587353088",
+        "38592622004963596061651915441/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "9/10",
+      "domain": [
+        "7/10",
+        "9/10"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0001378937920163149273331385941581093113540455889832610521845555805826571954543276741723993856091644192",
+      "interval": [
+        "0",
+        "166726356062559261087/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "19/20",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.02791538701262207325039301447473902012587964602102933244770280373966908338413406229971449521618962178",
+      "interval": [
+        "-16878470613740567171705/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "19/20",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "4.548960341989493960624679968148536343566569144888920892475234829239930238307180121225351841017647661",
+      "interval": [
+        "-667128253311072561300673/604462909807314587353088",
+        "3418511750709589230855645/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "19/20",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-540.733988132075682400853247869242719505711594517451236118453934164392426335632401414265148877644373",
+      "interval": [
+        "-366342658862353896244541023/302231454903657293676544",
+        "202659673065327569291564805/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "19/20",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.000001831368054056883975805489730571100905620836212769778267067730574580616666506902383585806433389026133",
+      "interval": [
+        "0",
+        "166726356062559261087/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "193/200",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.0007517306548067010113494090181561814783008497115760546280600997408409602760847307207578742535345667445",
+      "interval": [
+        "-16878470613740567171705/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "193/200",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.2658701839791980986267186861956380662968386328787839754076835977163510309659890598264280941227163567",
+      "interval": [
+        "-667128253311072561300673/604462909807314587353088",
+        "3418511750709589230855645/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "193/200",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-77.74262859466355979924318024713908155634243867393768182227976849897995406164835051841687152587348379",
+      "interval": [
+        "-366342658862353896244541023/302231454903657293676544",
+        "202659673065327569291564805/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "193/200",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.00000000003935754835659100201571598515995425785769051422627648126812302202024126592508042614284564525839780425",
+      "interval": [
+        "0",
+        "166726356062559261087/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "49/50",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.00000004928234679005908328466587709652613811711101935050052588815023711868252528616409190975319834273974742",
+      "interval": [
+        "-16878470613740567171705/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "49/50",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.00005679054535625032474529771458114149548857636489863681269290710822531039188647868710789750452259783058",
+      "interval": [
+        "-667128253311072561300673/604462909807314587353088",
+        "3418511750709589230855645/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "49/50",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.05952968586014178263465203863771507029734684787391557720142604670718513527116130259346502612412618259",
+      "interval": [
+        "-366342658862353896244541023/302231454903657293676544",
+        "202659673065327569291564805/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "49/50",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "1.021487612926283312485464749213783727077584726996692329414672634353156724990306210888771646124017938e-43",
+      "interval": [
+        "0",
+        "166726356062559261087/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "199/200",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-2.043183671442389353939909289214061441243645438474581436516800176379866501742302141235143694438210001e-39",
+      "interval": [
+        "-16878470613740567171705/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "199/200",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "4.005065351786337758697183518534887405938403714682268097400671975974777340683934465090372448032135685e-35",
+      "interval": [
+        "-667128253311072561300673/604462909807314587353088",
+        "3418511750709589230855645/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "199/200",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-0.0000000000000000000000000000007688942070531390318777214047956814358555192194504365438036702032173648599570962907500788038100438868",
+      "interval": [
+        "-366342658862353896244541023/302231454903657293676544",
+        "202659673065327569291564805/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "199/200",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "166726356062559261087/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "101/100",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-16878470613740567171705/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "101/100",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-667128253311072561300673/604462909807314587353088",
+        "3418511750709589230855645/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "101/100",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-366342658862353896244541023/302231454903657293676544",
+        "202659673065327569291564805/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "101/100",
+      "domain": [
+        "19/20",
+        "101/100"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "0",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-35961015256224266085333899/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-1582265238078218811751029473/1208925819614629174706176",
+        "316292291004934610800794625/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-122581044748077968593936474319/1208925819614629174706176",
+        "2021502442500815905674307825/18889465931478580854784"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1/2",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.9350308308713359378724571900326600640405453730567552547277572099668397356736055438477981009976398098",
+      "interval": [
+        "0",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5/8",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-2.159935153471826016633127549623955710755747625484014798715190095331041160582826300834703377008682609",
+      "interval": [
+        "-35961015256224266085333899/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5/8",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-36.86762876558569977472758692884620422431944789517067564814565358575745473305571221757983408192067298",
+      "interval": [
+        "-1582265238078218811751029473/1208925819614629174706176",
+        "316292291004934610800794625/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5/8",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "288.653387841942920505550414607162925653692098254233566063458292350257204359146114172012910816349117",
+      "interval": [
+        "-122581044748077968593936474319/1208925819614629174706176",
+        "2021502442500815905674307825/18889465931478580854784"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "5/8",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.5",
+      "interval": [
+        "0",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-4.0",
+      "interval": [
+        "-35961015256224266085333899/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "-1582265238078218811751029473/1208925819614629174706176",
+        "316292291004934610800794625/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "128.0",
+      "interval": [
+        "-122581044748077968593936474319/1208925819614629174706176",
+        "2021502442500815905674307825/18889465931478580854784"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "3/4",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.06496916912866406212754280996733993595945462694324474527224279003316026432639445615220189900236019021",
+      "interval": [
+        "0",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/8",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-2.159935153471826016633127549623955710755747625484014798715190095331041160582826300834703377008682609",
+      "interval": [
+        "-35961015256224266085333899/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/8",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "36.86762876558569977472758692884620422431944789517067564814565358575745473305571221757983408192067298",
+      "interval": [
+        "-1582265238078218811751029473/1208925819614629174706176",
+        "316292291004934610800794625/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/8",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "288.653387841942920505550414607162925653692098254233566063458292350257204359146114172012910816349117",
+      "interval": [
+        "-122581044748077968593936474319/1208925819614629174706176",
+        "2021502442500815905674307825/18889465931478580854784"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "7/8",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 3
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "1"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 0
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-3.567770185749321216357671749645400093187653080823515521075370528371795892404532793438288315964432291e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352105",
+      "interval": [
+        "-35961015256224266085333899/1208925819614629174706176",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 1
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "4.303503284344813190071757803657473553452140067444281069726858797595727917450651692337270269549517159e-12504661987382593360126705798779656436339527513154755917359724267853644056097608519787603567581586098136591566837468834509923086849950766744490624700446197845175807",
+      "interval": [
+        "-1582265238078218811751029473/1208925819614629174706176",
+        "316292291004934610800794625/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 2
+    },
+    {
+      "label": "chi_interval_sample",
+      "status": "PASS",
+      "reference": "-3.170849688473386375103783269065532364713106178985575078697464712095572398794391373478522864908811257e-8336441324921728906751137199186437624226351675436503944906482845235762704065072346525069045054390732091061044558312556339948724566633844496327083133630798563450265",
+      "interval": [
+        "-122581044748077968593936474319/1208925819614629174706176",
+        "2021502442500815905674307825/18889465931478580854784"
+      ],
+      "check_method": "strict containment in rational interval",
+      "s": "1",
+      "domain": [
+        "1/2",
+        "1"
+      ],
+      "order": 3
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.4037091682690451396152207040177288837287045217308174215718317272965682492896219803678053234927553444",
+      "interval": [
+        "488054437135595640671819/1208925819614629174706176",
+        "488054437135595640671821/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-2.208193442454176914757266502048167202397608905006672881140565963680709174382958432758311249853998686",
+      "interval": [
+        "-2669542067286565309771027/1208925819614629174706176",
+        "-2669542067286565309771019/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,1",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-6.161317657452451302622521205080882900370298739397885826101860185776213919220826285333400884392053161",
+      "interval": [
+        "-931071999867723966435393/151115727451828646838272",
+        "-3724287999470895865741563/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "33.70094691284434162378319971191267475494595079535588289937742005276557758160057190186750216042638179",
+      "interval": [
+        "40741944868399452504906031/1208925819614629174706176",
+        "40741944868399452504906085/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,1",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-26.46910461604997310169741059472671082234701532332941965008289670914707973616011886277055925901885113",
+      "interval": [
+        "-31999183992423578202271767/1208925819614629174706176",
+        "-31999183992423578202271693/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,2,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "1497.792932321034733926060871703000434891011592052773042288733320785728475094713699805723789449607942",
+      "interval": [
+        "1810720548319205720512228505/1208925819614629174706176",
+        "452680137079801430128058071/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,3,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-1.865148389835654588580759263750393278756801242071541418304009668163909175758961766176675099725026401",
+      "interval": [
+        "-563706511471243653612587/302231454903657293676544",
+        "-2254826045884974614450341/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "10.20191951869243256891166497215737983883964057898310325605525690765648042893083449082721746322019006",
+      "interval": [
+        "6166681957888866113333281/604462909807314587353088",
+        "6166681957888866113333293/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,1",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "28.46547121368551651629094733969510556503510742939706976010657821239573236134305436742164988188350048",
+      "interval": [
+        "34412643117721396142584963/1208925819614629174706176",
+        "34412643117721396142585025/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,1,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "122.2880522300055705364989987624405435868005586936161631095182859802505494340179054708141558266561895",
+      "interval": [
+        "147837183771236065353953239/1208925819614629174706176",
+        "147837183771236065353953501/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,2,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-63.67191007439453241160556917298016921581842672052534833253581270034855517260674420243608498924847289",
+      "interval": [
+        "-38487308036558187282906697/604462909807314587353088",
+        "-76974616073116374565813197/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "971.7462338225820366708801986179265275518502187462852986686069563699960184885441805154337593664003463",
+      "interval": [
+        "1174769112181394075095239139/1208925819614629174706176",
+        "1174769112181394075095240807/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,1,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "997.0325279231197018153772315497989940174991012107650247974835575971792355430407749952092804747185367",
+      "interval": [
+        "1205338366001903134344788987/1208925819614629174706176",
+        "1205338366001903134344792031/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@3,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.4037091682690451396152207040177288837287045217308174215718317272965682492896219803678053234927553444",
+      "interval": [
+        "488054437135595640671819/1208925819614629174706176",
+        "488054437135595640671821/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-2.208193442454176914757266502048167202397608905006672881140565963680709174382958432758311249853998686",
+      "interval": [
+        "-2669542067286565309771027/1208925819614629174706176",
+        "-2669542067286565309771019/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,1",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-6.161317657452451302622521205080882900370298739397885826101860185776213919220826285333400884392053161",
+      "interval": [
+        "-931071999867723966435393/151115727451828646838272",
+        "-3724287999470895865741563/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "33.70094691284434162378319971191267475494595079535588289937742005276557758160057190186750216042638179",
+      "interval": [
+        "40741944868399452504906031/1208925819614629174706176",
+        "40741944868399452504906085/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,1",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-26.46910461604997310169741059472671082234701532332941965008289670914707973616011886277055925901885113",
+      "interval": [
+        "-31999183992423578202271767/1208925819614629174706176",
+        "-31999183992423578202271693/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,2,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "1497.792932321034733926060871703000434891011592052773042288733320785728475094713699805723789449607942",
+      "interval": [
+        "1810720548319205720512228505/1208925819614629174706176",
+        "452680137079801430128058071/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,3,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-1.865148389835654588580759263750393278756801242071541418304009668163909175758961766176675099725026401",
+      "interval": [
+        "-563706511471243653612587/302231454903657293676544",
+        "-2254826045884974614450341/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "10.20191951869243256891166497215737983883964057898310325605525690765648042893083449082721746322019006",
+      "interval": [
+        "6166681957888866113333281/604462909807314587353088",
+        "6166681957888866113333293/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,1",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "28.46547121368551651629094733969510556503510742939706976010657821239573236134305436742164988188350048",
+      "interval": [
+        "34412643117721396142584963/1208925819614629174706176",
+        "34412643117721396142585025/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,1,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "122.2880522300055705364989987624405435868005586936161631095182859802505494340179054708141558266561895",
+      "interval": [
+        "147837183771236065353953239/1208925819614629174706176",
+        "147837183771236065353953501/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,2,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-63.67191007439453241160556917298016921581842672052534833253581270034855517260674420243608498924847289",
+      "interval": [
+        "-38487308036558187282906697/604462909807314587353088",
+        "-76974616073116374565813197/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "971.7462338225820366708801986179265275518502187462852986686069563699960184885441805154337593664003463",
+      "interval": [
+        "1174769112181394075095239139/1208925819614629174706176",
+        "1174769112181394075095240807/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,1,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "997.0325279231197018153772315497989940174991012107650247974835575971792355430407749952092804747185367",
+      "interval": [
+        "1205338366001903134344788987/1208925819614629174706176",
+        "1205338366001903134344792031/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@3,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.4037091682690451396152207040177288837287045217308174215718317272965682492896219803678053234927553444",
+      "interval": [
+        "488054437135595640671819/1208925819614629174706176",
+        "488054437135595640671821/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-2.208193442454176914757266502048167202397608905006672881140565963680709174382958432758311249853998686",
+      "interval": [
+        "-2669542067286565309771027/1208925819614629174706176",
+        "-2669542067286565309771019/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,1",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-6.161317657452451302622521205080882900370298739397885826101860185776213919220826285333400884392053161",
+      "interval": [
+        "-931071999867723966435393/151115727451828646838272",
+        "-3724287999470895865741563/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "33.70094691284434162378319971191267475494595079535588289937742005276557758160057190186750216042638179",
+      "interval": [
+        "40741944868399452504906031/1208925819614629174706176",
+        "40741944868399452504906085/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,1",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-26.46910461604997310169741059472671082234701532332941965008289670914707973616011886277055925901885113",
+      "interval": [
+        "-31999183992423578202271767/1208925819614629174706176",
+        "-31999183992423578202271693/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,2,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "1497.792932321034733926060871703000434891011592052773042288733320785728475094713699805723789449607942",
+      "interval": [
+        "1810720548319205720512228505/1208925819614629174706176",
+        "452680137079801430128058071/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,3,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-1.865148389835654588580759263750393278756801242071541418304009668163909175758961766176675099725026401",
+      "interval": [
+        "-563706511471243653612587/302231454903657293676544",
+        "-2254826045884974614450341/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "10.20191951869243256891166497215737983883964057898310325605525690765648042893083449082721746322019006",
+      "interval": [
+        "6166681957888866113333281/604462909807314587353088",
+        "6166681957888866113333293/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,1",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "28.46547121368551651629094733969510556503510742939706976010657821239573236134305436742164988188350048",
+      "interval": [
+        "34412643117721396142584963/1208925819614629174706176",
+        "34412643117721396142585025/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,1,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "122.2880522300055705364989987624405435868005586936161631095182859802505494340179054708141558266561895",
+      "interval": [
+        "147837183771236065353953239/1208925819614629174706176",
+        "147837183771236065353953501/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,2,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-63.67191007439453241160556917298016921581842672052534833253581270034855517260674420243608498924847289",
+      "interval": [
+        "-38487308036558187282906697/604462909807314587353088",
+        "-76974616073116374565813197/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "971.7462338225820366708801986179265275518502187462852986686069563699960184885441805154337593664003463",
+      "interval": [
+        "1174769112181394075095239139/1208925819614629174706176",
+        "1174769112181394075095240807/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,1,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "997.0325279231197018153772315497989940174991012107650247974835575971792355430407749952092804747185367",
+      "interval": [
+        "1205338366001903134344788987/1208925819614629174706176",
+        "1205338366001903134344792031/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@3,0,0",
+      "domain": "active_point",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.6705929379873508912771458032095595610430975348944285570324015757072299552965041204511622859461389434",
+      "interval": [
+        "64952316857254411908259/1208925819614629174706176",
+        "578225180864261836413423/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-3.116522082768008923853204111660093431926205400371567584174079301941061439051061577459071874125643089",
+      "interval": [
+        "-3105282135970134375471181/604462909807314587353088",
+        "-188640215812255641745189/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,1",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-5.197928471520079894939598615384010241953475469172434150609759343329812244148122897803536589720459751",
+      "interval": [
+        "-27314797629890125464320869/1208925819614629174706176",
+        "-772354507868508690696225/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "24.15691837549064084776010766218872970074582201485979063811778994930337305837757522506913091160271888",
+      "interval": [
+        "1121569853836640456795305/302231454903657293676544",
+        "146690521158138000072021933/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,1",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-117.6355301744559108068526027464934861952865065502500762661438904605836056150065518554546349994390444",
+      "interval": [
+        "-1157572747944410985185831429/604462909807314587353088",
+        "1495719554511325332665180103/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,2,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "3491.717345185928270663830039783285652246206426737306243960603815998512004930541752648753894439729246",
+      "interval": [
+        "-38311464907777349483943921923/151115727451828646838272",
+        "83979654374684750732760194887/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,3,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-0.268815664476955609343857472779246424827505687428286160765759492983043434577162654744595115160466367",
+      "interval": [
+        "-7152318573558768584101193/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "1.24929731149687482000298283331135700656579480383700725393730481019353499663554897518636877602066562",
+      "interval": [
+        "0",
+        "76821168749664742652105487/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,1",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "2.083655399308295267848014012049813935114273452732492363126144194781209411658498470149905407712158616",
+      "interval": [
+        "0",
+        "84467150898398801698754831/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,1,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "47.15569076055764389282279349240816863139025924881137280960999500551310171690271301617550945857333094",
+      "interval": [
+        "-18501205247714244457673323041/1208925819614629174706176",
+        "14318520430039595966166224047/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,2,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-46.10488488678192418954561241477084954616104266647831564896629062486733730678161325156697302436303936",
+      "interval": [
+        "-254249056020782169147676979/302231454903657293676544",
+        "462904140029324470587007115/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,0,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "357.3701425315039819108644789600497591300730731298011672268779925834105556040585536819570244973795315",
+      "interval": [
+        "-2733392916242505504255236847/302231454903657293676544",
+        "12010479208840513846813705105/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,1,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-4746.743000709942078503363361649979134263703105636186400550733978006172517053222371330187690563473613",
+      "interval": [
+        "-5864385872163506112776588397/75557863725914323419136",
+        "87004691951432131964623628605/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@3,0,0",
+      "domain": "active_box",
+      "sample": [
+        "12/25",
+        "23/100",
+        "57/100",
+        "17/25"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.3926092529626656362654537563369990406511754357518734727330435123298905525641523601928418326814286839",
+      "interval": [
+        "64952316857254411908259/1208925819614629174706176",
+        "578225180864261836413423/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-2.231186802745777561980363970748511118238895030180316637915535210788804203857494119001680339879866347",
+      "interval": [
+        "-3105282135970134375471181/604462909807314587353088",
+        "-188640215812255641745189/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,1",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-5.991913270461058174484171453168261707473616548480956943909991143035364135260975100370819241872013694",
+      "interval": [
+        "-27314797629890125464320869/1208925819614629174706176",
+        "-772354507868508690696225/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "34.05186635660191301885355078568859577228770814777537195489721864241983965606303741314876107128802886",
+      "interval": [
+        "1121569853836640456795305/302231454903657293676544",
+        "146690521158138000072021933/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,1",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-25.74134106107900396010608467153422825490536176274269659523181812468930506792184823350208260812918572",
+      "interval": [
+        "-1157572747944410985185831429/604462909807314587353088",
+        "1495719554511325332665180103/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,2,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "1456.611368953175836260259146041362740129117235138723769652253184528090186743493849776672089246004479",
+      "interval": [
+        "-38311464907777349483943921923/151115727451828646838272",
+        "83979654374684750732760194887/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,3,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-1.813866450290480051773111211300100208600402807796332006327374704386086888811059646686084467139651746",
+      "interval": [
+        "-7152318573558768584101193/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "10.3081495285499480083446450029626986723571475900563427302952893884349498427895696956126888894690499",
+      "interval": [
+        "0",
+        "76821168749664742652105487/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,1",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "27.68281789673750028446886656771553551549745611662140392084766284028813499175002311871828518403170513",
+      "interval": [
+        "0",
+        "84467150898398801698754831/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,1,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "118.9257629152616274606036762049589702443910107797708353599290441366589994248444924125946072668795642",
+      "interval": [
+        "-18501205247714244457673323041/1208925819614629174706176",
+        "14318520430039595966166224047/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,2,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-61.92126167507408960921358793061670471188089481907003823980685940015873137819685872219266634144014502",
+      "interval": [
+        "-254249056020782169147676979/302231454903657293676544",
+        "462904140029324470587007115/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,0,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "945.0282354650724381031126356176910027277984199031781492788653557366291280818532539542032600409946241",
+      "interval": [
+        "-2733392916242505504255236847/302231454903657293676544",
+        "12010479208840513846813705105/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,1,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "969.619287185726572382838550205747032484541337371468951031274486100952199265886075535190144397126976",
+      "interval": [
+        "-5864385872163506112776588397/75557863725914323419136",
+        "87004691951432131964623628605/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@3,0,0",
+      "domain": "active_box",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "141/200"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.1415704081818477178249280756999483083413804264313023643641272514402656439251351384114117917449571407",
+      "interval": [
+        "64952316857254411908259/1208925819614629174706176",
+        "578225180864261836413423/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-0.9702163514359185601192337950016418511015363881470335627434430827979403876360488390529747177277869752",
+      "interval": [
+        "-3105282135970134375471181/604462909807314587353088",
+        "-188640215812255641745189/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,0,1",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-4.215884907953840456536743712885909579679780800418770303219022458286841830663359269264862663652748541",
+      "interval": [
+        "-27314797629890125464320869/1208925819614629174706176",
+        "-772354507868508690696225/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "28.89248202360691455088709713448578380756630238247413656788770381908278087855426671131987646549163695",
+      "interval": [
+        "1121569853836640456795305/302231454903657293676544",
+        "146690521158138000072021933/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,1,1",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "12.75567124041086071677070977107103147078896839492688702286806339087639276344013087541486921792373761",
+      "interval": [
+        "-1157572747944410985185831429/604462909807314587353088",
+        "1495719554511325332665180103/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,2,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "1662.679073337744295725732114074358104435422008485929791558342243243109475909374875987508765081969466",
+      "interval": [
+        "-38311464907777349483943921923/151115727451828646838272",
+        "83979654374684750732760194887/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@0,3,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-1.39181474593178723643601610075494093504085853739335261587896043826338889069405753064576376700869375",
+      "interval": [
+        "-7152318573558768584101193/604462909807314587353088",
+        "0"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "9.538444100112392811897097010231325586189298341359172178396398511028853586587481670525522955804963237",
+      "interval": [
+        "0",
+        "76821168749664742652105487/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,0,1",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "41.4474384682447802167847302479300244208767005798282910530079691696479076583410179617030329343282142",
+      "interval": [
+        "0",
+        "84467150898398801698754831/302231454903657293676544"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,1,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-125.4042532946388781373170190218086669545535641157524727148277527287591127621546520061294950436337557",
+      "interval": [
+        "-18501205247714244457673323041/1208925819614629174706176",
+        "14318520430039595966166224047/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@1,2,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-9.398721742069257071551449551750310026505337638917215730118701108074457531293076608688835435301084026",
+      "interval": [
+        "-254249056020782169147676979/302231454903657293676544",
+        "462904140029324470587007115/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,0,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "279.8884996894995454134408648928185753516098829108556116123942524232132613729237693604898823531330861",
+      "interval": [
+        "-2733392916242505504255236847/302231454903657293676544",
+        "12010479208840513846813705105/604462909807314587353088"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@2,1,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "486.0755158662209030721642814606904475614325183591828829095511151066592336166528222696985969794536143",
+      "interval": [
+        "-5864385872163506112776588397/75557863725914323419136",
+        "87004691951432131964623628605/1208925819614629174706176"
+      ],
+      "check_method": "strict containment in rational interval",
+      "atom": "C@3,0,0",
+      "domain": "active_box",
+      "sample": [
+        "13/25",
+        "27/100",
+        "63/100",
+        "73/100"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "1",
+        "1"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,1",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,1",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,2,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,3,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,1",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,1,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,2,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,1,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@3,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "1",
+        "1"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,1",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,1",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,2,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,3,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,1",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,1,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,2,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,1,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@3,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "1.0",
+      "interval": [
+        "1",
+        "1"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,1",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,1",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,2,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,3,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,1",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,1,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,2,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,1,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@3,0,0",
+      "domain": "plateau",
+      "sample": [
+        "1/4",
+        "0",
+        "1/4",
+        "1/4"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,1",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,1",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,2,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,3,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,1",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,1,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,2,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,1,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@3,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,1",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,1",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,2,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,3,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,1",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,1,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,2,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,1,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@3,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,1",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,1",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,2,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,3,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,1",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,1,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,2,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,1,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@3,0,0",
+      "domain": "zero_radial",
+      "sample": [
+        "3/4",
+        "0",
+        "0",
+        "7/10"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-2.066311384693406486795540925317740249721851596003886485910755656066282066619078059219926522675455347e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352105",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,1",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "3.153557516390615378192393009986941274712446075842303810451187303112039475389630108599508542917459239e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352104",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,1",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,2,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,3,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "9.54642018308479684276318082154314620922572966600935462359049053742906831942107295801007507299515423e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352105",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,1",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,1,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,2,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,1,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@3,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-2.066311384693406486795540925317740249721851596003886485910755656066282066619078059219926522675455347e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352105",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,1",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "3.153557516390615378192393009986941274712446075842303810451187303112039475389630108599508542917459239e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352104",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,1",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,2,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,3,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "9.54642018308479684276318082154314620922572966600935462359049053742906831942107295801007507299515423e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352105",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,1",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,1,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,2,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,1,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@3,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "-2.066311384693406486795540925317740249721851596003886485910755656066282066619078059219926522675455347e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352105",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,0,1",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "3.153557516390615378192393009986941274712446075842303810451187303112039475389630108599508542917459239e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352104",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,1,1",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,2,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@0,3,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -3,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "9.54642018308479684276318082154314620922572966600935462359049053742906831942107295801007507299515423e-25009323974765186720253411597559312872679055026309511834719448535707288112195217039575207135163172196273183133674937669019846173699901533488981249400892395690352105",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,0,1",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": -1
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,1,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@1,2,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -2,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@2,1,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": -1,
+        "tau0_power": 0
+      }
+    },
+    {
+      "label": "cutoff_atom",
+      "status": "PASS",
+      "reference": "0.0",
+      "interval": [
+        "0",
+        "0"
+      ],
+      "check_method": "exact identity cross-check, 1e-120 numerical tolerance",
+      "atom": "C@3,0,0",
+      "domain": "zero_time_seam",
+      "sample": [
+        "1/2",
+        "1/4",
+        "3/5",
+        "1"
+      ],
+      "physical_scale": {
+        "z0_power": 0,
+        "tau0_power": 0
+      }
+    }
+  ],
+  "summary": {
+    "passed": 383,
+    "failed": 0,
+    "elapsed_seconds": 1.6140049770001497
+  }
+}

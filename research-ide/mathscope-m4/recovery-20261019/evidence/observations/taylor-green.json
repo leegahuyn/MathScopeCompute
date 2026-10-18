@@ -1,0 +1,181 @@
+{
+  "schema": "MathScope.M4.FreshObservationTrace/1",
+  "fixtureId": "taylor-green",
+  "execution": {
+    "id": "taylor-green",
+    "engine": "M1",
+    "claimId": "R1-01/N2-06",
+    "startedAt": "2026-10-18T18:51:40.782Z",
+    "finishedAt": "2026-10-18T18:51:40.907Z",
+    "pass": true,
+    "commandScope": "FRESH_ISOLATED_INSTALLED_BROWSER_WORKER_VS_CURRENT_LOCAL_MODULE",
+    "workersStarted": 1,
+    "request": {
+      "kind": "ns.benchmark",
+      "input": {
+        "time": 0.19,
+        "viscosity": 1
+      },
+      "precision": {
+        "bits": 53,
+        "absoluteTolerance": 1e-8,
+        "relativeTolerance": 1e-8
+      },
+      "budget": {
+        "maxOperations": 20000000,
+        "maxMilliseconds": 60000,
+        "maxPoints": 480
+      }
+    },
+    "requestDigest": "6d7480354162fd1d3ad4e2ac141a4dc61fc33853603111cefaeeeb95cd8da808",
+    "inputHash": "92170bc6d82906eb1bcf7935a97a8f54358082166d43777c01fdbb089610eef4",
+    "local": {
+      "status": "COMPLETED",
+      "resultHash": "6a809232687a628645ad10994afa81bbaa24db8e981adfe27e025c49b12a8b49",
+      "mathematicalHash": "1d042781d05c2bb6bd3d20f16ede0d5e000f365c1be55beb728816b96419f9de"
+    },
+    "worker": {
+      "status": "COMPLETED",
+      "resultHash": "5963c792ed90194071fee81ba6b42c46879b2e980546f41f7fdd4f144e112765",
+      "mathematicalHash": "1d042781d05c2bb6bd3d20f16ede0d5e000f365c1be55beb728816b96419f9de",
+      "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+    },
+    "mathematicalHashMatch": true,
+    "invariant": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "terminal-completed",
+          "pass": true,
+          "observed": "COMPLETED"
+        },
+        {
+          "id": "reference-pde-mean-balance",
+          "pass": true,
+          "observed": {
+            "energy": 0.1169166067524773,
+            "dissipation": 0.4676664270099092,
+            "derivative": -0.4676664270099092
+          }
+        }
+      ]
+    },
+    "observation": {
+      "meanEnergy": 0.1169166067524773,
+      "meanDissipation": 0.4676664270099092,
+      "energyDerivative": -0.4676664270099092
+    },
+    "source": {
+      "repoPath": "research-ide/mathscope-m1/navier/heat.mjs",
+      "page": 54,
+      "equation": "N2 exact periodic benchmark (separate model)",
+      "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/navier/heat.mjs",
+      "paperUrl": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "pageDocument": "99-page Research IDE blueprint"
+    },
+    "memory": {
+      "parentRSSBefore": 84152320,
+      "parentRSSAfter": 119500800,
+      "scope": "Process snapshots including threads; not a peak process-tree bound"
+    },
+    "fullSourceSolution": false,
+    "formalKernelExecuted": false
+  },
+  "record": {
+    "schema": "MathScope.M4.InspectableObservation/1",
+    "claimId": "R1-01/N2-06",
+    "jobId": "fresh-fixture:2026-10-18T18:51:40.782Z:taylor-green",
+    "inputHash": "92170bc6d82906eb1bcf7935a97a8f54358082166d43777c01fdbb089610eef4",
+    "result": {
+      "meanEnergy": 0.1169166067524773,
+      "meanDissipation": 0.4676664270099092,
+      "energyDerivative": -0.4676664270099092
+    },
+    "resultHash": "fc28d308163155174558b8b48937007cbdc91d8e08b131994dff590c6ef4aeb5",
+    "source": {
+      "path": "research-ide/mathscope-m1/navier/heat.mjs",
+      "commit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+      "sha256": "5bb609090a021a2af5bd6a0dac5f6cc398f67bc8b807b5270d649867be021769"
+    },
+    "document": {
+      "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+      "page": 54
+    },
+    "formula": "u=e^(−2νt)(sin x cos y,−cos x sin y,0); dE/dt=−ν‖∇u‖²",
+    "assumptionIds": [],
+    "scope": "Fresh taylor-green fixture; source catalogue limitations apply. This is not the actual whole-K native field or a new kernel theorem.",
+    "originalCoordinates": null,
+    "error": null,
+    "kernelPass": false,
+    "originalCriterionAccepted": false
+  },
+  "inspection": {
+    "schema": "MathScope.M4.ObservationInspection/1",
+    "status": "SOURCE_AND_RESULT_BYTES_MATCH",
+    "student": {
+      "assumptionIds": [],
+      "claimId": "R1-01/N2-06",
+      "display": null,
+      "document": {
+        "page": 54,
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      "error": null,
+      "formula": "u=e^(−2νt)(sin x cos y,−cos x sin y,0); dE/dt=−ν‖∇u‖²",
+      "inputHash": "92170bc6d82906eb1bcf7935a97a8f54358082166d43777c01fdbb089610eef4",
+      "jobId": "fresh-fixture:2026-10-18T18:51:40.782Z:taylor-green",
+      "originalCoordinates": null,
+      "originalValue": {
+        "energyDerivative": -0.4676664270099092,
+        "meanDissipation": 0.4676664270099092,
+        "meanEnergy": 0.1169166067524773
+      },
+      "resultHash": "fc28d308163155174558b8b48937007cbdc91d8e08b131994dff590c6ef4aeb5",
+      "scope": "Fresh taylor-green fixture; source catalogue limitations apply. This is not the actual whole-K native field or a new kernel theorem.",
+      "selectionPath": [],
+      "source": {
+        "commit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+        "path": "research-ide/mathscope-m1/navier/heat.mjs",
+        "sha256": "5bb609090a021a2af5bd6a0dac5f6cc398f67bc8b807b5270d649867be021769",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/333d6095d4a2d2d69ceec9b25c44e1d3381e36d2/research-ide/mathscope-m1/navier/heat.mjs"
+      },
+      "explanation": "Fresh taylor-green fixture; source catalogue limitations apply. This is not the actual whole-K native field or a new kernel theorem."
+    },
+    "expert": {
+      "assumptionIds": [],
+      "claimId": "R1-01/N2-06",
+      "display": null,
+      "document": {
+        "page": 54,
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      "error": null,
+      "formula": "u=e^(−2νt)(sin x cos y,−cos x sin y,0); dE/dt=−ν‖∇u‖²",
+      "inputHash": "92170bc6d82906eb1bcf7935a97a8f54358082166d43777c01fdbb089610eef4",
+      "jobId": "fresh-fixture:2026-10-18T18:51:40.782Z:taylor-green",
+      "originalCoordinates": null,
+      "originalValue": {
+        "energyDerivative": -0.4676664270099092,
+        "meanDissipation": 0.4676664270099092,
+        "meanEnergy": 0.1169166067524773
+      },
+      "resultHash": "fc28d308163155174558b8b48937007cbdc91d8e08b131994dff590c6ef4aeb5",
+      "scope": "Fresh taylor-green fixture; source catalogue limitations apply. This is not the actual whole-K native field or a new kernel theorem.",
+      "selectionPath": [],
+      "source": {
+        "commit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+        "path": "research-ide/mathscope-m1/navier/heat.mjs",
+        "sha256": "5bb609090a021a2af5bd6a0dac5f6cc398f67bc8b807b5270d649867be021769",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/333d6095d4a2d2d69ceec9b25c44e1d3381e36d2/research-ide/mathscope-m1/navier/heat.mjs"
+      },
+      "theoremType": null
+    },
+    "currentKernelExecuted": false,
+    "grantsProof": false,
+    "originalCriterionAccepted": false,
+    "limitation": "Stored observation byte binding only; no fresh numerical execution, whole-field certificate, theorem import, or browser interaction is asserted."
+  },
+  "currentKernelExecuted": false,
+  "currentBrowserInspected": false,
+  "originalM4CriterionAccepted": false
+}

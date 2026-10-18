@@ -1,0 +1,41 @@
+# Proposal only. Root may place this in .github/workflows after review.
+# Action versions follow the repository's existing M4 workflow convention.
+name: MathScope current recovery scoped checks
+on:
+  workflow_dispatch:
+  push:
+    branches: [mathscope-m3-n6-cloud-20261014]
+    paths:
+      - 'research-ide/mathscope-m3/recovery-20261019/**'
+      - 'research-ide/mathscope-m4/recovery-20261019/**'
+      - '.github/workflows/mathscope-recovery-scoped.yml'
+permissions:
+  contents: read
+concurrency:
+  group: mathscope-recovery-scoped-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  scoped:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install pinned small reference dependencies
+        run: python -m pip install -r research-ide/requirements-reference.txt
+      - name: Current cutoff, native scalar and new M4 contracts
+        run: python -B research-ide/mathscope-m4/recovery-20261019/run_all_scoped.py --output-dir "$RUNNER_TEMP/mathscope-scoped"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-scoped-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/mathscope-scoped
+          if-no-files-found: error
+          retention-days: 14

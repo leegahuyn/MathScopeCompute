@@ -1,0 +1,156 @@
+{
+  "schema": "MathScope.IndependentOuterCutoffReview/1",
+  "reviewedAt": "2026-10-18T19:01:30.019280+00:00",
+  "reviewer": "ChatGPT remote_state agent; independent of outer_cutoff author",
+  "reviewedFiles": [
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/outer_cutoff.py",
+      "bytes": 10628,
+      "sha256": "535e1126c6450627bd61cf0e5a94c33938b12e71886a995175493dddfe6b8ced"
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/OUTER_CUTOFF_PROOF.md",
+      "bytes": 5847,
+      "sha256": "3cd47d14ef91b1bf043e204a92b2e957bc9d859a2c4b2012b46514dba2d7fccb"
+    },
+    {
+      "path": "research-ide/mathscope-m3/recovery-20261019/run_outer_cutoff.py",
+      "bytes": 8176,
+      "sha256": "14bd91acf7dc3d5d79b6a46c29002ed39cee3703988f7ebdb3693babcea729f9"
+    }
+  ],
+  "sourceFilesUnchangedDuringReview": true,
+  "sourcePins": {
+    "research-ide/mathscope-m3/navier/evidence/source-localization-20261012/attempt1/localization.json": "fa2acf400bb1fe8705bdb716d171882a3343562be3c5167e0fcb153d96cbf24e",
+    "research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+    "research-ide/mathscope-m3/navier/source-localization.mjs": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036"
+  },
+  "sourcePinChecksPassed": true,
+  "sympyVersion": "1.14.0",
+  "mathematicalReview": [
+    {
+      "subject": "Original cutoff primitive",
+      "result": "CONSISTENT",
+      "reason": "Pinned archived AST uses sigma_1 based on exp(-1/u), the unit branch s<=1/2, quotient transition and zero branch s>=1. It is distinct from the inner sigma_2 profile."
+    },
+    {
+      "subject": "Exponential enclosure",
+      "result": "CONSISTENT",
+      "reason": "For y<=1/8 the positive Taylor tail ratios are bounded by y/(n+2). Reciprocal reverses endpoints; dyadic floor/ceiling and squaring retain inclusion. x>=bits uses e>2 and returns a nonzero upper bound, not exact zero."
+    },
+    {
+      "subject": "Derivative polynomial and range",
+      "result": "CONSISTENT",
+      "reason": "d/du=-v^2 d/dv gives P_next=v^2(P-P_prime). v^j exp(-v) has its only positive maximum at v=j; endpoints plus that maximum and the zero limit enclose every monomial. Signed interval sums remain enclosures."
+    },
+    {
+      "subject": "Quotient and seams",
+      "result": "CONSISTENT",
+      "reason": "Differentiating H*Q=G gives the stated binomial recurrence. H>=exp(-2)>0 since max(u,1-u)>=1/2. The exterior derivative zero is included at either seam; value and first-derivative sign intersections are justified by the quotient."
+    },
+    {
+      "subject": "Physical radial/axial/time factors",
+      "result": "CONSISTENT",
+      "reason": "Archived r0 is exactly1, s=x^2+y^2. All13 symbolic C@a,b,c identities match independent differentiation including z0^-b and tau0^-c. These are tau derivatives; physical d/dt has the negative sign verified separately."
+    },
+    {
+      "subject": "Exact global zero before local field",
+      "result": "CONSISTENT",
+      "reason": "The implementation does not evaluate an A/b/p provider. Cells outside the support use the original smooth global zero extension. Active cells retain missing field state, null energy, and null last-resolved tau."
+    },
+    {
+      "subject": "Acceptance boundary",
+      "result": "CONSISTENT",
+      "reason": "The8^3/16^3 result encloses support geometry and13 cutoff jets only. The67 A/b/p operands, stages1..4 and slow-base/tails remain separate. It is not N7 energy refinement or four-axis N8 acceptance."
+    }
+  ],
+  "symbolicJetChecks": [
+    {
+      "atom": "C@0,0,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@0,0,1",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@0,1,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@0,1,1",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@0,2,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@0,3,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@1,0,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@1,0,1",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@1,1,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@1,2,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@2,0,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@2,1,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    },
+    {
+      "atom": "C@3,0,0",
+      "symbolicRemainder": "0",
+      "pass": true
+    }
+  ],
+  "physicalTimeSignCheck": {
+    "remainder": "0",
+    "pass": true
+  },
+  "exactZeroBranchCheck": {
+    "pass": true,
+    "wholeKEnergy": null
+  },
+  "precisionBoundary": {
+    "requestedBits": 4096,
+    "case": "x=y=zeta=0; rho=2/3",
+    "scope": "Published API edge, not current 80-bit evidence",
+    "result": "SUPPORTED"
+  },
+  "findings": [],
+  "verdict": "SCOPED_ANALYTIC_REVIEW_NO_UNRESOLVED_FINDING",
+  "pass": true,
+  "newLeanExecution": false,
+  "originalM3Accepted": false,
+  "N706Closed": false,
+  "N805Closed": false,
+  "actualGlobalLastResolvedTau": null
+}

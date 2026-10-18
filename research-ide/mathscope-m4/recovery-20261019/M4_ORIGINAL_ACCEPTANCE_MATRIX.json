@@ -1,0 +1,2025 @@
+{
+  "schema": "MathScope.M4.OriginalAcceptanceMatrix/1",
+  "generatedAt": "2026-10-18T19:05:23.072110+00:00",
+  "sourceCommit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+  "sourceTree": "341d08d0560cb14d7cec923a20814d362ca6e1dc",
+  "originalSource": {
+    "path": "/workspace/scratch/00fe7982b3e1/handoff_restore/01_ORIGINAL_PDFS/MathScope_Research_IDE_Blueprint_v1_KO(1)(20261018-014348).pdf",
+    "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+    "page_count": 99
+  },
+  "originalCriteria": 16,
+  "acceptedCurrentRelease": null,
+  "finalAcceptance": "UNCONFIRMED",
+  "overallRelease": "HOLD",
+  "M3": {
+    "accepted": 62,
+    "total": 64,
+    "open": [
+      "N7-06",
+      "N8-05"
+    ],
+    "actualGlobalLastResolvedTau": null
+  },
+  "actualNewLeanExecution": false,
+  "currentBrowserInspection": false,
+  "githubSaved": false,
+  "sitePublished": false,
+  "softwareExecution": {
+    "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/execution.json",
+    "present": true,
+    "bytes": 8534,
+    "sha256": "af2348f37db7e01919e0879ffbe44dbf0d110eaf5741fa646d1e0171a8c96f94"
+  },
+  "softwareTests": {
+    "tests": 51,
+    "pass": true,
+    "scope": "Scoped new contracts and inherited guards/dated artifacts; original criteria are not counted from test totals."
+  },
+  "rows": [
+    {
+      "id": "I3-01",
+      "title": "정의와 연구가설의 파일 분리",
+      "source_page": 20,
+      "original_acceptance": "Defs, Finite, Analytic, Comparison, Conditional, Open 모듈을 나누고 Open은 axiom-free theorem import 경로에 넣 지 않는다. 합격: unconditional target의 dependency closure에 사용자 공리가 있으면 해당 등급의 build가 실패한다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Defs.lean",
+          "present": true,
+          "bytes": 1929,
+          "sha256": "6f4e450a25322939c00a3684fbd052ecabc14d3c1c8ad587fb6d1f99cf5f0f49"
+        },
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+          "present": true,
+          "bytes": 2401,
+          "sha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e"
+        },
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Analytic.lean",
+          "present": true,
+          "bytes": 1223,
+          "sha256": "8cbd276dca0dc5d5267a615107a6ba6c1f796769dbbaaa0212c331b71b3806e0"
+        },
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Comparison.lean",
+          "present": true,
+          "bytes": 728,
+          "sha256": "e1acc6c6359e4c805f910aa4d707b74ae5cbcfdc8e2e3c41194583e71339cca0"
+        },
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Conditional.lean",
+          "present": true,
+          "bytes": 510,
+          "sha256": "bef1701760da5abb50b3786e0a8af0d0a44022ce14ed706bddd1f79466b413b8"
+        },
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Open.lean",
+          "present": true,
+          "bytes": 380,
+          "sha256": "e976529a4946eb203009fe8b738b1e9f6aeb96a6c9acf89f2a7cbf6c64613a50"
+        },
+        {
+          "path": "research-ide/mathscope-m4/kernel-evidence.mjs",
+          "present": true,
+          "bytes": 9921,
+          "sha256": "58f61545a000d5c9fe0e994dd96d66123557cad91baab7704433cd8b8d98a2f9"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-kernel-evidence",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/kernel-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.tap",
+              "bytes": 2497,
+              "sha256": "974b44557f8d34725c1ee94952b244b01a70fedb28630073e5bba3f50b9c4bd6"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-acceptance",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/acceptance.test.mjs"
+          ],
+          "expected": "exit 0; 13 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 13,
+            "pass": 13,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.tap",
+              "bytes": 3222,
+              "sha256": "f2da8f210a59cfe94ad43b142f694a03f8d7a96b6d4d219eed48a360385d0d31"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/evidence/formal-audit-20261014.json",
+          "present": true,
+          "bytes": 43337,
+          "sha256": "ec2f0e0e0c0868a878f5bd4762ddf35f65804df7fd7059f9e52cbd88c85c1319"
+        },
+        {
+          "path": "research-ide/mathscope-m4/evidence/official-linux-success-summary-20261014.json",
+          "present": true,
+          "bytes": 3935,
+          "sha256": "029e3925257a5fbe108f74afa87005a1d675fd849baf994a5829d7566ddd9fa2"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Six modules exist; exact historical core source/log readback isolates assumedComplete. Its unconditional grade is rejected. The dependency guard rejects open modules and user axioms.",
+      "remainingOriginalObligations": [
+        "Original criterion acceptance for the current selected research targets remains unreviewed. Historical kernel scopes are retained separately from full M3."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "I3-02",
+      "title": "유한 대수 정리부터 형식화",
+      "source_page": 20,
+      "original_acceptance": "delta identities의 허용 정밀도, d²=0, semilinear chain map, 유한 소수 구간 인증, Lie bracket, lattice holonomy를 작은 정리로 나눈다. 합격: 자체 fixture와 일부러 잘못된 certificate가 각각 수락·거부된다. 숫자 예시와 전칭 정리의 범위가 구분 된다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+          "present": true,
+          "bytes": 2401,
+          "sha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e"
+        },
+        {
+          "path": "research-ide/mathscope-m4/kernel-evidence.mjs",
+          "present": true,
+          "bytes": 9921,
+          "sha256": "58f61545a000d5c9fe0e994dd96d66123557cad91baab7704433cd8b8d98a2f9"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-kernel-evidence",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/kernel-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.tap",
+              "bytes": 2497,
+              "sha256": "974b44557f8d34725c1ee94952b244b01a70fedb28630073e5bba3f50b9c4bd6"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-kernel-contract",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/pinned-kernel-contract.test.mjs"
+          ],
+          "expected": "exit 0; 4 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 4,
+            "pass": 4,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-contract.tap",
+              "bytes": 1173,
+              "sha256": "7d123f40284f90731968c6997c47676ebb2e5c0f479d49b83f7bd0459317fe90"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-contract.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/evidence/formal-audit-20261014.json",
+          "present": true,
+          "bytes": 43337,
+          "sha256": "ec2f0e0e0c0868a878f5bd4762ddf35f65804df7fd7059f9e52cbd88c85c1319"
+        },
+        {
+          "path": "research-ide/mathscope-m4/evidence/official-linux-success-summary-20261014.json",
+          "present": true,
+          "bytes": 3935,
+          "sha256": "029e3925257a5fbe108f74afa87005a1d675fd849baf994a5829d7566ddd9fa2"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Reused exact scopes: p=2 delta numerator, fixed integer d-squared-zero, identity coefficient endomorphism chain map, primes in [2,30), integer 2x2 brackets, shear plaquette. Historical wrong prime and false rfl are rejected for mathematical reasons.",
+      "remainingOriginalObligations": [
+        "These finite targets do not cover arbitrary primes/division precision, nonidentity Frobenius semilinearity, or general gauge holonomy. Keep fixture versus universal target ranges explicit."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "I3-03",
+      "title": "해석적 가정의 구체화",
+      "source_page": 20,
+      "original_acceptance": "완비성, uniform convergence, 미분과 극한의 교환, semigroup bounds, spectral measure, stability constants의 정확 한 진술을 저장한다. 합격: 무한 합의 미분이나 continuum limit를 쓰는 lemma마다 필요한 norm·정의역·양화 범위가 표시 된다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/analytic-obligations.json",
+          "present": true,
+          "bytes": 6222,
+          "sha256": "78f6211710583ecee490ab6548e41a90024040815612838402f14a11f56f6679"
+        },
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Defs.lean",
+          "present": true,
+          "bytes": 1929,
+          "sha256": "6f4e450a25322939c00a3684fbd052ecabc14d3c1c8ad587fb6d1f99cf5f0f49"
+        },
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Analytic.lean",
+          "present": true,
+          "bytes": 1223,
+          "sha256": "8cbd276dca0dc5d5267a615107a6ba6c1f796769dbbaaa0212c331b71b3806e0"
+        },
+        {
+          "path": "research-ide/mathscope-m4/formal-claims.mjs",
+          "present": true,
+          "bytes": 6944,
+          "sha256": "cedbf37dca5238ce3d18551f8fb32c97bcd376e2ce2d491c2ec421a1f7aa2707"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-kernel-evidence",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/kernel-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.tap",
+              "bytes": 2497,
+              "sha256": "974b44557f8d34725c1ee94952b244b01a70fedb28630073e5bba3f50b9c4bd6"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/evidence/formal-audit-20261014.json",
+          "present": true,
+          "bytes": 43337,
+          "sha256": "ec2f0e0e0c0868a878f5bd4762ddf35f65804df7fd7059f9e52cbd88c85c1319"
+        },
+        {
+          "path": "research-ide/mathscope-m4/evidence/official-linux-success-summary-20261014.json",
+          "present": true,
+          "bytes": 3935,
+          "sha256": "029e3925257a5fbe108f74afa87005a1d675fd849baf994a5829d7566ddd9fa2"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Exact norm/metric, domain and quantifiers are stored for the six analytic classes. The precision-metric uniform-limit continuity theorem is rebound to its real archived kernel output.",
+      "remainingOriginalObligations": [
+        "Real/Banach/Hilbert derivative-limit, semigroup, spectral measure and stability adapters retain SPECIFICATION_LEAN_IMPORT_MISSING. The same final-field infinite sums still need their own explicit application bindings."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "I3-04",
+      "title": "외부 비교 정리의 adapter",
+      "source_page": 20,
+      "original_acceptance": "프리즘 비교·trace formula·BSD의 알려진 경우·NS 원문 정리를 인용 레벨과 실제 Lean import 레벨로 구분한다. 합격: 문헌 링크만 연결된 결과는 THEOREM REFERENCE이며, 정확한 exported Lean theorem을 import한 경우에만 kernel 결과와 연결된다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/analytic-obligations.json",
+          "present": true,
+          "bytes": 6222,
+          "sha256": "78f6211710583ecee490ab6548e41a90024040815612838402f14a11f56f6679"
+        },
+        {
+          "path": "research-ide/mathscope-m4/lean/MathScope/M4/Comparison.lean",
+          "present": true,
+          "bytes": 728,
+          "sha256": "e1acc6c6359e4c805f910aa4d707b74ae5cbcfdc8e2e3c41194583e71339cca0"
+        },
+        {
+          "path": "research-ide/mathscope-m4/formal-claims.mjs",
+          "present": true,
+          "bytes": 6944,
+          "sha256": "cedbf37dca5238ce3d18551f8fb32c97bcd376e2ce2d491c2ec421a1f7aa2707"
+        },
+        {
+          "path": "research-ide/mathscope-m4/acceptance.mjs",
+          "present": true,
+          "bytes": 12242,
+          "sha256": "02c3eaad61e91616d3e02ef6727a63937b42e373ad11a13b855bfb407ee0ffd0"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-kernel-evidence",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/kernel-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.tap",
+              "bytes": 2497,
+              "sha256": "974b44557f8d34725c1ee94952b244b01a70fedb28630073e5bba3f50b9c4bd6"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-acceptance",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/acceptance.test.mjs"
+          ],
+          "expected": "exit 0; 13 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 13,
+            "pass": 13,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.tap",
+              "bytes": 3222,
+              "sha256": "f2da8f210a59cfe94ad43b142f694a03f8d7a96b6d4d219eed48a360385d0d31"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/evidence/formal-audit-20261014.json",
+          "present": true,
+          "bytes": 43337,
+          "sha256": "ec2f0e0e0c0868a878f5bd4762ddf35f65804df7fd7059f9e52cbd88c85c1319"
+        },
+        {
+          "path": "research-ide/mathscope-m4/evidence/official-linux-success-summary-20261014.json",
+          "present": true,
+          "bytes": 3935,
+          "sha256": "029e3925257a5fbe108f74afa87005a1d675fd849baf994a5829d7566ddd9fa2"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "The uniform-continuity adapter uses an exact exported Lean target. Prism/trace/BSD/NS entries remain THEOREM REFERENCE. Reference-only and unrelated target imports cannot close research gates.",
+      "remainingOriginalObligations": [
+        "No new exact Lean import for prism, trace formula, known BSD cases or the original NS theorem has been produced in this recovery. Current UI application of this distinction needs inspection."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "I3-05",
+      "title": "소스 생성과 재검사",
+      "source_page": 20,
+      "original_acceptance": "사용자가 G·Δ·p·정밀도·계수식·가정을 바꾸면 새로운 ProofJob을 만들고, 이전 검사 결과는 hash 불일치로 분리한다. 합격: 기본 시나리오 소스를 한 글자 바꾸는 negative test에서 과거 PASS가 재사용되지 않는다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/proof-jobs.mjs",
+          "present": true,
+          "bytes": 3600,
+          "sha256": "758b597bc54b3ecd975de8e9dc40ed478bb97abc20062a7d021a8d43a62681b3"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence-session.mjs",
+          "present": true,
+          "bytes": 11267,
+          "sha256": "61ff5f80e483eb9dbb45187d4fe39ae925e86f9cdacd43716b657ac2339fceac"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-kernel-evidence",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/kernel-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.tap",
+              "bytes": 2497,
+              "sha256": "974b44557f8d34725c1ee94952b244b01a70fedb28630073e5bba3f50b9c4bd6"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "semantic-session",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/evidence-session.test.mjs"
+          ],
+          "expected": "exit 0; 10 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 10,
+            "pass": 10,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.tap",
+              "bytes": 2684,
+              "sha256": "8c04106d3875495c90a2ec997f71008fb801efb1e4727c052bb6b83b985e690e"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/evidence/formal-audit-20261014.json",
+          "present": true,
+          "bytes": 43337,
+          "sha256": "ec2f0e0e0c0868a878f5bd4762ddf35f65804df7fd7059f9e52cbd88c85c1319"
+        },
+        {
+          "path": "research-ide/mathscope-m4/evidence/official-linux-success-summary-20261014.json",
+          "present": true,
+          "bytes": 3935,
+          "sha256": "029e3925257a5fbe108f74afa87005a1d675fd849baf994a5829d7566ddd9fa2"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "G/delta/p/precision/coefficients/field/assumptions generate new source bindings. One-character source mutation, source digest changes and ABA input reversion invalidate prior runs; imported PASS cannot recover authority.",
+      "remainingOriginalObligations": [
+        "The generated Lean target is the declared fixed integer fixture. New parameter-specific mathematical targets still require their own actual kernel execution and UI integration."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "I3-06",
+      "title": "커널·공리·빌드 감사",
+      "source_page": 20,
+      "original_acceptance": "Lean/mathlib commit, compile exit, warnings, sorry 여부, #print axioms, target theorem type, 소요 시간을 기록한다. 합격: 0=1을 rfl로 제출하는 통제 사례가 실패한다. kernel PASS가 UI에서 사용자 공리 의존성을 가리지 않는다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/kernel-evidence.mjs",
+          "present": true,
+          "bytes": 9921,
+          "sha256": "58f61545a000d5c9fe0e994dd96d66123557cad91baab7704433cd8b8d98a2f9"
+        },
+        {
+          "path": "research-ide/mathscope-m4/tools/pinned-kernel-contract.mjs",
+          "present": true,
+          "bytes": 3170,
+          "sha256": "c7c134c22a978c17cbfb70f89f8e35c5c5ef765b4480f474345a9d282e8344af"
+        },
+        {
+          "path": "research-ide/mathscope-m4/tools/pinned-kernel-replay.mjs",
+          "present": true,
+          "bytes": 15538,
+          "sha256": "825a87527b41bad4cb6e96707fe750e022412f9448ae104c807613753338364b"
+        },
+        {
+          "path": "research-ide/mathscope-m4/formal-claims.mjs",
+          "present": true,
+          "bytes": 6944,
+          "sha256": "cedbf37dca5238ce3d18551f8fb32c97bcd376e2ce2d491c2ec421a1f7aa2707"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-kernel-contract",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/pinned-kernel-contract.test.mjs"
+          ],
+          "expected": "exit 0; 4 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 4,
+            "pass": 4,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-contract.tap",
+              "bytes": 1173,
+              "sha256": "7d123f40284f90731968c6997c47676ebb2e5c0f479d49b83f7bd0459317fe90"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-contract.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-kernel-evidence",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/kernel-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.tap",
+              "bytes": 2497,
+              "sha256": "974b44557f8d34725c1ee94952b244b01a70fedb28630073e5bba3f50b9c4bd6"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-acceptance",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/acceptance.test.mjs"
+          ],
+          "expected": "exit 0; 13 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 13,
+            "pass": 13,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.tap",
+              "bytes": 3222,
+              "sha256": "f2da8f210a59cfe94ad43b142f694a03f8d7a96b6d4d219eed48a360385d0d31"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/evidence/formal-audit-20261014.json",
+          "present": true,
+          "bytes": 43337,
+          "sha256": "ec2f0e0e0c0868a878f5bd4762ddf35f65804df7fd7059f9e52cbd88c85c1319"
+        },
+        {
+          "path": "research-ide/mathscope-m4/evidence/official-linux-success-summary-20261014.json",
+          "present": true,
+          "bytes": 3935,
+          "sha256": "029e3925257a5fbe108f74afa87005a1d675fd849baf994a5829d7566ddd9fa2"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Dated official Lean/mathlib and separate core scopes retain compiler exits, warnings, axioms, types, timing, sources, logs and compiled bytes. False rfl and wrong prime controls retain expected nonzero exits.",
+      "remainingOriginalObligations": [
+        "No new Lean kernel was executed in this recovery. Current UI must expose exact user-axiom dependencies and environment, and full original acceptance remains unconfirmed."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "I3-07",
+      "title": "연구 관문의 완료 조건",
+      "source_page": 20,
+      "original_acceptance": "RH global bridge, 전칭 BSD, 일반 G continuum quantum construction은 RESEARCH OPEN으로 관리한다. 알려진 prism 비교의 구현은 MODEL DEVELOPMENT로, 새로운 비교정리가 필요한 경우는 RESEARCH OPEN으로 구분한다. 합 격: 가정 자체를 결론으로 다시 쓰는 순환 증명과 대수적 이름만 붙인 의미 인터페이스가 연구 관문을 닫지 못한다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/acceptance.mjs",
+          "present": true,
+          "bytes": 12242,
+          "sha256": "02c3eaad61e91616d3e02ef6727a63937b42e373ad11a13b855bfb407ee0ffd0"
+        },
+        {
+          "path": "research-ide/mathscope-m4/formal-claims.mjs",
+          "present": true,
+          "bytes": 6944,
+          "sha256": "cedbf37dca5238ce3d18551f8fb32c97bcd376e2ce2d491c2ec421a1f7aa2707"
+        },
+        {
+          "path": "research-ide/mathscope-m4/analytic-obligations.json",
+          "present": true,
+          "bytes": 6222,
+          "sha256": "78f6211710583ecee490ab6548e41a90024040815612838402f14a11f56f6679"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-acceptance",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/acceptance.test.mjs"
+          ],
+          "expected": "exit 0; 13 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 13,
+            "pass": 13,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.tap",
+              "bytes": 3222,
+              "sha256": "f2da8f210a59cfe94ad43b142f694a03f8d7a96b6d4d219eed48a360385d0d31"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-kernel-evidence",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/kernel-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.tap",
+              "bytes": 2497,
+              "sha256": "974b44557f8d34725c1ee94952b244b01a70fedb28630073e5bba3f50b9c4bd6"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/evidence/formal-audit-20261014.json",
+          "present": true,
+          "bytes": 43337,
+          "sha256": "ec2f0e0e0c0868a878f5bd4762ddf35f65804df7fd7059f9e52cbd88c85c1319"
+        },
+        {
+          "path": "research-ide/mathscope-m4/evidence/official-linux-success-summary-20261014.json",
+          "present": true,
+          "bytes": 3935,
+          "sha256": "029e3925257a5fbe108f74afa87005a1d675fd849baf994a5829d7566ddd9fa2"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Circular hypotheses, dependency cycles, open nodes, references and user-axiom grade conflicts are rejected. RH/BSD/general-G continuum and new comparison research gates remain OPEN.",
+      "remainingOriginalObligations": [
+        "Current full research-graph and UI acceptance is not implied by the scoped structural guard tests."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "I3-08",
+      "title": "교육용 설명과 전문가 감사 동기화",
+      "source_page": 20,
+      "original_acceptance": "학생에게는 문장과 예제를, 연구자에게는 동일 claim의 정확한 Lean type·가정·출처·반례 조건을 보여준다. 합격: 두 모드가 같은 claim ID를 사용하고, 쉬운 설명에서 양화사·조건·근사 범위가 빠지지 않는다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/formal-claims.mjs",
+          "present": true,
+          "bytes": 6944,
+          "sha256": "cedbf37dca5238ce3d18551f8fb32c97bcd376e2ce2d491c2ec421a1f7aa2707"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/inspect-evidence.mjs",
+          "present": true,
+          "bytes": 5364,
+          "sha256": "601086941fc28b08e613f6e108aee622fd87fe35008b3ea8a532576cf80fd6ca"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-kernel-evidence",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/kernel-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.tap",
+              "bytes": 2497,
+              "sha256": "974b44557f8d34725c1ee94952b244b01a70fedb28630073e5bba3f50b9c4bd6"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "observation-inspection",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/inspect-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 6 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 6,
+            "pass": 6,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.tap",
+              "bytes": 1607,
+              "sha256": "76ba2127ad2aa71ce9853f5bc8440f2f0d2a2c74390d980fd53ac8760815ea02"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/evidence/formal-audit-20261014.json",
+          "present": true,
+          "bytes": 43337,
+          "sha256": "ec2f0e0e0c0868a878f5bd4762ddf35f65804df7fd7059f9e52cbd88c85c1319"
+        },
+        {
+          "path": "research-ide/mathscope-m4/evidence/official-linux-success-summary-20261014.json",
+          "present": true,
+          "bytes": 3935,
+          "sha256": "029e3925257a5fbe108f74afa87005a1d675fd849baf994a5829d7566ddd9fa2"
+        }
+      ],
+      "freshObservationEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/manifest.json",
+          "present": true,
+          "bytes": 994,
+          "sha256": "75183b8044b0be5bb4da531182ffeafd4e7b0bac226471f08a54a006ec48e492"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/taylor-green.json",
+          "present": true,
+          "bytes": 7487,
+          "sha256": "7dbccd24b227342236eca63e464b43be0d2216d1c09854b00449dcd1fd4f3c8d"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/prism.json",
+          "present": true,
+          "bytes": 11440,
+          "sha256": "bbcb70e463576964ce02f76211b8f341504d7bf9038f320bf148b74f649ccc25"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/delta.json",
+          "present": true,
+          "bytes": 11335,
+          "sha256": "57a2848bc82e40f20f1b1f7a1b48b290e863ed2264d502aa3074662aeb86be87"
+        }
+      ],
+      "peerReviewEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/peer_review/OBSERVATION_REVIEW_NEGATIVE_CONTROLS.json",
+          "present": true,
+          "bytes": 819,
+          "sha256": "e285f4f889343ecc695708cc684afd8d08e4704a943705016f332d8dbb98a3b4"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/peer_review/OBSERVATION_REVIEW_AFTER_FIX.json",
+          "present": true,
+          "bytes": 810,
+          "sha256": "1a8145dcda8bd54d4a9c43eb6cba061ca43cd0e0336f59892eb71698b182a329"
+        }
+      ],
+      "verifiedScope": "Eleven exact core claim views share IDs, scope and assumptions. New stored-observation inspection shares original values, formula, document page, job hashes and null uncertainty between student and expert modes.",
+      "remainingOriginalObligations": [
+        "The new inspection adapter is prepared independently; original full browser educational/expert walkthrough acceptance is not yet confirmed."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "R1-01",
+      "title": "기준 예제 전 구간 재현",
+      "source_page": 68,
+      "original_acceptance": "점·P1·좋은 소수의 E, SU2/SU3/G2 지원 예제, heat exterior/axis profile/기준 PDE를 clean worker에서 실행한다. 합격: 명시된 작은 fixture에서 입력 hash·출력 불변량·오차 범위가 acceptance manifest와 일치한다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/catalog.json",
+          "present": true,
+          "bytes": 21127,
+          "sha256": "1d7dc292a72355bf8167bfba31ec41e7f1ac7aa32993e83cac71dc0ea5dc52dd"
+        },
+        {
+          "path": "research-ide/mathscope-m4/release-lab/verify-fixtures.mjs",
+          "present": true,
+          "bytes": 14130,
+          "sha256": "e8abd53fbb1e5ec6e8b3fbd05b276ec9531714c0bbc4a40201e11263161fd994"
+        },
+        {
+          "path": "research-ide/mathscope-m4/release-lab/runtime.mjs",
+          "present": true,
+          "bytes": 8337,
+          "sha256": "647fdf80fe682942198d711d569b69d653e171b158280a1a64954cb3f9675963"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "semantic-session",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/evidence-session.test.mjs"
+          ],
+          "expected": "exit 0; 10 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 10,
+            "pass": 10,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.tap",
+              "bytes": 2684,
+              "sha256": "8c04106d3875495c90a2ec997f71008fb801efb1e4727c052bb6b83b985e690e"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "observation-inspection",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/inspect-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 6 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 6,
+            "pass": 6,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.tap",
+              "bytes": 1607,
+              "sha256": "76ba2127ad2aa71ce9853f5bc8440f2f0d2a2c74390d980fd53ac8760815ea02"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-runtime",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/release-lab/runtime.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-runtime.tap",
+              "bytes": 2211,
+              "sha256": "81e0f0a970dd58e16c87083d73cced4d86ca3e4030af03769a98fcdd3555853b"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-runtime.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/evidence/run-2026-10-13T175955318Z/manifest.json",
+          "present": true,
+          "bytes": 811252,
+          "sha256": "8a310145e28ae01ed7bd412052436d8ab25798d9cff66f5b87cda5c2214c72e6"
+        }
+      ],
+      "freshObservationEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/manifest.json",
+          "present": true,
+          "bytes": 994,
+          "sha256": "75183b8044b0be5bb4da531182ffeafd4e7b0bac226471f08a54a006ec48e492"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/taylor-green.json",
+          "present": true,
+          "bytes": 7487,
+          "sha256": "7dbccd24b227342236eca63e464b43be0d2216d1c09854b00449dcd1fd4f3c8d"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/prism.json",
+          "present": true,
+          "bytes": 11440,
+          "sha256": "bbcb70e463576964ce02f76211b8f341504d7bf9038f320bf148b74f649ccc25"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/delta.json",
+          "present": true,
+          "bytes": 11335,
+          "sha256": "57a2848bc82e40f20f1b1f7a1b48b290e863ed2264d502aa3074662aeb86be87"
+        }
+      ],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Historical catalog contains thirteen small clean-Worker fixtures. This recovery freshly exercised P1, reference Taylor-Green, prism comparison and delta fixtures through actual installed Workers while checking local equality.",
+      "remainingOriginalObligations": [
+        "This scoped replay does not assert a fresh complete thirteen-fixture acceptance or whole original global NS construction. Retained earlier fixture evidence must remain tied to its own source and Worker hashes."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "R1-02",
+      "title": "정밀도와 해상도 수렴 표",
+      "source_page": 68,
+      "original_acceptance": "p-adic M, series order J, spatial K, lattice a/L, sample count를 하나씩 바꾸고 관측의 변화와 예측 오차를 기록한다. 합격: 인증된 수치 경계 위반은 실패다. 앙상블 통계는 사전 유의수준·autocorrelation·독립 반복 기준으로 판정하며 신뢰구간은 결 정론적 보장과 구별한다. 수렴표만으로 무한 극한 정리를 발급하지 않는다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "HISTORICAL_EVIDENCE_AND_REMAINING_REVIEW",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/catalog.json",
+          "present": true,
+          "bytes": 21127,
+          "sha256": "1d7dc292a72355bf8167bfba31ec41e7f1ac7aa32993e83cac71dc0ea5dc52dd"
+        },
+        {
+          "path": "research-ide/mathscope-m4/release-lab/verify-fixtures.mjs",
+          "present": true,
+          "bytes": 14130,
+          "sha256": "e8abd53fbb1e5ec6e8b3fbd05b276ec9531714c0bbc4a40201e11263161fd994"
+        }
+      ],
+      "tests": [],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/evidence/run-2026-10-13T175955318Z/manifest.json",
+          "present": true,
+          "bytes": 811252,
+          "sha256": "8a310145e28ae01ed7bd412052436d8ab25798d9cff66f5b87cda5c2214c72e6"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Historical independent tables retain point p-adic precision, local rational-axis series tail, heat exterior display grid, fixed-site lattice spacing, fixed-spacing lattice volume and deterministic delta sample count.",
+      "remainingOriginalObligations": [
+        "Identity lattices and display grids are not stochastic continuum certificates. Prior alpha, autocorrelation and independent ensemble-repeat coverage remains absent here; final-field N8-05 is separately OPEN."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "R1-03",
+      "title": "출처에서 그림까지 추적",
+      "source_page": 68,
+      "original_acceptance": "모든 핵심 그림의 점 또는 패치를 선택하면 원식, 논문 위치, job, 오차, theorem/assumption ID를 열 수 있게 한다. 합격: NS의 원문 식과 생성 계수, prism 비교사상, Δ state generator 각각 하나를 end-to-end로 추적한다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/web/release-lab.js",
+          "present": true,
+          "bytes": 15855,
+          "sha256": "5e161dfd381782c115051ecc31c251833596ba375424674c35a936338c2bff54"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/inspect-evidence.mjs",
+          "present": true,
+          "bytes": 5364,
+          "sha256": "601086941fc28b08e613f6e108aee622fd87fe35008b3ea8a532576cf80fd6ca"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "observation-inspection",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/inspect-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 6 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 6,
+            "pass": 6,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.tap",
+              "bytes": 1607,
+              "sha256": "76ba2127ad2aa71ce9853f5bc8440f2f0d2a2c74390d980fd53ac8760815ea02"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/evidence/run-2026-10-13T175955318Z/manifest.json",
+          "present": true,
+          "bytes": 811252,
+          "sha256": "8a310145e28ae01ed7bd412052436d8ab25798d9cff66f5b87cda5c2214c72e6"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/evidence/live-20261013095417465/receipt.json",
+          "present": true,
+          "bytes": 2955,
+          "sha256": "99cf1d41ea47056c86f7481129268edc32a3f5dccfc0ef244db529188b00b0e1"
+        }
+      ],
+      "freshObservationEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/manifest.json",
+          "present": true,
+          "bytes": 994,
+          "sha256": "75183b8044b0be5bb4da531182ffeafd4e7b0bac226471f08a54a006ec48e492"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/taylor-green.json",
+          "present": true,
+          "bytes": 7487,
+          "sha256": "7dbccd24b227342236eca63e464b43be0d2216d1c09854b00449dcd1fd4f3c8d"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/prism.json",
+          "present": true,
+          "bytes": 11440,
+          "sha256": "bbcb70e463576964ce02f76211b8f341504d7bf9038f320bf148b74f649ccc25"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/delta.json",
+          "present": true,
+          "bytes": 11335,
+          "sha256": "57a2848bc82e40f20f1b1f7a1b48b290e863ed2264d502aa3074662aeb86be87"
+        }
+      ],
+      "peerReviewEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/peer_review/OBSERVATION_REVIEW_NEGATIVE_CONTROLS.json",
+          "present": true,
+          "bytes": 819,
+          "sha256": "e285f4f889343ecc695708cc684afd8d08e4704a943705016f332d8dbb98a3b4"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/peer_review/OBSERVATION_REVIEW_AFTER_FIX.json",
+          "present": true,
+          "bytes": 810,
+          "sha256": "1a8145dcda8bd54d4a9c43eb6cba061ca43cd0e0336f59892eb71698b182a329"
+        }
+      ],
+      "verifiedScope": "New adapter binds selection to own original result fields, exact source bytes and fixed commit URLs. Actual fresh NS reference/prism/delta fixtures pass; traversal, missing uncertainty, mutable branch labels and data corruption are rejected.",
+      "remainingOriginalObligations": [
+        "The NS sample is the explicitly labeled reference PDE fixture, not the final native whole-K field. Original source-coefficient, prism and delta UI end-to-end selection must be checked on the production page."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "R1-04",
+      "title": "세션·가정 변경 회귀",
+      "source_page": 68,
+      "original_acceptance": "p·G·Δ·τ·cutoff·계수체 변경 후 정확한 downstream node만 STALE이 되는지 검사한다. 합격: 계산 중 입력 변경, 취소, 재 개, 내보내기/가져오기 후 다른 입력의 증거가 연결되지 않는다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/runtime.mjs",
+          "present": true,
+          "bytes": 8337,
+          "sha256": "647fdf80fe682942198d711d569b69d653e171b158280a1a64954cb3f9675963"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence-session.mjs",
+          "present": true,
+          "bytes": 11267,
+          "sha256": "61ff5f80e483eb9dbb45187d4fe39ae925e86f9cdacd43716b657ac2339fceac"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-runtime",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/release-lab/runtime.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-runtime.tap",
+              "bytes": 2211,
+              "sha256": "81e0f0a970dd58e16c87083d73cced4d86ca3e4030af03769a98fcdd3555853b"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-runtime.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "semantic-session",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/evidence-session.test.mjs"
+          ],
+          "expected": "exit 0; 10 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 10,
+            "pass": 10,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.tap",
+              "bytes": 2684,
+              "sha256": "8c04106d3875495c90a2ec997f71008fb801efb1e4727c052bb6b83b985e690e"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/evidence/run-2026-10-13T175955318Z/manifest.json",
+          "present": true,
+          "bytes": 811252,
+          "sha256": "8a310145e28ae01ed7bd412052436d8ab25798d9cff66f5b87cda5c2214c72e6"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Actual release runtime tests and the new semantic graph tests preserve exact declared descendants, in-flight input changes, cancel/resume original input and import isolation. Camera/layer/selection have a separate view revision.",
+      "remainingOriginalObligations": [
+        "The generic graph enforces supplied dependency declarations; it does not infer or prove them. Bind the current production graph to these contracts and verify its UI transitions before original acceptance."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "R1-05",
+      "title": "화면·접근성·성능 검수",
+      "source_page": 68,
+      "original_acceptance": "데스크톱과 모바일 한 종류 이상, 키보드, WebGL/CPU fallback, 긴 한국어·수식, 색 범위와 샘플 선택을 확인한다. 합격: 클 리핑·빈 3D·오류 overlay가 없고, 문서에 정한 표본 예산에서 조작 지연과 메모리 상한을 만족한다.",
+      "stage": "M4",
+      "status": "OPEN",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "HISTORICAL_EVIDENCE_AND_REMAINING_REVIEW",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/web/panel.js",
+          "present": true,
+          "bytes": 7058,
+          "sha256": "8e84ba74803cb87683689b9faae08d7ae7c45b2659166483d33408304ce3e753"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/release-lab.js",
+          "present": true,
+          "bytes": 15855,
+          "sha256": "5e161dfd381782c115051ecc31c251833596ba375424674c35a936338c2bff54"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/panel.css",
+          "present": true,
+          "bytes": 5790,
+          "sha256": "51f12e656a56be5258181f109511a51c0cb858ae28527f6c51a20047beafb90d"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/release-lab.css",
+          "present": true,
+          "bytes": 2207,
+          "sha256": "daac28e94b822ff167b86cd2df8d0b490f0455e66038b4989264cbd395d4f9ec"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/test-browser.mjs",
+          "present": true,
+          "bytes": 13243,
+          "sha256": "133e76407d635d1d447e58bcbbe7ba73f23a6136d28d641b8eab8698152bb9b8"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/verify-live-panel.mjs",
+          "present": true,
+          "bytes": 9758,
+          "sha256": "94efaa336146866e70d39d12e8c8aca96160798512ea24aaeaab670c6a2a5fb8"
+        }
+      ],
+      "tests": [],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/evidence/run-2026-10-13T175955318Z/manifest.json",
+          "present": true,
+          "bytes": 811252,
+          "sha256": "8a310145e28ae01ed7bd412052436d8ab25798d9cff66f5b87cda5c2214c72e6"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/evidence/live-20261013095417465/receipt.json",
+          "present": true,
+          "bytes": 2955,
+          "sha256": "99cf1d41ea47056c86f7481129268edc32a3f5dccfc0ef244db529188b00b0e1"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Historical desktop/mobile screenshots and a dated live-page receipt exist. They describe their recorded document hash, not the current page.",
+      "remainingOriginalObligations": [
+        "Current desktop/mobile, keyboard, WebGL/CPU fallback, long Korean/formula rendering, color/sample behavior, clipping, interaction latency and memory budgets remain for current production inspection. No historical screenshot is relabeled as current."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "R1-06",
+      "title": "증거 경계 공격 테스트",
+      "source_page": 68,
+      "original_acceptance": "조작된 PASS, 잘못된 소스 hash, 원문과 다른 theorem type, 조작된 prime certificate, 잘못된 force/cutoff를 주입한다. 합격: 각 사례가 기대하는 이유로 거부되고 기존 유효 관측은 보존된다. 로그는 사용자가 원인을 이해할 수 있다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/acceptance.mjs",
+          "present": true,
+          "bytes": 12242,
+          "sha256": "02c3eaad61e91616d3e02ef6727a63937b42e373ad11a13b855bfb407ee0ffd0"
+        },
+        {
+          "path": "research-ide/mathscope-m4/kernel-evidence.mjs",
+          "present": true,
+          "bytes": 9921,
+          "sha256": "58f61545a000d5c9fe0e994dd96d66123557cad91baab7704433cd8b8d98a2f9"
+        },
+        {
+          "path": "research-ide/mathscope-m4/release-lab/runtime.mjs",
+          "present": true,
+          "bytes": 8337,
+          "sha256": "647fdf80fe682942198d711d569b69d653e171b158280a1a64954cb3f9675963"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence-session.mjs",
+          "present": true,
+          "bytes": 11267,
+          "sha256": "61ff5f80e483eb9dbb45187d4fe39ae925e86f9cdacd43716b657ac2339fceac"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/inspect-evidence.mjs",
+          "present": true,
+          "bytes": 5364,
+          "sha256": "601086941fc28b08e613f6e108aee622fd87fe35008b3ea8a532576cf80fd6ca"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-acceptance",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/acceptance.test.mjs"
+          ],
+          "expected": "exit 0; 13 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 13,
+            "pass": 13,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.tap",
+              "bytes": 3222,
+              "sha256": "f2da8f210a59cfe94ad43b142f694a03f8d7a96b6d4d219eed48a360385d0d31"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-kernel-contract",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/pinned-kernel-contract.test.mjs"
+          ],
+          "expected": "exit 0; 4 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 4,
+            "pass": 4,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-contract.tap",
+              "bytes": 1173,
+              "sha256": "7d123f40284f90731968c6997c47676ebb2e5c0f479d49b83f7bd0459317fe90"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-contract.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-kernel-evidence",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/kernel-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.tap",
+              "bytes": 2497,
+              "sha256": "974b44557f8d34725c1ee94952b244b01a70fedb28630073e5bba3f50b9c4bd6"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-kernel-evidence.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "inherited-runtime",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/release-lab/runtime.test.mjs"
+          ],
+          "expected": "exit 0; 9 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-runtime.tap",
+              "bytes": 2211,
+              "sha256": "81e0f0a970dd58e16c87083d73cced4d86ca3e4030af03769a98fcdd3555853b"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-runtime.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "semantic-session",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/evidence-session.test.mjs"
+          ],
+          "expected": "exit 0; 10 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 10,
+            "pass": 10,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.tap",
+              "bytes": 2684,
+              "sha256": "8c04106d3875495c90a2ec997f71008fb801efb1e4727c052bb6b83b985e690e"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "observation-inspection",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/inspect-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 6 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 6,
+            "pass": 6,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.tap",
+              "bytes": 1607,
+              "sha256": "76ba2127ad2aa71ce9853f5bc8440f2f0d2a2c74390d980fd53ac8760815ea02"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/evidence/run-2026-10-13T175955318Z/manifest.json",
+          "present": true,
+          "bytes": 811252,
+          "sha256": "8a310145e28ae01ed7bd412052436d8ab25798d9cff66f5b87cda5c2214c72e6"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/peer_review/OBSERVATION_REVIEW_NEGATIVE_CONTROLS.json",
+          "present": true,
+          "bytes": 819,
+          "sha256": "e285f4f889343ecc695708cc684afd8d08e4704a943705016f332d8dbb98a3b4"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/peer_review/OBSERVATION_REVIEW_AFTER_FIX.json",
+          "present": true,
+          "bytes": 810,
+          "sha256": "1a8145dcda8bd54d4a9c43eb6cba061ca43cd0e0336f59892eb71698b182a329"
+        }
+      ],
+      "verifiedScope": "Forged PASS, source/hash/type/axioms, compiler/log tampering, changed prime evidence, foreign bindings and selection-path attacks are rejected with explicit reason codes; previously valid observations remain usable.",
+      "remainingOriginalObligations": [
+        "The exact full force/cutoff mathematical rejection cases remain tied to M3 source-specific evidence; generic hash rejection does not prove those mathematical identities."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "R1-07",
+      "title": "연구·교육 시나리오 완료",
+      "source_page": 68,
+      "original_acceptance": "학생용 계수체 실험, 연구용 Frobenius/local-factor 감사, Δ 상태족 비교, NS 근사/잔차 비교의 네 walkthrough를 수행한 다. 합격: 설명만 보고 다른 사람이 같은 입력과 결과를 재현할 수 있다. 결과의 의미와 미해결 가정을 직접 확인한다.",
+      "stage": "M4",
+      "status": "PARTIAL",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/README_KO.md",
+          "present": true,
+          "bytes": 3456,
+          "sha256": "7bef3a15cb6c9044d913910fa55082dc726ab21cc434679343480d7b298f7adc"
+        },
+        {
+          "path": "research-ide/mathscope-m4/release-lab/catalog.json",
+          "present": true,
+          "bytes": 21127,
+          "sha256": "1d7dc292a72355bf8167bfba31ec41e7f1ac7aa32993e83cac71dc0ea5dc52dd"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/release-lab.js",
+          "present": true,
+          "bytes": 15855,
+          "sha256": "5e161dfd381782c115051ecc31c251833596ba375424674c35a936338c2bff54"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "semantic-session",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/evidence-session.test.mjs"
+          ],
+          "expected": "exit 0; 10 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 10,
+            "pass": 10,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.tap",
+              "bytes": 2684,
+              "sha256": "8c04106d3875495c90a2ec997f71008fb801efb1e4727c052bb6b83b985e690e"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/semantic-session.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        },
+        {
+          "suite": "observation-inspection",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/recovery-20261019/tests/inspect-evidence.test.mjs"
+          ],
+          "expected": "exit 0; 6 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 6,
+            "pass": 6,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.tap",
+              "bytes": 1607,
+              "sha256": "76ba2127ad2aa71ce9853f5bc8440f2f0d2a2c74390d980fd53ac8760815ea02"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/observation-inspection.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/evidence/run-2026-10-13T175955318Z/manifest.json",
+          "present": true,
+          "bytes": 811252,
+          "sha256": "8a310145e28ae01ed7bd412052436d8ab25798d9cff66f5b87cda5c2214c72e6"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/evidence/live-20261013095417465/receipt.json",
+          "present": true,
+          "bytes": 2955,
+          "sha256": "99cf1d41ea47056c86f7481129268edc32a3f5dccfc0ef244db529188b00b0e1"
+        }
+      ],
+      "freshObservationEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/manifest.json",
+          "present": true,
+          "bytes": 994,
+          "sha256": "75183b8044b0be5bb4da531182ffeafd4e7b0bac226471f08a54a006ec48e492"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/taylor-green.json",
+          "present": true,
+          "bytes": 7487,
+          "sha256": "7dbccd24b227342236eca63e464b43be0d2216d1c09854b00449dcd1fd4f3c8d"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/prism.json",
+          "present": true,
+          "bytes": 11440,
+          "sha256": "bbcb70e463576964ce02f76211b8f341504d7bf9038f320bf148b74f649ccc25"
+        },
+        {
+          "path": "research-ide/mathscope-m4/recovery-20261019/evidence/observations/delta.json",
+          "present": true,
+          "bytes": 11335,
+          "sha256": "57a2848bc82e40f20f1b1f7a1b48b290e863ed2264d502aa3074662aeb86be87"
+        }
+      ],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Four documented walkthrough subjects and executable fixtures are preserved. New partial clean-Worker replays supply concrete outputs for inspection.",
+      "remainingOriginalObligations": [
+        "An independent person has not reproduced all four walkthroughs from the current documentation and current production UI in this recovery."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    },
+    {
+      "id": "R1-08",
+      "title": "범위별 릴리스 판정",
+      "source_page": 68,
+      "original_acceptance": "지원 대상을 명시한 기능만 배포 후보로 묶고, 기존 전체 RELEASE HOLD와 구분해 모듈별 상태를 보고한다. 합격: 패치·테스 트·되돌리기 자료가 준비되고 실제 게시 후 화면을 확인한 시점에만 배포 완료를 기록한다.",
+      "stage": "M4",
+      "status": "OPEN",
+      "originalAcceptance": "UNCONFIRMED",
+      "independentPreparation": "SCOPED_SOFTWARE_VERIFIED",
+      "implementation": [
+        {
+          "path": "research-ide/mathscope-m4/acceptance.mjs",
+          "present": true,
+          "bytes": 12242,
+          "sha256": "02c3eaad61e91616d3e02ef6727a63937b42e373ad11a13b855bfb407ee0ffd0"
+        },
+        {
+          "path": "research-ide/mathscope-m4/criteria.mjs",
+          "present": true,
+          "bytes": 8691,
+          "sha256": "5ce1cee34860d0a2c56ea837164c9beca642ef50b6ea095e9b7113258cac90f6"
+        }
+      ],
+      "tests": [
+        {
+          "suite": "inherited-acceptance",
+          "command": [
+            "node",
+            "--test-reporter=tap",
+            "research-ide/mathscope-m4/tests/acceptance.test.mjs"
+          ],
+          "expected": "exit 0; 13 registered assertions pass; no skipped cases",
+          "result": "PASS",
+          "exitCode": 0,
+          "counts": {
+            "tests": 13,
+            "pass": 13,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "evidence": [
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.tap",
+              "bytes": 3222,
+              "sha256": "f2da8f210a59cfe94ad43b142f694a03f8d7a96b6d4d219eed48a360385d0d31"
+            },
+            {
+              "path": "research-ide/mathscope-m4/recovery-20261019/evidence/attempt5/inherited-acceptance.stderr.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "scope": "Software contract/dated artifact readback only. No new Lean execution, browser inspection, or M3/M4 original acceptance."
+        }
+      ],
+      "inheritedEvidence": [
+        {
+          "path": "research-ide/mathscope-m4/release-lab/evidence/run-2026-10-13T175955318Z/manifest.json",
+          "present": true,
+          "bytes": 811252,
+          "sha256": "8a310145e28ae01ed7bd412052436d8ab25798d9cff66f5b87cda5c2214c72e6"
+        },
+        {
+          "path": "research-ide/mathscope-m4/web/evidence/live-20261013095417465/receipt.json",
+          "present": true,
+          "bytes": 2955,
+          "sha256": "99cf1d41ea47056c86f7481129268edc32a3f5dccfc0ef244db529188b00b0e1"
+        }
+      ],
+      "freshObservationEvidence": [],
+      "peerReviewEvidence": [],
+      "verifiedScope": "Supported finite scopes and global HOLD are separated; forged 16/16 and 64/64 receipts cannot freeze the release. Recovery changes, tests and raw failure history are local and reviewable.",
+      "remainingOriginalObligations": [
+        "GitHub commit, CI, publisher version, rollback material and actual current post-publication inspection are separate root-owned steps. None is asserted by this matrix."
+      ],
+      "dependencyBoundary": "This independently prepared code/dated artifact check does not fulfill the unfinished original M3 whole-K energy and four-axis refinement gates or authorize full M4 release."
+    }
+  ],
+  "nextResume": "Integrate and inspect current UI dependency/provenance contracts; keep mathematical M3 native whole-K gates OPEN. Root records remote save, CI, publication and production inspection separately."
+}
