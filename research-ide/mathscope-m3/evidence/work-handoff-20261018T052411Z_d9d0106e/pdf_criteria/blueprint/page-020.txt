@@ -1,0 +1,34 @@
+MATHSCOPE / I3 / 세부 실행 체크리스트 BLUEPRINT 1.0
+CHECKLIST / 8 ITEMS
+I3 / 세부 실행 체크리스트
+각 항목은 산출물과 합격 로그를 확보한 뒤 체크한다. 담당자 · 검증일 · 증빙 hash는 ResearchSession에 함께 기록한다.
+□ I3-01 | 정의와 연구가설의 파일 분리
+Defs, Finite, Analytic, Comparison, Conditional, Open 모듈을 나누고 Open은 axiom-free theorem import 경로에 넣
+지 않는다. 합격: unconditional target의 dependency closure에 사용자 공리가 있으면 해당 등급의 build가 실패한다.
+□ I3-02 | 유한 대수 정리부터 형식화
+delta identities의 허용 정밀도, d²=0, semilinear chain map, 유한 소수 구간 인증, Lie bracket, lattice holonomy를 작은
+정리로 나눈다. 합격: 자체 fixture와 일부러 잘못된 certificate가 각각 수락·거부된다. 숫자 예시와 전칭 정리의 범위가 구분
+된다.
+□ I3-03 | 해석적 가정의 구체화
+완비성, uniform convergence, 미분과 극한의 교환, semigroup bounds, spectral measure, stability constants의 정확
+한 진술을 저장한다. 합격: 무한 합의 미분이나 continuum limit를 쓰는 lemma마다 필요한 norm·정의역·양화 범위가 표시
+된다.
+□ I3-04 | 외부 비교 정리의 adapter
+프리즘 비교·trace formula·BSD의 알려진 경우·NS 원문 정리를 인용 레벨과 실제 Lean import 레벨로 구분한다. 합격: 문헌
+링크만 연결된 결과는 THEOREM REFERENCE이며, 정확한 exported Lean theorem을 import한 경우에만 kernel 결과와
+연결된다.
+□ I3-05 | 소스 생성과 재검사
+사용자가 G· Δ·p·정밀도·계수식·가정을 바꾸면 새로운 ProofJob을 만들고, 이전 검사 결과는 hash 불일치로 분리한다. 합격:
+기본 시나리오 소스를 한 글자 바꾸는 negative test에서 과거 PASS가 재사용되지 않는다.
+□ I3-06 | 커널·공리·빌드 감사
+Lean/mathlib commit, compile exit, warnings, sorry 여부, #print axioms, target theorem type, 소요 시간을 기록한다.
+합격: 0=1을 rfl로 제출하는 통제 사례가 실패한다. kernel PASS가 UI에서 사용자 공리 의존성을 가리지 않는다.
+□ I3-07 | 연구 관문의 완료 조건
+RH global bridge, 전칭 BSD, 일반 G continuum quantum construction은 RESEARCH OPEN으로 관리한다. 알려진
+prism 비교의 구현은 MODEL DEVELOPMENT로, 새로운 비교정리가 필요한 경우는 RESEARCH OPEN으로 구분한다. 합
+격: 가정 자체를 결론으로 다시 쓰는 순환 증명과 대수적 이름만 붙인 의미 인터페이스가 연구 관문을 닫지 못한다.
+□ I3-08 | 교육용 설명과 전문가 감사 동기화
+학생에게는 문장과 예제를, 연구자에게는 동일 claim의 정확한 Lean type·가정·출처·반례 조건을 보여준다. 합격: 두 모드가
+같은 claim ID를 사용하고, 쉬운 설명에서 양화사·조건·근사 범위가 빠지지 않는다.
+패키지 판정: □ 예정 □ 구현 중 □ 검증 중 □ 완료 □ BLOCKED / OPEN
+2026-10-09 / 연구 설계 · 예정 작업 20 / 99

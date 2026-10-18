@@ -1,0 +1,62 @@
+{
+  "decision": "ACCEPT_SCOPED_LITERAL_SUFFICIENT_K_RESOURCE_BOUND",
+  "input_sha256": "36026f7c3804d54f779d214ead8ea434db32b3fc5cb468465d174748eda5a74b",
+  "expected_input_sha256": "36026f7c3804d54f779d214ead8ea434db32b3fc5cb468465d174748eda5a74b",
+  "actual_Kcondition_root": 24825,
+  "exact_independent_reduction": [
+    "node24812=2^12*Lambda^2*Q^3/t1=2^12*Q^131/t1",
+    "node24818=2^18*(node24812)^2*(rho/(2^10*Q))^-2=2^62*Q^264/(t1^2*rho^2)",
+    "node24823=(rho/(2^13*Q))^-1=2^13*Q/rho",
+    "node24824=72*Xa*exp(t1/16)*(node24818)^2*node24823=72*2^139*Q^465*exp(t1/16)/(t1^4*rho^5)",
+    "Kcondition=ceil(node24824)>2^(139+465*260+6)=2^121045"
+  ],
+  "parameter_source_AST_checked": true,
+  "strict_parameter_bounds": [
+    "Q_source>2^260",
+    "0<rho<1",
+    "0<t1<1"
+  ],
+  "distinct_Q_binding": {
+    "Picard_constant_Q": {
+      "root": 24797,
+      "op": "source_parameter",
+      "args": [
+        "Q"
+      ]
+    },
+    "global_band_Q": {
+      "root": 622794,
+      "expression": "2^-ell"
+    },
+    "not_the_same_scalar": true
+  },
+  "actual_partial_sum_evaluated": false,
+  "optimal_term_count_claimed": false,
+  "all_algorithms_impossible_claimed": false,
+  "N706_closed": false,
+  "N805_closed": false,
+  "pins": [
+    {
+      "path": "work/actual_evaluator/code/actual_picard_term_budget.py",
+      "sha256": "243c64bc35fd74c71ad78444ace474a523603789ac1b78d92f9006c767f7087b"
+    },
+    {
+      "path": "work/actual_evaluator/evidence/ACTUAL_PICARD_TERM_RESOURCE_BOUND.json",
+      "sha256": "c89c12b65ce2767fdd9e45d67cb6fbd277b6da63195228151cd737429fcb7216"
+    }
+  ],
+  "post_review_clarification_updates": [
+    {
+      "path": "work/actual_evaluator/code/actual_picard_term_budget.py",
+      "previous_sha256": "5d0379f771fa0dd2ed327e57897ab5cb7136e26968d5986ea405cf31e4b1407b",
+      "new_sha256": "243c64bc35fd74c71ad78444ace474a523603789ac1b78d92f9006c767f7087b",
+      "only_added_Q_notation": true
+    },
+    {
+      "path": "work/actual_evaluator/evidence/ACTUAL_PICARD_TERM_RESOURCE_BOUND.json",
+      "previous_sha256": "ae0c3e22f95f638a68c33268afa54e6d22ac1a9aa8bb4bfce2f2846454e89609",
+      "new_sha256": "c89c12b65ce2767fdd9e45d67cb6fbd277b6da63195228151cd737429fcb7216",
+      "only_added_Q_notation": true
+    }
+  ]
+}

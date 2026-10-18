@@ -1,0 +1,515 @@
+{
+  "items_covered": [
+    "N7-04",
+    "N7-05",
+    "N7-06",
+    "N8-05"
+  ],
+  "n7_04": {
+    "blueprint_page": 64,
+    "criterion": "N7-04",
+    "exterior_formula_promoted_to_whole_K": false,
+    "origin_flatness_complete": false,
+    "paper_reference": "Proposition 10.1 & Lemma 10.2, pp. 117-120, (10.4)-(10.10)",
+    "schema": "MathScope.M3.N704TerminalJetSynthesis/1",
+    "three_region_decomposition_of_K": {
+      "region_1_open_heat_exterior": {
+        "domain": "r > 0, X > X_ext near t -> 1^- (chi_t = 1, A_loc = 0)",
+        "exact_symbolic_force_jet_rows": 90,
+        "native_665_666_667_receipt": {
+          "actual_667_call_nodes": [
+            612888,
+            613561,
+            613572,
+            613584,
+            613598,
+            613608,
+            613620,
+            613633
+          ],
+          "complete_source_union_nodes": 49307,
+          "complete_source_union_sha256": "7d34755391e945d1da5368e271108c1d15017697a732bb23d36f52b9e077a0ff",
+          "flat_seed_all_fixed_right_jets": "D_delta^n exp(-4/delta^2) = P_n(1/delta)*exp(-4/delta^2) -> 0 as delta -> 0^+",
+          "native_666_heat_substitution_sha256": "dafd4585ac7586d5b72d0a077cc1aa4141c1a2670f61f1f22098cd8c70d63731",
+          "other_seed_lower_bound": "exp(-64/49) > 0 on 0 <= delta <= 1/4",
+          "selector_root": 617466
+        },
+        "status": "VERIFIED_SYMBOLIC_AND_SOURCE_REGULARITY",
+        "symbolic_algebra_checks_passed": 33
+      },
+      "region_2_annular_collar_and_away_from_origin": {
+        "domain": "x != 0 in K (0 < c <= q(x,t) <= c' as t -> 1^-)",
+        "mechanism": "Locally finite shrinking cutoff sum (9.21) activates only finitely many j on any compact subset of {x != 0}; each active stage is smooth up to tau = 0",
+        "status": "CONDITIONAL_ON_N6_08_ACTUAL_STAGE_INCREMENTS"
+      },
+      "region_3_origin_flatness_and_joining": {
+        "domain": "x -> 0, t -> 1^- (q(x,t) -> 0)",
+        "finite_order_jet_evaluation_vs_all_order_theorem_separated": true,
+        "mechanism": "Single fixed-stage comparison (9.20) with N > K_(m+2j) implies |D_x^a D_t^j f(x,t)| <= C q(x,t)^(N - K_(m+2j)) -> 0 as (x,t) -> (0,1), yielding D_x^a F_j(0) = 0 and uniform limit (10.10)",
+        "status": "CONDITIONAL_ON_N6_08_FLATNESS_BOUND_9_20"
+      }
+    },
+    "whole_K_terminal_jets_complete": false
+  },
+  "n7_05": {
+    "actual_b_j": null,
+    "b0": 1,
+    "benchmark_minimal_b_j_schedules": {
+      "factorial_norm_envelope_schedule": [
+        {
+          "b": 1,
+          "j": 0,
+          "minimal": true
+        },
+        {
+          "b": 2,
+          "constraints": 1,
+          "global_force_input_hypotheses_required": true,
+          "j": 1,
+          "minimal": true
+        },
+        {
+          "b": 1092,
+          "constraints": 3,
+          "global_force_input_hypotheses_required": true,
+          "j": 2,
+          "minimal": true
+        },
+        {
+          "b": 1093,
+          "constraints": 3,
+          "global_force_input_hypotheses_required": true,
+          "j": 3,
+          "minimal": true
+        },
+        {
+          "b": 1094,
+          "constraints": 6,
+          "global_force_input_hypotheses_required": true,
+          "j": 4,
+          "minimal": true
+        },
+        {
+          "b": 1095,
+          "constraints": 6,
+          "global_force_input_hypotheses_required": true,
+          "j": 5,
+          "minimal": true
+        },
+        {
+          "b": 1096,
+          "constraints": 10,
+          "global_force_input_hypotheses_required": true,
+          "j": 6,
+          "minimal": true
+        },
+        {
+          "b": 1097,
+          "constraints": 10,
+          "global_force_input_hypotheses_required": true,
+          "j": 7,
+          "minimal": true
+        },
+        {
+          "b": 1098,
+          "constraints": 15,
+          "global_force_input_hypotheses_required": true,
+          "j": 8,
+          "minimal": true
+        }
+      ],
+      "scope": "PARAMETRIC_BENCHMARK_ONLY (전체 K의 실제 ||F_j||_C^a 수치 상계가 입력될 때 동일 알고리즘으로 즉시 산출; 외곽 노름으로 대체하지 않음)",
+      "unit_norm_envelope_schedule": [
+        {
+          "b": 1,
+          "j": 0,
+          "minimal": true
+        },
+        {
+          "b": 2,
+          "constraints": 1,
+          "global_force_input_hypotheses_required": true,
+          "j": 1,
+          "minimal": true
+        },
+        {
+          "b": 1092,
+          "constraints": 3,
+          "global_force_input_hypotheses_required": true,
+          "j": 2,
+          "minimal": true
+        },
+        {
+          "b": 1093,
+          "constraints": 3,
+          "global_force_input_hypotheses_required": true,
+          "j": 3,
+          "minimal": true
+        },
+        {
+          "b": 1094,
+          "constraints": 6,
+          "global_force_input_hypotheses_required": true,
+          "j": 4,
+          "minimal": true
+        },
+        {
+          "b": 1095,
+          "constraints": 6,
+          "global_force_input_hypotheses_required": true,
+          "j": 5,
+          "minimal": true
+        },
+        {
+          "b": 1096,
+          "constraints": 10,
+          "global_force_input_hypotheses_required": true,
+          "j": 6,
+          "minimal": true
+        },
+        {
+          "b": 1097,
+          "constraints": 10,
+          "global_force_input_hypotheses_required": true,
+          "j": 7,
+          "minimal": true
+        },
+        {
+          "b": 1098,
+          "constraints": 15,
+          "global_force_input_hypotheses_required": true,
+          "j": 8,
+          "minimal": true
+        }
+      ]
+    },
+    "blueprint_page": 64,
+    "criterion": "N7-05",
+    "differentiated_tail_bounds": [
+      {
+        "J": 1,
+        "condition_J_plus_1_ge_2_a_plus_m": true,
+        "spatial_order_a": 0,
+        "tail_bound": "1/2",
+        "time_order_m": 1
+      },
+      {
+        "J": 3,
+        "condition_J_plus_1_ge_2_a_plus_m": true,
+        "spatial_order_a": 1,
+        "tail_bound": "1/8",
+        "time_order_m": 1
+      },
+      {
+        "J": 5,
+        "condition_J_plus_1_ge_2_a_plus_m": true,
+        "spatial_order_a": 2,
+        "tail_bound": "1/32",
+        "time_order_m": 1
+      },
+      {
+        "J": 7,
+        "condition_J_plus_1_ge_2_a_plus_m": true,
+        "spatial_order_a": 2,
+        "tail_bound": "1/128",
+        "time_order_m": 2
+      },
+      {
+        "J": 9,
+        "condition_J_plus_1_ge_2_a_plus_m": true,
+        "spatial_order_a": 3,
+        "tail_bound": "1/512",
+        "time_order_m": 2
+      }
+    ],
+    "exact_C_jm_matrix": [
+      {
+        "C_jm": {
+          "0": "1"
+        },
+        "j": 0,
+        "max_m_floor_j_over_2": 0
+      },
+      {
+        "C_jm": {
+          "0": "1"
+        },
+        "j": 1,
+        "max_m_floor_j_over_2": 0
+      },
+      {
+        "C_jm": {
+          "0": "1/2",
+          "1": "273"
+        },
+        "j": 2,
+        "max_m_floor_j_over_2": 1
+      },
+      {
+        "C_jm": {
+          "0": "1/6",
+          "1": "547/6"
+        },
+        "j": 3,
+        "max_m_floor_j_over_2": 1
+      },
+      {
+        "C_jm": {
+          "0": "1/24",
+          "1": "137/6",
+          "2": "23395/6"
+        },
+        "j": 4,
+        "max_m_floor_j_over_2": 2
+      },
+      {
+        "C_jm": {
+          "0": "1/120",
+          "1": "183/40",
+          "2": "23669/30"
+        },
+        "j": 5,
+        "max_m_floor_j_over_2": 2
+      },
+      {
+        "C_jm": {
+          "0": "1/720",
+          "1": "55/72",
+          "2": "47887/360",
+          "3": "67411/2"
+        },
+        "j": 6,
+        "max_m_floor_j_over_2": 3
+      },
+      {
+        "C_jm": {
+          "0": "1/5040",
+          "1": "551/5040",
+          "2": "48437/2520",
+          "3": "4092547/840"
+        },
+        "j": 7,
+        "max_m_floor_j_over_2": 3
+      },
+      {
+        "C_jm": {
+          "0": "1/40320",
+          "1": "23/1680",
+          "2": "12247/5040",
+          "3": "172541/280",
+          "4": "177078563/840"
+        },
+        "j": 8,
+        "max_m_floor_j_over_2": 4
+      }
+    ],
+    "exact_cutoff_derivative_bounds_M_a": [
+      "1",
+      "544",
+      "89216",
+      "22612992",
+      "7745445888",
+      "3344750837760",
+      "1745129049292800",
+      "1069114815833702400",
+      "753693399755280875520"
+    ],
+    "global_F_j_norms": null,
+    "inequality_10_12": "max_{a + m <= floor(j/2)} C_(j,m) * b_j^(m - j) * ||F_j||_(C^a(K)) <= 2^(-j)",
+    "original_item_complete": false,
+    "paper_reference": "Lemma 10.3, p. 120, (10.11)-(10.12)",
+    "schema": "MathScope.M3.N705ExtensionScheduleContract/1",
+    "series_formula_10_11": "f(x, 1 + sigma) = sum_{j>=0} chi_0(b_j * sigma) * (sigma^j / j!) * F_j(x) for sigma = t - 1 >= 0",
+    "support_and_jet_matching": {
+      "compact_support_in_K_times_0_2": "chi_0(s) = 0 for |s| >= 1 and b_j >= 1 imply f(x, t) = 0 for t >= 2; spatial support stays inside K",
+      "jet_matching_at_t_1": "Uniform convergence of termwise derivatives (10.12) gives lim_{sigma->0^+} partial_t^m f(x, 1+sigma) = F_m(x), matching left limit (10.10)",
+      "velocity_extended_past_t_1": false
+    }
+  },
+  "n7_06_and_n8_05": {
+    "benchmark_independent_2x_refinement_table": [
+      {
+        "after": "1/256",
+        "analytic_tail": "O(h_r^2) 2차 격자 수렴 검증용 기준 비교",
+        "axis": "radial_grid",
+        "base_resolution": 64,
+        "before": "1/64",
+        "certification": "관측된 독립 refinement 비교; 입력 run과 tail의 진위 검토는 별도",
+        "decreased": true,
+        "doubling_ratio": "2",
+        "inherited_run_hashes": [
+          "benchmark_base_run_000",
+          "benchmark_refined_001_radial_grid"
+        ],
+        "is_original_whole_K_fluid_run": false,
+        "refined_resolution": 128
+      },
+      {
+        "after": "1/256",
+        "analytic_tail": "O(h_z^2) 2차 축 격자 수렴 검증용 기준 비교",
+        "axis": "axial_grid",
+        "base_resolution": 64,
+        "before": "1/64",
+        "certification": "관측된 독립 refinement 비교; 입력 run과 tail의 진위 검토는 별도",
+        "decreased": true,
+        "doubling_ratio": "2",
+        "inherited_run_hashes": [
+          "benchmark_base_run_000",
+          "benchmark_refined_002_axial_grid"
+        ],
+        "is_original_whole_K_fluid_run": false,
+        "refined_resolution": 128
+      },
+      {
+        "after": "1/128",
+        "analytic_tail": "8(2+sqrt(2))C_r/((2*pi)^5 K) 보조 토러스 Fourier 꼬리 감소 비교",
+        "axis": "auxiliary_fourier_cutoff",
+        "base_resolution": 16,
+        "before": "1/64",
+        "certification": "관측된 독립 refinement 비교; 입력 run과 tail의 진위 검토는 별도",
+        "decreased": true,
+        "doubling_ratio": "2",
+        "inherited_run_hashes": [
+          "benchmark_base_run_000",
+          "benchmark_refined_003_auxiliary_fourier_cutoff"
+        ],
+        "is_original_whole_K_fluid_run": false,
+        "refined_resolution": 32
+      },
+      {
+        "after": "1/512",
+        "analytic_tail": "배경/단계 계수 절단 차수 2배 증가 비교",
+        "axis": "coefficient_order",
+        "base_resolution": 2,
+        "before": "1/64",
+        "certification": "관측된 독립 refinement 비교; 입력 run과 tail의 진위 검토는 별도",
+        "decreased": true,
+        "doubling_ratio": "2",
+        "inherited_run_hashes": [
+          "benchmark_base_run_000",
+          "benchmark_refined_004_coefficient_order"
+        ],
+        "is_original_whole_K_fluid_run": false,
+        "refined_resolution": 4
+      },
+      {
+        "after": "1/65",
+        "analytic_tail": "가수부 정밀도 비트 2배 증가(128 -> 256 bits) 반올림 오차 비교",
+        "axis": "precision_bits",
+        "base_resolution": 128,
+        "before": "1/64",
+        "certification": "관측된 독립 refinement 비교; 입력 run과 tail의 진위 검토는 별도",
+        "decreased": true,
+        "doubling_ratio": "2",
+        "inherited_run_hashes": [
+          "benchmark_base_run_000",
+          "benchmark_refined_005_precision_bits"
+        ],
+        "is_original_whole_K_fluid_run": false,
+        "refined_resolution": 256
+      },
+      {
+        "after": "1/256",
+        "analytic_tail": "활성 시간 적분 격자 2배 세분화 비교",
+        "axis": "time_grid",
+        "base_resolution": 64,
+        "before": "1/64",
+        "certification": "관측된 독립 refinement 비교; 입력 run과 tail의 진위 검토는 별도",
+        "decreased": true,
+        "doubling_ratio": "2",
+        "inherited_run_hashes": [
+          "benchmark_base_run_000",
+          "benchmark_refined_006_time_grid"
+        ],
+        "is_original_whole_K_fluid_run": false,
+        "refined_resolution": 128
+      }
+    ],
+    "equation_10_13_and_10_14_contract": {
+      "actual_whole_K_numerical_check": null,
+      "core_energy_substituted_for_whole_K": false,
+      "differential_balance_10_14": "(1/2) d/dt ||u||_2^2 + nu ||grad u||_2^2 = <f, u> on K x [0, 2]",
+      "initial_zero_branch_substituted_for_active_time": false,
+      "integrated_bound_10_13_at_nu_1": "||u(t)||_2^2 + 2 * integral_0^t ||grad u(s)||_2^2 ds <= (integral_0^t ||f(s)||_2 ds)^2"
+    },
+    "exact_angular_parseval_verification": {
+      "angular_quadrature_error_for_finite_polynomial": "0",
+      "auxiliary_haar_average_used": false,
+      "cylindrical_frame_terms_retained": true,
+      "frequencies": [
+        -6,
+        -3,
+        0,
+        3,
+        6
+      ],
+      "laurent_zero_mode_convolution_checks": {
+        "dissipation_over_2pi": true,
+        "force2_over_2pi": true,
+        "forcing_work_over_2pi": true,
+        "u2_over_2pi": true
+      },
+      "sample_grouped_mode_count": 5
+    },
+    "multiscale_and_tau_budget": {
+      "last_resolved_tau": null,
+      "last_resolved_tau_budget_limit_point_and_reason": "1) 원본 프로파일(same-profile-2026-10-10.3)의 h = exp(-8002*(exp(1048576)+10)) < 2^(-4096)에 대해 단일 고정 단계 비교 차수 J(h,m,N) >= ceil(20*(N+K_(m+2)+1+ell_(m+3))/h - 1) > 2^4096 및 공통 밴드 하한 ell_0 > exp(1048576)이므로, 직접 격자·부동소수점 수치 적분 예산(표준 정밀도 및 유한 배열 한계)을 초월함. 2) 또한 저장소 내 j >= 1 후속 보정 단계 Z_j의 실제 표현식 몸체와 전체 K의 활성 시간(chi_t > 0) 수치 계수 배열이 물질화되지 않았으므로, core 에너지만의 결과나 초기 영 구간(u=p=0)의 에너지 0을 활성 시간 결과로 허위 대체하지 않고 last_resolved_tau = null 및 정확한 예산 한계 원인을 기록함.",
+      "physical_scales_at_tau_1_minus_t": {
+        "active_harmonic_inventory": {
+          "lift_templates": 10,
+          "retained_modes": [
+            -1,
+            1
+          ],
+          "signed_labels": 162,
+          "source_boxes": 81
+        },
+        "axial_length": "ell_z ~= sqrt(nu) * tau^(1/2 - h)",
+        "core_radius": "ell_r ~= sqrt(nu) * tau^(1/2)",
+        "pulse_wavelength": "lambda_wave ~= sqrt(nu) * tau^(1/2 + h/2)",
+        "scale_separation_ratio": "ell_z / lambda_wave ~= tau^(-3*h/2)"
+      },
+      "source_parameter_h": {
+        "expression": "exp(-8002*(exp(1048576)+10))",
+        "reciprocal_lower_bound": "1/h > 2^4096 > 10^1233",
+        "upper_bound": "2^-4096"
+      }
+    },
+    "separate_analytical_tail_bounds": {
+      "1_gaussian_pulse_cutoff_tail": {
+        "all_order_q_flatness": "C * Q^(-M) * S_*^P * exp(-c * S_*) <= C_N * q^N for every fixed N >= 0",
+        "c_formula": "c = GaussianLower(617317) * Lmin(300173) / 25 > 0",
+        "gaussian_lower_node": 617317,
+        "length_ratio_lower_node": 300173,
+        "pointwise_envelope_decay": "P(v) <= exp(-c * S_*) on |v - Ls/2| >= Ls/5",
+        "sample_log_C_N_upper_at_C1_c1_25_M2_P3_N4": {
+          "N": 4,
+          "actual_physical_derivative_constants_are_inputs": true,
+          "domain": "ell>=1; Q=2^-ell; q>=Q/2; S*=ell²",
+          "log_C_N_upper": "787581462250783106488427085517389799761731159112558049092070975407620631482469318590239911973315551291728797881187658726590268538287992053068713236949830150381868867244050646666496523/3365612634465293391639152390089050976800259379557617442046058128211030087693835053240265048396566842709510065442492058695903129433506620351193383186351632083087632835783297018172800",
+          "proof": "Young 부등식과 sup x^P exp(-x) <= P^P를 사용; q/Q의 2^N 인자를 유지"
+        },
+        "source_evidence": "GAUSSIAN_TAIL_CONNECTION.json"
+      },
+      "2_auxiliary_fourier_inverse_tail": {
+        "diophantine_bound": "|d_k|^(-1) <= (2 + sqrt(2)) * N for max-norm N = max(|k_0|, |k_1|) >= 1",
+        "omitted_tail_bound": "sum_{|k|>K} |c_k| <= 8*(2+sqrt(2))*C_(m+4) / ((2*pi)^5 * K) after r = m + 4 integrations by parts",
+        "operator": "(sqrt(2)-1)*partial_Y0 + partial_Y1 on [0,1]^2 with zero Haar mode projected out",
+        "shell_mode_count": "8 * N modes on max-norm shell N",
+        "source_evidence": "FOURIER_KERNEL_REVIEW.json"
+      },
+      "3_background_stress_selector_tail": {
+        "cutoff_support_decay": "B_(n,m) * q^(2*n*h) <= 2^(-n) * q^(n*h) on q <= 1/b_n",
+        "prefix_N1_window": "On 0 < q < qGlobalStar with b_2 * q >= 1, all n >= 2 background cutoffs and their derivatives vanish identically",
+        "selector_condition": "B_(n,m) * b_n^(-n*h) <= 2^(-n) for all 0 <= m <= n",
+        "source_evidence": "COMMON_FAMILY_AND_PARENT_DIGEST_RECEIPT.json"
+      },
+      "4_local_shrinking_cutoff_and_extension_tail": {
+        "lemma_10_3_extension_tail": "2^(-J) on t in [1, 2] when J + 1 >= 2*(a + m) under (10.12)",
+        "lemma_5_4_local_tail": "2^(-J) * q^(h*(J+1)/20 - ell_(m+1)) on 0 < q < 1/(2*a_J) under (5.37) and a_(j+1) >= 2*a_j",
+        "source_evidence": "STAGE_CYCLE_AND_TAIL_SCHEDULE.json & EXTENSION_CONTRACT.json"
+      }
+    }
+  },
+  "schema": "MathScope.M3.TerminalAndEnergyIntegration/1"
+}

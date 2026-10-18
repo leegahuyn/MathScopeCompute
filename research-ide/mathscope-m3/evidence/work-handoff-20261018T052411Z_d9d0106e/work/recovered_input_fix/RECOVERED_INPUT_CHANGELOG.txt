@@ -1,0 +1,30 @@
+Recovered-input Step 1 update
+
+This directory contains a separate copy of the v5 Step 1 workspace. The original v5 package and original Windows receipt were not modified, and REPRODUCE_ALL.py was not rerun.
+
+Changes
+- Added the four exact producer originals (common-Y, background, Fourier and radial) recovered from the authenticated Gemini source-recovery archive. All 11 producers match the unchanged reference byte counts and SHA256 pins.
+- Raised this recovered copy's available-producer regression requirement from 7 to 11. Zero producer inputs are now missing.
+- Preserved the original TARGET_SOURCE_NODES.ndjson absence and expected SHA256. No target file was synthesized, renamed from the parent slice, or given a changed pin.
+- Kept the separately authenticated 285-line RECOVERED_PARENT_SOURCE_NODES.ndjson finite-projection check. It passes independently and does not claim to be the absent 33,792-byte target original.
+- Replaced the old unit fixture that synthesized TARGET bytes and patched trusted pins. New regressions check original pins, removed or modified recovered producers, and the actual conditional theorem evidence under independently successful input validation.
+- Refactored the existing unchanged closure boolean expression into a small testable helper. This patch does not independently certify the all-order theorem or promote an obligation.
+
+Verification
+- Step 1 verifier CLI: exit 0; status BLOCKED, mathematical_complete false, new_M3_completions 0.
+- Modified Step 1 unit suite: 28 tests, all passed, exit 0.
+- All 11 producer definitions authenticated; 4 conditional premises and 2 original mathematical obligations remain reported.
+- Strict source_validation_passed remains false solely because the distinct original target-node artifact is absent. The recovered parent finite-projection check passes.
+- No original Windows full launcher, Step 2 suite, inherited 68/32 suites, initial 1260 proofs, or archived .mjs producer execution was performed in this update.
+
+Run from this directory
+  python workspace/wave_source_connection.py --root workspace --out RECOVERED_STEP1_AUDIT.json
+  cd workspace
+  python -m unittest -v test_wave_source_connection.py
+
+Evidence
+- INPUT_PROVENANCE.json records the unchanged pins, original-archive member provenance and separate node identities.
+- STEP1_REPRODUCTION_RECEIPT.json records runtime, exact commands, actual exit codes and scoped results.
+- logs/ contains stdout, stderr and exit files for both commands.
+- RECOVERED_STEP1_AUDIT.json contains the full source-check result.
+- recovered_input_fix.patch contains unified diffs for the verifier, tests and recovery-status file. The four added producer originals are identified in INPUT_PROVENANCE.json and copied unchanged in workspace/payload/producers/.

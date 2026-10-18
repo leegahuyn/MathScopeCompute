@@ -1,0 +1,157 @@
+/** Separate successor for the exact pre-temporal signed update.
+ * It requires live original private seals. Serialized packets are not inputs.
+ * The old signed mean/receipt remains unchanged; this module constructs the
+ * previously missing full-Y covariance, latest pressure and whole PDE paths.
+ */
+import {assertGlobalSignedCurrent} from './source-global-signed.mjs';
+import {assertGlobalInitialAngularState,originalHomogeneousPrimaryPressure,
+  originalAngularNormalizationLedger} from './source-global-angular.mjs';
+import {assertGlobalCurrentPressure} from './source-global-pressure.mjs';
+import {guardGlobalLocalBody} from './source-global-current.mjs';
+import {reconstructUpdatedFullMeanPressure} from './source-updated-mean-pressure.mjs';
+import {exactRealCylindricalPDE,originalCylindricalDifferentialOperators}
+  from './source-harmonic-assembly.mjs';
+import {createQuadraticSourceVerifier} from './source-quadratic-identity.mjs';
+
+const covarianceNames=['rr','rtheta','rz','thetatheta','thetaz','zz'];
+const need=(condition,message)=>{
+  if(!condition)throw Object.assign(new Error(message),{code:'INVALID_SOURCE_CONSTRUCTION'});
+};
+
+function assembleSignedFields(signed,initial){
+  const pressure=initial.pressure,current=pressure.current,G=initial.G;
+  const {band}=current,{cover}=pressure,{R,Z,T,theta}=band.coordinates;
+  const power=(x,a)=>G.exp(G.mul(a,G.log(x)));
+  const atRepresentative=body=>G.simultaneousSubstitute(body,
+    [band.coordinates.Xrep,band.coordinates.etaRep,band.coordinates.sRep],
+    [current.representative.roots.X,current.representative.roots.eta,current.representative.roots.s]);
+  const rows=signed.rows.map((row,index)=>{
+    const family=band.families[index],old=initial.local[index];
+    need(row.sign===old.sign&&row.sign===family.sign,'The signed and initial source signs differ.');
+    const argument=G.mul(band.geometry.k,family.phase);
+    const real=row.oldFull.real.map((x,j)=>G.add(x,row.increment.real[j]));
+    const imaginary=row.oldFull.imaginary.map((x,j)=>G.add(x,row.increment.imaginary[j]));
+    const velocity=real.map((x,j)=>G.sub(G.mul(x,G.cosine(argument)),G.mul(imaginary[j],G.sine(argument))));
+    // The signed scalar amplitude is independent of the pulse variable;
+    // it multiplies the same original homogeneous t and pressure row.
+    need(!G.freeCoordinates(row.deltaA).has(band.coordinates.v)&&
+      !G.freeCoordinates(row.deltaA).has(band.cutoffs.xi),
+      'Signed deltaA cannot be substituted into the homogeneous pressure with fast dependence.');
+    const incrementPressure=originalHomogeneousPrimaryPressure(G,{
+      normal:family.frame.n,nPrime:family.frame.nPrime,K:family.frame.principalK,
+      k:band.geometry.k,amplitude:row.weightedAmplitude});
+    need(incrementPressure.identity.pass,'The actual signed homogeneous pressure identity failed.');
+    const pReal=G.add(old.primaryPressure.value.real,incrementPressure.value.real);
+    const pImaginary=G.add(old.primaryPressure.value.imaginary,incrementPressure.value.imaginary);
+    const angularPressure=G.sub(G.mul(pReal,G.cosine(argument)),G.mul(pImaginary,G.sine(argument)));
+    const bodies={...row.expansion.after,angularPressure,
+      ...Object.fromEntries(velocity.map((body,j)=>['velocity_'+j,body]))};
+    const systems=Object.fromEntries(Object.entries(bodies).map(([name,body])=>{
+      const angular=!covarianceNames.includes(name);
+      const parameters=[...cover.localParameters,...(angular?[theta]:[])];
+      const guard=guardGlobalLocalBody(G,current.geometry,current.local.slowCutoff,body);
+      const fixedBody=atRepresentative(guard.body);
+      const system=G.defineExpressionFunction({name:'SignedFullPressure_'+row.sign+'_'+name,parameters,body:fixedBody});
+      return [name,{system,body,fixedBody,guard}];
+    }));
+    return {sign:row.sign,systems,incrementPressure,actualPreHaarCovariance:row.expansion.after};
+  });
+  const fields={};
+  for(const name of Object.keys(rows[0].systems)){
+    const angular=!covarianceNames.includes(name),isVelocity=name.startsWith('velocity_');
+    const parameters=[...cover.parameters,...(angular?[theta]:[])];
+    const directions=[...cover.directions,...(angular?[theta]:[])],sourceRows=[];
+    for(const box of cover.rows){
+      const b=cover.bands[box.relativeBand+1];
+      for(const sign of box.signs){
+        const source=rows[sign.sourceLocalRow];
+        sourceRows.push({localSystem:source.systems[name].system,
+          values:[...sign.values,...(angular?[theta]:[])],
+          derivativeMaps:[...sign.derivativeMaps,...(angular?[[{parameter:9,coefficient:G.one}]]:[])],
+          coefficient:isVelocity?power(b.ratio,band.constants.A):sign.coefficient,
+          guards:box.guards,label:{key:box.key,ell:box.label.ell,grid:box.label.grid,
+            sign:source.sign,countBoxOnce:true,signIsInsideBox:true}});
+      }
+    }
+    need(sourceRows.length===162,'The signed full field must retain all 162 source contributions.');
+    const field=G.definePeriodicIndexedField({name:'SignedFullPressureAll162_'+name,parameters,directions,rows:sourceRows,
+      sourceRecipe:{samePrivatelySealedCurrent:true,signedCovarianceBeforeAuxiliaryHaar:true,
+        physicalVelocityScale:'(Q_ref/Q_label)^A',physicalCovarianceAndPressureScale:'(Q_ref/Q_label)^(2A)',
+        frozenOriginalLabelsAndCopies:true,sourceFlatJoins:cover.proof.localFinitenessAndFlatJoins}});
+    fields[name]={field,root:G.periodicIndexedValue(field,parameters),rows:sourceRows};
+  }
+  return {rows,fields,normalization:originalAngularNormalizationLedger()};
+}
+
+/** Independent tensor-product expansion on the actual full real fields.
+ * Direct evaluation is performed separately by exactRealCylindricalPDE.
+ */
+function decomposedUpdate(G,geometry,oldVelocity,oldPressure,velocity,pressure,oldFlat){
+  const D=originalCylindricalDifferentialOperators(G,geometry),{R,epsilon}=D;
+  const increment=velocity.map((x,j)=>G.sub(x,oldVelocity[j]));
+  const pressureIncrement=G.sub(pressure,oldPressure);
+  const tensorDiv=(a,b)=>{
+    const tensor=a.map(x=>b.map(y=>G.mul(x,y)));
+    const value=tensor.map(row=>G.add(D.Dr(row[0]),G.div(row[0],R),D.angular(row[1]),D.Dz(row[2])));
+    value[0]=G.sub(value[0],G.div(tensor[1][1],R));
+    value[1]=G.add(value[1],G.div(tensor[0][1],R));
+    return value;
+  };
+  const r2=G.pow(R,2),lap=[
+    G.sub(G.sub(D.lap(increment[0]),G.div(increment[0],r2)),G.div(G.mul(G.q(2),D.thetaDerivative(increment[1])),r2)),
+    G.add(G.sub(D.lap(increment[1]),G.div(increment[1],r2)),G.div(G.mul(G.q(2),D.thetaDerivative(increment[0])),r2)),
+    D.lap(increment[2])];
+  const gradient=[D.Dr(pressureIncrement),D.angular(pressureIncrement),D.Dz(pressureIncrement)];
+  const linear=increment.map((x,j)=>G.add(D.time(x),G.neg(G.mul(epsilon,lap[j])),gradient[j]));
+  const left=tensorDiv(oldVelocity,increment),right=tensorDiv(increment,oldVelocity),quadratic=tensorDiv(increment,increment);
+  const old=exactRealCylindricalPDE(G,{geometry,velocity:oldVelocity,pressure:oldPressure});
+  const oldRegular=old.conservativeResidual.map((x,j)=>G.sub(x,oldFlat[j]));
+  const residual=oldRegular.map((x,j)=>G.add(x,oldFlat[j],linear[j],left[j],right[j],quadratic[j]));
+  return {increment,pressureIncrement,oldResidual:old.conservativeResidual,oldRegular,
+    oldFlatResidual:oldFlat,linear,orderedCrossTerms:[left,right],newQuadraticRemainder:quadratic,residual};
+}
+
+export function attachGlobalSignedFullPressure(signed,initial,context={}){
+  // No reconstruction of private seals from JSON and no caller-supplied fields.
+  assertGlobalSignedCurrent(signed);assertGlobalInitialAngularState(initial);
+  const pressure=initial.pressure;assertGlobalCurrentPressure(pressure);
+  need(signed.state===pressure.current&&initial.G===pressure.G&&initial.G.baseGraph===signed.G,
+    'Signed and initial angular states must share the exact original current and graph.');
+  need(initial.scope.actualPostTemporalCurrent===false,
+    'This repair is only the original pre-temporal signed substep.');
+  const current=pressure.current,G=initial.G,{band}=current;
+  const {R,theta}=band.coordinates,geometry={...pressure.geometry,theta};
+  need(Object.values(current.mean.initialMeanVelocity).every(x=>x===G.zero),
+    'A later mean correction cannot be replaced by the original zero mean velocity.');
+  need(pressure.cover.proof.allCrossLabelProductsVanish&&pressure.cover.proof.exactSourceAuthority,
+    'The exact signed source support/flat-join atlas must be retained.');
+  const assembly=assembleSignedFields(signed,initial);
+  need(assembly.normalization.pass,'The original full cylindrical normalization failed.');
+  const covariance=Object.fromEntries(covarianceNames.map(name=>[name,assembly.fields[name].root]));
+  const background={b:band.fields.b,V:G.mul(R,band.fields.F),G:band.fields.G};
+  const latestMean=reconstructUpdatedFullMeanPressure(G,{geometry:pressure.geometry,background,
+    velocity:current.mean.initialMeanVelocity,covariance,stress:pressure.residual.fullOriginalStress,
+    rho:pressure.pressure.rho,chi:pressure.pressure.chi,tag:'ActualSignedPreTemporalFullAuxiliaryPressure'});
+  const velocity=[background.b,background.V,background.G].map((x,j)=>G.add(x,assembly.fields['velocity_'+j].root));
+  const fullPressure=G.add(band.fields.pressure,latestMean.pressure.value,assembly.fields.angularPressure.root);
+  const direct=exactRealCylindricalPDE(G,{geometry,velocity,pressure:fullPressure});
+  const D=originalCylindricalDifferentialOperators(G,geometry),stress=pressure.residual.fullOriginalStress;
+  const backgroundPDE=exactRealCylindricalPDE(G,{geometry,velocity:[background.b,background.V,background.G],pressure:band.fields.pressure});
+  const stressDivergence=[G.zero,G.add(D.Dr(stress[0]),G.div(G.mul(G.q(2),stress[0]),R)),G.add(D.Dr(stress[1]),G.div(stress[1],R))];
+  const oldFlat=backgroundPDE.conservativeResidual.map((x,j)=>G.add(x,stressDivergence[j]));
+  const decomposition=decomposedUpdate(G,geometry,initial.global.velocity.value,initial.global.pressure.value,velocity,fullPressure,oldFlat);
+  const verify=createQuadraticSourceVerifier(G,{maxTerms:180000,maxProducts:3000000});
+  const comparison=direct.conservativeResidual.map((root,j)=>({component:j,direct:root,
+    decomposed:decomposition.residual[j],...verify(G.sub(root,decomposition.residual[j]))}));
+  need(comparison.every(row=>row.pass),'The actual signed whole-field direct/decomposed PDE comparison failed.');
+  assertGlobalSignedCurrent(signed);assertGlobalInitialAngularState(initial);
+  context.onProgress?.({stage:'signed-full-Y-pressure-and-whole3-residual-comparison',nodeCount:G.nodes.length});
+  return {schema:'MathScope.SignedFullAuxiliaryPressureSuccessor/1',G,signed,initial,
+    geometry,assembly,covariance,latestMean,
+    global:{velocity,pressure:fullPressure,direct,decomposition,comparison},
+    scope:{actualSourceConstructionExecuted:true,fullAuxiliaryCovarianceRetained:true,
+      latestPressureIncludesBackgroundMeanAndSignedAngular:true,all162SourceContributionsRetained:true,
+      oldFlatResidualRetained:true,newQuadraticRemainderRetained:true,
+      allThreeExactResidualComponentsCompared:true,preTemporalSignedSubstepOnly:true,
+      laterSignedCyclesCertified:false,originalN602Complete:false,mathematicalCompletionClaimed:false}};
+}

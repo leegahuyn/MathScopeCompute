@@ -1,0 +1,9 @@
+# Primary-agent N6-02 acceptance
+
+The primary agent accepts N6-02 as CLOSED for the original mandatory implemented finite canonical cycle, after checking the actual process record, complete comparison receipt, source/domain argument, and two independent reviews.
+
+The actual process exited 0 after 1700.657 seconds with 4,312,220 live source nodes. The four poststeps forced, signed, temporal and fresh-five passed twelve exact direct/decomposed comparisons; the three new successors rejected nine stale-pressure/quadratic-omission/flat-omission controls. Original dependencies 135 remained byte-identical. The preserved receipt SHA-256 is `1a525f1501f073cf4163b1bb18fe0dce4ff417027cbd3ef2f5582e82a370f34d`; the loaded successor is `7cb5819ba9db2c1f5530ae744d6c15966e7af25bdaa1926e6a6a8485266cb12b`.
+
+The source reviewer passed 46 read-only checks. The original-criteria reviewer passed 190 read-only checks and separately traced seven denominator/domain arguments. The rational checker's remaining `nonzeroSourceDenominatorProofRequired=true` is not itself a discharged domain certificate: the mathematical application uses the original positive-q finite-prefix window, same-box admissibility, positive radial/chart geometry, nonzero H determinant, positive amplitudes and bump mass, Fourier integer norm, original positive profile moments/matrix gaps, and guarded smooth extensions. These premises were traced to the actual source construction, not assigned from old node numbers or inferred from a zero numerator.
+
+This closes the finite implementation duty without demanding infinitely many literal executions. It does not assert numerical evaluation of the final global field, whole-K energy refinement, N8 four-axis evaluation, a formal Lean kernel proof, or M3/M4 completion. Current M3 is 62/64; N7-06 and N8-05 remain OPEN.

@@ -1,0 +1,740 @@
+--- /dev/null
++++ work/theorem_connection/code/verify_n601_joint_application.py
+@@ -0,0 +1,231 @@
++#!/usr/bin/env python3
++"""Assemble a reviewable joint N6-01 theorem application on one saved source.
++
++This verifies source identity, finite expression links and exact exponent
++arithmetic. The all-order statements are applications of the identified
++written proofs, not inferences from the sampled finite norm rows.
++"""
++from __future__ import annotations
++import argparse
++import copy
++import hashlib
++import json
++from fractions import Fraction as Q
++from pathlib import Path
++
++
++def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
++
++
++def relocated_producer(root, recorded):
++    """Resolve pinned original audit paths inside a relocated package root."""
++    path=Path(recorded)
++    if path.is_absolute():
++        marker='/analysis/'
++        assert recorded.count(marker)==1, 'Unsupported original producer path'
++        relative=Path('analysis')/recorded.split(marker,1)[1]
++    else:
++        relative=path
++    assert '..' not in relative.parts
++    result=(root/relative).resolve()
++    assert result.is_relative_to(root.resolve()), 'Producer escapes package root'
++    return result
++
++
++def join_bindings(roots, wave, mean, defect):
++    assert wave['current_mean_velocity']==roots['initializedVelocity']==defect['updated_velocity']
++    assert wave['latest_mean_pressure']==roots['initializedPressure']['value']==defect['latest_pressure']==mean['pressure_sources']['initialized_full']
++    assert roots['temporalVelocity']==mean['temporal_velocity']==defect['previous_full_velocity']
++    assert roots['temporalPressure']['value']==mean['pressure_sources']['post_temporal_full']
++    assert roots['freshInputDefects']==defect['fresh_five_targets']
++    assert roots['initializedDefects']==defect['current_defects']
++    assert roots['retainedRemainderDefects']==defect['retained_remainders']
++    assert roots['background']==defect['fixed_background']
++    assert roots['covariance']==defect['fixed_covariance']
++    assert wave['same_original_domain']==defect['same_original_domain']
++    assert mean['five_increment']==defect['increment']
++    assert roots['exactFiveRows']==defect['five_rows']
++    return True
++
++
++def run(root):
++    b=root/'analysis/base/PR30-primary67-continuation'
++    nav=b/'MathScopeCompute/research-ide/mathscope-m3/navier'
++    w=root/'analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation'
++    paths={
++      'family':nav/'evidence/saved-initialized-norm-family-20261012/attempt1/saved-initialized-norm-family.json',
++      'initialized':nav/'evidence/global-forced-current-20261012/attempt382884203291/initialized-angular-construction.json',
++      'primary':nav/'evidence/global-primary-class-20261012/attempt1/actual-primary-class.json',
++      'primary_application':b/'pressure-proof/original-norm-scope-audit/PRIMARY_WAVE_QUANTITATIVE_SOURCE_APPLICATION.json',
++      'specification':b/'pressure-proof/original-norm-scope-audit/ORIGINAL_N6_NORM_TYPED_SPEC.json',
++      'wave_binding':w/'evidence/SOURCE_BINDINGS.json',
++      'wave_application':w/'evidence/CURRENT_WAVE_APPLICATION.json',
++      'gaussian':w/'evidence/GAUSSIAN_TAIL_CONNECTION.json',
++      'mean_binding':w/'inherited/inherited/evidence/SOURCE_BINDINGS.json',
++      'mean_application':w/'inherited/inherited/evidence/FAST_CUTOFF_MEAN_REPORT.json',
++      'defect_binding':w/'inherited/evidence/SOURCE_BINDINGS.json',
++      'defect_application':w/'inherited/evidence/CURRENT_DEFECT_APPLICATION.json',
++      'defect_all_order':w/'inherited/evidence/ALL_ORDER_EXPONENT_PROOF.json',
++      'transport':root/'work/theorem_connection/transport/TRANSPORT_APPLICATION.json',
++      'actual_source_nodes':root/'work/integrated_verifier/inputs/actual_source_nodes.json',
++      'blueprint':root/'recovered/pdfs/MathScope_Research_IDE_Blueprint_v1_KO(1)(20261017-114129).pdf',
++      'base_source_audit':root/'analysis/theorem_sources/base_theorem_audit.json'}
++    expected=json.loads((root/'work/theorem_connection/evidence/N601_INPUT_PINS.json').read_text())
++    assert set(expected)==set(paths)
++    for key,p in paths.items():
++        assert sha(p)==expected[key]['sha256'] and p.stat().st_size==expected[key]['bytes'], 'Input pin changed '+key
++    data={k:json.loads(p.read_text()) for k,p in paths.items() if p.suffix=='.json'}
++    audit=data['base_source_audit']
++    producer_bindings={}
++    for k in ['same_source_continuation','common_family','weighted_target','primary_class','common_y','background','fourier','radial','lazy_norm','wave_consumer','mean_consumer','defect_consumer','initial_mean','full_pressure']:
++        row=audit['source_files'][k];p=relocated_producer(root,row['path'])
++        assert p.stat().st_size==row['bytes'] and sha(p)==row['sha256'], 'Producer changed '+k
++        producer_bindings[k]={**row,'path':str(p.relative_to(root))}
++    f,primary=data['family'],data['primary']
++    roots=f['source']['actualRoots'];wb,mb,db=data['wave_binding'],data['mean_binding'],data['defect_binding']
++    assert join_bindings(roots,wb,mb,db)
++    identity_keys=['paperSHA256','parameterExpressionSHA256','originalMeanCertificateSHA256','sourceNodePrefixSHA256','originalMeanGraph','originalSourceSequence']
++    same_source=[]
++    canonical=f['source']['source']
++    for name in ['wave_binding','wave_application','mean_binding','mean_application','defect_binding']:
++        src=data[name]['source']
++        for k in identity_keys:
++            if k in src:
++                assert src[k]==canonical[k], name+' source mismatch '+k
++                same_source.append({'artifact':name,'key':k,'equal':True})
++    assert all(c['pass'] for c in primary['checks']) and len(primary['checks'])==9
++    assert primary['source']['paperSHA256']==canonical['paperSHA256']
++    assert primary['source']['parameterExpressionSHA256']==canonical['parameterExpressionSHA256']
++    assert sha(paths['primary'])==data['primary_application']['inputBindings']['primaryClass']['sha256']
++    assert data['primary_application']['actualTargetBinding']['isolatedWaveRoots']==[3676894,3676895,3676896]
++    final_global=data['initialized']['global']
++    assert final_global['velocity']==data['primary_application']['actualTargetBinding']['wholeVelocityRoots']==[3825006,3825007,3825008]
++    assert final_global['pressure']==3825009
++    assert final_global['assembledResidual']==wb['inspection_roots']
++    continuation=f['family']['continuation']
++    assert [x['id'] for x in continuation['induction']]==['same-coefficients','same-selector','same-physical-window','same-q-big','finite-source-jets','finite-source-only-norms','closed-operator-composition']
++    programs=[]
++    for cert in f['certificates']:
++        p=cert['program'];calls=p['callGraph']['calls'];assert len(calls)==13
++        for i,c in enumerate(calls):
++            assert c['id']==i and all(0<=d<i for d in c['dependencies'])
++        leaves=[]
++        for i,n in enumerate(p['scalarProgram']['nodes']):
++            if n['op']=='source_norm_result':
++                call,path=n['args'];assert 0<=call<13 and isinstance(path,list) and path
++                leaves.append(i)
++        assert leaves and p['savedSourceBinding']['actualRoots']==roots
++        for row in p['rows']:
++            assert row['velocity']['beta']['epsilonExponent']=='2-kappa_s'
++            assert row['velocity']['v']['epsilonExponent']=='1-kappa_s'
++            assert row['velocity']['gamma']['epsilonExponent']=='1-kappa_s'
++            assert row['fullPressure']['epsilonExponent']=='1-kappa_s'
++        programs.append({'order':p['request']['order'],'calls':13,'source_norm_leaves':len(leaves),'all_backward_dependencies':True})
++    c=roots['conservation']; assert c['angular']==c['axial']==0
++    assert c['exactTemporalZeroMeanSource']=={'theta':0,'z':0}
++    assert c['actualFiveRows']==roots['exactFiveRows'][:2]
++    assert all(row['target']==0 for row in c['actualFiveRows'])
++    source_nodes=data['actual_source_nodes']['nodes']
++    assert source_nodes['24']=={'op':'rational','args':['2','1']}
++    assert source_nodes['1']=={'op':'rational','args':['1','1']}
++    assert [row['weightPower'] for row in c['actualFiveRows']]==[24,1]
++    moment_weights=[{'moment':row['name'],'weight_power_node_id':row['weightPower'],'weight_power_value':source_nodes[str(row['weightPower'])]['args'][0]} for row in c['actualFiveRows']]
++    assert c['allCorrectionsRemainDivergenceFree']
++    assert wb['inspection_roots']==[3825348,3825349,3825350]
++    assert wb['retained_modes']==[-2,-1,0,1,2] and wb['signed_source_count']==162
++    assert mb['final_mean_sources']=={'Etheta':3614976,'Ez':3615392}
++    mean_rows=[]
++    for row in data['mean_application']['rows']:
++        assert row['actual_final_source_id']==mb['final_mean_sources'][row['field']]
++        exponent=Q(row['composed_bound']['epsilonExponentExact'])
++        assert exponent>=Q(149,100)
++        mean_rows.append({'field':row['field'],'root':row['actual_final_source_id'],'order':row['order'],'proved_exponent':str(exponent),'at_least_149_100':True})
++    assert data['wave_application']['all_finite_order_rule']['common_wave_exponent']=='99997/100000'
++    assert data['defect_all_order']['result']=='99999/50000'
++    assert data['gaussian']['gaussian_lower']['node']==617317 and data['gaussian']['length_ratio_lower']['node']==300173
++    transport=data['transport']
++    # Consume the verifier result; source pins and proof prerequisites remain recorded in its artifact.
++    assert transport['result']=='PASS' and all(x['status']=='PASS' for x in transport['checks']), 'Transport verification not passed'
++    assert sha(paths['initialized'])==transport['source_bindings']['initialized_original']['sha256']
++    assert sha(paths['family'])==transport['source_bindings']['norm_family']['sha256']
++    k=Q(1,100000)
++    norm_rows=[
++      ('9.8-wave-B0','W','Pi_nonzero R = G_wave + F_pulse; claim is for G_wave',wb['inspection_roots'],1-3*k,Q(7,10),'wave_all_order_and_transport'),
++      ('9.8-mean-C0','M','Etheta and Ez',[3614976,3615392],Q(149,100),Q(6,5),'fast_cutoff_all_order'),
++      ('9.8-defects-C0','S','P, Jtheta and Jz',[3615055,3615101,3615147],2-2*k,Q(6,5),'exact_five_remainder_all_order'),
++      ('9.9-total-wave','W','isolated complete primary curls',[3676894,3676895,3676896],Q(1,2),Q(1,2),'actual_primary_application'),
++      ('9.9-curl-remainder','W','same isolated waves minus transverse primary leading wave',[3676894,3676895,3676896],1-k,Q(17,25),'actual_primary_application'),
++      ('9.9-tangential-and-pressure','M','v, gamma, complete latest pm',[3614791,3614792,3615361],1-k,Q(9,10),'same_source_closed_norm_program'),
++      ('9.9-radial','M','beta',[3614790],2-k,Q(19,10),'same_source_closed_norm_program')]
++    assert [x[0] for x in norm_rows]==[x['id'] for x in data['specification']['normTargets']]
++    norms=[]
++    for id,cls,meaning,ids,proved,target,proof in norm_rows:
++        assert proved>=target
++        norms.append({'id':id,'class':cls,'meaning':meaning,'actual_roots':ids,'proved_exponent':str(proved),'required_exponent':str(target),'exact_margin':str(proved-target),'proof':proof,'quantifiers':'For every fixed derivative multiindex, finite source-only C,pole,log powers, uniform on the same original common domain.'})
++    controls={}
++    for key,mutate in {
++        'stale_mean_pressure':lambda x:x.__setitem__('latest_mean_pressure',3614634),
++        'wrong_final_velocity':lambda x:x['current_mean_velocity'].__setitem__('gamma',1706782)}.items():
++        bad=copy.deepcopy(wb);mutate(bad)
++        try: join_bindings(roots,bad,mb,db)
++        except AssertionError: controls[key]='REJECTED'
++        else: raise AssertionError('Negative control accepted '+key)
++    proofs={
++      'same_source_closed_norm_program':{
++        'sources':['same_source_continuation','common_family','weighted_target','primary_class','common_y','background','fourier','radial','lazy_norm'],
++        'argument':'Apply the seven-part continuation to the authenticated final mean functions, preserving original coefficient bodies, selector, common q threshold and physical cutoff window. Each finite m recursively consumes finitely many original producer orders. Weighted target Gaussian recurrence, stable pulse/inverse H/positive square roots, exact two-column commonY lift, Fourier divisor and shifted radial FTC supply finite source-only constants. The 13-call DAG has only those producer leaves and backward dependencies. Thus its final velocity/pressure rows hold for every fixed m, independently of whether high-order derivative arrays or decimal constants were printed.',
++        'actual_final_fields':roots['initializedVelocity'],'latest_pressure':3615361},
++      'actual_primary_application':{
++        'source':'primary_application',
++        'argument':'Reuse the existing exact primary application at isolated wave roots, not total velocity anchors. Complete physical curl, moving-frame homogeneous pressure, protected source H/positive covariance weights, original primary amplitudes and flat support are retained. The actual unchanged primary wave is still present after temporal/five mean corrections. W^1/2 and remainder W^(1-kappa) survive the actual chart maps.'},
++      'wave_all_order_and_transport':{
++        'sources':['wave_consumer','primary_application','transport','gaussian'],
++        'argument':'The original homogeneous principal ODE including pressure cancels the dangerous linear term; retain +psi_prime*t separately. Full-curl divergence cancels the apparent carrier loss in the full quadratic products. Retain tt,tr,rt,rr and both mean-wave products with the complete final mean. Exact own-label background homogeneity and whole reference-mean substitution justify the principal coefficients. Apply finite Leibniz recurrence for arbitrary m, obtaining W^(1-3kappa). The actual commonY affine and fixed-label normalization maps change only finite constants/log powers. Existing full3 source function equality transports each radial/angular/axial grouped coefficient, not merely the angular component. Flat joins give global zero extension.',
++        'flat_remainder':'The actual +psi_prime*t term is F_pulse. Actual Gaussian c=(node617317*node300173)/25>0 yields C Q^-M S^P exp(-cS); every fixed physical derivative and every N is <=C_N q^N by the completed-square estimate. It is retained separately, not included in W or set to zero.'},
++      'fast_cutoff_all_order':{
++        'sources':['mean_consumer','mean_application','same_source_continuation','radial','fourier'],
++        'argument':'Apply the exact temporal then fresh-five telescoping formulas to roots3614976/3615392. The final Etheta is initial Haar plus both slow changes; final Ez also keeps -ci N A1(gamma_desired). Using N inverse on the actual zero-mean source and commutation with the unchanged translated radial integral, this equals +A1(initialEz-Haar(initialEz)). Positive radial IBP p=49001 uses initial Ez through m+98005, a finite order supplied by the same-source theorem; it does not require a new smaller domain. Initial Haar leading-covariance cancellation is the original 9.11 primary covariance theorem. Slow changes have exponent2-3kappa; full cutoff has exponent1.49. Therefore Etheta and Ez both satisfy M^1.49, with all variable-Dr coefficient derivatives, full pressure difference and A0 terms retained.'},
++      'exact_five_remainder_all_order':{
++        'sources':['defect_consumer','defect_all_order','defect_binding','initial_mean'],
++        'argument':'The same fresh P/J targets enter the exact five rows. Integrating the complete8.26/8.27 identities shows final P/J equal the retained nonlinear remainder roots3615635/3615673/3615848, not zero. All19 exponent groups are >=2-2kappa using the actual temporal and slow five increments from the closed norm program; whole radial/full Haar projection absorbs finite boundary poles. Each arbitrary fixed derivative is a finite Leibniz sum on the same domain.'},
++      'moments_support_domain':{
++        'sources':['initial_mean','primary_application','specification','transport'],
++        'argument':'The exact temporal inverse has zero normalized auxiliary mean; the translated T1 realization preserves that mean. Positive bump moments mu_p, positive a/lambda and d=1/5 give distinct angular nodes exp(2d),exp((-2-2lambda)d),exp(-2lambda*d) and positive axial gap 1-exp(-2d*lambda), so the same fixed five map is invertible. Its two homogeneous actual rows have zero targets, proving both9.10 weighted moments. Primary curls and mean potentials are divergence free with original flat radial support. Fixed-label/copy derivatives never differentiate floor or carrier rounding. Compatible finite prefixes share the same selector; every omitted term and derivative is identically zero and ODE uniqueness identifies overlaps. No single truncated polynomial is asserted valid for allq.',
++        'uniform_prefix_chain':['The original commonRecursiveSelector imposes diagonal derivative clauses m<=n and preserves earlier b_n when extended.','For each fixed derivative m, finitely many low-index coefficient norms are bounded directly; all higher indices obey the selector geometric-tail estimate. This gives one finite source constant independent of the valid prefix.','source-background-class-majorants.mjs combines the finite low-order block and geometric high-index tail; source-primary-class-majorants.mjs domain.allBandRecipe carries that source constant through protected covariance inversion, primary pulses and full curls.','At any q>0 select a valid prefix with b_(N+1)*q>=1. Omitted terms and all cutoff derivatives are exactly zero. On overlaps the same coefficients, matrices and ODE uniqueness identify the fields.','The complete cover and whole-radial integrals use one common q and one shared valid prefix; actual commonY maps preserve qActual, X and eta. Thus these compatible local proofs form the same original q<qGlobalStar source, without changing q_big for the requested derivative order.']}}
++    proofs['retained_full_flat_residual']={
++      'sources':['radial','initial_mean','full_pressure','gaussian','specification'],
++      'argument':'The complete Definition9.4/Proposition9.3 residual retains the inherited background flat residual E_B, the separate pulse F_pulse, and modified radial integral remainders including actual A0=chi_R*whole(g_r-rhoP). It is not asserted that the whole flat residual equals F_pulse. source-radial-class-majorants.mjs174-289 proves for every fixed output m and positive integer p the exact original A_e operator estimate with exponent gain p*kappa_s and finite input demand m+2p+3. The same-source theorem supplies that finite order on the same domain. Since h>0 and kappa_s>0, choose p to dominate any prescribed physical derivative/normalization loss and desired q order; this proves all-order physical flatness of retained A0 and any remaining A_e terms. Keep the actual centered fullY source and its normalized whole-Haar identity; neither pressure A0 nor the new defects are declared zero.',
++      'latest_actual_A0_root':roots['initializedPressure']['cutoffRemainder'],
++      'background_flatness':'Inherited original completed background-source theorem, with identical coefficient bodies and selector; not reexecuted or proved from finite samples.'}
++    premises=[
++      {'original':'same-source all-fixed-order norm continuation','discharged_by':'same_source_closed_norm_program','scope':'actual final initialized velocity, full mean pressure and fresh targets, not merely base fields'},
++      {'original':'primary homogeneous amplitude/pressure equation and tangency','discharged_by':'actual_primary_application + wave_all_order_and_transport','scope':'actual unchanged primary coefficient bodies in all10 templates and162 contributions'},
++      {'original':'full curl divergence and original supports','discharged_by':'actual_primary_application + moments_support_domain','scope':'complete primary curls and actual final mean; both torus columns and flat joins'},
++      {'original':'whole reference mean pullback and previous finite-state mean bounds','discharged_by':'same_source_closed_norm_program + transport','scope':'final beta3614790,v3614791,gamma3614792,pm3615361 under actual reference map'},
++      {'original':'actual all3 transport and physical Gaussian flatness','discharged_by':'wave_all_order_and_transport','scope':'G_wave/F_pulse for all3 components of final assembled roots3825348/9/50'}]
++    return {'schema':'MathScope.N601JointOriginalSourceApplicationCandidate/1',
++      'status':'MATHEMATICAL_SOURCE_APPLICATION_CANDIDATE_AWAITING_INDEPENDENT_CROSSREVIEW',
++      'original_criterion':{**data['specification']['originalCriteria']['N6-01'],
++         'historical_source_alias':data['specification']['originalCriteria']['N6-01']['source'],
++         'source':paths['blueprint'].name,'verified_current_source_sha256':sha(paths['blueprint'])},
++      'source':canonical,'source_manifest':{key:{'path':str(p.relative_to(root)),'sha256':sha(p),'bytes':p.stat().st_size} for key,p in paths.items()},
++      'producer_bindings':producer_bindings,'source_identity_checks':same_source,'same_source_join_checks':12,
++      'finite_norm_program_checks':programs,'actual_mean_row_checks':mean_rows,'original_primary_checks':9,'seven_norm_groups':norms,
++      'proof_applications':proofs,'inherited_wave_premises_discharged':premises,
++      'two_exact_moments':c,'moment_weight_node_resolution':moment_weights,'common_domain':wb['same_original_domain'],
++      'full_final_tuple':{'velocity':final_global['velocity'],'full_pressure':final_global['pressure'],'full_pressure_meaning':'p_background+p_mean+p_angular; complete mean pressure is separately root3615361','mean_velocity':roots['initializedVelocity'],'full_mean_pressure':roots['initializedPressure']['value'],'assembled_residual':final_global['assembledResidual'],'mean_residual':list(mb['final_mean_sources'].values()),'defects':roots['initializedDefects']},
++      'negative_controls':controls,
++      'remaining_original_mathematical_hypotheses_for_this_j0_application':[],
++      'proof_assurance':'Analytical theorem reuse plus exact source identity/exponent checks. This is not a new kernel proof or finite numerical extrapolation; independent review is explicitly pending.',
++      'outside_scope':['forced and signed subsequent-stage class estimates','whole Proposition9.6 cycle','diagonal limit','global terminal regularity and energy'],
++      'historical_status_flags_edited':False,'original_1260_reexecuted':False,'M3_count_changed':False,
++      'candidate_source_checks_passed':True}
++
++
++def main():
++    ap=argparse.ArgumentParser();ap.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[3]);ap.add_argument('--out',type=Path);a=ap.parse_args()
++    out=a.out or a.root/'work/theorem_connection/evidence/N601_JOINT_SOURCE_APPLICATION.json'
++    result=run(a.root.resolve());out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n')
++    print(json.dumps({'status':result['status'],'same_source_fields_checked':len(result['source_identity_checks']),'norm_groups':len(result['seven_norm_groups']),'moments':2,'negative_controls':result['negative_controls'],'output':str(out)}))
++
++if __name__=='__main__':main()
+--- /dev/null
++++ work/theorem_connection/code/verify_stage_connection.py
+@@ -0,0 +1,246 @@
++#!/usr/bin/env python3
++"""Source-bound N6-02 connection, without executing or altering original producers.
++
++The independent algebra is a polynomial identity over arbitrary cylindrical
++field jets. Source bindings are checked separately: symbolic equality alone
++does not establish a missing full-pressure construction.
++"""
++from __future__ import annotations
++import argparse
++import hashlib
++import json
++from collections import defaultdict
++from fractions import Fraction
++from pathlib import Path
++
++
++class Poly:
++    """Exact commutative polynomial ring with a formal radial inverse."""
++    def __init__(self, terms=None):
++        self.terms = {k: Fraction(v) for k, v in (terms or {}).items() if v}
++
++    @staticmethod
++    def atom(name):
++        return Poly({(name,): 1})
++
++    @staticmethod
++    def coerce(x):
++        return x if isinstance(x, Poly) else Poly({(): x})
++
++    def __add__(self, other):
++        d = defaultdict(Fraction, self.terms)
++        for k, v in self.coerce(other).terms.items():
++            d[k] += v
++        return Poly(d)
++    __radd__ = __add__
++
++    def __neg__(self):
++        return Poly({k: -v for k, v in self.terms.items()})
++
++    def __sub__(self, other):
++        return self + -self.coerce(other)
++
++    def __mul__(self, other):
++        d = defaultdict(Fraction)
++        for k, v in self.terms.items():
++            for l, w in self.coerce(other).terms.items():
++                d[tuple(sorted(k+l))] += v*w
++        return Poly(d)
++    __rmul__ = __mul__
++
++    def derivative(self, axis):
++        out = Poly()
++        for monomial, coeff in self.terms.items():
++            for i, name in enumerate(monomial):
++                if name == 'nu':
++                    continue
++                if name == 'rho':
++                    if axis != 'r':
++                        continue
++                    factor, replacement = -1, ('rho', 'rho')
++                else:
++                    stem, _, derivatives = name.partition(':')
++                    factor, replacement = 1, (stem+':'+''.join(sorted(derivatives+axis)),)
++                out += Poly({tuple(sorted(monomial[:i]+monomial[i+1:]+replacement)): coeff*factor})
++        return out
++
++    def zero(self):
++        return not self.terms
++
++
++def cylindrical_identity():
++    rho, nu = Poly.atom('rho'), Poly.atom('nu')
++    u = [Poly.atom('u'+str(j)) for j in range(3)]
++    w = [Poly.atom('w'+str(j)) for j in range(3)]
++    p, pi = Poly.atom('p'), Poly.atom('pi')
++    flat = [Poly.atom('F'+str(j)) for j in range(3)]
++    def D(f, a): return f.derivative(a)
++    def grad(f): return [D(f,'r'),rho*D(f,'h'),D(f,'z')]
++    def div(v): return D(v[0],'r')+rho*v[0]+rho*D(v[1],'h')+D(v[2],'z')
++    def lap(f): return D(D(f,'r'),'r')+rho*D(f,'r')+rho*rho*D(D(f,'h'),'h')+D(D(f,'z'),'z')
++    def vector_lap(v):
++        return [lap(v[0])-rho*rho*v[0]-2*rho*rho*D(v[1],'h'),
++                lap(v[1])-rho*rho*v[1]+2*rho*rho*D(v[0],'h'),lap(v[2])]
++    def linear(v, pressure):
++        vl, gp = vector_lap(v), grad(pressure)
++        return [D(v[j],'t')-nu*vl[j]+gp[j] for j in range(3)]
++    def tensor_div(a,b):
++        # (a dot grad)b+b div(a), including rotation of cylindrical basis.
++        out = [a[0]*D(b[j],'r')+rho*a[1]*D(b[j],'h')+a[2]*D(b[j],'z')+b[j]*div(a) for j in range(3)]
++        out[0] -= rho*a[1]*b[1]
++        out[1] += rho*a[1]*b[0]
++        return out
++    def residual(v, pressure):
++        L, B = linear(v,pressure), tensor_div(v,v)
++        return [L[j]+B[j] for j in range(3)]
++    direct = residual([u[j]+w[j] for j in range(3)],p+pi)
++    old, L, uw, wu, ww = residual(u,p),linear(w,pi),tensor_div(u,w),tensor_div(w,u),tensor_div(w,w)
++    old_regular = [old[j]-flat[j] for j in range(3)]
++    decomposed = [old_regular[j]+flat[j]+L[j]+uw[j]+wu[j]+ww[j] for j in range(3)]
++    defects = [direct[j]-decomposed[j] for j in range(3)]
++    controls = {
++        'omit_latest_pressure_increment': [direct[j]-(decomposed[j]-grad(pi)[j]) for j in range(3)],
++        'omit_new_quadratic_remainder': [direct[j]-(decomposed[j]-ww[j]) for j in range(3)],
++        'omit_old_flat_residual': [direct[j]-(decomposed[j]-flat[j]) for j in range(3)],
++    }
++    assert all(x.zero() for x in defects)
++    assert all(all(not x.zero() for x in v) for v in controls.values())
++    return {
++        'ring':'exact rational polynomials in arbitrary commuting field jets and rho=1/r; d_r rho=-rho^2',
++        'identity':'R(u+w,p+pi)=(R(u,p)-F)+F+L(w,pi)+div(u tensor w+w tensor u)+div(w tensor w)',
++        'components':['radial','angular','axial'],
++        'exact_defect_monomial_counts':[len(x.terms) for x in defects],
++        'difference_enclosures':[[0,0]]*3,
++        'full_cylindrical_vector_laplacian_and_basis_connections':True,
++        'incompressibility_not_required_for_conservative_identity':True,
++        'negative_controls':{k:{'nonzero_component_monomial_counts':[len(x.terms) for x in v],'rejected':all(not x.zero() for x in v)} for k,v in controls.items()},
++        'scope':'Universal differential identity; actual construction and pressure binding remain independent obligations.'}
++
++
++def digest(path): return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def run(root):
++    base = root/'analysis/base/PR30-primary67-continuation'
++    nav = base/'MathScopeCompute/research-ide/mathscope-m3/navier'
++    family_path = nav/'evidence/saved-initialized-norm-family-20261012/attempt1/saved-initialized-norm-family.json'
++    initialized_path = nav/'evidence/global-forced-current-20261012/attempt382884203291/initialized-angular-construction.json'
++    comparison_path = base/'pressure-proof/cartesian-universal-closure/E_ACTUAL_CARTESIAN_RESIDUAL_SOURCE_APPLICATION.json'
++    paths = {
++        'forced':root/'recovered/github-pr30/source-global-forced-current.mjs',
++        'signed':root/'recovered/github-pr30/source-global-signed.mjs',
++        'harmonic':nav/'source-harmonic-assembly.mjs',
++        'mean':nav/'source-global-initial-mean.mjs',
++        'pressure':nav/'source-updated-mean-pressure.mjs',
++        'family':family_path,'initialized':initialized_path,'full3_comparison':comparison_path}
++    pins=json.loads((root/'work/theorem_connection/evidence/STAGE_INPUT_PINS.json').read_text())
++    assert set(pins)==set(paths)
++    for key,path in paths.items():
++        assert digest(path)==pins[key]['sha256'] and path.stat().st_size==pins[key]['bytes'], 'Input changed '+key
++    expected = {
++        'forced':'b41f298702238cf6170c16f31362e9429ebc659ca2a999d8d85cf2159ae01be3',
++        'signed':'4078e65989da153d57a36672645bad13ac0b4f2894c5c77b88208fc1fc25ceb1',
++        'harmonic':'339c8cb4e5853ba4afe68f3b37933784241baaef3fcf655d5d88aa9f13708d20',
++        'mean':'513779930558d044076318f39396060465b6518184b952482a0d973ac16bd411'}
++    for k,h in expected.items():
++        assert digest(paths[k]) == h, 'Changed source '+k
++    texts = {k:p.read_text() for k,p in paths.items() if p.suffix == '.mjs'}
++    required = {
++      'forced':[
++        'assertGlobalInitializedAngular(source);',
++        "exponent=kind==='velocity'?A:kind==='residual'?G.add(G.mul(G.q(2),A),G.q(1,2)):G.mul(G.q(2),A)",
++        'referenceValues=[G.mul(G.sqrt(ratio),R),G.mul(power(ratio,D),Z),G.mul(ratio,T),...parameters.slice(3)]',
++        'referenceBody=G.mul(power(ratio,exponent),G.expressionValue(ownSystem,referenceValues))',
++        'newLocalMeanPressure=G.mul(power(source.reference.ratio,G.neg(G.mul(G.q(2),band.constants.A)))',
++        "latestMean=reconstructUpdatedFullMeanPressure(G,{geometry:pressure.geometry,background,",
++        "velocity:source.mean.stages.moments.velocity,covariance,stress:pressure.residual.fullOriginalStress,",
++        'pressureDifference=G.sub(latestMean.pressure.value,source.mean.stages.moments.pressure.value)',
++        'pressure:C.value(localPressureDifference)',
++        'previous:newMean,increment:t.waveRows,oldFlatResidual:t.oldFlatResidual',
++        'fullPressure=G.add(band.fields.pressure,latestMean.pressure.value,angularPressureField.root)',
++        'direct=exactRealCylindricalPDE(G,{geometry,velocity,pressure:fullPressure})',
++        'assembledResidual=meanDirect.conservativeResidual.map((x,j)=>G.add(x,residualFields[j].root))',
++        't.update.newQuadraticRemainderRetained&&t.update.oldFlatResidualRetained',
++        'f.contributions===162'],
++      'mean':[
++        'afterTemporal=reconstructUpdatedFullMeanPressure(G,{...input,velocity:temporal.potential.velocity',
++        'actualInputDefects={P:afterTemporal.mean.P,Jtheta:afterTemporal.mean.Jtheta,Jz:afterTemporal.mean.Jz}',
++        'afterMoments=reconstructUpdatedFullMeanPressure(G,{...input,velocity:updated',
++        "allCorrectionsRemainDivergenceFree:true"],
++      'harmonic':['oldRegular=kernel.result.conservative.map((M,j)=>S.sub(M,flat[j]))',
++        'decomposed=oldRegular.map((M,j)=>S.add(M,flat[j],linearized[j],quadratic[j]))'],
++      'signed':['W=registered.after.roots,mean=buildGlobalMeanState(G,band,W',
++        'updated:{fullAuxiliaryMean:W,mean}', 'fullAuxiliaryPressureConstructed:false']}
++    source_checks=[]
++    for k, snippets in required.items():
++        for snippet in snippets:
++            passed=snippet in texts[k]
++            assert passed, 'Source dataflow mismatch: '+snippet
++            source_checks.append({'file':k,'literal':snippet,'line':texts[k][:texts[k].index(snippet)].count('\n')+1,'pass':passed})
++    family=json.loads(family_path.read_text())
++    roots=family['source']['actualRoots']
++    initial=json.loads(initialized_path.read_text())
++    comparison=json.loads(comparison_path.read_text())
++    g=initial['global']
++    assert g['velocity']==[3825006,3825007,3825008] and g['pressure']==3825009
++    assert roots['initializedVelocity']=={'beta':3614790,'v':3614791,'gamma':3614792}
++    assert roots['initializedPressure']['value']==3615361
++    assert roots['temporalPressure']['value']==3614634
++    for row in comparison['literalRootEqualities']:
++        j=row['component']
++        assert row['directRoot']==g['direct']['conservativeResidual'][j]
++        assert row['decomposedRoot']==g['assembledResidual'][j]
++        assert row['differenceEnclosure']==[0,0]
++    algebra=cylindrical_identity()
++    return {
++      'schema':'MathScope.ActualStagePressureResidualConnection/1',
++      'source_manifest':{k:{'path':str(p.relative_to(root)),'sha256':digest(p),'bytes':p.stat().st_size} for k,p in paths.items()},
++      'source_dataflow_checks':source_checks,'independent_algebra':algebra,
++      'stages':[
++        {'id':'initialized-temporal','operation':'temporal-8.20 then full-pressure-8.12',
++         'actual_velocity_roots':roots['temporalVelocity'],'latest_mean_pressure_root':3614634,
++         'fresh_defect_roots':roots['freshInputDefects'],
++         'proof_application':'The universal conservative identity applies to the literal temporal velocity increment and complete refreshed pressure. Latest pressure includes T0, A0 and full covariance; no discarded zero mode.',
++         'independent_frozen_whole3_stage_comparison':'not supplied separately; endpoint comparison follows after the five step',
++         'status':'SOURCE_BOUND_OPERATOR_IDENTITY_WITH_FULL_PRESSURE'},
++        {'id':'initialized-five','operation':'five-8.25 on fresh P/J then full-pressure-8.12',
++         'actual_velocity_roots':roots['initializedVelocity'],'latest_mean_pressure_root':3615361,
++         'proof_application':'Same universal identity, actual fresh targets, complete five increments and complete pressure difference; retained nonlinear defect remainder is not set to zero.',
++         'status':'SOURCE_BOUND_OPERATOR_IDENTITY_WITH_FULL_PRESSURE'},
++        {'id':'initialized-full3','actual_velocity_roots':g['velocity'],'latest_full_pressure_root':g['pressure'],
++         'direct_roots':g['direct']['conservativeResidual'],'assembled_roots':g['assembledResidual'],
++         'comparison':comparison['literalRootEqualities'],
++         'status':'INHERITED_EXACT_INDEPENDENT_WHOLE3_SOURCE_COMPARISON'},
++        {'id':'implemented-forced-angular','operation':'all20 positive systems, conjugate routes, full covariance, refreshed pressure, all162 fields',
++         'actual_input_source':initial['source'],'source_constructor':paths['forced'].name,
++         'full_pressure_expression':'background pressure + latestMean.pressure.value + all angular pressure',
++         'direct_expression':'exactRealCylindricalPDE(complete velocity, fullPressure)',
++         'assembled_expression':'meanDirect.conservativeResidual + actual all162 waveResidual fields',
++         'proof_application':'Universal update identity applies to each retained complete old state and increment including the new mean pressure difference. Exact finite Fourier reconstruction commutes with the same cylindrical differential operator. The unchanged fixed-label physical normalization and support-disjoint assembly transport all three components. This is an operator theorem on the actual constructor expressions, not a flag or a numerical sample.',
++         'symbolic_source_application':'APPLIES_TO_COMPLETE_CONSTRUCTOR_OUTPUT',
++         'frozen_output_graph_replayed_this_run':False,
++         'snapshot_recovery':'11 forced-stage checkpoints were not found in searched recovered archives; this is a replay-provenance issue, not an extra mathematical hypothesis',
++         'post_forced_class_bounds':'not inferred from finite residual identity',
++         'status':'SOURCE_BOUND_COMPLETE_CONSTRUCTOR_OPERATOR_APPLICATION'},
++        {'id':'implemented-signed-covariance','operation':'fixed-primary signed update',
++         'mean_pressure_available':True,'complete_auxiliary_pressure_available':False,
++         'obstruction':'Local full covariance is integrated over both auxiliary coordinates before registerGlobalMeanFields; updated.fullAuxiliaryMean and buildGlobalMeanState do not determine its discarded nonzero auxiliary modes. No full-pressure/direct/assembled output is constructed for this update.',
++         'smallest_next_implementation':'Retain pre-Haar local after covariance; assemble it on the unchanged full162 cover, reconstruct gr -> Haar P -> full shifted pm and A0, add complete updated angular pressure and velocity, then bind both whole3 residual paths. Do not transplant a private seal or replace fullY covariance by its mean.',
++         'status':'OPEN_ACTUAL_FULL_AUXILIARY_PRESSURE_CONSTRUCTION'}],
++      'N6_02':'OPEN_SIGNED_FULL_PRESSURE_STAGE_UNRESOLVED',
++      'original_1260_reexecuted':False,'originals_modified':False,
++      'all_finite_correction_cycle_certified':False,
++      'scoped_connection_checks_passed':True}
++
++
++def main():
++    parser=argparse.ArgumentParser()
++    parser.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[3])
++    parser.add_argument('--out',type=Path)
++    args=parser.parse_args()
++    out=args.out or args.root/'work/theorem_connection/evidence/STAGE_SOURCE_APPLICATION.json'
++    result=run(args.root.resolve());out.parent.mkdir(parents=True,exist_ok=True)
++    out.write_text(json.dumps(result,indent=2)+'\n')
++    print(json.dumps({'source_checks':len(result['source_dataflow_checks']),'algebra':result['independent_algebra']['exact_defect_monomial_counts'],'negative_controls':3,'N6_02':result['N6_02'],'output':str(out)}))
++
++if __name__=='__main__': main()
+--- /dev/null
++++ work/theorem_connection/transport/verify_transport_application.py
+@@ -0,0 +1,254 @@
++#!/usr/bin/env python3
++"""Read-only successor application of the original angular transport theorem.
++
++Usage: python verify_transport_application.py [--workspace ROOT] [--output-dir DIR]
++Only this verifier's JSON/log outputs are written. No original proof code is
++imported or executed. PASS means exact source links, rational scaling identities,
++and negative controls passed; the analytical implication retains the explicitly
++listed original primary/mean/support premises. N6-01 is never promoted.
++"""
++from __future__ import annotations
++
++import argparse
++import copy
++from fractions import Fraction
++import hashlib
++import json
++from pathlib import Path
++import sys
++
++MANIFEST = {'angular_original': {'bytes': 536696,
++                      'path': 'analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_SOURCE_APPLICATION_STABLE_ATTEMPT1/ACTUAL_ANGULAR_PDE_SOURCE_APPLICATION.json',
++                      'sha256': '67d90e772579c0be478242b7a60fe7445d278800700f2eb95b32bbc578bb39f3'},
++ 'angular_producer_code': {'bytes': 62701,
++                           'path': 'analysis/base/PR30-primary67-continuation/MathScopeCompute/tools/n6-native-domain-frontier-20261015/actual_angular_pde_source_application.py',
++                           'sha256': '0e0a019cd8594ab311be4473186d3181935367f8ae6501a4789372f113b5c6eb'},
++ 'angular_wave_copy': {'bytes': 536696,
++                       'path': 'analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inputs/ACTUAL_ANGULAR_PDE_SOURCE_APPLICATION.json',
++                       'sha256': '67d90e772579c0be478242b7a60fe7445d278800700f2eb95b32bbc578bb39f3'},
++ 'common_y': {'bytes': 16223,
++              'path': 'analysis/intake_audit/recovered_source_candidates/9badb503543f8bc8/source-common-y-class-majorants.mjs',
++              'sha256': '9badb503543f8bc83f5db0e7a373a9a8434ae63104f201601c8e1df66e493da6'},
++ 'global_angular_code': {'bytes': 21721,
++                         'path': 'analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-global-angular.mjs',
++                         'sha256': '4e9c3ea67b124a953856f83d0aca0dcfec4b01a245043424de2bb035b8d902ca'},
++ 'global_band_code': {'bytes': 23815,
++                      'path': 'analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-global-band.mjs',
++                      'sha256': 'babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60'},
++ 'initialized_angular_code': {'bytes': 24460,
++                              'path': 'analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-initialized-angular.mjs',
++                              'sha256': '655809f64af15daa67260ae4207ceac3d3090816086e9920027eedda2ccf24b7'},
++ 'initialized_original': {'bytes': 1733741,
++                          'path': 'analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/initialized-angular-construction.json',
++                          'sha256': 'ba60de00a1e41f9c448da3aabcbf791bc4649b5fcfd99cff7a71865463db8b14'},
++ 'initialized_wave_copy': {'bytes': 1733741,
++                           'path': 'analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/initialized.json',
++                           'sha256': 'ba60de00a1e41f9c448da3aabcbf791bc4649b5fcfd99cff7a71865463db8b14'},
++ 'norm_family': {'bytes': 5286543,
++                 'path': 'analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/normFamily.json',
++                 'sha256': 'd98a245f1fc563ba44c48d21c59a43d6787fc3895d922472bb3f3ab6e04d9a6d'},
++ 'norm_family_code': {'bytes': 12670,
++                      'path': 'analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-saved-initialized-norm-family.mjs',
++                      'sha256': '857a1641e1b5da964ed4893d6108cc06191cf8f8c92c9a16b285af9f0aaf8fc4'},
++ 'packet_original': {'bytes': 1544048,
++                     'path': 'analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_PDE_SOURCE_V3.json',
++                     'sha256': '36ea92bf82e016ceac3dac9e81dbe6ee4bf0a541bd8ec0c5d2109cf253d0ecd4'},
++ 'packet_wave_copy': {'bytes': 1544048,
++                      'path': 'analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inputs/ANGULAR_PDE_SOURCE_V3.json',
++                      'sha256': '36ea92bf82e016ceac3dac9e81dbe6ee4bf0a541bd8ec0c5d2109cf253d0ecd4'},
++ 'primary': {'bytes': 8483361,
++             'path': 'analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/primaryClass.json',
++             'sha256': '84fbcd228accdff56b13b8a01065cbf6efae9f07cf88421780122a45247f1a25'},
++ 'primary_code': {'bytes': 27252,
++                  'path': 'analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-primary-class-majorants.mjs',
++                  'sha256': '40b3f1220b7ad1b9b05a11ae1378c864351e77e8efe7134ae1b78921fbab47ea'},
++ 'radial_axial_original': {'bytes': 1499008,
++                           'path': 'analysis/base/PR30-primary67-continuation/pressure-proof/radial-axial-pde/RADIAL_AXIAL_PDE_STABLE_ATTEMPT1/ACTUAL_RADIAL_AXIAL_PDE_SOURCE_APPLICATION.json',
++                           'sha256': '84522cf7c9db5c3e311cff48eb257106043f601eba3d16cf70387707b6cbd365'},
++ 'radial_axial_producer_code': {'bytes': 63226,
++                                'path': 'analysis/base/PR30-primary67-continuation/MathScopeCompute/tools/n6-native-domain-frontier-20261015/actual_radial_axial_pde_source_application.py',
++                                'sha256': 'd92c6352a76179eb27b1553ce4146498043ebd8b10a8a5b8edee428225065ff3'},
++ 'wave_consumer': {'bytes': 25445,
++                   'path': 'analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/code/wave_bridge.py',
++                   'sha256': '524b0efa080fa8cf405fdc0f12ada592659b7cb615c74f081dc8b5ebcf6c0ccb'},
++ 'written_all_order_proof': {'bytes': 6770,
++                             'path': 'analysis/base/embedded-wave-norm/MathScope_M3_WaveNorm_Continuation/reports/ALL_ORDER_PROOF_KO.md',
++                             'sha256': '17b270f6cf292887c361fca40ecd7b9eb030855cbe51cc1307b986990a15cf4b'},
++ 'written_integration': {'bytes': 15009,
++                         'path': 'analysis/theorem_sources/angular_transport_audit.md',
++                         'sha256': 'e499a43c835263b4bc9eb9555c99d0119efd870fd7f642a86b13b497ad452d4a'}}
++
++
++def digest(raw: bytes) -> str:
++    return hashlib.sha256(raw).hexdigest()
++
++
++def row(identifier: str, passed: bool, detail: str) -> dict:
++    return {"id": identifier, "status": "PASS" if passed else "FAIL", "detail": detail}
++
++
++def load_sources(workspace: Path) -> tuple[dict, dict, list]:
++    data, observed, checks = {}, {}, []
++    for name, spec in MANIFEST.items():
++        path = workspace / spec["path"]
++        try:
++            raw = path.read_bytes()
++            actual = digest(raw)
++            observed[name] = {"path": spec["path"], "sha256": actual, "bytes": len(raw)}
++            checks.append(row("pin:" + name, actual == spec["sha256"] and len(raw) == spec["bytes"], spec["path"]))
++            if path.suffix == ".json":
++                data[name] = json.loads(raw)
++        except (OSError, ValueError) as exc:
++            checks.append(row("pin:" + name, False, type(exc).__name__ + ": " + str(exc)))
++    return data, observed, checks
++
++
++def source_checks(d: dict, observed: dict) -> list:
++    """Original fifteen link checks plus exact actual-map and residual-root checks."""
++    checks = []
++    def check(name, passed, detail):
++        checks.append(row(name, passed, detail))
++    for a, b in [("initialized_wave_copy", "initialized_original"),
++                 ("angular_wave_copy", "angular_original"),
++                 ("packet_wave_copy", "packet_original")]:
++        check(a + "_same_bytes", observed[a]["sha256"] == observed[b]["sha256"], a + " = " + b)
++    i, t, r = d["initialized_wave_copy"], d["angular_original"], d["radial_axial_original"]
++    p, f, packet = d["primary"], d["norm_family"], d["packet_original"]
++    check("common_y_expected_original", observed["common_y"]["sha256"] == MANIFEST["common_y"]["sha256"], "Recovered original affine-chain source")
++    check("all_component_same_header", r["sourceHeaderSHA256"] == t["sourceHeaderSHA256"] == packet["sourceHeaderSHA256"], "One exact original source header")
++    check("radial_axial_binds_same_angular_theorem", r["inputBindings"]["angular-application-proof"]["sha256"] == observed["angular_original"]["sha256"], "Radial/axial theorem imports this exact angular theorem")
++    check("native_theorems_bind_same_initialized_source", all(x["inputBindings"]["construction"]["sha256"] == observed["initialized_wave_copy"]["sha256"] for x in [t, r]), "Both theorems bind the same initialized construction")
++    check("native_full_three_components", r["provedComponents"] == [0, 2] and t["eligibleOriginalPDECount"] == 197 and r["eligibleOriginalPDECount"] == 823, "169+197+654 comparison rows; no norm inferred from their count")
++    normalized = t["actualFixedLabelNormalizationApplication"]["actualRowApplications"]
++    check("all162_common_maps", len(normalized) == 162 and all(len(v) == 162 for v in r["actualSelected162RowApplications"].values()), "All162 maps retained for all components")
++    check("all162_angular_source_fields", all(len(packet["definitions"]["fieldDefinitions:" + str(k)]["rows"]) == 162 for k in range(6, 10)), "All velocity3+pressure fields retained")
++    check("paper_and_parameter_identity", all(p["source"][k] == i["source"][k] == f["source"]["source"][k] for k in ["paperSHA256", "parameterExpressionSHA256"]), "Same paper and source-parameter graph")
++    check("same_initialized_mean_graph", i["sourceMeanGraph"] == f["source"]["source"]["originalMeanGraph"], "Exact initialized-mean graph identity")
++    check("nonzero_harmonics_all_components", len(i["templates"]) == 10 and all([x["m"] for x in a["nonzeroAngularForcing"]] == [-2, -1, 1, 2] and all(len(x["value"]) == 3 for x in a["nonzeroAngularForcing"]) for a in i["templates"]), "10 lifts x 4 modes x 3 components")
++    check("whole_reference_mean", i["reference"]["fullOriginalReferenceFieldPulledBack"] and not i["reference"]["ownLabelBackgroundIdentityAssumedInstead"], "Whole common-Y mean preserved")
++    check("same_source_continuation", f["family"]["scope"]["sameSourceNormContinuationBound"] and p["scope"]["allFiniteOrdersBySameOriginalNormGenerator"], "Source-bound prerequisite statements recorded, not newly proven by this flag check")
++    coupled = packet["definitions"]["definitions:1:1"]["rows"]
++    map_matches = len(coupled) == len(normalized) == 162 and all(
++        bound["index"] == index and bound["actualArguments"] == actual["values"]
++        and bound["actualOuterGuards"] == actual["guards"] and bound["label"] == actual["label"]
++        for index, (bound, actual) in enumerate(zip(normalized, coupled)))
++    check("all162_literal_map_evidence_matches_source", map_matches, "Actual argument tuples, guards and labels compared; a changed map is rejected")
++    check("actual_component_residual_roots", i["global"]["assembledResidual"] == [3825348, 3825349, 3825350]
++          and i["application"]["residualRoots"] == [3825003, 3825004, 3825005]
++          and i["global"]["assembledResidual"][1] == t["actualOriginalSourceApplication"]["originalAssembledRoot"]
++          and i["application"]["residualRoots"][1] == t["actualOriginalSourceApplication"]["originalCoupledOperand"],
++          "Original three assembled/wave roots retained; a changed root is rejected")
++    return checks
++
++
++def scaling_checks() -> tuple[list, dict]:
++    """Exact affine polynomials in symbolic h: pair (constant, coefficient of h)."""
++    Q = Fraction
++    def add(*xs):
++        return tuple(sum((x[j] for x in xs), Q(0)) for j in range(2))
++    def mul(n, x):
++        return tuple(Q(n) * a for a in x)
++    half, one, h = (Q(1, 2), Q(0)), (Q(1), Q(0)), (Q(0), Q(1))
++    A, D = add(half, h), add(half, mul(-1, h))
++    residual = add(mul(2, A), half)
++    identities = {
++        "implicit_s_homogeneity": (add(mul(2, D), mul(2, h)), one),
++        "X_invariant": (add(mul(2, half), mul(-1, one)), (Q(0), Q(0))),
++        "eta_invariant": (add(D, mul(-1, D)), (Q(0), Q(0))),
++        "qActual_invariant": (add(mul(-1, one), one), (Q(0), Q(0))),
++        "radial_background_velocity": (add(h, half), A),
++        "angular_background_velocity": (add(mul(-1, half), A, half), A),
++        "axial_background_velocity": (A, A),
++        "background_pressure": (mul(2, A), add(A, A)),
++        "residual_quadratic_connections": (add(mul(2, A), half), residual),
++        "residual_time_viscosity": (add(A, one, h), residual),
++        "residual_pressure": (add(mul(2, A), half), residual),
++    }
++    checks = [row("scaling:" + name, lhs == rhs, "Exact polynomial equality in symbolic h") for name, (lhs, rhs) in identities.items()]
++    evidence = {name: {"left": list(map(str, lhs)), "right": list(map(str, rhs))} for name, (lhs, rhs) in identities.items()}
++    return checks, evidence
++
++
++PREREQUISITES = [
++    {"id": "P_PRIMARY", "statement": "Same-source all-fixed-order primary, potential, pressure and full-curl remainder bounds, including actual homogeneous ODE, moving-normal pressure and tangency.", "evidence": "primary_code:123-143,175-240; primary.sourcePulseBindings", "status": "INHERITED_MATHEMATICAL_PREMISE; source identity checked here"},
++    {"id": "P_MEAN", "statement": "Same-source initialized mean has all-fixed-order bounds through the finite recursive demand, preserving the original coefficient bodies, selector, latest pressure and q domain.", "evidence": "norm_family_code:24-50; norm_family.family.continuation", "status": "INHERITED_MATHEMATICAL_PREMISE; exact mean graph checked here"},
++    {"id": "P_SUPPORT", "statement": "Original source supports have all-order flat zero extensions and distinct-label products vanish; labels/copies/carriers are frozen before differentiation.", "evidence": "common_y:71-109; global_angular_code:166-176", "status": "INHERITED_SOURCE_GEOMETRY_PREMISE; pinned original source retained"},
++    {"id": "P_NATIVE", "statement": "The actual full three-component direct-minus-mean operator equals the original coupled residual as functions on each fixed-label chart.", "evidence": "angular_producer_code:205-210,254-313; radial_axial_producer_code:107-136,183-212,251-255", "status": "INHERITED_EXACT_FUNCTION_IDENTITY; same inputs/components/maps checked here"},
++    {"id": "P_DOMAIN", "statement": "Use the original certified atlas windows: the literal N=1 prefix requires 0<q<qGlobalStar and b_2*q>=1. Positive source Gaussian decay/length and palette bounds remain in force.", "evidence": "written_all_order_proof:5-9,60-77; global_band_code:65-97,154-178", "status": "ORIGINAL_DOMAIN_RESTRICTION; not enlarged"},
++]
++
++INFERENCE_CHAIN = [
++    {"id": "T1", "requires": ["P_PRIMARY", "P_SUPPORT", "P_DOMAIN"], "evidence": "common_y:39-63,71-109; global_angular_code:73-117", "argument": "The arbitrary-m affine chain rule applies to both actual xi/v columns. The wave constructor literally reuses sign.values and sign.derivativeMaps and adds only theta's identity column. Higher coordinate derivatives vanish on fixed-label charts. A derivative of length m costs at most (32404*S_ref)^m and preserves the epsilon exponent."},
++    {"id": "T2", "requires": ["P_MEAN", "P_DOMAIN"], "evidence": "global_band_code:70-97; initialized_angular_code:113-122,128-159", "argument": "For K=Q_ref/Q_label, s_label(P)=K*s_ref because 2D+2h=1 and the actual monotone root is unique on the active overlap. X, eta and Q*s are invariant. All actual background profile/cutoff bodies therefore coincide, with velocity scaling K^A (radial b uses epsilon_ref=K^h*epsilon_label) and pressure K^(2A). Whole Y-dependent mean correction keeps the identity Y map and inverse slow chart; no inverse torus cover or replacement mean is assumed."},
++    {"id": "T3", "requires": ["P_PRIMARY", "P_MEAN", "P_NATIVE", "T1", "T2"], "evidence": "angular_producer_code:205-210; radial_axial_producer_code:251-255", "argument": "The native result is an exact function identity, not equality at finitely many points. Separate all-order source bounds supply smoothness. Differentiating equal smooth functions gives every fixed coefficient derivative identity without a fresh native jet run. Dr squared retains derivatives of the R-dependent fast coefficient. Mean-pressure terms cancel linearly before the wave estimate."},
++    {"id": "T4", "requires": ["P_PRIMARY", "P_MEAN", "T1", "T2", "T3"], "evidence": "written_all_order_proof:13-58; wave_consumer:146-248", "argument": "The actual homogeneous principal equation leaves +psi_prime*t. The regular coefficient contains every principal-on-curl, slow, phase, pressure, viscous, frame, mean-wave and same-label square term. Exact full-curl divergence removes the longitudinal k loss, without assuming n dot a=0 for the full amplitude. Finite Leibniz rules at any fixed m preserve alpha=1-3*kappa_s for modes +/-1 and alpha=1-kappa_s for +/-2. Frozen ratio factors are bounded by 16*4^(m+L); no extra epsilon loss is introduced. Thus actual G_wave belongs to W_(99997/100000), hence W_(7/10)."},
++    {"id": "T5", "requires": ["P_PRIMARY", "P_SUPPORT", "P_DOMAIN", "T1", "T2", "T3"], "evidence": "written_all_order_proof:60-77; wave_consumer:250-267; global_angular_code:130-156", "argument": "The actual cutoff tail retains +psi_prime*t. Its source Gaussian/length nodes give c>0 and exp(-c*S_label). Each fixed physical derivative, including chart, normalization and carrier factors, is bounded by a finite C*Q^(-M)*S_label^P*exp(-c*S_label). With Q=2^(-ell), S_label=ell^2 and q>=Q/2 on active-label support, square completion gives C_N=C*2^N*(2P/c)^P*exp((M+N)^2/(2c)) for every N; the P=0 factor is1. Hence F_pulse is flat. No numerical C or new threshold is required."},
++    {"id": "T6", "requires": ["P_SUPPORT", "T4", "T5"], "evidence": "common_y:108; global_angular_code:166-176; written_all_order_proof:42-48", "argument": "Original all-order flat joins extend the chart result across guards/relabeling. Finite assembly keeps all three components, all162 source rows, both mean-wave orders and same-row squares. Therefore Pi_nonzero R=G_wave+F_pulse on the original domain. This closes the transport implication only; it does not accept the whole N6-01 tuple or any later N6-02 substep."},
++]
++
++
++def negative_controls(data: dict, observed: dict) -> list:
++    result = []
++    mutations = [
++        ("changed_first_map_argument", "all162_literal_map_evidence_matches_source", lambda d: d["angular_original"]["actualFixedLabelNormalizationApplication"]["actualRowApplications"][0]["actualArguments"].__setitem__(0, -1)),
++        ("changed_angular_assembled_root", "actual_component_residual_roots", lambda d: d["initialized_wave_copy"]["global"]["assembledResidual"].__setitem__(1, -1)),
++    ]
++    for name, expected, mutate in mutations:
++        altered = copy.deepcopy(data)
++        mutate(altered)
++        failed = [c["id"] for c in source_checks(altered, observed) if c["status"] == "FAIL"]
++        result.append({"id": name, "status": "PASS" if expected in failed else "FAIL", "expected_rejection": expected, "observed_failed_checks": failed, "mutation_scope": "In-memory copy only; original files untouched"})
++    return result
++
++
++def execute(workspace: Path) -> dict:
++    data, observed, pins = load_sources(workspace)
++    checks = list(pins)
++    controls, algebra = [], {}
++    if all(c["status"] == "PASS" for c in pins):
++        try:
++            checks.extend(source_checks(data, observed))
++            scaling, algebra = scaling_checks()
++            checks.extend(scaling)
++            controls = negative_controls(data, observed)
++        except (KeyError, TypeError, ValueError, IndexError) as exc:
++            checks.append(row("input_structure", False, type(exc).__name__ + ": " + str(exc)))
++    # Report precisely what remains an analytic prerequisite, never promote flags.
++    passed = bool(controls) and all(c["status"] == "PASS" for c in checks + controls)
++    return {"schema": "MathScope.SuccessorAngularTransportApplication/1", "result": "PASS" if passed else "FAIL",
++            "grade": "CHECKED_SOURCE_APPLICATION_OF_CONDITIONAL_ALL_FIXED_ORDER_TRANSPORT" if passed else "REJECTED_SOURCE_APPLICATION",
++            "verification_scope": "Exact pinned-source/link/map/root checks and rational scaling identities; analytical inference recorded against explicit inherited prerequisites. No original producer, native derivative expansion or tests executed.",
++            "source_bindings": observed, "checks": checks, "negative_controls": controls,
++            "background_homogeneity_polynomial_checks": algebra,
++            "conditional_prerequisites": PREREQUISITES, "all_fixed_order_inference_chain": INFERENCE_CHAIN,
++            "conclusion_if_prerequisites_hold": "The actual full three-component nonzero residual has Pi_nonzero R=G_wave+F_pulse, with G_wave in W_(99997/100000) subset W_(7/10), and every fixed physical derivative of F_pulse flat to every q order. No independent angular-transport premise or fresh all-jet execution is needed.",
++            "finite_execution_is_not_all_order_proof": True, "original_source_files_modified": False,
++            "original_producers_executed": False, "N6_01_promoted": False, "N6_02_later_substeps_certified": False,
++            "status_policy": "Preserve N6-01 OPEN and N6-02 PARTIAL pending their separate integration/stage decisions."}
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--workspace", type=Path, default=Path(__file__).resolve().parents[3])
++    parser.add_argument("--output-dir", type=Path, default=Path(__file__).resolve().parent)
++    args = parser.parse_args()
++    workspace, output = args.workspace.resolve(), args.output_dir.resolve()
++    protected = [workspace / "analysis/base", workspace / "analysis/intake_audit/recovered_source_candidates"]
++    if workspace == output or any(output == directory or directory in output.parents for directory in protected):
++        parser.error("Choose a separate successor evidence directory outside the preserved originals.")
++    result = execute(workspace)
++    result["verifier"] = {"file": Path(__file__).name, "sha256": digest(Path(__file__).read_bytes())}
++    output.mkdir(parents=True, exist_ok=True)
++    (output / "TRANSPORT_APPLICATION.json").write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
++    lines = [result["result"] + " " + result["grade"]]
++    lines += [c["status"] + " " + c["id"] for c in result["checks"]]
++    lines += [c["status"] + " negative:" + c["id"] + " -> " + ",".join(c["observed_failed_checks"]) for c in result["negative_controls"]]
++    lines += ["PRESERVED N6-01 OPEN; N6-02 PARTIAL", "PREREQUISITES " + ", ".join(p["id"] for p in PREREQUISITES)]
++    log = "\n".join(lines) + "\n"
++    (output / "TRANSPORT_APPLICATION.log").write_text(log, encoding="utf-8")
++    sys.stdout.write(log)
++    return 0 if result["result"] == "PASS" else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())

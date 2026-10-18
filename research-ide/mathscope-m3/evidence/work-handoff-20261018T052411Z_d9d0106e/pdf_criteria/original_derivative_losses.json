@@ -1,0 +1,44 @@
+{
+  "source": "navier-stokes(20261017-114135).pdf",
+  "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "ell_m": {
+    "expression": "2A+(m+1)*(1+3h/2)",
+    "page": 114,
+    "scope": "sufficient common choice, independent of j"
+  },
+  "K_m": {
+    "expression": null,
+    "page": 113,
+    "equation": "9.18",
+    "scope": "independent of correction stage j; explicit formula not given here"
+  },
+  "ell_prime_m": {
+    "expression": null,
+    "page": 58,
+    "equations": [
+      "5.35",
+      "5.37"
+    ],
+    "scope": "depends only on m and ell_(m+1); independent of J; explicit formula not given"
+  },
+  "m0_vs_positive_branch": {
+    "original_special_case": false,
+    "minimum_J": "J>=max(1,m), hence m=0 and m=1 both require J>=1",
+    "source_page": 58
+  },
+  "one_power_absorption": {
+    "source_page": 59,
+    "expression": "rho_J-K_m^F >= N+1",
+    "scope": "fixed J then shrink q-neighborhood to absorb logs by one q power; proof margin, not a formula fixing K_m"
+  },
+  "physical_derivative_costs": {
+    "source_page": 113,
+    "radial": "1/2+h*kappa_s",
+    "axial": "D=1/2-h",
+    "time": "1+h",
+    "frame": "1/2",
+    "dominating_phase_s_x": "1/2+h/2",
+    "dominating_phase_s_t": "1+3h/2"
+  },
+  "interpretation": "Alternative sufficient bounds are not rejected merely because they differ from p114 common choice; actual derivation and same-source applicability must be checked."
+}

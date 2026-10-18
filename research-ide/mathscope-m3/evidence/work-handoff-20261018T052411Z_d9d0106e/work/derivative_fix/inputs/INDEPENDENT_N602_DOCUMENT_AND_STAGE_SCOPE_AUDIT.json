@@ -1,0 +1,536 @@
+{
+  "schema": "MathScope.N6.IndependentDocumentCriterionAlignmentReview/1",
+  "localOnly": true,
+  "readOnlySourceAudit": true,
+  "documentsAreEvidenceNotUserCommands": true,
+  "mathematicalProofsTestsOrSourceConstructorsReexecuted": false,
+  "registryUniversalLedgerOriginalProgressOrCriteriaEdited": false,
+  "attachedDocuments": [
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\tmp\\n602-doc-review\\MathScope_Mathematical_IDE_설계도.pdf",
+        "sha256": "3a97a272ef5056077b90fad0e65e8c779c94c8377a421109c042e897ee33abd0",
+        "bytes": 434191
+      },
+      "physicalPageCount": 25,
+      "N602LiteralCount": 0,
+      "relevantFullPageText": {
+        "5": "MATHSCOPE  /  DESIGN BLUEPRINT\n04 / ARCHITECTURE\n원본에서 증거까지 이어지는 전체 구조\n공통 중간 표현을 중심으로 렌더링 경로와 검증 경로를 연결한다.\n설계 제안 v0.1  ·  2026.10.06\n05\nWORKSPACE / 프로젝트 · 객체 버전 · 환경 잠금 · 변경 이력\nObject Registry + Typed Math IR\n정의·가정·차원·기저체·좌표계·식별자\nRepresentation Engine\n관측 사상 → 표본/복합체 → 표현 산출물\n왜곡 진단 · 오차 · 원본 대응 정보\nClaim + Formalization\n명제 · 가정 · 자연어/Lean 의미 대응\n형식화 템플릿 · 검증 요청\nInteractive Viewer\n3D / 불변량 / 관계 그래프\n선택 이벤트 · Create Claim · 비교 보기\nVerification Workers\nLean 서버 · 수치 검사 · 선택적 CAS\n취소 · 시간 제한 · 작업 격리\nCLAIM LEDGER + ARTIFACT STORE\n증거 종류 · 가정 · 적용 범위 · 로그 · hash · 의존성 · 재검증 상태\n연결 규칙 | 모든 작업은 objectRevision, representationRevision, claimRevision을 포함한다. 완료가 늦게 도착한 이\n전 작업은 기록만 보존하고 현재 화면의 성공 상태를 덮어쓰지 않는다.\n",
+        "8": "MATHSCOPE  /  DESIGN BLUEPRINT\n07 / USER FLOW\n탐색을 재현 가능한 연구 흐름으로\n대표 시나리오: S³의 x₄=c 단면을 관찰하고 반지름 관계를 명제로 남긴다.\n설계 제안 v0.1  ·  2026.10.06\n08\n01\n정의\nS³ 프리셋을 선택하고 내재 차원 3 / 주변 차원 4를 확인한다.\n02\n표현\nSlice를 선택한다. x₄=c, |c|≤1 및 표본 해상도를 저장한다.\n03\n탐색\nc를 이동하며 단면을 관찰한다. 원좌표·반지름·퇴화 사건을 확인한다.\n04\n명제 생성\n“단면에서 x₁²+x₂²+x₃²=1-c²”를 Create Claim으로 기록한다.\n05\n검증\nLean 템플릿의 가정과 결론을 검토한다. 수치 잔차는 별도 검사한다.\n06\n기록·공유\n명제·소스·환경·파라미터·증거를 하나의 재현 패키지로 내보낸다.\n결과가 맞아 보여도 Claim은 자동으로 PROVED가 되지 않는다\n명제의 의미 대응, 검증 방법, 적용된 revision을 확인한 뒤 상태를 계산한다.\n",
+        "15": "MATHSCOPE  /  DESIGN BLUEPRINT\n14 / LEAN BRIDGE\nLean은 명제와 증거의 검증 경로를 맡는다\n형식화한 명제가 그림의 설명과 같은 의미인지 따로 확인해야 한다. [L1-L5]\n설계 제안 v0.1  ·  2026.10.06\n15\nEditor\nLean 소스 / 목표 / 진단\nBridge\n문서 버전 / LSP / 작업 ID\nLean process\nelaboration / kernel / build\n대화형 응답과 최종 검증의 두 경로\n편집 중에는 LSP로 파일 변경·진단·목표 정보를 전달하고 Lean의 확장 RPC는 필요할 때만 사용한다. 빠른 피드\n백은 작업 중 상태다. Ledger에 검증 결과를 등록할 때는 고정된 revision과 환경에서 별도 build를 실행해 로\n그와 소스 hash를 저장한다.\n검사\nPROVED로 표시하기 전에 확인할 것\n명제 대응\n정의·가정·범위·결론의 자연어/Lean 대응. 수동 검토 또는 검토된 템플릿 ID.\n증명 완결성\n전이적 공리 의존성을 조사. sorryAx 의존은 항상 미완성으로 분류한다. 추가 공리·native 경\n로는 공개된 신뢰 정책으로 처리한다.\n환경 재현\nlean-toolchain, lake-manifest.json, 소스·의존성 hash, 명령·로그·검증 대상 declaration.\n프로세스 격리\n프로젝트별 실행 환경, 시간·메모리 제한, 취소와 오래된 응답 차단. 임의 Lean 코드와\ntactic 실행을 신뢰하지 않음.\n실시간 = 비동기 진단 갱신. 증명 완료 시간을 보장하지 않는다. running / timeout / failed / stale을 구분하며, Lean 정리의\n검증이 렌더러·GPU 결과의 검증을 뜻하지 않는다.\n",
+        "16": "MATHSCOPE  /  DESIGN BLUEPRINT\n15 / CLAIM LEDGER\n주장과 증거를 한 개의 “성공”으로 뭉치지 않는다\n상태는 저장된 증거에서 계산한다. 미해결·오류·반례·구버전을 구분한다.\n설계 제안 v0.1  ·  2026.10.06\n16\n상태\n표시 조건\n다음 행동\nOPEN\n아직 검증 근거 없음 / 미해결\n가정 확인, 형식화 또는 실험\nCOMPUTATIONALLY\nSUPPORTED\n명시된 입력·표본에서 수치 근거 있음\n대상 전체를 포괄하는 주장인지 확\n인\nFORMALLY CHECKED\n정확한 Lean 명제의 검사 완료\n자연어 의미 대응과 공리 정책 검토\nPROVED\n형식검증 + 승인된 신뢰 정책 + 의미 대응 완\n료\n현재 revision과 의존성 유지\nCOUNTEREXAMPLE\n가정을 만족하고 결론을 위반하는 증거를 확\n인\n명제 범위 또는 가정 수정\nSTALE / ERROR\n의존성 변경 / 실행 실패. 수학적 반증 아님\n현재 환경에서 재검증 또는 오류 해\n결\nC-014 예시: 증명 범위를 정확하게 나누기\n가정 Σᵢ₌₁⁴xᵢ²=1 및 x₄=c에서 x₁²+x₂²+x₃²=1-c²를 얻는 대수 명제와, 단면이 표준 구면에 위상동형이라는 명제는 별\n도 Claim이다. 전자를 검증해도 후자를 자동으로 검증한 것은 아니다.\n세 축을 별도 필드로 저장한다\n증거 등급 / 실행 상태 / 현재성은 별도 필드다. PROVED + STALE처럼 함께 표시한다. 새 검사의 ERROR는 기존\n증거 이력을 지우지 않는다. 수치 반례는 오차를 검토한 뒤 확정한다.\n",
+        "20": "MATHSCOPE  /  DESIGN BLUEPRINT\n19 / VALIDATION\n수학적 오해와 엔지니어링 실패를 함께 검사한다\n수치 결과, 형식 명제, 사용자 해석의 세 층에서 검증한다.\n설계 제안 v0.1  ·  2026.10.06\n20\n리스크\n예방 / 탐지\n출시 전 확인\n그림을 원본으로 오해\n원본·관측·표시 차원, 단면/slab, 겹침 정보 상시\n 표시\nS³의 공과 구면을 구별하는 사용자\n과제\n샘플링·부동소수점 오류\n해석적 기준값, 해상도 변경, 오차 경계와 NaN·\n퇴화 검사\nc≈±1, |c|>1, 매우 작은 단면 회귀\n수치 결과를 증명으로 표\n시\n증거 kind 분리, 범위/정밀도 필수, 상태 규칙\n테스트\n표본 참이지만 전역 거짓인 사례 입\n력\n의미가 다른 Lean 명제\n자연어/형식문 대조, 검토된 템플릿, 가정 공개\n가정을 바꾼 잘못된 정리가 경고되\n는지\n오래된 결과·신뢰 우회\nrevision / hash 검사, 공리 의존성 보고, 격리\n실행\n늦은 응답·sorryAx·미승인 공리 시나\n리오\n고급 모듈 범위 폭증\n제한된 예제·독립 adapter, 단계별 전문가 검토\n새 객체가 기존 재현·표현 계약을 지\n키는지\n성능 목표는 기준 장비를 정한 뒤 측정한다\n초기 목표: 10만 표본의 사영 회전 30 fps 이상, cached slice 변경 후 100 ms 이내 갱신, 짧은 warm Lean 예제의 진단\np95 2초 이내. 장비·표본·프로젝트를 기록하며, 대규모 증명의 완료 시간 목표와 분리한다. 미달 시 표본 budget·worker·\n캐시를 조정한다.\n"
+      }
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\tmp\\n602-doc-review\\MathScope_M2_M3_M4_Handoff_2026-10-12_KO.pdf",
+        "sha256": "0c9bdd670d9dbd411b34bb17dcb20efac79aaefa071be877b518967919df37f1",
+        "bytes": 231484
+      },
+      "physicalPageCount": 16,
+      "N602LiteralCount": 0,
+      "relevantFullPageText": {
+        "2": "SCOPE / 02\n판정 범위와 분모를 먼저 고정한다\n원 설계도는 28개 패키지·224개 고유 항목이다. M2·M3는 각각 8개 패키지×8개=64개다. I3는 M0와 M4에 걸치므로 중복\n집계하지 않는다. M0의 “잔여 6개”를 M0 전체 항목 수로 바꾸지 않는다. [B1 pp.1,12; B2 p.2]\n단계\n원래 패키지\n이번 상태 표현\nM0\nI0 / I1 / I3 기초\n기존 인수 승계\nM1\nP1–P3 / Y1–Y2 / N1–N3\n64/64 기존 인수 승계\nM2\nP4–P6 / Y3–Y4 / N4–N5 / I2\n원래 64/64 및 별도 소스 결속 수학 관문 완료\nM3\nP7–P8 / Y5–Y7 / N6–N8\nP7 첫 실행판 진행 중\nM4\nI3 확장 / R1\n최종 전체 인수 판정 미확인\n이 문서에서 구별하는 증거 수준\n표현\n의미\n직접 조회\n파일 내용·버전 이력·커밋·기준별 판정을 이 턴에서 읽음\n기록상 실행 성공\n소스 문서와 receipt가 이전 실제 실행의 성공을 보고함\n승계\n이전 인수 완료를 보존; 이 턴의 새 독립 검증으로 쓰지 않음\n이번 재실행\n수학 모듈은 없음. 문서 생성·출력·패키지 무결성만 검사\n미확인\n자료가 없거나 회수하지 못함. 실패·0%·미착수를 자동 의미하지 않음\nP7_PROGRESS.json에는 PASS가 아니라 PARTIAL 4개, OPEN 3개, SUPPORTED_FINITE_CASES_EXECUTED 1개가 있다. 마지막 상태\n를 임의로 PASS로 바꾸거나 1/64로 환산하지 않는다. M4도 최신 항목별 판정을 확보하지 못했으므로 0% 또는 완료율을 발급하지 않는다.\n[M3-P]\n전체 224개 완료율은 이번 문서에서 계산하지 않는다. 각 출처의 판단 범위를 그대로 보존하고, 새로운 발견으로 영향을 받는\n 의존 부분만 다시 검토한다. [B1 p.5; B2 p.12]\nMATHSCOPE / RESEARCH IDE / M2 · M3 · M4 HANDOFF\n2026-10-12 KST\n범위별 판정 · 고정 소스 · 실행 증거 / 원격 변경 없음\n2 / 16\n",
+        "10": "M3 DEPENDENCIES / 10\nP7 이후의 패키지와 연결 순서\n고정 P7 진행표는 P8, Y5, Y6, Y7, N6, N7, N8의 remainingPackagesStarted를 모두 false로 둔다. 이것은 이 브랜치의 기\n록이며, 다른 채팅의 미게시·미커밋 작업이 없다는 증거는 아니다. 중복 구현 전에 실제 branch·artifact를 확인한다. [M3-P]\n후속 패키지\n원래 역할\n진입 원칙\nP8\n수학 객체·관측·Lean·연구 가설 연결\n원래 P1–P4 선행 유지. 현재 요청 순서는 P7 다음\nY5\nΔ 상태족·질량 스펙트럼\nY2·Y4 결과와 표본 계약 준비 후\nY6\n4D→3D 관측·IDE\nY2·Y3·Y5의 같은 원본 사용\nY7\n유한/조건부 형식화·연속체 관문\nY1–Y6 의존성·가정 감사\nN6\n비선형 잔차 네 단계 반복 보정\nN5 결과; 실제 미보정 residual과 curl 나머지 유지\nN7\nlocalization·smooth force·에너지·성장\nN6의 같은 최종 구성 필요\nN8\nnear-T·Galerkin·IDE 증거\n재구성은 N2·N7; 별도 Galerkin은 N2 후 독립 가능\n원래 순서: P7 → P8 / Y5 → Y6 → Y7 / N6 → N7 → N8. 이 순서는 M3_ENTRY 및 진행표에 저장되어 있다. 새로운 병렬\n분담을 실행한 기록으로 읽지 않는다. [M3-P, M3-X; B1 pp.35,45–49,61–65]\nM2에서 완료한 E_B의 flat 경계와 전체 미보정 NS residual은 같은 명제가 아니다. 후자를 이미 flat이라고 가정하면 N6의 핵심 작업을 지워\n 버린다. M2_FINAL_COMPLETION의 nonlinearAndCurlRemaindersRemainN6Inputs=true를 보존한다. [M2-F]\n담당자를 나눌 경우 source·environment·입출력·도메인·오차·가정 pin을 공유하고 별도 checkout에서 작업한다. 공통 스키\n마·정적 페이지·배포는 한 통합 담당자가 처리한다. 이는 다음 작업을 위한 운영 제안이지 이미 적용되었다는 보고가 아니다.\nMATHSCOPE / RESEARCH IDE / M2 · M3 · M4 HANDOFF\n2026-10-12 KST\n범위별 판정 · 고정 소스 · 실행 증거 / 원격 변경 없음\n10 / 16\n",
+        "14": "NEXT ACTION / 14\n다음 담당자의 실행 우선순위\n순서\n작업\n완료 근거\n1\n현 작업 보존·pin 대조\n실제 HEAD, status, 수정/미추적 파일, dependency lock을 기록\n2\nM2 완료 선언 승계\nsource4/common6/최종 gate/M3 entry의 파일·범위 연결 확인\n3\nP7 작은 재현 1개\n고정 환경의 새 run/replay 및 실제 tolerance/status 확인\n4\nP7 미완료 항목 진행\n원래 8개 기준·소스·실행·거부 대조로 단계별 판정\n5\nP8 및 나머지 M3 순서 유지\nP7→P8 / Y5→Y6→Y7 / N6→N7→N8의 필요한 입력 확인\n6\n브라우저 미확인·M4 기반\n파일 선택/가져오기와 실제 장치·통합 source의 검수\n7\n최종 통합·배포\n같은 후보의 source/runtime/proof/관측을 묶고 실제 게시 후 확인\n상태를 바꿀 때 최소로 남길 기록\ntaskId / originalCriterion / assessedAt\nsourceCommit / sourceHash / inputRevision / environment\nrunId / checkCommand / exitCode / actualResult\nartifactPaths / artifactHashes / negativeControls\nmathScope / precision / domain / assumptions\nremainingObligations / status / inheritedFrom / reviewerScope\n파일 이름의 verified, 단순 성공 배지, 한 번의 residual 통과만으로 증거 등급을 올리지 않는다. 현재 source의 실제 값을 계\n산한 결과인지, 이전 receipt를 읽은 요약인지, 외부 정리를 가정과 함께 적용한 것인지 구분한다. [B1 p.5; B2 p.12]\n지금 바로 이어갈 중심은 P7이다. M2의 원래 기준을 다시 0/64로 초기화하거나, 해결된 물리 지도 문제를 구 source로 재개하지 않는다. 반\n대로 아직 없는 elliptic analytic L·rank 상계·P8 통합을 완료로 간주하지 않는다.\nMATHSCOPE / RESEARCH IDE / M2 · M3 · M4 HANDOFF\n2026-10-12 KST\n범위별 판정 · 고정 소스 · 실행 증거 / 원격 변경 없음\n14 / 16\n",
+        "16": "SOURCES / 16\n출처·조회 한계·파일 무결성\n이번 인수는 두 첨부 PDF, 회수 가능한 대화 발췌, 고정 GitHub 기록, WebsitePublisher 버전 이력을 대조했다. 외부 공개\n수학 주장의 공인 상태를 새로 검증한 연구 보고서는 아니다.\n[B1] 원 설계도, 99쪽 · 첨부 MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf\np.5,12,33–36,57–68. 설계·합격 기준이며 실행 상태 문서가 아님.\n[B2] 이전 M1·M2 인수인계, 18쪽 · 첨부 MathScope_M1_M2_Handoff_2026-10-11_KO(5).pdf\n확인 기준 2026-10-10 23:58 KST. M0 잔여+M1 70/70 역사적 인수와 보존 원칙.\n[M2-C] 원래 M2 기준 집계 · 고정 원문 열기\n원래 64개, PASS 64. 이 턴은 머리말과 첫 항목을 직접 읽음.\n[M2-F] 최종 M2 완료 선언 · 고정 원문 열기\n직접 읽음. 선언 범위, 참조 25개, 검사 집계, 남은 브라우저 한계.\n[M2-G] 확장 완료 관문 · 고정 원문 열기\n최종 선언·M3 진입 기록의 해시 연결과 해당 커밋 diff를 확인. 모든 내부 증거를 재실행한 것이 아님.\n[M2-K] M2 관문 한국어 설명 · 고정 원문 열기\n해당 커밋 diff의 새 머리말·완료 근거·과거 기록 보존을 확인.\n[M2-X] M2 완료 커밋 · 고정 원문 열기\n최종 직접 조회: 2026-10-11 16:15:47 UTC. 교정된 관문 완료와 브라우저 한계 기록.\n[M3-P] P7 원래 기준별 진행 · 고정 원문 열기\n직접 전체 읽음. PARTIAL 4, OPEN 3, SUPPORTED_FINITE_CASES_EXECUTED 1.\n[M3-R] P7 첫 실행판 설명 · 고정 원문 열기\n실제 계산 종류·범위·설치·CLI·예제·제한을 읽음. 기록된 실행을 이번에 재실행하지 않음.\n[M3-E] P7 실행판 증거 · 고정 원문 열기\n진행 JSON과 커밋 diff에서 참조·선택 실행·해시 일부를 확인. 전체 파일 33개의 바이트 재감사 아님.\n[M3-X] M3 P7 커밋·진입 · 고정 원문 열기\n2026-10-11 16:47:49 UTC. parent는 M2 완료 커밋. M3_ENTRY.json을 diff에서 읽음.\n[W1] 현재 페이지 버전 이력 · WebsitePublisher.get_page_versions(project_id=29770, slug=\"v0.3.1.html\")\n최종 반환: v81/17383723, 2026-10-11T16:12:24+00:00. 메타데이터이며 이 턴의 브라우저 검수가 아님.\n[G1] 재조회한 브랜치 목록 · 고정 원문 열기\nM2 90e977…, M3-p7 625654…, main 55dac…를 반환. 초기 조회와 불일치한 값은 최신 소스로 혼합하지 않음.\n[C1] 이전 대화 회수 · 개인 맥락 검색: “M2 마무리 후 M3 진행”\n관련 발췌만 회수. 전체 채팅·도구 실행·미커밋 작업의 완전한 백업이 아님.\n조회 응답의 불일치와 접근 제한: 초반의 과거 v59/다른 HEAD·경로와 후속 v81/최종 선언이 일치하지 않았다. 동일 M2 SHA에 대한 커밋\n설명·파일 경로도 초기 반환과 달랐다. 원인은 미확인이다. 이 문서는 후속 직접 조회의 최종 선언과 M3 진입 해시·P7 진행표·버전 이력이 서\n로 연결되는 기록을 채택했다. 다음 환경에서 실제 파일 바이트와 pin을 확인하고, 불일치한 원본을 강제로 덮어쓰지 않는다.\n패키지의 source_observations.json은 선택한 사실·경로·출처를 옮긴 요약본이지 전체 API 원문 archive가 아니다. 첨부 두\nPDF와 이전 11:50 인수 자료를 함께 보존하며, 전체 연구 저장소·새 source4/common6 원본 graph·P7 실행 데이터 전체\n·FLINT wheel·Lean cache는 포함하지 않는다. manifest의 해시는 이 인수 파일들의 무결성만 확인하며 수학적 정확성의 증\n명이 아니다.\nMATHSCOPE / RESEARCH IDE / M2 · M3 · M4 HANDOFF\n2026-10-12 KST\n범위별 판정 · 고정 소스 · 실행 증거 / 원격 변경 없음\n16 / 16\n"
+      }
+    }
+  ],
+  "directN602CriterionSource": {
+    "file": {
+      "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\reference-documents\\n6-audit-20261014\\blueprint.pdf",
+      "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+      "bytes": 886241
+    },
+    "physicalPageCount": 99,
+    "relevantFullPageText": {
+      "61": "MATHSCOPE / N6 / 비선형 잔차의 네 단계 반복 보정 BLUEPRINT 1.0\nWORK PACKAGE / PLANNED\nN6 / 비선형 잔차의 네 단계 반복 보정\n목표\nwave, covariance, auxiliary mean, radial moment를 순서대로 보정해 모든 실제 교차항을 유지하며 잔차 차\n수를 높인다.\n선행: N5\n수학·계산 모델\nDefinition9.4의 finite correction states. finite j 결과와 최종 cutoff sum을 구분한다.\n필수 산출물\n• 예정: correction-state-j.h5\n• 예정: harmonic-ledger.json\n• 예정: mean-moment-audit.json\n• 예정: residual-order-report.json\nLean 및 증거 연결\n• Definition9.4→Proposition9.5→Proposition9.6→Lemmas9.7,9.8→Proposition9.9의 의존성을 유지한다.\n• 유한 개 m,N 검사로 ∀m,N flatness를 대체하지 않는다.\n실패·중단 조건\n• linearized residual만 평가\n• correction의 quadratic self interaction 생략\n• Fourier zero divisor 처리 누락\n• σ 증가만 보고 실제 오차 감소·tail를 자동 확정\n완료 관문\n현재 u,p에서 재계산한 잔차·모멘트·tail가 일관되고 원문의 finite-state→local-field 명제가 연결되어야 전역\nlocalization에 진입한다.\n원 전/ 근 거: 첨 부 pp88-100 §8/ (8.12)-(8.27); 첨 부 pp103-105 Proposition9.3/ (9.3)-(9.6); 첨 부 pp106-111 Definition9.4/ Proposi-\ntions9.5,9.6; 첨부 pp113-116 Lemma9.8/Proposition9.9/(9.17)-(9.21)\n2026-10-09 / 연구 설계 · 예정 작업 61 / 99",
+      "62": "MATHSCOPE / N6 / 세부 실행 체크리스트 BLUEPRINT 1.0\nCHECKLIST / 8 ITEMS\nN6 / 세부 실행 체크리스트\n각 항목은 산출물과 합격 로그를 확보한 뒤 체크한다. 담당자 · 검증일 · 증빙 hash는 ResearchSession에 함께 기록한다.\n□ N6-01 | 초기 finite state 구성\nprimary curls 뒤 temporal mean update와 다섯 moment correction을 수행하여 j=0 상태를 만든다. 합격: Proposition9.5\n의 B0=0.7,C0*=1.2와 (9.9),(9.10) 명세를 충족한다. 명세의 상수 없이 경험적 power slope만으로 인증하지 않는다.\n□ N6-02 | 전체 residual 재계산\nR(u+δu,p+δp)=R(u,p)+Lu(δu,δp)+div(δu⊗δu)를 사용하며 매 substep 후 최신 압력을 복원한다. 합격: 독립 직접 PDE\n평가와 decomposed residual이 오차 예산 내 일치한다. 기존 flat tail와 새 quadratic remainder를 장부에서 누락하지 않\n는다.\n□ N6-03 | 비영 angular harmonics 보정\n현재 source의 모든 nonzero harmonics를 (7.13) inverse로 풀고 source-supported potentials에 cutoff 후 curl한다.\n합격: same-label 곱에서 m+m′ 신규 주파수가 생성된다. 단계별 최대 harmonic을 기록하고 조용한 truncation 대신\ndiscarded-mode bound를 제공한다.\n□ N6-04 | Signed covariance increment\n고정 positive a±에 대해 δa=(Hcov^−1(Σ/ε))/(2a)를 사용한다. 새 Σ는 signed일 수 있다. 합격: B(W0,LΣ)=Σ와 (7.41)의\n세 remainder를 모두 검사한다. 앞 단계 a±를 새 residual에 맞춰 몰래 재선택하지 않는다.\n□ N6-05 | Zero auxiliary mean Fourier inverse\n(8.19)의 1/(2 πi vt·k) multiplier로 (8.20)을 풀고 axial increment는 (8.14)의 potential로 실현한다. 합격: zero mode가\n0이고 Nφ=F가 맞는다. |vt·k|^ −1≤C(1+|k|) 및 4개 추가 도함수를 포함한 Fourier tail를 기록한다.\n□ N6-06 | 다섯 radial equations와 압력\n(8.25)로 두 보존 모멘트와 P,J θ,Jz를 보정하고 (8.12)로 pressure를 다시 계산한다. 합격: 두 보존 적분은 0으로 유지되고 새\n결함은 (8.26),(8.27)의 nonlinear remainder와 일치한다. λ의 작은 값에 따른 condition number를 통제한다.\n□ N6-07 | 고정 도메인과 차수 향상\nσj=1/5+j/10, gj=hj/10 및 (9.17),(9.18)의 Km,ℓm,log powers를 추적한다. 합격: 모든 finite stage가 같은 q<qbig 도메\n인을 사용한다. 단 한 번의 step에서 샘플 잔차가 늘면 정밀도/범위/상수부터 조사하고 차수 theorem과 혼동하지 않는다.\n□ N6-08 | 최종 local 합성\n(9.21)에서 Aj,Bj,pj에 shrinking cutoff를 적용하고 curl하여 local field를 만든다. finite residual의 flat terms를 무조건 합\n산하지 않는다. 합격: Lemma5.4의 tail 비교로 (9.20)을 연결한다. 평가 구간의 active indices와 생략 tail의 bound를 저장\n하고 없으면 finite-stage approximation으로 제한한다.\n패키지 판정: □ 예정 □ 구현 중 □ 검증 중 □ 완료 □ BLOCKED / OPEN\n2026-10-09 / 연구 설계 · 예정 작업 62 / 99",
+      "80": "MATHSCOPE / Navier–Stokes 기술부록 BLUEPRINT 1.0\nTECHNICAL APPENDIX / NAVIER–STOKES 4 / 7\nNS 부록 4 · 잔차 보정에서 compact force로\n알고리즘 A · 3단계: 매번 완전한 PDE를 다시 계산한다\nfinite state 𝑗의 supported harmonics와 flat remainder를 서로 다른 장부에 보존한다. 보정의 네 부분은 nonzero harmonic\ninverse, 고정 primary pulse 주위 covariance update, zero auxiliary mean inverse, 다섯 radial moment 방정식이다.\n[N00, pp103–111, Props. 9.3, 9.5, 9.6]\n# Algorithm A3 -- every call below requires its own certificate\nstate = initialize_background_primary_waves_means_pressure()\nfor j in required_correction_stages:\nfor step in [nonzero_harmonic_inverse,\nsigned_covariance_about_fixed_primary,\nzero_auxiliary_mean_inverse,\nfive_radial_moment_repair]:\ndelta = step(full_residual(state))\nstate += complete_velocity_potential_and_pressure(delta)\nrecompute_full_residual_means_moments(state)\nretain_all_cross_terms_and_quadratic_self_terms()\nverify_state_exponents_and_common_domain(j + 1)\na[j] = certified_derivative_cutoff_schedule(state)\nlocal = sum_cutoff_potentials_then_curl(equation_9_21)\ncertify_final_residual_by_comparison_with_a_finite_stage()\nc = fixed_space_cutoff * fixed_time_cutoff\nu = curl(c * local.A) + c * local.B * e_theta\np = c * local.p\nf = independent_full_residual_expression(u, p)\ncertify_terminal_force_jets_and_compact_smooth_extension(f)\ncertify_energy_comparison_and_positive_growth_coefficient()\nrescale_viscosity_and_export_certified_evaluation_window()\nfinite residual 감소와 최종 합은 별개 검증이다\n𝜎𝑗 = 1\n5 + 𝑗\n10 , 𝑔𝑗 = ℎ𝑗/10이고, 유한 단계는 구조적으로\n|𝑅(𝑢[𝑗], 𝑝[𝑗])|𝑚 ≤ 𝐶𝑗,𝑚𝑞ℎ𝜎𝑗 −𝐾𝑚 (1 + |log 𝑞|)𝑃𝑗,𝑚 + 𝐸𝑗,𝑚, 𝐸 𝑗,𝑚는 flat\n형태의 상계를 가진다. 공통 𝑞big와 cutoff 상수를 먼저 확보한다. 최종 residual의 flatness는 유한 단계 비교식으로 증명한다.\n여러 유한 단계의 flat residual을 숫자로 더하는 것만으로 최종 명제가 나오지 않는다. [N00, p106, Definition 9.4; pp111–116,\nLemmas 9.7–9.8, Prop. 9.9; (9.17)–(9.21)]\nforce의 종단 regularity가 독립된 핵심 산출물이다\n𝑐 = 𝜒 𝑥𝜒𝑡는 local 구성 영역 안에 지지한다. 모든 cutoff 교차항을 𝑓 = 𝑅 1(𝑢, 𝑝)에 포함한다. 𝐹𝑗(𝑥) =lim𝑡↑1 𝜕𝑗\n𝑡 𝑓(𝑥, 𝑡)의 호환\n성과 compact 지지를 확보한 뒤, 𝜎 > 0에 대해\n𝑓(𝑥, 1 + 𝜎) = ∑\n𝑗≥0\n𝜒0(𝑏𝑗𝜎)𝜎𝑗\n𝑗! 𝐹𝑗(𝑥)\n로 force만 smooth하게 연장한다. 속도의 𝑡 = 1 통과를 구현하는 단계가 아니다. 𝑏𝑗는 유한 개 미분 조건의 tail이 2−𝑗 이하가\n되게 선택한다. [N00, pp117–120, Prop. 10.1, Lemmas 10.2–10.3; (10.1)–(10.12)]\n−Δ𝑝 = ∑\n𝑖,𝑗\n𝜕𝑖𝜕𝑗(𝑢𝑖𝑢𝑗) − ∇ ⋅ 𝑓, 𝑑\n𝑑𝑡\n1\n2‖𝑢‖2\n2 = ⟨𝑓, 𝑢⟩ − 𝜈‖∇𝑢‖ 2\n2.\n[N00, p118, (10.5) 직후; p121, Lemma 10.4]\nN6–N7 반증 조건 cutoff 미분 누락, ∇ ⋅ 𝑓 = 0 의 불필요한 강제, 𝛿𝑢의 제곱항 삭제, 같은 코드에서 𝑓 ∶= 𝑅 를 정의하고\n𝑅 − 𝑓 = 0만 검사하는 방식은 완성 판정을 거부한다. manufactured force의 시각화는 가능하지만 𝑡 = 1까지의 smooth\nextension과 별도 증거가 필요하다.\n2026-10-09 / 연구 설계 · 예정 작업 80 / 99"
+    }
+  },
+  "exactOriginalN602Criterion": {
+    "id": "N6-02",
+    "title": "전체 residual 재계산",
+    "text": "R(u+δu,p+δp)=R(u,p)+Lu(δu,δp)+div(δu⊗δu)를 사용하며 매 substep 후 최신 압력을 복원한다. 합격: 독립 직접 PDE\n평가와 decomposed residual이 오차 예산 내 일치한다. 기존 flat tail와 새 quadratic remainder를 장부에서 누락하지 않\n는다.",
+    "page": 62,
+    "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+  },
+  "sourceAttribution": [
+    "The attached Mathematical IDE concept blueprint has 25 pages, no N6 identifier and no N6-02 checklist. It supplies object/revision/evidence/claim-grade principles.",
+    "The attached 16-page Handoff has no N6-02 literal. Its page16 B1 explicitly names the separate 99-page Research IDE Blueprint as the original checklist source; page10 identifies N6 as a four-substep nonlinear correction package and preserves nonlinear/curl remainders.",
+    "The source-bound original N6-02 text is directly present on physical page62 of the 99-page Blueprint, and its page80 Algorithm A3 requires an individual certificate for every required correction call."
+  ],
+  "originalRequirements": [
+    {
+      "requirement": "Retain the complete old residual, linearized increment and quadratic self term in the displayed update identity.",
+      "sourcePages": [
+        62,
+        80
+      ]
+    },
+    {
+      "requirement": "Restore latest full pressure and recompute residual/means/moments after each implemented required substep.",
+      "sourcePages": [
+        62,
+        80
+      ]
+    },
+    {
+      "requirement": "Independent direct full PDE and decomposed residual agree within an explicit error budget on their declared original domain.",
+      "sourcePages": [
+        62
+      ]
+    },
+    {
+      "requirement": "Keep old flat tails and new quadratic remainders explicitly in the ledger.",
+      "sourcePages": [
+        62,
+        80
+      ]
+    }
+  ],
+  "currentCompletedEvidencePreserved": {
+    "original1260Rows": {
+      "status": "COMPLETE",
+      "remaining": {
+        "Guard": 0,
+        "Jet": 0,
+        "PDE": 0
+      },
+      "registry": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\pressure-proof\\radial-axial-pde-original-import\\RADIAL_AXIAL823_ORIGINAL_ROW_IMPORT.json",
+        "sha256": "2e2e7ffe50b724e46dfc892bd3051ccb1bbb38ce8666d2600ba5b25f5d121c43",
+        "bytes": 6871485
+      }
+    },
+    "C": {
+      "status": "PASS",
+      "certificate": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\pressure-proof\\cartesian-universal-closure\\C_ACTUAL_CARTESIAN_SOURCE_APPLICATION.json",
+        "sha256": "68d0a8bccb136876b96ef08ddf53fcc2b4f8ab6f3e769a73d2368dc8c7b866a2",
+        "bytes": 394554
+      },
+      "scope": "Every retained request in the full independent source-derived Cartesian program"
+    },
+    "E": {
+      "status": "PASS",
+      "certificate": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\pressure-proof\\cartesian-universal-closure\\E_ACTUAL_CARTESIAN_RESIDUAL_SOURCE_APPLICATION.json",
+        "sha256": "54a12be51a60dd8c5c8aea834994928c70d7840a72e4505e666eb71aff31d7e4",
+        "bytes": 82805
+      },
+      "scope": "Three components on the complete actual original parameter domain",
+      "directRoots": [
+        3825257,
+        3825259,
+        3825261
+      ],
+      "decomposedRoots": [
+        3825348,
+        3825349,
+        3825350
+      ],
+      "latestPressureRoot": 3825009,
+      "boundSourceExecution": "ACTUAL_COMPLETE_POST_TEMPORAL_POST_MOMENT_ANGULAR_SOURCE_CONSTRUCTION",
+      "forcedInverseApplied": false,
+      "enclosure": {
+        "comparison": "independent full original direct minus decomposed residual",
+        "domain": "complete actual original admitted parameter domain with its original guarded chart/joins",
+        "roundingError": [
+          0,
+          0
+        ],
+        "truncationError": [
+          0,
+          0
+        ],
+        "cylindricalComponents": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "CartesianComponents": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "reason": "exact whole-function identities, with full infinite Fourier functions and all original terms retained"
+      },
+      "literalScopeLimit": "The bound and quantifier concern the exact direct-minus-decomposed comparison only. They do not assert a zero physical forcing, all-band W/M/S norm constants, later correction stages or final localization; those remain separate original obligations."
+    },
+    "exactWholeMoments": "Two whole-moment obligations separately completed; they do not supply every-substep PDE bindings or all quantitative norm bounds."
+  },
+  "implementedStageScopeFindings": [
+    {
+      "stage": "Initial primary/current pressure",
+      "finding": "The current C/E source application is the authenticated complete post-temporal/post-five-moment initialized angular source. Its completed all-component comparison is retained."
+    },
+    {
+      "stage": "Temporal then five-moment initialization",
+      "finding": "source-global-initial-mean constructs afterTemporal full pressure before new P/J targets and afterMoments full pressure. New C/E attaches the final initialized source; per-intermediate-substep full direct comparison still needs explicit evidence mapping if claimed under the whole N6-02 label."
+    },
+    {
+      "stage": "Forced nonzero angular substep",
+      "finding": "Saved construction/replay proves substantial exact coefficient comparisons and fresh-pressure checkpoint. The successful replay expressly does not recover the whole current certificate. C/E roots under this review belong to the pre-forced initialized source, with forcedInverseApplied=false."
+    },
+    {
+      "stage": "Signed covariance substep",
+      "finding": "The actual signed source constructs six updated covariances and full updated MEAN pressure/PJ, but its own scope explicitly has fullAuxiliaryPressureConstructed=false. No later source-bound full auxiliary/physical pressure and all-component direct-minus-decomposed certificate for that implemented signed update was found in the narrow source/receipt audit."
+    }
+  ],
+  "narrowReceiptReview": [
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\evidence\\forced-snapshot-replay-20261012\\attempt1\\receipt.json",
+        "sha256": "76cb0c616b6485bff14037bd3fd8c67e59f3f2edbd476e5d37ef15e456f3c736",
+        "bytes": 3128
+      },
+      "retainedFields": {
+        "schema": "MathScope.N6.SavedForcedSnapshotReplayObservedExecution/1",
+        "attempt": 1,
+        "exitCode": 0,
+        "v8OldSpaceMiB": 3072,
+        "sourceFilesUnchanged": true,
+        "originalConstructorPass": false,
+        "originalConstructorOutcomeRewritten": false,
+        "actualCoefficientComparisons": 540,
+        "actualScalarIdentities": 2320,
+        "independentChecks": 213,
+        "independentPass": true,
+        "actualSavedSourceStageBound": true,
+        "negativeControls": 4,
+        "privateSourceAuthorityHydrated": false,
+        "wholeCurrentCertificateRecovered": false,
+        "originalN602Complete": false,
+        "initializedJ0": false,
+        "completeN6": false,
+        "wholeM3Complete": false,
+        "pass": true
+      }
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\evidence\\global-forced-current-20261012\\attempt382884203291\\receipt.json",
+        "sha256": "d17bc42fcfaf8000d014977d4725f325dbdb73849a43c71c36d20ea63ef14684",
+        "bytes": 17193
+      },
+      "retainedFields": {
+        "schema": "MathScope.N6.GlobalForcedCurrentObservedExecution/1",
+        "attempt": 382884203291,
+        "exitCode": 1,
+        "stdoutAndStderrCombined": true,
+        "rawOutputPreserved": true,
+        "nodeTests": {
+          "passed": null,
+          "failed": null,
+          "skipped": null,
+          "required": 58
+        },
+        "independentChecks": 90,
+        "independentPass": true,
+        "independentActualSourceBound": false,
+        "sourceFilesUnchanged": true,
+        "partialConstructionArtifactsPreservedEvenOnFailure": true,
+        "actualInitializedMeanConstructed": true,
+        "actualFixedMeanOperatorAttachmentConstructed": true,
+        "actualInitializedMeanStressConstructed": true,
+        "actualCompleteInitializedAngularSourceConstructed": true,
+        "actualAll20InversesAndFreshPressureCheckpointed": true,
+        "all11ExactSourceGraphCheckpointsSaved": true,
+        "actualCompleteForcedCurrentConstructed": false,
+        "actualLatestMeanStressConstructed": false,
+        "actualConstructionArtifactsAreNotAnAutomaticCriterionPromotion": true,
+        "actualSourceDerivativeClosureAudited": false,
+        "allOrderSourceClassBoundCertified": false,
+        "numericalWholeFieldEnclosure": false,
+        "initializedJ0": false,
+        "completeFourStepCycle": false,
+        "allCorrectionStagesConstructed": false,
+        "originalN602Complete": false,
+        "originalN603Complete": false,
+        "completeN6": false,
+        "wholeM3Complete": false,
+        "pass": false
+      }
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\evidence\\global-forced-current-20261012\\repair-preflight2\\receipt.json",
+        "sha256": "09d5d1d79791855f3fc9b787d80254704126a563e262313f15fd0c3beec5ae18",
+        "bytes": 2516
+      },
+      "retainedFields": {
+        "schema": "MathScope.N6.RetainedBodyForcedRepairObservedExecution/1",
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 18,
+          "failed": 0,
+          "skipped": 0,
+          "required": 18
+        },
+        "independentChecks": 90,
+        "independentPass": true,
+        "sourceFilesUnchanged": true,
+        "sourceSnapshotsPreserved": true,
+        "allWholeCoefficientBodyAndArgumentChecksExecuted": true,
+        "sourceShapedNestedDenominatorControlExecuted": true,
+        "streamedGraphAndPrefixMutationControlsExecuted": true,
+        "actualOriginalLargeSourceConstructorExecuted": false,
+        "actualForcedCurrentConstructed": false,
+        "originalN602Complete": false,
+        "originalN603Complete": false,
+        "allOrderClassBoundsEstablished": false,
+        "pass": true
+      }
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\evidence\\global-signed-20261012\\attempt1\\receipt.json",
+        "sha256": "0db5178978e2587d142032b606b7c1e59e2c6d66dc078c884d26618745ed4232",
+        "bytes": 2185
+      },
+      "retainedFields": {
+        "schema": "MathScope.N6.GlobalSignedObservedExecution/1",
+        "attempt": 1,
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 13,
+          "failed": 0
+        },
+        "sourceFilesUnchanged": true,
+        "originalN604Complete": false,
+        "actualAllCoverSignedExpressionClosureExecuted": true,
+        "allOrderSourceClassBoundCertified": false,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false,
+        "pass": true
+      }
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\evidence\\global-temporal-20261012\\attempt3\\receipt.json",
+        "sha256": "6acab3d43f99043545e715db2e2260b373ac317103773667b5fbd328d7cc8663",
+        "bytes": 4984
+      },
+      "retainedFields": {
+        "schema": "MathScope.N6.GlobalTemporalObservedExecution/1",
+        "attempt": 3,
+        "exitCode": 0,
+        "upstreamSourceStageMaximumNodes": 3500000,
+        "temporalStageMaximumNodes": 5000000,
+        "stdoutAndStderrCombined": true,
+        "rawOutputPreserved": true,
+        "nodeTests": {
+          "passed": 15,
+          "failed": 0,
+          "skipped": 0
+        },
+        "sourceFilesUnchanged": true,
+        "actualAllLabelFullAuxiliaryPressureConstructed": true,
+        "actualSourceAuxiliaryTemporalInverseConstructed": true,
+        "actualOriginalAxialPotentialRealized": true,
+        "individualN605OperatorCriteriaSatisfied": true,
+        "actualFullTangentialMeanResidualConstructed": true,
+        "normalizedHaarCoveringIdentityAnalytical": true,
+        "temporalMeanInverseApplied": true,
+        "postTemporalNonlinearPressureReconstructed": false,
+        "initializedJ0": false,
+        "fullNonzeroAuxiliaryPressureConstructed": true,
+        "allOrderSourceClassBoundCertified": false,
+        "completeN6": false,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false,
+        "pass": true
+      }
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\evidence\\global-moment-pressure-20261012\\attempt1\\receipt.json",
+        "sha256": "631faa13604e69d07dea0cd0f217355ec4970fe8565e31b940f55f92b24b6bb2",
+        "bytes": 4262
+      },
+      "retainedFields": {
+        "schema": "MathScope.N6.GlobalMomentPressureObservedExecution/1",
+        "attempt": 1,
+        "exitCode": 0,
+        "stdoutAndStderrCombined": true,
+        "rawOutputPreserved": true,
+        "nodeTests": {
+          "passed": 10,
+          "failed": 0,
+          "skipped": 0
+        },
+        "sourceFilesUnchanged": true,
+        "actualAllLabelFullAuxiliaryPressureConstructed": true,
+        "actualFiveMomentsWithFullPressureConstructed": true,
+        "individualN606OperatorCriteriaSatisfied": true,
+        "actualFullTangentialMeanResidualConstructed": true,
+        "normalizedHaarCoveringIdentityAnalytical": true,
+        "temporalMeanInverseApplied": false,
+        "initializedJ0": false,
+        "fullNonzeroAuxiliaryPressureConstructed": true,
+        "allOrderSourceClassBoundCertified": false,
+        "completeN6": false,
+        "newLeanExecuted": false,
+        "wholeM3Complete": false,
+        "pass": true
+      }
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\evidence\\saved-initialized-authority-20261012\\attempt1\\receipt.json",
+        "sha256": "a927791f2dab30f0626c4e98422b017b4aec370741de0082c4fd95b52fb0016a",
+        "bytes": 2498
+      },
+      "retainedFields": {
+        "schema": "MathScope.N6.SavedInitializedSourceAuthorityObservedExecution/1",
+        "attempt": 1,
+        "v8OldSpaceMiB": 3072,
+        "exitCode": 0,
+        "nodeTests": {
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0,
+          "required": 3
+        },
+        "sourceFilesUnchanged": true,
+        "independentChecks": 51,
+        "independentPass": true,
+        "originalSourceConstructorRerun": false,
+        "originalCoefficientReplayRerun": false,
+        "originalPrivateSourceAuthorityHydrated": false,
+        "wholeIndependentPDECompared": false,
+        "allOrderSourceClassProved": false,
+        "originalN602Complete": false,
+        "wholeM3Complete": false,
+        "pass": true
+      }
+    }
+  ],
+  "exactCodeEvidence": [
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\source-global-initial-mean.mjs",
+        "sha256": "513779930558d044076318f39396060465b6518184b952482a0d973ac16bd411",
+        "bytes": 12706
+      },
+      "startLine": 29,
+      "endLine": 34,
+      "text": "  const background={b:band.fields.b,V:G.mul(R,band.fields.F),G:band.fields.G},covariance=previousPressure.covariance.fullAngularMean,\n    stress=previousPressure.residual.fullOriginalStress,{rho,chi}=previousPressure.pressure,\n    input={geometry,background,covariance,stress,rho,chi},\n    afterTemporal=reconstructUpdatedFullMeanPressure(G,{...input,velocity:temporal.potential.velocity,tag:'GlobalInitializationAfterTemporal'}),\n    b=template.bumps,power=(x,a)=>G.exp(G.mul(a,G.log(x))),q=(n,d=1)=>G.q(n,d),s=band.chart.s,A=band.constants.A,\n    actualInputDefects={P:afterTemporal.mean.P,Jtheta:afterTemporal.mean.Jtheta,Jz:afterTemporal.mean.Jz},"
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\source-global-initial-mean.mjs",
+        "sha256": "513779930558d044076318f39396060465b6518184b952482a0d973ac16bd411",
+        "bytes": 12706
+      },
+      "startLine": 50,
+      "endLine": 59,
+      "text": "    increment={beta:deltaBeta,v:deltaV,gamma:gammaDesired},\n    previous=temporal.potential.velocity,updated=Object.fromEntries(names.map(n=>[n,G.add(previous[n],increment[n])])),\n    {De,Dz}=originalFullMeanOperators(G,geometry),realizedGamma=De(psi,1),divergence=G.add(De(rawDeltaBeta,1),Dz(gammaDesired)),\n    potentialChecks=[\n      {id:'post-temporal-five-bump-axial-potential-FTC',...globalGraphEqual(G,realizedGamma,gammaDesired,[R,primitive,gammaDesired])},\n      {id:'post-temporal-five-bump-exact-incompressibility',...globalGraphEqual(G,divergence,G.zero)},\n      {id:'post-temporal-five-bump-has-no-auxiliary-variable',pass:Object.values(increment).every(x=>Y.every(y=>!G.freeCoordinates(x).has(y)))}],\n    afterMoments=reconstructUpdatedFullMeanPressure(G,{...input,velocity:updated,tag:'GlobalInitializationAfterFiveMoments'}),\n    oldEquations=afterTemporal.mean.raw,newEquations=afterMoments.mean.raw,\n    nonlinear=exactFullMeanMomentRemainders(G,{geometry,background,previous,increment}),"
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\source-global-initial-mean.mjs",
+        "sha256": "513779930558d044076318f39396060465b6518184b952482a0d973ac16bd411",
+        "bytes": 12706
+      },
+      "startLine": 74,
+      "endLine": 82,
+      "text": "    checks=[...potentialChecks,...expansionChecks,...coefficients.checks,\n      {id:'temporal-pressure-reconstructed-before-actual-five-moment-targets',pass:afterTemporal.checks.every(x=>x.pass)&&\n        actualInputDefects.P===afterTemporal.mean.P&&actualInputDefects.Jtheta===afterTemporal.mean.Jtheta&&actualInputDefects.Jz===afterTemporal.mean.Jz},\n      {id:'new-five-moment-pressure-reconstructed-with-complete-current',pass:afterMoments.checks.every(x=>x.pass)&&\n        afterMoments.mean.fullAngularCovariance===covariance&&afterMoments.mean.fullOriginalStress===stress},\n      {id:'same-original-five-row-matrix-and-positive-lambda',pass:canonicalStringify(coefficients.angularMatrix)===canonicalStringify(b.coefficients.angularMatrix)&&\n        canonicalStringify(coefficients.axialMatrix)===canonicalStringify(b.coefficients.axialMatrix)&&b.lambda===G.parameter('lambda')},\n      {id:'old-pre-temporal-targets-not-reused',pass:actualInputDefects.P!==template.mean.P&&actualInputDefects.P!==current.mean.P&&\n        actualInputDefects.Jtheta!==template.mean.Jtheta&&actualInputDefects.Jz!==template.mean.Jz},"
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\source-global-signed.mjs",
+        "sha256": "4078e65989da153d57a36672645bad13ac0b4f2894c5c77b88208fc1fc25ceb1",
+        "bytes": 29583
+      },
+      "startLine": 241,
+      "endLine": 249,
+      "text": "  const result={schema:'MathScope.N6.GlobalActualSignedCurrent/1',G,state,\n    source:{paperSHA256:state.source.paperSHA256,parameterExpressionSHA256:state.source.parameterExpressionSHA256,prefixNodeCount:prefixCount,\n      actualCurrentSigma:state.target.Sigma,originalH:band.target.H,fixedOriginalA:band.target.squareRootWeights,sourceUniformDeterminantLower:band.quantitative.sourceDeterminantScaleLower,\n      sourcePositiveWeightLower:band.quantitative.sourceWeightOverZetaLower,newTargetOrWeightsAccepted:false,oldM2SealForged:false,equations:['7.31','7.40','7.41','8.18']},\n    domain:state.domain,inverse,leading,chartLaw,rows,assembly:{localSystems,registered,identity},updated:{fullAuxiliaryMean:W,mean},checks,\n    scope:{actualSignedCurrentWaveConstructed:true,allOriginalLabelsIncluded:true,originalHandPositiveAFixed:true,actualGlobalBilinearIdentity:true,\n      allThreeActualGlobalCovarianceRemaindersConstructed:true,fullUpdatedMeanPressureAndPJConstructed:true,\n      allOrderSourceClassBoundsCertified:false,fullAuxiliaryPressureConstructed:false,initializedJ0:false,completeN6:false,originalN604Complete:false,\n      allActualDerivativeBodiesMaterialized:false,numericalFieldValuesOrEnclosuresComputed:false,newLeanKernelProof:false}};"
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\source-harmonic-assembly.mjs",
+        "sha256": "339c8cb4e5853ba4afe68f3b37933784241baaef3fcf655d5d88aa9f13708d20",
+        "bytes": 16915
+      },
+      "startLine": 166,
+      "endLine": 194,
+      "text": "/** N6-02 exact finite update. The old flat residual has a named retained\n * slot; subtracting it from the computed old residual only defines the\n * regular part, and the same exact roots are then added back. No flatness\n * bound or numerical zero is inferred from a user-supplied expression.\n */\nexport function exactAngularResidualUpdate(G,input={}){\n  if(!keys(input,['geometry','phase','k','previous','increment','oldFlatResidual'])||!Array.isArray(input.oldFlatResidual))fail('An update needs the complete previous state, increment pressure and explicit retained old flat residual.');\n  const H=harmonicCalculus(G,input.geometry,input.phase,input.k),{S,C}=H,old=vectorInput(G,input.previous,H.D.theta),inc=vectorInput(G,input.increment,H.D.theta),\n    updated={velocity:old.velocity.map((M,j)=>S.add(M,inc.velocity[j])),pressure:S.add(old.pressure,inc.pressure)},\n    kernel=harmonicComponents(G,H,old.velocity,old.pressure),next=harmonicComponents(G,H,updated.velocity,updated.pressure),\n    linear=kernel.linear(inc.velocity,inc.pressure),left=kernel.tensorDivergence(inc.velocity,old.velocity),right=kernel.tensorDivergence(old.velocity,inc.velocity),\n    quadratic=kernel.tensorDivergence(inc.velocity,inc.velocity),flat=[0,1,2].map(j=>scalarSeries(G,(input.oldFlatResidual??[]).map(row=>{\n      if(!keys(row,['m','value'])||!Array.isArray(row.value)||row.value.length!==3||!row.value.every(C.check))fail('The old flat residual needs all three exact components.');\n      return {m:row.m,value:row.value[j]};\n    }),H.D.theta)),\n    oldRegular=kernel.result.conservative.map((M,j)=>S.sub(M,flat[j])),\n    linearized=linear.map((M,j)=>S.add(M,left[j],right[j])),\n    decomposed=oldRegular.map((M,j)=>S.add(M,flat[j],linearized[j],quadratic[j])),\n    defect=next.result.conservative.map((M,j)=>S.sub(M,decomposed[j]));\n  return {schema:'MathScope.N6.ExactFiniteAngularUpdate/1',\n    updated:vectorRows(S,updated.velocity).map(row=>({m:row.m,velocity:row.value,pressure:S.get(updated.pressure,row.m)})),\n    direct:vectorRows(S,next.result.conservative),decomposed:vectorRows(S,decomposed),defect:vectorRows(S,defect),\n    oldResidual:vectorRows(S,kernel.result.conservative),oldRegularResidual:vectorRows(S,oldRegular),oldFlatResidual:vectorRows(S,flat),\n    linearized:vectorRows(S,linearized),newQuadraticRemainder:vectorRows(S,quadratic),\n    previousDivergence:S.rows(kernel.result.divergence),incrementDivergence:S.rows(kernel.divergence(inc.velocity)),\n    updatedPressure:S.rows(updated.pressure),pressureRefreshedFromIncrement:true,oldFlatResidualRetained:true,\n    newQuadraticRemainderRetained:true,discardedModes:[],sourceAuthenticated:false,\n    exactEqualityRequires:'Execute the emitted exact coefficient identity; no floating-point tolerance or omitted field is substituted.',\n    flatResidualClassBoundCertified:false,allCorrectionStagesConstructed:false};"
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\source-global-forced-current.mjs",
+        "sha256": "b41f298702238cf6170c16f31362e9429ebc659ca2a999d8d85cf2159ae01be3",
+        "bytes": 33806
+      },
+      "startLine": 220,
+      "endLine": 241,
+      "text": "  const covarianceFields=Object.fromEntries(names.map(name=>[name,completeSourceField(source,templates,'ActualForcedCurrent_W_'+name,t=>t.covariance.values[name],{kind:'covariance',angular:false})])),\n    covariance=Object.fromEntries(names.map(name=>[name,covarianceFields[name].root])),\n    background={b:band.fields.b,V:G.mul(R,band.fields.F),G:band.fields.G},\n    latestMean=reconstructUpdatedFullMeanPressure(G,{geometry:pressure.geometry,background,\n      velocity:source.mean.stages.moments.velocity,covariance,stress:pressure.residual.fullOriginalStress,\n      rho:pressure.pressure.rho,chi:pressure.pressure.chi,tag:'ActualAfterCompleteForcedAngularSubstep'}),\n    pressureDifference=G.sub(latestMean.pressure.value,source.mean.stages.moments.pressure.value),\n    meanPressureFunction=G.defineExpressionFunction({name:'ActualAfterForcedRefreshedFullMeanPressure',parameters:pressure.cover.parameters,\n      body:G.add(band.fields.pressure,latestMean.pressure.value)}),\n    power=(x,a)=>G.exp(G.mul(a,G.log(x))),newLocalMeanPressure=G.mul(power(source.reference.ratio,G.neg(G.mul(G.q(2),band.constants.A))),\n      G.expressionValue(meanPressureFunction,source.reference.values)),\n    localPressureDifference=G.sub(newLocalMeanPressure,source.reference.normalizedMeanPressure);\n  yield {kind:'actual-forced-inverses-and-refreshed-pressure',G,\n    record:{schema:'MathScope.N6.ActualForcedInversesPressureCheckpoint/1',source:source.source,\n      initializedSourceNodeCount:start,graphNodeCount:G.nodes.length,\n      templates:templates.map(t=>({...t,forced:t.forced.map(f=>({...f,bound:omit(f.bound,['G','inverse']),\n        inverse:omit(f.inverse,['G']),mapped:omit(f.mapped,['G','inverse'])}))})),\n      covarianceFields,latestMean,pressureDifference,newLocalMeanPressure,localPressureDifference,\n      scope:{all20PositiveSourcesAndNegativeRoutesConstructed:true,allMappedCurlChecksExecuted:true,\n        fullNewCovarianceAndMeanPressureConstructed:true,postForcedResidualComparisonCompleted:false,\n        completeForcedCurrentConstructed:false,sourceDerivativeClosureAudited:false,allOrderClassBoundEstablished:false,\n        initializedJ0:false,originalN602Complete:false,originalN603Complete:false}}};"
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\source-global-forced-current.mjs",
+        "sha256": "b41f298702238cf6170c16f31362e9429ebc659ca2a999d8d85cf2159ae01be3",
+        "bytes": 33806
+      },
+      "startLine": 296,
+      "endLine": 315,
+      "text": "  const result={schema:'MathScope.N6.GlobalActualForcedCurrent/1',G,input:source,\n    source:{paperSHA256:current.source.paperSHA256,parameterExpressionSHA256:current.source.parameterExpressionSHA256,sourcePrefixCount:start,\n      actualInput:'Privately constructed temporal→fresh-pressure→new-five-moments→fresh-pressure current.',\n      operators:['complete-current-angular-residual','original-fixed-lift-H_w','original-forced-7.13','original-psi-full-curl',\n        'complete-new-angular-covariance','fresh-full-mean-pressure-8.12','complete-physical-PDE'],\n      originalM2Modified:false,primaryCoefficientsRepurposedAsForcedSolutions:false,callerSourceOrNumericalBoundsAccepted:false},\n    templates,assembly:{covarianceFields,velocityFields,angularPressureField,residualFields,allOriginalSourceLabels:81,signedSourceContributions:162,\n      exactPositiveSourceSystems:20,exactNegativeConjugateSolutionRoutes:20,originalCover:pressure.cover.proof,\n      fullMeanWaveProductsRetained:true,crossLabelProductsRemovedOnlyByActualSupportIdealAndOriginalDisjointness:true},\n    mean:{...latestMean,previousPressure:source.mean.stages.moments.pressure.value,pressureDifference,fullCurrentCovariance:covariance,\n      completeBetaVGamma:source.mean.stages.moments.velocity,sourceStress:pressure.residual.fullOriginalStress},\n    global:{geometry,velocity,pressure:fullPressure,direct,assembledResidual,meanResidual:meanDirect,\n      originalBackgroundPressure:band.fields.pressure,fullMeanPressure:latestMean.pressure.value,allAngularPressure:angularPressureField.root,\n      oldPhysicalResidual:source.global.direct.conservativeResidual,\n      oldFlatResidual:source.global.oldFlatResidual,\n      equalityScope:'Executed complete local harmonic updates, full fixed-label physical normalization, and the actual source support/disjointness proof. Both whole-source expression paths are retained.'},\n    checks,scope:{actualOriginalForcedAngularSubstepConstructed:true,actualCompleteUpdatedCurrentConstructed:true,\n      everyCurrentNonzeroModeUsedAsSource:true,allOriginalAndNewPressureTermsRetained:true,allNextFiniteHarmonicsConstructed:true,\n      sourceDerivativeClosureAudited:false,numericalWholeFieldEnclosure:false,originalProp9_5ClassBoundsEstablished:false,\n      initializedJ0:false,allCorrectionStagesConstructed:false,originalN602Complete:false,originalN603Complete:false,completeN6:false}};"
+    },
+    {
+      "file": {
+        "path": "C:\\Users\\사용자\\Documents\\Codex\\2026-10-16\\task\\MathScopeCompute\\research-ide\\mathscope-m3\\navier\\N6_SOURCE_SCOPE_REVIEW_2026_10_12.md",
+        "sha256": "aa22dacbfef185d54c28e05b7f03b25d869a051f7a7b6167a80b71b0e792c7f5",
+        "bytes": 14478
+      },
+      "startLine": 120,
+      "endLine": 128,
+      "text": "**N6-02 boundary:** the new full-equation kernel and moment-pressure source\ngate verify the complete angular-mean substep, including nonzero auxiliary\ncontrols and all new quadratic terms. The blueprint also requires the full\nphysical PDE and latest pressure after every substep. The absent nonzero\nangular physical pressure/residual and temporal/angular operator applications\ncannot be omitted from that claim. A general differential-polynomial\nidentity is useful evidence; it does not by itself verify those missing\nsource applications. No initialized-state or all-order requirement is added\nto N6-02, but its own complete-PDE and every-substep requirements remain open."
+    }
+  ],
+  "interpretationLimits": {
+    "exactZeroDifferenceCanMeetErrorBudget": true,
+    "exactEnclosureRationale": "A genuine exact identity for the full original functions and domain has difference enclosure [0,0]; N6-02 does not force an extra floating-point sample or nonzero tolerance.",
+    "numericalPlotsPowerFitsHostedRunOrInfiniteAllJExecutionAddedAsRequirements": false,
+    "noNewUniversalNormPrerequisiteForN602": "Original N6-01/07/08 quantitative class, common-domain/order and final synthesis requirements remain separate.",
+    "genericOperatorIdentityMayBeReused": "The already proved generic conservative update and Cartesian frame identities can be reused for each actual stage once its original velocity, full pressure, ordinary derivative/guard and remainder bindings are demonstrated; no repeated algebra proof is needed.",
+    "genericIdentityAloneIsNotStageBinding": "The current exact theorem and final current source root comparison do not identify an unbound signed/forced updated full pressure or prove that missing stage application was executed.",
+    "originalCriterionPassNotLeanProved": "The attached concept blueprint page16 PROVED badge requires formal verification, accepted trust policy and semantic alignment. Local Python exact certificates are not new Lean kernel verification."
+  },
+  "assessment": {
+    "completionConditionTextAligned": true,
+    "automaticWholeN602PASSFromCurrentCAndEAloneSupported": false,
+    "N6-02": "PARTIAL",
+    "originalM3Count": "56/64",
+    "reason": "The current C/E theorem is complete for its exact current source. Original N6-02 additionally requires latest full pressure/full residual after each implemented required correction substep; an actual signed substep is already present but full auxiliary pressure is expressly absent, and the forced current source is not the C/E-bound source.",
+    "minimumRemainingObligations": [
+      "Make an explicit source-bound stage map for each currently implemented required substep, reusing valid saved receipts. Preserve its actual velocity update, freshly restored FULL pressure, old flat terms and every linear/cross/quadratic term.",
+      "For any stage not already covered, attach the existing independent full operator/frame equality to those exact stage functions and domain/ordinary derivative guards, with its explicit exact or rigorous nonzero error enclosure. In particular resolve the signed full auxiliary pressure and the forced-current source binding.",
+      "Close original N6-02 immediately when this stage map covers its implemented required calls; no additional numerical plot, hosted replay, all-band norm or infinite literal all-j execution condition is introduced."
+    ],
+    "original1260OrCurrentCECompletionRevoked": false,
+    "twoWholeMomentsAndQuantitativeNormObligationsConflated": false
+  }
+}

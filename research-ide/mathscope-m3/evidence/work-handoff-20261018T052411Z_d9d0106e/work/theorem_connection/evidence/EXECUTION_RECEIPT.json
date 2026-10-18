@@ -1,0 +1,64 @@
+{
+  "schema": "MathScope.TheoremConnectionExecution/1",
+  "commands": [
+    {
+      "name": "transport",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/11bf626d6c2d/work/theorem_connection/transport/verify_transport_application.py",
+        "--workspace",
+        "/workspace/scratch/11bf626d6c2d"
+      ],
+      "exit_code": 0,
+      "seconds": 1.585711,
+      "stdout": "logs/transport.stdout.log",
+      "stderr": "logs/transport.stderr.log"
+    },
+    {
+      "name": "stage",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/11bf626d6c2d/work/theorem_connection/code/verify_stage_connection.py",
+        "--root",
+        "/workspace/scratch/11bf626d6c2d"
+      ],
+      "exit_code": 0,
+      "seconds": 0.106901,
+      "stdout": "logs/stage.stdout.log",
+      "stderr": "logs/stage.stderr.log"
+    },
+    {
+      "name": "n601",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/11bf626d6c2d/work/theorem_connection/code/verify_n601_joint_application.py",
+        "--root",
+        "/workspace/scratch/11bf626d6c2d"
+      ],
+      "exit_code": 0,
+      "seconds": 0.196555,
+      "stdout": "logs/n601.stdout.log",
+      "stderr": "logs/n601.stderr.log"
+    }
+  ],
+  "earlier_integration_attempts": [
+    {
+      "name": "n601_attempt1",
+      "exit_code": 1,
+      "reason": "Transport result schema used result=PASS, not all_checks_passed; corrected consumer key.",
+      "stderr": "logs/n601_attempt1.stderr.log"
+    },
+    {
+      "name": "n601_attempt2",
+      "exit_code": 1,
+      "reason": "Transport check rows use status=PASS, not pass boolean; corrected consumer key.",
+      "stderr": "logs/n601_attempt2.stderr.log"
+    }
+  ],
+  "original_producers_executed": false,
+  "whole_forced_graph_generation_attempted": false,
+  "forced_graph_nonexecution_reason": "An independent universal full3 differential identity plus exact complete-constructor source dataflow supplies the symbolic operator application; original private live objects were not rehydrated or bypassed. Missing frozen stage packets are only replay provenance, not an added mathematical gate.",
+  "original_source_files_modified": false,
+  "original_1260_reexecuted": false,
+  "source_and_control_checks_only": true
+}

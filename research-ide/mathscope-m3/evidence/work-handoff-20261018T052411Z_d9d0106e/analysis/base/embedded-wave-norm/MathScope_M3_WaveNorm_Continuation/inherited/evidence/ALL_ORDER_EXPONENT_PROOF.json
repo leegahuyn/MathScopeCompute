@@ -1,0 +1,128 @@
+{
+  "schema": "MathScope.AllFiniteDefectExponentProof/1",
+  "H0": "99999/100000",
+  "kappa_s": "1/100000",
+  "target": "6/5",
+  "result": "99999/50000",
+  "exact_margin": "39999/50000",
+  "terms": [
+    {
+      "id": "slow-time",
+      "exponent": "299999/100000",
+      "margin_to_2H0": "100001/100000"
+    },
+    {
+      "id": "radial_2b_dbeta",
+      "exponent": "299999/100000",
+      "margin_to_2H0": "100001/100000"
+    },
+    {
+      "id": "radial_2old_beta_dbeta",
+      "exponent": "399997/100000",
+      "margin_to_2H0": "199999/100000"
+    },
+    {
+      "id": "radial_dbeta_squared",
+      "exponent": "199999/50000",
+      "margin_to_2H0": "2"
+    },
+    {
+      "id": "axial_b_dgamma",
+      "exponent": "299999/100000",
+      "margin_to_2H0": "100001/100000"
+    },
+    {
+      "id": "axial_G_dbeta",
+      "exponent": "299999/100000",
+      "margin_to_2H0": "100001/100000"
+    },
+    {
+      "id": "axial_old_beta_dgamma",
+      "exponent": "199999/50000",
+      "margin_to_2H0": "2"
+    },
+    {
+      "id": "axial_old_gamma_dbeta",
+      "exponent": "199999/50000",
+      "margin_to_2H0": "2"
+    },
+    {
+      "id": "axial_dbeta_dgamma",
+      "exponent": "199999/50000",
+      "margin_to_2H0": "2"
+    },
+    {
+      "id": "angular_2v_dv",
+      "exponent": "99999/50000",
+      "margin_to_2H0": "0"
+    },
+    {
+      "id": "angular_dv_squared",
+      "exponent": "99999/50000",
+      "margin_to_2H0": "0"
+    },
+    {
+      "id": "viscous_radial",
+      "exponent": "299999/100000",
+      "margin_to_2H0": "100001/100000"
+    },
+    {
+      "id": "viscous_axial",
+      "exponent": "499999/100000",
+      "margin_to_2H0": "300001/100000"
+    },
+    {
+      "id": "viscous_cylindrical",
+      "exponent": "299999/100000",
+      "margin_to_2H0": "100001/100000"
+    },
+    {
+      "id": "theta_gamma_dv",
+      "exponent": "99999/50000",
+      "margin_to_2H0": "0"
+    },
+    {
+      "id": "theta_v_dgamma",
+      "exponent": "99999/50000",
+      "margin_to_2H0": "0"
+    },
+    {
+      "id": "theta_dgamma_dv",
+      "exponent": "99999/50000",
+      "margin_to_2H0": "0"
+    },
+    {
+      "id": "z_2gamma_dgamma",
+      "exponent": "99999/50000",
+      "margin_to_2H0": "0"
+    },
+    {
+      "id": "z_dgamma_squared",
+      "exponent": "99999/50000",
+      "margin_to_2H0": "0"
+    }
+  ],
+  "quantifiers": "각 임의의 유한 m에서 같은 입력 노름의 충분한 유한 차수를 소비한다. 계수 미분의 차수 m와 무관한 epsilon 지수를 얻는다.",
+  "premises": [
+    "고정 같은 소스의 all-finite norm continuation: b in M1, G bounded; temporal v,gamma in M_H0, beta in M_(H0+1)",
+    "8.25의 같은 새 targets in S_H0; 고정 five map으로 dv,dgamma in M_H0, dbeta in M_(H0+1)",
+    "five 증분은 slow; 원래 compact potential와 normalized full-Haar/whole-radial projection",
+    "0<epsilon<=1, Sstar>=1, 0<delta<=1, 0<=zeta<=1; 각 source_norm_result가 지정한 노름 상계를 제공"
+  ],
+  "proof_steps": [
+    "각 고정 다중지표에 Leibniz의 유한 binomial convolution을 적용한다.",
+    "원래 radialFast의 계수 미분 상계는 차수와 무관하게 epsilon^-kappa_s 하나를 사용한다. slow five 증분의 fast 성분은 항등적으로 0이다.",
+    "위 19개 지수 비교 항목은 모든 유한 m에서 동일하다. 각 항은 2H0 이상의 지수를 가진다.",
+    "곱의 상수/로그/극 차수는 유한 합/곱으로 생성한다. final radial projection이 유한 극 차수를 원래 Gaussian 가중치에서 흡수한다.",
+    "8.27의 정확한 동일성과 0<epsilon<=1에서 지수 약화로 세 현재 결함 in S_(6/5)를 얻는다. 현재 결함을 가정에 다시 넣지 않는다."
+  ],
+  "grade": "CONDITIONAL_REFERENCE_APPLICATION_ON_INHERITED_SAME_SOURCE_NORM_PREMISES",
+  "new_finite_instantiations": [
+    0,
+    1,
+    2
+  ],
+  "all_orders_not_inferred_from_finite_tests": true,
+  "independent_Lean_proof": false,
+  "numeric_C_not_required_for_this_class_membership": true
+}
