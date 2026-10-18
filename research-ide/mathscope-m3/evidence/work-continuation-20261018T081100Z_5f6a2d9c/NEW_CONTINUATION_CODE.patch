@@ -1,0 +1,2226 @@
+--- /dev/null
++++ b/work/resumed_continuation/cutoff/code/cutoff_continuation.py
+@@ -0,0 +1,284 @@
++"""Frozen-family cutoff support and conditional interval consumers.
++
++The support planner applies to the pinned actual family. The scalar/jet/integral
++consumers do arithmetic on explicitly unidentified input enclosures. They cannot
++authenticate source bounds or manufacture the missing actual recursive fields.
++"""
++from fractions import Fraction as Q
++from itertools import product
++from math import factorial
++from pathlib import Path
++import hashlib
++import importlib.util
++import json
++
++ROOT = Path(__file__).resolve().parents[4]
++BACKEND = ROOT / 'work/prune_recovery/energy/code/actual_energy_backend.py'
++spec = importlib.util.spec_from_file_location('retained_actual_energy_backend', BACKEND)
++backend = importlib.util.module_from_spec(spec)
++import sys
++sys.modules[spec.name] = backend
++spec.loader.exec_module(backend)
++I = backend.Interval
++
++FAMILY_SHA = 'b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78'
++FAMILY_REL = 'work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json'
++SUPPORT_PINS = {
++    'work/remaining_chain/PROOF_APPLICATION.md': '641ff6eb9a78066babc71921ba67059e9f9705cac28b0f7f95688b0e78542dd5',
++    'work/remaining_chain/source/source-localization.mjs': '5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036',
++    'work/remaining_chain/source/source-localization-domain.mjs': 'e8c92fb57bcea6282320b8e9cae9b65be62d1f2f157982d999388389a28ebfb7',
++    'work/remaining_chain/source/source-inner-growth.mjs': '4a6b9ade65d9280e44871d3e707b9bb0d086b2c53e0e0f311b908dd34103b3a8',
++}
++
++
++def sha(path):
++    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
++
++
++def reciprocal(x):
++    if x.lo <= 0 <= x.hi:
++        raise ValueError('INTERVAL_DIVISION_THROUGH_ZERO')
++    return I(1/x.hi, 1/x.lo)
++
++
++def ipow(x, n):
++    if n < 0:
++        return ipow(reciprocal(x), -n)
++    answer = I.point(1)
++    for _ in range(n):
++        answer = answer*x
++    return answer
++
++
++def maximum(values):
++    values = list(values)
++    if not values:
++        raise ValueError('EMPTY_MAXIMUM')
++    return I(max(x.lo for x in values), max(x.hi for x in values))
++
++
++def ceilq(q):
++    return -((-q.numerator)//q.denominator)
++
++
++def selected_C_enclosure(supremum):
++    """C=1+ceil(S) for the TRUE selected P, conditional on this S enclosure.
++
++    This does not claim to compute a global supremum. A closed interval touching
++    an integer may legitimately leave two C values possible.
++    """
++    if supremum.lo < 0:
++        raise ValueError('NEGATIVE_NORM_SUPREMUM')
++    return I(1+ceilq(supremum.lo), 1+ceilq(supremum.hi))
++
++
++def conditional_scale_enclosure(j, h, log_inverse_qbig, previous, selectors):
++    """Enclose the SAME max formula, not select a new sufficient scale.
++
++    selectors maps every m=0..j to (EXACT minimal P_hat, S_hat enclosure at P).
++    The caller still owes source identity, global enclosure and P-minimality.
++    """
++    if not isinstance(j, int) or j < 1 or set(selectors) != set(range(j+1)):
++        raise ValueError('ALL_ORDERS_ZERO_THROUGH_J_REQUIRED')
++    if h.lo <= 0:
++        raise ValueError('POSITIVE_H_REQUIRED')
++    gamma = h*Q(j, 20)
++    inverse_gamma = reciprocal(gamma)
++    bounds = [I.point(1), previous+1, log_inverse_qbig+1]
++    for m in range(j+1):
++        p, s = selectors[m]
++        if not isinstance(p, int) or p < 0:
++            raise ValueError('EXACT_NONNEGATIVE_MINIMAL_P_REQUIRED')
++        c = selected_C_enclosure(s)
++        bounds.extend([ipow(2*p*inverse_gamma, 2), 2*(c+j)*inverse_gamma])
++    return {'L': maximum(bounds), 'actual_selector_authenticated': False,
++            'scope': 'CONDITIONAL_INTERVAL_IMAGE_OF_FROZEN_FORMULA'}
++
++
++def exp_lower_taylor(j, degree):
++    if not isinstance(j, int) or j < 0 or not isinstance(degree, int) or degree < 0:
++        raise ValueError('NONNEGATIVE_INTEGER_TAYLOR_INPUTS_REQUIRED')
++    return sum((Q(j**k, factorial(k)) for k in range(degree+1)), Q(0))
++
++
++def certified_tail_start(rho, requested_j=None):
++    """Produce a finite rational proof exp(J)*rho > 1, no floating log.
++
++    J is a sufficient zero-tail start, never a claim of the minimal active set.
++    For automatic selection, e>2 gives an a priori terminating finite search.
++    """
++    rho = Q(rho)
++    if rho <= 0:
++        raise ValueError('POSITIVE_CELL_Q_LOWER_BOUND_REQUIRED')
++    if requested_j is None:
++        j = 1
++        while rho*2**j <= 1:
++            j += 1
++        lower=Q(2**j)
++        return {'J':j, 'rho':str(rho), 'Taylor_degree':None,
++                'exp_J_rational_lower':str(lower),
++                'exponential_lower_method':'exp(1)>1+1=2, so exp(J)>2^J',
++                'product_strict_lower':str(rho*lower),
++                'zero_tail':f'all original stage corrections j >= {j}',
++                'all_mixed_derivatives_zero':True,
++                'minimal_tail_start_claimed':False}
++    else:
++        if not isinstance(requested_j, int) or requested_j < 1:
++            raise ValueError('POSITIVE_TAIL_INDEX_REQUIRED')
++        j = requested_j
++    # A requested J need not work. A finite budget reports unresolved, not zero.
++    for degree in range(1, 1025):
++        lower = exp_lower_taylor(j, degree)
++        if rho*lower > 1:
++            return {'J': j, 'rho': str(rho), 'Taylor_degree': degree,
++                    'exp_J_rational_lower': str(lower),
++                    'product_strict_lower': str(rho*lower),
++                    'zero_tail': f'all original stage corrections j >= {j}',
++                    'all_mixed_derivatives_zero': True,
++                    'minimal_tail_start_claimed': False}
++    raise ValueError('REQUESTED_J_NOT_CERTIFIED_WITH_FINITE_TAYLOR_BUDGET')
++
++
++class FrozenCutoffPlanner:
++    def __init__(self, recovered_root):
++        self.root = Path(recovered_root)
++        self.path = self.root/FAMILY_REL
++        if sha(self.path) != FAMILY_SHA:
++            raise ValueError('CHANGED_FROZEN_ACTUAL_FAMILY')
++        for relative, expected in SUPPORT_PINS.items():
++            if sha(self.root/relative) != expected:
++                raise ValueError('CHANGED_SUPPORT_SOURCE: '+relative)
++        self.family = json.loads(self.path.read_text())
++        self.nodes = {n['id']: n for n in self.family['nodes']}
++        self.scales = [n for n in self.nodes.values() if n['operation']=='ActualShrinkingScale']
++        self.corrections = {n['data']['j']: n for n in self.nodes.values()
++                            if n['operation']=='ActualCorrectionPotentials'}
++        for n in self.scales:
++            if not ('1+L_previous' in n['data']['L'] and n['data']['every_m_le_j']):
++                raise ValueError('FROZEN_RECURRENCE_NOT_RETAINED')
++
++    def plan(self, normalized_tau_lower, requested_j=None):
++        s = Q(normalized_tau_lower)
++        if not 0 < s <= 1:
++            raise ValueError('FINITE_NONZERO_PHYSICAL_TIME_SLAB_REQUIRED')
++        # tau=tau0*s, tau0=qbig/32; tau=q(1-eta^2)<=q.
++        proof = certified_tail_start(s/32, requested_j)
++        j = proof['J']
++        return {
++            'schema': 'MathScope.FrozenActualCutoffFinitePrefix/1',
++            'family_sha256': FAMILY_SHA,
++            'physical_slab': {'tau/tau0_lower': str(s), 'tau/tau0_upper': '1',
++                              'tau0': 'qbig/32', 'q/qbig_lower': str(s/32)},
++            'proof': proof,
++            'universal_induction': 'L_0=log(1/qbig); L_j>=L_(j-1)+1 implies L_j>=L_0+j for EVERY j>=1',
++            'local_source_and_extension': 'Apply on the original local-source branch; elsewhere retain its prescribed smooth zero extension. Localization support is contained in q<=qbig/4.',
++            'possibly_active_stage_indices': list(range(1,j)),
++            'serialized_active_correction_nodes': [self.corrections[k]['id'] for k in range(1,j) if k in self.corrections],
++            'unserialized_active_stage_indices': [k for k in range(1,j) if k not in self.corrections],
++            'stage_tail_exact_zero': True,
++            'base_coefficient_series_tail_evaluated': False,
++            'finite_prefix_values_evaluated': False,
++            'remaining_active_scale_values_evaluated': False,
++            'initialization_replaces_final_field': False,
++            'N706_closed': False, 'N805_closed': False, 'actual_last_resolved_tau': None,
++        }
++
++    def selector_premises(self):
++        rows=[]
++        for scale in self.scales:
++            for ident in scale['data']['norm_inputs']:
++                n=self.nodes[ident]
++                rows.append({'stage':scale['data']['j'], 'order':n['data']['m'],
++                    'cutoff_supremum_node':ident, 'scale_node':scale['id'],
++                    'actual_derivative_source_node':n['inputs'][0],
++                    'needs': ['An enclosure of S_hat at its exact least finite integer exponent P_hat',
++                              'Finiteness at P_hat and divergence at each smaller nonnegative integer, unless P_hat=0',
++                              'Uniform original-domain proof including q approaching zero; point samples only give lower bounds'],
++                    'all_numeric_values':None})
++        return rows
++
++
++def multiindices(dimension, order):
++    return sorted((a for a in product(range(order+1), repeat=dimension) if sum(a)<=order),
++                  key=lambda a:(sum(a),a))
++
++
++def alpha_factorial(alpha):
++    answer=1
++    for a in alpha:
++        answer*=factorial(a)
++    return answer
++
++
++def cutoff_chain_jets(q_jets, chi_derivatives, s, order, dimension=4):
++    """Jets of chi(a*q) at FIXED a, THEN substitute a=s/q.
++
++    Inputs enclose all q derivatives on a common physical cell, and chi^(k) on
++    its s interval. Reparametrizing before differentiation would give wrong jets.
++    No source authority is assigned to these interval inputs.
++    """
++    if not isinstance(order,int) or order<0 or not isinstance(dimension,int) or dimension<1:
++        raise ValueError('FINITE_JET_ORDER_AND_DIMENSION_REQUIRED')
++    indices=multiindices(dimension,order)
++    zero=(0,)*dimension
++    if set(indices)-set(q_jets):
++        raise ValueError('INCOMPLETE_Q_JETS')
++    if q_jets[zero].lo<=0 or s.lo<0:
++        raise ValueError('POSITIVE_Q_AND_NONNEGATIVE_S_REQUIRED')
++    if s.lo>=1:
++        return {a:I.point(0) for a in indices}
++    if len(chi_derivatives)<order+1:
++        raise ValueError('INCOMPLETE_CHI_DERIVATIVES')
++    a=s*reciprocal(q_jets[zero])
++    delta={alpha:q_jets[alpha]*Q(1,alpha_factorial(alpha)) for alpha in indices if alpha!=zero}
++    powers={zero:I.point(1)}
++    output={alpha:I.point(0) for alpha in indices}
++    for k in range(order+1):
++        factor=chi_derivatives[k]*ipow(a,k)*Q(1,factorial(k))
++        for alpha,value in powers.items():
++            output[alpha]=output[alpha]+factor*value*alpha_factorial(alpha)
++        next_power={}
++        for alpha,value in powers.items():
++            for beta,other in delta.items():
++                gamma=tuple(x+y for x,y in zip(alpha,beta))
++                if sum(gamma)<=order:
++                    next_power[gamma]=next_power.get(gamma,I.point(0))+value*other
++        powers=next_power
++    return output
++
++
++def normalized_box_integral(edges, cells, quantities):
++    """Exact rectangular enclosure consumer over the whole normalized box.
++
++    Each cell must be present once and contain intervals valid throughout it.
++    No grid or tolerance is prescribed. Values/derivative source identity remain
++    unverified; physical z0 (and tau0 for time integrals) factors remain separate.
++    """
++    if not quantities or len(set(quantities))!=len(quantities):
++        raise ValueError('DISTINCT_NONEMPTY_QUANTITIES_REQUIRED')
++    if not edges or any(len(axis)<2 for axis in edges):
++        raise ValueError('NONEMPTY_PARTITION_REQUIRED')
++    edges=[[Q(x) for x in axis] for axis in edges]
++    if any(any(b<=a for a,b in zip(axis,axis[1:])) for axis in edges):
++        raise ValueError('STRICT_PARTITION_EDGES_REQUIRED')
++    expected=set(product(*(range(len(axis)-1) for axis in edges)))
++    seen=set()
++    sums={q:I.point(0) for q in quantities}
++    for cell in cells:
++        index=tuple(cell['index'])
++        if index in seen or index not in expected:
++            raise ValueError('DUPLICATE_OR_OUT_OF_DOMAIN_CELL')
++        seen.add(index)
++        volume=Q(1)
++        for axis,i in zip(edges,index):
++            volume*=axis[i+1]-axis[i]
++        for q in quantities:
++            if q not in cell['enclosures']:
++                raise ValueError('MISSING_CELL_DENSITY')
++            sums[q]=sums[q]+cell['enclosures'][q]*volume
++    if seen!=expected:
++        raise ValueError('WHOLE_BOX_COVER_INCOMPLETE')
++    return {'scope':'UNIDENTIFIED_WHOLE_NORMALIZED_BOX_ENCLOSURE',
++            'integrals':sums, 'cell_count':len(seen),
++            'supplied_box':[[str(axis[0]),str(axis[-1])] for axis in edges],
++            'actual_field_authenticated':False, 'physical_measure_applied':False}
+--- /dev/null
++++ b/work/resumed_continuation/cutoff/code/run_continuation.py
+@@ -0,0 +1,208 @@
++"""Reproducible new cutoff continuation checks; no historical checks rerun."""
++from pathlib import Path
++from fractions import Fraction as Q
++from itertools import product
++import copy
++import json
++import sys
++
++from cutoff_continuation import (ROOT, FAMILY_SHA, FAMILY_REL, SUPPORT_PINS,
++    FrozenCutoffPlanner, I, backend, sha, selected_C_enclosure,
++    conditional_scale_enclosure, certified_tail_start, cutoff_chain_jets,
++    multiindices, normalized_box_integral)
++
++OUT = ROOT/'work/resumed_continuation/cutoff/evidence'
++OUT.mkdir(parents=True, exist_ok=True)
++
++
++def write(name, obj):
++    (OUT/name).write_text(json.dumps(obj, ensure_ascii=False, indent=2)+'\n')
++
++
++checks=[]
++
++
++def check(name, condition):
++    if not condition:
++        raise AssertionError(name)
++    checks.append({'id':name,'pass':True})
++
++
++def rejects(name, call, code):
++    try:
++        call()
++    except ValueError as e:
++        check(name, str(e)==code)
++    else:
++        raise AssertionError(name+' unexpectedly accepted')
++
++
++def main():
++    recovered=ROOT/'recovered/base'
++    planner=FrozenCutoffPlanner(recovered)
++    plan=planner.plan('1/2',5)
++    proof=plan['proof']
++    check('actual-family-exact-fifth-stage-zero-tail-witness',
++          proof['Taylor_degree']==4 and proof['exp_J_rational_lower']=='523/8'
++          and proof['product_strict_lower']=='523/512')
++    check('retain-all-four-possibly-active-original-stages',
++          plan['possibly_active_stage_indices']==[1,2,3,4]
++          and len(plan['serialized_active_correction_nodes'])==4)
++    check('does-not-certify-base-coefficient-tail-or-prefix-values',
++          plan['base_coefficient_series_tail_evaluated'] is False
++          and plan['finite_prefix_values_evaluated'] is False)
++    rejects('reject-terminal-slab-zero-lower',lambda:planner.plan('0'),
++            'FINITE_NONZERO_PHYSICAL_TIME_SLAB_REQUIRED')
++    rejects('reject-negative-cell-q',lambda:certified_tail_start('-1'),
++            'POSITIVE_CELL_Q_LOWER_BOUND_REQUIRED')
++    later=planner.plan(Q(1,256))
++    check('unserialized-finite-prefix-is-explicit',
++          bool(later['unserialized_active_stage_indices'])
++          and later['finite_prefix_values_evaluated'] is False)
++    write('ACTUAL_FINITE_PREFIX_PLAN.json',plan)
++
++    # These are conditional arithmetic fixtures, never actual source selectors.
++    check('ceil-image-straddles-integer-without-picking-side',
++          selected_C_enclosure(I(Q(3,2),Q(5,2)))==I(3,4))
++    check('ceil-image-exact-integer-and-zero',
++          selected_C_enclosure(I.point(2))==I.point(3)
++          and selected_C_enclosure(I.point(0))==I.point(1))
++    scale=conditional_scale_enclosure(1,I.point(1),I.point(3),I.point(3),
++                                     {0:(0,I.point(0)),1:(1,I(Q(3,2),Q(5,2)))})
++    check('same-frozen-scale-formula-conditional-interval-image',scale['L']==I.point(1600)
++          and scale['actual_selector_authenticated'] is False)
++    rejects('all-frozen-derivative-orders-required',
++            lambda:conditional_scale_enclosure(1,I.point(1),I.point(3),I.point(3),{0:(0,I.point(0))}),
++            'ALL_ORDERS_ZERO_THROUGH_J_REQUIRED')
++    rejects('interval-valued-exponent-rejected-as-not-exact-integer',
++            lambda:conditional_scale_enclosure(1,I.point(1),I.point(3),I.point(3),
++                                               {0:(I(0,1),I.point(0)),1:(1,I.point(1))}),
++            'EXACT_NONNEGATIVE_MINIMAL_P_REQUIRED')
++
++    # chi(s)=s^3 and q(x)=x at q=2,a=1/4 provide a chain-rule control.
++    # This polynomial is expressly a fixture, not the original flat cutoff.
++    qjets={(0,):I.point(2),(1,):I.point(1),(2,):I.point(0),(3,):I.point(0)}
++    jets=cutoff_chain_jets(qjets,[I.point(Q(1,8)),I.point(Q(3,4)),I.point(3),I.point(6)],I.point(Q(1,2)),3,1)
++    check('fixed-a-derivative-before-s-over-q-substitution',
++          [jets[(k,)] for k in range(4)]==[I.point(Q(1,8)),I.point(Q(3,16)),I.point(Q(3,16)),I.point(Q(3,32))])
++    # q=x+y+2, a=1/4. The mixed xy derivative of chi(aq) equals 3*a^2.
++    q2={a:I.point(0) for a in multiindices(2,2)}
++    q2[(0,0)]=I.point(2);q2[(1,0)]=q2[(0,1)]=I.point(1)
++    j2=cutoff_chain_jets(q2,[I.point(Q(1,8)),I.point(Q(3,4)),I.point(3)],I.point(Q(1,2)),2,2)
++    check('multivariate-mixed-cutoff-chain-jet',j2[(1,1)]==I.point(Q(3,16)))
++    zerojets=cutoff_chain_jets(qjets,[],I(1,2),3,1)
++    check('original-flat-zero-branch-needs-no-chi-values',all(v==I.point(0) for v in zerojets.values()))
++    rejects('missing-q-jet-rejected',lambda:cutoff_chain_jets({(0,):I.point(2)},[],I.point(1),3,1),
++            'INCOMPLETE_Q_JETS')
++
++    # Exact coverage/integration fixture on a whole box, independent of old
++    # 54-check operator controls and their 540-term symbolic expansion.
++    edges=[[-1,0,1],[-1,1],[-1,1]]
++    cells=[{'index':i,'enclosures':{'velocity_squared':I.point(2),'dissipation_density':I(1,3)}}
++           for i in product(range(2),range(1),range(1))]
++    result=normalized_box_integral(edges,cells,['velocity_squared','dissipation_density'])
++    check('whole-box-measure-applied-to-enclosed-densities',
++          result['integrals']['velocity_squared']==I.point(16)
++          and result['integrals']['dissipation_density']==I(8,24)
++          and result['actual_field_authenticated'] is False)
++    rejects('whole-box-missing-cell-rejected',lambda:normalized_box_integral(edges,cells[:-1],['velocity_squared']),
++            'WHOLE_BOX_COVER_INCOMPLETE')
++    rejects('whole-box-duplicate-cell-rejected',lambda:normalized_box_integral(edges,cells+[cells[0]],['velocity_squared']),
++            'DUPLICATE_OR_OUT_OF_DOMAIN_CELL')
++    rejects('duplicate-density-name-cannot-double-count-integral',
++            lambda:normalized_box_integral(edges,cells,['velocity_squared','velocity_squared']),
++            'DISTINCT_NONEMPTY_QUANTITIES_REQUIRED')
++
++    binding_path=ROOT/'work/prune_recovery/energy/evidence/ACTUAL_ENERGY_OPERATOR_BINDING.json'
++    binding=json.loads(binding_path.read_text())
++    adapter=backend.FrozenActualEnergyAdapter(recovered,binding)
++    request=adapter.required_request()
++    check('same-energy-target-keeps-67-plus13-original-jet-requests',
++          len(request['requested_field_jets'])==67 and len(request['requested_cutoff_jets'])==13
++          and request['actual_family_sha256']==FAMILY_SHA)
++    family=planner.family
++    norm_path=recovered/family['source_norm_family']['path']
++    check('frozen-norm-archive-hash-retained',sha(norm_path)==family['source_norm_family']['sha256'])
++    norms=json.loads(norm_path.read_text())
++    criteria_path=recovered/'work/m4_criteria/M3_REMAINING_NUMERIC_REQUIREMENTS.json'
++    criteria=json.loads(criteria_path.read_text())
++    original=[r for r in criteria['requirements'] if r['id'] in ('N7-06','N8-05')]
++
++    norm_review={
++      'schema':'MathScope.ExactFrozenSelectorRemainingPremises/1',
++      'family_sha256':FAMILY_SHA,
++      'source_norm_archive':{**family['source_norm_family'],'hash_rechecked':True},
++      'saved_norm_family_scope':norms['family']['scope'],
++      'saved_certificates':[{'scope':c['scope'],'exactDeferredSourceNormExpressions':c['exactDeferredSourceNormExpressions'],
++                            'allIntegerDerivativeGraphsExecuted':c['allIntegerDerivativeGraphsExecuted']}
++                            for c in norms['certificates']],
++      'selector_premises':planner.selector_premises(),
++      'minimality_is_existing_frozen_definition_not_new_acceptance_gate':True,
++      'original_criteria_do_not_require_this_unique_schedule': 'The exact min/ceil functionals define the already chosen frozen family. No claim is made that the paper permits only this choice. An alternative sufficient original-compliant schedule would require an explicit separate construction, source rebinding and revalidation; it is not silently substituted here.',
++      'sufficient_bound_warning': 'S_pbar <= M implies P_hat <= pbar, but does not bound S_(P_hat) by M. A different sufficient C,P does not evaluate or preserve the frozen scale.',
++      'counterexample':{'Lambda_domain':'[1,infinity)', 'F_N':'N*Lambda^2/(N+Lambda)',
++                        'S_2_upper':'1','P_min':'1','S_1':'N','C_selected':'N+1',
++                        'scope':'abstract selector distinction, not an actual source replacement'},
++      'conditional_computable_routes':[
++          'Prove finite S_hat_0 with a certified global upper bound: minimal P_hat is then exactly zero.',
++          'For p>0 prove finite S_hat_p and infinite S_hat_(p-1); Lambda>=1 covers all smaller p.',
++          'Once P_hat is identified, any rigorous interval [Slo,Shi] encloses C by [1+ceil(Slo),1+ceil(Shi)]; exact supremum equality is unnecessary for an enclosing L interval.',
++          'A ceiling interval crossing an integer may remain nontrivial; do not replace it by its midpoint or claim a selected exact integer.'
++      ],
++      'scale_supremum_reparametrization':{
++          'identity':'sup_(a>=1,(x,t) in D) W*|T_a Z_j|_m = sup_((x,t) in D,q<=s<=1) W*|D^alpha T_a Z_j evaluated at a=s/q|_max',
++          'weight':'W=q^(ellPrime_m-g_j)/(1+|log q|)^p',
++          'derivative_order_rule':'Differentiate with a CONSTANT, then substitute a=s/q; do not differentiate the substituted expression at fixed s.',
++          'reason':'For q>0, s=a*q is a bijection [1,infinity) to [q,infinity); all cutoff jets vanish on s>=1.',
++          'remaining_noncompact_endpoint':'q approaches zero; this still requires actual weighted source bounds and exponent minimality',
++          'actual_values_evaluated':False},
++      'original_criteria':original,
++      'no_fixed_tolerance_or_invented_grid':True,
++      'actual_selector_values_evaluated':False,
++      'N706_closed':False,'N805_closed':False,'actual_last_resolved_tau':None}
++    check('all-twenty-serialized-selector-premise-rows-retained',len(norm_review['selector_premises'])==20)
++    write('FROZEN_SELECTOR_PREMISES.json',norm_review)
++    write('ENERGY_INTEGRATION_CONNECTION.json',{
++      'schema':'MathScope.CutoffFinitePrefixEnergyConnection/1',
++      'family_sha256':FAMILY_SHA,
++      'operator_binding':{'path':str(binding_path.relative_to(ROOT)),'sha256':sha(binding_path)},
++      'required_original_field_jets':request['requested_field_jets'],
++      'required_original_outer_cutoff_jets':request['requested_cutoff_jets'],
++      'stage_tail_on_planned_positive_slab':'Exactly zero, by ACTUAL_FINITE_PREFIX_PLAN.json',
++      'still_missing':['Actual stages1..4 canonical potential/direct scalar/complete pressure derivatives and exact active selector enclosures',
++                       'Actual initialization and slow-base coefficient series values, native values and their independent tails',
++                       'Closed-cell enclosures for all67+13 jets and physical tau0,z0, followed by actual whole-K quadrature',
++                       'Independent space/time numerical defect decrease and original N8-05 four-axis comparisons'],
++      'normalized_coordinates':{'physical_x':'xi','physical_y':'upsilon','physical_z':'z0*zeta','physical_tau':'tau0*s',
++                                'spatial_box':'[-1,1]^3 in xi,upsilon,zeta',
++                                'whole_K_in_box':'K: xi^2+upsilon^2<=1/2 and zeta^2<=1/2',
++                                'spatial_measure':'z0 dxi dupsilon dzeta','space_time_measure':'z0*tau0 dxi dupsilon dzeta ds'},
++      'energy_route':{'velocity_squared':'z0 * normalized spatial integral of velocity_squared',
++                      'dissipation':'z0*tau0 * normalized space-time integral of dissipation_density',
++                      'work':'z0*tau0 * normalized space-time integral of work_density',
++                      'force_norm_integral':'tau0 * integral_s sqrt(z0 * spatial integral of force_squared) ds',
++                      'time_orientation':'t=1-tau0*s; from t=1-tau0 to target t corresponds to integral s_target..1',
++                      'initial_energy':'0 on t<=1-tau0 by original exact temporal zero branch'},
++      'code_consumer':'normalized_box_integral validates full rectangular cover and exact rational cell measures; it does not authenticate its input enclosures.',
++      'actual_whole_K_integrated':False,'generic_fixture_numbers_are_actual_energy':False,
++      'N706_closed':False,'N805_closed':False,'actual_last_resolved_tau':None})
++
++    write('CONTINUATION_CHECKS.json',{'schema':'MathScope.CutoffContinuationChecks/1',
++      'checks':checks,'passed':len(checks),'failed':0,
++      'scope':'New support-application and arithmetic consumer controls only; no historical54/540 replay.',
++      'actual_numeric_field_values':0,'actual_selector_values':0,
++      'N706_closed':False,'N805_closed':False,'actual_last_resolved_tau':None})
++    write('INPUT_PINS.json',{'family':{'path':str((recovered/FAMILY_REL).relative_to(ROOT)),'sha256':FAMILY_SHA},
++      'support_sources':[{'path':str((recovered/p).relative_to(ROOT)),'sha256':v} for p,v in SUPPORT_PINS.items()],
++      'norm_archive':{'path':str(norm_path.relative_to(ROOT)),'sha256':sha(norm_path)},
++      'criteria':{'path':str(criteria_path.relative_to(ROOT)),'sha256':sha(criteria_path)},
++      'energy_backend':{'path':str((ROOT/'work/prune_recovery/energy/code/actual_energy_backend.py').relative_to(ROOT)),
++                        'sha256':sha(ROOT/'work/prune_recovery/energy/code/actual_energy_backend.py')}})
++    print(json.dumps({'passed':len(checks),'failed':0,'actual_stage_tail_zero_on':'tau/tau0 in[1/2,1]',
++                      'possibly_active_corrections':[1,2,3,4],
++                      'actual_selector_values_evaluated':False,'actual_whole_K_integrated':False,
++                      'N706_closed':False,'N805_closed':False,'actual_last_resolved_tau':None}))
++
++
++if __name__=='__main__':
++    main()
+--- /dev/null
++++ b/work/resumed_continuation/cutoff/review/run_independent_review.py
+@@ -0,0 +1,63 @@
++"""Independent, scoped review probes; no historical backend checks run."""
++from pathlib import Path
++from itertools import product
++from fractions import Fraction as Q
++from math import factorial
++import hashlib
++import importlib.util
++import json
++import sys
++
++ROOT = Path(__file__).resolve().parents[4]
++HERE = Path(__file__).resolve().parent
++SUBJECT = ROOT / 'work/resumed_continuation/cutoff/code/cutoff_continuation.py'
++spec = importlib.util.spec_from_file_location('independent_cutoff_review_subject', SUBJECT)
++m = importlib.util.module_from_spec(spec)
++sys.modules[spec.name] = m
++spec.loader.exec_module(m)
++
++# Expand the polynomial (q/4)^4 directly, independently of chain composition,
++# with q=2+x+2y+3xy+x^2. The comparison point is x=y=0, so s=a*q=1/2.
++terms = {(0, 0): Q(2), (1, 0): Q(1), (0, 1): Q(2),
++         (1, 1): Q(3), (2, 0): Q(1)}
++expanded = {}
++for factors in product(terms.items(), repeat=4):
++    alpha = tuple(sum(term[0][i] for term in factors) for i in range(2))
++    coefficient = Q(1, 256)
++    for _, value in factors:
++        coefficient *= value
++    expanded[alpha] = expanded.get(alpha, Q(0)) + coefficient
++
++indices = m.multiindices(2, 3)
++qjets = {a: m.I.point(terms.get(a, Q(0)) * factorial(a[0]) * factorial(a[1]))
++         for a in indices}
++chi_jets = [m.I.point(value) for value in [Q(1, 16), Q(1, 2), Q(3), Q(12)]]
++output = m.cutoff_chain_jets(qjets, chi_jets, m.I.point(Q(1, 2)), 3, 2)
++comparison = []
++for alpha in indices:
++    expected = expanded.get(alpha, Q(0)) * factorial(alpha[0]) * factorial(alpha[1])
++    comparison.append({'alpha': alpha, 'expected': str(expected),
++                       'computed': output[alpha].encoded(),
++                       'pass': output[alpha] == m.I.point(expected)})
++assert len(comparison) == 10 and all(row['pass'] for row in comparison)
++
++try:
++    duplicate_result = m.normalized_box_integral(
++        [[0, 1]], [{'index': (0,), 'enclosures': {'q': m.I.point(1)}}], ['q', 'q'])
++except ValueError as error:
++    duplicate = {'rejected': True, 'message': str(error)}
++else:
++    duplicate = {'rejected': False, 'result': duplicate_result['integrals']['q'].encoded()}
++assert duplicate == {'rejected': True, 'message': 'DISTINCT_NONEMPTY_QUANTITIES_REQUIRED'}
++
++record = {
++    'subject_path': str(SUBJECT.relative_to(ROOT)),
++    'subject_sha256': hashlib.sha256(SUBJECT.read_bytes()).hexdigest(),
++    'nonlinear_mixed_jet_probe': comparison,
++    'duplicate_quantity_probe': duplicate,
++    'historical_backend_checks_rerun': False,
++    'fixture_values_claimed_as_actual_source': False,
++}
++encoded = json.dumps(record, indent=2) + '\n'
++(HERE / 'INDEPENDENT_PROBES.json').write_text(encoded)
++print(encoded, end='')
+--- /dev/null
++++ b/work/resumed_continuation/indexed/code/exact_derivative_connection.py
+@@ -0,0 +1,225 @@
++#!/usr/bin/env python3
++"""Actual indexed local first derivative DAG and exact nearest-cell guards.
++
++Uses the original formal variables before an explicit lexical application.
++Native expression derivative calls remain exact, named evaluation obligations.
++"""
++import sys
++sys.dont_write_bytecode=True
++from pathlib import Path
++from fractions import Fraction as F
++import collections,json
++import materialize_dependencies as dep
++ROOT=dep.ROOT;OUT=dep.OUT
++from native_binding import canonical,digest,pin,Unresolved
++TRANSITIVE=OUT/'evidence/TRANSITIVE_INDEXED_DEPENDENCIES.json'
++SOURCE_COUNT=3892594
++class DAG:
++ def __init__(self,nodes,bindings,grammar):
++  self.source=nodes;self.b=bindings;self.h=grammar;self.new={};self.lookup={};self.free_memo={};self.diff_memo={};self.trace=[]
++ def node(self,i):return self.new[i] if i in self.new else self.source[i]
++ def make(self,op,args):
++  key=canonical([op,args]);i=self.lookup.get(key)
++  if i is None:
++   i=SOURCE_COUNT+len(self.new);self.new[i]={'op':op,'args':args};self.lookup[key]=i
++  return i
++ def q(self,x):
++  x=F(x)
++  if x==0:return 0
++  if x==1:return 1
++  return self.make('rational',[str(x.numerator),str(x.denominator)])
++ def rational(self,i):
++  n=self.node(i)
++  return F(*map(int,n['args'])) if n['op']=='rational' else None
++ def add(self,*terms):
++  out=0
++  for t in terms:
++   if t==0:continue
++   if out==0:out=t;continue
++   x,y=self.rational(out),self.rational(t)
++   out=self.q(x+y) if x is not None and y is not None else self.make('add',sorted([out,t]))
++  return out
++ def mul(self,*terms):
++  out=1
++  for t in terms:
++   if t==0:return 0
++   if t==1:continue
++   x,y=self.rational(out),self.rational(t)
++   out=self.q(x*y) if x is not None and y is not None else t if out==1 else self.make('multiply',sorted([out,t]))
++  return out
++ def power(self,x,n):
++  if n==0:return 1
++  if n==1:return x
++  return self.make('integer_power',[x,n])
++ def inv(self,x):return self.make('inverse',[x])
++ def integral(self,body,binder,left,right):
++  return 0 if body==0 or left==right else self.make('definite_integral',[body,binder,left,right])
++ def apply(self,body,formals,values):
++  if len(set(formals))!=len(formals) or len(formals)!=len(values):raise Unresolved('application arity or capture failure')
++  return self.make('lexical_application',[body,formals,values])
++ def children(self,i):
++  n=self.node(i)
++  if n['op']=='lexical_application':return [n['args'][0],*n['args'][2]]
++  return self.h.argument_children(n)
++ def free(self,i):
++  if i in self.free_memo:return self.free_memo[i]
++  op,a=self.node(i).values()
++  if op=='coordinate':v={i}
++  elif op=='definite_integral':v=(self.free(a[0])-{a[1]})|self.free(a[2])|self.free(a[3])
++  elif op=='lexical_application':v=(self.free(a[0])-set(a[1]))|set().union(*(self.free(x) for x in a[2]))
++  else:v=set().union(*(self.free(x) for x in self.children(i)))
++  self.free_memo[i]=frozenset(v);return self.free_memo[i]
++ def d(self,i,var):
++  key=i,var
++  if key in self.diff_memo:return self.diff_memo[key]
++  op,a=self.node(i).values();d=lambda x:self.d(x,var)
++  if var not in self.free(i):out=0;rule='independent formal variable'
++  elif op=='coordinate':out=1;rule='formal coordinate'
++  elif op=='add':out=self.add(*(d(x) for x in a));rule='sum'
++  elif op=='multiply':out=self.add(self.mul(d(a[0]),a[1]),self.mul(a[0],d(a[1])));rule='product'
++  elif op=='inverse':out=self.mul(self.q(-1),d(a[0]),self.power(i,2));rule='reciprocal'
++  elif op=='integer_power':out=self.mul(self.q(a[1]),self.power(a[0],a[1]-1),d(a[0]));rule='integer power'
++  elif op=='exp':out=self.mul(i,d(a[0]));rule='exponential'
++  elif op=='log_positive':out=self.mul(d(a[0]),self.inv(a[0]));rule='positive logarithm'
++  elif op=='sqrt_positive':out=self.mul(d(a[0]),self.inv(self.mul(self.q(2),i)));rule='positive square root'
++  elif op=='sine':out=self.mul(self.make('cosine',[a[0]]),d(a[0]));rule='sine'
++  elif op=='cosine':out=self.mul(self.q(-1),self.make('sine',[a[0]]),d(a[0]));rule='cosine'
++  elif op=='source_step_derivative':out=self.mul(self.make(op,[a[0],a[1]+1]),d(a[0]));rule='original step derivative'
++  elif op=='smooth_piecewise':
++   # Exactly the original source join rule. No derivative of a nearest label
++   # is taken. Matching source jets remain the original theorem's premise.
++   out=self.make(op,a[:3]+[d(x) for x in a[3:]]);rule='original matching-jet piecewise rule'
++  elif op=='definite_integral':
++   body,binder,left,right=a;dl,dr=d(left),d(right)
++   out=self.add(0 if binder==var else self.integral(d(body),binder,left,right),
++      0 if dr==0 else self.mul(self.apply(body,[binder],[right]),dr),
++      0 if dl==0 else self.mul(self.q(-1),self.apply(body,[binder],[left]),dl));rule='Leibniz with lexical endpoint binding'
++  elif op in {'actual_expression_partial','m3_aux_expression_partial'}:
++   key_def,definition=self.b.definition(self.node(i));terms=[]
++   if len(a[1])!=len(definition['parameters']):raise Unresolved('native expression arity')
++   for j,value in enumerate(a[1]):
++    scale=d(value)
++    if scale==0:continue
++    orders=a[2].copy();orders[j]+=1
++    if orders[j]>definition['derivativeLimits'][j]:raise Unresolved('original derivative budget exhausted')
++    terms.append(self.mul(scale,self.make(op,[a[0],a[1],orders])))
++   out=self.add(*terms);rule='original native expression chain rule'
++  else:raise Unresolved(f'actual local derivative needs unsupported operation {op} at {i} w.r.t. {var}')
++  self.diff_memo[key]=out;self.trace.append({'sourceNode':i,'formalVariable':var,'rule':rule,'resultNode':out});return out
++
++def affine(g,root,atoms):
++ if root in atoms:return {root:F(1)}
++ n=g.node(root);op,a=n['op'],n['args']
++ if op=='rational':return {None:F(*map(int,a))}
++ if op=='add':
++  out=collections.defaultdict(F)
++  for c in a:
++   for k,v in affine(g,c,atoms).items():out[k]+=v
++  return {k:v for k,v in out.items() if v}
++ if op=='multiply':
++  x,y=(g.rational(c) for c in a)
++  if x is not None:return {k:x*v for k,v in affine(g,a[1],atoms).items() if x*v}
++  if y is not None:return {k:y*v for k,v in affine(g,a[0],atoms).items() if y*v}
++ raise Unresolved('nonaffine guard expression')
++
++def nearest_guard(g,guard):
++ selector,left,right=guard
++ if g.rational(left)!=F(-3,4) or g.rational(right)!=F(3,4):raise Unresolved('not original nearest-cell guard')
++ n=g.node(selector)
++ if n['op']!='add':raise Unresolved('guard selector is not original sum')
++ # Try both operands as the continuous atom. The other must be the retained
++ # ceiling of -(1/2+x); no claim depends on a sampled floating-point value.
++ for x in n['args']:
++  seen=set();stack=[selector]
++  while stack:
++   i=stack.pop()
++   if i in seen or i==x:continue
++   seen.add(i);q=g.node(i)
++   if q['op']=='ceiling':
++    try:
++     if affine(g,selector,{x,i})=={x:F(1),i:F(1)} and affine(g,q['args'][0],{x})=={None:F(-1,2),x:F(-1)}:
++      return {'guard':guard,'continuousAtom':x,'ceilingNode':i,'ceilingArgument':q['args'][0],
++       'selectorIdentity':'x + ceil(-1/2 - x)','certifiedSelectorEnclosure':['-1/2','1/2'],
++       'upperEndpointActuallyExcluded':True,'strictlyInsideOriginalGuard':True,
++       'hypothesis':'continuousAtom is a finite defined real; inherited source-image definedness is not removed',
++       'proof':'For y=-1/2-x, 0<=ceil(y)-y<1, so -1/2<=x+ceil(y)<1/2; [-1/2,1/2] is strictly inside (-3/4,3/4).'}
++    except Unresolved:pass
++   stack.extend(g.children(i))
++ raise Unresolved('guard is not authenticated nearest-cell identity')
++
++def main():
++ if pin(TRANSITIVE)['sha256']!='81fc4a98953dd28683d7ae7f4e171eca92bcd258e9f7fbfb3160bebae8eaf43d':raise Unresolved('reviewed transitive source record evidence differs')
++ if pin(dep.DIRECT)!=json.loads(TRANSITIVE.read_text())['inputs']['directOperands']:raise Unresolved('direct source operand evidence differs')
++ b=dep.SourceBindings();h=dep.load_grammar();nodes=dict(b.nodes)
++ for p,k in [(dep.DIRECT,'records'),(TRANSITIVE,'newRecords')]:nodes.update({int(i):r for i,r in json.loads(p.read_text())[k].items()})
++ recipe=next(r for r in json.loads(dep.PLANS.read_text())['recipes']if r['node']==643019)
++ if recipe!=b.indexed_recipe(643019):raise Unresolved('actual indexed call differs')
++ g=DAG(nodes,b,h);local={};rows=[]
++ for row in recipe['rows']:
++  for term in row['derivatives']:
++   key=(row['localBody'],tuple(term['localOrders']))
++   if key not in local:
++    body=row['localBody']
++    for var,count in zip(row['localParameters'],term['localOrders']):
++     for _ in range(count):body=g.d(body,var)
++    if not g.free(body)<=set(row['localParameters']):raise Unresolved('derivative introduced unbound formal')
++    local[key]={'originalBody':row['localBody'],'formalParameters':row['localParameters'],'orders':term['localOrders'],
++      'formalDerivativeRoot':body,'freeCoordinates':sorted(g.free(body)),'differentiateBeforeSubstitution':True}
++  # Row derivative is generated once per sign; each actual chart binds all
++  # source arguments simultaneously in a separate lexical frame.
++  terms=[]
++  for term in row['derivatives']:
++   body=local[(row['localBody'],tuple(term['localOrders']))]['formalDerivativeRoot']
++   applied=g.apply(body,row['localParameters'],row['argumentNodes'])
++   terms.append(g.mul(g.q(term['integerMultiplier']),*term['coefficientNodeFactors'],applied))
++  unguarded=g.mul(row['rowCoefficientNode'],g.add(*terms));value=unguarded
++  for selector,left,right in row['guards']:value=g.make('smooth_piecewise',[selector,left,right,0,value,0])
++  rows.append({'rowIndex':row['index'],'sourceLabel':row['label'],'formalLocalDerivativeRoot':body,
++     'lexicalApplication':applied,'unguardedRoot':unguarded,'guardedRoot':value,
++     'guardEvaluationOrder':list(reversed(row['guards']))})
++ field=g.apply(g.add(*(r['guardedRoot']for r in rows)),recipe['outerParameters'],recipe['outerArgumentNodes'])
++ center=[r for r in recipe['rows']if r['label']['key']=='0:0:0:0']
++ guards=[nearest_guard(g,v)for v in center[0]['guards'][1:]]
++ # Track exact source dependency path to the missing slow inverse for the
++ # innermost radial guard. This is a precise evaluation obligation, not a
++ # source-domain relaxation or a newly supplied numeric oracle.
++ def path_to(root,target):
++  todo=[(root,[root])];seen=set()
++  while todo:
++   i,p=todo.pop()
++   if i==target:return p
++   if i in seen:continue
++   seen.add(i);todo.extend((c,p+[c])for c in g.children(i))
++  return None
++ remaining=center[0]['guards'][0];slow_path=path_to(remaining[0],622820)
++ if not slow_path:raise Unresolved('radial guard no longer reaches actual slow inverse')
++ native_leaves={str(i):v for i,v in g.new.items()if v['op'] in h.NATIVE}
++ # Controls exercise only authenticated graph perturbations, never toy values.
++ negative=[]
++ original=g.node(guards[0]['ceilingNode']);bad_id=guards[0]['ceilingNode'];g.source=dict(g.source);g.source[bad_id]={'op':'ceiling','args':[1]}
++ try:nearest_guard(g,guards[0]['guard']);raise AssertionError('mutated ceiling accepted')
++ except Unresolved:negative.append('changed actual ceiling argument rejected')
++ g.source[bad_id]=original
++ try:nearest_guard(g,[guards[0]['guard'][0],0,1]);raise AssertionError('mutated boundary accepted')
++ except Unresolved:negative.append('changed original guard endpoints rejected')
++ try:g.d(632178,622791);raise AssertionError('frozen nearest label derivative accepted')
++ except Unresolved as e:negative.append('frozen nearest-label derivative rejected: '+str(e))
++ report={'schema':'MathScope.ResumedActualIndexedDerivativeConnection/1','implementationKind':'NEW RECOVERY symbolic derivative materializer',
++ 'inputs':{'recipes':pin(dep.PLANS),'transitiveDependencies':pin(TRANSITIVE),'originalHeader':pin(dep.HEADER)},
++ 'actualIndexedCall':643019,'originalIndexedDefinitionSHA256':recipe['sourceDefinitionSHA256'],'retainedRows':len(rows),
++ 'formalDerivativeBodies':list(local.values()),'generatedNodeNamespaceStart':SOURCE_COUNT,'generatedNodes':{str(k):v for k,v in g.new.items()},
++ 'ruleApplications':g.trace,'rows':rows,'assembledFieldRoot':field,
++ 'nativeDerivativeLeaves':native_leaves,'nativeDerivativeLeavesNumericallyEvaluated':False,
++ 'centerRows':[r['index']for r in center],'centerOuterGuardCertificates':guards,
++ 'conditionalActiveGuardCountPerCenterRow':len(guards),'guardProofScope':'All finite defined source values of the continuous atoms; actual source definedness remains required',
++ 'remainingInnerGuard':remaining,'remainingInnerGuardPathToSlowInverse':slow_path,
++ 'exactRemainingKernel':{'node':622820,'operation':nodes[622820]['op'],'arguments':nodes[622820]['args'],'definition':b.registry['monotone'][2],
++  'need':'Certified ActualCommonBandSlowInverse evaluation at actual caller Z,T, then a certified enclosure of R^2/(2*s) relative to original endpoints Xa (node 3617) and XR*exp(node 319) (node 28826); boundary crossing must subdivide or remain unresolved'},
++ 'negativeControls':negative,'localOrdinaryDerivativeDAGMaterialized':True,'allNestedNativeDerivativeBodiesMaterialized':False,
++ 'originalSourceMutated':False,'callerNumericalValuesInvented':False,'actualIndexedNumericalValueComputed':False,'newM3Closures':0,'N706_closed':False,'N805_closed':False}
++ dep.write('ACTUAL_INDEXED_DERIVATIVE_CONNECTION.json',report)
++ summary={'actualIndexedCall':643019,'retainedRows':len(rows),'formalLocalBodies':len(local),'generatedDAGNodes':len(g.new),'formalDerivativeRules':len(g.trace),
++ 'nativeDerivativeLeaves':len(native_leaves),'centerRows':[r['index']for r in center],'exactOuterGuardCertificates':len(guards),'negativeControlsPassed':len(negative),
++ 'remainingGuard':remaining,'remainingKernel':622820,'actualNumericalValueComputed':False,'newM3Closures':0}
++ dep.write('DERIVATIVE_RECEIPT.json',summary);print(json.dumps(summary,sort_keys=True))
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/resumed_continuation/indexed/code/materialize_dependencies.py
+@@ -0,0 +1,96 @@
++#!/usr/bin/env python3
++"""Authenticated indexed argument/body closure; no producer or private seal."""
++import sys
++sys.dont_write_bytecode=True
++from pathlib import Path
++ROOT=Path(__file__).resolve().parents[4]
++sys.path.insert(0,str(ROOT/'work/prune_recovery/native/code'))
++from native_binding import SourceBindings, pin, canonical, digest, Unresolved, HEADER, CLOSURE
++import argparse,collections,gzip,hashlib,importlib.util,json,time
++OUT=Path(__file__).resolve().parents[1]
++PIN='42ac47a05160f9bd0aebd8cf54b72501007a0c46a351039c8c84b5bc1e6832e3'
++DIRECT=ROOT/'work/prune_recovery/native/evidence/DIRECT_INDEXED_OPERAND_SUPPLEMENTS.json'
++PLANS=ROOT/'work/prune_recovery/native/evidence/FINITE_INDEXED_RECIPES.json'
++GRAMMAR=ROOT/'recovered/base/analysis/base/PR30-recovery-handoff/MathScopeCompute/tools/n6-native-domain-frontier-20261015/native_domain_extract.py'
++def write(name,obj):
++ (OUT/'evidence'/name).write_text(json.dumps(obj,indent=2,ensure_ascii=False)+'\n')
++def load_grammar():
++ if pin(GRAMMAR)['sha256']!='566e1a18b5417cafecf9fe7a4cd2e38d1e270c0cc29c1d984448a579a2a92f9d':raise Unresolved('operand grammar differs')
++ spec=importlib.util.spec_from_file_location('indexed_pinned_grammar',GRAMMAR);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
++
++def run(source):
++ start=time.monotonic();b=SourceBindings();h=load_grammar();direct=json.loads(DIRECT.read_text());plans=json.loads(PLANS.read_text())
++ for rec in plans['recipes']:
++  if rec!=b.indexed_recipe(rec['node']):raise Unresolved('source recipe changed')
++ if source.stat().st_size!=32688149:raise Unresolved('compressed source size differs')
++ hasher=hashlib.sha256()
++ with source.open('rb') as f:
++  for block in iter(lambda:f.read(1024*1024),b''):hasher.update(block)
++ if hasher.hexdigest()!=PIN:raise Unresolved('whole compressed source authentication failed')
++ wanted=set()
++ for rec in plans['recipes']:
++  wanted.update(rec['outerParameters']);wanted.update(rec['outerArgumentNodes'])
++  for row in rec['rows']:
++   wanted.add(row['localBody']);wanted.update(row['localParameters']);wanted.update(row['argumentNodes']);wanted.add(row['rowCoefficientNode'])
++   wanted.update(x for guard in row['guards'] for x in guard)
++   for term in row['derivatives']:wanted.update(term['coefficientNodeFactors'])
++ if direct['requestedDirectOperandIDs']!=sorted(wanted):raise Unresolved('direct operand requests differ from authenticated recipes')
++ if {int(k) for k in direct['records']}!=wanted-set(b.nodes):raise Unresolved('direct supplemental record set differs')
++ initial=dict(b.nodes);initial.update({int(k):v for k,v in direct['records'].items()})
++ # Keep raw source prefix, parsing only transitively reached rows. All needed
++ # references are checked against the authenticated source ID sequence.
++ cap=max(int(k) for k in direct['records']);lines=[]
++ with gzip.open(source,'rb') as f:
++  if f.readline()!=HEADER.read_bytes():raise Unresolved('exact header differs')
++  for i,line in enumerate(f):
++   if i>cap:break
++   # Authenticate every prefix source index without allocating every AST.
++   index=int(line[1:line.index(b',')])
++   if index!=i:raise Unresolved('source index sequence differs')
++   lines.append(line)
++ if len(lines)!=cap+1:raise Unresolved('truncated source prefix')
++ for k,row in direct['records'].items():
++  if json.loads(lines[int(k)])!=[int(k),row]:raise Unresolved('direct supplemental record differs from authenticated source: '+k)
++ recovered={};nodes={};native={};bodyless={};edges=collections.Counter();stack=list(direct['requestedDirectOperandIDs']);parents={r:None for r in stack}
++ def get(n):
++  if n in initial:return initial[n]
++  if n in recovered:return recovered[n]
++  if type(n)is not int or not 0<=n<len(lines):raise Unresolved('required source outside authenticated prefix: '+str(n))
++  ident,row=json.loads(lines[n]);assert ident==n
++  recovered[n]=row;return row
++ while stack:
++  ident=stack.pop()
++  if ident in nodes:continue
++  row=get(ident);nodes[ident]=row
++  for child in h.argument_children(row):
++   edges['argument']+=1
++   if child not in parents:parents[child]={'parent':ident,'kind':'argument'}
++   stack.append(child)
++  if row['op'] in h.NATIVE:
++   key,definition=h.native_definition(row,b.registry)
++   native[str(ident)]={'operation':row['op'],'registry':key,'definitionSHA256':digest(definition)}
++   if type(definition.get('body'))is int:
++    child=definition['body'];edges['nativeDefinitionBody']+=1
++    if child not in parents:parents[child]={'parent':ident,'kind':'nativeDefinitionBody','registry':key}
++    stack.append(child)
++   else:bodyless[str(ident)]=native[str(ident)]
++ # Original evidence records remain immutable. Only newly needed IDs are output.
++ missing_arguments=sorted({c for row in nodes.values() for c in h.argument_children(row)}-set(nodes))
++ missing_bodies=sorted({h.native_definition(row,b.registry)[1]['body'] for row in nodes.values() if row['op'] in h.NATIVE and type(h.native_definition(row,b.registry)[1].get('body'))is int}-set(nodes))
++ if missing_arguments or missing_bodies:raise Unresolved('closure failed')
++ report={'schema':'MathScope.ResumedIndexedDependencyClosure/1','implementationKind':'NEW RECOVERY, not original producer bytes',
++ 'inputs':{'header':pin(HEADER),'initializedClosure':pin(CLOSURE),'directOperands':pin(DIRECT),'recipes':pin(PLANS),'operandGrammar':pin(GRAMMAR)},
++ 'authentication':{'wholeCompressedSourceSHA256':PIN,'compressedBytes':source.stat().st_size,'wholeCompressedSourceAuthenticated':True,'sourcePrefixRecordsRead':len(lines),'SQLiteUsed':False,'originalProducerRun':False},
++ 'requestedDirectOperandCount':len(direct['requestedDirectOperandIDs']),'newTransitiveRecordCount':len(recovered),'reachableRecords':len(nodes),'reachableExistingRecordCount':len(nodes)-len(recovered),
++ 'newRecordOperations':dict(sorted(collections.Counter(x['op'] for x in recovered.values()).items())),
++ 'reachableOperations':dict(sorted(collections.Counter(x['op'] for x in nodes.values()).items())),
++ 'newRecords':{str(k):v for k,v in sorted(recovered.items())},'reachableNodeIDs':sorted(nodes),'semanticBoundaries':native,'bodylessSemanticBoundaries':bodyless,
++ 'closureEdgeCounts':dict(edges),'remainingArgumentDependencyIDs':missing_arguments,'remainingExplicitNativeBodyIDs':missing_bodies,
++ 'argumentAndExplicitBodyRecordClosureComplete':True,'nativeMathematicalKernelsEvaluated':False,'allNativeHiddenDependenciesMaterialized':False,
++ 'callerDomainsNumericallyChecked':False,'newM3Closures':0,'N706_closed':False,'N805_closed':False}
++ write('TRANSITIVE_INDEXED_DEPENDENCIES.json',report)
++ summary={k:report[k] for k in ['requestedDirectOperandCount','newTransitiveRecordCount','reachableRecords','newRecordOperations','reachableOperations','argumentAndExplicitBodyRecordClosureComplete']}
++ summary.update({'nativeBoundaryCount':len(native),'bodylessNativeBoundaryCount':len(bodyless),'elapsedSeconds':round(time.monotonic()-start,3),'newM3Closures':0})
++ write('DEPENDENCY_RECEIPT.json',summary);print(json.dumps(summary,sort_keys=True))
++if __name__=='__main__':
++ p=argparse.ArgumentParser();p.add_argument('--source',type=Path,default=ROOT/'work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz');run(p.parse_args().source)
+--- /dev/null
++++ b/work/resumed_continuation/indexed/review_natural/review.py
+@@ -0,0 +1,111 @@
++#!/usr/bin/env python3
++"""Independent source/inequality review of the resumed natural certificates."""
++import sys
++sys.dont_write_bytecode=True
++from pathlib import Path
++from fractions import Fraction as F
++from hashlib import sha256
++from math import comb,factorial
++import gzip,json
++ROOT=Path(__file__).resolve().parents[4];OUT=Path(__file__).resolve().parent
++NAT=ROOT/'work/resumed_continuation/natural'
++HEADER=ROOT/'recovered/base/analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_ORIGINAL_HEADER.json'
++SOURCE=ROOT/'work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz'
++PINS={HEADER:'f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1',SOURCE:'42ac47a05160f9bd0aebd8cf54b72501007a0c46a351039c8c84b5bc1e6832e3'}
++def pin(p):return {'path':str(p.relative_to(ROOT)),'sha256':sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size}
++def main():
++ for p,want in PINS.items():assert pin(p)['sha256']==want
++ cert=json.loads((NAT/'evidence/SCALED_CALLER_CERTIFICATES.json').read_text());degree=json.loads((NAT/'evidence/ACTUAL_DEGREE_ONE.json').read_text())
++ outputs=cert['outputs'];wanted={v for o in outputs for v in [o['sourceNode'],o['naturalNode'],o['YNode'],o['scaleNode']]}
++ raw={}
++ with gzip.open(SOURCE,'rb') as f:
++  assert f.readline()==HEADER.read_bytes()
++  for i,line in enumerate(f):
++   if i>max(wanted|{3611}):break
++   n,row=json.loads(line);assert i==n
++   if i<=3611 or i in wanted:raw[i]=row
++ for i in range(3612):assert raw[i]==degree['nodes'][i]
++ # Independently compare each claimed multiplication with its native call,
++ # retaining eta order, original radial node, and the exact original scale.
++ for o in outputs:
++  assert raw[o['sourceNode']]=={'op':'multiply','args':sorted([o['scaleNode'],o['naturalNode']])}
++  assert raw[o['naturalNode']]=={'op':'actual_natural_series','args':[o['component'],o['YNode'],2,0,o['etaOrder']]}
++  assert o['scaleNode'] in [3457,3498]
++  assert o['YNode'] in [474,3628]
++  m=o['etaOrder'];assert 0<=m<=5
++  Y=F(4 if o['YNode']==474 else 5)
++  first=F(factorial(m)*comb(m+1,m),(m+1)**2*20*4)*Y
++  ratio=Y*F(m+2,40);tail=first/(1-ratio)
++  assert ratio<1
++  assert [str(first),str(ratio),str(tail)]==[o['tailFirstRational'],o['tailRatioUpper'],o['tailRational']]
++  exponent=m-63 if o['scaleNode']==3457 else m-198
++  assert exponent<0 and o['dyadicTailUpper']=={'coefficient':str(tail),'powerOfTwo':260*exponent}
++  finite=F(1,2**51740) if o['scaleNode']==3498 and m==0 else F(0)
++  assert tail/F(2**(-260*exponent))+finite<F(1,2**4096)
++  assert F(o['absoluteEnclosure']['lower'])==-F(1,2**4096)
++  assert F(o['absoluteEnclosure']['upper'])==F(1,2**4096)
++ # Required original factor nodes and caller Y binding.
++ expected={3457:('inverse',[3454]),3494:('definite_integral',[3493,3476,0,2]),3495:('multiply',[3454,3494]),3496:('exp',[3495]),3497:('inverse',[3456]),3498:('multiply',[3496,3497]),3454:('source_parameter',['Lambda']),3456:('source_parameter',['CSelected'])}
++ for i,(op,args) in expected.items():assert raw[i]=={'op':op,'args':args}
++ # Verify core formulas against the original degree prefix; the parameter
++ # inequalities below use these formulas, not the natural author's prose.
++ n=degree['nodes']
++ def q(i):
++  r=n[i];return F(*map(int,r['args'])) if r['op']=='rational' else None
++ def polynomial(i):
++  op,a=n[i]['op'],n[i]['args']
++  if op=='rational':return {(0,0,0):F(*map(int,a))}
++  if i in [2,9,3453]:return {tuple(int(k==[2,9,3453].index(i)) for k in range(3)):F(1)}
++  if op=='add':
++   z={}
++   for c in a:
++    for k,v in polynomial(c).items():z[k]=z.get(k,F(0))+v
++   return {k:v for k,v in z.items() if v}
++  if op=='multiply':
++   z={}
++   for k,v in polynomial(a[0]).items():
++    for l,w in polynomial(a[1]).items():
++     m=tuple(x+y for x,y in zip(k,l));z[m]=z.get(m,F(0))+v*w
++   return {k:v for k,v in z.items() if v}
++  if op=='integer_power' and a[1]==2:
++   z={}
++   for k,v in polynomial(a[0]).items():
++    for l,w in polynomial(a[0]).items():
++     m=tuple(x+y for x,y in zip(k,l));z[m]=z.get(m,F(0))+v*w
++   return {k:v for k,v in z.items() if v}
++  raise AssertionError(('unsupported polynomial',i,n[i]))
++ assert polynomial(28)=={(0,0,0):F(1),(2,1,0):F(-2)}
++ assert polynomial(3459)=={(1,0,0):F(4),(0,0,1):F(1)}
++ assert polynomial(3467)=={(0,0,0):F(-3),(1,0,1):F(-1),(2,1,0):F(8),(1,1,1):F(2)}
++ # Check g's integrand is substitution of zeta, an actual regular rational
++ # expression. Every referenced node lies in the exact matching prefix.
++ assert n[3475]['op']=='multiply' and 20 in n[3475]['args']
++ assert n[3472]['op']=='multiply'
++ assert n[3493]['op']=='multiply' and 20 in n[3493]['args']
++ # r1 estimate: h<1/16, j=h^4<1, |U|<5, |W|<8,
++ # L>7/8. Hence |r1|<(8+11/16)*8/7=139/14<13.
++ r1=F(8,1)+F(11,16);r1*=F(8,7);assert r1==F(139,14) and r1<13
++ assert F(13,4*2**16640)<F(1,2**4096)
++ # Exact residual inequalities sufficient for the parameter estimates:
++ # Q>=2 implies Q^200-Q^199>=Q^65/2; exp(-x)<1/x for x>0.
++ assert 2**200-2**199>=F(2**65,2)
++ # t1<exp(-120)<1/8, exp(t1)<8/7, gives Y<32/7<5.
++ assert F(32,7)<5 and 1+120>8
++ # Check all guards/restrictions remain expressly stated.
++ assert cert['all138WholeKernelsRemainOpen'] and cert['newM3Closures']==0
++ assert not cert['N706_closed'] and not cert['N805_closed']
++ assert all(o['etaDomain']==['-1','1'] and not o['unscaledNativeKernelComplete'] for o in outputs)
++ report={'schema':'MathScope.IndependentResumedNaturalReview/1','reviewedInputs':[pin(NAT/'code/certify_scaled_callers.py'),pin(NAT/'code/materialize_degree_one.mjs'),pin(NAT/'evidence/SCALED_CALLER_CERTIFICATES.json'),pin(NAT/'evidence/ACTUAL_DEGREE_ONE.json')],
++  'status':'PASS_WITH_STATED_FORMAL_DOMAIN_AND_NORMALIZATION_SCOPE','originalScalarMultiplicationsIndependentlyMatched':len(outputs),'authenticatedCorePrefixRecordsCompared':3612,
++  'tailRationalsAndDyadicErrorBudgetsRecomputed':len(outputs),'actual3632And3637Present':{str(i):any(o['sourceNode']==i for o in outputs)for i in [3632,3637]},
++  'gProofReview':['For real eta in [-1,1], h<1/16 and sigmaStar>0 imply 0<L<=1 and Hstar^2+sigmaStar^2>0.',
++   '|Hstar|/(Hstar^2+sigmaStar^2)<=1/(2 sigmaStar), and integration from 0 to eta has length<=1, so |psi|<=1/(2 sigmaStar)<Q/2.',
++   'log(CSelected)>=Q^200 and Lambda=Q^64 imply log(g)<=Q^65/2-Q^200<=-Q^199 for Q>2.',
++   'Since exp(x)>x for x>0, g<=exp(-Q^199)<Q^-199. This bounds g times the eta partial, not the derivative of their product.'],
++  'phiOneProofReview':{'r1Upper':str(r1),'claimed13Valid':True,'chiInUnitInterval':'Hstar^2/(Hstar^2+sigmaStar^2), sigmaStar>0','smallCoefficientRemainder':'13/(4 Lambda)<2^-4096'},
++  'domainProofReview':'Original Y is exactly 4 or 4 exp(t1), with 0<t1<1/8 and exp(t1)<8/7, hence 4<=Y<5; eta restriction unchanged.',
++  'materialLimitations':['Formal eta-domain certificates do not prove every later global caller substitution.','No arbitrary-precision unscaled native kernel is certified.','Degree-zero caller enclosures use original normalizations and exact zero/one coefficients; the Phi1 enclosure is separate.'],
++  'newM3Closures':0,'N706_closed':False,'N805_closed':False}
++ (OUT/'REVIEW.json').write_text(json.dumps(report,indent=2)+'\n')
++ print(json.dumps({'status':report['status'],'normalizedScalarNodesReviewed':len(outputs),'tailBudgetsReviewed':len(outputs),'newM3Closures':0}))
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/resumed_continuation/natural/code/certify_scaled_callers.py
+@@ -0,0 +1,235 @@
++#!/usr/bin/env python3
++"""New exact caller enclosures for original natural scalar subexpressions.
++
++No native call is relabelled as a complete arbitrary-precision evaluator.
++Only the finite degree-one materializer, small source scan, exact rational
++tail, and original scalar normalizations are used.
++"""
++from fractions import Fraction as F
++from hashlib import sha256
++from math import comb, factorial
++from pathlib import Path
++import copy, gzip, json
++
++ROOT = Path(__file__).resolve().parents[4]
++OUT = Path(__file__).resolve().parents[1]
++HEADER = ROOT/'recovered/base/analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_ORIGINAL_HEADER.json'
++CLOSURE = ROOT/'work/prune_recovery/scalar/evidence/RAW_INITIALIZED_SCALAR_CLOSURE.json'
++SOURCE = ROOT/'work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz'
++M2 = ROOT/'recovered/base/work/n602_continuation/source/research-ide/mathscope-m2/navier'
++PINS = {
++    HEADER: 'f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1',
++    CLOSURE: '2cbb5c74eb58ef82f948a19bad00a299c38b802cb8e668e94da8e34a37f77e91',
++    SOURCE: '42ac47a05160f9bd0aebd8cf54b72501007a0c46a351039c8c84b5bc1e6832e3',
++    M2/'actual-continuation-exact-core.mjs': 'd657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815',
++    M2/'actual-continuation-exact-tail.mjs': 'fa569df96f7950e4c1d908405d8a30bcb73088b1e2d3af7a0baa047d4b2a3df0',
++}
++
++def pin(path):
++    return {'path': str(path.relative_to(ROOT)), 'sha256': sha256(path.read_bytes()).hexdigest(), 'bytes': path.stat().st_size}
++
++def registry(header):
++    result = {}
++    def walk(d):
++        for k,v in d.items():
++            if k == 'base': walk(v)
++            elif isinstance(v,str):
++                try: result[k] = json.loads(v)
++                except json.JSONDecodeError: pass
++    walk(header['definitions'])
++    return result
++
++def assert_parameter_binding(p):
++    expected = {
++      'Md': {'integer':1048576},
++      'T': {'sum':[{'exp':{'ref':'Md'}},{'integer':10}]},
++      'h': {'exp':{'product':[{'integer':-8002},{'ref':'T'}]}},
++      'j0': {'power':[{'ref':'h'},4]},
++      'sigmaStar': {'quotient':[{'ref':'j0'},{'integer':2000}]},
++      'rho': {'quotient':[{'power':[{'ref':'sigmaStar'},2]},{'integer':65536}]},
++      'K': {'power':[{'ref':'Pstar'},2]},
++      'Pstar': {'exp':{'ref':'logP'}},
++      'logP': {'product':[{'integer':2},{'ref':'T'}]},
++      'Q': {'quotient':[{'product':[{'integer':str(2**260)},{'ref':'K'}]},{'power':[{'ref':'sigmaStar'},2]}]},
++      'Lambda': {'power':[{'ref':'Q'},64]},
++      'logCSelected': {'sum':[{'product':[{'integer':10},{'log':{'sum':[{'integer':1},{'ref':'BRefUpper'}]}}]},{'power':[{'ref':'Q'},200]}]},
++      'BRefUpper': {'power':[{'ref':'Q'},300]},
++      'CSelected': {'exp':{'ref':'logCSelected'}},
++      't1': {'power':[{'ref':'CSelected'},-120]},
++      'Xa': {'quotient':[{'integer':4},{'ref':'Lambda'}]},
++    }
++    for k,v in expected.items():
++        if p[k] != v: raise ValueError('Changed source parameter: '+k)
++
++def tail_zero(Y,m):
++    """The original complete B_rho positive tail after degree zero, k=0."""
++    if not isinstance(Y,F) or not 0<=Y<=5 or not isinstance(m,int) or not 0<=m<=5:
++        raise ValueError('Tail scope')
++    r = Y/F(20)*F(2+m,2)
++    if r >= 1: raise ValueError('Ratio does not contract')
++    first = F(factorial(m)*comb(1+m,m), (m+1)**2*20*4)*Y
++    return first, r, first/(1-r)
++
++class Certificate:
++    def __init__(self):
++        for path,expected in PINS.items():
++            if pin(path)['sha256'] != expected: raise ValueError('Input hash changed: '+str(path))
++        self.header=json.loads(HEADER.read_text()); self.fixed=registry(self.header)['fixed']
++        self.nodes={int(k):v for k,v in json.loads(CLOSURE.read_text())['records'].items()}
++        self.degree=json.loads((OUT/'evidence/ACTUAL_DEGREE_ONE.json').read_text())
++        assert_parameter_binding(self.fixed['source']['parametersExactExpressions'])
++        assert self.degree['rootFields']==self.fixed['core']
++        assert self.degree['coefficients']['Phi'][0]==1
++        assert self.degree['coefficients']['u'][0]==self.degree['coefficients']['average'][0]==0
++        assert self.degree['nodes'][0]=={'op':'rational','args':['0','1']}
++        assert self.degree['nodes'][1]=={'op':'rational','args':['1','1']}
++        # The coefficient materializer and authenticated original registry have
++        # exactly the same complete pressure/g/core prefix before they branch.
++        max_needed=max(81135,len(self.degree['nodes'])-1)
++        self.raw={}
++        with gzip.open(SOURCE,'rb') as f:
++            h=f.readline()
++            assert h.rstrip(b'\r\n')==HEADER.read_bytes().rstrip(b'\r\n')
++            for line in f:
++                i,n=json.loads(line)
++                if i>max_needed: break
++                self.raw[i]=n
++        for i in range(3612): assert self.raw[i]==self.degree['nodes'][i]
++        # Directly check the new Phi_1 expression, rather than inferring its
++        # formula from a filename or from the materializer's prose metadata.
++        phi_one_nodes={
++          1953:('inverse',[28]), 847:('rational',['1','4']),
++          3500:('multiply',[1192,3459]), 3501:('multiply',[20,3500]),
++          3502:('add',[1,3501]), 1192:('multiply',[2,24]),
++          3613:('multiply',[9,3502]),3614:('add',[3467,3613]),
++          3615:('multiply',[1953,3614]),3624:('multiply',[20,3472]),
++          3625:('multiply',[3457,3615]),3626:('add',[3624,3625]),
++          3627:('multiply',[847,3626]),
++        }
++        for i,(op,args) in phi_one_nodes.items():
++            assert self.degree['nodes'][i]=={'op':op,'args':args}
++        assert self.degree['coefficients']['Phi'][1]==3627
++        for i,n in self.nodes.items():
++            if i<=max_needed: assert self.raw[i]==n
++        exact={
++          2:('coordinate',['eta']), 3454:('source_parameter',['Lambda']),
++          3457:('inverse',[3454]), 3617:('source_parameter',['Xa']),
++          3612:('source_parameter',['t1']), 3623:('exp',[3612]),
++          3624:('multiply',[3617,3623]), 3628:('multiply',[3454,3624]),
++          474:('rational',['4','1']), 3494:('definite_integral',[3493,3476,0,2]),
++          3495:('multiply',[3454,3494]), 3496:('exp',[3495]),
++          3497:('inverse',[3456]), 3498:('multiply',[3496,3497]),
++        }
++        for i,(op,args) in exact.items(): assert self.nodes[i]=={'op':op,'args':args}
++        self.bound={}
++        for i,n in self.nodes.items():
++            if n['op']!='multiply': continue
++            for scale in [3457,3498]:
++                if scale not in n['args']: continue
++                a=next((v for v in n['args'] if v!=scale),None)
++                natural=self.nodes.get(a,{})
++                if natural.get('op')!='actual_natural_series': continue
++                comp,Y,eta,k,m=natural['args']
++                if Y not in [474,3628] or eta!=2 or k!=0 or not 0<=m<=5: continue
++                if scale==3457 and comp not in ['u','average']: continue
++                if scale==3498 and comp!='Phi': continue
++                self.bound[i]={'sourceNode':i,'naturalNode':a,'component':comp,'YNode':Y,'etaNode':eta,'radialOrder':k,'etaOrder':m,'scaleNode':scale}
++        assert len(self.bound)==33
++
++    def enclose(self,node,eta=(F(-1),F(1)),bits=4096):
++        if node not in self.bound: raise ValueError('Not a bound original normalized scalar')
++        if len(eta)!=2 or any(type(x) is not F for x in eta) or not -1<=eta[0]<=eta[1]<=1:
++            raise ValueError('Need a certified eta interval within [-1,1]')
++        if type(bits) is not int or not 1<=bits<=4096: raise ValueError('Certified precision range')
++        call=self.bound[node];m=call['etaOrder'];Y=F(4) if call['YNode']==474 else F(5)
++        first,ratio,tail=tail_zero(Y,m)
++        # Q>2^260, rho^-1<Q, Lambda=Q^64; every exponent is negative.
++        exponent=m-(63 if call['scaleNode']==3457 else 198)
++        complete_tail=tail*F(1,2**(-260*exponent))
++        finite_term=F(1,2**(199*260)) if call['scaleNode']==3498 and m==0 else F(0)
++        eps=F(1,2**bits)
++        assert complete_tail+finite_term<eps
++        return {**call,'etaDomain':[str(eta[0]),str(eta[1])],
++          'YEnclosure':['4','5'] if call['YNode']==3628 else ['4','4'],
++          'degree':0,'actualFiniteCoefficient':'1' if call['component']=='Phi' and m==0 else '0',
++          'finiteCoefficientRoundingError':'0',
++          'scaledFiniteTermEnclosure':['0','2^-51740'] if finite_term else ['0','0'],
++          'tailFirstRational':str(first),'tailRatioUpper':str(ratio),'tailRational':str(tail),
++          'originalTailScale':'Q*rho^(-m)',
++          'afterOriginalNormalizationUpper':f'({tail})*Q^({exponent})',
++          'dyadicTailUpper':{'coefficient':str(tail),'powerOfTwo':260*exponent},
++          'absoluteEnclosure':{'lower':str(-eps),'upper':str(eps),'notation':[f'-2^-{bits}',f'2^-{bits}']},
++          'status':'CERTIFIED_NORMALIZED_SCALAR_ENCLOSURE_ON_STATED_FORMAL_DOMAIN',
++          'unscaledNativeKernelComplete':False}
++
++def main():
++    cert=Certificate()
++    outputs=[cert.enclose(i) for i in sorted(cert.bound)]
++    original=json.loads((ROOT/'work/prune_recovery/ORIGINAL_138_CROSSWALK.json').read_text())['rows']
++    original_ids={r['sourceNodeId']:r['originalLedgerIndex'] for r in original}
++    for o in outputs: o['original138LedgerIndex']=original_ids.get(o['naturalNode'])
++    # Nonzero original finite coefficient, independently enclosed uniformly.
++    # |r1|<13, 0<=chi<=1, Lambda>2^16640 imply this interval.
++    eps=F(1,2**4096)
++    assert F(13,4*2**16640)<eps
++    phi1={'materializedCoefficientNode':cert.degree['coefficients']['Phi'][1],
++      'nodeNamespace':'new actual degree-one coefficient materialization; not raw original node IDs',
++      'formula':'(-chi + Lambda^-1*L^-1*(Wstar+h*(1-2*eta*Ustar)))/4',
++      'sourceCoreRootFieldsExactlyEqual':True,'rawPrefixNodesExactlyEqual':3612,
++      'r1AbsoluteUpper':'13','chiEnclosure':['0','1'],
++      'enclosure':{'notation':['-1/4-2^-4096','2^-4096'],'lower':str(-F(1,4)-eps),'upper':str(eps)},
++      'etaDomain':['-1','1'],'finiteCoefficientNumericallyEnclosed':True,
++      'nonzeroFiniteCoefficientEnclosureUsedForDegreeZeroCallers':False}
++    # This compares the available *upper-bound certificate*, not true error.
++    # Q > 2^(260+64020), while the first-tail coefficient at N=10000,Y=4
++    # is 1/(5^10001*10002^2). Its product already exceeds one.
++    assert 2**64280 > 5**10001 * 10002**2
++    negative=[]
++    for label,fn in [
++      ('unscaled native rejected',lambda:cert.enclose(3631)),
++      ('eta outside original domain rejected',lambda:cert.enclose(3632,(F(-1),F(2)))),
++      ('floating endpoint rejected',lambda:cert.enclose(3632,(-1.0,1.0))),
++      ('unsupported radial derivative rejected',lambda:cert.enclose(3692)),
++      ('source tail ratio boundary rejected',lambda:tail_zero(F(5),6)),
++    ]:
++        try:fn()
++        except (ValueError,AssertionError):negative.append({'control':label,'pass':True})
++        else:raise AssertionError(label)
++    changed=copy.deepcopy(cert.fixed['source']['parametersExactExpressions']);changed['Lambda']={'power':[{'ref':'Q'},1]}
++    try:assert_parameter_binding(changed)
++    except ValueError:negative.append({'control':'different normalization parameter rejected','pass':True})
++    else:raise AssertionError('normalization mutation accepted')
++    result={
++      'schema':'MathScope.ResumedNaturalOriginalScaledCallerEnclosures/1',
++      'inputs':[pin(p) for p in [HEADER,CLOSURE,SOURCE,M2/'actual-continuation-exact-core.mjs',M2/'actual-continuation-exact-tail.mjs',OUT/'evidence/ACTUAL_DEGREE_ONE.json']],
++      'sourceParameterExpressionSHA256':cert.fixed['source']['parameterExpressionSHA256'],
++      'authentication':{'wholeCompressedSourceSHA256Verified':True,'rawHeaderBytesExactlyEqual':True,'corePrefixRecordCount':3612,'rawOriginalProducerExecuted':False},
++      'degreeOneActualPhiCoefficient':phi1,
++      'domainProof':{'eta':'original formal coordinate node 2, restricted to [-1,1]; no later global chart substitution is silently certified',
++          'radialNode474':'exact rational 4',
++          'radialNode3628':'Lambda*Xa*exp(t1)=4*exp(t1)',
++          'upperProof':['Q>2^260>2','log(CSelected)>=Q^200>1','0<t1=CSelected^-120<exp(-120)<1/8','exp(t1)<=1/(1-t1)<8/7','4*exp(t1)<32/7<5'],
++          'derivedCallerDomain':'Y in [4,5], eta in [-1,1]'},
++      'scaleProof':{
++          'Q':'2^260*K/sigmaStar^2 > 2^260',
++          'rhoInverse':'2^16/sigmaStar^2 < Q since K=exp(4T)>1',
++          'inverseLambda':'Q^-64, exactly the original node 3457',
++          'gUpper':['0<sigmaStar<1; 0<L<=1 on eta in [-1,1]','|zeta|=L*|Hstar|/(Hstar^2+sigmaStar^2)<=1/(2*sigmaStar)','|psi|<=1/(2*sigmaStar)<Q/2','log(g)=Q^64*psi-log(CSelected)<=Q^65/2-Q^200<=-Q^199','g<=exp(-Q^199)<Q^-199'],
++          'gDerivativeWarning':'g*d_eta^m(Phi) is enclosed; this is not d_eta^m(g*Phi).'},
++      'normalizedScalarCount':len(outputs),'outputs':outputs,
++      'negativeControls':negative,
++      'unscaledBlockingInequality':{
++          'required':'finite-coefficient enclosure error + Q*rho^-m*t_N(Y,k,m) <= 2^-bits',
++          'actualSourcePoint':'Y=4 (node474), k=m=0',
++          'availableFiniteCoefficientProducerMaximumDegree':64,
++          'availableTailRoutineMaximumDegree':10000,
++          'atMaximumTailDegree':'Q*t_10000 >= Q/(5^10001*10002^2) > 2^64280/(5^10001*10002^2) > 1',
++          'integerComparisonVerified':True,
++          'interpretation':'The retained norm-tail certificate cannot certify small unscaled error at this budget. This is not a lower bound on the actual truncation error.',
++          'additionalRequirements':['Sharper source-bound natural coefficient/tail estimates or an executable higher-degree original recurrence','Certified pressure P0 and eta derivatives in nonzero u coefficients','Actual global caller eta/chart domains and all remaining factors and derivatives']},
++      'all138WholeKernelsRemainOpen':True,'newM3Closures':0,'N706_closed':False,'N805_closed':False,
++    }
++    (OUT/'evidence/SCALED_CALLER_CERTIFICATES.json').write_text(json.dumps(result,indent=2)+'\n')
++    print(json.dumps({'normalizedScalarCount':len(outputs),'original138CallsRepresented':len({o['naturalNode'] for o in outputs if o['original138LedgerIndex'] is not None}),'finiteNonzeroPhiCoefficientEnclosed':True,'controlsPassed':len(negative),'newM3Closures':0}))
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/resumed_continuation/natural/code/materialize_degree_one.mjs
+@@ -0,0 +1,18 @@
++import fs from 'node:fs';
++import {prepareActualNaturalCoreProgram} from '../../../../recovered/base/work/n602_continuation/source/research-ide/mathscope-m2/navier/actual-continuation-exact-core.mjs';
++
++// Only the small original finite coefficient materializer is run, never the
++// original global producer, finite cycle, or a substitute parameter profile.
++const prepared = prepareActualNaturalCoreProgram({degree: 1});
++const output = {
++  schema: 'MathScope.ResumedNaturalActualDegreeOne/1',
++  rootFields: prepared.rootFields,
++  coefficients: prepared.coefficients,
++  nodes: prepared.G.nodes,
++  recurrence: prepared.program.recurrence,
++  source: prepared.G.source,
++  degree: 1,
++  originalGlobalProducerExecuted: false,
++};
++fs.writeFileSync(new URL('../evidence/ACTUAL_DEGREE_ONE.json', import.meta.url), JSON.stringify(output, null, 2) + '\n');
++console.log(JSON.stringify({degree: 1, nodeCount: output.nodes.length, coefficients: output.coefficients, rootFields: output.rootFields}));
+--- /dev/null
++++ b/work/resumed_continuation/natural/code/replay.py
+@@ -0,0 +1,36 @@
++#!/usr/bin/env python3
++"""Replay only the new natural continuation, with complete execution receipt."""
++import hashlib,json,subprocess,sys
++from pathlib import Path
++OUT=Path(__file__).resolve().parents[1]
++ROOT=OUT.parents[2]
++
++def pin(path):
++    return {'path':str(path.relative_to(ROOT)),'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'bytes':path.stat().st_size}
++
++jobs=[('materialize',['node',str(OUT/'code/materialize_degree_one.mjs')]),
++      ('certify',[sys.executable,str(OUT/'code/certify_scaled_callers.py')])]
++receipts=[]
++for name,argv in jobs:
++    try:
++        p=subprocess.run(argv,cwd=ROOT,capture_output=True,text=True,timeout=45)
++        stdout,stderr,code=p.stdout,p.stderr,p.returncode
++    except subprocess.TimeoutExpired as e:
++        stdout=e.stdout or '';stderr=e.stderr or ''
++        if isinstance(stdout,bytes):stdout=stdout.decode(errors='replace')
++        if isinstance(stderr,bytes):stderr=stderr.decode(errors='replace')
++        stderr+='\nNew natural continuation job exceeded 45 seconds.\n';code=124
++    files=[]
++    for suffix,value in [('stdout.log',stdout),('stderr.log',stderr),('exit.txt',str(code)+'\n')]:
++        path=OUT/'logs'/f'{name}.{suffix}';path.write_text(value);files.append(pin(path))
++    receipts.append({'name':name,'argv':argv,'exitCode':code,'logs':files})
++    if code:break
++outputs=[OUT/'evidence/ACTUAL_DEGREE_ONE.json',OUT/'evidence/SCALED_CALLER_CERTIFICATES.json']
++receipt={'schema':'MathScope.ResumedNaturalReplayReceipt/1','jobs':receipts,
++    'code':[pin(p)for p in sorted((OUT/'code').glob('*'))if p.is_file()],
++    'outputs':[pin(p)for p in outputs if p.exists()],
++    'pass':len(receipts)==2 and all(x['exitCode']==0 for x in receipts),
++    'originalGlobalProducerExecuted':False,'newM3Closures':0}
++(OUT/'evidence/EXECUTION_RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n')
++print(json.dumps({'pass':receipt['pass'],'jobs':len(receipts),'normalizedScalarEnclosures':33 if receipt['pass'] else None,'newM3Closures':0}))
++sys.exit(0 if receipt['pass'] else 1)
+--- /dev/null
++++ b/work/resumed_continuation/natural/review_indexed/review.py
+@@ -0,0 +1,173 @@
++#!/usr/bin/env python3
++"""Independent raw-source and expanded-polynomial indexed review."""
++import collections,gzip,hashlib,importlib.util,json,sys
++from fractions import Fraction as F
++from pathlib import Path
++ROOT=Path(__file__).resolve().parents[4]
++OUT=Path(__file__).resolve().parent
++INDEX=ROOT/'work/resumed_continuation/indexed'
++sys.dont_write_bytecode=True
++sys.path.insert(0,str(ROOT/'work/prune_recovery/native/code'))
++from native_binding import SourceBindings
++
++def canonical(x):return json.dumps(x,sort_keys=True,separators=(',',':'))
++def pin(p):return {'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
++def plus(a,b):
++ d=collections.defaultdict(F,a)
++ for k,v in b.items():d[k]+=v
++ return {k:v for k,v in d.items() if v}
++def times(a,b):
++ d=collections.defaultdict(F)
++ for am,av in a.items():
++  for bm,bv in b.items():
++   m=collections.defaultdict(int,am)
++   for k,v in bm:m[k]+=v
++   d[tuple(sorted((k,v)for k,v in m.items()if v))]+=av*bv
++ return {k:v for k,v in d.items() if v}
++def atom(k):return {((k,1),):F(1)}
++def const(q):return {} if q==0 else {():F(q)}
++
++def main():
++ paths=[INDEX/'evidence/TRANSITIVE_INDEXED_DEPENDENCIES.json',INDEX/'evidence/ACTUAL_INDEXED_DERIVATIVE_CONNECTION.json']
++ dep,der=(json.loads(p.read_text())for p in paths)
++ closure=json.loads((ROOT/'work/prune_recovery/scalar/evidence/RAW_INITIALIZED_SCALAR_CLOSURE.json').read_text())
++ direct=json.loads((ROOT/'work/prune_recovery/native/evidence/DIRECT_INDEXED_OPERAND_SUPPLEMENTS.json').read_text())
++ nodes={int(k):v for k,v in closure['records'].items()}
++ nodes.update({int(k):v for k,v in direct['records'].items()})
++ nodes.update({int(k):v for k,v in dep['newRecords'].items()})
++ source=ROOT/'work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz'
++ assert hashlib.sha256(source.read_bytes()).hexdigest()=='42ac47a05160f9bd0aebd8cf54b72501007a0c46a351039c8c84b5bc1e6832e3'
++ wanted=set(dep['reachableNodeIDs']); matched=set(); max_wanted=max(wanted)
++ with gzip.open(source,'rb') as f:
++  f.readline()
++  for line in f:
++   i,n=json.loads(line)
++   if i in wanted:
++    assert nodes[i]==n,('raw source mismatch',i)
++    matched.add(i)
++   if i>=max_wanted:break
++ assert matched==wanted
++ grammar_path=ROOT/'recovered/base/analysis/base/PR30-recovery-handoff/MathScopeCompute/tools/n6-native-domain-frontier-20261015/native_domain_extract.py'
++ spec=importlib.util.spec_from_file_location('independent_pinned_grammar',grammar_path);grammar=importlib.util.module_from_spec(spec);spec.loader.exec_module(grammar)
++ binding=SourceBindings()
++ stack=list(direct['requestedDirectOperandIDs']);reachable=set()
++ while stack:
++  i=stack.pop()
++  if i in reachable:continue
++  reachable.add(i);n=nodes[i];stack.extend(grammar.argument_children(n))
++  if n['op'] in grammar.NATIVE:
++   _,definition=grammar.native_definition(n,binding.registry)
++   if type(definition.get('body')) is int:stack.append(definition['body'])
++ assert reachable==wanted
++ generated={int(k):v for k,v in der['generatedNodes'].items()};allnodes=nodes|generated
++ R=622802;free_cache={};poly_cache={};native_keys={}
++ def free(i):
++  if i in free_cache:return free_cache[i]
++  n=allnodes[i];op,a=n['op'],n['args']
++  if op=='coordinate':s={i}
++  elif op=='definite_integral':s=(free(a[0])-{a[1]})|free(a[2])|free(a[3])
++  elif op=='lexical_application':s=(free(a[0])-set(a[1]))|set().union(*(free(v)for v in a[2]))
++  else:s=set().union(*(free(v)for v in grammar.argument_children(n)))
++  free_cache[i]=s;return s
++ def native_key(n):
++  key='native:'+canonical(n);native_keys[key]=n;return key
++ def poly(i):
++  if i in poly_cache:return poly_cache[i]
++  n=allnodes[i];op,a=n['op'],n['args']
++  if op=='rational':v=const(F(*map(int,a)))
++  elif i==R:v=atom('R')
++  elif i in nodes and R not in free(i):v=atom('constant:'+str(i))
++  elif op=='add':v=plus(poly(a[0]),poly(a[1]))
++  elif op=='multiply':v=times(poly(a[0]),poly(a[1]))
++  elif op=='inverse':
++   p=poly(a[0]);assert len(p)==1
++   mon,co=next(iter(p.items()));v={tuple((k,-e)for k,e in mon):1/co}
++  elif op=='integer_power':
++   assert a[1]>=0;v=const(1)
++   for _ in range(a[1]):v=times(v,poly(a[0]))
++  elif op=='smooth_piecewise':
++   # One independent selector indicator for each original branch. This
++   # proves all branchwise polynomial derivatives simultaneously, with the
++   # source matching-jet premise retained at joins.
++   v={}
++   for j,body in enumerate(a[3:]):v=plus(v,times(atom('guard:'+canonical([a[:3],j])),poly(body)))
++  elif op=='actual_expression_partial':
++   assert a[1][0]==R and all(R not in free(x)for x in a[1][1:])
++   v=atom(native_key(n))
++  else:raise AssertionError(('unsupported actual polynomial operation',i,op))
++  poly_cache[i]=v;return v
++ def derivative(p):
++  result={}
++  for mon,co in p.items():
++   for k,power in mon:
++    if k=='R':extra={};factor=power
++    elif k.startswith('native:'):
++     n=json.loads(json.dumps(native_keys[k]));n['args'][2][0]+=1
++     extra={native_key(n):1};factor=power
++    else:continue
++    new=dict(mon);new[k]-=1
++    for a,v in extra.items():new[a]=new.get(a,0)+v
++    term={tuple(sorted((a,v)for a,v in new.items()if v)):co*factor}
++    result=plus(result,term)
++  return result
++ derivative_checks=[]
++ for b in der['formalDerivativeBodies']:
++  assert b['orders']==[1]+[0]*8 and b['formalParameters'][0]==R
++  expected=derivative(poly(b['originalBody']));actual=poly(b['formalDerivativeRoot'])
++  assert expected==actual,('derivative differs',b['originalBody'])
++  derivative_checks.append({'body':b['originalBody'],'root':b['formalDerivativeRoot'],'expandedLaurentMonomials':len(actual),'pass':True})
++ recipe=binding.indexed_recipe(643019)
++ assert len(recipe['rows'])==len(der['rows'])==162
++ for actual,row in zip(der['rows'],recipe['rows']):
++  assert actual['rowIndex']==row['index'] and actual['sourceLabel']==row['label']
++  app=allnodes[actual['lexicalApplication']]
++  assert app=={'op':'lexical_application','args':[actual['formalLocalDerivativeRoot'],row['localParameters'],row['argumentNodes']]}
++  assert actual['guardEvaluationOrder']==list(reversed(row['guards']))
++  root=actual['guardedRoot']
++  for guard in reversed(row['guards']):
++   n=allnodes[root];assert n['op']=='smooth_piecewise'
++   assert n['args'][:3]==guard and n['args'][3]==n['args'][5]==0
++   root=n['args'][4]
++  assert root==actual['unguardedRoot']
++ field=allnodes[der['assembledFieldRoot']]
++ assert field['op']=='lexical_application' and field['args'][1:]==[recipe['outerParameters'],recipe['outerArgumentNodes']]
++ def affine(i,atoms):
++  if i in atoms:return {i:F(1)}
++  n=nodes[i];op,a=n['op'],n['args']
++  if op=='rational':return {None:F(*map(int,a))}
++  if op=='add':
++   d=collections.defaultdict(F)
++   for child in a:
++    for k,v in affine(child,atoms).items():d[k]+=v
++   return {k:v for k,v in d.items()if v}
++  if op=='multiply':
++   p,q=(affine(c,atoms)for c in a)
++   if set(p)<= {None}:return {k:p.get(None,0)*v for k,v in q.items()if p.get(None,0)*v}
++   if set(q)<= {None}:return {k:q.get(None,0)*v for k,v in p.items()if q.get(None,0)*v}
++  raise AssertionError(('nonaffine guard',i))
++ for guard in der['centerOuterGuardCertificates']:
++  selector,left,right=guard['guard'];x=guard['continuousAtom'];ceil=guard['ceilingNode']
++  assert nodes[ceil]['op']=='ceiling'
++  assert affine(selector,{x,ceil})=={x:F(1),ceil:F(1)}
++  assert affine(nodes[ceil]['args'][0],{x})=={None:F(-1,2),x:F(-1)}
++  assert affine(left,set())=={None:F(-3,4)} and affine(right,set())=={None:F(3,4)}
++  assert F(-3,4)<F(-1,2)<=F(1,2)<F(3,4)
++ assert der['remainingInnerGuard']==[622824,3617,28826]
++ path=der['remainingInnerGuardPathToSlowInverse']
++ assert path[0]==622824 and path[-1]==622820
++ for i,j in zip(path,path[1:]):assert j in grammar.argument_children(nodes[i])
++ assert not der['actualIndexedNumericalValueComputed'] and der['newM3Closures']==0
++ report={'schema':'MathScope.IndependentIndexedContinuationReview/1','inputs':[pin(p)for p in paths+[INDEX/'code/materialize_dependencies.py',INDEX/'code/exact_derivative_connection.py']],
++  'status':'PASS_WITH_STATED_SYMBOLIC_AND_DEFINED_REAL_SCOPE','rawSourceRecordsIndependentlyMatched':len(matched),
++  'argumentAndExplicitBodyClosureIndependentlyRecomputed':True,'newTransitiveRecordCount':len(dep['newRecords']),
++  'derivativeMethod':'Expand actual bodies as exact sparse Laurent polynomials in R, native-function atoms, and original branch indicators; differentiate expanded monomials and compare with new derivative DAG.',
++  'localDerivativeChecks':derivative_checks,'originalNativeDerivativeLeavesRetained':len(der['nativeDerivativeLeaves']),
++  'all162LexicalBindingsAndGuardWrappersChecked':True,'fourNearestCellIdentitiesChecked':True,
++  'nearestCellProof':'0<=ceil(y)-y<1 gives -1/2<=x+ceil(-1/2-x)<1/2, inside the original (-3/4,3/4).',
++  'remainingActualInnerGuardAndSlowInversePathChecked':True,
++  'limitations':['Branchwise derivative equality uses original matching-jet theorem at joins','Native derivative functions remain unevaluated','Nearest-cell guards require finite defined real atoms','Inner slow-inverse guard and actual global numerical value remain unresolved'],
++  'newM3Closures':0}
++ (OUT/'REVIEW.json').write_text(json.dumps(report,indent=2)+'\n')
++ print(json.dumps({'status':report['status'],'sourceRecords':len(matched),'newRecords':len(dep['newRecords']),'localDerivatives':derivative_checks,'rows':162,'guards':4,'newM3Closures':0}))
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/resumed_continuation/picard/code/apply_actual_collar_bounds.py
+@@ -0,0 +1,205 @@
++#!/usr/bin/env python3
++"""New actual-source collar bound application; never runs the source producer.
++
++The result is a coarse exact numeric-expression enclosure, not a finite-term
++Picard evaluation. It applies the retained full-collar theorem to two ordinary
++radial jets and two literal averages at authenticated source callers.
++"""
++from __future__ import annotations
++from collections import Counter
++from fractions import Fraction as F
++from functools import lru_cache
++from hashlib import sha256
++from pathlib import Path
++import json
++
++ROOT = Path(__file__).resolve().parents[4]
++OUT = Path(__file__).resolve().parents[1]
++HEADER = ROOT/'recovered/base/analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_ORIGINAL_HEADER.json'
++CLOSURE = ROOT/'work/prune_recovery/scalar/evidence/RAW_INITIALIZED_SCALAR_CLOSURE.json'
++PROOFS = ROOT/'recovered/base/analysis/base/PR30-recovery-handoff/angular-proof/inputs'
++MAJORANT = PROOFS/'ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json'
++AVERAGE = PROOFS/'ACTUAL_PICARD_AVERAGE_COLLAR.json'
++PRIOR = ROOT/'work/prune_recovery/native/evidence/EXISTING_PROOF_APPLICATION.json'
++CROSSWALK = ROOT/'work/prune_recovery/ORIGINAL_138_CROSSWALK.json'
++SOURCE = ROOT/'recovered/base/work/n602_continuation/source/research-ide/mathscope-m2/navier'
++
++def canonical(obj, sort=True):
++    return json.dumps(obj,sort_keys=sort,separators=(',',':'),ensure_ascii=False).encode()
++
++def pin(path):
++    raw=path.read_bytes()
++    return {'path':str(path.relative_to(ROOT)),'sha256':sha256(raw).hexdigest(),'bytes':len(raw)}
++
++def require(condition, text):
++    if not condition: raise ValueError(text)
++
++def write(name,obj):
++    (OUT/'evidence'/name).write_text(json.dumps(obj,indent=2,ensure_ascii=False)+'\n')
++
++def mul(x,y):
++    c,a=x;d,b=y;p=Counter(dict(a))
++    p.update(dict(b))
++    return c*d,tuple(sorted((k,v) for k,v in p.items() if v))
++
++def power(x,n):
++    c,a=x
++    return c**n,tuple((k,v*n) for k,v in a if v*n)
++
++def main():
++    inputs=[HEADER,CLOSURE,MAJORANT,AVERAGE,PRIOR,CROSSWALK,
++            SOURCE/'actual-background-majorant.mjs',SOURCE/'actual-continuation-exact-functions.mjs']
++    pins=[pin(p) for p in inputs]
++    require(pins[0]['sha256']=='f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1','header pin')
++    require(pins[1]['sha256']=='2cbb5c74eb58ef82f948a19bad00a299c38b802cb8e668e94da8e34a37f77e91','closure pin')
++    require(pins[2]['sha256']=='36026f7c3804d54f779d214ead8ea434db32b3fc5cb468465d174748eda5a74b','retained theorem pin')
++    header=json.loads(HEADER.read_text());closed=json.loads(CLOSURE.read_text())
++    nodes=closed['records'];major=json.loads(MAJORANT.read_text())
++    average=json.loads(AVERAGE.read_text());prior=json.loads(PRIOR.read_text())
++    cross=json.loads(CROSSWALK.read_text());reg={}
++    def unpack(d):
++        for k,v in d.items():
++            if k=='base':unpack(v)
++            elif isinstance(v,str):
++                try:reg[k]=json.loads(v)
++                except json.JSONDecodeError:pass
++    unpack(header['definitions'])
++    system=reg['picard'][0]
++    require(sha256(canonical(system,False)).hexdigest()==major['originalPicardSHA256']==average['actualPicardSHA256'],'actual system identity')
++    require(major['actualSourceAndAnalyticInputsComposed'] and major['numericC1KCertifiedTailBoundsProvedHere'],'retained all-order actual theorem')
++    require(closed['source_header_sha256']==pins[0]['sha256'],'raw closure header')
++    require(all(prior['picard']['sameActualParameterExpressions'].values()),'prior actual parameter binding')
++    params=reg['fixed']['source']['parametersExactExpressions']
++    for k,v in major['actualParameterASTConstraints'].items():require(params[k]==v,'parameter mismatch '+k)
++    cone=major['originalConstantCone']
++    for k,v in cone.items():
++        if k in nodes:require(nodes[k]==v,'raw scalar changed '+k)
++    require(all(prior['picard']['sameOriginalTailRoots'].values()),'original tail binding')
++    require(all(x['matchesOriginalProof'] for x in prior['picard']['sameOriginalConstantNodeComparisons']),'constant source proof attachment')
++
++    expected={
++      0:('rational',['0','1']),1:('rational',['1','1']),2:('coordinate',['eta']),
++      4756:('coordinate',['X']),29329:('coordinate',['actual_n1_axis_average$200']),
++      29330:('multiply',[4756,29329]),
++      29331:('actual_background_even_profile',[0,1,29330,2,0,0]),
++      29342:('actual_background_even_profile',[0,1,29330,2,0,1]),
++      29332:('definite_integral',[29331,29329,0,1]),
++      29343:('definite_integral',[29342,29329,0,1]),
++      29336:('smooth_piecewise',[4756,28819,29328,29332,29335,0]),
++      29436:('smooth_piecewise',[4756,28819,29328,29343,29435,0]),
++      72018:('actual_background_even_profile',[0,0,4756,2,1,0]),
++      72257:('actual_background_even_profile',[0,1,4756,2,1,0]),
++      72026:('smooth_piecewise',[4756,28819,28823,72018,72025,0]),
++      72261:('smooth_piecewise',[4756,28819,28823,72257,72260,0]),
++      28814:('multiply',[3617,28813]),28813:('exp',[28812]),
++      28812:('multiply',[3612,28811]),28811:('rational',['1','128']),
++      28819:('multiply',[3617,28818]),28818:('exp',[28817]),
++      28817:('multiply',[3612,28816]),28816:('rational',['1','64'])}
++    for k,(op,args) in expected.items():require(nodes[str(k)]=={'op':op,'args':args},'actual caller record '+str(k))
++    require(system['diagonal']==[0,0,2,0,3,1],'singular diagonal')
++    require(system['zeroAxisDatum']==[0]*6,'zero-axis datum')
++    require(system['A0'][0]==[0,0,0,0,1,0] and system['A0'][1]==[0,0,0,0,0,1],'F/U derivative rows')
++    require(system['A1'][0]==system['A1'][1]==[0]*6 and system['forcing'][:2]==[0,0],'first rows no extra terms')
++    require(system['solutionNorm']['commonCollar']==24848 and system['radialDomain']==[0,24806],'common collar norm/domain')
++    ledger=major['exactRationalLedger']
++    for k,upper in [('A0row4OverBDelta',512),('A0row5OverBDelta',512),('A1row4OverBDelta',512),('A1row5OverBDelta',512),('forcingOverB2DeltaSquared',65536)]:
++        require(F(ledger[k])<=upper,'original source coefficient bound '+k)
++    source_majorant=(SOURCE/'actual-background-majorant.mjs').read_text()
++    require('All A0/A1 row sums <=512B/delta' in source_majorant,'coefficient norm interpretation')
++    require('||f1||_infty<=65536B^2/delta^2' in source_majorant,'forcing norm interpretation')
++    require(512<262144 and 65536<262144,'C1 bounds each coefficient operator and forcing, since B/delta>1')
++
++    # Decode the actual source monomials; E means the unchanged exp(t1/16).
++    @lru_cache(None)
++    def monomial(i):
++        n=cone[str(i)];a=n['args'];op=n['op']
++        if op=='rational':return F(int(a[0]),int(a[1])),()
++        if op=='source_parameter':
++            if a[0]=='Lambda':return F(1),(('Q',64),)
++            if a[0]=='Xa':return F(4),(('Q',-64),)
++            return F(1),((a[0],1),)
++        if op=='multiply':
++            v=(F(1),())
++            for j in a:v=mul(v,monomial(j))
++            return v
++        if op=='inverse':return power(monomial(a[0]),-1)
++        if op=='integer_power':return power(monomial(a[0]),a[1])
++        if op=='exp':
++            require(monomial(a[0])==(F(1,16),(('t1',1),)),'unexpected exponential')
++            return F(1),(('E',1),)
++        raise ValueError('unsupported monomial '+op)
++    require(monomial(24818)==(F(2**62),(('Q',264),('rho',-2),('t1',-2))),'actual C1 normalized')
++    require(monomial(24801)==(F(1,1024),(('Q',-1),('rho',1))),'actual delta normalized')
++    require(monomial(24847)==(F(9*2**138),(('E',1),('Q',465),('rho',-5),('t1',-4))),'actual log M normalized')
++
++    # All arithmetic below is exact integer/rational arithmetic. The proof
++    # documents the analytic inequalities connecting these comparisons.
++    compression_checks={
++      'logQ_over_T':260+22+64020 < 2**16,
++      'logRhoInverse_over_T':16+22+64016 < 2**16,
++      'fourMillion_below_2pow22':4000000<2**22,
++      'logC_remainder_absorbed':3010<2**(260*199),
++      'logS_remainder_absorbed':617<2**(260*199),
++      'prefactor_remainder_absorbed':342<2**(260*199),
++      'logPrefactor_below_S':481<9*2**138,
++      'loglogH_coefficient':962<2**10,
++      'top_exponent_coefficient':10+200*2**16<2**24,
++      'top_integer':1048576+25==1048601,
++      'rhs_coefficient':1+1+16==18,
++      'F_integral_weight':F(1,2)*F(1,4)==F(1,8),
++      'U_integral_weight':F(1,2)*F(1,2)==F(1,4),
++      'radial_shared_factor':F(18,4)<5,
++      'closed_collar_before_Xkeep':F(3,256)<F(1,64),
++      'collar_before_aSquared':F(1,64)<F(1,16),
++      'strict_actual_activation':F(1,256)>0,
++      'Xminus_inside_collar':F(1,256)<F(1,128)<F(3,256),
++      'cauchy_disc_inside_tube':F(1,16)<F(1,8)}
++    require(all(compression_checks.values()),'exact compression or domain arithmetic')
++    bound={'exp':{'exp':{'exp':{'exp':{'integer':1048601}}}}}
++    caller_domain={
++      'freeX':{'lower':'Xa*exp(t1/256)','upper':'Xa*exp(3*t1/256)','closed':True},
++      'eta':['-1','1'],
++      'containsActualSourceXminusNode':28814,
++      'allXStrictlyBeyondActualNaturalCore':True,
++      'sourceXkeepNode':28819,'sourceCommonASquaredNode':24805,
++      'exactSourceParameterInequalities':['Q>2^260','0<rho<1','0<t1<1','delta=rho/(1024Q) in (0,1)','B/delta>1'],
++      'proof':'Positive t1 and rational exponent comparisons give Xa<left<=X<=right<Xkeep<aSquared. Every t in [0,1] has 0<=tX<=aSquared.'}
++    cases=[(29336,29332,29331,'value','M',True),
++           (29436,29343,29342,'eta-order-1','16*M/delta',True),
++           (72026,72018,72018,'ordinary-X-order-1-F','18*C1*M/(8*delta)',False),
++           (72261,72257,72257,'ordinary-X-order-1-U','18*C1*M/(4*delta)',False)]
++    original_ids={r['sourceNodeId'] for r in cross['rows']}
++    apps=[]
++    for caller,selected,native,kind,expression,integral in cases:
++        apps.append({'sourceCaller':caller,'selectedSourceNode':selected,'nativeSourceNode':native,
++          'nativeIsOriginal138':native in original_ids,'kind':kind,'callerDomain':caller_domain,
++          'exactSourceUpper':expression,'M_sourceNormRoot':24848,'C1_sourceRoot':24818,'delta_sourceRoot':24801,
++          'numericEnclosure':{'lower':{'negate':bound},'upper':bound},
++          'numericEnclosureEncoding':'finite positive real expression with only integer1048601 and four exponentials',
++          'literalIntegralDomainVerified':integral,'sourceCallerDomainProved':True,
++          'ordinaryRadialRecurrenceApplied':kind.startswith('ordinary'),
++          'radialHolomorphyUsed':False,'pointValueOrRequestedPrecisionComputed':False,
++          'wholeNativeKernelNumericallyCompleted':False,'N706orN805Closed':False})
++    write('ACTUAL_COLLAR_BOUND_APPLICATION.json',{
++      'schema':'MathScope.ActualPicardOrdinaryCollarBoundApplication/1',
++      'implementationKind':'NEW source-proof application, not recovered lost implementation bytes',
++      'inputs':pins,'originalParameterASTSHA256':reg['fixed']['source']['parameterExpressionSHA256'],
++      'originalPicardDefinitionSHA256':major['originalPicardSHA256'],
++      'retainedAllOrderProofReused':True,'sourceCallerApplications':apps,
++      'exactChecks':compression_checks,
++      'normalizedActualConstants':{'C1':'2^62*Q^264/(rho^2*t1^2)',
++        'delta':'rho/(1024*Q)','logM':'9*2^138*Q^465*exp(t1/16)/(rho^5*t1^4)'},
++      'observedNativeCount':4,'original138TouchedNativeCount':sum(a['nativeIsOriginal138'] for a in apps),
++      'wholeOriginal138NewlyCompleted':0,
++      'notClaimed':['high-precision Picard values','second radial jets','pressure radial jet','global sourcecaller domain coverage','whole-K/four-axis norm closure','N706 closure','N805 closure'],
++      'nextExactFrontier':[
++        {'nodes':[72136,72310],'need':'Ordinary second X jets of F/U require bounding the differentiated RHS integral (coefficient xi derivatives and resulting W derivatives) or an interval differential-equation evaluator over the original full collar.'},
++        {'nodes':[87492],'need':'First X derivative of Pi requires source-specific coefficient/forcing parity factorization in A0[3][0]=node25602 and forcing[3]=node26395, or a bounded ordinary xi-derivative recurrence.'},
++        {'need':'Turning these coarse enclosures into narrow values requires validated quadrature/ODE/accelerated Picard evaluation with explicit arithmetic error and tail; the literal K budget is not an impossibility result.'} ]})
++    write('ACTUAL_CALLER_RECORDS.json',{'source':pins[1], 'records':{str(k):nodes[str(k)] for k in expected},
++      'actualSystemRows':{k:system[k] for k in ['diagonal','A0','A1','forcing','zeroAxisDatum','radialDomain','solutionNorm']}})
++    print(json.dumps({'actualCallerApplications':len(apps),'ordinaryFullCollarRadialJetApplications':2,
++      'literalAverageApplications':2,'constantUpper':'exp(exp(exp(exp(1048601))))',
++      'sourceDomainProved':True,'allExactChecks':True,'wholeNativeClosures':0,'N706Closed':False,'N805Closed':False}))
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/resumed_continuation/picard/review_quadratic/review.py
+@@ -0,0 +1,139 @@
++#!/usr/bin/env python3
++"""Independent permutation-based review of the continuous matrix enclosures.
++Reads the other worker's output and writes only in this review directory.
++"""
++from fractions import Fraction as F
++from hashlib import sha256
++from itertools import permutations
++from math import isqrt, factorial
++from pathlib import Path
++import json
++
++HERE=Path(__file__).resolve().parent
++ROOT=HERE.parents[3]
++TARGET=ROOT/'work/resumed_continuation/quadratic/evidence/ACTUAL_CONTINUOUS_MATRIX_AND_JETS.json'
++RECORDS=ROOT/'work/resumed_continuation/quadratic/evidence/SELECTED_AUTHENTICATED_SOURCE_RECORDS.json'
++
++def point(a):return F(a),F(a)
++def add(a,b):return a[0]+b[0],a[1]+b[1]
++def neg(a):return -a[1],-a[0]
++def mul(a,b):
++    c=[x*y for x in a for y in b]
++    return min(c),max(c)
++def scale(a,b):return mul(point(b),a)
++def inv(a):
++    assert a[0]*a[1]>0
++    return 1/a[1],1/a[0]
++def determinant(a):
++    n=len(a);total=point(0)
++    for p in permutations(range(n)):
++        sign=(-1)**sum(p[i]>p[j] for i in range(n) for j in range(i+1,n))
++        term=point(sign)
++        for i,j in enumerate(p):term=mul(term,a[i][j])
++        total=add(total,term)
++    return total
++def norm(a):return max(sum(max(abs(x),abs(y)) for x,y in row) for row in a)
++def log_enclosure(x):
++    x=F(x);power=0
++    while x>2:x/=2;power+=1
++    def direct(x):
++        x=F(x)
++        t=(x-1)/(x+1);n=110
++        lower=2*sum(t**(2*k+1)/F(2*k+1) for k in range(n))
++        tail=2*t**(2*n+1)/(F(2*n+1)*(1-t*t))
++        return lower,lower+tail
++    return add(direct(x),scale(direct(2),power))
++def sqrti(x):
++    x=F(x);d=2**110;n=isqrt(x.numerator*d*d//x.denominator)
++    return F(n,d),F(n,d) if F(n,d)**2==x else F(n+1,d)
++def encloses(outer,inner):return outer[0]<=inner[0]<=inner[1]<=outer[1]
++
++def main():
++    d=json.loads(TARGET.read_text());src=json.loads(RECORDS.read_text())['records']
++    parse=lambda x:tuple(F(v) for v in x)
++    A=[[parse(v) for v in row] for row in d['linearMatrixIntervals']]
++    E=[r[2:] for r in A[2:]];U=[r[:2] for r in A[:2]]
++    delta=F(1,2**200);decay=1-3*delta
++    checks={}
++    checks['all25ActualEntriesMatched']=len(d['matrixIntegralBindings'])==25 and all(x['analyticIntegralMatched'] for x in d['matrixIntegralBindings'])
++    checks['samePositiveLambdaUpper']=d['lambdaInterval']==['0',str(delta)] and not d['lambdaSetToZero']
++    checks['sourceRawC2ProductConvention']=d['systems'][0]['proof']['normConvention'].startswith('max over components, eta in [-1,1], and ordinary eta derivative orders 0,1,2')
++    checks['sourceQuadraticNorm']=F(d['systems'][0]['proof']['quadraticUpper'])==64
++    for j in range(5):
++        left=F(j+9);right=left+F(1,2)
++        for i in range(5):
++            if (i<2)!=(j<2):checks[f'zero_{i}_{j}']=A[i][j]==point(0)
++        if j<2:
++            checks[f'unit_mass_{j}']=A[0][j]==point(1)
++            ll,rr=log_enclosure(left),log_enclosure(right)
++            checks[f'continuous_log_interval_{j}']=encloses(A[1][j],(-rr[1],-ll[0]+F(9,2)*delta))
++        else:
++            xlo,xhi=sqrti(left),sqrti(right)
++            checks[f'sqrt_interval_{j}']=encloses(A[2][j],(sqrti(2*left)[0],sqrti(2*right)[1]))
++            checks[f'negative_power_interval_{j}']=encloses(A[3][j],(-1/xlo[0],-decay/xhi[1]))
++            checks[f'power_three_halves_interval_{j}']=encloses(A[4][j],(decay/(right*xhi[1]),1/(left*xlo[0])))
++    dU=parse(d['UDeterminantInterval']);dE=parse(d['EDeterminantInterval'])
++    checks['U_determinant_independent_permutations']=encloses(dU,determinant(U)) and dU[1]<0
++    checks['E_positive_determinant']=0<dE[0]<dE[1]
++    # f=x^(2+lambda) has f''/2 >=1 on x>=11, lambda>=0.
++    # [f,-x,1] has positive Vandermonde sign; gaps .5,1.5,.5.
++    product_lower=F(3,8)*sqrti(2)[0]
++    for r in [F(23,2),F(25,2),F(27,2)]:product_lower*=decay/(r*sqrti(r)[1])
++    checks['E_divided_difference_lower_independently_safe']=dE[0]<=product_lower
++    # An independent upper bound uses the point determinant, avoiding shared
++    # expression dependency differences between Laplace and permutation sums.
++    assert (2+delta)*(1+delta)/(2*(1-3*delta))<2
++    point_upper=sqrti(2)[1]*F(45,8)*2
++    for l in [F(11),F(12),F(13)]:point_upper/=l*sqrti(l)[0]
++    checks['E_upper_independent_divided_difference']=point_upper<=dE[1]
++    output_inverse=[[parse(v) for v in row] for row in d['linearInverseIntervals']]
++    for offset,mat,det in [(0,U,dU),(2,E,dE)]:
++        n=len(mat)
++        for i in range(n):
++            for j in range(n):
++                minor=[[mat[r][c] for c in range(n) if c!=i] for r in range(n) if r!=j]
++                cofactor=scale(determinant(minor),(-1)**(i+j))
++                value=mul(cofactor,inv(det))
++                checks[f'inverse_cofactor_{offset+i}_{offset+j}']=encloses(output_inverse[offset+i][offset+j],value)
++    M=F(d['newLinearInverseInfinityNormUpper']);beta=F(1,2**441);r=F(1,1000000)
++    checks['inverse_norm_recomputed']=M==norm(output_inverse) and M<2**30
++    q=8*delta*M*64*r
++    checks['C2_contraction_recomputed']=F(d['newC2ContractionUpper'])==q< F(d['previousC2ContractionUpper'])<F(1,4)
++    jet=beta/(1-q)
++    checks['same_actual_preconditioned_incoming_beta']=F(d['maximumRawEtaJetIncomingBound'])==beta
++    checks['C2_fixed_point_bound_recomputed']=F(d['newUniformOrdinaryC2JetBound'])==jet
++    checks['C2_ball_invariant']=beta+4*delta*M*64*r*r<r
++    checks['eight_actual_eta_calls']=len(d['rootDerivativeEnclosures'])==8 and all(x['ordinaryEtaOrders']==[0,1,2] and parse(x['eachDerivativeEnclosure'])==(-jet,jet) for x in d['rootDerivativeEnclosures'])
++    point_q=2*delta*M*64*jet
++    checks['actualJacobianNeumannBound']=F(d['actualI1JacobianInverseInfinityNormUpper'])==M/(1-point_q) and point_q<1
++    # sigma_2'=2 sigma_2(1-sigma_2)(s^-3+(1-s)^-3).
++    # Middle interval: <=2*(1/4)*(64+64)=64. Near zero the
++    # bound is (3584/27)*exp(-14)<1; reflection handles near one.
++    checks['sigma2_middle_bound']=2*F(1,4)*(64+64)==64
++    checks['sigma2_endpoint_bound']=sum(F(14**k,factorial(k)) for k in range(4))>F(3584,27)
++    cutoff=ROOT/d['sourceCutoffDefinition']['path']
++    checks['source_sigma2_definition']=sha256(cutoff.read_bytes()).hexdigest()==d['sourceCutoffDefinition']['sha256'] and 'sigma_2(s)=a(s)/(a(s)+a(1-s)), a(s)=exp(-1/s^2)' in cutoff.read_text()
++    checks['sigma2_global_upper']=d['newElementaryGlobalSigma2PrimeBound']==64
++    for c in d['actualCallers']:
++        caller,root,factor=c['callerNode'],c['rootNode'],c['factorNode']
++        node=src[str(factor)];step=node['args'][1]
++        checks[f'caller_source_factor_{caller}']=src[str(caller)]=={'op':'multiply','args':[root,factor]} and node['op']=='multiply' and node['args'][0]==24 and src['24']=={'op':'rational','args':['2','1']} and src[str(step)]['op']=='source_step_derivative' and src[str(step)]['args'][1]==1
++        checks[f'caller_uniform_eta_jet_{caller}']=c['factorEtaIndependentProvedByRawCone'] and 2 not in c['factorSourceNodes'] and c['factorGlobalEnclosure']==['0','128'] and c['ordinaryEtaOrders']==[0,1,2] and parse(c['eachCallerDerivativeEnclosure'])==(-128*jet,128*jet)
++    checks['no_whole_closure_claim']=not d['N706Closed'] and not d['N805Closed'] and d['wholeKernelRowsClosed']==0 and not d['originalRhsNumericallyEvaluated']
++    assert all(checks.values()),[k for k,v in checks.items() if not v]
++    record={'schema':'MathScope.IndependentQuadraticReview/1','reviewer':'continue_picard',
++      'target':{'path':str(TARGET.relative_to(ROOT)),'sha256':sha256(TARGET.read_bytes()).hexdigest()},
++      'targetCodeSHA256':sha256((ROOT/'work/resumed_continuation/quadratic/code/continue_quadratic.py').read_bytes()).hexdigest(),
++      'checks':checks,'allPassed':True,
++      'analyticReview':['The factor x^(-3/2-lambda) leaves rows sqrt(2)*x^(2+lambda), -x, 1, with positive determinant sign.',
++        'The product support gaps are >=3/8; f divided difference is >=1 from f second derivative/2>=1.',
++        'Positive normalized bump measures preserve the pointwise determinant lower bound by multilinearity.',
++        'The already proved beta applies to the same exact A inverse and actual RHS, so replacing its operator-norm upper bound does not invalidate beta.',
++        'Raw ordinary C2 product constants4 and8 give the stated Banach-space self-map and contraction; the zero-seeded root is unchanged.',
++        'For s<=1/4, sigma(1-sigma)<=exp(2-s^-2), s^-3 exp(-s^-2)<=64exp(-16), and (1-s)^-3<=64/27. Thus sigma prime<1 there; reflection and the middle interval give global bound64.',
++        'The actual eta-independent source factors are twice sigma_2 prime, so each actual caller9206/71726 C2 jet is bounded by128 times the same root-jet enclosure.'],
++      'scope':'Independent continuous-matrix/C2-bound review; not an actual RHS evaluation or N706/N805 closure.'}
++    (HERE/'REVIEW.json').write_text(json.dumps(record,indent=2)+'\n')
++    print(json.dumps({'allPassed':True,'exactChecks':len(checks),'targetSHA256':record['target']['sha256']}))
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/resumed_continuation/quadratic/code/continue_quadratic.py
+@@ -0,0 +1,312 @@
++#!/usr/bin/env python3
++"""New source-bound continuous C.2 matrix and ordinary eta-jet enclosures.
++
++Does not run a source producer, replace an integral by samples, or evaluate
++the actual oscillatory/improper RHS. Frozen inputs are strictly read-only.
++"""
++from __future__ import annotations
++from dataclasses import dataclass
++from fractions import Fraction as F
++from hashlib import sha256
++from math import isqrt, factorial
++from pathlib import Path
++import gzip, json, sys
++
++ROOT = Path(__file__).resolve().parents[4]
++OUT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT/'work/prune_recovery/native/code'))
++from native_binding import SourceBindings
++
++def h(p): return sha256(p.read_bytes()).hexdigest()
++def pin(p): return {'path':str(p.relative_to(ROOT)), 'bytes':p.stat().st_size,'sha256':h(p)}
++def dump(name, value):
++    (OUT/'evidence'/name).write_text(json.dumps(value, indent=2)+'\n')
++def canonical(x):return json.dumps(x,sort_keys=True,separators=(',',':'))
++
++@dataclass(frozen=True)
++class I:
++    lo: F
++    hi: F
++    def __post_init__(self):
++        object.__setattr__(self,'lo',F(self.lo));object.__setattr__(self,'hi',F(self.hi))
++        assert self.lo<=self.hi
++    @classmethod
++    def pt(cls,x):return cls(F(x),F(x))
++    def __add__(self,b):
++        b=b if isinstance(b,I) else I.pt(b);return I(self.lo+b.lo,self.hi+b.hi)
++    __radd__=__add__
++    def __neg__(self):return I(-self.hi,-self.lo)
++    def __sub__(self,b):return self+-b
++    def __mul__(self,b):
++        b=b if isinstance(b,I) else I.pt(b)
++        v=[self.lo*b.lo,self.lo*b.hi,self.hi*b.lo,self.hi*b.hi];return I(min(v),max(v))
++    __rmul__=__mul__
++    def inv(self):
++        assert self.lo>0 or self.hi<0
++        return I(1/self.hi,1/self.lo)
++    def __truediv__(self,b):return self*(b if isinstance(b,I) else I.pt(b)).inv()
++    def absmax(self):return max(abs(self.lo),abs(self.hi))
++    def data(self):return [str(self.lo),str(self.hi)]
++
++def sqrtI(x,bits=90):
++    x=F(x);assert x>=0
++    scale=2**bits;n=isqrt((x.numerator*scale**2)//x.denominator)
++    lo=F(n,scale);hi=lo if lo*lo==x else F(n+1,scale)
++    assert lo*lo<=x<=hi*hi
++    return I(lo,hi)
++
++def logI(x,n=80):
++    """Positive rational log, exact atanh series and geometric remainder."""
++    x=F(x);assert x>=1;k=0
++    while x>=2:x/=2;k+=1
++    def series(v):
++        t=(v-1)/(v+1)
++        lo=2*sum((t**(2*j+1)/F(2*j+1) for j in range(n)),F(0))
++        rem=2*t**(2*n+1)/(F(2*n+1)*(1-t*t))
++        return I(lo,lo+rem)
++    return series(x)+k*series(F(2))
++
++def det(m):
++    if len(m)==0:return I.pt(1)
++    if len(m)==1:return m[0][0]
++    return sum(((-1)**j*m[0][j]*det([r[:j]+r[j+1:] for r in m[1:]]) for j in range(len(m))),I.pt(0))
++
++def inverse_with_det(m,d):
++    n=len(m)
++    return [[(-1)**(i+j)*det([row[:i]+row[i+1:] for k,row in enumerate(m) if k!=j])/d for j in range(n)] for i in range(n)]
++
++def norm(m):return max(sum(v.absmax() for v in row) for row in m)
++def matdata(m):return [[v.data() for v in row] for row in m]
++
++def q(x):return ('q',str(F(x)))
++def coord(x):return ('coordinate',x)
++def comm(op,*args):
++    flat=[];r=F(0) if op=='add' else F(1)
++    for a in args:
++        xs=a[1:] if a[0]==op else [a]
++        for x in xs:
++            if x[0]=='q':r=r+F(x[1]) if op=='add' else r*F(x[1])
++            else:flat.append(x)
++    if op=='multiply' and r==0:return q(0)
++    if r!=(0 if op=='add' else 1) or not flat:flat.append(q(r))
++    flat.sort(key=repr)
++    return flat[0] if len(flat)==1 else tuple([op]+flat)
++def add(*a):return comm('add',*a)
++def mul(*a):return comm('multiply',*a)
++def unary(op,x):return (op,x)
++def integral(f,v,l,r):return ('definite_integral',f,v,l,r)
++
++def read_source(b):
++    p=ROOT/'work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz'
++    assert p.stat().st_size==32688149
++    assert h(p)=='42ac47a05160f9bd0aebd8cf54b72501007a0c46a351039c8c84b5bc1e6832e3'
++    n={}
++    with gzip.open(p,'rb') as stream:
++        raw_header=stream.readline()
++        assert sha256(raw_header).hexdigest()=='f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1'
++        for expected,line in enumerate(stream):
++            i,node=json.loads(line);assert i==expected;n[i]=node
++            if i>=71726:break
++    assert all(n[i]==v for i,v in b.nodes.items() if i in n)
++    return n,{'compressedSource':pin(p),'headerSHA256':sha256(raw_header).hexdigest(),'prefixRecordCount':len(n),'existingClosureRecordsCompared':sum(i in n for i in b.nodes)}
++
++def signature(nodes,i,env=None,used=None):
++    env={} if env is None else env
++    if used is not None:used.add(i)
++    n=nodes[i];op,a=n['op'],n['args']
++    if op=='rational':return q(F(int(a[0]),int(a[1])))
++    if op=='coordinate':return coord(env.get(i,a[0]))
++    if op=='source_parameter':return ('source_parameter',a[0])
++    if op in ('add','multiply'):return comm(op,*(signature(nodes,j,env,used) for j in a))
++    if op=='definite_integral':
++        body,var,lo,hi=a;name='s' if env else 'x'
++        return integral(signature(nodes,body,env|{var:name},used),coord(name),signature(nodes,lo,env,used),signature(nodes,hi,env,used))
++    if op in ('source_step_derivative','integer_power'):return (op,signature(nodes,a[0],env,used),a[1])
++    return tuple([op]+[signature(nodes,j,env,used) for j in a])
++
++def expected_entry(row,col):
++    if (row<2)!=(col<2):return q(0)
++    if row==0:return q(1)
++    x=coord('x');s=coord('s');lam=('source_parameter','lambda');left=col+9
++    bump=mul(q(2),('source_step_derivative',mul(q(2),add(x,q(-left))),1))
++    if row==1:
++        f=mul(q(-1),bump,integral(unary('exp',mul(q(-1),lam,s)),s,q(0),unary('log_positive',x)))
++    elif row==2:f=mul(bump,unary('sqrt_positive',q(2)),unary('sqrt_positive',x))
++    elif row in (3,4):
++        a=F(1,2) if row==3 else F(3,2)
++        f=mul(unary('exp',mul(q(-1),add(lam,q(a)),unary('log_positive',x))),bump)
++    out=integral(f,x,q(left),q(F(2*left+1,2)))
++    return mul(q(-1),out) if row==3 else out
++
++def cone(nodes,roots):
++    seen=set();frontiers={};ints={}
++    def visit(i):
++        if i in seen:return
++        seen.add(i);n=nodes[i];op,a=n['op'],n['args']
++        if op in ('rational','coordinate','source_parameter'):return
++        if op.startswith('actual_') or op.startswith('m3_'):
++            frontiers[i]=n;return
++        if op=='definite_integral':ints[i]=n
++        children=a[:1] if op in ('integer_power','source_step_derivative') else a
++        for j in children:
++            assert isinstance(j,int), (i,n)
++            visit(j)
++    for i in roots:visit(i)
++    return seen,frontiers,ints
++
++def main():
++    b=SourceBindings();nodes,auth=read_source(b)
++    cutoff_source=ROOT/'recovered/base/work/remaining_chain/source/source-inner-growth.mjs'
++    cutoff_text=cutoff_source.read_text()
++    assert 'sigma_2(s)=a(s)/(a(s)+a(1-s)), a(s)=exp(-1/s^2)' in cutoff_text
++    s=b.registry['quadratic'][1];heat=b.registry['quadratic'][2]
++    assert heat['linear']==[r[2:] for r in s['linear'][2:]]
++    used=set();bindings=[]
++    for i,row in enumerate(s['linear']):
++        for j,node in enumerate(row):
++            actual=signature(nodes,node,used=used);expected=expected_entry(i,j)
++            assert actual==expected,(i,j,node,actual,expected)
++            bindings.append({'row':i,'column':j,'sourceNode':node,'analyticIntegralMatched':True})
++    # Reused theorem hypotheses are source expressions, not numerical overrides.
++    assert s['scale']==8 and nodes[8]=={'op':'source_parameter','args':['lambda']}
++    assert s['proof']['sourceIncomingBounds']['lambdaUpper']=='1/2^200'
++    assert s['proof']['quadraticUpper']=='64'
++    assert heat['proof']['preconditionedQuadraticUpper']=='2^36'
++    assert heat['proof']['exactContinuousEInverseUpper']=='2^30'
++    assert heat['quadraticDiagonal']==[r[2:] for r in s['quadraticDiagonal'][2:]]
++    assert s['proof']['normConvention'].startswith('max over components, eta in [-1,1], and ordinary eta derivative orders 0,1,2')
++    assert heat['proof']['norm'].startswith('maximum raw eta derivative order 0,1,2')
++    delta=F(1,2**200);decay=1-3*delta
++    assert sum(F(3**k,factorial(k)) for k in range(5))>F(27,2)
++    A=[[I.pt(0) for j in range(5)] for i in range(5)]
++    for j in range(5):
++        left=F(j+9);right=left+F(1,2)
++        if j<2:
++            A[0][j]=I.pt(1)
++            A[1][j]=I(-logI(right).hi,-logI(left).lo+F(9,2)*delta)
++        else:
++            A[2][j]=I(sqrtI(2*left).lo,sqrtI(2*right).hi)
++            A[3][j]=I(-1/sqrtI(left).lo,-decay/sqrtI(right).hi)
++            A[4][j]=I(decay/(right*sqrtI(right).hi),1/(left*sqrtI(left).lo))
++    U=[r[:2] for r in A[:2]];E=[r[2:] for r in A[2:]]
++    # Positive bump mass and convex divided differences preserve determinant.
++    e_lower=F(3,8)*sqrtI(2).lo
++    for right in (F(23,2),F(25,2),F(27,2)):
++        e_lower*=decay/(right*sqrtI(right).hi)
++    assert e_lower>F(3,64000000)
++    e_naive=det(E);dE=I(e_lower,e_naive.hi);assert dE.hi>0
++    dU=det(U);assert dU.hi<0
++    invU=inverse_with_det(U,dU);invE=inverse_with_det(E,dE)
++    invA=[[I.pt(0) for j in range(5)] for i in range(5)]
++    for i in range(2):
++        for j in range(2):invA[i][j]=invU[i][j]
++    for i in range(3):
++        for j in range(3):invA[i+2][j+2]=invE[i][j]
++    M=norm(invA);assert M<2**30
++    beta=F(1,2**441);radius=F(1,1000000);Q=F(64)
++    qnew=8*delta*M*Q*radius
++    qold=F(s['proof']['lipschitzUpper'])
++    assert qnew<qold<F(1,4)
++    jet=beta/(1-qnew)
++    assert beta+4*delta*M*Q*radius**2<radius
++    point_q=2*delta*M*Q*jet;assert point_q<1
++    jacobian_inverse_bound=M/(1-point_q)
++    A_norm=norm(A)
++    # An entrywise J^{-1} enclosure follows from a matrix Neumann perturbation.
++    inverse_error=M*point_q/(1-point_q)
++    Jinverse=[[x+I(-inverse_error,inverse_error) for x in row] for row in invA]
++    derivative_rows=[]
++    for call_id in list(range(9169,9174))+list(range(71717,71720)):
++        n=nodes[call_id];assert n['op']=='actual_quadratic_root' and n['args'][2]==2
++        sysid,component,eta=n['args']
++        derivative_rows.append({'sourceCallNode':call_id,'sourceCall':n,'system':sysid,'component':component,'actualEtaArgumentNode':eta,
++            'ordinaryEtaOrders':[0,1,2],'etaDomain':['-1','1'],'eachDerivativeEnclosure':I(-jet,jet).data(),
++            'center':'0','kind':'theorem-derived numerical rational interval; not evaluated RHS or derivative center',
++            'sameZeroSeededRoot':True,'finiteIterateDeclaredRoot':False})
++    rhs_records={};rhs_frontiers={};rhs_integrals={};rhs_cone=set()
++    for sysid in [1,2]:
++        d=b.registry['quadratic'][sysid]
++        found,fr,integ=cone(nodes,d['rhs']);rhs_cone|=found
++        rhs_records[str(sysid)]={str(i):nodes[i] for i in d['rhs']}
++        rhs_frontiers[str(sysid)]={str(i):n for i,n in fr.items()}
++        rhs_integrals[str(sysid)]={str(i):n for i,n in integ.items()}
++    actual_callers={str(i):nodes[i] for i in [9170,9206,9205,71717,71726,71725]}
++    callers=[]
++    cutoff_prime_upper=64
++    # On [1/4,3/4], sigma(1-sigma)<=1/4 and both inverse cubes<=64.
++    # On [0,1/4], s^-3*exp(-s^-2)<=64*exp(-16), with symmetry at 1.
++    assert 2*F(1,4)*(64+64)==cutoff_prime_upper
++    assert sum(F(14**k,factorial(k)) for k in range(4))>F(3584,27)
++    for caller,root,factor in [(9206,9170,9205),(71726,71717,71725)]:
++        assert nodes[caller]=={'op':'multiply','args':[root,factor]}
++        fcone,frontier,_=cone(nodes,[factor]);assert not frontier and 2 not in fcone
++        assert nodes[factor]['op']=='multiply' and nodes[factor]['args'][0]==24
++        step_id=nodes[factor]['args'][1]
++        assert nodes[step_id]['op']=='source_step_derivative' and nodes[step_id]['args'][1]==1
++        callers.append({'callerNode':caller,'rootNode':root,'factorNode':factor,'factorEtaIndependentProvedByRawCone':True,
++                        'factorSourceNodes':sorted(fcone),'actualRootJetBoundAttached':True,
++                        'ordinaryDerivativeFormula':'d_eta^m caller = factor * d_eta^m actualRoot, m=0,1,2',
++                        'factorGlobalEnclosure':['0','128'],
++                        'callerEtaDomain':['-1','1'],'callerXDomain':'all finite real X; original positive X0 parameter unchanged',
++                        'ordinaryEtaOrders':[0,1,2],'eachCallerDerivativeEnclosure':I(-128*jet,128*jet).data(),
++                        'fullCallerNumericEnclosureComputed':True,'requestedPrecisionOrNonzeroCenterComputed':False})
++        used|=fcone
++    used|={8,2,9170,9206,9205,71717,71726,71725}
++    used|=set(s['rhs'])|set(heat['rhs'])
++    dump('ACTUAL_CONTINUOUS_MATRIX_AND_JETS.json',{
++        'schema':'MathScope.ResumedActualQuadraticContinuousIntervals/1','newImplementation':True,'sourceAuthentication':auth,
++        'sourceParameterExpressionSHA256':b.fixed['source']['parameterExpressionSHA256'],'systems':[s,heat],
++        'matrixIntegralBindings':bindings,'lambdaInterval':['0',str(delta)],'actualLambdaStrictlyPositivePreserved':True,
++        'lambdaSetToZero':False,'normalization':'original unit-mass positive bumps, width=1/2, supports [9+j,9+j+1/2]',
++        'method':'continuous integral convex-hull enclosures; no quadrature samples or discrete matrix',
++        'linearMatrixIntervals':matdata(A),'heatMatrixIntervals':matdata(E),'UDeterminantInterval':dU.data(),
++        'EDeterminantInterval':dE.data(),'newEDeterminantLower':str(e_lower),'previousEDeterminantLower':'3/64000000',
++        'linearInverseIntervals':matdata(invA),'heatInverseIntervals':matdata(invE),'newLinearInverseInfinityNormUpper':str(M),
++        'previousLinearInverseInfinityNormUpper':str(2**30),'maximumRawEtaJetIncomingBound':str(beta),
++        'quadraticOperatorUpperReused':'64','rootBallRadius':str(radius),'newC2ContractionUpper':str(qnew),
++        'previousC2ContractionUpper':str(qold),'newUniformOrdinaryC2JetBound':str(jet),'rootDerivativeEnclosures':derivative_rows,
++        'sourceCutoffDefinition':pin(cutoff_source),'newElementaryGlobalSigma2PrimeBound':64,
++        'actualI1JacobianInverseInfinityNormUpper':str(jacobian_inverse_bound),'actualI1JacobianInverseIntervals':matdata(Jinverse),
++        'jacobianFormula':'J=A+2*lambda*Qdiag*diag(z); A and Qdiag are original continuous matrices',
++        'actualI1PointwiseNeumannPerturbationUpper':str(point_q),'actualI1InversePerturbationEntryError':str(inverse_error),
++        'actualCallers':callers,'sourceRhsNodes':rhs_records,
++        'originalRhsNumericallyEvaluated':False,'originalRhsDerivativeNumericallyEvaluated':False,
++        'finiteIterateDeclaredRoot':False,'originalContinuousMatrixReplaced':False,
++        'N706Closed':False,'N805Closed':False,'wholeKernelRowsClosed':0})
++    dump('SELECTED_AUTHENTICATED_SOURCE_RECORDS.json',{'sourceAuthentication':auth,'records':{str(i):nodes[i] for i in sorted(used)},'transitiveRhsClosureClaimed':False})
++    dump('ACTUAL_RHS_REMAINING_REQUIREMENTS.json',{
++        'schema':'MathScope.ResumedQuadraticRhsRequirements/1','originalRhsNodes':rhs_records,
++        'I1OriginalDensityIntegralNodes':[8786,8787,8788,8789,8790],
++        'I1OriginalDensityIntegralRecords':{str(i):nodes[i] for i in [8786,8787,8788,8789,8790]},
++        'heatOriginalIntegralNodes':[71547,71610,71671],
++        'heatOriginalIntegralRecords':{str(i):nodes[i] for i in [71547,71610,71671]},
++        'nativeFrontiers':rhs_frontiers,'integrals':rhs_integrals,
++        'requirements':[
++          'For refined nonzero-centered I1 root intervals evaluate actual density integrals8786..8790 at the actual eta caller, including original loop roots, N log X phase and signed cancellations.',
++          'Keep RHS8831: -(dJ/(sqrt(2)*X0^(3/2)*K^2)-dM/(X0*K))/lambda^2; do not simplify the row to a different normalization.',
++          'For heat evaluate integrals71547,71610,71671 with original infinite-tail change of variable and eta dependence, then exact normalizations71708,71712,71716.',
++          'The new derivative bounds use the existing uniform C2 incoming theorem; they do not supply original RHS derivative values or nonzero centers.',
++          'All higher eta orders need their own source incoming derivative bound; C2 is not an all-orders result.',
++          'Final A,b,p mixed derivatives, energy/norm integrals and all actual caller domains remain required for N7-06/N8-05.'
++        ],'wholeKernelRowsClosed':0,'N706Closed':False,'N805Closed':False})
++    controls={
++        'all25OriginalMatrixEntriesAnalyticallyMatched':len(bindings)==25,
++        'continuousEBlockSharedByHeat':heat['linear']==[r[2:] for r in s['linear'][2:]],
++        'EDeterminantBoundImprovesSourceBound':e_lower>F(3,64000000),
++        'InverseBoundImprovesSourceBound':M<2**30,'C2ContractionStrictlyImproved':qnew<qold,
++        'sourceRadiusStillInvariant':beta+4*delta*M*Q*radius**2<radius,
++        'actualJacobianNonsingular':point_q<1,'eightActualRootCallsBound':len(derivative_rows)==8,
++        'twoActualParentProductsBoundToEtaIndependentFactor':all(c['factorEtaIndependentProvedByRawCone'] for c in callers),
++        'twoActualParentProductC2IntervalsComputed':all(c['fullCallerNumericEnclosureComputed'] for c in callers),
++        'sqrtLowerAndUpperDirected':all(sqrtI(F(i,2)).lo**2<=F(i,2)<=sqrtI(F(i,2)).hi**2 for i in range(18,28)),
++        'matrixSubstitutionNegativeControl':signature(nodes,s['linear'][2][2])!=expected_entry(2,3),
++        'normalizationNegativeControl':s['linear'][0][0]==1 and nodes[1]=={'op':'rational','args':['1','1']},
++        'RhsStillUnresolved':True,'acceptanceRowsUnchanged':True}
++    assert all(controls.values())
++    dump('CHECKS.json',{'checks':controls,'allPassed':True})
++    print(json.dumps({'allChecksPassed':True,'matrixEntries':25,'rootCallsWithOrdinaryEtaC2Intervals':8,
++        'actualParentCallers':2,'newEInverseNormUpperApprox':float(M),'newEDeterminantLowerApprox':float(e_lower),
++        'newC2ContractionUpperApprox':float(qnew),'newJetBoundApprox':float(jet),'RhsEvaluated':False,
++        'N706Closed':False,'N805Closed':False,'wholeKernelRowsClosed':0},sort_keys=True))
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/resumed_continuation/quadratic/review_picard/review_picard.py
+@@ -0,0 +1,79 @@
++#!/usr/bin/env python3
++"""Independent read-only review of the actual Picard collar application."""
++from pathlib import Path
++from fractions import Fraction as F
++from hashlib import sha256
++import json
++
++ROOT=Path(__file__).resolve().parents[4]
++OUT=Path(__file__).resolve().parent
++P=ROOT/'work/resumed_continuation/picard'
++def pin(p):return {'path':str(p.relative_to(ROOT)),'sha256':sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size}
++
++def main():
++    a=json.loads((P/'evidence/ACTUAL_COLLAR_BOUND_APPLICATION.json').read_text())
++    records=json.loads((P/'evidence/ACTUAL_CALLER_RECORDS.json').read_text())
++    closure=json.loads((ROOT/'work/prune_recovery/scalar/evidence/RAW_INITIALIZED_SCALAR_CLOSURE.json').read_text())
++    theorem=json.loads((ROOT/'recovered/base/analysis/base/PR30-recovery-handoff/angular-proof/inputs/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json').read_text())
++    assert all(closure['records'][k]==v for k,v in records['records'].items())
++    rows=records['actualSystemRows']
++    assert rows['diagonal']==[0,0,2,0,3,1] and rows['zeroAxisDatum']==[0]*6
++    assert rows['A0'][0]==[0,0,0,0,1,0] and rows['A0'][1]==[0,0,0,0,0,1]
++    assert rows['forcing'][:2]==[0,0] and rows['A1'][:2]==[[0]*6,[0]*6]
++    assert rows['solutionNorm']['commonCollar']==24848
++    assert theorem['bothOriginalSolutionNormFields']['commonCollar']['root']==24848
++    assert theorem['universalSourceScopedQuantifiers']['commonValueTube']=='distance(eta,I)<delta/8; C1 and coefficient bounds use the larger source tube delta/4'
++    assert closure['records']['3612']=={'op':'source_parameter','args':['t1']}
++    assert closure['records']['3617']=={'op':'source_parameter','args':['Xa']}
++    applications=a['sourceCallerApplications']
++    assert [x['sourceCaller'] for x in applications]==[29336,29436,72026,72261]
++    assert [x['nativeSourceNode'] for x in applications]==[29331,29342,72018,72257]
++    for row in applications:
++        caller=closure['records'][str(row['sourceCaller'])]
++        assert caller['op']=='smooth_piecewise' and caller['args'][1]==28819
++        assert caller['args'][3]==row['selectedSourceNode']
++        assert row['M_sourceNormRoot']==24848 and not row['radialHolomorphyUsed']
++        assert row['numericEnclosure']['upper']=={'exp':{'exp':{'exp':{'exp':{'integer':1048601}}}}}
++        assert not row['wholeNativeKernelNumericallyCompleted'] and not row['N706orN805Closed']
++    checks={
++      'originalRawCallerRecordsMatch':True,
++      'commonCollarNormUsedNotSeparateY5Norm':True,
++      'originalSingularRowsAndZeroDatumRetained':True,
++      'strictActivationSubcollarAndCallerSelection':0<F(1,256)<F(1,128)<F(3,256)<F(1,64)<F(1,16),
++      'etaDiscStrictlyInValueTube':F(1,16)<F(1,8),
++      'ordinaryFWeightIntegral':F(1,2)*F(1,3+1)==F(1,8),
++      'ordinaryUWeightIntegral':F(1,2)*F(1,1+1)==F(1,4),
++      'regularInverseMonomialCheck':all(F(1,k+c+1)*F(k+c+1)==1 for c in [1,3] for k in range(8)),
++      'sourceMajorantRhsFactor':1+1+16==18,
++      'sharedHBoundsRadialQuantities':F(18,4)<5,
++      'C1BinaryCoefficient':18+2*12+2*10==62,
++      'C1QExponent':2*(2*64+3)+2==264,
++      'SBinaryCoefficient':2*62+4+10==138,
++      'SQExponent':2*264-64+1==465,
++      'logQFixedSourceBound':260+22+64020<2**16,
++      'logRhoFixedSourceBound':16+22+64016<2**16,
++      'logCAbsorption':3010<2**(260*199),
++      'logSAbsorption':147+470==617 and 617<2**(260*199),
++      'logPrefactorAbsorption':74+268==342 and 342<2**(260*199),
++      'prefactorLogBelowS':481<9*2**138,
++      'loglogHCoefficient':962<2**10,
++      'thirdLogCoefficient':10+200*2**16<2**24,
++      'sourceTExponentCompression':1048576+25==1048601,
++      'wholeRowsRemainOpen':a['wholeOriginal138NewlyCompleted']==0,
++    }
++    assert all(checks.values())
++    notes=[
++      'W4/xi and W5/xi are obtained from the original regular singular inverse, not from radial Cauchy estimates. Their t^3 and t weights produce factors1/8 and1/4 after X=xi^2.',
++      'The selected X interval lies strictly in the activation collar, below original Xkeep and aSquared. Literal average arguments tX remain in the common real collar for every t in[0,1].',
++      'Only eta analyticity on the retained complex tube is used for W_eta. The delta/16 disc is strictly inside the original delta/8 value tube.',
++      'The four-exponential endpoint is a numerical real expression independent of source variables. It is a coarse uniform interval, not a precision evaluation, all-caller proof, all-radial-order result, or kernel closure.',
++      'Reviewed analytic compression: q=logQ, r<q and tau<240Q^200 yield logS<961Q^200; log(5C1/delta)<S; three logarithms of H are below exp(1048601). This yields four exponentials for H.'
++    ]
++    result={'schema':'MathScope.IndependentResumedPicardReview/1','reviewerBranch':'quadratic',
++      'reviewedFiles':[pin(P/x) for x in ['code/apply_actual_collar_bounds.py','evidence/ACTUAL_COLLAR_BOUND_APPLICATION.json','evidence/ACTUAL_CALLER_RECORDS.json','ACTUAL_COLLAR_BOUND_PROOF.md']],
++      'checks':checks,'allPassed':True,'findings':notes,'scope':'independent source and mathematical review; no original producer executed',
++      'requestedChanges':[],'wholeKernelRowsClosed':0,'N706Closed':False,'N805Closed':False}
++    (OUT/'REVIEW.json').write_text(json.dumps(result,indent=2)+'\n')
++    print(json.dumps({'review':'Picard actual collar application','allPassed':True,'checks':len(checks),'requestedChanges':0,'wholeKernelRowsClosed':0}))
++
++if __name__=='__main__':main()

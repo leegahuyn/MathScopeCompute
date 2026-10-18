@@ -1,0 +1,65 @@
+{
+  "schema": "MathScope.IndependentResumedPicardReview/1",
+  "reviewerBranch": "quadratic",
+  "reviewedFiles": [
+    {
+      "path": "work/resumed_continuation/picard/code/apply_actual_collar_bounds.py",
+      "sha256": "aa36cb15e040d366b8e64d6f8599a952dc3f659b0a2435a7faeeb605b71a29c7",
+      "bytes": 12888
+    },
+    {
+      "path": "work/resumed_continuation/picard/evidence/ACTUAL_COLLAR_BOUND_APPLICATION.json",
+      "sha256": "ec45c6e3448cb7444cfcfc9ad83869993ec556c71379cef752575487e2e942df",
+      "bytes": 12225
+    },
+    {
+      "path": "work/resumed_continuation/picard/evidence/ACTUAL_CALLER_RECORDS.json",
+      "sha256": "1bbdf9d4e31aa8111c334be0c62ab70402cda3efa5e59e7b3fbc35c015d73159",
+      "bytes": 4642
+    },
+    {
+      "path": "work/resumed_continuation/picard/ACTUAL_COLLAR_BOUND_PROOF.md",
+      "sha256": "e604ccb2b39e24ef42e98e15f601b72430beca7a0a6c466b6c17011429f0d2eb",
+      "bytes": 7147
+    }
+  ],
+  "checks": {
+    "originalRawCallerRecordsMatch": true,
+    "commonCollarNormUsedNotSeparateY5Norm": true,
+    "originalSingularRowsAndZeroDatumRetained": true,
+    "strictActivationSubcollarAndCallerSelection": true,
+    "etaDiscStrictlyInValueTube": true,
+    "ordinaryFWeightIntegral": true,
+    "ordinaryUWeightIntegral": true,
+    "regularInverseMonomialCheck": true,
+    "sourceMajorantRhsFactor": true,
+    "sharedHBoundsRadialQuantities": true,
+    "C1BinaryCoefficient": true,
+    "C1QExponent": true,
+    "SBinaryCoefficient": true,
+    "SQExponent": true,
+    "logQFixedSourceBound": true,
+    "logRhoFixedSourceBound": true,
+    "logCAbsorption": true,
+    "logSAbsorption": true,
+    "logPrefactorAbsorption": true,
+    "prefactorLogBelowS": true,
+    "loglogHCoefficient": true,
+    "thirdLogCoefficient": true,
+    "sourceTExponentCompression": true,
+    "wholeRowsRemainOpen": true
+  },
+  "allPassed": true,
+  "findings": [
+    "W4/xi and W5/xi are obtained from the original regular singular inverse, not from radial Cauchy estimates. Their t^3 and t weights produce factors1/8 and1/4 after X=xi^2.",
+    "The selected X interval lies strictly in the activation collar, below original Xkeep and aSquared. Literal average arguments tX remain in the common real collar for every t in[0,1].",
+    "Only eta analyticity on the retained complex tube is used for W_eta. The delta/16 disc is strictly inside the original delta/8 value tube.",
+    "The four-exponential endpoint is a numerical real expression independent of source variables. It is a coarse uniform interval, not a precision evaluation, all-caller proof, all-radial-order result, or kernel closure.",
+    "Reviewed analytic compression: q=logQ, r<q and tau<240Q^200 yield logS<961Q^200; log(5C1/delta)<S; three logarithms of H are below exp(1048601). This yields four exponentials for H."
+  ],
+  "scope": "independent source and mathematical review; no original producer executed",
+  "requestedChanges": [],
+  "wholeKernelRowsClosed": 0,
+  "N706Closed": false,
+  "N805Closed": false
+}

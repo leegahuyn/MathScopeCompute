@@ -1,0 +1,53 @@
+{
+  "checked_at_utc": "2026-10-18T07:53:24.592623+00:00",
+  "scope": "Read-only recheck of access to the existing ChatGPT Work environment and saved final attachment verification.",
+  "requested_configuration": {
+    "model": "GPT 6 Astra",
+    "reasoning_effort": "Ultra",
+    "environment": "same ChatGPT Work environment"
+  },
+  "requested_configuration_source": "User requirement relayed in the delegated task; not a tool observation.",
+  "browser_skill": "browser:control-browser",
+  "browser_tool": "mcp__codex_apps__browser_js",
+  "browser_attempt": {
+    "code": "const agent = await setupBrowserRuntime();\nconst browser = await agent.browsers.get(\"extension\");\nawait nodeRepl.write(await browser.documentation());",
+    "result": "blocked_before_documentation_or_tab_access",
+    "exact_tool_output": "Browser access requires the originating browser context. Open ChatGPT in the browser with the connected extension and try again.",
+    "originating_browser_connected": "not_established",
+    "existing_work_tab_observed": false,
+    "model_selector_observed": false,
+    "ui_model": null,
+    "ui_reasoning_effort": null,
+    "same_browser_environment_verified": false
+  },
+  "backend_attestation": {
+    "root_model": "not_attestable_by_this_check",
+    "root_reasoning_effort": "not_attestable_by_this_check",
+    "note": "A user report or visible model label would not by itself attest the root backend; no model label was observed in this recheck."
+  },
+  "actions": {
+    "settings_changed": false,
+    "tabs_navigated": false,
+    "authentication_attempted": false,
+    "fallback_browser_used": false,
+    "plugins_installed": false,
+    "git_written": false,
+    "site_published": false
+  },
+  "existing_attachment_verification": {
+    "source": "/workspace/scratch/11bf626d6c2d/work/git_delivery_final_20261018T072604Z/FINAL_ATTACHMENT_VERIFICATION.json",
+    "verification_rerun": false,
+    "status": "Previously saved record reports all checks passed.",
+    "saved_record": {
+      "library_file_id": "libfile_a3defbb4cb5481919c912aeb00401c01",
+      "actual_returned_attachment": "/workspace/scratch/11bf626d6c2d/attachment_verification/final/MathScope_Recovery_Final_20261018T072604Z_b479c2d1.zip",
+      "size_bytes": 74022563,
+      "sha256": "6db01bbf3d07048e7ee2cd8411b8b4a38d9c64ee5516898935f32f8b2228cad8",
+      "indexed_members": 1230,
+      "crc_passed": true,
+      "all_indexed_hashes_passed": true,
+      "same_as_saved_local_zip": true
+    }
+  },
+  "conclusion": "Requested model, effort, and same-browser environment remain unverified because the browser tool requires an originating browser context."
+}

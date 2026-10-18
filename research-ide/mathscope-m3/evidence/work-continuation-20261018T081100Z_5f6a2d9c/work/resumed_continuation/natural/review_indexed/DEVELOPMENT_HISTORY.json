@@ -1,0 +1,20 @@
+{
+  "schema": "MathScope.IndependentReviewDevelopmentHistory/1",
+  "initialReviewAttempt": {
+    "issue": "The first raw-source scan recomputed max(wanted) inside every source-record iteration, causing excessive scan time.",
+    "executionLimitSeconds": 50,
+    "rawStdoutStderrCapturedInFiles": false,
+    "toolSessionHandleRetained": false,
+    "claimAboutExactTermination": "No exit code from that initial attempt was retained; it is not counted as a passing review."
+  },
+  "correction": "Compute max_wanted once before scanning the authenticated source.",
+  "subsequentEvidence": [
+    "review_attempt2.stdout.log",
+    "review_attempt2.stderr.log",
+    "review_attempt2.exit.txt",
+    "review.stdout.log",
+    "review.stderr.log",
+    "review.exit.txt"
+  ],
+  "mathematicalConclusionChanged": false
+}
