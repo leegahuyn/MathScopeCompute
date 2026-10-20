@@ -165,8 +165,8 @@ def main() -> int:
               and browser.get("desktop", {}).get("dialogScrollWidth") == browser.get("desktop", {}).get("dialogClientWidth")
               and browser.get("mobile", {}).get("passed") is True
               and browser.get("mobile", {}).get("dialogScrollWidth") == browser.get("mobile", {}).get("dialogClientWidth")
-              and browser.get("r105Status") == "OPEN"
-              and browser.get("r108Status") == "OPEN",
+              and browser.get("checks", {}).get("r105Status") == "OPEN"
+              and browser.get("checks", {}).get("r108Status") == "OPEN",
               "current v119 readback and Chromium overflow fix are verified; incomplete R1-05/R1-08 remain OPEN")
     else:
         check("publisher_observation_matches_checkpoint", False, "public/v0.3.1-publisher-observation.json is missing")
