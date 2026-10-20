@@ -21,7 +21,7 @@ const m4Path = 'research-ide/mathscope-m4/recovery-20261019/M4_ORIGINAL_ACCEPTAN
 const finitePath = 'research-ide/mathscope-m3/recovery-20261019/evidence/FINITE_VS_CONTINUUM_N706_N805_RECEIPT.json';
 const m4ReceiptPath = 'research-ide/mathscope-m4/acceptance-review-20261019/evidence/followup-20261020/M4_FOLLOWUP_VERIFICATION_RECEIPT.json';
 const observationPath = 'public/v0.3.1-publisher-observation.json';
-const bundlePath = 'public/websitepublisher-v118-followup-bundle.json';
+const bundlePath = 'public/websitepublisher-v119-followup-bundle.json';
 const statusPath = 'public/v0.3.1-sync-status.html';
 const m3 = read(m3Path), m4 = read(m4Path), finite = read(finitePath), receipt = read(m4ReceiptPath);
 const observation = read(observationPath), bundle = read(bundlePath);
@@ -38,11 +38,11 @@ check('m4_original_16_rows', m4.originalCriteria === 16 && m4.rows.length === 16
 check('m4_statuses_not_promoted', counts.ACCEPTED === 0 && counts.PARTIAL === 14 && counts.OPEN === 2 && m4.overallRelease === 'HOLD' && m4.finalAcceptance === 'UNCONFIRMED' && m4.acceptedCurrentRelease === null, JSON.stringify({counts, overallRelease:m4.overallRelease, finalAcceptance:m4.finalAcceptance}));
 check('m4_receipt_pins_matrix', receipt.matrixBlobSha === m4Blob && receipt.originalCriteriaStatusCounts.ACCEPTED === 0 && receipt.originalCriteriaStatusCounts.PARTIAL === 14 && receipt.originalCriteriaStatusCounts.OPEN === 2, 'matrixBlobSha=' + receipt.matrixBlobSha);
 check('finite_receipt_pins_m3', finite.sourceLedgerBlobSha === m3Blob && finite.N706Closed === false && finite.N805Closed === false && finite.actualLastResolvedTau === null, 'finite evidence does not close continuum obligations');
-check('publisher_page_readback', observation.page.version === 118 && observation.page.versionHash === '9a0eebc5' && observation.page.fullPageSourceMirroredInGit === false, 'live v0.3.1.html v118 / 9a0eebc5 remains the canonical page');
+check('publisher_page_readback', observation.page.version === 119 && observation.page.versionHash === 'f9c0e80a' && observation.page.fullPageSourceMirroredInGit === false, 'live v0.3.1.html v119 / f9c0e80a remains the canonical page');
 check('publisher_runtime_readback', observation.fragments.runtime.version === 8 && observation.fragments.runtime.versionHash === 'abfa2a92' && observation.currentM4Panel.sourceMatrixGitBlobSha === m4Blob, 'runtime v8 overlay points to the current GitHub M4 matrix');
 check('publisher_overlay_counts', JSON.stringify(observation.currentM4Panel.statusCounts) === JSON.stringify({ACCEPTED:0,PARTIAL:14,OPEN:2}) && observation.currentM4Panel.overallRelease === 'HOLD', 'runtime panel is source-pinned and preserves HOLD');
 check('bundle_current_versions', bundle.liveBaseline.page.version === observation.page.version && bundle.liveBaseline.page.versionHash === observation.page.versionHash && bundle.liveBaseline.runtime.version === observation.fragments.runtime.version && bundle.liveBaseline.runtime.versionHash === observation.fragments.runtime.versionHash, 'bundle metadata matches current WebsitePublisher read-back');
-check('bundle_release_hold', bundle.m4.statusCounts.ACCEPTED === 0 && bundle.m4.statusCounts.PARTIAL === 14 && bundle.m4.statusCounts.OPEN === 2 && bundle.publication.overallRelease === 'HOLD' && bundle.publication.status === 'PARTIAL_RUNTIME_UPDATED_FULL_PAGE_UNCHANGED', 'partial publication is not presented as full release');
+check('bundle_release_hold', bundle.m4.statusCounts.ACCEPTED === 0 && bundle.m4.statusCounts.PARTIAL === 14 && bundle.m4.statusCounts.OPEN === 2 && bundle.publication.overallRelease === 'HOLD' && bundle.publication.status === 'TARGETED_PAGE_CSS_PATCH_LIVE_BROWSER_RECHECKED_PARTIAL_ACCEPTANCE', 'partial publication is not presented as full release');
 check('status_page_is_not_ide_replacement', fs.existsSync(path.join(root,statusPath)) && fs.readFileSync(path.join(root,statusPath),'utf8').includes('대체본이 아닙니다') && fs.readFileSync(path.join(root,statusPath),'utf8').includes('HOLD'), 'status page explicitly does not replace the 26 MB live IDE page');
 check('browser_mobile_not_claimed', observation.currentM4Panel.currentBrowserInspection === false && observation.currentM4Panel.physicalMobileInspection === false, 'no unverified E2E/mobile claim');
 
